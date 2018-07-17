@@ -1,0 +1,23 @@
+= OpenShift Unified Hybrid Cloud
+
+This repository contains the UI components for the OpenShift Unified Hybrid
+Cloud site.
+
+== Bulding
+
+To build the application istall the `yarn` tool and then run these commands:
+
+....
+$ yarn install
+$ yarn build
+....
+
+== Testing
+
+To test the application in your development environment run the following command:
+
+....
+$ yarn start
+....
+
+That will start the the Webpack development server, in http://localhost:8001. 
