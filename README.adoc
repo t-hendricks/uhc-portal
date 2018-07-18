@@ -21,3 +21,60 @@ $ yarn start
 ....
 
 That will start the the Webpack development server, in http://localhost:8001. 
+
+== Deploying
+
+In order to deploy the application to an _OpenShift_ cluster first you need to
+build the image:
+
+....
+$ make image
+....
+
+As the image isn't currently uploaded to any image repository, you will need
+then to save it to a `tar` file:
+
+....
+$ make tar
+....
+
+That will generate the `openshift-unified-hybrid-cloud_portal_latest.tar`. You
+need to manually copy it to the nodes of the cluster where you want to deploy
+the application, and load it into the docker daemon of the node. For example,
+assuming that the name of the node is `sandbox` and that you have configured SSH
+access without password, you can use the `scp` and `ssh` commands:
+
+....
+$ scp openshift-unified-hybrid-cloud_portal_latest.tar sandbox:
+$ ssh sadnbox docker load -i openshift-unified-hybrid-cloud_portal_latest.tar
+....
+
+Once the image is loaded, you can run the `template.sh` that processes the
+`template.yml` template and creates all the required _OpenShift_ objects:
+
+....
+$ sh template.sh
+....
+
+That will create a `unified-hybrid-cloud` namespace, and inside that namespace a
+`portal-server` deployment. Check that it is running:
+
+....
+$ oc project unified-hybrid-cloud
+$ oc get pods
+NAME                            READY STATUS  RESTARTS AGE
+portal-server-c7664975c-sx6rr   1/1   Running 0        54m
+....
+
+A route for the `cloud.openshift.com` DNS domain will also be created, so to
+access the application you will need to add to your `/etc/hosts` a line that
+makes that correspond to the IP address of the cluster node. For example, if the IP
+address of the cluster node is `192.168.122.100` you should add a line like
+this:
+
+....
+192.168.122.100 cloud.example.com
+....
+
+Then go with your browser to https://cloud.example.com, and you should see the
+application running.

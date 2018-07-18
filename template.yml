@@ -1,0 +1,152 @@
+#
+# Copyright (c) 2018 Red Hat, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# This file contains an OpenShift template that creates all the objects needed
+# for a working installation of the application. See the `template.sh` file for
+# an example of how to use it.
+
+---
+
+apiVersion: v1
+kind: Template
+metadata:
+  name: unified-hybrid-cloud-portal
+  annotations:
+    description: "Unified Hybrid Cloud Portal"
+
+parameters:
+
+- name: NAMESPACE
+  description: The namespace where the objects will be created.
+  value: unified-hybrid-cloud
+
+- name: VERSION
+  description: The version of the project.
+  value: latest
+
+- name: DOMAIN
+  description: The DNS domain where the route will be created.
+  value: cloud.openshift.com
+
+objects:
+
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: portal-config
+  data:
+
+    httpd.conf: |-
+      # Set the server root:
+      ServerRoot /etc/httpd
+
+      # Explicilty set the server name, otherwise the web server will use
+      # the IP address of the pod:
+      ServerName ${DOMAIN}
+
+      # Listen in a non privileged port, as we will be running wit a non
+      # privileged user:
+      Listen 8000
+
+      # The default location of the PID file isn't readable by the user that
+      # runs the container, so we need to put it in a different place:
+      PidFile /var/tmp/httpd.pid
+
+      # Load modules:
+      LoadModule mpm_event_module /usr/lib64/httpd/modules/mod_mpm_event.so
+      LoadModule unixd_module /usr/lib64/httpd/modules/mod_unixd.so
+      LoadModule dir_module /usr/lib64/httpd/modules/mod_dir.so
+      LoadModule log_config_module /usr/lib64/httpd/modules/mod_log_config.so
+      LoadModule authz_core_module /usr/lib64/httpd/modules/mod_authz_core.so
+
+      # Deny access to all the file system:
+      <Directory />
+        AllowOverride none
+        Require all denied
+      </Directory>
+
+      # Allow access to the documents directory:
+      DocumentRoot /var/www/html
+      <Directory /var/www/html>
+        AllowOverride None
+        Require all granted
+      </Directory>
+
+      # Send the logs to the standard output:
+      LogLevel warn
+      ErrorLog /dev/stdout
+      TransferLog /dev/stdout
+
+- apiVersion: apps/v1beta1
+  kind: Deployment
+  metadata:
+    name: portal-server
+    labels:
+      app: portal-server
+  spec:
+    selector:
+      matchLabels:
+        app: portal-server
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: portal-server
+      spec:
+        volumes:
+        - name: config
+          configMap:
+            name: portal-config
+            items:
+            - key: httpd.conf
+              path: conf/httpd.conf
+        containers:
+        - name: server
+          image: openshift-unified-hybrid-cloud/portal:${VERSION}
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: config
+            mountPath: /etc/httpd
+          command:
+          - /usr/sbin/httpd
+          args:
+          - -D
+          - FOREGROUND
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: portal-server
+    labels:
+      app: portal-server
+  spec:
+    selector:
+      app: portal-server
+    ports:
+    - port: 8000
+      targetPort: 8000
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: portal-server
+  spec:
+    host: ${DOMAIN}
+    to:
+      kind: Service
+      name: portal-server
+    tls:
+      termination: edge

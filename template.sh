@@ -1,3 +1,5 @@
+#!/bin/bash -ex
+
 #
 # Copyright (c) 2018 Red Hat, Inc.
 #
@@ -14,30 +16,18 @@
 # limitations under the License.
 #
 
-# The name and version of the image repository:
-namespace:=openshift-unified-hybrid-cloud
-repository:=portal
-version:=latest
+# This script uses the OpenShift template to create a deployment of
+# the application.
 
-# The tag that will be assigned to the image:
-tag:=$(namespace)/$(repository):$(version)
+# Create the namespace:
+oc new-project unified-hybrid-cloud || true
 
-# The name of the tar file for the image:
-tar:=$(shell echo $(tag) | tr /: __).tar
-
-.PHONY: app
-app:
-	yarn install
-	yarn build
-
-.PHONY: image
-image: app
-	docker build -t $(tag) .
-
-.PHONY: tar
-tar: image
-	docker save -o $(tar) $(tag)
-
-.PHONY: clean
-clean:
-	rm -rf build node_modules
+# Use the template to create the objects:
+oc process \
+  --filename="template.yml" \
+  --param=NAMESPACE="${TEMPLATE_NAMESPACE:-unified-hybrid-cloud}" \
+  --param=VERSION="${TEMPLATE_VERSION:-latest}" \
+  --param=DOMAIN="${TEMPLATE_DOMAIN:-cloud.openshift.com}" \
+| \
+oc apply \
+  --filename=-
