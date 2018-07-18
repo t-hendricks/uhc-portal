@@ -15,6 +15,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import * as fromItems from './ducks/items';
+import * as fromUsers from './ducks/users';
 import { Header } from './Header.js';
 import { ClusterList } from './ClusterList.js';
 import { Pager, Label} from 'patternfly-react'
@@ -24,7 +25,7 @@ import "patternfly/dist/css/patternfly-additions.css";
 
 class App extends Component {
   componentDidMount() {
-    const { fetchItems, itemsCurrentPage } = this.props;
+    const { fetchItems, itemsCurrentPage, userProfile } = this.props;
     fetchItems(itemsCurrentPage);
     this.handleNext = this.handleNext.bind(this);
     this.handlePrevious = this.handlePrevious.bind(this);
@@ -44,14 +45,14 @@ class App extends Component {
       itemsErrored,
       itemsLastPage,
       itemsRequested,
+      userProfile
     } = this.props;
     let label;
     if (itemsRequested) label = <Label bsStyle="warning"> Requested </Label>;
     else if (itemsErrored) label = <Label bsStyle="danger"> Error fetching data </Label>
     else label = <Label bsStyle="success"> Updated </Label>
 
-
-    let clusters = itemsPaged.map( item => Object.assign(item, {
+    let clusters = itemsPaged.map(item => Object.assign(item, {
       title: item.name,
       "properties": { "nodes": item['nodes'] },
       "expandedContentText":
@@ -61,7 +62,7 @@ class App extends Component {
       }}))
     return (
       <div>
-        <Header></Header>
+        <Header username={userProfile.firstName}></Header>
         {label}
         <ClusterList clusters={clusters}></ClusterList>
         <Pager
@@ -84,8 +85,8 @@ App.propTypes = {
   itemsErrored: PropTypes.bool.isRequired,
   itemsLastPage: PropTypes.number.isRequired,
   itemsRequested: PropTypes.bool.isRequired,
+  userProfile: PropTypes.object.isRequired,
 };
-
 
 const mapStateToProps = state => ({
   itemsCurrentPage: fromItems.getItemsCurrentPage(state),
@@ -93,6 +94,7 @@ const mapStateToProps = state => ({
   itemsLastPage: fromItems.getItemsLastPage(state),
   itemsPaged: fromItems.getItemsPaged(state),
   itemsRequested: fromItems.getItemsRequested(state),
+  userProfile: fromUsers.getUserProfile(state),
 });
 
 const mapDispatchToProps = {
