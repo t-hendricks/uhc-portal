@@ -14,9 +14,11 @@ limitations under the License.
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
 import items from './ducks/items';
+import userProfile from './ducks/users';
 
 const reducers = combineReducers({
   items,
+  userProfile
 });
 const middlewares = [reduxThunk];
 const enhancer = compose(

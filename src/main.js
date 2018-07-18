@@ -18,6 +18,31 @@ import App from './App';
 import { Provider } from 'react-redux'
 import registerServiceWorker from './registerServiceWorker';
 import store from './store';
+import * as fromUsers from './ducks/users';
+import * as fromItems from './ducks/items';
+
+export const keycloak = Keycloak()
+keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success(authenticated => {
+  if (keycloak.authenticated) {
+    sessionStorage.setItem('kctoken', keycloak.token);
+
+    keycloak.loadUserProfile()
+      .success(result => {
+        store.dispatch(fromUsers.userInfoResponse(result))
+      })
+      .error(err => {
+        console.log(err) // should probably redirect to an error page
+      })
+
+    setInterval(() => {
+      keycloak.updateToken(10)
+        .success(() => sessionStorage.setItem('kctoken', keycloak.token))
+        .error(() => keycloak.logout());
+    }, 10000);
+  } else {
+      keycloak.login(); // comment this out if you dont care about logging in
+  }
+});
 
 ReactDOM.render(
   <Provider store={store}>
