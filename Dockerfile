@@ -14,30 +14,14 @@
 # limitations under the License.
 #
 
-# The name and version of the image repository:
-namespace:=openshift-unified-hybrid-cloud
-repository:=portal
-version:=latest
+FROM centos:7
 
-# The tag that will be assigned to the image:
-tag:=$(namespace)/$(repository):$(version)
+RUN \
+    yum install -y httpd && \
+    yum clean all
 
-# The name of the tar file for the image:
-tar:=$(shell echo $(tag) | tr /: __).tar
+COPY build/ /var/www/html/
 
-.PHONY: app
-app:
-	yarn install
-	yarn build
+EXPOSE 8000
 
-.PHONY: image
-image: app
-	docker build -t $(tag) .
-
-.PHONY: tar
-tar: image
-	docker save -o $(tar) $(tag)
-
-.PHONY: clean
-clean:
-	rm -rf build node_modules
+ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
