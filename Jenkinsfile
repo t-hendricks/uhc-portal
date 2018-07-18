@@ -56,9 +56,9 @@ pipeline {
             oc ${OC_ARGS} new-project unified-hybrid-cloud || oc ${OC_ARGS} project unified-hybrid-cloud || true
             oc ${OC_ARGS} process \
               --filename=template.yml \
-              --param=NAMESPACE=dedicated-portal \
+              --param=NAMESPACE=unified-hybrid-cloud \
               --param=VERSION=${GIT_COMMIT} \
-              --param=DOMAIN=${SSH_HOST} \
+              --param=DOMAIN=cloud.openshift.private \
             | \
             oc ${OC_ARGS} apply \
               --filename=-
