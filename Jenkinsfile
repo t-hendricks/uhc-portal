@@ -53,7 +53,7 @@ pipeline {
             ssh ${SSH_ARGS} ${SSH_TARGET} docker load -i *.tar
 
             # Deploy the application:
-            oc ${OC_ARGS} new-project unified-hybrid-cloud || oc project unified-hybrid-cloud || true
+            oc ${OC_ARGS} new-project unified-hybrid-cloud || oc ${OC_ARGS} project unified-hybrid-cloud || true
             oc ${OC_ARGS} process \
               --filename=template.yml \
               --param=NAMESPACE=dedicated-portal \
