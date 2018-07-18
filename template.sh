@@ -20,7 +20,7 @@
 # the application.
 
 # Create the namespace:
-oc new-project unified-hybrid-cloud || true
+oc new-project unified-hybrid-cloud || oc project unified-hybrid-cloud || true
 
 # Use the template to create the objects:
 oc process \
