@@ -23,6 +23,7 @@ import * as fromClusterDetails from './ducks/clusterdetails';
 import { Header } from './Header.js';
 import { ClusterList } from './ClusterList.js';
 import { ClusterDetails } from './ClusterDetails'
+import { CreateClusterModal } from './CreateClusterModal.js';
 import { Pager, Label} from 'patternfly-react'
 import PropTypes from 'prop-types'
 import "patternfly/dist/css/patternfly.css";
@@ -70,10 +71,11 @@ class App extends Component {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
       "compoundExpandText": {
         "nodes": "Text describing Item 1s nodes"
-    }}))
+      }}))
     return (
       <div>
         {label}
+        <CreateClusterModal show={true} /*{showCreateCluster}*/ />
         <ClusterList clusters={clusters} showClusterDetails={this.props.showClusterDetails}></ClusterList>
         <Pager
           messages={{nextPage: 'The Next Page', previousPage: 'The Previous Page'}}
