@@ -17,12 +17,18 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import PortalRouter from './portalRouter';
 import { Provider } from 'react-redux'
 import registerServiceWorker from './registerServiceWorker';
-import store from './store';
+import { Route, Switch } from 'react-router' // react-router v4
+import { ConnectedRouter } from 'connected-react-router'
 import * as fromUsers from './ducks/users';
-import * as fromItems from './ducks/items';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import reduxThunk from 'redux-thunk';
+import { createBrowserHistory } from 'history'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
+import { AppContainer } from 'react-hot-loader'
+import reducers from './reducers'
 
 export const keycloak = Keycloak()
 keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success(authenticated => {
@@ -47,11 +53,45 @@ keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success(auth
   }
 });
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App/>
-  </Provider>,
-  document.getElementById('root')
+
+const history = createBrowserHistory()
+
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(
+  connectRouter(history)(reducers),
+  composeEnhancer(
+    applyMiddleware(
+      routerMiddleware(history), reduxThunk
+    ),
+  ),
 )
+
+const render = () => {
+  ReactDOM.render(
+    <AppContainer>
+      <Provider store={store}>
+        <PortalRouter history={history} />
+      </Provider>
+    </AppContainer>,
+    document.getElementById('root')
+  )
+}
+
+render()
+
+// Hot reloading
+if (module.hot) {
+  // Reload components
+  module.hot.accept('./App', () => {
+    console.log("App hot reload") // never seen this happening 
+    render()
+  })
+
+  // Reload reducers
+  module.hot.accept('./reducers', () => {
+    console.log("reducers hot reload") // never seen this happening 
+    store.replaceReducer(connectRouter(history)(reducers))
+  })
+}
 
 registerServiceWorker();
