@@ -19,6 +19,10 @@ import PropTypes from 'prop-types'
 import { Button, Col, ControlLabel, HelpBlock, Icon, Form, FormGroup, Modal } from 'patternfly-react'
 
 class CreateClusterModal extends Component {
+  static propTypes = {
+    show: PropTypes.bool.isRequired,
+  }
+
   render() {
     var props = this.props;
     return (
