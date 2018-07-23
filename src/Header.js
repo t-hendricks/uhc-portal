@@ -20,14 +20,17 @@ import "patternfly/dist/css/patternfly.css";
 import "patternfly/dist/css/patternfly-additions.css";
 import logo from "./logo.svg"
 import PropTypes from 'prop-types'
-export const keycloak = Keycloak()
+import { connect } from 'react-redux';
+import * as fromUsers from './ducks/users';
 
+export const keycloak = Keycloak()
 class Header extends Component {
   logout() {
     keycloak.logout()
   }
 
   render() {
+    const { userProfile } = this.props;
     return (
         <Masthead
           titleImg={logo}
@@ -44,7 +47,7 @@ class Header extends Component {
               title={
                 <span>
                   <span title="Help" className="pficon pficon-user" />
-                  <span className="dropdown-title">{this.props.username}</span>
+                  <span className="dropdown-title">{userProfile.userProfile.firstName}</span>
                 </span>
               }
             >
@@ -58,7 +61,11 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  username: PropTypes.string
+  userProfile: PropTypes.object.isRequired
 }
 
-export { Header };
+const mapStateToProps = state => ({
+  userProfile: fromUsers.getUserProfile(state),
+});
+
+export default connect(mapStateToProps)(Header);

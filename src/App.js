@@ -62,7 +62,7 @@ class App extends Component {
     customers.forEach(function (customer) {
       clusters = clusters.concat(customer.owned_clusters)
     }) 
-    
+
     // Add fake data. I hope we can remove this soon...
     clusters = clusters.map(name => Object.assign({}, {
       title: name,
@@ -72,10 +72,8 @@ class App extends Component {
       "compoundExpandText": {
         "nodes": "Text describing Item 1s nodes"
     }}))
-
     return (
       <div>
-        <Header username={userProfile.firstName}></Header>
         {label}
         <ClusterList clusters={clusters}></ClusterList>
         <Pager
