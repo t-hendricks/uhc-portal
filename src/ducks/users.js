@@ -43,4 +43,6 @@ const userProfile = (state = {}, action) => {
   }
 };
 
-export default combineReducers({userProfile})
+export default combineReducers({
+  userProfile
+})
