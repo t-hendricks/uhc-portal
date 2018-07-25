@@ -18,13 +18,9 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { ListView, Button, Row, Col } from 'patternfly-react'
 import PropTypes from 'prop-types'
+import ClusterDetails from './ClusterDetails'
+import * as fromClusterDetails from './ducks/clusterdetails';
 import { CSSTransition, TransitionGroup} from 'react-transition-group'; 
-
-export const renderActions = () => (
-  <div>
-    <Button>Details</Button>
-  </div>
-);
 
 export const renderAdditionalInfoItems = itemProperties =>
   itemProperties &&
@@ -49,23 +45,33 @@ class ClusterList extends Component {
     clusters: PropTypes.array.isRequired,
   }
 
+  componentDidMount = () => {
+    this.showDetails = this.showDetails.bind(this);
+  }
+
   shouldComponentUpdate(nextProps) {
     return (nextProps.clusters.length !== 0); 
   }
-  
+
+  showDetails(clusterID) {
+    return () => {
+      this.props.showClusterDetails(clusterID);
+    }
+  }
+
   render() {
     return (
       <div>
         <ListView>
         <TransitionGroup>
-          {this.props.clusters.map(({ actions, properties, title, description, expandedContentText, hideCloseIcon }, index) => (
+          {this.props.clusters.map(({ actions, properties, clusterID, title, description, expandedContentText, hideCloseIcon }, index) => (
             <CSSTransition
               key={title}
               timeout={500}
               classNames="list"
               unmountOnExit>
               <ListView.Item
-                actions={renderActions(actions)}
+                actions={<Button onClick={this.showDetails(clusterID)}>Details</Button>}
                 checkboxInput={<input type="checkbox" />}
                 leftContent={<ListView.Icon name="cluster" type="pf" />}
                 additionalInfo={renderAdditionalInfoItems(properties)}
@@ -82,7 +88,7 @@ class ClusterList extends Component {
         </TransitionGroup>
           
         </ListView>
-
+        <ClusterDetails details={{}} />
       </div>
     );
   }

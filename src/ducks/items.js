@@ -213,5 +213,5 @@ export default combineReducers({
   ids,
   lastPage,
   pages,
-  requested,
+  requested
 });

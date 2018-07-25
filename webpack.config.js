@@ -35,7 +35,7 @@ module.exports = {
     path: outDir,
     filename: 'bundle.js'
   },
-
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -126,6 +126,7 @@ module.exports = {
           '/api/customers_mgmt',
         ],
         changeOrigin: true,
+        secure: false,
         target: 'https://customers-service.127.0.0.1.nip.io/',
       }
     ]  }

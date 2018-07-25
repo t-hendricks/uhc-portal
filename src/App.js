@@ -19,8 +19,10 @@ import { connect } from 'react-redux';
 import './App.css';
 import * as fromItems from './ducks/items';
 import * as fromUsers from './ducks/users';
+import * as fromClusterDetails from './ducks/clusterdetails';
 import { Header } from './Header.js';
 import { ClusterList } from './ClusterList.js';
+import { ClusterDetails } from './ClusterDetails'
 import { Pager, Label} from 'patternfly-react'
 import PropTypes from 'prop-types'
 import "patternfly/dist/css/patternfly.css";
@@ -48,25 +50,22 @@ class App extends Component {
       itemsErrored,
       itemsLastPage,
       itemsRequested,
-      userProfile
+      userProfile,
+      fetchClusterDetails,
+      clusterDetails,
     } = this.props;
     let label;
     if (itemsRequested) label = <Label bsStyle="warning"> Requested </Label>;
     else if (itemsErrored) label = <Label bsStyle="danger"> Error fetching data </Label>
     else label = <Label bsStyle="success"> Updated </Label>
 
-    let customers = Object.values(itemsPaged)
-    let clusters = []
-
-    // join all clusters from all customers
-    customers.forEach(function (customer) {
-      clusters = clusters.concat(customer.owned_clusters)
-    }) 
+    let clusters = Object.values(itemsPaged)
 
     // Add fake data. I hope we can remove this soon...
-    clusters = clusters.map(name => Object.assign({}, {
-      title: name,
-      "properties": { "nodes": 5 },
+    clusters = clusters.map(item => Object.assign({}, {
+      clusterID: item.id,
+      title: item.name,
+      "properties": { "nodes": item.nodes.total },
       "expandedContentText":
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
       "compoundExpandText": {
@@ -75,7 +74,7 @@ class App extends Component {
     return (
       <div>
         {label}
-        <ClusterList clusters={clusters}></ClusterList>
+        <ClusterList clusters={clusters} showClusterDetails={this.props.showClusterDetails}></ClusterList>
         <Pager
           messages={{nextPage: 'The Next Page', previousPage: 'The Previous Page'}}
           onNextPage={this.handleNext}
@@ -88,6 +87,7 @@ class App extends Component {
 
 App.propTypes = {
   fetchItems: PropTypes.func.isRequired,
+  fetchClusterDetails: PropTypes.func.isRequired,
   itemsPaged: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
@@ -97,6 +97,8 @@ App.propTypes = {
   itemsLastPage: PropTypes.number.isRequired,
   itemsRequested: PropTypes.bool.isRequired,
   userProfile: PropTypes.object.isRequired,
+  clusterDetails: PropTypes.object.isRequired,
+
 };
 
 const mapStateToProps = state => ({
@@ -106,10 +108,13 @@ const mapStateToProps = state => ({
   itemsPaged: fromItems.getItemsPaged(state),
   itemsRequested: fromItems.getItemsRequested(state),
   userProfile: fromUsers.getUserProfile(state),
+  clusterDetails: fromClusterDetails.getClusterDetails(state)
 });
 
 const mapDispatchToProps = {
   fetchItems: fromItems.fetchItems,
+  fetchClusterDetails: fromClusterDetails.fetchClusterDetails,
+  showClusterDetails: fromClusterDetails.showClusterDetails
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
