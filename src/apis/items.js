@@ -15,10 +15,14 @@ limitations under the License.
 */
 
 /* eslint-disable-next-line */
+
 export const fetchItems = (params) => {
   console.log(params)
+  const options = {
+    headers: { 'Authorization': "Bearer " + sessionStorage.getItem('kctoken') }
+  }
   const createPromise = response => new Promise((resolve, reject) => {
-    return fetch('/api/customers_mgmt/v1/customers?page='+params.page+'&size='+params.limit)
+    return fetch('/api/clusters_mgmt/v1/clusters?page='+params.page+'&size='+params.limit, options)
       .then(response => {  
         if (response.ok) {
           return response;
