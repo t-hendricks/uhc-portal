@@ -115,9 +115,7 @@ module.exports = {
     port: 8001,
     proxy: [{
       context: ['/api',],
-      target: 'http://localhost:8000/api/customers_mgmt/v1/',
-      pathRewrite: {'^/api' : ''},
-      changeOrigin: true,
+      target: 'http://localhost:8000/',
     }]
   }
 }

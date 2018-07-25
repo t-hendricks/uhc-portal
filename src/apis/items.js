@@ -18,7 +18,7 @@ limitations under the License.
 export const fetchItems = (params) => {
   console.log(params)
   const createPromise = response => new Promise((resolve, reject) => {
-    return fetch('/api/customers?page='+params.page+'&size='+params.limit)
+    return fetch('/api/customers_mgmt/v1/customers?page='+params.page+'&size='+params.limit)
       .then(response => {  
         if (response.ok) {
           return response;
