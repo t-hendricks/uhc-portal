@@ -59,18 +59,12 @@ class App extends Component {
     else if (itemsErrored) label = <Label bsStyle="danger"> Error fetching data </Label>
     else label = <Label bsStyle="success"> Updated </Label>
 
-    let customers = Object.values(itemsPaged)
-    let clusters = []
-
-    // join all clusters from all customers
-    customers.forEach(function (customer) {
-      clusters = clusters.concat(customer.owned_clusters)
-    }) 
+    let clusters = Object.values(itemsPaged)
 
     // Add fake data. I hope we can remove this soon...
-    clusters = clusters.map(name => Object.assign({}, {
+    clusters = clusters.map(item => Object.assign({}, {
       clusterID: item.id,
-      title: name,
+      title: item.name,
       "properties": { "nodes": item.nodes.total },
       "expandedContentText":
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
