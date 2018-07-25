@@ -113,9 +113,20 @@ module.exports = {
     hot: true,
     inline: true,
     port: 8001,
-    proxy: [{
-      context: ['/api',],
-      target: 'http://localhost:8000/',
-    }]
-  }
+    proxy: [
+      {
+        context: [
+          '/api/clusters_mgmt',
+        ],
+        changeOrigin: true,
+        target: 'http://clusters-service.127.0.0.1.nip.io/',
+      },
+      {
+        context: [
+          '/api/customers_mgmt',
+        ],
+        changeOrigin: true,
+        target: 'https://customers-service.127.0.0.1.nip.io/',
+      }
+    ]  }
 }
