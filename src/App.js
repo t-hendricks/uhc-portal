@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Route, Link } from 'react-router-dom'
 import './App.css';
 import * as fromItems from './ducks/items';
 import * as fromUsers from './ducks/users';
@@ -24,7 +25,7 @@ import { Header } from './Header.js';
 import { ClusterList } from './ClusterList.js';
 import { ClusterDetails } from './ClusterDetails'
 import { CreateClusterModal } from './CreateClusterModal.js';
-import { Pager, Label} from 'patternfly-react'
+import { Pager, Label, Button } from 'patternfly-react'
 import PropTypes from 'prop-types'
 import "patternfly/dist/css/patternfly.css";
 import "patternfly/dist/css/patternfly-additions.css";
@@ -75,13 +76,23 @@ class App extends Component {
     return (
       <div>
         {label}
-        <CreateClusterModal show={true} /*{showCreateCluster}*/ />
+
         <ClusterList clusters={clusters} showClusterDetails={this.props.showClusterDetails}></ClusterList>
         <Pager
           messages={{nextPage: 'The Next Page', previousPage: 'The Previous Page'}}
           onNextPage={this.handleNext}
           onPreviousPage={this.handlePrevious}
         />
+
+        <div>
+          <Link to="/clusters/create">
+            <Button>Create cluster</Button>
+          </Link>
+          <Route path="/clusters/create" render={() => (
+            <CreateClusterModal cancelTo="/clusters" createTo="/clusters"/>
+          )}>
+          </Route>
+        </div>
       </div>
     );
   }

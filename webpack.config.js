@@ -33,7 +33,8 @@ module.exports = {
 
   output: {
     path: outDir,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   devtool: 'source-map',
   module: {
@@ -108,6 +109,7 @@ module.exports = {
   },
 
   devServer: {
+    historyApiFallback: true,
     contentBase: outDir,
     outputPath: outDir,
     hot: true,

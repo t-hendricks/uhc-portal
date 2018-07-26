@@ -2,17 +2,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ConnectedRouter } from 'connected-react-router'
-import { Route, Switch } from 'react-router'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import App from './App'
 import Header from './Header'
-
+import { CreateClusterModal } from './CreateClusterModal.js';
 
 const PortalRouter = ({ history }) => {
   return (
     <div>
       <Header/>
       <ConnectedRouter history={history}>
-        <Route exact path="/" component={App}/>
+        <Switch>
+          <Redirect from="/" exact to="/clusters"/>
+          <Route path="/clusters" component={App}/>
+        </Switch>
       </ConnectedRouter>
     </div>
   )

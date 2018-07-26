@@ -16,21 +16,24 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { Button, Col, ControlLabel, DropdownButton, HelpBlock, Icon, Form, FormControl, FormGroup, MenuItem, Modal } from 'patternfly-react'
 
 class CreateClusterModal extends Component {
   static propTypes = {
-    show: PropTypes.bool.isRequired,
+    cancelTo: PropTypes.string.isRequired,
+    createTo: PropTypes.string.isRequired,
   }
 
   render() {
-    var props = this.props;
     return (
-      <Modal show={props.show}>
+      <Modal show={true}>
         <Modal.Header>
-          <button className="close" onClick={() => alert('TODO close unimplemented')} aria-hidden="true" aria-label="Close">
-            <Icon type="pf" name="close" />
-          </button>
+          <Link to={this.props.cancelTo}>
+            <button className="close" aria-hidden="true" aria-label="Close">
+              <Icon type="pf" name="close" />
+            </button>
+          </Link>
           <Modal.Title>Create Cluster</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -96,9 +99,11 @@ class CreateClusterModal extends Component {
           <Button bsStyle="primary" onClick={() => alert('TODO Create unimplemented')}>
             Create
           </Button>
-          <Button bsStyle="default"  onClick={() => alert('TODO Cancel unimplemented')}>
-            Cancel
-          </Button>
+          <Link to={this.props.cancelTo}>
+            <Button bsStyle="default">
+              Cancel
+            </Button>
+          </Link>
         </Modal.Footer>
       </Modal>
     );
