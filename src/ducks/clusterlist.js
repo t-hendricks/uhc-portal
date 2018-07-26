@@ -16,106 +16,105 @@ limitations under the License.
 
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
-import * as fromItems from '../apis/items';
+import * as fromClusterList from '../apis/clusterList';
 
 const PAGE_SIZE = 5;
 
 // SELECTORS
-export const getItemsRequested = state => state.items.requested;
+export const getClustersRequested = state => state.clusterList.requested;
 
-export const getItemsErrored = state => state.items.errored;
+export const getClustersErrored = state => state.clusterList.errored;
 
-export const getItem = (state, id) => state.items.byId[id];
+export const getCluster = (state, id) => state.clusterList.byId[id];
 
-const getItemsById = state => state.items.byId;
+const getClustersById = state => state.clusterList.byId;
 
-const getItemsIds = state => state.items.ids;
+const getClusterIds = state => state.clusterList.ids;
 
-export const getItems = createSelector(
-  [getItemsById, getItemsIds],
+export const getClusters = createSelector(
+  [getClustersById, getClusterIds],
   (pById, pIds) => pIds.map(o => pById[o]),
 );
 
-export const getItemsCurrentPage = state => state.items.currentPage;
+export const getClustersCurrentPage = state => state.clusterList.currentPage;
 
-export const getItemsLastPage = state => state.items.lastPage;
+export const getClustersLastPage = state => state.clusterList.lastPage;
 
-const getIsPageFetched = (state, page) => state.items.pages[page] !== undefined;
+const getIsPageFetched = (state, page) => state.clusterList.pages[page] !== undefined;
 
-const getItemsIdsPaged = (state) => {
-  const page = state.items.currentPage;
-  const pageIds = state.items.pages[page];
+const getClustersIdsPaged = (state) => {
+  const page = state.clusterList.currentPage;
+  const pageIds = state.clusterList.pages[page];
   if (pageIds === undefined) {
     return [];
   }
   return pageIds;
 };
 
-export const getItemsPaged = createSelector(
-  [getItemsById, getItemsIdsPaged],
+export const getClustersPaged = createSelector(
+  [getClustersById, getClustersIdsPaged],
   (pById, pIds) => pIds.map(o => pById[o]),
 );
 
 // ACTIONS
-const FETCH_ITEMS_REQUEST = 'FETCH_ITEMS_REQUEST';
+const FETCH_CLUSTERS_REQUEST = 'FETCH_CLUSTERS_REQUEST';
 
-const FETCH_ITEMS_RESPONSE = 'FETCH_ITEMS_RESPONSE';
+const FETCH_CLUSTERS_RESPONSE = 'FETCH_CLUSTERS_RESPONSE';
 
-const SET_ITEMS_CURRENT_PAGE = 'SET_ITEMS_CURRENT_PAGE';
+const SET_CLUSTERS_CURRENT_PAGE = 'SET_CLUSTERS_CURRENT_PAGE';
 
-const fetchItemsRequest = () => ({
-  type: FETCH_ITEMS_REQUEST,
+const fetchClustersRequest = () => ({
+  type: FETCH_CLUSTERS_REQUEST,
 });
 
-const fetchItemsResponse = (payload, error) => {
+const fetchClustersResponse = (payload, error) => {
   if (error) {
     return {
       error: true,
       payload,
-      type: FETCH_ITEMS_RESPONSE,
+      type: FETCH_CLUSTERS_RESPONSE,
     };
   }
   return {
     payload,
-    type: FETCH_ITEMS_RESPONSE,
+    type: FETCH_CLUSTERS_RESPONSE,
   };
 };
 
-const setItemsCurrentPage = page => ({
+const setClustersCurrentPage = page => ({
   payload: page,
-  type: SET_ITEMS_CURRENT_PAGE,
+  type: SET_CLUSTERS_CURRENT_PAGE,
 });
 
-export const fetchItems = page => (dispatch, getState) => {
+export const fetchClusters = page => (dispatch, getState) => {
   const state = getState();
   const offset = page * PAGE_SIZE;
-  dispatch(setItemsCurrentPage(page));
+  dispatch(setClustersCurrentPage(page));
   if (getIsPageFetched(state, page)) {
     return;
   }
-  dispatch(fetchItemsRequest());
-  fromItems.fetchItems({
+  dispatch(fetchClustersRequest());
+  fromClusterList.fetchClusters({
     limit: PAGE_SIZE,
     offset,
     page: page
   })
     .then((response) => {
       const pageCount = Math.ceil(response.count / PAGE_SIZE);
-      dispatch(fetchItemsResponse({
+      dispatch(fetchClustersResponse({
         items: response.items,
         page,
         pageCount,
       }));
-    })
-    .catch(() => dispatch(fetchItemsResponse('500', true)));
+    }).catch(() => dispatch(fetchClustersResponse('500', true)));
 };
 
 // REDUCER
 const requested = (state = false, action) => {
   switch (action.type) {
-    case FETCH_ITEMS_REQUEST:
+    case FETCH_CLUSTERS_REQUEST:
       return true;
-    case FETCH_ITEMS_RESPONSE:
+    case FETCH_CLUSTERS_RESPONSE:
       return false;
     default:
       return state;
@@ -125,13 +124,13 @@ const requested = (state = false, action) => {
 const byId = (state = {}, action) => {
   const entry = {}; // OUTSIDE BECAUSE OF LINTER
   switch (action.type) {
-    case FETCH_ITEMS_RESPONSE:
+    case FETCH_CLUSTERS_RESPONSE:
       if (action.error) {
         return state;
       }
       for (let i = 0; i < action.payload.items.length; i += 1) {
-        const item = action.payload.items[i];
-        entry[item.id] = item;
+        const cluster = action.payload.items[i];
+        entry[cluster.id] = cluster;
       }
       return {
         ...state,
@@ -144,7 +143,7 @@ const byId = (state = {}, action) => {
 
 const ids = (state = [], action) => {
   switch (action.type) {
-    case FETCH_ITEMS_RESPONSE:
+    case FETCH_CLUSTERS_RESPONSE:
       if (action.error) {
         return state;
       }
@@ -159,9 +158,9 @@ const ids = (state = [], action) => {
 
 const errored = (state = false, action) => {
   switch (action.type) {
-    case FETCH_ITEMS_REQUEST:
+    case FETCH_CLUSTERS_REQUEST:
       return false;
-    case FETCH_ITEMS_RESPONSE:
+    case FETCH_CLUSTERS_RESPONSE:
       return action.error === true;
     default:
       return state;
@@ -170,7 +169,7 @@ const errored = (state = false, action) => {
 
 const currentPage = (state = 0, action) => {
   switch (action.type) {
-    case SET_ITEMS_CURRENT_PAGE:
+    case SET_CLUSTERS_CURRENT_PAGE:
       return action.payload;
     default:
       return state;
@@ -179,7 +178,7 @@ const currentPage = (state = 0, action) => {
 
 const lastPage = (state = 0, action) => {
   switch (action.type) {
-    case FETCH_ITEMS_RESPONSE:
+    case FETCH_CLUSTERS_RESPONSE:
       if (action.error) {
         return state;
       }
@@ -192,11 +191,11 @@ const lastPage = (state = 0, action) => {
 const pages = (state = {}, action) => {
   let pageIds;
   switch (action.type) {
-    case FETCH_ITEMS_RESPONSE:
+    case FETCH_CLUSTERS_RESPONSE:
       if (action.error) {
         return state;
       }
-      pageIds = action.payload.items.map(item => item.id);
+      pageIds = action.payload.items.map(cluster => cluster.id);
       return {
         ...state,
         [action.payload.page]: pageIds,

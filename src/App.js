@@ -18,7 +18,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom'
 import './App.css';
-import * as fromItems from './ducks/items';
+import * as fromClusterList from './ducks/clusterlist';
 import * as fromUsers from './ducks/users';
 import * as fromClusterDetails from './ducks/clusterdetails';
 import { Header } from './Header.js';
@@ -32,42 +32,42 @@ import "patternfly/dist/css/patternfly-additions.css";
 
 class App extends Component {
   componentDidMount() {
-    const { fetchItems, itemsCurrentPage, userProfile } = this.props;
-    fetchItems(itemsCurrentPage);
+    const { fetchClusters, clustersCurrentPage, userProfile } = this.props;
+    fetchClusters(clustersCurrentPage);
     this.handleNext = this.handleNext.bind(this);
     this.handlePrevious = this.handlePrevious.bind(this);
   }
   handleNext() {
-    const { fetchItems, itemsCurrentPage } = this.props;
-    fetchItems(itemsCurrentPage + 1);
+    const { fetchClusters, clustersCurrentPage } = this.props;
+    fetchClusters(clustersCurrentPage + 1);
   }
   handlePrevious() {
-    const { fetchItems, itemsCurrentPage } = this.props;
-    fetchItems(itemsCurrentPage - 1);
+    const { fetchClusters, clustersCurrentPage } = this.props;
+    fetchClusters(clustersCurrentPage - 1);
   }
   render() {
     const {
-      itemsPaged,
-      itemsCurrentPage,
-      itemsErrored,
-      itemsLastPage,
-      itemsRequested,
+      clustersPaged,
+      clustersCurrentPage,
+      clustersErrored,
+      clustersLastPage,
+      clustersRequested,
       userProfile,
       fetchClusterDetails,
       clusterDetails,
     } = this.props;
     let label;
-    if (itemsRequested) label = <Label bsStyle="warning"> Requested </Label>;
-    else if (itemsErrored) label = <Label bsStyle="danger"> Error fetching data </Label>
+    if (clustersRequested) label = <Label bsStyle="warning"> Requested </Label>;
+    else if (clustersErrored) label = <Label bsStyle="danger"> Error fetching data </Label>
     else label = <Label bsStyle="success"> Updated </Label>
 
-    let clusters = Object.values(itemsPaged)
+    let clusters = Object.values(clustersPaged)
 
     // Add fake data. I hope we can remove this soon...
-    clusters = clusters.map(item => Object.assign({}, {
-      clusterID: item.id,
-      title: item.name,
-      "properties": { "nodes": item.nodes.total },
+    clusters = clusters.map(cluster => Object.assign({}, {
+      clusterID: cluster.id,
+      title: cluster.name,
+      "properties": { "nodes": cluster.nodes.total },
       "expandedContentText":
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
       "compoundExpandText": {
@@ -99,33 +99,33 @@ class App extends Component {
 }
 
 App.propTypes = {
-  fetchItems: PropTypes.func.isRequired,
+  fetchClusters: PropTypes.func.isRequired,
   fetchClusterDetails: PropTypes.func.isRequired,
-  itemsPaged: PropTypes.arrayOf(PropTypes.shape({
+  clustersPaged: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
   })).isRequired,
-  itemsCurrentPage: PropTypes.number.isRequired,
-  itemsErrored: PropTypes.bool.isRequired,
-  itemsLastPage: PropTypes.number.isRequired,
-  itemsRequested: PropTypes.bool.isRequired,
+  clustersCurrentPage: PropTypes.number.isRequired,
+  clustersErrored: PropTypes.bool.isRequired,
+  clustersLastPage: PropTypes.number.isRequired,
+  clustersRequested: PropTypes.bool.isRequired,
   userProfile: PropTypes.object.isRequired,
   clusterDetails: PropTypes.object.isRequired,
 
 };
 
 const mapStateToProps = state => ({
-  itemsCurrentPage: fromItems.getItemsCurrentPage(state),
-  itemsErrored: fromItems.getItemsErrored(state),
-  itemsLastPage: fromItems.getItemsLastPage(state),
-  itemsPaged: fromItems.getItemsPaged(state),
-  itemsRequested: fromItems.getItemsRequested(state),
+  clustersCurrentPage: fromClusterList.getClustersCurrentPage(state),
+  clustersErrored: fromClusterList.getClustersErrored(state),
+  clustersLastPage: fromClusterList.getClustersLastPage(state),
+  clustersPaged: fromClusterList.getClustersPaged(state),
+  clustersRequested: fromClusterList.getClustersRequested(state),
   userProfile: fromUsers.getUserProfile(state),
   clusterDetails: fromClusterDetails.getClusterDetails(state)
 });
 
 const mapDispatchToProps = {
-  fetchItems: fromItems.fetchItems,
+  fetchClusters: fromClusterList.fetchClusters,
   fetchClusterDetails: fromClusterDetails.fetchClusterDetails,
   showClusterDetails: fromClusterDetails.showClusterDetails
 };
