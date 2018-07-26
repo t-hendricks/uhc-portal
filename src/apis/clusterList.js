@@ -16,7 +16,7 @@ limitations under the License.
 
 /* eslint-disable-next-line */
 
-export const fetchItems = (params) => {
+export const fetchClusters = (params) => {
   console.log(params)
   const options = {
     headers: { 'Authorization': "Bearer " + sessionStorage.getItem('kctoken') }

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { combineReducers } from 'redux';
-import * as fromClusters from '../apis/clusters';
+import * as fromClusterDetails from '../apis/clusterDetails';
 
 
 export const getClusterDetails = state => state.clusterDetails.clusterDetails;
@@ -46,7 +46,7 @@ const clusterDetailsShow = (payload) => {
 // ACTIONS
 export const fetchClusterDetails = clusterID => (dispatch, getState) => {
   const state = getState();
-  fromClusters.fetchClusterDetails({clusterID: clusterID}).then((response) => {
+  fromClusterDetails.fetchClusterDetails({clusterID: clusterID}).then((response) => {
       response.json().then((value) => {
       var ret = {}
       ret[clusterID] = value;
