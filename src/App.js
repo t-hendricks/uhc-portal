@@ -11,11 +11,12 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License. 
+limitations under the License.
 */
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Route, Link } from 'react-router-dom'
 import './App.css';
 import * as fromItems from './ducks/items';
 import * as fromUsers from './ducks/users';
@@ -23,7 +24,8 @@ import * as fromClusterDetails from './ducks/clusterdetails';
 import { Header } from './Header.js';
 import { ClusterList } from './ClusterList.js';
 import { ClusterDetails } from './ClusterDetails'
-import { Pager, Label} from 'patternfly-react'
+import { CreateClusterModal } from './CreateClusterModal.js';
+import { Pager, Label, Button } from 'patternfly-react'
 import PropTypes from 'prop-types'
 import "patternfly/dist/css/patternfly.css";
 import "patternfly/dist/css/patternfly-additions.css";
@@ -70,16 +72,27 @@ class App extends Component {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
       "compoundExpandText": {
         "nodes": "Text describing Item 1s nodes"
-    }}))
+      }}))
     return (
       <div>
         {label}
+
         <ClusterList clusters={clusters} showClusterDetails={this.props.showClusterDetails}></ClusterList>
         <Pager
           messages={{nextPage: 'The Next Page', previousPage: 'The Previous Page'}}
           onNextPage={this.handleNext}
           onPreviousPage={this.handlePrevious}
         />
+
+        <div>
+          <Link to="/clusters/create">
+            <Button>Create cluster</Button>
+          </Link>
+          <Route path="/clusters/create" render={() => (
+            <CreateClusterModal cancelTo="/clusters" createTo="/clusters"/>
+          )}>
+          </Route>
+        </div>
       </div>
     );
   }

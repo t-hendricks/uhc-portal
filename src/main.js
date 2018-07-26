@@ -20,8 +20,6 @@ import './index.css';
 import PortalRouter from './portalRouter';
 import { Provider } from 'react-redux'
 import registerServiceWorker from './registerServiceWorker';
-import { Route, Switch } from 'react-router' // react-router v4
-import { ConnectedRouter } from 'connected-react-router'
 import * as fromUsers from './ducks/users';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
