@@ -29,31 +29,8 @@ import { AppContainer } from 'react-hot-loader'
 import reducers from './reducers'
 
 export const keycloak = Keycloak('/keycloak.json')
-keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success(authenticated => {
-  if (keycloak.authenticated) {
-    sessionStorage.setItem('kctoken', keycloak.token);
-
-    keycloak.loadUserProfile()
-      .success(result => {
-        store.dispatch(fromUsers.userInfoResponse(result))
-      })
-      .error(err => {
-        console.log(err) // should probably redirect to an error page
-      })
-
-    setInterval(() => {
-      keycloak.updateToken(10)
-        .success(() => sessionStorage.setItem('kctoken', keycloak.token))
-        .error(() => keycloak.logout());
-    }, 10000);
-  } else {
-      keycloak.login(); // comment this out if you dont care about logging in
-  }
-});
-
 
 const history = createBrowserHistory()
-
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
   connectRouter(history)(reducers),
@@ -75,8 +52,6 @@ const render = () => {
   )
 }
 
-render()
-
 // Hot reloading
 if (module.hot) {
   // Reload components
@@ -91,5 +66,26 @@ if (module.hot) {
     store.replaceReducer(connectRouter(history)(reducers))
   })
 }
+
+keycloak.init({ onLoad: 'login-required', checkLoginIframeInterval: 1 }).success(authenticated => {
+  if (keycloak.authenticated) {
+    sessionStorage.setItem('kctoken', keycloak.token);
+
+    keycloak.loadUserProfile()
+      .success(result => {
+        store.dispatch(fromUsers.userInfoResponse(result))
+        render()
+      })
+      .error(err => {
+        console.log(err) // should probably redirect to an error page
+      })
+
+    setInterval(() => {
+      keycloak.updateToken(10)
+        .success(() => sessionStorage.setItem('kctoken', keycloak.token))
+        .error(() => keycloak.logout());
+    }, 10000);
+  }
+});
 
 registerServiceWorker();
