@@ -22,8 +22,8 @@ import logo from "./logo.svg"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import * as fromUsers from './ducks/users';
+import { keycloak } from './main';
 
-export const keycloak = Keycloak()
 class Header extends Component {
   logout() {
     keycloak.logout()
