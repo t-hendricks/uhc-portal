@@ -28,7 +28,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { AppContainer } from 'react-hot-loader'
 import reducers from './reducers'
 
-export const keycloak = Keycloak()
+export const keycloak = Keycloak('/keycloak.json')
 keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success(authenticated => {
   if (keycloak.authenticated) {
     sessionStorage.setItem('kctoken', keycloak.token);
