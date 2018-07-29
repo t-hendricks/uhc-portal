@@ -45,18 +45,8 @@ class ClusterList extends Component {
     clusters: PropTypes.array.isRequired,
   }
 
-  componentDidMount = () => {
-    this.showDetails = this.showDetails.bind(this);
-  }
-
   shouldComponentUpdate(nextProps) {
     return (nextProps.clusters.length !== 0); 
-  }
-
-  showDetails(clusterID) {
-    return () => {
-      this.props.showClusterDetails(clusterID);
-    }
   }
 
   render() {
@@ -71,7 +61,7 @@ class ClusterList extends Component {
               classNames="list"
               unmountOnExit>
               <ListView.Item
-                actions={<Button onClick={this.showDetails(clusterID)}>Details</Button>}
+                actions={<Button href={"/cluster/"+clusterID}>Details</Button>}
                 checkboxInput={<input type="checkbox" />}
                 leftContent={<ListView.Icon name="cluster" type="pf" />}
                 additionalInfo={renderAdditionalInfoItems(properties)}
@@ -88,7 +78,6 @@ class ClusterList extends Component {
         </TransitionGroup>
           
         </ListView>
-        <ClusterDetails details={{}} />
       </div>
     );
   }
