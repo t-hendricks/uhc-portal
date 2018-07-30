@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import App from './App'
 import Header from './Header'
 import { CreateClusterModal } from './CreateClusterModal.js';
+import ClusterDetails from './ClusterDetails';
 
 const PortalRouter = ({ history }) => {
   return (
@@ -15,6 +16,7 @@ const PortalRouter = ({ history }) => {
         <Switch>
           <Redirect from="/" exact to="/clusters"/>
           <Route path="/clusters" component={App}/>
+          <Route path="/cluster/:id" component={ClusterDetails}/>
         </Switch>
       </ConnectedRouter>
     </div>

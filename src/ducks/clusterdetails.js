@@ -19,27 +19,15 @@ import * as fromClusterDetails from '../apis/clusterDetails';
 
 
 export const getClusterDetails = state => state.clusterDetails.clusterDetails;
-export const showSelector = state => state.clusterDetails.clusterDetailsShowReducer.visible;
-export const currentCluster = state => state.clusterDetails.clusterDetailsShowReducer.currentCluster;
-
 
 
 // ACTIONS
 const CLUSTER_DETAILS_RESPONSE = 'CLUSTER_DETAILS_RESPONSE';
-const CLUSTER_DETAILS_SHOW = 'CLUSTER_DETAILS_SHOW';
-
 
 export const clusterDetailsResponse = (payload) => {
   return {
     payload,
     type: CLUSTER_DETAILS_RESPONSE,
-  };
-};
-
-const clusterDetailsShow = (payload) => {
-  return {
-    payload,
-    type: CLUSTER_DETAILS_SHOW,
   };
 };
 
@@ -54,16 +42,6 @@ export const fetchClusterDetails = clusterID => (dispatch, getState) => {
     })
 };
 
-export const showClusterDetails = clusterID => (dispatch, getState) => {
-    dispatch(clusterDetailsShow({visible: true, currentCluster: clusterID}));
-};
-
-export const hideClusterDetails = () => (dispatch, getState) => {
-  dispatch(clusterDetailsShow({visible: false}));
-};
-
-
-
 // REDUCERS
 
 const clusterDetails = (state = {}, action) => {
@@ -75,14 +53,5 @@ const clusterDetails = (state = {}, action) => {
   }
 };
 
-const clusterDetailsShowReducer = (state = {visible: false, currentCluster: null}, action) => {
-  switch (action.type) {
-    case CLUSTER_DETAILS_SHOW:
-      return action.payload;
-    default:
-      return state;
-  }
-};
 
-
-export default combineReducers({clusterDetails, clusterDetailsShowReducer})
+export default combineReducers({clusterDetails})
