@@ -41,6 +41,22 @@ parameters:
   description: The DNS domain where the route will be created.
   value: cloud.openshift.com
 
+- name: API_URL
+  description: URL for the API server
+  value: https://api.openshift.com
+
+- name: KEYCLOAK_URL
+  description: URL for the keycloak auth server
+  value: https://developers.stage.redhat.com/auth
+
+- name: KEYCLOAK_REALM
+  description: Keycloak authentication realm
+  value: rhd
+
+- name: KEYCLOAK_RESOURCE
+  description: Keycloak authentication resource
+  value: uhc
+
 objects:
 
 - apiVersion: v1
@@ -90,6 +106,21 @@ objects:
       ErrorLog /dev/stdout
       TransferLog /dev/stdout
 
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: webapp-config
+  data:
+    config.json: |-
+      {
+        "apiGateway": "${API_URL}"
+        "keycloak": {
+            "realm": "${KEYCLOAK_REALM}",
+            "clientId": "${KEYCLOAK_RESOURCE}",
+            "url": "${KEYCLOAK_URL}"
+        }
+      }
+
 - apiVersion: apps/v1beta1
   kind: Deployment
   metadata:
@@ -113,6 +144,9 @@ objects:
             items:
             - key: httpd.conf
               path: conf/httpd.conf
+        - name: webapp-config
+          configMap:
+            name: webapp-config
         containers:
         - name: server
           image: openshift-unified-hybrid-cloud/portal:${VERSION}
@@ -120,6 +154,8 @@ objects:
           volumeMounts:
           - name: config
             mountPath: /etc/httpd
+          - name: webapp-config
+            mountPath: /var/www/html/config
           command:
           - /usr/sbin/httpd
           args:

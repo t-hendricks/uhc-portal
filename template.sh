@@ -28,6 +28,10 @@ oc process \
   --param=NAMESPACE="${TEMPLATE_NAMESPACE:-unified-hybrid-cloud}" \
   --param=VERSION="${TEMPLATE_VERSION:-latest}" \
   --param=DOMAIN="${TEMPLATE_DOMAIN:-cloud.openshift.com}" \
+  --param=API_URL="${TEMPLATE_API_URL:-https://api.openshift.com}" \
+  --param=KEYCLOAK_URL="${TEMPLATE_KEYCLOAK_URL:-https://developers.stage.redhat.com/auth}" \
+  --param=KEYCLOAK_REALM="${KEYCLOAK_REALM:-rhd}" \
+  --param=KEYCLOAK_RESOURCE="${TEMPLATE_KEYCLOAK_URL:-uhc}" \
 | \
 oc apply \
   --filename=-

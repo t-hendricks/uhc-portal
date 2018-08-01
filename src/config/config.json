@@ -1,0 +1,8 @@
+{
+    "apiGateway": "http://localhost:8001",
+    "keycloak": {
+        "realm": "rhd",
+        "clientId": "uhc",
+        "url": "https://developers.stage.redhat.com/auth"
+    }
+}
