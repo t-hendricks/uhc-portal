@@ -100,7 +100,7 @@ export const fetchClusters = page => (dispatch, getState) => {
     page: page
   })
     .then((response) => {
-      const pageCount = Math.ceil(response.count / PAGE_SIZE);
+      const pageCount = Math.ceil(response.total / PAGE_SIZE);
       dispatch(fetchClustersResponse({
         items: response.items,
         page,
