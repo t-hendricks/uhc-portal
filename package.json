@@ -35,12 +35,14 @@
     "babel-preset-react": "^6.24.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.4",
-    "eslint": "^3.8.1",
+    "eslint": "4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
     "eslint-config-standard": "^6.2.1",
     "eslint-config-standard-react": "^4.2.0",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-import": "2.12.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-react": "^6.4.1",
+    "eslint-plugin-react": "7.9.1",
     "eslint-plugin-standard": "^2.3.1",
     "file-loader": "^0.10.1",
     "style-loader": "^0.13.1",
@@ -51,6 +53,6 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --progress --hot --inline",
-    "test": "eslint src --ext js,jsx"
+    "lint": "eslint src --ext js,jsx"
   }
 }
