@@ -3,6 +3,33 @@
 This repository contains the UI components for the OpenShift Unified Hybrid
 Cloud site.
 
+== Style
+
+To promote consistency in the code base and prevent bike-shedding over style
+issues, UHC follows the JavaScript and React style guides produced by airbnb.
+
+https://github.com/airbnb/javascript[airbnb style guides]
+
+To guide and aid developers in style consistency, UHC uses eslint and the eslint
+tools provided by airbnb.
+
+https://eslint.org/[eslint]
+https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb[airbnb eslint tools]
+
+To run the linter
+
+....
+$ yarn lint
+....
+
+=== Local Linting
+
+To use eslint tools locally (e.g. as part of your editor config), you may
+need to follow the installation and usage instructions using global
+installation.
+
+https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb#eslint-config-airbnb-1[Installation instructions]
+
 == Bulding
 
 To build the application istall the `yarn` tool and then run these commands:
@@ -20,7 +47,7 @@ To test the application in your development environment run the following comman
 $ yarn start
 ....
 
-That will start the the Webpack development server, in http://localhost:8001. 
+That will start the the Webpack development server, in http://localhost:8001.
 
 == Deploying
 
