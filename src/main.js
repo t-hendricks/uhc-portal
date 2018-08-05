@@ -45,7 +45,7 @@ const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <PortalRouter history={history} />
+        <PortalRouter history={history} authenticated={keycloak.authenticated} loginFunction={keycloak.login} />
       </Provider>
     </AppContainer>,
     document.getElementById('root')
@@ -67,7 +67,7 @@ if (module.hot) {
   })
 }
 
-keycloak.init({ onLoad: 'login-required', checkLoginIframeInterval: 1 }).success(authenticated => {
+keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success(authenticated => {
   if (keycloak.authenticated) {
     sessionStorage.setItem('kctoken', keycloak.token);
 
@@ -85,6 +85,8 @@ keycloak.init({ onLoad: 'login-required', checkLoginIframeInterval: 1 }).success
         .success(() => sessionStorage.setItem('kctoken', keycloak.token))
         .error(() => keycloak.logout());
     }, 10000);
+  } else {
+    render()
   }
 });
 

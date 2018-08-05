@@ -3,28 +3,42 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { ConnectedRouter } from 'connected-react-router'
 import { Route, Switch, Redirect } from 'react-router-dom'
+import { Button, Row, Col } from 'patternfly-react'
 import App from './App'
 import Header from './Header'
-import { CreateClusterModal } from './CreateClusterModal.js';
 import ClusterDetails from './ClusterDetails';
 
-const PortalRouter = ({ history }) => {
-  return (
-    <div>
-      <Header/>
-      <ConnectedRouter history={history}>
-        <Switch>
-          <Redirect from="/" exact to="/clusters"/>
-          <Route path="/clusters" component={App}/>
-          <Route path="/cluster/:id" component={ClusterDetails}/>
-        </Switch>
-      </ConnectedRouter>
-    </div>
-  )
+const PortalRouter = ({ history, authenticated, loginFunction }) => {
+  if (!authenticated) {
+    return (
+      <div>
+        <Header />
+        <Row>
+          <Col xs={6} md={4} xsOffset={6}>
+            <Button  bsSize="large" style={{"marginTop": "20px"}} onClick={loginFunction}>Log In</Button>
+          </Col>
+        </Row>
+      </div>)
+  } else {
+    return (
+      <div>
+        <Header/>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Redirect from="/" exact to="/clusters"/>
+            <Route path="/clusters" component={App}/>
+            <Route path="/cluster/:id" component={ClusterDetails}/>
+          </Switch>
+        </ConnectedRouter>
+      </div>
+    )
+  }
 }
 
 PortalRouter.propTypes = {
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  authenticated: PropTypes.bool.isRequired,
+  loginFunction: PropTypes.func.isRequired
 }
 
 export default PortalRouter
