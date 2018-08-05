@@ -1,5 +1,6 @@
 {
   "name": "cloud.openshift.com",
+  "sideEffects": false,
   "version": "0.0.0",
   "description": "OpenShift Unified Hybrid Cloud",
   "repository": {
@@ -27,13 +28,13 @@
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
-    "babel-loader": "^6.4.1",
+    "babel-loader": "^7.1.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
-    "copy-webpack-plugin": "^4.0.1",
+    "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^0.26.4",
     "eslint": "4.19.1",
     "eslint-config-airbnb": "^17.0.0",
@@ -44,11 +45,12 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "7.9.1",
     "eslint-plugin-standard": "^2.3.1",
-    "file-loader": "^0.10.1",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.8",
-    "webpack": "^2.6.1",
-    "webpack-dev-server": "^1.16.3"
+    "file-loader": "^1.1.11",
+    "style-loader": "^0.21.0",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.16.4",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
   },
   "scripts": {
     "build": "webpack",

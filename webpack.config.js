@@ -26,8 +26,8 @@ const rscDir = path.resolve(__dirname, 'src')
 const outDir = path.resolve(__dirname, 'build')
 
 module.exports = {
+  mode: "development",
   entry: {
-    prolog: path.resolve(srcDir, 'prolog.js'),
     main: path.resolve(srcDir, 'main.js'),
   },
 
@@ -84,17 +84,6 @@ module.exports = {
   },
 
   plugins: [
-	// Some dependencies need to be defined before anything else. For example,
-	// jQuery needs to be defined before loading the Bootstrap or Patternfly
-	// scripts, as they assume that it is already available. But Webpack doesn't
-	// guarantee the order of modules in the generated bundle, so to force that
-	// order we generate this separate chunk, and we make sure that it is loaded
-	// first in the HTML page.
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'prolog',
-      filename: 'prolog.js',
-    }),
-
     // Copy the static files to the output directory:
     new CopyWebpackPlugin([
       { from: rscDir, to: outDir }
@@ -111,7 +100,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     contentBase: outDir,
-    outputPath: outDir,
+    publicPath: '/',
     hot: true,
     inline: true,
     port: 8001,
