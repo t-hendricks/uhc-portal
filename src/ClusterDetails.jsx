@@ -115,13 +115,13 @@ class ClusterDetails extends Component {
                   <CardGrid>
                     <Row style={{marginTop: '20px'}}>
                       <Col xs={6} sm={3} md={3}>
-                        <ClusterUtilizationCard title="CPU" total={details.cpu.total} available={10} unit="Cores" used={10} donut_id="cpu_donut" />
+                        <ClusterUtilizationCard title="CPU" total={details.cpu.total} unit="Cores" used={details.cpu.used} donut_id="cpu_donut" />
                       </Col>
                       <Col xs={6} sm={3} md={3}>
-                        <ClusterUtilizationCard title="Memory" total={details.memory.total} available={100} unit="GiB" used={10} donut_id="memory_donut" />
+                        <ClusterUtilizationCard title="Memory" total={details.memory.total} unit="GiB" used={details.memory.used} donut_id="memory_donut" />
                       </Col>
                       <Col xs={6} sm={3} md={3}>
-                        <ClusterUtilizationCard title="Storage" total={details.storage.total} available={100} unit="GiB" used={10} donut_id="storage_donut" />
+                        <ClusterUtilizationCard title="Storage" total={details.storage.total} unit="GiB" used={details.storage.used} donut_id="storage_donut" />
                       </Col>
                     </Row>
                   </CardGrid>
@@ -141,9 +141,9 @@ class ClusterDetails extends Component {
                 <CardBody>
                   <Row>
                     <Col sm={6}>
-                      <dl class="dl-horizontal left">
+                      <dl className="dl-horizontal left">
                         <dt>Status</dt>
-                        <dd>??????</dd>
+                        <dd>{details.state}</dd>
                         <dt>Cluster Name</dt>
                         <dd>{details.name}</dd>
                         <dt>Provider</dt>
@@ -159,7 +159,7 @@ class ClusterDetails extends Component {
                       </dl>
                     </Col>
                     <Col sm={6}>
-                      <dl class="dl-horizontal left">
+                      <dl className="dl-horizontal left">
                         <dt>Masters</dt>
                         <dd>{details.nodes.master} Master nodes</dd>
                         <dt>Infrastructure</dt>
