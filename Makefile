@@ -14,30 +14,56 @@
 # limitations under the License.
 #
 
-# The name and version of the image repository:
-namespace:=openshift-unified-hybrid-cloud
-repository:=portal
+# The details of the image:
+registry:=quay.io
+repository:=openshift-unified-hybrid-cloud/portal
 version:=latest
 
 # The tag that will be assigned to the image:
-tag:=$(namespace)/$(repository):$(version)
+tag:=$(registry)/$(repository):$(version)
 
 # The name of the tar file for the image:
-tar:=$(shell echo $(tag) | tr /: __).tar
+tar:=$(shell echo $(tag) | tr /:. ---).tar
 
-.PHONY: app
+# The details of the application:
+namespace:=unified-hybrid-cloud
+domain:=cloud.openshift.com
+
+# The default image pull policy:
+pull_policy:=IfNotPresent
+
+.PHONY: \
+	app \
+	clean \
+	image \
+	push \
+	tar \
+	$(NULL)
+
 app:
 	yarn install
 	yarn build
 
-.PHONY: image
-image: app
+image:
 	docker build -t $(tag) .
 
-.PHONY: tar
-tar: image
+tar:
 	docker save -o $(tar) $(tag)
 
-.PHONY: clean
+push:
+	docker push $(tag)
+
+deploy:
+	oc process \
+		--filename="template.yml" \
+		--param=DOMAIN="$(domain)" \
+		--param=IMAGE="$(tag)" \
+		--param=NAMESPACE="$(namespace)" \
+		--param=VERSION="$(version)" \
+		--param=PULL_POLICY="$(pull_policy)" \
+	| \
+	oc apply \
+		--filename=-
+
 clean:
-	rm -rf build node_modules
+	rm -rf build node_modules *.tar

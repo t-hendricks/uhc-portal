@@ -37,6 +37,14 @@ parameters:
   description: The version of the project.
   value: latest
 
+- name: IMAGE
+  description: Name of the image, including the registry and the version.
+  value: quay.io/openshift-unified-hybrid-cloud/portal:latest
+
+- name: PULL_POLICY
+  description: Image pull policy.
+  value: IfNotPresent
+
 - name: DOMAIN
   description: The DNS domain where the route will be created.
   value: cloud.openshift.com
@@ -149,8 +157,8 @@ objects:
             name: webapp-config
         containers:
         - name: server
-          image: openshift-unified-hybrid-cloud/portal:${VERSION}
-          imagePullPolicy: IfNotPresent
+          image: ${IMAGE}
+          imagePullPolicy: ${PULL_POLICY}
           volumeMounts:
           - name: config
             mountPath: /etc/httpd
