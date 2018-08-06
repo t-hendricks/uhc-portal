@@ -11,33 +11,36 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License. 
+limitations under the License.
 */
 
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { ListView, Button, Row, Col } from 'patternfly-react'
-import PropTypes from 'prop-types'
-import ClusterDetails from './ClusterDetails'
-import * as fromClusterDetails from './ducks/clusterdetails';
-import { CSSTransition, TransitionGroup} from 'react-transition-group'; 
+import {
+  ListView, Button, Row, Col,
+} from 'patternfly-react';
+import PropTypes from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-export const renderAdditionalInfoItems = itemProperties =>
-  itemProperties &&
-  Object.keys(itemProperties).map(prop => {
+export const renderAdditionalInfoItems = itemProperties => itemProperties
+  && Object.keys(itemProperties).map((prop) => {
     const cssClassNames = classNames('pficon', {
       'pficon-flavor': prop === 'hosts',
       'pficon-cluster': prop === 'clusters',
       'pficon-container-node': prop === 'nodes',
-      'pficon-image': prop === 'images'
+      'pficon-image': prop === 'images',
     });
     return (
       <ListView.InfoItem key={prop}>
         <span className={cssClassNames} />
-        <strong>{itemProperties[prop]}</strong> {prop}
+        <strong>
+          {itemProperties[prop]}
+        </strong>
+        {' '}
+        {prop}
       </ListView.InfoItem>
     );
-});
+  });
 
 
 class ClusterList extends Component {
@@ -46,37 +49,47 @@ class ClusterList extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return (nextProps.clusters.length !== 0); 
+    return (nextProps.clusters.length !== 0);
   }
 
   render() {
     return (
       <div>
         <ListView>
-        <TransitionGroup>
-          {this.props.clusters.map(({ actions, properties, clusterID, title, description, expandedContentText, hideCloseIcon }, index) => (
-            <CSSTransition
-              key={title}
-              timeout={500}
-              classNames="list"
-              unmountOnExit>
-              <ListView.Item
-                actions={<Button href={"/cluster/"+clusterID}>Details</Button>}
-                checkboxInput={<input type="checkbox" />}
-                leftContent={<ListView.Icon name="cluster" type="pf" />}
-                additionalInfo={renderAdditionalInfoItems(properties)}
-                heading={title}
-                description={description}
-                stacked={false}
-                hideCloseIcon={false}>
-                <Row>
-                  <Col sm={11}>{expandedContentText}</Col>
-                </Row>
-              </ListView.Item>
-            </CSSTransition>
-          ))}
-        </TransitionGroup>
-          
+          <TransitionGroup>
+            {this.props.clusters.map(({
+              actions, properties, clusterID, title, description, expandedContentText, hideCloseIcon,
+            }, index) => (
+              <CSSTransition
+                key={title}
+                timeout={500}
+                classNames="list"
+                unmountOnExit
+              >
+                <ListView.Item
+                  actions={(
+                    <Button href={`/cluster/${clusterID}`}>
+Details
+                    </Button>
+)}
+                  checkboxInput={<input type="checkbox" />}
+                  leftContent={<ListView.Icon name="cluster" type="pf" />}
+                  additionalInfo={renderAdditionalInfoItems(properties)}
+                  heading={title}
+                  description={description}
+                  stacked={false}
+                  hideCloseIcon={false}
+                >
+                  <Row>
+                    <Col sm={11}>
+                      {expandedContentText}
+                    </Col>
+                  </Row>
+                </ListView.Item>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
+
         </ListView>
       </div>
     );

@@ -16,17 +16,17 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Route, Link } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom';
 import './ClustersPage.css';
+import { Pager, Label, Button } from 'patternfly-react';
+import PropTypes from 'prop-types';
 import * as fromClusterList from './ducks/clusterlist';
 import * as fromUsers from './ducks/users';
 import * as fromClusterDetails from './ducks/clusterdetails';
 import { ClusterList } from './ClusterList';
-import { CreateClusterModal } from './CreateClusterModal';
-import { Pager, Label, Button } from 'patternfly-react'
-import PropTypes from 'prop-types'
-import "patternfly/dist/css/patternfly.css";
-import "patternfly/dist/css/patternfly-additions.css";
+import CreateClusterModal from './CreateClusterModal';
+import 'patternfly/dist/css/patternfly.css';
+import 'patternfly/dist/css/patternfly-additions.css';
 
 class ClustersPage extends Component {
   componentDidMount() {
@@ -35,14 +35,17 @@ class ClustersPage extends Component {
     this.handleNext = this.handleNext.bind(this);
     this.handlePrevious = this.handlePrevious.bind(this);
   }
+
   handleNext() {
     const { fetchClusters, clustersCurrentPage } = this.props;
     fetchClusters(clustersCurrentPage + 1);
   }
+
   handlePrevious() {
     const { fetchClusters, clustersCurrentPage } = this.props;
     fetchClusters(clustersCurrentPage - 1);
   }
+
   render() {
     const {
       clustersPaged,
@@ -55,29 +58,52 @@ class ClustersPage extends Component {
       clusterDetails,
     } = this.props;
     let label;
-    if (clustersRequested) label = <Label bsStyle="warning"> Requested </Label>;
-    else if (clustersErrored) label = <Label bsStyle="danger"> Error fetching data </Label>
-    else label = <Label bsStyle="success"> Updated </Label>
+    if (clustersRequested) {
+      label = (
+        <Label bsStyle="warning">
+          {' '}
+Requested
+          {' '}
+        </Label>
+      );
+    } else if (clustersErrored) {
+      label = (
+        <Label bsStyle="danger">
+          {' '}
+Error fetching data
+          {' '}
+        </Label>
+      );
+    } else {
+      label = (
+        <Label bsStyle="success">
+          {' '}
+Updated
+          {' '}
+        </Label>
+      );
+    }
 
-    let clusters = Object.values(clustersPaged)
+    let clusters = Object.values(clustersPaged);
 
     // Add fake data. I hope we can remove this soon...
     clusters = clusters.map(cluster => Object.assign({}, {
       clusterID: cluster.id,
       title: cluster.name,
-      "properties": { "nodes": cluster.nodes.total },
-      "expandedContentText":
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-      "compoundExpandText": {
-        "nodes": "Text describing Item 1s nodes"
-      }}))
+      properties: { nodes: cluster.nodes.total },
+      expandedContentText:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
+      compoundExpandText: {
+        nodes: 'Text describing Item 1s nodes',
+      },
+    }));
     return (
       <div>
         {label}
 
-        <ClusterList clusters={clusters} showClusterDetails={this.props.showClusterDetails}></ClusterList>
+        <ClusterList clusters={clusters} showClusterDetails={this.props.showClusterDetails} />
         <Pager
-          messages={{nextPage: 'The Next Page', previousPage: 'The Previous Page'}}
+          messages={{ nextPage: 'The Next Page', previousPage: 'The Previous Page' }}
           onNextPage={this.handleNext}
           onPreviousPage={this.handlePrevious}
           disableNext={clustersCurrentPage === clustersLastPage}
@@ -86,12 +112,16 @@ class ClustersPage extends Component {
 
         <div>
           <Link to="/clusters/create">
-            <Button>Create cluster</Button>
+            <Button>
+Create cluster
+            </Button>
           </Link>
-          <Route path="/clusters/create" render={() => (
-            <CreateClusterModal cancelTo="/clusters" createTo="/clusters"/>
-          )}>
-          </Route>
+          <Route
+            path="/clusters/create"
+            render={() => (
+              <CreateClusterModal cancelTo="/clusters" createTo="/clusters" />
+            )}
+          />
         </div>
       </div>
     );
@@ -121,13 +151,13 @@ const mapStateToProps = state => ({
   clustersPaged: fromClusterList.getClustersPaged(state),
   clustersRequested: fromClusterList.getClustersRequested(state),
   userProfile: fromUsers.getUserProfile(state),
-  clusterDetails: fromClusterDetails.getClusterDetails(state)
+  clusterDetails: fromClusterDetails.getClusterDetails(state),
 });
 
 const mapDispatchToProps = {
   fetchClusters: fromClusterList.fetchClusters,
   fetchClusterDetails: fromClusterDetails.fetchClusterDetails,
-  showClusterDetails: fromClusterDetails.showClusterDetails
+  showClusterDetails: fromClusterDetails.showClusterDetails,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClustersPage);

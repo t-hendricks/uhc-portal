@@ -26,12 +26,10 @@ const fetchUserInfo = () => ({
   type: USER_INFO_REQUEST,
 });
 
-export const userInfoResponse = (payload) => {
-  return {
-    payload,
-    type: USER_INFO_RESPONSE,
-  };
-};
+export const userInfoResponse = payload => ({
+  payload,
+  type: USER_INFO_RESPONSE,
+});
 
 // REDUCERS
 const userProfile = (state = {}, action) => {
@@ -44,5 +42,5 @@ const userProfile = (state = {}, action) => {
 };
 
 export default combineReducers({
-  userProfile
-})
+  userProfile,
+});

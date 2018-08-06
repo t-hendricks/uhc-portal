@@ -8,61 +8,67 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License. 
+limitations under the License.
 */
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as fromClusterDetails from './ducks/clusterdetails';
-import { Alert, Row, Col, Icon, DonutChart, UtilizationCard, UtilizationCardDetails, 
-         UtilizationCardDetailsCount, UtilizationCardDetailsDesc, UtilizationCardDetailsLine1, UtilizationCardDetailsLine2 } from 'patternfly-react'
+import {
+  Alert, Row, Col, Icon,
+} from 'patternfly-react';
 
-import PropTypes from 'prop-types'
-import { CardGrid, Card, CardBody, CardTitle, AggregateStatusCount } from 'patternfly-react/dist/js/components/Cards';
-import ClusterUtilizationCard from './components/ClusterUtilizationCard' 
+import PropTypes from 'prop-types';
+import {
+  CardGrid, Card, CardBody, CardTitle, AggregateStatusCount,
+} from 'patternfly-react/dist/js/components/Cards';
+import * as fromClusterDetails from './ducks/clusterdetails';
+import ClusterUtilizationCard from './components/ClusterUtilizationCard';
 
 class ClusterDetails extends Component {
   componentDidMount() {
-    const clusterID = this.props.match.params.id;
+    const { fetchClusterDetails, match } = this.props;
+    const clusterID = match.params.id;
     if (clusterID !== null && clusterID !== undefined) {
-      this.props.fetchClusterDetails(clusterID);
+      fetchClusterDetails(clusterID);
     }
   }
 
   componentDidUpdate(prevProps) {
-    const clusterID = this.props.match.params.id;
+    const { fetchClusterDetails, match } = this.props;
+    const clusterID = match.params.id;
     const oldClusterID = prevProps.match.params.id;
     if (clusterID !== oldClusterID && clusterID !== null && clusterID !== undefined) {
-      this.props.fetchClusterDetails(clusterID);
+      fetchClusterDetails(clusterID);
     }
-  }
-
-  close() {
-    this.props.hideClusterDetails()
   }
 
   render() {
-    console.log(this.props)
-    const details = this.props.details[this.props.match.params.id];
-    if (details === undefined) {
-      return <div />
+    console.log(this.props);
+    const { details, match } = this.props;
+    const cluster = details[match.params.id];
+    if (cluster === undefined) {
+      return <div />;
     }
-    if (details.error !== undefined) {
+    if (cluster.error !== undefined) {
       return (
-        <Alert>{details.error}</Alert>
-      )
+        <Alert>
+          {cluster.error}
+        </Alert>
+      );
     }
     return (
       <div>
-        <h1>{details.name}</h1>
+        <h1>
+          {cluster.name}
+        </h1>
         <CardGrid>
-          <Row  style={{marginBottom: '20px',marginTop: '20px'}}>
+          <Row style={{ marginBottom: '20px', marginTop: '20px' }}>
             <Col xs={3}>
               <Card accented aggregated>
                 <CardTitle>
                   <Icon type="pf" name="container-node" />
                   <AggregateStatusCount>
-                    {details.nodes.total}
+                    {cluster.nodes.total}
                   </AggregateStatusCount>
                   Nodes
                 </CardTitle>
@@ -104,7 +110,7 @@ class ClusterDetails extends Component {
           </Row>
         </CardGrid>
         <CardGrid>
-          <Row  style={{marginTop: '20px'}}>
+          <Row style={{ marginTop: '20px' }}>
             <Col>
               <Card>
                 <CardTitle>
@@ -113,15 +119,15 @@ class ClusterDetails extends Component {
                 </CardTitle>
                 <CardBody>
                   <CardGrid>
-                    <Row style={{marginTop: '20px'}}>
+                    <Row style={{ marginTop: '20px' }}>
                       <Col xs={6} sm={3} md={3}>
-                        <ClusterUtilizationCard title="CPU" total={details.cpu.total} unit="Cores" used={details.cpu.used} donut_id="cpu_donut" />
+                        <ClusterUtilizationCard title="CPU" total={cluster.cpu.total} unit="Cores" used={cluster.cpu.used} donutId="cpu_donut" />
                       </Col>
                       <Col xs={6} sm={3} md={3}>
-                        <ClusterUtilizationCard title="Memory" total={details.memory.total} unit="GiB" used={details.memory.used} donut_id="memory_donut" />
+                        <ClusterUtilizationCard title="Memory" total={cluster.memory.total} unit="GiB" used={cluster.memory.used} donutId="memory_donut" />
                       </Col>
                       <Col xs={6} sm={3} md={3}>
-                        <ClusterUtilizationCard title="Storage" total={details.storage.total} unit="GiB" used={details.storage.used} donut_id="storage_donut" />
+                        <ClusterUtilizationCard title="Storage" total={cluster.storage.total} unit="GiB" used={cluster.storage.used} donutId="storage_donut" />
                       </Col>
                     </Row>
                   </CardGrid>
@@ -142,38 +148,106 @@ class ClusterDetails extends Component {
                   <Row>
                     <Col sm={6}>
                       <dl className="dl-horizontal left">
-                        <dt>Status</dt>
-                        <dd>{details.state}</dd>
-                        <dt>Cluster Name</dt>
-                        <dd>{details.name}</dd>
-                        <dt>Provider</dt>
-                        <dd>??????</dd>
-                        <dt>Region</dt>
-                        <dd>{details.region}</dd>
-                        <dt>OpenShift Version</dt>
-                        <dd>????</dd>
-                        <dt>Container Runtime</dt>
-                        <dd>????</dd>
-                        <dt>OS Version</dt>
-                        <dd>????</dd>
+                        <dt>
+                          Status
+                        </dt>
+                        <dd>
+                          {cluster.state}
+                        </dd>
+                        <dt>
+                          Cluster Name
+                        </dt>
+                        <dd>
+                          {cluster.name}
+                        </dd>
+                        <dt>
+                          Provider
+                        </dt>
+                        <dd>
+                          ??????
+                        </dd>
+                        <dt>
+                          Region
+                        </dt>
+                        <dd>
+                          {cluster.region}
+                        </dd>
+                        <dt>
+                          OpenShift Version
+                        </dt>
+                        <dd>
+                          ????
+                        </dd>
+                        <dt>
+                          Container Runtime
+                        </dt>
+                        <dd>
+                          ????
+                        </dd>
+                        <dt>
+                          OS Version
+                        </dt>
+                        <dd>
+                          ????
+                        </dd>
                       </dl>
                     </Col>
                     <Col sm={6}>
                       <dl className="dl-horizontal left">
-                        <dt>Masters</dt>
-                        <dd>{details.nodes.master} Master nodes</dd>
-                        <dt>Infrastructure</dt>
-                        <dd>{details.nodes.infra} Nodes</dd>
-                        <dt>Compute</dt>
-                        <dd>{details.nodes.compute} Nodes</dd>
-                        <dt>vCPU</dt>
-                        <dd>{details.cpu.total} Cores</dd>
-                        <dt>Memory</dt>
-                        <dd>{details.memory.total} (unit unknown)</dd>
-                        <dt>Storage</dt>
-                        <dd>{details.storage.total} (unit unknown)</dd>
-                        <dt>Network</dt>
-                        <dd>?????????</dd>
+                        <dt>
+                          Masters
+                        </dt>
+                        <dd>
+                          {cluster.nodes.master}
+                          {' '}
+                          Master nodes
+                        </dd>
+                        <dt>
+                          Infrastructure
+                        </dt>
+                        <dd>
+                          {cluster.nodes.infra}
+                          {' '}
+                          Nodes
+                        </dd>
+                        <dt>
+                          Compute
+                        </dt>
+                        <dd>
+                          {cluster.nodes.compute}
+                          {' '}
+                          Nodes
+                        </dd>
+                        <dt>
+                          vCPU
+                        </dt>
+                        <dd>
+                          {cluster.cpu.total}
+                          {' '}
+                          Cores
+                        </dd>
+                        <dt>
+                          Memory
+                        </dt>
+                        <dd>
+                          {cluster.memory.total}
+                          {' '}
+                          (unit unknown)
+                        </dd>
+                        <dt>
+                          Storage
+                        </dt>
+                        <dd>
+                          {cluster.storage.total}
+                          {' '}
+                          (unit unknown)
+                        </dd>
+                        <dt>
+                          Network
+                        </dt>
+                        <dd>
+                          ?????????
+                        </dd>
                       </dl>
                     </Col>
                   </Row>
@@ -193,7 +267,7 @@ ClusterDetails.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  details: fromClusterDetails.getClusterDetails(state)
+  details: fromClusterDetails.getClusterDetails(state),
 });
 
 const mapDispatchToProps = {
