@@ -18,28 +18,33 @@ limitations under the License.
 import config from '../config'
 
 export const fetchClusters = (params) => {
-  console.log(params)
+  console.log(params);
   const options = {
-    headers: { 'Authorization': "Bearer " + sessionStorage.getItem('kctoken') }
-  }
-  const createPromise = response => new Promise((resolve, reject) => {
-    return fetch(config.configData.apiGateway + '/api/clusters_mgmt/v1/clusters?page='+params.page+'&size='+params.limit, options)
-      .then(response => {  
-        if (response.ok) {
-          return response;
-        } else {
-          reject(new Error('error'))
-        }
-      }, error => {
-        reject(new Error(error.message))
-      }).then(response => response.json())
-      .then(json => {
-        console.log(json)
-        resolve(json)
-      }).catch(function(error) {
+    headers: { Authorization: `Bearer ${sessionStorage.getItem('kctoken')}` },
+  };
+  const createPromise = response => new Promise((resolve, reject) => (
+    fetch(`${config.configData.apiGateway}/api/clusters_mgmt/v1/clusters?page=${params.page}&size=${params.limit}`, options)
+      .then(
+        (response) => {
+          if (response.ok) {
+            return response;
+          } else {
+            reject(new Error('error'));
+          }
+        },
+        (error) => {
+          reject(new Error(error.message));
+        },
+      )
+      .then(response => response.json())
+      .then((json) => {
+        console.log(json);
+        resolve(json);
+      })
+      .catch((error) => {
         console.log(error);
-    });
-  })
+      })
+  ));
 
   const { limit } = params;
   const offset = params.offset !== undefined ? params.offset : 0;
