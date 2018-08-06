@@ -74,3 +74,6 @@ limitations under the License.
   transition: opacity .5s ease-in;
 }
 
+.maintenance{
+  border: 2px solid #f0ab00 !important;
+}
