@@ -19,7 +19,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import PortalRouter from './portalRouter';
 import { Provider } from 'react-redux'
-import registerServiceWorker from './registerServiceWorker';
 import * as fromUsers from './ducks/users';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import reduxThunk from 'redux-thunk';
@@ -97,6 +96,3 @@ function initKeycloak() {
 config.fetchConfig().then( () => {
     initKeycloak();
 });
-
-
-registerServiceWorker();
