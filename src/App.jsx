@@ -80,6 +80,8 @@ class App extends Component {
           messages={{nextPage: 'The Next Page', previousPage: 'The Previous Page'}}
           onNextPage={this.handleNext}
           onPreviousPage={this.handlePrevious}
+          disableNext={clustersCurrentPage === clustersLastPage}
+          disablePrevious={clustersCurrentPage === 0}
         />
 
         <div>
