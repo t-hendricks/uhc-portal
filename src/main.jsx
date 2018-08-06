@@ -11,76 +11,82 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License. 
+limitations under the License.
 */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import PortalRouter from './portalRouter';
-import { Provider } from 'react-redux'
-import * as fromUsers from './ducks/users';
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import {
+  applyMiddleware, compose, createStore,
+} from 'redux';
 import reduxThunk from 'redux-thunk';
-import { createBrowserHistory } from 'history'
-import { connectRouter, routerMiddleware } from 'connected-react-router'
-import { AppContainer } from 'react-hot-loader'
-import config from './config'
-import reducers from './reducers'
+import { createBrowserHistory } from 'history';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { AppContainer } from 'react-hot-loader';
+import * as fromUsers from './ducks/users';
+import PortalRouter from './portalRouter';
+import config from './config';
+import reducers from './reducers';
 
 export var keycloak;
 
-const history = createBrowserHistory()
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const history = createBrowserHistory();
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   connectRouter(history)(reducers),
   composeEnhancer(
     applyMiddleware(
-      routerMiddleware(history), reduxThunk
+      routerMiddleware(history), reduxThunk,
     ),
   ),
-)
+);
 
 const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <PortalRouter history={history} authenticated={keycloak.authenticated} loginFunction={keycloak.login} />
+        <PortalRouter
+          history={history}
+          authenticated={keycloak.authenticated}
+          loginFunction={keycloak.login}
+        />
       </Provider>
     </AppContainer>,
-    document.getElementById('root')
-  )
-}
+    document.getElementById('root'),
+  );
+};
 
 // Hot reloading
 if (module.hot) {
   // Reload components
   module.hot.accept('./ClustersPage', () => {
-    console.log("ClustersPage hot reload") // never seen this happening 
-    render()
-  })
+    console.log('ClustersPage hot reload'); // never seen this happening
+    render();
+  });
 
   // Reload reducers
   module.hot.accept('./reducers', () => {
-    console.log("reducers hot reload") // never seen this happening 
-    store.replaceReducer(connectRouter(history)(reducers))
-  })
+    console.log('reducers hot reload'); // never seen this happening
+    store.replaceReducer(connectRouter(history)(reducers));
+  });
 }
 
 function initKeycloak() {
   keycloak = Keycloak(config.configData.keycloak);
-  keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success(authenticated => {
+  keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success((authenticated) => {
     if (keycloak.authenticated) {
       sessionStorage.setItem('kctoken', keycloak.token);
 
       keycloak.loadUserProfile()
-        .success(result => {
-          store.dispatch(fromUsers.userInfoResponse(result))
-          render()
+        .success((result) => {
+          store.dispatch(fromUsers.userInfoResponse(result));
+          render();
         })
-        .error(err => {
-          console.log(err) // should probably redirect to an error page
-        })
+        .error((err) => {
+          console.log(err); // should probably redirect to an error page
+        });
 
       setInterval(() => {
         keycloak.updateToken(10)
@@ -88,11 +94,11 @@ function initKeycloak() {
           .error(() => keycloak.logout());
       }, 10000);
     } else {
-      render()
+      render();
     }
   });
 }
 
-config.fetchConfig().then( () => {
-    initKeycloak();
+config.fetchConfig().then(() => {
+  initKeycloak();
 });

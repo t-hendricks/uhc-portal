@@ -28,9 +28,8 @@ export const fetchClusters = (params) => {
         (response) => {
           if (response.ok) {
             return response;
-          } else {
-            reject(new Error('error'));
           }
+          reject(new Error('error'));
         },
         (error) => {
           reject(new Error(error.message));

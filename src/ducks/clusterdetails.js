@@ -24,22 +24,21 @@ export const getClusterDetails = state => state.clusterDetails.clusterDetails;
 // ACTIONS
 const CLUSTER_DETAILS_RESPONSE = 'CLUSTER_DETAILS_RESPONSE';
 
-export const clusterDetailsResponse = (payload) => {
-  return {
-    payload,
-    type: CLUSTER_DETAILS_RESPONSE,
-  };
-};
+export const clusterDetailsResponse = payload => ({
+  payload,
+  type: CLUSTER_DETAILS_RESPONSE,
+});
 
 // ACTIONS
 export const fetchClusterDetails = clusterID => (dispatch, getState) => {
   const state = getState();
-  fromClusterDetails.fetchClusterDetails({clusterID: clusterID}).then((response) => {
-      response.json().then((value) => {
-      var ret = {}
+  fromClusterDetails.fetchClusterDetails({ clusterID }).then((response) => {
+    response.json().then((value) => {
+      const ret = {};
       ret[clusterID] = value;
-      dispatch(clusterDetailsResponse(ret))});
-    })
+      dispatch(clusterDetailsResponse(ret));
+    });
+  });
 };
 
 // REDUCERS
@@ -54,4 +53,4 @@ const clusterDetails = (state = {}, action) => {
 };
 
 
-export default combineReducers({clusterDetails})
+export default combineReducers({ clusterDetails });

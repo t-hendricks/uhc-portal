@@ -97,7 +97,7 @@ export const fetchClusters = page => (dispatch, getState) => {
   fromClusterList.fetchClusters({
     limit: PAGE_SIZE,
     offset,
-    page: page
+    page,
   })
     .then((response) => {
       const pageCount = Math.ceil(response.total / PAGE_SIZE);
@@ -212,5 +212,5 @@ export default combineReducers({
   ids,
   lastPage,
   pages,
-  requested
+  requested,
 });

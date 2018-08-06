@@ -14,100 +14,114 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { Button, Col, ControlLabel, DropdownButton, HelpBlock, Icon, Form, FormControl, FormGroup, MenuItem, Modal } from 'patternfly-react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import {
+  Button, Col, ControlLabel, HelpBlock, Icon, Form, FormControl, FormGroup, Modal,
+} from 'patternfly-react';
 
-class CreateClusterModal extends Component {
-  static propTypes = {
-    cancelTo: PropTypes.string.isRequired,
-    createTo: PropTypes.string.isRequired,
-  }
+function CreateClusterModal(props) {
+  const { cancelTo } = props;
+  return (
+    <Modal show>
+      <Modal.Header>
+        <Link to={cancelTo}>
+          <button type="button" className="close" aria-hidden="true" aria-label="Close">
+            <Icon type="pf" name="close" />
+          </button>
+        </Link>
+        <Modal.Title>
+Create Cluster
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
 
-  render() {
-    return (
-      <Modal show={true}>
-        <Modal.Header>
-          <Link to={this.props.cancelTo}>
-            <button className="close" aria-hidden="true" aria-label="Close">
-              <Icon type="pf" name="close" />
-            </button>
-          </Link>
-          <Modal.Title>Create Cluster</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-
-          <Form horizontal>
-            <FormGroup controlId="name">
-              <Col componentClass={ControlLabel} sm={3}>
+        <Form horizontal>
+          <FormGroup controlId="name">
+            <Col componentClass={ControlLabel} sm={3}>
                 Cluster name
-              </Col>
-              <Col sm={9}>
-                <Form.FormControl type="text" />
-                <HelpBlock>TODO: what does this affect?</HelpBlock>
-              </Col>
-            </FormGroup>
+            </Col>
+            <Col sm={9}>
+              <Form.FormControl type="text" />
+              <HelpBlock>
+TODO: what does this affect?
+              </HelpBlock>
+            </Col>
+          </FormGroup>
 
-            <FormGroup controlId="aws_access_key_id">
-              <Col componentClass={ControlLabel} sm={3}>
+          <FormGroup controlId="aws_access_key_id">
+            <Col componentClass={ControlLabel} sm={3}>
                 AWS access key ID
-              </Col>
-              <Col sm={9}>
-                <Form.FormControl type="password" placeholder="AWS access key ID" />
-              </Col>
-            </FormGroup>
+            </Col>
+            <Col sm={9}>
+              <Form.FormControl type="password" placeholder="AWS access key ID" />
+            </Col>
+          </FormGroup>
 
-            <FormGroup controlId="aws_secret_access_key">
-              <Col componentClass={ControlLabel} sm={3}>
+          <FormGroup controlId="aws_secret_access_key">
+            <Col componentClass={ControlLabel} sm={3}>
                 AWS secret access key
-              </Col>
-              <Col sm={9}>
-                <Form.FormControl type="password" placeholder="AWS secret access key" />
-                <HelpBlock>Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, generate an access key for Red Hat, and put that here.</HelpBlock>
-              </Col>
-            </FormGroup>
+            </Col>
+            <Col sm={9}>
+              <Form.FormControl type="password" placeholder="AWS secret access key" />
+              <HelpBlock>
+Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, generate an access key for Red Hat, and put that here.
+              </HelpBlock>
+            </Col>
+          </FormGroup>
 
-            <FormGroup controlId="region">
-              <Col componentClass={ControlLabel} sm={3}>
+          <FormGroup controlId="region">
+            <Col componentClass={ControlLabel} sm={3}>
                 AWS region
-              </Col>
-              <Col sm={9}>
-                <FormControl componentClass="select" placeholder="us-east-1">
-                  <option value="us-east-1">us-east-1</option>
-                </FormControl>
-                <HelpBlock>TODO support other regions</HelpBlock>
-              </Col>
-            </FormGroup>
+            </Col>
+            <Col sm={9}>
+              <FormControl componentClass="select" placeholder="us-east-1">
+                <option value="us-east-1">
+us-east-1
+                </option>
+              </FormControl>
+              <HelpBlock>
+TODO support other regions
+              </HelpBlock>
+            </Col>
+          </FormGroup>
 
-            <FormGroup controlId="availability_zone">
-              <Col componentClass={ControlLabel} sm={3}>
+          <FormGroup controlId="availability_zone">
+            <Col componentClass={ControlLabel} sm={3}>
                 AWS availability zone
-              </Col>
-              <Col sm={9}>
-                <FormControl componentClass="select" placeholder="us-east-1a">
-                  <option value="us-east-1a">us-east-1a</option>
-                </FormControl>
-                <HelpBlock>TODO unused</HelpBlock>
-              </Col>
-            </FormGroup>
+            </Col>
+            <Col sm={9}>
+              <FormControl componentClass="select" placeholder="us-east-1a">
+                <option value="us-east-1a">
+us-east-1a
+                </option>
+              </FormControl>
+              <HelpBlock>
+TODO unused
+              </HelpBlock>
+            </Col>
+          </FormGroup>
 
-          </Form>
+        </Form>
 
-        </Modal.Body>
-        <Modal.Footer>
-          <Button bsStyle="primary" onClick={() => alert('TODO Create unimplemented')}>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button bsStyle="primary" onClick={() => alert('TODO Create unimplemented')}>
             Create
-          </Button>
-          <Link to={this.props.cancelTo}>
-            <Button bsStyle="default">
+        </Button>
+        <Link to={cancelTo}>
+          <Button bsStyle="default">
               Cancel
-            </Button>
-          </Link>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+          </Button>
+        </Link>
+      </Modal.Footer>
+    </Modal>
+  );
 }
+CreateClusterModal.propTypes = {
+  cancelTo: PropTypes.string.isRequired,
+  createTo: PropTypes.string.isRequired,
+};
 
-export { CreateClusterModal }
+export default CreateClusterModal;

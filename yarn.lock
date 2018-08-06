@@ -6322,7 +6322,7 @@ patternfly-react@^2.10.1:
     sortabular "^1.5.1"
     table-resolver "^3.2.0"
 
-patternfly@^3.52.1:
+patternfly@^3.52.1, patternfly@^3.54.1:
   version "3.54.1"
   resolved "https://registry.yarnpkg.com/patternfly/-/patternfly-3.54.1.tgz#a0f8b52076aa405486e77ecb504460b1ff35fe92"
   dependencies:

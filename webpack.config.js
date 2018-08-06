@@ -28,7 +28,7 @@ const outDir = path.resolve(__dirname, 'build')
 module.exports = {
   mode: "development",
   entry: {
-    main: path.resolve(srcDir, 'main.js'),
+    main: path.resolve(srcDir, 'main.jsx'),
   },
 
   output: {
