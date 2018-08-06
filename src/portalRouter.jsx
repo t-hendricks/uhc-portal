@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { ConnectedRouter } from 'connected-react-router'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { Button, Row, Col } from 'patternfly-react'
-import App from './App'
+import ClustersPage from './ClustersPage'
 import Header from './Header'
 import ClusterDetails from './ClusterDetails';
 
@@ -26,7 +26,7 @@ const PortalRouter = ({ history, authenticated, loginFunction }) => {
         <ConnectedRouter history={history}>
           <Switch>
             <Redirect from="/" exact to="/clusters"/>
-            <Route path="/clusters" component={App}/>
+            <Route path="/clusters" component={ClustersPage}/>
             <Route path="/cluster/:id" component={ClusterDetails}/>
           </Switch>
         </ConnectedRouter>

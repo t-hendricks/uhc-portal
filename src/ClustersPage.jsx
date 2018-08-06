@@ -17,7 +17,7 @@ limitations under the License.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom'
-import './App.css';
+import './ClustersPage.css';
 import * as fromClusterList from './ducks/clusterlist';
 import * as fromUsers from './ducks/users';
 import * as fromClusterDetails from './ducks/clusterdetails';
@@ -28,7 +28,7 @@ import PropTypes from 'prop-types'
 import "patternfly/dist/css/patternfly.css";
 import "patternfly/dist/css/patternfly-additions.css";
 
-class App extends Component {
+class ClustersPage extends Component {
   componentDidMount() {
     const { fetchClusters, clustersCurrentPage, userProfile } = this.props;
     fetchClusters(clustersCurrentPage);
@@ -98,7 +98,7 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
+ClustersPage.propTypes = {
   fetchClusters: PropTypes.func.isRequired,
   fetchClusterDetails: PropTypes.func.isRequired,
   clustersPaged: PropTypes.arrayOf(PropTypes.shape({
@@ -130,4 +130,4 @@ const mapDispatchToProps = {
   showClusterDetails: fromClusterDetails.showClusterDetails
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(ClustersPage);
