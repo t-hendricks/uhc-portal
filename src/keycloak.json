@@ -1,5 +1,0 @@
-{
-  "auth-server-url": "https://developers.stage.redhat.com/auth",
-  "realm": "rhd",
-  "resource": "uhc"
-}

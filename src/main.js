@@ -26,9 +26,10 @@ import reduxThunk from 'redux-thunk';
 import { createBrowserHistory } from 'history'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { AppContainer } from 'react-hot-loader'
+import config from './config'
 import reducers from './reducers'
 
-export const keycloak = Keycloak('/keycloak.json')
+export var keycloak;
 
 const history = createBrowserHistory()
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -67,27 +68,35 @@ if (module.hot) {
   })
 }
 
-keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success(authenticated => {
-  if (keycloak.authenticated) {
-    sessionStorage.setItem('kctoken', keycloak.token);
+function initKeycloak() {
+  keycloak = Keycloak(config.configData.keycloak);
+  keycloak.init({ onLoad: 'check-sso', checkLoginIframeInterval: 1 }).success(authenticated => {
+    if (keycloak.authenticated) {
+      sessionStorage.setItem('kctoken', keycloak.token);
 
-    keycloak.loadUserProfile()
-      .success(result => {
-        store.dispatch(fromUsers.userInfoResponse(result))
-        render()
-      })
-      .error(err => {
-        console.log(err) // should probably redirect to an error page
-      })
+      keycloak.loadUserProfile()
+        .success(result => {
+          store.dispatch(fromUsers.userInfoResponse(result))
+          render()
+        })
+        .error(err => {
+          console.log(err) // should probably redirect to an error page
+        })
 
-    setInterval(() => {
-      keycloak.updateToken(10)
-        .success(() => sessionStorage.setItem('kctoken', keycloak.token))
-        .error(() => keycloak.logout());
-    }, 10000);
-  } else {
-    render()
-  }
+      setInterval(() => {
+        keycloak.updateToken(10)
+          .success(() => sessionStorage.setItem('kctoken', keycloak.token))
+          .error(() => keycloak.logout());
+      }, 10000);
+    } else {
+      render()
+    }
+  });
+}
+
+config.fetchConfig().then( () => {
+    initKeycloak();
 });
+
 
 registerServiceWorker();

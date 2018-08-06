@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 /* eslint-disable-next-line */
+import config from '../config'
 
 export const fetchClusters = (params) => {
   console.log(params)
@@ -22,7 +23,7 @@ export const fetchClusters = (params) => {
     headers: { 'Authorization': "Bearer " + sessionStorage.getItem('kctoken') }
   }
   const createPromise = response => new Promise((resolve, reject) => {
-    return fetch('/api/clusters_mgmt/v1/clusters?page='+params.page+'&size='+params.limit, options)
+    return fetch(config.configData.apiGateway + '/api/clusters_mgmt/v1/clusters?page='+params.page+'&size='+params.limit, options)
       .then(response => {  
         if (response.ok) {
           return response;
