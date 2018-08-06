@@ -10,15 +10,15 @@ export class ClusterUtilizationCard extends Component {
         title: PropTypes.string.isRequired,
         used: PropTypes.number.isRequired,
         total: PropTypes.number.isRequired,
-        available: PropTypes.number.isRequired,
         unit: PropTypes.string.isRequired,
         donut_id: PropTypes.string.isRequired,
       }
     
     render() {
-        const {title, used, total, available, unit, donut_id} = this.props
-        const used_column_title = this.props.unit + ' used';
-        const available_column_title = this.props.unit + ' available';
+        const {title, used, total, unit, donut_id} = this.props
+        const available = total - used;
+        const usedColumnTitle = this.props.unit + ' used';
+        const availableColumnTitle = this.props.unit + ' available';
         return (
             <UtilizationCard>
                 <CardTitle>
@@ -39,8 +39,8 @@ export class ClusterUtilizationCard extends Component {
                       </UtilizationCardDetailsDesc>
                   </UtilizationCardDetails>
                   <DonutChart id={donut_id} size={{width: 210,height: 210}}
-                              data={{columns: [[used_column_title, this.props.used],[available_column_title, this.props.available]],
-                                     groups: [[used_column_title, available_column_title]],
+                              data={{columns: [[usedColumnTitle, this.props.used],[availableColumnTitle, available]],
+                                     groups: [[usedColumnTitle, availableColumnTitle]],
                                      order: null,
                                     }}
                               title={{type: 'max'}} />
