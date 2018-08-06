@@ -56,8 +56,8 @@ const render = () => {
 // Hot reloading
 if (module.hot) {
   // Reload components
-  module.hot.accept('./App', () => {
-    console.log("App hot reload") // never seen this happening 
+  module.hot.accept('./ClustersPage', () => {
+    console.log("ClustersPage hot reload") // never seen this happening 
     render()
   })
 
