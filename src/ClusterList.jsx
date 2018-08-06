@@ -20,6 +20,7 @@ import {
   ListView, Button, Row, Col,
 } from 'patternfly-react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 export const renderAdditionalInfoItems = itemProperties => itemProperties
@@ -68,9 +69,11 @@ class ClusterList extends Component {
               >
                 <ListView.Item
                   actions={(
-                    <Button href={`/cluster/${clusterID}`}>
-Details
-                    </Button>
+                    <Link to={`/cluster/${clusterID}`}>
+                      <Button>
+                        Details
+                      </Button>
+                    </Link>
 )}
                   checkboxInput={<input type="checkbox" />}
                   leftContent={<ListView.Icon name="cluster" type="pf" />}
