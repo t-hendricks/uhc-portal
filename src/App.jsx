@@ -21,10 +21,8 @@ import './App.css';
 import * as fromClusterList from './ducks/clusterlist';
 import * as fromUsers from './ducks/users';
 import * as fromClusterDetails from './ducks/clusterdetails';
-import { Header } from './Header.js';
-import { ClusterList } from './ClusterList.js';
-import { ClusterDetails } from './ClusterDetails'
-import { CreateClusterModal } from './CreateClusterModal.js';
+import { ClusterList } from './ClusterList';
+import { CreateClusterModal } from './CreateClusterModal';
 import { Pager, Label, Button } from 'patternfly-react'
 import PropTypes from 'prop-types'
 import "patternfly/dist/css/patternfly.css";
