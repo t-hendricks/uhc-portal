@@ -111,7 +111,8 @@ module.exports = {
           '/api/clusters_mgmt',
         ],
         changeOrigin: true,
-        target: 'http://clusters-service.127.0.0.1.nip.io/',
+        secure: false,
+        target: 'https://clusters-service.127.0.0.1.nip.io/',
       },
       {
         context: [
