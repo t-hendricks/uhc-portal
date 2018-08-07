@@ -16,13 +16,40 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   Button, Col, ControlLabel, HelpBlock, Icon, Form, FormControl, FormGroup, Modal,
 } from 'patternfly-react';
+import * as actions from './ducks/createcluster';
+import * as api from './apis/createCluster';
 
 function CreateClusterModal(props) {
-  const { cancelTo } = props;
+  const { cancelTo, createCluster } = props;
+
+  const submit = () => {
+    // TODO use form content here
+    const cluster = {
+      name: 'nimrods_cluster',
+      region: 'us-east-1',
+      nodes: {
+        master: 1,
+        infra: 2,
+        compute: 4,
+      },
+      memory: {
+        total: 400,
+      },
+      cpu: {
+        total: 16,
+      },
+      storage: {
+        total: 72,
+      },
+    };
+    createCluster(cluster);
+  };
+
   return (
     <Modal show>
       <Modal.Header>
@@ -107,12 +134,12 @@ TODO unused
 
       </Modal.Body>
       <Modal.Footer>
-        <Button bsStyle="primary" onClick={() => alert('TODO Create unimplemented')}>
+        <Button bsStyle="primary" onClick={submit}>
             Create
         </Button>
         <Link to={cancelTo}>
           <Button bsStyle="default">
-              Cancel
+            Cancel
           </Button>
         </Link>
       </Modal.Footer>
@@ -122,6 +149,22 @@ TODO unused
 CreateClusterModal.propTypes = {
   cancelTo: PropTypes.string.isRequired,
   createTo: PropTypes.string.isRequired,
+  createCluster: PropTypes.func.isRequired,
 };
 
-export default CreateClusterModal;
+const mapStateToProps = state => ({
+  // TODO connect form content to state
+});
+
+const mapDispatchToProps = dispatch => ({
+  createCluster: (cluster) => {
+    dispatch(actions.createClusterRequest());
+    api.postNewCluster(cluster)
+      .then(response => response.json())
+      .then((value) => {
+        dispatch(actions.createClusterResponse(value));
+      });
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateClusterModal);
