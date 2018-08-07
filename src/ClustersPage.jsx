@@ -22,7 +22,6 @@ import { Pager, Label, Button } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import * as fromClusterList from './ducks/clusterlist';
 import * as fromUsers from './ducks/users';
-import * as fromClusterDetails from './ducks/clusterdetails';
 import { ClusterList } from './ClusterList';
 import CreateClusterModal from './CreateClusterModal';
 import 'patternfly/dist/css/patternfly.css';
@@ -54,8 +53,6 @@ class ClustersPage extends Component {
       clustersLastPage,
       clustersRequested,
       userProfile,
-      fetchClusterDetails,
-      clusterDetails,
     } = this.props;
     let label;
     if (clustersRequested) {
@@ -101,7 +98,7 @@ Updated
       <div>
         {label}
 
-        <ClusterList clusters={clusters} showClusterDetails={this.props.showClusterDetails} />
+        <ClusterList clusters={clusters} />
         <Pager
           messages={{ nextPage: 'The Next Page', previousPage: 'The Previous Page' }}
           onNextPage={this.handleNext}
@@ -113,7 +110,7 @@ Updated
         <div>
           <Link to="/clusters/create">
             <Button>
-Create cluster
+              Create cluster
             </Button>
           </Link>
           <Route
@@ -130,7 +127,6 @@ Create cluster
 
 ClustersPage.propTypes = {
   fetchClusters: PropTypes.func.isRequired,
-  fetchClusterDetails: PropTypes.func.isRequired,
   clustersPaged: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
@@ -140,8 +136,6 @@ ClustersPage.propTypes = {
   clustersLastPage: PropTypes.number.isRequired,
   clustersRequested: PropTypes.bool.isRequired,
   userProfile: PropTypes.object.isRequired,
-  clusterDetails: PropTypes.object.isRequired,
-
 };
 
 const mapStateToProps = state => ({
@@ -151,13 +145,10 @@ const mapStateToProps = state => ({
   clustersPaged: fromClusterList.getClustersPaged(state),
   clustersRequested: fromClusterList.getClustersRequested(state),
   userProfile: fromUsers.getUserProfile(state),
-  clusterDetails: fromClusterDetails.getClusterDetails(state),
 });
 
 const mapDispatchToProps = {
   fetchClusters: fromClusterList.fetchClusters,
-  fetchClusterDetails: fromClusterDetails.fetchClusterDetails,
-  showClusterDetails: fromClusterDetails.showClusterDetails,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClustersPage);
