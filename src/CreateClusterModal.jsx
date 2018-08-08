@@ -30,30 +30,31 @@ const fieldCols = 12 - labelCols;
 
 // To be used inside redux-form Field component.
 function ReduxFormGroup(props) {
-  console.log(props);
-
   const {
     label,
     helpText,
-    meta: { error, warning, touched },
+    meta: { error, touched },
     input,
-    ...extraProps,
+    ...extraProps
   } = props;
 
   return (
-    <FormGroup controlId={input.name} validationState={touched && error ? "error" : null}>
+    <FormGroup controlId={input.name} validationState={touched && error ? 'error' : null}>
       <Col componentClass={ControlLabel} sm={labelCols}>
         {label}
       </Col>
       <Col sm={fieldCols}>
         <FormControl name={input.name} {...input} {...extraProps}/>
         <HelpBlock>
-          {touched && error ? `${helpText} ${error}` : helpText}
+          { touched && error ? `${helpText} ${error}` : helpText }
         </HelpBlock>
       </Col>
     </FormGroup>
   );
 }
+ReduxFormGroup.defaultProps = {
+  helpText: "",
+};
 ReduxFormGroup.propTypes = {
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
@@ -64,7 +65,7 @@ ReduxFormGroup.propTypes = {
 };
 
 // Validations
-const required = value => (value ? undefined : "Field is required");
+const required = value => (value ? undefined : 'Field is required');
 
 function CreateClusterModal(props) {
   const { cancelTo, createCluster } = props;
