@@ -20,49 +20,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import {
-  Button, Col, ControlLabel, HelpBlock, Icon, Form, FormControl, FormGroup, Modal,
+  Button, Icon, Form, Modal,
 } from 'patternfly-react';
+import ReduxHorizontalFormGroup from './components/ReduxHorizontalFormGroup';
 import * as actions from './ducks/createcluster';
 import * as api from './apis/createCluster';
 
-const labelCols = 3;
-const fieldCols = 12 - labelCols;
-
-// To be used inside redux-form Field component.
-function ReduxFormGroup(props) {
-  const {
-    label,
-    helpText,
-    meta: { error, touched },
-    input,
-    ...extraProps
-  } = props;
-
-  return (
-    <FormGroup controlId={input.name} validationState={touched && error ? 'error' : null}>
-      <Col componentClass={ControlLabel} sm={labelCols}>
-        {label}
-      </Col>
-      <Col sm={fieldCols}>
-        <FormControl name={input.name} {...input} {...extraProps} />
-        <HelpBlock>
-          { touched && error ? `${helpText} ${error}` : helpText }
-        </HelpBlock>
-      </Col>
-    </FormGroup>
-  );
-}
-ReduxFormGroup.defaultProps = {
-  helpText: '',
-};
-ReduxFormGroup.propTypes = {
-  label: PropTypes.string.isRequired,
-  helpText: PropTypes.string,
-  // props passed by redux-form
-  input: PropTypes.object.isRequired,
-  meta: PropTypes.object.isRequired,
-  // plus other props to be passed to the field...
-};
 
 // Validations
 const required = value => (value ? undefined : 'Field is required');
@@ -110,7 +73,7 @@ Create Cluster
         <Form horizontal>
 
           <Field
-            component={ReduxFormGroup}
+            component={ReduxHorizontalFormGroup}
             name="name"
             label="Cluster name"
             type="text"
@@ -119,7 +82,7 @@ Create Cluster
           />
 
           <Field
-            component={ReduxFormGroup}
+            component={ReduxHorizontalFormGroup}
             name="aws_access_key_id"
             label="AWS access key ID"
             type="password"
@@ -127,7 +90,7 @@ Create Cluster
           />
 
           <Field
-            component={ReduxFormGroup}
+            component={ReduxHorizontalFormGroup}
             name="aws_secret_access_key"
             label="AWS secret access key"
             type="password"
@@ -136,7 +99,7 @@ Create Cluster
           />
 
           <Field
-            component={ReduxFormGroup}
+            component={ReduxHorizontalFormGroup}
             name="region"
             label="AWS region"
             componentClass="select"
@@ -149,7 +112,7 @@ Create Cluster
           </Field>
 
           <Field
-            component={ReduxFormGroup}
+            component={ReduxHorizontalFormGroup}
             name="availability_zone"
             label="AWS availability zone"
             componentClass="select"
