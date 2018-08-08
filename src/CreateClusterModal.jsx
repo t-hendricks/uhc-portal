@@ -18,11 +18,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
 import {
   Button, Col, ControlLabel, HelpBlock, Icon, Form, FormControl, FormGroup, Modal,
 } from 'patternfly-react';
 import * as actions from './ducks/createcluster';
 import * as api from './apis/createCluster';
+
+function ReduxFormControl({input, meta, ...props}) {
+  return <FormControl {...props} {...input}/>;
+}
 
 function CreateClusterModal(props) {
   const { cancelTo, createCluster } = props;
@@ -73,7 +78,7 @@ Create Cluster
                 Cluster name
             </Col>
             <Col sm={fieldCols}>
-              <Form.FormControl type="text" />
+              <Field component={ReduxFormControl} name="name" type="text" />
               <HelpBlock>
 TODO: what does this affect?
               </HelpBlock>
@@ -155,6 +160,8 @@ CreateClusterModal.propTypes = {
   createCluster: PropTypes.func.isRequired,
 };
 
+const reduxFormCreateClusterModal = reduxForm({form: 'CreateCluster'})(CreateClusterModal)
+
 const mapStateToProps = state => ({
   // TODO connect form content to state
 });
@@ -170,4 +177,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateClusterModal);
+export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateClusterModal);

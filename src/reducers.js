@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import clusterList from './ducks/clusterlist';
 import userProfile from './ducks/users';
 import clusterDetails from './ducks/clusterdetails';
@@ -9,6 +10,7 @@ const reducers = combineReducers({
   userProfile,
   clusterDetails,
   createCluster,
+  form: formReducer,
 });
 
 export default reducers;
