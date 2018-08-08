@@ -44,7 +44,7 @@ function ReduxFormGroup(props) {
         {label}
       </Col>
       <Col sm={fieldCols}>
-        <FormControl name={input.name} {...input} {...extraProps}/>
+        <FormControl name={input.name} {...input} {...extraProps} />
         <HelpBlock>
           { touched && error ? `${helpText} ${error}` : helpText }
         </HelpBlock>
@@ -53,7 +53,7 @@ function ReduxFormGroup(props) {
   );
 }
 ReduxFormGroup.defaultProps = {
-  helpText: "",
+  helpText: '',
 };
 ReduxFormGroup.propTypes = {
   label: PropTypes.string.isRequired,
@@ -116,7 +116,7 @@ Create Cluster
             type="text"
             validate={required}
             helpText="TODO: what does this affect?"
-            />
+          />
 
           <Field
             component={ReduxFormGroup}
@@ -124,7 +124,7 @@ Create Cluster
             label="AWS access key ID"
             type="password"
             placeholder="AWS access key ID"
-            />
+          />
 
           <Field
             component={ReduxFormGroup}
@@ -133,7 +133,7 @@ Create Cluster
             type="password"
             placeholder="AWS secret access key"
             helpText="Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, generate an access key for Red Hat, and put that here."
-            />
+          />
 
           <Field
             component={ReduxFormGroup}
@@ -142,7 +142,7 @@ Create Cluster
             componentClass="select"
             placeholder="us-east-1"
             helpText="TODO support other regions"
-            >
+          >
             <option value="us-east-1">
               us-east-1
             </option>
@@ -155,7 +155,7 @@ Create Cluster
             componentClass="select"
             placeholder="us-east-1a"
             helpText="TODO unused"
-            >
+          >
             <option value="us-east-1a">
               us-east-1a
             </option>
@@ -183,7 +183,7 @@ CreateClusterModal.propTypes = {
   createCluster: PropTypes.func.isRequired,
 };
 
-const reduxFormCreateClusterModal = reduxForm({form: 'CreateCluster'})(CreateClusterModal)
+const reduxFormCreateClusterModal = reduxForm({ form: 'CreateCluster' })(CreateClusterModal);
 
 const mapStateToProps = state => ({
   // TODO connect form content to state
