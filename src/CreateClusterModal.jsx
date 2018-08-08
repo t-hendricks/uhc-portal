@@ -25,9 +25,46 @@ import {
 import * as actions from './ducks/createcluster';
 import * as api from './apis/createCluster';
 
-function ReduxFormControl({input, meta, ...props}) {
-  return <FormControl {...props} {...input}/>;
+const labelCols = 3;
+const fieldCols = 12 - labelCols;
+
+// To be used inside redux-form Field component.
+function ReduxFormGroup(props) {
+  console.log(props);
+
+  const {
+    label,
+    helpText,
+    meta: { error, warning, touched },
+    input,
+    ...extraProps,
+  } = props;
+
+  return (
+    <FormGroup controlId={input.name} validationState={touched && error ? "error" : null}>
+      <Col componentClass={ControlLabel} sm={labelCols}>
+        {label}
+      </Col>
+      <Col sm={fieldCols}>
+        <FormControl name={input.name} {...input} {...extraProps}/>
+        <HelpBlock>
+          {touched && error ? `${helpText} ${error}` : helpText}
+        </HelpBlock>
+      </Col>
+    </FormGroup>
+  );
 }
+ReduxFormGroup.propTypes = {
+  label: PropTypes.string.isRequired,
+  helpText: PropTypes.string,
+  // props passed by redux-form
+  input: PropTypes.object.isRequired,
+  meta: PropTypes.object.isRequired,
+  // plus other props to be passed to the field...
+};
+
+// Validations
+const required = value => (value ? undefined : "Field is required");
 
 function CreateClusterModal(props) {
   const { cancelTo, createCluster } = props;
@@ -55,9 +92,6 @@ function CreateClusterModal(props) {
     createCluster(cluster);
   };
 
-  const labelCols = 3;
-  const fieldCols = 12 - labelCols;
-
   return (
     <Modal show>
       <Modal.Header>
@@ -73,70 +107,58 @@ Create Cluster
       <Modal.Body>
 
         <Form horizontal>
-          <FormGroup controlId="name">
-            <Col componentClass={ControlLabel} sm={labelCols}>
-                Cluster name
-            </Col>
-            <Col sm={fieldCols}>
-              <Field component={ReduxFormControl} name="name" type="text" />
-              <HelpBlock>
-TODO: what does this affect?
-              </HelpBlock>
-            </Col>
-          </FormGroup>
 
-          <FormGroup controlId="aws_access_key_id">
-            <Col componentClass={ControlLabel} sm={labelCols}>
-                AWS access key ID
-            </Col>
-            <Col sm={fieldCols}>
-              <Form.FormControl type="password" placeholder="AWS access key ID" />
-            </Col>
-          </FormGroup>
+          <Field
+            component={ReduxFormGroup}
+            name="name"
+            label="Cluster name"
+            type="text"
+            validate={required}
+            helpText="TODO: what does this affect?"
+            />
 
-          <FormGroup controlId="aws_secret_access_key">
-            <Col componentClass={ControlLabel} sm={labelCols}>
-                AWS secret access key
-            </Col>
-            <Col sm={fieldCols}>
-              <Form.FormControl type="password" placeholder="AWS secret access key" />
-              <HelpBlock>
-Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, generate an access key for Red Hat, and put that here.
-              </HelpBlock>
-            </Col>
-          </FormGroup>
+          <Field
+            component={ReduxFormGroup}
+            name="aws_access_key_id"
+            label="AWS access key ID"
+            type="password"
+            placeholder="AWS access key ID"
+            />
 
-          <FormGroup controlId="region">
-            <Col componentClass={ControlLabel} sm={labelCols}>
-                AWS region
-            </Col>
-            <Col sm={fieldCols}>
-              <FormControl componentClass="select" placeholder="us-east-1">
-                <option value="us-east-1">
-us-east-1
-                </option>
-              </FormControl>
-              <HelpBlock>
-TODO support other regions
-              </HelpBlock>
-            </Col>
-          </FormGroup>
+          <Field
+            component={ReduxFormGroup}
+            name="aws_secret_access_key"
+            label="AWS secret access key"
+            type="password"
+            placeholder="AWS secret access key"
+            helpText="Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, generate an access key for Red Hat, and put that here."
+            />
 
-          <FormGroup controlId="availability_zone">
-            <Col componentClass={ControlLabel} sm={labelCols}>
-                AWS availability zone
-            </Col>
-            <Col sm={fieldCols}>
-              <FormControl componentClass="select" placeholder="us-east-1a">
-                <option value="us-east-1a">
-us-east-1a
-                </option>
-              </FormControl>
-              <HelpBlock>
-TODO unused
-              </HelpBlock>
-            </Col>
-          </FormGroup>
+          <Field
+            component={ReduxFormGroup}
+            name="region"
+            label="AWS region"
+            componentClass="select"
+            placeholder="us-east-1"
+            helpText="TODO support other regions"
+            >
+            <option value="us-east-1">
+              us-east-1
+            </option>
+          </Field>
+
+          <Field
+            component={ReduxFormGroup}
+            name="availability_zone"
+            label="AWS availability zone"
+            componentClass="select"
+            placeholder="us-east-1a"
+            helpText="TODO unused"
+            >
+            <option value="us-east-1a">
+              us-east-1a
+            </option>
+          </Field>
 
         </Form>
 
