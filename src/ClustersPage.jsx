@@ -86,6 +86,7 @@ Updated
     // Add fake data. I hope we can remove this soon...
     clusters = clusters.map(cluster => Object.assign({}, {
       clusterID: cluster.id,
+      state: cluster.state,
       title: cluster.name,
       properties: { nodes: cluster.nodes.total },
       expandedContentText:

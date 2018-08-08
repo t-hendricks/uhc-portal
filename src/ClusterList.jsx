@@ -23,8 +23,33 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-export const renderAdditionalInfoItems = itemProperties => itemProperties
-  && Object.keys(itemProperties).map((prop) => {
+export const renderAdditionalInfoItems = (itemProperties, state) => {
+  const generateStateInfoItem = (clusterState) => {
+    let text;
+    let icon;
+    switch (clusterState) {
+      case 'Installing':
+        [text, icon] = ['Installing...', 'warning-triangle-o'];
+        break;
+      case 'Error':
+        [text, icon] = ['Error', 'error-circle-o'];
+        break;
+      default:
+        [text, icon] = ['Ready', 'ok'];
+    }
+    return (
+      <ListView.InfoItem key="clusterState">
+        <ListView.Icon name={icon} type="pf"/>
+        <span>
+          {text}
+        </span>
+      </ListView.InfoItem>
+    );
+  };
+
+  const infoItems = [generateStateInfoItem(state)];
+
+  return infoItems.concat(Object.keys(itemProperties).map((prop) => {
     const cssClassNames = classNames('pficon', {
       'pficon-flavor': prop === 'hosts',
       'pficon-cluster': prop === 'clusters',
@@ -41,8 +66,8 @@ export const renderAdditionalInfoItems = itemProperties => itemProperties
         {prop}
       </ListView.InfoItem>
     );
-  });
-
+  }));
+};
 
 class ClusterList extends Component {
   static propTypes = {
@@ -54,12 +79,14 @@ class ClusterList extends Component {
   }
 
   render() {
+    const maintenanceIcon = <ListView.Icon name="maintenance" type="pf" className="maintenance" />;
+    const clusterIcon = <ListView.Icon name="cluster" type="pf" />;
     return (
       <div>
         <ListView>
           <TransitionGroup>
             {this.props.clusters.map(({
-              actions, properties, clusterID, title, description, expandedContentText, hideCloseIcon,
+              actions, properties, clusterID, title, description, expandedContentText, hideCloseIcon, state
             }, index) => (
               <CSSTransition
                 key={title}
@@ -74,10 +101,10 @@ class ClusterList extends Component {
                         Details
                       </Button>
                     </Link>
-)}
+                  )}
                   checkboxInput={<input type="checkbox" />}
-                  leftContent={<ListView.Icon name="cluster" type="pf" />}
-                  additionalInfo={renderAdditionalInfoItems(properties)}
+                  leftContent={state === 'Installing' ? maintenanceIcon : clusterIcon}
+                  additionalInfo={renderAdditionalInfoItems(properties, state)}
                   heading={title}
                   description={description}
                   stacked={false}
