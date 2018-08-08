@@ -50,6 +50,9 @@ function CreateClusterModal(props) {
     createCluster(cluster);
   };
 
+  const labelCols = 3;
+  const fieldCols = 12 - labelCols;
+
   return (
     <Modal show>
       <Modal.Header>
@@ -66,10 +69,10 @@ Create Cluster
 
         <Form horizontal>
           <FormGroup controlId="name">
-            <Col componentClass={ControlLabel} sm={3}>
+            <Col componentClass={ControlLabel} sm={labelCols}>
                 Cluster name
             </Col>
-            <Col sm={9}>
+            <Col sm={fieldCols}>
               <Form.FormControl type="text" />
               <HelpBlock>
 TODO: what does this affect?
@@ -78,19 +81,19 @@ TODO: what does this affect?
           </FormGroup>
 
           <FormGroup controlId="aws_access_key_id">
-            <Col componentClass={ControlLabel} sm={3}>
+            <Col componentClass={ControlLabel} sm={labelCols}>
                 AWS access key ID
             </Col>
-            <Col sm={9}>
+            <Col sm={fieldCols}>
               <Form.FormControl type="password" placeholder="AWS access key ID" />
             </Col>
           </FormGroup>
 
           <FormGroup controlId="aws_secret_access_key">
-            <Col componentClass={ControlLabel} sm={3}>
+            <Col componentClass={ControlLabel} sm={labelCols}>
                 AWS secret access key
             </Col>
-            <Col sm={9}>
+            <Col sm={fieldCols}>
               <Form.FormControl type="password" placeholder="AWS secret access key" />
               <HelpBlock>
 Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, generate an access key for Red Hat, and put that here.
@@ -99,10 +102,10 @@ Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, 
           </FormGroup>
 
           <FormGroup controlId="region">
-            <Col componentClass={ControlLabel} sm={3}>
+            <Col componentClass={ControlLabel} sm={labelCols}>
                 AWS region
             </Col>
-            <Col sm={9}>
+            <Col sm={fieldCols}>
               <FormControl componentClass="select" placeholder="us-east-1">
                 <option value="us-east-1">
 us-east-1
@@ -115,10 +118,10 @@ TODO support other regions
           </FormGroup>
 
           <FormGroup controlId="availability_zone">
-            <Col componentClass={ControlLabel} sm={3}>
+            <Col componentClass={ControlLabel} sm={labelCols}>
                 AWS availability zone
             </Col>
-            <Col sm={9}>
+            <Col sm={fieldCols}>
               <FormControl componentClass="select" placeholder="us-east-1a">
                 <option value="us-east-1a">
 us-east-1a
