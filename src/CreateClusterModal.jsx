@@ -18,11 +18,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
 import {
-  Button, Col, ControlLabel, HelpBlock, Icon, Form, FormControl, FormGroup, Modal,
+  Button, Icon, Form, Modal,
 } from 'patternfly-react';
+import ReduxHorizontalFormGroup from './components/ReduxHorizontalFormGroup';
 import * as actions from './ducks/createcluster';
 import * as api from './apis/createCluster';
+
+
+// Validations
+const required = value => (value ? undefined : 'Field is required');
 
 function CreateClusterModal(props) {
   const { cancelTo, createCluster } = props;
@@ -65,70 +71,58 @@ Create Cluster
       <Modal.Body>
 
         <Form horizontal>
-          <FormGroup controlId="name">
-            <Col componentClass={ControlLabel} sm={3}>
-                Cluster name
-            </Col>
-            <Col sm={9}>
-              <Form.FormControl type="text" />
-              <HelpBlock>
-TODO: what does this affect?
-              </HelpBlock>
-            </Col>
-          </FormGroup>
 
-          <FormGroup controlId="aws_access_key_id">
-            <Col componentClass={ControlLabel} sm={3}>
-                AWS access key ID
-            </Col>
-            <Col sm={9}>
-              <Form.FormControl type="password" placeholder="AWS access key ID" />
-            </Col>
-          </FormGroup>
+          <Field
+            component={ReduxHorizontalFormGroup}
+            name="name"
+            label="Cluster name"
+            type="text"
+            validate={required}
+            helpText="TODO: what does this affect?"
+          />
 
-          <FormGroup controlId="aws_secret_access_key">
-            <Col componentClass={ControlLabel} sm={3}>
-                AWS secret access key
-            </Col>
-            <Col sm={9}>
-              <Form.FormControl type="password" placeholder="AWS secret access key" />
-              <HelpBlock>
-Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, generate an access key for Red Hat, and put that here.
-              </HelpBlock>
-            </Col>
-          </FormGroup>
+          <Field
+            component={ReduxHorizontalFormGroup}
+            name="aws_access_key_id"
+            label="AWS access key ID"
+            type="password"
+            placeholder="AWS access key ID"
+          />
 
-          <FormGroup controlId="region">
-            <Col componentClass={ControlLabel} sm={3}>
-                AWS region
-            </Col>
-            <Col sm={9}>
-              <FormControl componentClass="select" placeholder="us-east-1">
-                <option value="us-east-1">
-us-east-1
-                </option>
-              </FormControl>
-              <HelpBlock>
-TODO support other regions
-              </HelpBlock>
-            </Col>
-          </FormGroup>
+          <Field
+            component={ReduxHorizontalFormGroup}
+            name="aws_secret_access_key"
+            label="AWS secret access key"
+            type="password"
+            placeholder="AWS secret access key"
+            helpText="Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, generate an access key for Red Hat, and put that here."
+          />
 
-          <FormGroup controlId="availability_zone">
-            <Col componentClass={ControlLabel} sm={3}>
-                AWS availability zone
-            </Col>
-            <Col sm={9}>
-              <FormControl componentClass="select" placeholder="us-east-1a">
-                <option value="us-east-1a">
-us-east-1a
-                </option>
-              </FormControl>
-              <HelpBlock>
-TODO unused
-              </HelpBlock>
-            </Col>
-          </FormGroup>
+          <Field
+            component={ReduxHorizontalFormGroup}
+            name="region"
+            label="AWS region"
+            componentClass="select"
+            placeholder="us-east-1"
+            helpText="TODO support other regions"
+          >
+            <option value="us-east-1">
+              us-east-1
+            </option>
+          </Field>
+
+          <Field
+            component={ReduxHorizontalFormGroup}
+            name="availability_zone"
+            label="AWS availability zone"
+            componentClass="select"
+            placeholder="us-east-1a"
+            helpText="TODO unused"
+          >
+            <option value="us-east-1a">
+              us-east-1a
+            </option>
+          </Field>
 
         </Form>
 
@@ -152,6 +146,8 @@ CreateClusterModal.propTypes = {
   createCluster: PropTypes.func.isRequired,
 };
 
+const reduxFormCreateClusterModal = reduxForm({ form: 'CreateCluster' })(CreateClusterModal);
+
 const mapStateToProps = state => ({
   // TODO connect form content to state
 });
@@ -167,4 +163,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateClusterModal);
+export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateClusterModal);
