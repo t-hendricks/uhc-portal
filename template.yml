@@ -29,41 +29,32 @@ metadata:
 
 parameters:
 
-- name: NAMESPACE
-  description: The namespace where the objects will be created.
-  value: unified-hybrid-cloud
-
-- name: VERSION
-  description: The version of the project.
-  value: latest
-
-- name: IMAGE
-  description: Name of the image, including the registry and the version.
-  value: quay.io/openshift-unified-hybrid-cloud/portal:latest
-
-- name: PULL_POLICY
-  description: Image pull policy.
-  value: IfNotPresent
+- name: API_URL
+  description: URL for the API server.
 
 - name: DOMAIN
   description: The DNS domain where the route will be created.
-  value: cloud.openshift.com
 
-- name: API_URL
-  description: URL for the API server
-  value: https://api.openshift.com
+- name: IMAGE_PULL_POLICY
+  description: Image pull policy.
 
-- name: KEYCLOAK_URL
-  description: URL for the keycloak auth server
-  value: https://developers.stage.redhat.com/auth
+- name: IMAGE_TAG
+  description: Tag of the image, including the registry and the version.
+
+- name: NAMESPACE
+  description: The namespace where the objects will be created.
 
 - name: KEYCLOAK_REALM
-  description: Keycloak authentication realm
-  value: rhd
+  description: Keycloak authentication realm.
 
 - name: KEYCLOAK_RESOURCE
-  description: Keycloak authentication resource
-  value: uhc
+  description: Keycloak authentication resource.
+
+- name: KEYCLOAK_URL
+  description: URL for the Keycloak server.
+
+- name: VERSION
+  description: The version of the project.
 
 objects:
 
@@ -157,8 +148,8 @@ objects:
             name: webapp-config
         containers:
         - name: server
-          image: ${IMAGE}
-          imagePullPolicy: ${PULL_POLICY}
+          image: ${IMAGE_TAG}
+          imagePullPolicy: ${IMAGE_PULL_POLICY}
           volumeMounts:
           - name: config
             mountPath: /etc/httpd
