@@ -14,23 +14,25 @@
 # limitations under the License.
 #
 
-# The details of the image:
-registry:=quay.io
-repository:=openshift-unified-hybrid-cloud/portal
+# The details of the application:
+domain:=cloud.openshift.com
+namespace:=unified-hybrid-cloud
 version:=latest
 
-# The tag that will be assigned to the image:
-tag:=$(registry)/$(repository):$(version)
+# The details of the image:
+image_registry:=quay.io
+image_repository:=openshift-unified-hybrid-cloud/portal
+image_tag:=$(image_registry)/$(image_repository):$(version)
+image_tar:=$(shell echo $(image_tag) | tr /:. ---).tar
+image_pull_policy:=IfNotPresent
 
-# The name of the tar file for the image:
-tar:=$(shell echo $(tag) | tr /:. ---).tar
+# The location of the API gateway:
+api_url:=https://api.openshift.com
 
-# The details of the application:
-namespace:=unified-hybrid-cloud
-domain:=cloud.openshift.com
-
-# The default image pull policy:
-pull_policy:=IfNotPresent
+# The details of the Keycloak instance:
+keycloak_url:=https://developers.stage.redhat.com/auth
+keycloak_realm:=rhd
+keycloak_resource:=uhc
 
 .PHONY: \
 	app \
@@ -45,22 +47,26 @@ app:
 	yarn build
 
 image:
-	docker build -t $(tag) .
+	docker build -t $(image_tag) .
 
 tar:
-	docker save -o $(tar) $(tag)
+	docker save -o $(image_tar) $(image_tag)
 
 push:
-	docker push $(tag)
+	docker push $(image_tag)
 
 deploy:
 	oc process \
 		--filename="template.yml" \
+		--param=API_URL="$(api_url)" \
 		--param=DOMAIN="$(domain)" \
-		--param=IMAGE="$(tag)" \
+		--param=IMAGE_PULL_POLICY="$(image_pull_policy)" \
+		--param=IMAGE_TAG="$(image_tag)" \
+		--param=KEYCLOAK_REALM="$(keycloak_realm)" \
+		--param=KEYCLOAK_RESOURCE="$(keycloak_resource)" \
+		--param=KEYCLOAK_URL="$(keycloak_url)" \
 		--param=NAMESPACE="$(namespace)" \
 		--param=VERSION="$(version)" \
-		--param=PULL_POLICY="$(pull_policy)" \
 	| \
 	oc apply \
 		--filename=-
