@@ -4,6 +4,7 @@ import clusterList from './ducks/clusterlist';
 import userProfile from './ducks/users';
 import clusterDetails from './ducks/clusterdetails';
 import createCluster from './ducks/createcluster';
+import clusterListFilters from './reducers/clusterListFilter';
 
 const reducers = combineReducers({
   clusterList,
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   clusterDetails,
   createCluster,
   form: formReducer,
+  clusterListFilters,
 });
 
 export default reducers;
