@@ -18,10 +18,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 import './ClustersPage.css';
-import { Pager, Label, Button } from 'patternfly-react';
+import { PaginationRow, Label, Button } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import * as fromClusterList from './ducks/clusterlist';
-import * as fromUsers from './ducks/users';
 import { ClusterList } from './ClusterList';
 import CreateClusterModal from './CreateClusterModal';
 import 'patternfly/dist/css/patternfly.css';
@@ -29,30 +28,24 @@ import 'patternfly/dist/css/patternfly-additions.css';
 
 class ClustersPage extends Component {
   componentDidMount() {
-    const { fetchClusters, clustersCurrentPage, userProfile } = this.props;
-    fetchClusters(clustersCurrentPage);
-    this.handleNext = this.handleNext.bind(this);
-    this.handlePrevious = this.handlePrevious.bind(this);
+    const { fetchClusters } = this.props;
+    fetchClusters(this.createQueryParams(this.props));
   }
 
-  handleNext() {
-    const { fetchClusters, clustersCurrentPage } = this.props;
-    fetchClusters(clustersCurrentPage + 1);
-  }
-
-  handlePrevious() {
-    const { fetchClusters, clustersCurrentPage } = this.props;
-    fetchClusters(clustersCurrentPage - 1);
-  }
+  createQueryParams(oldParams, newParams) {
+    return Object.assign({}, oldParams, newParams); // should exclude irrelevant values
+  };
 
   render() {
     const {
       clustersPaged,
       clustersCurrentPage,
+      clustersPageSize,
+      clusterCount,
       clustersErrored,
       clustersLastPage,
       clustersRequested,
-      userProfile,
+      fetchClusters,
     } = this.props;
     let label;
     if (clustersRequested) {
@@ -95,19 +88,34 @@ Updated
         nodes: 'Text describing Item 1s nodes',
       },
     }));
+
+    const pageSelect = param => fetchClusters(this.createQueryParams(this.props, param));
+    const onNextPage = () => pageSelect({ clustersCurrentPage: clustersCurrentPage + 1 });
+    const onPreviousPage = () => pageSelect({ clustersCurrentPage: clustersCurrentPage - 1 });
+    const onLastPage = () => pageSelect({ clustersCurrentPage: clustersLastPage });
+    const onFirstPage = () => pageSelect({ clustersCurrentPage: 0 });
+    const onPageSizeSelect = size => pageSelect({ clustersPageSize: size });
+
     return (
       <div>
         {label}
 
         <ClusterList clusters={clusters} />
-        <Pager
-          messages={{ nextPage: 'The Next Page', previousPage: 'The Previous Page' }}
-          onNextPage={this.handleNext}
-          onPreviousPage={this.handlePrevious}
-          disableNext={clustersCurrentPage === clustersLastPage}
-          disablePrevious={clustersCurrentPage === 0}
+        <PaginationRow
+          viewType="list"
+          pagination={{ page: clustersCurrentPage + 1, perPage: clustersPageSize, perPageOptions: [5, 10, 15, 25] }}
+          itemCount={clusterCount}
+          amountOfPages={clustersLastPage + 1}
+          onPerPageSelect={onPageSizeSelect}
+          onPreviousPage={onPreviousPage}
+          onNextPage={onNextPage}
+          itemsStart={clustersCurrentPage * clustersPageSize + 1}
+          itemsEnd={Math.min((clustersCurrentPage + 1) * clustersPageSize, clusterCount)}
+          onLastPage={onLastPage}
+          onFirstPage={onFirstPage}
+          pageInputValue={clustersCurrentPage + 1}
         />
-
+        <br />
         <div>
           <Link to="/clusters/create">
             <Button>
@@ -133,19 +141,21 @@ ClustersPage.propTypes = {
     name: PropTypes.string,
   })).isRequired,
   clustersCurrentPage: PropTypes.number.isRequired,
+  clustersPageSize: PropTypes.number.isRequired,
+  clusterCount: PropTypes.number.isRequired,
   clustersErrored: PropTypes.bool.isRequired,
   clustersLastPage: PropTypes.number.isRequired,
   clustersRequested: PropTypes.bool.isRequired,
-  userProfile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   clustersCurrentPage: fromClusterList.getClustersCurrentPage(state),
+  clustersPageSize: fromClusterList.getClustersPageSize(state),
+  clusterCount: fromClusterList.getClustersClusterCount(state),
   clustersErrored: fromClusterList.getClustersErrored(state),
   clustersLastPage: fromClusterList.getClustersLastPage(state),
   clustersPaged: fromClusterList.getClustersPaged(state),
   clustersRequested: fromClusterList.getClustersRequested(state),
-  userProfile: fromUsers.getUserProfile(state),
 });
 
 const mapDispatchToProps = {

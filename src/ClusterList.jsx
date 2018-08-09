@@ -87,6 +87,7 @@ class ClusterList extends Component {
             actions, properties, clusterID, title, description, expandedContentText, hideCloseIcon, state,
           }, index) => (
             <ListView.Item
+              key={`cluster${clusterID}`}
               actions={(
                 <Link to={`/cluster/${clusterID}`}>
                   <Button>
