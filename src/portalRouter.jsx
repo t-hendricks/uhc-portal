@@ -7,6 +7,7 @@ import { Button, Row, Col } from 'patternfly-react';
 import ClustersPage from './ClustersPage';
 import Header from './Header';
 import ClusterDetails from './ClusterDetails';
+import { hot } from 'react-hot-loader';
 
 const PortalRouter = ({ history, authenticated, loginFunction }) => {
   if (!authenticated) {
@@ -42,4 +43,4 @@ PortalRouter.propTypes = {
   loginFunction: PropTypes.func.isRequired,
 };
 
-export default PortalRouter;
+export default hot(module)(PortalRouter);
