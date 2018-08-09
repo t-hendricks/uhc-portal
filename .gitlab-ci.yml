@@ -72,7 +72,7 @@ deploy_sandbox:
       image_pull_policy="Always"
       keycloak_realm="rhd"
       keycloak_resource="uhc"
-      keycloak_url="https://developers.stage.redhat.com"
+      keycloak_url="https://developers.stage.redhat.com/auth"
       version="latest"
       deploy
   - oc logout
@@ -90,7 +90,7 @@ deploy_staging:
       domain="cloud.staging.private"
       keycloak_realm="rhd"
       keycloak_resource="uhc"
-      keycloak_url="https://developers.stage.redhat.com"
+      keycloak_url="https://developers.stage.redhat.com/auth"
       version="${CI_COMMIT_TAG}"
       deploy
   - oc logout
@@ -109,7 +109,7 @@ deploy_production:
       domain="cloud.production.private"
       keycloak_realm="rhd"
       keycloak_resource="uhc"
-      keycloak_url="https://developers.stage.redhat.com"
+      keycloak_url="https://developers.stage.redhat.com/auth"
       version="${CI_COMMIT_TAG}"
       deploy
   - oc logout
