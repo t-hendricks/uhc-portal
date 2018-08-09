@@ -21,7 +21,6 @@ import {
 } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 export const renderAdditionalInfoItems = (itemProperties, state) => {
   const generateStateInfoItem = (clusterState) => {
@@ -39,7 +38,7 @@ export const renderAdditionalInfoItems = (itemProperties, state) => {
     }
     return (
       <ListView.InfoItem key="clusterState">
-        <ListView.Icon name={icon} type="pf"/>
+        <ListView.Icon name={icon} type="pf" />
         <span>
           {text}
         </span>
@@ -84,42 +83,32 @@ class ClusterList extends Component {
     return (
       <div>
         <ListView>
-          <TransitionGroup>
-            {this.props.clusters.map(({
-              actions, properties, clusterID, title, description, expandedContentText, hideCloseIcon, state
-            }, index) => (
-              <CSSTransition
-                key={title}
-                timeout={500}
-                classNames="list"
-                unmountOnExit
-              >
-                <ListView.Item
-                  actions={(
-                    <Link to={`/cluster/${clusterID}`}>
-                      <Button>
+          {this.props.clusters.map(({
+            actions, properties, clusterID, title, description, expandedContentText, hideCloseIcon, state,
+          }, index) => (
+            <ListView.Item
+              actions={(
+                <Link to={`/cluster/${clusterID}`}>
+                  <Button>
                         Details
-                      </Button>
-                    </Link>
+                  </Button>
+                </Link>
                   )}
-                  checkboxInput={<input type="checkbox" />}
-                  leftContent={state === 'Installing' ? maintenanceIcon : clusterIcon}
-                  additionalInfo={renderAdditionalInfoItems(properties, state)}
-                  heading={title}
-                  description={description}
-                  stacked={false}
-                  hideCloseIcon={false}
-                >
-                  <Row>
-                    <Col sm={11}>
-                      {expandedContentText}
-                    </Col>
-                  </Row>
-                </ListView.Item>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
-
+              checkboxInput={<input type="checkbox" />}
+              leftContent={state === 'Installing' ? maintenanceIcon : clusterIcon}
+              additionalInfo={renderAdditionalInfoItems(properties, state)}
+              heading={title}
+              description={description}
+              stacked={false}
+              hideCloseIcon={false}
+            >
+              <Row>
+                <Col sm={11}>
+                  {expandedContentText}
+                </Col>
+              </Row>
+            </ListView.Item>
+          ))}
         </ListView>
       </div>
     );

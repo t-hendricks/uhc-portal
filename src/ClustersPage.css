@@ -47,33 +47,6 @@ limitations under the License.
   height: 33px;
 }
 
-.list-enter {
-  opacity: 0.01;
-}
-
-.list-enter.list-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.list-leave {
-  opacity: 0.02;
-}
-
-.list-leave.list-leave-active {
-  opacity: 0.01;
-  transition: opacity 100ms ease-in;
-}
-
-.list-appear {
-  opacity: 0.01;
-}
-
-.list-appear.list-appear-active {
-  opacity: 1;
-  transition: opacity .5s ease-in;
-}
-
 .maintenance{
   border: 2px solid #f0ab00 !important;
 }
