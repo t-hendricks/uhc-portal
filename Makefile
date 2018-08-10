@@ -15,7 +15,7 @@
 #
 
 # The details of the application:
-domain:=cloud.openshift.com
+domain:=cloud.127.0.0.1.nip.io
 namespace:=unified-hybrid-cloud
 version:=latest
 
@@ -27,7 +27,7 @@ image_tar:=$(shell echo $(image_tag) | tr /:. ---).tar
 image_pull_policy:=IfNotPresent
 
 # The location of the API gateway:
-api_url:=https://api.openshift.com
+api_url:=https://api.127.0.0.1.nip.io
 
 # The details of the Keycloak instance:
 keycloak_url:=https://developers.stage.redhat.com/auth
@@ -37,9 +37,12 @@ keycloak_resource:=uhc
 .PHONY: \
 	app \
 	clean \
+	deploy \
 	image \
 	push \
 	tar \
+	template \
+	undeploy \
 	$(NULL)
 
 app:
@@ -55,21 +58,32 @@ tar:
 push:
 	docker push $(image_tag)
 
-deploy:
+template:
 	oc process \
 		--filename="template.yml" \
-		--param=API_URL="$(api_url)" \
-		--param=DOMAIN="$(domain)" \
-		--param=IMAGE_PULL_POLICY="$(image_pull_policy)" \
-		--param=IMAGE_TAG="$(image_tag)" \
-		--param=KEYCLOAK_REALM="$(keycloak_realm)" \
-		--param=KEYCLOAK_RESOURCE="$(keycloak_resource)" \
-		--param=KEYCLOAK_URL="$(keycloak_url)" \
-		--param=NAMESPACE="$(namespace)" \
-		--param=VERSION="$(version)" \
-	| \
-	oc apply \
-		--filename=-
+		--local="true" \
+		--param="API_URL=$(api_url)" \
+		--param="DOMAIN=$(domain)" \
+		--param="IMAGE_PULL_POLICY=$(image_pull_policy)" \
+		--param="IMAGE_TAG=$(image_tag)" \
+		--param="KEYCLOAK_REALM=$(keycloak_realm)" \
+		--param="KEYCLOAK_RESOURCE=$(keycloak_resource)" \
+		--param="KEYCLOAK_URL=$(keycloak_url)" \
+		--param="NAMESPACE=$(namespace)" \
+		--param="VERSION=$(version)" \
+	> template.json
+
+deploy: template
+	oc new-project "$(namespace)" || oc project "$(namespace)" || true
+	oc apply --filename="template.json"
+
+undeploy: template
+	oc delete --filename="template.json"
 
 clean:
-	rm -rf build node_modules *.tar
+	rm -rf \
+		*.tar \
+		build \
+		node_modules \
+		template.json \
+		$(NULL)
