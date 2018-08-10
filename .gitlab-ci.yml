@@ -65,7 +65,6 @@ deploy_sandbox:
   - master@service/uhc-portal
   script:
   - oc login --token="${SANDBOX_TOKEN}" --insecure-skip-tls-verify "${SANDBOX_URL}"
-  - oc project unified-hybrid-cloud
   - make
       api_url="https://api.sandbox.private"
       domain="cloud.sandbox.private"
@@ -84,7 +83,6 @@ deploy_staging:
   - tags@service/uhc-portal
   script:
   - oc login --token="${STAGING_TOKEN}" --insecure-skip-tls-verify "${STAGING_URL}"
-  - oc project unified-hybrid-cloud
   - make
       api_url="https://api.staging.private"
       domain="cloud.staging.private"
@@ -103,7 +101,6 @@ deploy_production:
   when: manual
   script:
   - oc login --token="${PRODUCTION_TOKEN}" --insecure-skip-tls-verify "${PRODUCTION_URL}"
-  - oc project unified-hybrid-cloud
   - make
       api_url="https://api.production.private"
       domain="cloud.production.private"
