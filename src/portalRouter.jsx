@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Button, Row, Col } from 'patternfly-react';
+import { hot } from 'react-hot-loader';
 import ClustersPage from './ClustersPage';
 import Header from './Header';
 import ClusterDetails from './ClusterDetails';
-import { hot } from 'react-hot-loader';
 
-const PortalRouter = ({ history, authenticated, loginFunction }) => {
+const PortalRouter = (props) => {
+  const {
+    history, authenticated, loginFunction, logoutFunction,
+  } = props;
   if (!authenticated) {
     return (
       <div>
@@ -17,7 +20,7 @@ const PortalRouter = ({ history, authenticated, loginFunction }) => {
         <Row>
           <Col xs={6} md={4} xsOffset={6}>
             <Button bsSize="large" style={{ marginTop: '20px' }} onClick={loginFunction}>
-Log In
+              Log In
             </Button>
           </Col>
         </Row>
@@ -25,7 +28,7 @@ Log In
   }
   return (
     <div>
-      <Header />
+      <Header logoutFunction={logoutFunction} />
       <ConnectedRouter history={history}>
         <Switch>
           <Redirect from="/" exact to="/clusters" />
@@ -41,6 +44,7 @@ PortalRouter.propTypes = {
   history: PropTypes.object.isRequired,
   authenticated: PropTypes.bool.isRequired,
   loginFunction: PropTypes.func.isRequired,
+  logoutFunction: PropTypes.func.isRequired,
 };
 
 export default hot(module)(PortalRouter);
