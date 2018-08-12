@@ -47,7 +47,7 @@ keycloak_resource:=uhc
 
 app:
 	yarn install
-	yarn build
+	yarn build --mode=production
 
 image:
 	docker build -t $(image_tag) .
