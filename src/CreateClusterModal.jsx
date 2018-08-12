@@ -102,7 +102,6 @@ function CreateClusterModal(props) {
             name="region"
             label="AWS region"
             componentClass="select"
-            placeholder="us-east-1"
             helpText="TODO support other regions"
           >
             <option value="us-east-1">
@@ -115,7 +114,6 @@ function CreateClusterModal(props) {
             name="availability_zone"
             label="AWS availability zone"
             componentClass="select"
-            placeholder="us-east-1a"
             helpText="TODO unused"
           >
             <option value="us-east-1a">
@@ -153,6 +151,13 @@ const reduxFormCreateClusterModal = reduxForm(reduxFormConfig)(CreateClusterModa
 const mapStateToProps = state => ({
   // TODO connect form content to state
   createClusterResponse: state.createCluster,
+  initialValues: {
+    name: '',
+    aws_access_key_id: '',
+    aws_secret_access_key: '',
+    region: 'us-east-1',
+    availability_zone: 'us-east-1a',
+  },
 });
 
 const mapDispatchToProps = dispatch => ({
