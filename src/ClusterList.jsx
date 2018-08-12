@@ -95,7 +95,6 @@ class ClusterList extends Component {
                   </Button>
                 </Link>
                   )}
-              checkboxInput={<input type="checkbox" />}
               leftContent={state === 'Installing' ? maintenanceIcon : clusterIcon}
               additionalInfo={renderAdditionalInfoItems(properties, state)}
               heading={title}
