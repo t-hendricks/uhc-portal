@@ -12,7 +12,11 @@ function ClusterUtilizationCard(props) {
   const {
     title, used, total, unit, donutId,
   } = props;
-  const available = total - used;
+  let fakeTotal = total;
+  if (total === 0) {
+    fakeTotal = 1;
+  }
+  const available = fakeTotal - used;
   const usedColumnTitle = `${unit} used`;
   const availableColumnTitle = `${unit} available`;
   return (
@@ -32,7 +36,7 @@ function ClusterUtilizationCard(props) {
             <UtilizationCardDetailsLine2>
                           of
               {' '}
-              {total}
+              {fakeTotal}
             </UtilizationCardDetailsLine2>
           </UtilizationCardDetailsDesc>
         </UtilizationCardDetails>
