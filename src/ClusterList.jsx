@@ -84,8 +84,8 @@ class ClusterList extends Component {
       <div>
         <ListView>
           {this.props.clusters.map(({
-            actions, properties, clusterID, title, description, expandedContentText, hideCloseIcon, state,
-          }, index) => (
+            properties, clusterID, title, description, state,
+          }) => (
             <ListView.Item
               key={`cluster${clusterID}`}
               actions={(
@@ -102,13 +102,7 @@ class ClusterList extends Component {
               description={description}
               stacked={false}
               hideCloseIcon={false}
-            >
-              <Row>
-                <Col sm={11}>
-                  {expandedContentText}
-                </Col>
-              </Row>
-            </ListView.Item>
+            />
           ))}
         </ListView>
       </div>
