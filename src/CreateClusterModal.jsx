@@ -31,46 +31,24 @@ import * as api from './apis/createCluster';
 const required = value => (value ? undefined : 'Field is required');
 
 function CreateClusterModal(props) {
-  const { cancelTo, createCluster } = props;
-
-  const submit = () => {
-    // TODO use form content here
-    const cluster = {
-      name: 'nimrods-cluster',
-      region: 'us-east-1',
-      nodes: {
-        master: 1,
-        infra: 2,
-        compute: 4,
-      },
-      memory: {
-        total: 400,
-      },
-      cpu: {
-        total: 16,
-      },
-      storage: {
-        total: 72,
-      },
-    };
-    createCluster(cluster);
-  };
+  // handleSubmit comes from reduxForm()
+  const { cancelTo, handleSubmit } = props;
 
   return (
     <Modal show>
-      <Modal.Header>
-        <Link to={cancelTo}>
-          <button type="button" className="close" aria-hidden="true" aria-label="Close">
-            <Icon type="pf" name="close" />
-          </button>
-        </Link>
-        <Modal.Title>
-Create Cluster
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+      <Form horizontal onSubmit={handleSubmit}>
 
-        <Form horizontal>
+        <Modal.Header>
+          <Link to={cancelTo}>
+            <button type="button" className="close" aria-hidden="true" aria-label="Close">
+              <Icon type="pf" name="close" />
+            </button>
+          </Link>
+          <Modal.Title>
+            Create Cluster
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
 
           <Field
             component={ReduxHorizontalFormGroup}
@@ -124,37 +102,61 @@ Create Cluster
             </option>
           </Field>
 
-        </Form>
-
-      </Modal.Body>
-      <Modal.Footer>
-        <Button bsStyle="primary" onClick={submit}>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button bsStyle="primary" type="submit">
             Create
-        </Button>
-        <Link to={cancelTo}>
-          <Button bsStyle="default">
-            Cancel
           </Button>
-        </Link>
-      </Modal.Footer>
+          <Link to={cancelTo}>
+            <Button bsStyle="default">
+              Cancel
+            </Button>
+          </Link>
+        </Modal.Footer>
+
+      </Form>
     </Modal>
   );
 }
 CreateClusterModal.propTypes = {
   cancelTo: PropTypes.string.isRequired,
   createTo: PropTypes.string.isRequired,
-  createCluster: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
-const reduxFormCreateClusterModal = reduxForm({ form: 'CreateCluster' })(CreateClusterModal);
+const reduxFormConfig = {
+  form: 'CreateCluster',
+  //onSubmit:
+}
+const reduxFormCreateClusterModal = reduxForm(reduxFormConfig)(CreateClusterModal);
 
 const mapStateToProps = state => ({
   // TODO connect form content to state
 });
 
-const mapDispatchToProps = dispatch => ({
-  createCluster: (cluster) => {
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (formData) => {
     dispatch(actions.createClusterRequest());
+
+    const cluster = {
+      // TODO use more form content here
+      name: formData.name,
+      region: 'us-east-1',
+      nodes: {
+        master: 1,
+        infra: 2,
+        compute: 4,
+      },
+      memory: {
+        total: 400,
+      },
+      cpu: {
+        total: 16,
+      },
+      storage: {
+        total: 72,
+      },
+    };
     api.postNewCluster(cluster)
       .then(response => response.json())
       .then((value) => {
