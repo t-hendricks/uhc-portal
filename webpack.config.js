@@ -14,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const fs = require('fs')
-const path = require('path')
-const webpack = require('webpack')
+const fs = require('fs');
+const path = require('path');
+const webpack = require('webpack');
 
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const modDir = path.resolve(__dirname, 'node_modules')
-const srcDir = path.resolve(__dirname, 'src')
-const rscDir = path.resolve(__dirname, 'src')
-const outDir = path.resolve(__dirname, 'build')
+const modDir = path.resolve(__dirname, 'node_modules');
+const srcDir = path.resolve(__dirname, 'src');
+const rscDir = path.resolve(__dirname, 'src');
+const outDir = path.resolve(__dirname, 'build');
 
 module.exports = {
-  mode: "development",
+  mode: 'development',
   entry: {
     main: path.resolve(srcDir, 'main.jsx'),
   },
@@ -34,7 +34,7 @@ module.exports = {
   output: {
     path: outDir,
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   devtool: 'source-map',
   module: {
@@ -42,60 +42,60 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: [
-          /node_modules/
+          /node_modules/,
         ],
         use: {
           loader: 'babel-loader',
           options: {
-            'presets': [
+            presets: [
               path.join(__dirname, 'node_modules/babel-preset-react'),
-              path.join(__dirname, 'node_modules/babel-preset-env')
+              path.join(__dirname, 'node_modules/babel-preset-env'),
             ],
-            'plugins': [
+            plugins: [
               path.join(__dirname, 'node_modules/babel-plugin-transform-class-properties'),
               path.join(__dirname, 'node_modules/babel-plugin-transform-object-rest-spread'),
               path.join(__dirname, 'node_modules/babel-plugin-transform-object-assign'),
-            ]
-          }
-        }
+            ],
+          },
+        },
       },
       {
         test: /\.css$/,
         use: [
           'style-loader',
-          'css-loader'
-        ]
+          'css-loader',
+        ],
       },
       {
         test: /(webfont\.svg|\.(eot|ttf|woff|woff2))$/,
         loader: 'file-loader',
         options: {
-          name: 'fonts/[name].[ext]'
-        }
+          name: 'fonts/[name].[ext]',
+        },
       },
       {
         test: /\.(gif|jpg|png|svg)$/,
         loader: 'url-loader',
         options: {
-          name: 'images/[name].[ext]'
-        }
-      }
-    ]
+          name: 'images/[name].[ext]',
+        },
+      },
+    ],
   },
 
   plugins: [
     // Copy the static files to the output directory:
     new CopyWebpackPlugin([
-      { from: rscDir, to: outDir, ignore: ['*.js', '*.jsx'] }
-    ])
+      { from: rscDir, to: outDir, ignore: ['*.js', '*.jsx'] },
+    ]),
   ],
 
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
       srcDir,
-      modDir
-    ]
+      modDir,
+    ],
   },
 
   devServer: {
@@ -121,6 +121,7 @@ module.exports = {
         changeOrigin: true,
         secure: false,
         target: 'https://customers-service.127.0.0.1.nip.io/',
-      }
-    ]  }
-}
+      },
+    ],
+  },
+};
