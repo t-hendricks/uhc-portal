@@ -36,7 +36,7 @@ function CreateClusterModal(props) {
   const submit = () => {
     // TODO use form content here
     const cluster = {
-      name: 'nimrods_cluster',
+      name: 'nimrods-cluster',
       region: 'us-east-1',
       nodes: {
         master: 1,
