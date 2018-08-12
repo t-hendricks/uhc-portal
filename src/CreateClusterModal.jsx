@@ -147,7 +147,6 @@ CreateClusterModal.propTypes = {
 
 const reduxFormConfig = {
   form: 'CreateCluster',
-  // onSubmit:
 };
 const reduxFormCreateClusterModal = reduxForm(reduxFormConfig)(CreateClusterModal);
 
