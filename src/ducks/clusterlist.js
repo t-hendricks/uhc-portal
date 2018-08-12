@@ -18,7 +18,7 @@ import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
 import * as fromClusterList from '../apis/clusterList';
 
-const PAGE_SIZE = 5;
+const DEFAULT_PAGE_SIZE = 5;
 
 // SELECTORS
 export const getClustersRequested = state => state.clusterList.requested;
@@ -37,7 +37,8 @@ export const getClusters = createSelector(
 );
 
 export const getClustersCurrentPage = state => state.clusterList.currentPage;
-
+export const getClustersPageSize = state => state.clusterList.pageSize;
+export const getClustersClusterCount = state => state.clusterList.clusterCount;
 export const getClustersLastPage = state => state.clusterList.lastPage;
 
 const getIsPageFetched = (state, page) => state.clusterList.pages[page] !== undefined;
@@ -62,6 +63,7 @@ const FETCH_CLUSTERS_REQUEST = 'FETCH_CLUSTERS_REQUEST';
 const FETCH_CLUSTERS_RESPONSE = 'FETCH_CLUSTERS_RESPONSE';
 
 const SET_CLUSTERS_CURRENT_PAGE = 'SET_CLUSTERS_CURRENT_PAGE';
+const SET_CLUSTERS_PAGE_SIZE = 'SET_CLUSTERS_PAGE_SIZE';
 
 const fetchClustersRequest = () => ({
   type: FETCH_CLUSTERS_REQUEST,
@@ -86,25 +88,27 @@ const setClustersCurrentPage = page => ({
   type: SET_CLUSTERS_CURRENT_PAGE,
 });
 
-export const fetchClusters = page => (dispatch, getState) => {
+export const fetchClusters = params => (dispatch, getState) => {
   const state = getState();
-  const offset = page * PAGE_SIZE;
-  dispatch(setClustersCurrentPage(page));
-  if (getIsPageFetched(state, page)) {
+  const { clustersCurrentPage, clustersPageSize } = params;
+  const offset = clustersCurrentPage * clustersPageSize;
+  dispatch(setClustersCurrentPage(clustersCurrentPage));
+  if (getIsPageFetched(state, clustersCurrentPage)) {
     return;
   }
   dispatch(fetchClustersRequest());
   fromClusterList.fetchClusters({
-    limit: PAGE_SIZE,
+    limit: clustersPageSize,
     offset,
-    page,
+    page: clustersCurrentPage,
   })
     .then((response) => {
-      const pageCount = Math.ceil(response.total / PAGE_SIZE);
+      const pageCount = Math.ceil(response.total / clustersPageSize);
       dispatch(fetchClustersResponse({
         items: response.items,
-        page,
+        page: clustersCurrentPage,
         pageCount,
+        clusterCount: response.total,
       }));
     }).catch(() => dispatch(fetchClustersResponse('500', true)));
 };
@@ -176,6 +180,27 @@ const currentPage = (state = 0, action) => {
   }
 };
 
+const pageSize = (state = DEFAULT_PAGE_SIZE, action) => {
+  switch (action.type) {
+    case SET_CLUSTERS_PAGE_SIZE:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const clusterCount = (state = 0, action) => {
+  switch (action.type) {
+    case FETCH_CLUSTERS_RESPONSE:
+      if (action.error) {
+        return state;
+      }
+      return action.payload.clusterCount;
+    default:
+      return state;
+  }
+};
+
 const lastPage = (state = 0, action) => {
   switch (action.type) {
     case FETCH_CLUSTERS_RESPONSE:
@@ -208,6 +233,8 @@ const pages = (state = {}, action) => {
 export default combineReducers({
   byId,
   currentPage,
+  pageSize,
+  clusterCount,
   errored,
   ids,
   lastPage,
