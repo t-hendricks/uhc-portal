@@ -86,7 +86,7 @@ module.exports = {
   plugins: [
     // Copy the static files to the output directory:
     new CopyWebpackPlugin([
-      { from: rscDir, to: outDir }
+      { from: rscDir, to: outDir, ignore: ['*.js', '*.jsx'] }
     ])
   ],
 
