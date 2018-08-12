@@ -147,15 +147,6 @@ const mapDispatchToProps = (dispatch) => ({
         infra: 2,
         compute: 4,
       },
-      memory: {
-        total: 400,
-      },
-      cpu: {
-        total: 16,
-      },
-      storage: {
-        total: 72,
-      },
     };
     api.postNewCluster(cluster)
       .then(response => response.json())
