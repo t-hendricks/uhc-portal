@@ -19,6 +19,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const modDir = path.resolve(__dirname, 'node_modules');
 const srcDir = path.resolve(__dirname, 'src');
@@ -86,8 +87,12 @@ module.exports = {
   plugins: [
     // Copy the static files to the output directory:
     new CopyWebpackPlugin([
-      { from: rscDir, to: outDir, ignore: ['*.js', '*.jsx'] },
+      { from: rscDir, to: outDir, ignore: ['*.js', '*.jsx', 'index.html'] },
     ]),
+    new HtmlWebpackPlugin({
+      hash: true, // cache invalidation on bundle updates
+      template: 'src/index.html',
+    }),
   ],
 
   resolve: {
