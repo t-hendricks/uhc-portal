@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import { Masthead, MenuItem } from 'patternfly-react';
 import 'patternfly/dist/css/patternfly.css';
 import 'patternfly/dist/css/patternfly-additions.css';
@@ -22,56 +22,50 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import logo from './logo.svg';
 import * as fromUsers from './ducks/users';
-import { keycloak } from './main';
 
-class Header extends Component {
-  logout() {
-    keycloak.logout();
-  }
-
-  render() {
-    const { userProfile } = this.props;
-    return (
-      <Masthead
-        titleImg={logo}
-        title="Cluster Reactor"
-        navToggle
-      >
-        <Masthead.Collapse>
-          <Masthead.Dropdown id="app-help-dropdown" title={<span title="Help" className="pficon pficon-help" />}>
-            <MenuItem eventKey="1">
-Help
-            </MenuItem>
-            <MenuItem eventKey="2">
-About
-            </MenuItem>
-          </Masthead.Dropdown>
-          <Masthead.Dropdown
-            id="app-user-dropdown"
-            title={(
-              <span>
-                <span title="Help" className="pficon pficon-user" />
-                <span className="dropdown-title">
-                  {userProfile.userProfile.firstName}
-                </span>
+function Header(props) {
+  const { userProfile, logoutFunction } = props;
+  return (
+    <Masthead
+      titleImg={logo}
+      title="Cluster Reactor"
+      navToggle
+    >
+      <Masthead.Collapse>
+        <Masthead.Dropdown id="app-help-dropdown" title={<span title="Help" className="pficon pficon-help" />}>
+          <MenuItem eventKey="1">
+            Help
+          </MenuItem>
+          <MenuItem eventKey="2">
+            About
+          </MenuItem>
+        </Masthead.Dropdown>
+        <Masthead.Dropdown
+          id="app-user-dropdown"
+          title={(
+            <span>
+              <span title="Help" className="pficon pficon-user" />
+              <span className="dropdown-title">
+                {userProfile.userProfile.firstName}
               </span>
-)}
-          >
-            <MenuItem eventKey="1">
-User Preferences
-            </MenuItem>
-            <MenuItem eventKey="2" onSelect={this.logout}>
-Logout
-            </MenuItem>
-          </Masthead.Dropdown>
-        </Masthead.Collapse>
-      </Masthead>
-    );
-  }
+            </span>
+          )}
+        >
+          <MenuItem eventKey="1">
+            User Preferences
+          </MenuItem>
+          <MenuItem eventKey="2" onSelect={logoutFunction}>
+            Logout
+          </MenuItem>
+        </Masthead.Dropdown>
+      </Masthead.Collapse>
+    </Masthead>
+  );
 }
 
 Header.propTypes = {
   userProfile: PropTypes.object.isRequired,
+  logoutFunction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

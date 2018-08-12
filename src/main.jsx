@@ -30,7 +30,7 @@ import PortalRouter from './portalRouter';
 import config from './config';
 import reducers from './reducers';
 
-export var keycloak;
+let keycloak;
 
 const history = createBrowserHistory();
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -51,6 +51,7 @@ const render = () => {
           history={history}
           authenticated={keycloak.authenticated}
           loginFunction={keycloak.login}
+          logoutFunction={keycloak.logout}
         />
       </Provider>
     </AppContainer>,
@@ -79,10 +80,10 @@ function initKeycloak() {
     if (keycloak.authenticated) {
       sessionStorage.setItem('kctoken', keycloak.token);
 
+      render();
       keycloak.loadUserProfile()
         .success((result) => {
           store.dispatch(fromUsers.userInfoResponse(result));
-          render();
         })
         .error((err) => {
           console.log(err); // should probably redirect to an error page
