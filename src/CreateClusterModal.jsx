@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import {
-  Button, Icon, Form, Modal, Grid, Row, Col, Alert,
+  Button, Icon, Form, Modal, Slider, Grid, Row, Col, Alert,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './components/ReduxHorizontalFormGroup';
 import * as actions from './actions/createCluster';
@@ -30,6 +30,20 @@ import ClusterCreationSuccessModal from './components/ClusterCreationSuccessModa
 
 // Validations
 const required = value => (value ? undefined : 'Field is required');
+
+
+const IntegerSlider = ({min, max, ...rest}) => (
+  <Slider
+    min={min}
+    max={max}
+    step={1}
+    showBoundaries
+    input
+    tooltip="show"
+    {...rest}
+    />
+);
+
 
 function CreateClusterModal(props) {
   // handleSubmit comes from reduxForm()
@@ -78,6 +92,33 @@ function CreateClusterModal(props) {
             type="text"
             validate={required}
             helpText="TODO: what does this affect?"
+          />
+
+          <Field
+            component={ReduxHorizontalFormGroup}
+            componentClass={IntegerSlider}
+            name="nodes_master"
+            label="Master nodes"
+            min={1}
+            max={3}
+          />
+
+          <Field
+            component={ReduxHorizontalFormGroup}
+            componentClass={IntegerSlider}
+            name="nodes_infra"
+            label="Infra nodes"
+            min={2}
+            max={5}
+          />
+
+          <Field
+            component={ReduxHorizontalFormGroup}
+            componentClass={IntegerSlider}
+            name="nodes_compute"
+            label="Compute nodes"
+            min={1}
+            max={20}
           />
 
           <Field
@@ -149,10 +190,12 @@ const reduxFormConfig = {
 const reduxFormCreateClusterModal = reduxForm(reduxFormConfig)(CreateClusterModal);
 
 const mapStateToProps = state => ({
-  // TODO connect form content to state
   createClusterResponse: state.createCluster,
   initialValues: {
     name: '',
+    nodes_master: 1,
+    nodes_infra: 2,
+    nodes_compute: 4,
     aws_access_key_id: '',
     aws_secret_access_key: '',
     region: 'us-east-1',
@@ -165,13 +208,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.createClusterRequest());
 
     const cluster = {
-      // TODO use more form content here
       name: formData.name,
       region: formData.region,
       nodes: {
-        master: 1,
-        infra: 2,
-        compute: 4,
+        master: formData.nodes_master,
+        infra: formData.nodes_infra,
+        compute: formData.nodes_compute,
       },
     };
     api.postNewCluster(cluster)
