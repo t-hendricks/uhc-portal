@@ -167,7 +167,7 @@ const mapDispatchToProps = dispatch => ({
     const cluster = {
       // TODO use more form content here
       name: formData.name,
-      region: 'us-east-1',
+      region: formData.region,
       nodes: {
         master: 1,
         infra: 2,
