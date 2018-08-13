@@ -34,7 +34,7 @@ class ClustersPage extends Component {
 
   createQueryParams(oldParams, newParams) {
     return Object.assign({}, oldParams, newParams); // should exclude irrelevant values
-  };
+  }
 
   render() {
     const {
@@ -125,7 +125,7 @@ Updated
           <Route
             path="/clusters/create"
             render={() => (
-              <CreateClusterModal cancelTo="/clusters" createTo="/clusters" />
+              <CreateClusterModal cancelTo="/clusters" />
             )}
           />
         </div>
