@@ -2,9 +2,9 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import clusterList from './ducks/clusterlist';
 import userProfile from './ducks/users';
-import clusterDetails from './ducks/clusterdetails';
-import createCluster from './ducks/createcluster';
+import clusterDetails from './reducers/clusterDetails';
 import clusterListFilters from './reducers/clusterListFilter';
+import createCluster from './reducers/createCluster';
 
 const reducers = combineReducers({
   clusterList,

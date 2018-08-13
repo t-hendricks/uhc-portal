@@ -21,29 +21,29 @@ import PropTypes from 'prop-types';
 import {
   CardGrid, Card, CardBody, CardTitle, AggregateStatusCount,
 } from 'patternfly-react/dist/js/components/Cards';
-import * as fromClusterDetails from './ducks/clusterdetails';
+import { fetchClusterDetails } from './actions/clusterDetails';
+import clusterDetailsSelector from './selectors/clusterDetails';
 import ClusterUtilizationCard from './components/ClusterUtilizationCard';
 
 class ClusterDetails extends Component {
   componentDidMount() {
-    const { fetchClusterDetails, match } = this.props;
+    const { fetchDetails, match } = this.props;
     const clusterID = match.params.id;
     if (clusterID !== null && clusterID !== undefined) {
-      fetchClusterDetails(clusterID);
+      fetchDetails(clusterID);
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { fetchClusterDetails, match } = this.props;
+    const { fetchDetails, match } = this.props;
     const clusterID = match.params.id;
     const oldClusterID = prevProps.match.params.id;
     if (clusterID !== oldClusterID && clusterID !== null && clusterID !== undefined) {
-      fetchClusterDetails(clusterID);
+      fetchDetails(clusterID);
     }
   }
 
   render() {
-    console.log(this.props);
     const { details, match } = this.props;
     const cluster = details[match.params.id];
     if (cluster === undefined) {
@@ -262,16 +262,16 @@ class ClusterDetails extends Component {
 
 ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
-  fetchClusterDetails: PropTypes.func.isRequired,
+  fetchDetails: PropTypes.func.isRequired,
   details: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  details: fromClusterDetails.getClusterDetails(state),
+  details: clusterDetailsSelector(state),
 });
 
 const mapDispatchToProps = {
-  fetchClusterDetails: fromClusterDetails.fetchClusterDetails,
+  fetchDetails: fetchClusterDetails,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

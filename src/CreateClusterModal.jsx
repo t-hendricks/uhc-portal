@@ -23,7 +23,7 @@ import {
   Button, Icon, Form, Modal,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './components/ReduxHorizontalFormGroup';
-import * as actions from './ducks/createcluster';
+import * as actions from './actions/createCluster';
 import * as api from './apis/createCluster';
 
 
@@ -126,15 +126,15 @@ CreateClusterModal.propTypes = {
 
 const reduxFormConfig = {
   form: 'CreateCluster',
-  //onSubmit:
-}
+  // onSubmit:
+};
 const reduxFormCreateClusterModal = reduxForm(reduxFormConfig)(CreateClusterModal);
 
 const mapStateToProps = state => ({
   // TODO connect form content to state
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   onSubmit: (formData) => {
     dispatch(actions.createClusterRequest());
 
