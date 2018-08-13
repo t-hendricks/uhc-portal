@@ -21,6 +21,7 @@ import {
 } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import ClusterListFilterBar from './components/ClusterListFilterBar';
 
 export const renderAdditionalInfoItems = (itemProperties, state) => {
   const generateStateInfoItem = (clusterState) => {
@@ -82,6 +83,7 @@ class ClusterList extends Component {
     const clusterIcon = <ListView.Icon name="cluster" type="pf" />;
     return (
       <div>
+        <ClusterListFilterBar />
         <ListView>
           {this.props.clusters.map(({
             properties, clusterID, title, description, state,
