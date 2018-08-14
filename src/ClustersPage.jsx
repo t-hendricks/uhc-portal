@@ -26,14 +26,14 @@ import CreateClusterModal from './CreateClusterModal';
 import 'patternfly/dist/css/patternfly.css';
 import 'patternfly/dist/css/patternfly-additions.css';
 
+function createQueryParams(oldParams, newParams) {
+  return Object.assign({}, oldParams, newParams); // should exclude irrelevant values
+}
+
 class ClustersPage extends Component {
   componentDidMount() {
     const { fetchClusters } = this.props;
-    fetchClusters(this.createQueryParams(this.props));
-  }
-
-  createQueryParams(oldParams, newParams) {
-    return Object.assign({}, oldParams, newParams); // should exclude irrelevant values
+    fetchClusters(createQueryParams(this.props));
   }
 
   render() {
@@ -52,7 +52,7 @@ class ClustersPage extends Component {
       label = (
         <Label bsStyle="warning">
           {' '}
-Requested
+          Requested
           {' '}
         </Label>
       );
@@ -60,7 +60,7 @@ Requested
       label = (
         <Label bsStyle="danger">
           {' '}
-Error fetching data
+          Error fetching data
           {' '}
         </Label>
       );
@@ -68,7 +68,7 @@ Error fetching data
       label = (
         <Label bsStyle="success">
           {' '}
-Updated
+          Updated
           {' '}
         </Label>
       );
@@ -103,7 +103,11 @@ Updated
         <ClusterList clusters={clusters} />
         <PaginationRow
           viewType="list"
-          pagination={{ page: clustersCurrentPage + 1, perPage: clustersPageSize, perPageOptions: [5, 10, 15, 25] }}
+          pagination={{
+            page: clustersCurrentPage + 1,
+            perPage: clustersPageSize,
+            perPageOptions: [5, 10, 15, 25],
+          }}
           itemCount={clusterCount}
           amountOfPages={clustersLastPage + 1}
           onPerPageSelect={onPageSizeSelect}

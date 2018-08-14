@@ -16,9 +16,7 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import {
-  ListView, Button, Row, Col,
-} from 'patternfly-react';
+import { ListView, Button } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ClusterListFilterBar from './components/ClusterListFilterBar';
@@ -81,11 +79,12 @@ class ClusterList extends Component {
   render() {
     const maintenanceIcon = <ListView.Icon name="maintenance" type="pf" className="maintenance" />;
     const clusterIcon = <ListView.Icon name="cluster" type="pf" />;
+    const { clusters } = this.props;
     return (
       <div>
         <ClusterListFilterBar />
         <ListView>
-          {this.props.clusters.map(({
+          {clusters.map(({
             properties, clusterID, title, description, state,
           }) => (
             <ListView.Item
