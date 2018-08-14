@@ -31,6 +31,7 @@ import ClusterCreationSuccessModal from './components/ClusterCreationSuccessModa
 // Validations
 const required = value => (value ? undefined : 'Field is required');
 
+
 function CreateClusterModal(props) {
   // handleSubmit comes from reduxForm()
   const {
@@ -82,6 +83,30 @@ function CreateClusterModal(props) {
 
           <Field
             component={ReduxHorizontalFormGroup}
+            name="nodes_master"
+            label="Master nodes"
+            type="number"
+            min="1"
+          />
+
+          <Field
+            component={ReduxHorizontalFormGroup}
+            name="nodes_infra"
+            label="Infra nodes"
+            type="number"
+            min="2"
+          />
+
+          <Field
+            component={ReduxHorizontalFormGroup}
+            name="nodes_compute"
+            label="Compute nodes"
+            type="number"
+            min="1"
+          />
+
+          <Field
+            component={ReduxHorizontalFormGroup}
             name="aws_access_key_id"
             label="AWS access key ID"
             type="password"
@@ -102,7 +127,6 @@ function CreateClusterModal(props) {
             name="region"
             label="AWS region"
             componentClass="select"
-            placeholder="us-east-1"
             helpText="TODO support other regions"
           >
             <option value="us-east-1">
@@ -115,7 +139,6 @@ function CreateClusterModal(props) {
             name="availability_zone"
             label="AWS availability zone"
             componentClass="select"
-            placeholder="us-east-1a"
             helpText="TODO unused"
           >
             <option value="us-east-1a">
@@ -147,13 +170,21 @@ CreateClusterModal.propTypes = {
 
 const reduxFormConfig = {
   form: 'CreateCluster',
-  // onSubmit:
 };
 const reduxFormCreateClusterModal = reduxForm(reduxFormConfig)(CreateClusterModal);
 
 const mapStateToProps = state => ({
-  // TODO connect form content to state
   createClusterResponse: state.createCluster,
+  initialValues: {
+    name: '',
+    nodes_master: '1',
+    nodes_infra: '2',
+    nodes_compute: '4',
+    aws_access_key_id: '',
+    aws_secret_access_key: '',
+    region: 'us-east-1',
+    availability_zone: 'us-east-1a',
+  },
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -161,13 +192,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.createClusterRequest());
 
     const cluster = {
-      // TODO use more form content here
       name: formData.name,
-      region: 'us-east-1',
+      region: formData.region,
       nodes: {
-        master: 1,
-        infra: 2,
-        compute: 4,
+        master: parseInt(formData.nodes_master, 10),
+        infra: parseInt(formData.nodes_infra, 10),
+        compute: parseInt(formData.nodes_compute, 10),
       },
     };
     api.postNewCluster(cluster)
