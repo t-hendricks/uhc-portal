@@ -20,11 +20,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import {
-  Button, Icon, Form, Modal, Grid, Row, Col, Alert,
+  Button, Icon, Form, Modal, Alert,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './components/ReduxHorizontalFormGroup';
 import * as actions from './actions/createCluster';
-import * as api from './apis/createCluster';
+import postNewCluster from './apis/createCluster';
 import ClusterCreationSuccessModal from './components/ClusterCreationSuccessModal';
 
 
@@ -170,7 +170,7 @@ const mapDispatchToProps = dispatch => ({
         compute: 4,
       },
     };
-    api.postNewCluster(cluster)
+    postNewCluster(cluster)
       .then(response => response.json())
       .then((value) => {
         dispatch(actions.createClusterResponse(value));

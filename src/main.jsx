@@ -33,6 +33,7 @@ import reducers from './reducers';
 let keycloak;
 
 const history = createBrowserHistory();
+/* eslint-disable-next-line no-underscore-dangle */
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   connectRouter(history)(reducers),
@@ -63,21 +64,20 @@ const render = () => {
 if (module.hot) {
   // Reload components
   module.hot.accept('./ClustersPage', () => {
-    console.log('ClustersPage hot reload'); // never seen this happening
     render();
   });
 
   // Reload reducers
   module.hot.accept('./reducers', () => {
-    console.log('reducers hot reload'); // never seen this happening
     store.replaceReducer(connectRouter(history)(reducers));
   });
 }
 
 function initKeycloak() {
+  /* eslint-disable-next-line no-undef */
   keycloak = Keycloak(config.configData.keycloak);
   keycloak.init({ onLoad: 'check-sso', checkLoginIframe: false }).success((authenticated) => {
-    if (keycloak.authenticated) {
+    if (authenticated) {
       sessionStorage.setItem('kctoken', keycloak.token);
 
       render();

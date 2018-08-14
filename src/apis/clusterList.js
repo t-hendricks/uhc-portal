@@ -14,42 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/* eslint-disable-next-line */
-import config from '../config'
+import config from '../config';
 
-export const fetchClusters = (params) => {
-  console.log(params);
+const fetchClustersAPI = (params) => {
   const options = {
     headers: { Authorization: `Bearer ${sessionStorage.getItem('kctoken')}` },
   };
-  const createPromise = response => new Promise((resolve, reject) => (
-    fetch(`${config.configData.apiGateway}/api/clusters_mgmt/v1/clusters?page=${params.page}&size=${params.limit}`, options)
-      .then(
-        (response) => {
-          if (response.ok) {
-            return response;
-          }
-          reject(new Error('error'));
-        },
-        (error) => {
-          reject(new Error(error.message));
-        },
-      )
-      .then(response => response.json())
-      .then((json) => {
-        console.log(json);
-        resolve(json);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  ));
-
-  const { limit } = params;
-  const offset = params.offset !== undefined ? params.offset : 0;
-  const defaultResponse = {
-    count: 0,
-    results: [],
-  };
-  return createPromise(defaultResponse);
+  const url = `${config.configData.apiGateway}/api/clusters_mgmt/v1/clusters?page=${params.page}&size=${params.limit}`;
+  return fetch(url, options);
 };
+
+export default fetchClustersAPI;

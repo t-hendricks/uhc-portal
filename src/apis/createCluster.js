@@ -16,7 +16,7 @@ limitations under the License.
 
 import config from '../config';
 
-export const postNewCluster = (params) => {
+const postNewCluster = (params) => {
   const url = `${config.configData.apiGateway}/api/clusters_mgmt/v1/clusters`;
   const options = {
     method: 'POST',
@@ -25,3 +25,5 @@ export const postNewCluster = (params) => {
   };
   return fetch(url, options);
 };
+
+export default postNewCluster;

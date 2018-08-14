@@ -16,7 +16,7 @@ limitations under the License.
 
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
-import * as fromClusterList from '../apis/clusterList';
+import fetchClustersAPI from '../apis/clusterList';
 
 const DEFAULT_PAGE_SIZE = 5;
 
@@ -97,20 +97,22 @@ export const fetchClusters = params => (dispatch, getState) => {
     return;
   }
   dispatch(fetchClustersRequest());
-  fromClusterList.fetchClusters({
+  fetchClustersAPI({
     limit: clustersPageSize,
     offset,
     page: clustersCurrentPage,
   })
     .then((response) => {
-      const pageCount = Math.ceil(response.total / clustersPageSize);
-      dispatch(fetchClustersResponse({
-        items: response.items,
-        page: clustersCurrentPage,
-        pageCount,
-        clusterCount: response.total,
-      }));
-    }).catch(() => dispatch(fetchClustersResponse('500', true)));
+      response.json().then((decoded) => {
+        const pageCount = Math.ceil(decoded.total / clustersPageSize);
+        dispatch(fetchClustersResponse({
+          items: decoded.items,
+          page: clustersCurrentPage,
+          pageCount,
+          clusterCount: decoded.total,
+        }));
+      });
+    });
 };
 
 // REDUCER
