@@ -20,11 +20,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import {
-  Button, Icon, Form, Modal,
+  Button, Icon, Form, Modal, Grid, Row, Col, Alert,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './components/ReduxHorizontalFormGroup';
 import * as actions from './actions/createCluster';
 import * as api from './apis/createCluster';
+import ClusterCreationSuccessModal from './components/ClusterCreationSuccessModal';
 
 
 // Validations
@@ -32,8 +33,28 @@ const required = value => (value ? undefined : 'Field is required');
 
 function CreateClusterModal(props) {
   // handleSubmit comes from reduxForm()
-  const { cancelTo, handleSubmit } = props;
-
+  const {
+    cancelTo, handleSubmit, createClusterResponse,
+  } = props;
+  let errorContainer = <div />;
+  if (createClusterResponse.createCluster !== undefined) {
+    const response = createClusterResponse.createCluster;
+    if (response.error !== undefined) {
+      errorContainer = (
+        <Alert>
+          <span>
+            Error creating cluster:
+          </span>
+          <span>
+            {response.error}
+          </span>
+        </Alert>
+      );
+    }
+    if (response.state === 'Installing' || response.state === 'Ready') {
+      return <ClusterCreationSuccessModal clusterID={response.id} closeTo={cancelTo} />;
+    }
+  }
   return (
     <Modal show>
       <Form horizontal onSubmit={handleSubmit}>
@@ -49,7 +70,7 @@ function CreateClusterModal(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
+          {errorContainer}
           <Field
             component={ReduxHorizontalFormGroup}
             name="name"
@@ -120,8 +141,8 @@ function CreateClusterModal(props) {
 }
 CreateClusterModal.propTypes = {
   cancelTo: PropTypes.string.isRequired,
-  createTo: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  createClusterResponse: PropTypes.object,
 };
 
 const reduxFormConfig = {
@@ -132,6 +153,7 @@ const reduxFormCreateClusterModal = reduxForm(reduxFormConfig)(CreateClusterModa
 
 const mapStateToProps = state => ({
   // TODO connect form content to state
+  createClusterResponse: state.createCluster,
 });
 
 const mapDispatchToProps = dispatch => ({
