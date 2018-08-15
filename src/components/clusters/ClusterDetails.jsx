@@ -21,9 +21,9 @@ import PropTypes from 'prop-types';
 import {
   CardGrid, Card, CardBody, CardTitle, AggregateStatusCount,
 } from 'patternfly-react/dist/js/components/Cards';
-import { fetchClusterDetails } from './actions/clusterDetails';
-import clusterDetailsSelector from './selectors/clusterDetails';
-import ClusterUtilizationCard from './components/ClusterUtilizationCard';
+import { fetchClusterDetails } from '../../actions/clusterDetails';
+import clusterDetailsSelector from '../../selectors/clusterDetails';
+import ClusterUtilizationCard from './ClusterUtilizationCard';
 
 class ClusterDetails extends Component {
   componentDidMount() {
