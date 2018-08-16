@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import {
   applyMiddleware, compose, createStore,
@@ -26,8 +27,8 @@ import { createBrowserHistory } from 'history';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { AppContainer } from 'react-hot-loader';
 import * as fromUsers from './ducks/users';
-import PortalRouter from './portalRouter';
 import config from './config';
+import App from './components/app';
 import reducers from './reducers';
 
 let keycloak;
@@ -48,12 +49,13 @@ const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <PortalRouter
-          history={history}
-          authenticated={keycloak.authenticated}
-          loginFunction={keycloak.login}
-          logoutFunction={keycloak.logout}
-        />
+        <BrowserRouter>
+          <App
+            loginFunction={keycloak.login}
+            logoutFunction={keycloak.logout}
+            authenticated={keycloak.authenticated}
+          />
+        </BrowserRouter>
       </Provider>
     </AppContainer>,
     document.getElementById('root'),
@@ -63,7 +65,7 @@ const render = () => {
 // Hot reloading
 if (module.hot) {
   // Reload components
-  module.hot.accept('./ClustersPage', () => {
+  module.hot.accept('./components/clusters/ClustersPage', () => {
     render();
   });
 

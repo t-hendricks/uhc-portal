@@ -22,10 +22,10 @@ import { Field, reduxForm } from 'redux-form';
 import {
   Button, Icon, Form, Modal, Alert,
 } from 'patternfly-react';
-import ReduxHorizontalFormGroup from './components/ReduxHorizontalFormGroup';
-import * as actions from './actions/createCluster';
-import postNewCluster from './apis/createCluster';
-import ClusterCreationSuccessModal from './components/ClusterCreationSuccessModal';
+import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
+import * as actions from '../../actions/createCluster';
+import postNewCluster from '../../apis/createCluster';
+import ClusterCreationSuccessModal from './ClusterCreationSuccessModal';
 
 
 // Validations

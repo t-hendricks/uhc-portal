@@ -20,7 +20,7 @@ import { Route, Link } from 'react-router-dom';
 import './ClustersPage.css';
 import { PaginationRow, Label, Button } from 'patternfly-react';
 import PropTypes from 'prop-types';
-import * as fromClusterList from './ducks/clusterlist';
+import * as fromClusterList from '../../ducks/clusterlist';
 import { ClusterList } from './ClusterList';
 import CreateClusterModal from './CreateClusterModal';
 import 'patternfly/dist/css/patternfly.css';

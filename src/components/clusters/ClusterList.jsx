@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import { ListView, Button } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import ClusterListFilterBar from './components/ClusterListFilterBar';
+import ClusterListFilterBar from './ClusterListFilterBar';
 
 export const renderAdditionalInfoItems = (itemProperties, state) => {
   const generateStateInfoItem = (clusterState) => {
