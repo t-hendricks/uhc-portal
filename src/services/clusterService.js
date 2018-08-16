@@ -1,0 +1,27 @@
+import axios from 'axios';
+import serviceConfig from './serviceConfig';
+
+const getClusters = params => axios(
+  serviceConfig({
+    method: 'get',
+    url: '/api/clusters_mgmt/v1/clusters',
+    params: {
+      page: params.page,
+      size: params.page_size,
+    },
+  }),
+);
+
+const getClusterDetails = clusterID => axios(
+  serviceConfig({
+    method: 'get',
+    url: `/api/clusters_mgmt/v1/clusters/${clusterID}`,
+  }),
+);
+
+const clusterService = {
+  getClusters,
+  getClusterDetails,
+};
+
+export default clusterService;

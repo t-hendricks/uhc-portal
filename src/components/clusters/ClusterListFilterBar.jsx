@@ -2,7 +2,7 @@ import React from 'react';
 import { Filter, FormControl, Toolbar } from 'patternfly-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addClusterListFilter, removeClusterListFilter, clearClusterListFilter } from '../../actions/clusterListFilter';
+import { addClusterListFilter, removeClusterListFilter, clearClusterListFilter } from '../../redux/actions/clusterListFilter';
 import clusterListFilters from '../../selectors/clusterListFilter';
 
 const filterFields = [

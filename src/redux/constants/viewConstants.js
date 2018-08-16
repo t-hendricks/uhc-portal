@@ -1,0 +1,3 @@
+const CLUSTERS_VIEW = 'CLUSTERS_VIEW';
+
+export { CLUSTERS_VIEW };
