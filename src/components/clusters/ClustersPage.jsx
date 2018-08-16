@@ -17,7 +17,6 @@ limitations under the License.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
-import './ClustersPage.css';
 import { PaginationRow, Label, Button } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import * as fromClusterList from '../../ducks/clusterlist';

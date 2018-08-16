@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import {
@@ -30,6 +29,8 @@ import * as fromUsers from './ducks/users';
 import config from './config';
 import App from './components/app';
 import reducers from './reducers';
+
+import './styles/main.scss';
 
 let keycloak;
 

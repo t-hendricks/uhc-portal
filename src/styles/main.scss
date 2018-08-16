@@ -1,0 +1,33 @@
+/**
+  Third Party / Dependency imports here
+*/
+$font-path:      '~patternfly/dist/fonts/';
+$img-path:        '~patternfly/dist/img/';
+$icon-font-path: '~patternfly/dist/fonts/';
+
+// Must include patternfly variables before bootstrap variables
+@import 'patternfly/dist/sass/patternfly/variables.scss';
+
+// Bootstrap Core variables and mixins
+@import 'bootstrap-sass/assets/stylesheets/bootstrap/variables.scss';
+@import 'bootstrap-sass/assets/stylesheets/bootstrap/mixins';
+
+// Patternfly Core variables and mixins
+@import 'patternfly/dist/sass/patternfly/bootstrap-mixin-overrides';
+@import 'patternfly/dist/sass/patternfly/mixins';
+
+@import '~patternfly/dist/css/patternfly.css';
+@import '~patternfly/dist/css/patternfly-additions.css';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+@import './app';

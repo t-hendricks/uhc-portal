@@ -61,6 +61,23 @@ module.exports = {
         },
       },
       {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: ['./node_modules/', './src'],
+            },
+          },
+        ],
+      },
+      {
         test: /\.css$/,
         use: [
           'style-loader',
@@ -87,7 +104,16 @@ module.exports = {
   plugins: [
     // Copy the static files to the output directory:
     new CopyWebpackPlugin([
-      { from: rscDir, to: outDir, ignore: ['*.js', '*.jsx', 'index.html'] },
+      {
+        from: rscDir,
+        to: outDir,
+        ignore: [
+          '*.js',
+          '*.jsx',
+          '*.scss',
+          'index.html',
+        ],
+      },
     ]),
     new HtmlWebpackPlugin({
       hash: true, // cache invalidation on bundle updates
