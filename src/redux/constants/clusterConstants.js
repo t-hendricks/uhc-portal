@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+const CREATE_CLUSTER = 'CREATE_CLUSTER';
 const GET_CLUSTERS = 'GET_CLUSTERS';
 const GET_CLUSTER_DETAILS = 'GET_CLUSTER_DETAILS';
 
 export {
+  CREATE_CLUSTER,
   GET_CLUSTERS,
   GET_CLUSTER_DETAILS,
 };

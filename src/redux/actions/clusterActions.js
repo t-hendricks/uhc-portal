@@ -16,6 +16,11 @@ limitations under the License.
 import { clusterConstants } from '../constants';
 import { clusterService } from '../../services';
 
+const createCluster = params => dispatch => dispatch({
+  type: clusterConstants.CREATE_CLUSTER,
+  payload: clusterService.postNewCluster(params),
+});
+
 const fetchClusters = params => dispatch => dispatch({
   type: clusterConstants.GET_CLUSTERS,
   payload: clusterService.getClusters(params),
@@ -27,8 +32,9 @@ const fetchClusterDetails = clusterID => dispatch => dispatch({
 });
 
 const clusterActions = {
+  createCluster,
   fetchClusters,
   fetchClusterDetails,
 };
 
-export { clusterActions, fetchClusters, fetchClusterDetails };
+export { clusterActions, createCluster, fetchClusters, fetchClusterDetails };

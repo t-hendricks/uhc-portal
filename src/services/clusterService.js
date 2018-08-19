@@ -14,6 +14,14 @@ const getClusters = params => axios(
   }),
 );
 
+const postNewCluster = params => axios(
+  serviceConfig({
+    method: 'post',
+    url: '/api/clusters_mgmt/v1/clusters',
+    data: params,
+  }),
+);
+
 const getClusterDetails = clusterID => axios(
   serviceConfig({
     method: 'get',
@@ -23,6 +31,7 @@ const getClusterDetails = clusterID => axios(
 
 const clusterService = {
   getClusters,
+  postNewCluster,
   getClusterDetails,
 };
 
