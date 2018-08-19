@@ -7,7 +7,6 @@ import viewOptionsReducer from './viewOptionsReducer';
 import userReducer from './userReducer';
 
 // Old
-import clusterDetails from './clusterDetails';
 import clusterListFilters from './clusterListFilter';
 import createCluster from './createCluster';
 
@@ -18,7 +17,6 @@ const reducers = {
   userProfile: userReducer,
 
   // old
-  clusterDetails,
   createCluster,
   form: formReducer,
   clusterListFilters,
