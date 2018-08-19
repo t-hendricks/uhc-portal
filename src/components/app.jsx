@@ -25,7 +25,6 @@ import { ConnectedRouter } from 'connected-react-router';
 import { VerticalNav, VerticalNavMasthead } from 'patternfly-react';
 
 import { routes } from '../routes';
-import * as fromUsers from '../apis/users';
 
 import MastheadOptions from './mastheadOptions/mastheadOptions';
 import LoginPage from './LoginPage';
@@ -123,7 +122,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  userProfile: fromUsers.getUserProfile(state),
+  userProfile: state.userProfile,
 });
 
 export default withRouter(connect(mapStateToProps)(App));
