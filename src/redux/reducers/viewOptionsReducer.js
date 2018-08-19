@@ -1,3 +1,6 @@
+import _ from 'lodash/collection';
+import { isEqual } from 'lodash/lang';
+
 import helpers from '../../common/helpers';
 import {
   clusterConstants,
@@ -10,6 +13,13 @@ const INITAL_VIEW_STATE = {
   pageSize: 5,
   totalCount: 0,
   totalPages: 0,
+  filter: [],
+  sorting: {
+    id: 'name',
+    title: 'Name',
+    isNumeric: false,
+    isSortAscending: true,
+  },
 };
 
 const initialState = {
@@ -86,6 +96,30 @@ const viewOptionsReducer = (state = initialState, action) => {
 
     case helpers.FULFILLED_ACTION(clusterConstants.GET_CLUSTERS):
       updatePageCounts(viewConstants.CLUSTERS_VIEW, action.payload.data.total);
+      return Object.assign({}, state, updateState);
+
+    case viewPaginationConstants.VIEW_ADD_LIST_FILTER:
+      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
+        filter: [...state[action.viewType].filter, action.filter],
+      });
+      return Object.assign({}, state, updateState);
+
+    case viewPaginationConstants.VIEW_REMOVE_LIST_FILTER:
+      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
+        filter: _.filter(state[action.viewType].filter, o => !isEqual(o, action.filter)),
+      });
+      return Object.assign({}, state, updateState);
+
+    case viewPaginationConstants.VIEW_CLEAR_LIST_FILTER:
+      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
+        filter: [],
+      });
+      return Object.assign({}, state, updateState);
+
+    case viewPaginationConstants.VIEW_CHANGE_SORT:
+      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
+        sorting: action.sorting,
+      });
       return Object.assign({}, state, updateState);
 
     default:
