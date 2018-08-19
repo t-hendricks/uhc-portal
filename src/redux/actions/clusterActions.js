@@ -13,15 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import { clusterConstants } from '../constants';
+import { clusterService } from '../../services';
 
-import config from '../config';
+const fetchClusters = params => dispatch => dispatch({
+  type: clusterConstants.GET_CLUSTERS,
+  payload: clusterService.getClusters(params),
+});
 
-const fetchClustersAPI = (params) => {
-  const options = {
-    headers: { Authorization: `Bearer ${sessionStorage.getItem('kctoken')}` },
-  };
-  const url = `${config.configData.apiGateway}/api/clusters_mgmt/v1/clusters?page=${params.page}&size=${params.limit}`;
-  return fetch(url, options);
+const fetchClusterDetails = clusterID => dispatch => dispatch({
+  type: clusterConstants.GET_CLUSTER_DETAILS,
+  payload: clusterService.getClusterDetails(clusterID),
+});
+
+const clusterActions = {
+  fetchClusters,
+  fetchClusterDetails,
 };
 
-export default fetchClustersAPI;
+export { clusterActions, fetchClusters, fetchClusterDetails };

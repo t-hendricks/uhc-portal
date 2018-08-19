@@ -23,7 +23,7 @@ import {
   Button, Icon, Form, Modal, Alert,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
-import * as actions from '../../actions/createCluster';
+import * as actions from '../../redux/actions/createCluster';
 import postNewCluster from '../../apis/createCluster';
 import ClusterCreationSuccessModal from './ClusterCreationSuccessModal';
 

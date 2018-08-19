@@ -25,11 +25,11 @@ import { ConnectedRouter } from 'connected-react-router';
 import { VerticalNav, VerticalNavMasthead } from 'patternfly-react';
 
 import { routes } from '../routes';
-import * as fromUsers from '../ducks/users';
+import * as fromUsers from '../apis/users';
 
 import MastheadOptions from './mastheadOptions/mastheadOptions';
 import LoginPage from './LoginPage';
-import ClustersPage from './clusters/ClustersPage';
+import ClustersList from './clusters/ClusterList';
 import ClusterDetails from './clusters/ClusterDetails';
 import rhProductTitle from '../styles/images/logo.svg';
 
@@ -102,7 +102,7 @@ class App extends React.Component {
             <ConnectedRouter history={history}>
               <Switch>
                 <Redirect from="/" exact to="/clusters" />
-                <Route path="/clusters" component={ClustersPage} />
+                <Route path="/clusters" component={ClustersList} />
                 <Route path="/cluster/:id" component={ClusterDetails} />
               </Switch>
             </ConnectedRouter>

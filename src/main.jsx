@@ -18,33 +18,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import {
-  applyMiddleware, compose, createStore,
-} from 'redux';
-import reduxThunk from 'redux-thunk';
-import { createBrowserHistory } from 'history';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { AppContainer } from 'react-hot-loader';
-import * as fromUsers from './ducks/users';
+import * as fromUsers from './apis/users';
 import config from './config';
 import App from './components/app';
-import reducers from './reducers';
+import { store, reloadReducers } from './redux/store';
 
 import './styles/main.scss';
 
 let keycloak;
-
-const history = createBrowserHistory();
-/* eslint-disable-next-line no-underscore-dangle */
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-  connectRouter(history)(reducers),
-  composeEnhancer(
-    applyMiddleware(
-      routerMiddleware(history), reduxThunk,
-    ),
-  ),
-);
 
 const render = () => {
   ReactDOM.render(
@@ -65,15 +47,10 @@ const render = () => {
 
 // Hot reloading
 if (module.hot) {
-  // Reload components
-  module.hot.accept('./components/clusters/ClustersPage', () => {
-    render();
-  });
-
   // Reload reducers
-  module.hot.accept('./reducers', () => {
-    store.replaceReducer(connectRouter(history)(reducers));
-  });
+  module.hot.accept('./redux/reducers', reloadReducers);
+
+  module.hot.accept();
 }
 
 function initKeycloak() {

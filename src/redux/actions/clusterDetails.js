@@ -1,4 +1,4 @@
-import fetchClusterDetailsAPI from '../apis/clusterDetails';
+import fetchClusterDetailsAPI from '../../apis/clusterDetails';
 
 export const CLUSTER_DETAILS_RESPONSE = 'CLUSTER_DETAILS_RESPONSE';
 

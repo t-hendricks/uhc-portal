@@ -14,12 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import * as _ from 'lodash-es';
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { ListView, Button } from 'patternfly-react';
+
+import {
+  ListView, Button, Alert, Grid, Row, Col, EmptyState, Modal, PaginationRow,
+} from 'patternfly-react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import ClusterListFilterBar from './ClusterListFilterBar';
+import CreateClusterModal from './CreateClusterModal';
+import helpers from '../../common/helpers';
+import { viewConstants } from '../../redux/constants';
+import { fetchClusters } from '../../redux/actions/clusterActions';
 
 export const renderAdditionalInfoItems = (itemProperties, state) => {
   const generateStateInfoItem = (clusterState) => {
@@ -68,23 +78,129 @@ export const renderAdditionalInfoItems = (itemProperties, state) => {
 };
 
 class ClusterList extends Component {
-  static propTypes = {
-    clusters: PropTypes.array.isRequired,
+  componentDidMount() {
+    this.refresh();
   }
 
   shouldComponentUpdate(nextProps) {
     return (nextProps.clusters.length !== 0);
   }
 
+  componentWillUpdate(nextProps) {
+    // Check for changes resulting in a fetch
+    if (helpers.viewPropsChanged(nextProps.viewOptions, this.props.viewOptions)) {
+      this.refresh(nextProps);
+    }
+  }
+
+  refresh(props) {
+    const options = _.get(props, 'viewOptions') || this.props.viewOptions;
+    this.props.fetchClusters(helpers.createViewQueryObject(options));
+  }
+
+  renderPendingMessage() {
+    const { pending } = this.props;
+
+    if (pending) {
+      return (
+        <Modal bsSize="lg" backdrop={false} show animation={false}>
+          <Modal.Body>
+            <div className="spinner spinner-xl" />
+            <div className="text-center">
+Loading clusters...
+            </div>
+          </Modal.Body>
+        </Modal>
+      );
+    }
+
+    return null;
+  }
+
+  renderCreateClusterButton() {
+    return (
+      <React.Fragment>
+        <Link to="/clusters/create">
+          <Button bsStyle="primary" bsSize="large">
+          Create cluster
+          </Button>
+        </Link>
+        <Route
+          path="/clusters/create"
+          render={() => (
+            <CreateClusterModal cancelTo="/clusters" />
+          )}
+        />
+      </React.Fragment>
+    );
+  }
+
   render() {
+    const {
+      error, pending, clusters, viewOptions,
+    } = this.props;
+
+    if (error) {
+      return this.renderError();
+    }
+
+    if (pending) {
+      return this.renderPendingMessage();
+    }
+
+    if (!_.size(clusters)) {
+      return (
+        <React.Fragment>
+          <Grid fluid>
+            <Row>
+              <EmptyState className="full-page-blank-slate">
+                <EmptyState.Icon />
+                <EmptyState.Title>
+No clusters have been added
+                </EmptyState.Title>
+                <EmptyState.Info>
+Add clusters to show them in this view.
+                </EmptyState.Info>
+                <EmptyState.Action>
+                  {this.renderCreateClusterButton()}
+                </EmptyState.Action>
+              </EmptyState>
+            </Row>
+          </Grid>
+          {this.renderPendingMessage()}
+        </React.Fragment>
+      );
+    }
+
+    // Add fake data. I hope we can remove this soon...
+    const fakeClusters = clusters.map(cluster => Object.assign(
+      {},
+      {
+        clusterID: cluster.id,
+        title: cluster.name,
+        state: cluster.state,
+        properties: { nodes: cluster.nodes.total },
+      },
+    ));
+
     const maintenanceIcon = <ListView.Icon name="maintenance" type="pf" className="maintenance" />;
     const clusterIcon = <ListView.Icon name="cluster" type="pf" />;
-    const { clusters } = this.props;
     return (
       <div>
         <ClusterListFilterBar />
+        <Link to="/clusters/create">
+          <Button bsStyle="primary" bsSize="large">
+              Create cluster
+          </Button>
+        </Link>
+        <Route
+          path="/clusters/create"
+          render={() => (
+            <CreateClusterModal cancelTo="/clusters" />
+          )}
+        />
         <ListView>
-          {clusters.map(({
+          {fakeClusters.map(({
             properties, clusterID, title, description, state,
           }) => (
             <ListView.Item
@@ -110,4 +226,28 @@ class ClusterList extends Component {
   }
 }
 
-export { ClusterList };
+ClusterList.propTypes = {
+  fetchClusters: PropTypes.func,
+  clusters: PropTypes.array,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  pending: PropTypes.bool,
+  fulfilled: PropTypes.bool,
+  viewOptions: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  fetchClusters: queryObj => dispatch(fetchClusters(queryObj)),
+});
+
+const mapStateToProps = state => Object.assign({}, state.cluster.clusters, {
+  viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ClusterList);
