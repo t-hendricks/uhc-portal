@@ -15,12 +15,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   CardGrid, Card, CardBody, CardTitle, AggregateStatusCount,
-  Alert, Row, Col, Icon, EmptyState, Modal, Grid,
+  Alert, Row, Col, Icon, EmptyState, Grid,
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
 import { fetchClusterDetails } from '../../redux/actions/clusterActions';
 import ClusterUtilizationCard from './ClusterUtilizationCard';
+import LoadingModal from './LoadingModal';
 
 class ClusterDetails extends Component {
   componentDidMount() {
@@ -46,14 +47,9 @@ class ClusterDetails extends Component {
     const { pending } = this.props;
     if (pending) {
       return (
-        <Modal bsSize="lg" backdrop={false} show animation={false}>
-          <Modal.Body>
-            <div className="spinner spinner-xl" />
-            <div className="text-center">
-              Loading cluster details...
-            </div>
-          </Modal.Body>
-        </Modal>
+        <LoadingModal>
+          Loading cluster details...
+        </LoadingModal>
       );
     }
     return null;
