@@ -6,7 +6,7 @@ import {
 } from '../constants';
 
 const INITAL_VIEW_STATE = {
-  currentPage: 0,
+  currentPage: 1,
   pageSize: 5,
   totalCount: 0,
   totalPages: 0,

@@ -27,6 +27,7 @@ import { connect } from 'react-redux';
 
 import ClusterListFilterBar from './ClusterListFilterBar';
 import CreateClusterModal from './CreateClusterModal';
+import ViewPaginationRow from './viewPaginationRow';
 import helpers from '../../common/helpers';
 import { viewConstants } from '../../redux/constants';
 import { fetchClusters } from '../../redux/actions/clusterActions';
@@ -221,6 +222,13 @@ Add clusters to show them in this view.
             />
           ))}
         </ListView>
+        <ViewPaginationRow
+          viewType={viewConstants.CLUSTERS_VIEW}
+          currentPage={viewOptions.currentPage}
+          pageSize={viewOptions.pageSize}
+          totalCount={viewOptions.totalCount}
+          totalPages={viewOptions.totalPages}
+        />
       </div>
     );
   }
