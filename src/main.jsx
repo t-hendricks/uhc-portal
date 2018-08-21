@@ -19,6 +19,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
+import Keycloak from 'keycloak-js';
 import { userInfoResponse } from './redux/actions/userActions';
 import config from './config';
 import App from './components/app';
@@ -54,7 +55,6 @@ if (module.hot) {
 }
 
 function initKeycloak() {
-  /* eslint-disable-next-line no-undef */
   keycloak = Keycloak(config.configData.keycloak);
   keycloak.init({ onLoad: 'check-sso', checkLoginIframe: false }).success((authenticated) => {
     if (authenticated) {
