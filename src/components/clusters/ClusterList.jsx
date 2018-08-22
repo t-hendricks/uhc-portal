@@ -19,7 +19,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import {
-  ListView, Button, Alert, Grid, Row, Col, EmptyState, Modal, PaginationRow,
+  ListView, Button, Grid, Row, EmptyState, Modal,
 } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { Link, Route } from 'react-router-dom';
@@ -28,6 +28,8 @@ import { connect } from 'react-redux';
 import ClusterListFilterBar from './ClusterListFilterBar';
 import CreateClusterModal from './CreateClusterModal';
 import ViewPaginationRow from './viewPaginationRow';
+import LoadingModal from './LoadingModal';
+
 import helpers from '../../common/helpers';
 import { viewConstants } from '../../redux/constants';
 import { fetchClusters } from '../../redux/actions/clusterActions';
@@ -104,14 +106,9 @@ class ClusterList extends Component {
 
     if (pending) {
       return (
-        <Modal bsSize="lg" backdrop={false} show animation={false}>
-          <Modal.Body>
-            <div className="spinner spinner-xl" />
-            <div className="text-center">
-Loading clusters...
-            </div>
-          </Modal.Body>
-        </Modal>
+        <LoadingModal>
+          Loading clusters...
+        </LoadingModal>
       );
     }
 

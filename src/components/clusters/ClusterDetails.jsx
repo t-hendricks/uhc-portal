@@ -14,21 +14,20 @@ limitations under the License.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Alert, Row, Col, Icon,
+  CardGrid, Card, CardBody, CardTitle, AggregateStatusCount,
+  Alert, Row, Col, Icon, EmptyState, Grid,
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
-import {
-  CardGrid, Card, CardBody, CardTitle, AggregateStatusCount,
-} from 'patternfly-react/dist/js/components/Cards';
-import { fetchClusterDetails } from '../../redux/actions/clusterDetails';
-import clusterDetailsSelector from '../../selectors/clusterDetails';
+import { fetchClusterDetails } from '../../redux/actions/clusterActions';
 import ClusterUtilizationCard from './ClusterUtilizationCard';
+import LoadingModal from './LoadingModal';
 
 class ClusterDetails extends Component {
   componentDidMount() {
-    const { fetchDetails, match } = this.props;
+    const { match, fetchDetails } = this.props;
     const clusterID = match.params.id;
+
     if (clusterID !== null && clusterID !== undefined) {
       fetchDetails(clusterID);
     }
@@ -43,19 +42,65 @@ class ClusterDetails extends Component {
     }
   }
 
-  render() {
-    const { details, match } = this.props;
-    const cluster = details[match.params.id];
-    if (cluster === undefined) {
-      return <div />;
-    }
-    if (cluster.error !== undefined) {
+
+  renderPendingMessage() {
+    const { pending } = this.props;
+    if (pending) {
       return (
-        <Alert>
-          {cluster.error}
-        </Alert>
+        <LoadingModal>
+          Loading cluster details...
+        </LoadingModal>
       );
     }
+    return null;
+  }
+
+  renderError() {
+    const { errorMessage } = this.props;
+    return (
+      <EmptyState>
+        <Alert type="error">
+          <span>
+            Error retrieving clusters:
+            {' '}
+            {errorMessage}
+          </span>
+        </Alert>
+        {this.renderPendingMessage()}
+      </EmptyState>
+    );
+  }
+
+  render() {
+    const { cluster, error, pending } = this.props;
+    if (error) {
+      return this.renderError();
+    }
+
+    if (pending) {
+      return this.renderPendingMessage();
+    }
+
+    if (cluster === null || !cluster.name) {
+      return (
+        <React.Fragment>
+          <Grid fluid>
+            <Row>
+              <EmptyState className="full-page-blank-slate">
+                <EmptyState.Icon name="error-circle-o" />
+                <EmptyState.Title>
+                  Cluster Not Found
+                </EmptyState.Title>
+                <EmptyState.Info>
+                  Unable to retrieve details for cluster.
+                </EmptyState.Info>
+              </EmptyState>
+            </Row>
+          </Grid>
+          {this.renderPendingMessage()}
+        </React.Fragment>);
+    }
+
     return (
       <div>
         <h1>
@@ -263,15 +308,23 @@ class ClusterDetails extends Component {
 ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
-  details: PropTypes.object.isRequired,
+  cluster: PropTypes.any,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  pending: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  details: clusterDetailsSelector(state),
-});
+ClusterDetails.defaultProps = {
+  cluster: undefined,
+  error: false,
+  errorMessage: '',
+  pending: true,
+};
+
+const mapStateToProps = state => Object.assign({}, state.cluster.details);
 
 const mapDispatchToProps = {
-  fetchDetails: fetchClusterDetails,
+  fetchDetails: clusterID => fetchClusterDetails(clusterID),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
