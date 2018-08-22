@@ -4,9 +4,9 @@ import { reducer as formReducer } from 'redux-form';
 // new
 import clusterReducer from './clusterReducer';
 import viewOptionsReducer from './viewOptionsReducer';
+import userReducer from './userReducer';
 
 // Old
-import userProfile from '../../apis/users';
 import clusterDetails from './clusterDetails';
 import clusterListFilters from './clusterListFilter';
 import createCluster from './createCluster';
@@ -15,9 +15,9 @@ const reducers = {
   // new
   cluster: clusterReducer,
   viewOptions: viewOptionsReducer,
+  userProfile: userReducer,
 
   // old
-  userProfile,
   clusterDetails,
   createCluster,
   form: formReducer,

@@ -19,7 +19,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
-import * as fromUsers from './apis/users';
+import { userInfoResponse } from './redux/actions/userActions';
 import config from './config';
 import App from './components/app';
 import { store, reloadReducers } from './redux/store';
@@ -63,7 +63,7 @@ function initKeycloak() {
       render();
       keycloak.loadUserProfile()
         .success((result) => {
-          store.dispatch(fromUsers.userInfoResponse(result));
+          store.dispatch(userInfoResponse(result));
         })
         .error((err) => {
           console.log(err); // should probably redirect to an error page
