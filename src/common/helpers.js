@@ -43,6 +43,8 @@ const createViewQueryObject = (viewOptions, queryObj) => {
   if (viewOptions) {
     queryObject.page = viewOptions.currentPage;
     queryObject.page_size = viewOptions.pageSize;
+    // sorting
+    // filters
   }
 
   return queryObject;

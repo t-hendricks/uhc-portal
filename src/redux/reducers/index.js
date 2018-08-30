@@ -7,7 +7,6 @@ import viewOptionsReducer from './viewOptionsReducer';
 import userReducer from './userReducer';
 
 // Old
-import clusterListFilters from './clusterListFilter';
 import createCluster from './createCluster';
 
 const reducers = {
@@ -19,7 +18,6 @@ const reducers = {
   // old
   createCluster,
   form: formReducer,
-  clusterListFilters,
 };
 
 const reduxReducers = combineReducers(reducers);

@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
 import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import ClusterListFilterBar from './ClusterListFilterBar';
+import ClusterListToolBar from './ClusterListToolBar';
 import CreateClusterModal from './CreateClusterModal';
 import ViewPaginationRow from './viewPaginationRow';
 import LoadingModal from './LoadingModal';
@@ -185,18 +185,7 @@ Add clusters to show them in this view.
     const clusterIcon = <ListView.Icon name="cluster" type="pf" />;
     return (
       <div>
-        <ClusterListFilterBar />
-        <Link to="/clusters/create">
-          <Button bsStyle="primary" bsSize="large">
-              Create cluster
-          </Button>
-        </Link>
-        <Route
-          path="/clusters/create"
-          render={() => (
-            <CreateClusterModal cancelTo="/clusters" />
-          )}
-        />
+        <ClusterListToolBar />
         <ListView>
           {fakeClusters.map(({
             properties, clusterID, title, description, state,
@@ -225,6 +214,12 @@ Add clusters to show them in this view.
           pageSize={viewOptions.pageSize}
           totalCount={viewOptions.totalCount}
           totalPages={viewOptions.totalPages}
+        />
+        <Route
+          path="/clusters/create"
+          render={() => (
+            <CreateClusterModal cancelTo="/clusters" />
+          )}
         />
       </div>
     );

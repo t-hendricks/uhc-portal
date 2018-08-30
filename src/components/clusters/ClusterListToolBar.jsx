@@ -1,9 +1,25 @@
 import React from 'react';
-import { Filter, FormControl, Toolbar } from 'patternfly-react';
+import {
+  Filter, FormControl, Toolbar, Sort, Button,
+} from 'patternfly-react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addClusterListFilter, removeClusterListFilter, clearClusterListFilter } from '../../redux/actions/clusterListFilter';
-import clusterListFilters from '../../selectors/clusterListFilter';
+import * as viewActions from '../../redux/actions/viewOptionsActions';
+import { viewConstants } from '../../redux/constants';
+
+const sortFields = [
+  {
+    id: 'name',
+    title: 'Name',
+    isNumeric: false,
+  },
+  {
+    id: 'region',
+    title: 'Region',
+    isNumeric: false,
+  },
+];
 
 const filterFields = [
   {
@@ -25,7 +41,7 @@ const filterFields = [
 ];
 
 
-class ClusterListFilterBar extends React.Component {
+class ClusterListToolBar extends React.Component {
     state = {
       // The current filter type and value are only relevant internally, so it shouldn't be in redux
       currentFilterType: filterFields[0],
@@ -132,6 +148,16 @@ class ClusterListFilterBar extends React.Component {
     clearFilters();
   }
 
+  changeSortType = (newSorting) => {
+    const { setSorting, sorting } = this.props;
+    setSorting(Object.assign({}, sorting, newSorting));
+  }
+
+  changeSortDirection = () => {
+    const { setSorting, sorting } = this.props;
+    setSorting(Object.assign({}, sorting, { isSortAscending: !sorting.isSortAscending }));
+  }
+
   renderInput() {
     const { currentFilterType, currentValue, filterCategory } = this.state;
     if (!currentFilterType) {
@@ -176,11 +202,11 @@ class ClusterListFilterBar extends React.Component {
   }
 
   render() {
-    const { activeFilters } = this.props;
+    const { activeFilters, sorting } = this.props;
     const { currentFilterType } = this.state;
 
     return (
-      <div>
+      <Toolbar>
         <div style={{ width: 300 }}>
           <Filter>
             <Filter.TypeSelector
@@ -190,6 +216,25 @@ class ClusterListFilterBar extends React.Component {
             />
             {this.renderInput()}
           </Filter>
+        </div>
+        <Sort>
+          <Sort.TypeSelector
+            sortTypes={sortFields}
+            currentSortType={sorting}
+            onSortTypeSelected={this.changeSortType}
+          />
+          <Sort.DirectionSelector
+            isNumeric={sorting.isNumeric}
+            isAscending={sorting.isSortAscending}
+            onClick={this.changeSortDirection}
+          />
+        </Sort>
+        <div className="form-group">
+          <Link to="/clusters/create">
+            <Button bsStyle="primary">
+              Create cluster
+            </Button>
+          </Link>
         </div>
         {activeFilters
           && activeFilters.length > 0 && (
@@ -208,37 +253,41 @@ class ClusterListFilterBar extends React.Component {
                   </Filter.Item>
                 ))}
               </Filter.List>
-              <button
-                type="button"
+              <a
+                href="#"
                 onClick={(e) => {
                   e.preventDefault();
                   this.clearFilters();
                 }}
               >
                 Clear All Filters
-              </button>
+              </a>
             </Toolbar.Results>
         )}
-      </div>
+      </Toolbar>
     );
   }
 }
 
-ClusterListFilterBar.propTypes = {
+ClusterListToolBar.propTypes = {
   activeFilters: PropTypes.array.isRequired,
+  sorting: PropTypes.object.isRequired,
   addFilter: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
   clearFilters: PropTypes.func.isRequired,
+  setSorting: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  activeFilters: clusterListFilters(state),
+  activeFilters: state.viewOptions[viewConstants.CLUSTERS_VIEW].filter,
+  sorting: state.viewOptions[viewConstants.CLUSTERS_VIEW].sorting,
 });
 
 const mapDispatchToProps = {
-  addFilter: addClusterListFilter,
-  removeFilter: removeClusterListFilter,
-  clearFilters: clearClusterListFilter,
+  addFilter: filter => viewActions.onListFilterAdded(filter, viewConstants.CLUSTERS_VIEW),
+  removeFilter: filter => viewActions.onListFilterRemoved(filter, viewConstants.CLUSTERS_VIEW),
+  clearFilters: () => viewActions.onListFilterCleared(viewConstants.CLUSTERS_VIEW),
+  setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClusterListFilterBar);
+export default connect(mapStateToProps, mapDispatchToProps)(ClusterListToolBar);
