@@ -19,10 +19,10 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import {
-  ListView, Button, Grid, Row, EmptyState, Modal,
+  ListView, Button, Grid, Row, EmptyState,
 } from 'patternfly-react';
 import PropTypes from 'prop-types';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import ClusterListToolBar from './ClusterListToolBar';
@@ -81,12 +81,12 @@ export const renderAdditionalInfoItems = (itemProperties, state) => {
 };
 
 class ClusterList extends Component {
-  componentDidMount() {
-    this.refresh();
+  state = {
+    clusterCreationModalVisible: false,
   }
 
-  shouldComponentUpdate(nextProps) {
-    return (nextProps.clusters.length !== 0);
+  componentDidMount() {
+    this.refresh();
   }
 
   componentWillUpdate(nextProps) {
@@ -95,6 +95,13 @@ class ClusterList extends Component {
       this.refresh(nextProps);
     }
   }
+
+  setModalState(show) {
+    this.setState((prevState) => {
+      return ({ ...prevState, clusterCreationModalVisible: show });
+    });
+  }
+
 
   refresh(props) {
     const options = _.get(props, 'viewOptions') || this.props.viewOptions;
@@ -117,20 +124,20 @@ class ClusterList extends Component {
 
   renderCreateClusterButton() {
     return (
-      <React.Fragment>
-        <Link to="/clusters/create">
-          <Button bsStyle="primary" bsSize="large">
-          Create cluster
-          </Button>
-        </Link>
-        <Route
-          path="/clusters/create"
-          render={() => (
-            <CreateClusterModal cancelTo="/clusters" />
-          )}
-        />
-      </React.Fragment>
+      <Button bsStyle="primary" bsSize="large" onClick={() => { this.setModalState(true); }}>
+        Create cluster
+      </Button>
     );
+  }
+
+  renderClusterCreationModal() {
+    const { clusterCreationModalVisible } = this.state;
+    if (clusterCreationModalVisible === true) {
+      return (
+        <CreateClusterModal closeFunc={() => this.setModalState(false)} />
+      );
+    }
+    return '';
   }
 
   render() {
@@ -165,6 +172,7 @@ Add clusters to show them in this view.
               </EmptyState>
             </Row>
           </Grid>
+          {this.renderClusterCreationModal()}
           {this.renderPendingMessage()}
         </React.Fragment>
       );
@@ -185,7 +193,9 @@ Add clusters to show them in this view.
     const clusterIcon = <ListView.Icon name="cluster" type="pf" />;
     return (
       <div>
-        <ClusterListToolBar />
+        <ClusterListToolBar>
+          {this.renderCreateClusterButton()}
+        </ClusterListToolBar>
         <ListView>
           {fakeClusters.map(({
             properties, clusterID, title, description, state,
@@ -215,12 +225,7 @@ Add clusters to show them in this view.
           totalCount={viewOptions.totalCount}
           totalPages={viewOptions.totalPages}
         />
-        <Route
-          path="/clusters/create"
-          render={() => (
-            <CreateClusterModal cancelTo="/clusters" />
-          )}
-        />
+        {this.renderClusterCreationModal()}
       </div>
     );
   }
