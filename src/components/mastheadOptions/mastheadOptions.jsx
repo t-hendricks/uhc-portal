@@ -21,7 +21,7 @@ import { Dropdown, Icon, MenuItem } from 'patternfly-react';
 import helpers from '../../common/helpers';
 
 const MastheadOptions = ({
-  userProfile, showHelp, showAboutModal, showUserPreferences, logoutUser,
+  userProfile, showHelp, showAboutModal, logoutUser,
 }) => (
   <nav className="collapse navbar-collapse">
     <ul className="navbar-iconic nav navbar-nav navbar-right">
@@ -46,9 +46,6 @@ const MastheadOptions = ({
           </span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <MenuItem onClick={showUserPreferences}>
-            User Preferences
-          </MenuItem>
           <MenuItem onClick={logoutUser}>
             Log out
           </MenuItem>
