@@ -35,7 +35,7 @@ const required = value => (value ? undefined : 'Field is required');
 function CreateClusterModal(props) {
   // handleSubmit comes from reduxForm()
   const {
-    cancelTo, handleSubmit, createClusterResponse,
+    closeFunc, handleSubmit, createClusterResponse,
   } = props;
   let errorContainer = <div />;
   if (createClusterResponse.createCluster !== undefined) {
@@ -53,7 +53,7 @@ function CreateClusterModal(props) {
       );
     }
     if (response.state === 'Installing' || response.state === 'Ready') {
-      return <ClusterCreationSuccessModal clusterID={response.id} closeTo={cancelTo} />;
+      return <ClusterCreationSuccessModal clusterID={response.id} closeFunc={closeFunc} />;
     }
   }
   return (
@@ -61,11 +61,9 @@ function CreateClusterModal(props) {
       <Form horizontal onSubmit={handleSubmit}>
 
         <Modal.Header>
-          <Link to={cancelTo}>
-            <button type="button" className="close" aria-hidden="true" aria-label="Close">
-              <Icon type="pf" name="close" />
-            </button>
-          </Link>
+          <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={closeFunc}>
+            <Icon type="pf" name="close" />
+          </button>
           <Modal.Title>
             Create Cluster
           </Modal.Title>
@@ -151,11 +149,9 @@ function CreateClusterModal(props) {
           <Button bsStyle="primary" type="submit">
             Create
           </Button>
-          <Link to={cancelTo}>
-            <Button bsStyle="default">
+          <Button bsStyle="default" onClick={closeFunc}>
               Cancel
-            </Button>
-          </Link>
+          </Button>
         </Modal.Footer>
 
       </Form>
@@ -163,7 +159,7 @@ function CreateClusterModal(props) {
   );
 }
 CreateClusterModal.propTypes = {
-  cancelTo: PropTypes.string.isRequired,
+  closeFunc: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
 };

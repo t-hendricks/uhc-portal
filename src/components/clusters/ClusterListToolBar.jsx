@@ -202,7 +202,7 @@ class ClusterListToolBar extends React.Component {
   }
 
   render() {
-    const { activeFilters, sorting } = this.props;
+    const { activeFilters, sorting, children } = this.props;
     const { currentFilterType } = this.state;
 
     return (
@@ -230,11 +230,7 @@ class ClusterListToolBar extends React.Component {
           />
         </Sort>
         <div className="form-group">
-          <Link to="/clusters/create">
-            <Button bsStyle="primary">
-              Create cluster
-            </Button>
-          </Link>
+          {children}
         </div>
         {activeFilters
           && activeFilters.length > 0 && (
