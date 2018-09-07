@@ -1,6 +1,6 @@
 {
   "short_name": "Customer Portal",
-  "name": "Openshift Customer Portal",
+  "name": "OpenShift Customer Portal",
   "icons": [
     {
       "src": "favicon.ico",
