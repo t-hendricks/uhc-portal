@@ -61,7 +61,7 @@ class ClusterDetails extends Component {
       <EmptyState>
         <Alert type="error">
           <span>
-            Error retrieving clusters:
+            Error retrieving cluster details:
             {' '}
             {errorMessage}
           </span>
