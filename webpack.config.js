@@ -49,13 +49,13 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: [
-              path.join(__dirname, 'node_modules/babel-preset-react'),
-              path.join(__dirname, 'node_modules/babel-preset-env'),
+              '@babel/preset-react',
+              '@babel/preset-env',
             ],
             plugins: [
-              path.join(__dirname, 'node_modules/babel-plugin-transform-class-properties'),
-              path.join(__dirname, 'node_modules/babel-plugin-transform-object-rest-spread'),
-              path.join(__dirname, 'node_modules/babel-plugin-transform-object-assign'),
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-proposal-object-rest-spread',
+              '@babel/plugin-transform-object-assign',
             ],
           },
         },
