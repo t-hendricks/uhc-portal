@@ -18,141 +18,133 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const modDir = path.resolve(__dirname, 'node_modules');
 const srcDir = path.resolve(__dirname, 'src');
-const rscDir = path.resolve(__dirname, 'src');
 const outDir = path.resolve(__dirname, 'build');
 
-module.exports = {
-  mode: 'development',
-  entry: {
-    main: path.resolve(srcDir, 'main.jsx'),
-  },
+module.exports = (env, argv) => {
+  const devMode = argv.mode !== 'production';
+  return ({
+    mode: argv.mode || 'development',
+    entry: {
+      main: path.resolve(srcDir, 'main.jsx'),
+    },
 
-  output: {
-    path: outDir,
-    filename: 'bundle.js',
-    publicPath: '/',
-  },
-  devtool: 'source-map',
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: [
-          /node_modules/,
-        ],
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-react',
-              '@babel/preset-env',
-            ],
-            plugins: [
-              '@babel/plugin-proposal-class-properties',
-              '@babel/plugin-proposal-object-rest-spread',
-              '@babel/plugin-transform-object-assign',
-            ],
-          },
-        },
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'sass-loader',
+    output: {
+      path: outDir,
+      filename: 'bundle.js',
+      publicPath: '/',
+    },
+    devtool: 'source-map',
+
+    plugins: [
+      new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+        filename: devMode ? '[name].css' : '[name].[hash].css',
+        chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+      }),
+      new HtmlWebpackPlugin({
+        hash: true, // cache invalidation on bundle updates
+        template: 'src/index.html',
+      }),
+    ],
+
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: [
+            /node_modules/,
+          ],
+          use: {
+            loader: 'babel-loader',
             options: {
-              includePaths: ['./node_modules/', './src'],
+              presets: [
+                '@babel/preset-react',
+                '@babel/preset-env',
+              ],
+              plugins: [
+                '@babel/plugin-proposal-class-properties',
+                '@babel/plugin-proposal-object-rest-spread',
+                '@babel/plugin-transform-object-assign',
+              ],
             },
           },
-        ],
-      },
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-        ],
-      },
-      {
-        test: /(webfont\.svg|\.(eot|ttf|woff|woff2))$/,
-        loader: 'file-loader',
-        options: {
-          name: 'fonts/[name].[ext]',
         },
-      },
-      {
-        test: /\.(gif|jpg|png|svg)$/,
-        loader: 'url-loader',
-        options: {
-          name: 'images/[name].[ext]',
+        {
+          test: /\.scss$/,
+          use: [
+            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: ['./node_modules/', './src'],
+              },
+            },
+          ],
         },
-      },
-    ],
-  },
+        {
+          test: /\.css$/,
+          use: [
+            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+            'css-loader',
+          ],
+        },
+        {
+          test: /(webfont\.svg|\.(eot|ttf|woff|woff2))$/,
+          loader: 'file-loader',
+          options: {
+            name: 'fonts/[name].[ext]',
+          },
+        },
+        {
+          test: /\.(gif|jpg|png|svg)$/,
+          loader: 'url-loader',
+          options: {
+            name: 'images/[name].[ext]',
+          },
+        },
+      ],
+    },
 
-  plugins: [
-    // Copy the static files to the output directory:
-    new CopyWebpackPlugin([
-      {
-        from: rscDir,
-        to: outDir,
-        ignore: [
-          '*.js',
-          '*.jsx',
-          '*.scss',
-          'index.html',
-        ],
-      },
-    ]),
-    new HtmlWebpackPlugin({
-      hash: true, // cache invalidation on bundle updates
-      template: 'src/index.html',
-    }),
-  ],
+    resolve: {
+      extensions: ['.js', '.jsx'],
+      modules: [
+        srcDir,
+        modDir,
+      ],
+    },
 
-  resolve: {
-    extensions: ['.js', '.jsx'],
-    modules: [
-      srcDir,
-      modDir,
-    ],
-  },
-
-  devServer: {
-    historyApiFallback: true,
-    contentBase: outDir,
-    publicPath: '/',
-    hot: true,
-    inline: true,
-    port: 8001,
-    proxy: [
-      {
-        context: [
-          '/api/clusters_mgmt',
-        ],
-        changeOrigin: true,
-        secure: false,
-        target: 'https://clusters-service.127.0.0.1.nip.io/',
-      },
-      {
-        context: [
-          '/api/customers_mgmt',
-        ],
-        changeOrigin: true,
-        secure: false,
-        target: 'https://customers-service.127.0.0.1.nip.io/',
-      },
-    ],
-  },
+    devServer: {
+      historyApiFallback: true,
+      contentBase: outDir,
+      publicPath: '/',
+      hot: true,
+      inline: true,
+      port: 8001,
+      proxy: [
+        {
+          context: [
+            '/api/clusters_mgmt',
+          ],
+          changeOrigin: true,
+          secure: false,
+          target: 'https://clusters-service.127.0.0.1.nip.io/',
+        },
+        {
+          context: [
+            '/api/customers_mgmt',
+          ],
+          changeOrigin: true,
+          secure: false,
+          target: 'https://customers-service.127.0.0.1.nip.io/',
+        },
+      ],
+    },
+  });
 };
