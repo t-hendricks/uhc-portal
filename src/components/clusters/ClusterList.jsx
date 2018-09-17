@@ -19,7 +19,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import {
-  ListView, Button, Grid, Row, EmptyState,
+  ListView, Alert, Button, Grid, Row, EmptyState,
 } from 'patternfly-react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -138,6 +138,22 @@ class ClusterList extends Component {
       );
     }
     return '';
+  }
+
+  renderError() {
+    const { errorMessage } = this.props;
+    return (
+      <EmptyState>
+        <Alert type="error">
+          <span>
+            Error retrieving clusters:
+            {' '}
+            {errorMessage}
+          </span>
+        </Alert>
+        {this.renderPendingMessage()}
+      </EmptyState>
+    );
   }
 
   render() {
