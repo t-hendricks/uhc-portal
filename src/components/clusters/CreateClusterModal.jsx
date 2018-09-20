@@ -36,26 +36,26 @@ function CreateClusterModal(props) {
   const {
     closeFunc, handleSubmit, createClusterResponse,
   } = props;
+
+  if (createClusterResponse.fulfilled) {
+    return <ClusterCreationSuccessModal clusterID={createClusterResponse.cluster.id} closeFunc={closeFunc} />;
+  }
+
   let errorContainer = <div />;
-  if (createClusterResponse.fulfilled || createClusterResponse.error) {
-    const response = createClusterResponse.createCluster;
-    if (createClusterResponse.error) {
-      errorContainer = (
-        <Alert>
-          <span>
-            Error creating cluster:
-          </span>
-          <span>
-            {createClusterResponse.error}
-          </span>
-          <span>
-            {createClusterResponse.errorMessage}
-          </span>
-        </Alert>
-      );
-    } else if (createClusterResponse.fulfilled) {
-      return <ClusterCreationSuccessModal clusterID={createClusterResponse.cluster.id} closeFunc={closeFunc} />;
-    }
+  if (createClusterResponse.error) {
+    errorContainer = (
+      <Alert>
+        <span>
+          Error creating cluster:
+        </span>
+        <span>
+          {createClusterResponse.error}
+        </span>
+        <span>
+          {createClusterResponse.errorMessage}
+        </span>
+      </Alert>
+    );
   }
   return (
     <Modal show>
