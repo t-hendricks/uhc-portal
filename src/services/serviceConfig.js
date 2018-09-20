@@ -9,7 +9,7 @@ const serviceConfig = (passedConfig = {}, auth = true) => Object.assign(
   passedConfig,
   {
     headers: auth ? authHeader() : {},
-    url: `${config.configData.apiGateway}/${passedConfig.url}`,
+    url: `${config.configData.apiGateway}${passedConfig.url}`,
   },
 );
 
