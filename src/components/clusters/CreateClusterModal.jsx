@@ -188,14 +188,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.createClusterRequest());
 
     const clusterRequest = {
-      payload: {
-        name: formData.name,
-        region: formData.region,
-        nodes: {
-          master: parseInt(formData.nodes_master, 10),
-          infra: parseInt(formData.nodes_infra, 10),
-          compute: parseInt(formData.nodes_compute, 10),
-        },
+      name: formData.name,
+      region: formData.region,
+      nodes: {
+        master: parseInt(formData.nodes_master, 10),
+        infra: parseInt(formData.nodes_infra, 10),
+        compute: parseInt(formData.nodes_compute, 10),
       },
       query: {
         aws_access_key_id: formData.aws_access_key_id,
