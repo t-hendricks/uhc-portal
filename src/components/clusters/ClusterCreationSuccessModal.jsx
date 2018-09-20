@@ -6,15 +6,13 @@ import {
 import { Link } from 'react-router-dom';
 
 
-function ClusterCreationSuccessModal({ closeTo, clusterID }) {
+function ClusterCreationSuccessModal({ closeFunc, clusterID }) {
   return (
     <Modal show style={{ padding: '15px' }}>
       <Modal.Header>
-        <Link to={closeTo}>
-          <button type="button" className="close" aria-hidden="true" aria-label="Close">
-            <Icon type="pf" name="close" />
-          </button>
-        </Link>
+        <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={closeFunc}>
+          <Icon type="pf" name="close" />
+        </button>
         <Modal.Title>
             Cluster Creation
         </Modal.Title>
@@ -34,11 +32,9 @@ function ClusterCreationSuccessModal({ closeTo, clusterID }) {
         </Grid>
       </Modal.Body>
       <Modal.Footer>
-        <Link to={closeTo}>
-          <Button>
-            Close
-          </Button>
-        </Link>
+        <Button onClick={closeFunc}>
+          Close
+        </Button>
         <Link to={`/cluster/${clusterID}`} style={{ marginRight: '15px' }}>
           <Button bsStyle="primary">
             Cluster Details
@@ -50,7 +46,7 @@ function ClusterCreationSuccessModal({ closeTo, clusterID }) {
 }
 
 ClusterCreationSuccessModal.propTypes = {
-  closeTo: PropTypes.string.isRequired,
+  closeFunc: PropTypes.func.isRequired,
   clusterID: PropTypes.string.isRequired,
 };
 
