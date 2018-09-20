@@ -34,10 +34,11 @@ const required = value => (value ? undefined : 'Field is required');
 function CreateClusterModal(props) {
   // handleSubmit comes from reduxForm()
   const {
-    closeFunc, handleSubmit, createClusterResponse,
+    closeFunc, handleSubmit, createClusterResponse, reset,
   } = props;
 
   if (createClusterResponse.fulfilled) {
+    reset();
     return <ClusterCreationSuccessModal clusterID={createClusterResponse.cluster.id} closeFunc={closeFunc} />;
   }
 
