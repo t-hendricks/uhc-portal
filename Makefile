@@ -29,10 +29,10 @@ image_pull_policy:=IfNotPresent
 # The location of the API gateway:
 api_url:=https://api.127.0.0.1.nip.io
 
-# The details of the Keycloak instance:
+# Keycloak details:
 keycloak_url:=https://developers.stage.redhat.com/auth
 keycloak_realm:=rhd
-keycloak_resource:=uhc
+keycloak_client_id:=uhc
 
 .PHONY: \
 	app \
@@ -66,8 +66,8 @@ template:
 		--param="DOMAIN=$(domain)" \
 		--param="IMAGE_PULL_POLICY=$(image_pull_policy)" \
 		--param="IMAGE_TAG=$(image_tag)" \
+		--param="KEYCLOAK_CLIENT_ID=$(keycloak_client_id)" \
 		--param="KEYCLOAK_REALM=$(keycloak_realm)" \
-		--param="KEYCLOAK_RESOURCE=$(keycloak_resource)" \
 		--param="KEYCLOAK_URL=$(keycloak_url)" \
 		--param="NAMESPACE=$(namespace)" \
 		--param="VERSION=$(version)" \

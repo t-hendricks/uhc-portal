@@ -44,14 +44,14 @@ parameters:
 - name: NAMESPACE
   description: The namespace where the objects will be created.
 
-- name: KEYCLOAK_REALM
-  description: Keycloak authentication realm.
-
-- name: KEYCLOAK_RESOURCE
-  description: Keycloak authentication resource.
-
 - name: KEYCLOAK_URL
-  description: URL for the Keycloak server.
+  description: The Keycloak base URL.
+
+- name: KEYCLOAK_REALM
+  description: The Keycloak realm.
+
+- name: KEYCLOAK_CLIENT_ID
+  description: The Keycloak client identifier.
 
 - name: VERSION
   description: The version of the project.
@@ -126,7 +126,7 @@ objects:
         "apiGateway": "${API_URL}",
         "keycloak": {
           "realm": "${KEYCLOAK_REALM}",
-          "clientId": "${KEYCLOAK_RESOURCE}",
+          "clientId": "${KEYCLOAK_CLIENT_ID}",
           "url": "${KEYCLOAK_URL}"
         }
       }
