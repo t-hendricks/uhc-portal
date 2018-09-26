@@ -15,7 +15,6 @@
 #
 
 # The details of the application:
-domain:=cloud.127.0.0.1.nip.io
 namespace:=unified-hybrid-cloud
 version:=latest
 
@@ -26,8 +25,9 @@ image_tag:=$(image_registry)/$(image_repository):$(version)
 image_tar:=$(shell echo $(image_tag) | tr /:. ---).tar
 image_pull_policy:=IfNotPresent
 
-# The location of the API gateway:
-api_url:=https://api.127.0.0.1.nip.io
+# The DNS domain names of the gateway and the portal:
+gateway_domain:=api.127.0.0.1.nip.io
+portal_domain:=cloud.127.0.0.1.nip.io
 
 # Keycloak details:
 keycloak_url:=https://developers.stage.redhat.com/auth
@@ -62,14 +62,14 @@ template:
 	oc process \
 		--filename="template.yml" \
 		--local="true" \
-		--param="API_URL=$(api_url)" \
-		--param="DOMAIN=$(domain)" \
+		--param="GATEWAY_DOMAIN=$(gateway_domain)" \
 		--param="IMAGE_PULL_POLICY=$(image_pull_policy)" \
 		--param="IMAGE_TAG=$(image_tag)" \
 		--param="KEYCLOAK_CLIENT_ID=$(keycloak_client_id)" \
 		--param="KEYCLOAK_REALM=$(keycloak_realm)" \
 		--param="KEYCLOAK_URL=$(keycloak_url)" \
 		--param="NAMESPACE=$(namespace)" \
+		--param="PORTAL_DOMAIN=$(portal_domain)" \
 		--param="VERSION=$(version)" \
 	> template.json
 
