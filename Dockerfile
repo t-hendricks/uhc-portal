@@ -16,6 +16,13 @@
 
 FROM centos:7
 
+COPY \
+    redhat-it.pem \
+    /etc/pki/ca-trust/source/anchors/
+
+RUN \
+    update-ca-trust
+
 RUN \
     yum install -y httpd && \
     yum clean all
