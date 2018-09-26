@@ -29,11 +29,11 @@ metadata:
 
 parameters:
 
-- name: API_URL
-  description: URL for the API server.
+- name: GATEWAY_DOMAIN
+  description: The DNS domain where the API gateway is deployed.
 
-- name: DOMAIN
-  description: The DNS domain where the route will be created.
+- name: PORTAL_DOMAIN
+  description: The DNS domain where the portal will be deployed.
 
 - name: IMAGE_PULL_POLICY
   description: Image pull policy.
@@ -70,7 +70,7 @@ objects:
 
       # Explicilty set the server name, otherwise the web server will use
       # the IP address of the pod:
-      ServerName ${DOMAIN}
+      ServerName ${PORTAL_DOMAIN}
 
       # Listen in a non privileged port, as we will be running wit a non
       # privileged user:
@@ -123,7 +123,7 @@ objects:
   data:
     config.json: |-
       {
-        "apiGateway": "${API_URL}",
+        "apiGateway": "https://${GATEWAY_DOMAIN}",
         "keycloak": {
           "realm": "${KEYCLOAK_REALM}",
           "clientId": "${KEYCLOAK_CLIENT_ID}",
@@ -184,15 +184,3 @@ objects:
     ports:
     - port: 8000
       targetPort: 8000
-
-- apiVersion: v1
-  kind: Route
-  metadata:
-    name: portal-server
-  spec:
-    host: ${DOMAIN}
-    to:
-      kind: Service
-      name: portal-server
-    tls:
-      termination: edge

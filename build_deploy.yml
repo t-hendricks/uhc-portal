@@ -27,6 +27,10 @@ metadata:
     description: "UHC Portal"
 parameters:
 
+- name: PORTAL_DOMAIN
+  description: |
+    The DNS domain where the route will be created.
+
 - name: QUAY_PULL_JSON
   description: |
     The Base64 encoded docker JSON configuration that will be used to pull
@@ -41,3 +45,15 @@ objects:
   type: kubernetes.io/dockerconfigjson
   data:
     .dockerconfigjson: ${QUAY_PULL_JSON}
+
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: portal-server
+  spec:
+    host: ${PORTAL_DOMAIN}
+    tls:
+      termination: edge
+    to:
+      kind: Service
+      name: portal-server

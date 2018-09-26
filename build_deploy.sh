@@ -35,6 +35,11 @@
 # OC_LOGIN_TOKEN - The details needed to connect to the cluster where the
 # cluster operator should be deployed.
 #
+# GATEWAY_DOMAIN - The DNS domain where the API gateway is deployed.
+#
+# PORTAL_DOMAIN - The DNS domain of the application, for example
+# 'cloud.openshift.com'.
+#
 # KEYCLOAK_URL, KEYCLOAK_REALM and KEYCLOAK_CLIENT_ID - The details of the
 # Keycloak instance that the application will use for authentication.
 #
@@ -99,9 +104,14 @@ fi
 trap "oc logout" EXIT
 
 # Deploy the application:
-if [ -z "${DOMAIN}" ]; then
-  echo "The DNS domain hasn't been provided."
-  echo "Make sure to set the 'DOMAIN' environment variable."
+if [ -z "${GATEWAY_DOMAIN}" ]; then
+  echo "The DNS domain of the gateway hasn't been provided."
+  echo "Make sure to set the 'GATEWAY_DOMAIN' environment variable."
+  exit 1
+fi
+if [ -z "${PORTAL_DOMAIN}" ]; then
+  echo "The DNS domain of the portal hasn't been provided."
+  echo "Make sure to set the 'PORTAL_DOMAIN' environment variable."
   exit 1
 fi
 if [ -z "${KEYCLOAK_URL}" ]; then
@@ -120,12 +130,12 @@ if [ -z "${KEYCLOAK_CLIENT_ID}" ]; then
   exit 1
 fi
 make \
-  default_cluster_tls_certificate="${DEFAULT_CLUSTER_TLS_CERTIFICATE}" \
-  default_cluster_tls_key="${DEFAULT_CLUSTER_TLS_KEY}" \
+  gateway_domain="${GATEWAY_DOMAIN}" \
   image_pull_policy="Always" \
   keycloak_client_id="${KEYCLOAK_CLIENT_ID}" \
   keycloak_realm="${KEYCLOAK_REALM}" \
   keycloak_url="${KEYCLOAK_URL}" \
+  portal_domain="${PORTAL_DOMAIN}" \
   version="${VERSION}" \
   deploy
 
@@ -155,6 +165,7 @@ QUAY_PULL_JSON="{
 oc process \
   --filename="build_deploy.yml" \
   --local="true" \
+  --param="PORTAL_DOMAIN=${PORTAL_DOMAIN}" \
   --param="QUAY_PULL_JSON=$(echo -n "${QUAY_PULL_JSON}" | base64 --wrap 0)" \
   > build_deploy.json
 trap "rm build_deploy.json" EXIT
