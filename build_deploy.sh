@@ -55,8 +55,14 @@ if [ -z "${BUILD_ID}" ]; then
 fi
 BUILD_TS="$(date --utc --iso-8601=seconds)"
 
-# The version should be 'latest' for commits, and the tag name for tags.
-VERSION="latest"
+# The version should be 'latest' for commits, and the tag name for tags:
+if [ -z "${VERSION}" ]; then
+  if [ "${TRIGGER}" = "tag" ]; then
+    VERSION="$(git describe)"
+  else
+    VERSION="latest"
+  fi
+fi
 
 # Set the directory for docker configuration:
 DOCKER_CONFIG="${PWD}/.docker"
