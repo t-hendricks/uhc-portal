@@ -29,6 +29,12 @@ metadata:
 
 parameters:
 
+- name: BUILD_ID
+  description: The identifier of the build.
+
+- name: BUILD_TS
+  description: The timestamp of the build.
+
 - name: GATEWAY_DOMAIN
   description: The DNS domain where the API gateway is deployed.
 
@@ -157,6 +163,12 @@ objects:
         - name: webapp-config
           configMap:
             name: webapp-config
+        initContainers:
+        - name: id
+          image: centos:7
+          command:
+          - echo
+          - ${VERSION}-${BUILD_ID}-${BUILD_TS}
         containers:
         - name: server
           image: ${IMAGE_TAG}
