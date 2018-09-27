@@ -46,6 +46,15 @@
 # The machines that run this script need to have access to internet, so that the
 # built images can be pushed to quay.io.
 
+# Make sure that the build identifier has been provided, and calculate a build
+# timestamp:
+if [ -z "${BUILD_ID}" ]; then
+  echo "The build identifier hasn't been provided."
+  echo "Make sure to set the 'BUILD_ID' environment variable."
+  exit 1
+fi
+BUILD_TS="$(date --utc --iso-8601=seconds)"
+
 # The version should be 'latest' for commits, and the tag name for tags.
 VERSION="latest"
 
@@ -54,6 +63,8 @@ DOCKER_CONFIG="${PWD}/.docker"
 
 # Build the image:
 make \
+  build_id="${BUILD_ID}" \
+  build_ts="${BUILD_TS}" \
   version="${VERSION}" \
   app \
   image
@@ -75,6 +86,8 @@ trap "docker logout" EXIT
 
 # Push the image:
 make \
+  build_id="${BUILD_ID}" \
+  build_ts="${BUILD_TS}" \
   version="${VERSION}" \
   push
 
@@ -130,6 +143,8 @@ if [ -z "${KEYCLOAK_CLIENT_ID}" ]; then
   exit 1
 fi
 make \
+  build_id="${BUILD_ID}" \
+  build_ts="${BUILD_TS}" \
   gateway_domain="${GATEWAY_DOMAIN}" \
   image_pull_policy="Always" \
   keycloak_client_id="${KEYCLOAK_CLIENT_ID}" \

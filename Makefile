@@ -14,6 +14,10 @@
 # limitations under the License.
 #
 
+# The details of the build:
+build_id:=unknown
+build_ts:=$(shell date --utc --iso-8601=seconds)
+
 # The details of the application:
 namespace:=unified-hybrid-cloud
 version:=latest
@@ -62,6 +66,8 @@ template:
 	oc process \
 		--filename="template.yml" \
 		--local="true" \
+		--param="BUILD_ID=$(build_id)" \
+		--param="BUILD_TS=$(build_ts)" \
 		--param="GATEWAY_DOMAIN=$(gateway_domain)" \
 		--param="IMAGE_PULL_POLICY=$(image_pull_policy)" \
 		--param="IMAGE_TAG=$(image_tag)" \
