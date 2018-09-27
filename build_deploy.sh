@@ -31,9 +31,8 @@
 # QUAY_PULL_TOKEN - The token of the robot account used inside the cluster to
 # pull images from 'quay.io'.
 #
-# OC_LOGIN_URL, OC_LOGIN_PROXY, OC_LOGIN_USER, OC_LOGIN_PASSWORD and
-# OC_LOGIN_TOKEN - The details needed to connect to the cluster where the
-# cluster operator should be deployed.
+# OC_LOGIN_URL, OC_LOGIN_USER, OC_LOGIN_PASSWORD and OC_LOGIN_TOKEN - The
+# details needed to connect to the cluster where the portal should be deployed.
 #
 # GATEWAY_DOMAIN - The DNS domain where the API gateway is deployed.
 #
@@ -103,13 +102,28 @@ if [ -z "${OC_LOGIN_URL}" ]; then
   echo "Make sure to set the 'OC_LOGIN_URL' environment variable."
   exit 1
 fi
-if [ -n "${OC_LOGIN_USER}" -a -n "${OC_LOGIN_PASSWORD}" ]; then
+if [ -z "${OC_LOGIN_USER}" ]; then
+  echo "The cluster user hasn't been provided."
+  echo "Make sure to set the 'OC_LOGIN_USER' environment variable."
+  exit 1
+fi
+if [ -z "${OC_LOGIN_PASSWORD}" ]; then
+  echo "The cluster password hasn't been provided."
+  echo "Make sure to set the 'OC_LOGIN_PASSWORD' environment variable."
+  exit 1
+fi
+if [ -z "${OC_LOGIN_TOKEN}" ]; then
+  echo "The cluster token hasn't been provided."
+  echo "Make sure to set the 'OC_LOGIN_TOKEN' environment variable."
+  exit 1
+fi
+if [ "${OC_LOGIN_USER}" != "none" -a "${OC_LOGIN_PASSWORD}" != "none" ]; then
   oc login \
     --username "${OC_LOGIN_USER}" \
     --password "${OC_LOGIN_PASSWORD}" \
     --insecure-skip-tls-verify \
     "${OC_LOGIN_URL}"
-elif [ -n "${OC_LOGIN_TOKEN}" != ]; then
+elif [ "${OC_LOGIN_TOKEN}" != "none" ]; then
   oc login \
     --token "${OC_LOGIN_TOKEN}" \
     --insecure-skip-tls-verify \
