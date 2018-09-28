@@ -117,6 +117,11 @@ if [ -z "${OC_LOGIN_TOKEN}" ]; then
   echo "Make sure to set the 'OC_LOGIN_TOKEN' environment variable."
   exit 1
 fi
+if [ -z "${OC_LOGIN_NAMESPACE}" ]; then
+  echo "The namespace hasn't been provided."
+  echo "Make sure to set the 'OC_LOGIN_NAMESPACE' environment variable."
+  exit 1
+fi
 if [ "${OC_LOGIN_USER}" != "none" -a "${OC_LOGIN_PASSWORD}" != "none" ]; then
   oc login \
     --username "${OC_LOGIN_USER}" \
@@ -170,6 +175,7 @@ make \
   keycloak_client_id="${KEYCLOAK_CLIENT_ID}" \
   keycloak_realm="${KEYCLOAK_REALM}" \
   keycloak_url="${KEYCLOAK_URL}" \
+  namespace="${OC_LOGIN_NAMESPACE}" \
   portal_domain="${PORTAL_DOMAIN}" \
   version="${VERSION}" \
   deploy
