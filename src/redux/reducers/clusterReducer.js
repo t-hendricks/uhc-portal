@@ -31,9 +31,16 @@ const initialState = {
     fulfilled: false,
     cluster: null,
   },
+  createdCluster: {
+    error: false,
+    errorMessage: '',
+    pending: false,
+    fulfilled: false,
+    cluster: null,
+  },
 };
 
-const clusterReducer = function (state = initialState, action) {
+function clusterReducer(state = initialState, action) {
   switch (action.type) {
     case helpers.REJECTED_ACTION(clusterConstants.GET_CLUSTERS):
       return helpers.setStateProp(
@@ -117,10 +124,52 @@ const clusterReducer = function (state = initialState, action) {
         },
       );
 
+    case helpers.REJECTED_ACTION(clusterConstants.CREATE_CLUSTER):
+      return helpers.setStateProp(
+        'createdCluster',
+        {
+          pending: false,
+          error: action.error,
+          errorMessage: helpers.getErrorMessageFromResults(action.payload),
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.PENDING_ACTION(clusterConstants.CREATE_CLUSTER):
+      return helpers.setStateProp(
+        'createdCluster',
+        {
+          pending: true,
+          cluster: null,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.FULFILLED_ACTION(clusterConstants.CREATE_CLUSTER):
+      return helpers.setStateProp(
+        'createdCluster',
+        {
+          cluster: action.payload.data,
+          pending: false,
+          fulfilled: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+
     default:
       return state;
   }
-};
+}
 
 clusterReducer.initialState = initialState;
 

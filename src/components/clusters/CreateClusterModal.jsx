@@ -23,8 +23,7 @@ import {
   Button, Icon, Form, Modal, Alert,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
-import * as actions from '../../redux/actions/createCluster';
-import postNewCluster from '../../apis/createCluster';
+import { createCluster } from '../../redux/actions/clusterActions';
 import ClusterCreationSuccessModal from './ClusterCreationSuccessModal';
 
 
@@ -35,26 +34,29 @@ const required = value => (value ? undefined : 'Field is required');
 function CreateClusterModal(props) {
   // handleSubmit comes from reduxForm()
   const {
-    closeFunc, handleSubmit, createClusterResponse,
+    closeFunc, handleSubmit, createClusterResponse, reset,
   } = props;
+
+  if (createClusterResponse.fulfilled) {
+    reset();
+    return <ClusterCreationSuccessModal clusterID={createClusterResponse.cluster.id} closeFunc={closeFunc} />;
+  }
+
   let errorContainer = <div />;
-  if (createClusterResponse.createCluster !== undefined) {
-    const response = createClusterResponse.createCluster;
-    if (response.error !== undefined) {
-      errorContainer = (
-        <Alert>
-          <span>
-            Error creating cluster:
-          </span>
-          <span>
-            {response.error}
-          </span>
-        </Alert>
-      );
-    }
-    if (response.state === 'Installing' || response.state === 'Ready') {
-      return <ClusterCreationSuccessModal clusterID={response.id} closeFunc={closeFunc} />;
-    }
+  if (createClusterResponse.error) {
+    errorContainer = (
+      <Alert>
+        <span>
+          Error creating cluster:
+        </span>
+        <span>
+          {createClusterResponse.error}
+        </span>
+        <span>
+          {createClusterResponse.errorMessage}
+        </span>
+      </Alert>
+    );
   }
   return (
     <Modal show>
@@ -170,7 +172,7 @@ const reduxFormConfig = {
 const reduxFormCreateClusterModal = reduxForm(reduxFormConfig)(CreateClusterModal);
 
 const mapStateToProps = state => ({
-  createClusterResponse: state.createCluster,
+  createClusterResponse: state.cluster.createdCluster,
   initialValues: {
     name: '',
     nodes_master: '1',
@@ -185,8 +187,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: (formData) => {
-    dispatch(actions.createClusterRequest());
-
     const clusterRequest = {
       name: formData.name,
       region: formData.region,
@@ -200,11 +200,7 @@ const mapDispatchToProps = dispatch => ({
         aws_secret_access_key: formData.aws_secret_access_key,
       },
     };
-    postNewCluster(clusterRequest)
-      .then(response => response.json())
-      .then((value) => {
-        dispatch(actions.createClusterResponse(value));
-      });
+    createCluster(clusterRequest)(dispatch);
   },
 });
 
