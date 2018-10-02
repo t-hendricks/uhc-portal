@@ -54,6 +54,7 @@ objects:
     host: ${PORTAL_DOMAIN}
     tls:
       termination: edge
+      insecureEdgeTerminationPolicy: Redirect
     to:
       kind: Service
       name: portal-server
