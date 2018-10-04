@@ -24,7 +24,10 @@ RUN \
     update-ca-trust
 
 RUN \
-    yum install -y httpd && \
+    yum install -y \
+    httpd \
+    mod_auth_openidc \
+    && \
     yum clean all
 
 COPY build/ /var/www/html/
