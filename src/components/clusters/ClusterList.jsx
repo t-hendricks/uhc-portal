@@ -36,9 +36,9 @@ import { fetchClusters } from '../../redux/actions/clusterActions';
 
 // TODO not sure about the sizes
 const nameColSizes = {
-  md: 2,
+  md: 4,
   sm: 4,
-  xs: 6,
+  xs: 4,
 };
 const statusColSizes = {
   md: 1,
@@ -52,8 +52,8 @@ const statColSizes = {
 };
 const locationColSizes = {
   md: 2,
-  sm: 4,
-  xs: 6,
+  sm: 2,
+  xs: 2,
 };
 
 function renderClusterStatusIcon(clusterState, id) {
@@ -99,7 +99,7 @@ function renderClusterRow(cluster, index) {
       <Grid.Col {...statColSizes}>{cluster.memory.total}</Grid.Col>
       <Grid.Col {...locationColSizes}>{location}</Grid.Col>
       <Grid.Col {...statColSizes}>
-        <DropdownKebab id={`${cluster.id}-dropdown`}>
+        <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
           <MenuItem>
             Launch Admin Console
           </MenuItem>
@@ -157,7 +157,7 @@ class ClusterList extends Component {
   renderCreateClusterButton() {
     return (
       <Button bsStyle="primary" bsSize="large" onClick={() => { this.setModalState(true); }}>
-        Create cluster
+        Create
       </Button>
     );
   }
@@ -227,10 +227,9 @@ class ClusterList extends Component {
     }
 
     return (
-      <div>
-        <ClusterListToolBar>
-          {this.renderCreateClusterButton()}
-        </ClusterListToolBar>
+      <div className="cluster-list">
+        <h1>Clusters</h1>
+        {this.renderCreateClusterButton()}
         <TableGrid id="table-grid">
           <TableGrid.Head>
             <TableGrid.ColumnHeader
@@ -323,9 +322,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   fetchClusters: queryObj => dispatch(fetchClusters(queryObj)),
 });
 
-const mapStateToProps = state => Object.assign({}, state.cluster.clusters, {
-  viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
-});
+const mapStateToProps = state => Object.assign(
+  {},
+  state.cluster.clusters,
+  { viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW] },
+);
 
 export default connect(
   mapStateToProps,

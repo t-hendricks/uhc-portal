@@ -19,6 +19,16 @@ limitations under the License.
   overflow-x: visible;
 }
 
+.cluster-list {
+  margin: 25px;
+}
+.cluster-list .table-grid-pf-column-header {
+  color: #838383;
+}
+.cluster-list .table-grid-pf .table-grid-pf-column-header .btn.btn-link {
+  color: #0189cf;
+}
+
 .layout-pf {
   height: 100%;
 }
