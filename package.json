@@ -1,6 +1,9 @@
 {
   "name": "cloud.openshift.com",
-  "sideEffects": ["*.css", "*.scss"],
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "version": "0.0.0",
   "description": "OpenShift Unified Hybrid Cloud",
   "repository": {
@@ -17,9 +20,9 @@
     "keycloak-js": "^4.3.0",
     "lodash": "^4.17.10",
     "lodash-es": "^4.17.10",
-    "patternfly": "^3.54.1",
-    "patternfly-react": "^2.10.1",
-    "patternfly-react-extensions": "^2.5.0",
+    "patternfly": "^3.54.8",
+    "patternfly-react": "^2.20.0",
+    "patternfly-react-extensions": "2.7.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
