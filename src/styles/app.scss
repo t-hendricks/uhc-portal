@@ -14,6 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License. 
 */
 
+// work around PatternFly bug that hides DropDownKebab menu
+.table-grid-pf .row, .table-grid-pf [class*="col-"] {
+  overflow-x: visible;
+}
+
 .layout-pf {
   height: 100%;
 }
