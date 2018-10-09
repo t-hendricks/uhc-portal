@@ -2,7 +2,7 @@ import ClusterList from './components/clusters/ClusterList';
 
 const routes = () => [
   {
-    iconClass: 'fa fa-crosshairs',
+    iconClass: 'pficon pficon-cluster',
     title: 'Clusters',
     to: '/clusters',
     redirect: true,
