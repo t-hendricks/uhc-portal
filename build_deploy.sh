@@ -168,6 +168,7 @@ if [ -z "${KEYCLOAK_CLIENT_ID}" ]; then
   exit 1
 fi
 make \
+  acl="production.acl" \
   build_id="${BUILD_ID}" \
   build_ts="${BUILD_TS}" \
   gateway_domain="${GATEWAY_DOMAIN}" \
