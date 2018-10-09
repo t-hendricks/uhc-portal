@@ -29,6 +29,9 @@ metadata:
 
 parameters:
 
+- name: ACL
+  description: The Base64 encoded access control list.
+
 - name: BUILD_ID
   description: The identifier of the build.
 
@@ -92,16 +95,11 @@ objects:
       LoadModule dir_module /usr/lib64/httpd/modules/mod_dir.so
       LoadModule log_config_module /usr/lib64/httpd/modules/mod_log_config.so
       LoadModule authn_core_module /usr/lib64/httpd/modules/mod_authn_core.so
+      LoadModule authn_file_module /usr/lib64/httpd/modules/mod_authn_file.so
       LoadModule authz_core_module /usr/lib64/httpd/modules/mod_authz_core.so
+      LoadModule authz_user_module /usr/lib64/httpd/modules/mod_authz_user.so
       LoadModule rewrite_module /usr/lib64/httpd/modules/mod_rewrite.so
-      LoadModule auth_openidc_module /usr/lib64/httpd/modules/mod_auth_openidc.so
-
-      # Set the details of the OpenID server:
-      OIDCProviderMetadataURL ${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}/.well-known/openid-configuration
-      OIDCRedirectURI https://${PORTAL_DOMAIN}/redirect
-      OIDCClientID ${KEYCLOAK_CLIENT_ID}
-      OIDCClientSecret none
-      OIDCCryptoPassphrase 5lM1TdX0CdplCAN/cxx4
+      LoadModule auth_basic_module /usr/lib64/httpd/modules/mod_auth_basic.so
 
       # Deny access to all the file system:
       <Directory />
@@ -114,12 +112,12 @@ objects:
       <Directory /var/www/html>
         AllowOverride None
 
-        # Allow access only to a sub-set of authenticated users:
-        AuthType openid-connect
-        Require claim preferred_username:***REMOVED***
-        Require claim preferred_username:ealfassa
-        Require claim preferred_username:jhernand-rh
-        Require claim preferred_username:oourfali
+        # Allow access only to authenticated users:
+        AuthType Basic
+        AuthName "Portal"
+        AuthBasicProvider file
+        AuthUserFile /secrets/acl/main
+        Require valid-user
 
         # Redirect all requests for files or directories that don't exist to the
         # index page of the application:
@@ -178,6 +176,9 @@ objects:
         - name: webapp-config
           configMap:
             name: webapp-config
+        - name: acl
+          secret:
+            secretName: portal-server-acl
         initContainers:
         - name: id
           image: centos:7
@@ -193,6 +194,8 @@ objects:
             mountPath: /etc/httpd
           - name: webapp-config
             mountPath: /var/www/html/config
+          - name: acl
+            mountPath: /secrets/acl
           command:
           - /usr/sbin/httpd
           args:
@@ -211,3 +214,13 @@ objects:
     ports:
     - port: 8000
       targetPort: 8000
+
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    name: portal-server-acl
+    labels:
+      app: portal-server
+  type: Opaque
+  data:
+    main: ${ACL}
