@@ -6,7 +6,7 @@ const getClusters = params => axios(
     method: 'get',
     url: '/api/clusters_mgmt/v1/clusters',
     params: {
-      page: params.page - 1,
+      page: params.page,
       size: params.page_size,
       // sorting
       // filters
