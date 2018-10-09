@@ -119,6 +119,7 @@ objects:
         Require claim preferred_username:***REMOVED***
         Require claim preferred_username:ealfassa
         Require claim preferred_username:jhernand-rh
+        Require claim preferred_username:oourfali
 
         # Redirect all requests for files or directories that don't exist to the
         # index page of the application:
