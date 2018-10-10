@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Alert, EmptyState
+  Alert, EmptyState,
 } from 'patternfly-react';
 
 class ErrorBoundary extends React.Component {
@@ -15,21 +15,28 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
-    if (this.state.error) {
+    const { error } = this.state;
+    if (error) {
       return (
         // Fallback UI
         <EmptyState>
           <Alert type="error">
             Something went wrong:
             <pre>
-              {this.state.error.componentStack}
+              {error.componentStack}
             </pre>
           </Alert>
         </EmptyState>
       );
     }
-    return this.props.children;
+
+    const { children } = this.props;
+    return children;
   }
 }
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ErrorBoundary;
