@@ -21,20 +21,10 @@ import { Dropdown, Icon, MenuItem } from 'patternfly-react';
 import helpers from '../../common/helpers';
 
 const MastheadOptions = ({
-  userProfile, showHelp, logoutUser,
+  userProfile, logoutUser,
 }) => (
   <nav className="collapse navbar-collapse">
     <ul className="navbar-iconic nav navbar-nav navbar-right">
-      <Dropdown componentClass="li" id="help">
-        <Dropdown.Toggle useAnchor className="nav-item-iconic">
-          <Icon type="pf" name="help" />
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <MenuItem onClick={showHelp}>
-            Help
-          </MenuItem>
-        </Dropdown.Menu>
-      </Dropdown>
       <Dropdown componentClass="li" id="user">
         <Dropdown.Toggle useAnchor className="nav-item-iconic">
           <Icon type="pf" name="user" />
@@ -54,13 +44,11 @@ const MastheadOptions = ({
 
 MastheadOptions.propTypes = {
   userProfile: PropTypes.object.isRequired,
-  showHelp: PropTypes.func,
   showUserPreferences: PropTypes.func,
   logoutUser: PropTypes.func,
 };
 
 MastheadOptions.defaultProps = {
-  showHelp: helpers.noop,
   showUserPreferences: helpers.noop,
   logoutUser: helpers.noop,
 };
