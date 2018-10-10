@@ -35,7 +35,6 @@ import rhProductTitle from '../styles/images/logo.svg';
 function renderMenuActions() {
   return (
     <React.Fragment>
-      <VerticalNav.Item className="collapsed-nav-item" title="Help" />
       <VerticalNav.Item className="collapsed-nav-item" title="User Preferences" />
       <VerticalNav.Item className="collapsed-nav-item" title="Logout" />
     </React.Fragment>
