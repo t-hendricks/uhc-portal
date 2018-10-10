@@ -28,6 +28,7 @@ import { routes } from '../routes';
 
 import MastheadOptions from './mastheadOptions/mastheadOptions';
 import LoginPage from './LoginPage';
+import ErrorBoundary from './ErrorBoundary';
 import ClustersList from './clusters/ClusterList';
 import ClusterDetails from './clusters/ClusterDetails';
 import rhProductTitle from '../styles/images/logo.svg';
@@ -98,13 +99,15 @@ class App extends React.Component {
         </VerticalNav>
         <div className="container-pf-nav-pf-vertical">
           <div className="coc-content">
-            <ConnectedRouter history={history}>
-              <Switch>
-                <Redirect from="/" exact to="/clusters" />
-                <Route path="/clusters" component={ClustersList} />
-                <Route path="/cluster/:id" component={ClusterDetails} />
-              </Switch>
-            </ConnectedRouter>
+            <ErrorBoundary>
+              <ConnectedRouter history={history}>
+                <Switch>
+                  <Redirect from="/" exact to="/clusters" />
+                  <Route path="/clusters" component={ClustersList} />
+                  <Route path="/cluster/:id" component={ClusterDetails} />
+                </Switch>
+              </ConnectedRouter>
+            </ErrorBoundary>
           </div>
         </div>
       </div>
