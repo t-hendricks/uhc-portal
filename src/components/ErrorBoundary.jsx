@@ -1,35 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Alert, EmptyState
+  Alert, EmptyState,
 } from 'patternfly-react';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { error: null };
+    this.state = { error: null, componentStack: null };
   }
 
   componentDidCatch(error, info) {
-    this.setState({ error: info });
+    this.setState({ error: error.toString(), componentStack: info.componentStack });
   }
 
   render() {
-    if (this.state.error) {
+    const { error, componentStack } = this.state;
+    if (error) {
       return (
         // Fallback UI
         <EmptyState>
           <Alert type="error">
-            Something went wrong:
-            <pre>
-              {this.state.error.componentStack}
-            </pre>
+            <h3>Something went wrong:</h3>
+            <div style={{ 'white-space': 'pre-wrap', 'text-align': 'left', 'font-family': 'monospace' }}>
+              {error}
+
+              {componentStack}
+            </div>
           </Alert>
         </EmptyState>
       );
     }
-    return this.props.children;
+
+    const { children } = this.props;
+    return children;
   }
 }
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ErrorBoundary;
