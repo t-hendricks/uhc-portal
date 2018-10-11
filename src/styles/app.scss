@@ -65,3 +65,9 @@ limitations under the License.
 .maintenance{
   border: 2px solid #f0ab00 !important;
 }
+
+// ----- NOTE: this is here for the upcoming demo! Remove it later -------- //
+.nav-pf-vertical, .navbar-toggle {
+  display: none;
+  visibility: hidden;
+}
