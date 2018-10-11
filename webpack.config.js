@@ -136,14 +136,6 @@ module.exports = (env, argv) => {
           secure: false,
           target: 'https://clusters-service.127.0.0.1.nip.io/',
         },
-        {
-          context: [
-            '/api/customers_mgmt',
-          ],
-          changeOrigin: true,
-          secure: false,
-          target: 'https://customers-service.127.0.0.1.nip.io/',
-        },
       ],
     },
   });
