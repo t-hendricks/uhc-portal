@@ -66,6 +66,33 @@ limitations under the License.
   border: 2px solid #f0ab00 !important;
 }
 
+.center {
+  text-align: center;
+}
+
+.cluster-details-item {
+  dt {
+    text-transform: uppercase;
+    font-weight: normal;
+  }
+  dd {
+    margin-bottom: 30px;
+  }
+}
+
+.cluster-details-item-list {
+  margin-bottom: 0px;
+  dt {
+    text-transform: none;
+    display: inline;
+    font-weight: bold;
+    color: #808080
+  }
+  dd {
+    display: inline;
+  }
+}
+
 // ----- NOTE: this is here for the upcoming demo! Remove it later -------- //
 .nav-pf-vertical, .navbar-toggle {
   display: none;

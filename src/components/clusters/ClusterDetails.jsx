@@ -20,8 +20,9 @@ import {
 
 import PropTypes from 'prop-types';
 import { fetchClusterDetails } from '../../redux/actions/clusterActions';
-import ClusterUtilizationCard from './ClusterUtilizationCard';
+import ClusterUtilizationChart from './ClusterUtilizationChart';
 import LoadingModal from './LoadingModal';
+import ClusterStateIcon from './ClusterStateIcon';
 
 class ClusterDetails extends Component {
   componentDidMount() {
@@ -103,204 +104,161 @@ class ClusterDetails extends Component {
 
     return (
       <div>
-        <h1>
+        <h1 style={{ marginLeft: '80px' }}>
           {cluster.name}
         </h1>
-        <CardGrid>
-          <Row style={{ marginBottom: '20px', marginTop: '20px' }}>
-            <Col xs={3}>
-              <Card accented aggregated>
-                <CardTitle>
-                  <Icon type="pf" name="container-node" />
-                  <AggregateStatusCount>
-                    {cluster.nodes.total}
-                  </AggregateStatusCount>
-                  Nodes
-                </CardTitle>
-              </Card>
-            </Col>
-            <Col xs={3}>
-              <Card accented aggregated>
-                <CardTitle>
-                  <Icon type="pf" name="users" />
-                  <AggregateStatusCount>
-                    ???
-                  </AggregateStatusCount>
-                  Users
-                </CardTitle>
-              </Card>
-            </Col>
-            <Col xs={3}>
-              <Card accented aggregated>
-                <CardTitle>
-                  <Icon type="pf" name="project" />
-                  <AggregateStatusCount>
-                    ???
-                  </AggregateStatusCount>
-                  Projects
-                </CardTitle>
-              </Card>
-            </Col>
-            <Col xs={3}>
-              <Card accented aggregated>
-                <CardTitle>
-                  <Icon type="fa" name="cubes" />
-                  <AggregateStatusCount>
-                    ???
-                  </AggregateStatusCount>
-                  Pods
-                </CardTitle>
-              </Card>
-            </Col>
-          </Row>
-        </CardGrid>
-        <CardGrid>
+        <Grid fluid>
           <Row style={{ marginTop: '20px' }}>
-            <Col>
-              <Card>
-                <CardTitle>
-                  <Icon type="fa" name="tachometer" />
-                  Cluster Utilization
-                </CardTitle>
-                <CardBody>
-                  <CardGrid>
-                    <Row style={{ marginTop: '20px' }}>
-                      <Col xs={6} sm={3} md={3}>
-                        <ClusterUtilizationCard title="CPU" total={cluster.cpu.total} unit="Cores" used={cluster.cpu.used} donutId="cpu_donut" />
-                      </Col>
-                      <Col xs={6} sm={3} md={3}>
-                        <ClusterUtilizationCard title="Memory" total={cluster.memory.total} unit="GiB" used={cluster.memory.used} donutId="memory_donut" />
-                      </Col>
-                      <Col xs={6} sm={3} md={3}>
-                        <ClusterUtilizationCard title="Storage" total={cluster.storage.total} unit="GiB" used={cluster.storage.used} donutId="storage_donut" />
-                      </Col>
-                    </Row>
-                  </CardGrid>
-                </CardBody>
-              </Card>
+            <Col xs={6} sm={3} md={3}>
+              <ClusterUtilizationChart title="CPU" total={cluster.cpu.total} unit="Cores" used={cluster.cpu.used} donutId="cpu_donut" />
+            </Col>
+            <Col xs={6} sm={3} md={3}>
+              <ClusterUtilizationChart title="MEMORY" total={cluster.memory.total} unit="GiB" used={cluster.memory.used} donutId="memory_donut" />
+            </Col>
+            <Col xs={6} sm={3} md={3}>
+              <ClusterUtilizationChart title="STORAGE" total={cluster.storage.total} unit="GiB" used={cluster.storage.used} donutId="storage_donut" />
             </Col>
           </Row>
-        </CardGrid>
-        <CardGrid>
+        </Grid>
+        <hr style={{ width: '96%' }}/>
+        <Grid fluid>
           <Row>
-            <Col>
-              <Card>
-                <CardTitle>
-                  <Icon type="pf" name="info" />
-                  Cluster info
-                </CardTitle>
-                <CardBody>
-                  <Row>
-                    <Col sm={6}>
-                      <dl className="dl-horizontal left">
-                        <dt>
-                          Status
-                        </dt>
-                        <dd>
-                          {cluster.state}
-                        </dd>
-                        <dt>
-                          Cluster Name
-                        </dt>
-                        <dd>
-                          {cluster.name}
-                        </dd>
-                        <dt>
-                          Provider
-                        </dt>
-                        <dd>
-                          ??????
-                        </dd>
-                        <dt>
-                          Region
-                        </dt>
-                        <dd>
-                          {cluster.region}
-                        </dd>
-                        <dt>
-                          OpenShift Version
-                        </dt>
-                        <dd>
-                          ????
-                        </dd>
-                        <dt>
-                          Container Runtime
-                        </dt>
-                        <dd>
-                          ????
-                        </dd>
-                        <dt>
-                          OS Version
-                        </dt>
-                        <dd>
-                          ????
-                        </dd>
-                      </dl>
-                    </Col>
-                    <Col sm={6}>
-                      <dl className="dl-horizontal left">
-                        <dt>
-                          Masters
-                        </dt>
-                        <dd>
-                          {cluster.nodes.master}
-                          {' '}
-                          Master nodes
-                        </dd>
-                        <dt>
-                          Infrastructure
-                        </dt>
-                        <dd>
-                          {cluster.nodes.infra}
-                          {' '}
-                          Nodes
-                        </dd>
-                        <dt>
-                          Compute
-                        </dt>
-                        <dd>
-                          {cluster.nodes.compute}
-                          {' '}
-                          Nodes
-                        </dd>
-                        <dt>
-                          vCPU
-                        </dt>
-                        <dd>
-                          {cluster.cpu.total}
-                          {' '}
-                          Cores
-                        </dd>
-                        <dt>
-                          Memory
-                        </dt>
-                        <dd>
-                          {cluster.memory.total}
-                          {' '}
-                          (unit unknown)
-                        </dd>
-                        <dt>
-                          Storage
-                        </dt>
-                        <dd>
-                          {cluster.storage.total}
-                          {' '}
-                          (unit unknown)
-                        </dd>
-                        <dt>
-                          Network
-                        </dt>
-                        <dd>
-                          ?????????
-                        </dd>
-                      </dl>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
+            <Col sm={6}>
+              <dl className="cluster-details-item left">
+                <dt>
+                  Name
+                </dt>
+                <dd>
+                  {cluster.name}
+                </dd>
+                <dt>
+                  Location
+                </dt>
+                <dd>
+                  {cluster.region}
+                </dd>
+                <dt>
+                  Lables
+                </dt>
+                <dd>
+                  N/A
+                </dd>
+                <dt>
+                  Provider
+                </dt>
+                <dd>
+                  N/A
+                </dd>
+                <dt>
+                  Versions
+                </dt>
+                <dd>
+                  <dl className="cluster-details-item-list left">
+                    <dt>
+                      OS:
+                      {' '}
+                    </dt>
+                    <dd>
+                      N/A
+                    </dd>
+                  </dl>
+                  <dl className="cluster-details-item-list left">
+                    <dt>
+                      OpenShift:
+                      {' '}
+                    </dt>
+                    <dd>
+                      N/A
+                    </dd>
+                  </dl>
+                  <dl className="cluster-details-item-list left">
+                    <dt>
+                      Docker:
+                      {' '}
+                    </dt>
+                    <dd>
+                      N/A
+                    </dd>
+                  </dl>
+                </dd>
+                <dt>
+                  Created at
+                </dt>
+                <dd>
+                  N/A
+                </dd>
+              </dl>
+            </Col>
+            <Col sm={6}>
+              <dl className="cluster-details-item left">
+                <dt>
+                  Status
+                </dt>
+                <dd>
+                  <ClusterStateIcon clusterState={cluster.state} />
+                  {' '}
+                  {cluster.state}
+                </dd>
+                <dt>
+                  CPU
+                </dt>
+                <dd>
+                  {cluster.cpu.total}
+                  {' '}
+                  vCPU
+                </dd>
+                <dt>
+                  Memory
+                </dt>
+                <dd>
+                  {cluster.memory.total}
+                  {' '}
+                  (unit unknown)
+                </dd>
+                <dt>
+                  Storage
+                </dt>
+                <dd>
+                  {cluster.storage.total}
+                  {' '}
+                  (unit unknown)
+                </dd>
+                <dt>
+                  Nodes
+                </dt>
+                <dd>
+                  <dl className="cluster-details-item-list left">
+                    <dt>
+                      Master:
+                      {' '}
+                    </dt>
+                    <dd>
+                      {cluster.nodes.master}
+                    </dd>
+                  </dl>
+                  <dl className="cluster-details-item-list left">
+                    <dt>
+                      Infrastructure:
+                      {' '}
+                    </dt>
+                    <dd>
+                      {cluster.nodes.infra}
+                    </dd>
+                  </dl>
+                  <dl className="cluster-details-item-list left">
+                    <dt>
+                      Compute:
+                      {' '}
+                    </dt>
+                    <dd>
+                      {cluster.nodes.compute}
+                    </dd>
+                  </dl>
+                </dd>
+              </dl>
             </Col>
           </Row>
-        </CardGrid>
+        </Grid>
       </div>);
   }
 }
