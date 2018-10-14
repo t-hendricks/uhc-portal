@@ -24,14 +24,14 @@ import {
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
 import { createCluster } from '../../redux/actions/clusterActions';
-import ClusterCreationSuccessModal from './ClusterCreationSuccessModal';
+import ClusterCreationSuccessMessage from './ClusterCreationSuccessMessage';
 
 
 // Validations
 const required = value => (value ? undefined : 'Field is required');
 
 
-function CreateClusterModal(props) {
+function CreateClusterForm(props) {
   // handleSubmit comes from reduxForm()
   const {
     closeFunc, handleSubmit, createClusterResponse, reset,
@@ -39,7 +39,7 @@ function CreateClusterModal(props) {
 
   if (createClusterResponse.fulfilled) {
     reset();
-    return <ClusterCreationSuccessModal clusterID={createClusterResponse.cluster.id} closeFunc={closeFunc} />;
+    return <ClusterCreationSuccessMessage clusterID={createClusterResponse.cluster.id} closeFunc={closeFunc} />;
   }
 
   let errorContainer = <div />;
@@ -160,7 +160,7 @@ function CreateClusterModal(props) {
     </Modal>
   );
 }
-CreateClusterModal.propTypes = {
+CreateClusterForm.propTypes = {
   closeFunc: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
@@ -169,7 +169,7 @@ CreateClusterModal.propTypes = {
 const reduxFormConfig = {
   form: 'CreateCluster',
 };
-const reduxFormCreateClusterModal = reduxForm(reduxFormConfig)(CreateClusterModal);
+const reduxFormCreateCluster = reduxForm(reduxFormConfig)(CreateClusterForm);
 
 const mapStateToProps = state => ({
   createClusterResponse: state.cluster.createdCluster,
@@ -204,4 +204,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateClusterModal);
+export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateCluster);

@@ -26,7 +26,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import ClusterListToolBar from './ClusterListToolBar';
-import CreateClusterModal from './CreateClusterModal';
+import CreateClusterForm from './CreateClusterForm';
 import ViewPaginationRow from './viewPaginationRow';
 import LoadingModal from './LoadingModal';
 
@@ -115,7 +115,7 @@ function renderClusterRow(cluster, index) {
 
 class ClusterList extends Component {
   state = {
-    clusterCreationModalVisible: false,
+    clusterCreationFormVisible: false,
   }
 
   componentDidMount() {
@@ -130,8 +130,8 @@ class ClusterList extends Component {
     }
   }
 
-  setModalState(show) {
-    this.setState(prevState => ({ ...prevState, clusterCreationModalVisible: show }));
+  setCreationFormState(show) {
+    this.setState(prevState => ({ ...prevState, clusterCreationFormVisible: show }));
   }
 
 
@@ -156,17 +156,17 @@ class ClusterList extends Component {
 
   renderCreateClusterButton() {
     return (
-      <Button bsStyle="primary" bsSize="large" onClick={() => { this.setModalState(true); }}>
+      <Button bsStyle="primary" bsSize="large" onClick={() => { this.setCreationFormState(true); }}>
         Create
       </Button>
     );
   }
 
-  renderClusterCreationModal() {
-    const { clusterCreationModalVisible } = this.state;
-    if (clusterCreationModalVisible === true) {
+  renderClusterCreationForm() {
+    const { clusterCreationFormVisible } = this.state;
+    if (clusterCreationFormVisible === true) {
       return (
-        <CreateClusterModal closeFunc={() => this.setModalState(false)} />
+        <CreateClusterForm closeFunc={() => this.setCreationFormState(false)} />
       );
     }
     return '';
@@ -220,7 +220,7 @@ class ClusterList extends Component {
               </EmptyState>
             </Row>
           </Grid>
-          {this.renderClusterCreationModal()}
+          {this.renderClusterCreationForm()}
           {this.renderPendingMessage()}
         </React.Fragment>
       );
@@ -299,7 +299,7 @@ class ClusterList extends Component {
           totalCount={viewOptions.totalCount}
           totalPages={viewOptions.totalPages}
         />
-        {this.renderClusterCreationModal()}
+        {this.renderClusterCreationForm()}
       </div>
     );
   }
