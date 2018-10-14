@@ -18,14 +18,14 @@ import * as _ from 'lodash-es';
 import React, { Component } from 'react';
 
 import {
-  Alert, Button, Grid, Row, EmptyState, Tooltip, OverlayTrigger, DropdownKebab, MenuItem,
+  Alert, Button, Grid, Row, Col, EmptyState, Tooltip, OverlayTrigger, DropdownKebab, MenuItem,
 } from 'patternfly-react';
 import { TableGrid } from 'patternfly-react-extensions';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import ClusterListToolBar from './ClusterListToolBar';
+import ClusterListFilter from './ClusterListFilter';
 import CreateClusterForm from './CreateClusterForm';
 import ViewPaginationRow from './viewPaginationRow';
 import LoadingModal from './LoadingModal';
@@ -52,9 +52,9 @@ const statColSizes = {
   xs: 1,
 };
 const locationColSizes = {
-  md: 2,
-  sm: 2,
-  xs: 2,
+  md: 1,
+  sm: 1,
+  xs: 1,
 };
 
 function renderClusterStatusIcon(clusterState, id) {
@@ -179,48 +179,17 @@ class ClusterList extends Component {
     );
   }
 
-  render() {
-    const {
-      error, pending, clusters, viewOptions,
-    } = this.props;
-
-    if (error) {
-      return this.renderError();
-    }
-
+  renderTable() {
+    const { viewOptions, pending } = this.props;
+    let { clusters } = this.props;
     if (pending) {
       return this.renderPendingMessage();
     }
-
-    if (!_.size(clusters)) {
-      return (
-        <React.Fragment>
-          <Grid fluid>
-            <Row>
-              <EmptyState className="full-page-blank-slate">
-                <EmptyState.Icon />
-                <EmptyState.Title>
-                  No Clusters Exists
-                </EmptyState.Title>
-                <EmptyState.Info>
-                  There are no clusters to display. Create a cluster to get started.
-                </EmptyState.Info>
-                <EmptyState.Action>
-                  {this.renderCreateClusterButton()}
-                </EmptyState.Action>
-              </EmptyState>
-            </Row>
-          </Grid>
-          {this.renderClusterCreationForm()}
-          {this.renderPendingMessage()}
-        </React.Fragment>
-      );
+    if (!clusters) {
+      clusters = [];
     }
-
     return (
-      <div className="cluster-list">
-        <h1>Clusters</h1>
-        {this.renderCreateClusterButton()}
+      <React.Fragment>
         <TableGrid id="table-grid">
           <TableGrid.Head>
             <TableGrid.ColumnHeader
@@ -281,7 +250,9 @@ class ClusterList extends Component {
               Provider (Location)
             </TableGrid.ColumnHeader>
           </TableGrid.Head>
-          <TableGrid.Body>{clusters.map((cluster, index) => renderClusterRow(cluster, index))}</TableGrid.Body>
+          <TableGrid.Body>
+            {clusters.map((cluster, index) => renderClusterRow(cluster, index))}
+          </TableGrid.Body>
         </TableGrid>
         <ViewPaginationRow
           viewType={viewConstants.CLUSTERS_VIEW}
@@ -290,6 +261,57 @@ class ClusterList extends Component {
           totalCount={viewOptions.totalCount}
           totalPages={viewOptions.totalPages}
         />
+      </React.Fragment>);
+  }
+
+  render() {
+    const {
+      error, pending, clusters, viewOptions,
+    } = this.props;
+
+    if (error) {
+      return this.renderError();
+    }
+
+    if (!_.size(clusters) && !pending && _.isEmpty(viewOptions.filter)) {
+      return (
+        <React.Fragment>
+          <Grid fluid>
+            <Row>
+              <EmptyState className="full-page-blank-slate">
+                <EmptyState.Icon />
+                <EmptyState.Title>
+                  No Clusters Exists
+                </EmptyState.Title>
+                <EmptyState.Info>
+                  There are no clusters to display. Create a cluster to get started.
+                </EmptyState.Info>
+                <EmptyState.Action>
+                  {this.renderCreateClusterButton()}
+                </EmptyState.Action>
+              </EmptyState>
+            </Row>
+          </Grid>
+          {this.renderClusterCreationForm()}
+          {this.renderPendingMessage()}
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <div className="cluster-list">
+        <h1>Clusters</h1>
+        <Grid fluid style={{ padding: 0 }}>
+          <Row>
+            <Col sm={1}>
+              {this.renderCreateClusterButton()}
+            </Col>
+            <Col sm={2} smOffset={8}>
+              <ClusterListFilter />
+            </Col>
+          </Row>
+        </Grid>
+        {this.renderTable()}
         {this.renderClusterCreationForm()}
       </div>
     );
@@ -297,19 +319,16 @@ class ClusterList extends Component {
 }
 
 ClusterList.propTypes = {
-  fetchClusters: PropTypes.func,
-  clusters: PropTypes.array,
-  error: PropTypes.bool,
-  errorMessage: PropTypes.string,
-  pending: PropTypes.bool,
-  fulfilled: PropTypes.bool,
-  viewOptions: PropTypes.object,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+  fetchClusters: PropTypes.func.isRequired,
+  clusters: PropTypes.array.isRequired,
+  error: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  pending: PropTypes.bool.isRequired,
+  fulfilled: PropTypes.bool.isRequired,
+  viewOptions: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   fetchClusters: queryObj => dispatch(fetchClusters(queryObj)),
 });
 

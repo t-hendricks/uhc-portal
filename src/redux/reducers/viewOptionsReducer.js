@@ -98,21 +98,9 @@ const viewOptionsReducer = (state = initialState, action) => {
       updatePageCounts(viewConstants.CLUSTERS_VIEW, action.payload.data.total);
       return Object.assign({}, state, updateState);
 
-    case viewPaginationConstants.VIEW_ADD_LIST_FILTER:
+    case viewPaginationConstants.VIEW_SET_LIST_FILTER:
       updateState[action.viewType] = Object.assign({}, state[action.viewType], {
-        filter: [...state[action.viewType].filter, action.filter],
-      });
-      return Object.assign({}, state, updateState);
-
-    case viewPaginationConstants.VIEW_REMOVE_LIST_FILTER:
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
-        filter: _.filter(state[action.viewType].filter, o => !isEqual(o, action.filter)),
-      });
-      return Object.assign({}, state, updateState);
-
-    case viewPaginationConstants.VIEW_CLEAR_LIST_FILTER:
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
-        filter: [],
+        filter: action.filter,
       });
       return Object.assign({}, state, updateState);
 

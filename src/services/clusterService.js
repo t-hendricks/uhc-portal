@@ -9,7 +9,7 @@ const getClusters = params => axios(
       page: params.page,
       size: params.page_size,
       // sorting
-      // filters
+      search: params.filter,
     },
   }),
 );

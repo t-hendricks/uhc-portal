@@ -33,6 +33,7 @@ const setStateProp = (prop, data, options) => {
 const viewPropsChanged = (nextViewOptions, currentViewOptions) => (
   nextViewOptions.currentPage !== currentViewOptions.currentPage
     || nextViewOptions.pageSize !== currentViewOptions.pageSize
+    || !_.isEqual(nextViewOptions.filter, currentViewOptions.filter)
 );
 
 const createViewQueryObject = (viewOptions, queryObj) => {
@@ -44,7 +45,7 @@ const createViewQueryObject = (viewOptions, queryObj) => {
     queryObject.page = viewOptions.currentPage;
     queryObject.page_size = viewOptions.pageSize;
     // sorting
-    // filters
+    queryObject.filter = viewOptions.filter;
   }
 
   return queryObject;
