@@ -150,7 +150,7 @@ module.exports = (env, argv) => {
           ],
           changeOrigin: true,
           secure: false,
-          target: 'http://localhost:8080/',
+          target: 'http://localhost:8000/',
         },
       ],
     },
