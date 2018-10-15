@@ -6,7 +6,7 @@ import {
 import { Link } from 'react-router-dom';
 
 
-function ClusterCreationSuccessModal({ closeFunc, clusterID }) {
+function ClusterCreationSuccessMessage({ closeFunc, clusterID }) {
   return (
     <Modal show style={{ padding: '15px' }}>
       <Modal.Header>
@@ -45,9 +45,9 @@ function ClusterCreationSuccessModal({ closeFunc, clusterID }) {
   );
 }
 
-ClusterCreationSuccessModal.propTypes = {
+ClusterCreationSuccessMessage.propTypes = {
   closeFunc: PropTypes.func.isRequired,
   clusterID: PropTypes.string.isRequired,
 };
 
-export default ClusterCreationSuccessModal;
+export default ClusterCreationSuccessMessage;
