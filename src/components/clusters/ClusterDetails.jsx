@@ -138,7 +138,7 @@ class ClusterDetails extends Component {
                   {cluster.region}
                 </dd>
                 <dt>
-                  Lables
+                  Labels
                 </dt>
                 <dd>
                   N/A
