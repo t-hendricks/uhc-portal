@@ -20,6 +20,7 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const modDir = path.resolve(__dirname, 'node_modules');
 const srcDir = path.resolve(__dirname, 'src');
@@ -27,6 +28,12 @@ const outDir = path.resolve(__dirname, 'build');
 
 module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
+  let copyConfig = null;
+  if (devMode) {
+    copyConfig = new CopyWebpackPlugin([
+      { from: 'src/config', to: `${outDir}/config` },
+    ]);
+  }
   return ({
     mode: argv.mode || 'development',
     entry: {
@@ -51,7 +58,8 @@ module.exports = (env, argv) => {
         hash: true, // cache invalidation on bundle updates
         template: 'src/index.html',
       }),
-    ],
+      copyConfig,
+    ].filter(Boolean),
 
     module: {
       rules: [
