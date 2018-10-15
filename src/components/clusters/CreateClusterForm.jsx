@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import {
-  Button, Icon, Form, Modal, Alert,
+  Button, Icon, Form, Modal, ModelessOverlay, Alert,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
 import { createCluster } from '../../redux/actions/clusterActions';
@@ -59,7 +59,7 @@ function CreateClusterForm(props) {
     );
   }
   return (
-    <Modal show>
+    <ModelessOverlay show={true} bsSize='large'>
       <Form horizontal onSubmit={handleSubmit}>
 
         <Modal.Header>
@@ -157,7 +157,7 @@ function CreateClusterForm(props) {
         </Modal.Footer>
 
       </Form>
-    </Modal>
+    </ModelessOverlay>
   );
 }
 CreateClusterForm.propTypes = {
