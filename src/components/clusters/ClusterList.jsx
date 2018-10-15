@@ -18,7 +18,7 @@ import * as _ from 'lodash-es';
 import React, { Component } from 'react';
 
 import {
-  Alert, Button, Grid, Row, EmptyState, Icon, Tooltip, OverlayTrigger, DropdownKebab, MenuItem,
+  Alert, Button, Grid, Row, EmptyState, Tooltip, OverlayTrigger, DropdownKebab, MenuItem,
 } from 'patternfly-react';
 import { TableGrid } from 'patternfly-react-extensions';
 import PropTypes from 'prop-types';
@@ -29,6 +29,7 @@ import ClusterListToolBar from './ClusterListToolBar';
 import CreateClusterForm from './CreateClusterForm';
 import ViewPaginationRow from './viewPaginationRow';
 import LoadingModal from './LoadingModal';
+import ClusterStateIcon from './ClusterStateIcon';
 
 import helpers from '../../common/helpers';
 import { viewConstants } from '../../redux/constants';
@@ -57,21 +58,7 @@ const locationColSizes = {
 };
 
 function renderClusterStatusIcon(clusterState, id) {
-  let icon;
   const tooltip = clusterState; // We might want a different string later, but that's a good start
-  switch (clusterState) {
-    case 'Installing':
-      icon = 'maintenance';
-      break;
-    case 'Error':
-      icon = 'error-circle-o';
-      break;
-    case 'OK':
-      icon = 'ok';
-      break;
-    default:
-      icon = 'unknown';
-  }
   return (
     <OverlayTrigger
       overlay={<Tooltip id={`${id}-status-tooltip`}>{tooltip}</Tooltip>}
@@ -79,7 +66,7 @@ function renderClusterStatusIcon(clusterState, id) {
       trigger={['hover', 'focus']}
       rootClose={false}
     >
-      <Icon name={icon} type="pf" />
+      <ClusterStateIcon clusterState={clusterState} />
     </OverlayTrigger>);
 }
 
