@@ -31,6 +31,7 @@ import LoginPage from './LoginPage';
 import ErrorBoundary from './ErrorBoundary';
 import ClustersList from './clusters/ClusterList';
 import ClusterDetails from './clusters/ClusterDetails';
+import InstallCluster from './clusters/InstallCluster';
 import rhProductTitle from '../styles/images/logo.svg';
 
 function renderMenuActions() {
@@ -76,9 +77,25 @@ class App extends React.Component {
     ));
   }
 
+  renderVerticalNav() {
+    const {
+      userProfile, logoutFunction,
+    } = this.props;
+    return (
+      <VerticalNav>
+        <VerticalNavMasthead>
+          <VerticalNav.Brand titleImg={rhProductTitle} />
+          <MastheadOptions userProfile={userProfile} logoutUser={logoutFunction} />
+        </VerticalNavMasthead>
+        {this.renderMenuItems()}
+        {renderMenuActions()}
+      </VerticalNav>
+    );
+  }
+
   render() {
     const {
-      userProfile, history, authenticated, loginFunction, logoutFunction,
+      history, authenticated, loginFunction,
     } = this.props;
 
     if (!authenticated) {
@@ -87,20 +104,14 @@ class App extends React.Component {
 
     return (
       <div className="layout-pf layout-pf-fixed">
-        <VerticalNav>
-          <VerticalNavMasthead>
-            <VerticalNav.Brand titleImg={rhProductTitle} />
-            <MastheadOptions userProfile={userProfile} logoutUser={logoutFunction} />
-          </VerticalNavMasthead>
-          {this.renderMenuItems()}
-          {renderMenuActions()}
-        </VerticalNav>
+        {this.renderVerticalNav()}
         <div className="container-pf-nav-pf-vertical">
           <div className="coc-content">
             <ErrorBoundary>
               <ConnectedRouter history={history}>
                 <Switch>
                   <Redirect from="/" exact to="/clusters" />
+                  <Route path="/clusters/install" component={InstallCluster} />
                   <Route path="/clusters" component={ClustersList} />
                   <Route path="/cluster/:id" component={ClusterDetails} />
                 </Switch>
