@@ -23,6 +23,7 @@ import { fetchClusterDetails } from '../../redux/actions/clusterActions';
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
+import Timestamp from '../Timestamp';
 
 class ClusterDetails extends Component {
   componentDidMount() {
@@ -185,7 +186,7 @@ class ClusterDetails extends Component {
                   Created at
                 </dt>
                 <dd>
-                  N/A
+                  <Timestamp value={cluster.creation_timestamp}/>
                 </dd>
               </dl>
             </Col>
