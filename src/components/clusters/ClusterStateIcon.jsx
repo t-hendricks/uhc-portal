@@ -1,23 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Icon,
-} from 'patternfly-react';
+import { Icon } from 'patternfly-react';
 
 function ClusterStateIcon(props) {
-  const {
-    clusterState
-  } = props;
+  const { clusterState } = props;
 
   let icon;
   switch (clusterState) {
-    case 'Installing':
-      icon = 'maintenance';
+    case 'installing':
+    case 'pending':
+      icon = 'in-progress';
       break;
-    case 'Error':
+    case 'error':
       icon = 'error-circle-o';
       break;
-    case 'OK':
+    case 'ready':
       icon = 'ok';
       break;
     default:
