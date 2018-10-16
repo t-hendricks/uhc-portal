@@ -73,6 +73,32 @@ class ClusterDetails extends Component {
     );
   }
 
+  renderUtilizationCharts() {
+    const { cluster } = this.props;
+    if (cluster.state === 'ready') {
+      return (
+        <React.Fragment>
+          <Col xs={6} sm={3} md={3}>
+            <ClusterUtilizationChart title="CPU" total={cluster.cpu.total} unit="Cores" used={cluster.cpu.used} donutId="cpu_donut" />
+          </Col>
+          <Col xs={6} sm={3} md={3}>
+            <ClusterUtilizationChart title="MEMORY" total={cluster.memory.total} unit="GiB" used={cluster.memory.used} donutId="memory_donut" />
+          </Col>
+          <Col xs={6} sm={3} md={3}>
+            <ClusterUtilizationChart title="STORAGE" total={cluster.storage.total} unit="GiB" used={cluster.storage.used} donutId="storage_donut" />
+          </Col>
+        </React.Fragment>);
+    }
+    return (
+      <Col xs={6}>
+        <p>
+          This cluster is in the process of being registered so some data is not yet available.
+          This may take some time.
+        </p>
+      </Col>
+    );
+  }
+
   render() {
     const { cluster, error, pending } = this.props;
     if (error) {
@@ -110,15 +136,7 @@ class ClusterDetails extends Component {
         </h1>
         <Grid fluid>
           <Row style={{ marginTop: '20px' }}>
-            <Col xs={6} sm={3} md={3}>
-              <ClusterUtilizationChart title="CPU" total={cluster.cpu.total} unit="Cores" used={cluster.cpu.used} donutId="cpu_donut" />
-            </Col>
-            <Col xs={6} sm={3} md={3}>
-              <ClusterUtilizationChart title="MEMORY" total={cluster.memory.total} unit="GiB" used={cluster.memory.used} donutId="memory_donut" />
-            </Col>
-            <Col xs={6} sm={3} md={3}>
-              <ClusterUtilizationChart title="STORAGE" total={cluster.storage.total} unit="GiB" used={cluster.storage.used} donutId="storage_donut" />
-            </Col>
+            {this.renderUtilizationCharts()}
           </Row>
         </Grid>
         <hr style={{ width: '96%' }}/>
