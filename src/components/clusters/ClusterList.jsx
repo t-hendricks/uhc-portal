@@ -75,7 +75,8 @@ function renderClusterStatusIcon(clusterState, id) {
 }
 
 function renderClusterRow(cluster, index) {
-  const location = `${cluster.provider} (${cluster.region})`;
+  const provider = cluster.cloud_provider.id || 'N/A';
+  const location = `${provider.toUpperCase()} (${cluster.region})`;
   return (
     <TableGrid.Row key={index}>
       <Grid.Col {...nameColSizes}>

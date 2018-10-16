@@ -129,6 +129,8 @@ class ClusterDetails extends Component {
         </React.Fragment>);
     }
 
+    const cloudProvider = cluster.cloud_provider.id || 'N/A';
+
     return (
       <div>
         <h1 style={{ marginLeft: '80px' }}>
@@ -139,7 +141,7 @@ class ClusterDetails extends Component {
             {this.renderUtilizationCharts()}
           </Row>
         </Grid>
-        <hr style={{ width: '96%' }}/>
+        <hr style={{ width: '96%' }} />
         <Grid fluid>
           <Row>
             <Col sm={6}>
@@ -166,7 +168,7 @@ class ClusterDetails extends Component {
                   Provider
                 </dt>
                 <dd>
-                  N/A
+                  { cloudProvider.toUpperCase() }
                 </dd>
                 <dt>
                   Versions
