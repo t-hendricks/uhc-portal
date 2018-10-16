@@ -66,7 +66,11 @@ function renderClusterStatusIcon(clusterState, id) {
       trigger={['hover', 'focus']}
       rootClose={false}
     >
-      <ClusterStateIcon clusterState={clusterState} />
+      {/* The span here is needed to work around a bug that caused the tooltip
+      to not render after we moved the icon to its own component */}
+      <span>
+        <ClusterStateIcon clusterState={clusterState} />
+      </span>
     </OverlayTrigger>);
 }
 
