@@ -155,12 +155,9 @@ class ClusterList extends Component {
 
   renderClusterCreationForm() {
     const { clusterCreationFormVisible } = this.state;
-    if (clusterCreationFormVisible === true) {
-      return (
-        <CreateClusterForm closeFunc={() => this.setCreationFormState(false)} />
-      );
-    }
-    return '';
+    return (
+      <CreateClusterForm show={clusterCreationFormVisible} closeFunc={() => this.setCreationFormState(false)} />
+    );
   }
 
   renderError() {

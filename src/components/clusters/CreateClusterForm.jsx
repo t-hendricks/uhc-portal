@@ -34,7 +34,7 @@ const required = value => (value ? undefined : 'Field is required');
 function CreateClusterForm(props) {
   // handleSubmit comes from reduxForm()
   const {
-    closeFunc, handleSubmit, createClusterResponse, reset,
+    show, closeFunc, handleSubmit, createClusterResponse, reset,
   } = props;
 
   if (createClusterResponse.fulfilled) {
@@ -59,7 +59,7 @@ function CreateClusterForm(props) {
     );
   }
   return (
-    <ModelessOverlay show={true} bsSize='large'>
+    <ModelessOverlay show={show} bsSize='large'>
       <Form horizontal onSubmit={handleSubmit}>
 
         <Modal.Header>
@@ -161,6 +161,7 @@ function CreateClusterForm(props) {
   );
 }
 CreateClusterForm.propTypes = {
+  show: PropTypes.bool.isRequired,
   closeFunc: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
