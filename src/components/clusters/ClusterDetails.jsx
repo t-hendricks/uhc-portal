@@ -159,7 +159,7 @@ class ClusterDetails extends Component {
                       {' '}
                     </dt>
                     <dd>
-                      N/A
+                      {cluster.os_version || 'N/A'}
                     </dd>
                   </dl>
                   <dl className="cluster-details-item-list left">
@@ -168,7 +168,7 @@ class ClusterDetails extends Component {
                       {' '}
                     </dt>
                     <dd>
-                      N/A
+                      {cluster.openshift_version || 'N/A'}
                     </dd>
                   </dl>
                   <dl className="cluster-details-item-list left">
@@ -177,7 +177,7 @@ class ClusterDetails extends Component {
                       {' '}
                     </dt>
                     <dd>
-                      N/A
+                      {cluster.runtime_version || 'N/A'}
                     </dd>
                   </dl>
                 </dd>
