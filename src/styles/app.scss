@@ -62,6 +62,12 @@ limitations under the License.
   }
 }
 
+// Make patternfly ModelessOverflay vertically scrollable.
+// TODO: fix upstream, remove here.
+.modeless-pf .modal-content {
+  overflow: hidden auto;
+}
+
 .maintenance{
   border: 2px solid #f0ab00 !important;
 }
