@@ -37,4 +37,6 @@ const clusterActions = {
   fetchClusterDetails,
 };
 
-export { clusterActions, createCluster, fetchClusters, fetchClusterDetails };
+export {
+  clusterActions, createCluster, fetchClusters, fetchClusterDetails,
+};
