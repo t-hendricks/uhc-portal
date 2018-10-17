@@ -56,7 +56,7 @@ if (module.hot) {
 
 function initKeycloak() {
   keycloak = Keycloak(config.configData.keycloak);
-  keycloak.init({ onLoad: 'check-sso', checkLoginIframe: false }).success((authenticated) => {
+  keycloak.init({ onLoad: 'login-required', checkLoginIframe: false }).success((authenticated) => {
     if (authenticated) {
       sessionStorage.setItem('kctoken', keycloak.token);
 
