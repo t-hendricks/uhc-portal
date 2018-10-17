@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Alert, Button, Col, Grid, Row } from 'patternfly-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { createAuthToken } from '../../redux/actions';
+import config from '../../config';
 
 class InstallCluster extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class InstallCluster extends Component {
               Please note the new cluster will not appear among your clusters
               until the external installation process is complete.
             </Alert>
-            <Button block={true} bsSize="large" bsStyle="primary">
+            <Button block={true} bsSize="large" bsStyle="primary" onClick={()=> window.open(config.configData.installerURL, "_blank")}>
               Download OCP Installer
             </Button>
             <Link

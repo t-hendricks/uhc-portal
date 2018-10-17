@@ -38,6 +38,9 @@ keycloak_url:=https://developers.stage.redhat.com/auth
 keycloak_realm:=rhd
 keycloak_client_id:=uhc
 
+# Installer URL:
+installer_url:=https://github.com/openshift/ose/releases
+
 # Name of the access control list file:
 acl:=development.acl
 
@@ -81,6 +84,7 @@ template:
 		--param="NAMESPACE=$(namespace)" \
 		--param="PORTAL_DOMAIN=$(portal_domain)" \
 		--param="VERSION=$(version)" \
+                --param="INSTALLER_URL=$(installer_url)" \
 	> template.json
 
 deploy: template

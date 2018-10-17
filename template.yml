@@ -65,6 +65,9 @@ parameters:
 - name: VERSION
   description: The version of the project.
 
+- name: INSTALLER_URL
+  description: The URL to download the installer.
+
 objects:
 
 - apiVersion: v1
@@ -147,7 +150,8 @@ objects:
           "realm": "${KEYCLOAK_REALM}",
           "clientId": "${KEYCLOAK_CLIENT_ID}",
           "url": "${KEYCLOAK_URL}"
-        }
+        },
+        "installerURL": "${INSTALLER_URL}"
       }
 
 - apiVersion: apps/v1beta1
