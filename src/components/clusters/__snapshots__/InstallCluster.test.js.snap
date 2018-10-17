@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[object Object] snapshot 1`] = `
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={false}
+>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={9}
+      md={9}
+      sm={12}
+      xs={12}
+    >
+      <h1>
+        Create Self-Managed Cluster (OCP)
+      </h1>
+      <p>
+        To create a self-managed OpenShift Container Platform cluster, follow the installation instructions below.
+      </p>
+      <h2>
+        Copy Your Authorization Token
+      </h2>
+      <pre>
+        {
+          "auths": {
+            "cloud.openshift.com": {
+              "auth": "***REMOVED***",
+              "email": "***REMOVED***"
+            },
+            "quay.io": {
+              "auth": "***REMOVED***",
+              "email": "***REMOVED***"
+            }
+          }
+        }
+      </pre>
+      <h2>
+        Run the OpenShift Container Platform Installer
+      </h2>
+      <Alert
+        className=""
+        onDismiss={null}
+        type="info"
+      >
+        Download and extract the OCP Installer to a directory of your choosing. Run the installer and follow the installation prompts. The authorization token provided above is required to complete the installation. The installation may take some time to complete. The installer will notify you of its results upon completion. Please note the new cluster will not appear among your clusters until the external installation process is complete.
+      </Alert>
+      <Button
+        active={false}
+        block={true}
+        bsClass="btn"
+        bsSize="large"
+        bsStyle="primary"
+        disabled={false}
+      >
+        Download OCP Installer
+      </Button>
+      <Link
+        className="btn btn-default"
+        replace={false}
+        style={
+          Object {
+            "marginTop": "20px",
+          }
+        }
+        to="/clusters"
+      >
+        Return to Clusters
+      </Link>
+    </Col>
+  </Row>
+</Grid>
+`;

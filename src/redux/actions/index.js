@@ -1,7 +1,9 @@
 import clusterActions from './clusterActions';
-import clusterListFilter from './clusterListFilter';
 import userActions from './userActions';
+import createAuthToken from './installClusterActions';
 
 export {
-  clusterActions, clusterListFilter, userActions,
+  clusterActions,
+  userActions,
+  createAuthToken,
 };
