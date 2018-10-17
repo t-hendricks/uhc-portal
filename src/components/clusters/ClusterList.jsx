@@ -157,7 +157,7 @@ class ClusterList extends Component {
   renderClusterCreationForm() {
     const { clusterCreationFormVisible } = this.state;
     return (
-      <ModelessOverlay show={clusterCreationFormVisible} bsSize='large'>
+      <ModelessOverlay show={clusterCreationFormVisible} bsSize="large">
         <CreateClusterForm closeFunc={() => this.setCreationFormState(false)} />
       </ModelessOverlay>
     );

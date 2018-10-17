@@ -27,23 +27,21 @@ import PropTypes from 'prop-types';
  * If the given date is not in the expected format (RFC 3339) or the date can't be parsed because of
  * any other reason, then a error message is sent to the console, and `N/A` is displayed.
  */
-class Timestamp extends React.Component {
-  render() {
-    const value = this.props.value
-    let text = 'N/A'
-    if (value) {
-      const date = new Date(value)
-      const time = date.getTime()
-      if (isNaN(time)) {
-        console.error("Can't parse date '%s'", value)
-      } else {
-        text = date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
-      }
+function Timestamp(props) {
+  const { value } = props;
+  let text = 'N/A';
+  if (value) {
+    const date = new Date(value);
+    const time = date.getTime();
+    if (Number.isNaN(time)) {
+      console.error("Can't parse date '%s'", value);
+    } else {
+      text = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     }
-    return (
-      <span>{text}</span>
-    )
   }
+  return (
+    <span>{text}</span>
+  );
 }
 
 Timestamp.propTypes = {
