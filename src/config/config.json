@@ -4,5 +4,6 @@
         "realm": "rhd",
         "clientId": "uhc",
         "url": "https://developers.stage.redhat.com/auth"
-    }
+    },
+    "installerURL": "https://github.com/openshift/ose/releases"
 }
