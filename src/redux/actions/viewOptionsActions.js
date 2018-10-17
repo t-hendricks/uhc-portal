@@ -32,21 +32,10 @@ const onPerPageSelect = (size, viewType) => dispatch => dispatch({
   pageSize: size,
 });
 
-const onListFilterAdded = (filter, viewType) => dispatch => dispatch({
+const onListFilterSet = (filter, viewType) => dispatch => dispatch({
   filter,
   viewType,
-  type: viewPaginationConstants.VIEW_ADD_LIST_FILTER,
-});
-
-const onListFilterRemoved = (filter, viewType) => dispatch => dispatch({
-  filter,
-  viewType,
-  type: viewPaginationConstants.VIEW_REMOVE_LIST_FILTER,
-});
-
-const onListFilterCleared = viewType => dispatch => dispatch({
-  viewType,
-  type: viewPaginationConstants.VIEW_CLEAR_LIST_FILTER,
+  type: viewPaginationConstants.VIEW_SET_LIST_FILTER,
 });
 
 const onListSortBy = (sorting, viewType) => dispatch => dispatch({
@@ -62,13 +51,11 @@ const viewActions = {
   onNextPage,
   onPageInput,
   onPerPageSelect,
-  onListFilterAdded,
-  onListFilterRemoved,
-  onListFilterCleared,
+  onListFilterSet,
   onListSortBy,
 };
 
 export {
   viewActions, onFirstPage, onLastPage, onPreviousPage, onNextPage, onPageInput, onPerPageSelect,
-  onListFilterAdded, onListFilterRemoved, onListFilterCleared, onListSortBy,
+  onListFilterSet, onListSortBy,
 };
