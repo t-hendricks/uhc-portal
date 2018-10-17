@@ -15,10 +15,8 @@ const INITAL_VIEW_STATE = {
   totalPages: 0,
   filter: [],
   sorting: {
-    id: 'name',
-    title: 'Name',
-    isNumeric: false,
-    isSortAscending: true,
+    sortField: 'name',
+    isAscending: true,
   },
 };
 

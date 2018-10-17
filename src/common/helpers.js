@@ -33,6 +33,7 @@ const setStateProp = (prop, data, options) => {
 const viewPropsChanged = (nextViewOptions, currentViewOptions) => (
   nextViewOptions.currentPage !== currentViewOptions.currentPage
     || nextViewOptions.pageSize !== currentViewOptions.pageSize
+    || !_.isEqual(nextViewOptions.sorting, currentViewOptions.sorting)
     || !_.isEqual(nextViewOptions.filter, currentViewOptions.filter)
 );
 
@@ -44,7 +45,10 @@ const createViewQueryObject = (viewOptions, queryObj) => {
   if (viewOptions) {
     queryObject.page = viewOptions.currentPage;
     queryObject.page_size = viewOptions.pageSize;
-    // sorting
+    if (viewOptions.sorting.sortField !== null) {
+      const direction = viewOptions.sorting.isAscending ? 'asc' : 'desc';
+      queryObject.order = `${viewOptions.sorting.sortField} ${direction}`;
+    }
     queryObject.filter = viewOptions.filter;
   }
 

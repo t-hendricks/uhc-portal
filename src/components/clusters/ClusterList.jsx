@@ -34,6 +34,7 @@ import ClusterStateIcon from './ClusterStateIcon';
 import helpers from '../../common/helpers';
 import { viewConstants } from '../../redux/constants';
 import { clusterActions } from '../../redux/actions/clusterActions';
+import { viewActions } from '../../redux/actions/viewOptionsActions';
 
 // TODO not sure about the sizes
 const nameColSizes = {
@@ -122,6 +123,16 @@ class ClusterList extends Component {
     }
   }
 
+  onSortToggle(id) {
+    const { viewOptions, setSorting } = this.props;
+    const sorting = Object.assign({}, viewOptions.sorting);
+    if (viewOptions.sorting.sortField === id) {
+      sorting.isAscending = !sorting.isAscending;
+    }
+    sorting.sortField = id;
+    setSorting(sorting);
+  }
+
   setCreationFormState(show) {
     this.setState(prevState => ({ ...prevState, clusterCreationFormVisible: show }));
   }
@@ -132,6 +143,12 @@ class ClusterList extends Component {
     const options = _.get(nextProps, 'viewOptions') || viewOptions;
     fetchClusters(helpers.createViewQueryObject(options));
   }
+
+  isSorted(id) {
+    const { viewOptions } = this.props;
+    return viewOptions.sorting.sortField === id;
+  }
+
 
   renderPendingMessage() {
     const { pending } = this.props;
@@ -196,8 +213,9 @@ class ClusterList extends Component {
             <TableGrid.ColumnHeader
               id="name"
               sortable
-              isSorted={false}
-              isAscending
+              isSorted={this.isSorted('name')}
+              isAscending={viewOptions.sorting.isAscending}
+              onSortToggle={() => this.onSortToggle('name')}
               {...nameColSizes}
             >
               Name
@@ -327,10 +345,12 @@ ClusterList.propTypes = {
   pending: PropTypes.bool.isRequired,
   fulfilled: PropTypes.bool.isRequired,
   viewOptions: PropTypes.object.isRequired,
+  setSorting: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
   fetchClusters: queryObj => clusterActions.fetchClusters(queryObj),
+  setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
 };
 
 const mapStateToProps = state => Object.assign(
