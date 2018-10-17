@@ -33,7 +33,7 @@ import ClusterStateIcon from './ClusterStateIcon';
 
 import helpers from '../../common/helpers';
 import { viewConstants } from '../../redux/constants';
-import { fetchClusters } from '../../redux/actions/clusterActions';
+import { clusterActions } from '../../redux/actions/clusterActions';
 
 // TODO not sure about the sizes
 const nameColSizes = {
@@ -127,9 +127,10 @@ class ClusterList extends Component {
   }
 
 
-  refresh(props) {
-    const options = _.get(props, 'viewOptions') || this.props.viewOptions;
-    this.props.fetchClusters(helpers.createViewQueryObject(options));
+  refresh(nextProps) {
+    const { fetchClusters, viewOptions } = this.props;
+    const options = _.get(nextProps, 'viewOptions') || viewOptions;
+    fetchClusters(helpers.createViewQueryObject(options));
   }
 
   renderPendingMessage() {
@@ -328,9 +329,9 @@ ClusterList.propTypes = {
   viewOptions: PropTypes.object.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  fetchClusters: queryObj => dispatch(fetchClusters(queryObj)),
-});
+const mapDispatchToProps = {
+  fetchClusters: queryObj => clusterActions.fetchClusters(queryObj),
+};
 
 const mapStateToProps = state => Object.assign(
   {},
