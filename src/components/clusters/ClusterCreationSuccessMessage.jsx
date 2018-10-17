@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 function ClusterCreationSuccessMessage({ closeFunc, clusterID }) {
   return (
-    <Modal show style={{ padding: '15px' }}>
+    <React.Fragment>
       <Modal.Header>
         <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={closeFunc}>
           <Icon type="pf" name="close" />
@@ -41,7 +41,7 @@ function ClusterCreationSuccessMessage({ closeFunc, clusterID }) {
           </Button>
         </Link>
       </Modal.Footer>
-    </Modal>
+    </React.Fragment>
   );
 }
 

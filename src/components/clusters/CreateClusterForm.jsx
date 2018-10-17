@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import {
-  Button, Icon, Form, Modal, ModelessOverlay, Alert,
+  Button, Icon, Form, Modal, Alert,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
 import { createCluster } from '../../redux/actions/clusterActions';
@@ -34,7 +34,7 @@ const required = value => (value ? undefined : 'Field is required');
 function CreateClusterForm(props) {
   // handleSubmit comes from reduxForm()
   const {
-    show, closeFunc, handleSubmit, createClusterResponse, reset,
+    closeFunc, handleSubmit, createClusterResponse, reset,
   } = props;
 
   if (createClusterResponse.fulfilled) {
@@ -59,7 +59,7 @@ function CreateClusterForm(props) {
     );
   }
   return (
-    <ModelessOverlay show={show} bsSize='large'>
+    <React.Fragment>
       <Form horizontal onSubmit={handleSubmit}>
 
         <Modal.Header>
@@ -157,11 +157,10 @@ function CreateClusterForm(props) {
         </Modal.Footer>
 
       </Form>
-    </ModelessOverlay>
+    </React.Fragment>
   );
 }
 CreateClusterForm.propTypes = {
-  show: PropTypes.bool.isRequired,
   closeFunc: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
