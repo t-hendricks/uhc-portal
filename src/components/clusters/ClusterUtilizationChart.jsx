@@ -23,15 +23,15 @@ function ClusterUtilizationChart(props) {
       </h4>
       <div className="center">
         <DonutChart
-            id={donutId}
-            size={{ width: 180, height: 180 }}
-            data={{
-              columns: [[usedColumnTitle, used], [availableColumnTitle, available]],
-              groups: [[usedColumnTitle, availableColumnTitle]],
-              order: null,
-            }}
-            title={{ type: 'max' }}
-          />
+          id={donutId}
+          size={{ width: 180, height: 180 }}
+          data={{
+            columns: [[usedColumnTitle, used], [availableColumnTitle, available]],
+            groups: [[usedColumnTitle, availableColumnTitle]],
+            order: null,
+          }}
+          title={{ type: 'max' }}
+        />
       </div>
     </div>);
 }
