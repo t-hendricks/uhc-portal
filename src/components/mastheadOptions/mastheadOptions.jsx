@@ -29,7 +29,7 @@ const MastheadOptions = ({
         <Dropdown.Toggle useAnchor className="nav-item-iconic">
           <Icon type="pf" name="user" />
           <span className="dropdown-title">
-            {userProfile.given_name || userProfile.name || userProfile.preferred_username}
+            {userProfile.name || userProfile.preferred_username}
           </span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
