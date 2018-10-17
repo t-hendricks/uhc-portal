@@ -84,6 +84,9 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
+    "setupFiles": [
+      "<rootDir>/src/setupTests.js"
+    ],
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     },
@@ -93,6 +96,6 @@
     "build": "webpack --progress",
     "start": "webpack-dev-server --progress --hot --inline",
     "lint": "eslint src --ext js,jsx",
-    "test": "jest"
+    "test": "jest --env=jsdom"
   }
 }

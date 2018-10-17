@@ -1,0 +1,214 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Instructions /> with a valid token displays the token 1`] = `
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={false}
+>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={9}
+      md={9}
+      sm={12}
+      xs={12}
+    >
+      <h1>
+        Create Self-Managed Cluster (OCP)
+      </h1>
+      <p>
+        To create a self-managed OpenShift Container Platform cluster, follow the installation instructions below.
+      </p>
+      <h2>
+        Copy Your Authorization Token
+      </h2>
+      <pre>
+        {
+  "hi": "I have no errors"
+}
+      </pre>
+      <CopyToClipboard
+        onCopy={[Function]}
+        text="{
+  \\"hi\\": \\"I have no errors\\"
+}"
+      >
+        <p>
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsSize="small"
+            bsStyle="default"
+            className="install--copy-token"
+            disabled={false}
+          >
+            Copy to Clipboard
+          </Button>
+        </p>
+      </CopyToClipboard>
+      <h2>
+        Run the OpenShift Container Platform Installer
+      </h2>
+      <Alert
+        className=""
+        onDismiss={null}
+        type="info"
+      >
+        Download and extract the OCP Installer to a directory of your choosing. Run the installer and follow the installation prompts. The authorization token provided above is required to complete the installation. The installation may take some time to complete. The installer will notify you of its results upon completion. Please note the new cluster will not appear among your clusters until the external installation process is complete.
+      </Alert>
+      <a
+        target="_blank"
+      >
+        <Button
+          active={false}
+          block="true"
+          bsClass="btn"
+          bsSize="large"
+          bsStyle="primary"
+          className="install--download-installer"
+          disabled={false}
+        >
+          Download OCP Installer
+        </Button>
+      </a>
+      <Link
+        replace={false}
+        to="/clusters"
+      >
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="default"
+          disabled={false}
+          style={
+            Object {
+              "marginTop": "20px",
+            }
+          }
+        >
+          Done
+        </Button>
+      </Link>
+    </Col>
+  </Row>
+</Grid>
+`;
+
+exports[`<Instructions /> with an invalid token displays an error 1`] = `
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={false}
+>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={9}
+      md={9}
+      sm={12}
+      xs={12}
+    >
+      <Alert
+        className="install--errors"
+        onDismiss={null}
+        style={
+          Object {
+            "marginTop": "20px",
+          }
+        }
+        type="error"
+      >
+        <p>
+          Invalid
+        </p>
+        <p>
+          Please try again by refreshing the page. If the problem persists, please contact Red Hat support.
+        </p>
+      </Alert>
+      <h1>
+        Create Self-Managed Cluster (OCP)
+      </h1>
+      <p>
+        To create a self-managed OpenShift Container Platform cluster, follow the installation instructions below.
+      </p>
+      <h2>
+        Copy Your Authorization Token
+      </h2>
+      <pre />
+      <CopyToClipboard
+        onCopy={[Function]}
+        text=""
+      >
+        <p>
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsSize="small"
+            bsStyle="default"
+            className="install--copy-token"
+            disabled={true}
+          >
+            Copy to Clipboard
+          </Button>
+        </p>
+      </CopyToClipboard>
+      <h2>
+        Run the OpenShift Container Platform Installer
+      </h2>
+      <Alert
+        className=""
+        onDismiss={null}
+        type="info"
+      >
+        Download and extract the OCP Installer to a directory of your choosing. Run the installer and follow the installation prompts. The authorization token provided above is required to complete the installation. The installation may take some time to complete. The installer will notify you of its results upon completion. Please note the new cluster will not appear among your clusters until the external installation process is complete.
+      </Alert>
+      <a
+        target="_blank"
+      >
+        <Button
+          active={false}
+          block="true"
+          bsClass="btn"
+          bsSize="large"
+          bsStyle="primary"
+          className="install--download-installer"
+          disabled={true}
+        >
+          Download OCP Installer
+        </Button>
+      </a>
+      <Link
+        replace={false}
+        to="/clusters"
+      >
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="default"
+          disabled={false}
+          style={
+            Object {
+              "marginTop": "20px",
+            }
+          }
+        >
+          Done
+        </Button>
+      </Link>
+    </Col>
+  </Row>
+</Grid>
+`;

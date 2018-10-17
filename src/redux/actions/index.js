@@ -1,9 +1,9 @@
-import { clusterActions } from './clusterActions';
-import { userActions } from './userActions';
-import createAuthToken from './installClusterActions';
+import clusterActions from './clusterActions';
+import userActions from './userActions';
+import tollboothActions from './tollbooth';
 
 export {
   clusterActions,
   userActions,
-  createAuthToken,
+  tollboothActions,
 };
