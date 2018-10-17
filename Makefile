@@ -39,7 +39,7 @@ keycloak_realm:=rhd
 keycloak_client_id:=uhc
 
 # Installer URL:
-installer_url:=https://github.com/openshift/ose/releases
+installer_url:=https://github.com/openshift/installer/releases
 
 # Name of the access control list file:
 acl:=development.acl
