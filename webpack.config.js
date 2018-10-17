@@ -144,6 +144,14 @@ module.exports = (env, argv) => {
           secure: false,
           target: 'https://clusters-service.127.0.0.1.nip.io/',
         },
+        {
+          context: [
+            '/api/accounts_mgmt',
+          ],
+          changeOrigin: true,
+          secure: false,
+          target: 'http://localhost:8080/',
+        },
       ],
     },
   });
