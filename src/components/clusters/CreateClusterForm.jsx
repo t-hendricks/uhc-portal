@@ -59,7 +59,7 @@ function CreateClusterForm(props) {
     );
   }
   return (
-    <Modal show>
+    <React.Fragment>
       <Form horizontal onSubmit={handleSubmit}>
 
         <Modal.Header>
@@ -157,7 +157,7 @@ function CreateClusterForm(props) {
         </Modal.Footer>
 
       </Form>
-    </Modal>
+    </React.Fragment>
   );
 }
 CreateClusterForm.propTypes = {

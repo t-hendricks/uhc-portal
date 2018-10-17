@@ -18,7 +18,7 @@ import * as _ from 'lodash-es';
 import React, { Component } from 'react';
 
 import {
-  Alert, Button, Grid, Row, Col, EmptyState, Tooltip, OverlayTrigger, DropdownKebab, MenuItem,
+  Alert, Button, Grid, Row, Col, EmptyState, ModelessOverlay, Tooltip, OverlayTrigger, DropdownKebab, MenuItem,
 } from 'patternfly-react';
 import { TableGrid } from 'patternfly-react-extensions';
 import PropTypes from 'prop-types';
@@ -155,12 +155,11 @@ class ClusterList extends Component {
 
   renderClusterCreationForm() {
     const { clusterCreationFormVisible } = this.state;
-    if (clusterCreationFormVisible === true) {
-      return (
+    return (
+      <ModelessOverlay show={clusterCreationFormVisible} bsSize='large'>
         <CreateClusterForm closeFunc={() => this.setCreationFormState(false)} />
-      );
-    }
-    return '';
+      </ModelessOverlay>
+    );
   }
 
   renderError() {
