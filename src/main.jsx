@@ -60,14 +60,8 @@ function initKeycloak() {
     if (authenticated) {
       sessionStorage.setItem('kctoken', keycloak.token);
 
+      store.dispatch(userInfoResponse(keycloak.idTokenParsed));
       render();
-      keycloak.loadUserProfile()
-        .success((result) => {
-          store.dispatch(userInfoResponse(result));
-        })
-        .error((err) => {
-          console.log(err); // should probably redirect to an error page
-        });
 
       setInterval(() => {
         keycloak.updateToken(10)
