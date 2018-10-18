@@ -61,7 +61,7 @@ function clusterReducer(state = initialState, action) {
         {
           pending: false,
           error: action.error,
-          errorMessage: helpers.getErrorMessageFromResults(action.payload),
+          errorMessage: helpers.getErrorMessage(action.payload),
         },
         {
           state,
@@ -103,7 +103,7 @@ function clusterReducer(state = initialState, action) {
         {
           pending: false,
           error: action.error,
-          errorMessage: helpers.getErrorMessageFromResults(action.payload),
+          errorMessage: helpers.getErrorMessage(action.payload),
         },
         {
           state,
@@ -144,7 +144,7 @@ function clusterReducer(state = initialState, action) {
         {
           pending: false,
           error: action.error,
-          errorMessage: helpers.getErrorMessageFromResults(action.payload),
+          errorMessage: helpers.getErrorMessage(action.payload),
         },
         {
           state,
