@@ -19,7 +19,12 @@ import helpers from '../../common/helpers';
 
 const createCluster = params => dispatch => dispatch({
   type: clusterConstants.CREATE_CLUSTER,
-  payload: clusterService.postNewCluster(params),
+  payload: clusterService.postNewCluster(params).then((response) => {
+    // TODO: this artificially delays CREATE_CLUSTER_FULLFILLED action
+    // until after the INVALIDATE action.
+    dispatch(invalidateClusters());
+    return response;
+  }),
 });
 
 const invalidateClusters = () => ({
