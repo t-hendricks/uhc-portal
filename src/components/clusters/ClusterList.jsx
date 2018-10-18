@@ -18,7 +18,8 @@ import * as _ from 'lodash-es';
 import React, { Component } from 'react';
 
 import {
-  Alert, Button, Grid, Row, Col, EmptyState, ModelessOverlay, Tooltip, OverlayTrigger, DropdownKebab, MenuItem,
+  Alert, Button, Grid, Row, Col, EmptyState, ModelessOverlay, Tooltip,
+  OverlayTrigger, DropdownKebab, MenuItem, Spinner,
 } from 'patternfly-react';
 import { TableGrid } from 'patternfly-react-extensions';
 import PropTypes from 'prop-types';
@@ -198,11 +199,8 @@ class ClusterList extends Component {
   }
 
   renderTable() {
-    const { viewOptions, pending } = this.props;
+    const { viewOptions } = this.props;
     let { clusters } = this.props;
-    if (pending) {
-      return this.renderPendingMessage();
-    }
     if (!clusters) {
       clusters = [];
     }
@@ -292,6 +290,9 @@ class ClusterList extends Component {
       return this.renderError();
     }
 
+    if (!_.size(clusters) && pending && _.isEmpty(viewOptions.filter)) {
+      return this.renderPendingMessage();
+    }
     if (!_.size(clusters) && !pending && _.isEmpty(viewOptions.filter)) {
       return (
         <React.Fragment>
@@ -325,7 +326,10 @@ class ClusterList extends Component {
             <Col sm={1}>
               {this.renderCreateClusterButton()}
             </Col>
-            <Col sm={2} smOffset={8}>
+            <Col sm={1}>
+              {pending ? <Spinner loading /> : null}
+            </Col>
+            <Col sm={2} smOffset={7}>
               <ClusterListFilter />
             </Col>
           </Row>
