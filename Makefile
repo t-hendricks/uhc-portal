@@ -74,13 +74,13 @@ template:
 		--param="GATEWAY_DOMAIN=$(gateway_domain)" \
 		--param="IMAGE_PULL_POLICY=$(image_pull_policy)" \
 		--param="IMAGE_TAG=$(image_tag)" \
+		--param="INSTALLER_URL=$(installer_url)" \
 		--param="KEYCLOAK_CLIENT_ID=$(keycloak_client_id)" \
 		--param="KEYCLOAK_REALM=$(keycloak_realm)" \
 		--param="KEYCLOAK_URL=$(keycloak_url)" \
 		--param="NAMESPACE=$(namespace)" \
 		--param="PORTAL_DOMAIN=$(portal_domain)" \
 		--param="VERSION=$(version)" \
-                --param="INSTALLER_URL=$(installer_url)" \
 	> template.json
 
 deploy: template
