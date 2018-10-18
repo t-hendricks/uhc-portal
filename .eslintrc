@@ -15,7 +15,9 @@
           "**/*.spec.js"
         ]
       }
-    ]
+    ],
+    "react/forbid-prop-types": [false],
+    "react/require-default-props": [false]
   },
   "parser": "babel-eslint"
 }

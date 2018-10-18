@@ -17,6 +17,10 @@ import { clusterConstants } from '../constants';
 import { clusterService } from '../../services';
 import helpers from '../../common/helpers';
 
+const invalidateClusters = () => ({
+  type: helpers.INVALIDATE_ACTION(clusterConstants.GET_CLUSTERS),
+});
+
 const createCluster = params => dispatch => dispatch({
   type: clusterConstants.CREATE_CLUSTER,
   payload: clusterService.postNewCluster(params).then((response) => {
@@ -25,10 +29,6 @@ const createCluster = params => dispatch => dispatch({
     dispatch(invalidateClusters());
     return response;
   }),
-});
-
-const invalidateClusters = () => ({
-  type: helpers.INVALIDATE_ACTION(clusterConstants.GET_CLUSTERS),
 });
 
 const fetchClusters = params => dispatch => dispatch({

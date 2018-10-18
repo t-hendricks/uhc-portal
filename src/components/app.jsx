@@ -49,9 +49,6 @@ class App extends React.Component {
     super();
 
     this.menu = routes();
-    this.state = {
-      aboutShown: false,
-    };
   }
 
   navigateTo(path) {
@@ -126,8 +123,8 @@ class App extends React.Component {
 
 App.propTypes = {
   userProfile: PropTypes.object,
-  location: PropTypes.object,
-  history: PropTypes.object.isRequired,
+  location: PropTypes.shape({ pathname: PropTypes.string.isRequired }),
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   authenticated: PropTypes.bool.isRequired,
   loginFunction: PropTypes.func.isRequired,
   logoutFunction: PropTypes.func.isRequired,

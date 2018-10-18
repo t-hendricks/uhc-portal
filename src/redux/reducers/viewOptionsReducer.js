@@ -1,6 +1,3 @@
-import _ from 'lodash/collection';
-import { isEqual } from 'lodash/lang';
-
 import helpers from '../../common/helpers';
 import {
   clusterConstants,

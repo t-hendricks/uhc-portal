@@ -1,5 +1,5 @@
-import clusterActions from './clusterActions';
-import userActions from './userActions';
+import { clusterActions } from './clusterActions';
+import { userActions } from './userActions';
 import createAuthToken from './installClusterActions';
 
 export {

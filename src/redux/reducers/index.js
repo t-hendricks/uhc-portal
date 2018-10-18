@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
-import clusterReducer from './clusterReducer';
-import viewOptionsReducer from './viewOptionsReducer';
+import { clusterReducer } from './clusterReducer';
+import { viewOptionsReducer } from './viewOptionsReducer';
 import userReducer from './userReducer';
-import { default as installClusterReducer } from './installClusterReducer';
+import installClusterReducer from './installClusterReducer';
 
 const reducers = {
   cluster: clusterReducer,
