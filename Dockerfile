@@ -26,7 +26,6 @@ RUN \
 RUN \
     yum install -y \
     httpd \
-    mod_auth_openidc \
     && \
     yum clean all
 
