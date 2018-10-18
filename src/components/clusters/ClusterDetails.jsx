@@ -14,8 +14,7 @@ limitations under the License.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  CardGrid, Card, CardBody, CardTitle, AggregateStatusCount,
-  Alert, Row, Col, Icon, EmptyState, Grid,
+  Alert, Row, Col, EmptyState, Grid,
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
