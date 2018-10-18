@@ -41,9 +41,6 @@ keycloak_client_id:=uhc
 # Installer URL:
 installer_url:=https://github.com/openshift/installer/releases
 
-# Name of the access control list file:
-acl:=development.acl
-
 .PHONY: \
 	app \
 	clean \
@@ -72,7 +69,6 @@ template:
 	oc process \
 		--filename="template.yml" \
 		--local="true" \
-		--param="ACL=$$(base64 --wrap=0 $(acl))" \
 		--param="BUILD_ID=$(build_id)" \
 		--param="BUILD_TS=$(build_ts)" \
 		--param="GATEWAY_DOMAIN=$(gateway_domain)" \
