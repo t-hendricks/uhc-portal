@@ -15,10 +15,15 @@ limitations under the License.
 */
 import { clusterConstants } from '../constants';
 import { clusterService } from '../../services';
+import helpers from '../../common/helpers';
 
 const createCluster = params => dispatch => dispatch({
   type: clusterConstants.CREATE_CLUSTER,
   payload: clusterService.postNewCluster(params),
+});
+
+const invalidateClusters = () => ({
+  type: helpers.INVALIDATE_ACTION(clusterConstants.GET_CLUSTERS),
 });
 
 const fetchClusters = params => dispatch => dispatch({

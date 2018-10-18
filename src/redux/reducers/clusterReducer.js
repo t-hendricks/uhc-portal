@@ -18,6 +18,7 @@ import { clusterConstants } from '../constants';
 
 const initialState = {
   clusters: {
+    valid: false,
     error: false,
     errorMessage: '',
     pending: false,
@@ -42,6 +43,18 @@ const initialState = {
 
 function clusterReducer(state = initialState, action) {
   switch (action.type) {
+    case helpers.INVALIDATE_ACTION(clusterConstants.GET_CLUSTERS):
+      return helpers.setStateProp(
+        'clusters',
+        {
+          valid: false,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
     case helpers.REJECTED_ACTION(clusterConstants.GET_CLUSTERS):
       return helpers.setStateProp(
         'clusters',
@@ -76,6 +89,7 @@ function clusterReducer(state = initialState, action) {
           clusters: action.payload.data.items,
           pending: false,
           fulfilled: true,
+          valid: true,
         },
         {
           state,
