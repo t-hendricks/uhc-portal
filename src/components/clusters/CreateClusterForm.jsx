@@ -77,7 +77,6 @@ function CreateClusterForm(props) {
             label="Cluster name"
             type="text"
             validate={required}
-            helpText="TODO: what does this affect?"
           />
 
           <Field
@@ -126,7 +125,6 @@ function CreateClusterForm(props) {
             name="region"
             label="AWS region"
             componentClass="select"
-            helpText="TODO support other regions"
           >
             <option value="us-east-1">
               us-east-1
@@ -138,7 +136,6 @@ function CreateClusterForm(props) {
             name="availability_zone"
             label="AWS availability zone"
             componentClass="select"
-            helpText="TODO unused"
           >
             <option value="us-east-1a">
               us-east-1a
