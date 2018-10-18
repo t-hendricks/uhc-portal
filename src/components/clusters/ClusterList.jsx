@@ -119,7 +119,8 @@ class ClusterList extends Component {
   componentWillUpdate(nextProps) {
     // Check for changes resulting in a fetch
     const { viewOptions } = this.props;
-    if (helpers.viewPropsChanged(nextProps.viewOptions, viewOptions)) {
+    if (!nextProps.valid ||
+        helpers.viewPropsChanged(nextProps.viewOptions, viewOptions)) {
       this.refresh(nextProps);
     }
   }
@@ -343,6 +344,7 @@ class ClusterList extends Component {
 
 ClusterList.propTypes = {
   fetchClusters: PropTypes.func.isRequired,
+  valid: PropTypes.bool.isRequired,
   clusters: PropTypes.array.isRequired,
   error: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string.isRequired,

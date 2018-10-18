@@ -74,10 +74,11 @@ const getErrorMessageFromResults = (results) => {
   return _.join(getMessages(responseData), '\n');
 };
 
+const INVALIDATE_ACTION = base => `${base}_INVALIDATE`;
+
+// redux-middleware-promise
 const FULFILLED_ACTION = base => `${base}_FULFILLED`;
-
 const PENDING_ACTION = base => `${base}_PENDING`;
-
 const REJECTED_ACTION = base => `${base}_REJECTED`;
 
 const helpers = {
@@ -86,6 +87,7 @@ const helpers = {
   viewPropsChanged,
   createViewQueryObject,
   getErrorMessageFromResults,
+  INVALIDATE_ACTION,
   FULFILLED_ACTION,
   PENDING_ACTION,
   REJECTED_ACTION,
