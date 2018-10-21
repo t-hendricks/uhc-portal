@@ -32,6 +32,9 @@ const ViewPaginationRow = ({
 );
 
 ViewPaginationRow.propTypes = {
+  // viewType *is* used, in mapDispatchToProps.
+  // The linter is not smart enough to figure it out, therefor:
+  // eslint-disable-next-line react/no-unused-prop-types
   viewType: PropTypes.string, // Check viewOptionsReducer to see how this works.
   currentPage: PropTypes.number,
   pageSize: PropTypes.number,

@@ -44,12 +44,10 @@ const MastheadOptions = ({
 
 MastheadOptions.propTypes = {
   userProfile: PropTypes.object.isRequired,
-  showUserPreferences: PropTypes.func,
   logoutUser: PropTypes.func,
 };
 
 MastheadOptions.defaultProps = {
-  showUserPreferences: helpers.noop,
   logoutUser: helpers.noop,
 };
 
