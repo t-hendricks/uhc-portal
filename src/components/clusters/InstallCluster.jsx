@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -78,6 +79,11 @@ class InstallCluster extends Component {
     );
   }
 }
+
+InstallCluster.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  token: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = state => ({ token: state.installCluster.token });
 
