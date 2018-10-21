@@ -1,3 +1,10 @@
 import clusterService from './clusterService';
+import accountManager from './accountManager';
 
-export { clusterService };
+const services = {
+  clusterService,
+  accountManager,
+};
+
+export { clusterService, accountManager };
+export default services;

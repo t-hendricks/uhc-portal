@@ -24,7 +24,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader';
 import { VerticalNav, VerticalNavMasthead } from 'patternfly-react';
 
-import { routes } from '../routes';
+import routes from '../routes';
 
 import MastheadOptions from './mastheadOptions/mastheadOptions';
 import LoginPage from './LoginPage';
