@@ -45,15 +45,22 @@ installer_url:=https://github.com/openshift/installer/releases
 	app \
 	clean \
 	deploy \
+        node_modules \
 	image \
+        lint \
 	push \
 	tar \
 	template \
 	undeploy \
 	$(NULL)
 
-app:
+node_modules:
 	yarn install
+
+lint: node_modules
+	yarn lint
+
+app: node_modules
 	yarn build --mode=production
 
 image:

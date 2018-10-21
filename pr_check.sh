@@ -20,5 +20,6 @@
 
 # Run the checks:
 make \
+  lint \
   app \
   image
