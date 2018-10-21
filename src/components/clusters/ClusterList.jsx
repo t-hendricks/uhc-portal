@@ -119,8 +119,8 @@ class ClusterList extends Component {
   componentWillUpdate(nextProps) {
     // Check for changes resulting in a fetch
     const { viewOptions } = this.props;
-    if (!nextProps.valid ||
-        helpers.viewPropsChanged(nextProps.viewOptions, viewOptions)) {
+    if (!nextProps.valid
+        || helpers.viewPropsChanged(nextProps.viewOptions, viewOptions)) {
       this.refresh(nextProps);
     }
   }

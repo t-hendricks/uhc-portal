@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Alert, Button, Col, Grid, Row } from 'patternfly-react';
+import {
+  Alert, Button, Col, Grid, Row,
+} from 'patternfly-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { createAuthToken } from '../../redux/actions';
 import config from '../../config';
@@ -11,7 +13,7 @@ class InstallCluster extends Component {
     super(props);
     this.state = {
       copied: false,
-    }
+    };
   }
 
   componentDidMount() {
@@ -22,11 +24,11 @@ class InstallCluster extends Component {
   render() {
     const { copied } = this.state;
     const { token } = this.props;
-    const tokenView = typeof(token) === 'object'
+    const tokenView = typeof (token) === 'object'
       ? JSON.stringify(token, null, 2)
-      : token
+      : token;
 
-    return(
+    return (
       <Grid>
         <Row>
           <Col xs={12} sm={12} md={9} lg={9}>
@@ -41,13 +43,13 @@ class InstallCluster extends Component {
             </pre>
             <CopyToClipboard
               text={tokenView}
-              onCopy={() => this.setState({copied: true})}
+              onCopy={() => this.setState({ copied: true })}
             >
               <p>
                 <Button bsSize="small">
                   Copy to Clipboard
                 </Button>
-                { copied && " Copied!" }
+                { copied && ' Copied!' }
               </p>
             </CopyToClipboard>
             <h2>Run the OpenShift Container Platform Installer</h2>
@@ -60,11 +62,11 @@ class InstallCluster extends Component {
               Please note the new cluster will not appear among your clusters
               until the external installation process is complete.
             </Alert>
-            <Button block={true} bsSize="large" bsStyle="primary" onClick={()=> window.open(config.configData.installerURL, "_blank")}>
+            <Button block bsSize="large" bsStyle="primary" onClick={() => window.open(config.configData.installerURL, '_blank')}>
               Download OCP Installer
             </Button>
             <Link
-              to={'/clusters'}
+              to="/clusters"
               className="btn btn-default"
               style={{ marginTop: '20px' }}
             >

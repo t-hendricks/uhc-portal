@@ -4,10 +4,11 @@ import promiseMiddleware from 'redux-promise-middleware';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 
-import reduxReducers from './reducers';
+import { reduxReducers } from './reducers';
 
 
 const history = createBrowserHistory();
+// eslint-disable-next-line no-underscore-dangle
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
