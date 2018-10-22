@@ -55,24 +55,13 @@ const createViewQueryObject = (viewOptions, queryObj) => {
   return queryObject;
 };
 
-const getErrorMessageFromResults = (results) => {
-  const responseData = _.get(results, 'response.data', results.message);
-
-  if (typeof responseData === 'string') {
-    return responseData;
+function getErrorMessage(payload) {
+  const response = payload.response.data;
+  if (response.kind === 'Error') {
+    return `${response.code}:\n${response.reason}`;
   }
-
-  const getMessages = messageObject => _.map(messageObject, (next) => {
-    if (_.isString(next)) {
-      return next;
-    }
-    if (_.isArray(next)) {
-      return getMessages(next);
-    }
-  });
-
-  return _.join(getMessages(responseData), '\n');
-};
+  return JSON.stringify(response);
+}
 
 const INVALIDATE_ACTION = base => `${base}_INVALIDATE`;
 
@@ -86,7 +75,7 @@ const helpers = {
   setStateProp,
   viewPropsChanged,
   createViewQueryObject,
-  getErrorMessageFromResults,
+  getErrorMessage,
   INVALIDATE_ACTION,
   FULFILLED_ACTION,
   PENDING_ACTION,
