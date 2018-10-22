@@ -63,9 +63,13 @@ class InstallCluster extends Component {
               Please note the new cluster will not appear among your clusters
               until the external installation process is complete.
             </Alert>
-            <Button block bsSize="large" bsStyle="primary" onClick={() => window.open(config.configData.installerURL, '_blank')}>
-              Download OCP Installer
-            </Button>
+
+            <a href={config.configData.installerURL} target="_blank">
+              <Button block bsSize="large" bsStyle="primary">
+                Download OCP Installer
+              </Button>
+            </a>
+
             <Link
               to="/clusters"
               className="btn btn-default"

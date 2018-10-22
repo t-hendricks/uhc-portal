@@ -17,7 +17,8 @@
       }
     ],
     "react/forbid-prop-types": [false],
-    "react/require-default-props": [false]
+    "react/require-default-props": [false],
+    "react/jsx-no-target-blank": [false],
   },
   "parser": "babel-eslint"
 }
