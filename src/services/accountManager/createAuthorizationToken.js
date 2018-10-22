@@ -4,7 +4,7 @@ import serviceConfig from '../serviceConfig';
 const createAuthorizationToken = () => axios(
   serviceConfig({
     method: 'post',
-    url: '/api/accounts_mgmt/v1/dockercfg',
+    url: '/api/accounts_mgmt/v1/access_token',
   }),
 );
 
