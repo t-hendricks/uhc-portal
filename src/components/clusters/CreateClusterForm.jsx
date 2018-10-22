@@ -38,7 +38,11 @@ function CreateClusterForm(props) {
 
   if (createClusterResponse.fulfilled) {
     reset();
-    return <ClusterCreationSuccessMessage clusterID={createClusterResponse.cluster.id} closeFunc={closeFunc} />;
+    return (
+      <ClusterCreationSuccessMessage
+        clusterID={createClusterResponse.cluster.id}
+        closeFunc={closeFunc}
+      />);
   }
 
   let errorContainer = <div />;
