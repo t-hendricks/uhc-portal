@@ -34,7 +34,7 @@ gateway_domain:=api.127.0.0.1.nip.io
 portal_domain:=cloud.127.0.0.1.nip.io
 
 # Keycloak details:
-keycloak_url:=https://developers.stage.redhat.com/auth
+keycloak_url:=https://developers.redhat.com/auth
 keycloak_realm:=rhd
 keycloak_client_id:=uhc
 
