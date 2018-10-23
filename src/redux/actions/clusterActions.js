@@ -17,7 +17,7 @@ import { clusterConstants } from '../constants';
 import { clusterService } from '../../services';
 import helpers from '../../common/helpers';
 
-const invalidateClusters = () => ({
+const invalidateClusters = () => dispatch => dispatch({
   type: helpers.INVALIDATE_ACTION(clusterConstants.GET_CLUSTERS),
 });
 
@@ -26,10 +26,20 @@ const createCluster = params => dispatch => dispatch({
   payload: clusterService.postNewCluster(params).then((response) => {
     // TODO: this artificially delays CREATE_CLUSTER_FULLFILLED action
     // until after the INVALIDATE action.
-    dispatch(invalidateClusters());
+    invalidateClusters()(dispatch);
     return response;
   }),
 });
+
+const clearDisplayNameResponse = () => dispatch => dispatch({
+  type: clusterConstants.CLEAR_DISPLAY_NAME_RESPONSE,
+});
+
+const editClusterDisplayName = (clusterID, displayName) => dispatch => dispatch({
+  type: clusterConstants.EDIT_CLUSTER_DISPLAY_NAME,
+  payload: clusterService.editClusterDisplayName(clusterID, displayName),
+});
+
 
 const fetchClusters = params => dispatch => dispatch({
   type: clusterConstants.GET_CLUSTERS,
@@ -42,11 +52,15 @@ const fetchClusterDetails = clusterID => dispatch => dispatch({
 });
 
 const clusterActions = {
+  clearDisplayNameResponse,
   createCluster,
+  editClusterDisplayName,
   fetchClusters,
   fetchClusterDetails,
+  invalidateClusters,
 };
 
 export {
-  clusterActions, createCluster, fetchClusters, fetchClusterDetails,
+  clusterActions, createCluster, editClusterDisplayName, fetchClusters, fetchClusterDetails,
+  invalidateClusters, clearDisplayNameResponse,
 };
