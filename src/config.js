@@ -1,4 +1,3 @@
-
 const config = {
   configData: {},
   fetchConfig() {

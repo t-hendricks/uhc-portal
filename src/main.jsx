@@ -75,5 +75,16 @@ function initKeycloak() {
 }
 
 config.fetchConfig().then(() => {
-  initKeycloak();
+  // If running using webpack-server development server, and setting env
+  // variable `UHC_DISABLE_KEYCLOAK` to `true`, disable keycloak.
+  if (process.env.UHC_DISABLE_KEYCLOAK === 'true') {
+    keycloak = {
+      login: () => {},
+      logout: () => {},
+      authenticated: true,
+    };
+    render();
+  } else {
+    initKeycloak();
+  }
 });

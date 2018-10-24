@@ -9,7 +9,13 @@ const serviceConfig = (passedConfig = {}, auth = true) => Object.assign(
   passedConfig,
   {
     headers: auth ? authHeader() : {},
-    url: `${config.configData.apiGateway}${passedConfig.url}`,
+
+    // NOTE: If running using webpack-server development server, and setting env
+    // variable `GATEWAY_DOMAIN` to a development api server, we can test that
+    // api server without editing the `config.json` file.
+    url: process.env.UHC_GATEWAY_DOMAIN
+      ? `${process.env.UHC_GATEWAY_DOMAIN}${passedConfig.url}`
+      : `${config.configData.apiGateway}${passedConfig.url}`,
   },
 );
 
