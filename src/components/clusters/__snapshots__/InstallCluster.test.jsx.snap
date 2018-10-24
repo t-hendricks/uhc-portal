@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`<InstallCluster /> renders 1`] = `
-<Instructions
-  token={Object {}}
-/>
-`;

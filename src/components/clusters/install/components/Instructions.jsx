@@ -7,7 +7,7 @@ import {
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import config from '../../../../config';
 
-export class Instructions extends React.Component {
+class Instructions extends React.Component {
   constructor(props) {
     super(props);
     this.state = { copied: false };

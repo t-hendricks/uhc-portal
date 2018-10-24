@@ -5,7 +5,7 @@ import { tollboothActions } from '../../redux/actions';
 import { Instructions } from './install';
 
 
-export class InstallCluster extends Component {
+class InstallCluster extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
