@@ -58,6 +58,10 @@ module.exports = (env, argv) => {
         hash: true, // cache invalidation on bundle updates
         template: 'src/index.html',
       }),
+      new webpack.DefinePlugin({
+        'process.env.UHC_DISABLE_KEYCLOAK': JSON.stringify(process.env.UHC_DISABLE_KEYCLOAK),
+        'process.env.UHC_GATEWAY_DOMAIN': JSON.stringify(process.env.UHC_GATEWAY_DOMAIN)
+      }),
       copyConfig,
     ].filter(Boolean),
 
