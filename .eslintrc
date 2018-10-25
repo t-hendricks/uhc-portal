@@ -10,9 +10,9 @@
       {
         "devDependencies": [
           "**/*setupTests.js",
-          "**/*.test.js",
-          "**/*test.js",
-          "**/*.spec.js"
+          "**/*.test.js*",
+          "**/*test.js*",
+          "**/*.spec.js*"
         ]
       }
     ],
@@ -20,5 +20,13 @@
     "react/require-default-props": [false],
     "react/jsx-no-target-blank": [false],
   },
+  "overrides": [{
+    "files": [
+      "**/*index.js*"
+    ],
+    "rules": {
+      "import/prefer-default-export": 0
+    }
+  }],
   "parser": "babel-eslint"
 }
