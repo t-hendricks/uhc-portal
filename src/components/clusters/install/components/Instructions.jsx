@@ -5,6 +5,7 @@ import {
   Alert, Button, Col, Grid, Row,
 } from 'patternfly-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Download from '@axetroy/react-download';
 import config from '../../../../config';
 
 class Instructions extends React.Component {
@@ -44,15 +45,21 @@ class Instructions extends React.Component {
               To create a self-managed OpenShift Container Platform cluster,
               follow the installation instructions below.
             </p>
-            <h2>Copy Your Authorization Token</h2>
-            <pre>
-              {tokenView}
-            </pre>
+            <h2>Download Pull Secret</h2>
+            <p>
+              Download the pull secret that the OCP installer will use to access container images.
+              After downloading this file you will pass it to the installer.
+            </p>
+            <Download file="pull-secret" content={tokenView}>
+              <Button block bsSize="large" bsStyle="primary">
+                Download Pull Secret
+              </Button>
+            </Download>
             <CopyToClipboard
               text={tokenView}
               onCopy={() => this.setState({ copied: true })}
             >
-              <p>
+              <p style={{ marginTop: '20px' }}>
                 <Button
                   bsSize="small"
                   className="install--copy-token"
