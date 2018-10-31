@@ -47,7 +47,12 @@ const createViewQueryObject = (viewOptions, queryObj) => {
     queryObject.page_size = viewOptions.pageSize;
     if (viewOptions.sorting.sortField !== null) {
       const direction = viewOptions.sorting.isAscending ? 'asc' : 'desc';
-      queryObject.order = `${viewOptions.sorting.sortField} ${direction}`;
+      if (viewOptions.sorting.sortField === 'name') {
+        // special casing name sorting, should sort by display name first, name second
+        queryObject.order = `display_name ${direction}, name ${direction}`;
+      } else {
+        queryObject.order = `${viewOptions.sorting.sortField} ${direction}`;
+      }
     }
     queryObject.filter = viewOptions.filter;
   }

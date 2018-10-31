@@ -39,6 +39,13 @@ const initialState = {
     fulfilled: false,
     cluster: null,
   },
+  editedCluster: {
+    error: false,
+    errorMessage: '',
+    pending: false,
+    fulfilled: false,
+    cluster: null,
+  },
 };
 
 function clusterReducer(state = initialState, action) {
@@ -180,6 +187,56 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
+    case helpers.REJECTED_ACTION(clusterConstants.EDIT_CLUSTER_DISPLAY_NAME):
+      return helpers.setStateProp(
+        'editedCluster',
+        {
+          pending: false,
+          error: action.error,
+          errorMessage: helpers.getErrorMessage(action.payload),
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.PENDING_ACTION(clusterConstants.EDIT_CLUSTER_DISPLAY_NAME):
+      return helpers.setStateProp(
+        'editedCluster',
+        {
+          pending: true,
+          cluster: null,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.FULFILLED_ACTION(clusterConstants.EDIT_CLUSTER_DISPLAY_NAME):
+      return helpers.setStateProp(
+        'editedCluster',
+        {
+          cluster: action.payload.data,
+          pending: false,
+          fulfilled: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case clusterConstants.CLEAR_DISPLAY_NAME_RESPONSE:
+      return helpers.setStateProp(
+        'editedCluster',
+        initialState.editedCluster,
+        {
+          state,
+          initialState,
+        },
+      );
 
     default:
       return state;

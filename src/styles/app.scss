@@ -99,6 +99,17 @@ limitations under the License.
   }
 }
 
+.displayNameForm {
+  .control-label, .name-label {
+    text-transform: uppercase;
+    color: #808080;
+    font-weight: normal;
+  }
+  .form-group {
+    margin-top: 5%;
+  }
+}
+
 // ----- NOTE: this is here for the upcoming demo! Remove it later -------- //
 .nav-pf-vertical, .navbar-toggle {
   display: none;

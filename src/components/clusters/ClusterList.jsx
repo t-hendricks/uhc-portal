@@ -19,7 +19,7 @@ import React, { Component } from 'react';
 
 import {
   Alert, Button, Grid, Row, Col, EmptyState, ModelessOverlay, Tooltip,
-  OverlayTrigger, DropdownKebab, MenuItem, Spinner,
+  OverlayTrigger, DropdownKebab, MenuItem, Spinner, Modal,
 } from 'patternfly-react';
 import { TableGrid } from 'patternfly-react-extensions';
 import PropTypes from 'prop-types';
@@ -31,6 +31,7 @@ import CreateClusterForm from './CreateClusterForm';
 import ViewPaginationRow from './viewPaginationRow';
 import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
+import EditDisplayNameDialog from './EditDisplayNameDialog';
 
 import helpers from '../../common/helpers';
 import { viewConstants } from '../../redux/constants';
@@ -76,40 +77,13 @@ function renderClusterStatusIcon(clusterState, id) {
     </OverlayTrigger>);
 }
 
-function renderClusterRow(cluster, index) {
-  const provider = cluster.cloud_provider.id || 'N/A';
-  const location = `${provider.toUpperCase()} (${cluster.region})`;
-  return (
-    <TableGrid.Row key={index}>
-      <Grid.Col {...nameColSizes}>
-        <Link to={`/cluster/${cluster.id}`}>
-          {cluster.name}
-        </Link>
-      </Grid.Col>
-      <Grid.Col {...statusColSizes}>{renderClusterStatusIcon(cluster.state, cluster.id)}</Grid.Col>
-      <Grid.Col {...statColSizes}>Red Hat</Grid.Col>
-      <Grid.Col {...statColSizes}>{cluster.cpu.total}</Grid.Col>
-      <Grid.Col {...statColSizes}>{cluster.storage.total}</Grid.Col>
-      <Grid.Col {...statColSizes}>{cluster.memory.total}</Grid.Col>
-      <Grid.Col {...locationColSizes}>{location}</Grid.Col>
-      <Grid.Col {...statColSizes}>
-        <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
-          <MenuItem>
-            Launch Admin Console
-          </MenuItem>
-          <MenuItem>
-            Action
-          </MenuItem>
-        </DropdownKebab>
-      </Grid.Col>
-    </TableGrid.Row>
-  );
-}
-
 
 class ClusterList extends Component {
   state = {
     clusterCreationFormVisible: false,
+    editClusterDisplayNameDialogVisible: false,
+    editClusterDisplayNameClusterID: '',
+    editClusterDisplayNameClusterName: '',
   }
 
   componentDidMount() {
@@ -139,6 +113,15 @@ class ClusterList extends Component {
     this.setState(prevState => ({ ...prevState, clusterCreationFormVisible: show }));
   }
 
+  openEditDisplayNameDialog(clusterID, clusterName) {
+    this.setState(prevState => (
+      {
+        ...prevState,
+        editClusterDisplayNameDialogVisible: true,
+        editClusterDisplayNameClusterID: clusterID,
+        editClusterDisplayNameClusterName: clusterName,
+      }));
+  }
 
   refresh(nextProps) {
     const { fetchClusters, viewOptions } = this.props;
@@ -183,6 +166,33 @@ class ClusterList extends Component {
     );
   }
 
+  renderEditClusterDisplayNameDialog() {
+    const {
+      editClusterDisplayNameDialogVisible,
+      editClusterDisplayNameClusterID,
+      editClusterDisplayNameClusterName,
+    } = this.state;
+    return (
+      <Modal show={editClusterDisplayNameDialogVisible}>
+        <EditDisplayNameDialog
+          clusterID={editClusterDisplayNameClusterID}
+          clusterName={editClusterDisplayNameClusterName}
+          closeFunc={(updated) => {
+            this.setState(prevState => (
+              {
+                ...prevState,
+                editClusterDisplayNameDialogVisible: false,
+              }));
+            if (updated) {
+              const { invalidateClusters } = this.props;
+              invalidateClusters();
+            }
+          }}
+        />
+      </Modal>
+    );
+  }
+
   renderError() {
     const { errorMessage } = this.props;
     return (
@@ -196,6 +206,41 @@ class ClusterList extends Component {
         </Alert>
         {this.renderPendingMessage()}
       </EmptyState>
+    );
+  }
+
+  renderClusterRow(cluster, index) {
+    const provider = cluster.cloud_provider.id || 'N/A';
+    const name = cluster.display_name || ''; // This would've been one trenary condition if the backend didn't have omitEmpty on display_name
+    const location = `${provider.toUpperCase()} (${cluster.region})`;
+    return (
+      <TableGrid.Row key={index}>
+        <Grid.Col {...nameColSizes}>
+          <Link to={`/cluster/${cluster.id}`}>
+            {/* we need to trim the display name,
+             to avoid cases where a cluster name would be only spaces */}
+            {name.trim() !== '' ? name : cluster.name}
+          </Link>
+        </Grid.Col>
+        <Grid.Col {...statusColSizes}>
+          {renderClusterStatusIcon(cluster.state, cluster.id)}
+        </Grid.Col>
+        <Grid.Col {...statColSizes}>Red Hat</Grid.Col>
+        <Grid.Col {...statColSizes}>{cluster.cpu.total}</Grid.Col>
+        <Grid.Col {...statColSizes}>{cluster.storage.total}</Grid.Col>
+        <Grid.Col {...statColSizes}>{cluster.memory.total}</Grid.Col>
+        <Grid.Col {...locationColSizes}>{location}</Grid.Col>
+        <Grid.Col {...statColSizes}>
+          <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
+            <MenuItem>
+              Launch Admin Console
+            </MenuItem>
+            <MenuItem onClick={() => this.openEditDisplayNameDialog(cluster.id, cluster.name)}>
+              Edit Display Name
+            </MenuItem>
+          </DropdownKebab>
+        </Grid.Col>
+      </TableGrid.Row>
     );
   }
 
@@ -269,7 +314,7 @@ class ClusterList extends Component {
             </TableGrid.ColumnHeader>
           </TableGrid.Head>
           <TableGrid.Body>
-            {clusters.map((cluster, index) => renderClusterRow(cluster, index))}
+            {clusters.map((cluster, index) => this.renderClusterRow(cluster, index))}
           </TableGrid.Body>
         </TableGrid>
         <ViewPaginationRow
@@ -337,12 +382,14 @@ class ClusterList extends Component {
         </Grid>
         {this.renderTable()}
         {this.renderClusterCreationForm()}
+        {this.renderEditClusterDisplayNameDialog()}
       </div>
     );
   }
 }
 
 ClusterList.propTypes = {
+  invalidateClusters: PropTypes.func.isRequired,
   fetchClusters: PropTypes.func.isRequired,
   valid: PropTypes.bool.isRequired,
   clusters: PropTypes.array.isRequired,
@@ -355,6 +402,7 @@ ClusterList.propTypes = {
 };
 
 const mapDispatchToProps = {
+  invalidateClusters: () => clusterActions.invalidateClusters(),
   fetchClusters: queryObj => clusterActions.fetchClusters(queryObj),
   setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
 };

@@ -29,10 +29,19 @@ const getClusterDetails = clusterID => axios(
   }),
 );
 
+const editClusterDisplayName = (clusterID, displayName) => axios(
+  serviceConfig({
+    method: 'patch',
+    url: `/api/clusters_mgmt/v1/clusters/${clusterID}`,
+    data: { display_name: displayName },
+  }),
+);
+
 const clusterService = {
   getClusters,
   postNewCluster,
   getClusterDetails,
+  editClusterDisplayName,
 };
 
 export default clusterService;
