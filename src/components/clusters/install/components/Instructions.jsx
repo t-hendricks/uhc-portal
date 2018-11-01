@@ -45,13 +45,14 @@ class Instructions extends React.Component {
               To create a self-managed OpenShift Container Platform cluster,
               follow the installation instructions below.
             </p>
-            <h2>Download Pull Secret</h2>
+            <h3>Step 1: Download Pull Secret</h3>
             <p>
-              Download the pull secret that the OCP installer will use to access container images.
-              After downloading this file you will pass it to the installer.
+              Download or copy this JSON file for use during the installation process
             </p>
-            <Download file="pull-secret" content={tokenView}>
-              <Button block bsSize="large" bsStyle="primary">
+            <Download file="pull-secret" content={tokenView} style={{ display: 'inline' }}>
+              <Button disabled={!!token.error} autofocus="true">
+                <span className="fa fa-download" />
+                &nbsp;
                 Download Pull Secret
               </Button>
             </Download>
@@ -59,18 +60,21 @@ class Instructions extends React.Component {
               text={tokenView}
               onCopy={() => this.setState({ copied: true })}
             >
-              <p style={{ marginTop: '20px' }}>
-                <Button
-                  bsSize="small"
-                  className="install--copy-token"
+              <span style={{ margin: '10px' }}>
+                <button
+                  type="button"
+                  className="fa fa-paste btn-text-link"
+                  tabIndex="-1"
                   disabled={!!token.error}
                 >
-                  Copy to Clipboard
-                </Button>
+                  &nbsp;
+                  Copy Pull Secret
+                </button>
                 { copied && ' Copied!' }
-              </p>
+              </span>
             </CopyToClipboard>
-            <h2>Run the OpenShift Container Platform Installer</h2>
+
+            <h3>Step 2: Run the OpenShift Container Platform Installer</h3>
             <Alert type="info">
               Download and extract the OCP Installer to a directory of your
               choosing. Run the installer and follow the installation prompts.
@@ -82,20 +86,21 @@ class Instructions extends React.Component {
             </Alert>
             <a href={config.configData.installerURL} target="_blank">
               <Button
-                block="true"
-                bsSize="large"
-                bsStyle="primary"
                 className="install--download-installer"
                 disabled={!!token.error}
               >
+                <span className="fa fa-download" />
+                &nbsp;
                 Download OCP Installer
               </Button>
             </a>
-            <Link to="/clusters">
-              <Button style={{ marginTop: '20px' }}>
-                Done
-              </Button>
-            </Link>
+            <p>
+              <Link to="/clusters">
+                <Button style={{ marginTop: '20px' }}>
+                  Done
+                </Button>
+              </Link>
+            </p>
           </Col>
         </Row>
       </Grid>
