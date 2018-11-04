@@ -17,6 +17,7 @@
     "bootstrap-sass": "^3.3.7",
     "classnames": "^2.2.6",
     "connected-react-router": "^4.3.0",
+    "filesize": "^3.6.1",
     "history": "^4.7.2",
     "keycloak-js": "4.3.0",
     "lodash": "^4.17.10",
@@ -91,7 +92,9 @@
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     },
-    "transformIgnorePatterns": ["<rootDir>/node_modules/(?!lodash-es/)"]
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!lodash-es/)"
+    ]
   },
   "scripts": {
     "build": "webpack --progress",
