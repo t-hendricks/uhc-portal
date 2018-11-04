@@ -41,4 +41,5 @@ fi
 make \
   lint \
   app \
+  binary \
   image

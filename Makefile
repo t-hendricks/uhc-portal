@@ -19,6 +19,7 @@ build_id:=unknown
 build_ts:=$(shell date --utc --iso-8601=seconds)
 
 # The details of the application:
+binary:=portal
 namespace:=unified-hybrid-cloud
 version:=latest
 
@@ -43,22 +44,58 @@ installer_url:=https://github.com/openshift/installer/releases
 
 .PHONY: \
 	app \
+	binary \
 	clean \
 	deploy \
-        node_modules \
+	fmt \
 	image \
-        lint \
+	lint \
+	node_modules \
 	push \
 	tar \
 	template \
 	undeploy \
 	$(NULL)
 
+binary: vendor
+	go build -o "$(binary)"
+
+lint: vendor node_modules
+	yarn lint
+	golangci-lint \
+		run \
+		--no-config \
+		--issues-exit-code=1 \
+		--deadline=15m \
+		--disable-all \
+		--enable=deadcode \
+		--enable=gas \
+		--enable=goconst \
+		--enable=gocyclo \
+		--enable=gofmt \
+		--enable=golint \
+		--enable=ineffassign \
+		--enable=interfacer \
+		--enable=lll \
+		--enable=maligned \
+		--enable=megacheck \
+		--enable=misspell \
+		--enable=structcheck \
+		--enable=unconvert \
+		--enable=varcheck \
+		$(NULL)
+
+fmt:
+	gofmt -s -l -w main.go ./cmd/ ./pkg/.
+
+test: vendor
+	go test ./cmd/... ./pkg/...
+
+vendor: Gopkg.lock
+	dep ensure -vendor-only -v
+
 node_modules:
 	yarn install
-
-lint: node_modules
-	yarn lint
 
 app: node_modules
 	yarn build --mode=production
@@ -99,7 +136,9 @@ undeploy: template
 
 clean:
 	rm -rf \
+		$(binary) \
 		*.tar \
+		.gopath \
 		build \
 		node_modules \
 		template.json \

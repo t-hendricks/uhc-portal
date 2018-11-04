@@ -1,2 +1,6 @@
-node_modules/
-build/
+/.gopath/
+/build/
+/node_modules/
+/portal
+/template.json
+/vendor/

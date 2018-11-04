@@ -67,83 +67,6 @@ parameters:
 
 objects:
 
-- apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: portal-config
-  data:
-
-    httpd.conf: |-
-      # Set the server root:
-      ServerRoot /etc/httpd
-
-      # Explicilty set the server name, otherwise the web server will use
-      # the IP address of the pod:
-      ServerName ${PORTAL_DOMAIN}
-
-      # Listen in a non privileged port, as we will be running wit a non
-      # privileged user:
-      Listen 8000
-
-      # The default location of the PID file isn't readable by the user that
-      # runs the container, so we need to put it in a different place:
-      PidFile /var/tmp/httpd.pid
-
-      # Load modules:
-      LoadModule mpm_event_module /usr/lib64/httpd/modules/mod_mpm_event.so
-      LoadModule unixd_module /usr/lib64/httpd/modules/mod_unixd.so
-      LoadModule dir_module /usr/lib64/httpd/modules/mod_dir.so
-      LoadModule log_config_module /usr/lib64/httpd/modules/mod_log_config.so
-      LoadModule authn_core_module /usr/lib64/httpd/modules/mod_authn_core.so
-      LoadModule authz_core_module /usr/lib64/httpd/modules/mod_authz_core.so
-      LoadModule rewrite_module /usr/lib64/httpd/modules/mod_rewrite.so
-
-      # Deny access to all the file system:
-      <Directory />
-        AllowOverride none
-        Require all denied
-      </Directory>
-
-      # Allow access to the documents directory:
-      DocumentRoot /var/www/html
-      <Directory /var/www/html>
-        AllowOverride None
-
-        # Allow access to everyone:
-        Require all granted
-
-        # Redirect all requests for files or directories that don't exist to the
-        # index page of the application:
-        RewriteEngine On
-        RewriteBase /
-        RewriteRule ^index\.html$ - [L]
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteCond %{REQUEST_FILENAME} !-l
-        RewriteRule . /index.html [L]
-      </Directory>
-
-      # Send the logs to the standard output:
-      LogLevel warn
-      ErrorLog /dev/stdout
-      TransferLog /dev/stdout
-
-- apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: webapp-config
-  data:
-    config.json: |-
-      {
-        "apiGateway": "https://${GATEWAY_DOMAIN}",
-        "keycloak": {
-          "realm": "${KEYCLOAK_REALM}",
-          "clientId": "${KEYCLOAK_CLIENT_ID}",
-          "url": "${KEYCLOAK_URL}"
-        },
-        "installerURL": "${INSTALLER_URL}"
-      }
-
 - apiVersion: apps/v1beta1
   kind: Deployment
   metadata:
@@ -160,16 +83,6 @@ objects:
         labels:
           app: portal-server
       spec:
-        volumes:
-        - name: config
-          configMap:
-            name: portal-config
-            items:
-            - key: httpd.conf
-              path: conf/httpd.conf
-        - name: webapp-config
-          configMap:
-            name: webapp-config
         initContainers:
         - name: id
           image: centos:7
@@ -180,16 +93,16 @@ objects:
         - name: server
           image: ${IMAGE_TAG}
           imagePullPolicy: ${IMAGE_PULL_POLICY}
-          volumeMounts:
-          - name: config
-            mountPath: /etc/httpd
-          - name: webapp-config
-            mountPath: /var/www/html/config
           command:
-          - /usr/sbin/httpd
-          args:
-          - -D
-          - FOREGROUND
+          - /usr/local/bin/portal
+          - server
+          - --portal-domain=${PORTAL_DOMAIN}
+          - --gateway-domain=${GATEWAY_DOMAIN}
+          - --keycloak-realm=${KEYCLOAK_REALM}
+          - --keycloak-client-id=${KEYCLOAK_CLIENT_ID}
+          - --keycloak-url=${KEYCLOAK_URL}
+          - --jwks-url=${JWKS_URL}
+          - --installer-url=${INSTALLER_URL}
 
 - apiVersion: v1
   kind: Service

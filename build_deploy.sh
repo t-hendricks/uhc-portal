@@ -87,6 +87,7 @@ make \
   build_ts="${BUILD_TS}" \
   version="${VERSION}" \
   app \
+  binary \
   image
 
 # Log in to the image registry:
