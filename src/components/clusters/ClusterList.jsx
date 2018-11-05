@@ -32,6 +32,7 @@ import ViewPaginationRow from './viewPaginationRow';
 import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
 import EditDisplayNameDialog from './EditDisplayNameDialog';
+import NumberWithUnit from './NumberWithUnit';
 
 import helpers from '../../common/helpers';
 import { viewConstants } from '../../redux/constants';
@@ -226,9 +227,15 @@ class ClusterList extends Component {
           {renderClusterStatusIcon(cluster.state, cluster.id)}
         </Grid.Col>
         <Grid.Col {...statColSizes}>Red Hat</Grid.Col>
-        <Grid.Col {...statColSizes}>{cluster.cpu.total}</Grid.Col>
-        <Grid.Col {...statColSizes}>{cluster.storage.total}</Grid.Col>
-        <Grid.Col {...statColSizes}>{cluster.memory.total}</Grid.Col>
+        <Grid.Col {...statColSizes}>
+          <NumberWithUnit valueWithUnit={cluster.cpu.total} unit="vCPU" />
+        </Grid.Col>
+        <Grid.Col {...statColSizes}>
+          <NumberWithUnit valueWithUnit={cluster.storage.total} isBytes />
+        </Grid.Col>
+        <Grid.Col {...statColSizes}>
+          <NumberWithUnit valueWithUnit={cluster.memory.total} isBytes />
+        </Grid.Col>
         <Grid.Col {...locationColSizes}>{location}</Grid.Col>
         <Grid.Col {...statColSizes}>
           <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>

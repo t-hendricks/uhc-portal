@@ -23,6 +23,7 @@ import ClusterUtilizationChart from './ClusterUtilizationChart';
 import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
 import Timestamp from '../Timestamp';
+import { humanizeValueWithUnit } from '../../common/unitParser';
 
 class ClusterDetails extends Component {
   componentDidMount() {
@@ -78,7 +79,7 @@ class ClusterDetails extends Component {
       return (
         <React.Fragment>
           <Col xs={6} sm={3} md={3}>
-            <ClusterUtilizationChart title="CPU" total={cluster.cpu.total} unit="Cores" used={cluster.cpu.used} donutId="cpu_donut" />
+            <ClusterUtilizationChart title="CPU" total={cluster.cpu.total.value} unit="Cores" used={cluster.cpu.used.value} donutId="cpu_donut" />
           </Col>
           <Col xs={6} sm={3} md={3}>
             <ClusterUtilizationChart title="MEMORY" total={cluster.memory.total} unit="GiB" used={cluster.memory.used} donutId="memory_donut" />
@@ -129,6 +130,12 @@ class ClusterDetails extends Component {
     }
 
     const cloudProvider = cluster.cloud_provider.id || 'N/A';
+    const memoryTotalWithUnit = humanizeValueWithUnit(
+      cluster.memory.total.value, cluster.memory.total.unit,
+    );
+    const storageTotalWithUnit = humanizeValueWithUnit(
+      cluster.storage.total.value, cluster.storage.total.unit,
+    );
 
     return (
       <div>
@@ -223,7 +230,7 @@ class ClusterDetails extends Component {
                   CPU
                 </dt>
                 <dd>
-                  {cluster.cpu.total}
+                  {cluster.cpu.total.value}
                   {' '}
                   vCPU
                 </dd>
@@ -231,17 +238,17 @@ class ClusterDetails extends Component {
                   Memory
                 </dt>
                 <dd>
-                  {cluster.memory.total}
+                  {memoryTotalWithUnit.value}
                   {' '}
-                  (unit unknown)
+                  {memoryTotalWithUnit.unit}
                 </dd>
                 <dt>
                   Storage
                 </dt>
                 <dd>
-                  {cluster.storage.total}
+                  {storageTotalWithUnit.value}
                   {' '}
-                  (unit unknown)
+                  {storageTotalWithUnit.unit}
                 </dd>
                 <dt>
                   Nodes
