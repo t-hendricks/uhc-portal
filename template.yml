@@ -44,8 +44,11 @@ parameters:
 - name: IMAGE_PULL_POLICY
   description: Image pull policy.
 
+- name: IMAGE
+  description: Image name.
+
 - name: IMAGE_TAG
-  description: Tag of the image, including the registry and the version.
+  description: Image tag.
 
 - name: NAMESPACE
   description: The namespace where the objects will be created.
@@ -91,7 +94,7 @@ objects:
           - ${VERSION}-${BUILD_ID}-${BUILD_TS}
         containers:
         - name: server
-          image: ${IMAGE_TAG}
+          image: ${IMAGE}:${IMAGE_TAG}
           imagePullPolicy: ${IMAGE_PULL_POLICY}
           command:
           - /usr/local/bin/portal
