@@ -66,12 +66,28 @@ fi
 # Set the directory for docker configuration:
 DOCKER_CONFIG="${PWD}/.docker"
 
+# Create the project directory inside the Go path and copy all the files of
+# the project:
+PROJECT="${GOPATH}/src/gitlab.cee.redhat.com/service/uhc-portal"
+mkdir -p "${PROJECT}"
+rsync -ap \
+  --exclude=.gopath \
+  --exclude=.git \
+  . "${PROJECT}"
+cd "${PROJECT}"
+
+# Enable the dep cache:
+if [ -n "${JENKINS_HOME}" ]; then
+  export DEPCACHEDIR="${JENKINS_HOME}/.cache/dep"
+fi
+
 # Build the image:
 make \
   build_id="${BUILD_ID}" \
   build_ts="${BUILD_TS}" \
   version="${VERSION}" \
   app \
+  binary \
   image
 
 # Log in to the image registry:

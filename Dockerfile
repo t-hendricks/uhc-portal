@@ -16,6 +16,12 @@
 
 FROM centos:7
 
+RUN \
+    yum install -y \
+    httpd \
+    && \
+    yum clean all
+
 COPY \
     redhat-it.pem \
     /etc/pki/ca-trust/source/anchors/
@@ -23,14 +29,13 @@ COPY \
 RUN \
     update-ca-trust
 
-RUN \
-    yum install -y \
-    httpd \
-    && \
-    yum clean all
+COPY \
+    portal \
+    /usr/local/bin/
 
-COPY build/ /var/www/html/
+COPY \
+    build/ \
+    /var/www/html/
 
-EXPOSE 8000
-
-ENTRYPOINT ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+EXPOSE \
+    8000
