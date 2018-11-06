@@ -1,0 +1,77 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: portal-server
+  namespace: unified-hybrid-cloud
+spec:
+  host: cloud.127.0.0.1.nip.io
+  to:
+    kind: Service
+    name: portal-server
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+    caCertificate: |-
+      -----BEGIN CERTIFICATE-----
+      MIIFGzCCAwOgAwIBAgIUI7RBMIJxHVodaZo5ZI9JRnGCT2QwDQYJKoZIhvcNAQEL
+      BQAwHTEbMBkGA1UEAwwSKi4xMjcuMC4wLjEubmlwLmlvMB4XDTE4MTEwNjE0MDI0
+      MloXDTI4MTEwMzE0MDI0MlowHTEbMBkGA1UEAwwSKi4xMjcuMC4wLjEubmlwLmlv
+      MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsVBCFcrBnU5KU/svMYKl
+      4ZV+n0/nKcf6FssBkD897qwK1LISADGk9cZIebjHJDnwPKRvi7dT0dk2RPsC7m0x
+      PCmcNdmcmfIur0gxuMbVwsHIzs1DMHNMw9uhLkCZi9nBdvietVKLkFNQ/a8EcBmT
+      4HtsUauzgpLm4kWNUeUzeowkWJru7ah4DxmMC7604u33M4F4GX2aRzAjZLE+qt9x
+      +nfWDf3OGT1d9a+i3CCcNI84iXxRax6g7KpDGd8J1DqCl+mOa4PX7D5Md/6NRQ8K
+      qEpKQh7O9YtK4aBIg0lFFkhDuq9aBNKbsh7IQCnWc3xEIM12crWgqob5/Rqh3Cdv
+      f7K/CGdfcV6Gpua+ujT0UF6SzPhimgGM9AeTmDCGhv9wojv5/cTfcqDzFRuSSNzf
+      fyfsONkRrxAjuq4XXyEB5348oL2zywQQmWrmzt2Xr2Xx7WaYpyBhCO3UQWxqEV+o
+      f8YunsoLXaBH9ZaiXL/aTvX/3UIA+vobi6xOcjdXIkml+LzMCk5jTnN4PUk99KN8
+      yjT2HOFhO8c5VmItKmn34BtGPRGeU7DxHQJQFiXpygByCBmrmPUQpOgTYGgF+ogh
+      9+YPYx/X6gNSkB3EljLznhsorUSh71dywVbxzFto4sUpKaKib79SNQzwQWMSx2Kp
+      o/EYdTM+Hy4rXlIrED6Dkq0CAwEAAaNTMFEwHQYDVR0OBBYEFNuxI4zsO6mcgwSE
+      Qq7ElQU72sSDMB8GA1UdIwQYMBaAFNuxI4zsO6mcgwSEQq7ElQU72sSDMA8GA1Ud
+      EwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIBABnb/jLtMI2qHotKzIGVzHvb
+      FXDYWXF/KXd0XZjboiZwPWjxbt1vXPNlIq+HWEFGZz2BoKkxl2zuBBpk6c0vxCuj
+      an515lb/EmpmE458x8u+n80GTitGuy+8PqFvShJCMAsdqUhdBDl6YkvXmWPtK9+W
+      Cm1y8bP0Z9Qh8/Gj4ebiyGCrTigQWE8ZlPVnTpJOR/JF71My9rO7SrvJiyaf+gHz
+      z+zqxb5CuLk9/Bw5jQk1A7YGC6MBhWJX6BF73niT0V0J+kGPXNYHGFgdPHl+Madh
+      goxATTY3VNhqGBFjTcpnApPBU+jKnZbOYc+C/Hu2Xi931Rn3Lj/NzCyV1I0c6D3I
+      npwXyoZz55Tjnmt9jf/p7J0jvHS8ArBEnvxmOlBw7pkq6YdfsV+ppnw7xBFIqWR7
+      RcMlCW0/9tbl9IgxF9SB/RDoMSGIOE8nV1y69eSXB9O2po9XjNiwDEVZ6n9D+bkC
+      N0dVS96ixQRlmVbeEsFmXDS0P+NMmkeaITJqKSANoSw68tOcmMPp0ZJlt9fAIzYe
+      KM4ReW5qJVGasyArURFpZDOXQ/qlTAQqBxWs+dST3FMl6TzVKxuGfTW3M+FVOvOg
+      pyhick0jAMut7KwNgARlXIuJD3kYcgmXftaXXDzAC4khBWYjxemNila9JhXpukRu
+      xoWsv/WDLHvBqCQrifVB
+      -----END CERTIFICATE-----
+    certificate: |-
+      -----BEGIN CERTIFICATE-----
+      MIIFGzCCAwOgAwIBAgIUI7RBMIJxHVodaZo5ZI9JRnGCT2QwDQYJKoZIhvcNAQEL
+      BQAwHTEbMBkGA1UEAwwSKi4xMjcuMC4wLjEubmlwLmlvMB4XDTE4MTEwNjE0MDI0
+      MloXDTI4MTEwMzE0MDI0MlowHTEbMBkGA1UEAwwSKi4xMjcuMC4wLjEubmlwLmlv
+      MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAsVBCFcrBnU5KU/svMYKl
+      4ZV+n0/nKcf6FssBkD897qwK1LISADGk9cZIebjHJDnwPKRvi7dT0dk2RPsC7m0x
+      PCmcNdmcmfIur0gxuMbVwsHIzs1DMHNMw9uhLkCZi9nBdvietVKLkFNQ/a8EcBmT
+      4HtsUauzgpLm4kWNUeUzeowkWJru7ah4DxmMC7604u33M4F4GX2aRzAjZLE+qt9x
+      +nfWDf3OGT1d9a+i3CCcNI84iXxRax6g7KpDGd8J1DqCl+mOa4PX7D5Md/6NRQ8K
+      qEpKQh7O9YtK4aBIg0lFFkhDuq9aBNKbsh7IQCnWc3xEIM12crWgqob5/Rqh3Cdv
+      f7K/CGdfcV6Gpua+ujT0UF6SzPhimgGM9AeTmDCGhv9wojv5/cTfcqDzFRuSSNzf
+      fyfsONkRrxAjuq4XXyEB5348oL2zywQQmWrmzt2Xr2Xx7WaYpyBhCO3UQWxqEV+o
+      f8YunsoLXaBH9ZaiXL/aTvX/3UIA+vobi6xOcjdXIkml+LzMCk5jTnN4PUk99KN8
+      yjT2HOFhO8c5VmItKmn34BtGPRGeU7DxHQJQFiXpygByCBmrmPUQpOgTYGgF+ogh
+      9+YPYx/X6gNSkB3EljLznhsorUSh71dywVbxzFto4sUpKaKib79SNQzwQWMSx2Kp
+      o/EYdTM+Hy4rXlIrED6Dkq0CAwEAAaNTMFEwHQYDVR0OBBYEFNuxI4zsO6mcgwSE
+      Qq7ElQU72sSDMB8GA1UdIwQYMBaAFNuxI4zsO6mcgwSEQq7ElQU72sSDMA8GA1Ud
+      EwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIBABnb/jLtMI2qHotKzIGVzHvb
+      FXDYWXF/KXd0XZjboiZwPWjxbt1vXPNlIq+HWEFGZz2BoKkxl2zuBBpk6c0vxCuj
+      an515lb/EmpmE458x8u+n80GTitGuy+8PqFvShJCMAsdqUhdBDl6YkvXmWPtK9+W
+      Cm1y8bP0Z9Qh8/Gj4ebiyGCrTigQWE8ZlPVnTpJOR/JF71My9rO7SrvJiyaf+gHz
+      z+zqxb5CuLk9/Bw5jQk1A7YGC6MBhWJX6BF73niT0V0J+kGPXNYHGFgdPHl+Madh
+      goxATTY3VNhqGBFjTcpnApPBU+jKnZbOYc+C/Hu2Xi931Rn3Lj/NzCyV1I0c6D3I
+      npwXyoZz55Tjnmt9jf/p7J0jvHS8ArBEnvxmOlBw7pkq6YdfsV+ppnw7xBFIqWR7
+      RcMlCW0/9tbl9IgxF9SB/RDoMSGIOE8nV1y69eSXB9O2po9XjNiwDEVZ6n9D+bkC
+      N0dVS96ixQRlmVbeEsFmXDS0P+NMmkeaITJqKSANoSw68tOcmMPp0ZJlt9fAIzYe
+      KM4ReW5qJVGasyArURFpZDOXQ/qlTAQqBxWs+dST3FMl6TzVKxuGfTW3M+FVOvOg
+      pyhick0jAMut7KwNgARlXIuJD3kYcgmXftaXXDzAC4khBWYjxemNila9JhXpukRu
+      xoWsv/WDLHvBqCQrifVB
+      -----END CERTIFICATE-----
+    key: |-
+      ***REMOVED***
