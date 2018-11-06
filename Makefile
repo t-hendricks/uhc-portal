@@ -25,8 +25,9 @@ version:=latest
 
 # The details of the image:
 image_registry:=quay.io
-image_repository:=openshift-unified-hybrid-cloud/portal
-image_tag:=$(image_registry)/$(image_repository):$(version)
+image_repository:=app-sre/uhc-portal
+image:=$(image_registry)/$(image_repository)
+image_tag:=$(version)
 image_tar:=$(shell echo $(image_tag) | tr /:. ---).tar
 image_pull_policy:=IfNotPresent
 
@@ -101,13 +102,13 @@ app: node_modules
 	yarn build --mode=production
 
 image:
-	docker build -t $(image_tag) .
+	docker build -t $(image):$(image_tag) .
 
 tar:
-	docker save -o $(image_tar) $(image_tag)
+	docker save -o $(image_tar) $(image):$(image_tag)
 
 push:
-	docker push $(image_tag)
+	docker push $(image):$(image_tag)
 
 template:
 	oc process \
@@ -116,6 +117,7 @@ template:
 		--param="BUILD_ID=$(build_id)" \
 		--param="BUILD_TS=$(build_ts)" \
 		--param="GATEWAY_DOMAIN=$(gateway_domain)" \
+		--param="IMAGE=$(image)" \
 		--param="IMAGE_PULL_POLICY=$(image_pull_policy)" \
 		--param="IMAGE_TAG=$(image_tag)" \
 		--param="INSTALLER_URL=$(installer_url)" \
