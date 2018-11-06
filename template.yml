@@ -68,6 +68,9 @@ parameters:
 - name: INSTALLER_URL
   description: The URL to download the installer.
 
+- name: DOCUMENTATION_URL
+  description: The URL to view the documentation.
+
 objects:
 
 - apiVersion: apps/v1beta1
@@ -106,6 +109,7 @@ objects:
           - --keycloak-url=${KEYCLOAK_URL}
           - --jwks-url=${JWKS_URL}
           - --installer-url=${INSTALLER_URL}
+          - --documentation-url=${DOCUMENTATION_URL}
 
 - apiVersion: v1
   kind: Service

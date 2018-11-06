@@ -88,5 +88,6 @@ const configJSONTemplate = `{
 		"clientId": "{{ .KeycloakClientID }}",
 		"url": "{{ .KeycloakURL }}"
 	},
-	"installerURL": "{{ .InstallerURL }}"
+	"installerURL": "{{ .InstallerURL }}",
+        "documentationURL": "{{ .DocumentationURL }}"
 }`

@@ -11,11 +11,18 @@ import config from '../../../../config';
 class Instructions extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { copied: false };
+    this.state = {
+      copied: false,
+      alertVisible: true,
+    };
   }
 
+  dismissAlert = () => {
+    this.setState({ alertVisible: false });
+  };
+
   render() {
-    const { copied } = this.state;
+    const { copied, alertVisible } = this.state;
     const { token } = this.props;
     const tokenView = token.error ? '' : JSON.stringify(token, null, 2);
 
@@ -40,12 +47,30 @@ class Instructions extends React.Component {
                 </Alert>
               )
             }
+
+            {
+              alertVisible && (
+                <Alert type="info" onDismiss={this.dismissAlert}>
+                  <h3>Welcome to OpenShift 4.0</h3>
+                  <p>
+                    First you must create a cluster by following the steps
+                    below. Once you have followed the installation process and
+                    your cluster has been created, you will see the cluster
+                    details.
+                  </p>
+                </Alert>
+              )}
             <h1>Create Self-Managed Cluster (OCP)</h1>
             <p>
               To create a self-managed OpenShift Container Platform cluster,
               follow the installation instructions below.
+              <a href={config.configData.documentationURL} target="_blank">
+                View Installation Instructions
+                &nbsp;
+                <span className="fa fa-external-link" />
+              </a>
             </p>
-            <h3>Step 1: Download Pull Secret</h3>
+            <h3 className="cluster-install-step">Step 1: Download Pull Secret</h3>
             <p>
               Download or copy this JSON file for use during the installation process
             </p>
@@ -74,8 +99,8 @@ class Instructions extends React.Component {
               </span>
             </CopyToClipboard>
 
-            <h3>Step 2: Run the OpenShift Container Platform Installer</h3>
-            <Alert type="info">
+            <h3 className="cluster-install-step">Step 2: Run the OpenShift Container Platform Installer</h3>
+            <p>
               Download and extract the OCP Installer to a directory of your
               choosing. Run the installer and follow the installation prompts.
               The authorization token provided above is required to complete
@@ -83,7 +108,7 @@ class Instructions extends React.Component {
               The installer will notify you of its results upon completion.
               Please note the new cluster will not appear among your clusters
               until the external installation process is complete.
-            </Alert>
+            </p>
             <a href={config.configData.installerURL} target="_blank">
               <Button
                 className="install--download-installer"
@@ -91,15 +116,32 @@ class Instructions extends React.Component {
               >
                 <span className="fa fa-download" />
                 &nbsp;
-                Download OCP Installer
+                Download Installer
               </Button>
             </a>
+
+            <h3 className="cluster-install-step">Step 3: Wait for Installation</h3>
+            <p>
+              If steps 1 and 2 are complete, the cluster is in the process of
+              installing. Wait for the cluster to appear. Some data may take
+              longer to load, but you can monitor as individual nodes are
+              installed.
+            </p>
             <p>
               <Link to="/clusters">
                 <Button style={{ marginTop: '20px' }}>
-                  Done
+                  Close
                 </Button>
               </Link>
+            </p>
+            <hr />
+            <h4>Help and Documentation</h4>
+            <p>
+              <a href={config.configData.documentationURL} target="_blank">
+                View Installation Instructions
+                &nbsp;
+                <span className="fa fa-external-link" />
+              </a>
             </p>
           </Col>
         </Row>
