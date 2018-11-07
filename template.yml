@@ -104,7 +104,6 @@ objects:
           - --keycloak-realm=${KEYCLOAK_REALM}
           - --keycloak-client-id=${KEYCLOAK_CLIENT_ID}
           - --keycloak-url=${KEYCLOAK_URL}
-          - --jwks-url=${JWKS_URL}
           - --installer-url=${INSTALLER_URL}
 
 - apiVersion: v1

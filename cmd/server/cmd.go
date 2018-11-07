@@ -38,7 +38,6 @@ var args struct {
 	keycloakRealm    string
 	keycloakClientID string
 	keycloakURL      string
-	jwksURL          string
 	installerURL     string
 }
 
@@ -83,12 +82,6 @@ func init() {
 		"Keycloak URL.",
 	)
 	flags.StringVar(
-		&args.jwksURL,
-		"jwks-url",
-		"",
-		"URL of the JSON web key set used to verify tokens.",
-	)
-	flags.StringVar(
 		&args.installerURL,
 		"installer-url",
 		"",
@@ -121,10 +114,6 @@ func run(cmd *cobra.Command, argv []string) {
 		glog.Errorf("Option '--keycloak-url' is mandatory")
 		ok = false
 	}
-	if args.jwksURL == "" {
-		glog.Errorf("Option '--jwks-url' is mandatory")
-		ok = false
-	}
 	if args.installerURL == "" {
 		glog.Errorf("Option '--installer-url' is mandatory")
 		ok = false
@@ -145,7 +134,6 @@ func run(cmd *cobra.Command, argv []string) {
 		Template(httpdConfTemplate).
 		Variable("ConfigDir", configDir).
 		Variable("PortalDomain", args.portalDomain).
-		Variable("JWKSURL", args.jwksURL).
 		Build()
 	if err != nil {
 		glog.Errorf("Can't create the web server: %v", err)
