@@ -39,6 +39,7 @@ var args struct {
 	keycloakClientID string
 	keycloakURL      string
 	installerURL     string
+	documentationURL string
 }
 
 // Cmd is the cobra serve command
@@ -87,6 +88,12 @@ func init() {
 		"",
 		"URL where the OpenShift installer can be downloaded from.",
 	)
+	flags.StringVar(
+		&args.documentationURL,
+		"documentation-url",
+		"",
+		"URL where the OpenShift documentation can be viewed.",
+	)
 }
 
 func run(cmd *cobra.Command, argv []string) {
@@ -118,6 +125,11 @@ func run(cmd *cobra.Command, argv []string) {
 		glog.Errorf("Option '--installer-url' is mandatory")
 		ok = false
 	}
+	if args.documentationURL == "" {
+		glog.Errorf("Option '--documentation-url' is mandatory")
+		ok = false
+	}
+
 	if !ok {
 		os.Exit(1)
 	}
@@ -199,6 +211,7 @@ func createConfigDir() (configDir string, err error) {
 		"KeycloakClientID": args.keycloakClientID,
 		"KeycloakURL":      args.keycloakURL,
 		"InstallerURL":     args.installerURL,
+		"DocumentationURL": args.documentationURL,
 	}
 	configJSONBuffer := new(bytes.Buffer)
 	err = configJSONTmpl.Execute(configJSONBuffer, configJSONData)

@@ -5,5 +5,6 @@
         "clientId": "uhc",
         "url": "https://developers.stage.redhat.com/auth"
     },
-    "installerURL": "https://github.com/openshift/installer/releases"
+    "installerURL": "https://github.com/openshift/installer/releases",
+    "documentationURL": "https://github.com/openshift/installer/tree/master/docs"
 }

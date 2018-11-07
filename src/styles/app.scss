@@ -32,6 +32,7 @@ limitations under the License.
 .btn-text-link {
   color: #0189cf;
   border: none;
+  font-size: 14px;
 }
 
 .layout-pf {
@@ -113,6 +114,11 @@ limitations under the License.
   .form-group {
     margin-top: 5%;
   }
+}
+
+.cluster-install-step {
+  margin-top: 40px;
+  font-weight: 600;
 }
 
 // ----- NOTE: this is here for the upcoming demo! Remove it later -------- //
