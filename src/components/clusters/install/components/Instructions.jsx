@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import {
   Alert, Button, Col, Grid, Row,
 } from 'patternfly-react';
@@ -50,7 +49,11 @@ class Instructions extends React.Component {
 
             {
               alertVisible && (
-                <Alert type="info" onDismiss={this.dismissAlert}>
+                <Alert
+                  type="info"
+                  onDismiss={this.dismissAlert}
+                  className="cluster-install-alert"
+                >
                   <h3>Welcome to OpenShift 4.0</h3>
                   <p>
                     First you must create a cluster by following the steps
@@ -64,12 +67,12 @@ class Instructions extends React.Component {
             <p>
               To create a self-managed OpenShift Container Platform cluster,
               follow the installation instructions below.
-              <a href={config.configData.documentationURL} target="_blank">
-                View Installation Instructions
-                &nbsp;
-                <span className="fa fa-external-link" />
-              </a>
             </p>
+            <a href={config.configData.documentationURL} target="_blank">
+              View Installation Instructions
+              &nbsp;
+              <span className="fa fa-external-link" />
+            </a>
             <h3 className="cluster-install-step">Step 1: Download Pull Secret</h3>
             <p>
               Download or copy this JSON file for use during the installation process
@@ -87,11 +90,12 @@ class Instructions extends React.Component {
             >
               <span style={{ margin: '10px' }}>
                 <button
+                  className="btn-text-link"
                   type="button"
-                  className="fa fa-paste btn-text-link"
                   tabIndex="-1"
                   disabled={!!token.error}
                 >
+                  <span className="fa fa-paste" />
                   &nbsp;
                   Copy Pull Secret
                 </button>
@@ -126,13 +130,6 @@ class Instructions extends React.Component {
               installing. Wait for the cluster to appear. Some data may take
               longer to load, but you can monitor as individual nodes are
               installed.
-            </p>
-            <p>
-              <Link to="/clusters">
-                <Button style={{ marginTop: '20px' }}>
-                  Close
-                </Button>
-              </Link>
             </p>
             <hr />
             <h4>Help and Documentation</h4>
