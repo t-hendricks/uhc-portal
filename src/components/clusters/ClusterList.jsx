@@ -91,12 +91,12 @@ class ClusterList extends Component {
     this.refresh();
   }
 
-  componentWillUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
-    const { viewOptions } = this.props;
-    if (!nextProps.valid
-        || helpers.viewPropsChanged(nextProps.viewOptions, viewOptions)) {
-      this.refresh(nextProps);
+    const { viewOptions, valid, pending } = this.props;
+    if ((!valid && !pending)
+        || helpers.viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+      this.refresh();
     }
   }
 
@@ -124,10 +124,9 @@ class ClusterList extends Component {
       }));
   }
 
-  refresh(nextProps) {
+  refresh() {
     const { fetchClusters, viewOptions } = this.props;
-    const options = _.get(nextProps, 'viewOptions') || viewOptions;
-    fetchClusters(helpers.createViewQueryObject(options));
+    fetchClusters(helpers.createViewQueryObject(viewOptions));
   }
 
   isSorted(id) {
