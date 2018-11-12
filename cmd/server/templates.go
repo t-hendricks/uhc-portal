@@ -82,7 +82,7 @@ TransferLog /dev/stdout
 
 // This is the template to generate the 'config.json' file.
 const configJSONTemplate = `{
-	"apiGateway": "{{ .GatewayDomain }}",
+	"apiGateway": "https://{{ .GatewayDomain }}",
 	"keycloak": {
 		"realm": "{{ .KeycloakRealm }}",
 		"clientId": "{{ .KeycloakClientID }}",
