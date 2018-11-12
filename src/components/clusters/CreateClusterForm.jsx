@@ -191,6 +191,9 @@ const mapDispatchToProps = dispatch => ({
     const clusterRequest = {
       name: formData.name,
       region: formData.region,
+      flavour: {
+        id: '4',
+      },
       nodes: {
         master: parseInt(formData.nodes_master, 10),
         infra: parseInt(formData.nodes_infra, 10),
