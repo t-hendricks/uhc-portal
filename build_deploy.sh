@@ -47,11 +47,6 @@ rsync -ap \
   . "${PROJECT}"
 cd "${PROJECT}"
 
-# Enable the dep cache:
-if [ -n "${JENKINS_HOME}" ]; then
-  export DEPCACHEDIR="${JENKINS_HOME}/.cache/dep"
-fi
-
 # Build the image:
 make \
   version="${VERSION}" \
