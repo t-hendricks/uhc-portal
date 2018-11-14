@@ -33,14 +33,6 @@
   revision = "298182f68c66c05229eb03ac171abe6e309ee79a"
   version = "v1.0.3"
 
-[[projects]]
-  digest = "1:cc5985ca542a1d717f51b8b14f901520b4fd6fe67a5bc422aa2e98db7a199031"
-  name = "gitlab.cee.redhat.com/service/uhc-gateway"
-  packages = ["cmd/server"]
-  pruneopts = "NUT"
-  revision = "915a572114130745464d9747f947a0a252ef2105"
-  version = "v0.0.25"
-
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
@@ -48,7 +40,6 @@
     "github.com/golang/glog",
     "github.com/spf13/cobra",
     "github.com/spf13/pflag",
-    "gitlab.cee.redhat.com/service/uhc-gateway/cmd/server",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
