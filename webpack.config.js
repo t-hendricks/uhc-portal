@@ -20,7 +20,8 @@ const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const modDir = path.resolve(__dirname, 'node_modules');
 const srcDir = path.resolve(__dirname, 'src');
@@ -29,12 +30,12 @@ const outDir = path.resolve(__dirname, 'build');
 module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
   let copyConfig = null;
+  let bundleAnalyzer = null;
   if (devMode) {
-    copyConfig = new CopyWebpackPlugin([
-      { from: 'src/config', to: `${outDir}/config` },
-    ]);
+    copyConfig = new CopyWebpackPlugin([{ from: 'src/config', to: `${outDir}/config` }]);
+    bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: false });
   }
-  return ({
+  return {
     mode: argv.mode || 'development',
     entry: {
       main: path.resolve(srcDir, 'main.jsx'),
@@ -49,8 +50,8 @@ module.exports = (env, argv) => {
 
     plugins: [
       new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
         filename: devMode ? '[name].css' : '[name].[hash].css',
         chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
       }),
@@ -60,8 +61,9 @@ module.exports = (env, argv) => {
       }),
       new webpack.DefinePlugin({
         'process.env.UHC_DISABLE_KEYCLOAK': JSON.stringify(process.env.UHC_DISABLE_KEYCLOAK),
-        'process.env.UHC_GATEWAY_DOMAIN': JSON.stringify(process.env.UHC_GATEWAY_DOMAIN)
+        'process.env.UHC_GATEWAY_DOMAIN': JSON.stringify(process.env.UHC_GATEWAY_DOMAIN),
       }),
+      bundleAnalyzer,
       copyConfig,
     ].filter(Boolean),
 
@@ -69,16 +71,11 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.jsx?$/,
-          exclude: [
-            /node_modules/,
-          ],
+          exclude: [/node_modules/],
           use: {
             loader: 'babel-loader',
             options: {
-              presets: [
-                '@babel/preset-react',
-                '@babel/preset-env',
-              ],
+              presets: ['@babel/preset-react', '@babel/preset-env'],
               plugins: [
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-proposal-object-rest-spread',
@@ -102,10 +99,7 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.css$/,
-          use: [
-            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-            'css-loader',
-          ],
+          use: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
           test: /(webfont\.svg|\.(eot|ttf|woff|woff2))$/,
@@ -126,10 +120,7 @@ module.exports = (env, argv) => {
 
     resolve: {
       extensions: ['.js', '.jsx'],
-      modules: [
-        srcDir,
-        modDir,
-      ],
+      modules: [srcDir, modDir],
     },
 
     devServer: {
@@ -141,22 +132,18 @@ module.exports = (env, argv) => {
       port: 8001,
       proxy: [
         {
-          context: [
-            '/api/clusters_mgmt',
-          ],
+          context: ['/api/clusters_mgmt'],
           changeOrigin: true,
           secure: false,
           target: 'https://clusters-service.127.0.0.1.nip.io/',
         },
         {
-          context: [
-            '/api/accounts_mgmt',
-          ],
+          context: ['/api/accounts_mgmt'],
           changeOrigin: true,
           secure: false,
           target: 'http://localhost:8000/',
         },
       ],
     },
-  });
+  };
 };
