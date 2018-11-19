@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as _ from 'lodash-es';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -22,27 +21,15 @@ import { withRouter } from 'react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader';
-import { VerticalNav, VerticalNavMasthead } from 'patternfly-react';
 
 import routes from '../routes';
 
-import MastheadOptions from './mastheadOptions/mastheadOptions';
+import Header from './header';
 import LoginPage from './LoginPage';
 import ErrorBoundary from './ErrorBoundary';
 import ClustersList from './clusters/ClusterList';
 import ClusterDetails from './clusters/ClusterDetails';
 import InstallCluster from './clusters/InstallCluster';
-import rhProductTitle from '../styles/images/logo.svg';
-
-function renderMenuActions() {
-  return (
-    <React.Fragment>
-      <VerticalNav.Item className="collapsed-nav-item" title="User Preferences" />
-      <VerticalNav.Item className="collapsed-nav-item" title="Logout" />
-    </React.Fragment>
-  );
-}
-
 
 class App extends React.Component {
   constructor() {
@@ -58,51 +45,19 @@ class App extends React.Component {
     console.dir(history.push(path));
   }
 
-  renderMenuItems() {
-    const { location } = this.props;
-
-    const activeItem = this.menu.find(item => _.startsWith(location.pathname, item.to));
-
-    return this.menu.map(item => (
-      <VerticalNav.Item
-        key={item.to}
-        title={item.title}
-        iconClass={item.iconClass}
-        active={item === activeItem || (!activeItem && item.redirect)}
-        onClick={() => this.navigateTo(item.to)}
-      />
-    ));
-  }
-
-  renderVerticalNav() {
-    const {
-      userProfile, logoutFunction,
-    } = this.props;
-    return (
-      <VerticalNav>
-        <VerticalNavMasthead>
-          <VerticalNav.Brand titleImg={rhProductTitle} />
-          <MastheadOptions userProfile={userProfile} logoutUser={logoutFunction} />
-        </VerticalNavMasthead>
-        {this.renderMenuItems()}
-        {renderMenuActions()}
-      </VerticalNav>
-    );
-  }
-
   render() {
     const {
-      history, authenticated, loginFunction,
+      history, authenticated, loginFunction, userProfile, logoutFunction,
     } = this.props;
 
     if (!authenticated) {
-      return (<LoginPage loginFunction={loginFunction} logo={rhProductTitle} />);
+      return (<LoginPage loginFunction={loginFunction} />);
     }
 
     return (
       <div className="layout-pf layout-pf-fixed">
-        {this.renderVerticalNav()}
-        <div className="container-pf-nav-pf-vertical">
+        <Header isLoggedIn userProfile={userProfile} logoutUser={logoutFunction} />
+        <div>
           <div className="coc-content">
             <ErrorBoundary>
               <ConnectedRouter history={history}>

@@ -1,30 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Row, Col, Masthead,
+  Button, Col,
 } from 'patternfly-react';
+import Header from './header';
 
-function LoginPage({ loginFunction, logo }) {
+function LoginPage({ loginFunction }) {
   return (
-    <div>
-      <Masthead
-        titleImg={logo}
-        title="OpenShift Unified Hybrid Cloud"
-        navToggle={false}
-      />
-      <Row>
-        <Col xs={6} md={4} xsOffset={6}>
-          <Button bsSize="large" style={{ marginTop: '20px' }} onClick={loginFunction}>
-            Log In
-          </Button>
-        </Col>
-      </Row>
-    </div>);
+    <React.Fragment>
+      <Header isLoggedIn={false} />
+      <Col xs={6} md={4} xsOffset={6}>
+        <Button bsSize="large" style={{ marginTop: '20px' }} onClick={loginFunction}>
+          Log In
+        </Button>
+      </Col>
+    </React.Fragment>);
 }
 
 LoginPage.propTypes = {
   loginFunction: PropTypes.func.isRequired,
-  logo: PropTypes.object.isRequired,
 };
 
 export default LoginPage;
