@@ -14,7 +14,7 @@ limitations under the License.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Alert, Row, Col, EmptyState, Grid,
+  Alert, Button, Row, Col, EmptyState, Grid,
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
@@ -137,11 +137,36 @@ class ClusterDetails extends Component {
       cluster.storage.total.value, cluster.storage.total.unit,
     );
 
+    // The trenary for consoleURL is needed because the API does not guarantee fields being present.
+    // We'll have a lot of these all over the place as we grow :(
+    const consoleURL = cluster.console ? cluster.console.url : false;
+
+    const consoleButton = consoleURL ? (
+      <a href={consoleURL}>
+        <Button bsStyle="primary">
+          Launch Console
+        </Button>
+      </a>)
+      : (
+        <Button bsStyle="primary" disabled title="Admin console is not yet available for this cluster">
+          Launch Console
+        </Button>
+      );
+
     return (
       <div>
-        <h1 style={{ marginLeft: '80px' }}>
-          {cluster.name}
-        </h1>
+        <Grid fluid style={{ marginTop: '20px' }}>
+          <Row>
+            <Col sm={2} smOffset={1}>
+              <h1 style={{ marginTop: 0 }}>
+                {cluster.name}
+              </h1>
+            </Col>
+            <Col sm={1} smOffset={6}>
+              {consoleButton}
+            </Col>
+          </Row>
+        </Grid>
         <Grid fluid>
           <Row style={{ marginTop: '20px' }}>
             {this.renderUtilizationCharts()}
