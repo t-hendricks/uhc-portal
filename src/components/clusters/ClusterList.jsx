@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as _ from 'lodash-es';
+import size from 'lodash-es/size';
+import isEmpty from 'lodash-es/isEmpty';
 import React, { Component } from 'react';
 
 import {
@@ -342,10 +343,10 @@ class ClusterList extends Component {
       return this.renderError();
     }
 
-    if (!_.size(clusters) && pending && _.isEmpty(viewOptions.filter)) {
+    if (!size(clusters) && pending && isEmpty(viewOptions.filter)) {
       return this.renderPendingMessage();
     }
-    if (!_.size(clusters) && !pending && _.isEmpty(viewOptions.filter)) {
+    if (!size(clusters) && !pending && isEmpty(viewOptions.filter)) {
       return (
         <React.Fragment>
           <Grid fluid>

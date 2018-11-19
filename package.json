@@ -20,7 +20,6 @@
     "filesize": "^3.6.1",
     "history": "^4.7.2",
     "keycloak-js": "4.3.0",
-    "lodash": "^4.17.10",
     "lodash-es": "^4.17.10",
     "patternfly": "^3.54.8",
     "patternfly-react": "^2.20.0",

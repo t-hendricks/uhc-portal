@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es';
+import isEqual from 'lodash-es/isEqual';
 
 const noop = Function.prototype;
 
@@ -33,8 +33,8 @@ const setStateProp = (prop, data, options) => {
 const viewPropsChanged = (nextViewOptions, currentViewOptions) => (
   nextViewOptions.currentPage !== currentViewOptions.currentPage
     || nextViewOptions.pageSize !== currentViewOptions.pageSize
-    || !_.isEqual(nextViewOptions.sorting, currentViewOptions.sorting)
-    || !_.isEqual(nextViewOptions.filter, currentViewOptions.filter)
+    || !isEqual(nextViewOptions.sorting, currentViewOptions.sorting)
+    || !isEqual(nextViewOptions.filter, currentViewOptions.filter)
 );
 
 const createViewQueryObject = (viewOptions, queryObj) => {
