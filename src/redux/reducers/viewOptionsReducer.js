@@ -7,7 +7,7 @@ import {
 
 const INITAL_VIEW_STATE = {
   currentPage: 1,
-  pageSize: 5,
+  pageSize: 50,
   totalCount: 0,
   totalPages: 0,
   filter: [],
