@@ -214,6 +214,20 @@ class ClusterList extends Component {
     const provider = cluster.cloud_provider.id || 'N/A';
     const name = cluster.display_name || ''; // This would've been one trenary condition if the backend didn't have omitEmpty on display_name
     const location = `${provider.toUpperCase()} (${cluster.region})`;
+    // The trenary for consoleURL is needed because the API does not guarantee fields being present.
+    // We'll have a lot of these all over the place as we grow :(
+    const consoleURL = cluster.console ? cluster.console.url : false;
+    const consoleMenuItem = consoleURL ? (
+      <MenuItem>
+        <a href={consoleURL}>
+          Launch Admin Console
+        </a>
+      </MenuItem>)
+      : (
+        <MenuItem disabled title="Admin console is not yet available for this cluster">
+          Launch Admin Console
+        </MenuItem>
+      );
     return (
       <TableGrid.Row key={index}>
         <Grid.Col {...nameColSizes}>
@@ -239,9 +253,7 @@ class ClusterList extends Component {
         <Grid.Col {...locationColSizes}>{location}</Grid.Col>
         <Grid.Col {...statColSizes}>
           <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
-            <MenuItem>
-              Launch Admin Console
-            </MenuItem>
+            {consoleMenuItem}
             <MenuItem onClick={() => this.openEditDisplayNameDialog(cluster.id, cluster.name)}>
               Edit Display Name
             </MenuItem>
