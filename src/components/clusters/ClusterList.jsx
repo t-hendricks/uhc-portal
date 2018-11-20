@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import size from 'lodash-es/size';
-import isEmpty from 'lodash-es/isEmpty';
+import size from 'lodash/size';
+import isEmpty from 'lodash/isEmpty';
 import React, { Component } from 'react';
 
 import {
