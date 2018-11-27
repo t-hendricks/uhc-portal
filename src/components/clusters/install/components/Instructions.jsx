@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 import PropTypes from 'prop-types';
 import {
   Alert, Button, Col, Grid, Row,
@@ -14,6 +15,10 @@ class Instructions extends React.Component {
       copied: false,
       alertVisible: true,
     };
+  }
+
+  componentDidMount() {
+    $('.react-download-container button').focus();
   }
 
   dismissAlert = () => {
@@ -78,7 +83,11 @@ class Instructions extends React.Component {
               Download or copy this JSON file for use during the installation process
             </p>
             <Download file="pull-secret" content={tokenView} style={{ display: 'inline' }}>
-              <Button disabled={!!token.error} autofocus="true">
+              <Button
+                tabIndex="0"
+                disabled={!!token.error}
+                autoFocus
+              >
                 <span className="fa fa-download" />
                 &nbsp;
                 Download Pull Secret
