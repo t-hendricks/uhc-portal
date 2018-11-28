@@ -14,10 +14,11 @@ limitations under the License.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Alert, Button, Row, Col, EmptyState, Grid,
+  Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, MenuItem,
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { fetchClusterDetails } from '../../redux/actions/clusterActions';
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import LoadingModal from './LoadingModal';
@@ -141,7 +142,7 @@ class ClusterDetails extends Component {
     // We'll have a lot of these all over the place as we grow :(
     const consoleURL = cluster.console ? cluster.console.url : false;
 
-    const consoleButton = consoleURL ? (
+    const consoleBtn = consoleURL ? (
       <a href={consoleURL}>
         <Button bsStyle="primary">
           Launch Console
@@ -153,18 +154,45 @@ class ClusterDetails extends Component {
         </Button>
       );
 
+    const backBtn = (
+      <Button bsStyle="default">
+        <Link to="/clusters">
+               Back
+        </Link>
+      </Button>
+    );
+
+    const actionsBtn = (
+      <DropdownButton
+        id="actions"
+        bsStyle="default"
+        title="Actions"
+      >
+        <MenuItem>
+              Edit Display Name
+        </MenuItem>
+      </DropdownButton>
+    );
+
     return (
       <div>
         <Grid fluid style={{ marginTop: '20px' }}>
           <Row>
+            <Col sm={1}>
+              {backBtn}
+            </Col>
             <Col sm={2} smOffset={1}>
               <h1 style={{ marginTop: 0 }}>
                 {cluster.name}
               </h1>
             </Col>
-            <Col sm={1} smOffset={6}>
-              {consoleButton}
+            <Col sm={1} smOffset={5}>
+              {consoleBtn}
             </Col>
+            <Col sm={1}>
+              {actionsBtn}
+            </Col>
+
           </Row>
         </Grid>
         <Grid fluid>

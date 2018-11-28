@@ -40,11 +40,10 @@ import { viewConstants } from '../../redux/constants';
 import { clusterActions } from '../../redux/actions/clusterActions';
 import { viewActions } from '../../redux/actions/viewOptionsActions';
 
-// TODO not sure about the sizes
 const nameColSizes = {
-  md: 4,
-  sm: 4,
-  xs: 4,
+  md: 5,
+  sm: 5,
+  xs: 5,
 };
 const statusColSizes = {
   md: 1,
@@ -218,10 +217,8 @@ class ClusterList extends Component {
     // We'll have a lot of these all over the place as we grow :(
     const consoleURL = cluster.console ? cluster.console.url : false;
     const consoleMenuItem = consoleURL ? (
-      <MenuItem>
-        <a href={consoleURL}>
+      <MenuItem href={consoleURL}>
           Launch Admin Console
-        </a>
       </MenuItem>)
       : (
         <MenuItem disabled title="Admin console is not yet available for this cluster">

@@ -238,6 +238,16 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
+    case clusterConstants.RESET_CREATED_CLUSTER_RESPONSE:
+      return helpers.setStateProp(
+        'createdCluster',
+        initialState.createdCluster,
+        {
+          state,
+          initialState,
+        },
+      );
+
     default:
       return state;
   }

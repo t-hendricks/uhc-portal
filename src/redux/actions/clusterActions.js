@@ -51,6 +51,10 @@ const fetchClusterDetails = clusterID => dispatch => dispatch({
   payload: clusterService.getClusterDetails(clusterID),
 });
 
+const resetCreatedClusterResponse = () => dispatch => dispatch({
+  type: clusterConstants.RESET_CREATED_CLUSTER_RESPONSE,
+});
+
 const clusterActions = {
   clearDisplayNameResponse,
   createCluster,
@@ -58,9 +62,10 @@ const clusterActions = {
   fetchClusters,
   fetchClusterDetails,
   invalidateClusters,
+  resetCreatedClusterResponse,
 };
 
 export {
   clusterActions, createCluster, editClusterDisplayName, fetchClusters, fetchClusterDetails,
-  invalidateClusters, clearDisplayNameResponse,
+  invalidateClusters, clearDisplayNameResponse, resetCreatedClusterResponse,
 };

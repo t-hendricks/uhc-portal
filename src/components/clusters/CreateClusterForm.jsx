@@ -18,12 +18,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { Redirect } from 'react-router';
 import {
   Button, Icon, Form, Modal, Alert,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
-import { createCluster } from '../../redux/actions/clusterActions';
-import ClusterCreationSuccessMessage from './ClusterCreationSuccessMessage';
+import { createCluster, resetCreatedClusterResponse } from '../../redux/actions/clusterActions';
 
 
 // Validations
@@ -33,16 +33,14 @@ const required = value => (value ? undefined : 'Field is required');
 function CreateClusterForm(props) {
   // handleSubmit comes from reduxForm()
   const {
-    closeFunc, handleSubmit, createClusterResponse, reset,
+    closeFunc, handleSubmit, createClusterResponse, resetResponse,
   } = props;
 
   if (createClusterResponse.fulfilled) {
-    reset();
+    resetResponse();
     return (
-      <ClusterCreationSuccessMessage
-        clusterID={createClusterResponse.cluster.id}
-        closeFunc={closeFunc}
-      />);
+      <Redirect to={`/cluster/${createClusterResponse.cluster.id}`} />
+    );
   }
 
   let errorContainer = <div />;
@@ -162,7 +160,7 @@ function CreateClusterForm(props) {
 }
 CreateClusterForm.propTypes = {
   closeFunc: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
+  resetResponse: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
 };
@@ -204,8 +202,9 @@ const mapDispatchToProps = dispatch => ({
         aws_secret_access_key: formData.aws_secret_access_key,
       },
     };
-    createCluster(clusterRequest)(dispatch);
+    dispatch(createCluster(clusterRequest));
   },
+  resetResponse: () => dispatch(resetCreatedClusterResponse()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateCluster);
