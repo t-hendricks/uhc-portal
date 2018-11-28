@@ -33,13 +33,14 @@ import (
 )
 
 var args struct {
-	portalDomain     string
-	gatewayDomain    string
-	keycloakRealm    string
-	keycloakClientID string
-	keycloakURL      string
-	installerURL     string
-	documentationURL string
+	portalDomain        string
+	gatewayDomain       string
+	keycloakRealm       string
+	keycloakClientID    string
+	keycloakURL         string
+	installerURL        string
+	documentationURL    string
+	terraformInstallURL string
 }
 
 // Cmd is the cobra serve command
@@ -94,6 +95,12 @@ func init() {
 		"",
 		"URL where the OpenShift documentation can be viewed.",
 	)
+	flags.StringVar(
+		&args.terraformInstallURL,
+		"terraform-install-url",
+		"",
+		"URL with Terraform installation instructions.",
+	)
 }
 
 func run(cmd *cobra.Command, argv []string) {
@@ -127,6 +134,10 @@ func run(cmd *cobra.Command, argv []string) {
 	}
 	if args.documentationURL == "" {
 		glog.Errorf("Option '--documentation-url' is mandatory")
+		ok = false
+	}
+	if args.terraformInstallURL == "" {
+		glog.Errorf("Option '--terraform-install-url' is mandatory")
 		ok = false
 	}
 
@@ -206,12 +217,13 @@ func createConfigDir() (configDir string, err error) {
 		return
 	}
 	configJSONData := map[string]string{
-		"GatewayDomain":    args.gatewayDomain,
-		"KeycloakRealm":    args.keycloakRealm,
-		"KeycloakClientID": args.keycloakClientID,
-		"KeycloakURL":      args.keycloakURL,
-		"InstallerURL":     args.installerURL,
-		"DocumentationURL": args.documentationURL,
+		"GatewayDomain":       args.gatewayDomain,
+		"KeycloakRealm":       args.keycloakRealm,
+		"KeycloakClientID":    args.keycloakClientID,
+		"KeycloakURL":         args.keycloakURL,
+		"InstallerURL":        args.installerURL,
+		"DocumentationURL":    args.documentationURL,
+		"TerraformInstallURL": args.terraformInstallURL,
 	}
 	configJSONBuffer := new(bytes.Buffer)
 	err = configJSONTmpl.Execute(configJSONBuffer, configJSONData)
