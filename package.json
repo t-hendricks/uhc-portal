@@ -17,11 +17,13 @@
     "bootstrap-sass": "^3.3.7",
     "classnames": "^2.2.6",
     "connected-react-router": "^4.3.0",
+    "core-js": "^2.5.7",
     "filesize": "^3.6.1",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
     "keycloak-js": "4.3.0",
     "lodash": "^4.7.11",
+    "path-to-regexp": "^1.7.0",
     "patternfly": "^3.54.8",
     "patternfly-react": "^2.20.0",
     "patternfly-react-extensions": "2.7.0",
@@ -38,8 +40,7 @@
     "redux-form": "^7.4.2",
     "redux-promise-middleware": "^5.0.0",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1",
-    "path-to-regexp": "^1.7.0"
+    "reselect": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.1",

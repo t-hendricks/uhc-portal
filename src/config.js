@@ -1,10 +1,12 @@
+import axios from 'axios';
+
 const config = {
   configData: {},
   fetchConfig() {
     return new Promise((resolve) => {
       const that = this;
-      fetch('/config/config.json').then(response => response.json()).then((data) => {
-        that.configData = data;
+      axios.get('/config/config.json').then((response) => {
+        that.configData = response.data;
         resolve();
       });
     });
