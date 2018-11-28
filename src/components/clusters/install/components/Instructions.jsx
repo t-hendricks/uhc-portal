@@ -28,7 +28,7 @@ class Instructions extends React.Component {
   render() {
     const { copied, alertVisible } = this.state;
     const { token } = this.props;
-    const tokenView = token.error ? '' : JSON.stringify(token, null, 2);
+    const tokenView = token.error ? '' : JSON.stringify(token);
 
     return (
       <Grid>
