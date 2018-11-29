@@ -14,19 +14,30 @@ limitations under the License.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, MenuItem,
+  Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, MenuItem, Modal,
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { fetchClusterDetails } from '../../redux/actions/clusterActions';
+import { fetchClusterDetails, invalidateClusters } from '../../redux/actions/clusterActions';
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import LoadingModal from './LoadingModal';
+import EditDisplayNameDialog from './EditDisplayNameDialog';
 import ClusterStateIcon from './ClusterStateIcon';
 import Timestamp from '../Timestamp';
 import { humanizeValueWithUnit } from '../../common/unitParser';
 
 class ClusterDetails extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clusterCreationFormVisible: false,
+      editClusterDisplayNameDialogVisible: false,
+      editClusterDisplayNameClusterID: '',
+      editClusterDisplayNameClusterName: '',
+    };
+  }
+
   componentDidMount() {
     const { match, fetchDetails } = this.props;
     const clusterID = match.params.id;
@@ -45,6 +56,15 @@ class ClusterDetails extends Component {
     }
   }
 
+  openEditDisplayNameDialog(clusterID, clusterName) {
+    this.setState(prevState => (
+      {
+        ...prevState,
+        editClusterDisplayNameDialogVisible: true,
+        editClusterDisplayNameClusterID: clusterID,
+        editClusterDisplayNameClusterName: clusterName,
+      }));
+  }
 
   renderPendingMessage() {
     const { pending } = this.props;
@@ -168,10 +188,37 @@ class ClusterDetails extends Component {
         bsStyle="default"
         title="Actions"
       >
-        <MenuItem>
+        <MenuItem onClick={() => this.openEditDisplayNameDialog(cluster.id, cluster.name)}>
               Edit Display Name
         </MenuItem>
       </DropdownButton>
+    );
+
+    const {
+      editClusterDisplayNameDialogVisible,
+      editClusterDisplayNameClusterID,
+      editClusterDisplayNameClusterName,
+    } = this.state;
+
+    const editDisplayNameModal = (
+      <Modal show={editClusterDisplayNameDialogVisible}>
+        <EditDisplayNameDialog
+          clusterID={editClusterDisplayNameClusterID}
+          clusterName={editClusterDisplayNameClusterName}
+          closeFunc={(updated) => {
+            this.setState(prevState => (
+              {
+                ...prevState,
+                editClusterDisplayNameDialogVisible: false,
+              }));
+            if (updated) {
+              // eslint-disable-next-line no-shadow
+              const { invalidateClusters } = this.props;
+              invalidateClusters();
+            }
+          }}
+        />
+      </Modal>
     );
 
     return (
@@ -339,12 +386,14 @@ class ClusterDetails extends Component {
             </Col>
           </Row>
         </Grid>
+        {editDisplayNameModal}
       </div>);
   }
 }
 
 ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
+  invalidateClusters: PropTypes.func.isRequired,
   fetchDetails: PropTypes.func.isRequired,
   cluster: PropTypes.any,
   error: PropTypes.bool,
@@ -363,6 +412,7 @@ const mapStateToProps = state => Object.assign({}, state.cluster.details);
 
 const mapDispatchToProps = {
   fetchDetails: clusterID => fetchClusterDetails(clusterID),
+  invalidateClusters,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
