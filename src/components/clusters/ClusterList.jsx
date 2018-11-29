@@ -73,7 +73,7 @@ function renderClusterStatusIcon(clusterState, id) {
       {/* The span here is needed to work around a bug that caused the tooltip
       to not render after we moved the icon to its own component */}
       <span>
-        <ClusterStateIcon clusterState={clusterState} />
+        <ClusterStateIcon clusterState={typeof clusterState !== 'undefined' ? clusterState : ''} />
       </span>
     </OverlayTrigger>);
 }
@@ -165,6 +165,8 @@ class ClusterList extends Component {
       </ModelessOverlay>
     );
   }
+
+  // TO-DO: extract to independent component and reuse in ClusterDetails
 
   renderEditClusterDisplayNameDialog() {
     const {
