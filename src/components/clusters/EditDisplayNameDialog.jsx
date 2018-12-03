@@ -49,7 +49,7 @@ class EditDisplayNameDialog extends React.Component {
     return (
       <React.Fragment>
         <Modal.Header>
-          <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={closeFunc}>
+          <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={() => closeFunc(false)}>
             <Icon type="pf" name="close" />
           </button>
           <Modal.Title>
@@ -89,7 +89,7 @@ class EditDisplayNameDialog extends React.Component {
           </Grid>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="default" onClick={closeFunc}>
+          <Button bsStyle="default" onClick={() => closeFunc(false)}>
             Cancel
           </Button>
           <Button bsStyle="primary" onClick={() => { submit(clusterID, currentValue.trim()); }}>
