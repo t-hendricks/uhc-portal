@@ -89,5 +89,6 @@ const configJSONTemplate = `{
 		"url": "{{ .KeycloakURL }}"
 	},
 	"installerURL": "{{ .InstallerURL }}",
-        "documentationURL": "{{ .DocumentationURL }}"
+        "documentationURL": "{{ .DocumentationURL }}",
+        "commandLineToolsURL": "{{ .CommandLineToolsURL }}"
 }`
