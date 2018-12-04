@@ -28,7 +28,7 @@ class Instructions extends React.Component {
   render() {
     const { copied, alertVisible } = this.state;
     const { token } = this.props;
-    const tokenView = token.error ? '' : JSON.stringify(token, null, 2);
+    const tokenView = token.error ? '' : JSON.stringify(token);
 
     return (
       <Grid>
@@ -114,10 +114,14 @@ class Instructions extends React.Component {
 
             <h3 className="cluster-install-step">Step 2: Run the OpenShift Container Platform Installer</h3>
             <p>
-              Download and extract the OCP Installer to a directory of your
-              choosing. Run the installer and follow the installation prompts.
-              The authorization token provided above is required to complete
-              the installation. The installation may take some time to complete.
+              Download the OCP Installer to a directory of your
+              choosing. Also install
+              <a href={config.config.Data.terraformInstallURL} target="_blank">Terraform</a>
+              in your
+              <code>PATH</code>
+              . Run the installer and follow the installation prompts. The
+              authorization token provided above is required to complete the
+              installation. The installation may take some time to complete.
               The installer will notify you of its results upon completion.
               Please note the new cluster will not appear among your clusters
               until the external installation process is complete.

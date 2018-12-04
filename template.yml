@@ -71,6 +71,9 @@ parameters:
 - name: DOCUMENTATION_URL
   description: The URL to view the documentation.
 
+- name: TERRAFORM_INSTALL_URL
+  description: URL with Terraform installation instructions.
+
 - name: COMMAND_LINE_TOOLS_URL
   description: The URL to download the command-line tools.
 
@@ -112,6 +115,7 @@ objects:
           - --keycloak-url=${KEYCLOAK_URL}
           - --installer-url=${INSTALLER_URL}
           - --documentation-url=${DOCUMENTATION_URL}
+          - --terraform-install-url=${TERRAFORM_INSTALL_URL}
           - --command-line-tools-url=${COMMAND_LINE_TOOLS_URL}
 
 - apiVersion: v1

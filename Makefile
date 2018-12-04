@@ -44,7 +44,10 @@ keycloak_client_id:=uhc
 installer_url:=https://github.com/openshift/installer/releases
 
 # Documentation URL:
-documentation_url:=https://github.com/openshift/installer/tree/master/docs
+documentation_url:=https://github.com/openshift/installer/blob/master/README.md#quick-start
+
+# Terraform install URL:
+terraform_install_url:=https://www.terraform.io/downloads.html
 
 # Command-line tools URL:
 command_line_tools_url:=https://mirror.openshift.com/pub/openshift-v3/clients/4.0.0-0.79.0/
@@ -128,8 +131,9 @@ template:
 		--param="IMAGE_PULL_POLICY=$(image_pull_policy)" \
 		--param="IMAGE_TAG=$(image_tag)" \
 		--param="INSTALLER_URL=$(installer_url)" \
-	        --param="DOCUMENTATION_URL=$(documentation_url)" \
-	        --param="COMMAND_LINE_TOOLS_URL=$(command_line_tools_url)" \
+		--param="DOCUMENTATION_URL=$(documentation_url)" \
+		--param="TERRAFORM_INSTALL_URL=$(terraform_install_url)" \
+		--param="COMMAND_LINE_TOOLS_URL=$(command_line_tools_url)" \
 		--param="KEYCLOAK_CLIENT_ID=$(keycloak_client_id)" \
 		--param="KEYCLOAK_REALM=$(keycloak_realm)" \
 		--param="KEYCLOAK_URL=$(keycloak_url)" \

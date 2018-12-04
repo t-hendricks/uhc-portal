@@ -40,6 +40,7 @@ var args struct {
 	keycloakURL         string
 	installerURL        string
 	documentationURL    string
+	terraformInstallURL string
 	commandLineToolsURL string
 }
 
@@ -96,6 +97,12 @@ func init() {
 		"URL where the OpenShift documentation can be viewed.",
 	)
 	flags.StringVar(
+		&args.terraformInstallURL,
+		"terraform-install-url",
+		"",
+		"URL with Terraform installation instructions.",
+	)
+	flags.StringVar(
 		&args.commandLineToolsURL,
 		"command-line-tools-url",
 		"",
@@ -134,6 +141,10 @@ func run(cmd *cobra.Command, argv []string) {
 	}
 	if args.documentationURL == "" {
 		glog.Errorf("Option '--documentation-url' is mandatory")
+		ok = false
+	}
+	if args.terraformInstallURL == "" {
+		glog.Errorf("Option '--terraform-install-url' is mandatory")
 		ok = false
 	}
 	if args.commandLineToolsURL == "" {
@@ -223,6 +234,7 @@ func createConfigDir() (configDir string, err error) {
 		"KeycloakURL":         args.keycloakURL,
 		"InstallerURL":        args.installerURL,
 		"DocumentationURL":    args.documentationURL,
+		"TerraformInstallURL": args.terraformInstallURL,
 		"CommandLineToolsURL": args.commandLineToolsURL,
 	}
 	configJSONBuffer := new(bytes.Buffer)
