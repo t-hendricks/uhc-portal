@@ -1,4 +1,5 @@
 import { ACTION_TYPE as tollboothActionType } from '../actions/tollbooth';
+import helpers from '../../common/helpers';
 
 const initialState = { token: {} };
 
@@ -12,7 +13,7 @@ const tollboothReducer = (state = initialState, action) => {
         token: {
           error: {
             msg: 'Failed to obtain authorization token.',
-            status: action.payload.response.status,
+            status: helpers.getErrorMessage(action.payload),
           },
         },
       };
