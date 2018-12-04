@@ -116,7 +116,7 @@ class Instructions extends React.Component {
             <p>
               Download the OCP Installer to a directory of your
               choosing. Also install
-              <a href={config.config.Data.terraformInstallURL} target="_blank">Terraform</a>
+              <a href={config.configData.terraformInstallURL} target="_blank">Terraform</a>
               in your
               <code>PATH</code>
               . Run the installer and follow the installation prompts. The
