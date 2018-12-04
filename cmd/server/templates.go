@@ -91,5 +91,5 @@ const configJSONTemplate = `{
 	"installerURL": "{{ .InstallerURL }}",
 	"documentationURL": "{{ .DocumentationURL }}",
 	"terraformInstallURL": "{{ .TerraformInstallURL }}",
-    "commandLineToolsURL": "{{ .CommandLineToolsURL }}"
+	"commandLineToolsURL": "{{ .CommandLineToolsURL }}"
 }`
