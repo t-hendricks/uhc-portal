@@ -61,6 +61,10 @@ const createViewQueryObject = (viewOptions, queryObj) => {
 };
 
 function getErrorMessage(payload) {
+  if (payload.response === undefined) {
+    // Handle edge cases in which `payload` might be an Error type
+    return String(payload);
+  }
   const response = payload.response.data;
   if (response.kind === 'Error') {
     return `${response.code}:\n${response.reason}`;

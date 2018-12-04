@@ -25,3 +25,8 @@ test('Error message is properly extracted from unexpected object', () => {
   };
   expect(helpers.getErrorMessage(err)).toBe('{"unexpected":"object"}');
 });
+
+test('Fail gracefully when getting JS Error objects', () => {
+  const err = new Error('Hello');
+  expect(helpers.getErrorMessage(err)).toBe('Error: Hello');
+});
