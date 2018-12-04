@@ -66,7 +66,7 @@ function getErrorMessage(payload) {
     return String(payload);
   }
   const response = payload.response.data;
-  if (response.kind === 'Error') {
+  if (response !== undefined && response.kind === 'Error') {
     return `${response.code}:\n${response.reason}`;
   }
   return JSON.stringify(response);
