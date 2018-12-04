@@ -6,5 +6,6 @@
         "url": "https://developers.stage.redhat.com/auth"
     },
     "installerURL": "https://github.com/openshift/installer/releases",
-    "documentationURL": "https://github.com/openshift/installer/tree/master/docs"
+    "documentationURL": "https://github.com/openshift/installer/tree/master/docs",
+    "commandLineToolsURL": "https://mirror.openshift.com/pub/openshift-v3/clients/4.0.0-0.79.0/"
 }
