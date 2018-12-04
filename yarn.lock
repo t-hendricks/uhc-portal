@@ -7170,7 +7170,7 @@ jquery-match-height@^0.7.2:
   resolved "https://registry.yarnpkg.com/jquery-match-height/-/jquery-match-height-0.7.2.tgz#f8d9f3ba5314daab109cf07408674be204be5f0e"
   integrity sha1-+NnzulMU2qsQnPB0CGdL4gS+Xw4=
 
-"jquery@>= 2.1.x", jquery@>=1.7, jquery@>=1.7.0, "jquery@>=1.7.1 <4.0.0", jquery@>=1.8, "jquery@^1.8.3 || ^2.0 || ^3.0":
+"jquery@>= 2.1.x", jquery@>=1.7, jquery@>=1.7.0, "jquery@>=1.7.1 <4.0.0", jquery@>=1.8, "jquery@^1.8.3 || ^2.0 || ^3.0", jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
   integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
@@ -8883,10 +8883,10 @@ patternfly-react@^2.15.0:
     sortabular "^1.5.1"
     table-resolver "^3.2.0"
 
-patternfly-react@^2.20.0:
-  version "2.24.3"
-  resolved "https://registry.yarnpkg.com/patternfly-react/-/patternfly-react-2.24.3.tgz#ed287fb6bf691add70c8b82ef76ee395065382ea"
-  integrity sha512-RyMkN79vWFq5aZLKNEOwKRtZCrElCduD9redU/+c1aAwfoyQbni1zGr1pURZ4FFlZvtB5ul/qRThZtspwc7XfA==
+patternfly-react@^2.22.5:
+  version "2.25.3"
+  resolved "https://registry.yarnpkg.com/patternfly-react/-/patternfly-react-2.25.3.tgz#75993bab9810bab0a6c5fd6de49b1d6ed65d8daa"
+  integrity sha512-DLz1pmlLdoo5EuTRMOEd3SIHzui8tH+5pOzANNAztYWeUmQyl40Gk97CxHQaKf/cSayVz2zLTEZf5su9HSQGIw==
   dependencies:
     bootstrap-slider-without-jquery "^10.0.0"
     breakjs "^1.0.0"

@@ -19,7 +19,7 @@ import isEmpty from 'lodash/isEmpty';
 import React, { Component } from 'react';
 
 import {
-  Alert, Button, Grid, Row, Col, EmptyState, ModelessOverlay, Tooltip,
+  Alert, Button, Grid, Row, Col, EmptyState, Tooltip,
   OverlayTrigger, DropdownKebab, MenuItem, Spinner, Modal,
 } from 'patternfly-react';
 import { TableGrid } from 'patternfly-react-extensions';
@@ -160,9 +160,9 @@ class ClusterList extends Component {
   renderClusterCreationForm() {
     const { clusterCreationFormVisible } = this.state;
     return (
-      <ModelessOverlay show={clusterCreationFormVisible} bsSize="large">
+      <Modal className="right-side-modal-pf" show={clusterCreationFormVisible} bsSize="large">
         <CreateClusterForm closeFunc={() => this.setCreationFormState(false)} />
-      </ModelessOverlay>
+      </Modal>
     );
   }
 
