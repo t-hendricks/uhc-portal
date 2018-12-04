@@ -74,6 +74,9 @@ parameters:
 - name: TERRAFORM_INSTALL_URL
   description: URL with Terraform installation instructions.
 
+- name: COMMAND_LINE_TOOLS_URL
+  description: The URL to download the command-line tools.
+
 objects:
 
 - apiVersion: apps/v1beta1
@@ -113,6 +116,7 @@ objects:
           - --installer-url=${INSTALLER_URL}
           - --documentation-url=${DOCUMENTATION_URL}
           - --terraform-install-url=${TERRAFORM_INSTALL_URL}
+          - --command-line-tools-url=${COMMAND_LINE_TOOLS_URL}
 
 - apiVersion: v1
   kind: Service

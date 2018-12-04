@@ -76,7 +76,7 @@ class Instructions extends React.Component {
             <a href={config.configData.documentationURL} target="_blank">
               View Installation Instructions
               &nbsp;
-              <span className="fa fa-external-link" />
+              <span className="fa fa-external-link" aria-hidden="true" />
             </a>
             <h3 className="cluster-install-step">Step 1: Download Pull Secret</h3>
             <p>
@@ -88,7 +88,7 @@ class Instructions extends React.Component {
                 disabled={!!token.error}
                 autoFocus
               >
-                <span className="fa fa-download" />
+                <span className="fa fa-download" aria-hidden="true" />
                 &nbsp;
                 Download Pull Secret
               </Button>
@@ -104,7 +104,7 @@ class Instructions extends React.Component {
                   tabIndex="-1"
                   disabled={!!token.error}
                 >
-                  <span className="fa fa-paste" />
+                  <span className="fa fa-paste" aria-hidden="true" />
                   &nbsp;
                   Copy Pull Secret
                 </button>
@@ -131,7 +131,7 @@ class Instructions extends React.Component {
                 className="install--download-installer"
                 disabled={!!token.error}
               >
-                <span className="fa fa-download" />
+                <span className="fa fa-download" aria-hidden="true" />
                 &nbsp;
                 Download Installer
               </Button>
@@ -142,15 +142,25 @@ class Instructions extends React.Component {
               If steps 1 and 2 are complete, the cluster is in the process of
               installing. Wait for the cluster to appear. Some data may take
               longer to load, but you can monitor as individual nodes are
-              installed.
+              installed. You can download the command-line tools to connect to
+              the cluster when it&apos;s ready.
             </p>
+            <a href={config.configData.commandLineToolsURL} target="_blank">
+              <Button
+                className="install--download-cli"
+              >
+                <span className="fa fa-download" aria-hidden="true" />
+                &nbsp;
+                Download Command-line Tools
+              </Button>
+            </a>
             <hr />
             <h4>Help and Documentation</h4>
             <p>
               <a href={config.configData.documentationURL} target="_blank">
                 View Installation Instructions
                 &nbsp;
-                <span className="fa fa-external-link" />
+                <span className="fa fa-external-link" aria-hidden="true" />
               </a>
             </p>
           </Col>

@@ -41,6 +41,7 @@ var args struct {
 	installerURL        string
 	documentationURL    string
 	terraformInstallURL string
+	commandLineToolsURL string
 }
 
 // Cmd is the cobra serve command
@@ -101,6 +102,12 @@ func init() {
 		"",
 		"URL with Terraform installation instructions.",
 	)
+	flags.StringVar(
+		&args.commandLineToolsURL,
+		"command-line-tools-url",
+		"",
+		"URL where the OpenShift command-line tools can be downloaded.",
+	)
 }
 
 func run(cmd *cobra.Command, argv []string) {
@@ -138,6 +145,10 @@ func run(cmd *cobra.Command, argv []string) {
 	}
 	if args.terraformInstallURL == "" {
 		glog.Errorf("Option '--terraform-install-url' is mandatory")
+		ok = false
+	}
+	if args.commandLineToolsURL == "" {
+		glog.Errorf("Option '--command-line-tools-url' is mandatory")
 		ok = false
 	}
 
@@ -224,6 +235,7 @@ func createConfigDir() (configDir string, err error) {
 		"InstallerURL":        args.installerURL,
 		"DocumentationURL":    args.documentationURL,
 		"TerraformInstallURL": args.terraformInstallURL,
+		"CommandLineToolsURL": args.commandLineToolsURL,
 	}
 	configJSONBuffer := new(bytes.Buffer)
 	err = configJSONTmpl.Execute(configJSONBuffer, configJSONData)

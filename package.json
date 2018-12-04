@@ -25,7 +25,7 @@
     "lodash": "^4.7.11",
     "path-to-regexp": "^1.7.0",
     "patternfly": "^3.54.8",
-    "patternfly-react": "^2.20.0",
+    "patternfly-react": "^2.22.5",
     "patternfly-react-extensions": "2.7.0",
     "prop-types": "^15.6.1",
     "react": "^16.5.2",

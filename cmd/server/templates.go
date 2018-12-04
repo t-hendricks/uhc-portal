@@ -89,6 +89,7 @@ const configJSONTemplate = `{
 		"url": "{{ .KeycloakURL }}"
 	},
 	"installerURL": "{{ .InstallerURL }}",
-	"documentationURL": "{{ .DocumentationURL }}"
-	"terraformInstallURL": "{{ .TerraformInstallURL }}"
+	"documentationURL": "{{ .DocumentationURL }}",
+	"terraformInstallURL": "{{ .TerraformInstallURL }}",
+    "commandLineToolsURL": "{{ .CommandLineToolsURL }}"
 }`
