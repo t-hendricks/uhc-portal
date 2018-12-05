@@ -21,7 +21,7 @@ import {
   Dropdown, Icon, MenuItem, Masthead,
 } from 'patternfly-react';
 import helpers from '../common/helpers';
-import rhProductTitle from '../styles/images/logo.svg';
+import rhProductTitle from '../styles/images/logo.png';
 
 const Header = ({
   isLoggedIn, userProfile, logoutUser,
