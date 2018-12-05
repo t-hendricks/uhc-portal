@@ -20,15 +20,13 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Redirect } from 'react-router';
 import {
-  Button, Icon, Form, Modal, Alert,
+  Button, Icon, Form, Modal, Alert, HintBlock,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
 import { createCluster, resetCreatedClusterResponse } from '../../redux/actions/clusterActions';
 
-
 // Validations
 const required = value => (value ? undefined : 'Field is required');
-
 
 function CreateClusterForm(props) {
   // handleSubmit comes from reduxForm()
@@ -73,6 +71,10 @@ function CreateClusterForm(props) {
         </Modal.Header>
         <Modal.Body>
           {errorContainer}
+          <HintBlock
+            title="Note"
+            body="At the moment, clusters created here can only be deleted via the API."
+          />
           <Field
             component={ReduxHorizontalFormGroup}
             name="name"
@@ -111,6 +113,7 @@ function CreateClusterForm(props) {
             label="AWS access key ID"
             type="password"
             placeholder="AWS access key ID"
+            validate={required}
           />
 
           <Field
@@ -120,6 +123,7 @@ function CreateClusterForm(props) {
             type="password"
             placeholder="AWS secret access key"
             helpText="Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, generate an access key for Red Hat, and put that here."
+            validate={required}
           />
 
           <Field
