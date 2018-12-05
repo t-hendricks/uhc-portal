@@ -115,9 +115,9 @@ class Instructions extends React.Component {
             <h3 className="cluster-install-step">Step 2: Run the OpenShift Container Platform Installer</h3>
             <p>
               Download the OCP Installer to a directory of your
-              choosing. Also install
+              choosing. Also install&nbsp;
               <a href={config.configData.terraformInstallURL} target="_blank">Terraform</a>
-              in your
+              &nbsp;in your&nbsp;
               <code>PATH</code>
               . Run the installer and follow the installation prompts. The
               authorization token provided above is required to complete the
