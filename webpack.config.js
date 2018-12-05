@@ -105,14 +105,15 @@ module.exports = (env, argv) => {
           test: /(webfont\.svg|\.(eot|ttf|woff|woff2))$/,
           loader: 'file-loader',
           options: {
-            name: 'fonts/[name].[ext]',
+            name: 'fonts/[name].[hash].[ext]',
           },
         },
         {
-          test: /\.(gif|jpg|png|svg)$/,
-          loader: 'url-loader',
+          test: /(?!webfont)\.(gif|jpg|png|svg)$/,
+          loader: 'url-loader', // Bundle small images in JS as base64 URIs.
           options: {
-            name: 'images/[name].[ext]',
+            limit: 8000, // Don't bundle images larger than 8KB in the JS bundle.
+            name: 'images/[name].[hash].[ext]',
           },
         },
       ],
