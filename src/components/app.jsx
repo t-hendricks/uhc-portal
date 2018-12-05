@@ -45,6 +45,32 @@ class App extends React.Component {
     console.dir(history.push(path));
   }
 
+  renderRoutes() {
+    const { authenticated, userProfile } = this.props;
+    // note: in this condition, I've added !authenticated even though
+    // it shouldn't really happen. If the user is not authenticated,
+    // they would get a login page. However, I wanted to be extra-sure
+    // that if something changes in the future, the full router will
+    // be the "normal" one, and no exception will be raised if userProfile
+    // is undefined.
+    if (!authenticated || userProfile.email.endsWith('@redhat.com')) {
+      return (
+        <Switch>
+          <Redirect from="/" exact to="/clusters" />
+          <Route path="/clusters/install" component={InstallCluster} />
+          <Route path="/clusters" component={ClustersList} />
+          <Route path="/cluster/:id" component={ClusterDetails} />
+        </Switch>
+      );
+    }
+    return (
+      <Switch>
+        <Route path="/clusters/install" component={InstallCluster} />
+        <Redirect from="/" to="/clusters/install" />
+      </Switch>
+    );
+  }
+
   render() {
     const {
       history, authenticated, loginFunction, userProfile, logoutFunction,
@@ -61,12 +87,7 @@ class App extends React.Component {
           <div className="coc-content">
             <ErrorBoundary>
               <ConnectedRouter history={history}>
-                <Switch>
-                  <Redirect from="/" exact to="/clusters" />
-                  <Route path="/clusters/install" component={InstallCluster} />
-                  <Route path="/clusters" component={ClustersList} />
-                  <Route path="/cluster/:id" component={ClusterDetails} />
-                </Switch>
+                { this.renderRoutes() }
               </ConnectedRouter>
             </ErrorBoundary>
           </div>
