@@ -175,11 +175,11 @@ class ClusterDetails extends Component {
       );
 
     const backBtn = (
-      <Button bsStyle="default">
-        <Link to="/clusters">
-               Back
-        </Link>
-      </Button>
+      <Link to="/clusters">
+        <Button bsStyle="default">
+          Back
+        </Button>
+      </Link>
     );
 
     const actionsBtn = (
