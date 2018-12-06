@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 import PropTypes from 'prop-types';
 import {
   Alert, Button, Col, Grid, Row,
@@ -14,10 +13,6 @@ class Instructions extends React.Component {
     this.state = {
       copied: false,
     };
-  }
-
-  componentDidMount() {
-    $('.react-download-container button').focus();
   }
 
   render() {
@@ -166,7 +161,6 @@ class Instructions extends React.Component {
                 <Button
                   tabIndex="0"
                   disabled={!!token.error}
-                  autoFocus
                 >
                   <span className="fa fa-download" aria-hidden="true" />
                   &nbsp;
