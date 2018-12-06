@@ -13,7 +13,6 @@ class Instructions extends React.Component {
     super(props);
     this.state = {
       copied: false,
-      alertVisible: true,
     };
   }
 
@@ -21,12 +20,8 @@ class Instructions extends React.Component {
     $('.react-download-container button').focus();
   }
 
-  dismissAlert = () => {
-    this.setState({ alertVisible: false });
-  };
-
   render() {
-    const { copied, alertVisible } = this.state;
+    const { copied } = this.state;
     const { token } = this.props;
     const tokenView = token.error ? '' : JSON.stringify(token);
 
@@ -46,114 +41,201 @@ class Instructions extends React.Component {
                   </p>
                   <p>
                     Please try again by refreshing the page.
-                    If the problem persists, please contact Red Hat support.
+                    If the problem persists, please report the issue in the
+                    {' '}
+                    <a href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview" target="_blank">developer preview forum</a>
+                    .
                   </p>
                 </Alert>
               )
             }
 
-            {
-              alertVisible && (
-                <Alert
-                  type="info"
-                  onDismiss={this.dismissAlert}
-                  className="cluster-install-alert"
-                >
-                  <h3>Welcome to OpenShift 4.0</h3>
-                  <p>
-                    First you must create a cluster by following the steps
-                    below. Once you have followed the installation process and
-                    your cluster has been created, you will see the cluster
-                    details.
-                  </p>
-                </Alert>
-              )}
-            <h1>Create Self-Managed Cluster (OCP)</h1>
+            <div className="jumbotron" style={{ marginTop: '20px' }}>
+              <h1 style={{ fontSize: '32px' }}>Developer Preview</h1>
+              <p>
+                This is a very early preview of OpenShift 4. There are still some rough edges,
+                but what we want more than anything is
+                {' '}
+                <a href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview" target="_blank">your feedback</a>
+                {' '}
+                on our direction and how we can be better.
+              </p>
+              <p className="text-right">
+                <span role="img" aria-label="heart">❤️</span>
+                {' '}
+                The OpenShift Development Team
+              </p>
+            </div>
+
+            <h1>Install OpenShift 4 on AWS</h1>
             <p>
-              To create a self-managed OpenShift Container Platform cluster,
-              follow the installation instructions below.
+              Use this guide to install a new OpenShift 4 preview cluster on your Amazon Web
+              Services (AWS) account. We’ll get you up and running in a few quick steps:
             </p>
-            <a href={config.configData.documentationURL} target="_blank">
-              View Installation Instructions
-              &nbsp;
-              <span className="fa fa-external-link" aria-hidden="true" />
-            </a>
-            <h3 className="cluster-install-step">Step 1: Download Pull Secret</h3>
+            <ol>
+              <li>Configure your DNS</li>
+              <li>Configure your AWS credentials</li>
+              <li>Download the OpenShift installer</li>
+              <li>Deploy the cluster</li>
+              <li>Access your new cluster!</li>
+            </ol>
+
+            <h3 className="cluster-install-step">Step 1: Configure DNS</h3>
             <p>
-              Download or copy this JSON file for use during the installation process
+              A DNS zone must be created and available in Route 53 for your AWS account
+              before installation. Register a domain for your cluster in
+              {' '}
+              <a href="https://console.aws.amazon.com/route53/" target="_blank">AWS Route53</a>
+              .
             </p>
-            <Download file="pull-secret" content={tokenView} style={{ display: 'inline' }}>
-              <Button
-                tabIndex="0"
-                disabled={!!token.error}
-                autoFocus
-              >
-                <span className="fa fa-download" aria-hidden="true" />
-                &nbsp;
-                Download Pull Secret
-              </Button>
-            </Download>
-            <CopyToClipboard
-              text={tokenView}
-              onCopy={() => this.setState({ copied: true })}
+            <p>
+              Entries created in the Route 53 zone are expected to be resolvable from the
+              nodes. In most cases this means that the zone that you are configuring must
+              be a publicly resolvable zone. Verify by using
+              {' '}
+              <code>dig</code>
+              {' '}
+              to determine the nameserver of this zone.
+            </p>
+            <pre>
+              <span className="noselect">$ </span>
+              dig NS openshift.example.com @8.8.8.8
+            </pre>
+            <h3 className="cluster-install-step">Step 2: Configure your AWS Credentials</h3>
+            <p>
+              Configure your AWS credentials. See the
+              {' '}
+              <a href="http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment" target="_blank">
+                AWS docs
+              </a>
+              {' '}
+              for details.
+            </p>
+
+            <Alert
+              type="warning"
             >
-              <span style={{ margin: '10px' }}>
-                <button
-                  className="btn-text-link"
-                  type="button"
-                  tabIndex="-1"
+              <p>
+                Today we require highly priviledged credentials. We recommend using a dedicated
+                account to try this out. We are working to reduce and improve how we use your
+                credentials.
+              </p>
+            </Alert>
+
+            <h3 className="cluster-install-step">Step 3: Download the Installer</h3>
+            <p>
+              Download the latest version of the OpenShift installer for your operating system
+              from the link below.
+            </p>
+            <p>
+              <a href={config.configData.installerURL} target="_blank">
+                <Button
+                  className="install--download-installer"
                   disabled={!!token.error}
                 >
-                  <span className="fa fa-paste" aria-hidden="true" />
+                  <span className="fa fa-download" aria-hidden="true" />
                   &nbsp;
-                  Copy Pull Secret
-                </button>
-                { copied && ' Copied!' }
-              </span>
-            </CopyToClipboard>
+                  Download Installer
+                </Button>
+              </a>
+            </p>
 
-            <h3 className="cluster-install-step">Step 2: Run the OpenShift Container Platform Installer</h3>
             <p>
-              Download the OCP Installer to a directory of your
-              choosing. Also install&nbsp;
-              <a href={config.configData.terraformInstallURL} target="_blank">Terraform</a>
-              &nbsp;in your&nbsp;
+              Once the download is complete, rename the installer and make it executable.
+              For example:
+            </p>
+            <pre>
+              <span className="noselect">$ </span>
+              mv openshift-install-darwin-amd64 openshift-install
+              {'\n'}
+              <span className="noselect">$ </span>
+              chmod +x openshift-install
+            </pre>
+
+            <h3 className="cluster-install-step" id="pull-secret">Step 4: Deploy the Cluster</h3>
+            <p>
+              Next, deploy the cluster following the installer’s interactive prompt. Enter your
+              pull secret, provided below, when prompted:
+            </p>
+            <pre>
+              <span className="noselect">$ </span>
+              ./openshift-install create cluster
+            </pre>
+            <p>
+              <Download file="pull-secret" content={tokenView} style={{ display: 'inline' }}>
+                <Button
+                  tabIndex="0"
+                  disabled={!!token.error}
+                  autoFocus
+                >
+                  <span className="fa fa-download" aria-hidden="true" />
+                  &nbsp;
+                  Download Pull Secret
+                </Button>
+              </Download>
+              <CopyToClipboard
+                text={tokenView}
+                onCopy={() => this.setState({ copied: true })}
+              >
+                <span style={{ margin: '10px' }}>
+                  <button
+                    className="btn-text-link"
+                    type="button"
+                    tabIndex="-1"
+                    disabled={!!token.error}
+                  >
+                    <span className="fa fa-paste" aria-hidden="true" />
+                    &nbsp;
+                    Copy Pull Secret
+                  </button>
+                  { copied && ' Copied!' }
+                </span>
+              </CopyToClipboard>
+            </p>
+
+            <Alert
+              type="warning"
+            >
+              <p>
+                This preview sends telemetry data to Red Hat by default. We don&apos;t have an
+                option to disable this yet. If collecting a limited amount of data about your
+                cluster is a concern, please wait a few weeks till we make this optional.
+              </p>
+            </Alert>
+
+            <h3 className="cluster-install-step">Step 5: Access your new cluster!</h3>
+            <p>
+              You have taken the first steps to create your cluster. While your cluster
+              finishes installing, take a moment to download the OpenShift command-line
+              tools and add them to your
+              {' '}
               <code>PATH</code>
-              . Run the installer and follow the installation prompts. The
-              authorization token provided above is required to complete the
-              installation. The installation may take some time to complete.
-              The installer will notify you of its results upon completion.
-              Please note the new cluster will not appear among your clusters
-              until the external installation process is complete.
+              .
             </p>
-            <a href={config.configData.installerURL} target="_blank">
-              <Button
-                className="install--download-installer"
-                disabled={!!token.error}
-              >
-                <span className="fa fa-download" aria-hidden="true" />
-                &nbsp;
-                Download Installer
-              </Button>
-            </a>
-
-            <h3 className="cluster-install-step">Step 3: Wait for Installation</h3>
             <p>
-              If steps 1 and 2 are complete, the cluster is in the process of
-              installing. Wait for the cluster to appear. Some data may take
-              longer to load, but you can monitor as individual nodes are
-              installed. You can download the command-line tools to connect to
-              the cluster when it&apos;s ready.
+              <a href={config.configData.commandLineToolsURL} target="_blank">
+                <Button
+                  className="install--download-cli"
+                >
+                  <span className="fa fa-download" aria-hidden="true" />
+                  &nbsp;
+                  Download Command-line Tools
+                </Button>
+              </a>
             </p>
-            <a href={config.configData.commandLineToolsURL} target="_blank">
-              <Button
-                className="install--download-cli"
-              >
-                <span className="fa fa-download" aria-hidden="true" />
-                &nbsp;
-                Download Command-line Tools
-              </Button>
-            </a>
+            <p>
+              When the installer is complete you will see the console URL and credentials
+              for accessing your new cluster. A
+              {' '}
+              <code>kubeconfig</code>
+              {' '}
+              file will also be generated for you to use with the
+              {' '}
+              <code>oc</code>
+              {' '}
+              CLI tools you downloaded.
+            </p>
+
             <hr />
             <h4>Help and Documentation</h4>
             <p>
