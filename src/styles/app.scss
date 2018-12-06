@@ -115,13 +115,14 @@ limitations under the License.
   font-weight: 600;
 }
 
-.cluster-install-alert {
-  margin-top: 20px;
-  color: $color-pf-blue-600;
-  background-color: $color-pf-blue-50;
-  span.pficon-info {
-    display: none
-  }
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
 
 // ----- NOTE: this is here for the upcoming demo! Remove it later -------- //
