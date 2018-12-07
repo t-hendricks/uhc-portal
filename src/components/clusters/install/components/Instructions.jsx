@@ -23,7 +23,7 @@ class Instructions extends React.Component {
     return (
       <Grid>
         <Row>
-          <Col xs={12} sm={12} md={9} lg={9}>
+          <Col xs={12} sm={12} md={12} lg={12}>
             {
               token.error && (
                 <Alert
@@ -51,18 +51,26 @@ class Instructions extends React.Component {
                 This is a very early preview of OpenShift 4. There are still some rough edges,
                 but what we want more than anything is
                 {' '}
-                <a href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview" target="_blank">your feedback</a>
+                <a href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview" target="_blank">your&nbsp;feedback</a>
                 {' '}
                 on our direction and how we can be better.
               </p>
               <p className="text-right">
-                <span role="img" aria-label="heart">❤️</span>
+                <span
+                  className="fa fa-heart"
+                  role="img"
+                  aria-label="heart"
+                  style={{ color: '#cc0000' }}
+                />
                 {' '}
                 The OpenShift Development Team
               </p>
             </div>
-
             <h1>Install OpenShift 4 on AWS</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={8} md={8} lg={8} className="left-col">
             <p>
               Use this guide to install a new OpenShift 4 preview cluster on your Amazon Web
               Services (AWS) account. We’ll get you up and running in a few quick steps:
@@ -74,7 +82,24 @@ class Instructions extends React.Component {
               <li>Deploy the cluster</li>
               <li>Access your new cluster!</li>
             </ol>
-
+          </Col>
+          <Col xs={12} sm={4} md={4} lg={4}>
+            <div className="cluster-install-callout">
+              <h4>What is the OpenShift installer?</h4>
+              <p>
+                The OpenShift Installer is a command-line installation wizard, prompting the user
+                for values that it cannot determine on its own and providing reasonable defaults
+                for everything else. For more advanced users, the installer provides facilities
+                for varying levels of customization.
+                {' '}
+                <a href="https://github.com/openshift/installer/blob/master/docs/user/overview.md#installer-overview" target="_blank">Learn more</a>
+                .
+              </p>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={8} md={8} lg={8} className="left-col">
             <h3 className="cluster-install-step">Step 1: Configure DNS</h3>
             <p>
               A DNS zone must be created and available in Route 53 for your AWS account
@@ -96,9 +121,16 @@ class Instructions extends React.Component {
               <span className="noselect">$ </span>
               dig NS openshift.example.com @8.8.8.8
             </pre>
+          </Col>
+          <Col xs={12} sm={4} md={4} lg={4} className="cluster-install-step-callout-col" />
+        </Row>
+        <Row>
+          <Col xs={12} sm={8} md={8} lg={8} className="left-col">
             <h3 className="cluster-install-step">Step 2: Configure your AWS Credentials</h3>
             <p>
-              Configure your AWS credentials. See the
+              The installer creates a number of resources in AWS that are necessary to run
+              your cluster, such as instances, VPCs, security groups, and IAM roles. To
+              configure your credentials see the
               {' '}
               <a href="http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment" target="_blank">
                 AWS docs
@@ -106,7 +138,12 @@ class Instructions extends React.Component {
               {' '}
               for details.
             </p>
-
+            <p>
+              If the installer is unable to detect your AWS access key ID and secret
+              access key it will prompt for them directly.
+            </p>
+          </Col>
+          <Col xs={12} sm={4} md={4} lg={4} className="cluster-install-step-callout-col">
             <Alert
               type="warning"
             >
@@ -116,7 +153,10 @@ class Instructions extends React.Component {
                 credentials.
               </p>
             </Alert>
-
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={8} md={8} lg={8} className="left-col">
             <h3 className="cluster-install-step">Step 3: Download the Installer</h3>
             <p>
               Download the latest version of the OpenShift installer for your operating system
@@ -146,7 +186,24 @@ class Instructions extends React.Component {
               <span className="noselect">$ </span>
               chmod +x openshift-install
             </pre>
-
+          </Col>
+          <Col xs={12} sm={4} md={4} lg={4} className="cluster-install-step-callout-col">
+            <Alert
+              type="warning"
+            >
+              <p>
+                  As part of the preview Red Hat collects a limited amount of telemetry data.
+                  By participating in the preview you accept our data collection policy.
+                {' '}
+                <a href="https://github.com/openshift/telemeter/blob/master/docs/data-collection.md" target="_blank">Learn&nbsp;more</a>
+                {' '}
+                  about the data we collect.
+              </p>
+            </Alert>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={8} md={8} lg={8} className="left-col">
             <h3 className="cluster-install-step" id="pull-secret">Step 4: Deploy the Cluster</h3>
             <p>
               Next, deploy the cluster following the installer’s interactive prompt. Enter your
@@ -186,17 +243,22 @@ class Instructions extends React.Component {
                 </span>
               </CopyToClipboard>
             </p>
-
-            <Alert
-              type="warning"
-            >
+          </Col>
+          <Col xs={12} sm={4} md={4} lg={4} className="cluster-install-step-callout-col">
+            <div className="cluster-install-callout">
+              <h4>Customizing your deployment</h4>
               <p>
-                This preview sends telemetry data to Red Hat by default. We don&apos;t have an
-                option to disable this yet. If collecting a limited amount of data about your
-                cluster is a concern, please wait a few weeks till we make this optional.
+                The installer allows many aspects of the clusters it creates to be customized
+                by creating and editing targets.
+                {' '}
+                <a href="https://github.com/openshift/installer/blob/master/docs/user/overview.md#key-concepts" target="_blank">Learn more</a>
+                .
               </p>
-            </Alert>
-
+            </div>
+          </Col>
+        </Row>
+        <Row className="cluster-install-last-step">
+          <Col xs={12} sm={8} md={8} lg={8} className="left-col">
             <h3 className="cluster-install-step">Step 5: Access your new cluster!</h3>
             <p>
               You have taken the first steps to create your cluster. While your cluster
@@ -229,16 +291,23 @@ class Instructions extends React.Component {
               {' '}
               CLI tools you downloaded.
             </p>
-
-            <hr />
-            <h4>Help and Documentation</h4>
-            <p>
-              <a href={config.configData.documentationURL} target="_blank">
-                View Installation Instructions
-                &nbsp;
-                <span className="fa fa-external-link" aria-hidden="true" />
-              </a>
-            </p>
+          </Col>
+          <Col xs={12} sm={4} md={4} lg={4} className="cluster-install-step-callout-col">
+            <div className="cluster-install-callout">
+              <h4>Installer troubleshooting</h4>
+              <p>
+                Unfortunately, there will always be some cases where OpenShift fails to install
+                properly. In these events, it is helpful to understand the likely
+                {' '}
+                <a href="https://github.com/openshift/installer/blob/master/docs/user/troubleshooting.md#common-failures" target="_blank">failure modes</a>
+                {' '}
+                as well as
+                {' '}
+                <a href="https://github.com/openshift/installer/blob/master/docs/user/troubleshooting.md#generic-troubleshooting" target="_blank">how to troubleshoot</a>
+                {' '}
+                the failure.
+              </p>
+            </div>
           </Col>
         </Row>
       </Grid>
