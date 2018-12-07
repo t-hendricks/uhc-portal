@@ -135,19 +135,21 @@ limitations under the License.
 }
 
 @media (min-width: 768px) {
-  .left-col {
-    position: relative;
-  }
+  .row:not(:last-child) {
+    .left-col {
+      position: relative;
+    }
 
-  .left-col::after {
-    /* Gap filler hack to handle left column being shorter than right */
-    background-color: #d1d1d1;
-    bottom: -60px;
-    content: '';
-    height: 60px;
-    right: -1px;
-    position: absolute;
-    width: 1px;
+    .left-col::after {
+      /* Gap filler hack to handle left column being shorter than right */
+      background-color: #d1d1d1;
+      bottom: -60px;
+      content: '';
+      height: 60px;
+      right: -1px;
+      position: absolute;
+      width: 1px;
+    }
   }
 }
 
