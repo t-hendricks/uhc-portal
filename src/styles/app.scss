@@ -135,12 +135,16 @@ limitations under the License.
 }
 
 @media (min-width: 768px) {
-  .row:not(:last-child) .left-col::after {
+  .left-col {
+    position: relative;
+  }
+
+  .left-col::after {
     /* Gap filler hack to handle left column being shorter than right */
     background-color: #d1d1d1;
-    bottom: -30px;
+    bottom: -60px;
     content: '';
-    height: 30px;
+    height: 60px;
     right: -1px;
     position: absolute;
     width: 1px;
@@ -150,7 +154,6 @@ limitations under the License.
 .left-col {
   border-right: 1px solid #d1d1d1;
   font-size: 14px;
-  position: relative;
 
   @media (max-width: 767px) {
     /* Target devices narrower than 768px. */
