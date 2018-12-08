@@ -25,8 +25,22 @@ import {
 import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
 import { createCluster, resetCreatedClusterResponse } from '../../redux/actions/clusterActions';
 
-// Validations
+// Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');
+
+// Regular expression used to check base DNS domains:
+const baseDomainRE = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z0-9])?$/;
+
+// Funcion to validate that a field contains a correct base DNS domain:
+function checkBaseDNSDomain(value) {
+  if (!value) {
+    return 'Base DNS domain is required.';
+  }
+  if (!baseDomainRE.test(value)) {
+    return `Base DNS domain '${value}' isn't valid, must contain at least two valid DNS labels separate by dots, for example 'mydomain.com'.`;
+  }
+  return undefined;
+}
 
 function CreateClusterForm(props) {
   // handleSubmit comes from reduxForm()
@@ -109,6 +123,14 @@ function CreateClusterForm(props) {
 
           <Field
             component={ReduxHorizontalFormGroup}
+            name="dns_base_domain"
+            label="Base DNS domain"
+            type="text"
+            validate={checkBaseDNSDomain}
+          />
+
+          <Field
+            component={ReduxHorizontalFormGroup}
             name="aws_access_key_id"
             label="AWS access key ID"
             type="password"
@@ -181,6 +203,7 @@ const mapStateToProps = state => ({
     nodes_master: '1',
     nodes_infra: '2',
     nodes_compute: '4',
+    dns_base_domain: '',
     aws_access_key_id: '',
     aws_secret_access_key: '',
     region: 'us-east-1',
@@ -200,6 +223,9 @@ const mapDispatchToProps = dispatch => ({
         master: parseInt(formData.nodes_master, 10),
         infra: parseInt(formData.nodes_infra, 10),
         compute: parseInt(formData.nodes_compute, 10),
+      },
+      dns: {
+        base_domain: formData.dns_base_domain,
       },
       query: {
         aws_access_key_id: formData.aws_access_key_id,
