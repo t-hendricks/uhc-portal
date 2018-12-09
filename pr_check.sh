@@ -36,5 +36,6 @@ cd "${PROJECT}"
 make \
   lint \
   app \
+  test \
   binary \
   image
