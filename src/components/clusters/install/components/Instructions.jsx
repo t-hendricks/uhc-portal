@@ -230,7 +230,7 @@ class Instructions extends React.Component {
               >
                 <span style={{ margin: '10px' }}>
                   <button
-                    className="btn-text-link"
+                    className="btn-text-link install--copy-pull-secret"
                     type="button"
                     tabIndex="-1"
                     disabled={!!token.error}
