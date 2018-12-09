@@ -229,9 +229,9 @@ const mapDispatchToProps = dispatch => ({
       dns: {
         base_domain: formData.dns_base_domain,
       },
-      query: {
-        aws_access_key_id: formData.aws_access_key_id,
-        aws_secret_access_key: formData.aws_secret_access_key,
+      aws: {
+        access_key_id: formData.aws_access_key_id,
+        secret_access_key: formData.aws_secret_access_key,
       },
     };
     dispatch(createCluster(clusterRequest));
