@@ -214,7 +214,7 @@ class ClusterList extends Component {
   renderClusterRow(cluster, index) {
     const provider = cluster.cloud_provider.id || 'N/A';
     const name = cluster.display_name || ''; // This would've been one trenary condition if the backend didn't have omitEmpty on display_name
-    const location = `${provider.toUpperCase()} (${cluster.region})`;
+    const location = `${provider.toUpperCase()} (${cluster.region.id})`;
     // The trenary for consoleURL is needed because the API does not guarantee fields being present.
     // We'll have a lot of these all over the place as we grow :(
     const consoleURL = cluster.console ? cluster.console.url : false;

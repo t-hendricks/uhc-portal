@@ -262,7 +262,7 @@ class ClusterDetails extends Component {
                   Location
                 </dt>
                 <dd>
-                  {cluster.region}
+                  {cluster.region.id}
                 </dd>
                 <dt>
                   Labels
