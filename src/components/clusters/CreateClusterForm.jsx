@@ -215,7 +215,9 @@ const mapDispatchToProps = dispatch => ({
   onSubmit: (formData) => {
     const clusterRequest = {
       name: formData.name,
-      region: formData.region,
+      region: {
+        id: formData.region,
+      },
       flavour: {
         id: '4',
       },
