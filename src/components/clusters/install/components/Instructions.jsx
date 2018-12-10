@@ -257,7 +257,7 @@ class Instructions extends React.Component {
             </div>
           </Col>
         </Row>
-        <Row className="cluster-install-last-step">
+        <Row>
           <Col xs={12} sm={8} md={8} lg={8} className="left-col">
             <h3 className="cluster-install-step">Step 5: Access your new cluster!</h3>
             <p>
@@ -309,6 +309,22 @@ class Instructions extends React.Component {
               </p>
             </div>
           </Col>
+        </Row>
+        <Row className="footer">
+          <Col xs={12} sm={8} md={8} lg={8} className="left-col">
+            <h3 className="cluster-install-step">
+              <a href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview" target="_blank">
+                <span
+                  className="fa fa-bullhorn"
+                  role="img"
+                  aria-hidden="true"
+                  style={{ marginRight: '10px' }}
+                />
+                Give us feedback
+              </a>
+            </h3>
+          </Col>
+          <Col xs={12} sm={4} md={4} lg={4} className="cluster-install-step-callout-col" />
         </Row>
       </Grid>
     );
