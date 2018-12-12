@@ -20,6 +20,7 @@ import {
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { fetchClusterDetails, invalidateClusters } from '../../redux/actions/clusterActions';
+import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import LoadingModal from './LoadingModal';
 import EditDisplayNameDialog from './EditDisplayNameDialog';
@@ -39,11 +40,17 @@ class ClusterDetails extends Component {
   }
 
   componentDidMount() {
-    const { match, fetchDetails } = this.props;
+    const {
+      match, fetchDetails, cloudProviders, getCloudProviders,
+    } = this.props;
     const clusterID = match.params.id;
 
     if (clusterID !== null && clusterID !== undefined) {
       fetchDetails(clusterID);
+    }
+
+    if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
+      getCloudProviders();
     }
   }
 
@@ -121,7 +128,9 @@ class ClusterDetails extends Component {
   }
 
   render() {
-    const { cluster, error, pending } = this.props;
+    const {
+      cluster, error, pending, cloudProviders,
+    } = this.props;
     if (error) {
       return this.renderError();
     }
@@ -150,7 +159,18 @@ class ClusterDetails extends Component {
         </React.Fragment>);
     }
 
-    const cloudProvider = cluster.cloud_provider.id || 'N/A';
+    let cloudProvider = cluster.cloud_provider.id || 'N/A';
+    let region = cluster.region.id;
+    if (cloudProviders.fulfilled && cloudProviders.providers[cluster.cloud_provider.id]) {
+      const providerData = cloudProviders.providers[cluster.cloud_provider.id];
+
+      cloudProvider = providerData.display_name;
+      if (!providerData.regions[region]) {
+        region = providerData.regions[region].display_name;
+      }
+    } else {
+      cloudProvider = cloudProvider.toUpperCase();
+    }
     const memoryTotalWithUnit = humanizeValueWithUnit(
       cluster.memory.total.value, cluster.memory.total.unit,
     );
@@ -262,7 +282,7 @@ class ClusterDetails extends Component {
                   Location
                 </dt>
                 <dd>
-                  {cluster.region.id}
+                  {region}
                 </dd>
                 <dt>
                   Labels
@@ -274,7 +294,7 @@ class ClusterDetails extends Component {
                   Provider
                 </dt>
                 <dd>
-                  { cloudProvider.toUpperCase() }
+                  { cloudProvider }
                 </dd>
                 <dt>
                   Versions
@@ -395,6 +415,8 @@ ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   fetchDetails: PropTypes.func.isRequired,
+  getCloudProviders: PropTypes.func.isRequired,
+  cloudProviders: PropTypes.object.isRequired,
   cluster: PropTypes.any,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
@@ -408,10 +430,15 @@ ClusterDetails.defaultProps = {
   pending: true,
 };
 
-const mapStateToProps = state => Object.assign({}, state.cluster.details);
+const mapStateToProps = state => Object.assign(
+  {},
+  state.cluster.details,
+  { cloudProviders: state.cloudProviders.cloudProviders },
+);
 
 const mapDispatchToProps = {
   fetchDetails: clusterID => fetchClusterDetails(clusterID),
+  getCloudProviders: cloudProviderActions.getCloudProviders,
   invalidateClusters,
 };
 

@@ -23,6 +23,7 @@ import {
   Button, Icon, Form, Modal, Alert, HintBlock,
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
+import CloudRegionComboBox from './CloudRegionComboBox';
 import { createCluster, resetCreatedClusterResponse } from '../../redux/actions/clusterActions';
 import validators from '../../common/validators';
 
@@ -137,12 +138,10 @@ function CreateClusterForm(props) {
             component={ReduxHorizontalFormGroup}
             name="region"
             label="AWS region"
-            componentClass="select"
-          >
-            <option value="us-east-1">
-              us-east-1
-            </option>
-          </Field>
+            componentClass={CloudRegionComboBox}
+            cloudProviderID="aws"
+            validate={validators.required}
+          />
 
           <Field
             component={ReduxHorizontalFormGroup}

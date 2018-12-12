@@ -37,11 +37,30 @@ const editClusterDisplayName = (clusterID, displayName) => axios(
   }),
 );
 
+const getCloudProviders = () => axios(
+  serviceConfig({
+    method: 'get',
+    params: {
+      size: 1000,
+    },
+    url: '/api/clusters_mgmt/v1/cloud_providers',
+  }),
+);
+
+const getCloudRegions = providerID => axios(
+  serviceConfig({
+    method: 'get',
+    url: `/api/clusters_mgmt/v1/cloud_providers/${providerID}/regions`,
+  }),
+);
+
 const clusterService = {
   getClusters,
   postNewCluster,
   getClusterDetails,
   editClusterDisplayName,
+  getCloudProviders,
+  getCloudRegions,
 };
 
 export default clusterService;
