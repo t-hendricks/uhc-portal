@@ -103,6 +103,7 @@ function CreateClusterForm(props) {
           <HintBlock
             title="Note"
             body="At the moment, clusters created here can only be deleted via the API."
+            className="create-cluster-hint"
           />
           <Field
             component={ReduxHorizontalFormGroup}
