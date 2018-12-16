@@ -52,7 +52,7 @@ describe('<Instructions />', () => {
 
     it('enables copying the token', () => {
       expect(
-        wrapper.find('.install--copy-token').first().props().disabled,
+        wrapper.find('.install--copy-pull-secret').first().props().disabled,
       ).toBeFalsy();
     });
 
@@ -80,7 +80,7 @@ describe('<Instructions />', () => {
 
     it('disables copying the token', () => {
       expect(
-        wrapper.find('.install--copy-token').first().props().disabled,
+        wrapper.find('.install--copy-pull-secret').first().props().disabled,
       ).toBeTruthy();
     });
 

@@ -99,8 +99,8 @@ lint: vendor node_modules
 fmt:
 	gofmt -s -l -w main.go ./cmd/ ./pkg/.
 
-test: vendor
-	go test ./cmd/... ./pkg/...
+test: node_modules
+	yarn test
 
 vendor: Gopkg.lock
 	dep ensure -vendor-only -v
