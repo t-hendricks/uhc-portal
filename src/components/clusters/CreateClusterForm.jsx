@@ -88,17 +88,17 @@ function CreateClusterForm(props) {
   }
   return (
     <React.Fragment>
-      <Form horizontal onSubmit={handleSubmit}>
+      <Modal.Header>
+        <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={closeFunc}>
+          <Icon type="pf" name="close" />
+        </button>
+        <Modal.Title>
+          Create Cluster
+        </Modal.Title>
+      </Modal.Header>
 
-        <Modal.Header>
-          <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={closeFunc}>
-            <Icon type="pf" name="close" />
-          </button>
-          <Modal.Title>
-            Create Cluster
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Modal.Body>
+        <Form horizontal onSubmit={handleSubmit}>
           {errorContainer}
           <HintBlock
             title="Note"
@@ -185,17 +185,17 @@ function CreateClusterForm(props) {
             </option>
           </Field>
 
-        </Modal.Body>
-        <Modal.Footer>
-          <Button bsStyle="primary" type="submit">
-            Create
-          </Button>
-          <Button bsStyle="default" onClick={closeFunc}>
-              Cancel
-          </Button>
-        </Modal.Footer>
+        </Form>
+      </Modal.Body>
 
-      </Form>
+      <Modal.Footer>
+        <Button bsStyle="primary" type="submit">
+          Create
+        </Button>
+        <Button bsStyle="default" onClick={closeFunc}>
+          Cancel
+        </Button>
+      </Modal.Footer>
     </React.Fragment>
   );
 }
