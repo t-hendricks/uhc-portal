@@ -445,7 +445,6 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
   </Row>
   <Row
     bsClass="row"
-    className="cluster-install-last-step"
     componentClass="div"
   >
     <Col
@@ -544,6 +543,51 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
         </p>
       </div>
     </Col>
+  </Row>
+  <Row
+    bsClass="row"
+    className="footer"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      className="left-col"
+      componentClass="div"
+      lg={8}
+      md={8}
+      sm={8}
+      xs={12}
+    >
+      <h3
+        className="cluster-install-step"
+      >
+        <a
+          href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview"
+          target="_blank"
+        >
+          <span
+            aria-hidden="true"
+            className="fa fa-bullhorn"
+            role="img"
+            style={
+              Object {
+                "marginRight": "10px",
+              }
+            }
+          />
+          Give us feedback
+        </a>
+      </h3>
+    </Col>
+    <Col
+      bsClass="col"
+      className="cluster-install-step-callout-col"
+      componentClass="div"
+      lg={4}
+      md={4}
+      sm={4}
+      xs={12}
+    />
   </Row>
 </Grid>
 `;
@@ -1018,7 +1062,6 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
   </Row>
   <Row
     bsClass="row"
-    className="cluster-install-last-step"
     componentClass="div"
   >
     <Col
@@ -1117,6 +1160,51 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
         </p>
       </div>
     </Col>
+  </Row>
+  <Row
+    bsClass="row"
+    className="footer"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      className="left-col"
+      componentClass="div"
+      lg={8}
+      md={8}
+      sm={8}
+      xs={12}
+    >
+      <h3
+        className="cluster-install-step"
+      >
+        <a
+          href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview"
+          target="_blank"
+        >
+          <span
+            aria-hidden="true"
+            className="fa fa-bullhorn"
+            role="img"
+            style={
+              Object {
+                "marginRight": "10px",
+              }
+            }
+          />
+          Give us feedback
+        </a>
+      </h3>
+    </Col>
+    <Col
+      bsClass="col"
+      className="cluster-install-step-callout-col"
+      componentClass="div"
+      lg={4}
+      md={4}
+      sm={4}
+      xs={12}
+    />
   </Row>
 </Grid>
 `;
