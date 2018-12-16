@@ -17,22 +17,11 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Col, ControlLabel, HelpBlock, FormControl, FormGroup,
+  ControlLabel, HelpBlock, FormControl, FormGroup,
 } from 'patternfly-react';
 
-/*
-  TODO: this hardcodes specific "horizontal form" layout.
-  https://www.patternfly.org/pattern-library/forms-and-controls/field-labeling/,
-  https://github.com/patternfly/patternfly-react/blob/master/packages/patternfly-react/src/components/Form/Stories/HorizontalFormField.js
-  vs
-  https://github.com/patternfly/patternfly-react/blob/master/packages/patternfly-react/src/components/Form/Stories/VerticalFormField.js
-*/
-
-const labelCols = 3;
-const fieldCols = 12 - labelCols;
-
 // To be used inside redux-form Field component.
-function ReduxHorizontalFormGroup(props) {
+function ReduxVerticalFormGroup(props) {
   const {
     label,
     helpText,
@@ -43,22 +32,20 @@ function ReduxHorizontalFormGroup(props) {
 
   return (
     <FormGroup controlId={input.name} validationState={touched && error ? 'error' : null}>
-      <Col componentClass={ControlLabel} sm={labelCols}>
+      <ControlLabel>
         {label}
-      </Col>
-      <Col sm={fieldCols}>
-        <FormControl name={input.name} {...input} {...extraProps} />
-        <HelpBlock>
-          { touched && error ? `${helpText} ${error}` : helpText }
-        </HelpBlock>
-      </Col>
+      </ControlLabel>
+      <FormControl name={input.name} {...input} {...extraProps} />
+      <HelpBlock>
+        { touched && error ? `${helpText} ${error}` : helpText }
+      </HelpBlock>
     </FormGroup>
   );
 }
-ReduxHorizontalFormGroup.defaultProps = {
+ReduxVerticalFormGroup.defaultProps = {
   helpText: '',
 };
-ReduxHorizontalFormGroup.propTypes = {
+ReduxVerticalFormGroup.propTypes = {
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   // props passed by redux-form
@@ -69,4 +56,4 @@ ReduxHorizontalFormGroup.propTypes = {
   // plus other props passed from the <Field> component to the control (extraProps, incl. children)…
 };
 
-export default ReduxHorizontalFormGroup;
+export default ReduxVerticalFormGroup;

@@ -22,8 +22,8 @@ import { Redirect } from 'react-router';
 import {
   Button, Icon, Form, Modal, Alert, HintBlock,
 } from 'patternfly-react';
-import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
 import CloudRegionComboBox from './CloudRegionComboBox';
+import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { createCluster, resetCreatedClusterResponse } from '../../redux/actions/clusterActions';
 import validators from '../../common/validators';
 
@@ -76,7 +76,7 @@ function CreateClusterForm(props) {
             className="create-cluster-hint"
           />
           <Field
-            component={ReduxHorizontalFormGroup}
+            component={ReduxVerticalFormGroup}
             name="name"
             label="Cluster name"
             type="text"
@@ -84,7 +84,7 @@ function CreateClusterForm(props) {
           />
 
           <Field
-            component={ReduxHorizontalFormGroup}
+            component={ReduxVerticalFormGroup}
             name="nodes_master"
             label="Master nodes"
             type="number"
@@ -92,7 +92,7 @@ function CreateClusterForm(props) {
           />
 
           <Field
-            component={ReduxHorizontalFormGroup}
+            component={ReduxVerticalFormGroup}
             name="nodes_infra"
             label="Infra nodes"
             type="number"
@@ -100,7 +100,7 @@ function CreateClusterForm(props) {
           />
 
           <Field
-            component={ReduxHorizontalFormGroup}
+            component={ReduxVerticalFormGroup}
             name="nodes_compute"
             label="Compute nodes"
             type="number"
@@ -108,7 +108,7 @@ function CreateClusterForm(props) {
           />
 
           <Field
-            component={ReduxHorizontalFormGroup}
+            component={ReduxVerticalFormGroup}
             name="dns_base_domain"
             label="Base DNS domain"
             type="text"
@@ -116,7 +116,7 @@ function CreateClusterForm(props) {
           />
 
           <Field
-            component={ReduxHorizontalFormGroup}
+            component={ReduxVerticalFormGroup}
             name="aws_access_key_id"
             label="AWS access key ID"
             type="password"
@@ -125,7 +125,7 @@ function CreateClusterForm(props) {
           />
 
           <Field
-            component={ReduxHorizontalFormGroup}
+            component={ReduxVerticalFormGroup}
             name="aws_secret_access_key"
             label="AWS secret access key"
             type="password"
@@ -135,7 +135,7 @@ function CreateClusterForm(props) {
           />
 
           <Field
-            component={ReduxHorizontalFormGroup}
+            component={ReduxVerticalFormGroup}
             name="region"
             label="AWS region"
             componentClass={CloudRegionComboBox}
@@ -144,7 +144,7 @@ function CreateClusterForm(props) {
           />
 
           <Field
-            component={ReduxHorizontalFormGroup}
+            component={ReduxVerticalFormGroup}
             name="availability_zone"
             label="AWS availability zone"
             componentClass="select"
