@@ -32,7 +32,7 @@ https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb#e
 
 == Bulding
 
-To build the application istall the `yarn` tool and then run these commands:
+To build the application install the `yarn` tool and then run these commands:
 
 ....
 $ yarn install
