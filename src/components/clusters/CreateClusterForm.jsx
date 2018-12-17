@@ -24,38 +24,7 @@ import {
 } from 'patternfly-react';
 import ReduxHorizontalFormGroup from './ReduxHorizontalFormGroup';
 import { createCluster, resetCreatedClusterResponse } from '../../redux/actions/clusterActions';
-
-// Function to validate that a field is mandatory:
-const required = value => (value ? undefined : 'Field is required');
-
-// Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
-// alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
-const dnsLabelRE = /^[a-z]([-a-z0-9]*[a-z0-9])?$/;
-
-// Function to validate that the cluster name field contains a valid DNS label:
-function checkClusterName(value) {
-  if (!value) {
-    return 'Cluster name is required.';
-  }
-  if (!dnsLabelRE.test(value)) {
-    return `Cluster name '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-name', or 'abc-123'.`;
-  }
-  return undefined;
-}
-
-// Regular expression used to check base DNS domains, based on RFC-1035
-const baseDomainRE = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z0-9])?$/;
-
-// Function to validate that a field contains a correct base DNS domain
-function checkBaseDNSDomain(value) {
-  if (!value) {
-    return 'Base DNS domain is required.';
-  }
-  if (!baseDomainRE.test(value)) {
-    return `Base DNS domain '${value}' isn't valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'mydomain.com'.`;
-  }
-  return undefined;
-}
+import validators from '../../common/validators';
 
 function CreateClusterForm(props) {
   // handleSubmit comes from reduxForm()
@@ -110,7 +79,7 @@ function CreateClusterForm(props) {
             name="name"
             label="Cluster name"
             type="text"
-            validate={checkClusterName}
+            validate={validators.checkClusterName}
           />
 
           <Field
@@ -142,7 +111,7 @@ function CreateClusterForm(props) {
             name="dns_base_domain"
             label="Base DNS domain"
             type="text"
-            validate={checkBaseDNSDomain}
+            validate={validators.checkBaseDNSDomain}
           />
 
           <Field
@@ -151,7 +120,7 @@ function CreateClusterForm(props) {
             label="AWS access key ID"
             type="password"
             placeholder="AWS access key ID"
-            validate={required}
+            validate={validators.required}
           />
 
           <Field
@@ -161,7 +130,7 @@ function CreateClusterForm(props) {
             type="password"
             placeholder="AWS secret access key"
             helpText="Do NOT put here your AWS user/password.  You should create an AWS IAM sub-user, generate an access key for Red Hat, and put that here."
-            validate={required}
+            validate={validators.required}
           />
 
           <Field
