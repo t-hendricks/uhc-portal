@@ -24,6 +24,12 @@ limitations under the License.
   overflow-x: visible;
 }
 
+// work around side modal height & scrolling bug in older browsers
+.modal.right-side-modal-pf .modal-dialog .modal-content .modal-body {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .cluster-list {
   margin: 25px;
 }
@@ -113,6 +119,10 @@ limitations under the License.
   .form-group {
     margin-top: 5%;
   }
+}
+
+.create-cluster-hint {
+  margin-bottom: 15px;
 }
 
 .cluster-install-step {
