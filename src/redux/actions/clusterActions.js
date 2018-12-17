@@ -31,13 +31,13 @@ const createCluster = params => dispatch => dispatch({
   }),
 });
 
-const clearDisplayNameResponse = () => dispatch => dispatch({
+const clearClusterResponse = () => dispatch => dispatch({
   type: clusterConstants.CLEAR_DISPLAY_NAME_RESPONSE,
 });
 
-const editClusterDisplayName = (clusterID, displayName) => dispatch => dispatch({
+const editCluster = (id, cluster) => dispatch => dispatch({
   type: clusterConstants.EDIT_CLUSTER_DISPLAY_NAME,
-  payload: clusterService.editClusterDisplayName(clusterID, displayName),
+  payload: clusterService.editCluster(id, cluster),
 });
 
 
@@ -56,9 +56,9 @@ const resetCreatedClusterResponse = () => dispatch => dispatch({
 });
 
 const clusterActions = {
-  clearDisplayNameResponse,
+  clearClusterResponse,
   createCluster,
-  editClusterDisplayName,
+  editCluster,
   fetchClusters,
   fetchClusterDetails,
   invalidateClusters,
@@ -66,6 +66,6 @@ const clusterActions = {
 };
 
 export {
-  clusterActions, createCluster, editClusterDisplayName, fetchClusters, fetchClusterDetails,
-  invalidateClusters, clearDisplayNameResponse, resetCreatedClusterResponse,
+  clusterActions, createCluster, editCluster, fetchClusters, fetchClusterDetails,
+  invalidateClusters, clearClusterResponse, resetCreatedClusterResponse,
 };

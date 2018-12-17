@@ -16,25 +16,27 @@ limitations under the License.
 
 import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import {
   Alert, Button, Grid, Row, Col, EmptyState, Tooltip,
   OverlayTrigger, DropdownKebab, MenuItem, Spinner, Modal,
 } from 'patternfly-react';
 import { TableGrid } from 'patternfly-react-extensions';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import ClusterListFilter from './ClusterListFilter';
-import CreateClusterForm from './CreateClusterForm';
 import ViewPaginationRow from './viewPaginationRow';
 import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
-import EditDisplayNameDialog from './EditDisplayNameDialog';
 import NumberWithUnit from './NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
+
+import CreateClusterForm from './forms/CreateClusterForm';
+import EditClusterDialog from './forms/EditClusterDialog';
+import EditDisplayNameDialog from './forms/EditDisplayNameDialog';
 
 import helpers from '../../common/helpers';
 import { viewConstants } from '../../redux/constants';
@@ -84,9 +86,7 @@ function renderClusterStatusIcon(clusterState, id) {
 class ClusterList extends Component {
   state = {
     clusterCreationFormVisible: false,
-    editClusterDisplayNameDialogVisible: false,
-    editClusterDisplayNameClusterID: '',
-    editClusterDisplayNameClusterName: '',
+    editClusterDialogVisible: false,
   }
 
   componentDidMount() {
@@ -118,13 +118,23 @@ class ClusterList extends Component {
     this.setState(prevState => ({ ...prevState, clusterCreationFormVisible: show }));
   }
 
-  openEditDisplayNameDialog(clusterID, clusterName) {
+  openEditDisplayNameDialog(cluster) {
     this.setState(prevState => (
       {
         ...prevState,
-        editClusterDisplayNameDialogVisible: true,
-        editClusterDisplayNameClusterID: clusterID,
-        editClusterDisplayNameClusterName: clusterName,
+        editCluster: cluster,
+        editClusterDialogVisible: false,
+        editDisplayNameDialogVisible: true,
+      }));
+  }
+
+  openEditClusterDialog(cluster) {
+    this.setState(prevState => (
+      {
+        ...prevState,
+        editCluster: cluster,
+        editClusterDialogVisible: true,
+        editDisplayNameDialogVisible: false,
       }));
   }
 
@@ -172,22 +182,45 @@ class ClusterList extends Component {
 
   // TO-DO: extract to independent component and reuse in ClusterDetails
 
-  renderEditClusterDisplayNameDialog() {
+  renderEditClusterDialog() {
     const {
-      editClusterDisplayNameDialogVisible,
-      editClusterDisplayNameClusterID,
-      editClusterDisplayNameClusterName,
+      editCluster,
+      editClusterDialogVisible,
     } = this.state;
     return (
-      <Modal show={editClusterDisplayNameDialogVisible}>
-        <EditDisplayNameDialog
-          clusterID={editClusterDisplayNameClusterID}
-          clusterName={editClusterDisplayNameClusterName}
+      <Modal show={editClusterDialogVisible}>
+        <EditClusterDialog
+          cluster={editCluster}
           closeFunc={(updated) => {
             this.setState(prevState => (
               {
                 ...prevState,
-                editClusterDisplayNameDialogVisible: false,
+                editClusterDialogVisible: false,
+              }));
+            if (updated) {
+              const { invalidateClusters } = this.props;
+              invalidateClusters();
+            }
+          }}
+        />
+      </Modal>
+    );
+  }
+
+  renderEditDisplayNameDialog() {
+    const {
+      editCluster,
+      editDisplayNameDialogVisible,
+    } = this.state;
+    return (
+      <Modal show={editDisplayNameDialogVisible}>
+        <EditDisplayNameDialog
+          cluster={editCluster}
+          closeFunc={(updated) => {
+            this.setState(prevState => (
+              {
+                ...prevState,
+                editDisplayNameDialogVisible: false,
               }));
             if (updated) {
               const { invalidateClusters } = this.props;
@@ -230,6 +263,15 @@ class ClusterList extends Component {
           Launch Admin Console
         </MenuItem>
       );
+    const editClusterItem = (
+      <MenuItem onClick={() => this.openEditClusterDialog(cluster)}>
+        Edit Cluster
+      </MenuItem>);
+    const editDisplayNameItem = (
+      <MenuItem onClick={() => this.openEditDisplayNameDialog(cluster)}>
+        Edit Display Name
+      </MenuItem>);
+
     return (
       <TableGrid.Row key={index}>
         <Grid.Col {...nameColSizes}>
@@ -258,9 +300,8 @@ class ClusterList extends Component {
         <Grid.Col {...statColSizes}>
           <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
             {consoleMenuItem}
-            <MenuItem onClick={() => this.openEditDisplayNameDialog(cluster.id, cluster.name)}>
-              Edit Display Name
-            </MenuItem>
+            {editDisplayNameItem}
+            {editClusterItem}
           </DropdownKebab>
         </Grid.Col>
       </TableGrid.Row>
@@ -405,7 +446,8 @@ class ClusterList extends Component {
         </Grid>
         {this.renderTable()}
         {this.renderClusterCreationForm()}
-        {this.renderEditClusterDisplayNameDialog()}
+        {this.renderEditClusterDialog()}
+        {this.renderEditDisplayNameDialog()}
       </div>
     );
   }
