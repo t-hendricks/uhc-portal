@@ -87,6 +87,12 @@ limitations under the License.
   text-align: center;
 }
 
+// Enable word wrapping in the cluster list
+.cluster-list .table-grid-pf-row > div {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
 .cluster-details-item {
   dt {
     text-transform: uppercase;
