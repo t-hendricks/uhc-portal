@@ -80,7 +80,7 @@ class Instructions extends React.Component {
               <li>Configure your AWS credentials</li>
               <li>Download the OpenShift installer</li>
               <li>Deploy the cluster</li>
-              <li>Access your new cluster!</li>
+              <li>Access your new cluster</li>
             </ol>
           </Col>
           <Col xs={12} sm={4} md={4} lg={4}>
@@ -126,7 +126,7 @@ class Instructions extends React.Component {
         </Row>
         <Row>
           <Col xs={12} sm={8} md={8} lg={8} className="left-col">
-            <h3 className="cluster-install-step">Step 2: Configure your AWS Credentials</h3>
+            <h3 className="cluster-install-step">Step 2: Configure Your AWS Credentials</h3>
             <p>
               The installer creates a number of resources in AWS that are necessary to run
               your cluster, such as instances, VPCs, security groups, and IAM roles. To
@@ -259,7 +259,7 @@ class Instructions extends React.Component {
         </Row>
         <Row>
           <Col xs={12} sm={8} md={8} lg={8} className="left-col">
-            <h3 className="cluster-install-step">Step 5: Access your new cluster!</h3>
+            <h3 className="cluster-install-step">Step 5: Access Your New Cluster</h3>
             <p>
               You have taken the first steps to create your cluster. While your cluster
               finishes installing, take a moment to download the OpenShift command-line
