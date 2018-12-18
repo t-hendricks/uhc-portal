@@ -67,7 +67,7 @@ function CreateClusterForm(props) {
       </Modal.Header>
 
       <Modal.Body>
-        <Form horizontal onSubmit={handleSubmit}>
+        <Form horizontal>
           {errorContainer}
           <HintBlock
             title="Note"
@@ -159,7 +159,7 @@ function CreateClusterForm(props) {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button bsStyle="primary" type="submit">
+        <Button bsStyle="primary" type="submit" onClick={handleSubmit}>
           Create
         </Button>
         <Button bsStyle="default" onClick={closeFunc}>
