@@ -100,7 +100,7 @@
   },
   "scripts": {
     "build": "webpack --progress",
-    "start": "webpack-dev-server --progress --hot --inline",
+    "start": "webpack-dev-server --progress --hot",
     "lint": "eslint src --ext js,jsx",
     "test": "jest --env=jsdom"
   }
