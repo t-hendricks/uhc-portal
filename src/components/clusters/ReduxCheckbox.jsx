@@ -17,14 +17,13 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  ControlLabel, HelpBlock, FormControl, FormGroup,
+  Checkbox, FormGroup,
 } from 'patternfly-react';
 
 // To be used inside redux-form Field component.
-function ReduxVerticalFormGroup(props) {
+function ReduxCheckbox(props) {
   const {
     label,
-    helpText,
     meta: { error, touched },
     input,
     ...extraProps // any extra props not specified above
@@ -32,28 +31,18 @@ function ReduxVerticalFormGroup(props) {
 
   return (
     <FormGroup controlId={input.name} validationState={touched && error ? 'error' : null}>
-      <ControlLabel>
+      <Checkbox {...input} {...extraProps}>
         {label}
-      </ControlLabel>
-      <FormControl name={input.name} {...input} {...extraProps} />
-      <HelpBlock>
-        {touched && error ? `${helpText} ${error}` : helpText}
-      </HelpBlock>
+      </Checkbox>
     </FormGroup>
   );
 }
-ReduxVerticalFormGroup.defaultProps = {
-  helpText: '',
-};
-ReduxVerticalFormGroup.propTypes = {
+ReduxCheckbox.propTypes = {
   label: PropTypes.string.isRequired,
-  helpText: PropTypes.string,
   // props passed by redux-form
-  // collection of redux-form callbacks to be destructured into an html input element
   input: PropTypes.object.isRequired,
-  // redux-form metadata like error or active states
   meta: PropTypes.object.isRequired,
-  // plus other props passed from the <Field> component to the control (extraProps, incl. children)…
+  // plus other props to be passed to the field...
 };
 
-export default ReduxVerticalFormGroup;
+export default ReduxCheckbox;

@@ -26,6 +26,7 @@ import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
 import CloudRegionComboBox from '../CloudRegionComboBox';
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clusterActions';
 import validators from '../../../common/validators';
+import ReduxCheckbox from '../ReduxCheckbox';
 
 function CreateClusterForm(props) {
   // handleSubmit comes from reduxForm()
@@ -152,6 +153,11 @@ function CreateClusterForm(props) {
                   cloudProviderID="aws"
                   validate={validators.required}
                 />
+                <Field
+                  component={ReduxCheckbox}
+                  name="multi_az"
+                  label="Deploy on multiple availability zones"
+                />
               </Col>
               <Col sm={4}>
                 <HintBlock
@@ -185,7 +191,6 @@ function CreateClusterForm(props) {
                   )}
                 />
               </Col>
-
             </Row>
           </Grid>
         </Form>
@@ -223,7 +228,7 @@ const mapStateToProps = state => ({
     aws_access_key_id: '',
     aws_secret_access_key: '',
     region: 'us-east-1',
-    availability_zone: 'us-east-1a', // Note, this should be removed from the API, but is here for backwards compatibility
+    multi_az: false,
   },
 });
 
@@ -247,6 +252,7 @@ const mapDispatchToProps = dispatch => ({
         access_key_id: formData.aws_access_key_id,
         secret_access_key: formData.aws_secret_access_key,
       },
+      multi_az: formData.multi_az,
     };
     dispatch(createCluster(clusterRequest));
   },
