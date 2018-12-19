@@ -43,9 +43,9 @@ import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
 import { viewActions } from '../../redux/actions/viewOptionsActions';
 
 const nameColSizes = {
-  md: 5,
-  sm: 5,
-  xs: 5,
+  md: 4,
+  sm: 4,
+  xs: 4,
 };
 const statusColSizes = {
   md: 1,
@@ -58,9 +58,9 @@ const statColSizes = {
   xs: 1,
 };
 const locationColSizes = {
-  md: 1,
-  sm: 1,
-  xs: 1,
+  md: 2,
+  sm: 2,
+  xs: 2,
 };
 
 function renderClusterStatusIcon(clusterState, id) {
