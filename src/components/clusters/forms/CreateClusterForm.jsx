@@ -22,10 +22,10 @@ import { Redirect } from 'react-router';
 import {
   Button, Icon, Form, Modal, Alert, HintBlock, Grid, Row, Col,
 } from 'patternfly-react';
-import CloudRegionComboBox from './CloudRegionComboBox';
-import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
-import { createCluster, resetCreatedClusterResponse } from '../../redux/actions/clusterActions';
-import validators from '../../common/validators';
+import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
+import CloudRegionComboBox from '../CloudRegionComboBox';
+import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clusterActions';
+import validators from '../../../common/validators';
 
 function CreateClusterForm(props) {
   // handleSubmit comes from reduxForm()
