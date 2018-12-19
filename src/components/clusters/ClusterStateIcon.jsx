@@ -1,3 +1,5 @@
+// ClusterStateIcon matches a cluster state from the API to the matching icon
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'patternfly-react';
@@ -5,23 +7,31 @@ import { Icon } from 'patternfly-react';
 function ClusterStateIcon(props) {
   const { clusterState } = props;
 
-  let icon;
+  let icon = { type: 'pf' };
+  // Icons from http://openshift.github.io/openshift-origin-design/web-console/4.0-designs/status/status
   switch (clusterState) {
-    case 'installing':
     case 'pending':
-      icon = 'in-progress';
+      icon = { type: 'fa', name: 'hourglass-half' };
+      break;
+    case 'installing':
+      icon.name = 'in-progress';
       break;
     case 'error':
-      icon = 'error-circle-o';
+      icon.name = 'error-circle-o';
       break;
     case 'ready':
-      icon = 'ok';
+      icon.name = 'ok';
+      break;
+    case 'uninstalling':
+      icon = { type: 'fa', name: 'ban' };
       break;
     default:
-      icon = 'unknown';
+      icon.name = 'unknown';
   }
+  // patternfly bug workaround: pf icons ignore the `size` prop.
+  // Specifying className='fa-lg' makes them larger too.
   return (
-    <Icon name={icon} type="pf" />);
+    <Icon className="fa-lg" {...icon} />);
 }
 
 ClusterStateIcon.propTypes = {
