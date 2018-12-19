@@ -285,12 +285,6 @@ class ClusterDetails extends Component {
                   {region}
                 </dd>
                 <dt>
-                  Labels
-                </dt>
-                <dd>
-                  N/A
-                </dd>
-                <dt>
                   Provider
                 </dt>
                 <dd>
@@ -302,29 +296,11 @@ class ClusterDetails extends Component {
                 <dd>
                   <dl className="cluster-details-item-list left">
                     <dt>
-                      OS:
-                      {' '}
-                    </dt>
-                    <dd>
-                      {cluster.os_version || 'N/A'}
-                    </dd>
-                  </dl>
-                  <dl className="cluster-details-item-list left">
-                    <dt>
                       OpenShift:
                       {' '}
                     </dt>
                     <dd>
                       {cluster.openshift_version || 'N/A'}
-                    </dd>
-                  </dl>
-                  <dl className="cluster-details-item-list left">
-                    <dt>
-                      Docker:
-                      {' '}
-                    </dt>
-                    <dd>
-                      {cluster.runtime_version || 'N/A'}
                     </dd>
                   </dl>
                 </dd>
