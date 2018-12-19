@@ -67,7 +67,7 @@ function renderClusterStatusIcon(clusterState, id) {
   const tooltip = clusterState; // We might want a different string later, but that's a good start
   return (
     <OverlayTrigger
-      overlay={<Tooltip id={`${id}-status-tooltip`}>{tooltip}</Tooltip>}
+      overlay={<Tooltip style={{ textTransform: 'capitalize' }} id={`${id}-status-tooltip`}>{tooltip}</Tooltip>}
       placement="top"
       trigger={['hover', 'focus']}
       rootClose={false}

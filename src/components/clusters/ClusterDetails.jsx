@@ -341,7 +341,7 @@ class ClusterDetails extends Component {
                 <dt>
                   Status
                 </dt>
-                <dd>
+                <dd style={{ textTransform: 'capitalize' }}>
                   <ClusterStateIcon clusterState={cluster.state} />
                   {' '}
                   {cluster.state}
