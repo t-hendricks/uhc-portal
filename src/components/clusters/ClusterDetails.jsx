@@ -30,6 +30,7 @@ import EditDisplayNameDialog from './forms/EditDisplayNameDialog';
 import { humanizeValueWithUnit } from '../../common/unitParser';
 import { fetchClusterDetails, invalidateClusters } from '../../redux/actions/clusterActions';
 import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
+import RefreshBtn from './RefreshButton';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -189,7 +190,7 @@ class ClusterDetails extends Component {
 
   render() {
     const {
-      cluster, error, pending, cloudProviders,
+      cluster, error, pending, cloudProviders, fetchDetails,
     } = this.props;
     if (error) {
       return this.renderError();
@@ -286,15 +287,16 @@ class ClusterDetails extends Component {
       <div>
         <Grid fluid style={{ marginTop: '20px' }}>
           <Row>
-            <Col sm={1}>
+            <Col sm={2}>
               {backBtn}
+              <RefreshBtn id="refresh" refreshFunc={() => fetchDetails(cluster.id)} />
             </Col>
             <Col sm={2} smOffset={1}>
               <h1 style={{ marginTop: 0 }}>
                 {cluster.name}
               </h1>
             </Col>
-            <Col sm={1} smOffset={5}>
+            <Col sm={1} smOffset={4}>
               {consoleBtn}
             </Col>
             <Col sm={1}>
