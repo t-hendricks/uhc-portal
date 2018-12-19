@@ -38,7 +38,7 @@ function ReduxHorizontalFormGroup(props) {
     helpText,
     meta: { error, touched },
     input,
-    ...extraProps
+    ...extraProps // any extra props not specified above
   } = props;
 
   return (
@@ -62,9 +62,11 @@ ReduxHorizontalFormGroup.propTypes = {
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   // props passed by redux-form
+  // collection of redux-form callbacks to be destructured into an html input element
   input: PropTypes.object.isRequired,
+  // redux-form metadata like error or active states
   meta: PropTypes.object.isRequired,
-  // plus other props to be passed to the field...
+  // plus other props passed from the <Field> component to the control (extraProps, incl. children)…
 };
 
 export default ReduxHorizontalFormGroup;

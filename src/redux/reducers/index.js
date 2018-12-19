@@ -4,9 +4,11 @@ import { clusterReducer } from './clusterReducer';
 import { viewOptionsReducer } from './viewOptionsReducer';
 import userReducer from './userReducer';
 import tollboothReducer from './tollbooth';
+import { cloudProvidersReducer } from './cloudProvidersReducer';
 
 const reducers = {
   cluster: clusterReducer,
+  cloudProviders: cloudProvidersReducer,
   viewOptions: viewOptionsReducer,
   userProfile: userReducer,
   form: formReducer,

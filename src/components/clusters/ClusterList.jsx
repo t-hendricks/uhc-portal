@@ -34,10 +34,12 @@ import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
 import EditDisplayNameDialog from './EditDisplayNameDialog';
 import NumberWithUnit from './NumberWithUnit';
+import ClusterLocationLabel from './ClusterLocationLabel';
 
 import helpers from '../../common/helpers';
 import { viewConstants } from '../../redux/constants';
 import { clusterActions } from '../../redux/actions/clusterActions';
+import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
 import { viewActions } from '../../redux/actions/viewOptionsActions';
 
 const nameColSizes = {
@@ -88,7 +90,9 @@ class ClusterList extends Component {
   }
 
   componentDidMount() {
+    const { getCloudProviders } = this.props;
     this.refresh();
+    getCloudProviders();
   }
 
   componentDidUpdate(prevProps) {
@@ -214,7 +218,6 @@ class ClusterList extends Component {
   renderClusterRow(cluster, index) {
     const provider = cluster.cloud_provider.id || 'N/A';
     const name = cluster.display_name || ''; // This would've been one trenary condition if the backend didn't have omitEmpty on display_name
-    const location = `${provider.toUpperCase()} (${cluster.region.id})`;
     // The trenary for consoleURL is needed because the API does not guarantee fields being present.
     // We'll have a lot of these all over the place as we grow :(
     const consoleURL = cluster.console ? cluster.console.url : false;
@@ -249,7 +252,9 @@ class ClusterList extends Component {
         <Grid.Col {...statColSizes}>
           <NumberWithUnit valueWithUnit={cluster.memory.total} isBytes />
         </Grid.Col>
-        <Grid.Col {...locationColSizes}>{location}</Grid.Col>
+        <Grid.Col {...locationColSizes}>
+          <ClusterLocationLabel regionID={cluster.region.id} cloudProviderID={provider} />
+        </Grid.Col>
         <Grid.Col {...statColSizes}>
           <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
             {consoleMenuItem}
@@ -417,12 +422,14 @@ ClusterList.propTypes = {
   fulfilled: PropTypes.bool.isRequired,
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
+  getCloudProviders: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
   invalidateClusters: () => clusterActions.invalidateClusters(),
   fetchClusters: queryObj => clusterActions.fetchClusters(queryObj),
   setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
+  getCloudProviders: cloudProviderActions.getCloudProviders,
 };
 
 const mapStateToProps = state => Object.assign(

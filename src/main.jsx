@@ -18,6 +18,7 @@ import 'core-js/es6/promise';
 import 'core-js/modules/es6.string.starts-with';
 import 'core-js/modules/es6.string.ends-with';
 import 'core-js/modules/es6.number.is-nan';
+import 'core-js/modules/es7.object.values';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
