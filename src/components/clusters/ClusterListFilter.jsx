@@ -12,7 +12,6 @@ class ClusterListFilter extends React.Component {
     currentValue: '',
   };
 
-
   updateCurrentValue(event) {
     const { setFilter } = this.props;
     this.setState({ currentValue: event.target.value });
@@ -24,7 +23,7 @@ class ClusterListFilter extends React.Component {
   render() {
     const { currentValue } = this.state;
     return (
-      <Filter>
+      <Filter className="pull-right cluster-list-top">
         <FormControl
           type="text"
           value={currentValue}

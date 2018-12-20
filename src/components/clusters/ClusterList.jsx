@@ -33,6 +33,7 @@ import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
 import NumberWithUnit from './NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
+import RefreshBtn from './RefreshButton';
 
 import CreateClusterForm from './forms/CreateClusterForm';
 import EditClusterDialog from './forms/EditClusterDialog';
@@ -84,6 +85,12 @@ function renderClusterStatusIcon(clusterState, id) {
 
 
 class ClusterList extends Component {
+  constructor() {
+    super();
+    // refresh needs to be bound because it is passed to another componenet
+    this.refresh = this.refresh.bind(this);
+  }
+
   state = {
     clusterCreationFormVisible: false,
     editClusterDialogVisible: false,
@@ -165,8 +172,8 @@ class ClusterList extends Component {
 
   renderCreateClusterButton() {
     return (
-      <Button bsStyle="primary" bsSize="large" onClick={() => { this.setCreationFormState(true); }}>
-        Create
+      <Button className="cluster-list-top" bsStyle="primary" bsSize="large" onClick={() => { this.setCreationFormState(true); }}>
+        Create Cluster
       </Button>
     );
   }
@@ -430,8 +437,8 @@ class ClusterList extends Component {
 
     return (
       <div className="cluster-list">
-        <h1>Clusters</h1>
         <Grid fluid style={{ padding: 0 }}>
+          <Row><Col sm={1}><h1>Clusters</h1></Col></Row>
           <Row>
             <Col sm={1}>
               {this.renderCreateClusterButton()}
@@ -439,7 +446,8 @@ class ClusterList extends Component {
             <Col sm={1}>
               {pending ? <Spinner loading /> : null}
             </Col>
-            <Col sm={2} smOffset={7}>
+            <Col sm={2} smOffset={8}>
+              <RefreshBtn id="refresh" refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
               <ClusterListFilter />
             </Col>
           </Row>
