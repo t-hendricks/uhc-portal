@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Redirect } from 'react-router';
 import {
-  Button, Icon, Form, Modal, Alert, HintBlock, Grid, Row, Col,
+  Button, Icon, Form, Modal, Alert, HintBlock, Grid, Row, Col, Spinner,
 } from 'patternfly-react';
 import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
 import CloudRegionComboBox from '../CloudRegionComboBox';
@@ -57,6 +57,16 @@ function CreateClusterForm(props) {
       </Alert>
     );
   }
+
+  const loadingSpinner = () => (
+    <div className="form-loading-spinner">
+      <span>
+      Do not refresh this page. This request may take a moment...
+      </span>
+      <Spinner size="xs" loading inline />
+    </div>
+  );
+
   return (
     <React.Fragment>
       <Modal.Header>
@@ -69,7 +79,10 @@ function CreateClusterForm(props) {
       </Modal.Header>
 
       <Modal.Body>
-        <Form horizontal>
+        <Form
+          loading={createClusterResponse.pending}
+          disabled={createClusterResponse.pending}
+        >
           {errorContainer}
           {/* This HintBlock was requested by KB,
             please don't remove until we implement the deletion dialog */}
@@ -89,6 +102,7 @@ function CreateClusterForm(props) {
                   type="password"
                   placeholder="AWS access key ID"
                   validate={validators.required}
+                  disabled={createClusterResponse.pending}
                 />
 
                 <Field
@@ -98,6 +112,7 @@ function CreateClusterForm(props) {
                   type="password"
                   placeholder="AWS secret access key"
                   validate={validators.required}
+                  disabled={createClusterResponse.pending}
                 />
               </Col>
               <Col sm={4}>
@@ -127,6 +142,7 @@ function CreateClusterForm(props) {
                   label="Cluster name"
                   type="text"
                   validate={validators.checkClusterName}
+                  disabled={createClusterResponse.pending}
                 />
 
                 <Field
@@ -135,6 +151,7 @@ function CreateClusterForm(props) {
                   label="Base DNS domain"
                   type="text"
                   validate={validators.checkBaseDNSDomain}
+                  disabled={createClusterResponse.pending}
                 />
 
                 <Field
@@ -143,6 +160,7 @@ function CreateClusterForm(props) {
                   label="Compute nodes"
                   type="number"
                   min="1"
+                  disabled={createClusterResponse.pending}
                 />
 
                 <Field
@@ -152,11 +170,13 @@ function CreateClusterForm(props) {
                   componentClass={CloudRegionComboBox}
                   cloudProviderID="aws"
                   validate={validators.required}
+                  disabled={createClusterResponse.pending}
                 />
                 <Field
                   component={ReduxCheckbox}
                   name="multi_az"
                   label="Deploy on multiple availability zones"
+                  disabled={createClusterResponse.pending}
                 />
               </Col>
               <Col sm={4}>
@@ -197,12 +217,13 @@ function CreateClusterForm(props) {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button bsStyle="primary" type="submit" onClick={handleSubmit}>
+        <Button bsStyle="primary" type="submit" onClick={handleSubmit} disabled={createClusterResponse.pending}>
           Create
         </Button>
-        <Button bsStyle="default" onClick={closeFunc}>
+        <Button bsStyle="default" onClick={closeFunc} disabled={createClusterResponse.pending}>
           Cancel
         </Button>
+        {createClusterResponse.pending ? loadingSpinner() : null}
       </Modal.Footer>
     </React.Fragment>
   );
