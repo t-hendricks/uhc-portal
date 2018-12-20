@@ -37,6 +37,13 @@ const editCluster = (id, data) => axios(
   }),
 );
 
+const deleteCluster = id => axios(
+  serviceConfig({
+    method: 'delete',
+    url: `/api/clusters_mgmt/v1/clusters/${id}`,
+  }),
+);
+
 const getCloudProviders = () => axios(
   serviceConfig({
     method: 'get',
@@ -61,6 +68,7 @@ const clusterService = {
   editCluster,
   getCloudProviders,
   getCloudRegions,
+  deleteCluster,
 };
 
 export default clusterService;

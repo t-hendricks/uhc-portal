@@ -6,10 +6,10 @@ import {
   Button, Icon, Form, Modal, Alert, Grid, Col, Row,
 } from 'patternfly-react';
 
-import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
-import { editCluster, clearClusterResponse } from '../../../redux/actions/clusterActions';
+import ReduxVerticalFormGroup from '../../clusters/ReduxVerticalFormGroup';
+import { editCluster, clearClusterResponse } from '../../../redux/actions/clustersActions';
 
-function EditClusterDialog(props) {
+function EditDisplayNameDialog(props) {
   // handleSubmit comes from reduxForm()
   const {
     closeFunc, handleSubmit, editClusterResponse, resetResponse,
@@ -49,7 +49,7 @@ function EditClusterDialog(props) {
           <Icon type="pf" name="close" />
         </button>
         <Modal.Title>
-          Edit Cluster
+          Edit Display Name
         </Modal.Title>
       </Modal.Header>
 
@@ -61,26 +61,9 @@ function EditClusterDialog(props) {
                 {errorContainer}
                 <Field
                   component={ReduxVerticalFormGroup}
-                  name="nodes_master"
-                  label="Master nodes"
-                  type="number"
-                  min="1"
-                />
-
-                <Field
-                  component={ReduxVerticalFormGroup}
-                  name="nodes_infra"
-                  label="Infra nodes"
-                  type="number"
-                  min="2"
-                />
-
-                <Field
-                  component={ReduxVerticalFormGroup}
-                  name="nodes_compute"
-                  label="Compute nodes"
-                  type="number"
-                  min="1"
+                  name="display_name"
+                  label="Cluster name"
+                  type="text"
                 />
               </Col>
             </Row>
@@ -100,39 +83,33 @@ function EditClusterDialog(props) {
   );
 }
 
-EditClusterDialog.propTypes = {
+EditDisplayNameDialog.propTypes = {
   closeFunc: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   resetResponse: PropTypes.func.isRequired,
   editClusterResponse: PropTypes.object,
 };
 const reduxFormConfig = {
-  form: 'EditCluster',
+  form: 'EditDisplayName',
 };
-const reduxFormEditCluster = reduxForm(reduxFormConfig)(EditClusterDialog);
+const reduxFormEditDisplayName = reduxForm(reduxFormConfig)(EditDisplayNameDialog);
 
 const mapStateToProps = (state, props) => ({
-  editClusterResponse: state.cluster.editedCluster,
+  editClusterResponse: state.clusters.editedCluster,
   initialValues: {
     id: props.cluster.id,
-    nodes_master: props.cluster.nodes.master,
-    nodes_infra: props.cluster.nodes.infra,
-    nodes_compute: props.cluster.nodes.compute,
+    display_name: props.cluster.display_name,
   },
 });
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: (formData) => {
     const clusterRequest = {
-      nodes: {
-        master: parseInt(formData.nodes_master, 10),
-        infra: parseInt(formData.nodes_infra, 10),
-        compute: parseInt(formData.nodes_compute, 10),
-      },
+      display_name: formData.display_name,
     };
     dispatch(editCluster(formData.id, clusterRequest));
   },
   resetResponse: () => dispatch(clearClusterResponse()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxFormEditCluster);
+export default connect(mapStateToProps, mapDispatchToProps)(reduxFormEditDisplayName);

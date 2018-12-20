@@ -24,11 +24,13 @@ import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
 import Timestamp from '../Timestamp';
 
-import EditClusterDialog from './forms/EditClusterDialog';
-import EditDisplayNameDialog from './forms/EditDisplayNameDialog';
+import EditClusterDialog from '../cluster/forms/EditClusterDialog';
+import EditDisplayNameDialog from '../cluster/forms/EditDisplayNameDialog';
+import DeleteClusterDialog from '../cluster/forms/DeleteClusterDialog';
+
 
 import { humanizeValueWithUnit } from '../../common/unitParser';
-import { fetchClusterDetails, invalidateClusters } from '../../redux/actions/clusterActions';
+import { fetchClusterDetails, invalidateClusters } from '../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
 import RefreshBtn from './RefreshButton';
 
@@ -39,6 +41,7 @@ class ClusterDetails extends Component {
       clusterCreationFormVisible: false,
       editClusterDialogVisible: false,
       editDisplayNameDialogVisible: false,
+      deleteClusterDialogVisible: false,
     };
   }
 
@@ -85,6 +88,15 @@ class ClusterDetails extends Component {
         editDisplayNameDialogVisible: false,
       }));
   }
+
+  openDeleteClusterDialog() {
+    this.setState(prevState => (
+      {
+        ...prevState,
+        deleteClusterDialogVisible: true,
+      }));
+  }
+
 
   renderPendingMessage() {
     const { pending } = this.props;
@@ -136,6 +148,30 @@ class ClusterDetails extends Component {
               {
                 ...prevState,
                 editDisplayNameDialogVisible: false,
+              }));
+            if (updated) {
+              invalidateClusters();
+            }
+          }}
+        />
+      </Modal>
+    );
+  }
+
+  renderDeleteClusterDialog(cluster) {
+    const {
+      deleteClusterDialogVisible,
+    } = this.state;
+    return (
+      <Modal show={deleteClusterDialogVisible}>
+        <DeleteClusterDialog
+          clusterID={cluster.id}
+          clusterName={cluster.name}
+          closeFunc={(updated) => {
+            this.setState(prevState => (
+              {
+                ...prevState,
+                deleteClusterDialogVisible: false,
               }));
             if (updated) {
               invalidateClusters();
@@ -271,6 +307,10 @@ class ClusterDetails extends Component {
       <MenuItem onClick={() => this.openEditDisplayNameDialog(cluster)}>
         Edit Display Name
       </MenuItem>);
+    const deleteDisplayNameItem = (
+      <MenuItem onClick={() => this.openDeleteClusterDialog(cluster)}>
+          Delete Cluster
+      </MenuItem>);
 
     const actionsBtn = (
       <DropdownButton
@@ -280,6 +320,7 @@ class ClusterDetails extends Component {
       >
         {editDisplayNameItem}
         {editClusterItem}
+        {deleteDisplayNameItem}
       </DropdownButton>
     );
 
@@ -427,6 +468,7 @@ class ClusterDetails extends Component {
         </Grid>
         {this.renderEditClusterDialog()}
         {this.renderEditDisplayNameDialog()}
+        {this.renderDeleteClusterDialog(cluster)}
       </div>);
   }
 }
@@ -451,7 +493,7 @@ ClusterDetails.defaultProps = {
 
 const mapStateToProps = state => Object.assign(
   {},
-  state.cluster.details,
+  state.clusters.details,
   { cloudProviders: state.cloudProviders.cloudProviders },
 );
 

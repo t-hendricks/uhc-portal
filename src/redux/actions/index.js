@@ -1,9 +1,9 @@
-import clusterActions from './clusterActions';
-import userActions from './userActions';
-import tollboothActions from './tollbooth';
+import { clustersActions } from './clustersActions';
+import { userActions } from './userActions';
+import { tollboothActions } from './tollbooth';
 
 export {
-  clusterActions,
+  clustersActions,
   userActions,
   tollboothActions,
 };

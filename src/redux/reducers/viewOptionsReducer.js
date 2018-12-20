@@ -1,6 +1,6 @@
 import helpers from '../../common/helpers';
 import {
-  clusterConstants,
+  clustersConstants,
   viewConstants,
   viewPaginationConstants,
 } from '../constants';
@@ -89,7 +89,7 @@ const viewOptionsReducer = (state = initialState, action) => {
       });
       return Object.assign({}, state, updateState);
 
-    case helpers.FULFILLED_ACTION(clusterConstants.GET_CLUSTERS):
+    case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
       updatePageCounts(viewConstants.CLUSTERS_VIEW, action.payload.data.total);
       return Object.assign({}, state, updateState);
 

@@ -35,13 +35,14 @@ import NumberWithUnit from './NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
 import RefreshBtn from './RefreshButton';
 
-import CreateClusterForm from './forms/CreateClusterForm';
-import EditClusterDialog from './forms/EditClusterDialog';
-import EditDisplayNameDialog from './forms/EditDisplayNameDialog';
+import CreateClusterForm from '../cluster/forms/CreateClusterForm';
+import EditClusterDialog from '../cluster/forms/EditClusterDialog';
+import EditDisplayNameDialog from '../cluster/forms/EditDisplayNameDialog';
+import DeleteClusterDialog from '../cluster/forms/DeleteClusterDialog';
 
 import helpers from '../../common/helpers';
 import { viewConstants } from '../../redux/constants';
-import { clusterActions } from '../../redux/actions/clusterActions';
+import { clustersActions } from '../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
 import { viewActions } from '../../redux/actions/viewOptionsActions';
 
@@ -105,6 +106,9 @@ class ClusterList extends Component {
   state = {
     clusterCreationFormVisible: false,
     editClusterDialogVisible: false,
+    deleteClusterDialogVisible: false,
+    deleteClusterClusterID: '',
+    deleteClusterClusterName: '',
   }
 
   componentDidMount() {
@@ -153,6 +157,16 @@ class ClusterList extends Component {
         editCluster: cluster,
         editClusterDialogVisible: true,
         editDisplayNameDialogVisible: false,
+      }));
+  }
+
+  openDeleteClusterDialog(clusterID, clusterName) {
+    this.setState(prevState => (
+      {
+        ...prevState,
+        deleteClusterDialogVisible: true,
+        deleteClusterClusterID: clusterID,
+        deleteClusterClusterName: clusterName,
       }));
   }
 
@@ -250,6 +264,33 @@ class ClusterList extends Component {
     );
   }
 
+  renderDeleteClusterDialog() {
+    const {
+      deleteClusterDialogVisible,
+      deleteClusterClusterID,
+      deleteClusterClusterName,
+    } = this.state;
+    return (
+      <Modal show={deleteClusterDialogVisible}>
+        <DeleteClusterDialog
+          clusterID={deleteClusterClusterID}
+          clusterName={deleteClusterClusterName}
+          closeFunc={(updated) => {
+            this.setState(prevState => (
+              {
+                ...prevState,
+                deleteClusterDialogVisible: false,
+              }));
+            if (updated) {
+              const { invalidateClusters } = this.props;
+              invalidateClusters();
+            }
+          }}
+        />
+      </Modal>
+    );
+  }
+
   renderError() {
     const { errorMessage } = this.props;
     return (
@@ -290,6 +331,14 @@ class ClusterList extends Component {
         Edit Display Name
       </MenuItem>);
 
+    const deleteClusterItem = (
+      <MenuItem onClick={
+        () => this.openDeleteClusterDialog(cluster.id, cluster.name)
+        }
+      >
+        Delete Cluster
+      </MenuItem>);
+
     return (
       <TableGrid.Row key={index}>
         <Grid.Col {...nameColSizes}>
@@ -322,6 +371,7 @@ class ClusterList extends Component {
             {consoleMenuItem}
             {editDisplayNameItem}
             {editClusterItem}
+            {deleteClusterItem}
           </DropdownKebab>
         </Grid.Col>
       </TableGrid.Row>
@@ -469,6 +519,7 @@ class ClusterList extends Component {
         {this.renderClusterCreationForm()}
         {this.renderEditClusterDialog()}
         {this.renderEditDisplayNameDialog()}
+        {this.renderDeleteClusterDialog()}
       </div>
     );
   }
@@ -489,15 +540,15 @@ ClusterList.propTypes = {
 };
 
 const mapDispatchToProps = {
-  invalidateClusters: () => clusterActions.invalidateClusters(),
-  fetchClusters: queryObj => clusterActions.fetchClusters(queryObj),
+  invalidateClusters: () => clustersActions.invalidateClusters(),
+  fetchClusters: queryObj => clustersActions.fetchClusters(queryObj),
   setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
   getCloudProviders: cloudProviderActions.getCloudProviders,
 };
 
 const mapStateToProps = state => Object.assign(
   {},
-  state.cluster.clusters,
+  state.clusters.clusters,
   { viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW] },
 );
 

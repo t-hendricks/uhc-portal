@@ -12,6 +12,6 @@ const tollboothActions = {
 };
 
 export {
-  tollboothActions as default,
+  tollboothActions,
   ACTION_TYPE,
 };

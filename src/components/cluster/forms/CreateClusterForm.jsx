@@ -22,11 +22,11 @@ import { Redirect } from 'react-router';
 import {
   Button, Icon, Form, Modal, Alert, HintBlock, Grid, Row, Col,
 } from 'patternfly-react';
-import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
-import CloudRegionComboBox from '../CloudRegionComboBox';
-import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clusterActions';
+import ReduxVerticalFormGroup from '../../clusters/ReduxVerticalFormGroup';
+import CloudRegionComboBox from '../../clusters/CloudRegionComboBox';
+import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import validators from '../../../common/validators';
-import ReduxCheckbox from '../ReduxCheckbox';
+import ReduxCheckbox from '../../clusters/ReduxCheckbox';
 
 function CreateClusterForm(props) {
   // handleSubmit comes from reduxForm()
@@ -71,13 +71,6 @@ function CreateClusterForm(props) {
       <Modal.Body>
         <Form horizontal>
           {errorContainer}
-          {/* This HintBlock was requested by KB,
-            please don't remove until we implement the deletion dialog */}
-          <HintBlock
-            title="Note"
-            body="At the moment, clusters created here can only be deleted via the API."
-            className="create-cluster-hint"
-          />
           <Grid>
             <Row>
               <h3>Step 1: Cloud Provider Credentials</h3>
@@ -220,7 +213,7 @@ const reduxFormConfig = {
 const reduxFormCreateCluster = reduxForm(reduxFormConfig)(CreateClusterForm);
 
 const mapStateToProps = state => ({
-  createClusterResponse: state.cluster.createdCluster,
+  createClusterResponse: state.clusters.createdCluster,
   initialValues: {
     name: '',
     nodes_compute: '4',
