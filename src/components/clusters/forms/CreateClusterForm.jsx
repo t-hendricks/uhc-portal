@@ -138,22 +138,6 @@ function CreateClusterForm(props) {
 
                 <Field
                   component={ReduxVerticalFormGroup}
-                  name="nodes_master"
-                  label="Master nodes"
-                  type="number"
-                  min="1"
-                />
-
-                <Field
-                  component={ReduxVerticalFormGroup}
-                  name="nodes_infra"
-                  label="Infra nodes"
-                  type="number"
-                  min="2"
-                />
-
-                <Field
-                  component={ReduxVerticalFormGroup}
                   name="nodes_compute"
                   label="Compute nodes"
                   type="number"
@@ -234,8 +218,6 @@ const mapStateToProps = state => ({
   createClusterResponse: state.cluster.createdCluster,
   initialValues: {
     name: '',
-    nodes_master: '1',
-    nodes_infra: '2',
     nodes_compute: '4',
     dns_base_domain: '',
     aws_access_key_id: '',
@@ -256,8 +238,6 @@ const mapDispatchToProps = dispatch => ({
         id: '4',
       },
       nodes: {
-        master: parseInt(formData.nodes_master, 10),
-        infra: parseInt(formData.nodes_infra, 10),
         compute: parseInt(formData.nodes_compute, 10),
       },
       dns: {
