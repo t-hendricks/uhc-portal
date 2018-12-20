@@ -83,6 +83,17 @@ function renderClusterStatusIcon(clusterState, id) {
     </OverlayTrigger>);
 }
 
+function renderClusterType(clusterDedicated, id) {
+  return (
+    <OverlayTrigger
+      overlay={<Tooltip id={`${id}-type-tooltip`}>{clusterDedicated ? 'OpenShift Dedicated (OSD) cluster managed by Red Hat' : 'Self-managed OpenShift Container Platform (OCP) cluster'}</Tooltip>}
+      placement="top"
+      trigger={['hover', 'focus']}
+      rootClose={false}
+    >
+      <span>{clusterDedicated ? 'Dedicated' : 'Self-managed'}</span>
+    </OverlayTrigger>);
+}
 
 class ClusterList extends Component {
   constructor() {
@@ -291,7 +302,9 @@ class ClusterList extends Component {
         <Grid.Col {...statusColSizes}>
           {renderClusterStatusIcon(cluster.state, cluster.id)}
         </Grid.Col>
-        <Grid.Col {...statColSizes}>Red Hat</Grid.Col>
+        <Grid.Col {...statColSizes}>
+          {renderClusterType(cluster.dedicated, cluster.id)}
+        </Grid.Col>
         <Grid.Col {...statColSizes}>
           <NumberWithUnit valueWithUnit={cluster.cpu.total} unit="vCPU" />
         </Grid.Col>
@@ -344,12 +357,12 @@ class ClusterList extends Component {
               Status
             </TableGrid.ColumnHeader>
             <TableGrid.ColumnHeader
-              id="managed"
+              id="type"
               isSorted={false}
               isAscending
               {...statColSizes}
             >
-              Managed
+              Type
             </TableGrid.ColumnHeader>
             <TableGrid.ColumnHeader
               id="cpu"
