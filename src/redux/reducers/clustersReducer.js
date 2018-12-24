@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import helpers from '../../common/helpers';
-import { clusterConstants } from '../constants';
+import { clustersConstants } from '../constants';
 
 const initialState = {
   clusters: {
@@ -48,9 +48,9 @@ const initialState = {
   },
 };
 
-function clusterReducer(state = initialState, action) {
+function clustersReducer(state = initialState, action) {
   switch (action.type) {
-    case helpers.INVALIDATE_ACTION(clusterConstants.GET_CLUSTERS):
+    case helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS):
       return helpers.setStateProp(
         'clusters',
         {
@@ -62,7 +62,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.REJECTED_ACTION(clusterConstants.GET_CLUSTERS):
+    case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTERS):
       return helpers.setStateProp(
         'clusters',
         {
@@ -77,7 +77,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(clusterConstants.GET_CLUSTERS):
+    case helpers.PENDING_ACTION(clustersConstants.GET_CLUSTERS):
       return helpers.setStateProp(
         'clusters',
         {
@@ -90,7 +90,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(clusterConstants.GET_CLUSTERS):
+    case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
       return helpers.setStateProp(
         'clusters',
         {
@@ -105,7 +105,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.REJECTED_ACTION(clusterConstants.GET_CLUSTER_DETAILS):
+    case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
       return helpers.setStateProp(
         'details',
         {
@@ -119,7 +119,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(clusterConstants.GET_CLUSTER_DETAILS):
+    case helpers.PENDING_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
       return helpers.setStateProp(
         'details',
         {
@@ -132,7 +132,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(clusterConstants.GET_CLUSTER_DETAILS):
+    case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
       return helpers.setStateProp(
         'details',
         {
@@ -146,7 +146,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.REJECTED_ACTION(clusterConstants.CREATE_CLUSTER):
+    case helpers.REJECTED_ACTION(clustersConstants.CREATE_CLUSTER):
       return helpers.setStateProp(
         'createdCluster',
         {
@@ -160,7 +160,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(clusterConstants.CREATE_CLUSTER):
+    case helpers.PENDING_ACTION(clustersConstants.CREATE_CLUSTER):
       return helpers.setStateProp(
         'createdCluster',
         {
@@ -173,7 +173,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(clusterConstants.CREATE_CLUSTER):
+    case helpers.FULFILLED_ACTION(clustersConstants.CREATE_CLUSTER):
       return helpers.setStateProp(
         'createdCluster',
         {
@@ -187,7 +187,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.REJECTED_ACTION(clusterConstants.EDIT_CLUSTER_DISPLAY_NAME):
+    case helpers.REJECTED_ACTION(clustersConstants.EDIT_CLUSTER_DISPLAY_NAME):
       return helpers.setStateProp(
         'editedCluster',
         {
@@ -201,7 +201,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(clusterConstants.EDIT_CLUSTER_DISPLAY_NAME):
+    case helpers.PENDING_ACTION(clustersConstants.EDIT_CLUSTER_DISPLAY_NAME):
       return helpers.setStateProp(
         'editedCluster',
         {
@@ -214,7 +214,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(clusterConstants.EDIT_CLUSTER_DISPLAY_NAME):
+    case helpers.FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER_DISPLAY_NAME):
       return helpers.setStateProp(
         'editedCluster',
         {
@@ -228,7 +228,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case clusterConstants.CLEAR_DISPLAY_NAME_RESPONSE:
+    case clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE:
       return helpers.setStateProp(
         'editedCluster',
         initialState.editedCluster,
@@ -238,7 +238,7 @@ function clusterReducer(state = initialState, action) {
         },
       );
 
-    case clusterConstants.RESET_CREATED_CLUSTER_RESPONSE:
+    case clustersConstants.RESET_CREATED_CLUSTER_RESPONSE:
       return helpers.setStateProp(
         'createdCluster',
         initialState.createdCluster,
@@ -253,8 +253,8 @@ function clusterReducer(state = initialState, action) {
   }
 }
 
-clusterReducer.initialState = initialState;
+clustersReducer.initialState = initialState;
 
-export { initialState, clusterReducer };
+export { initialState, clustersReducer };
 
-export default clusterReducer;
+export default clustersReducer;

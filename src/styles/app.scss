@@ -148,6 +148,21 @@ limitations under the License.
   margin-bottom: 40px;
 }
 
+#deleteClusterHint {
+  margin-top: 20px
+}
+
+#deleteCluster span {
+  font-weight: 700;
+}
+
+#deleteClusterBtn .spinner {
+  top: 2px;
+  left: 1px;
+  width: 15px;
+  height: 15px;
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

@@ -13,16 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { clusterConstants } from '../constants';
+import { clustersConstants } from '../constants';
 import { clusterService } from '../../services';
 import helpers from '../../common/helpers';
 
 const invalidateClusters = () => dispatch => dispatch({
-  type: helpers.INVALIDATE_ACTION(clusterConstants.GET_CLUSTERS),
+  type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
 });
 
 const createCluster = params => dispatch => dispatch({
-  type: clusterConstants.CREATE_CLUSTER,
+  type: clustersConstants.CREATE_CLUSTER,
   payload: clusterService.postNewCluster(params).then((response) => {
     // TODO: this artificially delays CREATE_CLUSTER_FULLFILLED action
     // until after the INVALIDATE action.
@@ -32,30 +32,30 @@ const createCluster = params => dispatch => dispatch({
 });
 
 const clearClusterResponse = () => dispatch => dispatch({
-  type: clusterConstants.CLEAR_DISPLAY_NAME_RESPONSE,
+  type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
 });
 
 const editCluster = (id, cluster) => dispatch => dispatch({
-  type: clusterConstants.EDIT_CLUSTER_DISPLAY_NAME,
+  type: clustersConstants.EDIT_CLUSTER_DISPLAY_NAME,
   payload: clusterService.editCluster(id, cluster),
 });
 
 
 const fetchClusters = params => dispatch => dispatch({
-  type: clusterConstants.GET_CLUSTERS,
+  type: clustersConstants.GET_CLUSTERS,
   payload: clusterService.getClusters(params),
 });
 
 const fetchClusterDetails = clusterID => dispatch => dispatch({
-  type: clusterConstants.GET_CLUSTER_DETAILS,
+  type: clustersConstants.GET_CLUSTER_DETAILS,
   payload: clusterService.getClusterDetails(clusterID),
 });
 
 const resetCreatedClusterResponse = () => dispatch => dispatch({
-  type: clusterConstants.RESET_CREATED_CLUSTER_RESPONSE,
+  type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
 });
 
-const clusterActions = {
+const clustersActions = {
   clearClusterResponse,
   createCluster,
   editCluster,
@@ -66,6 +66,6 @@ const clusterActions = {
 };
 
 export {
-  clusterActions, createCluster, editCluster, fetchClusters, fetchClusterDetails,
+  clustersActions, createCluster, editCluster, fetchClusters, fetchClusterDetails,
   invalidateClusters, clearClusterResponse, resetCreatedClusterResponse,
 };

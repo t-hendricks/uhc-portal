@@ -30,5 +30,4 @@ const getCloudProviders = () => dispatch => dispatch({
 
 const cloudProviderActions = { getCloudProviders };
 
-export { getCloudProviders, cloudProviderActions };
-export default cloudProviderActions;
+export { cloudProviderActions, getCloudProviders };
