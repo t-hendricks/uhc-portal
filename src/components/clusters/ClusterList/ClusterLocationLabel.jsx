@@ -4,7 +4,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
+import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 
 class ClusterLocationLabel extends React.Component {
   componentDidMount() {
