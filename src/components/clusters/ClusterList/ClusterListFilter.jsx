@@ -2,8 +2,8 @@ import React from 'react';
 import { Filter, FormControl } from 'patternfly-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as viewActions from '../../redux/actions/viewOptionsActions';
-import { viewConstants } from '../../redux/constants';
+import * as viewActions from '../../../redux/actions/viewOptionsActions';
+import { viewConstants } from '../../../redux/constants';
 
 
 class ClusterListFilter extends React.Component {

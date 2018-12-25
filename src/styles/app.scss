@@ -229,3 +229,15 @@ limitations under the License.
   padding-top: 20px;
   padding-bottom: 10px;
 }
+
+  .cluster-list-emptystate-options h2 {
+  font-weight: 600;
+}
+
+.cluster-list-emptystate-options {
+  margin-top: 40px;
+}
+
+.cluster-list-emptystate-options > :first-child {
+  border-right: 1px solid lightgray;
+}

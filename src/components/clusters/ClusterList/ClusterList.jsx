@@ -28,23 +28,24 @@ import {
 import { TableGrid } from 'patternfly-react-extensions';
 
 import ClusterListFilter from './ClusterListFilter';
-import ViewPaginationRow from './viewPaginationRow';
-import LoadingModal from './LoadingModal';
-import ClusterStateIcon from './ClusterStateIcon';
-import NumberWithUnit from './NumberWithUnit';
+import ClusterListEmptyState from './ClusterListEmptyState';
+import ViewPaginationRow from '../viewPaginationRow';
+import LoadingModal from '../LoadingModal';
+import ClusterStateIcon from '../ClusterStateIcon';
+import NumberWithUnit from '../NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
-import RefreshBtn from './RefreshButton';
+import RefreshBtn from '../RefreshButton';
 
-import CreateClusterForm from '../cluster/forms/CreateClusterForm';
-import EditClusterDialog from '../cluster/forms/EditClusterDialog';
-import EditDisplayNameDialog from '../cluster/forms/EditDisplayNameDialog';
-import DeleteClusterDialog from '../cluster/forms/DeleteClusterDialog';
+import CreateClusterForm from '../../cluster/forms/CreateClusterForm';
+import EditClusterDialog from '../../cluster/forms/EditClusterDialog';
+import EditDisplayNameDialog from '../../cluster/forms/EditDisplayNameDialog';
+import DeleteClusterDialog from '../../cluster/forms/DeleteClusterDialog';
 
-import helpers from '../../common/helpers';
-import { viewConstants } from '../../redux/constants';
-import { clustersActions } from '../../redux/actions/clustersActions';
-import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
-import { viewActions } from '../../redux/actions/viewOptionsActions';
+import helpers from '../../../common/helpers';
+import { viewConstants } from '../../../redux/constants';
+import { clustersActions } from '../../../redux/actions/clustersActions';
+import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
+import { viewActions } from '../../../redux/actions/viewOptionsActions';
 
 const nameColSizes = {
   md: 4,
@@ -476,22 +477,7 @@ class ClusterList extends Component {
     if (!size(clusters) && !pending && isEmpty(viewOptions.filter)) {
       return (
         <React.Fragment>
-          <Grid fluid>
-            <Row>
-              <EmptyState className="full-page-blank-slate">
-                <EmptyState.Icon />
-                <EmptyState.Title>
-                  No Clusters Exists
-                </EmptyState.Title>
-                <EmptyState.Info>
-                  There are no clusters to display. Create a cluster to get started.
-                </EmptyState.Info>
-                <EmptyState.Action>
-                  {this.renderCreateClusterButton()}
-                </EmptyState.Action>
-              </EmptyState>
-            </Row>
-          </Grid>
+          <ClusterListEmptyState showCreationForm={() => { this.setCreationFormState(true); }} />
           {this.renderClusterCreationForm()}
           {this.renderPendingMessage()}
         </React.Fragment>
