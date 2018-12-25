@@ -392,7 +392,13 @@ class ClusterDetails extends Component {
                   Created at
                 </dt>
                 <dd>
-                  <Timestamp value={cluster.creation_timestamp} />
+                  <Timestamp value={cluster.creation_timestamp || ''} />
+                </dd>
+                <dt>
+                  Last Update
+                </dt>
+                <dd>
+                  <Timestamp value={cluster.last_update_date || ''} />
                 </dd>
               </dl>
             </Col>
