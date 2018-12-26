@@ -398,7 +398,7 @@ class ClusterDetails extends Component {
                   Last Update
                 </dt>
                 <dd>
-                  <Timestamp value={cluster.last_update_date || ''} />
+                  <Timestamp value={cluster.last_update_timestamp || ''} />
                 </dd>
               </dl>
             </Col>
