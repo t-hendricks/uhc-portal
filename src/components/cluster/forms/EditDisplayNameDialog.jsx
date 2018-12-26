@@ -17,7 +17,7 @@ function EditDisplayNameDialog(props) {
 
   const cancelEdit = () => {
     resetResponse();
-    closeFunc(true);
+    closeFunc(false);
   };
 
   if (editClusterResponse.fulfilled) {
@@ -45,7 +45,7 @@ function EditDisplayNameDialog(props) {
   return (
     <React.Fragment>
       <Modal.Header>
-        <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={closeFunc}>
+        <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={cancelEdit}>
           <Icon type="pf" name="close" />
         </button>
         <Modal.Title>
