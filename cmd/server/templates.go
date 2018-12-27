@@ -37,6 +37,7 @@ LoadModule authz_core_module /usr/lib64/httpd/modules/mod_authz_core.so
 LoadModule rewrite_module /usr/lib64/httpd/modules/mod_rewrite.so
 LoadModule alias_module /usr/lib64/httpd/modules/mod_alias.so
 LoadModule mime_module /usr/lib64/httpd/modules/mod_mime.so
+LoadModule status_module /usr/lib64/httpd/modules/mod_status.so
 
 # Load MIME types:
 TypesConfig /etc/mime.types
@@ -78,6 +79,11 @@ Alias /config {{ .ConfigDir }}
 LogLevel warn
 ErrorLog /dev/stdout
 TransferLog /dev/stdout
+
+<Location "/server-status">
+  SetHandler server-status
+  Require  host  localhost
+</Location>
 `
 
 // This is the template to generate the 'config.json' file.
