@@ -34,6 +34,7 @@ LoadModule dir_module /usr/lib64/httpd/modules/mod_dir.so
 LoadModule log_config_module /usr/lib64/httpd/modules/mod_log_config.so
 LoadModule authn_core_module /usr/lib64/httpd/modules/mod_authn_core.so
 LoadModule authz_core_module /usr/lib64/httpd/modules/mod_authz_core.so
+LoadModule authz_host_module /usr/lib64/httpd/modules/mod_authz_host.so
 LoadModule rewrite_module /usr/lib64/httpd/modules/mod_rewrite.so
 LoadModule alias_module /usr/lib64/httpd/modules/mod_alias.so
 LoadModule mime_module /usr/lib64/httpd/modules/mod_mime.so
