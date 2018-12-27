@@ -61,6 +61,7 @@ DocumentRoot /var/www/html
   # index page of the application:
   RewriteEngine On
   RewriteBase /
+  RewriteRule ^server-status$ - [L]
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
