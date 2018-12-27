@@ -118,9 +118,10 @@ objects:
           - --terraform-install-url=${TERRAFORM_INSTALL_URL}
           - --command-line-tools-url=${COMMAND_LINE_TOOLS_URL}
           livenessProbe:
-            httpGet:
-              path: /server-status
-              port: 8000
+            exec:
+              command:
+              - curl
+              - localhost:8000/server-status
             initialDelaySeconds: 5
             periodSeconds: 3
           readinessProbe:
