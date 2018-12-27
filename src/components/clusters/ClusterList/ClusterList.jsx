@@ -346,7 +346,12 @@ class ClusterList extends Component {
           <Link to={`/cluster/${cluster.id}`}>
             {/* we need to trim the display name,
              to avoid cases where a cluster name would be only spaces */}
-            {name.trim() !== '' ? name : cluster.name}
+            <OverlayTrigger
+              overlay={<Tooltip id={cluster.id}>{`cluster name: ${cluster.name}`}</Tooltip>}
+              placement="right"
+            >
+              <span>{name.trim() !== '' ? name : cluster.name}</span>
+            </OverlayTrigger>
           </Link>
         </Grid.Col>
         <Grid.Col {...statusColSizes}>
