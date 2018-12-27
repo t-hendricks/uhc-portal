@@ -82,7 +82,7 @@ TransferLog /dev/stdout
 
 <Location "/server-status">
   SetHandler server-status
-  Require  host  localhost
+  Require local
 </Location>
 `
 
