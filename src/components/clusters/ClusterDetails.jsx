@@ -262,7 +262,7 @@ class ClusterDetails extends Component {
       const providerData = cloudProviders.providers[cluster.cloud_provider.id];
 
       cloudProvider = providerData.display_name;
-      if (!providerData.regions[region]) {
+      if (providerData.regions[region]) {
         region = providerData.regions[region].display_name;
       }
     } else {
