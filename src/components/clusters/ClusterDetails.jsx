@@ -307,10 +307,16 @@ class ClusterDetails extends Component {
       <MenuItem onClick={() => this.openEditDisplayNameDialog(cluster)}>
         Edit Display Name
       </MenuItem>);
-    const deleteDisplayNameItem = (
+
+    const deleteClusterItem = cluster.dedicated ? (
       <MenuItem onClick={() => this.openDeleteClusterDialog(cluster)}>
+        Delete Cluster
+      </MenuItem>)
+      : (
+        <MenuItem disabled title="Self managed cluster cannot be deleted">
           Delete Cluster
-      </MenuItem>);
+        </MenuItem>
+      );
 
     const actionsBtn = (
       <DropdownButton
@@ -320,7 +326,7 @@ class ClusterDetails extends Component {
       >
         {editDisplayNameItem}
         {editClusterItem}
-        {deleteDisplayNameItem}
+        {deleteClusterItem}
       </DropdownButton>
     );
 

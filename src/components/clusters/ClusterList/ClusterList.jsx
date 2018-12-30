@@ -332,13 +332,18 @@ class ClusterList extends Component {
         Edit Display Name
       </MenuItem>);
 
-    const deleteClusterItem = (
+    const deleteClusterItem = cluster.dedicated ? (
       <MenuItem onClick={
-        () => this.openDeleteClusterDialog(cluster.id, cluster.name)
-        }
+    () => this.openDeleteClusterDialog(cluster.id, cluster.name)
+    }
       >
-        Delete Cluster
-      </MenuItem>);
+    Delete Cluster
+      </MenuItem>)
+      : (
+        <MenuItem disabled title="Self managed cluster cannot be deleted">
+      Delete Cluster
+        </MenuItem>
+      );
 
     return (
       <TableGrid.Row key={index}>
