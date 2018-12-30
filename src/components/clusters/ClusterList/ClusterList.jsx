@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import size from 'lodash/size';
+import result from 'lodash/result';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -375,7 +376,10 @@ class ClusterList extends Component {
           <NumberWithUnit valueWithUnit={cluster.memory.total} isBytes />
         </Grid.Col>
         <Grid.Col {...locationColSizes}>
-          <ClusterLocationLabel regionID={cluster.region.id} cloudProviderID={provider} />
+          <ClusterLocationLabel
+            regionID={result(cluster, 'region.id', 'N/A')}
+            cloudProviderID={provider}
+          />
         </Grid.Col>
         <Grid.Col {...statColSizes}>
           <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
