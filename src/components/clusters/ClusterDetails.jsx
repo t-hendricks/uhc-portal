@@ -11,6 +11,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import result from 'lodash/result';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -27,7 +29,6 @@ import Timestamp from '../Timestamp';
 import EditClusterDialog from '../cluster/forms/EditClusterDialog';
 import EditDisplayNameDialog from '../cluster/forms/EditDisplayNameDialog';
 import DeleteClusterDialog from '../cluster/forms/DeleteClusterDialog';
-
 
 import { humanizeValueWithUnit } from '../../common/unitParser';
 import { fetchClusterDetails, invalidateClusters } from '../../redux/actions/clustersActions';
@@ -257,7 +258,7 @@ class ClusterDetails extends Component {
     }
 
     let cloudProvider = cluster.cloud_provider.id || 'N/A';
-    let region = cluster.region.id;
+    let region = result(cluster, 'region.id', 'N/A');
     if (cloudProviders.fulfilled && cloudProviders.providers[cluster.cloud_provider.id]) {
       const providerData = cloudProviders.providers[cluster.cloud_provider.id];
 
