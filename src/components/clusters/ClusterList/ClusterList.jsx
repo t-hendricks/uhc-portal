@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import {
-  Alert, Button, Grid, Row, Col, EmptyState, Tooltip,
+  Alert, Grid, Row, Col, EmptyState, Tooltip,
   OverlayTrigger, DropdownKebab, MenuItem, Spinner, Modal,
 } from 'patternfly-react';
 import { TableGrid } from 'patternfly-react-extensions';
@@ -35,6 +35,7 @@ import LoadingModal from '../LoadingModal';
 import ClusterStateIcon from '../ClusterStateIcon';
 import NumberWithUnit from '../NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
+import CreateClusterDropdown from './CreateClusterDropdown';
 import RefreshBtn from '../RefreshButton';
 
 import CreateClusterForm from '../../cluster/forms/CreateClusterForm';
@@ -195,14 +196,6 @@ class ClusterList extends Component {
     }
 
     return null;
-  }
-
-  renderCreateClusterButton() {
-    return (
-      <Button className="cluster-list-top" bsStyle="primary" bsSize="large" onClick={() => { this.setCreationFormState(true); }}>
-        Create Cluster
-      </Button>
-    );
   }
 
   renderClusterCreationForm() {
@@ -502,9 +495,11 @@ class ClusterList extends Component {
       <div className="cluster-list">
         <Grid fluid style={{ padding: 0 }}>
           <Row><Col sm={1}><h1>Clusters</h1></Col></Row>
-          <Row>
+          <Row className="cluster-list-top-row">
             <Col sm={1}>
-              {this.renderCreateClusterButton()}
+              <CreateClusterDropdown
+                showCreationForm={() => { this.setCreationFormState(true); }}
+              />
             </Col>
             <Col sm={1}>
               {pending ? <Spinner loading /> : null}
