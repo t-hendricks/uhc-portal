@@ -79,10 +79,7 @@ function CreateClusterForm(props) {
       </Modal.Header>
 
       <Modal.Body>
-        <Form
-          loading={createClusterResponse.pending}
-          disabled={createClusterResponse.pending}
-        >
+        <Form>
           {errorContainer}
           <Grid>
             <Row>
