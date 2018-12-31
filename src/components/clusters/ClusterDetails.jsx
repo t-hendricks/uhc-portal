@@ -281,7 +281,7 @@ class ClusterDetails extends Component {
     const consoleURL = cluster.console ? cluster.console.url : false;
 
     const consoleBtn = consoleURL ? (
-      <a href={consoleURL}>
+      <a href={consoleURL} target="_blank" rel="noreferrer">
         <Button bsStyle="primary">
           Launch Console
         </Button>
