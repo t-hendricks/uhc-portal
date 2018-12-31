@@ -114,9 +114,11 @@ class ClusterList extends Component {
   }
 
   componentDidMount() {
-    const { getCloudProviders } = this.props;
+    const { getCloudProviders, cloudProviders } = this.props;
     this.refresh();
-    getCloudProviders();
+    if (!cloudProviders.fulfilled && !cloudProviders.pending) {
+      getCloudProviders();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -537,6 +539,7 @@ ClusterList.propTypes = {
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
+  cloudProviders: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = {
@@ -549,7 +552,10 @@ const mapDispatchToProps = {
 const mapStateToProps = state => Object.assign(
   {},
   state.clusters.clusters,
-  { viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW] },
+  {
+    viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
+    cloudProviders: state.cloudProviders.cloudProviders,
+  },
 );
 
 export default connect(
