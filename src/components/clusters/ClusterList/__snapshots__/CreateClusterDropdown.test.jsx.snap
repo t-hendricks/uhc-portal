@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CreateClusterDropdown /> renders correctly 1`] = `
+<DropdownButton
+  bsSize="large"
+  bsStyle="primary"
+  className="cluster-list-top"
+  id="dropdown-example"
+  title="Create Cluster"
+>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    eventKey="1"
+    header={false}
+    onClick={[MockFunction]}
+  >
+    Red Hat-Managed Cluster
+  </MenuItem>
+  <LinkContainer
+    activeClassName="active"
+    exact={false}
+    replace={false}
+    strict={false}
+    to="/clusters/install"
+  >
+    <MenuItem
+      bsClass="dropdown"
+      disabled={false}
+      divider={false}
+      eventKey="2"
+      header={false}
+    >
+      Self-Managed Cluster
+    </MenuItem>
+  </LinkContainer>
+</DropdownButton>
+`;
