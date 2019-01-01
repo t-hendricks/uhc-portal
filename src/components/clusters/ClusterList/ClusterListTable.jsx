@@ -45,7 +45,7 @@ function ClusterListTable(props) {
     // We'll have a lot of these all over the place as we grow :(
     const consoleURL = cluster.console ? cluster.console.url : false;
     const consoleMenuItem = consoleURL ? (
-      <MenuItem href={consoleURL}>
+      <MenuItem href={consoleURL} target="_blank" rel="noreferrer">
           Launch Admin Console
       </MenuItem>)
       : (
