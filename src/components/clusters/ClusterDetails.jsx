@@ -341,7 +341,7 @@ class ClusterDetails extends Component {
             </Col>
             <Col sm={2} smOffset={1}>
               <h1 style={{ marginTop: 0 }}>
-                {cluster.name}
+                {cluster.display_name || cluster.name}
               </h1>
             </Col>
             <Col sm={1} smOffset={4}>
