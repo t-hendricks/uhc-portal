@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterStateIcon /> renders correctly for error status 1`] = `
+<Icon
+  className="fa-lg"
+  name="error-circle-o"
+  type="pf"
+/>
+`;
+
+exports[`<ClusterStateIcon /> renders correctly for installing status 1`] = `
+<Icon
+  className="fa-lg"
+  name="in-progress"
+  type="pf"
+/>
+`;
+
+exports[`<ClusterStateIcon /> renders correctly for pending status 1`] = `
+<Icon
+  className="fa-lg"
+  name="hourglass-half"
+  type="fa"
+/>
+`;
+
+exports[`<ClusterStateIcon /> renders correctly for ready status 1`] = `
+<Icon
+  className="fa-lg"
+  name="ok"
+  type="pf"
+/>
+`;
+
+exports[`<ClusterStateIcon /> renders correctly for uninstalling status 1`] = `
+<Icon
+  className="fa-lg"
+  name="ban"
+  type="fa"
+/>
+`;
+
+exports[`<ClusterStateIcon /> renders correctly for unknown status 1`] = `
+<Icon
+  className="fa-lg"
+  name="unknown"
+  type="pf"
+/>
+`;
