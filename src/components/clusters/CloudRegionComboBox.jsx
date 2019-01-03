@@ -56,18 +56,10 @@ class CloudRegionComboBox extends React.Component {
         </select>
       );
     }
+
     return cloudProviders.error ? (
       <Alert>
-        <span>
-          Error loading region list:
-          {' '}
-        </span>
-        <span>
-          {cloudProviders.error}
-        </span>
-        <span>
-          {cloudProviders.errorMessage}
-        </span>
+        <span>{`Error loading region list: ${cloudProviders.errorMessage}`}</span>
       </Alert>
     ) : (
       <React.Fragment>

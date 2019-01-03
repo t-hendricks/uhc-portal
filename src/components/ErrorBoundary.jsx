@@ -24,7 +24,6 @@ class ErrorBoundary extends React.Component {
             <h3>Something went wrong:</h3>
             <div style={{ whiteSpace: 'pre-wrap', textAlign: 'left', fontFamily: 'monospace' }}>
               {error}
-
               {componentStack}
             </div>
           </Alert>

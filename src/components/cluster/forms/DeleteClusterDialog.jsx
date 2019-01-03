@@ -38,19 +38,12 @@ class DeleteClusterDialog extends React.Component {
       return null;
     }
 
-    const errorContainer = deleteClusterResponse.error ? (
+    const errorContainer = (
       <Alert>
-        <span>
-      Error deleting cluster:
-        </span>
-        <span>
-          {deleteClusterResponse.error}
-        </span>
-        <span>
-          {deleteClusterResponse.errorMessage}
-        </span>
+        <span>{`Error deleting cluster: ${deleteClusterResponse.errorMessage}`}</span>
       </Alert>
-    ) : false;
+    && deleteClusterResponse.error);
+
 
     const isPending = deleteClusterResponse.pending;
 

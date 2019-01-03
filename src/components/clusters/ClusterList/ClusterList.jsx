@@ -222,11 +222,7 @@ class ClusterList extends Component {
     return (
       <EmptyState>
         <Alert type="error">
-          <span>
-            Error retrieving clusters:
-            {' '}
-            {errorMessage}
-          </span>
+          <span>{`Error retrieving clusters: ${errorMessage}`}</span>
         </Alert>
         {this.renderPendingMessage()}
       </EmptyState>
