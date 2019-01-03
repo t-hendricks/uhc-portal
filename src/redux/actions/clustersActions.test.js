@@ -1,0 +1,105 @@
+import { clustersActions } from './clustersActions';
+import { clusterService } from '../../services';
+import { clustersConstants } from '../constants';
+import helpers from '../../common/helpers';
+
+jest.mock('../../services/clusterService.js');
+
+describe('clustersActions', () => {
+  let mockDispatch;
+  beforeEach(() => {
+    mockDispatch = jest.fn();
+  });
+
+  describe('invalidateClusters', () => {
+    it('dispatches successfully', () => {
+      clustersActions.invalidateClusters()(mockDispatch);
+      expect(mockDispatch).toBeCalledWith({
+        type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
+      });
+    });
+  });
+
+  describe('createCluster', () => {
+    it('dispatches successfully', () => {
+      const fakeParams = { fake: 'params' };
+      clustersActions.createCluster(fakeParams)(mockDispatch);
+      expect(mockDispatch).toBeCalledWith({
+        payload: expect.anything(),
+        type: clustersConstants.CREATE_CLUSTER,
+      });
+    });
+
+    it('calls clusterService.postNewCluster', () => {
+      const fakeParams = { fake: 'params' };
+      clustersActions.createCluster(fakeParams)(mockDispatch);
+      expect(clusterService.postNewCluster).toBeCalledWith(fakeParams);
+    });
+  });
+
+  describe('clearClusterResponse', () => {
+    it('dispatches successfully', () => {
+      clustersActions.clearClusterResponse()(mockDispatch);
+      expect(mockDispatch).toBeCalledWith({
+        type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
+      });
+    });
+  });
+
+  describe('editCluster', () => {
+    it('dispatches successfully', () => {
+      clustersActions.editCluster()(mockDispatch);
+      expect(mockDispatch).toBeCalledWith({
+        payload: expect.anything(),
+        type: clustersConstants.EDIT_CLUSTER_DISPLAY_NAME,
+      });
+    });
+
+    it('calls clusterService.editCluster', () => {
+      const fakeParams = { fake: 'params' };
+      clustersActions.editCluster('fakeID', fakeParams)(mockDispatch);
+      expect(clusterService.editCluster).toBeCalledWith('fakeID', fakeParams);
+    });
+  });
+
+  describe('fetchClusters', () => {
+    it('dispatches successfully', () => {
+      clustersActions.fetchClusters()(mockDispatch);
+      expect(mockDispatch).toBeCalledWith({
+        payload: expect.anything(),
+        type: clustersConstants.GET_CLUSTERS,
+      });
+    });
+
+    it('calls clusterService.getClusters', () => {
+      const fakeParams = { fake: 'params' };
+      clustersActions.fetchClusters(fakeParams)(mockDispatch);
+      expect(clusterService.getClusters).toBeCalledWith(fakeParams);
+    });
+  });
+
+  describe('fetchClusterDetails', () => {
+    it('dispatches successfully', () => {
+      clustersActions.fetchClusterDetails()(mockDispatch);
+      expect(mockDispatch).toBeCalledWith({
+        payload: expect.anything(),
+        type: clustersConstants.GET_CLUSTER_DETAILS,
+      });
+    });
+
+    it('calls clusterService.getClusterDetails', () => {
+      const fakeParams = { fake: 'params' };
+      clustersActions.fetchClusterDetails(fakeParams)(mockDispatch);
+      expect(clusterService.getClusterDetails).toBeCalledWith(fakeParams);
+    });
+  });
+
+  describe('resetCreatedClusterResponse', () => {
+    it('dispatches successfully', () => {
+      clustersActions.resetCreatedClusterResponse()(mockDispatch);
+      expect(mockDispatch).toBeCalledWith({
+        type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
+      });
+    });
+  });
+});
