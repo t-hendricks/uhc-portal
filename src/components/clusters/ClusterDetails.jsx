@@ -188,11 +188,7 @@ class ClusterDetails extends Component {
     return (
       <EmptyState>
         <Alert type="error">
-          <span>
-            Error retrieving cluster details:
-            {' '}
-            {errorMessage}
-          </span>
+          <span>{`Error retrieving cluster details: ${errorMessage}`}</span>
         </Alert>
         {this.renderPendingMessage()}
       </EmptyState>
