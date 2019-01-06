@@ -63,6 +63,9 @@ module.exports = (env, argv) => {
         'process.env.UHC_DISABLE_KEYCLOAK': JSON.stringify(process.env.UHC_DISABLE_KEYCLOAK),
         'process.env.UHC_GATEWAY_DOMAIN': JSON.stringify(process.env.UHC_GATEWAY_DOMAIN),
       }),
+      new CopyWebpackPlugin([
+        { from: 'public', to: outDir, toType: 'dir' },
+      ]),
       bundleAnalyzer,
       copyConfig,
     ].filter(Boolean),
