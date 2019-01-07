@@ -27,6 +27,7 @@ import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 import Keycloak from 'keycloak-js';
 import { userInfoResponse } from './redux/actions/userActions';
+import { getCloudProviders } from './redux/actions/cloudProviderActions';
 import config from './config';
 import App from './components/app';
 import { store, reloadReducers } from './redux/store';
@@ -67,6 +68,8 @@ function initKeycloak() {
       sessionStorage.setItem('kctoken', keycloak.token);
 
       store.dispatch(userInfoResponse(keycloak.idTokenParsed));
+      // fetch cloud providers as soon as possible, for lower latency
+      store.dispatch(getCloudProviders());
       render();
 
       setInterval(() => {
