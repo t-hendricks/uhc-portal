@@ -41,11 +41,10 @@ function CreateClusterForm(props) {
     );
   }
 
-  const errorContainer = (
+  const errorContainer = createClusterResponse.error && (
     <Alert>
       <span>{`Error creating cluster: ${createClusterResponse.errorMessage}`}</span>
-    </Alert>
-  && createClusterResponse.error);
+    </Alert>);
 
   const loadingSpinner = () => (
     <div className="form-loading-spinner">
