@@ -25,11 +25,10 @@ function EditClusterDialog(props) {
     closeFunc(true);
   }
 
-  const errorContainer = (
+  const errorContainer = editClusterResponse.error ? (
     <Alert>
       <span>{`Error changing display name: ${editClusterResponse.errorMessage}`}</span>
-    </Alert>
-  && editClusterResponse.error);
+    </Alert>) : null;
 
   return (
     <React.Fragment>
