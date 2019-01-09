@@ -85,4 +85,6 @@ const mapDispatchToProps = {
   getCloudProviders: cloudProviderActions.getCloudProviders,
 };
 
+export { CloudRegionComboBox as DisconnectedCloudRegionComboBox };
+
 export default connect(mapStateToProps, mapDispatchToProps)(CloudRegionComboBox);

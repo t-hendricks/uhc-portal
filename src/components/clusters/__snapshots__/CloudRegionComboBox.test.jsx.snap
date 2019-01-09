@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CloudRegionComboBox /> when region list needs to be fetched renders correctly 1`] = `
+<CloudRegionComboBox
+  cloudProviderID="aws"
+  cloudProviders={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": false,
+      "pending": false,
+      "providers": Object {},
+    }
+  }
+  getCloudProviders={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  onChange={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          "",
+        ],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
+>
+  <Spinner
+    className=""
+    inline={true}
+    inverse={false}
+    loading={true}
+    size="sm"
+  >
+    <div
+      className="spinner spinner-sm spinner-inline"
+    />
+  </Spinner>
+  Loading region list...
+</CloudRegionComboBox>
+`;
+
+exports[`<CloudRegionComboBox /> when the region list is available renders correctly 1`] = `
+<CloudRegionComboBox
+  cloudProviderID="aws"
+  cloudProviders={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": true,
+      "pending": false,
+      "providers": Object {
+        "aws": Object {
+          "regions": Object {
+            "eu-west-1": Object {
+              "display_name": "Ireland",
+              "id": "eu-west-1",
+            },
+            "us-east-1": Object {
+              "display_name": "N. Virginia",
+              "id": "us-east-1",
+            },
+          },
+        },
+      },
+    }
+  }
+  getCloudProviders={[MockFunction]}
+  onChange={[MockFunction]}
+>
+  <select
+    onChange={[MockFunction]}
+  >
+    <option
+      key="us-east-1"
+      value="us-east-1"
+    >
+      us-east-1
+      , 
+      N. Virginia
+    </option>
+    <option
+      key="eu-west-1"
+      value="eu-west-1"
+    >
+      eu-west-1
+      , 
+      Ireland
+    </option>
+  </select>
+</CloudRegionComboBox>
+`;
+
+exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1`] = `
+<CloudRegionComboBox
+  cloudProviderID="aws"
+  cloudProviders={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": false,
+      "pending": true,
+      "providers": Object {},
+    }
+  }
+  getCloudProviders={[MockFunction]}
+  onChange={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          "",
+        ],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
+>
+  <Spinner
+    className=""
+    inline={true}
+    inverse={false}
+    loading={true}
+    size="sm"
+  >
+    <div
+      className="spinner spinner-sm spinner-inline"
+    />
+  </Spinner>
+  Loading region list...
+</CloudRegionComboBox>
+`;
+
+exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] = `
+<CloudRegionComboBox
+  cloudProviderID="aws"
+  cloudProviders={
+    Object {
+      "error": true,
+      "errorMessage": "This is an error message",
+      "fulfilled": false,
+      "pending": false,
+      "providers": Object {},
+    }
+  }
+  getCloudProviders={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  onChange={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          "",
+        ],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
+>
+  <Alert
+    className=""
+    onDismiss={null}
+    type="error"
+  >
+    <div
+      className="alert alert-danger"
+    >
+      <Icon
+        name="error-circle-o"
+        type="pf"
+      >
+        <PatternflyIcon
+          className=""
+          name="error-circle-o"
+        >
+          <span
+            aria-hidden="true"
+            className="pficon pficon-error-circle-o"
+          />
+        </PatternflyIcon>
+      </Icon>
+      <span>
+        Error loading region list: This is an error message
+      </span>
+    </div>
+  </Alert>
+</CloudRegionComboBox>
+`;
