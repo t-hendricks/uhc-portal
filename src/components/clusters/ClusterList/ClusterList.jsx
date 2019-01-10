@@ -133,9 +133,14 @@ class ClusterList extends Component {
 
   renderClusterCreationForm() {
     const { clusterCreationFormVisible } = this.state;
+    const { resetCreatedClusterResponse } = this.props;
     return (
       <Modal className="right-side-modal-pf" show={clusterCreationFormVisible} bsSize="large">
-        <CreateClusterForm closeFunc={() => this.setCreationFormState(false)} />
+        <CreateClusterForm closeFunc={() => {
+          resetCreatedClusterResponse();
+          this.setCreationFormState(false);
+        }}
+        />
       </Modal>
     );
   }
@@ -301,6 +306,7 @@ ClusterList.propTypes = {
   setSorting: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  resetCreatedClusterResponse: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
@@ -308,6 +314,7 @@ const mapDispatchToProps = {
   fetchClusters: queryObj => clustersActions.fetchClusters(queryObj),
   setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
   getCloudProviders: cloudProviderActions.getCloudProviders,
+  resetCreatedClusterResponse: clustersActions.resetCreatedClusterResponse,
 };
 
 const mapStateToProps = state => Object.assign(
