@@ -52,10 +52,15 @@ class DeleteClusterDialog extends React.Component {
       </Button>
     );
 
+    const closeDialog = () => {
+      clearDeleteClusterResponse();
+      closeFunc(false);
+    };
+
     return (
       <React.Fragment>
         <Modal.Header>
-          <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={() => closeFunc(false)}>
+          <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={closeDialog}>
             <Icon type="pf" name="close" />
           </button>
           <Modal.Title>
@@ -89,7 +94,7 @@ class DeleteClusterDialog extends React.Component {
         </Modal.Body>
         <Modal.Footer>
           {deleteBtn}
-          <Button bsStyle="default" onClick={() => closeFunc(false)}>
+          <Button bsStyle="default" onClick={closeDialog}>
             Cancel
           </Button>
         </Modal.Footer>
