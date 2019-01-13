@@ -16,22 +16,23 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field } from 'redux-form';
 import { Redirect } from 'react-router';
 import {
-  Button, Icon, Form, Modal, Alert, HintBlock, Grid, Row, Col, Spinner, ExpandCollapse,
+  Modal, Button, Form, Alert, Grid, Row, Col, Spinner, ExpandCollapse,
 } from 'patternfly-react';
-import ReduxVerticalFormGroup from '../../clusters/ReduxVerticalFormGroup';
-import CloudRegionComboBox from '../../clusters/CloudRegionComboBox';
-import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
+import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
+import CloudRegionComboBox from '../CloudRegionComboBox';
 import validators from '../../../common/validators';
-import ReduxCheckbox from '../../clusters/ReduxCheckbox';
+import ReduxCheckbox from '../ReduxCheckbox';
+import ModalHeader from '../../Modal/components/ModalHeader';
+import constants, {
+  AWSCredentialsHint, ConfigurationHint, RegionsHint, NetworkConfugurationHint,
+} from './CreateClusterModalHelper';
 
-function CreateClusterForm(props) {
-  // handleSubmit comes from reduxForm()
+function CreateClusterModal(props) {
   const {
-    closeFunc, handleSubmit, createClusterResponse, resetResponse,
+    isOpen, closeModal, handleSubmit, createClusterResponse, resetResponse,
   } = props;
 
   if (createClusterResponse.fulfilled) {
@@ -41,7 +42,7 @@ function CreateClusterForm(props) {
     );
   }
 
-  const errorContainer = createClusterResponse.error && (
+  const hasError = createClusterResponse.error && (
     <Alert>
       <span>{`Error creating cluster: ${createClusterResponse.errorMessage}`}</span>
     </Alert>);
@@ -49,29 +50,29 @@ function CreateClusterForm(props) {
   const loadingSpinner = () => (
     <div className="form-loading-spinner">
       <span>
-      Do not refresh this page. This request may take a moment...
+        {constants.spinnerMessage}
       </span>
       <Spinner size="xs" loading inline />
     </div>
   );
 
-  return (
-    <React.Fragment>
-      <Modal.Header>
-        <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={closeFunc}>
-          <Icon type="pf" name="close" />
-        </button>
-        <Modal.Title>
-          Create a Red Hat-Managed Cluster (OSD)
-        </Modal.Title>
-      </Modal.Header>
+  const onClose = () => {
+    resetResponse();
+    closeModal('create-cluster');
+  };
 
+  return isOpen
+    && (
+    <Modal show className="right-side-modal-pf" bsSize="large">
+      <Modal.Header>
+        <ModalHeader title="Create a Red Hat-Managed Cluster" onClose={onClose} />
+      </Modal.Header>
       <Modal.Body>
         <Form>
-          {errorContainer}
+          {hasError}
           <Grid>
             <Row>
-              <h3>Step 1: Cloud Provider Credentials</h3>
+              <h3>{constants.step1Header}</h3>
               <Col sm={5}>
                 <Field
                   component={ReduxVerticalFormGroup}
@@ -94,25 +95,11 @@ function CreateClusterForm(props) {
                 />
               </Col>
               <Col sm={4}>
-                <HintBlock
-                  title="Need help setting up your credentials?"
-                  style={{ marginTop: '20px' }}
-                  body={(
-                    <React.Fragment>
-                      <p>
-                        Some details to explain what an AWS access key is and how to create
-                        an access key onthe AWS Platform.
-                      </p>
-                      <p>
-                        A link to documentation showing how to configure the AWS account.
-                      </p>
-                    </React.Fragment>
-                  )}
-                />
+                <AWSCredentialsHint />
               </Col>
             </Row>
             <Row>
-              <h3>Step 2: Configuration</h3>
+              <h3>{constants.step2Header}</h3>
               <Col sm={5}>
                 <Field
                   component={ReduxVerticalFormGroup}
@@ -159,36 +146,8 @@ function CreateClusterForm(props) {
                 />
               </Col>
               <Col sm={4}>
-                <HintBlock
-                  title="Basic Configuration"
-                  body={(
-                    <React.Fragment>
-                      <p>
-                        Your cluster name will be used for the cluster DNS name, so it must not
-                        contain dots, underscores or special characters.
-                      </p>
-                      <p>
-                        Some information on how to configure the base domain in AWS,
-                        with link to documentation.
-                      </p>
-                    </React.Fragment>
-                  )}
-                />
-                <HintBlock
-                  title="Regions and Zones"
-                  body={(
-                    <React.Fragment>
-                      <p>
-                        You can select the geographical region for your cluster.
-                        For some regions, it is possible to deploy the cluster on
-                        multiple availability zones within the region, for high availability setups.
-                      </p>
-                      <p>
-                        By default, the cluster is deployed on a single availability zone.
-                      </p>
-                    </React.Fragment>
-                  )}
-                />
+                <ConfigurationHint />
+                <RegionsHint />
               </Col>
             </Row>
             <Row>
@@ -220,98 +179,35 @@ function CreateClusterForm(props) {
                   />
                 </Col>
                 <Col sm={4}>
-                  <HintBlock
-                    title="Network Configuration"
-                    body={(
-                      <React.Fragment>
-                        <p>
-                          You can override the default CIDR values for your VPC, Service (Portal),
-                          and Cluster (Pod).
-                        </p>
-                        <p>
-                          Valid CIDR notation includes a prefix, shown as a 4-octet quantity,
-                          similar to a traditional IPv4 address, followed by the &#34;/&#34; (slash)
-                          character, followed by a number between 0 and 32 that describes the
-                          number of significant bits. For example:
-                          <code>192.168.0.0/16</code>
-                        </p>
-                      </React.Fragment>
-                    )}
-                  />
+                  <NetworkConfugurationHint />
                 </Col>
               </ExpandCollapse>
             </Row>
           </Grid>
         </Form>
       </Modal.Body>
-
       <Modal.Footer>
         <Button bsStyle="primary" type="submit" onClick={handleSubmit} disabled={createClusterResponse.pending}>
           Create
         </Button>
-        <Button bsStyle="default" onClick={closeFunc} disabled={createClusterResponse.pending}>
+        <Button bsStyle="default" onClick={onClose} disabled={createClusterResponse.pending}>
           Cancel
         </Button>
         {createClusterResponse.pending ? loadingSpinner() : null}
       </Modal.Footer>
-    </React.Fragment>
-  );
+    </Modal>
+    );
 }
-CreateClusterForm.propTypes = {
-  closeFunc: PropTypes.func.isRequired,
+CreateClusterModal.propTypes = {
+  isOpen: PropTypes.bool,
+  closeModal: PropTypes.func.isRequired,
   resetResponse: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
 };
 
-const reduxFormConfig = {
-  form: 'CreateCluster',
+CreateClusterModal.defaultProps = {
+  isOpen: false,
 };
-const reduxFormCreateCluster = reduxForm(reduxFormConfig)(CreateClusterForm);
 
-const mapStateToProps = state => ({
-  createClusterResponse: state.clusters.createdCluster,
-  initialValues: {
-    name: '',
-    nodes_compute: '4',
-    dns_base_domain: '',
-    aws_access_key_id: '',
-    aws_secret_access_key: '',
-    region: 'us-east-1',
-    multi_az: false,
-  },
-});
-
-const mapDispatchToProps = dispatch => ({
-  onSubmit: (formData) => {
-    const clusterRequest = {
-      name: formData.name,
-      region: {
-        id: formData.region,
-      },
-      flavour: {
-        id: '4',
-      },
-      nodes: {
-        compute: parseInt(formData.nodes_compute, 10),
-      },
-      dns: {
-        base_domain: formData.dns_base_domain,
-      },
-      aws: {
-        access_key_id: formData.aws_access_key_id,
-        secret_access_key: formData.aws_secret_access_key,
-        vpc_cidr: formData.aws_vpc_cidr,
-      },
-      multi_az: formData.multi_az,
-      network: {
-        service_cidr: formData.network_service_cidr,
-        pod_cidr: formData.network_pod_cidr,
-      },
-    };
-    dispatch(createCluster(clusterRequest));
-  },
-  resetResponse: () => dispatch(resetCreatedClusterResponse()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateCluster);
+export default CreateClusterModal;

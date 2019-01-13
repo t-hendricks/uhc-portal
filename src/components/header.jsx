@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import {
   Dropdown, Icon, MenuItem, Masthead,
 } from 'patternfly-react';
-import helpers from '../common/helpers';
+import { noop } from '../common/helpers';
 import rhProductTitle from '../styles/images/logo.png';
 
 const Header = ({
@@ -56,7 +56,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  logoutUser: helpers.noop,
+  logoutUser: noop,
   isLoggedIn: false,
 };
 

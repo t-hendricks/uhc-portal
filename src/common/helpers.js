@@ -91,4 +91,6 @@ const helpers = {
   REJECTED_ACTION,
 };
 
+export { noop };
+
 export default helpers;
