@@ -274,6 +274,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
             bsStyle="default"
             className="install--download-installer"
             disabled={false}
+            tabIndex="-1"
           >
             <span
               aria-hidden="true"
@@ -362,7 +363,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
         </span>
         ./openshift-install create cluster
       </pre>
-      <p>
+      <div>
         <Download
           content="{\\"hi\\":\\"I have no errors\\"}"
           file="pull-secret"
@@ -378,7 +379,6 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
             bsClass="btn"
             bsStyle="default"
             disabled={false}
-            tabIndex="0"
           >
             <span
               aria-hidden="true"
@@ -401,7 +401,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
             <button
               className="btn-text-link install--copy-pull-secret"
               disabled={false}
-              tabIndex="-1"
+              tabIndex="0"
               type="button"
             >
               <span
@@ -412,7 +412,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
             </button>
           </span>
         </CopyToClipboard>
-      </p>
+      </div>
     </Col>
     <Col
       bsClass="col"
@@ -480,6 +480,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
             bsStyle="default"
             className="install--download-cli"
             disabled={false}
+            tabIndex="-1"
           >
             <span
               aria-hidden="true"
@@ -891,6 +892,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
             bsStyle="default"
             className="install--download-installer"
             disabled={true}
+            tabIndex="-1"
           >
             <span
               aria-hidden="true"
@@ -979,7 +981,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
         </span>
         ./openshift-install create cluster
       </pre>
-      <p>
+      <div>
         <Download
           content=""
           file="pull-secret"
@@ -995,7 +997,6 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
             bsClass="btn"
             bsStyle="default"
             disabled={true}
-            tabIndex="0"
           >
             <span
               aria-hidden="true"
@@ -1018,7 +1019,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
             <button
               className="btn-text-link install--copy-pull-secret"
               disabled={true}
-              tabIndex="-1"
+              tabIndex="0"
               type="button"
             >
               <span
@@ -1029,7 +1030,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
             </button>
           </span>
         </CopyToClipboard>
-      </p>
+      </div>
     </Col>
     <Col
       bsClass="col"
@@ -1097,6 +1098,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
             bsStyle="default"
             className="install--download-cli"
             disabled={false}
+            tabIndex="-1"
           >
             <span
               aria-hidden="true"

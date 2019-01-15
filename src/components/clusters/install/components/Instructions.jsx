@@ -167,6 +167,7 @@ class Instructions extends React.Component {
                 <Button
                   className="install--download-installer"
                   disabled={!!token.error}
+                  tabIndex="-1"
                 >
                   <span className="fa fa-download" aria-hidden="true" />
                   &nbsp;
@@ -213,10 +214,9 @@ class Instructions extends React.Component {
               <span className="noselect">$ </span>
               ./openshift-install create cluster
             </pre>
-            <p>
+            <div>
               <Download file="pull-secret" content={tokenView} style={{ display: 'inline' }}>
                 <Button
-                  tabIndex="0"
                   disabled={!!token.error}
                 >
                   <span className="fa fa-download" aria-hidden="true" />
@@ -232,7 +232,7 @@ class Instructions extends React.Component {
                   <button
                     className="btn-text-link install--copy-pull-secret"
                     type="button"
-                    tabIndex="-1"
+                    tabIndex="0"
                     disabled={!!token.error}
                   >
                     <span className="fa fa-paste" aria-hidden="true" />
@@ -242,7 +242,7 @@ class Instructions extends React.Component {
                   { copied && ' Copied!' }
                 </span>
               </CopyToClipboard>
-            </p>
+            </div>
           </Col>
           <Col xs={12} sm={4} md={4} lg={4} className="cluster-install-step-callout-col">
             <div className="cluster-install-callout">
@@ -272,6 +272,7 @@ class Instructions extends React.Component {
               <a href={config.configData.commandLineToolsURL} target="_blank">
                 <Button
                   className="install--download-cli"
+                  tabIndex="-1"
                 >
                   <span className="fa fa-download" aria-hidden="true" />
                   &nbsp;
