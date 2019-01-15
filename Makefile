@@ -50,7 +50,7 @@ documentation_url:=https://github.com/openshift/installer/blob/master/README.md#
 terraform_install_url:=https://www.terraform.io/downloads.html
 
 # Command-line tools URL:
-command_line_tools_url:=https://mirror.openshift.com/pub/openshift-v3/clients/4.0.0-0.79.0/
+command_line_tools_url:=https://mirror.openshift.com/pub/openshift-v3/clients/4.0.0-0.139.0/
 
 
 .PHONY: \
