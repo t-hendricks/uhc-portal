@@ -233,7 +233,7 @@ class ClusterDetails extends Component {
       return this.renderPendingMessage();
     }
 
-    if (cluster === null || !cluster.name) {
+    if (cluster === null || !cluster.id) {
       return (
         <React.Fragment>
           <Grid fluid>
@@ -378,7 +378,7 @@ class ClusterDetails extends Component {
                   { cloudProvider }
                 </dd>
                 <dt>
-                  Versions
+                  Version
                 </dt>
                 <dd>
                   <dl className="cluster-details-item-list left">
@@ -398,7 +398,7 @@ class ClusterDetails extends Component {
                   <Timestamp value={cluster.creation_timestamp || ''} />
                 </dd>
                 <dt>
-                  Last Update
+                  Last Updated
                 </dt>
                 <dd>
                   <Timestamp value={cluster.last_update_timestamp || ''} />
@@ -416,7 +416,7 @@ class ClusterDetails extends Component {
                   {cluster.state}
                 </dd>
                 <dt>
-                  CPU
+                  Total CPU
                 </dt>
                 <dd>
                   {cluster.cpu.total.value}
@@ -424,7 +424,7 @@ class ClusterDetails extends Component {
                   vCPU
                 </dd>
                 <dt>
-                  Memory
+                  Total Memory
                 </dt>
                 <dd>
                   {memoryTotalWithUnit.value}
@@ -432,7 +432,7 @@ class ClusterDetails extends Component {
                   {memoryTotalWithUnit.unit}
                 </dd>
                 <dt>
-                  Storage
+                  Total Storage
                 </dt>
                 <dd>
                   {storageTotalWithUnit.value}
@@ -452,15 +452,17 @@ class ClusterDetails extends Component {
                       {cluster.nodes.master}
                     </dd>
                   </dl>
-                  <dl className="cluster-details-item-list left">
-                    <dt>
-                      Infrastructure:
-                      {' '}
-                    </dt>
-                    <dd>
-                      {cluster.nodes.infra}
-                    </dd>
-                  </dl>
+                  { cluster.dedicated ? (
+                    <dl className="cluster-details-item-list left">
+                      <dt>
+                        Infrastructure:
+                        {' '}
+                      </dt>
+                      <dd>
+                        {cluster.nodes.infra}
+                      </dd>
+                    </dl>
+                  ) : null }
                   <dl className="cluster-details-item-list left">
                     <dt>
                       Compute:
