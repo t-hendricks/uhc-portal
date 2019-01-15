@@ -130,6 +130,17 @@ objects:
               port: 8000
             initialDelaySeconds: 10
             periodSeconds: 3
+        - name: exporter
+          # See https://gitlab.cee.redhat.com/service/uhc-apache-exporter/
+          # BUILD_REPO_VERSION=01bc54e64f15f2f5040e035cd5c8cdf394bb88fc
+          # UPSTREAM_VERSION=v0.5.0-3-gaa54a5d29929d259ba5ae95c514289250c01fd1f
+          image: quay.io/app-sre/uhc-apache-exporter:01bc54e
+          imagePullPolicy: ${IMAGE_PULL_POLICY}
+          command:
+          - apache_exporter
+          - --scrape_uri=http://localhost:8000/server-status/?auto
+          - --telemetry.address=:8080
+
 
 - apiVersion: v1
   kind: Service
