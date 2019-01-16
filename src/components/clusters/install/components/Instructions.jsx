@@ -36,23 +36,17 @@ class Instructions extends React.Component {
                   </p>
                   <p>
                     Please try again by refreshing the page.
-                    If the problem persists, please report the issue in the
-                    {' '}
-                    <a href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview" target="_blank">developer preview forum</a>
-                    .
+                    If the problem persists, please contact Red Hat Support.
                   </p>
                 </Alert>
               )
             }
 
             <div className="jumbotron" style={{ marginTop: '20px' }}>
-              <h1 style={{ fontSize: '32px' }}>Developer Preview</h1>
+              <h1 style={{ fontSize: '32px' }}>Beta</h1>
               <p>
-                This is a very early preview of OpenShift 4. There are still some rough edges,
-                but what we want more than anything is
-                {' '}
-                <a href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview" target="_blank">your&nbsp;feedback</a>
-                {' '}
+                This is an early preview of OpenShift 4. There are still some rough edges,
+                but what we want more than anything is your&nbsp;feedback
                 on our direction and how we can be better.
               </p>
               <p className="text-right">
@@ -72,7 +66,7 @@ class Instructions extends React.Component {
         <Row>
           <Col xs={12} sm={8} md={8} lg={8} className="left-col">
             <p>
-              Use this guide to install a new OpenShift 4 preview cluster on your Amazon Web
+              Use this guide to install a new OpenShift 4 beta cluster on your Amazon Web
               Services (AWS) account. We’ll get you up and running in a few quick steps:
             </p>
             <ol>
@@ -192,8 +186,8 @@ class Instructions extends React.Component {
               type="warning"
             >
               <p>
-                  As part of the preview Red Hat collects a limited amount of telemetry data.
-                  By participating in the preview you accept our data collection policy.
+                  As part of the beta Red Hat collects a limited amount of telemetry data.
+                  By participating in the beta you accept our data collection policy.
                 {' '}
                 <a href="https://github.com/openshift/telemeter/blob/master/docs/data-collection.md" target="_blank">Learn&nbsp;more</a>
                 {' '}
@@ -311,19 +305,6 @@ class Instructions extends React.Component {
           </Col>
         </Row>
         <Row className="footer">
-          <Col xs={12} sm={8} md={8} lg={8} className="left-col">
-            <h3 className="cluster-install-step">
-              <a href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview" target="_blank">
-                <span
-                  className="fa fa-bullhorn"
-                  role="img"
-                  aria-hidden="true"
-                  style={{ marginRight: '10px' }}
-                />
-                Give us feedback
-              </a>
-            </h3>
-          </Col>
           <Col xs={12} sm={4} md={4} lg={4} className="cluster-install-step-callout-col" />
         </Row>
       </Grid>
