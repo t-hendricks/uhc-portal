@@ -54,13 +54,27 @@ function ClusterListTable(props) {
         </MenuItem>
       );
 
-    const editClusterItem = cluster.dedicated ? (
-      <MenuItem onClick={() => openEditClusterDialog(cluster)}>
-        Edit Cluster
-      </MenuItem>) : (
-        <MenuItem disabled title="Self managed cluster cannot be edited">
+    const editClusterItem = () => {
+      if (!cluster.dedicated) {
+        return (
+          <MenuItem disabled title="Self managed cluster cannot be edited">
+            Edit Cluster
+          </MenuItem>
+        );
+      }
+      if (cluster.state !== 'ready') {
+        return (
+          <MenuItem disabled title="This cluster is not ready">
+            Edit Cluster
+          </MenuItem>
+        );
+      }
+      return (
+        <MenuItem onClick={() => openEditClusterDialog(cluster)}>
           Edit Cluster
-        </MenuItem>);
+        </MenuItem>
+      );
+    };
 
     const editDisplayNameItem = (
       <MenuItem onClick={() => openEditDisplayNameDialog(cluster)}>
@@ -153,7 +167,7 @@ function ClusterListTable(props) {
           <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
             {consoleMenuItem}
             {editDisplayNameItem}
-            {editClusterItem}
+            {editClusterItem()}
             {deleteClusterItem}
           </DropdownKebab>
         </Grid.Col>
