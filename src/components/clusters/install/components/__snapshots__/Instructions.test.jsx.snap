@@ -33,10 +33,19 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
             }
           }
         >
-          Beta
+          Developer Preview
         </h1>
         <p>
-          This is an early preview of OpenShift 4. There are still some rough edges, but what we want more than anything is your feedback on our direction and how we can be better.
+          This is a very early preview of OpenShift 4. There are still some rough edges, but what we want more than anything is
+           
+          <a
+            href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview"
+            target="_blank"
+          >
+            your feedback
+          </a>
+           
+          on our direction and how we can be better.
         </p>
         <p
           className="text-right"
@@ -74,7 +83,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
       xs={12}
     >
       <p>
-        Use this guide to install a new OpenShift 4 beta cluster on your Amazon Web Services (AWS) account. We’ll get you up and running in a few quick steps:
+        Use this guide to install a new OpenShift 4 preview cluster on your Amazon Web Services (AWS) account. We’ll get you up and running in a few quick steps:
       </p>
       <ol>
         <li>
@@ -309,7 +318,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
         type="warning"
       >
         <p>
-          As part of the beta Red Hat collects a limited amount of telemetry data. By participating in the beta you accept our data collection policy.
+          As part of the preview Red Hat collects a limited amount of telemetry data. By participating in the preview you accept our data collection policy.
            
           <a
             href="https://github.com/openshift/telemeter/blob/master/docs/data-collection.md"
@@ -542,6 +551,36 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
   >
     <Col
       bsClass="col"
+      className="left-col"
+      componentClass="div"
+      lg={8}
+      md={8}
+      sm={8}
+      xs={12}
+    >
+      <h3
+        className="cluster-install-step"
+      >
+        <a
+          href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview"
+          target="_blank"
+        >
+          <span
+            aria-hidden="true"
+            className="fa fa-bullhorn"
+            role="img"
+            style={
+              Object {
+                "marginRight": "10px",
+              }
+            }
+          />
+          Give us feedback
+        </a>
+      </h3>
+    </Col>
+    <Col
+      bsClass="col"
       className="cluster-install-step-callout-col"
       componentClass="div"
       lg={4}
@@ -585,7 +624,15 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
           Invalid
         </p>
         <p>
-          Please try again by refreshing the page. If the problem persists, please contact Red Hat Support.
+          Please try again by refreshing the page. If the problem persists, please report the issue in the
+           
+          <a
+            href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview"
+            target="_blank"
+          >
+            developer preview forum
+          </a>
+          .
         </p>
       </Alert>
       <div
@@ -603,10 +650,19 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
             }
           }
         >
-          Beta
+          Developer Preview
         </h1>
         <p>
-          This is an early preview of OpenShift 4. There are still some rough edges, but what we want more than anything is your feedback on our direction and how we can be better.
+          This is a very early preview of OpenShift 4. There are still some rough edges, but what we want more than anything is
+           
+          <a
+            href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview"
+            target="_blank"
+          >
+            your feedback
+          </a>
+           
+          on our direction and how we can be better.
         </p>
         <p
           className="text-right"
@@ -644,7 +700,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
       xs={12}
     >
       <p>
-        Use this guide to install a new OpenShift 4 beta cluster on your Amazon Web Services (AWS) account. We’ll get you up and running in a few quick steps:
+        Use this guide to install a new OpenShift 4 preview cluster on your Amazon Web Services (AWS) account. We’ll get you up and running in a few quick steps:
       </p>
       <ol>
         <li>
@@ -879,7 +935,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
         type="warning"
       >
         <p>
-          As part of the beta Red Hat collects a limited amount of telemetry data. By participating in the beta you accept our data collection policy.
+          As part of the preview Red Hat collects a limited amount of telemetry data. By participating in the preview you accept our data collection policy.
            
           <a
             href="https://github.com/openshift/telemeter/blob/master/docs/data-collection.md"
@@ -1110,6 +1166,36 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
     className="footer"
     componentClass="div"
   >
+    <Col
+      bsClass="col"
+      className="left-col"
+      componentClass="div"
+      lg={8}
+      md={8}
+      sm={8}
+      xs={12}
+    >
+      <h3
+        className="cluster-install-step"
+      >
+        <a
+          href="https://groups.google.com/forum/#!forum/openshift-4-dev-preview"
+          target="_blank"
+        >
+          <span
+            aria-hidden="true"
+            className="fa fa-bullhorn"
+            role="img"
+            style={
+              Object {
+                "marginRight": "10px",
+              }
+            }
+          />
+          Give us feedback
+        </a>
+      </h3>
+    </Col>
     <Col
       bsClass="col"
       className="cluster-install-step-callout-col"
