@@ -98,7 +98,6 @@ class ClusterDetails extends Component {
       }));
   }
 
-
   renderPendingMessage() {
     const { pending } = this.props;
     if (pending) {
@@ -232,6 +231,43 @@ class ClusterDetails extends Component {
     if (pending) {
       return this.renderPendingMessage();
     }
+
+    const clusterNetwork = () => {
+      if (cluster.dedicated && cluster.network) {
+        return (
+          <React.Fragment>
+            <dt>Network</dt>
+            <dd>
+              { cluster.aws && cluster.aws.vpc_cidr
+              && (
+              <dl className="cluster-details-item-list left">
+                <dt>VPC CIDR: </dt>
+                <dd>{cluster.aws.vpc_cidr}</dd>
+              </dl>
+              )
+              }
+              { cluster.network.service_cidr
+              && (
+              <dl className="cluster-details-item-list left">
+                <dt>Service CIDR: </dt>
+                <dd>{cluster.network.service_cidr}</dd>
+              </dl>
+              )
+              }
+              { cluster.network.pod_cidr
+              && (
+              <dl className="cluster-details-item-list left">
+                <dt>Pod CIDR: </dt>
+                <dd>{cluster.network.pod_cidr}</dd>
+              </dl>
+              )
+              }
+            </dd>
+          </React.Fragment>
+        );
+      }
+      return null;
+    };
 
     if (cluster === null || !cluster.id) {
       return (
@@ -473,6 +509,7 @@ class ClusterDetails extends Component {
                     </dd>
                   </dl>
                 </dd>
+                {clusterNetwork()}
               </dl>
             </Col>
           </Row>

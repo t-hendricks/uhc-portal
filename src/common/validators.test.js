@@ -18,3 +18,12 @@ test('Field is a valid DNS domain', () => {
   expect(validators.checkBaseDNSDomain('foo.bar')).toBe(undefined);
   expect(validators.checkBaseDNSDomain('foo.bar.baz')).toBe(undefined);
 });
+
+test('Field is valid CIDR range', () => {
+  expect(validators.cidr()).toBe(undefined);
+  expect(validators.cidr('foo')).toBe('IP address range \'foo\' isn\'t valid CIDR notation. It must follow the RFC-4632 format: \'192.168.0.0/16\'.');
+  expect(validators.cidr('192.168.0.0')).toBe('IP address range \'192.168.0.0\' isn\'t valid CIDR notation. It must follow the RFC-4632 format: \'192.168.0.0/16\'.');
+  expect(validators.cidr('192.168.0.0/')).toBe('IP address range \'192.168.0.0/\' isn\'t valid CIDR notation. It must follow the RFC-4632 format: \'192.168.0.0/16\'.');
+  expect(validators.cidr('192.168.0.0/foo')).toBe('IP address range \'192.168.0.0/foo\' isn\'t valid CIDR notation. It must follow the RFC-4632 format: \'192.168.0.0/16\'.');
+  expect(validators.cidr('192.168.0.0/16')).toBe(undefined);
+});
