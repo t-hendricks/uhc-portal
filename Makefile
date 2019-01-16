@@ -62,9 +62,9 @@ command_line_tools_url:=https://mirror.openshift.com/pub/openshift-v3/clients/4.
 	image \
 	lint \
 	node_modules \
+	project \
 	push \
 	tar \
-	template \
 	undeploy \
 	$(NULL)
 
@@ -120,10 +120,11 @@ tar:
 push:
 	docker push $(image):$(image_tag)
 
-template:
+%-template:
 	oc process \
-		--filename="template.yml" \
+		--filename="$*-template.yml" \
 		--local="true" \
+		--ignore-unknown-parameters="true" \
 		--param="BUILD_ID=$(build_id)" \
 		--param="BUILD_TS=$(build_ts)" \
 		--param="GATEWAY_DOMAIN=$(gateway_domain)" \
@@ -140,21 +141,33 @@ template:
 		--param="NAMESPACE=$(namespace)" \
 		--param="PORTAL_DOMAIN=$(portal_domain)" \
 		--param="VERSION=$(version)" \
-	> template.json
+	> "$*-template.json"
 
-deploy: template
+project:
 	oc new-project "$(namespace)" || oc project "$(namespace)" || true
-	oc apply --filename="template.json"
 
-undeploy: template
-	oc delete --filename="template.json"
+deploy-%: project %-template
+	oc apply --filename="$*-template.json"
+
+undeploy-%: project %-template
+	oc delete --filename="$*-template.json"
+
+deploy: \
+	deploy-service \
+	deploy-route \
+        $(NULL)
+
+undeploy: \
+	undeploy-service \
+	undeploy-route \
+        $(NULL)
 
 clean:
 	rm -rf \
 		$(binary) \
+		*-template.json \
 		*.tar \
 		.gopath \
 		build \
 		node_modules \
-		template.json \
 		$(NULL)
