@@ -98,139 +98,127 @@ class ClusterDetails extends Component {
       }));
   }
 
-  renderPendingMessage() {
-    const { pending } = this.props;
-    if (pending) {
-      return (
-        <LoadingModal>
-          Loading cluster details...
-        </LoadingModal>
-      );
-    }
-    return null;
-  }
-
-  renderEditClusterDialog() {
+  render() {
     const {
-      editCluster,
-      editClusterDialogVisible,
-    } = this.state;
-    return (
-      <Modal show={editClusterDialogVisible}>
-        <EditClusterDialog
-          cluster={editCluster}
-          closeFunc={(updated) => {
-            this.setState(prevState => (
-              {
-                ...prevState,
-                editClusterDialogVisible: false,
-              }));
-            if (updated) {
-              invalidateClusters();
-            }
-          }}
-        />
-      </Modal>
-    );
-  }
+      cluster, error, errorMessage, pending, cloudProviders, fetchDetails,
+    } = this.props;
 
-  renderEditDisplayNameDialog() {
-    const {
-      editCluster,
-      editDisplayNameDialogVisible,
-    } = this.state;
-    return (
-      <Modal show={editDisplayNameDialogVisible}>
-        <EditDisplayNameDialog
-          cluster={editCluster}
-          closeFunc={(updated) => {
-            this.setState(prevState => (
-              {
-                ...prevState,
-                editDisplayNameDialogVisible: false,
-              }));
-            if (updated) {
-              invalidateClusters();
-            }
-          }}
-        />
-      </Modal>
-    );
-  }
+    const pendingMessage = () => {
+      if (pending) {
+        return (
+          <LoadingModal>
+            Loading cluster details...
+          </LoadingModal>
+        );
+      }
+      return null;
+    };
 
-  renderDeleteClusterDialog(cluster) {
-    const {
-      deleteClusterDialogVisible,
-    } = this.state;
-    return (
-      <Modal show={deleteClusterDialogVisible}>
-        <DeleteClusterDialog
-          clusterID={cluster.id}
-          clusterName={cluster.name}
-          closeFunc={(updated) => {
-            this.setState(prevState => (
-              {
-                ...prevState,
-                deleteClusterDialogVisible: false,
-              }));
-            if (updated) {
-              invalidateClusters();
-            }
-          }}
-        />
-      </Modal>
-    );
-  }
-
-  renderError() {
-    const { errorMessage } = this.props;
-    return (
+    const errorState = () => (
       <EmptyState>
         <Alert type="error">
           <span>{`Error retrieving cluster details: ${errorMessage}`}</span>
         </Alert>
-        {this.renderPendingMessage()}
+        {pendingMessage()}
       </EmptyState>
     );
-  }
 
-  renderUtilizationCharts() {
-    const { cluster } = this.props;
-    if (cluster.state === 'ready') {
+    const editClusterDialog = () => {
+      const {
+        editCluster,
+        editClusterDialogVisible,
+      } = this.state;
       return (
-        <React.Fragment>
-          <Col xs={6} sm={3} md={3}>
-            <ClusterUtilizationChart title="CPU" total={cluster.cpu.total.value} unit="Cores" used={cluster.cpu.used.value} donutId="cpu_donut" />
-          </Col>
-          <Col xs={6} sm={3} md={3}>
-            <ClusterUtilizationChart title="MEMORY" total={cluster.memory.total} unit="GiB" used={cluster.memory.used} donutId="memory_donut" />
-          </Col>
-          <Col xs={6} sm={3} md={3}>
-            <ClusterUtilizationChart title="STORAGE" total={cluster.storage.total} unit="GiB" used={cluster.storage.used} donutId="storage_donut" />
-          </Col>
-        </React.Fragment>);
-    }
-    return (
-      <Col xs={6}>
-        <p>
-          This cluster is in the process of being registered so some data is not yet available.
-          This may take some time.
-        </p>
-      </Col>
-    );
-  }
+        <Modal show={editClusterDialogVisible}>
+          <EditClusterDialog
+            cluster={editCluster}
+            closeFunc={(updated) => {
+              this.setState(prevState => (
+                {
+                  ...prevState,
+                  editClusterDialogVisible: false,
+                }));
+              if (updated) {
+                invalidateClusters();
+              }
+            }}
+          />
+        </Modal>
+      );
+    };
 
-  render() {
-    const {
-      cluster, error, pending, cloudProviders, fetchDetails,
-    } = this.props;
-    if (error) {
-      return this.renderError();
-    }
+    const editDisplayNameDialog = () => {
+      const {
+        editCluster,
+        editDisplayNameDialogVisible,
+      } = this.state;
+      return (
+        <Modal show={editDisplayNameDialogVisible}>
+          <EditDisplayNameDialog
+            cluster={editCluster}
+            closeFunc={(updated) => {
+              this.setState(prevState => (
+                {
+                  ...prevState,
+                  editDisplayNameDialogVisible: false,
+                }));
+              if (updated) {
+                invalidateClusters();
+              }
+            }}
+          />
+        </Modal>
+      );
+    };
 
-    if (pending) {
-      return this.renderPendingMessage();
-    }
+    const deleteClusterDialog = () => {
+      const {
+        deleteClusterDialogVisible,
+      } = this.state;
+      return (
+        <Modal show={deleteClusterDialogVisible}>
+          <DeleteClusterDialog
+            clusterID={cluster.id}
+            clusterName={cluster.name}
+            closeFunc={(updated) => {
+              this.setState(prevState => (
+                {
+                  ...prevState,
+                  deleteClusterDialogVisible: false,
+                }));
+              if (updated) {
+                invalidateClusters();
+              }
+            }}
+          />
+        </Modal>
+      );
+    };
+
+    const utilizationCharts = () => {
+      if (cluster.state === 'ready') {
+        return (
+          <React.Fragment>
+            <Col xs={6} sm={3} md={3}>
+              <ClusterUtilizationChart title="CPU" total={cluster.cpu.total.value} unit="Cores" used={cluster.cpu.used.value} donutId="cpu_donut" />
+            </Col>
+            <Col xs={6} sm={3} md={3}>
+              <ClusterUtilizationChart title="MEMORY" total={cluster.memory.total} unit="GiB" used={cluster.memory.used} donutId="memory_donut" />
+            </Col>
+            <Col xs={6} sm={3} md={3}>
+              <ClusterUtilizationChart title="STORAGE" total={cluster.storage.total} unit="GiB" used={cluster.storage.used} donutId="storage_donut" />
+            </Col>
+          </React.Fragment>);
+      }
+      return (
+        <Col xs={6}>
+          <p>
+            This cluster is in the process of being registered so some data is not yet available.
+            This may take some time.
+          </p>
+        </Col>
+      );
+    };
 
     const clusterNetwork = () => {
       if (cluster.dedicated && cluster.network) {
@@ -269,6 +257,14 @@ class ClusterDetails extends Component {
       return null;
     };
 
+    if (error) {
+      return errorState();
+    }
+
+    if (pending) {
+      return pendingMessage();
+    }
+
     if (cluster === null || !cluster.id) {
       return (
         <React.Fragment>
@@ -285,7 +281,7 @@ class ClusterDetails extends Component {
               </EmptyState>
             </Row>
           </Grid>
-          {this.renderPendingMessage()}
+          {pendingMessage()}
         </React.Fragment>);
     }
 
@@ -387,7 +383,7 @@ class ClusterDetails extends Component {
         </Grid>
         <Grid fluid>
           <Row style={{ marginTop: '20px' }}>
-            {this.renderUtilizationCharts()}
+            {utilizationCharts()}
           </Row>
         </Grid>
         <hr style={{ width: '96%' }} />
@@ -514,9 +510,9 @@ class ClusterDetails extends Component {
             </Col>
           </Row>
         </Grid>
-        {this.renderEditClusterDialog()}
-        {this.renderEditDisplayNameDialog()}
-        {this.renderDeleteClusterDialog(cluster)}
+        {editClusterDialog()}
+        {editDisplayNameDialog()}
+        {deleteClusterDialog()}
       </div>);
   }
 }
