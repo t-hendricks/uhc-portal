@@ -5,6 +5,8 @@ const DNS_LABEL_REGEXP = /^[a-z]([-a-z0-9]*[a-z0-9])?$/;
 // Regular expression used to check base DNS domains, based on RFC-1035
 const BASE_DOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z0-9])?$/;
 
+// Regular expression used to check whether input is a valid IPv4 CIDR range
+const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
 
 // Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');
@@ -31,11 +33,19 @@ const checkBaseDNSDomain = (value) => {
   return undefined;
 };
 
+// Function to validate IP address blocks
+const cidr = (value) => {
+  if (value && !CIDR_REGEXP.test(value)) {
+    return `IP address range '${value}' isn't valid CIDR notation. It must follow the RFC-4632 format: '192.168.0.0/16'.`;
+  }
+  return undefined;
+};
 
 const validators = {
   required,
   checkClusterName,
   checkBaseDNSDomain,
+  cidr,
 };
 
 export default validators;

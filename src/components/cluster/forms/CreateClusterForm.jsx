@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Redirect } from 'react-router';
 import {
-  Button, Icon, Form, Modal, Alert, HintBlock, Grid, Row, Col, Spinner,
+  Button, Icon, Form, Modal, Alert, HintBlock, Grid, Row, Col, Spinner, ExpandCollapse,
 } from 'patternfly-react';
 import ReduxVerticalFormGroup from '../../clusters/ReduxVerticalFormGroup';
 import CloudRegionComboBox from '../../clusters/CloudRegionComboBox';
@@ -150,6 +150,7 @@ function CreateClusterForm(props) {
                   validate={validators.required}
                   disabled={createClusterResponse.pending}
                 />
+
                 <Field
                   component={ReduxCheckbox}
                   name="multi_az"
@@ -189,6 +190,56 @@ function CreateClusterForm(props) {
                   )}
                 />
               </Col>
+            </Row>
+            <Row>
+              <ExpandCollapse>
+                <Col sm={5}>
+                  <Field
+                    component={ReduxVerticalFormGroup}
+                    name="aws_vpc_cidr"
+                    label="VPC CIDR"
+                    type="text"
+                    validate={validators.cidr}
+                    disabled={createClusterResponse.pending}
+                  />
+                  <Field
+                    component={ReduxVerticalFormGroup}
+                    name="network_service_cidr"
+                    label="Service CIDR"
+                    type="text"
+                    validate={validators.cidr}
+                    disabled={createClusterResponse.pending}
+                  />
+                  <Field
+                    component={ReduxVerticalFormGroup}
+                    name="network_pod_cidr"
+                    label="Pod CIDR"
+                    type="text"
+                    validate={validators.cidr}
+                    disabled={createClusterResponse.pending}
+                  />
+                </Col>
+                <Col sm={4}>
+                  <HintBlock
+                    title="Network Configuration"
+                    body={(
+                      <React.Fragment>
+                        <p>
+                          You can override the default CIDR values for your VPC, Service (Portal),
+                          and Cluster (Pod).
+                        </p>
+                        <p>
+                          Valid CIDR notation includes a prefix, shown as a 4-octet quantity,
+                          similar to a traditional IPv4 address, followed by the &#34;/&#34; (slash)
+                          character, followed by a number between 0 and 32 that describes the
+                          number of significant bits. For example:
+                          <code>192.168.0.0/16</code>
+                        </p>
+                      </React.Fragment>
+                    )}
+                  />
+                </Col>
+              </ExpandCollapse>
             </Row>
           </Grid>
         </Form>
@@ -250,8 +301,13 @@ const mapDispatchToProps = dispatch => ({
       aws: {
         access_key_id: formData.aws_access_key_id,
         secret_access_key: formData.aws_secret_access_key,
+        vpc_cidr: formData.aws_vpc_cidr,
       },
       multi_az: formData.multi_az,
+      network: {
+        service_cidr: formData.network_service_cidr,
+        pod_cidr: formData.network_pod_cidr,
+      },
     };
     dispatch(createCluster(clusterRequest));
   },
