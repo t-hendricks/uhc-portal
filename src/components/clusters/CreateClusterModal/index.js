@@ -45,10 +45,10 @@ const mapDispatchToProps = dispatch => ({
       aws: {
         access_key_id: formData.aws_access_key_id,
         secret_access_key: formData.aws_secret_access_key,
-        vpc_cidr: formData.aws_vpc_cidr,
       },
       multi_az: formData.multi_az,
       network: {
+        machine_cidr: formData.network_machine_cidr,
         service_cidr: formData.network_service_cidr,
         pod_cidr: formData.network_pod_cidr,
       },

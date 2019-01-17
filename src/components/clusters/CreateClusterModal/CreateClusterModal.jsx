@@ -155,8 +155,8 @@ function CreateClusterModal(props) {
                 <Col sm={5}>
                   <Field
                     component={ReduxVerticalFormGroup}
-                    name="aws_vpc_cidr"
-                    label="VPC CIDR"
+                    name="network_machine_cidr"
+                    label="Machine CIDR"
                     type="text"
                     validate={validators.cidr}
                     disabled={createClusterResponse.pending}
