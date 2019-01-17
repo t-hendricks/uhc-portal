@@ -62,6 +62,10 @@ parameters:
 - name: KEYCLOAK_CLIENT_ID
   description: The Keycloak client identifier.
 
+- name: REPLICAS
+  description: Number of replicas of the service to run.
+  value: "1"
+
 - name: VERSION
   description: The version of the project.
 
@@ -89,7 +93,7 @@ objects:
     selector:
       matchLabels:
         app: portal-server
-    replicas: 1
+    replicas: ${{REPLICAS}}
     template:
       metadata:
         labels:
