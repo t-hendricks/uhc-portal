@@ -410,10 +410,10 @@ class ClusterDetails extends Component {
             <Col sm={6}>
               <dl className="cluster-details-item left">
                 <dt>
-                  Name
+                  Cluster ID
                 </dt>
                 <dd>
-                  {cluster.name}
+                  {cluster.external_id || 'N/A'}
                 </dd>
                 <dt>
                   Location
