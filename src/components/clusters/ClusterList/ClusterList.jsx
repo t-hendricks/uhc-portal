@@ -31,7 +31,7 @@ import LoadingModal from '../LoadingModal';
 import CreateClusterDropdown from './CreateClusterDropdown';
 import RefreshBtn from '../RefreshButton';
 
-import CreateClusterForm from '../../cluster/forms/CreateClusterForm';
+import CreateClusterModal from '../CreateClusterModal';
 import EditClusterDialog from '../../cluster/forms/EditClusterDialog';
 import EditDisplayNameDialog from '../../cluster/forms/EditDisplayNameDialog';
 import DeleteClusterDialog from '../../cluster/forms/DeleteClusterDialog';
@@ -41,6 +41,7 @@ import { viewConstants } from '../../../redux/constants';
 import { clustersActions } from '../../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 import { viewActions } from '../../../redux/actions/viewOptionsActions';
+import { modalActions } from '../../Modal/ModalActions';
 
 class ClusterList extends Component {
   constructor() {
@@ -76,10 +77,6 @@ class ClusterList extends Component {
         || helpers.viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
     }
-  }
-
-  setCreationFormState(show) {
-    this.setState(prevState => ({ ...prevState, clusterCreationFormVisible: show }));
   }
 
   openEditDisplayNameDialog(cluster) {
@@ -131,21 +128,7 @@ class ClusterList extends Component {
     return null;
   }
 
-  renderClusterCreationForm() {
-    const { clusterCreationFormVisible } = this.state;
-    const { resetCreatedClusterResponse } = this.props;
-    return (
-      <Modal className="right-side-modal-pf" show={clusterCreationFormVisible} bsSize="large">
-        <CreateClusterForm closeFunc={() => {
-          resetCreatedClusterResponse();
-          this.setCreationFormState(false);
-        }}
-        />
-      </Modal>
-    );
-  }
-
-  // TO-DO: extract to independent component and reuse in ClusterDetails
+  // TO-DO: use generic modal for all dialogs
 
   renderEditClusterDialog() {
     const {
@@ -238,7 +221,7 @@ class ClusterList extends Component {
 
   render() {
     const {
-      error, pending, clusters, viewOptions, setSorting,
+      error, pending, clusters, viewOptions, setSorting, openModal,
     } = this.props;
 
     if (error) {
@@ -251,13 +234,12 @@ class ClusterList extends Component {
     if (!size(clusters) && !pending && isEmpty(viewOptions.filter)) {
       return (
         <React.Fragment>
-          <ClusterListEmptyState showCreationForm={() => { this.setCreationFormState(true); }} />
-          {this.renderClusterCreationForm()}
+          <ClusterListEmptyState showCreationForm={() => { openModal('create-cluster'); }} />
           {this.renderPendingMessage()}
+          <CreateClusterModal />
         </React.Fragment>
       );
     }
-
     return (
       <div className="cluster-list">
         <Grid fluid style={{ padding: 0 }}>
@@ -265,7 +247,7 @@ class ClusterList extends Component {
           <Row className="cluster-list-top-row">
             <Col sm={1}>
               <CreateClusterDropdown
-                showCreationForm={() => { this.setCreationFormState(true); }}
+                showCreationForm={() => openModal('create-cluster')}
               />
             </Col>
             <Col sm={1}>
@@ -285,10 +267,10 @@ class ClusterList extends Component {
           openDeleteClusterDialog={this.openDeleteClusterDialog}
           openEditDisplayNameDialog={this.openEditDisplayNameDialog}
         />
-        {this.renderClusterCreationForm()}
         {this.renderEditClusterDialog()}
         {this.renderEditDisplayNameDialog()}
         {this.renderDeleteClusterDialog()}
+        <CreateClusterModal />
       </div>
     );
   }
@@ -306,7 +288,7 @@ ClusterList.propTypes = {
   setSorting: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
-  resetCreatedClusterResponse: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
@@ -314,7 +296,7 @@ const mapDispatchToProps = {
   fetchClusters: queryObj => clustersActions.fetchClusters(queryObj),
   setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
   getCloudProviders: cloudProviderActions.getCloudProviders,
-  resetCreatedClusterResponse: clustersActions.resetCreatedClusterResponse,
+  openModal: modalActions.openModal,
 };
 
 const mapStateToProps = state => Object.assign(
