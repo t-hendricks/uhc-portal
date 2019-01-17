@@ -69,7 +69,7 @@ function NetworkConfugurationHint() {
       body={(
         <React.Fragment>
           <p>
-            You can override the default CIDR values for your Machine (Host), Service (Portal),
+            You can override the default CIDR values for your Machine (Host), Service,
             and Cluster (Pod).
           </p>
           <p>
