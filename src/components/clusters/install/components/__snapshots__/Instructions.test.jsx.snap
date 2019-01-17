@@ -99,7 +99,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
           Deploy the cluster
         </li>
         <li>
-          Access your new cluster!
+          Access your new cluster
         </li>
       </ol>
     </Col>
@@ -204,7 +204,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
       <h3
         className="cluster-install-step"
       >
-        Step 2: Configure your AWS Credentials
+        Step 2: Configure Your AWS Credentials
       </h3>
       <p>
         The installer creates a number of resources in AWS that are necessary to run your cluster, such as instances, VPCs, security groups, and IAM roles. To configure your credentials see the
@@ -459,7 +459,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
       <h3
         className="cluster-install-step"
       >
-        Step 5: Access your new cluster!
+        Step 5: Access Your New Cluster
       </h3>
       <p>
         You have taken the first steps to create your cluster. While your cluster finishes installing, take a moment to download the OpenShift command-line tools and add them to your
@@ -717,7 +717,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
           Deploy the cluster
         </li>
         <li>
-          Access your new cluster!
+          Access your new cluster
         </li>
       </ol>
     </Col>
@@ -822,7 +822,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
       <h3
         className="cluster-install-step"
       >
-        Step 2: Configure your AWS Credentials
+        Step 2: Configure Your AWS Credentials
       </h3>
       <p>
         The installer creates a number of resources in AWS that are necessary to run your cluster, such as instances, VPCs, security groups, and IAM roles. To configure your credentials see the
@@ -1077,7 +1077,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
       <h3
         className="cluster-install-step"
       >
-        Step 5: Access your new cluster!
+        Step 5: Access Your New Cluster
       </h3>
       <p>
         You have taken the first steps to create your cluster. While your cluster finishes installing, take a moment to download the OpenShift command-line tools and add them to your
