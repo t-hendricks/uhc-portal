@@ -328,10 +328,28 @@ class ClusterDetails extends Component {
       </Link>
     );
 
-    const editClusterItem = (
-      <MenuItem onClick={() => this.openEditClusterDialog(cluster)}>
-        Edit Cluster
-      </MenuItem>);
+    const editClusterItem = () => {
+      if (!cluster.dedicated) {
+        return (
+          <MenuItem disabled title="Self managed cluster cannot be edited">
+            Edit Cluster
+          </MenuItem>
+        );
+      }
+      if (cluster.state !== 'ready') {
+        return (
+          <MenuItem disabled title="This cluster is not ready">
+            Edit Cluster
+          </MenuItem>
+        );
+      }
+      return (
+        <MenuItem onClick={() => this.openEditClusterDialog(cluster)}>
+          Edit Cluster
+        </MenuItem>
+      );
+    };
+
     const editDisplayNameItem = (
       <MenuItem onClick={() => this.openEditDisplayNameDialog(cluster)}>
         Edit Display Name
@@ -354,7 +372,7 @@ class ClusterDetails extends Component {
         title="Actions"
       >
         {editDisplayNameItem}
-        {editClusterItem}
+        {editClusterItem()}
         {deleteClusterItem}
       </DropdownButton>
     );
