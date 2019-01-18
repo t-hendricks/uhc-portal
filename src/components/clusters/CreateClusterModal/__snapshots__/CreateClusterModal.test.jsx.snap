@@ -173,8 +173,8 @@ exports[`CreateClusterModal should render 1`] = `
               <Field
                 component={[Function]}
                 disabled={false}
-                label="VPC CIDR"
-                name="aws_vpc_cidr"
+                label="Machine CIDR"
+                name="network_machine_cidr"
                 type="text"
                 validate={[Function]}
               />

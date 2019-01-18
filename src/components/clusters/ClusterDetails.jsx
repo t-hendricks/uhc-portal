@@ -226,11 +226,11 @@ class ClusterDetails extends Component {
           <React.Fragment>
             <dt>Network</dt>
             <dd>
-              { cluster.aws && cluster.aws.vpc_cidr
+              { cluster.network.machine_cidr
               && (
               <dl className="cluster-details-item-list left">
-                <dt>VPC CIDR: </dt>
-                <dd>{cluster.aws.vpc_cidr}</dd>
+                <dt>Machine CIDR: </dt>
+                <dd>{cluster.network.machine_cidr}</dd>
               </dl>
               )
               }
