@@ -226,10 +226,15 @@ class Instructions extends React.Component {
               </Download>
               <CopyToClipboard
                 text={tokenView}
-                onCopy={() => this.setState({ copied: true })}
+                onCopy={() => {
+                  this.setState({ copied: true });
+                  // fix for IE
+                  document.getElementById('copyPullSecret').focus();
+                }}
               >
                 <span style={{ margin: '10px' }}>
                   <button
+                    id="copyPullSecret"
                     className="btn-text-link install--copy-pull-secret"
                     type="button"
                     tabIndex="0"
