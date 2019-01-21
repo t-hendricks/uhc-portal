@@ -15,7 +15,7 @@ describe('Modal Redcuer', () => {
 
 
   it('should handle open modal action', () => {
-    const action = { type: OPEN_MODAL, payload: 'test-modal' };
+    const action = { type: OPEN_MODAL, payload: { name: 'test-modal' } };
     const result = reducer(initialState, action);
 
     expect(result).toHaveProperty('activeModal.modalName', 'test-modal');
@@ -27,5 +27,13 @@ describe('Modal Redcuer', () => {
     const result = reducer(activeModalState, action);
 
     expect(result).toEqual(initialState);
+  });
+
+  it('should handle open modal action with data', () => {
+    const action = { type: OPEN_MODAL, payload: { name: 'test-modal', data: 'foo' } };
+    const result = reducer(initialState, action);
+
+    expect(result).toHaveProperty('activeModal.modalName', 'test-modal');
+    expect(result).toHaveProperty('activeModal.data', 'foo');
   });
 });

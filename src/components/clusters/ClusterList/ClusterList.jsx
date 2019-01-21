@@ -50,16 +50,12 @@ class ClusterList extends Component {
     this.refresh = this.refresh.bind(this);
     // the various open dialog methods get called from the table component
     this.openEditClusterDialog = this.openEditClusterDialog.bind(this);
-    this.openDeleteClusterDialog = this.openDeleteClusterDialog.bind(this);
     this.openEditDisplayNameDialog = this.openEditDisplayNameDialog.bind(this);
   }
 
   state = {
     clusterCreationFormVisible: false,
     editClusterDialogVisible: false,
-    deleteClusterDialogVisible: false,
-    deleteClusterClusterID: '',
-    deleteClusterClusterName: '',
   }
 
   componentDidMount() {
@@ -96,16 +92,6 @@ class ClusterList extends Component {
         editCluster: cluster,
         editClusterDialogVisible: true,
         editDisplayNameDialogVisible: false,
-      }));
-  }
-
-  openDeleteClusterDialog(clusterID, clusterName) {
-    this.setState(prevState => (
-      {
-        ...prevState,
-        deleteClusterDialogVisible: true,
-        deleteClusterClusterID: clusterID,
-        deleteClusterClusterName: clusterName,
       }));
   }
 
@@ -186,36 +172,6 @@ class ClusterList extends Component {
     );
   }
 
-  renderDeleteClusterDialog() {
-    const {
-      deleteClusterDialogVisible,
-      deleteClusterClusterID,
-      deleteClusterClusterName,
-    } = this.state;
-    return (
-      <Modal
-        show={deleteClusterDialogVisible}
-        onHide={() => this.setState({ deleteClusterDialogVisible: false })}
-      >
-        <DeleteClusterDialog
-          clusterID={deleteClusterClusterID}
-          clusterName={deleteClusterClusterName}
-          closeFunc={(updated) => {
-            this.setState(prevState => (
-              {
-                ...prevState,
-                deleteClusterDialogVisible: false,
-              }));
-            if (updated) {
-              const { invalidateClusters } = this.props;
-              invalidateClusters();
-            }
-          }}
-        />
-      </Modal>
-    );
-  }
-
   renderError() {
     const { errorMessage } = this.props;
     return (
@@ -230,7 +186,7 @@ class ClusterList extends Component {
 
   render() {
     const {
-      error, pending, clusters, viewOptions, setSorting, openModal,
+      error, pending, clusters, viewOptions, setSorting, openModal, invalidateClusters,
     } = this.props;
 
     if (error) {
@@ -273,12 +229,19 @@ class ClusterList extends Component {
           viewOptions={viewOptions}
           setSorting={setSorting}
           openEditClusterDialog={this.openEditClusterDialog}
-          openDeleteClusterDialog={this.openDeleteClusterDialog}
+          openDeleteClusterDialog={(clusterID, clusterName) => {
+            openModal('delete-cluster', { clusterID, clusterName });
+          }}
           openEditDisplayNameDialog={this.openEditDisplayNameDialog}
         />
         {this.renderEditClusterDialog()}
         {this.renderEditDisplayNameDialog()}
-        {this.renderDeleteClusterDialog()}
+        <DeleteClusterDialog onClose={(shouldRefresh) => {
+          if (shouldRefresh) {
+            invalidateClusters();
+          }
+        }}
+        />
         <CreateClusterModal />
       </div>
     );

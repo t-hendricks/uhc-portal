@@ -34,6 +34,8 @@ import DeleteClusterDialog from '../cluster/forms/DeleteClusterDialog';
 import { humanizeValueWithUnit } from '../../common/unitParser';
 import { fetchClusterDetails, invalidateClusters } from '../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
+import { modalActions } from '../Modal/ModalActions';
+
 import RefreshBtn from './RefreshButton';
 import { metricsStatusMessages, maxMetricsTimeDelta } from './clusterDetailsConsts';
 
@@ -44,7 +46,6 @@ class ClusterDetails extends Component {
       clusterCreationFormVisible: false,
       editClusterDialogVisible: false,
       editDisplayNameDialogVisible: false,
-      deleteClusterDialogVisible: false,
     };
   }
 
@@ -92,17 +93,9 @@ class ClusterDetails extends Component {
       }));
   }
 
-  openDeleteClusterDialog() {
-    this.setState(prevState => (
-      {
-        ...prevState,
-        deleteClusterDialogVisible: true,
-      }));
-  }
-
   render() {
     const {
-      cluster, error, errorMessage, pending, cloudProviders, fetchDetails,
+      cluster, error, errorMessage, pending, cloudProviders, fetchDetails, openModal,
     } = this.props;
 
     const pendingMessage = () => {
@@ -174,34 +167,6 @@ class ClusterDetails extends Component {
               if (updated) {
                 invalidateClusters();
                 fetchDetails(editCluster.id);
-              }
-            }}
-          />
-        </Modal>
-      );
-    };
-
-    const deleteClusterDialog = () => {
-      const {
-        deleteClusterDialogVisible,
-      } = this.state;
-      return (
-        <Modal
-          show={deleteClusterDialogVisible}
-          onHide={() => this.setState({ deleteClusterDialogVisible: false })}
-        >
-          <DeleteClusterDialog
-            clusterID={cluster.id}
-            clusterName={cluster.name}
-            closeFunc={(updated) => {
-              this.setState(prevState => (
-                {
-                  ...prevState,
-                  deleteClusterDialogVisible: false,
-                }));
-              if (updated) {
-                invalidateClusters();
-                fetchDetails(cluster.id);
               }
             }}
           />
@@ -327,6 +292,7 @@ class ClusterDetails extends Component {
     // The trenary for consoleURL is needed because the API does not guarantee fields being present.
     // We'll have a lot of these all over the place as we grow :(
     const consoleURL = cluster.console ? cluster.console.url : false;
+    const clusterName = cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
 
     const consoleBtn = consoleURL ? (
       <a href={consoleURL} target="_blank" rel="noreferrer">
@@ -376,7 +342,7 @@ class ClusterDetails extends Component {
       </MenuItem>);
 
     const deleteClusterItem = cluster.dedicated ? (
-      <MenuItem onClick={() => this.openDeleteClusterDialog(cluster)}>
+      <MenuItem onClick={() => openModal('delete-cluster', { clusterID: cluster.id, clusterName })}>
         Delete Cluster
       </MenuItem>)
       : (
@@ -407,7 +373,7 @@ class ClusterDetails extends Component {
             </Col>
             <Col sm={2} smOffset={1}>
               <h1 style={{ marginTop: 0 }}>
-                {cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster'}
+                {clusterName}
               </h1>
             </Col>
             <Col sm={1} smOffset={4}>
@@ -550,7 +516,13 @@ class ClusterDetails extends Component {
         </Grid>
         {editClusterDialog()}
         {editDisplayNameDialog()}
-        {deleteClusterDialog()}
+        <DeleteClusterDialog onClose={(shouldRefresh) => {
+          if (shouldRefresh) {
+            invalidateClusters();
+            fetchDetails(cluster.id);
+          }
+        }}
+        />
       </div>);
   }
 }
@@ -560,6 +532,7 @@ ClusterDetails.propTypes = {
   fetchDetails: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  openModal: PropTypes.func.isRequired,
   cluster: PropTypes.any,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
@@ -583,6 +556,7 @@ const mapDispatchToProps = {
   fetchDetails: clusterID => fetchClusterDetails(clusterID),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   invalidateClusters,
+  openModal: modalActions.openModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
