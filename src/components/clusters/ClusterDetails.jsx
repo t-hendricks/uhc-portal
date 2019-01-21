@@ -25,6 +25,7 @@ import ClusterUtilizationChart from './ClusterUtilizationChart';
 import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
 import Timestamp from '../Timestamp';
+import { getMetricsTimeDelta } from '../../common/helpers';
 
 import EditClusterDialog from '../cluster/forms/EditClusterDialog';
 import EditDisplayNameDialog from '../cluster/forms/EditDisplayNameDialog';
@@ -34,6 +35,7 @@ import { humanizeValueWithUnit } from '../../common/unitParser';
 import { fetchClusterDetails, invalidateClusters } from '../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
 import RefreshBtn from './RefreshButton';
+import { metricsStatusMessages, maxMetricsTimeDelta } from './clusterDetailsConsts';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -198,31 +200,6 @@ class ClusterDetails extends Component {
       );
     };
 
-    const utilizationCharts = () => {
-      if (cluster.state === 'ready') {
-        return (
-          <React.Fragment>
-            <Col xs={6} sm={3} md={3}>
-              <ClusterUtilizationChart title="CPU" total={cluster.cpu.total.value} unit="Cores" used={cluster.cpu.used.value} donutId="cpu_donut" />
-            </Col>
-            <Col xs={6} sm={3} md={3}>
-              <ClusterUtilizationChart title="MEMORY" total={cluster.memory.total} unit="GiB" used={cluster.memory.used} donutId="memory_donut" />
-            </Col>
-            <Col xs={6} sm={3} md={3}>
-              <ClusterUtilizationChart title="STORAGE" total={cluster.storage.total} unit="GiB" used={cluster.storage.used} donutId="storage_donut" />
-            </Col>
-          </React.Fragment>);
-      }
-      return (
-        <Col xs={6}>
-          <p>
-            This cluster is in the process of being registered so some data is not yet available.
-            This may take some time.
-          </p>
-        </Col>
-      );
-    };
-
     const clusterNetwork = () => {
       if (cluster.dedicated && cluster.network) {
         return (
@@ -304,9 +281,39 @@ class ClusterDetails extends Component {
     const memoryTotalWithUnit = humanizeValueWithUnit(
       cluster.memory.total.value, cluster.memory.total.unit,
     );
+    const memoryUsedWithUnit = humanizeValueWithUnit(
+      cluster.memory.used.value, cluster.memory.used.unit,
+    );
     const storageTotalWithUnit = humanizeValueWithUnit(
       cluster.storage.total.value, cluster.storage.total.unit,
     );
+    const storageUsedWithUnit = humanizeValueWithUnit(
+      cluster.storage.total.value, cluster.storage.total.unit,
+    );
+
+    const metricsLatsUpdate = new Date(cluster.cpu.updated_timestamp);
+
+    const metricsAvailable = getMetricsTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta;
+
+    const utilizationCharts = () => (metricsAvailable ? (
+      <React.Fragment>
+        <Col xs={6} sm={3} md={3}>
+          <ClusterUtilizationChart title="CPU" total={cluster.cpu.total.value} unit="Cores" used={cluster.cpu.used.value} donutId="cpu_donut" />
+        </Col>
+        <Col xs={6} sm={3} md={3}>
+          <ClusterUtilizationChart title="MEMORY" total={memoryTotalWithUnit.value} unit="GiB" used={memoryUsedWithUnit.value} donutId="memory_donut" />
+        </Col>
+        <Col xs={6} sm={3} md={3}>
+          <ClusterUtilizationChart title="STORAGE" total={storageTotalWithUnit.value} unit="GiB" used={storageUsedWithUnit.value} donutId="storage_donut" />
+        </Col>
+      </React.Fragment>)
+      : (
+        <Col xs={6}>
+          <p>
+            {metricsStatusMessages[cluster.state] || metricsStatusMessages.default}
+          </p>
+        </Col>
+      ));
 
     // The trenary for consoleURL is needed because the API does not guarantee fields being present.
     // We'll have a lot of these all over the place as we grow :(
