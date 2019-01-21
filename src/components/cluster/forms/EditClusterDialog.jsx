@@ -27,7 +27,7 @@ function EditClusterDialog(props) {
 
   const errorContainer = editClusterResponse.error ? (
     <Alert>
-      <span>{`Error changing display name: ${editClusterResponse.errorMessage}`}</span>
+      <span>{`Error editing cluster: ${editClusterResponse.errorMessage}`}</span>
     </Alert>) : null;
 
   return (
