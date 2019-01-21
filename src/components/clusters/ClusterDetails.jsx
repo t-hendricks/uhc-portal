@@ -140,6 +140,7 @@ class ClusterDetails extends Component {
                 }));
               if (updated) {
                 invalidateClusters();
+                fetchDetails(editCluster.id);
               }
             }}
           />
@@ -164,6 +165,7 @@ class ClusterDetails extends Component {
                 }));
               if (updated) {
                 invalidateClusters();
+                fetchDetails(editCluster.id);
               }
             }}
           />
@@ -188,6 +190,7 @@ class ClusterDetails extends Component {
                 }));
               if (updated) {
                 invalidateClusters();
+                fetchDetails(cluster.id);
               }
             }}
           />
