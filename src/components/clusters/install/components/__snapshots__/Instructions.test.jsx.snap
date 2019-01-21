@@ -401,6 +401,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
             <button
               className="btn-text-link install--copy-pull-secret"
               disabled={false}
+              id="copyPullSecret"
               tabIndex="0"
               type="button"
             >
@@ -1019,6 +1020,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
             <button
               className="btn-text-link install--copy-pull-secret"
               disabled={true}
+              id="copyPullSecret"
               tabIndex="0"
               type="button"
             >
