@@ -36,6 +36,7 @@ function CreateClusterModal(props) {
   } = props;
 
   if (createClusterResponse.fulfilled) {
+    closeModal('create-cluster');
     resetResponse();
     return (
       <Redirect to={`/cluster/${createClusterResponse.cluster.id}`} />

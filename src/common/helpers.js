@@ -72,6 +72,11 @@ function getErrorMessage(payload) {
   return JSON.stringify(response);
 }
 
+function getMetricsTimeDelta(t1, t2 = new Date()) {
+  const timeDiff = Math.abs(t2.getTime() - t1.getTime());
+  return Math.ceil(timeDiff / (1000 * 3600));
+}
+
 const INVALIDATE_ACTION = base => `${base}_INVALIDATE`;
 
 // redux-middleware-promise
@@ -85,12 +90,13 @@ const helpers = {
   viewPropsChanged,
   createViewQueryObject,
   getErrorMessage,
+  getMetricsTimeDelta,
   INVALIDATE_ACTION,
   FULFILLED_ACTION,
   PENDING_ACTION,
   REJECTED_ACTION,
 };
 
-export { noop };
+export { noop, getMetricsTimeDelta };
 
 export default helpers;
