@@ -22,7 +22,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader';
 
-import config from '../config';
 import routes from '../routes';
 
 import Header from './header';
@@ -47,14 +46,14 @@ class App extends React.Component {
   }
 
   renderRoutes() {
-    const { authenticated } = this.props;
+    const { authenticated, userProfile } = this.props;
     // note: in this condition, I've added !authenticated even though
     // it shouldn't really happen. If the user is not authenticated,
     // they would get a login page. However, I wanted to be extra-sure
     // that if something changes in the future, the full router will
-    // be the "normal" one, and no exception will be raised if config
+    // be the "normal" one, and no exception will be raised if userProfile
     // is undefined.
-    if (!authenticated || config.configData.apiGateway !== 'https://api.openshift.com') {
+    if (!authenticated || (userProfile.email && userProfile.email.endsWith('@redhat.com'))) {
       return (
         <Switch>
           <Redirect from="/" exact to="/clusters" />
