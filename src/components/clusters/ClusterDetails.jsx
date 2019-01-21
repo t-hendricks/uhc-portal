@@ -288,17 +288,18 @@ class ClusterDetails extends Component {
         </React.Fragment>);
     }
 
-    let cloudProvider = cluster.cloud_provider.id || 'N/A';
+    const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
+    let cloudProvider;
     let region = result(cluster, 'region.id', 'N/A');
-    if (cloudProviders.fulfilled && cloudProviders.providers[cluster.cloud_provider.id]) {
-      const providerData = cloudProviders.providers[cluster.cloud_provider.id];
+    if (cloudProviderId && cloudProviders.fulfilled && cloudProviders.providers[cloudProviderId]) {
+      const providerData = cloudProviders.providers[cloudProviderId];
 
       cloudProvider = providerData.display_name;
       if (providerData.regions[region]) {
         region = providerData.regions[region].display_name;
       }
     } else {
-      cloudProvider = cloudProvider.toUpperCase();
+      cloudProvider = cloudProviderId ? cloudProviderId.toUpperCase() : 'N/A';
     }
     const memoryTotalWithUnit = humanizeValueWithUnit(
       cluster.memory.total.value, cluster.memory.total.unit,
@@ -390,7 +391,7 @@ class ClusterDetails extends Component {
             </Col>
             <Col sm={2} smOffset={1}>
               <h1 style={{ marginTop: 0 }}>
-                {cluster.display_name || cluster.name}
+                {cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster'}
               </h1>
             </Col>
             <Col sm={1} smOffset={4}>

@@ -39,7 +39,7 @@ function ClusterListTable(props) {
   };
 
   const clusterRow = (cluster, index) => {
-    const provider = cluster.cloud_provider.id || 'N/A';
+    const provider = result(cluster, 'cloud_provider.id', 'N/A');
     const name = cluster.display_name || ''; // This would've been one trenary condition if the backend didn't have omitEmpty on display_name
     // The trenary for consoleURL is needed because the API does not guarantee fields being present.
     // We'll have a lot of these all over the place as we grow :(
