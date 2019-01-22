@@ -131,7 +131,10 @@ class ClusterDetails extends Component {
         editClusterDialogVisible,
       } = this.state;
       return (
-        <Modal show={editClusterDialogVisible}>
+        <Modal
+          show={editClusterDialogVisible}
+          onHide={() => this.setState({ editClusterDialogVisible: false })}
+        >
           <EditClusterDialog
             cluster={editCluster}
             closeFunc={(updated) => {
@@ -156,7 +159,10 @@ class ClusterDetails extends Component {
         editDisplayNameDialogVisible,
       } = this.state;
       return (
-        <Modal show={editDisplayNameDialogVisible}>
+        <Modal
+          show={editDisplayNameDialogVisible}
+          onHide={() => this.setState({ editDisplayNameDialogVisible: false })}
+        >
           <EditDisplayNameDialog
             cluster={editCluster}
             closeFunc={(updated) => {
@@ -180,7 +186,10 @@ class ClusterDetails extends Component {
         deleteClusterDialogVisible,
       } = this.state;
       return (
-        <Modal show={deleteClusterDialogVisible}>
+        <Modal
+          show={deleteClusterDialogVisible}
+          onHide={() => this.setState({ deleteClusterDialogVisible: false })}
+        >
           <DeleteClusterDialog
             clusterID={cluster.id}
             clusterName={cluster.name}
