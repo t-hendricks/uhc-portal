@@ -20,13 +20,15 @@ import PropTypes from 'prop-types';
 import {
   Dropdown, Icon, MenuItem, Masthead,
 } from 'patternfly-react';
+import { withRouter } from 'react-router-dom';
+
 import { noop } from '../common/helpers';
 import rhProductTitle from '../styles/images/logo.png';
 
 const Header = ({
-  isLoggedIn, userProfile, logoutUser,
+  isLoggedIn, userProfile, logoutUser, history,
 }) => (
-  <Masthead titleImg={rhProductTitle} navToggle={false}>
+  <Masthead titleImg={rhProductTitle} navToggle={false} onTitleClick={() => history.push('/')} href={null}>
     {isLoggedIn && (
       <nav className="collapse navbar-collapse">
         <ul className="navbar-iconic nav navbar-nav navbar-right">
@@ -46,13 +48,13 @@ const Header = ({
         </ul>
       </nav>
     )}
-  </Masthead>
-);
+  </Masthead>);
 
 Header.propTypes = {
   isLoggedIn: PropTypes.bool,
   userProfile: PropTypes.object.isRequired,
   logoutUser: PropTypes.func,
+  history: PropTypes.object,
 };
 
 Header.defaultProps = {
@@ -60,4 +62,4 @@ Header.defaultProps = {
   isLoggedIn: false,
 };
 
-export default Header;
+export default withRouter(Header);
