@@ -64,7 +64,7 @@ function CreateClusterModal(props) {
 
   return isOpen
     && (
-    <Modal show className="right-side-modal-pf" bsSize="large">
+    <Modal show className="right-side-modal-pf" bsSize="large" onHide={onClose}>
       <Modal.Header>
         <ModalHeader title="Create a Red Hat-Managed Cluster" onClose={onClose} />
       </Modal.Header>
