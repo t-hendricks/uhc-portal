@@ -6,6 +6,10 @@ import {
 } from 'patternfly-react';
 import { Link } from 'react-router-dom';
 import { TableGrid } from 'patternfly-react-extensions';
+import { BadgedResource } from '../../BadgedResource';
+import {
+  kindAbbrs, kindStrings, getResourceBadgeColor, resourceTypes,
+} from '../../BadgedResource/ResourceTypes';
 import { viewConstants } from '../../../redux/constants';
 import ViewPaginationRow from '../viewPaginationRow';
 import ClusterStateIcon from '../ClusterStateIcon';
@@ -99,7 +103,7 @@ function ClusterListTable(props) {
         overlay={<Tooltip id={cluster.id}>{`cluster name: ${cluster.name}`}</Tooltip>}
         placement="right"
       >
-        <span>{name.trim() !== '' ? name : cluster.name}</span>
+        <Link to={`/cluster/${cluster.id}`}>{name.trim() !== '' ? name : cluster.name}</Link>
       </OverlayTrigger>
     );
 
@@ -136,11 +140,14 @@ function ClusterListTable(props) {
     );
 
     return (
-      <TableGrid.Row key={index}>
+      <TableGrid.Row key={index} className="cluster-list-row">
         <Grid.Col {...nameColSizes}>
-          <Link to={`/cluster/${cluster.id}`}>
-            {clusterName}
-          </Link>
+          <BadgedResource
+            resourceName={clusterName}
+            kindStr={kindStrings.cluster}
+            kindAbbr={kindAbbrs.cluster}
+            badgeColor={getResourceBadgeColor(resourceTypes.CLUSTER)}
+          />
         </Grid.Col>
         <Grid.Col {...statusColSizes}>
           {clusterStatus}
