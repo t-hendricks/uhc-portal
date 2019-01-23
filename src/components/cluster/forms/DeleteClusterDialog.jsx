@@ -2,15 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  Button, Icon, Form, Modal, Alert, FormGroup, ControlLabel, FormControl, HintBlock, Spinner,
+  Button, Icon, Alert, FormControl, Spinner, MessageDialog,
 } from 'patternfly-react';
 
 import { clusterActions } from '../ClusterActions';
+import { closeModal } from '../../Modal/ModalActions';
+import shouldShowModal from '../../Modal/ModalSelectors';
+import { noop } from '../../../common/helpers';
 
 class DeleteClusterDialog extends React.Component {
   state = {
     clusterNameInput: '',
     isValid: false,
+  }
+
+  componentDidUpdate() {
+    const { deleteClusterResponse } = this.props;
+    if (deleteClusterResponse.fulfilled) {
+      // Close the dialog and tell the parent they might want to refresh.
+      this.closeDialog(true);
+    }
+  }
+
+  closeDialog(parentShouldRefresh) {
+    const { clearDeleteClusterResponse, close, onClose } = this.props;
+    clearDeleteClusterResponse(); // clear the response for the next time the dialog is shown.
+    close(); // Close the dialog.
+    onClose(parentShouldRefresh); // call the onClose event handler from the parent.
   }
 
   validateClusterName(event) {
@@ -25,18 +43,10 @@ class DeleteClusterDialog extends React.Component {
 
   render() {
     const {
-      clusterID, clusterName, closeFunc, submit, deleteClusterResponse,
-      clearDeleteClusterResponse,
+      isOpen, clusterID, clusterName, submit, deleteClusterResponse,
     } = this.props;
 
     const { clusterNameInput, isValid } = this.state;
-
-    if (deleteClusterResponse.fulfilled) {
-      // FIXME This produces a warning because it causes a dispatch during a state transition
-      clearDeleteClusterResponse();
-      closeFunc(true);
-      return null;
-    }
 
     const errorContainer = deleteClusterResponse.error ? (
       <Alert>
@@ -52,73 +62,83 @@ class DeleteClusterDialog extends React.Component {
       </Button>
     );
 
-    const closeDialog = () => {
-      clearDeleteClusterResponse();
-      closeFunc(false);
-    };
+    const icon = <Icon type="pf" name="warning-triangle-o" />;
+
+    const primaryContent = (
+      <React.Fragment>
+        {errorContainer}
+        <p>
+          This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
+        </p>
+      </React.Fragment>
+    );
+    const secondaryContent = (
+      <React.Fragment>
+        <p>
+          Confirm deletion by typing
+          {' '}
+          <span style={{ fontWeight: 'bold' }}>{clusterName}</span>
+          {' '}
+          below:
+        </p>
+        <FormControl
+          type="text"
+          value={clusterNameInput}
+          placeholder="Enter name"
+          onChange={e => this.validateClusterName(e)}
+          autoFocus
+        />
+      </React.Fragment>);
+
+    const footer = (
+      <React.Fragment>
+        <Button bsStyle="default" onClick={() => this.closeDialog(false)} disabled={isPending}>
+          Cancel
+        </Button>
+        {deleteBtn}
+      </React.Fragment>);
 
     return (
-      <React.Fragment>
-        <Modal.Header>
-          <button type="button" className="close" aria-hidden="true" aria-label="Close" onClick={closeDialog}>
-            <Icon type="pf" name="close" />
-          </button>
-          <Modal.Title>
-            Delete Cluster
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {errorContainer}
-          <Form id="deleteCluster">
-            <FormGroup>
-              <ControlLabel>
-                Confirm deletion of cluster
-                {' '}
-                <span>{`"${clusterName}"`}</span>
-                {' '}
-                by typing the cluster name:
-              </ControlLabel>
-              <FormControl
-                type="text"
-                value={clusterNameInput}
-                placeholder="type cluster name to confirm"
-                onChange={e => this.validateClusterName(e)}
-              />
-            </FormGroup>
-          </Form>
-          <HintBlock
-            id="deleteClusterHint"
-            title="Note!"
-            body="The cluster will be uninstalled and all data will be deleted. This action cannot be undone."
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          {deleteBtn}
-          <Button bsStyle="default" onClick={closeDialog}>
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </React.Fragment>
+      <MessageDialog
+        show={isOpen}
+        onHide={() => this.closeDialog(false)}
+        primaryActionButtonBsStyle="danger"
+        title="Delete Cluster"
+        icon={icon}
+        primaryContent={primaryContent}
+        secondaryContent={secondaryContent}
+        footer={footer}
+      />
     );
   }
 }
 
 DeleteClusterDialog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   clusterID: PropTypes.string.isRequired,
   clusterName: PropTypes.string.isRequired,
   clearDeleteClusterResponse: PropTypes.func.isRequired,
-  closeFunc: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
   deleteClusterResponse: PropTypes.object,
+  onClose: PropTypes.func,
+};
+
+DeleteClusterDialog.defaultProps = {
+  onClose: noop,
 };
 
 const mapStateToProps = state => ({
+  isOpen: shouldShowModal(state, 'delete-cluster'),
+  clusterName: state.modal.activeModal.data.clusterName,
+  clusterID: state.modal.activeModal.data.clusterID,
   deleteClusterResponse: state.cluster.deletedCluster,
 });
 
 const mapDispatchToProps = {
   clearDeleteClusterResponse: () => clusterActions.deletedClusterResponse(),
   submit: clusterID => clusterActions.deleteCluster(clusterID),
+  close: () => closeModal('delete-cluster'),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeleteClusterDialog);

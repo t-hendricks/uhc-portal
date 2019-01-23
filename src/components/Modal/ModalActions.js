@@ -1,8 +1,8 @@
 import { modalConstants } from './ModalConstants';
 
-const openModal = modalName => ({
+const openModal = (modalName, data) => ({
   type: modalConstants.OPEN_MODAL,
-  payload: modalName,
+  payload: { name: modalName, data },
 });
 
 const closeModal = () => ({

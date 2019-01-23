@@ -2,7 +2,7 @@ import helpers from '../../common/helpers';
 import { modalConstants } from './ModalConstants';
 
 const initialState = {
-  activeModal: { modalName: null },
+  activeModal: { modalName: null, data: {} },
 };
 
 function modalReducer(state = initialState, action) {
@@ -11,7 +11,8 @@ function modalReducer(state = initialState, action) {
       return helpers.setStateProp(
         'activeModal',
         {
-          modalName: action.payload,
+          modalName: action.payload.name,
+          data: action.payload.data,
         },
         {
           state,
@@ -24,6 +25,7 @@ function modalReducer(state = initialState, action) {
         'activeModal',
         {
           modalName: null,
+          data: {},
         },
         {
           state,

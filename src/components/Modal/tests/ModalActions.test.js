@@ -6,7 +6,7 @@ describe('Modal actions', () => {
     const testModalName = 'test-modal';
     const expectedResults = {
       type: OPEN_MODAL,
-      payload: testModalName,
+      payload: { name: testModalName, data: undefined },
     };
 
     expect(openModal(testModalName)).toEqual(expectedResults);
@@ -18,5 +18,15 @@ describe('Modal actions', () => {
     };
 
     expect(closeModal()).toEqual(expectedResults);
+  });
+
+  it('should open modal with data', () => {
+    const testModalName = 'test-modal';
+    const expectedResults = {
+      type: OPEN_MODAL,
+      payload: { name: testModalName, data: 'foo' },
+    };
+
+    expect(openModal(testModalName, 'foo')).toEqual(expectedResults);
   });
 });
