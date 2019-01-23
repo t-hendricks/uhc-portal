@@ -50,7 +50,7 @@ function EditDisplayNameDialog(props) {
                 <Field
                   component={ReduxVerticalFormGroup}
                   name="display_name"
-                  label="Cluster name"
+                  label="Display Name"
                   type="text"
                 />
               </Col>
@@ -60,11 +60,11 @@ function EditDisplayNameDialog(props) {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button bsStyle="primary" onClick={handleSubmit}>
-            Edit
-        </Button>
         <Button bsStyle="default" onClick={cancelEdit}>
             Cancel
+        </Button>
+        <Button bsStyle="primary" onClick={handleSubmit}>
+            Edit
         </Button>
       </Modal.Footer>
     </React.Fragment>
