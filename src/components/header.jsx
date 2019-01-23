@@ -24,6 +24,7 @@ import { withRouter } from 'react-router-dom';
 
 import { noop } from '../common/helpers';
 import rhProductTitle from '../styles/images/logo.png';
+import config from '../config';
 
 const Header = ({
   isLoggedIn, userProfile, logoutUser, history,
@@ -40,6 +41,9 @@ const Header = ({
               </span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
+              <MenuItem href={`${config.configData.keycloak.url}/realms/${config.configData.keycloak.realm}/account`} target="_blank">
+                  View Profile
+              </MenuItem>
               <MenuItem onClick={logoutUser}>
                 Log out
               </MenuItem>
