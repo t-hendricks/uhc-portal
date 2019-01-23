@@ -16,7 +16,7 @@ class ClusterListFilter extends React.Component {
     const { setFilter } = this.props;
     this.setState({ currentValue: event.target.value });
     // The backend defers the complexity of this search to the UI...
-    setFilter(`display_name like '%${event.target.value}%' or (display_name = '' and name like '%${event.target.value}%')`);
+    setFilter(`display_name like '%${event.target.value}%' or (display_name = '' and name like '%${event.target.value}%') or external_id like '%${event.target.value}%'`);
   }
 
 
