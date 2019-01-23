@@ -17,14 +17,14 @@ function CreateClusterDropdown(props) {
       bsSize="large"
       className="cluster-list-top"
     >
-      <MenuItem eventKey="1" onClick={showCreationForm}>
-        Red Hat-Managed Cluster
-      </MenuItem>
       <LinkContainer to="/clusters/install">
-        <MenuItem eventKey="2">
+        <MenuItem eventKey="1">
           Self-Managed Cluster
         </MenuItem>
       </LinkContainer>
+      <MenuItem eventKey="2" onClick={showCreationForm}>
+        Red Hat-Managed Cluster
+      </MenuItem>
     </DropdownButton>
   );
 }

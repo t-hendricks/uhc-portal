@@ -1,14 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CreateClusterDropdown from './CreateClusterDropdown';
+import ClusterListEmptyState from './ClusterListEmptyState';
 
-describe('<CreateClusterDropdown />', () => {
+describe('<ClusterListEmptyState />', () => {
   let onClickFunc;
   let wrapper;
   beforeEach(() => {
     onClickFunc = jest.fn();
-    wrapper = shallow(<CreateClusterDropdown showCreationForm={onClickFunc} />);
+    wrapper = shallow(<ClusterListEmptyState showCreationForm={onClickFunc} />);
   });
 
   it('renders correctly', () => {
@@ -16,7 +16,7 @@ describe('<CreateClusterDropdown />', () => {
   });
 
   it('calls showCreationForm when needed', () => {
-    wrapper.find('MenuItem').at(1).simulate('click');
+    wrapper.find('Button').at(1).simulate('click');
     expect(onClickFunc).toBeCalled();
   });
 });
