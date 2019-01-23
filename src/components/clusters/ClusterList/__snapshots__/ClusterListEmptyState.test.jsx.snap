@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterListEmptyState /> renders correctly 1`] = `
+<EmptyState
+  className="full-page-blank-slate"
+>
+  <Grid
+    bsClass="container"
+    componentClass="div"
+    fluid={true}
+  >
+    <Row
+      bsClass="row"
+      componentClass="div"
+    >
+      <EmptyStateTitle
+        className=""
+      >
+        No Clusters Exist
+      </EmptyStateTitle>
+      <EmptyStateInfo
+        className=""
+      >
+        There are no clusters to display. Create a cluster to get started.
+      </EmptyStateInfo>
+    </Row>
+    <Row
+      bsClass="row"
+      className="cluster-list-emptystate-options"
+      componentClass="div"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={3}
+        mdOffset={3}
+      >
+        <h2>
+          Self Managed Cluster
+        </h2>
+        <p>
+          Create a self-managed cluster (OCP) to install OpenShift and manage it yourself. More information and better text should go here.
+        </p>
+        <EmptyStateAction
+          className=""
+          secondary={false}
+        >
+          <Link
+            replace={false}
+            to="/clusters/install"
+          >
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsSize="large"
+              bsStyle="primary"
+              disabled={false}
+            >
+              Create Self Managed Cluster
+            </Button>
+          </Link>
+        </EmptyStateAction>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={3}
+      >
+        <h2>
+          Red Hat Managed Cluster
+        </h2>
+        <p>
+          Create a Red Hat-managed cluster (OSD), to provision the cluster on Amazon Web Services. More information on this flow and why users would take this flow.
+        </p>
+        <EmptyStateAction
+          className=""
+          secondary={false}
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsSize="large"
+            bsStyle="default"
+            disabled={false}
+            onClick={[MockFunction]}
+          >
+            Create Red Hat Managed Cluster
+          </Button>
+        </EmptyStateAction>
+      </Col>
+    </Row>
+  </Grid>
+</EmptyState>
+`;

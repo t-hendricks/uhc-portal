@@ -22,19 +22,6 @@ function ClusterListEmptyState(props) {
         </Row>
         <Row className="cluster-list-emptystate-options">
           <Col md={3} mdOffset={3}>
-            <h2>Red Hat Managed Cluster</h2>
-            <p>
-              Create a Red Hat-managed cluster (OSD),
-              to provision the cluster on Amazon Web Services.
-              More information on this flow and why users would take this flow.
-            </p>
-            <EmptyState.Action>
-              <Button bsStyle="primary" bsSize="large" onClick={showCreationForm}>
-                Create Red Hat Managed Cluster
-              </Button>
-            </EmptyState.Action>
-          </Col>
-          <Col md={3}>
             <h2>Self Managed Cluster</h2>
             <p>
               Create a self-managed cluster (OCP) to install OpenShift and manage it yourself.
@@ -42,10 +29,23 @@ function ClusterListEmptyState(props) {
             </p>
             <EmptyState.Action>
               <Link to="/clusters/install">
-                <Button bsSize="large">
+                <Button bsStyle="primary" bsSize="large">
                   Create Self Managed Cluster
                 </Button>
               </Link>
+            </EmptyState.Action>
+          </Col>
+          <Col md={3}>
+            <h2>Red Hat Managed Cluster</h2>
+            <p>
+              Create a Red Hat-managed cluster (OSD),
+              to provision the cluster on Amazon Web Services.
+              More information on this flow and why users would take this flow.
+            </p>
+            <EmptyState.Action>
+              <Button bsSize="large" onClick={showCreationForm}>
+                Create Red Hat Managed Cluster
+              </Button>
             </EmptyState.Action>
           </Col>
         </Row>
