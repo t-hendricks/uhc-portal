@@ -98,7 +98,7 @@ class DeleteClusterDialog extends React.Component {
         {deleteBtn}
       </React.Fragment>);
 
-    return (
+    return isOpen && (
       <MessageDialog
         show={isOpen}
         onHide={() => this.closeDialog(false)}
