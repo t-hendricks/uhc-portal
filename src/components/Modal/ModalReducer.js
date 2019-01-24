@@ -12,7 +12,7 @@ function modalReducer(state = initialState, action) {
         'activeModal',
         {
           modalName: action.payload.name,
-          data: action.payload.data,
+          data: action.payload.data || {},
         },
         {
           state,
