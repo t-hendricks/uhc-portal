@@ -29,7 +29,7 @@ import config from '../config';
 const Header = ({
   isLoggedIn, userProfile, logoutUser, history,
 }) => (
-  <Masthead titleImg={rhProductTitle} navToggle={false} onTitleClick={() => history.push('/')} href={null}>
+  <Masthead titleImg={rhProductTitle} navToggle={false} onTitleClick={() => history.push('/')}>
     {isLoggedIn && (
       <nav className="collapse navbar-collapse">
         <ul className="navbar-iconic nav navbar-nav navbar-right">
