@@ -175,7 +175,7 @@ class ClusterDetails extends Component {
     };
 
     const clusterNetwork = () => {
-      if (cluster.dedicated && cluster.network) {
+      if (cluster.managed && cluster.network) {
         return (
           <React.Fragment>
             <dt>Network</dt>
@@ -315,7 +315,7 @@ class ClusterDetails extends Component {
     );
 
     const editClusterItem = () => {
-      if (!cluster.dedicated) {
+      if (!cluster.managed) {
         return (
           <MenuItem disabled title="Self managed cluster cannot be edited">
             Edit Cluster
@@ -341,7 +341,7 @@ class ClusterDetails extends Component {
         Edit Display Name
       </MenuItem>);
 
-    const deleteClusterItem = cluster.dedicated ? (
+    const deleteClusterItem = cluster.managed ? (
       <MenuItem onClick={() => openModal('delete-cluster', { clusterID: cluster.id, clusterName })}>
         Delete Cluster
       </MenuItem>)
@@ -488,7 +488,7 @@ class ClusterDetails extends Component {
                       {cluster.nodes.master}
                     </dd>
                   </dl>
-                  { cluster.dedicated ? (
+                  { cluster.managed ? (
                     <dl className="cluster-details-item-list left">
                       <dt>
                         Infrastructure:

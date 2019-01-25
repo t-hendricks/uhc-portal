@@ -52,6 +52,7 @@ const mapDispatchToProps = dispatch => ({
         service_cidr: formData.network_service_cidr,
         pod_cidr: formData.network_pod_cidr,
       },
+      managed: true,
     };
     dispatch(createCluster(clusterRequest));
   },
