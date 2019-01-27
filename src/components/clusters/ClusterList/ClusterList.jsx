@@ -199,7 +199,10 @@ class ClusterList extends Component {
     if (!size(clusters) && !pending && isEmpty(viewOptions.filter)) {
       return (
         <React.Fragment>
-          <ClusterListEmptyState showCreationForm={() => { openModal('create-cluster'); }} />
+          <ClusterListEmptyState
+            showCreationForm={() => { openModal('create-cluster'); }}
+            showOCPCreationForm={() => { openModal('create-cluster', { isManaged: false }); }}
+          />
           {this.renderPendingMessage()}
           <CreateClusterModal />
         </React.Fragment>
@@ -213,6 +216,7 @@ class ClusterList extends Component {
             <Col sm={1}>
               <CreateClusterDropdown
                 showCreationForm={() => openModal('create-cluster')}
+                showOCPCreationForm={() => { openModal('create-cluster', { isManaged: false }); }}
               />
             </Col>
             <Col sm={1}>

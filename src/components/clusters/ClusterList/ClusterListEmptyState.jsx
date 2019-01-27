@@ -1,14 +1,13 @@
 // ClusterListEmptyState is the empty state (no clusters) for ClusterList
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import {
   Button, Grid, Row, Col, EmptyState,
 } from 'patternfly-react';
 
 
 function ClusterListEmptyState(props) {
-  const { showCreationForm } = props;
+  const { showCreationForm, showOCPCreationForm } = props;
   return (
     <EmptyState className="full-page-blank-slate">
       <Grid fluid>
@@ -28,11 +27,9 @@ function ClusterListEmptyState(props) {
               More information and better text should go here.
             </p>
             <EmptyState.Action>
-              <Link to="/clusters/install">
-                <Button bsStyle="primary" bsSize="large">
-                  Create Self Managed Cluster
-                </Button>
-              </Link>
+              <Button onClick={showOCPCreationForm} bsStyle="primary" bsSize="large">
+                Create Self Managed Cluster
+              </Button>
             </EmptyState.Action>
           </Col>
           <Col md={3}>
@@ -56,6 +53,7 @@ function ClusterListEmptyState(props) {
 
 ClusterListEmptyState.propTypes = {
   showCreationForm: PropTypes.func.isRequired,
+  showOCPCreationForm: PropTypes.func.isRequired,
 };
 
 

@@ -45,21 +45,17 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
           className=""
           secondary={false}
         >
-          <Link
-            replace={false}
-            to="/clusters/install"
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsSize="large"
+            bsStyle="primary"
+            disabled={false}
+            onClick={[MockFunction]}
           >
-            <Button
-              active={false}
-              block={false}
-              bsClass="btn"
-              bsSize="large"
-              bsStyle="primary"
-              disabled={false}
-            >
-              Create Self Managed Cluster
-            </Button>
-          </Link>
+            Create Self Managed Cluster
+          </Button>
         </EmptyStateAction>
       </Col>
       <Col
