@@ -59,7 +59,7 @@ function ClusterListTable(props) {
       );
 
     const editClusterItem = () => {
-      if (!cluster.dedicated) {
+      if (!cluster.managed) {
         return (
           <MenuItem disabled title="Self managed cluster cannot be edited">
             Edit Cluster
@@ -85,7 +85,7 @@ function ClusterListTable(props) {
         Edit Display Name
       </MenuItem>);
 
-    const deleteClusterItem = cluster.dedicated ? (
+    const deleteClusterItem = cluster.managed ? (
       <MenuItem onClick={
     () => openDeleteClusterDialog(cluster.id, cluster.name)
     }
@@ -126,7 +126,7 @@ function ClusterListTable(props) {
       <OverlayTrigger
         overlay={(
           <Tooltip id={`${cluster.id}-type-tooltip`}>
-            {cluster.dedicated
+            {cluster.managed
               ? 'OpenShift Dedicated (OSD) cluster managed by Red Hat'
               : 'Self-managed OpenShift Container Platform (OCP) cluster'
             }
@@ -135,7 +135,7 @@ function ClusterListTable(props) {
         trigger={['hover', 'focus']}
         rootClose={false}
       >
-        <span>{cluster.dedicated ? 'Dedicated' : 'Self-managed'}</span>
+        <span>{cluster.managed ? 'Managed' : 'Self-managed'}</span>
       </OverlayTrigger>
     );
 
