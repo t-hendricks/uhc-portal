@@ -28,8 +28,8 @@ const mapStateToProps = state => ({
   },
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: (formData) => {
+const mapDispatchToProps = dispatch => ({
+  onSubmit: (formData, reduxDispatch, ownProps) => {
     const clusterRequest = {
       name: formData.name,
       region: {

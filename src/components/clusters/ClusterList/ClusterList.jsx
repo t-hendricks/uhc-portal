@@ -200,8 +200,8 @@ class ClusterList extends Component {
       return (
         <React.Fragment>
           <ClusterListEmptyState
-            showCreationForm={() => { openModal('create-cluster'); }}
-            showOCPCreationForm={() => { openModal('create-cluster', { isManaged: false }); }}
+            showCreationForm={() => openModal('create-cluster')}
+            showOCPCreationForm={() => openModal('create-cluster', { isManaged: false })}
           />
           {this.renderPendingMessage()}
           <CreateClusterModal />
@@ -216,7 +216,7 @@ class ClusterList extends Component {
             <Col sm={1}>
               <CreateClusterDropdown
                 showCreationForm={() => openModal('create-cluster')}
-                showOCPCreationForm={() => { openModal('create-cluster', { isManaged: false }); }}
+                showOCPCreationForm={() => openModal('create-cluster', { isManaged: false })}
               />
             </Col>
             <Col sm={1}>
