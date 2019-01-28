@@ -252,6 +252,10 @@ limitations under the License.
   margin-top: 40px;
 }
 
-.cluster-list-emptystate-options > :first-child {
+.cluster-list-emptystate-options > * {
   border-right: 1px solid lightgray;
+}
+
+.cluster-list-emptystate-options > :last-child {
+  border-right: none;
 }

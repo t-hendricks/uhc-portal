@@ -8,20 +8,38 @@ exports[`<CreateClusterDropdown /> renders correctly 1`] = `
   id="dropdown-example"
   title="Create Cluster"
 >
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
-    eventKey="1"
-    header={false}
+  <LinkContainer
+    activeClassName="active"
+    exact={false}
+    replace={false}
+    strict={false}
+    to="/clusters/install"
   >
-    Self-Managed Cluster
-  </MenuItem>
+    <MenuItem
+      bsClass="dropdown"
+      disabled={false}
+      divider={false}
+      eventKey="1"
+      header={false}
+    >
+      Self-Managed (Manual Install) Cluster
+    </MenuItem>
+  </LinkContainer>
   <MenuItem
     bsClass="dropdown"
     disabled={false}
     divider={false}
     eventKey="2"
+    header={false}
+    onClick={[MockFunction]}
+  >
+    Self-Managed (Auto-Install) Cluster
+  </MenuItem>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    eventKey="3"
     header={false}
     onClick={[MockFunction]}
   >

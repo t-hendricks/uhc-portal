@@ -20,13 +20,13 @@ describe('<ClusterListEmptyState />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('calls showCreationForm when needed', () => {
+  it('calls showOCPCreationForm when needed', () => {
     wrapper.find('Button').at(1).simulate('click');
-    expect(managedFunc).toBeCalled();
+    expect(ocpFunc).toBeCalled();
   });
 
-  it('calls showOCPCreationForm when needed', () => {
-    wrapper.find('Button').at(0).simulate('click');
-    expect(ocpFunc).toBeCalled();
+  it('calls showCreationForm when needed', () => {
+    wrapper.find('Button').at(2).simulate('click');
+    expect(managedFunc).toBeCalled();
   });
 });
