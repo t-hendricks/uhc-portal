@@ -61,6 +61,13 @@ const getCloudRegions = providerID => axios(
   }),
 );
 
+const getClusterCredentials = clusterID => axios(
+  serviceConfig({
+    method: 'get',
+    url: `/api/clusters_mgmt/v1/clusters/${clusterID}/credentials`,
+  }),
+);
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -69,6 +76,7 @@ const clusterService = {
   getCloudProviders,
   getCloudRegions,
   deleteCluster,
+  getClusterCredentials,
 };
 
 export default clusterService;
