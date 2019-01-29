@@ -366,11 +366,11 @@ class ClusterDetails extends Component {
     );
 
     let credentialsButton = null;
-    if (credentials.fulfilled && credentials.credentials.admin) {
+    if (credentials.fulfilled && credentials.credentials.admin && result(credentials, 'credentials.admin.password', false)) {
       credentialsButton = (
         <React.Fragment>
           <Button bsStyle="default" onClick={() => { openModal('cluster-credentials'); }}>Admin Credentials</Button>
-          <ClusterCredentialsModal credentials={credentials} />
+          <ClusterCredentialsModal credentials={credentials.credentials} />
         </React.Fragment>
       );
     }

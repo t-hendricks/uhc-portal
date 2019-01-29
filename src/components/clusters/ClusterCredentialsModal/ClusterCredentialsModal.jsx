@@ -21,6 +21,9 @@ class ClusterCredentialsModal extends React.Component {
       isOpen, credentials, close,
     } = this.props;
     const { userCopied, passwordCopied } = this.state;
+    if (!credentials.admin || !credentials.admin.user || !credentials.admin.password) {
+      return null;
+    }
 
     const icon = <Icon type="pf" name="key" />;
 
