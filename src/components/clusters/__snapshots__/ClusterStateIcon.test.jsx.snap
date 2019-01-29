@@ -16,6 +16,14 @@ exports[`<ClusterStateIcon /> renders correctly for installing status 1`] = `
 />
 `;
 
+exports[`<ClusterStateIcon /> renders correctly for patching status 1`] = `
+<Icon
+  className="fa-lg"
+  name="hourglass-half"
+  type="fa"
+/>
+`;
+
 exports[`<ClusterStateIcon /> renders correctly for pending status 1`] = `
 <Icon
   className="fa-lg"

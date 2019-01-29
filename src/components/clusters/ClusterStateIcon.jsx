@@ -25,6 +25,9 @@ function ClusterStateIcon(props) {
     case 'uninstalling':
       icon = { type: 'fa', name: 'ban' };
       break;
+    case 'patching':
+      icon = { type: 'fa', name: 'hourglass-half' };
+      break;
     default:
       icon.name = 'unknown';
   }
