@@ -30,9 +30,10 @@ import { getMetricsTimeDelta } from '../../common/helpers';
 import EditClusterDialog from '../cluster/forms/EditClusterDialog';
 import EditDisplayNameDialog from '../cluster/forms/EditDisplayNameDialog';
 import DeleteClusterDialog from '../cluster/forms/DeleteClusterDialog';
+import ClusterCredentialsModal from './ClusterCredentialsModal';
 
 import { humanizeValueWithUnit } from '../../common/unitParser';
-import { fetchClusterDetails, invalidateClusters } from '../../redux/actions/clustersActions';
+import { fetchClusterDetails, fetchClusterCredentials, invalidateClusters } from '../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
 import { modalActions } from '../Modal/ModalActions';
 
@@ -51,12 +52,13 @@ class ClusterDetails extends Component {
 
   componentDidMount() {
     const {
-      match, fetchDetails, cloudProviders, getCloudProviders,
+      match, fetchDetails, fetchCredentials, cloudProviders, getCloudProviders,
     } = this.props;
     const clusterID = match.params.id;
 
     if (clusterID !== null && clusterID !== undefined) {
       fetchDetails(clusterID);
+      fetchCredentials(clusterID);
     }
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
@@ -95,7 +97,7 @@ class ClusterDetails extends Component {
 
   render() {
     const {
-      cluster, error, errorMessage, pending, cloudProviders, fetchDetails, openModal,
+      cluster, error, errorMessage, pending, cloudProviders, fetchDetails, openModal, credentials,
     } = this.props;
 
     const pendingMessage = () => {
@@ -363,6 +365,16 @@ class ClusterDetails extends Component {
       </DropdownButton>
     );
 
+    let credentialsButton = null;
+    if (credentials.fulfilled && credentials.credentials.admin) {
+      credentialsButton = (
+        <React.Fragment>
+          <Button bsStyle="default" onClick={() => { openModal('cluster-credentials'); }}>Admin Credentials</Button>
+          <ClusterCredentialsModal credentials={credentials} />
+        </React.Fragment>
+      );
+    }
+
     return (
       <div>
         <Grid fluid style={{ marginTop: '20px' }}>
@@ -376,7 +388,10 @@ class ClusterDetails extends Component {
                 {clusterName}
               </h1>
             </Col>
-            <Col sm={1} smOffset={4}>
+            <Col sm={2} md={2} lg={1} smOffset={3}>
+              {credentialsButton}
+            </Col>
+            <Col sm={1}>
               {consoleBtn}
             </Col>
             <Col sm={1}>
@@ -530,8 +545,10 @@ class ClusterDetails extends Component {
 ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
+  fetchCredentials: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  credentials: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   cluster: PropTypes.any,
   error: PropTypes.bool,
@@ -549,11 +566,15 @@ ClusterDetails.defaultProps = {
 const mapStateToProps = state => Object.assign(
   {},
   state.clusters.details,
-  { cloudProviders: state.cloudProviders.cloudProviders },
+  {
+    cloudProviders: state.cloudProviders.cloudProviders,
+    credentials: state.clusters.credentials,
+  },
 );
 
 const mapDispatchToProps = {
   fetchDetails: clusterID => fetchClusterDetails(clusterID),
+  fetchCredentials: clusterID => fetchClusterCredentials(clusterID),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   invalidateClusters,
   openModal: modalActions.openModal,

@@ -32,6 +32,13 @@ const initialState = {
     fulfilled: false,
     cluster: null,
   },
+  credentials: {
+    error: false,
+    errorMessage: '',
+    pending: false,
+    fulfilled: false,
+    credentials: null,
+  },
   createdCluster: {
     error: false,
     errorMessage: '',
@@ -137,6 +144,47 @@ function clustersReducer(state = initialState, action) {
         'details',
         {
           cluster: action.payload.data,
+          pending: false,
+          fulfilled: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTER_CREDENTIALS):
+      return helpers.setStateProp(
+        'credentials',
+        {
+          pending: false,
+          error: action.error,
+          errorMessage: helpers.getErrorMessage(action.payload),
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.PENDING_ACTION(clustersConstants.GET_CLUSTER_CREDENTIALS):
+      return helpers.setStateProp(
+        'credentials',
+        {
+          pending: true,
+          credentials: null,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTER_CREDENTIALS):
+      return helpers.setStateProp(
+        'credentials',
+        {
+          credentials: action.payload.data,
           pending: false,
           fulfilled: true,
         },
