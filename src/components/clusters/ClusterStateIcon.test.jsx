@@ -29,6 +29,11 @@ describe('<ClusterStateIcon />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('renders correctly for patching status', () => {
+    const wrapper = shallow(<ClusterStateIcon clusterState="patching" />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('renders correctly for uninstalling status', () => {
     const wrapper = shallow(<ClusterStateIcon clusterState="uninstalling" />);
     expect(wrapper).toMatchSnapshot();
