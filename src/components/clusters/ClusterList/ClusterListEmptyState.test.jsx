@@ -4,19 +4,29 @@ import { shallow } from 'enzyme';
 import ClusterListEmptyState from './ClusterListEmptyState';
 
 describe('<ClusterListEmptyState />', () => {
-  let onClickFunc;
+  let managedFunc;
+  let ocpFunc;
   let wrapper;
   beforeEach(() => {
-    onClickFunc = jest.fn();
-    wrapper = shallow(<ClusterListEmptyState showCreationForm={onClickFunc} />);
+    managedFunc = jest.fn();
+    ocpFunc = jest.fn();
+    wrapper = shallow(<ClusterListEmptyState
+      showCreationForm={managedFunc}
+      showOCPCreationForm={ocpFunc}
+    />);
   });
 
   it('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('calls showCreationForm when needed', () => {
+  it('calls showOCPCreationForm when needed', () => {
     wrapper.find('Button').at(1).simulate('click');
-    expect(onClickFunc).toBeCalled();
+    expect(ocpFunc).toBeCalled();
+  });
+
+  it('calls showCreationForm when needed', () => {
+    wrapper.find('Button').at(2).simulate('click');
+    expect(managedFunc).toBeCalled();
   });
 });

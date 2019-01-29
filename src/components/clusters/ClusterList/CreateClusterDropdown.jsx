@@ -6,9 +6,8 @@ import {
 } from 'patternfly-react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-
 function CreateClusterDropdown(props) {
-  const { showCreationForm } = props;
+  const { showCreationForm, showOCPCreationForm } = props;
   return (
     <DropdownButton
       bsStyle="primary"
@@ -19,10 +18,13 @@ function CreateClusterDropdown(props) {
     >
       <LinkContainer to="/clusters/install">
         <MenuItem eventKey="1">
-          Self-Managed Cluster
+          Self-Managed (Manual Install) Cluster
         </MenuItem>
       </LinkContainer>
-      <MenuItem eventKey="2" onClick={showCreationForm}>
+      <MenuItem eventKey="2" onClick={showOCPCreationForm}>
+        Self-Managed (Auto-Install) Cluster
+      </MenuItem>
+      <MenuItem eventKey="3" onClick={showCreationForm}>
         Red Hat-Managed Cluster
       </MenuItem>
     </DropdownButton>
@@ -31,6 +33,7 @@ function CreateClusterDropdown(props) {
 
 CreateClusterDropdown.propTypes = {
   showCreationForm: PropTypes.func.isRequired,
+  showOCPCreationForm: PropTypes.func.isRequired,
 };
 
 export default CreateClusterDropdown;

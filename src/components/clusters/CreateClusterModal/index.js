@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import result from 'lodash/result';
 
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import CreateClusterModal from './CreateClusterModal';
@@ -14,6 +15,7 @@ const reduxFormCreateCluster = reduxForm(reduxFormConfig)(CreateClusterModal);
 
 const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'create-cluster'),
+  isManaged: result(state.modal.activeModal, 'data.isManaged', true),
   createClusterResponse: state.clusters.createdCluster,
   initialValues: {
     name: '',
@@ -27,7 +29,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (formData) => {
+  onSubmit: (formData, reduxDispatch, ownProps) => {
     const clusterRequest = {
       name: formData.name,
       region: {
@@ -52,7 +54,7 @@ const mapDispatchToProps = dispatch => ({
         service_cidr: formData.network_service_cidr,
         pod_cidr: formData.network_pod_cidr,
       },
-      managed: true,
+      managed: ownProps.isManaged,
     };
     dispatch(createCluster(clusterRequest));
   },

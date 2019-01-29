@@ -32,11 +32,10 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
       <Col
         bsClass="col"
         componentClass="div"
-        md={3}
-        mdOffset={3}
+        md={4}
       >
         <h2>
-          Self Managed Cluster
+          Self-Managed (Manual Install) Cluster
         </h2>
         <p>
           Create a self-managed cluster (OCP) to install OpenShift and manage it yourself. More information and better text should go here.
@@ -57,7 +56,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
               bsStyle="primary"
               disabled={false}
             >
-              Create Self Managed Cluster
+              Create Self-Managed (Manual) Cluster
             </Button>
           </Link>
         </EmptyStateAction>
@@ -65,10 +64,38 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
       <Col
         bsClass="col"
         componentClass="div"
-        md={3}
+        md={4}
       >
         <h2>
-          Red Hat Managed Cluster
+          Self-Managed (Auto-Install) Cluster
+        </h2>
+        <p>
+          Create a self-managed cluster (OCP) to provision the cluster on Amazon Web Services and manage it yourself. More information and better text should go here.
+        </p>
+        <EmptyStateAction
+          className=""
+          secondary={false}
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsSize="large"
+            bsStyle="default"
+            disabled={false}
+            onClick={[MockFunction]}
+          >
+            Create Self-Managed (Auto) Cluster
+          </Button>
+        </EmptyStateAction>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={4}
+      >
+        <h2>
+          Red Hat-Managed Cluster
         </h2>
         <p>
           Create a Red Hat-managed cluster (OSD), to provision the cluster on Amazon Web Services. More information on this flow and why users would take this flow.
@@ -86,7 +113,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
             disabled={false}
             onClick={[MockFunction]}
           >
-            Create Red Hat Managed Cluster
+            Create Red Hat-Managed Cluster
           </Button>
         </EmptyStateAction>
       </Col>

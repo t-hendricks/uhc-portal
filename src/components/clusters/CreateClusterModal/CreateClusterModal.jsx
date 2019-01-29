@@ -32,7 +32,7 @@ import constants, {
 
 function CreateClusterModal(props) {
   const {
-    isOpen, closeModal, handleSubmit, createClusterResponse, resetResponse,
+    isOpen, isManaged, closeModal, handleSubmit, createClusterResponse, resetResponse,
   } = props;
 
   if (createClusterResponse.fulfilled) {
@@ -62,11 +62,13 @@ function CreateClusterModal(props) {
     closeModal('create-cluster');
   };
 
+  const title = isManaged ? 'Create a Red Hat-Managed Cluster' : 'Create a Self-Managed Cluster';
+
   return isOpen
     && (
     <Modal show className="right-side-modal-pf" bsSize="large" onHide={onClose}>
       <Modal.Header>
-        <ModalHeader title="Create a Red Hat-Managed Cluster" onClose={onClose} />
+        <ModalHeader title={title} onClose={onClose} />
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -201,6 +203,7 @@ function CreateClusterModal(props) {
 }
 CreateClusterModal.propTypes = {
   isOpen: PropTypes.bool,
+  isManaged: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   resetResponse: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
@@ -209,6 +212,7 @@ CreateClusterModal.propTypes = {
 
 CreateClusterModal.defaultProps = {
   isOpen: false,
+  isManaged: true,
 };
 
 export default CreateClusterModal;
