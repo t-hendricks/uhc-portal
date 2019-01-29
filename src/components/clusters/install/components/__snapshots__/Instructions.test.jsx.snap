@@ -365,7 +365,8 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
       </pre>
       <div>
         <Download
-          content="{\\"hi\\":\\"I have no errors\\"}"
+          content="{\\"hi\\":\\"I have no errors\\"}
+"
           file="pull-secret"
           style={
             Object {
@@ -389,7 +390,8 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
         </Download>
         <CopyToClipboard
           onCopy={[Function]}
-          text="{\\"hi\\":\\"I have no errors\\"}"
+          text="{\\"hi\\":\\"I have no errors\\"}
+"
         >
           <span
             style={
