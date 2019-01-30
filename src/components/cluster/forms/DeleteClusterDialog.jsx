@@ -13,7 +13,6 @@ import { noop } from '../../../common/helpers';
 class DeleteClusterDialog extends React.Component {
   state = {
     clusterNameInput: '',
-    isValid: false,
   }
 
   componentDidUpdate() {
@@ -24,21 +23,21 @@ class DeleteClusterDialog extends React.Component {
     }
   }
 
+  setValue(event) {
+    this.setState({
+      clusterNameInput: event.target.value,
+    });
+  }
+
   closeDialog(parentShouldRefresh) {
     const { clearDeleteClusterResponse, close, onClose } = this.props;
+    // reset the input, so it'll be empty next time the dialog is opened.
+    this.setState({
+      clusterNameInput: '',
+    });
     clearDeleteClusterResponse(); // clear the response for the next time the dialog is shown.
     close(); // Close the dialog.
     onClose(parentShouldRefresh); // call the onClose event handler from the parent.
-  }
-
-  validateClusterName(event) {
-    const { clusterName } = this.props;
-    const currentValue = event.target.value;
-
-    this.setState({
-      clusterNameInput: currentValue,
-      isValid: event.target.value === clusterName,
-    });
   }
 
   render() {
@@ -46,7 +45,7 @@ class DeleteClusterDialog extends React.Component {
       isOpen, clusterID, clusterName, submit, deleteClusterResponse,
     } = this.props;
 
-    const { clusterNameInput, isValid } = this.state;
+    const { clusterNameInput } = this.state;
 
     const errorContainer = deleteClusterResponse.error ? (
       <Alert>
@@ -55,6 +54,7 @@ class DeleteClusterDialog extends React.Component {
 
 
     const isPending = deleteClusterResponse.pending;
+    const isValid = clusterNameInput === clusterName;
 
     const deleteBtn = (
       <Button id="deleteClusterBtn" bsStyle={!isPending ? 'danger' : 'default'} disabled={!isValid || isPending} onClick={() => submit(clusterID)}>
@@ -85,7 +85,7 @@ class DeleteClusterDialog extends React.Component {
           type="text"
           value={clusterNameInput}
           placeholder="Enter name"
-          onChange={e => this.validateClusterName(e)}
+          onChange={e => this.setValue(e)}
           autoFocus
         />
       </React.Fragment>);
