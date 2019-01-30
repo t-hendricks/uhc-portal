@@ -49,22 +49,6 @@ function EditClusterDialog(props) {
                 {errorContainer}
                 <Field
                   component={ReduxVerticalFormGroup}
-                  name="nodes_master"
-                  label="Master nodes"
-                  type="number"
-                  min="1"
-                />
-
-                <Field
-                  component={ReduxVerticalFormGroup}
-                  name="nodes_infra"
-                  label="Infra nodes"
-                  type="number"
-                  min="2"
-                />
-
-                <Field
-                  component={ReduxVerticalFormGroup}
                   name="nodes_compute"
                   label="Compute nodes"
                   type="number"
@@ -103,8 +87,6 @@ const mapStateToProps = (state, props) => ({
   editClusterResponse: state.clusters.editedCluster,
   initialValues: {
     id: props.cluster.id,
-    nodes_master: props.cluster.nodes.master,
-    nodes_infra: props.cluster.nodes.infra,
     nodes_compute: props.cluster.nodes.compute,
   },
 });
@@ -113,8 +95,6 @@ const mapDispatchToProps = dispatch => ({
   onSubmit: (formData) => {
     const clusterRequest = {
       nodes: {
-        master: parseInt(formData.nodes_master, 10),
-        infra: parseInt(formData.nodes_infra, 10),
         compute: parseInt(formData.nodes_compute, 10),
       },
     };
