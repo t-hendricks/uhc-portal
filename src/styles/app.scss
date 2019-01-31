@@ -80,6 +80,7 @@ limitations under the License.
   display: flex;
   flex-direction: column;
   height: 100%;
+  margin-bottom: 40px;
 
   .list-view-pf {
     flex: 1;
@@ -258,4 +259,29 @@ limitations under the License.
 
 .cluster-list-emptystate-options > :last-child {
   border-right: none;
+}
+
+footer {
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  background-color: $navbar-pf-vertical-bg-color;
+
+  ul {
+    margin: 10px auto;
+
+    li {
+      display: inline;
+      border-right: 1px solid;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  a, a:hover, a:focus, a:visited {
+    margin: auto 10px;
+    color: $navbar-pf-color;
+  }
 }

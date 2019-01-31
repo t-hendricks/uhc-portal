@@ -26,6 +26,7 @@ import config from '../config';
 import routes from '../routes';
 
 import Header from './header';
+import Footer from './footer';
 import LoginPage from './LoginPage';
 import ErrorBoundary from './ErrorBoundary';
 import ClustersList from './clusters/ClusterList';
@@ -93,6 +94,7 @@ class App extends React.Component {
             </ErrorBoundary>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
