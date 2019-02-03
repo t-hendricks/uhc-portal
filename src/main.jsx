@@ -72,10 +72,28 @@ function initKeycloak() {
       store.dispatch(getCloudProviders());
       render();
 
+      const IDLE_TIMEOUT_SECONDS = 15 * 60; // 15 minutes
+      const resetCounter = () => {
+        localStorage.setItem('lastActiveTimestamp', Math.floor(Date.now() / 1000));
+      };
+      resetCounter();
+
+      document.onclick = resetCounter;
+      document.onkeypress = resetCounter;
+      document.ontouchstart = resetCounter;
+      document.ontouchmove = resetCounter;
+      document.onwheel = resetCounter;
+
       setInterval(() => {
-        keycloak.updateToken(10)
-          .success(() => sessionStorage.setItem('kctoken', keycloak.token))
-          .error(() => keycloak.logout());
+        const lastActiveTimestamp = parseInt(localStorage.getItem('lastActiveTimestamp') || '0', 10);
+        const idleSeconds = Math.floor(Date.now() / 1000) - lastActiveTimestamp;
+        if (idleSeconds < IDLE_TIMEOUT_SECONDS) {
+          keycloak.updateToken(10)
+            .success(() => sessionStorage.setItem('kctoken', keycloak.token))
+            .error(() => keycloak.logout());
+        } else {
+          keycloak.logout();
+        }
       }, 10000);
     } else {
       render();
