@@ -1,0 +1,59 @@
+// We are disabling PF4 base reset for now ($pf-global--enable-reset: false), so
+// adding this back in here. PF4 base resets are for PF4-only apps.
+html {
+  height: 100%;
+}
+
+/* 
+  Open Shift masthead overrides:
+  https://github.com/openshift/console/blob/master/frontend/public/style/_overrides.scss#L260
+
+  These are temporary until OpenShift updates masthead treatment.
+ */
+.pf-c-page {
+  &__header {
+    background-color: var(--pf-global--BackgroundColor--dark-200);
+    background-image: url('./images/pfbg_2000.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  // `.pf-c-page` specificity required
+  .pf-c-page__main-section {
+    --pf-c-page__main-section--PaddingTop: 0;
+    --pf-c-page__main-section--PaddingRight: 0;
+    --pf-c-page__main-section--PaddingBottom: 0;
+    --pf-c-page__main-section--PaddingLeft: 0;
+  }
+}
+// customizations to make the logo 178px and match OpenShift (without the hamburger)
+.pf-c-page__header-brand-link {
+  max-width: 178px;
+}
+.pf-c-brand {
+  max-width: 100%;
+  display: block;
+}
+
+/* 
+  Open Shift PF3/PF4 Base Font change (makes PF4 Overpass fonts slightly smaller):
+  https://github.com/openshift/console/blob/master/frontend/public/style/_layout.scss#L22
+
+  Masthead is PF4 and uses base font size 16px, while the rest of the page remains 12px (PF3) for now
+ */
+ .pf-c-page { 
+  --pf-global--FontSize--md: #{$font-size-base}; 
+ }
+ .pf-c-page__header {
+  --pf-global--FontSize--md: calc(#{$pf-global--font-size-root} * 1px);
+}
+.modal-title {
+  font-size: $font-size-base;
+}
+
+// Workdaround for toolbar until PF-R issue is resolved:
+// https://github.com/patternfly/patternfly-react/issues/1333
+@media screen and (max-width: 767px) {
+  .pf-u-visible-on-md {
+    display: none;
+  }
+}

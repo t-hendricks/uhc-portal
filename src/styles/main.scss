@@ -1,8 +1,8 @@
 /**
   Third Party / Dependency imports here
 */
-$font-path:      '~patternfly/dist/fonts/';
-$img-path:        '~patternfly/dist/img/';
+$font-path: '~patternfly/dist/fonts/';
+$img-path: '~patternfly/dist/img/';
 $icon-font-path: '~patternfly/dist/fonts/';
 
 // Must include patternfly variables before bootstrap variables
@@ -23,6 +23,20 @@ $icon-font-path: '~patternfly/dist/fonts/';
 
 @import '~patternfly-react-extensions/dist/css/patternfly-react-extensions.css';
 
+//PF4 Styles
+$pf-global--enable-reset: false;
+$pf-global--disable-fontawesome: true;
+$pf-global--font-path: '~@patternfly/patternfly/assets/fonts/';
+
+@import "~@patternfly/patternfly/sass-utilities/_all";
+@import "~@patternfly/patternfly/_variables";
+@import "~@patternfly/patternfly/_fonts";
+@import "~@patternfly/patternfly/_base";
+@import "~@patternfly/patternfly/_themes";
+@import '~@patternfly/patternfly/utilities/Accessibility/accessibility.scss';
+@import '~@patternfly/patternfly/utilities/Spacing/spacing.css';
+@import '~@patternfly/patternfly/components/Content/content.css';
+
 body {
   margin: 0;
   padding: 0;
@@ -33,4 +47,5 @@ body {
   height: 100%;
 }
 
+@import './overrides.scss';
 @import './app';

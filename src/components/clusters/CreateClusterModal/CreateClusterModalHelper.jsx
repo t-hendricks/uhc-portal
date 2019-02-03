@@ -5,7 +5,6 @@ function AWSCredentialsHint() {
   return (
     <HintBlock
       title="Need help setting up your credentials?"
-      style={{ marginTop: '20px' }}
       body={(
         <React.Fragment>
           <p>

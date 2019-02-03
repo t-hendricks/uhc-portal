@@ -21,6 +21,7 @@ import { withRouter } from 'react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader';
+import { Page, PageSection, PageSectionVariants } from '@patternfly/react-core';
 
 import routes from '../../routes';
 
@@ -78,23 +79,20 @@ class App extends React.Component {
     } = this.props;
 
     if (!authenticated) {
-      return (<LoginPage loginFunction={loginFunction} />);
+      return <LoginPage loginFunction={loginFunction} />;
     }
 
     return (
-      <div className="layout-pf layout-pf-fixed">
-        <Header isLoggedIn userProfile={userProfile} logoutUser={logoutFunction} />
-        <div>
+      <Page header={<Header isLoggedIn userProfile={userProfile} logoutUser={logoutFunction} />}>
+        <PageSection variant={PageSectionVariants.light}>
           <div className="coc-content">
             <ErrorBoundary>
-              <ConnectedRouter history={history}>
-                { this.renderRoutes() }
-              </ConnectedRouter>
+              <ConnectedRouter history={history}>{this.renderRoutes()}</ConnectedRouter>
             </ErrorBoundary>
           </div>
-        </div>
+        </PageSection>
         <Footer />
-      </div>
+      </Page>
     );
   }
 }

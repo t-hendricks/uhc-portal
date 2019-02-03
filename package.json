@@ -13,6 +13,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@axetroy/react-download": "^1.1.1",
+    "@patternfly/react-core": "2.2.3",
+    "@patternfly/patternfly": "1.0.200",
     "axios": "^0.18.0",
     "bootstrap-sass": "^3.3.7",
     "classnames": "^2.2.6",
