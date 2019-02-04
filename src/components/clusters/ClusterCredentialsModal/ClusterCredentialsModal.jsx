@@ -14,12 +14,17 @@ class ClusterCredentialsModal extends React.Component {
       userCopied: false,
       passwordCopied: false,
     };
+    this.close = this.close.bind(this);
+  }
+
+  close() {
+    const { close } = this.props;
+    this.setState({ userCopied: false, passwordCopied: false });
+    close();
   }
 
   render() {
-    const {
-      isOpen, credentials, close,
-    } = this.props;
+    const { isOpen, credentials } = this.props;
     const { userCopied, passwordCopied } = this.state;
     if (!credentials.admin || !credentials.admin.user || !credentials.admin.password) {
       return null;
@@ -82,8 +87,8 @@ class ClusterCredentialsModal extends React.Component {
     return isOpen && (
       <MessageDialog
         show={isOpen}
-        onHide={close}
-        primaryAction={close}
+        onHide={this.close}
+        primaryAction={this.close}
         title="Administrator Credentials"
         icon={icon}
         primaryContent={primaryContent}
