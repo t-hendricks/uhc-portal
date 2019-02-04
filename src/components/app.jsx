@@ -21,7 +21,6 @@ import { withRouter } from 'react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader';
-import { Alert } from 'patternfly-react';
 
 import routes from '../routes';
 
@@ -57,25 +56,12 @@ class App extends React.Component {
     // is undefined.
     if (!authenticated || (userProfile.email && userProfile.email.endsWith('@redhat.com'))) {
       return (
-        <div>
-          <Alert type="warning" className="alpha-notice">
-            <p>
-              This is an alpha version of the service, restricted to Red Hat internal
-              testing only.
-            </p>
-            <p>
-              All customers and external users and testers should go to&nbsp;
-              <a href="https://try.openshift.com">try.openshift.com</a>
-              &nbsp;and follow instructions from there.
-            </p>
-          </Alert>
-          <Switch>
-            <Redirect from="/" exact to="/clusters" />
-            <Route path="/clusters/install" component={InstallCluster} />
-            <Route path="/clusters" component={ClustersList} />
-            <Route path="/cluster/:id" component={ClusterDetails} />
-          </Switch>
-        </div>
+        <Switch>
+          <Redirect from="/" exact to="/clusters" />
+          <Route path="/clusters/install" component={InstallCluster} />
+          <Route path="/clusters" component={ClustersList} />
+          <Route path="/cluster/:id" component={ClusterDetails} />
+        </Switch>
       );
     }
     return (

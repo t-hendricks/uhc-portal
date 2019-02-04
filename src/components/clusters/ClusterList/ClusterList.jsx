@@ -43,6 +43,8 @@ import { cloudProviderActions } from '../../../redux/actions/cloudProviderAction
 import { viewActions } from '../../../redux/actions/viewOptionsActions';
 import { modalActions } from '../../Modal/ModalActions';
 
+import AlphaNotice from '../../AlphaNotice';
+
 class ClusterList extends Component {
   constructor() {
     super();
@@ -209,44 +211,47 @@ class ClusterList extends Component {
       );
     }
     return (
-      <div className="cluster-list">
-        <Grid fluid style={{ padding: 0 }}>
-          <Row><Col sm={1}><h1>Clusters</h1></Col></Row>
-          <Row className="cluster-list-top-row">
-            <Col sm={1}>
-              <CreateClusterDropdown
-                showCreationForm={() => openModal('create-cluster')}
-                showOCPCreationForm={() => openModal('create-cluster', { isManaged: false })}
-              />
-            </Col>
-            <Col sm={1}>
-              {pending ? <Spinner loading /> : null}
-            </Col>
-            <Col sm={2} smOffset={8}>
-              <RefreshBtn id="refresh" refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
-              <ClusterListFilter />
-            </Col>
-          </Row>
-        </Grid>
-        <ClusterListTable
-          clusters={clusters || []}
-          viewOptions={viewOptions}
-          setSorting={setSorting}
-          openEditClusterDialog={this.openEditClusterDialog}
-          openDeleteClusterDialog={(clusterID, clusterName) => {
-            openModal('delete-cluster', { clusterID, clusterName });
+      <div>
+        <AlphaNotice />
+        <div className="cluster-list">
+          <Grid fluid style={{ padding: 0 }}>
+            <Row><Col sm={1}><h1>Clusters</h1></Col></Row>
+            <Row className="cluster-list-top-row">
+              <Col sm={1}>
+                <CreateClusterDropdown
+                  showCreationForm={() => openModal('create-cluster')}
+                  showOCPCreationForm={() => openModal('create-cluster', { isManaged: false })}
+                />
+              </Col>
+              <Col sm={1}>
+                {pending ? <Spinner loading /> : null}
+              </Col>
+              <Col sm={2} smOffset={8}>
+                <RefreshBtn id="refresh" refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
+                <ClusterListFilter />
+              </Col>
+            </Row>
+          </Grid>
+          <ClusterListTable
+            clusters={clusters || []}
+            viewOptions={viewOptions}
+            setSorting={setSorting}
+            openEditClusterDialog={this.openEditClusterDialog}
+            openDeleteClusterDialog={(clusterID, clusterName) => {
+              openModal('delete-cluster', { clusterID, clusterName });
+            }}
+            openEditDisplayNameDialog={this.openEditDisplayNameDialog}
+          />
+          {this.renderEditClusterDialog()}
+          {this.renderEditDisplayNameDialog()}
+          <DeleteClusterDialog onClose={(shouldRefresh) => {
+            if (shouldRefresh) {
+              invalidateClusters();
+            }
           }}
-          openEditDisplayNameDialog={this.openEditDisplayNameDialog}
-        />
-        {this.renderEditClusterDialog()}
-        {this.renderEditDisplayNameDialog()}
-        <DeleteClusterDialog onClose={(shouldRefresh) => {
-          if (shouldRefresh) {
-            invalidateClusters();
-          }
-        }}
-        />
-        <CreateClusterModal />
+          />
+          <CreateClusterModal />
+        </div>
       </div>
     );
   }

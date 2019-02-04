@@ -40,6 +40,8 @@ import { modalActions } from '../Modal/ModalActions';
 import RefreshBtn from './RefreshButton';
 import { metricsStatusMessages, maxMetricsTimeDelta } from './clusterDetailsConsts';
 
+import AlphaNotice from '../AlphaNotice';
+
 class ClusterDetails extends Component {
   constructor(props) {
     super(props);
@@ -377,168 +379,171 @@ class ClusterDetails extends Component {
 
     return (
       <div>
-        <Grid fluid style={{ marginTop: '20px' }}>
-          <Row>
-            <Col sm={2}>
-              {backBtn}
-              <RefreshBtn id="refresh" refreshFunc={() => fetchDetails(cluster.id)} />
-            </Col>
-            <Col sm={2} smOffset={1}>
-              <h1 style={{ marginTop: 0 }}>
-                {clusterName}
-              </h1>
-            </Col>
-            <Col sm={2} md={2} lg={1} smOffset={3}>
-              {credentialsButton}
-            </Col>
-            <Col sm={1}>
-              {consoleBtn}
-            </Col>
-            <Col sm={1}>
-              {actionsBtn}
-            </Col>
-
-          </Row>
-        </Grid>
-        <Grid fluid>
-          <Row style={{ marginTop: '20px' }}>
-            {utilizationCharts()}
-          </Row>
-        </Grid>
-        <hr style={{ width: '96%' }} />
-        <Grid fluid>
-          <Row>
-            <Col sm={6}>
-              <dl className="cluster-details-item left">
-                <dt>
-                  Cluster ID
-                </dt>
-                <dd>
-                  {cluster.external_id || 'N/A'}
-                </dd>
-                <dt>
-                  Location
-                </dt>
-                <dd>
-                  {region}
-                </dd>
-                <dt>
-                  Provider
-                </dt>
-                <dd>
-                  { cloudProvider }
-                </dd>
-                <dt>
-                  Version
-                </dt>
-                <dd>
-                  <dl className="cluster-details-item-list left">
-                    <dt>
-                      OpenShift:
-                      {' '}
-                    </dt>
-                    <dd>
-                      {cluster.openshift_version || 'N/A'}
-                    </dd>
-                  </dl>
-                </dd>
-                <dt>
-                  Created at
-                </dt>
-                <dd>
-                  <Timestamp value={cluster.creation_timestamp || ''} />
-                </dd>
-                <dt>
-                  Last Updated
-                </dt>
-                <dd>
-                  <Timestamp value={cluster.last_update_timestamp || ''} />
-                </dd>
-              </dl>
-            </Col>
-            <Col sm={6}>
-              <dl className="cluster-details-item left">
-                <dt>
-                  Status
-                </dt>
-                <dd style={{ textTransform: 'capitalize' }}>
-                  <ClusterStateIcon clusterState={cluster.state} />
-                  {' '}
-                  {cluster.state}
-                </dd>
-                <dt>
-                  Total CPU
-                </dt>
-                <dd>
-                  {cluster.cpu.total.value}
-                  {' '}
-                  vCPU
-                </dd>
-                <dt>
-                  Total Memory
-                </dt>
-                <dd>
-                  {memoryTotalWithUnit.value}
-                  {' '}
-                  {memoryTotalWithUnit.unit}
-                </dd>
-                <dt>
-                  Total Storage
-                </dt>
-                <dd>
-                  {storageTotalWithUnit.value}
-                  {' '}
-                  {storageTotalWithUnit.unit}
-                </dd>
-                <dt>
-                  Nodes
-                </dt>
-                <dd>
-                  <dl className="cluster-details-item-list left">
-                    <dt>
-                      Master:
-                      {' '}
-                    </dt>
-                    <dd>
-                      {cluster.nodes.master}
-                    </dd>
-                  </dl>
-                  { cluster.managed ? (
+        <AlphaNotice />
+        <div>
+          <Grid fluid style={{ marginTop: '20px' }}>
+            <Row>
+              <Col sm={2}>
+                {backBtn}
+                <RefreshBtn id="refresh" refreshFunc={() => fetchDetails(cluster.id)} />
+              </Col>
+              <Col sm={2} smOffset={1}>
+                <h1 style={{ marginTop: 0 }}>
+                  {clusterName}
+                </h1>
+              </Col>
+              <Col sm={2} md={2} lg={1} smOffset={3}>
+                {credentialsButton}
+              </Col>
+              <Col sm={1}>
+                {consoleBtn}
+              </Col>
+              <Col sm={1}>
+                {actionsBtn}
+              </Col>
+            </Row>
+          </Grid>
+          <Grid fluid>
+            <Row style={{ marginTop: '20px' }}>
+              {utilizationCharts()}
+            </Row>
+          </Grid>
+          <hr style={{ width: '96%' }} />
+          <Grid fluid>
+            <Row>
+              <Col sm={6}>
+                <dl className="cluster-details-item left">
+                  <dt>
+                    Cluster ID
+                  </dt>
+                  <dd>
+                    {cluster.external_id || 'N/A'}
+                  </dd>
+                  <dt>
+                    Location
+                  </dt>
+                  <dd>
+                    {region}
+                  </dd>
+                  <dt>
+                    Provider
+                  </dt>
+                  <dd>
+                    { cloudProvider }
+                  </dd>
+                  <dt>
+                    Version
+                  </dt>
+                  <dd>
                     <dl className="cluster-details-item-list left">
                       <dt>
-                        Infrastructure:
+                        OpenShift:
                         {' '}
                       </dt>
                       <dd>
-                        {cluster.nodes.infra}
+                        {cluster.openshift_version || 'N/A'}
                       </dd>
                     </dl>
-                  ) : null }
-                  <dl className="cluster-details-item-list left">
-                    <dt>
-                      Compute:
-                      {' '}
-                    </dt>
-                    <dd>
-                      {cluster.nodes.compute}
-                    </dd>
-                  </dl>
-                </dd>
-                {clusterNetwork()}
-              </dl>
-            </Col>
-          </Row>
-        </Grid>
-        {editClusterDialog()}
-        {editDisplayNameDialog()}
-        <DeleteClusterDialog onClose={(shouldRefresh) => {
-          if (shouldRefresh) {
-            invalidateClusters();
-            fetchDetails(cluster.id);
-          }
-        }}
-        />
-      </div>);
+                  </dd>
+                  <dt>
+                    Created at
+                  </dt>
+                  <dd>
+                    <Timestamp value={cluster.creation_timestamp || ''} />
+                  </dd>
+                  <dt>
+                    Last Updated
+                  </dt>
+                  <dd>
+                    <Timestamp value={cluster.last_update_timestamp || ''} />
+                  </dd>
+                </dl>
+              </Col>
+              <Col sm={6}>
+                <dl className="cluster-details-item left">
+                  <dt>
+                    Status
+                  </dt>
+                  <dd style={{ textTransform: 'capitalize' }}>
+                    <ClusterStateIcon clusterState={cluster.state} />
+                    {' '}
+                    {cluster.state}
+                  </dd>
+                  <dt>
+                    Total CPU
+                  </dt>
+                  <dd>
+                    {cluster.cpu.total.value}
+                    {' '}
+                    vCPU
+                  </dd>
+                  <dt>
+                    Total Memory
+                  </dt>
+                  <dd>
+                    {memoryTotalWithUnit.value}
+                    {' '}
+                    {memoryTotalWithUnit.unit}
+                  </dd>
+                  <dt>
+                    Total Storage
+                  </dt>
+                  <dd>
+                    {storageTotalWithUnit.value}
+                    {' '}
+                    {storageTotalWithUnit.unit}
+                  </dd>
+                  <dt>
+                    Nodes
+                  </dt>
+                  <dd>
+                    <dl className="cluster-details-item-list left">
+                      <dt>
+                        Master:
+                        {' '}
+                      </dt>
+                      <dd>
+                        {cluster.nodes.master}
+                      </dd>
+                    </dl>
+                    { cluster.managed ? (
+                      <dl className="cluster-details-item-list left">
+                        <dt>
+                          Infrastructure:
+                          {' '}
+                        </dt>
+                        <dd>
+                          {cluster.nodes.infra}
+                        </dd>
+                      </dl>
+                    ) : null }
+                    <dl className="cluster-details-item-list left">
+                      <dt>
+                        Compute:
+                        {' '}
+                      </dt>
+                      <dd>
+                        {cluster.nodes.compute}
+                      </dd>
+                    </dl>
+                  </dd>
+                  {clusterNetwork()}
+                </dl>
+              </Col>
+            </Row>
+          </Grid>
+          {editClusterDialog()}
+          {editDisplayNameDialog()}
+          <DeleteClusterDialog onClose={(shouldRefresh) => {
+            if (shouldRefresh) {
+              invalidateClusters();
+              fetchDetails(cluster.id);
+            }
+          }}
+          />
+        </div>
+      </div>
+    );
   }
 }
 
