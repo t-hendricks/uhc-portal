@@ -19,7 +19,7 @@ build_id:=unknown
 build_ts:=$(shell date --utc --iso-8601=seconds)
 
 # The details of the application:
-binary:=portal
+binaries:=$(shell ls cmd)
 namespace:=unified-hybrid-cloud
 version:=latest
 
@@ -52,7 +52,6 @@ terraform_install_url:=https://www.terraform.io/downloads.html
 # Command-line tools URL:
 command_line_tools_url:=https://mirror.openshift.com/pub/openshift-v3/clients/4.0.0-0.139.0/
 
-
 .PHONY: \
 	app \
 	binary \
@@ -69,7 +68,9 @@ command_line_tools_url:=https://mirror.openshift.com/pub/openshift-v3/clients/4.
 	$(NULL)
 
 binary: vendor
-	go build -o "$(binary)"
+	for binary in $(binaries); do \
+		go build "./cmd/$${binary}" || exit 1; \
+	done
 
 lint: vendor node_modules
 	yarn lint
@@ -97,7 +98,7 @@ lint: vendor node_modules
 		$(NULL)
 
 fmt:
-	gofmt -s -l -w main.go ./cmd/ ./pkg/.
+	gofmt -s -l -w ./cmd/ ./pkg/.
 
 test: node_modules
 	yarn test
@@ -164,7 +165,7 @@ undeploy: \
 
 clean:
 	rm -rf \
-		$(binary) \
+		$(binaries) \
 		*-template.json \
 		*.tar \
 		.gopath \

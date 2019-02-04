@@ -111,7 +111,6 @@ objects:
           imagePullPolicy: ${IMAGE_PULL_POLICY}
           command:
           - /usr/local/bin/portal
-          - server
           - --portal-domain=${PORTAL_DOMAIN}
           - --gateway-domain=${GATEWAY_DOMAIN}
           - --keycloak-realm=${KEYCLOAK_REALM}

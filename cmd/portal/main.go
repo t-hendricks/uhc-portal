@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package server
+package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -28,6 +29,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 
 	"gitlab.cee.redhat.com/service/uhc-portal/pkg/apache"
 )
@@ -44,16 +46,26 @@ var args struct {
 	commandLineToolsURL string
 }
 
-// Cmd is the cobra serve command
-var Cmd = &cobra.Command{
-	Use:   "server",
-	Short: "Run the portal server",
-	Long:  "Run the portal server.",
-	Run:   run,
+var cmd = &cobra.Command{
+	Use:  "portal",
+	Long: "Portal server.",
+	Run:  run,
 }
 
 func init() {
-	flags := Cmd.Flags()
+	// Send logs to the standard error stream by default:
+	err := flag.Set("logtostderr", "true")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Can't set default error stream: %v\n", err)
+		os.Exit(1)
+	}
+
+	// Register the options that are managed by the 'flag' package, so that they will also be parsed
+	// by the 'pflag' package:
+	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
+
+	// Register the options:
+	flags := cmd.Flags()
 	flags.StringVar(
 		&args.portalDomain,
 		"portal-domain",
@@ -110,9 +122,26 @@ func init() {
 	)
 }
 
-func run(cmd *cobra.Command, argv []string) {
-	var err error
+func main() {
+	// This is needed to make `glog` believe that the flags have already been parsed, otherwise
+	// every log messages is prefixed by an error message stating the the flags haven't been
+	// parsed.
+	err := flag.CommandLine.Parse([]string{})
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Can't parse empty command line to satisfy 'glog': %v\n", err)
+		os.Exit(1)
+	}
 
+	// Execute the command:
+	cmd.SetArgs(os.Args[1:])
+	err = cmd.Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to execute command: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+func run(cmd *cobra.Command, argv []string) {
 	// Check mandatory options:
 	ok := true
 	if args.portalDomain == "" {
@@ -201,8 +230,9 @@ func run(cmd *cobra.Command, argv []string) {
 	glog.Infof("Removing temporary configuration directory '%s'", configDir)
 	err = os.RemoveAll(configDir)
 	if err != nil {
-		glog.Errorf(
-			"Can't remove temporary configuration directory '%s': %v",
+		fmt.Fprintf(
+			os.Stderr,
+			"Can't remove temporary configuration directory '%s': %v\n",
 			configDir, err,
 		)
 		os.Exit(1)
@@ -248,7 +278,7 @@ func createConfigDir() (configDir string, err error) {
 
 	// Write the 'config.json' file:
 	configJSONPath := filepath.Join(configDir, "config.json")
-	glog.Infof("Writing generated configuration text to file '%s", configJSONPath)
+	glog.Infof("Writing generated configuration text to file '%s'", configJSONPath)
 	configJSONFile, err := os.Create(configJSONPath)
 	if err != nil {
 		err = fmt.Errorf("can't create configuration file '%s': %v", configJSONPath, err)

@@ -1,0 +1,289 @@
+/*
+Copyright (c) 2019 Red Hat, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+// This file contains the implementation of the configuration object.
+
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+
+	"github.com/ghodss/yaml"
+	"github.com/golang/glog"
+)
+
+// ConfigBuilder contains the data and the methods needed to load the service configuration.
+type ConfigBuilder struct {
+	files []string
+}
+
+// Config is a read only view of the configuration of the server.
+type Config struct {
+	listener *Listener
+	proxies  []*Proxy
+}
+
+// NewConfig creates a builder that can then be used to create new configuration objects.
+func NewConfig() *ConfigBuilder {
+	return new(ConfigBuilder)
+}
+
+// File adds the given file to the set of configuration files that will be loaded.
+func (b *ConfigBuilder) File(value string) *ConfigBuilder {
+	b.files = append(b.files, value)
+	return b
+}
+
+// Files adds the given files to the set of configuration files that will be loaded.
+func (b *ConfigBuilder) Files(values []string) *ConfigBuilder {
+	b.files = append(b.files, values...)
+	return b
+}
+
+// Build loads the configuration files and returns the resulting configuration object.
+func (b *ConfigBuilder) Build() (config *Config, err error) {
+	// Create the object:
+	config = &Config{
+		listener: &Listener{},
+		proxies:  []*Proxy{},
+	}
+
+	// Load the defaults:
+	err = config.mergeText(defaultConfig)
+	if err != nil {
+		return
+	}
+
+	// Load the files:
+	err = config.mergeFiles(b.files)
+	if err != nil {
+		return
+	}
+
+	return
+}
+
+// Listener returns the listener configuration.
+func (c *Config) Listener() *Listener {
+	return c.listener
+}
+
+// Procies returns the list of proxies.
+func (c *Config) Proxies() []*Proxy {
+	return c.proxies
+}
+
+// configData is the struct used internally to unmarshall the configuration data.
+type configData struct {
+	Listener *listenerData `json:"listener,omitempty"`
+	Proxies  []*proxyData  `json:"proxies,omitempty"`
+}
+
+// load loads the configuration data from the given files.
+func (c *Config) mergeFiles(files []string) error {
+	for _, file := range files {
+		info, err := os.Stat(file)
+		if os.IsNotExist(err) {
+			return fmt.Errorf(
+				"configuration file '%s' doesn't exist",
+				file,
+			)
+		}
+		if err != nil {
+			return fmt.Errorf(
+				"can't check if '%s' is a file or a directory: %v",
+				file, err,
+			)
+		}
+		if info.IsDir() {
+			err = c.mergeDir(file)
+			if err != nil {
+				return fmt.Errorf(
+					"can't load configuration directory '%s': %v",
+					file, err,
+				)
+			}
+		} else {
+			err = c.mergeFile(file)
+			if err != nil {
+				return fmt.Errorf(
+					"can't load configuration file '%s': %v",
+					file, err,
+				)
+			}
+		}
+	}
+
+	return nil
+}
+
+func (c *Config) mergeDir(dir string) error {
+	// List the files in the directory:
+	infos, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return err
+	}
+	files := make([]string, 0, len(infos))
+	for _, info := range infos {
+		if !info.IsDir() {
+			name := info.Name()
+			if strings.HasSuffix(name, ".yml") || strings.HasSuffix(name, ".yaml") {
+				file := filepath.Join(dir, name)
+				files = append(files, file)
+			}
+		}
+	}
+
+	// Load the files in alphabetical order:
+	sort.Strings(files)
+	for _, file := range files {
+		err := c.mergeFile(file)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (c *Config) mergeFile(file string) error {
+	glog.Infof("Loading configuration file '%s'", file)
+	var text []byte
+	// #nosec G304
+	text, err := ioutil.ReadFile(file)
+	if err != nil {
+		return err
+	}
+	return c.mergeText(text)
+}
+
+func (c *Config) mergeText(text []byte) error {
+	// Parse the YAML text:
+	var data configData
+	err := yaml.Unmarshal(text, &data)
+	if err != nil {
+		return err
+	}
+
+	// Merge the configuration data from the file with the existing configuration:
+	if data.Listener != nil {
+		err = c.listener.merge(data.Listener)
+		if err != nil {
+			return err
+		}
+	}
+	for _, item := range data.Proxies {
+		err = c.mergeProxies(item)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (c *Config) mergeProxies(data *proxyData) error {
+	var proxy *Proxy
+	if data.Prefix != nil {
+		for _, candidate := range c.proxies {
+			if candidate.prefix == *data.Prefix {
+				proxy = candidate
+			}
+		}
+	}
+	if proxy == nil {
+		proxy = new(Proxy)
+		c.proxies = append(c.proxies, proxy)
+	}
+	err := proxy.merge(data)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Listener is a read only view of the listener configuration.
+type Listener struct {
+	address string
+}
+
+// Address returns the listening address.
+func (l *Listener) Address() string {
+	return l.address
+}
+
+// listenerData is the struct used internally to unmarshal the listener configuration.
+type listenerData struct {
+	Address *string `json:"address,omitempty"`
+}
+
+// merge processes the unmarshalled configuration data and merges it with this listener
+// configuration.
+func (l *Listener) merge(data *listenerData) error {
+	if data.Address != nil {
+		l.address = *data.Address
+	}
+	return nil
+}
+
+// Proxy is a read only view of section of the configuration that describes a proxy configuration.
+type Proxy struct {
+	prefix string
+	target string
+}
+
+// Prefix returns the path prefix of this proxy.
+func (p *Proxy) Prefix() string {
+	return p.prefix
+}
+
+// Target returns the target address of this proxy.
+func (p *Proxy) Target() string {
+	return p.target
+}
+
+// proxyData is the struct used internally to unmarshal the proxy configuration.
+type proxyData struct {
+	Prefix *string `json:"prefix,omitempty"`
+	Target *string `json:"target,omitempty"`
+}
+
+// merge processes the unmarshalled configuration data and merges it with this proxy configuration.
+func (p *Proxy) merge(data *proxyData) error {
+	if data.Prefix != nil {
+		p.prefix = *data.Prefix
+	}
+	if data.Target != nil {
+		p.target = *data.Target
+	}
+	return nil
+}
+
+// defaultConfig is the default configuration that is always loaded before any configuration file.
+var defaultConfig = []byte(`
+listener:
+  address: localhost:8002
+
+proxies:
+- prefix: /api/
+  target: https://api.stage.openshift.com
+`)
