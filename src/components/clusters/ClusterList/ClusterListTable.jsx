@@ -21,9 +21,9 @@ function ClusterListTable(props) {
     viewOptions, setSorting, openEditClusterDialog, openDeleteClusterDialog,
     openEditDisplayNameDialog,
   } = props;
-  let { clusters } = props;
-  if (!clusters) {
-    clusters = [];
+  const { clusters } = props;
+  if (!clusters || clusters.length === 0) {
+    return <p className="notfound">No Results Match the Filter Criteria.</p>;
   }
 
   const nameColSizes = { md: 4 };

@@ -286,6 +286,11 @@ footer {
   }
 }
 
+p.notfound {
+  text-align: center;
+  font-size: larger;
+}
+
 // TODO: This is used for the notice in the main page that explains that this is an alpha version of the
 // service. Should be removed once we get out of the alpha period.
 .alpha-notice {
