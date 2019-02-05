@@ -85,18 +85,16 @@ function ClusterListTable(props) {
         Edit Display Name
       </MenuItem>);
 
-    const deleteClusterItem = cluster.managed ? (
-      <MenuItem onClick={
-    () => openDeleteClusterDialog(cluster.id, cluster.name)
-    }
-      >
-    Delete Cluster
-      </MenuItem>)
-      : (
-        <MenuItem disabled title="Self managed cluster cannot be deleted">
-      Delete Cluster
-        </MenuItem>
-      );
+    const deleteModalData = {
+      clusterID: cluster.id,
+      clusterName: cluster.name,
+      managed: cluster.managed,
+    };
+
+    const deleteClusterItem = (
+      <MenuItem onClick={() => openDeleteClusterDialog(deleteModalData)}>
+        Delete Cluster
+      </MenuItem>);
 
     const clusterName = (
       <OverlayTrigger

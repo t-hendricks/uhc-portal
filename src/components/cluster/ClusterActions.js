@@ -1,9 +1,11 @@
 import { clusterConstants } from './ClusterConstants';
 import { clusterService } from '../../services';
 
-const deleteCluster = clusterID => ({
+const deleteCluster = (clusterID, managed) => ({
   type: clusterConstants.DELETE_CLUSTER,
-  payload: clusterService.deleteCluster(clusterID),
+  payload: managed
+    ? clusterService.deleteCluster(clusterID)
+    : clusterService.deleteSelfManagedCluster(clusterID),
 });
 
 const deletedClusterResponse = () => ({

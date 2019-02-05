@@ -345,15 +345,17 @@ class ClusterDetails extends Component {
         Edit Display Name
       </MenuItem>);
 
-    const deleteClusterItem = cluster.managed ? (
-      <MenuItem onClick={() => openModal('delete-cluster', { clusterID: cluster.id, clusterName })}>
-        Delete Cluster
-      </MenuItem>)
-      : (
-        <MenuItem disabled title="Self managed cluster cannot be deleted">
-          Delete Cluster
-        </MenuItem>
-      );
+
+    const deleteModalData = {
+      clusterID: cluster.id,
+      clusterName: cluster.name,
+      managed: cluster.managed,
+    };
+
+    const deleteClusterItem = (
+      <MenuItem onClick={() => openModal('delete-cluster', deleteModalData)}>
+    Delete Cluster
+      </MenuItem>);
 
     const actionsBtn = (
       <DropdownButton
