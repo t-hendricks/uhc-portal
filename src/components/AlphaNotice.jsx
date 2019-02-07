@@ -28,6 +28,11 @@ const AlphaNotice = () => (
       <a href="https://try.openshift.com">try.openshift.com</a>
       &nbsp;and follow instructions from there.
     </p>
+    <p>
+      Send all feedback to&nbsp;
+      <a href="mailto:***REMOVED***">***REMOVED***</a>
+      &nbsp;.
+    </p>
   </Alert>
 );
 
