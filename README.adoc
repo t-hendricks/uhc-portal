@@ -39,6 +39,12 @@ $ yarn install
 $ yarn build
 ....
 
+To build the backend proxy server run the `binary` target of the _Makefile_:
+
+....
+$ make binary
+....
+
 == Testing
 
 To test the application in your development environment run the following command:
@@ -48,6 +54,53 @@ $ yarn start
 ....
 
 That will start the the Webpack development server, in http://localhost:8001.
+
+You will also need to start start the backend proxy server, which acts as a proxy
+for the _OpenID_ and API services that are required by the application:
+
+....
+./backend
+....
+
+By default this will be available in http://localhost:8002, and the default
+configuration of the application is already prepared to use it.
+
+If you need to change the configuration used by this backend proxy, then create a
+YAML file and specify it with the `--config` commmand line option:
+
+....
+./backend --config=my.yml
+....
+
+The content of this file should be something like this:
+
+[source,yaml]
+----
+listener:
+  address: localhost:8002
+
+proxies:
+- prefix: /api/
+  target: https://api.stage.openshift.com
+----
+
+Note that this `--config` option and the configuration file are optional, the
+default configuration already uses `localhost` and port `8002`, and already
+forwards all API requests to the staging environment.
+
+If you need to use a service located in some other place, for example if you
+need to use the clusters service deployed in your local environment, you can add
+an additional proxy configuration:
+
+[source,yaml]
+----
+proxies:
+- prefix: /api/clusters_mgmt/
+  target: https://api.127.0.0.1.nip.io
+----
+
+That will forward requests starting with `/api/clusters_mgmt/` to your local
+clusters service, and the rest to the staging environment.
 
 == Deploying
 

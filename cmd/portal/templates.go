@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package server
+package main
 
 // This is a template used to generate the 'httpd.conf' file of the Apache web server that will do
 // all the heavy lifting of the portal.

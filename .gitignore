@@ -1,6 +1,7 @@
 .idea
 /*template.json
 /.gopath/
+/backend
 /build/
 /node_modules/
 /portal
