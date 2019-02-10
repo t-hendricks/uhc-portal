@@ -352,10 +352,12 @@ class ClusterDetails extends Component {
       managed: cluster.managed,
     };
 
-    const deleteClusterItem = (
+    const deleteClusterItem = cluster.state !== 'uninstalling' ? (
       <MenuItem onClick={() => openModal('delete-cluster', deleteModalData)}>
     Delete Cluster
-      </MenuItem>);
+      </MenuItem>)
+      : (<MenuItem disabled title="The cluster is being deleted">Delete Cluster</MenuItem>);
+
 
     const actionsBtn = (
       <DropdownButton
