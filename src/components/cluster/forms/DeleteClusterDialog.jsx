@@ -42,8 +42,10 @@ class DeleteClusterDialog extends React.Component {
 
   render() {
     const {
-      isOpen, clusterID, clusterName, submit, deleteClusterResponse,
+      isOpen, modalData, submit, deleteClusterResponse,
     } = this.props;
+
+    const { clusterID, clusterName, managed } = modalData;
 
     const { clusterNameInput } = this.state;
 
@@ -57,19 +59,36 @@ class DeleteClusterDialog extends React.Component {
     const isValid = clusterNameInput === clusterName;
 
     const deleteBtn = (
-      <Button id="deleteClusterBtn" bsStyle={!isPending ? 'danger' : 'default'} disabled={!isValid || isPending} onClick={() => submit(clusterID)}>
+      <Button id="deleteClusterBtn" bsStyle={!isPending ? 'danger' : 'default'} disabled={!isValid || isPending} onClick={() => submit(clusterID, managed)}>
         {!isPending ? 'Delete' : <Spinner size="sm" inline loading />}
       </Button>
     );
 
     const icon = <Icon type="pf" name="warning-triangle-o" />;
 
+    const managedMessage = (
+      <p>
+      This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
+      </p>
+    );
+    const selfManagedMessage = (
+      <p>
+      This action cannot be undone.
+        <br />
+        Since this is a self managed cluster, this action will only detach the cluster
+        from the portal.
+        <br />
+        Delete the cluster resources externally before performing this action.
+      </p>
+    );
+
+
+    const message = managed ? managedMessage : selfManagedMessage;
+
     const primaryContent = (
       <React.Fragment>
         {errorContainer}
-        <p>
-          This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
-        </p>
+        {message}
       </React.Fragment>
     );
     const secondaryContent = (
@@ -115,8 +134,7 @@ class DeleteClusterDialog extends React.Component {
 
 DeleteClusterDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  clusterID: PropTypes.string.isRequired,
-  clusterName: PropTypes.string.isRequired,
+  modalData: PropTypes.object,
   clearDeleteClusterResponse: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
@@ -130,14 +148,13 @@ DeleteClusterDialog.defaultProps = {
 
 const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'delete-cluster'),
-  clusterName: state.modal.activeModal.data.clusterName,
-  clusterID: state.modal.activeModal.data.clusterID,
+  modalData: state.modal.activeModal.data,
   deleteClusterResponse: state.cluster.deletedCluster,
 });
 
 const mapDispatchToProps = {
   clearDeleteClusterResponse: () => clusterActions.deletedClusterResponse(),
-  submit: clusterID => clusterActions.deleteCluster(clusterID),
+  submit: (clusterID, managed) => clusterActions.deleteCluster(clusterID, managed),
   close: () => closeModal('delete-cluster'),
 };
 

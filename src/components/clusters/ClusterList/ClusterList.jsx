@@ -237,8 +237,8 @@ class ClusterList extends Component {
             viewOptions={viewOptions}
             setSorting={setSorting}
             openEditClusterDialog={this.openEditClusterDialog}
-            openDeleteClusterDialog={(clusterID, clusterName) => {
-              openModal('delete-cluster', { clusterID, clusterName });
+            openDeleteClusterDialog={(modalData) => {
+              openModal('delete-cluster', modalData);
             }}
             openEditDisplayNameDialog={this.openEditDisplayNameDialog}
           />
