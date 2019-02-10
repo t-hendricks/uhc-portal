@@ -72,12 +72,15 @@ YAML file and specify it with the `--config` commmand line option:
 ./backend --config=my.yml
 ....
 
-The content of this file should be something like this:
+The content of this file should be something like this (or any subset of it):
 
 [source,yaml]
 ----
 listener:
   address: localhost:8002
+
+keycloak:
+  url: https://developers.redhat.com/auth/realms/rhd/protocol/openid-connect/token
 
 proxies:
 - prefix: /api/
@@ -85,8 +88,8 @@ proxies:
 ----
 
 Note that this `--config` option and the configuration file are optional, the
-default configuration already uses `localhost` and port `8002`, and already
-forwards all API requests to the staging environment.
+default configuration already uses `localhost`, `developers.redhat.com` and port
+`8002`, and already forwards all API requests to the staging environment.
 
 If you need to use a service located in some other place, for example if you
 need to use the clusters service deployed in your local environment, you can add

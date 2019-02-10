@@ -124,9 +124,11 @@ func run(cmd *cobra.Command, argv []string) {
 	}
 
 	// Create the authentication handlers:
+	tokenURL := cfg.Keycloak().URL()
 	var authHandler http.Handler
 	authHandler, err = NewAuthHandler().
 		Sessions(store).
+		TokenURL(cfg.Keycloak().URL()).
 		Build()
 	if err != nil {
 		glog.Errorf("Can't create authentication handler: %v", err)

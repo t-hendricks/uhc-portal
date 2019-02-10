@@ -37,12 +37,14 @@ import (
 // handler.
 type AuthHandlerBuilder struct {
 	sessions *SessionStore
+	tokenURL string
 }
 
 // AuthHandler is an authentication handler.
 type AuthHandler struct {
 	sessions *SessionStore
 	parser   *jwt.Parser
+	tokenURL string
 }
 
 // NewAuthHandler creates a builder that can then be used to configure and create authentication
@@ -58,6 +60,11 @@ func (b *AuthHandlerBuilder) Sessions(value *SessionStore) *AuthHandlerBuilder {
 	return b
 }
 
+func (b *AuthHandlerBuilder) TokenURL(url string) *AuthHandlerBuilder {
+	b.tokenURL = url
+	return b
+}
+
 // Build uses the configuration stored in the builder to create a new authentication handler.
 func (b *AuthHandlerBuilder) Build() (handler *AuthHandler, err error) {
 	// Check parameters:
@@ -70,6 +77,7 @@ func (b *AuthHandlerBuilder) Build() (handler *AuthHandler, err error) {
 	handler = new(AuthHandler)
 	handler.sessions = b.sessions
 	handler.parser = &jwt.Parser{}
+	handler.tokenURL = b.tokenURL
 
 	return
 }
@@ -124,6 +132,7 @@ func (h *AuthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	connection, err := client.NewConnectionBuilder().
 		Logger(logger).
 		User(user, password).
+		TokenURL(h.tokenURL).
 		Build()
 	if err != nil {
 		glog.Errorf("Can't create connection for user '%s': %v", user, err)
