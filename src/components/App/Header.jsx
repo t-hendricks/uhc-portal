@@ -22,9 +22,9 @@ import {
 } from 'patternfly-react';
 import { withRouter } from 'react-router-dom';
 
-import { noop } from '../common/helpers';
-import rhProductTitle from '../styles/images/logo.png';
-import config from '../config';
+import { noop } from '../../common/helpers';
+import rhProductTitle from '../../styles/images/logo.png';
+import config from '../../config';
 
 const Header = ({
   isLoggedIn, userProfile, logoutUser, history,

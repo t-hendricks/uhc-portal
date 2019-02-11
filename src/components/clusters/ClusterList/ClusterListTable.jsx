@@ -6,10 +6,10 @@ import {
 } from 'patternfly-react';
 import { Link } from 'react-router-dom';
 import { TableGrid } from 'patternfly-react-extensions';
-import { BadgedResource } from '../../BadgedResource';
+import { BadgedResource } from '../../common/BadgedResource';
 import {
   kindAbbrs, kindStrings, getResourceBadgeColor, resourceTypes,
-} from '../../BadgedResource/ResourceTypes';
+} from '../../common/BadgedResource/ResourceTypes';
 import { viewConstants } from '../../../redux/constants';
 import ViewPaginationRow from '../viewPaginationRow';
 import ClusterStateIcon from '../ClusterStateIcon';

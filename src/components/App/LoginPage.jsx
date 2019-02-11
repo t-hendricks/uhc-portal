@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Col,
 } from 'patternfly-react';
-import Header from './header';
+import Header from './Header';
 
 function LoginPage({ loginFunction }) {
   return (

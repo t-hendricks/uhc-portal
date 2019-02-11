@@ -1,4 +1,4 @@
-import helpers from '../../common/helpers';
+import helpers from '../../../common/helpers';
 import { modalConstants } from './ModalConstants';
 
 const initialState = {

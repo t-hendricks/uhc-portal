@@ -24,7 +24,7 @@ import { Link } from 'react-router-dom';
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
-import Timestamp from '../Timestamp';
+import Timestamp from '../common/Timestamp';
 import { getMetricsTimeDelta } from '../../common/helpers';
 
 import EditClusterDialog from '../cluster/forms/EditClusterDialog';
@@ -35,12 +35,12 @@ import ClusterCredentialsModal from './ClusterCredentialsModal';
 import { humanizeValueWithUnit } from '../../common/unitParser';
 import { fetchClusterDetails, fetchClusterCredentials, invalidateClusters } from '../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
-import { modalActions } from '../Modal/ModalActions';
+import { modalActions } from '../common/Modal/ModalActions';
 
 import RefreshBtn from './RefreshButton';
 import { metricsStatusMessages, maxMetricsTimeDelta } from './clusterDetailsConsts';
 
-import AlphaNotice from '../AlphaNotice';
+import AlphaNotice from '../common/AlphaNotice';
 
 class ClusterDetails extends Component {
   constructor(props) {
