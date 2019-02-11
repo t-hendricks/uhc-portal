@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Icon, MessageDialog,
+  Icon, MessageDialog, Grid, Col, Form, FormGroup, ControlLabel, FormControl, Button,
+  Tooltip, OverlayTrigger, Row,
 } from 'patternfly-react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -14,11 +15,11 @@ class ClusterCredentialsModal extends React.Component {
       userCopied: false,
       passwordCopied: false,
     };
-    this.close = this.close.bind(this);
+    this.closeDialog = this.closeDialog.bind(this);
   }
 
-  close() {
-    const { close } = this.props;
+  closeDialog() {
+    const { close } = this.props; // close comes from Redux
     this.setState({ userCopied: false, passwordCopied: false });
     close();
   }
@@ -35,60 +36,78 @@ class ClusterCredentialsModal extends React.Component {
     const primaryContent = (
       <React.Fragment>
         <p>
-          You can copy your administrator credentials here.
-          Note that these credentials are temporary and should be changed manually
-          from within the cluster. Once changed, the credentials available here will become invalid.
+          Use this username and password to access the OpenShift Console.
+          These credentials are temporary and should be changed manually,
+          once you log in to the OpenShift Console.
+          Once the password is changed, the credentials shown here will be invalid.
         </p>
       </React.Fragment>
     );
     const secondaryContent = (
-      <React.Fragment>
-        <CopyToClipboard
-          text={credentials.admin.user}
-          onCopy={() => {
-            this.setState({ userCopied: true });
-          }}
-        >
-          <span style={{ margin: '10px' }}>
-            <button
-              id="copyUsername"
-              type="button"
-              tabIndex="0"
-            >
-              <span className="fa fa-paste" aria-hidden="true" />
-              &nbsp;
-              Copy Username
-            </button>
-            { userCopied && ' Copied!' }
-          </span>
-        </CopyToClipboard>
-        <CopyToClipboard
-          text={credentials.admin.password}
-          onCopy={() => {
-            this.setState({ passwordCopied: true });
-          }}
-        >
-          <span style={{ margin: '10px' }}>
-            <button
-              id="copyPassword"
-              type="button"
-              tabIndex="0"
-            >
-              <span className="fa fa-paste" aria-hidden="true" />
-              &nbsp;
-              Copy Password
-            </button>
-            { passwordCopied && ' Copied!' }
-          </span>
-        </CopyToClipboard>
-
-      </React.Fragment>);
+      <Grid fluid>
+        <Row>
+          <Form horizontal inline>
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={3}>
+                Username
+              </Col>
+              <Col sm={9}>
+                <FormControl type="text" value={credentials.admin.user} />
+                <OverlayTrigger
+                  overlay={<Tooltip id="copypassword">{userCopied ? 'Copied' : 'Copy to clipboard'}</Tooltip>}
+                  placement="left"
+                  shouldUpdatePosition={userCopied}
+                >
+                  <CopyToClipboard
+                    text={credentials.admin.user}
+                    onCopy={() => {
+                      this.setState({ userCopied: true });
+                    }}
+                  >
+                    <Button className="clustercredentials-copy-button">
+                      <Icon type="fa" name="paste" size="xs" />
+                    </Button>
+                  </CopyToClipboard>
+                </OverlayTrigger>
+              </Col>
+            </FormGroup>
+          </Form>
+        </Row>
+        <Row className="clustercredentials-password-row">
+          <Form horizontal inline>
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={3}>
+                Password
+              </Col>
+              <Col sm={9}>
+                <FormControl type="text" value="****" />
+                <OverlayTrigger
+                  overlay={<Tooltip id="copypassword">{passwordCopied ? 'Copied' : 'Copy to clipboard'}</Tooltip>}
+                  placement="left"
+                  shouldUpdatePosition={passwordCopied}
+                >
+                  <CopyToClipboard
+                    text={credentials.admin.password}
+                    onCopy={() => {
+                      this.setState({ passwordCopied: true });
+                    }}
+                  >
+                    <Button className="clustercredentials-copy-button">
+                      <Icon type="fa" name="paste" size="xs" />
+                    </Button>
+                  </CopyToClipboard>
+                </OverlayTrigger>
+              </Col>
+            </FormGroup>
+          </Form>
+        </Row>
+      </Grid>);
 
     return isOpen && (
       <MessageDialog
         show={isOpen}
-        onHide={this.close}
-        primaryAction={this.close}
+        onHide={this.closeDialog}
+        primaryAction={this.closeDialog}
         title="Administrator Credentials"
         icon={icon}
         primaryContent={primaryContent}
