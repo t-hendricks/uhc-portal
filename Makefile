@@ -55,6 +55,7 @@ command_line_tools_url:=https://mirror.openshift.com/pub/openshift-v3/clients/4.
 .PHONY: \
 	app \
 	binary \
+	$(binaries) \
 	clean \
 	deploy \
 	fmt \
@@ -67,10 +68,12 @@ command_line_tools_url:=https://mirror.openshift.com/pub/openshift-v3/clients/4.
 	undeploy \
 	$(NULL)
 
-binary: vendor
-	for binary in $(binaries); do \
-		go build "./cmd/$${binary}" || exit 1; \
-	done
+binary: $(binaries)
+
+# These are declared phony so `make backend` or `make binary` always rebuilds them.
+# (there is no easy way to list all .go prerequisites)
+$(binaries): %: vendor
+	go build "./cmd/$*"
 
 lint: vendor node_modules
 	yarn lint
