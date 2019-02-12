@@ -105,6 +105,15 @@ proxies:
 That will forward requests starting with `/api/clusters_mgmt/` to your local
 clusters service, and the rest to the staging environment.
 
+=== Testing Without a Real Backend
+Sometimes the backend might be broken, but you still want to develop the UI. For this purpose we've created
+a basic mock server that sends mock data. It doesn't support all actions the real backend supports, but
+it should allow you to run the UI and test basic read-only functionality.
+
+To run it, run the `./backend` command as described above, and then in another terminal tab run `python mockdata/mockserver.py`.
+
+Then, run `yarn startmock` instead of `yarn start`, and you'll get a working UI showing mock data.
+
 == Deploying
 
 In order to deploy the application to an _OpenShift_ cluster first you need to
