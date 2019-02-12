@@ -6,8 +6,8 @@ import {
 } from 'patternfly-react';
 
 import { clusterActions } from '../ClusterActions';
-import { closeModal } from '../../Modal/ModalActions';
-import shouldShowModal from '../../Modal/ModalSelectors';
+import { closeModal } from '../../common/Modal/ModalActions';
+import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { noop } from '../../../common/helpers';
 
 class DeleteClusterDialog extends React.Component {

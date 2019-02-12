@@ -4,8 +4,8 @@ import result from 'lodash/result';
 
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import CreateClusterModal from './CreateClusterModal';
-import { closeModal } from '../../Modal/ModalActions';
-import shouldShowModal from '../../Modal/ModalSelectors';
+import { closeModal } from '../../common/Modal/ModalActions';
+import shouldShowModal from '../../common/Modal/ModalSelectors';
 
 
 const reduxFormConfig = {

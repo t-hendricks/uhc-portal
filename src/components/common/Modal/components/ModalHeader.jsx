@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal as PfModal, Button, Icon } from 'patternfly-react';
-import { noop } from '../../../common/helpers';
+import { noop } from '../../../../common/helpers';
 
 function ModalHeader(props) {
   const { title, onClose } = props;

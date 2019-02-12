@@ -29,7 +29,7 @@ import Keycloak from 'keycloak-js';
 import { userInfoResponse } from './redux/actions/userActions';
 import { getCloudProviders } from './redux/actions/cloudProviderActions';
 import config from './config';
-import App from './components/app';
+import App from './components/App/App';
 import { store, reloadReducers } from './redux/store';
 
 import './styles/main.scss';

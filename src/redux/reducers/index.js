@@ -6,7 +6,7 @@ import { viewOptionsReducer } from './viewOptionsReducer';
 import userReducer from './userReducer';
 import tollboothReducer from './tollbooth';
 import { cloudProvidersReducer } from './cloudProvidersReducer';
-import modalReducer from '../../components/Modal/ModalReducer';
+import modalReducer from '../../components/common/Modal/ModalReducer';
 
 const reducers = {
   clusters: clustersReducer,

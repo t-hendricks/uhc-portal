@@ -22,15 +22,15 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader';
 
-import routes from '../routes';
+import routes from '../../routes';
 
-import Header from './header';
-import Footer from './footer';
+import Header from './Header';
+import Footer from './Footer';
 import LoginPage from './LoginPage';
 import ErrorBoundary from './ErrorBoundary';
-import ClustersList from './clusters/ClusterList';
-import ClusterDetails from './clusters/ClusterDetails';
-import InstallCluster from './clusters/InstallCluster';
+import ClustersList from '../clusters/ClusterList';
+import ClusterDetails from '../clusters/ClusterDetails';
+import InstallCluster from '../clusters/InstallCluster';
 
 class App extends React.Component {
   constructor() {

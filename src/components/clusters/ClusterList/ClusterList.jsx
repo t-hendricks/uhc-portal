@@ -41,9 +41,9 @@ import { viewConstants } from '../../../redux/constants';
 import { clustersActions } from '../../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 import { viewActions } from '../../../redux/actions/viewOptionsActions';
-import { modalActions } from '../../Modal/ModalActions';
+import { modalActions } from '../../common/Modal/ModalActions';
 
-import AlphaNotice from '../../AlphaNotice';
+import AlphaNotice from '../../common/AlphaNotice';
 
 class ClusterList extends Component {
   constructor() {

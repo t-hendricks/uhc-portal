@@ -25,7 +25,7 @@ import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
 import CloudRegionComboBox from '../CloudRegionComboBox';
 import validators from '../../../common/validators';
 import ReduxCheckbox from '../ReduxCheckbox';
-import ModalHeader from '../../Modal/components/ModalHeader';
+import ModalHeader from '../../common/Modal/components/ModalHeader';
 import constants, {
   AWSCredentialsHint, ConfigurationHint, RegionsHint, NetworkConfugurationHint,
 } from './CreateClusterModalHelper';
