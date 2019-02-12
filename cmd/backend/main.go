@@ -30,6 +30,12 @@ import (
 	"github.com/spf13/pflag"
 )
 
+// #nosec G101
+const authPath = "/auth/realms/rhd/protocol/openid-connect/auth"
+
+// #nosec G101
+const tokenPath = "/auth/realms/rhd/protocol/openid-connect/token"
+
 var args struct {
 	configFiles []string
 }
@@ -117,21 +123,25 @@ func run(cmd *cobra.Command, argv []string) {
 			Sessions(store).
 			Build()
 		if err != nil {
-			glog.Errorf("Can't create API handler: %v", err)
+			glog.Errorf("Can't create proxy handler: %v", err)
 			os.Exit(1)
 		}
 		mainMux.Handle(proxyCfg.Prefix(), proxyHandler)
 	}
 
 	// Create the authentication handlers:
+	tokenURL := cfg.Keycloak().URL()
+	glog.Infof("Creating auth handler at '%s' that calls '%s'", authPath, tokenURL)
 	var authHandler http.Handler
 	authHandler, err = NewAuthHandler().
 		Sessions(store).
+		TokenURL(cfg.Keycloak().URL()).
 		Build()
 	if err != nil {
 		glog.Errorf("Can't create authentication handler: %v", err)
 		os.Exit(1)
 	}
+	glog.Infof("Creating token handler at '%s'", tokenPath)
 	var tokenHandler http.Handler
 	tokenHandler, err = NewTokenHandler().
 		Sessions(store).
@@ -163,8 +173,8 @@ func run(cmd *cobra.Command, argv []string) {
 	tokenHandler = corsMiddleware(tokenHandler)
 
 	// Add the authentication handlers to the multiplexer:
-	mainMux.Handle("/auth/realms/rhd/protocol/openid-connect/auth", authHandler)
-	mainMux.Handle("/auth/realms/rhd/protocol/openid-connect/token", tokenHandler)
+	mainMux.Handle(authPath, authHandler)
+	mainMux.Handle(tokenPath, tokenHandler)
 
 	// Enable access logs:
 	logger := handlers.LoggingHandler(os.Stdout, mainMux)

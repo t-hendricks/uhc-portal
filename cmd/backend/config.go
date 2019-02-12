@@ -38,6 +38,7 @@ type ConfigBuilder struct {
 // Config is a read only view of the configuration of the server.
 type Config struct {
 	listener *Listener
+	keycloak *Keycloak
 	proxies  []*Proxy
 }
 
@@ -63,6 +64,7 @@ func (b *ConfigBuilder) Build() (config *Config, err error) {
 	// Create the object:
 	config = &Config{
 		listener: &Listener{},
+		keycloak: &Keycloak{},
 		proxies:  []*Proxy{},
 	}
 
@@ -86,14 +88,20 @@ func (c *Config) Listener() *Listener {
 	return c.listener
 }
 
-// Procies returns the list of proxies.
+// Proxies returns the list of proxies.
 func (c *Config) Proxies() []*Proxy {
 	return c.proxies
+}
+
+// Keycloak returns the keycloak configuration.
+func (c *Config) Keycloak() *Keycloak {
+	return c.keycloak
 }
 
 // configData is the struct used internally to unmarshall the configuration data.
 type configData struct {
 	Listener *listenerData `json:"listener,omitempty"`
+	Keycloak *keycloakData `json:"keycloak,omitempty"`
 	Proxies  []*proxyData  `json:"proxies,omitempty"`
 }
 
@@ -190,6 +198,12 @@ func (c *Config) mergeText(text []byte) error {
 			return err
 		}
 	}
+	if data.Keycloak != nil {
+		err = c.keycloak.merge(data.Keycloak)
+		if err != nil {
+			return err
+		}
+	}
 	for _, item := range data.Proxies {
 		err = c.mergeProxies(item)
 		if err != nil {
@@ -218,6 +232,28 @@ func (c *Config) mergeProxies(data *proxyData) error {
 		return err
 	}
 
+	return nil
+}
+
+// Keycloak is a read only view of the keycloak configuration.
+type Keycloak struct {
+	url string
+}
+
+// URL returns the keycloak token URL the client should use to obtain tokens to.
+func (k *Keycloak) URL() string {
+	return k.url
+}
+
+// keycloakData is the struct used internally to unmarshal the keycloak configuration.
+type keycloakData struct {
+	URL *string `json:"url,omitempty"`
+}
+
+func (k *Keycloak) merge(data *keycloakData) error {
+	if data.URL != nil {
+		k.url = *data.URL
+	}
 	return nil
 }
 
@@ -282,6 +318,9 @@ func (p *Proxy) merge(data *proxyData) error {
 var defaultConfig = []byte(`
 listener:
   address: localhost:8002
+
+keycloak:
+  url: https://developers.redhat.com/auth/realms/rhd/protocol/openid-connect/token
 
 proxies:
 - prefix: /api/
