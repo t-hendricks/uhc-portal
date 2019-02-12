@@ -16,7 +16,7 @@ import result from 'lodash/result';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, MenuItem, Modal,
+  Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, MenuItem, Modal, ButtonGroup,
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
@@ -396,13 +396,13 @@ class ClusterDetails extends Component {
                   {clusterName}
                 </h1>
               </Col>
-              <Col sm={2} md={2} lg={1} smOffset={3}>
-                {credentialsButton}
+              <Col md={4} lg={2} lgOffset={3} mdOffset={1}>
+                <ButtonGroup>
+                  {credentialsButton}
+                  {consoleBtn}
+                </ButtonGroup>
               </Col>
-              <Col sm={1}>
-                {consoleBtn}
-              </Col>
-              <Col sm={1}>
+              <Col sm={2}>
                 {actionsBtn}
               </Col>
             </Row>
