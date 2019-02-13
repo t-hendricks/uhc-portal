@@ -10,8 +10,6 @@ import { BadgedResource } from '../../common/BadgedResource';
 import {
   kindAbbrs, kindStrings, getResourceBadgeColor, resourceTypes,
 } from '../../common/BadgedResource/ResourceTypes';
-import { viewConstants } from '../../../redux/constants';
-import ViewPaginationRow from '../viewPaginationRow';
 import ClusterStateIcon from '../ClusterStateIcon';
 import NumberWithUnit from '../NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
@@ -248,13 +246,6 @@ function ClusterListTable(props) {
           {clusters.map((cluster, index) => clusterRow(cluster, index))}
         </TableGrid.Body>
       </TableGrid>
-      <ViewPaginationRow
-        viewType={viewConstants.CLUSTERS_VIEW}
-        currentPage={viewOptions.currentPage}
-        pageSize={viewOptions.pageSize}
-        totalCount={viewOptions.totalCount}
-        totalPages={viewOptions.totalPages}
-      />
     </React.Fragment>);
 }
 

@@ -31,7 +31,7 @@ limitations under the License.
 }
 
 .cluster-list {
-  margin: 25px;
+  margin: 0px 25px 0 25px;
 }
 .cluster-list .table-grid-pf-column-header {
   color: #838383;
@@ -48,6 +48,12 @@ limitations under the License.
 }
 .cluster-list-row:hover{
   background-color: #edf8ff;
+}
+
+// override pagination patternfly
+
+.content-view-pf-pagination{
+  border: none;
 }
 
 .btn-text-link {

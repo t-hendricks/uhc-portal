@@ -9,7 +9,7 @@ import * as actions from '../../redux/actions/viewOptionsActions';
 const ViewPaginationRow = ({
   currentPage, pageSize, totalCount, totalPages, onFirstPage,
   onLastPage, onPreviousPage, onNextPage, onPageInput, onPerPageSelect,
-}) => (
+}) => totalCount > pageSize && (
   <PaginationRow
     viewType="list"
     pagination={{
