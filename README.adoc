@@ -3,6 +3,21 @@
 This repository contains the UI components for the OpenShift Unified Hybrid
 Cloud site.
 
+Building the Go parts requires checking out this repo in the correct place under GOPATH:
+
+....
+git clone https://gitlab.cee.redhat.com/service/uhc-portal $GOPATH/src/gitlab.cee.redhat.com/service/uhc-portal
+# OR (clones into same place)
+go get -d gitlab.cee.redhat.com/service/uhc-portal/...
+....
+
+If you don't have GOPATH set, you can pick any directory e.g.:
+
+....
+mkdir $HOME/go
+export GOPATH=$HOME/go
+....
+
 == Style
 
 To promote consistency in the code base and prevent bike-shedding over style
@@ -39,11 +54,13 @@ $ yarn install
 $ yarn build
 ....
 
-To build the backend proxy server run the `binary` target of the _Makefile_:
+To build the `backend` proxy server run the `binary` target of the _Makefile_:
 
 ....
 $ make binary
 ....
+
+Reminder: for this and most other Makefile targets, you need this directory in the right place under GOPATH.
 
 == Testing
 
