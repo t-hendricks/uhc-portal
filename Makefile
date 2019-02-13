@@ -115,7 +115,7 @@ node_modules:
 app: node_modules
 	yarn build --mode=production
 
-image:
+image: portal app
 	docker build -t $(image):$(image_tag) .
 
 tar:
