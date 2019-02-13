@@ -36,6 +36,8 @@ import EditClusterDialog from '../../cluster/forms/EditClusterDialog';
 import EditDisplayNameDialog from '../../cluster/forms/EditDisplayNameDialog';
 import DeleteClusterDialog from '../../cluster/forms/DeleteClusterDialog';
 
+import ViewPaginationRow from '../viewPaginationRow';
+
 import helpers from '../../../common/helpers';
 import { viewConstants } from '../../../redux/constants';
 import { clustersActions } from '../../../redux/actions/clustersActions';
@@ -252,6 +254,13 @@ class ClusterList extends Component {
           />
           <CreateClusterModal />
         </div>
+        <ViewPaginationRow
+          viewType={viewConstants.CLUSTERS_VIEW}
+          currentPage={viewOptions.currentPage}
+          pageSize={viewOptions.pageSize}
+          totalCount={viewOptions.totalCount}
+          totalPages={viewOptions.totalPages}
+        />
       </div>
     );
   }
