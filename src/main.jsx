@@ -19,6 +19,7 @@ import 'core-js/modules/es6.string.starts-with';
 import 'core-js/modules/es6.string.ends-with';
 import 'core-js/modules/es6.number.is-nan';
 import 'core-js/modules/es7.object.values';
+import detectPassiveEvents from 'detect-passive-events';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -61,6 +62,15 @@ if (module.hot) {
   module.hot.accept();
 }
 
+function addPassiveListener(eventName, callback) {
+  if (detectPassiveEvents.hasSupport) {
+    // passive tells browser it won't preventDefault(), allowing scroll optimizations
+    document.addEventListener(eventName, callback, { capture: false, passive: true });
+  } else {
+    document.addEventListener(eventName, callback, false);
+  }
+}
+
 function initKeycloak() {
   keycloak = Keycloak(config.configData.keycloak);
   keycloak.init({ onLoad: 'login-required', checkLoginIframe: false }).success((authenticated) => {
@@ -78,11 +88,11 @@ function initKeycloak() {
       };
       resetCounter();
 
-      document.onclick = resetCounter;
-      document.onkeypress = resetCounter;
-      document.ontouchstart = resetCounter;
-      document.ontouchmove = resetCounter;
-      document.onwheel = resetCounter;
+      addPassiveListener('click', resetCounter);
+      addPassiveListener('keypress', resetCounter);
+      addPassiveListener('touchstart', resetCounter);
+      addPassiveListener('touchmove', resetCounter);
+      addPassiveListener('wheel', resetCounter);
 
       setInterval(() => {
         const lastActiveTimestamp = parseInt(localStorage.getItem('lastActiveTimestamp') || '0', 10);
