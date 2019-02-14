@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
+import { Card, CardBody } from 'patternfly-react';
 import { hot } from 'react-hot-loader';
 import { Page, PageSection, PageSectionVariants } from '@patternfly/react-core';
 
@@ -85,11 +86,15 @@ class App extends React.Component {
     if (APP_EMBEDED) {
       return (
         <section className="pf-c-page__main-section">
-          <ErrorBoundary>
-            <ConnectedRouter history={history}>
-              {this.renderRoutes()}
-            </ConnectedRouter>
-          </ErrorBoundary>
+          <Card>
+            <CardBody>
+              <ErrorBoundary>
+                <ConnectedRouter history={history}>
+                  {this.renderRoutes()}
+                </ConnectedRouter>
+              </ErrorBoundary>
+            </CardBody>
+          </Card>
         </section>
       );
     }
