@@ -82,6 +82,18 @@ class App extends React.Component {
       return <LoginPage loginFunction={loginFunction} />;
     }
 
+    if (APP_EMBEDED) {
+      return (
+        <section className="pf-c-page__main-section">
+          <ErrorBoundary>
+            <ConnectedRouter history={history}>
+              {this.renderRoutes()}
+            </ConnectedRouter>
+          </ErrorBoundary>
+        </section>
+      );
+    }
+
     return (
       <Page header={<Header isLoggedIn userProfile={userProfile} logoutUser={logoutFunction} />}>
         <PageSection variant={PageSectionVariants.light}>

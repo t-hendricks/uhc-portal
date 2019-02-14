@@ -22,6 +22,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ReplaceWebpackPlugin = require('html-replace-webpack-plugin');
 
 const modDir = path.resolve(__dirname, 'node_modules');
 const srcDir = path.resolve(__dirname, 'src');
@@ -31,6 +32,10 @@ module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
   let copyConfig = null;
   let bundleAnalyzer = null;
+  const embededApp = process.env.EMBEDED === 'true';
+  const insightsDeployment = process.env.NODE_ENV === 'production' ?
+    'insightsbeta' :
+    'insights';
   if (devMode) {
     copyConfig = new CopyWebpackPlugin([{ from: 'src/config', to: `${outDir}/config` }]);
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: false });
@@ -44,7 +49,7 @@ module.exports = (env, argv) => {
     output: {
       path: outDir,
       filename: 'bundle.js',
-      publicPath: '/',
+      publicPath: embededApp ? `/${insightsDeployment}/platform/uhc` : '/',
     },
     devtool: 'source-map',
 
@@ -62,11 +67,24 @@ module.exports = (env, argv) => {
       new webpack.DefinePlugin({
         'process.env.UHC_DISABLE_KEYCLOAK': JSON.stringify(process.env.UHC_DISABLE_KEYCLOAK),
         'process.env.UHC_GATEWAY_DOMAIN': JSON.stringify(process.env.UHC_GATEWAY_DOMAIN),
+        'APP_EMBEDED': embededApp
       }),
+      new ReplaceWebpackPlugin([
+        ...embededApp ? [{
+          pattern: '<div id="root"></div>',
+          replacement: `<esi:include src="/${insightsDeployment}/static/chrome/snippets/body.html" />`
+        }, {
+          pattern: '@@head-snippet@@',
+          replacement: `<esi:include src="/${insightsDeployment}/static/chrome/snippets/head.html" />`
+        }]: [{
+          pattern: '@@head-snippet@@',
+          replacement: ''
+        }]
+      ]),
       new CopyWebpackPlugin([
         { from: 'public', to: outDir, toType: 'dir' },
       ]),
-      bundleAnalyzer,
+      !embededApp && bundleAnalyzer,
       copyConfig,
     ].filter(Boolean),
 
@@ -130,7 +148,7 @@ module.exports = (env, argv) => {
     devServer: {
       historyApiFallback: true,
       contentBase: outDir,
-      publicPath: '/',
+      publicPath: embededApp ? `/${insightsDeployment}/platform/uhc` : '/',
       hot: true,
       inline: true,
       port: 8001,

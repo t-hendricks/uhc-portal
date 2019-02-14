@@ -6237,6 +6237,11 @@ html-minifier@^3.2.3:
     relateurl "0.2.x"
     uglify-js "3.4.x"
 
+html-replace-webpack-plugin@^2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/html-replace-webpack-plugin/-/html-replace-webpack-plugin-2.5.5.tgz#4cdb2834578fb44b53943adf292fccf3d759557d"
+  integrity sha512-yEDPhbtG6LPlh+RFZsKZVKap6XJ/x7D/cg6BZuS3Bj9M2k18fK26x6QQi1nqH/UP6kkRh6PMZqs53beh02PZIA==
+
 html-tokenize@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/html-tokenize/-/html-tokenize-2.0.0.tgz#8b3a9a5deb475cae6a6f9671600d2c20ab298251"
