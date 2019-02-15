@@ -31,7 +31,7 @@ const AlphaNotice = () => (
     <p>
       Send all feedback to&nbsp;
       <a href="mailto:***REMOVED***">***REMOVED***</a>
-      &nbsp;.
+      .
     </p>
   </Alert>
 );
