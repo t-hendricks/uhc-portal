@@ -6,10 +6,7 @@ import {
 } from 'patternfly-react';
 import { Link } from 'react-router-dom';
 import { TableGrid } from 'patternfly-react-extensions';
-import { BadgedResource } from '../../common/BadgedResource';
-import {
-  kindAbbrs, kindStrings, getResourceBadgeColor, resourceTypes,
-} from '../../common/BadgedResource/ResourceTypes';
+import ClusterBadge from '../ClusterBadge';
 import ClusterStateIcon from '../ClusterStateIcon';
 import NumberWithUnit from '../NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
@@ -139,12 +136,7 @@ function ClusterListTable(props) {
     return (
       <TableGrid.Row key={index} className="cluster-list-row">
         <Grid.Col {...nameColSizes}>
-          <BadgedResource
-            resourceName={clusterName}
-            kindStr={kindStrings.cluster}
-            kindAbbr={kindAbbrs.cluster}
-            badgeColor={getResourceBadgeColor(resourceTypes.CLUSTER)}
-          />
+          <ClusterBadge clusterName={clusterName} />
         </Grid.Col>
         <Grid.Col {...statusColSizes}>
           {clusterStatus}

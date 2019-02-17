@@ -17,10 +17,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, MenuItem, Modal, ButtonGroup,
+  Breadcrumb,
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import LoadingModal from './LoadingModal';
@@ -39,6 +41,7 @@ import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
 import { modalActions } from '../common/Modal/ModalActions';
 
 import RefreshBtn from './RefreshButton';
+import ClusterBadge from './ClusterBadge';
 import { metricsStatusMessages, maxMetricsTimeDelta } from './clusterDetailsConsts';
 
 import AlphaNotice from '../common/AlphaNotice';
@@ -319,14 +322,6 @@ class ClusterDetails extends Component {
         </Button>
       );
 
-    const backBtn = (
-      <Link to="/clusters">
-        <Button bsStyle="default">
-          Back
-        </Button>
-      </Link>
-    );
-
     const editClusterItem = () => {
       if (!cluster.managed) {
         return (
@@ -389,23 +384,32 @@ class ClusterDetails extends Component {
         </React.Fragment>
       );
     }
-
     return (
       <div>
         <AlphaNotice />
         <div>
-          <Grid fluid style={{ marginTop: '20px' }}>
+          <Grid fluid className="clusterdetails-topbar">
             <Row>
-              <Col sm={2}>
-                {backBtn}
-                <RefreshBtn id="refresh" refreshFunc={() => fetchDetails(cluster.id)} />
+              <Col sm={3}>
+                <Breadcrumb>
+                  <LinkContainer to="/clusters">
+                    <Breadcrumb.Item href="#">
+                        Clusters
+                    </Breadcrumb.Item>
+                  </LinkContainer>
+                  <Breadcrumb.Item active>
+                    {clusterName}
+                  </Breadcrumb.Item>
+                </Breadcrumb>
               </Col>
-              <Col sm={2} smOffset={1}>
+            </Row>
+            <Row>
+              <Col sm={3}>
                 <h1 style={{ marginTop: 0 }}>
-                  {clusterName}
+                  <ClusterBadge clusterName={clusterName} />
                 </h1>
               </Col>
-              <Col md={4} lg={2} lgOffset={3} mdOffset={1}>
+              <Col md={4} lg={2} lgOffset={4} mdOffset={1}>
                 <ButtonGroup>
                   {credentialsButton}
                   {consoleBtn}
@@ -413,6 +417,7 @@ class ClusterDetails extends Component {
               </Col>
               <Col sm={2}>
                 {actionsBtn}
+                <RefreshBtn id="refresh" refreshFunc={() => fetchDetails(cluster.id)} />
               </Col>
             </Row>
           </Grid>
