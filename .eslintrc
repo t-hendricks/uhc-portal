@@ -32,6 +32,6 @@
   "parser": "babel-eslint",
   "globals": {
     "insights": true,
-    "APP_EMBEDED": true
+    "APP_EMBEDDED": true
   }
 }

@@ -83,7 +83,7 @@ class App extends React.Component {
       return <LoginPage loginFunction={loginFunction} />;
     }
 
-    if (APP_EMBEDED) {
+    if (APP_EMBEDDED) {
       return (
         <section className="pf-c-page__main-section">
           <Card>

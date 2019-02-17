@@ -41,7 +41,7 @@ const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <BrowserRouter basename={APP_EMBEDED ? '/insights/platform/uhc' : ''}>
+        <BrowserRouter basename={APP_EMBEDDED ? '/insights/platform/uhc' : ''}>
           <App
             loginFunction={keycloak.login}
             logoutFunction={keycloak.logout}
@@ -115,7 +115,7 @@ function initKeycloak() {
   });
 }
 
-if (APP_EMBEDED) {
+if (APP_EMBEDDED) {
   document.querySelector('.layout-pf.layout-pf-fixed').classList.remove('layout-pf', 'layout-pf-fixed');
   insights.chrome.init();
   insights.chrome.auth.getUser().then((data) => {

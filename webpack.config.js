@@ -32,8 +32,8 @@ module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
   let copyConfig = null;
   let bundleAnalyzer = null;
-  const embededApp = process.env.EMBEDED === 'true';
-  const insightsDeployment = process.env.NODE_ENV === 'production' ?
+  const embeddedApp = process.env.EMBEDDED === 'true';
+  const insightsDeployment = devMode ?
     'insightsbeta' :
     'insights';
   if (devMode) {
@@ -49,7 +49,7 @@ module.exports = (env, argv) => {
     output: {
       path: outDir,
       filename: 'bundle.js',
-      publicPath: embededApp ? `/${insightsDeployment}/platform/uhc` : '/',
+     publicPath: embeddedApp ? `/${insightsDeployment}/platform/uhc` : '/',
     },
     devtool: 'source-map',
 
@@ -67,10 +67,10 @@ module.exports = (env, argv) => {
       new webpack.DefinePlugin({
         'process.env.UHC_DISABLE_KEYCLOAK': JSON.stringify(process.env.UHC_DISABLE_KEYCLOAK),
         'process.env.UHC_GATEWAY_DOMAIN': JSON.stringify(process.env.UHC_GATEWAY_DOMAIN),
-        'APP_EMBEDED': embededApp
+        'APP_EMBEDDED': embeddedApp
       }),
       new ReplaceWebpackPlugin([
-        ...embededApp ? [{
+        ...embeddedApp ? [{
           pattern: '<div id="root"></div>',
           replacement: `<esi:include src="/${insightsDeployment}/static/chrome/snippets/body.html" />`
         }, {
@@ -84,7 +84,7 @@ module.exports = (env, argv) => {
       new CopyWebpackPlugin([
         { from: 'public', to: outDir, toType: 'dir' },
       ]),
-      !embededApp && bundleAnalyzer,
+      !embeddedApp && bundleAnalyzer,
       copyConfig,
     ].filter(Boolean),
 
@@ -148,7 +148,7 @@ module.exports = (env, argv) => {
     devServer: {
       historyApiFallback: true,
       contentBase: outDir,
-      publicPath: embededApp ? `/${insightsDeployment}/platform/uhc` : '/',
+      publicPath: embeddedApp ? `/${insightsDeployment}/platform/uhc` : '/',
       hot: true,
       inline: true,
       port: 8001,

@@ -8,7 +8,7 @@ import { Instructions } from './install';
 class InstallCluster extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    if (!APP_EMBEDED) {
+    if (!APP_EMBEDDED) {
       dispatch(tollboothActions.createAuthToken());
     }
   }
