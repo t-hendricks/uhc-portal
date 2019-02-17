@@ -20,7 +20,8 @@ import {
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import LoadingModal from './LoadingModal';
 import ClusterStateIcon from './ClusterStateIcon';
@@ -99,7 +100,15 @@ class ClusterDetails extends Component {
 
   render() {
     const {
-      cluster, error, errorMessage, pending, cloudProviders, fetchDetails, openModal, credentials,
+      cluster,
+      error,
+      errorMessage,
+      pending,
+      cloudProviders,
+      fetchDetails,
+      openModal,
+      credentials,
+      history,
     } = this.props;
 
     const pendingMessage = () => {
@@ -541,7 +550,7 @@ class ClusterDetails extends Component {
           <DeleteClusterDialog onClose={(shouldRefresh) => {
             if (shouldRefresh) {
               invalidateClusters();
-              fetchDetails(cluster.id);
+              history.push('/clusters');
             }
           }}
           />
@@ -563,6 +572,7 @@ ClusterDetails.propTypes = {
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   pending: PropTypes.bool,
+  history: PropTypes.object,
 };
 
 ClusterDetails.defaultProps = {
@@ -589,4 +599,4 @@ const mapDispatchToProps = {
   openModal: modalActions.openModal,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ClusterDetails));
