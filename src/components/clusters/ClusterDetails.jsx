@@ -115,7 +115,7 @@ class ClusterDetails extends Component {
     } = this.props;
 
     const pendingMessage = () => {
-      if (pending) {
+      if (pending || credentials.pending) {
         return (
           <LoadingModal>
             Loading cluster details...
@@ -231,7 +231,7 @@ class ClusterDetails extends Component {
       return errorState();
     }
 
-    if (pending) {
+    if (pending || credentials.pending) {
       return pendingMessage();
     }
 
