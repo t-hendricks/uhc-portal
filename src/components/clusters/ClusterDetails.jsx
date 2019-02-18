@@ -311,7 +311,7 @@ class ClusterDetails extends Component {
     const clusterName = cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
 
     const consoleBtn = consoleURL && cluster.state !== 'uninstalling' ? (
-      <a href={consoleURL} target="_blank" rel="noreferrer">
+      <a href={consoleURL} target="_blank" rel="noreferrer" className="pull-left">
         <Button bsStyle="primary">
           Launch Console
         </Button>
@@ -414,15 +414,13 @@ class ClusterDetails extends Component {
                   <ClusterBadge clusterName={clusterName} />
                 </h1>
               </Col>
-              <Col md={4} lg={2} lgOffset={4} mdOffset={1}>
-                <ButtonGroup>
-                  {credentialsButton}
+              <Col md={9} lg={5} lgOffset={4}>
+                <ButtonGroup id="cl-details-btns">
                   {consoleBtn}
+                  {credentialsButton}
+                  {actionsBtn}
+                  <RefreshBtn id="refresh" refreshFunc={() => fetchDetails(cluster.id)} />
                 </ButtonGroup>
-              </Col>
-              <Col sm={2}>
-                {actionsBtn}
-                <RefreshBtn id="refresh" refreshFunc={() => fetchDetails(cluster.id)} />
               </Col>
             </Row>
           </Grid>

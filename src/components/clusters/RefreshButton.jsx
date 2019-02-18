@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
+
 import {
   OverlayTrigger, Tooltip, Button, Icon,
 } from 'patternfly-react';
@@ -13,7 +13,7 @@ function RefreshBtn(props) {
       overlay={<Tooltip id={id}>Refresh</Tooltip>}
       placement="bottom"
     >
-      <Button bsStyle="default" className={cx('refresh-btn', classOptions)} onClick={refreshFunc}>
+      <Button bsStyle="default" className={classOptions} onClick={refreshFunc}>
         <Icon name="refresh" type="fa" />
       </Button>
     </OverlayTrigger>

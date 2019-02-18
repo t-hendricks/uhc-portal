@@ -141,8 +141,12 @@ limitations under the License.
   }
 }
 
-.refresh-btn {
-  margin-left: 10px;
+#cl-details-btns{
+  float: right;
+}
+
+#cl-details-btns > * {
+  margin-left: 10px !important;
 }
 
 .displayNameForm {
