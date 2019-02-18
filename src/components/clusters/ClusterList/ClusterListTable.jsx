@@ -43,40 +43,42 @@ function ClusterListTable(props) {
     // The trenary for consoleURL is needed because the API does not guarantee fields being present.
     // We'll have a lot of these all over the place as we grow :(
     const consoleURL = cluster.console ? cluster.console.url : false;
-    const consoleMenuItem = consoleURL ? (
+    const consoleMenuItem = consoleURL && cluster.state !== 'uninstalling' ? (
       <MenuItem href={consoleURL} target="_blank" rel="noreferrer">
           Launch Admin Console
       </MenuItem>)
       : (
-        <MenuItem disabled title="Admin console is not yet available for this cluster">
+        <MenuItem disabled title={cluster.state === 'uninstalling' ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
           Launch Admin Console
         </MenuItem>
       );
 
+    const uninstallingProps = cluster.state === 'uninstalling' ? { disabled: true, title: 'The cluster is being uninstalled' } : {};
+
     const editClusterItem = () => {
       if (!cluster.managed) {
         return (
-          <MenuItem disabled title="Self managed cluster cannot be edited">
+          <MenuItem disabled title={cluster.state === 'uninstalling' ? 'The cluster is being uninstalled' : 'Self managed cluster cannot be edited'}>
             Edit Cluster
           </MenuItem>
         );
       }
       if (cluster.state !== 'ready') {
         return (
-          <MenuItem disabled title="This cluster is not ready">
+          <MenuItem disabled title={cluster.state === 'uninstalling' ? 'The cluster is being uninstalled' : 'This cluster is not ready'}>
             Edit Cluster
           </MenuItem>
         );
       }
       return (
-        <MenuItem onClick={() => openEditClusterDialog(cluster)}>
+        <MenuItem onClick={() => openEditClusterDialog(cluster)} {...uninstallingProps}>
           Edit Cluster
         </MenuItem>
       );
     };
 
     const editDisplayNameItem = (
-      <MenuItem onClick={() => openEditDisplayNameDialog(cluster)}>
+      <MenuItem onClick={() => openEditDisplayNameDialog(cluster)} {...uninstallingProps}>
         Edit Display Name
       </MenuItem>);
 

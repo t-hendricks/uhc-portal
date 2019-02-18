@@ -310,42 +310,47 @@ class ClusterDetails extends Component {
     const consoleURL = cluster.console ? cluster.console.url : false;
     const clusterName = cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
 
-    const consoleBtn = consoleURL ? (
+    const consoleBtn = consoleURL && cluster.state !== 'uninstalling' ? (
       <a href={consoleURL} target="_blank" rel="noreferrer">
         <Button bsStyle="primary">
           Launch Console
         </Button>
       </a>)
       : (
-        <Button bsStyle="primary" disabled title="Admin console is not yet available for this cluster">
+        <Button bsStyle="primary" disabled title={cluster.state === 'uninstalling' ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
           Launch Console
         </Button>
       );
 
+    const uninstallingProps = cluster.state === 'uninstalling' ? { disabled: true, title: 'The cluster is being uninstalled' } : {};
+
     const editClusterItem = () => {
       if (!cluster.managed) {
         return (
-          <MenuItem disabled title="Self managed cluster cannot be edited">
+          <MenuItem disabled title={cluster.state === 'uninstalling' ? 'The cluster is being uninstalled' : 'Self managed cluster cannot be edited'}>
             Edit Cluster
           </MenuItem>
         );
       }
       if (cluster.state !== 'ready') {
         return (
-          <MenuItem disabled title="This cluster is not ready">
+          <MenuItem disabled title={cluster.state === 'uninstalling' ? 'The cluster is being uninstalled' : 'This cluster is not ready'}>
             Edit Cluster
           </MenuItem>
         );
       }
       return (
-        <MenuItem onClick={() => this.openEditClusterDialog(cluster)}>
+        <MenuItem onClick={() => this.openEditClusterDialog(cluster)} {...uninstallingProps}>
           Edit Cluster
         </MenuItem>
       );
     };
 
     const editDisplayNameItem = (
-      <MenuItem onClick={() => this.openEditDisplayNameDialog(cluster)}>
+      <MenuItem
+        onClick={() => this.openEditDisplayNameDialog(cluster)}
+        {...uninstallingProps}
+      >
         Edit Display Name
       </MenuItem>);
 
@@ -360,7 +365,7 @@ class ClusterDetails extends Component {
       <MenuItem onClick={() => openModal('delete-cluster', deleteModalData)}>
     Delete Cluster
       </MenuItem>)
-      : (<MenuItem disabled title="The cluster is being deleted">Delete Cluster</MenuItem>);
+      : (<MenuItem disabled title="The cluster is being uninstalled">Delete Cluster</MenuItem>);
 
 
     const actionsBtn = (
