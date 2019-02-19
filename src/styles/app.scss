@@ -31,7 +31,7 @@ limitations under the License.
 }
 
 .cluster-list {
-  margin: 0px 25px 0 25px;
+  margin: 0px 30px 0 30px;
 }
 .cluster-list .table-grid-pf-column-header {
   color: #838383;
@@ -304,7 +304,7 @@ p.notfound {
 // TODO: This is used for the notice in the main page that explains that this is an alpha version of the
 // service. Should be removed once we get out of the alpha period.
 .alpha-notice {
-  margin: 10px;
+  margin: 10px 30px 0px 30px;
   font-size: 1.2em;
 }
 
@@ -317,9 +317,14 @@ p.notfound {
   margin-top: 15px;
 }
 
-.clusterdetails-topbar {
-  margin-top: 20px;
+#clusterdetails-content {
+  margin: 20px 30px 0 30px;
 }
-.clusterdetails-topbar .breadcrumb {
+#clusterdetails-content .breadcrumb {
   margin-bottom: 0;
+}
+
+#clusterdetails-content .container-fluid {
+  padding-right: 0;
+  padding-left: 0;
 }
