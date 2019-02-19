@@ -17,7 +17,7 @@ function ClusterBadge(props) {
 }
 
 ClusterBadge.propTypes = {
-  clusterName: PropTypes.string.isRequired,
+  clusterName: PropTypes.object.isRequired,
 };
 
 export default ClusterBadge;
