@@ -380,15 +380,18 @@ class ClusterDetails extends Component {
       </DropdownButton>
     );
 
-    let credentialsButton = null;
-    if (credentials.fulfilled && credentials.credentials.admin && result(credentials, 'credentials.admin.password', false)) {
-      credentialsButton = (
-        <React.Fragment>
-          <Button bsStyle="default" onClick={() => { openModal('cluster-credentials'); }}>Admin Credentials</Button>
-          <ClusterCredentialsModal credentials={credentials.credentials} />
-        </React.Fragment>
-      );
-    }
+    const hasCredentials = (cluster.state === 'ready'
+                            && credentials.fulfilled
+                            && credentials.credentials.admin
+                            && result(credentials, 'credentials.admin.password', false));
+
+    const credentialsButton = hasCredentials ? (
+      <React.Fragment>
+        <Button bsStyle="default" onClick={() => { openModal('cluster-credentials'); }}>Admin Credentials</Button>
+        <ClusterCredentialsModal credentials={credentials.credentials} />
+      </React.Fragment>
+    ) : null;
+
     return (
       <div>
         <AlphaNotice />
