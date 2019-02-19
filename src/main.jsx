@@ -120,6 +120,7 @@ config.fetchConfig().then(() => {
       logout: () => {},
       authenticated: true,
     };
+    store.dispatch(userInfoResponse({ email: '***REMOVED***', name: 'mock username' }));
     render();
   } else {
     initKeycloak();
