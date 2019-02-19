@@ -112,6 +112,7 @@ class ClusterDetails extends Component {
       openModal,
       credentials,
       history,
+      fetchCredentials,
     } = this.props;
 
     const pendingMessage = () => {
@@ -422,7 +423,7 @@ class ClusterDetails extends Component {
                   {consoleBtn}
                   {credentialsButton}
                   {actionsBtn}
-                  <RefreshBtn id="refresh" refreshFunc={() => fetchDetails(cluster.id)} />
+                  <RefreshBtn id="refresh" refreshFunc={() => { fetchDetails(cluster.id); fetchCredentials(cluster.id); }} />
                 </ButtonGroup>
               </Col>
             </Row>
