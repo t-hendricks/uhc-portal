@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 
 import RefreshButton from './RefreshButton';
 
+jest.useFakeTimers();
+
 describe('<RefreshButton />', () => {
   let onClickFunc;
   let wrapper;
@@ -18,5 +20,50 @@ describe('<RefreshButton />', () => {
   it('calls refreshFunc when clicked', () => {
     wrapper.find('Button').simulate('click');
     expect(onClickFunc).toBeCalled();
+  });
+
+  it('doesn\'t call setInterval when autoRefresh is disabled', () => {
+    expect(setInterval).not.toBeCalled();
+  });
+});
+
+describe('<RefreshButton autoRefresh />', () => {
+  let onClickFunc;
+  let wrapper;
+  beforeEach(() => {
+    onClickFunc = jest.fn();
+    wrapper = shallow(<RefreshButton id="id" autoRefresh refreshFunc={onClickFunc} />);
+  });
+
+  it('renders correctly', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('calls refreshFunc when clicked', () => {
+    wrapper.find('Button').simulate('click');
+    expect(onClickFunc).toBeCalled();
+  });
+
+  it('sets up the interval', () => {
+    expect(setInterval).toBeCalled();
+    expect(setInterval).toHaveBeenLastCalledWith(expect.any(Function), 60 * 1000);
+  });
+
+  it('refreshes after a minute', () => {
+    jest.runOnlyPendingTimers();
+    expect(onClickFunc).toBeCalled();
+  });
+
+  it('does not refresh if autoRefresh has been turned off', () => {
+    wrapper.setProps({ autoRefresh: false });
+    jest.runOnlyPendingTimers();
+    expect(onClickFunc).not.toBeCalled();
+  });
+
+  it('clears timer on umount', () => {
+    wrapper.unmount();
+    expect(clearInterval).toBeCalled();
+    jest.runOnlyPendingTimers();
+    expect(onClickFunc).not.toBeCalled();
   });
 });

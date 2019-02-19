@@ -172,7 +172,7 @@ function clustersReducer(state = initialState, action) {
         'credentials',
         {
           pending: true,
-          credentials: null,
+          credentials: state.credentials.credentials,
         },
         {
           state,
