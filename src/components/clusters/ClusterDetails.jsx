@@ -374,6 +374,7 @@ class ClusterDetails extends Component {
         id="actions"
         bsStyle="default"
         title="Actions"
+        pullRight
       >
         {editDisplayNameItem}
         {editClusterItem()}
@@ -396,8 +397,8 @@ class ClusterDetails extends Component {
     return (
       <div>
         <AlphaNotice />
-        <div>
-          <Grid fluid className="clusterdetails-topbar">
+        <div id="clusterdetails-content">
+          <Grid fluid>
             <Row>
               <Col sm={3}>
                 <Breadcrumb>
