@@ -127,9 +127,9 @@ Sometimes the backend might be broken, but you still want to develop the UI. For
 a basic mock server that sends mock data. It doesn't support all actions the real backend supports, but
 it should allow you to run the UI and test basic read-only functionality.
 
-To run it, run the `./backend` command as described above, and then in another terminal tab run `python mockdata/mockserver.py`.
+To run it, run `mockdata/mockserver.py`.
 
-Then, run `yarn startmock` instead of `yarn start`, and you'll get a working UI showing mock data.
+Then in another terminal, run `yarn startmock` instead of `yarn start`, and you'll get a working UI showing mock data.
 
 == Deploying
 
