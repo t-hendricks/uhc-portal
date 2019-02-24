@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'patternfly-react';
+import clusterStates from '../../../common/clusterStates';
 
 function ClusterStateIcon(props) {
   const { clusterState } = props;
@@ -10,22 +11,22 @@ function ClusterStateIcon(props) {
   let icon = { type: 'pf' };
   // Icons from http://openshift.github.io/openshift-origin-design/web-console/4.0-designs/status/status
   switch (clusterState) {
-    case 'pending':
+    case clusterStates.PENDING:
       icon = { type: 'fa', name: 'hourglass-half' };
       break;
-    case 'installing':
+    case clusterStates.INSTALLING:
       icon.name = 'in-progress';
       break;
-    case 'error':
+    case clusterStates.ERROR:
       icon.name = 'error-circle-o';
       break;
-    case 'ready':
+    case clusterStates.READY:
       icon.name = 'ok';
       break;
-    case 'uninstalling':
+    case clusterStates.UNINSTALLING:
       icon = { type: 'fa', name: 'ban' };
       break;
-    case 'patching':
+    case clusterStates.PATCHING:
       icon = { type: 'fa', name: 'hourglass-half' };
       break;
     default:

@@ -1,10 +1,12 @@
+import clusterStates from '../../common/clusterStates';
+
 const metricsStatusMessages = {
-  installing: 'This cluster is installing so some data might not be available. This may take a few minutes.',
-  pending: 'This cluster is installing so some data might not be available. This may take a few minutes.',
-  error: 'An error occured',
-  uninstalling: 'This cluster is being deleted so some data might not be available.',
-  patching: 'The cluster currently does not have any metrics data. Please try again later.',
-  unknown: 'The cluster currently does not have any metrics data. Please try again later.',
+  [clusterStates.INSTALLING]: 'This cluster is installing so some data might not be available. This may take a few minutes.',
+  [clusterStates.PENDING]: 'This cluster is installing so some data might not be available. This may take a few minutes.',
+  [clusterStates.ERROR]: 'An error occured',
+  [clusterStates.UNINSTALLING]: 'This cluster is being deleted so some data might not be available.',
+  [clusterStates.PATCHING]: 'The cluster currently does not have any metrics data. Please try again later.',
+  [clusterStates.UNKNOWN]: 'The cluster currently does not have any metrics data. Please try again later.',
   default: 'The cluster currently does not have any metrics data. Please try again later.',
 };
 
