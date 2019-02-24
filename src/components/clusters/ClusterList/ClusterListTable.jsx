@@ -7,9 +7,10 @@ import {
 import { Link } from 'react-router-dom';
 import { TableGrid } from 'patternfly-react-extensions';
 import ClusterBadge from '../ClusterBadge';
-import ClusterStateIcon from '../ClusterStateIcon';
+import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import NumberWithUnit from '../NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
+import clusterStates from '../../../common/clusterStates';
 
 function ClusterListTable(props) {
   const {
@@ -43,29 +44,29 @@ function ClusterListTable(props) {
     // The trenary for consoleURL is needed because the API does not guarantee fields being present.
     // We'll have a lot of these all over the place as we grow :(
     const consoleURL = cluster.console ? cluster.console.url : false;
-    const consoleMenuItem = consoleURL && cluster.state !== 'uninstalling' ? (
+    const consoleMenuItem = consoleURL && cluster.state !== clusterStates.UNINSTALLING ? (
       <MenuItem href={consoleURL} target="_blank" rel="noreferrer">
           Launch Admin Console
       </MenuItem>)
       : (
-        <MenuItem disabled title={cluster.state === 'uninstalling' ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
+        <MenuItem disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
           Launch Admin Console
         </MenuItem>
       );
 
-    const uninstallingProps = cluster.state === 'uninstalling' ? { disabled: true, title: 'The cluster is being uninstalled' } : {};
+    const uninstallingProps = cluster.state === clusterStates.UNINSTALLING ? { disabled: true, title: 'The cluster is being uninstalled' } : {};
 
     const editClusterItem = () => {
       if (!cluster.managed) {
         return (
-          <MenuItem disabled title={cluster.state === 'uninstalling' ? 'The cluster is being uninstalled' : 'Self managed cluster cannot be edited'}>
+          <MenuItem disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Self managed cluster cannot be edited'}>
             Edit Cluster
           </MenuItem>
         );
       }
-      if (cluster.state !== 'ready') {
+      if (cluster.state !== clusterStates.READY) {
         return (
-          <MenuItem disabled title={cluster.state === 'uninstalling' ? 'The cluster is being uninstalled' : 'This cluster is not ready'}>
+          <MenuItem disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'This cluster is not ready'}>
             Edit Cluster
           </MenuItem>
         );
