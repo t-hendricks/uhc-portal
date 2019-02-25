@@ -11,7 +11,7 @@ function ClusterListEmptyState(props) {
   const { showCreationForm, showOCPCreationForm } = props;
   return (
     <EmptyState className="full-page-blank-slate">
-      <Grid fluid>
+      <Grid>
         <Row>
           <EmptyState.Title>
             No Clusters Exist
