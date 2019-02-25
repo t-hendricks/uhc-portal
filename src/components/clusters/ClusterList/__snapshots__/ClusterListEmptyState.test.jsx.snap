@@ -7,7 +7,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
   <Grid
     bsClass="container"
     componentClass="div"
-    fluid={true}
+    fluid={false}
   >
     <Row
       bsClass="row"

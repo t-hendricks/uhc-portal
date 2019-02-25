@@ -246,12 +246,6 @@ limitations under the License.
   }
 }
 
-// ----- NOTE: this is here for the upcoming demo! Remove it later -------- //
-.nav-pf-vertical, .navbar-toggle {
-  display: none;
-  visibility: hidden;
-}
-
 .form-loading-spinner {
   padding-top: 20px;
   padding-bottom: 10px;
@@ -271,6 +265,17 @@ limitations under the License.
 
 .cluster-list-emptystate-options > :last-child {
   border-right: none;
+}
+
+@media (max-width: 1000px) {
+  .cluster-list-emptystate-options > * {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 20px;
+    border-right: none;
+  }
+  .cluster-list-emptystate-options > :last-child {
+    border-bottom: none;
+  }
 }
 
 footer {
