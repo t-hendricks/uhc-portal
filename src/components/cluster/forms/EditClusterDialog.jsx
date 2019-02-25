@@ -8,6 +8,7 @@ import {
 
 import ReduxVerticalFormGroup from '../../clusters/ReduxVerticalFormGroup';
 import { editCluster, clearClusterResponse } from '../../../redux/actions/clustersActions';
+import validators from '../../../common/validators';
 
 function EditClusterDialog(props) {
   // handleSubmit comes from reduxForm()
@@ -52,6 +53,7 @@ function EditClusterDialog(props) {
                   name="nodes_compute"
                   label="Compute nodes"
                   type="number"
+                  validate={validators.nodes}
                   min="1"
                 />
               </Col>

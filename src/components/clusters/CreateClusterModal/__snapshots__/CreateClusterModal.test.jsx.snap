@@ -127,6 +127,7 @@ exports[`CreateClusterModal should render 1`] = `
               min="1"
               name="nodes_compute"
               type="number"
+              validate={[Function]}
             />
             <Field
               cloudProviderID="aws"
