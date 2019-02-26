@@ -129,6 +129,7 @@ function CreateClusterModal(props) {
                   label="Compute nodes"
                   type="number"
                   min="1"
+                  validate={validators.nodes}
                   disabled={createClusterResponse.pending}
                 />
 

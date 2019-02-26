@@ -41,11 +41,26 @@ const cidr = (value) => {
   return undefined;
 };
 
+// Function to validate number of nodes, which must be an integer equal or greater to one.
+const nodes = (value) => {
+  if (value === undefined || value <= 1) {
+    return 'At least one node is required.';
+  }
+  // eslint-disable-next-line eqeqeq
+  if (!parseInt(value, 10) || Math.floor(value) != value) {
+    // Using Math.floor to check for valid int because Number.isInteger doesn't work on IE.
+    return `'${value}' is not a valid number of nodes.`;
+  }
+
+  return undefined;
+};
+
 const validators = {
   required,
   checkClusterName,
   checkBaseDNSDomain,
   cidr,
+  nodes,
 };
 
 export default validators;
