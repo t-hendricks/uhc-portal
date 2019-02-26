@@ -431,7 +431,7 @@ class ClusterDetails extends Component {
             </Row>
           </Grid>
           <Grid fluid>
-            <Row style={{ marginTop: '20px' }}>
+            <Row>
               {utilizationCharts()}
             </Row>
           </Grid>

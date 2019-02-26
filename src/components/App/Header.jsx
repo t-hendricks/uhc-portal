@@ -16,43 +16,130 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import {
-  Dropdown, Icon, MenuItem, Masthead,
-} from 'patternfly-react';
 import { withRouter } from 'react-router-dom';
-
+import {
+  Brand,
+  Dropdown,
+  DropdownToggle,
+  DropdownItem,
+  KebabToggle,
+  PageHeader,
+  Toolbar,
+  ToolbarGroup,
+  ToolbarItem,
+} from '@patternfly/react-core';
 import { noop } from '../../common/helpers';
 import rhProductTitle from '../../styles/images/logo.png';
 import config from '../../config';
 
-const Header = ({
-  isLoggedIn, userProfile, logoutUser, history,
-}) => (
-  <Masthead titleImg={rhProductTitle} navToggle={false} onTitleClick={() => history.push('/')}>
-    {isLoggedIn && (
-      <nav className="collapse navbar-collapse">
-        <ul className="navbar-iconic nav navbar-nav navbar-right">
-          <Dropdown componentClass="li" id="user">
-            <Dropdown.Toggle useAnchor className="nav-item-iconic">
-              <Icon type="pf" name="user" />
-              <span className="dropdown-title">
-                {userProfile.name || userProfile.preferred_username}
-              </span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <MenuItem href={`${config.configData.keycloak.url}/realms/${config.configData.keycloak.realm}/account`} target="_blank">
-                  View Profile
-              </MenuItem>
-              <MenuItem onClick={logoutUser}>
-                Log out
-              </MenuItem>
-            </Dropdown.Menu>
-          </Dropdown>
-        </ul>
-      </nav>
-    )}
-  </Masthead>);
+class Header extends React.Component {
+  state = {
+    isUserDropdownOpen: false,
+    isKebabDropdownOpen: false,
+  };
+
+  onUserDropdownToggle = (isUserDropdownOpen) => {
+    this.setState({
+      isUserDropdownOpen,
+    });
+  };
+
+  onUserDropdownSelect = () => {
+    this.setState(prevState => ({
+      isUserDropdownOpen: !prevState.isUserDropdownOpen,
+    }));
+  };
+
+  onKebabDropdownToggle = (isKebabDropdownOpen) => {
+    this.setState({
+      isKebabDropdownOpen,
+    });
+  };
+
+  onKebabDropdownSelect = () => {
+    this.setState(prevState => ({
+      isKebabDropdownOpen: prevState.isKebabDropdownOpen,
+    }));
+  };
+
+  render() {
+    const {
+      isLoggedIn, userProfile, logoutUser, history,
+    } = this.props;
+    const { isUserDropdownOpen, isKebabDropdownOpen } = this.state;
+
+    return (
+      <PageHeader
+        logo={<Brand src={rhProductTitle} alt="Red Hat OpenShift" />}
+        logoProps={{
+          onClick: () => {
+            history.push('/');
+          },
+        }}
+        toolbar={(
+          <Toolbar>
+            {isLoggedIn && (
+            <ToolbarGroup>
+              {/* mobile -- kebab dropdown (| logout)] */}
+              <ToolbarItem className="pf-u-hidden-on-md pf-u-mr-0">
+                <Dropdown
+                  isPlain
+                  position="right"
+                  onSelect={this.onKebabDropdownSelect}
+                  toggle={<KebabToggle onToggle={this.onKebabDropdownToggle} />}
+                  isOpen={isKebabDropdownOpen}
+                  dropdownItems={[
+                    <DropdownItem
+                      key="profile"
+                      href={`${config.configData.keycloak.url}/realms/${
+                        config.configData.keycloak.realm
+                      }/account`}
+                      target="_blank"
+                    >
+                        View Profile
+                    </DropdownItem>,
+                    <DropdownItem key="logout" onClick={logoutUser}>
+                        Logout
+                    </DropdownItem>,
+                  ]}
+                />
+              </ToolbarItem>
+              {/* desktop -- (user dropdown [logout]) */}
+              <ToolbarItem className="pf-u-sr-only pf-u-visible-on-md">
+                <Dropdown
+                  isPlain
+                  position="right"
+                  onSelect={this.onUserDropdownSelect}
+                  isOpen={isUserDropdownOpen}
+                  toggle={(
+                    <DropdownToggle onToggle={this.onUserDropdownToggle}>
+                      {userProfile.name || userProfile.preferred_username}
+                    </DropdownToggle>
+)}
+                  dropdownItems={[
+                    <DropdownItem
+                      key="profile"
+                      href={`${config.configData.keycloak.url}/realms/${
+                        config.configData.keycloak.realm
+                      }/account`}
+                      target="_blank"
+                    >
+                        View Profile
+                    </DropdownItem>,
+                    <DropdownItem key="logout" onClick={logoutUser}>
+                        Logout
+                    </DropdownItem>,
+                  ]}
+                />
+              </ToolbarItem>
+            </ToolbarGroup>
+            )}
+          </Toolbar>
+)}
+      />
+    );
+  }
+}
 
 Header.propTypes = {
   isLoggedIn: PropTypes.bool,
