@@ -336,6 +336,15 @@ p.notfound {
   padding-left: 0;
 }
 
+h1 .badged-resource-pf span:first-child {
+  display: table;
+  padding-right: 4px;
+}
+
+h1 .badged-resource-pf .badged-resource-pf-icon {
+  display: table-cell;
+  vertical-align: middle;
+}
 .cluster-list .clusterstate {
   margin-left: 10px;
 }
