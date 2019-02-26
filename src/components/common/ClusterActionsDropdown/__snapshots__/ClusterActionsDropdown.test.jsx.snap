@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterActionsDropdown /> cluster with state ready and console url should render 1`] = `
+<Fragment>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    header={false}
+    href="www.testuhc.com"
+    rel="noreferrer"
+    target="_blank"
+  >
+    Launch Admin Console
+  </MenuItem>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    header={false}
+    onClick={[Function]}
+  >
+    Edit Display Name
+  </MenuItem>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    header={false}
+    onClick={[Function]}
+  >
+    Edit Cluster
+  </MenuItem>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    header={false}
+    onClick={[Function]}
+  >
+    Delete Cluster
+  </MenuItem>
+</Fragment>
+`;
