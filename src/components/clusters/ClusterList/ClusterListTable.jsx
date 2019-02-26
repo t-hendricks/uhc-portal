@@ -21,10 +21,11 @@ function ClusterListTable(props) {
     return <p className="notfound">No Results Match the Filter Criteria.</p>;
   }
 
-  const nameColSizes = { md: 4 };
+  const nameColSizes = { md: 3 };
   const statusColSizes = { md: 1 };
   const statColSizes = { md: 1 };
   const locationColSizes = { md: 2 };
+  const typesSizes = { md: 2 };
 
   const isSorted = columnID => viewOptions.sorting.sortField === columnID;
 
@@ -143,7 +144,7 @@ function ClusterListTable(props) {
         <Grid.Col {...statusColSizes}>
           {clusterStatus}
         </Grid.Col>
-        <Grid.Col {...statColSizes}>
+        <Grid.Col {...typesSizes}>
           {clusterType}
         </Grid.Col>
         <Grid.Col {...statColSizes}>
@@ -199,7 +200,7 @@ function ClusterListTable(props) {
             id="type"
             isSorted={false}
             isAscending
-            {...statColSizes}
+            {...typesSizes}
           >
             Type
           </TableGrid.ColumnHeader>

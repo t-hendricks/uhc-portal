@@ -36,9 +36,9 @@ html {
 
 /* 
   Open Shift PF3/PF4 Base Font change (makes PF4 Overpass fonts slightly smaller):
-  https://github.com/openshift/console/blob/master/frontend/public/style/_layout.scss#L22
+  https://github.com/openshift/console/blob/ef1212655ba60571aaeec666843cd9f1ef139189/frontend/public/style/_layout.scss#L23
 
-  Masthead is PF4 and uses base font size 16px, while the rest of the page remains 12px (PF3) for now
+  Masthead is PF4 and uses base font size 16px, while the rest of the page remains 14px ($font-size-base)
  */
  .pf-c-page { 
   --pf-global--FontSize--md: #{$font-size-base}; 
