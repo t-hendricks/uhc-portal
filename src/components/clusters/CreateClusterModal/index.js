@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { reduxForm, reset } from 'redux-form';
 import result from 'lodash/result';
 
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
@@ -60,6 +60,7 @@ const mapDispatchToProps = dispatch => ({
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   closeModal: () => dispatch(closeModal()),
+  resetForm: () => dispatch(reset('CreateCluster')),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateCluster);

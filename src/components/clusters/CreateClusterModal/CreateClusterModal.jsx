@@ -32,12 +32,18 @@ import constants, {
 
 function CreateClusterModal(props) {
   const {
-    isOpen, isManaged, closeModal, handleSubmit, createClusterResponse, resetResponse,
+    isOpen, isManaged, closeModal, handleSubmit, createClusterResponse, resetResponse, resetForm,
   } = props;
 
-  if (createClusterResponse.fulfilled) {
-    closeModal('create-cluster');
+  const onClose = () => {
     resetResponse();
+    resetForm();
+    closeModal('create-cluster');
+  };
+
+
+  if (createClusterResponse.fulfilled) {
+    onClose();
     return (
       <Redirect to={`/cluster/${createClusterResponse.cluster.id}`} />
     );
@@ -56,11 +62,6 @@ function CreateClusterModal(props) {
       <Spinner size="xs" loading inline />
     </div>
   );
-
-  const onClose = () => {
-    resetResponse();
-    closeModal('create-cluster');
-  };
 
   const title = isManaged ? 'Create a Red Hat-Managed Cluster' : 'Create a Self-Managed Cluster';
 
@@ -206,6 +207,7 @@ CreateClusterModal.propTypes = {
   isManaged: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   resetResponse: PropTypes.func.isRequired,
+  resetForm: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
 };
