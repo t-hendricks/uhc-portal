@@ -22,11 +22,18 @@ function ClusterListTable(props) {
     return <p className="notfound">No Results Match the Filter Criteria.</p>;
   }
 
-  const nameColSizes = { md: 3 };
-  const statusColSizes = { md: 1 };
-  const statColSizes = { md: 1 };
-  const locationColSizes = { md: 2 };
-  const typesSizes = { md: 2 };
+  const nameColSizes = {
+    xs: 9, sm: 8, md: 5, lg: 3,
+  };
+  const statusColSizes = { xs: 1 };
+  const statColSizes = {
+    md: 1, mdHidden: true, smHidden: true, xsHidden: true,
+  };
+  const locationColSizes = {
+    md: 3, lg: 2, smHidden: true, xsHidden: true,
+  };
+  const typesSizes = { sm: 2, xsHidden: true };
+  const kebabColSizes = { xs: 1 };
 
   const isSorted = columnID => viewOptions.sorting.sortField === columnID;
 
@@ -163,7 +170,7 @@ function ClusterListTable(props) {
             cloudProviderID={provider}
           />
         </Grid.Col>
-        <Grid.Col {...statColSizes}>
+        <Grid.Col {...kebabColSizes}>
           <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
             {consoleMenuItem}
             {editDisplayNameItem}
