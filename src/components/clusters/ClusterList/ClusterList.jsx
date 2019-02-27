@@ -48,8 +48,13 @@ import { modalActions } from '../../common/Modal/ModalActions';
 import AlphaNotice from '../../common/AlphaNotice';
 
 class ClusterList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      clusterCreationFormVisible: false,
+      editClusterDialogVisible: false,
+    };
+
     // refresh needs to be bound because it is passed to another componenet
     this.refresh = this.refresh.bind(this);
     // the various open dialog methods get called from the table component
@@ -57,13 +62,9 @@ class ClusterList extends Component {
     this.openEditDisplayNameDialog = this.openEditDisplayNameDialog.bind(this);
   }
 
-  state = {
-    clusterCreationFormVisible: false,
-    editClusterDialogVisible: false,
-  }
-
   componentDidMount() {
     const { getCloudProviders, cloudProviders } = this.props;
+
     this.refresh();
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
@@ -229,7 +230,7 @@ class ClusterList extends Component {
                 {pending ? <Spinner loading /> : null}
               </Col>
               <Col sm={2} smOffset={8}>
-                <RefreshBtn id="refresh" refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
+                <RefreshBtn id="refresh" autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
                 <ClusterListFilter />
               </Col>
             </Row>

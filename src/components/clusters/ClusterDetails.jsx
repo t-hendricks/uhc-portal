@@ -55,18 +55,16 @@ class ClusterDetails extends Component {
       editClusterDialogVisible: false,
       editDisplayNameDialogVisible: false,
     };
+
+    this.refresh = this.refresh.bind(this);
   }
 
   componentDidMount() {
     const {
-      match, fetchDetails, fetchCredentials, cloudProviders, getCloudProviders,
+      cloudProviders, getCloudProviders,
     } = this.props;
-    const clusterID = match.params.id;
 
-    if (clusterID !== null && clusterID !== undefined) {
-      fetchDetails(clusterID);
-      fetchCredentials(clusterID);
-    }
+    this.refresh();
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
@@ -74,11 +72,25 @@ class ClusterDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { fetchDetails, match } = this.props;
+    const {
+      match,
+    } = this.props;
     const clusterID = match.params.id;
     const oldClusterID = prevProps.match.params.id;
     if (clusterID !== oldClusterID && clusterID !== null && clusterID !== undefined) {
+      this.refresh();
+    }
+  }
+
+  refresh() {
+    const {
+      match, fetchDetails, fetchCredentials,
+    } = this.props;
+    const clusterID = match.params.id;
+
+    if (clusterID !== null && clusterID !== undefined && clusterID !== false && clusterID !== '') {
       fetchDetails(clusterID);
+      fetchCredentials(clusterID);
     }
   }
 
@@ -114,10 +126,13 @@ class ClusterDetails extends Component {
       credentials,
       history,
       fetchCredentials,
+      match,
     } = this.props;
 
+    const requestedClusterID = match.params.id;
+    const isPending = pending && result(cluster, 'id') !== requestedClusterID;
     const pendingMessage = () => {
-      if (pending || credentials.pending) {
+      if (isPending) {
         return (
           <LoadingModal>
             Loading cluster details...
@@ -233,7 +248,7 @@ class ClusterDetails extends Component {
       return errorState();
     }
 
-    if (pending || credentials.pending) {
+    if (isPending) {
       return pendingMessage();
     }
 
@@ -384,16 +399,15 @@ class ClusterDetails extends Component {
     );
 
     const hasCredentials = (cluster.state === 'ready'
-                            && credentials.fulfilled
-                            && credentials.credentials.admin
-                            && result(credentials, 'credentials.admin.password', false));
+                            && result(credentials, 'credentials.admin.password', false)
+                            && result(credentials, 'credentials.id') === cluster.id);
 
     const credentialsButton = hasCredentials ? (
       <React.Fragment>
         <Button bsStyle="default" onClick={() => { openModal('cluster-credentials'); }}>Admin Credentials</Button>
         <ClusterCredentialsModal credentials={credentials.credentials} />
       </React.Fragment>
-    ) : null;
+    ) : <Button bsStyle="default" disabled>Admin Credentials</Button>;
 
     return (
       <div>
@@ -425,7 +439,7 @@ class ClusterDetails extends Component {
                   {consoleBtn}
                   {credentialsButton}
                   {actionsBtn}
-                  <RefreshBtn id="refresh" refreshFunc={() => { fetchDetails(cluster.id); fetchCredentials(cluster.id); }} />
+                  <RefreshBtn id="refresh" autoRefresh refreshFunc={() => { fetchDetails(cluster.id); fetchCredentials(cluster.id); }} />
                 </ButtonGroup>
               </Col>
             </Row>
@@ -586,6 +600,7 @@ ClusterDetails.propTypes = {
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   pending: PropTypes.bool,
+  fulfilled: PropTypes.bool,
   history: PropTypes.object,
 };
 
