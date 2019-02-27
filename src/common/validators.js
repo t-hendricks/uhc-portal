@@ -43,7 +43,7 @@ const cidr = (value) => {
 
 // Function to validate number of nodes, which must be an integer equal or greater to one.
 const nodes = (value) => {
-  if (value === undefined || value <= 1) {
+  if (value === undefined || value < 1) {
     return 'At least one node is required.';
   }
   // eslint-disable-next-line eqeqeq

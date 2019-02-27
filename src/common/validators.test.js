@@ -33,5 +33,6 @@ test('Field is valid node count', () => {
   expect(validators.nodes('-1')).toBe('At least one node is required.');
   expect(validators.nodes('1.5')).toBe('\'1.5\' is not a valid number of nodes.');
   expect(validators.nodes('5')).toBe(undefined);
+  expect(validators.nodes('1')).toBe(undefined);
   expect(validators.nodes('aaa')).toBe('\'aaa\' is not a valid number of nodes.');
 });
