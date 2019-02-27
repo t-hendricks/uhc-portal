@@ -35,7 +35,7 @@ function ClusterStateIcon(props) {
   // patternfly bug workaround: pf icons ignore the `size` prop.
   // Specifying className='fa-lg' makes them larger too.
   return (
-    <Icon className="fa-lg" {...icon} />);
+    <Icon className="fa-lg clusterstate" {...icon} />);
 }
 
 ClusterStateIcon.propTypes = {
