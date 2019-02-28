@@ -94,17 +94,21 @@ function initKeycloak() {
       addPassiveListener('touchmove', resetCounter);
       addPassiveListener('wheel', resetCounter);
 
-      setInterval(() => {
+      const tokenRefreshTimer = () => {
         const lastActiveTimestamp = parseInt(localStorage.getItem('lastActiveTimestamp') || '0', 10);
         const idleSeconds = Math.floor(Date.now() / 1000) - lastActiveTimestamp;
         if (idleSeconds < IDLE_TIMEOUT_SECONDS) {
           keycloak.updateToken(10)
             .success(() => sessionStorage.setItem('kctoken', keycloak.token))
             .error(() => keycloak.logout());
-        } else {
+        } else if (document.visibilityState === 'visible') {
           keycloak.logout();
         }
-      }, 10000);
+      };
+      setInterval(tokenRefreshTimer, 10000);
+      // ensure the keycloak token is refreshed if the document becomes visible
+      // and the idle timeout was not reached
+      document.addEventListener('visibilitychange', tokenRefreshTimer, false);
     } else {
       render();
     }
