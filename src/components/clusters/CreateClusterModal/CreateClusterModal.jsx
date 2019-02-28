@@ -23,11 +23,12 @@ import {
 } from 'patternfly-react';
 import ReduxVerticalFormGroup from '../ReduxVerticalFormGroup';
 import CloudRegionComboBox from '../CloudRegionComboBox';
+import RouterShardInputForm from './RouterShardInputForm';
 import validators from '../../../common/validators';
 import ReduxCheckbox from '../ReduxCheckbox';
 import ModalHeader from '../../common/Modal/components/ModalHeader';
 import constants, {
-  AWSCredentialsHint, ConfigurationHint, RegionsHint, NetworkConfugurationHint,
+  AWSCredentialsHint, ConfigurationHint, RegionsHint, NetworkConfugurationHint, RouterShardsHint,
 } from './CreateClusterModalHelper';
 
 function CreateClusterModal(props) {
@@ -182,9 +183,27 @@ function CreateClusterModal(props) {
                     validate={validators.cidr}
                     disabled={createClusterResponse.pending}
                   />
+                  <h4>{constants.routerShardsHeader}</h4>
+                  <Field
+                    component={ReduxVerticalFormGroup}
+                    componentClass={RouterShardInputForm}
+                    label=""
+                    name="network_router_shards.0"
+                    validate={validators.routerShard}
+                    disabled={createClusterResponse.pending}
+                  />
+                  <Field
+                    component={ReduxVerticalFormGroup}
+                    componentClass={RouterShardInputForm}
+                    label=""
+                    name="network_router_shards.1"
+                    validate={validators.routerShard}
+                    disabled={createClusterResponse.pending}
+                  />
                 </Col>
                 <Col sm={4}>
                   <NetworkConfugurationHint />
+                  <RouterShardsHint />
                 </Col>
               </ExpandCollapse>
             </Row>

@@ -75,6 +75,13 @@ const getClusterCredentials = clusterID => axios(
   }),
 );
 
+const getClusterRouterShards = clusterID => axios(
+  serviceConfig({
+    method: 'get',
+    url: `/api/clusters_mgmt/v1/clusters/${clusterID}/router_shards`,
+  }),
+);
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -85,6 +92,7 @@ const clusterService = {
   deleteCluster,
   deleteSelfManagedCluster,
   getClusterCredentials,
+  getClusterRouterShards,
 };
 
 export default clusterService;

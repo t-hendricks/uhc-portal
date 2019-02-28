@@ -37,7 +37,12 @@ import DeleteClusterDialog from '../cluster/forms/DeleteClusterDialog';
 import ClusterCredentialsModal from './ClusterCredentialsModal';
 
 import { humanizeValueWithUnit, parseValueWithUnit } from '../../common/unitParser';
-import { fetchClusterDetails, fetchClusterCredentials, invalidateClusters } from '../../redux/actions/clustersActions';
+import {
+  fetchClusterDetails,
+  fetchClusterCredentials,
+  fetchClusterRouterShards,
+  invalidateClusters,
+} from '../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
 import { modalActions } from '../common/Modal/ModalActions';
 
@@ -85,13 +90,14 @@ class ClusterDetails extends Component {
 
   refresh() {
     const {
-      match, fetchDetails, fetchCredentials,
+      match, fetchDetails, fetchCredentials, fetchRouterShards,
     } = this.props;
     const clusterID = match.params.id;
 
     if (clusterID !== null && clusterID !== undefined && clusterID !== false && clusterID !== '') {
       fetchDetails(clusterID);
       fetchCredentials(clusterID);
+      fetchRouterShards(clusterID);
     }
   }
 
@@ -124,6 +130,7 @@ class ClusterDetails extends Component {
       fetchDetails,
       openModal,
       credentials,
+      routerShards,
       history,
       match,
     } = this.props;
@@ -207,43 +214,6 @@ class ClusterDetails extends Component {
           />
         </Modal>
       );
-    };
-
-    const clusterNetwork = () => {
-      if (cluster.managed && cluster.network) {
-        return (
-          <React.Fragment>
-            <dt>Network</dt>
-            <dd>
-              { cluster.network.machine_cidr
-              && (
-              <dl className="cluster-details-item-list left">
-                <dt>Machine CIDR: </dt>
-                <dd>{cluster.network.machine_cidr}</dd>
-              </dl>
-              )
-              }
-              { cluster.network.service_cidr
-              && (
-              <dl className="cluster-details-item-list left">
-                <dt>Service CIDR: </dt>
-                <dd>{cluster.network.service_cidr}</dd>
-              </dl>
-              )
-              }
-              { cluster.network.pod_cidr
-              && (
-              <dl className="cluster-details-item-list left">
-                <dt>Pod CIDR: </dt>
-                <dd>{cluster.network.pod_cidr}</dd>
-              </dl>
-              )
-              }
-            </dd>
-          </React.Fragment>
-        );
-      }
-      return null;
     };
 
     if (error) {
@@ -377,6 +347,64 @@ class ClusterDetails extends Component {
         <ClusterCredentialsModal credentials={credentials.credentials} />
       </React.Fragment>
     ) : <Button bsStyle="default" disabled>Admin Credentials</Button>;
+
+    const hasRouterShards = (routerShards
+                             && result(routerShards, 'routerShards.id') === cluster.id
+                             && result(routerShards, 'routerShards.items', false));
+
+    const routerShardList = hasRouterShards && routerShards.routerShards.items.map(routerShard => (
+      <li>
+        <dt>{`${routerShard.label}: `}</dt>
+        <dd>{routerShard.scheme === 'internal' ? 'Internal' : 'External'}</dd>
+      </li>
+    ));
+
+    const clusterNetwork = () => {
+      if (cluster.managed && cluster.network) {
+        return (
+          <React.Fragment>
+            <dt>Network</dt>
+            <dd>
+              { cluster.network.machine_cidr
+              && (
+              <dl className="cluster-details-item-list left">
+                <dt>Machine CIDR: </dt>
+                <dd>{cluster.network.machine_cidr}</dd>
+              </dl>
+              )
+              }
+              { cluster.network.service_cidr
+              && (
+              <dl className="cluster-details-item-list left">
+                <dt>Service CIDR: </dt>
+                <dd>{cluster.network.service_cidr}</dd>
+              </dl>
+              )
+              }
+              { cluster.network.pod_cidr
+              && (
+              <dl className="cluster-details-item-list left">
+                <dt>Pod CIDR: </dt>
+                <dd>{cluster.network.pod_cidr}</dd>
+              </dl>
+              )
+              }
+              { hasRouterShards
+              && (
+              <dl className="cluster-details-item-list left">
+                <dt>Router Shards: </dt>
+                <dd>
+                  <ul>{routerShardList}</ul>
+                </dd>
+              </dl>
+              )
+              }
+            </dd>
+          </React.Fragment>
+        );
+      }
+      return null;
+    };
 
     return (
       <div>
@@ -561,9 +589,11 @@ ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
   fetchCredentials: PropTypes.func.isRequired,
+  fetchRouterShards: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   credentials: PropTypes.object.isRequired,
+  routerShards: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   cluster: PropTypes.any,
   error: PropTypes.bool,
@@ -583,12 +613,14 @@ const mapStateToProps = state => Object.assign(
   {
     cloudProviders: state.cloudProviders.cloudProviders,
     credentials: state.clusters.credentials,
+    routerShards: state.clusters.routerShards,
   },
 );
 
 const mapDispatchToProps = {
   fetchDetails: clusterID => fetchClusterDetails(clusterID),
   fetchCredentials: clusterID => fetchClusterCredentials(clusterID),
+  fetchRouterShards: clusterID => fetchClusterRouterShards(clusterID),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   invalidateClusters,
   openModal: modalActions.openModal,

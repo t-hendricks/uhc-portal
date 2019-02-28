@@ -53,6 +53,9 @@ const mapDispatchToProps = dispatch => ({
         machine_cidr: formData.network_machine_cidr,
         service_cidr: formData.network_service_cidr,
         pod_cidr: formData.network_pod_cidr,
+        router_shards: {
+          items: formData.network_router_shards,
+        },
       },
       managed: ownProps.isManaged,
     };

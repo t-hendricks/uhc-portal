@@ -250,7 +250,21 @@ limitations under the License.
   padding-bottom: 10px;
 }
 
-  .cluster-list-emptystate-options h2 {
+.form-inline > .form-group {
+  @media (min-width: 1200px) {
+    padding-left: 20px;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  .control-label {
+    margin-right: 12px;
+  }
+}
+
+.cluster-list-emptystate-options h2 {
   font-weight: 600;
 }
 
