@@ -82,7 +82,7 @@ function initKeycloak() {
       store.dispatch(getCloudProviders());
       render();
 
-      const IDLE_TIMEOUT_SECONDS = 15 * 60; // 15 minutes
+      const IDLE_TIMEOUT_SECONDS = 30 * 60; // 30 minutes
       const resetCounter = () => {
         localStorage.setItem('lastActiveTimestamp', Math.floor(Date.now() / 1000));
       };
