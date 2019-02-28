@@ -220,16 +220,16 @@ class ClusterList extends Component {
           <Grid fluid style={{ padding: 0 }}>
             <Row><Col sm={1}><h1>Clusters</h1></Col></Row>
             <Row className="cluster-list-top-row">
-              <Col sm={1}>
+              <Col xs={2} sm={1}>
                 <CreateClusterDropdown
                   showCreationForm={() => openModal('create-cluster')}
                   showOCPCreationForm={() => openModal('create-cluster', { isManaged: false })}
                 />
               </Col>
-              <Col sm={1}>
+              <Col xs={1}>
                 {pending ? <Spinner loading /> : null}
               </Col>
-              <Col sm={2} smOffset={8}>
+              <Col xs={6} xsOffset={4} sm={4} smOffset={6} md={3} mdOffset={8}>
                 <RefreshBtn id="refresh" autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
                 <ClusterListFilter />
               </Col>
