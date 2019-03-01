@@ -68,19 +68,19 @@ html {
 
 // Mixin for active/focus/hover/open states
 @mixin btn-def-override-active {
-  background: white;
-  color: #0088ce;
+  background: $color-pf-white;
+  color: $color-pf-blue;
 
   &::before {
-    border: 2px solid #0088ce;
+    border: 2px solid $color-pf-blue;
   }
 }
 
 .btn-default:not(:disabled) {
   border-color: transparent;
   position: relative;
-  background: white;
-  color: #0088ce;
+  background: $color-pf-white;
+  color: $color-pf-blue;
 
   // Border
   &::before {
@@ -90,7 +90,7 @@ html {
     right: -1px;
     bottom: -1px;
     left: -1px;
-    border: 1px solid #0088ce;
+    border: 1px solid $color-pf-blue;
   }
 
   @at-root {

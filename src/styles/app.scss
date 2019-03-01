@@ -47,7 +47,7 @@ limitations under the License.
   margin-bottom: 20px;
 }
 .cluster-list-row:hover{
-  background-color: #edf8ff;
+  background-color: $color-pf-blue-25;
 }
 
 // override pagination patternfly
@@ -107,7 +107,7 @@ limitations under the License.
 }
 
 .maintenance{
-  border: 2px solid #f0ab00 !important;
+  border: 2px solid $color-pf-gold-400 !important;
 }
 
 .center {
@@ -136,7 +136,7 @@ limitations under the License.
     text-transform: none;
     display: inline;
     font-weight: bold;
-    color: #808080
+    color: #808080;
   }
   dd {
     display: inline;
@@ -208,7 +208,7 @@ limitations under the License.
 
     .left-col::after {
       /* Gap filler hack to handle left column being shorter than right */
-      background-color: #d1d1d1;
+      background-color: $color-pf-black-300;
       bottom: -60px;
       content: '';
       height: 60px;
@@ -220,7 +220,7 @@ limitations under the License.
 }
 
 .left-col {
-  border-right: 1px solid #d1d1d1;
+  border-right: 1px solid $color-pf-black-300;
   font-size: 14px;
 
   @media (max-width: 767px) {
@@ -241,7 +241,7 @@ limitations under the License.
 
 .cluster-install-callout {
   @media (max-width: 767px) {
-    border-left: 3px solid #d1d1d1;
+    border-left: 3px solid $color-pf-black-300;
     padding-left: 7px;
   }
 }
