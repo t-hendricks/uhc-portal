@@ -4,7 +4,7 @@ html {
   height: 100%;
 }
 
-/* 
+/*
   Open Shift masthead overrides:
   https://github.com/openshift/console/blob/master/frontend/public/style/_overrides.scss#L260
 
@@ -34,14 +34,14 @@ html {
   display: block;
 }
 
-/* 
+/*
   Open Shift PF3/PF4 Base Font change (makes PF4 Overpass fonts slightly smaller):
   https://github.com/openshift/console/blob/ef1212655ba60571aaeec666843cd9f1ef139189/frontend/public/style/_layout.scss#L23
 
   Masthead is PF4 and uses base font size 16px, while the rest of the page remains 14px ($font-size-base)
  */
- .pf-c-page { 
-  --pf-global--FontSize--md: #{$font-size-base}; 
+ .pf-c-page {
+  --pf-global--FontSize--md: #{$font-size-base};
  }
  .pf-c-page__header {
   --pf-global--FontSize--md: calc(#{$pf-global--font-size-root} * 1px);
@@ -55,5 +55,63 @@ html {
 @media screen and (max-width: 767px) {
   .pf-u-visible-on-md {
     display: none;
+  }
+}
+
+
+/*
+  Secondary buttons look disabled:
+  https://gitlab.cee.redhat.com/service/uhc-portal/issues/13
+
+  Change style for btn-default
+*/
+
+// Mixin for active/focus/hover/open states
+@mixin btn-def-override-active {
+  background: white;
+  color: #0088ce;
+
+  &::before {
+    border: 2px solid #0088ce;
+  }
+}
+
+.btn-default:not(:disabled) {
+  border-color: transparent;
+  position: relative;
+  background: white;
+  color: #0088ce;
+
+  // Border
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
+    border: 1px solid #0088ce;
+  }
+
+  @at-root {
+    .open .dropdown-toggle#{&},
+    .open .dropdown-toggle#{&}:hover,
+    .open .dropdown-toggle#{&}:active,
+    .open .dropdown-toggle#{&}:focus {
+      @include btn-def-override-active;
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:active:focus {
+    @include btn-def-override-active;
+  }
+
+  // Disable inner shadow
+  @at-root .btn-group.open .dropdown-toggle#{&},
+  &:active {
+    box-shadow: none;
   }
 }
