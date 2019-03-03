@@ -118,6 +118,88 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
         </EmptyStateAction>
       </Col>
     </Row>
+    <Row
+      bsClass="row"
+      className="cluster-list-emptystate-button-row"
+      componentClass="div"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={4}
+        smHidden={true}
+        xsHidden={true}
+      >
+        <EmptyStateAction
+          className=""
+          secondary={false}
+        >
+          <Link
+            replace={false}
+            to="/clusters/install"
+          >
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsSize="large"
+              bsStyle="primary"
+              disabled={false}
+            >
+              Create Self-Managed (Manual) Cluster
+            </Button>
+          </Link>
+        </EmptyStateAction>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={4}
+        smHidden={true}
+        xsHidden={true}
+      >
+        <EmptyStateAction
+          className=""
+          secondary={false}
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsSize="large"
+            bsStyle="default"
+            disabled={false}
+            onClick={[MockFunction]}
+          >
+            Create Self-Managed (Auto) Cluster
+          </Button>
+        </EmptyStateAction>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={4}
+        smHidden={true}
+        xsHidden={true}
+      >
+        <EmptyStateAction
+          className=""
+          secondary={false}
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsSize="large"
+            bsStyle="default"
+            disabled={false}
+            onClick={[MockFunction]}
+          >
+            Create Red Hat-Managed Cluster
+          </Button>
+        </EmptyStateAction>
+      </Col>
+    </Row>
   </Grid>
 </EmptyState>
 `;
