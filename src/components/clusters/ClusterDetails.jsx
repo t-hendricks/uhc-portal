@@ -21,7 +21,6 @@ import {
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import ClusterUtilizationChart from './ClusterUtilizationChart';
@@ -125,7 +124,6 @@ class ClusterDetails extends Component {
       openModal,
       credentials,
       history,
-      fetchCredentials,
       match,
     } = this.props;
 
@@ -439,7 +437,7 @@ class ClusterDetails extends Component {
                   {consoleBtn}
                   {credentialsButton}
                   {actionsBtn}
-                  <RefreshBtn id="refresh" autoRefresh refreshFunc={() => { fetchDetails(cluster.id); fetchCredentials(cluster.id); }} />
+                  <RefreshBtn id="refresh" autoRefresh refreshFunc={this.refresh} />
                 </ButtonGroup>
               </Col>
             </Row>
@@ -628,4 +626,4 @@ const mapDispatchToProps = {
   openModal: modalActions.openModal,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ClusterDetails));
+export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
