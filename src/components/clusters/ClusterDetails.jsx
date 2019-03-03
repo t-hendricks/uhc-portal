@@ -415,7 +415,7 @@ class ClusterDetails extends Component {
         <div id="clusterdetails-content">
           <Grid fluid>
             <Row>
-              <Col sm={3}>
+              <Col sm={8}>
                 <Breadcrumb>
                   <LinkContainer to="/clusters">
                     <Breadcrumb.Item href="#">
@@ -429,12 +429,12 @@ class ClusterDetails extends Component {
               </Col>
             </Row>
             <Row>
-              <Col sm={3}>
+              <Col sm={6}>
                 <h1 style={{ marginTop: 0 }}>
                   <ClusterBadge clusterName={clusterName} />
                 </h1>
               </Col>
-              <Col md={9} lg={5} lgOffset={4}>
+              <Col lg={5} lgOffset={1}>
                 <ButtonGroup id="cl-details-btns">
                   {consoleBtn}
                   {credentialsButton}
