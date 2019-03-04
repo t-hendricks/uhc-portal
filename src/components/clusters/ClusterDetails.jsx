@@ -120,7 +120,6 @@ class ClusterDetails extends Component {
       cluster,
       error,
       errorMessage,
-      pending,
       cloudProviders,
       fetchDetails,
       openModal,
@@ -130,7 +129,10 @@ class ClusterDetails extends Component {
     } = this.props;
 
     const requestedClusterID = match.params.id;
-    const isPending = pending && result(cluster, 'id') !== requestedClusterID;
+    // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
+    // the redux state will have the data for the previous cluster. We want to ensure we only
+    // show data for the requested cluster, so different data should be marked as pending.
+    const isPending = result(cluster, 'id') !== requestedClusterID;
     const pendingMessage = () => {
       if (isPending) {
         return (
@@ -556,7 +558,6 @@ ClusterDetails.propTypes = {
   cluster: PropTypes.any,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  pending: PropTypes.bool,
   history: PropTypes.object,
 };
 
@@ -564,7 +565,6 @@ ClusterDetails.defaultProps = {
   cluster: undefined,
   error: false,
   errorMessage: '',
-  pending: true,
 };
 
 const mapStateToProps = state => Object.assign(
