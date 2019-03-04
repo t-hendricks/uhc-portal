@@ -16,7 +16,7 @@ import result from 'lodash/result';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, MenuItem, Modal, ButtonGroup,
+  Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, Modal, ButtonGroup,
   Breadcrumb,
 } from 'patternfly-react';
 
@@ -29,6 +29,7 @@ import ClusterStateIcon from '../common/ClusterStateIcon/ClusterStateIcon';
 import Timestamp from '../common/Timestamp';
 import { getMetricsTimeDelta } from '../../common/helpers';
 import clusterStates from '../../common/clusterStates';
+import ClusterActionsDropdown from '../common/ClusterActionsDropdown';
 
 import EditClusterDialog from '../cluster/forms/EditClusterDialog';
 import EditDisplayNameDialog from '../cluster/forms/EditDisplayNameDialog';
@@ -54,8 +55,9 @@ class ClusterDetails extends Component {
       editClusterDialogVisible: false,
       editDisplayNameDialogVisible: false,
     };
-
     this.refresh = this.refresh.bind(this);
+    this.openEditDisplayNameDialog = this.openEditDisplayNameDialog.bind(this);
+    this.openEditClusterDialog = this.openEditClusterDialog.bind(this);
   }
 
   componentDidMount() {
@@ -337,52 +339,6 @@ class ClusterDetails extends Component {
         </Button>
       );
 
-    const uninstallingProps = cluster.state === clusterStates.UNINSTALLING ? { disabled: true, title: 'The cluster is being uninstalled' } : {};
-
-    const editClusterItem = () => {
-      if (!cluster.managed) {
-        return (
-          <MenuItem disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Self managed cluster cannot be edited'}>
-            Edit Cluster
-          </MenuItem>
-        );
-      }
-      if (cluster.state !== clusterStates.READY) {
-        return (
-          <MenuItem disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'This cluster is not ready'}>
-            Edit Cluster
-          </MenuItem>
-        );
-      }
-      return (
-        <MenuItem onClick={() => this.openEditClusterDialog(cluster)} {...uninstallingProps}>
-          Edit Cluster
-        </MenuItem>
-      );
-    };
-
-    const editDisplayNameItem = (
-      <MenuItem
-        onClick={() => this.openEditDisplayNameDialog(cluster)}
-        {...uninstallingProps}
-      >
-        Edit Display Name
-      </MenuItem>);
-
-
-    const deleteModalData = {
-      clusterID: cluster.id,
-      clusterName: cluster.name,
-      managed: cluster.managed,
-    };
-
-    const deleteClusterItem = cluster.state !== 'uninstalling' ? (
-      <MenuItem onClick={() => openModal('delete-cluster', deleteModalData)}>
-    Delete Cluster
-      </MenuItem>)
-      : (<MenuItem disabled title="The cluster is being uninstalled">Delete Cluster</MenuItem>);
-
-
     const actionsBtn = (
       <DropdownButton
         id="actions"
@@ -390,9 +346,12 @@ class ClusterDetails extends Component {
         title="Actions"
         pullRight
       >
-        {editDisplayNameItem}
-        {editClusterItem()}
-        {deleteClusterItem}
+        <ClusterActionsDropdown
+          cluster={cluster}
+          showConsoleButton={false}
+          openEditClusterDialog={this.openEditClusterDialog}
+          openEditDisplayNameDialog={this.openEditDisplayNameDialog}
+        />
       </DropdownButton>
     );
 
@@ -598,7 +557,6 @@ ClusterDetails.propTypes = {
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   pending: PropTypes.bool,
-  fulfilled: PropTypes.bool,
   history: PropTypes.object,
 };
 

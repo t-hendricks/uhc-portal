@@ -2,7 +2,7 @@ import result from 'lodash/result';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  Tooltip, OverlayTrigger, DropdownKebab, MenuItem, Grid,
+  Tooltip, OverlayTrigger, DropdownKebab, Grid,
 } from 'patternfly-react';
 import { Link } from 'react-router-dom';
 import { TableGrid } from 'patternfly-react-extensions';
@@ -10,11 +10,11 @@ import ClusterBadge from '../ClusterBadge';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import NumberWithUnit from '../NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
-import clusterStates from '../../../common/clusterStates';
+import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 
 function ClusterListTable(props) {
   const {
-    viewOptions, setSorting, openEditClusterDialog, openDeleteClusterDialog,
+    viewOptions, setSorting, openEditClusterDialog,
     openEditDisplayNameDialog,
   } = props;
   const { clusters } = props;
@@ -49,59 +49,6 @@ function ClusterListTable(props) {
   const clusterRow = (cluster, index) => {
     const provider = result(cluster, 'cloud_provider.id', 'N/A');
     const name = cluster.display_name || ''; // This would've been one trenary condition if the backend didn't have omitEmpty on display_name
-    // The trenary for consoleURL is needed because the API does not guarantee fields being present.
-    // We'll have a lot of these all over the place as we grow :(
-    const consoleURL = cluster.console ? cluster.console.url : false;
-    const consoleMenuItem = consoleURL && cluster.state !== clusterStates.UNINSTALLING ? (
-      <MenuItem href={consoleURL} target="_blank" rel="noreferrer">
-          Launch Admin Console
-      </MenuItem>)
-      : (
-        <MenuItem disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
-          Launch Admin Console
-        </MenuItem>
-      );
-
-    const uninstallingProps = cluster.state === clusterStates.UNINSTALLING ? { disabled: true, title: 'The cluster is being uninstalled' } : {};
-
-    const editClusterItem = () => {
-      if (!cluster.managed) {
-        return (
-          <MenuItem disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Self managed cluster cannot be edited'}>
-            Edit Cluster
-          </MenuItem>
-        );
-      }
-      if (cluster.state !== clusterStates.READY) {
-        return (
-          <MenuItem disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'This cluster is not ready'}>
-            Edit Cluster
-          </MenuItem>
-        );
-      }
-      return (
-        <MenuItem onClick={() => openEditClusterDialog(cluster)} {...uninstallingProps}>
-          Edit Cluster
-        </MenuItem>
-      );
-    };
-
-    const editDisplayNameItem = (
-      <MenuItem onClick={() => openEditDisplayNameDialog(cluster)} {...uninstallingProps}>
-        Edit Display Name
-      </MenuItem>);
-
-    const deleteModalData = {
-      clusterID: cluster.id,
-      clusterName: cluster.name,
-      managed: cluster.managed,
-    };
-
-    const deleteClusterItem = cluster.state !== 'uninstalling' ? (
-      <MenuItem onClick={() => openDeleteClusterDialog(deleteModalData)}>
-        Delete Cluster
-      </MenuItem>)
-      : (<MenuItem disabled title="The cluster is being deleted">Delete Cluster</MenuItem>);
 
     const clusterName = (
       <OverlayTrigger
@@ -172,10 +119,12 @@ function ClusterListTable(props) {
         </Grid.Col>
         <Grid.Col {...kebabColSizes}>
           <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
-            {consoleMenuItem}
-            {editDisplayNameItem}
-            {editClusterItem()}
-            {deleteClusterItem}
+            <ClusterActionsDropdown
+              cluster={cluster}
+              showConsoleButton
+              openEditDisplayNameDialog={openEditDisplayNameDialog}
+              openEditClusterDialog={openEditClusterDialog}
+            />
           </DropdownKebab>
         </Grid.Col>
       </TableGrid.Row>
