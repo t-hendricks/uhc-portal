@@ -8,23 +8,20 @@ import {
 class RefreshBtn extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      refreshTimerID: null,
-    };
+    this.refreshTimerID = null;
     this.refreshTimer = this.refreshTimer.bind(this);
   }
 
   componentDidMount() {
     const { autoRefresh } = this.props;
-    if (autoRefresh) {
-      this.setState({ refreshTimerID: setInterval(this.refreshTimer, 60 * 1000) });
+    if (autoRefresh && this.refreshTimerID === null) {
+      this.refreshTimerID = setInterval(this.refreshTimer, 60 * 1000);
     }
   }
 
   componentWillUnmount() {
-    const { refreshTimerID } = this.state;
-    if (refreshTimerID !== null) {
-      clearInterval(refreshTimerID);
+    if (this.refreshTimerID !== null) {
+      clearInterval(this.refreshTimerID);
     }
   }
 
