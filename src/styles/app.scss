@@ -258,12 +258,21 @@ limitations under the License.
   margin-top: 40px;
 }
 
-.cluster-list-emptystate-options > * {
+.cluster-list-emptystate-options > *, .cluster-list-emptystate-button-row > * {
   border-right: 1px solid lightgray;
 }
 
-.cluster-list-emptystate-options > :last-child {
+.cluster-list-emptystate-options > :last-child, .cluster-list-emptystate-button-row > :last-child {
   border-right: none;
+}
+
+.cluster-list-emptystate-options .btn {
+  display: none;
+  visibility: hidden;
+}
+
+.cluster-list-emptystate-options > :nth-child(2) {
+  height: 162px;
 }
 
 @media (max-width: 1000px) {
@@ -274,6 +283,11 @@ limitations under the License.
   }
   .cluster-list-emptystate-options > :last-child {
     border-bottom: none;
+  }
+
+  .cluster-list-emptystate-options .btn {
+    display: inline-block;
+    visibility: visible;
   }
 }
 

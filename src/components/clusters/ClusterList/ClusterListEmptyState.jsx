@@ -9,6 +9,32 @@ import {
 
 function ClusterListEmptyState(props) {
   const { showCreationForm, showOCPCreationForm } = props;
+
+  const createSelfManaged = (
+    <EmptyState.Action>
+      <Link to="/clusters/install">
+        <Button bsStyle="primary" bsSize="large">
+          Create Self-Managed (Manual) Cluster
+        </Button>
+      </Link>
+    </EmptyState.Action>);
+
+  const createAutoSelfManaged = (
+    <EmptyState.Action>
+      <Button bsSize="large" onClick={showOCPCreationForm}>
+        Create Self-Managed (Auto) Cluster
+      </Button>
+    </EmptyState.Action>
+  );
+
+  const createManaged = (
+    <EmptyState.Action>
+      <Button bsSize="large" onClick={showCreationForm}>
+        Create Red Hat-Managed Cluster
+      </Button>
+    </EmptyState.Action>
+  );
+
   return (
     <EmptyState className="full-page-blank-slate">
       <Grid>
@@ -28,13 +54,7 @@ function ClusterListEmptyState(props) {
               to install OpenShift and manage it yourself.
               More information and better text should go here.
             </p>
-            <EmptyState.Action>
-              <Link to="/clusters/install">
-                <Button bsStyle="primary" bsSize="large">
-                  Create Self-Managed (Manual) Cluster
-                </Button>
-              </Link>
-            </EmptyState.Action>
+            {createSelfManaged}
           </Col>
           <Col md={4}>
             <h2>Self-Managed (Auto-Install) Cluster</h2>
@@ -43,11 +63,7 @@ function ClusterListEmptyState(props) {
               to provision the cluster on Amazon Web Services and manage it yourself.
               More information and better text should go here.
             </p>
-            <EmptyState.Action>
-              <Button bsSize="large" onClick={showOCPCreationForm}>
-                Create Self-Managed (Auto) Cluster
-              </Button>
-            </EmptyState.Action>
+            {createAutoSelfManaged}
           </Col>
           <Col md={4}>
             <h2>Red Hat-Managed Cluster</h2>
@@ -56,11 +72,18 @@ function ClusterListEmptyState(props) {
               to provision the cluster on Amazon Web Services.
               More information on this flow and why users would take this flow.
             </p>
-            <EmptyState.Action>
-              <Button bsSize="large" onClick={showCreationForm}>
-                Create Red Hat-Managed Cluster
-              </Button>
-            </EmptyState.Action>
+            {createManaged}
+          </Col>
+        </Row>
+        <Row className="cluster-list-emptystate-button-row">
+          <Col md={4} smHidden xsHidden>
+            {createSelfManaged}
+          </Col>
+          <Col md={4} smHidden xsHidden>
+            {createAutoSelfManaged}
+          </Col>
+          <Col md={4} smHidden xsHidden>
+            {createManaged}
           </Col>
         </Row>
       </Grid>
