@@ -54,7 +54,7 @@ const createViewQueryObject = (viewOptions, queryObj) => {
         queryObject.order = `${viewOptions.sorting.sortField} ${direction}`;
       }
     }
-    queryObject.filter = viewOptions.filter;
+    queryObject.filter = viewOptions.filter ? `display_name like '%${viewOptions.filter}%' or (display_name = '' and name like '%${viewOptions.filter}%') or external_id like '%${viewOptions.filter}%'` : undefined;
   }
 
   return queryObject;
