@@ -19,7 +19,7 @@
     ],
     "react/forbid-prop-types": [false],
     "react/require-default-props": [false],
-    "react/jsx-no-target-blank": [false],
+    "react/jsx-no-target-blank": [false]
   },
   "overrides": [{
     "files": [
@@ -29,5 +29,9 @@
       "import/prefer-default-export": 0
     }
   }],
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "globals": {
+    "insights": true,
+    "APP_EMBEDDED": true
+  }
 }

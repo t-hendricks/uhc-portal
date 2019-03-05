@@ -41,7 +41,7 @@ const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter basename={APP_EMBEDDED ? '/insights/platform/uhc' : ''}>
           <App
             loginFunction={keycloak.login}
             logoutFunction={keycloak.logout}
@@ -115,18 +115,33 @@ function initKeycloak() {
   });
 }
 
-config.fetchConfig().then(() => {
-  // If running using webpack-server development server, and setting env
-  // variable `UHC_DISABLE_KEYCLOAK` to `true`, disable keycloak.
-  if (process.env.UHC_DISABLE_KEYCLOAK === 'true') {
+if (APP_EMBEDDED) {
+  document.querySelector('.layout-pf.layout-pf-fixed').classList.remove('layout-pf', 'layout-pf-fixed');
+  insights.chrome.init();
+  insights.chrome.auth.getUser().then((data) => {
+    store.dispatch(userInfoResponse(data));
+    store.dispatch(getCloudProviders());
     keycloak = {
-      login: () => {},
-      logout: () => {},
+      login: () => undefined,
+      logout: () => insights.chrome.auth.logout(),
       authenticated: true,
     };
     store.dispatch(userInfoResponse({ email: '***REMOVED***', name: 'mock username' }));
     render();
-  } else {
-    initKeycloak();
-  }
-});
+  });
+} else {
+  config.fetchConfig().then(() => {
+    // If running using webpack-server development server, and setting env
+    // variable `UHC_DISABLE_KEYCLOAK` to `true`, disable keycloak.
+    if (process.env.UHC_DISABLE_KEYCLOAK === 'true') {
+      keycloak = {
+        login: () => { },
+        logout: () => { },
+        authenticated: true,
+      };
+      render();
+    } else {
+      initKeycloak();
+    }
+  });
+}
