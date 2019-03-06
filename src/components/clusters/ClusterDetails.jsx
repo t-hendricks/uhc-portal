@@ -36,7 +36,7 @@ import EditDisplayNameDialog from '../cluster/forms/EditDisplayNameDialog';
 import DeleteClusterDialog from '../cluster/forms/DeleteClusterDialog';
 import ClusterCredentialsModal from './ClusterCredentialsModal';
 
-import { humanizeValueWithUnit } from '../../common/unitParser';
+import { humanizeValueWithUnit, parseValueWithUnit } from '../../common/unitParser';
 import { fetchClusterDetails, fetchClusterCredentials, invalidateClusters } from '../../redux/actions/clustersActions';
 import { cloudProviderActions } from '../../redux/actions/cloudProviderActions';
 import { modalActions } from '../common/Modal/ModalActions';
@@ -287,19 +287,13 @@ class ClusterDetails extends Component {
     } else {
       cloudProvider = cloudProviderId ? cloudProviderId.toUpperCase() : 'N/A';
     }
+
     const memoryTotalWithUnit = humanizeValueWithUnit(
       cluster.memory.total.value, cluster.memory.total.unit,
-    );
-    const memoryUsedWithUnit = humanizeValueWithUnit(
-      cluster.memory.used.value, cluster.memory.used.unit,
     );
     const storageTotalWithUnit = humanizeValueWithUnit(
       cluster.storage.total.value, cluster.storage.total.unit,
     );
-    const storageUsedWithUnit = humanizeValueWithUnit(
-      cluster.storage.total.value, cluster.storage.total.unit,
-    );
-
     const metricsLatsUpdate = new Date(cluster.cpu.updated_timestamp);
 
     const metricsAvailable = getMetricsTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta;
@@ -307,13 +301,29 @@ class ClusterDetails extends Component {
     const utilizationCharts = () => (metricsAvailable ? (
       <React.Fragment>
         <Col xs={6} sm={3} md={3}>
-          <ClusterUtilizationChart title="CPU" total={cluster.cpu.total.value} unit="Cores" used={cluster.cpu.used.value} donutId="cpu_donut" />
+          <ClusterUtilizationChart
+            title="CPU"
+            total={cluster.cpu.total.value}
+            unit="Cores"
+            used={cluster.cpu.used.value}
+            donutId="cpu_donut"
+          />
         </Col>
         <Col xs={6} sm={3} md={3}>
-          <ClusterUtilizationChart title="MEMORY" total={memoryTotalWithUnit.value} unit="GiB" used={memoryUsedWithUnit.value} donutId="memory_donut" />
+          <ClusterUtilizationChart
+            title="MEMORY"
+            totalBytes={parseValueWithUnit(cluster.memory.total.value, cluster.memory.total.unit)}
+            usedBytes={parseValueWithUnit(cluster.memory.used.value, cluster.memory.used.unit)}
+            donutId="memory_donut"
+          />
         </Col>
         <Col xs={6} sm={3} md={3}>
-          <ClusterUtilizationChart title="STORAGE" total={storageTotalWithUnit.value} unit="GiB" used={storageUsedWithUnit.value} donutId="storage_donut" />
+          <ClusterUtilizationChart
+            title="STORAGE"
+            totalBytes={parseValueWithUnit(cluster.storage.total.value, cluster.storage.total.unit)}
+            usedBytes={parseValueWithUnit(cluster.storage.used.value, cluster.storage.used.unit)}
+            donutId="storage_donut"
+          />
         </Col>
       </React.Fragment>)
       : (

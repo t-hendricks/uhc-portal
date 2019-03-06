@@ -1,21 +1,41 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   DonutChart,
 } from 'patternfly-react';
+import { humanizeValueWithUnit } from '../../common/unitParser';
 
-import PropTypes from 'prop-types';
 
 function ClusterUtilizationChart(props) {
   const {
-    title, used, total, unit, donutId,
+    title, used, total, unit, donutId, usedBytes, totalBytes,
   } = props;
-  let fakeTotal = total;
-  if (total === 0) {
-    fakeTotal = 1;
+  let available;
+  let usedValue;
+  let usedColumnTitle;
+  let availableColumnTitle;
+  if (usedBytes !== undefined) {
+    // bytes based donut, like memory or storage. We need to humanize it ourselves.
+    const usedHumanized = humanizeValueWithUnit(usedBytes, 'B');
+    usedValue = usedHumanized.value;
+
+    const availableBytes = totalBytes - usedBytes;
+    const availableHumanized = humanizeValueWithUnit(availableBytes, 'B');
+    available = availableHumanized.value;
+
+    usedColumnTitle = `${usedHumanized.unit} used`;
+    availableColumnTitle = `${availableHumanized.unit} available`;
+  } else {
+    // unit provided, for example CPU
+    available = total - used;
+    usedValue = used;
+    usedColumnTitle = `${unit} used`;
+    availableColumnTitle = `${unit} available`;
   }
-  const available = fakeTotal - used;
-  const usedColumnTitle = `${unit} used`;
-  const availableColumnTitle = `${unit} available`;
+
+  // had to copy this from the patternfly storybook source code to get the tooltip :(
+  const pfGetUtilizationDonutTooltipContents = d => `<span class="donut-tooltip-pf" style="white-space: nowrap;">${d[0].value} ${d[0].name}</span>`;
+
   return (
     <div>
       <h4 className="center">
@@ -26,11 +46,12 @@ function ClusterUtilizationChart(props) {
           id={donutId}
           size={{ width: 180, height: 180 }}
           data={{
-            columns: [[usedColumnTitle, used], [availableColumnTitle, available]],
-            groups: [[usedColumnTitle, availableColumnTitle]],
+            columns: [[usedColumnTitle, usedValue], [availableColumnTitle, available]],
+            groups: [['used', 'available']],
             order: null,
           }}
-          title={{ type: 'max' }}
+          tooltip={{ contents: pfGetUtilizationDonutTooltipContents }}
+          title={{ primary: usedValue, secondary: usedColumnTitle }}
         />
       </div>
     </div>);
@@ -38,9 +59,11 @@ function ClusterUtilizationChart(props) {
 
 ClusterUtilizationChart.propTypes = {
   title: PropTypes.string.isRequired,
-  used: PropTypes.number.isRequired,
-  total: PropTypes.number.isRequired,
-  unit: PropTypes.string.isRequired,
+  used: PropTypes.number,
+  total: PropTypes.number,
+  unit: PropTypes.string,
+  usedBytes: PropTypes.number,
+  totalBytes: PropTypes.number,
   donutId: PropTypes.string.isRequired,
 };
 
