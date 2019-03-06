@@ -45,7 +45,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
             className=""
           >
             <p
-              class="cluster-list-emptystate-preferred-string"
+              className="cluster-list-emptystate-preferred-string"
             >
               Preferred method
             </p>
