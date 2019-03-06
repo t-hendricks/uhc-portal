@@ -126,7 +126,6 @@ if (APP_EMBEDDED) {
       logout: () => insights.chrome.auth.logout(),
       authenticated: true,
     };
-    store.dispatch(userInfoResponse({ email: '***REMOVED***', name: 'mock username' }));
     render();
   });
 } else {
@@ -139,6 +138,7 @@ if (APP_EMBEDDED) {
         logout: () => { },
         authenticated: true,
       };
+      store.dispatch(userInfoResponse({ email: '***REMOVED***', name: 'mock username' }));
       render();
     } else {
       initKeycloak();
