@@ -195,6 +195,25 @@ exports[`CreateClusterModal should render 1`] = `
                 type="text"
                 validate={[Function]}
               />
+              <h4>
+                Router Shards
+              </h4>
+              <Field
+                component={[Function]}
+                componentClass={[Function]}
+                disabled={false}
+                label=""
+                name="network_router_shards.0"
+                validate={[Function]}
+              />
+              <Field
+                component={[Function]}
+                componentClass={[Function]}
+                disabled={false}
+                label=""
+                name="network_router_shards.1"
+                validate={[Function]}
+              />
             </Col>
             <Col
               bsClass="col"
@@ -202,6 +221,7 @@ exports[`CreateClusterModal should render 1`] = `
               sm={4}
             >
               <NetworkConfugurationHint />
+              <RouterShardsHint />
             </Col>
           </ExpandCollapse>
         </Row>

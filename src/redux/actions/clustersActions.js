@@ -56,6 +56,10 @@ const fetchClusterCredentials = clusterID => dispatch => dispatch({
   payload: clusterService.getClusterCredentials(clusterID),
 });
 
+const fetchClusterRouterShards = clusterID => dispatch => dispatch({
+  type: clustersConstants.GET_CLUSTER_ROUTER_SHARDS,
+  payload: clusterService.getClusterRouterShards(clusterID),
+});
 
 const resetCreatedClusterResponse = () => dispatch => dispatch({
   type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
@@ -68,11 +72,20 @@ const clustersActions = {
   fetchClusters,
   fetchClusterDetails,
   fetchClusterCredentials,
+  fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,
 };
 
 export {
-  clustersActions, createCluster, editCluster, fetchClusters, fetchClusterDetails,
-  invalidateClusters, clearClusterResponse, resetCreatedClusterResponse, fetchClusterCredentials,
+  clustersActions,
+  clearClusterResponse,
+  createCluster,
+  editCluster,
+  fetchClusters,
+  fetchClusterDetails,
+  fetchClusterCredentials,
+  fetchClusterRouterShards,
+  invalidateClusters,
+  resetCreatedClusterResponse,
 };
