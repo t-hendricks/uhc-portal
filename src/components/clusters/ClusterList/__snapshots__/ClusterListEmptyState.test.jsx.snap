@@ -4,26 +4,25 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
 <EmptyState
   className="full-page-blank-slate"
 >
-  <Grid
-    bsClass="container"
+  <Row
+    bsClass="row"
     componentClass="div"
-    fluid={false}
   >
-    <Row
-      bsClass="row"
-      componentClass="div"
+    <EmptyStateTitle
+      className=""
     >
-      <EmptyStateTitle
-        className=""
-      >
-        No Clusters Exist
-      </EmptyStateTitle>
-      <EmptyStateInfo
-        className=""
-      >
-        There are no clusters to display. Create a cluster to get started.
-      </EmptyStateInfo>
-    </Row>
+      No Clusters Exist
+    </EmptyStateTitle>
+    <EmptyStateInfo
+      className=""
+    >
+      There are no clusters to display. Create a cluster to get started.
+    </EmptyStateInfo>
+  </Row>
+  <CardGrid
+    className=""
+    matchHeight={true}
+  >
     <Row
       bsClass="row"
       className="cluster-list-emptystate-options"
@@ -34,172 +33,140 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
         componentClass="div"
         md={4}
       >
-        <h2>
-          Self-Managed (Manual Install) Cluster
-        </h2>
-        <p>
-          Create a self-managed cluster (OCP) to install OpenShift and manage it yourself. More information and better text should go here.
-        </p>
-        <EmptyStateAction
-          className=""
-          secondary={false}
+        <Card
+          accented={true}
+          aggregated={false}
+          aggregatedMini={false}
+          cardRef={null}
+          className="cluster-list-emptystate-preferred"
+          matchHeight={true}
         >
-          <Link
-            replace={false}
-            to="/clusters/install"
+          <CardBody
+            className=""
           >
-            <Button
-              active={false}
-              block={false}
-              bsClass="btn"
-              bsSize="large"
-              bsStyle="primary"
-              disabled={false}
+            <p
+              class="cluster-list-emptystate-preferred-string"
             >
-              Create Self-Managed (Manual) Cluster
-            </Button>
-          </Link>
-        </EmptyStateAction>
+              Preferred method
+            </p>
+            <CardTitle
+              className=""
+            >
+              Self-Managed (Manual Install) Cluster
+            </CardTitle>
+            <p>
+              Create a self-managed cluster (OCP) to install OpenShift and manage it yourself. More information and better text should go here.
+            </p>
+            <EmptyStateAction
+              className=""
+              secondary={false}
+            >
+              <Link
+                replace={false}
+                to="/clusters/install"
+              >
+                <Button
+                  active={false}
+                  block={false}
+                  bsClass="btn"
+                  bsSize="large"
+                  bsStyle="primary"
+                  disabled={false}
+                >
+                  Create Self-Managed (Manual) Cluster
+                </Button>
+              </Link>
+            </EmptyStateAction>
+          </CardBody>
+        </Card>
       </Col>
       <Col
         bsClass="col"
         componentClass="div"
         md={4}
       >
-        <h2>
-          Self-Managed (Auto-Install) Cluster
-        </h2>
-        <p>
-          Create a self-managed cluster (OCP) to provision the cluster on Amazon Web Services and manage it yourself. More information and better text should go here.
-        </p>
-        <EmptyStateAction
+        <Card
+          accented={false}
+          aggregated={false}
+          aggregatedMini={false}
+          cardRef={null}
           className=""
-          secondary={false}
+          matchHeight={true}
         >
-          <Button
-            active={false}
-            block={false}
-            bsClass="btn"
-            bsSize="large"
-            bsStyle="default"
-            disabled={false}
-            onClick={[MockFunction]}
+          <CardBody
+            className=""
           >
-            Create Self-Managed (Auto) Cluster
-          </Button>
-        </EmptyStateAction>
+            <CardTitle
+              className=""
+            >
+              Self-Managed (Auto-Install) Cluster
+            </CardTitle>
+            <p>
+              Create a self-managed cluster (OCP) to provision the cluster on Amazon Web Services and manage it yourself. More information and better text should go here.
+            </p>
+            <EmptyStateAction
+              className=""
+              secondary={false}
+            >
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsSize="large"
+                bsStyle="primary"
+                disabled={false}
+                onClick={[MockFunction]}
+              >
+                Create Self-Managed (Auto) Cluster
+              </Button>
+            </EmptyStateAction>
+          </CardBody>
+        </Card>
       </Col>
       <Col
         bsClass="col"
         componentClass="div"
         md={4}
       >
-        <h2>
-          Red Hat-Managed Cluster
-        </h2>
-        <p>
-          Create a Red Hat-managed cluster (OSD), to provision the cluster on Amazon Web Services. More information on this flow and why users would take this flow.
-        </p>
-        <EmptyStateAction
+        <Card
+          accented={false}
+          aggregated={false}
+          aggregatedMini={false}
+          cardRef={null}
           className=""
-          secondary={false}
+          matchHeight={true}
         >
-          <Button
-            active={false}
-            block={false}
-            bsClass="btn"
-            bsSize="large"
-            bsStyle="default"
-            disabled={false}
-            onClick={[MockFunction]}
+          <CardBody
+            className=""
           >
-            Create Red Hat-Managed Cluster
-          </Button>
-        </EmptyStateAction>
+            <CardTitle
+              className=""
+            >
+              Red Hat-Managed Cluster
+            </CardTitle>
+            <p>
+              Create a Red Hat-managed cluster (OSD), to provision the cluster on Amazon Web Services. More information on this flow and why users would take this flow.
+            </p>
+            <EmptyStateAction
+              className=""
+              secondary={false}
+            >
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsSize="large"
+                bsStyle="primary"
+                disabled={false}
+                onClick={[MockFunction]}
+              >
+                Create Red Hat-Managed Cluster
+              </Button>
+            </EmptyStateAction>
+          </CardBody>
+        </Card>
       </Col>
     </Row>
-    <Row
-      bsClass="row"
-      className="cluster-list-emptystate-button-row"
-      componentClass="div"
-    >
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={4}
-        smHidden={true}
-        xsHidden={true}
-      >
-        <EmptyStateAction
-          className=""
-          secondary={false}
-        >
-          <Link
-            replace={false}
-            to="/clusters/install"
-          >
-            <Button
-              active={false}
-              block={false}
-              bsClass="btn"
-              bsSize="large"
-              bsStyle="primary"
-              disabled={false}
-            >
-              Create Self-Managed (Manual) Cluster
-            </Button>
-          </Link>
-        </EmptyStateAction>
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={4}
-        smHidden={true}
-        xsHidden={true}
-      >
-        <EmptyStateAction
-          className=""
-          secondary={false}
-        >
-          <Button
-            active={false}
-            block={false}
-            bsClass="btn"
-            bsSize="large"
-            bsStyle="default"
-            disabled={false}
-            onClick={[MockFunction]}
-          >
-            Create Self-Managed (Auto) Cluster
-          </Button>
-        </EmptyStateAction>
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={4}
-        smHidden={true}
-        xsHidden={true}
-      >
-        <EmptyStateAction
-          className=""
-          secondary={false}
-        >
-          <Button
-            active={false}
-            block={false}
-            bsClass="btn"
-            bsSize="large"
-            bsStyle="default"
-            disabled={false}
-            onClick={[MockFunction]}
-          >
-            Create Red Hat-Managed Cluster
-          </Button>
-        </EmptyStateAction>
-      </Col>
-    </Row>
-  </Grid>
+  </CardGrid>
 </EmptyState>
 `;
