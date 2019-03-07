@@ -96,6 +96,7 @@ const viewOptionsReducer = (state = initialState, action) => {
     case viewPaginationConstants.VIEW_SET_LIST_FILTER:
       updateState[action.viewType] = Object.assign({}, state[action.viewType], {
         filter: action.filter,
+        currentPage: 1,
       });
       return Object.assign({}, state, updateState);
 
