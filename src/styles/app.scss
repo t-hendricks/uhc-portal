@@ -98,10 +98,10 @@ limitations under the License.
 .blank-slate-pf {
   &.full-page-blank-slate {
     border: none;
-    background-color: transparent;
-    border: none;
     height: 100%;
-    margin: 0 20px;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
@@ -299,45 +299,43 @@ limitations under the License.
   }
 }
 
-.cluster-list-emptystate-options h2 {
+.cluster-list-emptystate-options {
+  margin-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.cluster-list-emptystate-options .card-pf-title {
+  font-size: 22px;
   font-weight: 600;
 }
 
-.cluster-list-emptystate-options {
-  margin-top: 40px;
+.cluster-list-emptystate-options .card-pf {
+  display: flex;
 }
 
-.cluster-list-emptystate-options > *, .cluster-list-emptystate-button-row > * {
-  border-right: 1px solid lightgray;
-}
+.cluster-list-emptystate-options .card-pf-body {
+  display: flex;
+  flex-direction: column;
 
-.cluster-list-emptystate-options > :last-child, .cluster-list-emptystate-button-row > :last-child {
-  border-right: none;
-}
-
-.cluster-list-emptystate-options .btn {
-  display: none;
-  visibility: hidden;
-}
-
-.cluster-list-emptystate-options > :nth-child(2) {
-  height: 162px;
-}
-
-@media (max-width: 1000px) {
-  .cluster-list-emptystate-options > * {
-    border-bottom: 1px solid lightgray;
-    padding-bottom: 20px;
-    border-right: none;
+  @media (min-width: 996px) {
+    padding-top: 10px;
   }
-  .cluster-list-emptystate-options > :last-child {
-    border-bottom: none;
-  }
+}
 
-  .cluster-list-emptystate-options .btn {
-    display: inline-block;
-    visibility: visible;
-  }
+.cluster-list-emptystate-preferred .card-pf-body {
+  padding-top: 10px;
+}
+
+.cluster-list-emptystate-preferred-string {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  transform: translateX(-50%);
+}
+
+.cluster-list-emptystate-options .blank-slate-pf-main-action {
+  margin-top: auto;
 }
 
 footer {
