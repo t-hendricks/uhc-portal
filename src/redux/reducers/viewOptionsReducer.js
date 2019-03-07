@@ -10,7 +10,7 @@ const INITAL_VIEW_STATE = {
   pageSize: 50,
   totalCount: 0,
   totalPages: 0,
-  filter: [],
+  filter: '',
   sorting: {
     sortField: 'name',
     isAscending: true,
