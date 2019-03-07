@@ -268,41 +268,33 @@ class ClusterDetails extends Component {
 
     const metricsAvailable = getMetricsTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta;
 
-    const utilizationCharts = () => (metricsAvailable ? (
+    const utilizationCharts = metricsAvailable ? (
       <React.Fragment>
-        <Col xs={6} sm={3} md={3}>
-          <ClusterUtilizationChart
-            title="CPU"
-            total={cluster.cpu.total.value}
-            unit="Cores"
-            used={cluster.cpu.used.value}
-            donutId="cpu_donut"
-          />
-        </Col>
-        <Col xs={6} sm={3} md={3}>
-          <ClusterUtilizationChart
-            title="MEMORY"
-            totalBytes={parseValueWithUnit(cluster.memory.total.value, cluster.memory.total.unit)}
-            usedBytes={parseValueWithUnit(cluster.memory.used.value, cluster.memory.used.unit)}
-            donutId="memory_donut"
-          />
-        </Col>
-        <Col xs={6} sm={3} md={3}>
-          <ClusterUtilizationChart
-            title="STORAGE"
-            totalBytes={parseValueWithUnit(cluster.storage.total.value, cluster.storage.total.unit)}
-            usedBytes={parseValueWithUnit(cluster.storage.used.value, cluster.storage.used.unit)}
-            donutId="storage_donut"
-          />
-        </Col>
+        <ClusterUtilizationChart
+          title="CPU"
+          total={cluster.cpu.total.value}
+          unit="Cores"
+          used={cluster.cpu.used.value}
+          donutId="cpu_donut"
+        />
+        <ClusterUtilizationChart
+          title="MEMORY"
+          totalBytes={parseValueWithUnit(cluster.memory.total.value, cluster.memory.total.unit)}
+          usedBytes={parseValueWithUnit(cluster.memory.used.value, cluster.memory.used.unit)}
+          donutId="memory_donut"
+        />
+        <ClusterUtilizationChart
+          title="STORAGE"
+          totalBytes={parseValueWithUnit(cluster.storage.total.value, cluster.storage.total.unit)}
+          usedBytes={parseValueWithUnit(cluster.storage.used.value, cluster.storage.used.unit)}
+          donutId="storage_donut"
+        />
       </React.Fragment>)
       : (
-        <Col xs={6}>
-          <p>
-            {metricsStatusMessages[cluster.state] || metricsStatusMessages.default}
-          </p>
-        </Col>
-      ));
+        <p>
+          {metricsStatusMessages[cluster.state] || metricsStatusMessages.default}
+        </p>
+      );
 
     // The trenary for consoleURL is needed because the API does not guarantee fields being present.
     // We'll have a lot of these all over the place as we grow :(
@@ -425,6 +417,7 @@ class ClusterDetails extends Component {
                 </Breadcrumb>
               </Col>
             </Row>
+            <hr />
             <Row>
               <Col sm={6}>
                 <h1 style={{ marginTop: 0 }}>
@@ -442,133 +435,140 @@ class ClusterDetails extends Component {
             </Row>
           </Grid>
           <Grid fluid>
-            <Row>
-              {utilizationCharts()}
-            </Row>
+            <div id="cl-details-charts" className="cl-details-card">
+              <div className="cl-details-card-title"><h3>Resource Usage</h3></div>
+              <div className="cl-details-card-body">
+                {utilizationCharts}
+              </div>
+            </div>
           </Grid>
-          <hr style={{ width: '96%' }} />
           <Grid fluid>
-            <Row>
-              <Col sm={6}>
-                <dl className="cluster-details-item left">
-                  <dt>
+            <div className="cl-details-card">
+              <div className="cl-details-card-title"><h3>Details</h3></div>
+              <div className="cl-details-card-body">
+                <Row>
+                  <Col sm={6}>
+                    <dl className="cluster-details-item left">
+                      <dt>
                     Cluster ID
-                  </dt>
-                  <dd>
-                    {cluster.external_id || 'N/A'}
-                  </dd>
-                  <dt>
+                      </dt>
+                      <dd>
+                        {cluster.external_id || 'N/A'}
+                      </dd>
+                      <dt>
                     Location
-                  </dt>
-                  <dd>
-                    {region}
-                  </dd>
-                  <dt>
+                      </dt>
+                      <dd>
+                        {region}
+                      </dd>
+                      <dt>
                     Provider
-                  </dt>
-                  <dd>
-                    { cloudProvider }
-                  </dd>
-                  <dt>
+                      </dt>
+                      <dd>
+                        { cloudProvider }
+                      </dd>
+                      <dt>
                     Version
-                  </dt>
-                  <dd>
-                    <dl className="cluster-details-item-list left">
-                      <dt>
+                      </dt>
+                      <dd>
+                        <dl className="cluster-details-item-list left">
+                          <dt>
                         OpenShift:
-                        {' '}
-                      </dt>
-                      <dd>
-                        {cluster.openshift_version || 'N/A'}
+                            {' '}
+                          </dt>
+                          <dd>
+                            {cluster.openshift_version || 'N/A'}
+                          </dd>
+                        </dl>
                       </dd>
-                    </dl>
-                  </dd>
-                  <dt>
+                      <dt>
                     Created at
-                  </dt>
-                  <dd>
-                    <Timestamp value={cluster.creation_timestamp || ''} />
-                  </dd>
-                  <dt>
+                      </dt>
+                      <dd>
+                        <Timestamp value={cluster.creation_timestamp || ''} />
+                      </dd>
+                      <dt>
                     Last Updated
-                  </dt>
-                  <dd>
-                    <Timestamp value={cluster.last_update_timestamp || ''} />
-                  </dd>
-                </dl>
-              </Col>
-              <Col sm={6}>
-                <dl className="cluster-details-item left">
-                  <dt>
+                      </dt>
+                      <dd>
+                        <Timestamp value={cluster.last_update_timestamp || ''} />
+                      </dd>
+                    </dl>
+                  </Col>
+                  <Col sm={6}>
+                    <dl className="cluster-details-item left">
+                      <dt>
                     Status
-                  </dt>
-                  <dd style={{ textTransform: 'capitalize' }}>
-                    <ClusterStateIcon clusterState={cluster.state} />
-                    {' '}
-                    {cluster.state}
-                  </dd>
-                  <dt>
+                      </dt>
+                      <dd style={{ textTransform: 'capitalize' }}>
+                        <ClusterStateIcon clusterState={cluster.state} />
+                        {' '}
+                        {cluster.state}
+                      </dd>
+                      <dt>
                     Total CPU
-                  </dt>
-                  <dd>
-                    {cluster.cpu.total.value}
-                    {' '}
+                      </dt>
+                      <dd>
+                        {cluster.cpu.total.value}
+                        {' '}
                     vCPU
-                  </dd>
-                  <dt>
+                      </dd>
+                      <dt>
                     Total Memory
-                  </dt>
-                  <dd>
-                    {memoryTotalWithUnit.value}
-                    {' '}
-                    {memoryTotalWithUnit.unit}
-                  </dd>
-                  <dt>
+                      </dt>
+                      <dd>
+                        {memoryTotalWithUnit.value}
+                        {' '}
+                        {memoryTotalWithUnit.unit}
+                      </dd>
+                      <dt>
                     Total Storage
-                  </dt>
-                  <dd>
-                    {storageTotalWithUnit.value}
-                    {' '}
-                    {storageTotalWithUnit.unit}
-                  </dd>
-                  <dt>
+                      </dt>
+                      <dd>
+                        {storageTotalWithUnit.value}
+                        {' '}
+                        {storageTotalWithUnit.unit}
+                      </dd>
+                      <dt>
                     Nodes
-                  </dt>
-                  <dd>
-                    <dl className="cluster-details-item-list left">
-                      <dt>
+                      </dt>
+                      <dd>
+                        <dl className="cluster-details-item-list left">
+                          <dt>
                         Master:
-                        {' '}
-                      </dt>
-                      <dd>
-                        {cluster.nodes.master}
-                      </dd>
-                    </dl>
-                    { cluster.managed ? (
-                      <dl className="cluster-details-item-list left">
-                        <dt>
+                            {' '}
+                          </dt>
+                          <dd>
+                            {cluster.nodes.master}
+                          </dd>
+                        </dl>
+                        { cluster.managed ? (
+                          <dl className="cluster-details-item-list left">
+                            <dt>
                           Infrastructure:
-                          {' '}
-                        </dt>
-                        <dd>
-                          {cluster.nodes.infra}
-                        </dd>
-                      </dl>
-                    ) : null }
-                    <dl className="cluster-details-item-list left">
-                      <dt>
+                              {' '}
+                            </dt>
+                            <dd>
+                              {cluster.nodes.infra}
+                            </dd>
+                          </dl>
+                        ) : null }
+                        <dl className="cluster-details-item-list left">
+                          <dt>
                         Compute:
-                        {' '}
-                      </dt>
-                      <dd>
-                        {cluster.nodes.compute}
+                            {' '}
+                          </dt>
+                          <dd>
+                            {cluster.nodes.compute}
+                          </dd>
+                        </dl>
                       </dd>
+                      {clusterNetwork()}
                     </dl>
-                  </dd>
-                  {clusterNetwork()}
-                </dl>
-              </Col>
-            </Row>
+                  </Col>
+                </Row>
+              </div>
+            </div>
           </Grid>
           {editClusterDialog()}
           {editDisplayNameDialog()}

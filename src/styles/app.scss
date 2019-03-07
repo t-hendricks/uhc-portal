@@ -120,6 +120,7 @@ limitations under the License.
 }
 
 .cluster-details-item {
+  padding: 30px;
   dt {
     text-transform: uppercase;
     font-weight: normal;
@@ -172,6 +173,40 @@ limitations under the License.
 
 .footer {
   margin-bottom: 40px;
+}
+
+.cl-details-card {
+  padding: 20px 0 20px;
+}
+
+.cl-details-card-title {
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
+  padding: 10px 15px;
+}
+
+.cl-details-card-title h3 {
+  margin: 0px
+}
+
+.cl-details-card-body {
+  border: 1px solid #ccc;
+  border-top: none;
+  padding: 20px 0 20px;
+}
+
+
+#cl-details-charts .cl-details-card-body{
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0;
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
+}
+
+#cl-details-charts p{
+  padding: 30px;
 }
 
 #deleteClusterHint {
