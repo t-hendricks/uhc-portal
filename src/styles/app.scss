@@ -151,6 +151,17 @@ limitations under the License.
   margin-left: 10px !important;
 }
 
+.cl-details-cluster-name h1 {
+  margin-top: 0;
+  display: inline-block;
+}
+
+.cl-details-cluster-name .spinner {
+  display: inline-block;
+  margin-left: 15px;
+  vertical-align: middle;
+}
+
 .displayNameForm {
   .control-label, .name-label {
     text-transform: uppercase;

@@ -17,7 +17,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, Modal, ButtonGroup,
-  Breadcrumb,
+  Breadcrumb, Spinner,
 } from 'patternfly-react';
 
 import PropTypes from 'prop-types';
@@ -133,6 +133,7 @@ class ClusterDetails extends Component {
       routerShards,
       history,
       match,
+      pending,
     } = this.props;
 
     const requestedClusterID = match.params.id;
@@ -398,6 +399,8 @@ class ClusterDetails extends Component {
       return null;
     };
 
+    const isRefreshing = pending || credentials.pending || routerShards.pending;
+
     return (
       <div>
         <AlphaNotice />
@@ -419,10 +422,11 @@ class ClusterDetails extends Component {
             </Row>
             <hr />
             <Row>
-              <Col sm={6}>
-                <h1 style={{ marginTop: 0 }}>
+              <Col sm={6} className="cl-details-cluster-name">
+                <h1>
                   <ClusterBadge clusterName={clusterName} />
                 </h1>
+                { isRefreshing ? <Spinner loading /> : null }
               </Col>
               <Col lg={5} lgOffset={1}>
                 <ButtonGroup id="cl-details-btns">
@@ -599,6 +603,7 @@ ClusterDetails.propTypes = {
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   history: PropTypes.object,
+  pending: PropTypes.bool.isRequired,
 };
 
 ClusterDetails.defaultProps = {
