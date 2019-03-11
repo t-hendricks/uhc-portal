@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterListFilter /> renders correctly 1`] = `
+<getContext(ContextualFilter)
+  className="pull-right cluster-list-top"
+>
+  <FormControl
+    bsClass="form-control"
+    componentClass="input"
+    onChange={[Function]}
+    placeholder="Filter by name or ID..."
+    type="text"
+    value=""
+  />
+</getContext(ContextualFilter)>
+`;
+
+exports[`<ClusterListFilter /> renders correctly 2`] = `
+<getContext(ContextualFilter)
+  className="pull-right cluster-list-top"
+>
+  <FormControl
+    bsClass="form-control"
+    componentClass="input"
+    onChange={[Function]}
+    placeholder="Filter by name or ID..."
+    type="text"
+    value="hello"
+  />
+</getContext(ContextualFilter)>
+`;
