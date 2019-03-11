@@ -59,11 +59,13 @@ const ClusterActionsDropdown = (props) => {
     return isClusterReady ? managedEditProps : disabledManagedEditProps;
   };
 
-  const getEditDisplayNameProps = () => (
-    {
+  const getEditDisplayNameProps = () => {
+    const editDisplayNameProps = {
       onClick: () => openEditDisplayNameDialog(cluster),
-      ...isUninstallingProps,
-    });
+    };
+
+    return isClusterUninstalling ? isUninstallingProps : editDisplayNameProps;
+  };
 
   const getDeleteItemProps = () => {
     const deleteModalData = {
