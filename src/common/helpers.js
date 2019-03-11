@@ -49,12 +49,22 @@ const createViewQueryObject = (viewOptions, queryObj) => {
       const direction = viewOptions.sorting.isAscending ? 'asc' : 'desc';
       if (viewOptions.sorting.sortField === 'name') {
         // special casing name sorting, should sort by display name first, name second
+        // Note that this is buggy if the user ever sets a cluster to have an empty display name
+        // https://jira.coreos.com/browse/SDA-274
         queryObject.order = `display_name ${direction}, name ${direction}`;
       } else {
         queryObject.order = `${viewOptions.sorting.sortField} ${direction}`;
       }
     }
-    queryObject.filter = viewOptions.filter ? `display_name like '%${viewOptions.filter}%' or (display_name = '' and name like '%${viewOptions.filter}%') or external_id like '%${viewOptions.filter}%'` : undefined;
+    /* HACK: the backend defers all search query complexity to the UI. This means we have to escape
+    singlequotes, otherwise users will get an error they won't understand if
+    they accidentally type a singlequote. It also means that the query we send to the backend is
+    extremely complicated - it tries to search by display_name, because that's the name shown
+    to the user, but for clusters without display_name we show 'name'
+    so we search by name if display_name is empty.
+    */
+    const escaped = viewOptions.filter ? viewOptions.filter.replace(/(')/g, '\'\'') : '';
+    queryObject.filter = viewOptions.filter ? `display_name like '%${escaped}%' or (display_name = '' and name like '%${escaped}%') or external_id like '%${escaped}%'` : undefined;
   }
 
   return queryObject;

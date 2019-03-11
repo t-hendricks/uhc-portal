@@ -1,10 +1,6 @@
 import React from 'react';
 import { Filter, FormControl } from 'patternfly-react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { onListFilterSet } from '../../../redux/actions/viewOptionsActions';
-import { viewConstants } from '../../../redux/constants';
-
 
 class ClusterListFilter extends React.Component {
   constructor(props) {
@@ -60,12 +56,4 @@ ClusterListFilter.propTypes = {
   setFilter: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  currentFilter: state.viewOptions[viewConstants.CLUSTERS_VIEW].filter,
-});
-
-const mapDispatchToProps = {
-  setFilter: filter => onListFilterSet(filter, viewConstants.CLUSTERS_VIEW),
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ClusterListFilter);
+export default ClusterListFilter;
