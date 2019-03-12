@@ -24,19 +24,19 @@ import {
   Alert, Grid, Row, Col, EmptyState, Spinner, Modal,
 } from 'patternfly-react';
 
-import ClusterListFilter from './ClusterListFilter';
-import ClusterListEmptyState from './ClusterListEmptyState';
-import ClusterListTable from './ClusterListTable';
-import LoadingModal from '../LoadingModal';
-import CreateClusterDropdown from './CreateClusterDropdown';
-import RefreshBtn from '../RefreshButton';
+import ClusterListFilter from './components/ClusterListFilter';
+import ClusterListEmptyState from './components/ClusterListEmptyState';
+import ClusterListTable from './components/ClusterListTable/ClusterListTable';
+import LoadingModal from '../../common/LoadingModal';
+import CreateClusterDropdown from './components/CreateClusterDropdown';
+import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 
-import CreateClusterModal from '../CreateClusterModal';
-import EditClusterDialog from '../../cluster/forms/EditClusterDialog';
-import EditDisplayNameDialog from '../../cluster/forms/EditDisplayNameDialog';
-import DeleteClusterDialog from '../../cluster/forms/DeleteClusterDialog';
+import CreateClusterModal from './components/CreateClusterModal';
+import EditClusterDialog from '../common/EditClusterDialog';
+import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
+import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
 
-import ViewPaginationRow from '../viewPaginationRow';
+import ViewPaginationRow from './components/viewPaginationRow';
 
 import helpers from '../../../common/helpers';
 import { viewConstants } from '../../../redux/constants';

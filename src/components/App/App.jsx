@@ -31,8 +31,8 @@ import Footer from './Footer';
 import LoginPage from './LoginPage';
 import ErrorBoundary from './ErrorBoundary';
 import ClustersList from '../clusters/ClusterList';
-import ClusterDetails from '../clusters/ClusterDetails';
-import InstallCluster from '../clusters/InstallCluster';
+import ClusterDetails from '../clusters/ClusterDetails/ClusterDetails';
+import InstallCluster from '../clusters/install/InstallCluster';
 
 class App extends React.Component {
   constructor() {
