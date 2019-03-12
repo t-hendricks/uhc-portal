@@ -117,6 +117,7 @@ exports[`CreateClusterModal should render 1`] = `
               disabled={false}
               label="Base DNS domain"
               name="dns_base_domain"
+              normalize={[Function]}
               type="text"
               validate={[Function]}
             />
