@@ -122,6 +122,7 @@ function CreateClusterModal(props) {
                   type="text"
                   validate={validators.checkBaseDNSDomain}
                   disabled={createClusterResponse.pending}
+                  normalize={value => value.toLowerCase()}
                 />
 
                 <Field
