@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { clustersReducer } from './clustersReducer';
-import { clusterReducer } from '../../components/cluster/ClusterReducer';
+import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
 import { viewOptionsReducer } from './viewOptionsReducer';
 import userReducer from './userReducer';
 import tollboothReducer from './tollbooth';
@@ -10,7 +10,7 @@ import modalReducer from '../../components/common/Modal/ModalReducer';
 
 const reducers = {
   clusters: clustersReducer,
-  cluster: clusterReducer,
+  deleteCluster: deleteClusterDialogReducer,
   cloudProviders: cloudProvidersReducer,
   viewOptions: viewOptionsReducer,
   userProfile: userReducer,
