@@ -17,7 +17,7 @@ describe('<ClusterActionsDropdown />', () => {
 
     it('should open edit display name modal', () => {
       wrapper.find('MenuItem').at(1).simulate('click');
-      expect(Fixtures.managedReadyProps.openEditDisplayNameDialog).toBeCalled();
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-display-name', Fixtures.cluster);
     });
 
     it('should open edit cluster modal', () => {
