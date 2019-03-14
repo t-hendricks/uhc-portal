@@ -157,3 +157,18 @@ objects:
     ports:
     - port: 8000
       targetPort: 8000
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: portal-server-metrics
+    labels:
+      app: portal-server
+      port: metrics
+  spec:
+    selector:
+      app: portal-server
+    ports:
+    - port: 8080
+      targetPort: 8080
+      name: metrics
