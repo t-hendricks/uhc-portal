@@ -61,6 +61,15 @@ class ClusterLocationLabel extends React.Component {
         </React.Fragment>
       );
     }
+
+    if (cloudProviderID === 'N/A' && regionID === 'N/A') {
+      return (
+        <React.Fragment>
+          N/A
+        </React.Fragment>
+      );
+    }
+
     return (
       <React.Fragment>
         {cloudProviderID.toUpperCase()}
