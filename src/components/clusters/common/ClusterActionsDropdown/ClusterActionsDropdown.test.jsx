@@ -89,4 +89,10 @@ describe('<ClusterActionsDropdown />', () => {
       expect(launchConsoleDisabled).toEqual(true);
     });
   });
+  describe('read only cluster', () => {
+    const wrapper = shallow(<ClusterActionsDropdown {...Fixtures.organizationClusterProps} />);
+    it('should render correctly', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 });

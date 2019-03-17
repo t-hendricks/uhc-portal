@@ -42,3 +42,19 @@ exports[`<ClusterActionsDropdown /> cluster with state ready and console url sho
   </MenuItem>
 </Fragment>
 `;
+
+exports[`<ClusterActionsDropdown /> read only cluster should render correctly 1`] = `
+<Fragment>
+  <MenuItem
+    bsClass="dropdown"
+    disabled={false}
+    divider={false}
+    header={false}
+    href="www.testuhc.com"
+    rel="noreferrer"
+    target="_blank"
+  >
+    Launch Admin Console
+  </MenuItem>
+</Fragment>
+`;

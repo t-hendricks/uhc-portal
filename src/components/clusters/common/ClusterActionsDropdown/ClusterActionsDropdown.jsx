@@ -85,9 +85,9 @@ const ClusterActionsDropdown = (props) => {
   return (
     <React.Fragment>
       {showConsoleButton && <MenuItem {...adminConsoleItemProps}>Launch Admin Console</MenuItem>}
-      <MenuItem {...editDisplayNameItemProps}>Edit Display Name</MenuItem>
-      <MenuItem {...editClusterItemProps}>Edit Cluster</MenuItem>
-      <MenuItem {...deleteClusterItemProps}>Delete Cluster</MenuItem>
+      {cluster.canEdit && <MenuItem {...editDisplayNameItemProps}>Edit Display Name</MenuItem>}
+      {cluster.canEdit && <MenuItem {...editClusterItemProps}>Edit Cluster</MenuItem>}
+      {cluster.canDelete && <MenuItem {...deleteClusterItemProps}>Delete Cluster</MenuItem>}
     </React.Fragment>
   );
 };

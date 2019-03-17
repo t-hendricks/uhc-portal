@@ -280,6 +280,7 @@ class ClusterDetails extends Component {
         bsStyle="default"
         title="Actions"
         pullRight
+        disabled={!cluster.canEdit && !cluster.canDelete}
       >
         <ClusterActionsDropdown
           cluster={cluster}

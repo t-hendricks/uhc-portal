@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { clustersConstants } from '../constants';
-import { clusterService } from '../../services';
+import { clusterService, authorizationsService } from '../../services';
 import helpers from '../../common/helpers';
 
 const invalidateClusters = () => dispatch => dispatch({
@@ -40,15 +40,67 @@ const editCluster = (id, cluster) => dispatch => dispatch({
   payload: clusterService.editCluster(id, cluster),
 });
 
+const fetchClustersAndPermissions = (clusterRequestParams) => {
+  let result;
+  let canEdit;
+  let canDelete;
+  const buildPermissionDict = (response) => {
+    const ret = {};
+    response.data.cluster_ids.forEach((clusterID) => {
+      ret[clusterID] = true;
+    });
+    return ret;
+  };
+  const promises = [
+    clusterService.getClusters(clusterRequestParams).then((response) => {
+      result = response;
+    }),
+    authorizationsService.selfResourceReview(
+      { action: 'delete', resource_type: 'Cluster' },
+    ).then((response) => { canDelete = buildPermissionDict(response); }),
+    authorizationsService.selfResourceReview(
+      { action: 'update', resource_type: 'Cluster' },
+    ).then((response) => { canEdit = buildPermissionDict(response); }),
+  ];
+  return Promise.all(promises).then(() => {
+    for (let i = 0; i < result.data.items.length; i += 1) {
+      const cluster = result.data.items[i];
+      result.data.items[i].canEdit = canEdit['*'] || !!canEdit[cluster.id];
+      result.data.items[i].canDelete = canDelete['*'] || !!canDelete[cluster.id];
+    }
+    return result;
+  });
+};
+
 
 const fetchClusters = params => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTERS,
-  payload: clusterService.getClusters(params),
+  payload: fetchClustersAndPermissions(params),
 });
+
+const fetchSingleClusterAndPermissions = (clusterID) => {
+  let result;
+  let canEdit;
+  let canDelete;
+  const promises = [
+    clusterService.getClusterDetails(clusterID).then((response) => { result = response; }),
+    authorizationsService.selfAccessReview(
+      { action: 'delete', resource_type: 'Cluster', cluster_id: clusterID },
+    ).then((response) => { canDelete = response.data.allowed; }),
+    authorizationsService.selfAccessReview(
+      { action: 'update', resource_type: 'Cluster', cluster_id: clusterID },
+    ).then((response) => { canEdit = response.data.allowed; }),
+  ];
+  return Promise.all(promises).then(() => {
+    result.data.canEdit = canEdit;
+    result.data.canDelete = canDelete;
+    return result;
+  });
+};
 
 const fetchClusterDetails = clusterID => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTER_DETAILS,
-  payload: clusterService.getClusterDetails(clusterID),
+  payload: fetchSingleClusterAndPermissions(clusterID),
 });
 
 const fetchClusterCredentials = clusterID => dispatch => dispatch({
