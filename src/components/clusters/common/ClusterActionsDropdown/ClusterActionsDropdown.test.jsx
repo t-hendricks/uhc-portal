@@ -22,7 +22,7 @@ describe('<ClusterActionsDropdown />', () => {
 
     it('should open edit cluster modal', () => {
       wrapper.find('MenuItem').at(2).simulate('click');
-      expect(Fixtures.managedReadyProps.openEditClusterDialog).toBeCalled();
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-cluster', Fixtures.cluster);
     });
 
     it('should open delete modal', () => {
