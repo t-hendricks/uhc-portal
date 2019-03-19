@@ -9,7 +9,6 @@ const ClusterActionsDropdown = (props) => {
     showConsoleButton,
     openModal,
     openEditClusterDialog,
-    openEditDisplayNameDialog,
   } = props;
 
   const uninstallingMessage = 'The cluster is being uninstalled';
@@ -61,7 +60,7 @@ const ClusterActionsDropdown = (props) => {
 
   const getEditDisplayNameProps = () => {
     const editDisplayNameProps = {
-      onClick: () => openEditDisplayNameDialog(cluster),
+      onClick: () => openModal('edit-display-name', cluster),
     };
 
     return isClusterUninstalling ? isUninstallingProps : editDisplayNameProps;
@@ -98,7 +97,6 @@ ClusterActionsDropdown.propTypes = {
   showConsoleButton: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   openEditClusterDialog: PropTypes.func.isRequired,
-  openEditDisplayNameDialog: PropTypes.func.isRequired,
 };
 
 export default ClusterActionsDropdown;

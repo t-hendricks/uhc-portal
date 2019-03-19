@@ -12,7 +12,6 @@ const props = {
   showConsoleButton: true,
   openModal: jest.fn(),
   openEditClusterDialog: jest.fn(),
-  openEditDisplayNameDialog: jest.fn(),
 };
 
 const managedReadyProps = {
@@ -47,4 +46,5 @@ export {
   clusterUninstallingProps,
   clusterNotReadyProps,
   selfManagedProps,
+  cluster,
 };

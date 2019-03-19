@@ -51,7 +51,6 @@ class ClusterList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      clusterCreationFormVisible: false,
       editClusterDialogVisible: false,
     };
 
@@ -59,7 +58,6 @@ class ClusterList extends Component {
     this.refresh = this.refresh.bind(this);
     // the various open dialog methods get called from the table component
     this.openEditClusterDialog = this.openEditClusterDialog.bind(this);
-    this.openEditDisplayNameDialog = this.openEditDisplayNameDialog.bind(this);
   }
 
   componentDidMount() {
@@ -78,16 +76,6 @@ class ClusterList extends Component {
         || helpers.viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
     }
-  }
-
-  openEditDisplayNameDialog(cluster) {
-    this.setState(prevState => (
-      {
-        ...prevState,
-        editCluster: cluster,
-        editClusterDialogVisible: false,
-        editDisplayNameDialogVisible: true,
-      }));
   }
 
   openEditClusterDialog(cluster) {
@@ -138,34 +126,6 @@ class ClusterList extends Component {
               {
                 ...prevState,
                 editClusterDialogVisible: false,
-              }));
-            if (updated) {
-              const { invalidateClusters } = this.props;
-              invalidateClusters();
-            }
-          }}
-        />
-      </Modal>
-    );
-  }
-
-  renderEditDisplayNameDialog() {
-    const {
-      editCluster,
-      editDisplayNameDialogVisible,
-    } = this.state;
-    return (
-      <Modal
-        show={editDisplayNameDialogVisible}
-        onHide={() => this.setState({ editDisplayNameDialogVisible: false })}
-      >
-        <EditDisplayNameDialog
-          cluster={editCluster}
-          closeFunc={(updated) => {
-            this.setState(prevState => (
-              {
-                ...prevState,
-                editDisplayNameDialogVisible: false,
               }));
             if (updated) {
               const { invalidateClusters } = this.props;
@@ -243,10 +203,9 @@ class ClusterList extends Component {
             openDeleteClusterDialog={(modalData) => {
               openModal('delete-cluster', modalData);
             }}
-            openEditDisplayNameDialog={this.openEditDisplayNameDialog}
           />
           {this.renderEditClusterDialog()}
-          {this.renderEditDisplayNameDialog()}
+          <EditDisplayNameDialog onClose={() => invalidateClusters()} />
           <DeleteClusterDialog onClose={(shouldRefresh) => {
             if (shouldRefresh) {
               invalidateClusters();

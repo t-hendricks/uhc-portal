@@ -15,7 +15,6 @@ import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
 function ClusterListTable(props) {
   const {
     viewOptions, setSorting, openEditClusterDialog,
-    openEditDisplayNameDialog,
   } = props;
   const { clusters } = props;
   if (!clusters || clusters.length === 0) {
@@ -122,7 +121,6 @@ function ClusterListTable(props) {
             <ClusterActionsDropdown
               cluster={cluster}
               showConsoleButton
-              openEditDisplayNameDialog={openEditDisplayNameDialog}
               openEditClusterDialog={openEditClusterDialog}
             />
           </DropdownKebab>
@@ -207,7 +205,6 @@ ClusterListTable.propTypes = {
   setSorting: PropTypes.func.isRequired,
   openEditClusterDialog: PropTypes.func.isRequired,
   openDeleteClusterDialog: PropTypes.func.isRequired,
-  openEditDisplayNameDialog: PropTypes.func.isRequired,
 };
 
 export default ClusterListTable;

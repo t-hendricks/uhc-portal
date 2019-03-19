@@ -58,10 +58,8 @@ class ClusterDetails extends Component {
     this.state = {
       clusterCreationFormVisible: false,
       editClusterDialogVisible: false,
-      editDisplayNameDialogVisible: false,
     };
     this.refresh = this.refresh.bind(this);
-    this.openEditDisplayNameDialog = this.openEditDisplayNameDialog.bind(this);
     this.openEditClusterDialog = this.openEditClusterDialog.bind(this);
   }
 
@@ -99,16 +97,6 @@ class ClusterDetails extends Component {
       fetchCredentials(clusterID);
       fetchRouterShards(clusterID);
     }
-  }
-
-  openEditDisplayNameDialog(cluster) {
-    this.setState(prevState => (
-      {
-        ...prevState,
-        editCluster: cluster,
-        editClusterDialogVisible: false,
-        editDisplayNameDialogVisible: true,
-      }));
   }
 
   openEditClusterDialog(cluster) {
@@ -178,34 +166,6 @@ class ClusterDetails extends Component {
                 {
                   ...prevState,
                   editClusterDialogVisible: false,
-                }));
-              if (updated) {
-                invalidateClusters();
-                fetchDetails(editCluster.id);
-              }
-            }}
-          />
-        </Modal>
-      );
-    };
-
-    const editDisplayNameDialog = () => {
-      const {
-        editCluster,
-        editDisplayNameDialogVisible,
-      } = this.state;
-      return (
-        <Modal
-          show={editDisplayNameDialogVisible}
-          onHide={() => this.setState({ editDisplayNameDialogVisible: false })}
-        >
-          <EditDisplayNameDialog
-            cluster={editCluster}
-            closeFunc={(updated) => {
-              this.setState(prevState => (
-                {
-                  ...prevState,
-                  editDisplayNameDialogVisible: false,
                 }));
               if (updated) {
                 invalidateClusters();
@@ -325,7 +285,6 @@ class ClusterDetails extends Component {
           cluster={cluster}
           showConsoleButton={false}
           openEditClusterDialog={this.openEditClusterDialog}
-          openEditDisplayNameDialog={this.openEditDisplayNameDialog}
         />
       </DropdownButton>
     );
@@ -575,7 +534,11 @@ class ClusterDetails extends Component {
             </div>
           </Grid>
           {editClusterDialog()}
-          {editDisplayNameDialog()}
+          <EditDisplayNameDialog onClose={() => {
+            invalidateClusters();
+            fetchDetails(cluster.id);
+          }}
+          />
           <DeleteClusterDialog onClose={(shouldRefresh) => {
             if (shouldRefresh) {
               invalidateClusters();
