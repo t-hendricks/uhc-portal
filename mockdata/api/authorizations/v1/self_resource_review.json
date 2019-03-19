@@ -1,0 +1,13 @@
+{
+  "action": "get",
+  "resource_type": "Cluster",
+  "organization_ids": [
+    "*"
+  ],
+  "subscription_ids": [
+    "*"
+  ],
+  "cluster_ids": [
+    "*"
+  ]
+}

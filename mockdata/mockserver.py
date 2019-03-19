@@ -14,13 +14,16 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     """ override end_headers to append CORS headers to every request """
     self.send_header('Access-Control-Allow-Origin', '*')
     self.send_header('Access-Control-Allow-Methods', '*')
-    self.send_header('Access-Control-Allow-Headers', 'authorization')
+    self.send_header('Access-Control-Allow-Headers', 'authorization, content-type')
     return super().end_headers()
 
 
   def do_OPTIONS(self):
       self.send_response(200, "ok")
       self.end_headers()
+
+  def do_POST(self):
+    return self.do_GET()
 
 def main():
     server_address = ('localhost', 8000)
