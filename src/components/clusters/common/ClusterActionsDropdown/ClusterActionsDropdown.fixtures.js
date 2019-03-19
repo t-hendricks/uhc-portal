@@ -6,6 +6,8 @@ const cluster = {
   state: clusterStates.READY,
   console: { url: 'www.testuhc.com' },
   managed: true,
+  canEdit: true,
+  canDelete: true,
 };
 
 const props = {
@@ -26,17 +28,37 @@ const deleteModalData = {
 };
 
 const clusterUninstallingProps = {
-  cluster: { state: clusterStates.UNINSTALLING, managed: true },
+  cluster: {
+    state: clusterStates.UNINSTALLING,
+    managed: true,
+    canEdit: true,
+    canDelete: true,
+  },
   ...props,
 };
 
 const clusterNotReadyProps = {
-  cluster: { state: clusterStates.ERROR, managed: true },
+  cluster: {
+    state: clusterStates.ERROR,
+    managed: true,
+    canEdit: true,
+    canDelete: true,
+  },
   ...props,
 };
 
 const selfManagedProps = {
-  cluster: { state: clusterStates.READY, managed: false },
+  cluster: {
+    state: clusterStates.READY,
+    managed: false,
+    canEdit: true,
+    canDelete: true,
+  },
+  ...props,
+};
+
+const organizationClusterProps = {
+  cluster: { ...cluster, canEdit: false, canDelete: false },
   ...props,
 };
 
@@ -47,4 +69,5 @@ export {
   clusterNotReadyProps,
   selfManagedProps,
   cluster,
+  organizationClusterProps,
 };
