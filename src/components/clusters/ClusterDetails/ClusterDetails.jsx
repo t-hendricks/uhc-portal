@@ -16,7 +16,7 @@ import result from 'lodash/result';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, Modal, ButtonGroup,
+  Alert, Button, Row, Col, EmptyState, Grid, DropdownButton, ButtonGroup,
   Breadcrumb, Spinner,
 } from 'patternfly-react';
 
@@ -55,12 +55,7 @@ import AlphaNotice from '../../common/AlphaNotice';
 class ClusterDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      clusterCreationFormVisible: false,
-      editClusterDialogVisible: false,
-    };
     this.refresh = this.refresh.bind(this);
-    this.openEditClusterDialog = this.openEditClusterDialog.bind(this);
   }
 
   componentDidMount() {
@@ -97,16 +92,6 @@ class ClusterDetails extends Component {
       fetchCredentials(clusterID);
       fetchRouterShards(clusterID);
     }
-  }
-
-  openEditClusterDialog(cluster) {
-    this.setState(prevState => (
-      {
-        ...prevState,
-        editCluster: cluster,
-        editClusterDialogVisible: true,
-        editDisplayNameDialogVisible: false,
-      }));
   }
 
   render() {
@@ -148,34 +133,6 @@ class ClusterDetails extends Component {
         {pendingMessage()}
       </EmptyState>
     );
-
-    const editClusterDialog = () => {
-      const {
-        editCluster,
-        editClusterDialogVisible,
-      } = this.state;
-      return (
-        <Modal
-          show={editClusterDialogVisible}
-          onHide={() => this.setState({ editClusterDialogVisible: false })}
-        >
-          <EditClusterDialog
-            cluster={editCluster}
-            closeFunc={(updated) => {
-              this.setState(prevState => (
-                {
-                  ...prevState,
-                  editClusterDialogVisible: false,
-                }));
-              if (updated) {
-                invalidateClusters();
-                fetchDetails(editCluster.id);
-              }
-            }}
-          />
-        </Modal>
-      );
-    };
 
     if (error) {
       return errorState();
@@ -285,7 +242,6 @@ class ClusterDetails extends Component {
         <ClusterActionsDropdown
           cluster={cluster}
           showConsoleButton={false}
-          openEditClusterDialog={this.openEditClusterDialog}
         />
       </DropdownButton>
     );
@@ -534,7 +490,11 @@ class ClusterDetails extends Component {
               </div>
             </div>
           </Grid>
-          {editClusterDialog()}
+          <EditClusterDialog onClose={() => {
+            invalidateClusters();
+            fetchDetails(cluster.id);
+          }}
+          />
           <EditDisplayNameDialog onClose={() => {
             invalidateClusters();
             fetchDetails(cluster.id);

@@ -13,9 +13,7 @@ import ClusterLocationLabel from './ClusterLocationLabel';
 import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
 
 function ClusterListTable(props) {
-  const {
-    viewOptions, setSorting, openEditClusterDialog,
-  } = props;
+  const { viewOptions, setSorting } = props;
   const { clusters } = props;
   if (!clusters || clusters.length === 0) {
     return <p className="notfound">No Results Match the Filter Criteria.</p>;
@@ -121,7 +119,6 @@ function ClusterListTable(props) {
             <ClusterActionsDropdown
               cluster={cluster}
               showConsoleButton
-              openEditClusterDialog={openEditClusterDialog}
             />
           </DropdownKebab>
         </Grid.Col>
@@ -203,7 +200,6 @@ ClusterListTable.propTypes = {
   clusters: PropTypes.array.isRequired,
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
-  openEditClusterDialog: PropTypes.func.isRequired,
   openDeleteClusterDialog: PropTypes.func.isRequired,
 };
 

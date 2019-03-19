@@ -21,7 +21,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import {
-  Alert, Grid, Row, Col, EmptyState, Spinner, Modal,
+  Alert, Grid, Row, Col, EmptyState, Spinner,
 } from 'patternfly-react';
 
 import ClusterListFilter from './components/ClusterListFilter';
@@ -50,14 +50,10 @@ import AlphaNotice from '../../common/AlphaNotice';
 class ClusterList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      editClusterDialogVisible: false,
-    };
 
     // refresh needs to be bound because it is passed to another componenet
     this.refresh = this.refresh.bind(this);
     // the various open dialog methods get called from the table component
-    this.openEditClusterDialog = this.openEditClusterDialog.bind(this);
   }
 
   componentDidMount() {
@@ -78,16 +74,6 @@ class ClusterList extends Component {
     }
   }
 
-  openEditClusterDialog(cluster) {
-    this.setState(prevState => (
-      {
-        ...prevState,
-        editCluster: cluster,
-        editClusterDialogVisible: true,
-        editDisplayNameDialogVisible: false,
-      }));
-  }
-
   refresh() {
     const { fetchClusters, viewOptions } = this.props;
     fetchClusters(helpers.createViewQueryObject(viewOptions));
@@ -105,36 +91,6 @@ class ClusterList extends Component {
     }
 
     return null;
-  }
-
-  // TO-DO: use generic modal for all dialogs
-
-  renderEditClusterDialog() {
-    const {
-      editCluster,
-      editClusterDialogVisible,
-    } = this.state;
-    return (
-      <Modal
-        show={editClusterDialogVisible}
-        onHide={() => this.setState({ editClusterDialogVisible: false })}
-      >
-        <EditClusterDialog
-          cluster={editCluster}
-          closeFunc={(updated) => {
-            this.setState(prevState => (
-              {
-                ...prevState,
-                editClusterDialogVisible: false,
-              }));
-            if (updated) {
-              const { invalidateClusters } = this.props;
-              invalidateClusters();
-            }
-          }}
-        />
-      </Modal>
-    );
   }
 
   renderError() {
@@ -199,13 +155,12 @@ class ClusterList extends Component {
             clusters={clusters || []}
             viewOptions={viewOptions}
             setSorting={setSorting}
-            openEditClusterDialog={this.openEditClusterDialog}
             openDeleteClusterDialog={(modalData) => {
               openModal('delete-cluster', modalData);
             }}
           />
-          {this.renderEditClusterDialog()}
-          <EditDisplayNameDialog onClose={() => invalidateClusters()} />
+          <EditDisplayNameDialog onClose={invalidateClusters} />
+          <EditClusterDialog onClose={invalidateClusters} />
           <DeleteClusterDialog onClose={(shouldRefresh) => {
             if (shouldRefresh) {
               invalidateClusters();
