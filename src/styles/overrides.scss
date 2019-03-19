@@ -57,3 +57,24 @@ html {
     display: none;
   }
 }
+
+// Temporary fix until PF Core issue is resolved:
+// https://github.com/patternfly/patternfly-next/issues/1603
+.pf-c-page {
+  .pf-c-page__main-section:last-of-type, .pf-c-page__main-section:only-child {
+    flex: 1 0 auto;
+  }
+}
+
+.pf-c-dropdown {
+  .pf-c-dropdown__menu {
+    list-style: none; // Needed when not using the PF4 base reset styles
+  }
+
+  .pf-c-dropdown__menu-item {
+    &:hover,
+    &:focus {
+      color: var(--pf-global--Color--dark-100); // Fix for PF3 CSS overriding PF4 CSS
+    }
+  }
+}
