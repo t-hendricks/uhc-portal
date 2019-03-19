@@ -41,13 +41,6 @@ class App extends React.Component {
     this.menu = routes();
   }
 
-  navigateTo(path) {
-    const { history } = this.props;
-    console.log(path);
-    console.dir(history);
-    console.dir(history.push(path));
-  }
-
   renderRoutes() {
     const { authenticated, userProfile } = this.props;
     // note: in this condition, I've added !authenticated even though
@@ -56,7 +49,7 @@ class App extends React.Component {
     // that if something changes in the future, the full router will
     // be the "normal" one, and no exception will be raised if userProfile
     // is undefined.
-    if (!authenticated || (userProfile.email && userProfile.email.endsWith('@redhat.com'))) {
+    if (!authenticated || (userProfile.keycloakProfile.email && userProfile.keycloakProfile.email.endsWith('@redhat.com'))) {
       return (
         <Switch>
           <Redirect from="/" exact to="/clusters" />

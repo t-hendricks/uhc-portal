@@ -418,3 +418,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .cluster-list .clusterstate {
   margin-left: 10px;
 }
+
+// To display organization names in the masthead, we need a longer max length for the text
+.uhc_header .pf-c-page__header-tools .pf-c-dropdown__toggle-text {
+  max-width: 50ch; // pf default is 20ch
+}

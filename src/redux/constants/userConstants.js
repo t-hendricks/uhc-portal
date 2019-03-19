@@ -1,8 +1,10 @@
 const USER_INFO_RESPONSE = 'USER_INFO_RESPONSE';
+const GET_ORGANIZATION = 'GET_ORGANIZATION';
 
 const userConstants = {
   USER_INFO_RESPONSE,
+  GET_ORGANIZATION,
 };
 
-export { USER_INFO_RESPONSE };
+export { USER_INFO_RESPONSE, GET_ORGANIZATION };
 export default userConstants;
