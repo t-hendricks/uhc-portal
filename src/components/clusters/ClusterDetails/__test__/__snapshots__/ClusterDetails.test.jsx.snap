@@ -1,0 +1,744 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterDetails /> Cluster Details should render 1`] = `
+<div>
+  <AlphaNotice />
+  <div
+    id="clusterdetails-content"
+  >
+    <ClusterDetailsTop
+      cluster={
+        Object {
+          "api": Object {
+            "url": "https://api.test-liza.sdev.devshift.net:6443",
+          },
+          "canDelete": true,
+          "canEdit": true,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "console": Object {
+            "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
+          },
+          "cpu": Object {
+            "total": Object {
+              "unit": "",
+              "value": 0,
+            },
+            "updated_timestamp": "0001-01-01T00:00:00Z",
+            "used": Object {
+              "unit": "",
+              "value": 0,
+            },
+          },
+          "creation_timestamp": "2019-03-26T15:18:39.06783Z",
+          "creator": "***REMOVED***",
+          "display_name": "test-liza",
+          "dns": Object {
+            "base_domain": "sdev.devshift.net",
+          },
+          "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
+          "flavour": Object {
+            "href": "/api/clusters_mgmt/v1/flavours/4",
+            "id": "4",
+            "kind": "FlavourLink",
+          },
+          "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
+          "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+          "kind": "Cluster",
+          "managed": true,
+          "memory": Object {
+            "total": Object {
+              "unit": "B",
+              "value": 0,
+            },
+            "updated_timestamp": "0001-01-01T00:00:00Z",
+            "used": Object {
+              "unit": "B",
+              "value": 0,
+            },
+          },
+          "multi_az": false,
+          "name": "test-liza",
+          "network": Object {
+            "machine_cidr": "10.0.0.0/16",
+            "pod_cidr": "10.128.0.0/14",
+            "router_shards": Object {
+              "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+              "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+              "kind": "RouterShardListLink",
+            },
+            "service_cidr": "172.30.0.0/16",
+          },
+          "nodes": Object {
+            "compute": 2,
+            "infra": 2,
+            "master": 3,
+            "total": 7,
+          },
+          "region": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+            "id": "us-east-1",
+            "kind": "CloudRegionLink",
+          },
+          "state": "ready",
+          "storage": Object {
+            "total": Object {
+              "unit": "B",
+              "value": 0,
+            },
+            "updated_timestamp": "0001-01-01T00:00:00Z",
+            "used": Object {
+              "unit": "B",
+              "value": 0,
+            },
+          },
+          "version": Object {
+            "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+            "id": "openshift-v4.0-latest",
+            "kind": "VersionLink",
+          },
+        }
+      }
+      credentials={
+        Object {
+          "credentials": Object {
+            "admin": Object {
+              "password": "testPassword",
+              "user": "kubeadmin",
+            },
+            "href": "/api/clusters_mgmt/v1/1IztzhAGrbjtKkMbiPewJanhTXk/credentials",
+            "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+            "kind": "ClusterCredentials",
+            "kubeconfig": "apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: test",
+            "ssh": Object {
+              "private_key": "test",
+              "public_key": "test",
+            },
+          },
+          "error": false,
+          "errorMessage": "",
+          "fulfilled": true,
+          "pending": false,
+        }
+      }
+      openModal={[MockFunction]}
+      pending={false}
+      refreshFunc={[Function]}
+      routerShards={
+        Object {
+          "error": false,
+          "errorMessage": "",
+          "fulfilled": true,
+          "pending": false,
+          "routerShards": Object {
+            "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+            "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+            "items": Array [
+              Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards/ofvv",
+                "id": "ofvv",
+                "kind": "RouterShard",
+                "label": "test1",
+                "scheme": "internal",
+              },
+              Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards/jhso",
+                "id": "jhso",
+                "kind": "RouterShard",
+                "label": "test2",
+                "scheme": "internet-facing",
+              },
+            ],
+            "kind": "RouterShardList",
+            "page": 1,
+            "size": 2,
+            "total": 2,
+          },
+        }
+      }
+    />
+    <ResourceUsage
+      cluster={
+        Object {
+          "api": Object {
+            "url": "https://api.test-liza.sdev.devshift.net:6443",
+          },
+          "canDelete": true,
+          "canEdit": true,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "console": Object {
+            "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
+          },
+          "cpu": Object {
+            "total": Object {
+              "unit": "",
+              "value": 0,
+            },
+            "updated_timestamp": "0001-01-01T00:00:00Z",
+            "used": Object {
+              "unit": "",
+              "value": 0,
+            },
+          },
+          "creation_timestamp": "2019-03-26T15:18:39.06783Z",
+          "creator": "***REMOVED***",
+          "display_name": "test-liza",
+          "dns": Object {
+            "base_domain": "sdev.devshift.net",
+          },
+          "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
+          "flavour": Object {
+            "href": "/api/clusters_mgmt/v1/flavours/4",
+            "id": "4",
+            "kind": "FlavourLink",
+          },
+          "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
+          "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+          "kind": "Cluster",
+          "managed": true,
+          "memory": Object {
+            "total": Object {
+              "unit": "B",
+              "value": 0,
+            },
+            "updated_timestamp": "0001-01-01T00:00:00Z",
+            "used": Object {
+              "unit": "B",
+              "value": 0,
+            },
+          },
+          "multi_az": false,
+          "name": "test-liza",
+          "network": Object {
+            "machine_cidr": "10.0.0.0/16",
+            "pod_cidr": "10.128.0.0/14",
+            "router_shards": Object {
+              "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+              "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+              "kind": "RouterShardListLink",
+            },
+            "service_cidr": "172.30.0.0/16",
+          },
+          "nodes": Object {
+            "compute": 2,
+            "infra": 2,
+            "master": 3,
+            "total": 7,
+          },
+          "region": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+            "id": "us-east-1",
+            "kind": "CloudRegionLink",
+          },
+          "state": "ready",
+          "storage": Object {
+            "total": Object {
+              "unit": "B",
+              "value": 0,
+            },
+            "updated_timestamp": "0001-01-01T00:00:00Z",
+            "used": Object {
+              "unit": "B",
+              "value": 0,
+            },
+          },
+          "version": Object {
+            "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+            "id": "openshift-v4.0-latest",
+            "kind": "VersionLink",
+          },
+        }
+      }
+    />
+    <Grid
+      bsClass="container"
+      componentClass="div"
+      fluid={true}
+    >
+      <div
+        className="cl-details-card"
+      >
+        <div
+          className="cl-details-card-title"
+        >
+          <h3>
+            Details
+          </h3>
+        </div>
+        <div
+          className="cl-details-card-body"
+        >
+          <Row
+            bsClass="row"
+            componentClass="div"
+          >
+            <Col
+              bsClass="col"
+              componentClass="div"
+              sm={6}
+            >
+              <DetailsLeft
+                cloudProviders={
+                  Object {
+                    "error": false,
+                    "errorMessage": "",
+                    "fulfilled": true,
+                    "pending": false,
+                    "providers": Object {
+                      "aws": Object {
+                        "display_name": "Amazon Web Services",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                        "id": "aws",
+                        "kind": "CloudProvider",
+                        "name": "aws",
+                        "regions": Object {
+                          "ap-northeast-1": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "Asia Pacific (Tokyo)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-northeast-1",
+                            "id": "ap-northeast-1",
+                            "kind": "CloudRegion",
+                          },
+                          "ap-northeast-2": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "Asia Pacific (Seoul)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-northeast-2",
+                            "id": "ap-northeast-2",
+                            "kind": "CloudRegion",
+                          },
+                          "ap-south-1": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "Asia Pacific (Mumbai)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-south-1",
+                            "id": "ap-south-1",
+                            "kind": "CloudRegion",
+                          },
+                          "ap-southeast-1": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "Asia Pacific (Singapore)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-1",
+                            "id": "ap-southeast-1",
+                            "kind": "CloudRegion",
+                          },
+                          "ap-southeast-2": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "Asia Pacific (Sydney)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-2",
+                            "id": "ap-southeast-2",
+                            "kind": "CloudRegion",
+                          },
+                          "ca-central-1": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "Canada (Central)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ca-central-1",
+                            "id": "ca-central-1",
+                            "kind": "CloudRegion",
+                          },
+                          "eu-central-1": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "EU (Frankfurt)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-central-1",
+                            "id": "eu-central-1",
+                            "kind": "CloudRegion",
+                          },
+                          "eu-west-1": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "EU (Ireland)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-west-1",
+                            "id": "eu-west-1",
+                            "kind": "CloudRegion",
+                          },
+                          "eu-west-2": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "EU (London)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-west-2",
+                            "id": "eu-west-2",
+                            "kind": "CloudRegion",
+                          },
+                          "eu-west-3": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "EU (Paris)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-west-3",
+                            "id": "eu-west-3",
+                            "kind": "CloudRegion",
+                          },
+                          "sa-east-1": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "South America (São Paulo)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/sa-east-1",
+                            "id": "sa-east-1",
+                            "kind": "CloudRegion",
+                          },
+                          "us-east-1": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "US East (N. Virginia)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                            "id": "us-east-1",
+                            "kind": "CloudRegion",
+                          },
+                          "us-east-2": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "US East (Ohio)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-2",
+                            "id": "us-east-2",
+                            "kind": "CloudRegion",
+                          },
+                          "us-west-1": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "US West (N. California)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-west-1",
+                            "id": "us-west-1",
+                            "kind": "CloudRegion",
+                          },
+                          "us-west-2": Object {
+                            "cloud_provider": Object {
+                              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                              "id": "aws",
+                              "kind": "CloudProviderLink",
+                            },
+                            "display_name": "US West (Oregon)",
+                            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-west-2",
+                            "id": "us-west-2",
+                            "kind": "CloudRegion",
+                          },
+                        },
+                      },
+                    },
+                  }
+                }
+                cluster={
+                  Object {
+                    "api": Object {
+                      "url": "https://api.test-liza.sdev.devshift.net:6443",
+                    },
+                    "canDelete": true,
+                    "canEdit": true,
+                    "cloud_provider": Object {
+                      "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                      "id": "aws",
+                      "kind": "CloudProviderLink",
+                    },
+                    "console": Object {
+                      "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
+                    },
+                    "cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "creation_timestamp": "2019-03-26T15:18:39.06783Z",
+                    "creator": "***REMOVED***",
+                    "display_name": "test-liza",
+                    "dns": Object {
+                      "base_domain": "sdev.devshift.net",
+                    },
+                    "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
+                    "flavour": Object {
+                      "href": "/api/clusters_mgmt/v1/flavours/4",
+                      "id": "4",
+                      "kind": "FlavourLink",
+                    },
+                    "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
+                    "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                    "kind": "Cluster",
+                    "managed": true,
+                    "memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "multi_az": false,
+                    "name": "test-liza",
+                    "network": Object {
+                      "machine_cidr": "10.0.0.0/16",
+                      "pod_cidr": "10.128.0.0/14",
+                      "router_shards": Object {
+                        "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+                        "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                        "kind": "RouterShardListLink",
+                      },
+                      "service_cidr": "172.30.0.0/16",
+                    },
+                    "nodes": Object {
+                      "compute": 2,
+                      "infra": 2,
+                      "master": 3,
+                      "total": 7,
+                    },
+                    "region": Object {
+                      "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                      "id": "us-east-1",
+                      "kind": "CloudRegionLink",
+                    },
+                    "state": "ready",
+                    "storage": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "version": Object {
+                      "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+                      "id": "openshift-v4.0-latest",
+                      "kind": "VersionLink",
+                    },
+                  }
+                }
+              />
+            </Col>
+            <Col
+              bsClass="col"
+              componentClass="div"
+              sm={6}
+            >
+              <DetailsRight
+                cluster={
+                  Object {
+                    "api": Object {
+                      "url": "https://api.test-liza.sdev.devshift.net:6443",
+                    },
+                    "canDelete": true,
+                    "canEdit": true,
+                    "cloud_provider": Object {
+                      "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                      "id": "aws",
+                      "kind": "CloudProviderLink",
+                    },
+                    "console": Object {
+                      "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
+                    },
+                    "cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "creation_timestamp": "2019-03-26T15:18:39.06783Z",
+                    "creator": "***REMOVED***",
+                    "display_name": "test-liza",
+                    "dns": Object {
+                      "base_domain": "sdev.devshift.net",
+                    },
+                    "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
+                    "flavour": Object {
+                      "href": "/api/clusters_mgmt/v1/flavours/4",
+                      "id": "4",
+                      "kind": "FlavourLink",
+                    },
+                    "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
+                    "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                    "kind": "Cluster",
+                    "managed": true,
+                    "memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "multi_az": false,
+                    "name": "test-liza",
+                    "network": Object {
+                      "machine_cidr": "10.0.0.0/16",
+                      "pod_cidr": "10.128.0.0/14",
+                      "router_shards": Object {
+                        "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+                        "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                        "kind": "RouterShardListLink",
+                      },
+                      "service_cidr": "172.30.0.0/16",
+                    },
+                    "nodes": Object {
+                      "compute": 2,
+                      "infra": 2,
+                      "master": 3,
+                      "total": 7,
+                    },
+                    "region": Object {
+                      "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                      "id": "us-east-1",
+                      "kind": "CloudRegionLink",
+                    },
+                    "state": "ready",
+                    "storage": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "version": Object {
+                      "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+                      "id": "openshift-v4.0-latest",
+                      "kind": "VersionLink",
+                    },
+                  }
+                }
+                routerShards={
+                  Object {
+                    "error": false,
+                    "errorMessage": "",
+                    "fulfilled": true,
+                    "pending": false,
+                    "routerShards": Object {
+                      "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+                      "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                      "items": Array [
+                        Object {
+                          "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards/ofvv",
+                          "id": "ofvv",
+                          "kind": "RouterShard",
+                          "label": "test1",
+                          "scheme": "internal",
+                        },
+                        Object {
+                          "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards/jhso",
+                          "id": "jhso",
+                          "kind": "RouterShard",
+                          "label": "test2",
+                          "scheme": "internet-facing",
+                        },
+                      ],
+                      "kind": "RouterShardList",
+                      "page": 1,
+                      "size": 2,
+                      "total": 2,
+                    },
+                  }
+                }
+              />
+            </Col>
+          </Row>
+        </div>
+      </div>
+    </Grid>
+    <Connect(ReduxForm)
+      onClose={[Function]}
+    />
+    <Connect(EditDisplayNameDialog)
+      onClose={[Function]}
+    />
+    <Connect(DeleteClusterDialog)
+      onClose={[Function]}
+    />
+  </div>
+</div>
+`;
+
+exports[`<ClusterDetails /> Error should render error message 1`] = `
+<EmptyState
+  className=""
+>
+  <Alert
+    className=""
+    onDismiss={null}
+    type="error"
+  >
+    <span>
+      Error retrieving cluster details: 
+    </span>
+  </Alert>
+</EmptyState>
+`;
+
+exports[`<ClusterDetails /> Loading should render loading modal when pending 1`] = `
+<LoadingModal>
+  Loading cluster details...
+</LoadingModal>
+`;

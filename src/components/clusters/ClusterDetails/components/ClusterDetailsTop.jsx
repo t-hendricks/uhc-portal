@@ -1,0 +1,112 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import result from 'lodash/result';
+
+import { LinkContainer } from 'react-router-bootstrap';
+import {
+  Button, Row, Col, Grid, DropdownButton, ButtonGroup, Breadcrumb, Spinner,
+} from 'patternfly-react';
+
+import clusterStates from '../../common/clusterStates';
+import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
+import ClusterCredentialsModal from './ClusterCredentialsModal';
+import RefreshButton from '../../../common/RefreshButton/RefreshButton';
+import ClusterBadge from '../../common/ClusterBadge/ClusterBadge';
+
+
+function ClusterDetailsTop({
+  cluster, credentials, openModal, pending, routerShards, refreshFunc,
+}) {
+  // The trenary for consoleURL is needed because the API does not guarantee fields being present.
+  // We'll have a lot of these all over the place as we grow :(
+
+  const consoleURL = cluster.console ? cluster.console.url : false;
+  const clusterName = cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
+
+  const launchConsole = consoleURL && (cluster.state !== clusterStates.UNINSTALLING) ? (
+    <a href={consoleURL} target="_blank" rel="noreferrer" className="pull-left">
+      <Button bsStyle="primary">Launch Console</Button>
+    </a>)
+    : (
+      <Button bsStyle="primary" disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
+        Launch Console
+      </Button>
+    );
+
+  const actions = (
+    <DropdownButton
+      id="actions"
+      bsStyle="default"
+      title="Actions"
+      pullRight
+      disabled={!cluster.canEdit && !cluster.canDelete}
+    >
+      <ClusterActionsDropdown
+        cluster={cluster}
+        showConsoleButton={false}
+      />
+    </DropdownButton>
+  );
+
+  const hasCredentials = (cluster.state === 'ready'
+                                && result(credentials, 'credentials.admin.password', false)
+                                && result(credentials, 'credentials.id') === cluster.id);
+
+  const credentialsButton = hasCredentials
+    ? (
+      <React.Fragment>
+        <Button bsStyle="default" onClick={() => { openModal('cluster-credentials'); }}>Admin Credentials</Button>
+        <ClusterCredentialsModal credentials={credentials.credentials} />
+      </React.Fragment>
+    )
+    : <Button bsStyle="default" disabled>Admin Credentials</Button>;
+
+  const isRefreshing = pending || credentials.pending || routerShards.pending;
+
+  return (
+    <Grid fluid>
+      <Row>
+        <Col sm={8}>
+          <Breadcrumb>
+            <LinkContainer to="/clusters">
+              <Breadcrumb.Item href="#">
+                    Clusters
+              </Breadcrumb.Item>
+            </LinkContainer>
+            <Breadcrumb.Item active>
+              {clusterName}
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </Col>
+      </Row>
+      <hr />
+      <Row>
+        <Col sm={6} className="cl-details-cluster-name">
+          <h1>
+            <ClusterBadge clusterName={clusterName} />
+          </h1>
+          { isRefreshing ? <Spinner loading /> : false }
+        </Col>
+        <Col lg={5} lgOffset={1}>
+          <ButtonGroup id="cl-details-btns">
+            {launchConsole}
+            {credentialsButton}
+            {actions}
+            <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
+          </ButtonGroup>
+        </Col>
+      </Row>
+    </Grid>
+  );
+}
+
+ClusterDetailsTop.propTypes = {
+  cluster: PropTypes.object,
+  credentials: PropTypes.object.isRequired,
+  openModal: PropTypes.func.isRequired,
+  refreshFunc: PropTypes.func.isRequired,
+  pending: PropTypes.bool.isRequired,
+  routerShards: PropTypes.object.isRequired,
+};
+
+export default ClusterDetailsTop;

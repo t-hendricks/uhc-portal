@@ -87,6 +87,8 @@ function getMetricsTimeDelta(t1, t2 = new Date()) {
   return Math.ceil(timeDiff / (1000 * 3600));
 }
 
+const isValid = id => id !== null && id !== undefined && id !== false && id !== '';
+
 const INVALIDATE_ACTION = base => `${base}_INVALIDATE`;
 
 // redux-middleware-promise
@@ -101,12 +103,13 @@ const helpers = {
   createViewQueryObject,
   getErrorMessage,
   getMetricsTimeDelta,
+  isValid,
   INVALIDATE_ACTION,
   FULFILLED_ACTION,
   PENDING_ACTION,
   REJECTED_ACTION,
 };
 
-export { noop, getMetricsTimeDelta };
+export { noop, getMetricsTimeDelta, isValid };
 
 export default helpers;

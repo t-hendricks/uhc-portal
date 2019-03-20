@@ -101,7 +101,10 @@ BadgedResource.propTypes = {
    *  (defaulted if valid resourceKind is given) */
   kindStr: PropTypes.string,
   /** Name of the resource */
-  resourceName: PropTypes.node,
+  resourceName: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]),
   /** Flag for large version */
   large: PropTypes.bool,
   /** Delay in ms for the tooltip (-1 to use title rather than a tooltip) */

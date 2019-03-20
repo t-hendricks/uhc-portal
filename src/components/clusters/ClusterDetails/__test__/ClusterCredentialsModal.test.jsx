@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ClusterCredentialsModal from './ClusterCredentialsModal';
+import ClusterCredentialsModal from '../components/ClusterCredentialsModal/ClusterCredentialsModal';
 
 describe('<ClusterCredentialsModal />', () => {
   let closeFunc;
