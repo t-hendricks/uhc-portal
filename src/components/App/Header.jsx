@@ -67,9 +67,14 @@ class Header extends React.Component {
       isLoggedIn, userProfile, logoutUser, history,
     } = this.props;
     const { isUserDropdownOpen, isKebabDropdownOpen } = this.state;
-
+    let displayName = (userProfile.keycloakProfile.name
+                       || userProfile.keycloakProfile.preferred_username);
+    if (userProfile.organization.fulfilled && userProfile.organization.details.name) {
+      displayName += ` (${userProfile.organization.details.name})`;
+    }
     return (
       <PageHeader
+        className="uhc_header"
         logo={<Brand src={rhProductTitle} alt="Red Hat OpenShift" />}
         logoProps={{
           onClick: () => {
@@ -113,7 +118,7 @@ class Header extends React.Component {
                   isOpen={isUserDropdownOpen}
                   toggle={(
                     <DropdownToggle onToggle={this.onUserDropdownToggle}>
-                      {userProfile.name || userProfile.preferred_username}
+                      {displayName}
                     </DropdownToggle>
 )}
                   dropdownItems={[
