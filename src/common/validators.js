@@ -65,9 +65,6 @@ const routerShard = (value) => {
   if (value.scheme && !value.label) {
     return 'Router shard label is required when using router shards.';
   }
-  if (value && !value.label && !value.scheme) {
-    return 'Router shard needs both a label and a scheme.';
-  }
   return undefined;
 };
 

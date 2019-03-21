@@ -49,5 +49,4 @@ test('Field is valid router shard', () => {
     label: 'foo',
     scheme: 'bar',
   })).toBe(undefined);
-  expect(validators.routerShard('foo')).toBe('Router shard needs both a label and a scheme.');
 });

@@ -83,6 +83,7 @@ class ClusterDetails extends Component {
       credentials,
       routerShards,
       fetchDetails,
+      fetchRouterShards,
       invalidateClusters,
       openModal,
       history,

@@ -3,7 +3,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { Col } from 'patternfly-react';
 import ReduxVerticalFormGroup from '../../../../common/ReduxVerticalFormGroup';
-import RouterShardInputForm from './RouterShardInputForm';
+import RouterShardInputForm from '../../../common/RouterShardInputForm/RouterShardInputForm';
 import validators from '../../../../../common/validators';
 import constants, { NetworkConfugurationHint, RouterShardsHint } from './CreateClusterModalHelper';
 
@@ -40,17 +40,13 @@ function RouterShardsForm(props) {
         />
         <h4>{constants.routerShardsHeader}</h4>
         <Field
-          component={ReduxVerticalFormGroup}
-          componentClass={RouterShardInputForm}
-          label=""
+          component={RouterShardInputForm}
           name="network_router_shards.0"
           validate={validators.routerShard}
           disabled={pending}
         />
         <Field
-          component={ReduxVerticalFormGroup}
-          componentClass={RouterShardInputForm}
-          label=""
+          component={RouterShardInputForm}
           name="network_router_shards.1"
           validate={validators.routerShard}
           disabled={pending}

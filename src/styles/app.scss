@@ -319,17 +319,36 @@ limitations under the License.
   padding-bottom: 10px;
 }
 
-.form-inline > .form-group {
-  @media (min-width: 1200px) {
-    padding-left: 20px;
+.form-inline {
+  .form-group {
+    @media (min-width: 1200px) {
+      padding-left: 12px;
 
-    &:first-child {
-      padding-left: 0;
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+
+    .control-label {
+      margin-right: 6px;
+      font-weight: 400;
     }
   }
 
-  .control-label {
-    margin-right: 12px;
+  .btn {
+    margin-left: 12px;
+    vertical-align: text-bottom;
+  }
+}
+
+.form-horizontal {
+  .form-inline > .form-group {
+    margin-left: 12px;
+    margin-right: 0;
+
+    &:first-child {
+      margin-left: 20px;
+    }
   }
 }
 

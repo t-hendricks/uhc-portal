@@ -2,24 +2,45 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
-  Button, Form, Modal, Alert, Grid, Col, Row,
+  Button, Form, Modal, Alert, Grid, Col, Row, FormGroup, ControlLabel,
 } from 'patternfly-react';
 
 import ReduxVerticalFormGroup from '../../../common/ReduxVerticalFormGroup';
+import RouterShardInputForm from '../RouterShardInputForm/RouterShardInputForm';
 import validators from '../../../../common/validators';
 import ModalHeader from '../../../common/Modal/components/ModalHeader';
 
 class EditClusterDialog extends Component {
   componentDidUpdate(prevProps) {
     const {
-      editClusterResponse, resetResponse, closeModal, onClose, initialFormValues, change,
+      editClusterResponse,
+      resetResponse,
+      closeModal,
+      onClose,
+      initialFormValues,
+      change,
+      hasRouterShards,
+      fetchRouterShards,
     } = this.props;
 
-    // update initial values when a cluster is attached to the form
-    if ((prevProps.initialFormValues.id !== initialFormValues.id)
-      && initialFormValues.nodesCompute) {
-      change('id', initialFormValues.id);
-      change('nodes_compute', initialFormValues.nodesCompute);
+    if (initialFormValues.id) {
+      // update initial values when a cluster is attached to the form
+      if (prevProps.initialFormValues.id !== initialFormValues.id) {
+        change('id', initialFormValues.id);
+        change('nodes_compute', initialFormValues.nodesCompute);
+
+        // fetch router shards
+        if (!hasRouterShards) {
+          fetchRouterShards(initialFormValues.id);
+        }
+      }
+
+      // update initial router shards values once they are available
+      if (!prevProps.hasRouterShards
+          && hasRouterShards
+          && initialFormValues.routerShards) {
+        change('network_router_shards', initialFormValues.routerShards);
+      }
     }
 
     if (editClusterResponse.fulfilled) {
@@ -31,7 +52,7 @@ class EditClusterDialog extends Component {
 
   render() {
     const {
-      isOpen, closeModal, handleSubmit, editClusterResponse, resetResponse,
+      isOpen, closeModal, handleSubmit, editClusterResponse, resetResponse, hasRouterShards,
     } = this.props;
 
     const cancelEdit = () => {
@@ -65,6 +86,27 @@ class EditClusterDialog extends Component {
                   />
                 </Col>
               </Row>
+              { hasRouterShards
+              && (
+                <Row>
+                  <Col sm={5}>
+                    <FormGroup>
+                      <ControlLabel>Router Shards</ControlLabel>
+                      <Field
+                        component={RouterShardInputForm}
+                        name="network_router_shards.0"
+                        validate={validators.routerShard}
+                      />
+                      <Field
+                        component={RouterShardInputForm}
+                        name="network_router_shards.1"
+                        validate={validators.routerShard}
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+              )
+              }
             </Grid>
           </Form>
         </Modal.Body>
@@ -89,10 +131,14 @@ EditClusterDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   resetResponse: PropTypes.func.isRequired,
+  fetchRouterShards: PropTypes.func.isRequired,
   editClusterResponse: PropTypes.object,
-  initialFormValues: PropTypes.shape(
-    { id: PropTypes.string, nodesCompute: PropTypes.number },
-  ).isRequired,
+  hasRouterShards: PropTypes.bool.isRequired,
+  initialFormValues: PropTypes.shape({
+    id: PropTypes.string,
+    nodesCompute: PropTypes.number,
+    routerShards: PropTypes.array,
+  }).isRequired,
 };
 
 EditClusterDialog.defaultProps = {

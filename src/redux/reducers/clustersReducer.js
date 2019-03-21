@@ -201,6 +201,18 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
+    case helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTER_ROUTER_SHARDS):
+      return helpers.setStateProp(
+        'routerShards',
+        {
+          valid: false,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
     case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTER_ROUTER_SHARDS):
       return helpers.setStateProp(
         'routerShards',
