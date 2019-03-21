@@ -38,7 +38,7 @@ module.exports = (env, argv) => {
     copyConfig = new CopyWebpackPlugin([{ from: 'src/config', to: `${outDir}/config` }]);
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: false });
   }
-  const publicPath = embeddedApp ? `/${insightsDeployment}/platform/uhc` : '/clusters';
+  const publicPath = embeddedApp ? `/${insightsDeployment}/platform/uhc/` : '/clusters/';
   return {
     mode: argv.mode || 'development',
     entry: {
