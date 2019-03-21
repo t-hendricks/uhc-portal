@@ -59,17 +59,16 @@ class App extends React.Component {
     if (!authenticated || (userProfile.email && userProfile.email.endsWith('@redhat.com'))) {
       return (
         <Switch>
-          <Redirect from="/" exact to="/clusters" />
-          <Route path="/clusters/install" component={InstallCluster} />
-          <Route path="/clusters" component={ClustersList} />
-          <Route path="/cluster/:id" component={ClusterDetails} />
+          <Route path="/install" component={InstallCluster} />
+          <Route path="/details/:id" component={ClusterDetails} />
+          <Route path="/" component={ClustersList} />
         </Switch>
       );
     }
     return (
       <Switch>
-        <Route path="/clusters/install" component={InstallCluster} />
-        <Redirect from="/" to="/clusters/install" />
+        <Route path="/install" component={InstallCluster} />
+        <Redirect from="/" to="/install" />
       </Switch>
     );
   }

@@ -52,7 +52,7 @@ function ClusterListTable(props) {
         overlay={<Tooltip id={cluster.id}>{`cluster name: ${cluster.name}`}</Tooltip>}
         placement="right"
       >
-        <Link to={`/cluster/${cluster.id}`}>{name.trim() !== '' ? name : cluster.name}</Link>
+        <Link to={`/details/${cluster.id}`}>{name.trim() !== '' ? name : cluster.name}</Link>
       </OverlayTrigger>
     );
 
