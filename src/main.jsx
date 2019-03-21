@@ -41,7 +41,7 @@ const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <BrowserRouter basename={APP_EMBEDDED ? '/insights/platform/uhc' : ''}>
+        <BrowserRouter basename={APP_EMBEDDED ? '/insights/platform/uhc' : 'clusters'}>
           <App
             loginFunction={keycloak.login}
             logoutFunction={keycloak.logout}
