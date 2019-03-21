@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tokens /> Renders correctly 1`] = `
+<div>
+  <AlphaNotice />
+  <div
+    className="token-details"
+  >
+    <h2>
+      API Tokens
+    </h2>
+    <h3>
+      Access Token
+    </h3>
+    <p>
+      This access token is a kind of password that can be used to access the API:
+    </p>
+    <div
+      className="token-value"
+    >
+      <pre>
+        hello access token!
+      </pre>
+    </div>
+    <p>
+      Copy it, and then add it to the authorization header of the API request. For example, to obtain your list of clusters using the API with the 
+      <a
+        href="https://curl.haxx.se"
+      >
+        curl
+      </a>
+       and 
+      <a
+        href="https://stedolan.github.io/jq"
+      >
+        jq
+      </a>
+       command line tools, use the following commands:
+    </p>
+    <div
+      className="token-snippet"
+    >
+      <pre>
+        ACCESS_TOKEN="\\
+hello access token!\\
+"
+curl \\
+--silent \\
+--header "Authorization: Bearer \${ACCESS_TOKEN}" \\
+https://api.openshift.com/api/clusters_mgmt/v1/clusters | \\
+jq .
+      </pre>
+    </div>
+    <Alert
+      className=""
+      onDismiss={null}
+      type="warning"
+    >
+      <p>
+        Note that this token is short lived, usually only five minutes. If you need a long lived token then you can use the refresh token available below, but then you will need a tool that knows how to obtain an access token from that refresh token.
+      </p>
+    </Alert>
+    <h3>
+      Refresh Token
+    </h3>
+    <p>
+      This is a long lived token that you can use to obtain access tokens:
+    </p>
+    <div
+      className="token-value"
+    >
+      <pre>
+        and a refresh token too
+      </pre>
+    </div>
+    <p>
+      Copy it, and then use it o request an access token. For example, to obtain an access token using the 
+      <a
+        href="https://curl.haxx.se"
+      >
+        curl
+      </a>
+       and 
+      <a
+        href="https://stedolan.github.io/jq"
+      >
+        jq
+      </a>
+       command line tools, use the following commands:
+    </p>
+    <div
+      className="token-snippet"
+    >
+      <pre>
+        REFRESH_TOKEN="\\
+and a refresh token too\\
+"
+curl \\
+--silent \\
+--data-urlencode "grant_type=refresh_token" \\
+--data-urlencode "client_id=uhc" \\
+--data-urlencode "refresh_token=\${REFRESH_TOKEN}" \\
+https://developers.redhat.com/auth/realms/rhd/protocol/openid-connect/token | \\
+jq -r .access_token
+      </pre>
+    </div>
+  </div>
+</div>
+`;

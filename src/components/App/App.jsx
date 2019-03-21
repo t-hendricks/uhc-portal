@@ -33,6 +33,7 @@ import ErrorBoundary from './ErrorBoundary';
 import ClustersList from '../clusters/ClusterList';
 import ClusterDetails from '../clusters/ClusterDetails';
 import InstallCluster from '../clusters/install/InstallCluster';
+import Tokens from '../tokens/Tokens';
 
 class App extends React.Component {
   constructor() {
@@ -52,6 +53,7 @@ class App extends React.Component {
     if (!authenticated || (userProfile.keycloakProfile.email && userProfile.keycloakProfile.email.endsWith('@redhat.com'))) {
       return (
         <Switch>
+          <Route path="/tokens" component={Tokens} />
           <Route path="/install" component={InstallCluster} />
           <Route path="/details/:id" component={ClusterDetails} />
           <Route path="/" component={ClustersList} />

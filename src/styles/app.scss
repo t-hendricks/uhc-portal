@@ -50,6 +50,18 @@ limitations under the License.
   background-color: $color-pf-blue-25;
 }
 
+// Styles for the page where the user can download the access tokens, for use
+// with API clients:
+.token-details {
+  margin: 0px 30px 0 30px;
+}
+
+.token-value, .token-snippet {
+  pre {
+    white-space: pre-wrap;
+  }
+}
+
 // override pagination patternfly
 
 .content-view-pf-pagination{
