@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
 import {
-  Button, Form, Modal, Alert, Grid, Col, Row,
+  Button, Form, Modal, Alert, Grid, Col, Row, FormControl, ControlLabel, FormGroup,
 } from 'patternfly-react';
-
-import ReduxVerticalFormGroup from '../../../common/ReduxVerticalFormGroup';
 import ModalHeader from '../../../common/Modal/components/ModalHeader';
 
 class EditDisplayNameDialog extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      validFor: null,
+      currentValue: '',
+    };
+  }
+
   componentWillReceiveProps(nextProps) {
-    const { change } = this.props;
-    const { id, displayName } = nextProps.initialFormValues;
-    change('display_name', displayName);
-    change('id', id);
+    const { validFor } = this.state;
+    if (nextProps.clusterID !== validFor) {
+      this.setState((state, props) => ({
+        validFor: nextProps.clusterID,
+        currentValue: props.displayName,
+      }));
+    }
   }
 
 
@@ -28,10 +36,17 @@ class EditDisplayNameDialog extends Component {
     }
   }
 
+  setValue(event) {
+    this.setState({
+      currentValue: event.target.value,
+    });
+  }
+
   render() {
     const {
-      isOpen, closeModal, handleSubmit, editClusterResponse, resetResponse,
+      isOpen, closeModal, submit, editClusterResponse, resetResponse, clusterID,
     } = this.props;
+    const { currentValue } = this.state;
 
     const cancelEdit = () => {
       resetResponse();
@@ -49,17 +64,23 @@ class EditDisplayNameDialog extends Component {
         <ModalHeader title="Edit Display Name" onClose={cancelEdit} />
       </Modal.Header>
       <Modal.Body>
-        <Form horizontal onSubmit={() => handleSubmit()}>
+        <Form horizontal>
           <Grid>
             <Row>
               <Col sm={5}>
                 {hasError}
-                <Field
-                  component={ReduxVerticalFormGroup}
-                  name="display_name"
-                  label="Display Name"
-                  type="text"
-                />
+                <FormGroup>
+                  <ControlLabel>
+                    Display Name
+                  </ControlLabel>
+                  <FormControl
+                    type="text"
+                    value={currentValue}
+                    placeholder="Enter display name"
+                    onChange={e => this.setValue(e)}
+                    autoFocus
+                  />
+                </FormGroup>
               </Col>
             </Row>
           </Grid>
@@ -69,7 +90,7 @@ class EditDisplayNameDialog extends Component {
         <Button bsStyle="default" onClick={cancelEdit}>
             Cancel
         </Button>
-        <Button bsStyle="primary" onClick={() => handleSubmit()}>
+        <Button bsStyle="primary" onClick={() => submit(clusterID, currentValue)}>
             Edit
         </Button>
       </Modal.Footer>
@@ -82,13 +103,11 @@ EditDisplayNameDialog.propTypes = {
   isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired,
   resetResponse: PropTypes.func.isRequired,
-  change: PropTypes.func.isRequired,
   editClusterResponse: PropTypes.object,
-  initialFormValues: PropTypes.shape(
-    { id: PropTypes.string, displayName: PropTypes.string },
-  ).isRequired,
+  displayName: PropTypes.string,
+  clusterID: PropTypes.string,
 };
 
 EditDisplayNameDialog.defaultProps = {
