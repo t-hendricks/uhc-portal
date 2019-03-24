@@ -70,11 +70,11 @@ class EditClusterDialog extends Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button bsStyle="primary" onClick={handleSubmit}>
-            Edit
-          </Button>
           <Button bsStyle="default" onClick={cancelEdit}>
             Cancel
+          </Button>
+          <Button bsStyle="primary" onClick={handleSubmit}>
+            Edit
           </Button>
         </Modal.Footer>
       </Modal>
