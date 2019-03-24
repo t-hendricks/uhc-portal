@@ -10,17 +10,18 @@ import validators from '../../../../common/validators';
 import ModalHeader from '../../../common/Modal/components/ModalHeader';
 
 class EditClusterDialog extends Component {
-  componentWillReceiveProps(nextProps) {
-    const { change } = this.props;
-    if (nextProps.initialFormValues.nodesCompute) {
-      change('nodes_compute', nextProps.initialFormValues.nodesCompute);
-    }
-  }
-
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const {
-      editClusterResponse, resetResponse, closeModal, onClose,
+      editClusterResponse, resetResponse, closeModal, onClose, initialFormValues, change,
     } = this.props;
+
+    // update initial values when a cluster is attached to the form
+    if ((prevProps.initialFormValues.id !== initialFormValues.id)
+      && initialFormValues.nodesCompute) {
+      change('id', initialFormValues.id);
+      change('nodes_compute', initialFormValues.nodesCompute);
+    }
+
     if (editClusterResponse.fulfilled) {
       resetResponse();
       onClose();
