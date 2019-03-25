@@ -25,6 +25,7 @@ import {
 } from 'patternfly-react';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
+import SubscriptionCompliancy from './components/SubscriptionCompliancy';
 import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
 import Users from './components/Users';
@@ -52,9 +53,12 @@ class ClusterDetails extends Component {
       clusterIdentityProviders,
       getClusterIdentityProviders,
       match,
+      organization,
+      getOrganization,
     } = this.props;
     const clusterID = match.params.id;
     this.refresh();
+
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
     }
@@ -62,6 +66,9 @@ class ClusterDetails extends Component {
        && !clusterIdentityProviders.error
        && !clusterIdentityProviders.fulfilled) {
       getClusterIdentityProviders(clusterID); // TODO: get IDP only for managed cluster
+    }
+    if (!organization.pending && !organization.error && !organization.fulfilled) {
+      getOrganization();
     }
   }
 
@@ -114,6 +121,7 @@ class ClusterDetails extends Component {
       match,
       logs,
       clusterIdentityProviders,
+      organization,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -154,6 +162,10 @@ class ClusterDetails extends Component {
     return (
       <div>
         <div id="clusterdetails-content">
+          <SubscriptionCompliancy
+            cluster={cluster}
+            organization={organization}
+          />
           <ClusterDetailsTop
             cluster={cluster}
             credentials={credentials}
@@ -162,6 +174,7 @@ class ClusterDetails extends Component {
             routerShards={routerShards}
             refreshFunc={this.refresh}
             clusterIdentityProviders={clusterIdentityProviders}
+            organization={organization}
           />
           <TabContainer id="cluster-details-tabs" defaultActiveKey={1}>
             <React.Fragment>
@@ -224,6 +237,7 @@ ClusterDetails.propTypes = {
   fetchCredentials: PropTypes.func.isRequired,
   fetchRouterShards: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
+  getOrganization: PropTypes.func.isRequired,
   getLogs: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
@@ -234,6 +248,7 @@ ClusterDetails.propTypes = {
   getClusterIdentityProviders: PropTypes.func.isRequired,
   logs: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
+  organization: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({
     cluster: PropTypes.object,
     error: PropTypes.bool,

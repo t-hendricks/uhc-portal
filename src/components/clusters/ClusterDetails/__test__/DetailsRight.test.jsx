@@ -7,7 +7,10 @@ import { clusterDetails, routerShards } from './ClusterDetails.fixtures';
 describe('<DetailsRight />', () => {
   it('should render', () => {
     const wrapper = shallow(
-      <DetailsRight cluster={clusterDetails.cluster} routerShards={routerShards} />,
+      <DetailsRight
+        cluster={clusterDetails.cluster}
+        routerShards={routerShards}
+      />,
     );
     expect(wrapper).toMatchSnapshot();
   });

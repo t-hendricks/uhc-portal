@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SubscriptionCompliancy /> should render 1`] = `
+<Alert
+  className=""
+  onDismiss={null}
+  type="error"
+>
+  <p>
+    <strong>
+      This cluster is not attached to a subscription
+    </strong>
+  </p>
+  <p>
+    Please find 
+    this cluster in the 
+    <a
+      href="https://access.redhat.com/management/systems"
+      target="_blank"
+    >
+      Red Hat Customer Portal
+    </a>
+     and attach subscription(s) that covers 
+    the current size of this cluster. You may need to 
+    <a
+      href="https://www.redhat.com/en/contact"
+      target="_blank"
+    >
+      contact sales
+    </a>
+     in case you don't own enough subscriptions to cover it.
+  </p>
+</Alert>
+`;

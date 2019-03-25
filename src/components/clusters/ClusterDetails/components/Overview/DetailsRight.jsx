@@ -98,6 +98,12 @@ function DetailsRight({ cluster, routerShards }) {
             </dd>
           </dl>
         </dd>
+        <dt>
+          Support Level
+        </dt>
+        <dd>
+          {result(cluster, 'subscriptionInfo.support_level', 'None (Evaluation)')}
+        </dd>
         <ClusterNetwork cluster={cluster} routerShards={routerShards} />
       </dl>
     </React.Fragment>

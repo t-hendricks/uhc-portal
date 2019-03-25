@@ -54,6 +54,20 @@ const selfManagedProps = {
     canEdit: true,
     canDelete: true,
   },
+  subscription: {
+    items: [
+      {
+        id: 42,
+        support_level: 'Standard',
+        plan: {
+          id: 'OCP',
+        },
+      },
+    ],
+  },
+  organization: {
+    ebs_account_id: '123456',
+  },
   ...props,
 };
 

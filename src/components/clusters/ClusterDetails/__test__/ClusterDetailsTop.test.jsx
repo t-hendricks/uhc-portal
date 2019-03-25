@@ -3,7 +3,13 @@ import { shallow } from 'enzyme';
 
 import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import {
-  clusterDetails, credentials, openModal, routerShards, refreshFunc, clusterIdentityProviders,
+  clusterDetails,
+  credentials,
+  openModal,
+  routerShards,
+  refreshFunc,
+  clusterIdentityProviders,
+  organization,
 } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
 
@@ -18,6 +24,7 @@ describe('<ClusterDetailsTop />', () => {
       routerShards,
       refreshFunc,
       clusterIdentityProviders,
+      organization,
     };
     wrapper = shallow(
       <ClusterDetailsTop {...props} />,
