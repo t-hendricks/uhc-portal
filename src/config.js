@@ -5,7 +5,7 @@ const config = {
   fetchConfig() {
     return new Promise((resolve) => {
       const that = this;
-      axios.get('/config/config.json').then((response) => {
+      axios.get('/clusters/config/config.json').then((response) => {
         that.configData = response.data;
         resolve();
       });

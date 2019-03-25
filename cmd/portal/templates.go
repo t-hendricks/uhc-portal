@@ -73,6 +73,7 @@ DocumentRoot /var/www/html
 # Allow access to the directory that contains application configuration files,
 # including the config.json file:
 Alias /config {{ .ConfigDir }}
+Alias /clusters/config {{ .ConfigDir }}
 <Directory {{ .ConfigDir }} >
   AllowOverride None
   Require all granted
