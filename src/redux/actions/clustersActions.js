@@ -46,6 +46,9 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
   let canDelete;
   const buildPermissionDict = (response) => {
     const ret = {};
+    if (!response || !response.data || !response.data.cluster_ids) {
+      return ret;
+    }
     response.data.cluster_ids.forEach((clusterID) => {
       ret[clusterID] = true;
     });
