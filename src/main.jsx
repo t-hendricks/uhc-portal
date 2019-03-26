@@ -36,12 +36,20 @@ import { store, reloadReducers } from './redux/store';
 import './styles/main.scss';
 
 let keycloak;
+let basename = '/clusters';
+
+if (APP_EMBEDDED) {
+    const pathName = location.pathname.split('/');
+    pathName.shift();
+    const release = pathName[0] === 'beta' ? '/beta/' : '/';
+    basename = `${release}/${pathName[1]}`;
+}
 
 const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <BrowserRouter basename={APP_EMBEDDED ? '/insights/platform/uhc' : 'clusters'}>
+        <BrowserRouter basename={basename}>
           <App
             loginFunction={keycloak.login}
             logoutFunction={keycloak.logout}
