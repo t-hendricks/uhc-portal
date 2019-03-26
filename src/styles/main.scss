@@ -36,7 +36,6 @@ $pf-global--font-path: '~@patternfly/patternfly/assets/fonts/';
 @import "~@patternfly/patternfly/sass-utilities/_all";
 @import "~@patternfly/patternfly/_variables";
 @import "~@patternfly/patternfly/_fonts";
-@import "~@patternfly/patternfly/_base";
 @import "~@patternfly/patternfly/_themes";
 @import '~@patternfly/patternfly/utilities/Accessibility/accessibility.scss';
 @import '~@patternfly/patternfly/utilities/Spacing/spacing.css';
@@ -52,6 +51,5 @@ body {
   height: 100%;
 }
 
-@import './overrides.scss';
 @import './app';
 @import './log-window.scss'

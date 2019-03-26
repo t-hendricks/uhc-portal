@@ -39,10 +39,10 @@ let keycloak;
 let basename = '/clusters';
 
 if (APP_EMBEDDED) {
-    const pathName = location.pathname.split('/');
-    pathName.shift();
-    const release = pathName[0] === 'beta' ? '/beta/' : '/';
-    basename = `${release}/${pathName[1]}`;
+  const pathName = window.location.pathname.split('/');
+  pathName.shift();
+  const release = pathName[0] === 'beta' ? '/beta/' : '/';
+  basename = `${release}${pathName[1]}`;
 }
 
 const render = () => {
@@ -125,8 +125,8 @@ function initKeycloak() {
 }
 
 if (APP_EMBEDDED) {
-  document.querySelector('.layout-pf.layout-pf-fixed').classList.remove('layout-pf', 'layout-pf-fixed');
   insights.chrome.init();
+  insights.chrome.identifyApp('');
   insights.chrome.auth.getUser().then((data) => {
     store.dispatch(userInfoResponse(data));
     store.dispatch(getCloudProviders());
