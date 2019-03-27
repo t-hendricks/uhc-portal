@@ -63,7 +63,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
             >
               <Link
                 replace={false}
-                to="/clusters/install"
+                to="/install"
               >
                 <Button
                   active={false}

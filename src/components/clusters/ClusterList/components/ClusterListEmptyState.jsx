@@ -12,7 +12,7 @@ function ClusterListEmptyState(props) {
 
   const createSelfManaged = (
     <EmptyState.Action>
-      <Link to="/clusters/install">
+      <Link to="/install">
         <Button bsStyle="primary" bsSize="large">
           Create Self-Managed (Manual) Cluster
         </Button>

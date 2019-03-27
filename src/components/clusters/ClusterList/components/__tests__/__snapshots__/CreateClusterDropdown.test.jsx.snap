@@ -13,7 +13,7 @@ exports[`<CreateClusterDropdown /> renders correctly 1`] = `
     exact={false}
     replace={false}
     strict={false}
-    to="/clusters/install"
+    to="/install"
   >
     <MenuItem
       bsClass="dropdown"
