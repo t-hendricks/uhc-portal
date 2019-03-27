@@ -15,6 +15,7 @@ exports[`<RouterShardInputForm /> renders correctly 1`] = `
       component={[Function]}
       label="Label"
       name="label"
+      onChange={[Function]}
       type="text"
     />
     <Field

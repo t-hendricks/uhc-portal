@@ -3,7 +3,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, FormGroup, HelpBlock } from 'patternfly-react';
+import {
+  Button,
+  FormGroup,
+  HelpBlock,
+  OverlayTrigger,
+  Tooltip,
+} from 'patternfly-react';
 import {
   Field,
   FormSection,
@@ -14,11 +20,13 @@ import ReduxVerticalFormGroup from '../../../common/ReduxVerticalFormGroup';
 
 function RouterShardSchemeInputComboBox(props) {
   return (
-    <select {...props}>
-      <option value="" key="">- Please select -</option>
-      <option value="internal" key="internal">Internal</option>
-      <option value="internet-facing" key="internet-facing">External</option>
-    </select>
+    <OverlayTrigger overlay={<Tooltip id="router-shard-scheme-constraint-tooltip">Only external routes are currently supported</Tooltip>}>
+      <select {...props} readOnly>
+        <option value="" key="">- Please select -</option>
+        <option value="internal" key="internal">Internal</option>
+        <option value="internet-facing" key="internet-facing">External</option>
+      </select>
+    </OverlayTrigger>
   );
 }
 
@@ -33,6 +41,11 @@ function RouterShardInputForm(props) {
     },
     ...extraProps // any extra props not specified above
   } = props;
+
+  // Force external routes until upstream 4.x clusters support them
+  const forceExternal = (event) => {
+    dispatch(change(form, `${name}.scheme`, event.target.value ? 'internet-facing' : null));
+  };
 
   const clearForm = () => {
     dispatch(change(form, `${name}.label`, null));
@@ -49,6 +62,7 @@ function RouterShardInputForm(props) {
           name="label"
           label="Label"
           type="text"
+          onChange={forceExternal}
           {...extraProps}
         />
         <Field
