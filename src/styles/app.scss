@@ -342,6 +342,11 @@ limitations under the License.
 }
 
 .form-horizontal {
+  .form-group .spinner-inline.spinner-xs {
+    vertical-align: middle;
+    margin-left: 3px;
+  }
+
   .form-inline > .form-group {
     margin-left: 12px;
     margin-right: 0;

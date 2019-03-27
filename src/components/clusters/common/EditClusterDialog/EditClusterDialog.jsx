@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
-  Button, Form, Modal, Alert, Grid, Col, Row, FormGroup, ControlLabel,
+  Button, Form, Modal, Alert, Grid, Col, Row, FormGroup, ControlLabel, Spinner,
 } from 'patternfly-react';
 
 import ReduxVerticalFormGroup from '../../../common/ReduxVerticalFormGroup';
@@ -86,27 +86,26 @@ class EditClusterDialog extends Component {
                   />
                 </Col>
               </Row>
-              { hasRouterShards
-              && (
-                <Row>
-                  <Col sm={5}>
-                    <FormGroup>
-                      <ControlLabel>Router Shards</ControlLabel>
-                      <Field
-                        component={RouterShardInputForm}
-                        name="network_router_shards.0"
-                        validate={validators.routerShard}
-                      />
-                      <Field
-                        component={RouterShardInputForm}
-                        name="network_router_shards.1"
-                        validate={validators.routerShard}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-              )
-              }
+              <Row>
+                <Col sm={5}>
+                  <FormGroup>
+                    <ControlLabel>Router Shards</ControlLabel>
+                    <Spinner loading={!hasRouterShards} inline size="xs" />
+                    <Field
+                      component={RouterShardInputForm}
+                      name="network_router_shards.0"
+                      validate={validators.routerShard}
+                      disabled={!hasRouterShards}
+                    />
+                    <Field
+                      component={RouterShardInputForm}
+                      name="network_router_shards.1"
+                      validate={validators.routerShard}
+                      disabled={!hasRouterShards}
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
             </Grid>
           </Form>
         </Modal.Body>
@@ -115,7 +114,7 @@ class EditClusterDialog extends Component {
           <Button bsStyle="default" onClick={cancelEdit}>
             Cancel
           </Button>
-          <Button bsStyle="primary" onClick={handleSubmit}>
+          <Button bsStyle="primary" disabled={!hasRouterShards} onClick={handleSubmit}>
             Edit
           </Button>
         </Modal.Footer>

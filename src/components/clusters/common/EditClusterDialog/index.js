@@ -22,7 +22,6 @@ const mapStateToProps = (state) => {
   const modalData = state.modal.activeModal.data;
   const hasRouterShards = !!(state.clusters.routerShards
                              && state.clusters.routerShards.fulfilled
-                             && modalData.managed
                              && modalData.id === state.clusters.routerShards.routerShards.id);
   return ({
     isOpen: shouldShowModal(state, 'edit-cluster'),
