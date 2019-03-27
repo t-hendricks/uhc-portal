@@ -16,7 +16,7 @@ function CreateClusterDropdown(props) {
       bsSize="large"
       className="cluster-list-top"
     >
-      <LinkContainer to="/clusters/install">
+      <LinkContainer to="/install">
         <MenuItem eventKey="1">
           Self-Managed (Manual Install) Cluster
         </MenuItem>
