@@ -34,7 +34,7 @@ module.exports = (env, argv) => {
   let copyConfig = null;
   let bundleAnalyzer = null;
   const embeddedApp = process.env.EMBEDDED === 'true';
-  const appDeployment = devMode ? 'beta/apps' : 'apps';
+  const appDeployment = devMode ? 'apps' : 'bea/apps';
   if (devMode) {
     copyConfig = new CopyWebpackPlugin([{ from: 'src/config', to: `${outDir}/config` }]);
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: false });
@@ -110,6 +110,7 @@ module.exports = (env, argv) => {
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-proposal-object-rest-spread',
                 '@babel/plugin-transform-object-assign',
+                '@babel/plugin-syntax-dynamic-import'
               ],
             },
           },

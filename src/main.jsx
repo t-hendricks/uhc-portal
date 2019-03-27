@@ -35,6 +35,10 @@ import { store, reloadReducers } from './redux/store';
 
 import './styles/main.scss';
 
+if (!APP_EMBEDDED) {
+    import('./styles/standalone.scss');
+}
+
 let keycloak;
 let basename = '/clusters';
 
@@ -42,7 +46,7 @@ if (APP_EMBEDDED) {
   const pathName = window.location.pathname.split('/');
   pathName.shift();
   const release = pathName[0] === 'beta' ? '/beta/' : '/';
-  basename = `${release}${pathName[1]}`;
+  basename = `${release}${pathName[0]}`;
 }
 
 const render = () => {
