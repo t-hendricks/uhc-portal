@@ -43,11 +43,12 @@ module.exports = (env, argv) => {
     mode: argv.mode || 'development',
     entry: {
       main: path.resolve(srcDir, 'main.jsx'),
+      token: path.resolve(srcDir, 'token.jsx'),
     },
 
     output: {
       path: outDir,
-      filename: 'bundle.js',
+      filename: 'bundle.[name].js',
       publicPath,
     },
     devtool: 'source-map',
@@ -61,6 +62,13 @@ module.exports = (env, argv) => {
       }),
       new HtmlWebpackPlugin({
         hash: true, // cache invalidation on bundle updates
+        chunks: ['token'],
+        template: 'src/token.html',
+        filename: 'token.html',
+      }),
+      new HtmlWebpackPlugin({
+        hash: true, // cache invalidation on bundle updates
+        chunks: ['main'],
         template: 'src/index.html',
       }),
       new webpack.DefinePlugin({
@@ -71,10 +79,10 @@ module.exports = (env, argv) => {
       new ReplaceWebpackPlugin([
         ...embeddedApp ? [{
           pattern: '<div id="root"></div>',
-          replacement: `<esi:include src="/${insightsDeployment}/static/chrome/snippets/body.html" />`
+          replacement: `<esi:include src="/${insightsDeployment}/static/chrome/snippets/body.html" />`,
         }, {
           pattern: '@@head-snippet@@',
-          replacement: `<esi:include src="/${insightsDeployment}/static/chrome/snippets/head.html" />`
+          replacement: `<esi:include src="/${insightsDeployment}/static/chrome/snippets/head.html" />`,
         }] : [{
           pattern: '@@head-snippet@@',
           replacement: '',

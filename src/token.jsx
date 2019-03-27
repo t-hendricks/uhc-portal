@@ -1,0 +1,85 @@
+/*
+Copyright (c) 2018 Red Hat, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+import 'core-js/es6/promise';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+import Keycloak from 'keycloak-js';
+import config from './config';
+
+import './styles/main.scss';
+
+let keycloak;
+
+const render = (token) => {
+  ReactDOM.render(
+    <AppContainer>
+      <div>
+        <h1>Hello token page</h1>
+        <h2>render token page component here</h2>
+        <pre>{token}</pre>
+      </div>
+    </AppContainer>,
+    document.getElementById('root'),
+  );
+};
+
+// Hot reloading
+if (module.hot) {
+  // Reload reducers
+  module.hot.accept();
+}
+
+function initKeycloak() {
+  keycloak = Keycloak(config.configData.keycloak);
+  keycloak.init({ onLoad: 'check-sso', checkLoginIframe: false }).success((authenticated) => {
+    if (authenticated) {
+      sessionStorage.setItem('kctoken', keycloak.token);
+      render(keycloak.token);
+    } else {
+      keycloak.login({ scope: 'offline_access' }).success(() => { render(keycloak.token); });
+    }
+  });
+}
+
+if (APP_EMBEDDED) {
+  document.querySelector('.layout-pf.layout-pf-fixed').classList.remove('layout-pf', 'layout-pf-fixed');
+  insights.chrome.init();
+  insights.chrome.auth.getUser().then(() => {
+    keycloak = {
+      login: () => undefined,
+      logout: () => insights.chrome.auth.logout(),
+      authenticated: true,
+    };
+    render(); // TODO: Figure out how to get offline_access token when chromed!
+  });
+} else {
+  config.fetchConfig().then(() => {
+    // If running using webpack-server development server, and setting env
+    // variable `UHC_DISABLE_KEYCLOAK` to `true`, disable keycloak.
+    if (process.env.UHC_DISABLE_KEYCLOAK === 'true') {
+      keycloak = {
+        login: () => { },
+        logout: () => { },
+        token: 'fake token for mock mode',
+        authenticated: true,
+      };
+      render();
+    } else {
+      initKeycloak();
+    }
+  });
+}
