@@ -17,9 +17,6 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router';
 import { Card, CardBody } from 'patternfly-react';
 import { hot } from 'react-hot-loader';
 import { Page, PageSection, PageSectionVariants } from '@patternfly/react-core';
@@ -28,12 +25,9 @@ import routes from '../../routes';
 
 import Header from './Header';
 import Footer from './Footer';
+import Router from './Router';
 import LoginPage from './LoginPage';
 import ErrorBoundary from './ErrorBoundary';
-import ClustersList from '../clusters/ClusterList';
-import ClusterDetails from '../clusters/ClusterDetails';
-import InstallCluster from '../clusters/install/InstallCluster';
-import Tokens from '../tokens/Tokens';
 
 class App extends React.Component {
   constructor() {
@@ -42,64 +36,52 @@ class App extends React.Component {
     this.menu = routes();
   }
 
-  renderRoutes() {
-    const { authenticated, userProfile } = this.props;
-    // note: in this condition, I've added !authenticated even though
-    // it shouldn't really happen. If the user is not authenticated,
-    // they would get a login page. However, I wanted to be extra-sure
-    // that if something changes in the future, the full router will
-    // be the "normal" one, and no exception will be raised if userProfile
-    // is undefined.
-    if (!authenticated || (userProfile.keycloakProfile.email && userProfile.keycloakProfile.email.endsWith('@redhat.com'))) {
-      return (
-        <Switch>
-          <Route path="/tokens" component={Tokens} />
-          <Route path="/install" component={InstallCluster} />
-          <Route path="/details/:id" component={ClusterDetails} />
-          <Route path="/" component={ClustersList} />
-        </Switch>
-      );
-    }
-    return (
-      <Switch>
-        <Route path="/install" component={InstallCluster} />
-        <Redirect from="/" to="/install" />
-      </Switch>
-    );
-  }
-
   render() {
     const {
-      history, authenticated, loginFunction, userProfile, logoutFunction,
+      authenticated, loginFunction, userProfile, logoutFunction, children,
     } = this.props;
+
+    let { HeaderComponent } = this.props;
 
     if (!authenticated) {
       return <LoginPage loginFunction={loginFunction} />;
     }
+
+    const content = (
+      <ErrorBoundary>
+        {children || (
+          <Router
+            authenticated={authenticated}
+            userProfile={userProfile}
+          />)}
+      </ErrorBoundary>
+    );
 
     if (APP_EMBEDDED) {
       return (
         <section className="pf-c-page__main-section">
           <Card>
             <CardBody>
-              <ErrorBoundary>
-                <ConnectedRouter history={history}>
-                  {this.renderRoutes()}
-                </ConnectedRouter>
-              </ErrorBoundary>
+              {content}
             </CardBody>
           </Card>
         </section>
       );
     }
 
+    HeaderComponent = HeaderComponent || Header;
+    const header = (
+      <HeaderComponent
+        isLoggedIn
+        userProfile={userProfile}
+        logoutUser={logoutFunction}
+      />);
+
     return (
-      <Page header={<Header isLoggedIn userProfile={userProfile} logoutUser={logoutFunction} />}>
+      <Page header={header}>
         <PageSection variant={PageSectionVariants.light}>
           <div className="coc-content">
-            <ErrorBoundary>
-              <ConnectedRouter history={history}>{this.renderRoutes()}</ConnectedRouter>
-            </ErrorBoundary>
+            {content}
           </div>
         </PageSection>
         <Footer />
@@ -110,15 +92,18 @@ class App extends React.Component {
 
 App.propTypes = {
   userProfile: PropTypes.object,
-  location: PropTypes.shape({ pathname: PropTypes.string.isRequired }),
-  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   authenticated: PropTypes.bool.isRequired,
   loginFunction: PropTypes.func.isRequired,
   logoutFunction: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  HeaderComponent: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   userProfile: state.userProfile,
 });
 
-export default hot(module)(withRouter(connect(mapStateToProps)(App)));
+export default hot(module)(connect(mapStateToProps)(App));

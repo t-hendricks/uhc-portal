@@ -16,24 +16,21 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { Brand, PageHeader } from '@patternfly/react-core';
 import { noop } from '../../common/helpers';
 import rhProductTitle from '../../styles/images/logo.png';
 import HeaderToolBar from './HeaderToolBar';
 
-function Header(props) {
+function RouterlessHeader(props) {
   const {
-    isLoggedIn, userProfile, logoutUser, history,
+    isLoggedIn, userProfile, logoutUser,
   } = props;
   return (
     <PageHeader
       className="uhc_header"
       logo={<Brand src={rhProductTitle} alt="Red Hat OpenShift" />}
       logoProps={{
-        onClick: () => {
-          history.push('/');
-        },
+        href: '/clusters',
       }}
       toolbar={
         <HeaderToolBar isLoggedIn={isLoggedIn} userProfile={userProfile} logoutUser={logoutUser} />
@@ -42,16 +39,15 @@ function Header(props) {
   );
 }
 
-Header.propTypes = {
+RouterlessHeader.propTypes = {
   isLoggedIn: PropTypes.bool,
   userProfile: PropTypes.object.isRequired,
   logoutUser: PropTypes.func,
-  history: PropTypes.object,
 };
 
-Header.defaultProps = {
+RouterlessHeader.defaultProps = {
   logoutUser: noop,
   isLoggedIn: false,
 };
 
-export default withRouter(Header);
+export default RouterlessHeader;

@@ -16,22 +16,35 @@ limitations under the License.
 import 'core-js/es6/promise';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 import Keycloak from 'keycloak-js';
+
+import { store } from './redux/store';
+import { userInfoResponse } from './redux/actions/userActions';
+import Tokens from './components/tokens/Tokens';
+import App from './components/App/App';
+import RouterlessHeader from './components/App/RouterlessHeader';
 import config from './config';
+
 
 import './styles/main.scss';
 
 let keycloak;
 
-const render = (token) => {
+const render = (authenticated) => {
   ReactDOM.render(
     <AppContainer>
-      <div>
-        <h1>Hello token page</h1>
-        <h2>render token page component here</h2>
-        <pre>{token}</pre>
-      </div>
+      <Provider store={store}>
+        <App
+          authenticated={authenticated}
+          loginFunction={keycloak.login}
+          logoutFunction={keycloak.logout}
+          HeaderComponent={RouterlessHeader}
+        >
+          <Tokens accessToken={keycloak.token} refreshToken={keycloak.refreshToken} />
+        </App>
+      </Provider>
     </AppContainer>,
     document.getElementById('root'),
   );
@@ -45,12 +58,15 @@ if (module.hot) {
 
 function initKeycloak() {
   keycloak = Keycloak(config.configData.keycloak);
+  const loginSuccess = (authenticated) => {
+    store.dispatch(userInfoResponse(keycloak.idTokenParsed));
+    render(authenticated);
+  };
   keycloak.init({ onLoad: 'check-sso', checkLoginIframe: false }).success((authenticated) => {
     if (authenticated) {
-      sessionStorage.setItem('kctoken', keycloak.token);
-      render(keycloak.token);
+      loginSuccess(authenticated);
     } else {
-      keycloak.login({ scope: 'offline_access' }).success(() => { render(keycloak.token); });
+      keycloak.login({ scope: 'offline_access' }).success(loginSuccess);
     }
   });
 }
