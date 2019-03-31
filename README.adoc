@@ -70,7 +70,7 @@ To test the application in your development environment run the following comman
 $ yarn start
 ....
 
-That will start the the Webpack development server, in http://localhost:8001.
+That will start the the Webpack development server, at http://localhost:8001.
 
 You will also need to start start the backend proxy server, which acts as a proxy
 for the _OpenID_ and API services that are required by the application:
@@ -79,7 +79,7 @@ for the _OpenID_ and API services that are required by the application:
 ./backend
 ....
 
-By default this will be available in http://localhost:8002, and the default
+By default this will be available at http://localhost:8002, and the default
 configuration of the application is already prepared to use it.
 
 If you need to change the configuration used by this backend proxy, then create a
@@ -177,7 +177,7 @@ portal-server-c7664975c-sx6rr   1/1   Running 0        54m
 ....
 
 A route for the `cloud.127.0.0.1.nip.io` DNS domain will also be created. So you
-can go with your browser to https://cloud.127.0.0.1.nip.ip, and you should see
+can go with your browser to https://cloud.127.0.0.1.nip.io, and you should see
 the application running. To do so you can use the `route.yml` file, and the
 following command:
 
