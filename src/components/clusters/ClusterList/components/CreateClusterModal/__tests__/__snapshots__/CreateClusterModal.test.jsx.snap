@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CreateClusterModal should render 1`] = `
+exports[`CreateClusterModal ManagedClusterForm should render managed form 1`] = `
 <Modal
   animation={true}
   autoFocus={true}
@@ -42,192 +42,84 @@ exports[`CreateClusterModal should render 1`] = `
     bsClass="modal-body"
     componentClass="div"
   >
-    <Form
-      bsClass="form"
-      componentClass="form"
-      horizontal={false}
-      inline={false}
+    <ManagedClusterForm
+      pending={false}
+    />
+  </ModalBody>
+  <ModalFooter
+    bsClass="modal-footer"
+    componentClass="div"
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={false}
+      onClick={[MockFunction]}
+      type="submit"
     >
-      <Grid
-        bsClass="container"
-        componentClass="div"
-        fluid={false}
-      >
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <h3>
-            Step 1: Cloud Provider Credentials
-          </h3>
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={5}
-          >
-            <Field
-              component={[Function]}
-              disabled={false}
-              label="AWS access key ID"
-              name="aws_access_key_id"
-              placeholder="AWS access key ID"
-              type="password"
-              validate={[Function]}
-            />
-            <Field
-              component={[Function]}
-              disabled={false}
-              label="AWS secret access key"
-              name="aws_secret_access_key"
-              placeholder="AWS secret access key"
-              type="password"
-              validate={[Function]}
-            />
-          </Col>
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={4}
-          >
-            <AWSCredentialsHint />
-          </Col>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <h3>
-            Step 2: Configuration
-          </h3>
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={5}
-          >
-            <Field
-              component={[Function]}
-              disabled={false}
-              label="Cluster name"
-              name="name"
-              type="text"
-              validate={[Function]}
-            />
-            <Field
-              component={[Function]}
-              disabled={false}
-              label="Base DNS domain"
-              name="dns_base_domain"
-              normalize={[Function]}
-              type="text"
-              validate={[Function]}
-            />
-            <Field
-              component={[Function]}
-              disabled={false}
-              label="Compute nodes"
-              min="1"
-              name="nodes_compute"
-              type="number"
-              validate={[Function]}
-            />
-            <Field
-              cloudProviderID="aws"
-              component={[Function]}
-              componentClass={[Function]}
-              disabled={false}
-              label="AWS region"
-              name="region"
-              validate={[Function]}
-            />
-            <Field
-              component={[Function]}
-              disabled={false}
-              label="Deploy on multiple availability zones"
-              name="multi_az"
-            />
-          </Col>
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={4}
-          >
-            <ConfigurationHint />
-            <RegionsHint />
-          </Col>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <ExpandCollapse
-            align="left"
-            bordered={true}
-            className=""
-            expanded={false}
-            textCollapsed="Show Advanced Options"
-            textExpanded="Hide Advanced Options"
-          >
-            <Col
-              bsClass="col"
-              componentClass="div"
-              sm={5}
-            >
-              <Field
-                component={[Function]}
-                disabled={false}
-                label="Machine CIDR"
-                name="network_machine_cidr"
-                type="text"
-                validate={[Function]}
-              />
-              <Field
-                component={[Function]}
-                disabled={false}
-                label="Service CIDR"
-                name="network_service_cidr"
-                type="text"
-                validate={[Function]}
-              />
-              <Field
-                component={[Function]}
-                disabled={false}
-                label="Pod CIDR"
-                name="network_pod_cidr"
-                type="text"
-                validate={[Function]}
-              />
-              <h4>
-                Router Shards
-              </h4>
-              <Field
-                component={[Function]}
-                componentClass={[Function]}
-                disabled={false}
-                label=""
-                name="network_router_shards.0"
-                validate={[Function]}
-              />
-              <Field
-                component={[Function]}
-                componentClass={[Function]}
-                disabled={false}
-                label=""
-                name="network_router_shards.1"
-                validate={[Function]}
-              />
-            </Col>
-            <Col
-              bsClass="col"
-              componentClass="div"
-              sm={4}
-            >
-              <NetworkConfugurationHint />
-              <RouterShardsHint />
-            </Col>
-          </ExpandCollapse>
-        </Row>
-      </Grid>
-    </Form>
+      Create
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Cancel
+    </Button>
+  </ModalFooter>
+</Modal>
+`;
+
+exports[`CreateClusterModal SelfManagedClusterForm should render self managed form 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop={true}
+  bsClass="modal"
+  bsSize="large"
+  className="right-side-modal-pf"
+  dialogComponentClass={[Function]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "add": [Function],
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "isTopModal": [Function],
+      "modals": Array [],
+      "remove": [Function],
+    }
+  }
+  onHide={[Function]}
+  renderBackdrop={[Function]}
+  restoreFocus={true}
+  show={true}
+>
+  <ModalHeader
+    bsClass="modal-header"
+    closeButton={false}
+    closeLabel="Close"
+  >
+    <ModalHeader
+      onClose={[Function]}
+      title="Create a Self-Managed Cluster"
+    />
+  </ModalHeader>
+  <ModalBody
+    bsClass="modal-body"
+    componentClass="div"
+  >
+    <SelfManagedClusterForm
+      pending={false}
+    />
   </ModalBody>
   <ModalFooter
     bsClass="modal-footer"
