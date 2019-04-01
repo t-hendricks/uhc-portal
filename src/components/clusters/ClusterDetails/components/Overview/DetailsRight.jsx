@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ClusterNetwork from './ClusterNetwork';
-import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
-import { humanizeValueWithUnit } from '../../../../common/unitParser';
+import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
+import { humanizeValueWithUnit } from '../../../../../common/unitParser';
 
 function DetailsRight({ cluster, routerShards }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(

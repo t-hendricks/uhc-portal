@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import result from 'lodash/result';
 
-import Timestamp from '../../../common/Timestamp';
+import Timestamp from '../../../../common/Timestamp';
 
 function DetailsLeft({ cluster, cloudProviders }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
