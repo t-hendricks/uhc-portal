@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LogWindow /> should render with logs 1`] = `
+<div
+  className="log-window"
+>
+  <div
+    className="log-window__header"
+  >
+    Last 100 lines
+  </div>
+  <div
+    className="log-window__body"
+  >
+    <div
+      className="log-window__scroll-pane"
+    >
+      <div
+        className="log-window__contents"
+      >
+        <div
+          className="log-window__contents__text"
+        >
+          lorem ipsum
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<LogWindow /> should render without logs 1`] = `
+<div
+  className="log-window"
+>
+  <div
+    className="log-window__header"
+  >
+    Last 100 lines
+  </div>
+  <div
+    className="log-window__body"
+  >
+    <div
+      className="log-window__scroll-pane"
+    >
+      <div
+        className="log-window__contents"
+      >
+        <div
+          className="log-window__contents__text"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
