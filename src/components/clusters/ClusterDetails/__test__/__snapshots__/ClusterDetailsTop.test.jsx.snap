@@ -1,0 +1,236 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterDetailsTop /> should render 1`] = `
+<Grid
+  bsClass="container"
+  componentClass="div"
+  fluid={true}
+>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={8}
+    >
+      <Breadcrumb
+        title={false}
+      >
+        <LinkContainer
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
+          to="/clusters"
+        >
+          <BreadcrumbItem
+            active={false}
+            href="#"
+          >
+            Clusters
+          </BreadcrumbItem>
+        </LinkContainer>
+        <BreadcrumbItem
+          active={true}
+        >
+          test-liza
+        </BreadcrumbItem>
+      </Breadcrumb>
+    </Col>
+  </Row>
+  <hr />
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      className="cl-details-cluster-name"
+      componentClass="div"
+      sm={6}
+    >
+      <h1>
+        <ClusterBadge
+          clusterName="test-liza"
+        />
+      </h1>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      lg={5}
+      lgOffset={1}
+    >
+      <ButtonGroup
+        block={false}
+        bsClass="btn-group"
+        id="cl-details-btns"
+        justified={false}
+        vertical={false}
+      >
+        <a
+          className="pull-left"
+          href="https://console-openshift-console.apps.test-liza.sdev.devshift.net"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="primary"
+            disabled={false}
+          >
+            Launch Console
+          </Button>
+        </a>
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="default"
+          disabled={false}
+          onClick={[Function]}
+        >
+          Admin Credentials
+        </Button>
+        <Connect(ClusterCredentialsModal)
+          credentials={
+            Object {
+              "admin": Object {
+                "password": "testPassword",
+                "user": "kubeadmin",
+              },
+              "href": "/api/clusters_mgmt/v1/1IztzhAGrbjtKkMbiPewJanhTXk/credentials",
+              "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+              "kind": "ClusterCredentials",
+              "kubeconfig": "apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: test",
+              "ssh": Object {
+                "private_key": "test",
+                "public_key": "test",
+              },
+            }
+          }
+        />
+        <DropdownButton
+          bsStyle="default"
+          disabled={false}
+          id="actions"
+          pullRight={true}
+          title="Actions"
+        >
+          <Connect(ClusterActionsDropdown)
+            cluster={
+              Object {
+                "api": Object {
+                  "url": "https://api.test-liza.sdev.devshift.net:6443",
+                },
+                "canDelete": true,
+                "canEdit": true,
+                "cloud_provider": Object {
+                  "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                  "id": "aws",
+                  "kind": "CloudProviderLink",
+                },
+                "console": Object {
+                  "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
+                },
+                "cpu": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                  "updated_timestamp": "0001-01-01T00:00:00Z",
+                  "used": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
+                "creation_timestamp": "2019-03-26T15:18:39.06783Z",
+                "creator": "***REMOVED***",
+                "display_name": "test-liza",
+                "dns": Object {
+                  "base_domain": "sdev.devshift.net",
+                },
+                "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
+                "flavour": Object {
+                  "href": "/api/clusters_mgmt/v1/flavours/4",
+                  "id": "4",
+                  "kind": "FlavourLink",
+                },
+                "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
+                "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                "kind": "Cluster",
+                "managed": true,
+                "memory": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                  "updated_timestamp": "0001-01-01T00:00:00Z",
+                  "used": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                },
+                "multi_az": false,
+                "name": "test-liza",
+                "network": Object {
+                  "machine_cidr": "10.0.0.0/16",
+                  "pod_cidr": "10.128.0.0/14",
+                  "router_shards": Object {
+                    "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+                    "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                    "kind": "RouterShardListLink",
+                  },
+                  "service_cidr": "172.30.0.0/16",
+                },
+                "nodes": Object {
+                  "compute": 2,
+                  "infra": 2,
+                  "master": 3,
+                  "total": 7,
+                },
+                "region": Object {
+                  "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                  "id": "us-east-1",
+                  "kind": "CloudRegionLink",
+                },
+                "state": "ready",
+                "storage": Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                  "updated_timestamp": "0001-01-01T00:00:00Z",
+                  "used": Object {
+                    "unit": "B",
+                    "value": 0,
+                  },
+                },
+                "version": Object {
+                  "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+                  "id": "openshift-v4.0-latest",
+                  "kind": "VersionLink",
+                },
+              }
+            }
+            showConsoleButton={false}
+          />
+        </DropdownButton>
+        <RefreshBtn
+          autoRefresh={true}
+          classOptions=""
+          id="refresh"
+          refreshFunc={[MockFunction]}
+        />
+      </ButtonGroup>
+    </Col>
+  </Row>
+</Grid>
+`;

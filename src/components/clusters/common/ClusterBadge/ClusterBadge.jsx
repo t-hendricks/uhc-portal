@@ -17,7 +17,10 @@ function ClusterBadge(props) {
 }
 
 ClusterBadge.propTypes = {
-  clusterName: PropTypes.object.isRequired,
+  clusterName: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]),
 };
 
 export default ClusterBadge;

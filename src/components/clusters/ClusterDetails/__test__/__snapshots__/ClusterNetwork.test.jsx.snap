@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterNetwork /> should render 1`] = `
+<Fragment>
+  <dt>
+    Network
+  </dt>
+  <dd>
+    <dl
+      className="cluster-details-item-list left"
+    >
+      <dt>
+        Machine CIDR: 
+      </dt>
+      <dd>
+        10.0.0.0/16
+      </dd>
+    </dl>
+    <dl
+      className="cluster-details-item-list left"
+    >
+      <dt>
+        Service CIDR: 
+      </dt>
+      <dd>
+        172.30.0.0/16
+      </dd>
+    </dl>
+    <dl
+      className="cluster-details-item-list left"
+    >
+      <dt>
+        Pod CIDR: 
+      </dt>
+      <dd>
+        10.128.0.0/14
+      </dd>
+    </dl>
+    <dl
+      className="cluster-details-item-list left"
+    >
+      <dt>
+        Router Shards: 
+      </dt>
+      <dd>
+        <ul>
+          <li
+            key="ofvv"
+          >
+            <dt>
+              test1: 
+            </dt>
+            <dd>
+              Internal
+            </dd>
+          </li>
+          <li
+            key="jhso"
+          >
+            <dt>
+              test2: 
+            </dt>
+            <dd>
+              External
+            </dd>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+  </dd>
+</Fragment>
+`;

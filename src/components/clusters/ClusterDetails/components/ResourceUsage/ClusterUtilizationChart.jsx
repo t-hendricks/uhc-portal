@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   DonutChart,
 } from 'patternfly-react';
-import { humanizeValueWithUnit } from '../../../../common/unitParser';
+import { humanizeValueWithUnit } from '../../../../../common/unitParser';
 
 
 function ClusterUtilizationChart(props) {

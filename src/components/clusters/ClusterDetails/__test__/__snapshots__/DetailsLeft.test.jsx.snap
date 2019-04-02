@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DetailsLeft /> should render 1`] = `
+<Fragment>
+  <dl
+    className="cluster-details-item left"
+  >
+    <dt>
+      Cluster ID
+    </dt>
+    <dd>
+      9f50940b-fba8-4c59-9c6c-d64284b2026d
+    </dd>
+    <dt>
+      Location
+    </dt>
+    <dd>
+      US East (N. Virginia)
+    </dd>
+    <dt>
+      Provider
+    </dt>
+    <dd>
+      Amazon Web Services
+    </dd>
+    <dt>
+      Version
+    </dt>
+    <dd>
+      <dl
+        className="cluster-details-item-list left"
+      >
+        <dt>
+          OpenShift:
+           
+        </dt>
+        <dd>
+          N/A
+        </dd>
+      </dl>
+    </dd>
+    <dt>
+      Created at
+    </dt>
+    <dd>
+      <Timestamp
+        value="2019-03-26T15:18:39.06783Z"
+      />
+    </dd>
+    <dt>
+      Last Updated
+    </dt>
+    <dd>
+      <Timestamp
+        value=""
+      />
+    </dd>
+  </dl>
+</Fragment>
+`;
