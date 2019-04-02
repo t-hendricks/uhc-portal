@@ -40,6 +40,14 @@ limitations under the License.
   color: #0189cf;
 }
 
+.cluster-list-top-row .spinner {
+  margin-top: 25px;
+  margin-left: 60px;
+  @media (min-width: 1300px) {
+    margin-left: 0;
+  }
+}
+
 .cluster-list-top {
   margin: 20px 0 0 0;
 }
