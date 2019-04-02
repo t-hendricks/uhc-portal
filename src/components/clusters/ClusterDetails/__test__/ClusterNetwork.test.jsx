@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ClusterNetwork from '../components/ClusterNetwork';
+import ClusterNetwork from '../components/Overview/ClusterNetwork';
 import { clusterDetails, routerShards } from './ClusterDetails.fixtures';
 
 describe('<ClusterNetwork />', () => {
   let wrapper;
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = shallow(
       <ClusterNetwork cluster={clusterDetails.cluster} routerShards={routerShards} />,
     );

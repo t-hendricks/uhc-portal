@@ -15,15 +15,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import result from 'lodash/result';
 import {
-  Alert, Row, Col, EmptyState, Grid,
+  Alert,
+  EmptyState,
+  TabContainer,
+  Nav,
+  NavItem,
+  TabPane,
+  TabContent,
 } from 'patternfly-react';
 
 import AlphaNotice from '../../common/AlphaNotice';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
-import ResourceUsage from './components/ResourceUsage/ResourceUsage';
-import DetailsLeft from './components/DetailsLeft';
-import DetailsRight from './components/DetailsRight';
+import Overview from './components/Overview/Overview';
 
 import LoadingModal from '../../common/LoadingModal';
 import EditClusterDialog from '../common/EditClusterDialog';
@@ -129,23 +133,37 @@ class ClusterDetails extends Component {
             routerShards={routerShards}
             refreshFunc={this.refresh}
           />
-          <ResourceUsage cluster={cluster} />
-          <Grid fluid>
-            <div className="cl-details-card">
-              <div className="cl-details-card-title"><h3>Details</h3></div>
-              <div className="cl-details-card-body">
-                <Row>
-                  <Col sm={6}>
-                    <DetailsLeft cluster={cluster} cloudProviders={cloudProviders} />
-                  </Col>
-                  <Col sm={6}>
-                    <DetailsRight cluster={cluster} routerShards={routerShards} />
-                  </Col>
-                </Row>
-              </div>
-            </div>
-          </Grid>
-          {/* {dialogs} */}
+          <TabContainer id="cluster-details-tabs" defaultActiveKey={1}>
+            <React.Fragment>
+              <Nav bsClass="nav nav-tabs nav-tabs-pf">
+                <NavItem eventKey={1}>
+                Overview
+                </NavItem>
+                {/* For future work */}
+                {/* <NavItem eventKey={2}>
+                Users
+              </NavItem>
+              <NavItem eventKey={3}>
+                Logs
+              </NavItem>
+              <NavItem eventKey={4}>
+                Telemetry
+              </NavItem> */}
+              </Nav>
+              <TabContent animation>
+                <TabPane eventKey={1}>
+                  <Overview
+                    cluster={cluster}
+                    cloudProviders={cloudProviders}
+                    routerShards={routerShards}
+                  />
+                </TabPane>
+                {/* For future work */}
+                {/* <TabPane eventKey={2}></TabPane>
+              <TabPane eventKey={3}></TabPane> */}
+              </TabContent>
+            </React.Fragment>
+          </TabContainer>
           <EditClusterDialog onClose={onDialogClose} />
           <EditDisplayNameDialog onClose={onDialogClose} />
           <DeleteClusterDialog onClose={(shouldRefresh) => {
