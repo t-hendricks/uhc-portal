@@ -1,7 +1,7 @@
 import config from '../config';
 
 const authHeader = () => ({
-  Authorization: `Bearer ${sessionStorage.getItem('kc_access_token')}`,
+  Authorization: `Bearer ${sessionStorage.getItem('kctoken')}`,
 });
 
 const serviceConfig = (passedConfig = {}, auth = true) => {
