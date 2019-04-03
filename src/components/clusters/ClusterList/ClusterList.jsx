@@ -143,9 +143,9 @@ class ClusterList extends Component {
                 />
               </Col>
               <Col xs={1}>
-                {pending ? <Spinner loading /> : null}
+                {pending ? <Spinner loading /> : null }
               </Col>
-              <Col xs={6} xsOffset={4} sm={4} smOffset={6} md={3} mdOffset={8}>
+              <Col>
                 <RefreshBtn id="refresh" autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
                 <ClusterListFilter />
               </Col>
