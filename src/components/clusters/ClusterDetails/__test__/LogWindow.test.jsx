@@ -6,12 +6,12 @@ import { clusterDetails } from './ClusterDetails.fixtures';
 
 describe('<LogWindow />', () => {
   let wrapper;
-  const getLogs = jest.fn();
+  const clearLogs = jest.fn();
 
   beforeAll(() => {
     wrapper = shallow(<LogWindow
       clusterID={clusterDetails.cluster.id}
-      getLogs={getLogs}
+      clearLogs={clearLogs}
       lines="lorem ipsum"
     />);
   });
@@ -20,14 +20,10 @@ describe('<LogWindow />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should get logs', () => {
-    expect(getLogs).toBeCalledWith(clusterDetails.cluster.id);
-  });
-
   it('should render without logs', () => {
     wrapper = shallow(<LogWindow
       clusterID={clusterDetails.cluster.id}
-      getLogs={getLogs}
+      clearLogs={clearLogs}
       lines={null}
     />);
     expect(wrapper).toMatchSnapshot();

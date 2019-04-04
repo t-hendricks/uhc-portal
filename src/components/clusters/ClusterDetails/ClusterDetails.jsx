@@ -64,7 +64,7 @@ class ClusterDetails extends Component {
 
   refresh() {
     const {
-      match, fetchDetails, fetchCredentials, fetchRouterShards,
+      match, fetchDetails, fetchCredentials, fetchRouterShards, getLogs,
     } = this.props;
     const clusterID = match.params.id;
 
@@ -72,6 +72,7 @@ class ClusterDetails extends Component {
       fetchDetails(clusterID);
       fetchCredentials(clusterID);
       fetchRouterShards(clusterID);
+      getLogs(clusterID);
     }
   }
 
@@ -86,6 +87,7 @@ class ClusterDetails extends Component {
       openModal,
       history,
       match,
+      logs,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -140,9 +142,11 @@ class ClusterDetails extends Component {
                 <NavItem eventKey={1}>
                   Overview
                 </NavItem>
+                {logs && (
                 <NavItem eventKey={2}>
                   Logs
                 </NavItem>
+                )}
               </Nav>
               <TabContent animation>
                 <TabPane eventKey={1}>
@@ -152,9 +156,11 @@ class ClusterDetails extends Component {
                     routerShards={routerShards}
                   />
                 </TabPane>
+                {logs && (
                 <TabPane eventKey={2}>
                   <LogWindow clusterID={cluster.id} />
                 </TabPane>
+                )}
               </TabContent>
             </React.Fragment>
           </TabContainer>
@@ -180,11 +186,13 @@ ClusterDetails.propTypes = {
   fetchCredentials: PropTypes.func.isRequired,
   fetchRouterShards: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
+  getLogs: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   credentials: PropTypes.object.isRequired,
   routerShards: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
+  logs: PropTypes.string,
   clusterDetails: PropTypes.shape({
     cluster: PropTypes.object,
     error: PropTypes.bool,
@@ -200,6 +208,7 @@ ClusterDetails.defaultProps = {
     error: false,
     errorMessage: '',
   },
+  logs: '',
 };
 
 export default ClusterDetails;

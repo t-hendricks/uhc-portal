@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class LogWindow extends React.Component {
-  componentDidMount() {
-    const { getLogs, clusterID } = this.props;
-    getLogs(clusterID);
+  componentWillUnmount() {
+    const { clearLogs } = this.props;
+    clearLogs();
   }
 
   render() {
@@ -30,8 +30,7 @@ class LogWindow extends React.Component {
 }
 
 LogWindow.propTypes = {
-  getLogs: PropTypes.func.isRequired,
-  clusterID: PropTypes.string.isRequired,
+  clearLogs: PropTypes.func.isRequired,
   lines: PropTypes.string.isRequired,
 };
 
