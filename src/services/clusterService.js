@@ -82,6 +82,13 @@ const getClusterRouterShards = clusterID => axios(
   }),
 );
 
+const getLogs = clusterID => axios(
+  serviceConfig({
+    method: 'get',
+    url: `/api/clusters_mgmt/v1/clusters/${clusterID}/logs/hive`,
+  }),
+);
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -93,6 +100,7 @@ const clusterService = {
   deleteSelfManagedCluster,
   getClusterCredentials,
   getClusterRouterShards,
+  getLogs,
 };
 
 export default clusterService;

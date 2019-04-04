@@ -7,6 +7,7 @@ import userReducer from './userReducer';
 import tollboothReducer from './tollbooth';
 import { cloudProvidersReducer } from './cloudProvidersReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
+import { LogsReducer } from '../../components/clusters/ClusterDetails/components/LogWindow/LogWindowReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -17,6 +18,7 @@ const reducers = {
   form: formReducer,
   tollbooth: tollboothReducer,
   modal: modalReducer,
+  logs: LogsReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

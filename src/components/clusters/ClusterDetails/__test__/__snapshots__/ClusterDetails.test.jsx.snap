@@ -181,6 +181,13 @@ clusters:
         >
           Overview
         </NavItem>
+        <NavItem
+          active={false}
+          disabled={false}
+          eventKey={2}
+        >
+          Logs
+        </NavItem>
       </Nav>
       <TabContent
         animation={true}
@@ -505,6 +512,14 @@ clusters:
                 },
               }
             }
+          />
+        </TabPane>
+        <TabPane
+          bsClass="tab-pane"
+          eventKey={2}
+        >
+          <Connect(LogWindow)
+            clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
           />
         </TabPane>
       </TabContent>

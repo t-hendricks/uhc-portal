@@ -28,6 +28,7 @@ import AlphaNotice from '../../common/AlphaNotice';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import Overview from './components/Overview/Overview';
+import LogWindow from './components/LogWindow';
 
 import LoadingModal from '../../common/LoadingModal';
 import EditClusterDialog from '../common/EditClusterDialog';
@@ -137,18 +138,11 @@ class ClusterDetails extends Component {
             <React.Fragment>
               <Nav bsClass="nav nav-tabs nav-tabs-pf">
                 <NavItem eventKey={1}>
-                Overview
+                  Overview
                 </NavItem>
-                {/* For future work */}
-                {/* <NavItem eventKey={2}>
-                Users
-              </NavItem>
-              <NavItem eventKey={3}>
-                Logs
-              </NavItem>
-              <NavItem eventKey={4}>
-                Telemetry
-              </NavItem> */}
+                <NavItem eventKey={2}>
+                  Logs
+                </NavItem>
               </Nav>
               <TabContent animation>
                 <TabPane eventKey={1}>
@@ -158,9 +152,9 @@ class ClusterDetails extends Component {
                     routerShards={routerShards}
                   />
                 </TabPane>
-                {/* For future work */}
-                {/* <TabPane eventKey={2}></TabPane>
-              <TabPane eventKey={3}></TabPane> */}
+                <TabPane eventKey={2}>
+                  <LogWindow clusterID={cluster.id} />
+                </TabPane>
               </TabContent>
             </React.Fragment>
           </TabContainer>
