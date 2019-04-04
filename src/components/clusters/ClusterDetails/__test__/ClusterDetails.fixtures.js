@@ -7,6 +7,7 @@ const getCloudProviders = jest.fn();
 const invalidateClusters = jest.fn();
 const refreshFunc = jest.fn();
 const openModal = jest.fn();
+const getLogs = jest.fn();
 
 const clusterDetails = {
   error: false,
@@ -354,6 +355,7 @@ export {
   invalidateClusters,
   refreshFunc,
   openModal,
+  getLogs,
   clusterDetails,
   cloudProviders,
   routerShards,

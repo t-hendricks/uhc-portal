@@ -6,11 +6,17 @@ const getLogs = clusterID => ({
   payload: clusterService.getLogs(clusterID),
 });
 
+const clearLogs = () => ({
+  type: logsConstants.CLEAR_LOGS,
+});
+
 const logsActions = {
   getLogs,
+  clearLogs,
 };
 
 export {
   logsActions,
   getLogs,
+  clearLogs,
 };

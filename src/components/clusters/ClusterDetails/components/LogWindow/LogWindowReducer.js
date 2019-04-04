@@ -67,6 +67,18 @@ function LogsReducer(state = initialState, action) {
           initialState,
         },
       );
+
+    case logsConstants.CLEAR_LOGS:
+      return helpers.setStateProp(
+        'logs',
+        {},
+        {
+          state,
+          initialState,
+          reset: true,
+        },
+      );
+
     default:
       return state;
   }
