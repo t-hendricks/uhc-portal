@@ -74,6 +74,7 @@ module.exports = (env, argv) => {
       new webpack.DefinePlugin({
         'process.env.UHC_DISABLE_KEYCLOAK': JSON.stringify(process.env.UHC_DISABLE_KEYCLOAK),
         'process.env.UHC_GATEWAY_DOMAIN': JSON.stringify(process.env.UHC_GATEWAY_DOMAIN),
+        'process.env.UHC_SHOW_OLD_METRICS': JSON.stringify(process.env.UHC_SHOW_OLD_METRICS),
         APP_EMBEDDED: embeddedApp,
       }),
       new ReplaceWebpackPlugin([

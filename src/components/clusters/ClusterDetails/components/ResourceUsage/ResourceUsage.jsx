@@ -10,7 +10,9 @@ import { getMetricsTimeDelta } from '../../../../../common/helpers';
 function ResourceUsage({ cluster }) {
   const metricsLatsUpdate = new Date(cluster.cpu.updated_timestamp);
 
-  const metricsAvailable = getMetricsTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta;
+  const metricsAvailable = process.env.UHC_SHOW_OLD_METRICS === 'true'
+    ? true
+    : getMetricsTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta;
 
   return (
     <Grid fluid>
