@@ -219,11 +219,11 @@
       "storage": {
         "updated_timestamp": "0001-01-01T00:00:00Z",
         "used": {
-          "value": 2000,
+          "value": 0,
           "unit": "B"
         },
         "total": {
-          "value": 4000,
+          "value": 0,
           "unit": "B"
         }
       },
