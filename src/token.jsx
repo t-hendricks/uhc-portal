@@ -62,7 +62,7 @@ function initKeycloak() {
     store.dispatch(userInfoResponse(keycloak.idTokenParsed));
     render(authenticated);
   };
-  keycloak.init({ onLoad: 'check-sso', checkLoginIframe: false }).success((authenticated) => {
+  keycloak.init({ checkLoginIframe: false }).success((authenticated) => {
     if (authenticated) {
       loginSuccess(authenticated);
     } else {
