@@ -103,10 +103,10 @@ function ClusterListTable(props) {
           <NumberWithUnit valueWithUnit={cluster.cpu.total} unit="vCPU" />
         </Grid.Col>
         <Grid.Col {...statColSizes}>
-          <NumberWithUnit valueWithUnit={cluster.storage.total} isBytes />
+          <NumberWithUnit valueWithUnit={cluster.memory.total} isBytes />
         </Grid.Col>
         <Grid.Col {...statColSizes}>
-          <NumberWithUnit valueWithUnit={cluster.memory.total} isBytes />
+          <NumberWithUnit valueWithUnit={cluster.storage.total} isBytes />
         </Grid.Col>
         <Grid.Col {...locationColSizes}>
           <ClusterLocationLabel
