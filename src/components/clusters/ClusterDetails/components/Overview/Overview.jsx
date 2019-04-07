@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Row, Col } from 'patternfly-react';
 
-import ResourceUsage from '../ResourceUsage/ResourceUsage';
+import ResourceUsage from './ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
 
