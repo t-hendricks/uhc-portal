@@ -1,6 +1,6 @@
-import reducer, { initialState } from '../components/LogWindow/LogWindowReducer';
-import { GET_LOGS, CLEAR_LOGS } from '../components/LogWindow/LogWindowConstants';
-import helpers from '../../../../common/helpers';
+import reducer, { initialState } from '../LogWindowReducer';
+import { GET_LOGS, CLEAR_LOGS } from '../LogWindowConstants';
+import helpers from '../../../../../../common/helpers';
 
 describe('Modal Redcuer', () => {
   const mockPayload = {
