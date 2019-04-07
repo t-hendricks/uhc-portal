@@ -20,6 +20,9 @@ getCloudProviders.mockResolvedValue({});
 const getCloudRegions = jest.fn();
 getCloudRegions.mockResolvedValue({});
 
+const getLogs = jest.fn();
+getLogs.mockResolvedValue({});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -28,6 +31,7 @@ const clusterService = {
   getCloudProviders,
   getCloudRegions,
   deleteCluster,
+  getLogs,
 };
 
 export default clusterService;

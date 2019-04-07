@@ -1,22 +1,22 @@
-import { logsConstants } from './LogWindowConstants';
+import { logWindowConstants } from './LogWindowConstants';
 import { clusterService } from '../../../../../services';
 
-const getLogs = clusterID => ({
-  type: logsConstants.GET_LOGS,
+const getLogs = clusterID => dispatch => dispatch({
+  type: logWindowConstants.GET_LOGS,
   payload: clusterService.getLogs(clusterID),
 });
 
-const clearLogs = () => ({
-  type: logsConstants.CLEAR_LOGS,
+const clearLogs = () => dispatch => dispatch({
+  type: logWindowConstants.CLEAR_LOGS,
 });
 
-const logsActions = {
+const logWindowActions = {
   getLogs,
   clearLogs,
 };
 
 export {
-  logsActions,
+  logWindowActions,
   getLogs,
   clearLogs,
 };

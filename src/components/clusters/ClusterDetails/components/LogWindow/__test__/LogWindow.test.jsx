@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import LogWindow from '../components/LogWindow/LogWindow';
-import { clusterDetails } from './ClusterDetails.fixtures';
+import LogWindow from '../LogWindow';
+import { clusterDetails } from '../../../__test__/ClusterDetails.fixtures';
 
 describe('<LogWindow />', () => {
   let wrapper;

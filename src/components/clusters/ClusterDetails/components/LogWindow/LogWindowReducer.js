@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import helpers from '../../../../../common/helpers';
-import { logsConstants } from './LogWindowConstants';
+import { logWindowConstants } from './LogWindowConstants';
 
 const initialState = {
   logs: {
@@ -28,7 +28,7 @@ const initialState = {
 
 function LogsReducer(state = initialState, action) {
   switch (action.type) {
-    case helpers.REJECTED_ACTION(logsConstants.GET_LOGS):
+    case helpers.REJECTED_ACTION(logWindowConstants.GET_LOGS):
       return helpers.setStateProp(
         'logs',
         {
@@ -42,7 +42,7 @@ function LogsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(logsConstants.GET_LOGS):
+    case helpers.PENDING_ACTION(logWindowConstants.GET_LOGS):
       return helpers.setStateProp(
         'logs',
         {
@@ -54,7 +54,7 @@ function LogsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(logsConstants.GET_LOGS):
+    case helpers.FULFILLED_ACTION(logWindowConstants.GET_LOGS):
       return helpers.setStateProp(
         'logs',
         {
@@ -68,7 +68,7 @@ function LogsReducer(state = initialState, action) {
         },
       );
 
-    case logsConstants.CLEAR_LOGS:
+    case logWindowConstants.CLEAR_LOGS:
       return helpers.setStateProp(
         'logs',
         {},
