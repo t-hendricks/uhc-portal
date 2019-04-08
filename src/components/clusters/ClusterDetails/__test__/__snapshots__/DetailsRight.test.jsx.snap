@@ -56,17 +56,6 @@ exports[`<DetailsRight /> should render 1`] = `
         className="cluster-details-item-list left"
       >
         <dt>
-          Infrastructure:
-           
-        </dt>
-        <dd>
-          2
-        </dd>
-      </dl>
-      <dl
-        className="cluster-details-item-list left"
-      >
-        <dt>
           Compute:
            
         </dt>
@@ -143,9 +132,8 @@ exports[`<DetailsRight /> should render 1`] = `
           },
           "nodes": Object {
             "compute": 2,
-            "infra": 2,
             "master": 3,
-            "total": 7,
+            "total": 5,
           },
           "region": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
