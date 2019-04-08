@@ -9,9 +9,6 @@ function DetailsRight({ cluster, routerShards }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
     cluster.memory.total.value, cluster.memory.total.unit,
   );
-  const storageTotalWithUnit = humanizeValueWithUnit(
-    cluster.storage.total.value, cluster.storage.total.unit,
-  );
 
   return (
     <React.Fragment>
@@ -39,14 +36,6 @@ function DetailsRight({ cluster, routerShards }) {
           {memoryTotalWithUnit.value}
           {' '}
           {memoryTotalWithUnit.unit}
-        </dd>
-        <dt>
-          Total Storage
-        </dt>
-        <dd>
-          {storageTotalWithUnit.value}
-          {' '}
-          {storageTotalWithUnit.unit}
         </dd>
         <dt>
           Nodes
