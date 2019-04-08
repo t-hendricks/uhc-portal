@@ -113,6 +113,6 @@
     "test": "jest --env=jsdom"
   },
   "insights": {
-    "appname": "uhc"
+    "appname": "openshift"
   }
 }

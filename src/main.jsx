@@ -36,7 +36,7 @@ import { store, reloadReducers } from './redux/store';
 import './styles/main.scss';
 
 if (!APP_EMBEDDED) {
-    import('./styles/standalone.scss');
+    import('./styles/overrides.scss');
 }
 
 let keycloak;
@@ -141,7 +141,7 @@ if (APP_EMBEDDED) {
         authenticated: true,
       };
       render();
-    })
+    });
   });
 } else {
   config.fetchConfig().then(() => {
