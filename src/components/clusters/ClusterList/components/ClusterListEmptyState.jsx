@@ -10,14 +10,13 @@ import {
 function ClusterListEmptyState(props) {
   const { showCreationForm, showOCPCreationForm } = props;
 
-  const createSelfManaged = (
+  const createManaged = (
     <EmptyState.Action>
-      <Link to="/install">
-        <Button bsStyle="primary" bsSize="large">
-          Create Self-Managed (Manual) Cluster
-        </Button>
-      </Link>
-    </EmptyState.Action>);
+      <Button bsStyle="primary" bsSize="large" onClick={showCreationForm}>
+        Create Red Hat-Managed Cluster
+      </Button>
+    </EmptyState.Action>
+  );
 
   const createAutoSelfManaged = (
     <EmptyState.Action>
@@ -27,11 +26,13 @@ function ClusterListEmptyState(props) {
     </EmptyState.Action>
   );
 
-  const createManaged = (
+  const createSelfManaged = (
     <EmptyState.Action>
-      <Button bsStyle="primary" bsSize="large" onClick={showCreationForm}>
-        Create Red Hat-Managed Cluster
-      </Button>
+      <Link to="/install">
+        <Button bsStyle="primary" bsSize="large">
+          Create Self-Managed (Manual) Cluster
+        </Button>
+      </Link>
     </EmptyState.Action>
   );
 
@@ -51,13 +52,13 @@ function ClusterListEmptyState(props) {
             <Card className="cluster-list-emptystate-preferred" accented matchHeight>
               <CardBody>
                 <p className="cluster-list-emptystate-preferred-string">Preferred method</p>
-                <CardTitle>Self-Managed (Manual Install) Cluster</CardTitle>
+                <CardTitle>Red Hat-Managed Cluster</CardTitle>
                 <p>
-                  Create a self-managed cluster (OCP)
-                  to install OpenShift and manage it yourself.
-                  More information and better text should go here.
+                  Create a Red Hat-managed cluster (OSD),
+                  to provision the cluster on Amazon Web Services.
+                  More information on this flow and why users would take this flow.
                 </p>
-                {createSelfManaged}
+                {createManaged}
               </CardBody>
             </Card>
           </Col>
@@ -77,13 +78,13 @@ function ClusterListEmptyState(props) {
           <Col md={4}>
             <Card matchHeight>
               <CardBody>
-                <CardTitle>Red Hat-Managed Cluster</CardTitle>
+                <CardTitle>Self-Managed (Manual Install) Cluster</CardTitle>
                 <p>
-                  Create a Red Hat-managed cluster (OSD),
-                  to provision the cluster on Amazon Web Services.
-                  More information on this flow and why users would take this flow.
+                  Create a self-managed cluster (OCP)
+                  to install OpenShift and manage it yourself.
+                  More information and better text should go here.
                 </p>
-                {createManaged}
+                {createSelfManaged}
               </CardBody>
             </Card>
           </Col>
