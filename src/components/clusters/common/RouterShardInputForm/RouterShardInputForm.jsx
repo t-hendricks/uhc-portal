@@ -63,6 +63,7 @@ function RouterShardInputForm(props) {
           label="Label"
           type="text"
           onChange={forceExternal}
+          normalize={val => val.toLowerCase()}
           {...extraProps}
         />
         <Field
