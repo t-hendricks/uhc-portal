@@ -52,30 +52,26 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
             <CardTitle
               className=""
             >
-              Self-Managed (Manual Install) Cluster
+              Red Hat-Managed Cluster
             </CardTitle>
             <p>
-              Create a self-managed cluster (OCP) to install OpenShift and manage it yourself. More information and better text should go here.
+              Create a Red Hat-managed cluster (OSD), to provision the cluster on Amazon Web Services. More information on this flow and why users would take this flow.
             </p>
             <EmptyStateAction
               className=""
               secondary={false}
             >
-              <Link
-                replace={false}
-                to="/install"
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsSize="large"
+                bsStyle="primary"
+                disabled={false}
+                onClick={[MockFunction]}
               >
-                <Button
-                  active={false}
-                  block={false}
-                  bsClass="btn"
-                  bsSize="large"
-                  bsStyle="primary"
-                  disabled={false}
-                >
-                  Create Self-Managed (Manual) Cluster
-                </Button>
-              </Link>
+                Create Red Hat-Managed Cluster
+              </Button>
             </EmptyStateAction>
           </CardBody>
         </Card>
@@ -142,26 +138,30 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
             <CardTitle
               className=""
             >
-              Red Hat-Managed Cluster
+              Self-Managed (Manual Install) Cluster
             </CardTitle>
             <p>
-              Create a Red Hat-managed cluster (OSD), to provision the cluster on Amazon Web Services. More information on this flow and why users would take this flow.
+              Create a self-managed cluster (OCP) to install OpenShift and manage it yourself. More information and better text should go here.
             </p>
             <EmptyStateAction
               className=""
               secondary={false}
             >
-              <Button
-                active={false}
-                block={false}
-                bsClass="btn"
-                bsSize="large"
-                bsStyle="primary"
-                disabled={false}
-                onClick={[MockFunction]}
+              <Link
+                replace={false}
+                to="/install"
               >
-                Create Red Hat-Managed Cluster
-              </Button>
+                <Button
+                  active={false}
+                  block={false}
+                  bsClass="btn"
+                  bsSize="large"
+                  bsStyle="primary"
+                  disabled={false}
+                >
+                  Create Self-Managed (Manual) Cluster
+                </Button>
+              </Link>
             </EmptyStateAction>
           </CardBody>
         </Card>
