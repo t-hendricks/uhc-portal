@@ -51,10 +51,6 @@ function DetailsLeft({ cluster, cloudProviders }) {
         <dd>
           <Timestamp value={cluster.creation_timestamp || ''} />
         </dd>
-        <dt>Last Updated</dt>
-        <dd>
-          <Timestamp value={cluster.last_update_timestamp || ''} />
-        </dd>
       </dl>
     </React.Fragment>
   );

@@ -33,12 +33,6 @@ exports[`<ResourceUsage /> should render 1`] = `
         totalBytes={0}
         usedBytes={0}
       />
-      <ClusterUtilizationChart
-        donutId="storage_donut"
-        title="STORAGE"
-        totalBytes={0}
-        usedBytes={0}
-      />
     </div>
   </div>
 </Grid>

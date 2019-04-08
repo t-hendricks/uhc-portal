@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ResourceUsage from '../components/ResourceUsage/ResourceUsage';
+import ResourceUsage from '../components/Overview/ResourceUsage/ResourceUsage';
 import { clusterDetails } from './ClusterDetails.fixtures';
 
 describe('<ResourceUsage />', () => {

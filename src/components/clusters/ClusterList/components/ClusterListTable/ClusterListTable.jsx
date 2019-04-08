@@ -105,9 +105,6 @@ function ClusterListTable(props) {
         <Grid.Col {...statColSizes}>
           <NumberWithUnit valueWithUnit={cluster.memory.total} isBytes />
         </Grid.Col>
-        <Grid.Col {...statColSizes}>
-          <NumberWithUnit valueWithUnit={cluster.storage.total} isBytes />
-        </Grid.Col>
         <Grid.Col {...locationColSizes}>
           <ClusterLocationLabel
             regionID={result(cluster, 'region.id', 'N/A')}
@@ -171,14 +168,6 @@ function ClusterListTable(props) {
             {...statColSizes}
           >
             Memory
-          </TableGrid.ColumnHeader>
-          <TableGrid.ColumnHeader
-            id="storage"
-            isSorted={false}
-            isAscending
-            {...statColSizes}
-          >
-            Storage
           </TableGrid.ColumnHeader>
           <TableGrid.ColumnHeader
             id="location"
