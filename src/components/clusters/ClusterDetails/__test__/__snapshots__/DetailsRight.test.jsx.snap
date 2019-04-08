@@ -38,14 +38,6 @@ exports[`<DetailsRight /> should render 1`] = `
       B
     </dd>
     <dt>
-      Total Storage
-    </dt>
-    <dd>
-      0
-       
-      B
-    </dd>
-    <dt>
       Nodes
     </dt>
     <dd>
