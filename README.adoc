@@ -138,12 +138,16 @@ Have https://github.com/RedHatInsights/insights-proxy[insights-proxy] installed 
 SPANDX_CONFIG="./profiles/local-frontend.js" bash $PROXY_PATH/scripts/run.sh
 ```
 
-To pass api calls to your local application run
+To pass api calls to the mock server
 ```shell
-SPANDX_CONFIG="./profiles/local-frontend-and-api.js" bash $PROXY_PATH/scripts/run.sh
+SPANDX_CONFIG="./profiles/local-frontend-mock.js" bash $PROXY_PATH/scripts/run.sh
 ```
 
-Once the server is running you can access your UI on https://https://ci.foo.redhat.com:1337/openshift
+and use 
+....
+$ yarn startmock-embedded
+...
+Once the server is running you can access your UI on https://qa.foo.redhat.com:1337/openshift
 
 == Deploying
 
