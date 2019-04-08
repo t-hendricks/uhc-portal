@@ -4,7 +4,7 @@ import {
   DonutChart,
 } from 'patternfly-react';
 import { humanizeValueWithUnit } from '../../../../../../common/unitParser';
-
+import round from '../../../../../../common/math';
 
 function ClusterUtilizationChart(props) {
   const {
@@ -27,8 +27,8 @@ function ClusterUtilizationChart(props) {
     availableColumnTitle = `${availableHumanized.unit} available`;
   } else {
     // unit provided, for example CPU
-    available = total - used;
-    usedValue = used;
+    available = round(total - used, 2);
+    usedValue = round(used, 2);
     usedColumnTitle = `${unit} used`;
     availableColumnTitle = `${unit} available`;
   }
