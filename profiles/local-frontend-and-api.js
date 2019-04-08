@@ -1,6 +1,6 @@
 /*global module*/
 
-const APP_ID = 'uhc';
+const APP_ID = 'openshift';
 const API_PORT = 8888;
 const routes = {};
 

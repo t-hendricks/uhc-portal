@@ -143,6 +143,8 @@ To pass api calls to your local application run
 SPANDX_CONFIG="./profiles/local-frontend-and-api.js" bash $PROXY_PATH/scripts/run.sh
 ```
 
+Once the server is running you can access your UI on https://https://ci.foo.redhat.com:1337/openshift
+
 == Deploying
 
 In order to deploy the application to an _OpenShift_ cluster first you need to

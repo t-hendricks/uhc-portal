@@ -5,7 +5,7 @@ const authHeader = () => ({
 });
 
 const serviceConfig = (passedConfig = {}, auth = true) => {
-  let BASE_URL = config.configData.apiGateway ? config.configData.apiGateway : '';
+  const BASE_URL = config.configData.apiGateway ? config.configData.apiGateway : '';
   return Object.assign(
     {},
     passedConfig,
