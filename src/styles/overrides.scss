@@ -1,3 +1,5 @@
+@import "~@patternfly/patternfly/sass-utilities/_all";
+
 // We are disabling PF4 base reset for now ($pf-global--enable-reset: false), so
 // adding this back in here. PF4 base resets are for PF4-only apps.
 html {

@@ -35,13 +35,25 @@ import { store, reloadReducers } from './redux/store';
 
 import './styles/main.scss';
 
+if (!APP_EMBEDDED) {
+    import('./styles/overrides.scss');
+}
+
 let keycloak;
+let basename = '/clusters';
+
+if (APP_EMBEDDED) {
+  const pathName = window.location.pathname.split('/');
+  pathName.shift();
+  const release = pathName[0] === 'beta' ? '/beta/' : '/';
+  basename = `${release}${pathName[0]}`;
+}
 
 const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <BrowserRouter basename={APP_EMBEDDED ? '/insights/platform/uhc' : 'clusters'}>
+        <BrowserRouter basename={basename}>
           <App
             loginFunction={keycloak.login}
             logoutFunction={keycloak.logout}
@@ -117,17 +129,19 @@ function initKeycloak() {
 }
 
 if (APP_EMBEDDED) {
-  document.querySelector('.layout-pf.layout-pf-fixed').classList.remove('layout-pf', 'layout-pf-fixed');
   insights.chrome.init();
+  insights.chrome.identifyApp('');
   insights.chrome.auth.getUser().then((data) => {
-    store.dispatch(userInfoResponse(data));
-    store.dispatch(getCloudProviders());
-    keycloak = {
-      login: () => undefined,
-      logout: () => insights.chrome.auth.logout(),
-      authenticated: true,
-    };
-    render();
+    config.fetchConfig().then(() => {
+      store.dispatch(userInfoResponse(data));
+      store.dispatch(getCloudProviders());
+      keycloak = {
+        login: () => undefined,
+        logout: () => insights.chrome.auth.logout(),
+        authenticated: true,
+      };
+      render();
+    });
   });
 } else {
   config.fetchConfig().then(() => {

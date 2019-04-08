@@ -13,8 +13,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@axetroy/react-download": "^1.1.1",
-    "@patternfly/react-core": "2.2.3",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@patternfly/patternfly": "1.0.200",
+    "@patternfly/react-core": "2.2.3",
     "axios": "^0.18.0",
     "bootstrap-sass": "^3.3.7",
     "classnames": "^2.2.6",
@@ -110,5 +111,8 @@
     "startmock": "UHC_GATEWAY_DOMAIN=http://localhost:8000 UHC_DISABLE_KEYCLOAK=true UHC_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
     "lint": "eslint src --ext js,jsx",
     "test": "jest --env=jsdom"
+  },
+  "insights": {
+    "appname": "openshift"
   }
 }

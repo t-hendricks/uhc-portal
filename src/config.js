@@ -5,7 +5,8 @@ const config = {
   fetchConfig() {
     return new Promise((resolve) => {
       const that = this;
-      axios.get('/clusters/config/config.json').then((response) => {
+      const BASE = APP_EMBEDDED ? '/apps/openshift' : '/clusters';
+      axios.get(`${BASE}/config/config.json`).then((response) => {
         that.configData = response.data;
         resolve();
       });

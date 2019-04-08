@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License. 
 */
 
+@import "~@patternfly/patternfly/sass-utilities/_all";
+@import "~patternfly/dist/sass/patternfly/variables";
+
 // override the blue patternfly header border to match other properties
 .navbar-pf-vertical {
   border: 0;

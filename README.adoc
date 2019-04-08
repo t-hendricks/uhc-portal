@@ -131,6 +131,20 @@ To run it, run `mockdata/mockserver.py`.
 
 Then in another terminal, run `yarn startmock` instead of `yarn start`, and you'll get a working UI showing mock data.
 
+=== Chromed application
+Have https://github.com/RedHatInsights/insights-proxy[insights-proxy] installed under PROXY_PATH
+
+```shell
+SPANDX_CONFIG="./profiles/local-frontend.js" bash $PROXY_PATH/scripts/run.sh
+```
+
+To pass api calls to your local application run
+```shell
+SPANDX_CONFIG="./profiles/local-frontend-and-api.js" bash $PROXY_PATH/scripts/run.sh
+```
+
+Once the server is running you can access your UI on https://https://ci.foo.redhat.com:1337/openshift
+
 == Deploying
 
 In order to deploy the application to an _OpenShift_ cluster first you need to
