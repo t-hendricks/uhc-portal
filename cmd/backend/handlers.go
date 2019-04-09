@@ -36,15 +36,15 @@ import (
 // AuthHandlerBuilder contains the configuration and logic needed to create an authentication
 // handler.
 type AuthHandlerBuilder struct {
-	sessions *SessionStore
-	tokenURL string
+	sessions   *SessionStore
+	connection *client.Connection
 }
 
 // AuthHandler is an authentication handler.
 type AuthHandler struct {
-	sessions *SessionStore
-	parser   *jwt.Parser
-	tokenURL string
+	sessions   *SessionStore
+	parser     *jwt.Parser
+	connection *client.Connection
 }
 
 // NewAuthHandler creates a builder that can then be used to configure and create authentication
@@ -60,8 +60,9 @@ func (b *AuthHandlerBuilder) Sessions(value *SessionStore) *AuthHandlerBuilder {
 	return b
 }
 
-func (b *AuthHandlerBuilder) TokenURL(url string) *AuthHandlerBuilder {
-	b.tokenURL = url
+// Connection sets the connection to the server that will be used to obtain access tokens.
+func (b *AuthHandlerBuilder) Connection(value *client.Connection) *AuthHandlerBuilder {
+	b.connection = value
 	return b
 }
 
@@ -72,12 +73,16 @@ func (b *AuthHandlerBuilder) Build() (handler *AuthHandler, err error) {
 		err = fmt.Errorf("session store is mandatory")
 		return
 	}
+	if b.connection == nil {
+		err = fmt.Errorf("connection is mandatory")
+		return
+	}
 
 	// Create the object:
 	handler = new(AuthHandler)
 	handler.sessions = b.sessions
 	handler.parser = &jwt.Parser{}
-	handler.tokenURL = b.tokenURL
+	handler.connection = b.connection
 
 	return
 }
@@ -113,40 +118,15 @@ func (h *AuthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Check that the authorization header contains the user name and password:
-	user, password, ok := r.BasicAuth()
-	if !ok {
-		w.Header().Set("WWW-Authenticate", "Basic realm=\"UHC\"")
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-
-	// Try to authenticate the user:
-	logger, err := client.NewGlogLoggerBuilder().
-		Build()
+	// Get a bearer token for the user:
+	bearer, _, err := h.connection.Tokens()
 	if err != nil {
-		glog.Errorf("Can't create logger for user '%s': %v", user, err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-	connection, err := client.NewConnectionBuilder().
-		Logger(logger).
-		User(user, password).
-		TokenURL(h.tokenURL).
-		Build()
-	if err != nil {
-		glog.Errorf("Can't create connection for user '%s': %v", user, err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-	bearer, _, err := connection.Tokens()
-	if err != nil {
-		glog.Errorf("Can't get token for user '%s': %v", user, err)
+		glog.Errorf("Can't get token '%s': %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	// Get the mail address of the user:
+	// Get the user name:
 	claims := jwt.MapClaims{}
 	_, _, err = h.parser.ParseUnverified(bearer, claims)
 	if err != nil {
@@ -154,17 +134,32 @@ func (h *AuthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	claim, ok := claims["email"]
+	userClaim, ok := claims["preferred_username"]
 	if !ok {
-		glog.Errorf("Can't get mail address claim")
+		glog.Errorf("Can't get 'preferred_username' claim")
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	mail, ok := claim.(string)
+	user, ok := userClaim.(string)
 	if !ok {
 		glog.Errorf(
-			"Expected mail claim containing string but got '%T'",
-			claim,
+			"Expected 'preferred_username' claim containing string but got '%T'",
+			userClaim,
+		)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	mailClaim, ok := claims["email"]
+	if !ok {
+		glog.Errorf("Can't get 'email' claim")
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	mail, ok := mailClaim.(string)
+	if !ok {
+		glog.Errorf(
+			"Expected 'email' claim containing string but got '%T'",
+			mailClaim,
 		)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -175,7 +170,6 @@ func (h *AuthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		User(user).
 		Mail(mail).
 		Nonce(nonce).
-		Connection(connection).
 		Build()
 	if err != nil {
 		glog.Errorf("Can't create session for user '%s': %v", user, err)
@@ -502,22 +496,30 @@ const (
 
 // ProxyHandlerBuilder contains the configuration and logic needed to build proxy handlers.
 type ProxyHandlerBuilder struct {
-	target   string
-	sessions *SessionStore
+	connection *client.Connection
+	target     string
+	sessions   *SessionStore
 }
 
 // ProxyHandler is an an HTTP handler that forwards requests to a real API gateway, replacing the
 // authorization header with a valid token.
 type ProxyHandler struct {
-	target   *url.URL
-	sessions *SessionStore
-	parser   *jwt.Parser
-	proxy    *httputil.ReverseProxy
+	connection *client.Connection
+	target     *url.URL
+	sessions   *SessionStore
+	parser     *jwt.Parser
+	proxy      *httputil.ReverseProxy
 }
 
 // NewProxyHandler creates a buider that can then be used to configure and create an proxy handler.
 func NewProxyHandler() *ProxyHandlerBuilder {
 	return new(ProxyHandlerBuilder)
+}
+
+// Connection sets the connection that will be used to obtain real bearer tokens for the user.
+func (b *ProxyHandlerBuilder) Connection(value *client.Connection) *ProxyHandlerBuilder {
+	b.connection = value
+	return b
 }
 
 // Target sets the URL of the real API gateway.
@@ -536,6 +538,10 @@ func (b *ProxyHandlerBuilder) Sessions(value *SessionStore) *ProxyHandlerBuilder
 // Build uses the configuration stored in the builder to create a new proxy handler.
 func (b *ProxyHandlerBuilder) Build() (handler *ProxyHandler, err error) {
 	// Check mandatory parameters:
+	if b.connection == nil {
+		err = fmt.Errorf("connection mandatory")
+		return
+	}
 	if b.target == "" {
 		err = fmt.Errorf("target URL is mandatory")
 		return
@@ -570,6 +576,7 @@ func (b *ProxyHandlerBuilder) Build() (handler *ProxyHandler, err error) {
 
 	// Create and populate the object:
 	handler = new(ProxyHandler)
+	handler.connection = b.connection
 	handler.target = target
 	handler.sessions = b.sessions
 	handler.parser = &jwt.Parser{}
@@ -634,7 +641,7 @@ func (h *ProxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
-		bearer, _, err = session.Connection().Tokens()
+		bearer, _, err = h.connection.Tokens()
 		if err != nil {
 			glog.Errorf("Can't get real token for user '%s': %v", user, err)
 			w.WriteHeader(http.StatusUnauthorized)
@@ -644,7 +651,7 @@ func (h *ProxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		r.Header.Set("Authorization", authorization)
 	}
 
-	// Replace the scheme and post with the ones of the real gateway:
+	// Replace the scheme and host with the ones of the real gateway:
 	r.URL.Scheme = h.target.Scheme
 	r.URL.Host = h.target.Host
 	r.Host = h.target.Host

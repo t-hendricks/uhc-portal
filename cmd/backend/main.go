@@ -28,6 +28,8 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
+
+	"gitlab.cee.redhat.com/service/uhc-sdk/pkg/client"
 )
 
 // #nosec G101
@@ -35,6 +37,14 @@ const authPath = "/auth/realms/rhd/protocol/openid-connect/auth"
 
 // #nosec G101
 const tokenPath = "/auth/realms/rhd/protocol/openid-connect/token"
+
+// tokenEnv is the name of the environment variable that should contain the offline access token of
+// the user.
+const tokenEnv = "UHC_TOKEN"
+
+// tokenPage is the URL of the page where the user can obtain the offline access token.
+// #nosec G101
+const tokenPage = "https://cloud.openshift.com/clusters/token.html"
 
 var args struct {
 	configFiles []string
@@ -101,6 +111,47 @@ func run(cmd *cobra.Command, argv []string) {
 		os.Exit(1)
 	}
 
+	// Get the offline access token:
+	token := cfg.Token()
+	if token == "" {
+		token = os.Getenv(tokenEnv)
+		if token == "" {
+			glog.Errorf(
+				"Either the 'token' parameter in the configuration file or the "+
+					"environment variable '%s' must contain the offline "+
+					"access token, but both are empty",
+				tokenEnv,
+			)
+			glog.Infof("To obtain an offline access token go to '%s'", tokenPage)
+			os.Exit(1)
+		}
+	}
+
+	// Create the connection:
+	logger, err := client.NewGlogLoggerBuilder().
+		Build()
+	if err != nil {
+		glog.Errorf("Can't create logger: %v", err)
+		os.Exit(1)
+	}
+	connection, err := client.NewConnectionBuilder().
+		Logger(logger).
+		TokenURL(cfg.Keycloak().URL()).
+		Tokens(token).
+		Build()
+	if err != nil {
+		glog.Errorf("Can't create connection: %v", err)
+		os.Exit(1)
+	}
+
+	// Try to get a bearer token, just to verify that the connection is work and exit early if
+	// it doesn't:
+	_, _, err = connection.Tokens()
+	if err != nil {
+		glog.Errorf("Can't get bearer token: %v", err)
+		os.Exit(1)
+	}
+
 	// Create the session store:
 	store, err := NewSessionStore().
 		Build()
@@ -120,6 +171,7 @@ func run(cmd *cobra.Command, argv []string) {
 		)
 		proxyHandler, err := NewProxyHandler().
 			Target(proxyCfg.Target()).
+			Connection(connection).
 			Sessions(store).
 			Build()
 		if err != nil {
@@ -135,7 +187,7 @@ func run(cmd *cobra.Command, argv []string) {
 	var authHandler http.Handler
 	authHandler, err = NewAuthHandler().
 		Sessions(store).
-		TokenURL(cfg.Keycloak().URL()).
+		Connection(connection).
 		Build()
 	if err != nil {
 		glog.Errorf("Can't create authentication handler: %v", err)
@@ -177,10 +229,10 @@ func run(cmd *cobra.Command, argv []string) {
 	mainMux.Handle(tokenPath, tokenHandler)
 
 	// Enable access logs:
-	logger := handlers.LoggingHandler(os.Stdout, mainMux)
+	logHandler := handlers.LoggingHandler(os.Stdout, mainMux)
 
 	// Start the web server:
-	go http.ListenAndServe(cfg.Listener().Address(), logger)
+	go http.ListenAndServe(cfg.Listener().Address(), logHandler)
 	glog.Infof("Listening in 'http://%s'", cfg.Listener().Address())
 
 	// Wait for the stop signal:
