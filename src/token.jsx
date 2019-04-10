@@ -45,7 +45,7 @@ const render = (authenticated) => {
           logoutFunction={keycloak.logout}
           HeaderComponent={RouterlessHeader}
         >
-          <Tokens accessToken={keycloak.token} refreshToken={keycloak.refreshToken} />
+          <Tokens offlineAccessToken={keycloak.refreshToken} />
         </App>
       </Provider>
     </AppContainer>,
