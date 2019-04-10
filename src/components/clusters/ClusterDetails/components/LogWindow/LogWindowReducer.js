@@ -47,6 +47,7 @@ function LogsReducer(state = initialState, action) {
         'logs',
         {
           pending: true,
+          lines: state.logs.lines,
         },
         {
           state,
