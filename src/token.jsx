@@ -27,8 +27,11 @@ import App from './components/App/App';
 import RouterlessHeader from './components/App/RouterlessHeader';
 import config from './config';
 
-
 import './styles/main.scss';
+
+if (!APP_EMBEDDED) {
+  import('./styles/overrides.scss');
+}
 
 let keycloak;
 
