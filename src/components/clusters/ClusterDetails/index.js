@@ -14,13 +14,14 @@ import { modalActions } from '../../common/Modal/ModalActions';
 const mapStateToProps = (state) => {
   const { details, credentials, routerShards } = state.clusters;
   const { cloudProviders } = state.cloudProviders;
+  const { logs } = state.logs;
 
   return ({
     clusterDetails: details,
     cloudProviders,
     credentials,
     routerShards,
-    logs: state.logs.logs.lines || '',
+    logs,
   });
 };
 

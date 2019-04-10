@@ -142,7 +142,7 @@ class ClusterDetails extends Component {
                 <NavItem eventKey={1}>
                   Overview
                 </NavItem>
-                {logs && (
+                {logs.lines && (
                 <NavItem eventKey={2}>
                   Logs
                 </NavItem>
@@ -156,7 +156,7 @@ class ClusterDetails extends Component {
                     routerShards={routerShards}
                   />
                 </TabPane>
-                {logs && (
+                {logs.lines && (
                 <TabPane eventKey={2}>
                   <LogWindow clusterID={cluster.id} />
                 </TabPane>
@@ -192,7 +192,7 @@ ClusterDetails.propTypes = {
   credentials: PropTypes.object.isRequired,
   routerShards: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
-  logs: PropTypes.string,
+  logs: PropTypes.object,
   clusterDetails: PropTypes.shape({
     cluster: PropTypes.object,
     error: PropTypes.bool,
