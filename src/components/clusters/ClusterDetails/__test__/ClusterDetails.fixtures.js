@@ -39,9 +39,8 @@ const clusterDetails = {
       url: 'https://api.test-liza.sdev.devshift.net:6443',
     },
     nodes: {
-      total: 7,
+      total: 5,
       master: 3,
-      infra: 2,
       compute: 2,
     },
     memory: {

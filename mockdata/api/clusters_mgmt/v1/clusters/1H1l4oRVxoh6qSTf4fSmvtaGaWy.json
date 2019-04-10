@@ -23,9 +23,8 @@
     "url": "https://ealfassa-jan29-deleteme-api.sdev.devshift.net:6443"
   },
   "nodes": {
-    "total": 8,
+    "total": 6,
     "master": 3,
-    "infra": 2,
     "compute": 3
   },
   "memory": {

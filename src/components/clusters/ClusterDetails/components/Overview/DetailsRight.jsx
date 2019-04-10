@@ -50,17 +50,6 @@ function DetailsRight({ cluster, routerShards }) {
               {cluster.nodes.master}
             </dd>
           </dl>
-          { cluster.managed ? (
-            <dl className="cluster-details-item-list left">
-              <dt>
-                Infrastructure:
-                {' '}
-              </dt>
-              <dd>
-                {cluster.nodes.infra}
-              </dd>
-            </dl>
-          ) : null }
           <dl className="cluster-details-item-list left">
             <dt>
               Compute:

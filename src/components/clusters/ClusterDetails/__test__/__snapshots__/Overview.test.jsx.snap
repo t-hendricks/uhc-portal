@@ -70,9 +70,8 @@ exports[`<Overview /> should render 1`] = `
         },
         "nodes": Object {
           "compute": 2,
-          "infra": 2,
           "master": 3,
-          "total": 7,
+          "total": 5,
         },
         "region": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
@@ -378,9 +377,8 @@ exports[`<Overview /> should render 1`] = `
                   },
                   "nodes": Object {
                     "compute": 2,
-                    "infra": 2,
                     "master": 3,
-                    "total": 7,
+                    "total": 5,
                   },
                   "region": Object {
                     "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
@@ -481,9 +479,8 @@ exports[`<Overview /> should render 1`] = `
                   },
                   "nodes": Object {
                     "compute": 2,
-                    "infra": 2,
                     "master": 3,
-                    "total": 7,
+                    "total": 5,
                   },
                   "region": Object {
                     "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
