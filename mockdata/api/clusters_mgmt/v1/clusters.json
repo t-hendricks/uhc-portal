@@ -192,24 +192,24 @@
         "compute": 3
       },
       "memory": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "updated_timestamp": "2019-02-27T10:00:00Z",
         "used": {
-          "value": 2000,
-          "unit": "B"
+          "value": 300,
+          "unit": "KB"
         },
         "total": {
-          "value": 4000,
-          "unit": "B"
+          "value": 400,
+          "unit": "MiB"
         }
       },
       "cpu": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "updated_timestamp": "2019-02-27T13:00:00Z",
         "used": {
-          "value": 1,
+          "value": 6.283185307179586,
           "unit": ""
         },
         "total": {
-          "value": 2,
+          "value": 10,
           "unit": ""
         }
       },
