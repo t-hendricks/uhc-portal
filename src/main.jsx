@@ -111,14 +111,14 @@ function initKeycloak() {
         const lastActiveTimestamp = parseInt(localStorage.getItem('lastActiveTimestamp') || '0', 10);
         const idleSeconds = Math.floor(Date.now() / 1000) - lastActiveTimestamp;
         if (idleSeconds < IDLE_TIMEOUT_SECONDS) {
-          keycloak.updateToken(10)
+          keycloak.updateToken(60)
             .success(() => sessionStorage.setItem('kctoken', keycloak.token))
             .error(() => keycloak.logout());
         } else if (document.visibilityState === 'visible') {
           keycloak.logout();
         }
       };
-      setInterval(tokenRefreshTimer, 10000);
+      setInterval(tokenRefreshTimer, 5000);
       // ensure the keycloak token is refreshed if the document becomes visible
       // and the idle timeout was not reached
       document.addEventListener('visibilitychange', tokenRefreshTimer, false);
