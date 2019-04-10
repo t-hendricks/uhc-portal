@@ -40,6 +40,7 @@ type Config struct {
 	listener *Listener
 	keycloak *Keycloak
 	proxies  []*Proxy
+	token    string
 }
 
 // NewConfig creates a builder that can then be used to create new configuration objects.
@@ -98,11 +99,17 @@ func (c *Config) Keycloak() *Keycloak {
 	return c.keycloak
 }
 
+// Token returns the offline access token.
+func (c *Config) Token() string {
+	return c.token
+}
+
 // configData is the struct used internally to unmarshall the configuration data.
 type configData struct {
 	Listener *listenerData `json:"listener,omitempty"`
 	Keycloak *keycloakData `json:"keycloak,omitempty"`
 	Proxies  []*proxyData  `json:"proxies,omitempty"`
+	Token    *string       `json:"token,omitempty"`
 }
 
 // load loads the configuration data from the given files.
@@ -203,6 +210,9 @@ func (c *Config) mergeText(text []byte) error {
 		if err != nil {
 			return err
 		}
+	}
+	if data.Token != nil {
+		c.token = *data.Token
 	}
 	for _, item := range data.Proxies {
 		err = c.mergeProxies(item)

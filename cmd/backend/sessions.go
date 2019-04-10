@@ -22,8 +22,6 @@ package main
 import (
 	"fmt"
 	"sync"
-
-	"gitlab.cee.redhat.com/service/uhc-sdk/pkg/client"
 )
 
 // SessionStoreBuilder is used to create instances of session stores.
@@ -59,19 +57,17 @@ func (s *SessionStore) Lookup(user string) *Session {
 
 // Session builder contains the configuration and logic needed to create new sessions.
 type SessionBuilder struct {
-	store      *SessionStore
-	user       string
-	mail       string
-	nonce      string
-	connection *client.Connection
+	store *SessionStore
+	user  string
+	mail  string
+	nonce string
 }
 
 // Session contains the information about the user.
 type Session struct {
-	user       string
-	mail       string
-	nonce      string
-	connection *client.Connection
+	user  string
+	mail  string
+	nonce string
 }
 
 // New creates a builder that can then be used to create new sessions.
@@ -99,13 +95,6 @@ func (b *SessionBuilder) Nonce(value string) *SessionBuilder {
 	return b
 }
 
-// Connects sets the connection to the real gateway that will be used to get real tokens for the
-// user.
-func (b *SessionBuilder) Connection(value *client.Connection) *SessionBuilder {
-	b.connection = value
-	return b
-}
-
 // Build uses the configuration stored in the builder to add a new session to the store.
 func (b *SessionBuilder) Build() (session *Session, err error) {
 	// Check parameters:
@@ -117,17 +106,12 @@ func (b *SessionBuilder) Build() (session *Session, err error) {
 		err = fmt.Errorf("nonce is mandatory")
 		return
 	}
-	if b.connection == nil {
-		err = fmt.Errorf("connection is mandatory")
-		return
-	}
 
 	// Create the session:
 	session = new(Session)
 	session.user = b.user
 	session.mail = b.mail
 	session.nonce = b.nonce
-	session.connection = b.connection
 
 	// Add the session to the store:
 	b.store.mutex.Lock()
@@ -150,10 +134,4 @@ func (s *Session) Mail() string {
 // Nonce returns the nonce that should be used to issue tokens for the user.
 func (s *Session) Nonce() string {
 	return s.nonce
-}
-
-// Connection returns the connection to the real gateway that will be used to get real tokens for
-// the user.
-func (s *Session) Connection() *client.Connection {
-	return s.connection
 }
