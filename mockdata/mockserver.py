@@ -11,10 +11,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     return super().translate_path(path) + '.json'
 
   def end_headers(self):
-    """ override end_headers to append CORS headers to every request """
+    """ override end_headers to append headers to every request """
+    # Allow CORS.
     self.send_header('Access-Control-Allow-Origin', '*')
     self.send_header('Access-Control-Allow-Methods', '*')
     self.send_header('Access-Control-Allow-Headers', 'authorization, content-type')
+    # Disable caching - https://stackoverflow.com/a/25708957/239657
+    self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+    self.send_header("Pragma", "no-cache")
+    self.send_header("Expires", "0")
     return super().end_headers()
 
 
