@@ -27,8 +27,10 @@ class RefreshBtn extends React.Component {
 
   refreshTimer() {
     const { autoRefresh, refreshFunc } = this.props;
-    // this check allows autoRefresh to be turned off or on during the lifetime of the component.
-    if (autoRefresh) {
+    // autoRefresh check allows refresh to be turned off or on during the lifetime of the component
+    // visibilityState checks allows avoiding refreshes when the tab is not visible
+    // "online" state check allows to avoid refreshes when the network is offline.
+    if (autoRefresh && document.visibilityState === 'visible' && navigator.onLine) {
       refreshFunc();
     }
   }
