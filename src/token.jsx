@@ -28,10 +28,7 @@ import RouterlessHeader from './components/App/RouterlessHeader';
 import config from './config';
 
 import './styles/main.scss';
-
-if (!APP_EMBEDDED) {
-  import('./styles/overrides.scss');
-}
+import './styles/overrides.scss';
 
 let keycloak;
 
@@ -45,7 +42,7 @@ const render = (authenticated) => {
           logoutFunction={keycloak.logout}
           HeaderComponent={RouterlessHeader}
         >
-          <Tokens offlineAccessToken={keycloak.refreshToken} />
+          <Tokens token={keycloak.refreshToken} />
         </App>
       </Provider>
     </AppContainer>,
@@ -61,6 +58,7 @@ if (module.hot) {
 
 function initKeycloak() {
   keycloak = Keycloak(config.configData.keycloak);
+
   const loginSuccess = (authenticated) => {
     store.dispatch(userInfoResponse(keycloak.idTokenParsed));
     render(authenticated);
@@ -74,31 +72,18 @@ function initKeycloak() {
   });
 }
 
-if (APP_EMBEDDED) {
-  document.querySelector('.layout-pf.layout-pf-fixed').classList.remove('layout-pf', 'layout-pf-fixed');
-  insights.chrome.init();
-  insights.chrome.auth.getUser().then(() => {
+config.fetchConfig().then(() => {
+  // If running using webpack-server development server, and setting env
+  // variable `UHC_DISABLE_KEYCLOAK` to `true`, disable keycloak.
+  if (process.env.UHC_DISABLE_KEYCLOAK === 'true') {
     keycloak = {
-      login: () => undefined,
-      logout: () => insights.chrome.auth.logout(),
+      login: () => { },
+      logout: () => { },
+      token: 'fake token for mock mode',
       authenticated: true,
     };
-    render(); // TODO: Figure out how to get offline_access token when chromed!
-  });
-} else {
-  config.fetchConfig().then(() => {
-    // If running using webpack-server development server, and setting env
-    // variable `UHC_DISABLE_KEYCLOAK` to `true`, disable keycloak.
-    if (process.env.UHC_DISABLE_KEYCLOAK === 'true') {
-      keycloak = {
-        login: () => { },
-        logout: () => { },
-        token: 'fake token for mock mode',
-        authenticated: true,
-      };
-      render();
-    } else {
-      initKeycloak();
-    }
-  });
-}
+    render();
+  } else {
+    initKeycloak();
+  }
+});

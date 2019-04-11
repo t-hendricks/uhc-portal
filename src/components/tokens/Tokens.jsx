@@ -52,52 +52,82 @@ const snippetBox = lines => (
   </div>
 );
 
-const Tokens = ({ offlineAccessToken }) => {
-  // Prepare the snippet of code that shows how to use the offline access token:
-  const offlineAccessTokenSnippet = [
-    'OFFLINE_ACCESS_TOKEN="\\',
-    splitToken(offlineAccessToken),
-    '"',
-    'curl \\',
-    '--silent \\',
-    '--data-urlencode "grant_type=refresh_token" \\',
-    '--data-urlencode "client_id=uhc" \\',
-    `--data-urlencode "refresh_token=${'${'}OFFLINE_ACCESS_TOKEN${'}'}" \\`,
-    'https://developers.redhat.com/auth/realms/rhd/protocol/openid-connect/token | \\',
-    'jq -r .access_token',
-  ];
+class Tokens extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      offlineAccessToken: 'loading, please wait',
+    };
+  }
 
-  // Links to curl and jq:
-  const curlLink = <a href="https://curl.haxx.se">curl</a>;
-  const jqLink = <a href="https://stedolan.github.io/jq">jq</a>;
+  componentDidMount() {
+    if (APP_EMBEDDED) {
+      const that = this;
+      insights.chrome.auth.getOfflineToken().then((response) => {
+        that.setState({ offlineAccessToken: response.data.refresh_token });
+      }).catch((reason) => {
+        if (reason === 'not available') {
+          insights.chrome.auth.doOffline();
+        } else {
+          that.setState({ offlineAccessToken: reason });
+        }
+      });
+    }
+  }
 
-  // Render the component:
-  /* eslint-disable react/jsx-one-expression-per-line */
-  return (
-    <div>
-      <AlphaNotice />
-      <div className="token-details">
+  render() {
+    // If we're embedded (in insights chrome), use the token from state
+    // else, expect the non-embedded token page to provide it.
+    const { offlineAccessToken } = this.state;
+    const { token } = this.props;
+    const tokenToUse = (!APP_EMBEDDED && token) ? token : offlineAccessToken;
 
-        <h2>Offline Access Token</h2>
-        <p>
-          This is a long lived token that you can use to obtain access tokens:
-        </p>
-        {tokenBox(offlineAccessToken)}
-        <p>
-          Copy it, and then use it o request an access token. For example, to
-          obtain an access token using the {curlLink} and {jqLink} command
-          line tools, use the following commands:
-        </p>
-        {snippetBox(offlineAccessTokenSnippet)}
+    // Prepare the snippet of code that shows how to use the offline access token:
+    const offlineAccessTokenSnippet = [
+      'OFFLINE_ACCESS_TOKEN="\\',
+      splitToken(tokenToUse),
+      '"',
+      'curl \\',
+      '--silent \\',
+      '--data-urlencode "grant_type=refresh_token" \\',
+      '--data-urlencode "client_id=uhc" \\',
+      `--data-urlencode "refresh_token=${'${'}OFFLINE_ACCESS_TOKEN${'}'}" \\`,
+      'https://developers.redhat.com/auth/realms/rhd/protocol/openid-connect/token | \\',
+      'jq -r .access_token',
+    ];
 
+    // Links to curl and jq:
+    const curlLink = <a href="https://curl.haxx.se">curl</a>;
+    const jqLink = <a href="https://stedolan.github.io/jq">jq</a>;
+
+    // Render the component:
+    /* eslint-disable react/jsx-one-expression-per-line */
+    return (
+      <div>
+        <AlphaNotice />
+        <div className="token-details">
+
+          <h2>Offline Access Token</h2>
+          <p>
+            This is a long lived token that you can use to obtain access tokens:
+          </p>
+          {tokenBox(tokenToUse)}
+          <p>
+            Copy it, and then use it o request an access token. For example, to
+            obtain an access token using the {curlLink} and {jqLink} command
+            line tools, use the following commands:
+          </p>
+          {snippetBox(offlineAccessTokenSnippet)}
+
+        </div>
       </div>
-    </div>
-  );
-  /* eslint-enable react/jsx-one-expression-per-line */
-};
+    );
+    /* eslint-enable react/jsx-one-expression-per-line */
+  }
+}
 
 Tokens.propTypes = {
-  offlineAccessToken: PropTypes.string.isRequired,
+  token: PropTypes.string,
 };
 
 export default Tokens;
