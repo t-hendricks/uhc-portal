@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import result from 'lodash/result';
 
 import ClusterNetwork from './ClusterNetwork';
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
@@ -47,7 +48,7 @@ function DetailsRight({ cluster, routerShards }) {
               {' '}
             </dt>
             <dd>
-              {cluster.nodes.master}
+              {result(cluster, 'nodes.master', 'N/A')}
             </dd>
           </dl>
           <dl className="cluster-details-item-list left">
@@ -56,7 +57,7 @@ function DetailsRight({ cluster, routerShards }) {
               {' '}
             </dt>
             <dd>
-              {cluster.nodes.compute}
+              {result(cluster, 'nodes.compute', 'N/A')}
             </dd>
           </dl>
         </dd>
