@@ -133,7 +133,7 @@ if (APP_EMBEDDED) {
   insights.chrome.identifyApp('');
   insights.chrome.auth.getUser().then((data) => {
     config.fetchConfig().then(() => {
-      store.dispatch(userInfoResponse(data));
+      store.dispatch(userInfoResponse(data.identity.user));
       store.dispatch(getCloudProviders());
       keycloak = {
         login: () => undefined,
