@@ -175,7 +175,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
         >
           $ 
         </span>
-        dig NS openshift.example.com @8.8.8.8
+        dig NS openshift.example.com
       </pre>
     </Col>
     <Col
@@ -796,7 +796,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
         >
           $ 
         </span>
-        dig NS openshift.example.com @8.8.8.8
+        dig NS openshift.example.com
       </pre>
     </Col>
     <Col

@@ -119,7 +119,7 @@ class Instructions extends React.Component {
             </p>
             <pre>
               <span className="noselect">$ </span>
-              dig NS openshift.example.com @8.8.8.8
+              dig NS openshift.example.com
             </pre>
           </Col>
           <Col xs={12} sm={4} md={4} lg={4} className="cluster-install-step-callout-col" />
