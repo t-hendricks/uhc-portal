@@ -78,8 +78,7 @@ function ClusterListEmptyState(props) {
               <CardBody>
                 <CardTitle>Self-Installed Cluster</CardTitle>
                 <p>
-                  Create a self-installed cluster (OCP)
-                  to install OpenShift and manage it yourself.
+                  Install an OCP cluster manually, and manage it yourself.
                 </p>
                 {createSelfManaged}
               </CardBody>
