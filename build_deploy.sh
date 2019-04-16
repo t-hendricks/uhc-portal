@@ -30,6 +30,9 @@
 # PUSH_KEY - Base64 encoded SSH private key used to push to the Insights
 # platform git repository.
 #
+# PUSH_HOSTKEY - Public SSH key the host where the Insights platform git
+# repository lives, usually _github.com_.
+#
 # The machines that run this script need to have access to internet, so that the
 # built images can be pushed to quay.io.
 
@@ -52,6 +55,11 @@ fi
 if [ -z "${PUSH_URL}" ]; then
   echo "The Insights push URL hasn't been provided."
   echo "Make sure to set the 'PUSH_URL' environment variable."
+  exit 1
+fi
+if [ -z "${PUSH_HOSTKEY}" ]; then
+  echo "The Insights push host key hasn't been provided."
+  echo "Make sure to set the 'PUSH_HOSTKEY' environment variable."
   exit 1
 fi
 
@@ -92,11 +100,18 @@ make \
   version="${VERSION}" \
   push
 
-# Save the push key to a file so that we can use it with git commands:
+# Save the push key:
+rm --force key
 echo "${PUSH_KEY}" | base64 --decode > key
 chmod u=r,g=,o= key
-eval `ssh-agent`
-ssh-add key
+
+# Save the push host key:
+rm --force hostkey
+echo "${PUSH_HOSTKEY}" > hostkey
+
+# Set the environment variable that tells git what SSH command to use, as we
+# need to add options to indicate the `known_hosts` file that twe want to use:
+export GIT_SSH_COMMAND="ssh -i ${PWD}/key -o UserKnownHostsFile=${PWD}/hostkey"
 
 # Build the application for deployment to the Insights platform:
 rm --recursive --force build
