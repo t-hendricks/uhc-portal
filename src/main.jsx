@@ -132,14 +132,17 @@ if (APP_EMBEDDED) {
   insights.chrome.init();
   insights.chrome.identifyApp('');
   insights.chrome.auth.getUser().then((data) => {
-    config.fetchConfig().then(() => {
-      store.dispatch(userInfoResponse(data.identity.user));
+    store.dispatch(userInfoResponse(data.identity.user));
+  });
+  config.fetchConfig().then(() => {
+    keycloak = {
+      login: () => undefined,
+      logout: () => insights.chrome.auth.logout(),
+      authenticated: true,
+    };
+    insights.chrome.auth.getToken().then((token) => {
+      sessionStorage.setItem('kctoken', token);
       store.dispatch(getCloudProviders());
-      keycloak = {
-        login: () => undefined,
-        logout: () => insights.chrome.auth.logout(),
-        authenticated: true,
-      };
       render();
     });
   });
