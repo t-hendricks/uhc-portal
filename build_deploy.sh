@@ -143,11 +143,8 @@ git clone \
 # Push the build to all the target branches:
 PUSH_BRANCHES="
 ci-beta
-ci-stable
 prod-beta
-prod-stable
 qa-beta
-qa-stable
 "
 for PUSH_BRANCH in ${PUSH_BRANCHES}; do
   # Fetch the target branch:
@@ -168,6 +165,7 @@ for PUSH_BRANCH in ${PUSH_BRANCHES}; do
     --archive \
     --delete \
     --exclude=.git \
+    --exclude=58231b16fdee45a03a4ee3cf94a9f2c3 \
     build/clusters/ \
     target/
 
@@ -209,6 +207,7 @@ ${SUBJECT}
       *
     git commit \
       --all \
+      --allow-empty \
       --file ../message \
       --author "UHC Team <***REMOVED***>"
     git push \
