@@ -217,7 +217,7 @@ class Instructions extends React.Component {
             <div>
               <Download file="pull-secret" content={tokenView} style={{ display: 'inline' }}>
                 <Button
-                  disabled={!!token.error}
+                  disabled={!token || !!token.error}
                 >
                   <span className="fa fa-download" aria-hidden="true" />
                   &nbsp;
@@ -238,7 +238,7 @@ class Instructions extends React.Component {
                     className="btn-text-link install--copy-pull-secret"
                     type="button"
                     tabIndex="0"
-                    disabled={!!token.error}
+                    disabled={!token || !!token.error}
                   >
                     <span className="fa fa-paste" aria-hidden="true" />
                     &nbsp;
