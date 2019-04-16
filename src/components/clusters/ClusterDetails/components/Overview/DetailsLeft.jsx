@@ -25,7 +25,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
       <dl className="cluster-details-item left">
         <dt>Cluster ID</dt>
         <dd>
-          {cluster.external_id || 'N/A'}
+          {result(cluster, 'external_id', 'N/A')}
         </dd>
         <dt>Location</dt>
         <dd>
@@ -43,13 +43,13 @@ function DetailsLeft({ cluster, cloudProviders }) {
               {' '}
             </dt>
             <dd>
-              {cluster.openshift_version || 'N/A'}
+              {result(cluster, 'openshift_version', 'N/A')}
             </dd>
           </dl>
         </dd>
         <dt>Created at</dt>
         <dd>
-          <Timestamp value={cluster.creation_timestamp || ''} />
+          <Timestamp value={result(cluster, 'creation_timestamp', 'N/A')} />
         </dd>
       </dl>
     </React.Fragment>
