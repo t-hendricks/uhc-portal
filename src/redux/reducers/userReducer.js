@@ -10,6 +10,13 @@ const initialState = {
     pending: false,
     fulfilled: false,
   },
+  quota: {
+    quotaList: {},
+    error: false,
+    errorMessage: '',
+    pending: false,
+    fulfilled: false,
+  },
 };
 
 function userProfile(state = initialState, action) {
@@ -23,6 +30,8 @@ function userProfile(state = initialState, action) {
           initialState,
         },
       );
+
+    // GET_ORGANIZATION
     case helpers.PENDING_ACTION(userConstants.GET_ORGANIZATION):
       return helpers.setStateProp(
         'organization',
@@ -61,6 +70,44 @@ function userProfile(state = initialState, action) {
         },
       );
 
+    // GET_ORG_QUOTA
+    case helpers.PENDING_ACTION(userConstants.GET_ORG_QUOTA):
+      return helpers.setStateProp(
+        'quota',
+        {
+          pending: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+    case helpers.FULFILLED_ACTION(userConstants.GET_ORG_QUOTA):
+      return helpers.setStateProp(
+        'quota',
+        {
+          pending: false,
+          error: false,
+          fulfilled: true,
+          quotaList: action.payload.data,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+    case helpers.REJECTED_ACTION(userConstants.GET_ORG_QUOTA):
+      return helpers.setStateProp(
+        'organization',
+        {
+          error: action.error,
+          errorMessage: helpers.getErrorMessage(action.payload),
+        },
+        {
+          state,
+          initialState,
+        },
+      );
     default:
       return state;
   }

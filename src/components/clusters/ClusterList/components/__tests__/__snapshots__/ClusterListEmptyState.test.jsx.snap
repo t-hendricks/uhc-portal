@@ -123,6 +123,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
         bsClass="col"
         componentClass="div"
         md={4}
+        mdOffset={0}
       >
         <Card
           accented={false}

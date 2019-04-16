@@ -14,9 +14,17 @@ const getOrganization = () => ({
   type: userConstants.GET_ORGANIZATION,
 });
 
+const fetchOrganizationQuota = organiztionID => dispatch => dispatch({
+  type: userConstants.GET_ORG_QUOTA,
+  payload: accountsService.getOrganizationQuota(organiztionID),
+});
+
 const userActions = {
   userInfoResponse,
   getOrganization,
+  fetchOrganizationQuota,
 };
 
-export { userActions, userInfoResponse, getOrganization };
+export {
+  userActions, userInfoResponse, getOrganization, fetchOrganizationQuota,
+};

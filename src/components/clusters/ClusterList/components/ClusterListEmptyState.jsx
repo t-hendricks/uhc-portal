@@ -6,9 +6,8 @@ import {
   Button, Row, Col, EmptyState, Card, CardGrid, CardTitle, CardBody,
 } from 'patternfly-react';
 
-
 function ClusterListEmptyState(props) {
-  const { showCreationForm, showOCPCreationForm } = props;
+  const { showCreationForm, showOCPCreationForm, hasQuota } = props;
 
   const createManaged = (
     <EmptyState.Action>
@@ -48,32 +47,35 @@ function ClusterListEmptyState(props) {
       </Row>
       <CardGrid matchHeight>
         <Row className="cluster-list-emptystate-options">
-          <Col md={4}>
-            <Card className="cluster-list-emptystate-preferred" accented matchHeight>
-              <CardBody>
-                <p className="cluster-list-emptystate-preferred-string">Preferred method</p>
-                <CardTitle>Red Hat-Managed Cluster</CardTitle>
-                <p>
+          {hasQuota && (
+            <React.Fragment>
+              <Col md={4}>
+                <Card className="cluster-list-emptystate-preferred" accented matchHeight>
+                  <CardBody>
+                    <p className="cluster-list-emptystate-preferred-string">Preferred method</p>
+                    <CardTitle>Red Hat-Managed Cluster</CardTitle>
+                    <p>
                   Create a Red Hat-managed cluster (OSD),
                   to provision the cluster on Amazon Web Services.
-                </p>
-                {createManaged}
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card matchHeight>
-              <CardBody>
-                <CardTitle>Self-Managed Cluster</CardTitle>
-                <p>
+                    </p>
+                    {createManaged}
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md={4}>
+                <Card matchHeight>
+                  <CardBody>
+                    <CardTitle>Self-Managed Cluster</CardTitle>
+                    <p>
                   Create a self-managed cluster (OCP)
                   to provision the cluster on Amazon Web Services and manage it yourself.
-                </p>
-                {createAutoSelfManaged}
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md={4}>
+                    </p>
+                    {createAutoSelfManaged}
+                  </CardBody>
+                </Card>
+              </Col>
+            </React.Fragment>)}
+          <Col md={4} mdOffset={hasQuota ? 0 : 4}>
             <Card matchHeight>
               <CardBody>
                 <CardTitle>Self-Installed Cluster</CardTitle>
@@ -93,7 +95,7 @@ function ClusterListEmptyState(props) {
 ClusterListEmptyState.propTypes = {
   showCreationForm: PropTypes.func.isRequired,
   showOCPCreationForm: PropTypes.func.isRequired,
+  hasQuota: PropTypes.bool,
 };
-
 
 export default ClusterListEmptyState;
