@@ -111,7 +111,13 @@ echo "${PUSH_HOSTKEY}" > hostkey
 
 # Set the environment variable that tells git what SSH command to use, as we
 # need to add options to indicate the `known_hosts` file that twe want to use:
-export GIT_SSH_COMMAND="ssh -i ${PWD}/key -o UserKnownHostsFile=${PWD}/hostkey"
+export GIT_SSH_COMMAND="\
+ssh \
+-o User=git \
+-o IdentityFile=${PWD}/key \
+-o IdentitiesOnly=true \
+-o UserKnownHostsFile=${PWD}/hostkey \
+"
 
 # Build the application for deployment to the Insights platform:
 rm --recursive --force build
