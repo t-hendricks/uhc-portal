@@ -109,15 +109,22 @@ chmod u=r,g=,o= key
 rm --force hostkey
 echo "${PUSH_HOSTKEY}" > hostkey
 
-# Set the environment variable that tells git what SSH command to use, as we
-# need to add options to indicate the `known_hosts` file that twe want to use:
-export GIT_SSH_COMMAND="\
-ssh \
+# The version of `git` in the Jenkins slave is 1.18, and it doesn't support the
+# `GIT_SSH_COMMAND` environment variable, it only suppors `GIT_SSH`. So we need
+# to generate a script that wraps the original `ssh` command and adds the
+# required options, and then put it in the `GIT_SSH` environment variable.
+rm --force ssh
+cat > ssh <<.
+#!/bin/bash
+exec /usr/bin/ssh \
 -o User=git \
 -o IdentityFile=${PWD}/key \
 -o IdentitiesOnly=true \
 -o UserKnownHostsFile=${PWD}/hostkey \
-"
+\$@
+.
+chmod u=rx,g=,o= ssh
+export GIT_SSH="${PWD}/ssh"
 
 # Build the application for deployment to the Insights platform:
 rm --recursive --force build
