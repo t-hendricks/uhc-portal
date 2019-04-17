@@ -1,12 +1,9 @@
-import axios from 'axios';
-import serviceConfig from '../serviceConfig';
+import apiRequest from '../apiRequest';
 
-const createAuthorizationToken = () => axios(
-  serviceConfig({
-    method: 'post',
-    url: '/api/accounts_mgmt/v1/access_token',
-  }),
-);
+const createAuthorizationToken = () => apiRequest({
+  method: 'post',
+  url: '/api/accounts_mgmt/v1/access_token',
+});
 
 
 export default createAuthorizationToken;

@@ -1,21 +1,16 @@
-import axios from 'axios';
-import serviceConfig from './serviceConfig';
+import apiRequest from './apiRequest';
 
-const selfResourceReview = params => axios(
-  serviceConfig({
-    method: 'post',
-    url: '/api/authorizations/v1/self_resource_review',
-    data: params,
-  }),
-);
+const selfResourceReview = params => apiRequest({
+  method: 'post',
+  url: '/api/authorizations/v1/self_resource_review',
+  data: params,
+});
 
-const selfAccessReview = params => axios(
-  serviceConfig({
-    method: 'post',
-    url: '/api/authorizations/v1/self_access_review',
-    data: params,
-  }),
-);
+const selfAccessReview = params => apiRequest({
+  method: 'post',
+  url: '/api/authorizations/v1/self_access_review',
+  data: params,
+});
 
 
 const authorizationsService = {

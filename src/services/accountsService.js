@@ -1,19 +1,14 @@
-import axios from 'axios';
-import serviceConfig from './serviceConfig';
+import apiRequest from './apiRequest';
 
-const getCurrentAccount = () => axios(
-  serviceConfig({
-    method: 'get',
-    url: '/api/accounts_mgmt/v1/current_account',
-  }),
-);
+const getCurrentAccount = () => apiRequest({
+  method: 'get',
+  url: '/api/accounts_mgmt/v1/current_account',
+});
 
-const getOrganization = organizationID => axios(
-  serviceConfig({
-    method: 'get',
-    url: `/api/accounts_mgmt/v1/organizations/${organizationID}`,
-  }),
-);
+const getOrganization = organizationID => apiRequest({
+  method: 'get',
+  url: `/api/accounts_mgmt/v1/organizations/${organizationID}`,
+});
 
 
 const accountsService = {
