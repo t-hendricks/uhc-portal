@@ -126,10 +126,6 @@ exec /usr/bin/ssh \
 chmod u=rx,g=,o= ssh
 export GIT_SSH="${PWD}/ssh"
 
-# Build the application for deployment to the Insights platform:
-rm --recursive --force build
-yarn build-embedded
-
 # Clone the target Insights deployment repository:
 rm --recursive --force target
 mkdir target
@@ -140,24 +136,23 @@ git clone \
   "${PUSH_URL}" \
   target
 
-# Push the build to all the target branches:
-PUSH_BRANCHES="
-ci-beta
-prod-beta
-qa-beta
-"
-for PUSH_BRANCH in ${PUSH_BRANCHES}; do
+# This function pushes the contents of the `build` directory to a specific
+# branch of the Insights repository.
+function push_build {
+  # Get the parameters:
+  local branch="$1"
+  local gateway="$2"
+
   # Fetch the target branch:
   pushd target
     git fetch \
       --depth 1 \
-      origin \
-      "${PUSH_BRANCH}"
+      origin "${branch}"
     git branch \
-      "${PUSH_BRANCH}" \
+      "${branch}" \
       FETCH_HEAD
     git checkout \
-      "${PUSH_BRANCH}"
+      "${branch}"
   popd
 
   # Replace all the files in the target branch with the new build:
@@ -169,17 +164,6 @@ for PUSH_BRANCH in ${PUSH_BRANCHES}; do
     build/clusters/ \
     target/
 
-  # We want to use the production API gateway for production deployments, and
-  # the staging API gateway for everything else:
-  case "${PUSH_BRANCH}" in
-  prod-*)
-    API_GATEWAY="https://api.openshift.com"
-    ;;
-  *)
-    API_GATEWAY="https://api.stage.openshift.com"
-    ;;
-  esac
-
   # The `config.json` file is generated dynamicall by the portal server, but that
   # isn't possible in the _cloud.redhat.com_ environment, so we need to generate
   # it here. Note that this configuration doesn't contain the Keycloak parameters,
@@ -187,7 +171,7 @@ for PUSH_BRANCH in ${PUSH_BRANCHES}; do
   mkdir --parents target/config
   cat >> target/config/config.json <<.
 {
-  "apiGateway": "${API_GATEWAY}",
+  "apiGateway": "${gateway}",
   "installerURL": "https://github.com/openshift/installer/releases",
   "documentationURL": "https://github.com/openshift/installer/blob/master/README.md#quick-start",
   "terraformInstallURL": "https://www.terraform.io/downloads.html",
@@ -212,6 +196,22 @@ ${SUBJECT}
       --author "UHC Team <***REMOVED***>"
     git push \
       origin \
-      "${PUSH_BRANCH}:${PUSH_BRANCH}"
+      "${branch}:${branch}"
   popd
-done
+}
+
+# Build the application in development mode for deployment to the beta branches
+# of the Insights platform:
+rm --recursive --force build
+yarn build-embedded
+push_build "ci-beta" "https://api.stage.openshift.com"
+push_build "qa-beta" "https://api.stage.openshift.com"
+push_build "prod-beta" "https://api.openshift.com"
+
+# Build the application in production mode for deployment to the stable branches
+# of the Insights platform:
+rm --recursive --force build
+yarn build-embedded --mode=production
+push_build "ci-stable" "https://api.stage.openshift.com"
+push_build "qa-stable" "https://api.stage.openshift.com"
+push_build "prod-stable" "https://api.openshift.com"
