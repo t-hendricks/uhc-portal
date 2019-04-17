@@ -109,6 +109,9 @@ function ClusterListTable(props) {
         <Grid.Col {...statColSizes}>
           <NumberWithUnit valueWithUnit={cluster.memory.total} isBytes />
         </Grid.Col>
+        <Grid.Col {...statColSizes}>
+          {result(cluster, 'subscriptionInfo.creator.name', 'N/A')}
+        </Grid.Col>
         <Grid.Col {...locationColSizes}>
           <ClusterLocationLabel
             regionID={result(cluster, 'region.id', 'N/A')}
@@ -172,6 +175,14 @@ function ClusterListTable(props) {
             {...statColSizes}
           >
             Memory
+          </TableGrid.ColumnHeader>
+          <TableGrid.ColumnHeader
+            id="owner"
+            isSorted={false}
+            isAscending
+            {...statColSizes}
+          >
+            Owner
           </TableGrid.ColumnHeader>
           <TableGrid.ColumnHeader
             id="location"

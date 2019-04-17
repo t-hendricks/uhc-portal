@@ -51,6 +51,10 @@ function DetailsLeft({ cluster, cloudProviders }) {
         <dd>
           <Timestamp value={result(cluster, 'creation_timestamp', 'N/A')} />
         </dd>
+        <dt>Owner</dt>
+        <dd>
+          {result(cluster, 'subscriptionInfo.creator.name', 'N/A')}
+        </dd>
       </dl>
     </React.Fragment>
   );
