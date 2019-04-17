@@ -1,16 +1,18 @@
+import axios from 'axios';
+
 import config from '../config';
 
-const authHeader = () => ({
-  Authorization: `Bearer ${sessionStorage.getItem('kctoken')}`,
+const authHeader = token => ({
+  Authorization: `Bearer ${token}`,
 });
 
-const serviceConfig = (passedConfig = {}, auth = true) => {
+const serviceConfig = (passedConfig = {}, token) => {
   const BASE_URL = config.configData.apiGateway ? config.configData.apiGateway : '';
   return Object.assign(
     {},
     passedConfig,
     {
-      headers: auth ? authHeader() : {},
+      headers: token ? authHeader(token) : {},
 
       // NOTE: If running using webpack-server development server, and setting env
       // variable `GATEWAY_DOMAIN` to a development api server, we can test that
@@ -22,4 +24,11 @@ const serviceConfig = (passedConfig = {}, auth = true) => {
   );
 };
 
-export default serviceConfig;
+const apiRequest = (params) => {
+  if (APP_EMBEDDED) {
+    return insights.chrome.auth.getToken().then(token => axios(serviceConfig(params, token)));
+  }
+  return axios(serviceConfig(params, sessionStorage.getItem('kctoken')));
+};
+
+export default apiRequest;

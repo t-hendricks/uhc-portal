@@ -140,11 +140,8 @@ if (APP_EMBEDDED) {
       logout: () => insights.chrome.auth.logout(),
       authenticated: true,
     };
-    insights.chrome.auth.getToken().then((token) => {
-      sessionStorage.setItem('kctoken', token);
-      store.dispatch(getCloudProviders());
-      render();
-    });
+    store.dispatch(getCloudProviders());
+    render();
   });
 } else {
   config.fetchConfig().then(() => {
