@@ -128,7 +128,7 @@ export GIT_SSH="${PWD}/ssh"
 
 # Build the application for deployment to the Insights platform:
 rm --recursive --force build
-yarn build-embedded --mode=production
+yarn build-embedded
 
 # Clone the target Insights deployment repository:
 rm --recursive --force target
