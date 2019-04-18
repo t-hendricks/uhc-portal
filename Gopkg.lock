@@ -42,6 +42,17 @@
   version = "v1.0"
 
 [[projects]]
+  digest = "1:bf36b3cd1c92da7363c1f3fca9d1c0fd6eb032c0ae5b32522ec8900000a94417"
+  name = "github.com/openshift-online/uhc-sdk-go"
+  packages = [
+    "pkg/client",
+    "pkg/client/internal",
+  ]
+  pruneopts = "NUT"
+  revision = "bcd7eb34e17a374a442d43667f8a3747d92c0a05"
+  version = "v0.1.5"
+
+[[projects]]
   digest = "1:343d44e06621142ab09ae0c76c1799104cdfddd3ffb445d78b1adf8dc3ffaf3d"
   name = "github.com/spf13/cobra"
   packages = ["."]
@@ -56,17 +67,6 @@
   pruneopts = "NUT"
   revision = "298182f68c66c05229eb03ac171abe6e309ee79a"
   version = "v1.0.3"
-
-[[projects]]
-  digest = "1:89c75de12de4fa2b45aeb62adb1c87f66a0459f690c85726389b7409dbf056b2"
-  name = "gitlab.cee.redhat.com/service/uhc-sdk"
-  packages = [
-    "pkg/client",
-    "pkg/client/internal",
-  ]
-  pruneopts = "NUT"
-  revision = "9505fd142dc64dd03c77e39a01c6eeb596061f2a"
-  version = "v0.1.4"
 
 [[projects]]
   digest = "1:18108594151654e9e696b27b181b953f9a90b16bf14d253dd1b397b025a1487f"
@@ -84,9 +84,9 @@
     "github.com/ghodss/yaml",
     "github.com/golang/glog",
     "github.com/gorilla/handlers",
+    "github.com/openshift-online/uhc-sdk-go/pkg/client",
     "github.com/spf13/cobra",
     "github.com/spf13/pflag",
-    "gitlab.cee.redhat.com/service/uhc-sdk/pkg/client",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
