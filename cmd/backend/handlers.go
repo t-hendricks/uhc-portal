@@ -29,8 +29,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/golang/glog"
-
-	"gitlab.cee.redhat.com/service/uhc-sdk/pkg/client"
+	"github.com/openshift-online/uhc-sdk-go/pkg/client"
 )
 
 // AuthHandlerBuilder contains the configuration and logic needed to create an authentication

@@ -26,10 +26,9 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/gorilla/handlers"
+	"github.com/openshift-online/uhc-sdk-go/pkg/client"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
-
-	"gitlab.cee.redhat.com/service/uhc-sdk/pkg/client"
 )
 
 // #nosec G101
