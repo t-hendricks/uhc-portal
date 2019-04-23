@@ -104,8 +104,8 @@ function RouterShardsHint() {
 
 const constants = {
   spinnerMessage: 'Do not refresh this page. This request may take a moment...',
-  step1Header: 'Step 1: Cloud Provider Credentials',
-  step2Header: 'Step 2: Configuration',
+  credentialsHeader: 'Cloud Provider Credentials',
+  configurationHeader: 'Configuration',
   routerShardsHeader: 'Router Shards',
 };
 

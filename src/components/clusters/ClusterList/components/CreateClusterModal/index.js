@@ -44,10 +44,6 @@ const mapDispatchToProps = dispatch => ({
       dns: {
         base_domain: formData.dns_base_domain,
       },
-      aws: {
-        access_key_id: formData.aws_access_key_id,
-        secret_access_key: formData.aws_secret_access_key,
-      },
       multi_az: formData.multi_az,
       network: {
         machine_cidr: formData.network_machine_cidr,
@@ -59,6 +55,15 @@ const mapDispatchToProps = dispatch => ({
       },
       managed: ownProps.isManaged,
     };
+
+    // Fill aws credential only for self-managed clusters.
+    if (!ownProps.isManaged) {
+      clusterRequest.aws = {
+        access_key_id: formData.aws_access_key_id,
+        secret_access_key: formData.aws_secret_access_key,
+      };
+    }
+
     dispatch(createCluster(clusterRequest));
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
