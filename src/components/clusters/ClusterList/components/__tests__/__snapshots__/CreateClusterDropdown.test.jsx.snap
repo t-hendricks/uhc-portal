@@ -22,7 +22,7 @@ exports[`<CreateClusterDropdown /> renders correctly 1`] = `
       eventKey="1"
       header={false}
     >
-      Self-Managed (Manual Install) Cluster
+      Self-Installed Cluster
     </MenuItem>
   </LinkContainer>
   <MenuItem
@@ -33,7 +33,7 @@ exports[`<CreateClusterDropdown /> renders correctly 1`] = `
     header={false}
     onClick={[MockFunction]}
   >
-    Self-Managed (Auto-Install) Cluster
+    Self-Managed Cluster
   </MenuItem>
   <MenuItem
     bsClass="dropdown"

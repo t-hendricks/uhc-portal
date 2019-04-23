@@ -18,11 +18,11 @@ function CreateClusterDropdown(props) {
     >
       <LinkContainer to="/install">
         <MenuItem eventKey="1">
-          Self-Managed (Manual Install) Cluster
+          Self-Installed Cluster
         </MenuItem>
       </LinkContainer>
       <MenuItem eventKey="2" onClick={showOCPCreationForm}>
-        Self-Managed (Auto-Install) Cluster
+        Self-Managed Cluster
       </MenuItem>
       <MenuItem eventKey="3" onClick={showCreationForm}>
         Red Hat-Managed Cluster

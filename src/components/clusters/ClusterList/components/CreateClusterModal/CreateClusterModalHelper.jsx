@@ -8,11 +8,18 @@ function AWSCredentialsHint() {
       body={(
         <React.Fragment>
           <p>
-          Some details to explain what an AWS access key is and how to create
-          an access key onthe AWS Platform.
+          An AWS access key and secret are a set of credentials for an AWS account.
+          These are required to connect to AWS for provisioning the cluster.
           </p>
           <p>
-          A link to documentation showing how to configure the AWS account.
+          These credentials must have access to run instances, create VPCs, security groups,
+          and IAM roles. See the
+            {' '}
+            <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html#cli-environment">
+              AWS documentation
+            </a>
+            {' '}
+          for more information about obtaining and configuring these credentials.
           </p>
         </React.Fragment>
       )}
@@ -31,8 +38,12 @@ function ConfigurationHint() {
             contain dots, underscores or special characters.
           </p>
           <p>
-            Some information on how to configure the base domain in AWS,
-            with link to documentation.
+            A base domain is an
+            <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html"> AWS Route53 </a>
+            zone for the cluster.
+            A zone with this name must exist on your AWS account,
+            and entries created in it are expected to be resolvable
+            from the nodes.
           </p>
         </React.Fragment>
       )}

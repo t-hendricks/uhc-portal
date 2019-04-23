@@ -55,7 +55,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
               Red Hat-Managed Cluster
             </CardTitle>
             <p>
-              Create a Red Hat-managed cluster (OSD), to provision the cluster on Amazon Web Services. More information on this flow and why users would take this flow.
+              Create a Red Hat-managed cluster (OSD), to provision the cluster on Amazon Web Services.
             </p>
             <EmptyStateAction
               className=""
@@ -95,10 +95,10 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
             <CardTitle
               className=""
             >
-              Self-Managed (Auto-Install) Cluster
+              Self-Managed Cluster
             </CardTitle>
             <p>
-              Create a self-managed cluster (OCP) to provision the cluster on Amazon Web Services and manage it yourself. More information and better text should go here.
+              Create a self-managed cluster (OCP) to provision the cluster on Amazon Web Services and manage it yourself.
             </p>
             <EmptyStateAction
               className=""
@@ -113,7 +113,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
                 disabled={false}
                 onClick={[MockFunction]}
               >
-                Create Self-Managed (Auto) Cluster
+                Create Self-Managed Cluster
               </Button>
             </EmptyStateAction>
           </CardBody>
@@ -138,10 +138,10 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
             <CardTitle
               className=""
             >
-              Self-Managed (Manual Install) Cluster
+              Self-Installed Cluster
             </CardTitle>
             <p>
-              Create a self-managed cluster (OCP) to install OpenShift and manage it yourself. More information and better text should go here.
+              Create a self-installed cluster (OCP) to install OpenShift and manage it yourself.
             </p>
             <EmptyStateAction
               className=""
@@ -159,7 +159,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
                   bsStyle="primary"
                   disabled={false}
                 >
-                  Create Self-Managed (Manual) Cluster
+                  Create Self-Installed Cluster
                 </Button>
               </Link>
             </EmptyStateAction>
