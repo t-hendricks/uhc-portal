@@ -18,6 +18,7 @@ import result from 'lodash/result';
 import { clustersConstants } from '../constants';
 import { clusterService, authorizationsService, accountsService } from '../../services';
 import helpers from '../../common/helpers';
+import { normalizeCluster } from '../../common/normalize';
 
 const invalidateClusters = () => (dispatch) => {
   dispatch({
@@ -84,6 +85,7 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
   const promises = [
     clusterService.getClusters(clusterRequestParams).then((response) => {
       clusters = response;
+      clusters.data.items = clusters.data.items.map(normalizeCluster);
     }),
     authorizationsService.selfResourceReview(
       { action: 'delete', resource_type: 'Cluster' },
@@ -124,7 +126,6 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
   });
 };
 
-
 const fetchClusters = params => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTERS,
   payload: fetchClustersAndPermissions(params),
@@ -135,7 +136,10 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
   let canEdit;
   let canDelete;
   const promises = [
-    clusterService.getClusterDetails(clusterID).then((response) => { cluster = response; }),
+    clusterService.getClusterDetails(clusterID).then((response) => {
+      cluster = response;
+      cluster.data = normalizeCluster(cluster.data);
+    }),
     authorizationsService.selfAccessReview(
       { action: 'delete', resource_type: 'Cluster', cluster_id: clusterID },
     ).then((response) => { canDelete = response.data.allowed; }),
