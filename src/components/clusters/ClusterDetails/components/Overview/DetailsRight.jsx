@@ -4,6 +4,7 @@ import result from 'lodash/result';
 
 import ClusterNetwork from './ClusterNetwork';
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
+import { getClusterStateAndDescription } from '../../../common/clusterStates';
 import { humanizeValueWithUnit } from '../../../../../common/unitParser';
 
 function DetailsRight({ cluster, routerShards }) {
@@ -11,16 +12,18 @@ function DetailsRight({ cluster, routerShards }) {
     cluster.memory.total.value, cluster.memory.total.unit,
   );
 
+  const clusterState = getClusterStateAndDescription(cluster);
+
   return (
     <React.Fragment>
       <dl className="cluster-details-item left">
         <dt>
           Status
         </dt>
-        <dd style={{ textTransform: 'capitalize' }}>
-          <ClusterStateIcon clusterState={cluster.state} />
+        <dd style={clusterState.style}>
+          <ClusterStateIcon clusterState={clusterState.state} />
           {' '}
-          {cluster.state}
+          {clusterState.description}
         </dd>
         <dt>
           Total CPU

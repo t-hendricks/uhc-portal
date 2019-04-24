@@ -55,3 +55,11 @@ exports[`<ClusterStateIcon /> renders correctly for unknown status 1`] = `
   type="pf"
 />
 `;
+
+exports[`<ClusterStateIcon /> renders correctly for warning status 1`] = `
+<Icon
+  className="fa-lg clusterstate"
+  name="warning-triangle-o"
+  type="pf"
+/>
+`;

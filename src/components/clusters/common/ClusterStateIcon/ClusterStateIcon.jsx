@@ -29,6 +29,9 @@ function ClusterStateIcon(props) {
     case clusterStates.PATCHING:
       icon = { type: 'fa', name: 'hourglass-half' };
       break;
+    case clusterStates.WARNING:
+      icon.name = 'warning-triangle-o';
+      break;
     default:
       icon.name = 'unknown';
   }
