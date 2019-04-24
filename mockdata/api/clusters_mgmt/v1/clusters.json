@@ -1,9 +1,88 @@
 {
   "kind": "ClusterList",
   "page": 1,
-  "size": 2,
-  "total": 2,
+  "size": 3,
+  "total": 3,
   "items": [
+    {
+      "kind": "Cluster",
+      "id": "fake-installing-cluster",
+      "href": "/api/clusters_mgmt/v1/clusters/fake-installing-cluster",
+      "name": "fake-installing-cluster",
+      "external_id": "whatever-external-id",
+      "display_name": "fake-installing-cluster",
+      "creation_timestamp": "2019-02-11T09:28:16.000143Z",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "region": {
+        "kind": "CloudRegionLink",
+        "id": "us-east-1",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-2"
+      },
+      "console": {
+        "url": ""
+      },
+      "api": {
+        "url": ""
+      },
+      "nodes": {
+        "total": 6,
+        "master": 3,
+        "compute": 3
+      },
+      "memory": {
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": "B"
+        },
+        "total": {
+          "value": 0,
+          "unit": "B"
+        }
+      },
+      "cpu": {
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": ""
+        },
+        "total": {
+          "value": 0,
+          "unit": ""
+        }
+      },
+      "storage": {
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": "B"
+        },
+        "total": {
+          "value": 0,
+          "unit": "B"
+        }
+      },
+      "state": "installing",
+      "flavour": {
+        "kind": "FlavourLink",
+        "id": "4",
+        "href": "/api/clusters_mgmt/v1/flavours/4"
+      },
+      "dns": {
+        "base_domain": "sdev.devshift.net"
+      },
+      "network": {
+        "machine_cidr": "10.0.0.0/16",
+        "service_cidr": "172.30.0.0/16",
+        "pod_cidr": "10.128.0.0/14"
+      },
+      "multi_az": false,
+      "managed": true
+    },
     {
       "kind": "Cluster",
       "id": "1H1l4oRVxoh6qSTf4fSmvtaGaWy",
