@@ -11,6 +11,8 @@ import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon'
 import NumberWithUnit from './NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
 import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
+import { getClusterStateAndDescription } from '../../../common/clusterStates';
+
 
 function ClusterListTable(props) {
   const { viewOptions, setSorting } = props;
@@ -56,9 +58,11 @@ function ClusterListTable(props) {
       </OverlayTrigger>
     );
 
+    const clusterState = getClusterStateAndDescription(cluster);
+
     const clusterStatus = (
       <OverlayTrigger
-        overlay={<Tooltip style={{ textTransform: 'capitalize' }} id={`${cluster.id}-status-tooltip`}>{cluster.state}</Tooltip>}
+        overlay={<Tooltip style={clusterState.style} id={`${cluster.id}-status-tooltip`}>{clusterState.description}</Tooltip>}
         placement="top"
         trigger={['hover', 'focus']}
         rootClose={false}
@@ -66,7 +70,7 @@ function ClusterListTable(props) {
         {/* The span here is needed to work around a bug that caused the tooltip
         to not render after we moved the icon to its own component */}
         <span>
-          <ClusterStateIcon clusterState={typeof cluster.state !== 'undefined' ? cluster.state : ''} />
+          <ClusterStateIcon clusterState={typeof clusterState.state !== 'undefined' ? clusterState.state : ''} />
         </span>
       </OverlayTrigger>
     );

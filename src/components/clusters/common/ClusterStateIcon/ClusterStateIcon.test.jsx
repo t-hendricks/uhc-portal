@@ -38,4 +38,9 @@ describe('<ClusterStateIcon />', () => {
     const wrapper = shallow(<ClusterStateIcon clusterState="uninstalling" />);
     expect(wrapper).toMatchSnapshot();
   });
+
+  it('renders correctly for warning status', () => {
+    const wrapper = shallow(<ClusterStateIcon clusterState="warning" />);
+    expect(wrapper).toMatchSnapshot();
+  });
 });
