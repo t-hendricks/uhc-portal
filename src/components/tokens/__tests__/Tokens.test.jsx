@@ -22,7 +22,7 @@ import Tokens from '../Tokens';
 describe('<Tokens />', () => {
   it('Renders correctly', () => {
     const component = shallow(<Tokens
-      offlineAccessToken="hello offline access token!"
+      token="hello offline access token!"
     />);
     expect(component).toMatchSnapshot();
   });

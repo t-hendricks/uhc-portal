@@ -23,6 +23,8 @@ import { ConnectedRouter } from 'connected-react-router';
 import ClustersList from '../clusters/ClusterList';
 import ClusterDetails from '../clusters/ClusterDetails';
 import InstallCluster from '../clusters/install/InstallCluster';
+import Tokens from '../tokens/Tokens';
+
 
 class Router extends React.Component {
   renderRoutes() {
@@ -36,6 +38,7 @@ class Router extends React.Component {
     if (!authenticated || (userProfile.keycloakProfile.email && userProfile.keycloakProfile.email.endsWith('@redhat.com'))) {
       return (
         <Switch>
+          { APP_EMBEDDED && <Route path="/token" component={Tokens} /> }
           <Route path="/install" component={InstallCluster} />
           <Route path="/details/:id" component={ClusterDetails} />
           <Route path="/" component={ClustersList} />
