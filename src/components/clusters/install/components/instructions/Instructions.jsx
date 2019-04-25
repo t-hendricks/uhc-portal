@@ -159,8 +159,8 @@ class Instructions extends React.Component {
           <Col xs={12} sm={8} md={8} lg={8} className="left-col">
             <h3 className="cluster-install-step">Step 3: Download the Installer</h3>
             <p>
-              Download the latest version of the OpenShift installer for your operating system
-              from the link below.
+              Download the latest version of the tarball that contains OpenShift
+              installer for your operating system from the link below.
             </p>
             <p>
               <a href={config.configData.installerURL} target="_blank">
@@ -177,15 +177,12 @@ class Instructions extends React.Component {
             </p>
 
             <p>
-              Once the download is complete, rename the installer and make it executable.
-              For example:
+              Once the download is complete, extract the installer executable
+              from the tarball. For example:
             </p>
             <pre>
               <span className="noselect">$ </span>
-              mv openshift-install-darwin-amd64 openshift-install
-              {'\n'}
-              <span className="noselect">$ </span>
-              chmod +x openshift-install
+              tar xvf openshift-install-linux-4.1.0-rc.0.tar.gz
             </pre>
           </Col>
           <Col xs={12} sm={4} md={4} lg={4} className="cluster-install-step-callout-col">
