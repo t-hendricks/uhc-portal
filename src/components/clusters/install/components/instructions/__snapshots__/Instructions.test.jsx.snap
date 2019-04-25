@@ -261,7 +261,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
         Step 3: Download the Installer
       </h3>
       <p>
-        Download the latest version of the OpenShift installer for your operating system from the link below.
+        Download the latest version of the tarball that contains OpenShift installer for your operating system from the link below.
       </p>
       <p>
         <a
@@ -285,7 +285,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
         </a>
       </p>
       <p>
-        Once the download is complete, rename the installer and make it executable. For example:
+        Once the download is complete, extract the installer executable from the tarball. For example:
       </p>
       <pre>
         <span
@@ -293,15 +293,7 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
         >
           $ 
         </span>
-        mv openshift-install-darwin-amd64 openshift-install
-        
-
-        <span
-          className="noselect"
-        >
-          $ 
-        </span>
-        chmod +x openshift-install
+        tar xvf openshift-install-linux-4.1.0-rc.0.tar.gz
       </pre>
     </Col>
     <Col
@@ -882,7 +874,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
         Step 3: Download the Installer
       </h3>
       <p>
-        Download the latest version of the OpenShift installer for your operating system from the link below.
+        Download the latest version of the tarball that contains OpenShift installer for your operating system from the link below.
       </p>
       <p>
         <a
@@ -906,7 +898,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
         </a>
       </p>
       <p>
-        Once the download is complete, rename the installer and make it executable. For example:
+        Once the download is complete, extract the installer executable from the tarball. For example:
       </p>
       <pre>
         <span
@@ -914,15 +906,7 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
         >
           $ 
         </span>
-        mv openshift-install-darwin-amd64 openshift-install
-        
-
-        <span
-          className="noselect"
-        >
-          $ 
-        </span>
-        chmod +x openshift-install
+        tar xvf openshift-install-linux-4.1.0-rc.0.tar.gz
       </pre>
     </Col>
     <Col
