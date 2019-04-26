@@ -130,7 +130,7 @@ function initKeycloak() {
 
 if (APP_EMBEDDED) {
   insights.chrome.init();
-  insights.chrome.identifyApp('');
+  insights.chrome.identifyApp('clusters');
   insights.chrome.auth.getUser().then((data) => {
     store.dispatch(userInfoResponse(data.identity.user));
     config.fetchConfig().then(() => {
