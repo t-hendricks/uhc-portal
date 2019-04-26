@@ -6,6 +6,7 @@ import {
 import constants from './CreateClusterModalHelper';
 import ConfigurationForm from './ConfigurationForm';
 import RouterShardsForm from './RouterShardsForm';
+import CredentialsForm from './CredentialsForm';
 
 function ManagedClusterForm(props) {
   const {
@@ -15,7 +16,10 @@ function ManagedClusterForm(props) {
     <Form>
       <Grid>
         <Row>
-          <ConfigurationForm header={constants.configurationHeader} pending={pending} />
+          <CredentialsForm header={`Step 1: ${constants.credentialsHeader}`} pending={pending} />
+        </Row>
+        <Row>
+          <ConfigurationForm header={`Step 2: ${constants.configurationHeader}`} pending={pending} />
         </Row>
         <Row>
           <ExpandCollapse>
