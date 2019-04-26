@@ -21,7 +21,7 @@ function ClusterListEmptyState(props) {
   const createAutoSelfManaged = (
     <EmptyState.Action>
       <Button bsStyle="primary" bsSize="large" onClick={showOCPCreationForm}>
-        Create Self-Managed (Auto) Cluster
+        Create Self-Managed Cluster
       </Button>
     </EmptyState.Action>
   );
@@ -30,7 +30,7 @@ function ClusterListEmptyState(props) {
     <EmptyState.Action>
       <Link to="/install">
         <Button bsStyle="primary" bsSize="large">
-          Create Self-Managed (Manual) Cluster
+          Create Self-Installed Cluster
         </Button>
       </Link>
     </EmptyState.Action>
@@ -56,7 +56,6 @@ function ClusterListEmptyState(props) {
                 <p>
                   Create a Red Hat-managed cluster (OSD),
                   to provision the cluster on Amazon Web Services.
-                  More information on this flow and why users would take this flow.
                 </p>
                 {createManaged}
               </CardBody>
@@ -65,11 +64,10 @@ function ClusterListEmptyState(props) {
           <Col md={4}>
             <Card matchHeight>
               <CardBody>
-                <CardTitle>Self-Managed (Auto-Install) Cluster</CardTitle>
+                <CardTitle>Self-Managed Cluster</CardTitle>
                 <p>
                   Create a self-managed cluster (OCP)
                   to provision the cluster on Amazon Web Services and manage it yourself.
-                  More information and better text should go here.
                 </p>
                 {createAutoSelfManaged}
               </CardBody>
@@ -78,11 +76,10 @@ function ClusterListEmptyState(props) {
           <Col md={4}>
             <Card matchHeight>
               <CardBody>
-                <CardTitle>Self-Managed (Manual Install) Cluster</CardTitle>
+                <CardTitle>Self-Installed Cluster</CardTitle>
                 <p>
-                  Create a self-managed cluster (OCP)
+                  Create a self-installed cluster (OCP)
                   to install OpenShift and manage it yourself.
-                  More information and better text should go here.
                 </p>
                 {createSelfManaged}
               </CardBody>
