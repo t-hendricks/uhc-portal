@@ -36,9 +36,14 @@ const createCluster = params => dispatch => dispatch({
   }),
 });
 
-const clearClusterResponse = () => dispatch => dispatch({
-  type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
-});
+const clearClusterResponse = () => (dispatch) => {
+  dispatch({
+    type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
+  });
+  dispatch({
+    type: clustersConstants.CLEAR_ROUTER_SHARD_RESPONSE,
+  });
+};
 
 const editCluster = (id, cluster) => dispatch => dispatch({
   type: clustersConstants.EDIT_CLUSTER_DISPLAY_NAME,
@@ -117,13 +122,8 @@ const fetchClusterCredentials = clusterID => dispatch => dispatch({
 });
 
 const createClusterRouterShard = (clusterID, data) => dispatch => dispatch({
-  type: clustersConstants.CREATE_CLUSTER_ROUTER_SHARD,
+  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
   payload: clusterService.createClusterRouterShard(clusterID, data),
-});
-
-const fetchClusterRouterShard = (clusterID, routerShardID) => dispatch => dispatch({
-  type: clustersConstants.GET_CLUSTER_ROUTER_SHARD,
-  payload: clusterService.getClusterRouterShard(clusterID, routerShardID),
 });
 
 const editClusterRouterShard = (clusterID, routerShardID, data) => dispatch => dispatch({
@@ -132,7 +132,7 @@ const editClusterRouterShard = (clusterID, routerShardID, data) => dispatch => d
 });
 
 const deleteClusterRouterShard = (clusterID, routerShardID) => dispatch => dispatch({
-  type: clustersConstants.DELETE_CLUSTER_ROUTER_SHARD,
+  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
   payload: clusterService.deleteClusterRouterShard(clusterID, routerShardID),
 });
 
@@ -153,7 +153,6 @@ const clustersActions = {
   fetchClusterDetails,
   fetchClusterCredentials,
   createClusterRouterShard,
-  fetchClusterRouterShard,
   editClusterRouterShard,
   deleteClusterRouterShard,
   fetchClusterRouterShards,
@@ -170,7 +169,6 @@ export {
   fetchClusterDetails,
   fetchClusterCredentials,
   createClusterRouterShard,
-  fetchClusterRouterShard,
   editClusterRouterShard,
   deleteClusterRouterShard,
   fetchClusterRouterShards,

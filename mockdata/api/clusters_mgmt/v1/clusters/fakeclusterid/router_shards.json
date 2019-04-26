@@ -1,0 +1,17 @@
+{
+  "kind": "RouterShardList",
+  "href": "/api/clusters_mgmt/v1/fakeclusterid/router_shards",
+  "id": "fakeclusterid",
+  "page": 0,
+  "size": 1,
+  "total": 1,
+  "items": [
+    {
+      "kind": "RouterShard",
+      "href": "/api/clusters_mgmt/v1/fakeclusterid/router_shards/a1b2",
+      "id": "a1b2",
+      "scheme": "internet-facing",
+      "label": "foo"
+    }
+  ]
+}

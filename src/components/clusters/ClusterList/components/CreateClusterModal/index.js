@@ -53,12 +53,31 @@ const mapDispatchToProps = dispatch => ({
         machine_cidr: formData.network_machine_cidr,
         service_cidr: formData.network_service_cidr,
         pod_cidr: formData.network_pod_cidr,
-        router_shards: {
-          items: formData.network_router_shards,
-        },
       },
       managed: ownProps.isManaged,
     };
+
+    // Add router shards
+    if (formData.network_router_shards) {
+      clusterRequest.network.router_shards = {
+        items: [],
+      };
+      formData.network_router_shards.forEach((routerShard) => {
+        clusterRequest.network.router_shards.items.push({
+          label: routerShard.label,
+          scheme: 'internet-facing',
+        });
+      });
+    }
+
+    // Fill aws credential only for self-managed clusters.
+    if (!ownProps.isManaged) {
+      clusterRequest.aws = {
+        access_key_id: formData.aws_access_key_id,
+        secret_access_key: formData.aws_secret_access_key,
+      };
+    }
+
     dispatch(createCluster(clusterRequest));
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),

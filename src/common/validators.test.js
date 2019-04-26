@@ -36,17 +36,3 @@ test('Field is valid node count', () => {
   expect(validators.nodes('1')).toBe(undefined);
   expect(validators.nodes('aaa')).toBe('\'aaa\' is not a valid number of nodes.');
 });
-
-test('Field is valid router shard', () => {
-  expect(validators.routerShard()).toBe(undefined);
-  expect(validators.routerShard({
-    label: 'foo',
-  })).toBe('Router shard scheme is required when using router shards.');
-  expect(validators.routerShard({
-    scheme: 'bar',
-  })).toBe('Router shard label is required when using router shards.');
-  expect(validators.routerShard({
-    label: 'foo',
-    scheme: 'bar',
-  })).toBe(undefined);
-});

@@ -106,6 +106,9 @@ function RouterShardsHint() {
             can be either Internal or External (internet-facing). Once provisioned, the
             cluster will be accessible from auto-generated URLs matching the configuration.
           </p>
+          <p>
+            <em>Only external routers are supported currently.</em>
+          </p>
         </React.Fragment>
       )}
     />

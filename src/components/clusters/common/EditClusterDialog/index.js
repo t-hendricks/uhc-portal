@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
     isOpen: shouldShowModal(state, 'edit-cluster'),
     hasRouterShards,
     editClusterResponse: state.clusters.editedCluster,
+    editRouterShardResponse: state.clusters.editedRouterShards,
     initialFormValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,
@@ -48,20 +49,23 @@ const mapDispatchToProps = dispatch => ({
     // Update router shards
     formData.network_router_shards.forEach((routerShard, i) => {
       if (routerShard.id) {
-        if (routerShard.label && routerShard.scheme) {
-          // Only edit cluster if data was changed
-          if (routerShard.label !== props.initialFormValues.routerShards[i].label
-              || routerShard.scheme !== props.initialFormValues.routerShards[i].scheme) {
+        // Only update router shard if label was changed
+        if (routerShard.label) {
+          if (routerShard.label !== props.initialFormValues.routerShards[i].label) {
             dispatch(editClusterRouterShard(formData.id, routerShard.id, {
               label: routerShard.label,
-              scheme: routerShard.scheme,
+              scheme: 'internet-facing',
             }));
           }
         } else {
+          // If there was a router shard, but the label was removed, delete it
           dispatch(deleteClusterRouterShard(formData.id, routerShard.id));
         }
       } else {
-        dispatch(createClusterRouterShard(formData.id, routerShard));
+        dispatch(createClusterRouterShard(formData.id, {
+          label: routerShard.label,
+          scheme: 'internet-facing',
+        }));
       }
     });
   },

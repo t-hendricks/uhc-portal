@@ -62,11 +62,6 @@ const createClusterRouterShard = (clusterID, data) => apiRequest({
   data,
 });
 
-const getClusterRouterShard = (clusterID, routerShardID) => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/router_shards/${routerShardID}`,
-});
-
 const editClusterRouterShard = (clusterID, routerShardID, data) => apiRequest({
   method: 'patch',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/router_shards/${routerShardID}`,
@@ -99,7 +94,6 @@ const clusterService = {
   deleteSelfManagedCluster,
   getClusterCredentials,
   createClusterRouterShard,
-  getClusterRouterShard,
   editClusterRouterShard,
   deleteClusterRouterShard,
   getClusterRouterShards,
