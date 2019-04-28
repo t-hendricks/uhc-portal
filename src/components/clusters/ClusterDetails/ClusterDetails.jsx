@@ -32,6 +32,7 @@ import LoadingModal from '../../common/LoadingModal';
 import EditClusterDialog from '../common/EditClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
+import IdentityProvidersModal from './components/IdentityProvidersModal';
 
 import { isValid } from '../../../common/helpers';
 
@@ -44,11 +45,22 @@ class ClusterDetails extends Component {
   componentDidMount() {
     document.title = 'Red Hat OpenShift Cluster Manager';
 
-    const { cloudProviders, getCloudProviders } = this.props;
-
+    const {
+      cloudProviders,
+      getCloudProviders,
+      clusterIdentityProviders,
+      getClusterIdentityProviders,
+      match,
+    } = this.props;
+    const clusterID = match.params.id;
     this.refresh();
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
+    }
+    if (!clusterIdentityProviders.pending
+       && !clusterIdentityProviders.error
+       && !clusterIdentityProviders.fulfilled) {
+      getClusterIdentityProviders(clusterID); // TODO: get IDP only for managed cluster
     }
   }
 
@@ -69,7 +81,11 @@ class ClusterDetails extends Component {
 
   refresh() {
     const {
-      match, fetchDetails, fetchCredentials, fetchRouterShards, getLogs,
+      match,
+      fetchDetails,
+      fetchCredentials,
+      fetchRouterShards,
+      getLogs,
     } = this.props;
     const clusterID = match.params.id;
 
@@ -94,6 +110,7 @@ class ClusterDetails extends Component {
       history,
       match,
       logs,
+      clusterIdentityProviders,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -141,6 +158,7 @@ class ClusterDetails extends Component {
             pending={clusterDetails.pending}
             routerShards={routerShards}
             refreshFunc={this.refresh}
+            clusterIdentityProviders={clusterIdentityProviders}
           />
           <TabContainer id="cluster-details-tabs" defaultActiveKey={1}>
             <React.Fragment>
@@ -179,6 +197,7 @@ class ClusterDetails extends Component {
             }
           }}
           />
+          <IdentityProvidersModal clusterID={cluster.id} />
         </div>
       </div>
     );
@@ -198,7 +217,9 @@ ClusterDetails.propTypes = {
   credentials: PropTypes.object.isRequired,
   routerShards: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
+  getClusterIdentityProviders: PropTypes.func.isRequired,
   logs: PropTypes.object,
+  clusterIdentityProviders: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({
     cluster: PropTypes.object,
     error: PropTypes.bool,

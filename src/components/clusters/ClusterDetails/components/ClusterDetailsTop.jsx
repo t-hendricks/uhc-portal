@@ -4,7 +4,7 @@ import result from 'lodash/result';
 
 import { LinkContainer } from 'react-router-bootstrap';
 import {
-  Button, Row, Col, Grid, DropdownButton, ButtonGroup, Breadcrumb, Spinner,
+  Button, Row, Col, Grid, DropdownButton, ButtonGroup, Breadcrumb, Spinner, HintBlock,
 } from 'patternfly-react';
 
 import clusterStates from '../../common/clusterStates';
@@ -13,91 +13,142 @@ import ClusterCredentialsModal from './ClusterCredentialsModal';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ClusterBadge from '../../common/ClusterBadge/ClusterBadge';
 
+class ClusterDetailsTop extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { showIDPHint: true };
+  }
 
-function ClusterDetailsTop({
-  cluster, credentials, openModal, pending, routerShards, refreshFunc,
-}) {
-  // The trenary for consoleURL is needed because the API does not guarantee fields being present.
-  // We'll have a lot of these all over the place as we grow :(
+  hideIDPHint = () => {
+    this.setState({ showIDPHint: false });
+  }
 
-  const consoleURL = cluster.console ? cluster.console.url : false;
-  const clusterName = cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
+  render() {
+    const {
+      cluster,
+      credentials,
+      openModal,
+      pending,
+      routerShards,
+      refreshFunc,
+      clusterIdentityProviders,
+    } = this.props;
 
-  const launchConsole = consoleURL && (cluster.state !== clusterStates.UNINSTALLING) ? (
-    <a href={consoleURL} target="_blank" rel="noreferrer" className="pull-left">
-      <Button bsStyle="primary">Launch Console</Button>
-    </a>)
-    : (
-      <Button bsStyle="primary" disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
-        Launch Console
-      </Button>
+    const clusterName = cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
+
+    const { showIDPHint } = this.state;
+
+    const loadingIDP = !clusterIdentityProviders.fulfilled;
+
+    const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
+
+    const openIDPModal = () => {
+      openModal('create-identity-provider', { clusterName });
+    };
+
+    const IdentityProvidersHint = () => (
+      <HintBlock
+        id="idpHint"
+        title="Missing Identity Providers"
+        body={(
+          <React.Fragment>
+            <p>
+            Identity Providers determine how users log into the cluster.
+              {' '}
+              <Button className="buttonHref" onClick={openIDPModal}>Add OAuth Configuration</Button>
+              {' '}
+            to allow  others to log in.
+            </p>
+          </React.Fragment>
+    )}
+        onClose={() => this.hideIDPHint()}
+      />
     );
 
-  const actions = (
-    <DropdownButton
-      id="actions"
-      bsStyle="default"
-      title="Actions"
-      pullRight
-      disabled={!cluster.canEdit && !cluster.canDelete}
-    >
-      <ClusterActionsDropdown
-        cluster={cluster}
-        showConsoleButton={false}
-      />
-    </DropdownButton>
-  );
+    const consoleURL = cluster.console ? cluster.console.url : false;
 
-  const hasCredentials = (cluster.state === 'ready'
+    const launchConsole = consoleURL && (cluster.state !== clusterStates.UNINSTALLING) ? (
+      <a href={consoleURL} target="_blank" rel="noreferrer" className="pull-left">
+        <Button bsStyle="primary">Launch Console</Button>
+      </a>)
+      : (
+        <Button bsStyle="primary" disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
+        Launch Console
+        </Button>
+      );
+
+    const actions = (
+      <DropdownButton
+        id="actions"
+        bsStyle="default"
+        title="Actions"
+        pullRight
+        disabled={!cluster.canEdit && !cluster.canDelete}
+      >
+        <ClusterActionsDropdown
+          cluster={cluster}
+          showConsoleButton={false}
+        />
+      </DropdownButton>
+    );
+
+    const hasCredentials = (cluster.state === 'ready'
                                 && result(credentials, 'credentials.admin.password', false)
                                 && result(credentials, 'credentials.id') === cluster.id);
 
-  const credentialsButton = hasCredentials
-    ? (
-      <React.Fragment>
-        <Button bsStyle="default" onClick={() => { openModal('cluster-credentials'); }}>Admin Credentials</Button>
-        <ClusterCredentialsModal credentials={credentials.credentials} />
-      </React.Fragment>
-    )
-    : <Button bsStyle="default" disabled>Admin Credentials</Button>;
+    const credentialsButton = hasCredentials
+      ? (
+        <React.Fragment>
+          <Button bsStyle="default" onClick={() => { openModal('cluster-credentials'); }}>Admin Credentials</Button>
+          <ClusterCredentialsModal credentials={credentials.credentials} />
+        </React.Fragment>
+      )
+      : <Button bsStyle="default" disabled>Admin Credentials</Button>;
 
-  const isRefreshing = pending || credentials.pending || routerShards.pending;
+    const isRefreshing = pending || credentials.pending || routerShards.pending;
 
-  return (
-    <Grid fluid>
-      <Row>
-        <Col sm={8}>
-          <Breadcrumb>
-            <LinkContainer to="/clusters">
-              <Breadcrumb.Item href="#">
+    return (
+      <Grid fluid>
+        <Row>
+          <Col sm={8}>
+            <Breadcrumb>
+              <LinkContainer to="/clusters">
+                <Breadcrumb.Item href="#">
                     Clusters
+                </Breadcrumb.Item>
+              </LinkContainer>
+              <Breadcrumb.Item active>
+                {clusterName}
               </Breadcrumb.Item>
-            </LinkContainer>
-            <Breadcrumb.Item active>
-              {clusterName}
-            </Breadcrumb.Item>
-          </Breadcrumb>
-        </Col>
-      </Row>
-      <hr />
-      <Row>
-        <Col sm={6} className="cl-details-cluster-name">
-          <h1>
-            <ClusterBadge clusterName={clusterName} />
-          </h1>
-          { isRefreshing ? <Spinner loading /> : false }
-        </Col>
-        <Col lg={5} lgOffset={1}>
-          <ButtonGroup id="cl-details-btns">
-            {launchConsole}
-            {credentialsButton}
-            {actions}
-            <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
-          </ButtonGroup>
-        </Col>
-      </Row>
-    </Grid>
-  );
+            </Breadcrumb>
+          </Col>
+        </Row>
+        <hr />
+        <Row>
+          <Col sm={6} className="cl-details-cluster-name">
+            <h1>
+              <ClusterBadge clusterName={clusterName} />
+            </h1>
+            { isRefreshing ? <Spinner loading /> : false }
+          </Col>
+          <Col lg={5} lgOffset={1}>
+            <ButtonGroup id="cl-details-btns">
+              {launchConsole}
+              {credentialsButton}
+              {actions}
+              <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
+            </ButtonGroup>
+          </Col>
+        </Row>
+        {cluster.managed && !hasIdentityProviders && showIDPHint && (
+        <Row>
+          <Col sm={12}>
+            {loadingIDP ? <Spinner loading /> : <IdentityProvidersHint />}
+          </Col>
+        </Row>)}
+      </Grid>
+    );
+  }
 }
 
 ClusterDetailsTop.propTypes = {
@@ -107,6 +158,7 @@ ClusterDetailsTop.propTypes = {
   refreshFunc: PropTypes.func.isRequired,
   pending: PropTypes.bool.isRequired,
   routerShards: PropTypes.object.isRequired,
+  clusterIdentityProviders: PropTypes.object.isRequired,
 };
 
 export default ClusterDetailsTop;

@@ -83,6 +83,17 @@ const getLogs = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/logs/hive`,
 });
 
+const getIdentityProviders = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/identity_providers`,
+});
+
+const createClusterIdentityProvider = (clusterID, params) => apiRequest({
+  method: 'post',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/identity_providers`,
+  data: params,
+});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -98,6 +109,8 @@ const clusterService = {
   deleteClusterRouterShard,
   getClusterRouterShards,
   getLogs,
+  getIdentityProviders,
+  createClusterIdentityProvider,
 };
 
 export default clusterService;

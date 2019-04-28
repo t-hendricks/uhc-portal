@@ -71,6 +71,7 @@ const initialState = {
 
 function clustersReducer(state = initialState, action) {
   switch (action.type) {
+    // GET_CLUSTERS
     case helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS):
       return helpers.setStateProp(
         'clusters',
@@ -127,6 +128,7 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
+    // GET_CLUSTER_DETAILS
     case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
       return helpers.setStateProp(
         'details',
@@ -168,6 +170,7 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
+    // GET_CLUSTER_CREDENTIALS
     case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTER_CREDENTIALS):
       return helpers.setStateProp(
         'credentials',
@@ -262,6 +265,7 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
+    // CREATE_CLUSTER
     case helpers.REJECTED_ACTION(clustersConstants.CREATE_CLUSTER):
       return helpers.setStateProp(
         'createdCluster',
@@ -303,6 +307,7 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
+    // EDIT_CLUSTER_DISPLAY_NAME
     case helpers.REJECTED_ACTION(clustersConstants.EDIT_CLUSTER_DISPLAY_NAME):
       return helpers.setStateProp(
         'editedCluster',
@@ -322,7 +327,6 @@ function clustersReducer(state = initialState, action) {
         'editedCluster',
         {
           pending: true,
-          cluster: null,
         },
         {
           state,

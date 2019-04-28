@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Field, FormSection } from 'redux-form';
 import { Col } from 'patternfly-react';
-import ReduxVerticalFormGroup from '../../../../common/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../../common/validators';
 import constants, { NetworkConfugurationHint, RouterShardsHint } from './CreateClusterModalHelper';
 

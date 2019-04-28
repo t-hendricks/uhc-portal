@@ -8,6 +8,7 @@ const invalidateClusters = jest.fn();
 const refreshFunc = jest.fn();
 const openModal = jest.fn();
 const getLogs = jest.fn();
+const getClusterIdentityProviders = jest.fn();
 
 const clusterDetails = {
   error: false,
@@ -351,6 +352,10 @@ const cloudProviders = {
   },
 };
 
+const clusterIdentityProviders = {
+  clusterIDPList: [],
+};
+
 export {
   match,
   history,
@@ -358,6 +363,7 @@ export {
   fetchCredentials,
   fetchRouterShards,
   getCloudProviders,
+  getClusterIdentityProviders,
   invalidateClusters,
   refreshFunc,
   openModal,
@@ -366,4 +372,5 @@ export {
   cloudProviders,
   routerShards,
   credentials,
+  clusterIdentityProviders,
 };
