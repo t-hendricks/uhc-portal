@@ -9,6 +9,7 @@ import {
 } from '../../../redux/actions/clustersActions';
 import { getLogs } from './components/LogWindow/LogWindowActions';
 import { getClusterIdentityProviders } from './components/IdentityProvidersModal/IdentityProvidersActions';
+import usersActions from './components/Users/UsersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 
@@ -37,6 +38,7 @@ const mapDispatchToProps = {
   openModal: modalActions.openModal,
   getLogs,
   getClusterIdentityProviders,
+  getUsers: usersActions.getUsers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

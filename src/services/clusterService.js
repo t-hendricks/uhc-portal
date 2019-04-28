@@ -89,6 +89,27 @@ const createClusterIdentityProvider = (clusterID, params) => apiRequest({
   data: params,
 });
 
+const getClusterGroupUsers = (clusterID, groupID) => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/groups/${groupID}/users`,
+  params: {
+    size: 10000,
+  },
+});
+
+const addClusterGroupUser = (clusterID, groupID, userID) => apiRequest({
+  method: 'post',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/groups/${groupID}/users`,
+  data: {
+    id: userID,
+  },
+});
+
+const deleteClusterGroupUser = (clusterID, groupID, userID) => apiRequest({
+  method: 'delete',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/groups/${groupID}/users/${userID}`,
+});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -105,6 +126,9 @@ const clusterService = {
   getLogs,
   getIdentityProviders,
   createClusterIdentityProvider,
+  getClusterGroupUsers,
+  addClusterGroupUser,
+  deleteClusterGroupUser,
 };
 
 export default clusterService;

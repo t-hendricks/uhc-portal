@@ -472,3 +472,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .uhc_header .pf-c-page__header-tools .pf-c-dropdown__toggle-text {
   max-width: 50ch; // pf default is 20ch
 }
+
+// cluster details -> users
+.cluster-details-user-tab-contents {
+  margin-top: 20px;
+  .row {
+    padding-bottom: 5px;
+  }
+}

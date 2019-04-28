@@ -23,6 +23,16 @@ getCloudRegions.mockResolvedValue({});
 const getLogs = jest.fn();
 getLogs.mockResolvedValue({});
 
+const getClusterGroupUsers = jest.fn();
+getClusterGroupUsers.mockResolvedValue({});
+
+const addClusterGroupUser = jest.fn();
+addClusterGroupUser.mockResolvedValue({});
+
+const deleteClusterGroupUser = jest.fn();
+deleteClusterGroupUser.mockResolvedValue({});
+
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -32,6 +42,9 @@ const clusterService = {
   getCloudRegions,
   deleteCluster,
   getLogs,
+  getClusterGroupUsers,
+  addClusterGroupUser,
+  deleteClusterGroupUser,
 };
 
 export default clusterService;

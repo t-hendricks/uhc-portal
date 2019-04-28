@@ -8,6 +8,7 @@ const invalidateClusters = jest.fn();
 const refreshFunc = jest.fn();
 const openModal = jest.fn();
 const getLogs = jest.fn();
+const getUsers = jest.fn();
 const getClusterIdentityProviders = jest.fn();
 
 const clusterDetails = {
@@ -368,6 +369,7 @@ export {
   refreshFunc,
   openModal,
   getLogs,
+  getUsers,
   clusterDetails,
   cloudProviders,
   routerShards,
