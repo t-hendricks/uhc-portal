@@ -56,6 +56,23 @@ const getClusterCredentials = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/credentials`,
 });
 
+const createClusterRouterShard = (clusterID, data) => apiRequest({
+  method: 'post',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/router_shards`,
+  data,
+});
+
+const editClusterRouterShard = (clusterID, routerShardID, data) => apiRequest({
+  method: 'patch',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/router_shards/${routerShardID}`,
+  data,
+});
+
+const deleteClusterRouterShard = (clusterID, routerShardID) => apiRequest({
+  method: 'delete',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/router_shards/${routerShardID}`,
+});
+
 const getClusterRouterShards = clusterID => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/router_shards`,
@@ -76,6 +93,9 @@ const clusterService = {
   deleteCluster,
   deleteSelfManagedCluster,
   getClusterCredentials,
+  createClusterRouterShard,
+  editClusterRouterShard,
+  deleteClusterRouterShard,
   getClusterRouterShards,
   getLogs,
 };

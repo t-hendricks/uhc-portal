@@ -83,6 +83,7 @@ class ClusterDetails extends Component {
       credentials,
       routerShards,
       fetchDetails,
+      fetchRouterShards,
       invalidateClusters,
       openModal,
       history,
@@ -122,6 +123,7 @@ class ClusterDetails extends Component {
     const onDialogClose = () => {
       invalidateClusters();
       fetchDetails(cluster.id);
+      fetchRouterShards(cluster.id);
     };
 
     return (

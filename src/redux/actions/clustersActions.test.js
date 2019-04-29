@@ -17,6 +17,9 @@ describe('clustersActions', () => {
       expect(mockDispatch).toBeCalledWith({
         type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
       });
+      expect(mockDispatch).toBeCalledWith({
+        type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTER_ROUTER_SHARDS),
+      });
     });
   });
 
@@ -42,6 +45,9 @@ describe('clustersActions', () => {
       clustersActions.clearClusterResponse()(mockDispatch);
       expect(mockDispatch).toBeCalledWith({
         type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
+      });
+      expect(mockDispatch).toBeCalledWith({
+        type: clustersConstants.CLEAR_ROUTER_SHARD_RESPONSE,
       });
     });
   });

@@ -54,28 +54,10 @@ const nodes = (value) => {
   return undefined;
 };
 
-// Function to determine whether a router shard entry is correctly filled
-const routerShard = (value) => {
-  if (!value) {
-    return undefined;
-  }
-  if (value.label && !value.scheme) {
-    return 'Router shard scheme is required when using router shards.';
-  }
-  if (value.scheme && !value.label) {
-    return 'Router shard label is required when using router shards.';
-  }
-  if (value && !value.label && !value.scheme) {
-    return 'Router shard needs both a label and a scheme.';
-  }
-  return undefined;
-};
-
 const validators = {
   required,
   checkClusterName,
   checkBaseDNSDomain,
-  routerShard,
   cidr,
   nodes,
 };

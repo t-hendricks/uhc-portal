@@ -17,9 +17,14 @@ import { clustersConstants } from '../constants';
 import { clusterService, authorizationsService } from '../../services';
 import helpers from '../../common/helpers';
 
-const invalidateClusters = () => dispatch => dispatch({
-  type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
-});
+const invalidateClusters = () => (dispatch) => {
+  dispatch({
+    type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
+  });
+  dispatch({
+    type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTER_ROUTER_SHARDS),
+  });
+};
 
 const createCluster = params => dispatch => dispatch({
   type: clustersConstants.CREATE_CLUSTER,
@@ -31,9 +36,14 @@ const createCluster = params => dispatch => dispatch({
   }),
 });
 
-const clearClusterResponse = () => dispatch => dispatch({
-  type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
-});
+const clearClusterResponse = () => (dispatch) => {
+  dispatch({
+    type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
+  });
+  dispatch({
+    type: clustersConstants.CLEAR_ROUTER_SHARD_RESPONSE,
+  });
+};
 
 const editCluster = (id, cluster) => dispatch => dispatch({
   type: clustersConstants.EDIT_CLUSTER_DISPLAY_NAME,
@@ -111,6 +121,21 @@ const fetchClusterCredentials = clusterID => dispatch => dispatch({
   payload: clusterService.getClusterCredentials(clusterID),
 });
 
+const createClusterRouterShard = (clusterID, data) => dispatch => dispatch({
+  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
+  payload: clusterService.createClusterRouterShard(clusterID, data),
+});
+
+const editClusterRouterShard = (clusterID, routerShardID, data) => dispatch => dispatch({
+  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
+  payload: clusterService.editClusterRouterShard(clusterID, routerShardID, data),
+});
+
+const deleteClusterRouterShard = (clusterID, routerShardID) => dispatch => dispatch({
+  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
+  payload: clusterService.deleteClusterRouterShard(clusterID, routerShardID),
+});
+
 const fetchClusterRouterShards = clusterID => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTER_ROUTER_SHARDS,
   payload: clusterService.getClusterRouterShards(clusterID),
@@ -127,6 +152,9 @@ const clustersActions = {
   fetchClusters,
   fetchClusterDetails,
   fetchClusterCredentials,
+  createClusterRouterShard,
+  editClusterRouterShard,
+  deleteClusterRouterShard,
   fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,
@@ -140,6 +168,9 @@ export {
   fetchClusters,
   fetchClusterDetails,
   fetchClusterCredentials,
+  createClusterRouterShard,
+  editClusterRouterShard,
+  deleteClusterRouterShard,
   fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,
