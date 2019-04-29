@@ -41,9 +41,6 @@ const mapDispatchToProps = dispatch => ({
       nodes: {
         compute: parseInt(formData.nodes_compute, 10),
       },
-      dns: {
-        base_domain: formData.dns_base_domain,
-      },
       aws: {
         access_key_id: formData.aws_access_key_id,
         secret_access_key: formData.aws_secret_access_key,
@@ -76,6 +73,7 @@ const mapDispatchToProps = dispatch => ({
         access_key_id: formData.aws_access_key_id,
         secret_access_key: formData.aws_secret_access_key,
       };
+      clusterRequest.dns = { base_domain: formData.dns_base_domain };
     }
 
     dispatch(createCluster(clusterRequest));

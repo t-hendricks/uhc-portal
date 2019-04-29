@@ -19,7 +19,7 @@ function ManagedClusterForm(props) {
           <CredentialsForm header={`Step 1: ${constants.credentialsHeader}`} pending={pending} />
         </Row>
         <Row>
-          <ConfigurationForm header={`Step 2: ${constants.configurationHeader}`} pending={pending} />
+          <ConfigurationForm header={`Step 2: ${constants.configurationHeader}`} pending={pending} showDNSBaseDomain={false} />
         </Row>
         <Row>
           <ExpandCollapse>

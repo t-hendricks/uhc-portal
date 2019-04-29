@@ -10,7 +10,7 @@ import { ConfigurationHint, RegionsHint } from './CreateClusterModalHelper';
 
 function ConfigurationForm(props) {
   const {
-    header, pending,
+    header, pending, showDNSBaseDomain,
   } = props;
   return (
     <React.Fragment>
@@ -25,6 +25,7 @@ function ConfigurationForm(props) {
           disabled={pending}
         />
 
+        {showDNSBaseDomain && (
         <Field
           component={ReduxVerticalFormGroup}
           name="dns_base_domain"
@@ -34,6 +35,7 @@ function ConfigurationForm(props) {
           disabled={pending}
           normalize={value => value.toLowerCase()}
         />
+        )}
 
         <Field
           component={ReduxVerticalFormGroup}
@@ -63,7 +65,7 @@ function ConfigurationForm(props) {
         />
       </Col>
       <Col sm={4}>
-        <ConfigurationHint />
+        <ConfigurationHint showDNSBaseDomain={showDNSBaseDomain} />
         <RegionsHint />
       </Col>
     </React.Fragment>
@@ -71,8 +73,9 @@ function ConfigurationForm(props) {
 }
 
 ConfigurationForm.propTypes = {
-  header: PropTypes.string.isRequired,
+  header: PropTypes.oneOf([PropTypes.string, PropTypes.node]).isRequired,
   pending: PropTypes.bool,
+  showDNSBaseDomain: PropTypes.bool,
 };
 
 export default ConfigurationForm;

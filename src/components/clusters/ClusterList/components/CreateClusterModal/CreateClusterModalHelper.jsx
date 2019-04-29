@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { HintBlock } from 'patternfly-react';
 
 function AWSCredentialsHint() {
@@ -27,7 +28,7 @@ function AWSCredentialsHint() {
   );
 }
 
-function ConfigurationHint() {
+function ConfigurationHint({ showDNSBaseDomain }) {
   return (
     <HintBlock
       title="Basic Configuration"
@@ -37,6 +38,7 @@ function ConfigurationHint() {
             Your cluster name will be used for the cluster DNS name, so it must not
             contain dots, underscores or special characters.
           </p>
+          {showDNSBaseDomain && (
           <p>
             A base domain is an
             <a href="https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/Welcome.html"> AWS Route53 </a>
@@ -44,12 +46,15 @@ function ConfigurationHint() {
             A zone with this name must exist on your AWS account,
             and entries created in it are expected to be resolvable
             from the nodes.
-          </p>
+          </p>)}
         </React.Fragment>
       )}
     />
   );
 }
+ConfigurationHint.propTypes = {
+  showDNSBaseDomain: PropTypes.bool,
+};
 
 
 function RegionsHint() {
