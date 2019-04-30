@@ -24,8 +24,6 @@ import {
   TabContent,
 } from 'patternfly-react';
 
-import AlphaNotice from '../../common/AlphaNotice';
-
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
@@ -128,7 +126,6 @@ class ClusterDetails extends Component {
 
     return (
       <div>
-        <AlphaNotice />
         <div id="clusterdetails-content">
           <ClusterDetailsTop
             cluster={cluster}

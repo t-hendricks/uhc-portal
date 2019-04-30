@@ -2,7 +2,6 @@
 
 exports[`<Tokens /> Renders correctly 1`] = `
 <div>
-  <AlphaNotice />
   <div
     className="token-details"
   >

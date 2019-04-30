@@ -19,7 +19,6 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import AlphaNotice from '../common/AlphaNotice';
 
 /**
  * Splits the given text into lines of 72 characters each, so that they look
@@ -104,7 +103,6 @@ class Tokens extends React.Component {
     /* eslint-disable react/jsx-one-expression-per-line */
     return (
       <div>
-        <AlphaNotice />
         <div className="token-details">
 
           <h2>Offline Access Token</h2>
