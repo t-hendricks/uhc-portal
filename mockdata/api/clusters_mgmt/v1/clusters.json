@@ -33,38 +33,41 @@
         "master": 3,
         "compute": 3
       },
-      "memory": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
-        "used": {
-          "value": 0,
-          "unit": "B"
+      "metrics": {
+        "memory": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": "B"
+          },
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
         },
-        "total": {
-          "value": 0,
-          "unit": "B"
-        }
-      },
-      "cpu": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
-        "used": {
-          "value": 0,
-          "unit": ""
+        "cpu": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": ""
+          },
+          "total": {
+            "value": 0,
+            "unit": ""
+          }
         },
-        "total": {
-          "value": 0,
-          "unit": ""
-        }
-      },
-      "storage": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
-        "used": {
-          "value": 0,
-          "unit": "B"
+        "storage": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": "B"
+          },
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
         },
-        "total": {
-          "value": 0,
-          "unit": "B"
-        }
+        "nodes": {}
       },
       "state": "installing",
       "flavour": {
@@ -102,48 +105,51 @@
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1"
       },
       "console": {
-        "url": ""
+        "url": "https://console-openshift-console.apps.ealfassa-jan29-deleteme.sdev.devshift.net"
       },
       "api": {
-        "url": ""
+        "url": "https://ealfassa-jan29-deleteme-api.sdev.devshift.net:6443"
       },
       "nodes": {
         "total": 6,
         "master": 3,
         "compute": 3
       },
-      "memory": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
-        "used": {
-          "value": 0,
-          "unit": "B"
+      "metrics": {
+        "memory": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": "B"
+          },
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
         },
-        "total": {
-          "value": 0,
-          "unit": "B"
-        }
-      },
-      "cpu": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
-        "used": {
-          "value": 0,
-          "unit": ""
+        "cpu": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": ""
+          },
+          "total": {
+            "value": 0,
+            "unit": ""
+          }
         },
-        "total": {
-          "value": 0,
-          "unit": ""
-        }
-      },
-      "storage": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
-        "used": {
-          "value": 0,
-          "unit": "B"
+        "storage": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": "B"
+          },
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
         },
-        "total": {
-          "value": 0,
-          "unit": "B"
-        }
+        "nodes": {}
       },
       "state": "error",
       "flavour": {
@@ -191,38 +197,41 @@
         "master": 3,
         "compute": 3
       },
-      "memory": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
-        "used": {
-          "value": 0,
-          "unit": "B"
+      "metrics": {
+        "memory": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": "B"
+          },
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
         },
-        "total": {
-          "value": 0,
-          "unit": "B"
-        }
-      },
-      "cpu": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
-        "used": {
-          "value": 0,
-          "unit": ""
+        "cpu": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": ""
+          },
+          "total": {
+            "value": 0,
+            "unit": ""
+          }
         },
-        "total": {
-          "value": 0,
-          "unit": ""
-        }
-      },
-      "storage": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
-        "used": {
-          "value": 0,
-          "unit": "B"
+        "storage": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": "B"
+          },
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
         },
-        "total": {
-          "value": 0,
-          "unit": "B"
-        }
+        "nodes": {}
       },
       "state": "ready",
       "flavour": {
@@ -270,37 +279,44 @@
         "master": 3,
         "compute": 3
       },
-      "memory": {
-        "updated_timestamp": "2019-02-27T10:00:00Z",
-        "used": {
-          "value": 300,
-          "unit": "KB"
+      "metrics": {
+        "memory": {
+          "updated_timestamp": "2019-02-27T10:00:00Z",
+          "used": {
+            "value": 300,
+            "unit": "KB"
+          },
+          "total": {
+            "value": 400,
+            "unit": "MiB"
+          }
         },
-        "total": {
-          "value": 400,
-          "unit": "MiB"
-        }
-      },
-      "cpu": {
-        "updated_timestamp": "2019-02-27T13:00:00Z",
-        "used": {
-          "value": 6.283185307179586,
-          "unit": ""
+        "cpu": {
+          "updated_timestamp": "2019-02-27T13:00:00Z",
+          "used": {
+            "value": 6.283185307179586,
+            "unit": ""
+          },
+          "total": {
+            "value": 10,
+            "unit": ""
+          }
         },
-        "total": {
-          "value": 10,
-          "unit": ""
-        }
-      },
-      "storage": {
-        "updated_timestamp": "0001-01-01T00:00:00Z",
-        "used": {
-          "value": 0,
-          "unit": "B"
+        "storage": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": "B"
+          },
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
         },
-        "total": {
-          "value": 0,
-          "unit": "B"
+        "nodes": {
+          "total": 3,
+          "master": 2,
+          "compute": 1
         }
       },
       "state": "ready",
@@ -315,7 +331,12 @@
       "network": {
         "machine_cidr": "10.0.0.0/16",
         "service_cidr": "172.30.0.0/16",
-        "pod_cidr": "10.128.0.0/14"
+        "pod_cidr": "10.128.0.0/14",
+        "router_shards": {
+          "kind": "RouterShardListLink",
+          "id": "fakeclusterid",
+          "href": "/api/clusters_mgmt/v1/clusters/fakeclusterid/router_shards"
+        }
       },
       "multi_az": false,
       "managed": true
