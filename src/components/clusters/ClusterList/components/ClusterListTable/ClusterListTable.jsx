@@ -104,10 +104,10 @@ function ClusterListTable(props) {
           {clusterType}
         </Grid.Col>
         <Grid.Col {...statColSizes}>
-          <NumberWithUnit valueWithUnit={cluster.cpu.total} unit="vCPU" />
+          <NumberWithUnit valueWithUnit={cluster.metrics.cpu.total} unit="vCPU" />
         </Grid.Col>
         <Grid.Col {...statColSizes}>
-          <NumberWithUnit valueWithUnit={cluster.memory.total} isBytes />
+          <NumberWithUnit valueWithUnit={cluster.metrics.memory.total} isBytes />
         </Grid.Col>
         <Grid.Col {...statColSizes}>
           {result(cluster, 'subscriptionInfo.creator.name', 'N/A')}

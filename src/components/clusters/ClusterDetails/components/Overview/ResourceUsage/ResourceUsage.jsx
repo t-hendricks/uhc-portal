@@ -8,7 +8,7 @@ import { parseValueWithUnit } from '../../../../../../common/unitParser';
 import { getMetricsTimeDelta } from '../../../../../../common/helpers';
 
 function ResourceUsage({ cluster }) {
-  const metricsLatsUpdate = new Date(cluster.cpu.updated_timestamp);
+  const metricsLatsUpdate = new Date(cluster.metrics.cpu.updated_timestamp);
 
   const metricsAvailable = process.env.UHC_SHOW_OLD_METRICS === 'true'
     ? true
@@ -23,18 +23,20 @@ function ResourceUsage({ cluster }) {
             <React.Fragment>
               <ClusterUtilizationChart
                 title="CPU"
-                total={cluster.cpu.total.value}
+                total={cluster.metrics.cpu.total.value}
                 unit="Cores"
-                used={cluster.cpu.used.value}
+                used={cluster.metrics.cpu.used.value}
                 donutId="cpu_donut"
               />
               <ClusterUtilizationChart
                 title="MEMORY"
                 totalBytes={
-                  parseValueWithUnit(cluster.memory.total.value, cluster.memory.total.unit)
+                  parseValueWithUnit(cluster.metrics.memory.total.value,
+                    cluster.metrics.memory.total.unit)
                 }
                 usedBytes={
-                  parseValueWithUnit(cluster.memory.used.value, cluster.memory.used.unit)
+                  parseValueWithUnit(cluster.metrics.memory.used.value,
+                    cluster.metrics.memory.used.unit)
                 }
                 donutId="memory_donut"
               />
