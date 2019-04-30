@@ -28,6 +28,27 @@ import {
 import { noop } from '../../common/helpers';
 import config from '../../config';
 
+const getUserDisplayName = (keycloakProfile) => {
+  // concat full name from first and last, if either exist
+  const fullNameArr = [];
+  if (keycloakProfile.first_name) {
+    fullNameArr.push(keycloakProfile.first_name);
+  }
+  if (keycloakProfile.last_name) {
+    fullNameArr.push(keycloakProfile.last_name);
+  }
+  // using an array with join makes sure there are no needless spaces if only one name exists.
+  const fullName = fullNameArr.length !== 0 ? fullNameArr.join(' ') : undefined;
+
+  // this logic allows fallsbacks for different ways to get a user's display name,
+  // so no matter what they have, they'll at least see *something* useful.
+  return keycloakProfile.name
+         || keycloakProfile.preferred_username
+         || fullName
+         || keycloakProfile.username
+         || keycloakProfile.email;
+};
+
 class HeaderToolBar extends React.Component {
   constructor(props) {
     super(props);
@@ -61,13 +82,15 @@ class HeaderToolBar extends React.Component {
     }));
   }
 
+
   render() {
     const {
       isLoggedIn, userProfile, logoutUser,
     } = this.props;
     const { isUserDropdownOpen, isKebabDropdownOpen } = this.state;
-    let displayName = (userProfile.keycloakProfile.name
-                       || userProfile.keycloakProfile.preferred_username);
+
+    let displayName = getUserDisplayName(userProfile.keycloakProfile);
+
     if (userProfile.organization.fulfilled && userProfile.organization.details.name) {
       displayName += ` (${userProfile.organization.details.name})`;
     }
