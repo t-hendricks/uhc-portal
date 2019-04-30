@@ -206,7 +206,7 @@ rm --recursive --force build
 yarn build-embedded
 push_build "ci-beta" "https://api.stage.openshift.com"
 push_build "qa-beta" "https://api.stage.openshift.com"
-push_build "prod-beta" "https://api.openshift.com"
+#push_build "prod-beta" "https://api.openshift.com"
 
 # Build the application in production mode for deployment to the stable branches
 # of the Insights platform:
@@ -214,4 +214,4 @@ rm --recursive --force build
 yarn build-embedded --mode=production
 push_build "ci-stable" "https://api.stage.openshift.com"
 push_build "qa-stable" "https://api.stage.openshift.com"
-push_build "prod-stable" "https://api.openshift.com"
+#push_build "prod-stable" "https://api.openshift.com"
