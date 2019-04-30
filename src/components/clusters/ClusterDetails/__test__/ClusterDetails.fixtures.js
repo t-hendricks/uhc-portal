@@ -43,37 +43,44 @@ const clusterDetails = {
       master: 3,
       compute: 2,
     },
-    memory: {
-      updated_timestamp: '0001-01-01T00:00:00Z',
-      used: {
-        value: 0,
-        unit: 'B',
+    metrics: {
+      memory: {
+        updated_timestamp: '0001-01-01T00:00:00Z',
+        used: {
+          value: 0,
+          unit: 'B',
+        },
+        total: {
+          value: 0,
+          unit: 'B',
+        },
       },
-      total: {
-        value: 0,
-        unit: 'B',
+      cpu: {
+        updated_timestamp: '0001-01-01T00:00:00Z',
+        used: {
+          value: 0,
+          unit: '',
+        },
+        total: {
+          value: 0,
+          unit: '',
+        },
       },
-    },
-    cpu: {
-      updated_timestamp: '0001-01-01T00:00:00Z',
-      used: {
-        value: 0,
-        unit: '',
+      storage: {
+        updated_timestamp: '0001-01-01T00:00:00Z',
+        used: {
+          value: 0,
+          unit: 'B',
+        },
+        total: {
+          value: 0,
+          unit: 'B',
+        },
       },
-      total: {
-        value: 0,
-        unit: '',
-      },
-    },
-    storage: {
-      updated_timestamp: '0001-01-01T00:00:00Z',
-      used: {
-        value: 0,
-        unit: 'B',
-      },
-      total: {
-        value: 0,
-        unit: 'B',
+      nodes: {
+        total: 3,
+        master: 2,
+        compute: 1,
       },
     },
     state: 'ready',
