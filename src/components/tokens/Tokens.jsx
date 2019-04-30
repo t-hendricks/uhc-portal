@@ -90,9 +90,9 @@ class Tokens extends React.Component {
       'curl \\',
       '--silent \\',
       '--data-urlencode "grant_type=refresh_token" \\',
-      '--data-urlencode "client_id=uhc" \\',
+      '--data-urlencode "client_id=cloud-services" \\',
       `--data-urlencode "refresh_token=${'${'}OFFLINE_ACCESS_TOKEN${'}'}" \\`,
-      'https://developers.redhat.com/auth/realms/rhd/protocol/openid-connect/token | \\',
+      'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token | \\',
       'jq -r .access_token',
     ];
 
