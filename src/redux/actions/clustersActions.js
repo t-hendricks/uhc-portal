@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import result from 'lodash/result';
+
 import { clustersConstants } from '../constants';
-import { clusterService, authorizationsService } from '../../services';
+import { clusterService, authorizationsService, accountsService } from '../../services';
 import helpers from '../../common/helpers';
 
 const invalidateClusters = () => (dispatch) => {
@@ -51,7 +53,7 @@ const editCluster = (id, cluster) => dispatch => dispatch({
 });
 
 const fetchClustersAndPermissions = (clusterRequestParams) => {
-  let result;
+  let clusters;
   let canEdit;
   let canDelete;
   const buildPermissionDict = (response) => {
@@ -64,9 +66,24 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
     });
     return ret;
   };
+
+  const buildSearchQuery = (response, field) => {
+    const IDs = new Set();
+    response.data.items.forEach((cluster) => {
+      const subscriptionID = result(cluster, field);
+      if (subscriptionID) {
+        IDs.add(`'${subscriptionID}'`);
+      }
+    });
+    if (IDs.length === 0) {
+      return false;
+    }
+    return `id in (${Array.from(IDs).join(',')})`;
+  };
+
   const promises = [
     clusterService.getClusters(clusterRequestParams).then((response) => {
-      result = response;
+      clusters = response;
     }),
     authorizationsService.selfResourceReview(
       { action: 'delete', resource_type: 'Cluster' },
@@ -76,12 +93,34 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
     ).then((response) => { canEdit = buildPermissionDict(response); }),
   ];
   return Promise.all(promises).then(() => {
-    for (let i = 0; i < result.data.items.length; i += 1) {
-      const cluster = result.data.items[i];
-      result.data.items[i].canEdit = canEdit['*'] || !!canEdit[cluster.id];
-      result.data.items[i].canDelete = canDelete['*'] || !!canDelete[cluster.id];
+    const subscriptionMap = {}; // map subscription ID to cluster index
+    for (let i = 0; i < clusters.data.items.length; i += 1) {
+      const cluster = clusters.data.items[i];
+      clusters.data.items[i].canEdit = canEdit['*'] || !!canEdit[cluster.id];
+      clusters.data.items[i].canDelete = canDelete['*'] || !!canDelete[cluster.id];
+      const subscription = result(cluster, 'subscription.id');
+      if (subscription) {
+        subscriptionMap[subscription] = i;
+      }
     }
-    return result;
+    if (clusters.data.items.length > 0) {
+      // We got clusters, so we need to find their subscriptions and accounts
+      const query = buildSearchQuery(clusters, 'subscription.id');
+      if (!query) {
+        // Guard against cases in which all clusters have no subscription info.
+        return clusters;
+      }
+      return accountsService.getSubscriptions(query).then((response) => {
+        // Enrich cluster results with subscription information
+        response.data.items.forEach((subscriptionItem) => {
+          const index = subscriptionMap[subscriptionItem.id];
+          clusters.data.items[index].subscriptionInfo = subscriptionItem;
+        });
+        return clusters;
+      }).catch(() => clusters); // catch to return clusters even if subscription query fails
+    }
+    // return empty result.
+    return clusters;
   });
 };
 
@@ -92,11 +131,11 @@ const fetchClusters = params => dispatch => dispatch({
 });
 
 const fetchSingleClusterAndPermissions = (clusterID) => {
-  let result;
+  let cluster;
   let canEdit;
   let canDelete;
   const promises = [
-    clusterService.getClusterDetails(clusterID).then((response) => { result = response; }),
+    clusterService.getClusterDetails(clusterID).then((response) => { cluster = response; }),
     authorizationsService.selfAccessReview(
       { action: 'delete', resource_type: 'Cluster', cluster_id: clusterID },
     ).then((response) => { canDelete = response.data.allowed; }),
@@ -105,9 +144,18 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
     ).then((response) => { canEdit = response.data.allowed; }),
   ];
   return Promise.all(promises).then(() => {
-    result.data.canEdit = canEdit;
-    result.data.canDelete = canDelete;
-    return result;
+    cluster.data.canEdit = canEdit;
+    cluster.data.canDelete = canDelete;
+    const subscriptionID = result(cluster.data, 'subscription.id');
+    if (subscriptionID) {
+      // FIXME accounts service does not support fetching account info for a single
+      // subscription, so we have to use the search endpoint here
+      return accountsService.getSubscriptions(`id='${subscriptionID}'`).then((subscriptions) => {
+        cluster.data.subscriptionInfo = result(subscriptions, 'data.items[0]');
+        return cluster;
+      }).catch(() => cluster);
+    }
+    return cluster;
   });
 };
 

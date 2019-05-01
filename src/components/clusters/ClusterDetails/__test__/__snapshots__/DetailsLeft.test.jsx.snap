@@ -47,6 +47,12 @@ exports[`<DetailsLeft /> should render 1`] = `
         value="2019-03-26T15:18:39.06783Z"
       />
     </dd>
+    <dt>
+      Owner
+    </dt>
+    <dd>
+      N/A
+    </dd>
   </dl>
 </Fragment>
 `;

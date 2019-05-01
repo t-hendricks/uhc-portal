@@ -25,7 +25,6 @@ import ClusterDetails from '../clusters/ClusterDetails';
 import InstallCluster from '../clusters/install/InstallCluster';
 import Tokens from '../tokens/Tokens';
 
-
 class Router extends React.Component {
   renderRoutes() {
     const { authenticated, userProfile } = this.props;
