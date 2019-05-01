@@ -22,17 +22,6 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "console": Object {
             "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
           },
-          "cpu": Object {
-            "total": Object {
-              "unit": "",
-              "value": 0,
-            },
-            "updated_timestamp": "0001-01-01T00:00:00Z",
-            "used": Object {
-              "unit": "",
-              "value": 0,
-            },
-          },
           "creation_timestamp": "2019-03-26T15:18:39.06783Z",
           "creator": "***REMOVED***",
           "display_name": "test-liza",
@@ -49,15 +38,44 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
           "kind": "Cluster",
           "managed": true,
-          "memory": Object {
-            "total": Object {
-              "unit": "B",
-              "value": 0,
+          "metrics": Object {
+            "cpu": Object {
+              "total": Object {
+                "unit": "",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "",
+                "value": 0,
+              },
             },
-            "updated_timestamp": "0001-01-01T00:00:00Z",
-            "used": Object {
-              "unit": "B",
-              "value": 0,
+            "memory": Object {
+              "total": Object {
+                "unit": "B",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "B",
+                "value": 0,
+              },
+            },
+            "nodes": Object {
+              "compute": 1,
+              "master": 2,
+              "total": 3,
+            },
+            "storage": Object {
+              "total": Object {
+                "unit": "B",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "B",
+                "value": 0,
+              },
             },
           },
           "multi_az": false,
@@ -83,17 +101,6 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": "ready",
-          "storage": Object {
-            "total": Object {
-              "unit": "B",
-              "value": 0,
-            },
-            "updated_timestamp": "0001-01-01T00:00:00Z",
-            "used": Object {
-              "unit": "B",
-              "value": 0,
-            },
-          },
           "version": Object {
             "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
             "id": "openshift-v4.0-latest",
@@ -392,17 +399,6 @@ clusters:
                 "console": Object {
                   "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
                 },
-                "cpu": Object {
-                  "total": Object {
-                    "unit": "",
-                    "value": 0,
-                  },
-                  "updated_timestamp": "0001-01-01T00:00:00Z",
-                  "used": Object {
-                    "unit": "",
-                    "value": 0,
-                  },
-                },
                 "creation_timestamp": "2019-03-26T15:18:39.06783Z",
                 "creator": "***REMOVED***",
                 "display_name": "test-liza",
@@ -419,15 +415,44 @@ clusters:
                 "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
                 "kind": "Cluster",
                 "managed": true,
-                "memory": Object {
-                  "total": Object {
-                    "unit": "B",
-                    "value": 0,
+                "metrics": Object {
+                  "cpu": Object {
+                    "total": Object {
+                      "unit": "",
+                      "value": 0,
+                    },
+                    "updated_timestamp": "0001-01-01T00:00:00Z",
+                    "used": Object {
+                      "unit": "",
+                      "value": 0,
+                    },
                   },
-                  "updated_timestamp": "0001-01-01T00:00:00Z",
-                  "used": Object {
-                    "unit": "B",
-                    "value": 0,
+                  "memory": Object {
+                    "total": Object {
+                      "unit": "B",
+                      "value": 0,
+                    },
+                    "updated_timestamp": "0001-01-01T00:00:00Z",
+                    "used": Object {
+                      "unit": "B",
+                      "value": 0,
+                    },
+                  },
+                  "nodes": Object {
+                    "compute": 1,
+                    "master": 2,
+                    "total": 3,
+                  },
+                  "storage": Object {
+                    "total": Object {
+                      "unit": "B",
+                      "value": 0,
+                    },
+                    "updated_timestamp": "0001-01-01T00:00:00Z",
+                    "used": Object {
+                      "unit": "B",
+                      "value": 0,
+                    },
                   },
                 },
                 "multi_az": false,
@@ -453,17 +478,6 @@ clusters:
                   "kind": "CloudRegionLink",
                 },
                 "state": "ready",
-                "storage": Object {
-                  "total": Object {
-                    "unit": "B",
-                    "value": 0,
-                  },
-                  "updated_timestamp": "0001-01-01T00:00:00Z",
-                  "used": Object {
-                    "unit": "B",
-                    "value": 0,
-                  },
-                },
                 "version": Object {
                   "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
                   "id": "openshift-v4.0-latest",
