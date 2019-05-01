@@ -27,12 +27,17 @@ const getSubscription = subscriptionID => apiRequest({
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}`,
 });
 
+const getOrganizationQuota = organizationID => apiRequest({
+  method: 'get',
+  url: `/api/accounts_mgmt/v1/organizations/${organizationID}/resource_quota?search=resource_type='cluster.aws'`,
+});
 
 const accountsService = {
   getCurrentAccount,
   getOrganization,
   getSubscription,
   getSubscriptions,
+  getOrganizationQuota,
 };
 
 export default accountsService;

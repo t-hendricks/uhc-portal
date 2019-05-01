@@ -13,6 +13,7 @@ describe('<ClusterListEmptyState />', () => {
     wrapper = shallow(<ClusterListEmptyState
       showCreationForm={managedFunc}
       showOCPCreationForm={ocpFunc}
+      hasQuota
     />);
   });
 
@@ -28,5 +29,17 @@ describe('<ClusterListEmptyState />', () => {
   it('calls showCreationForm when needed', () => {
     wrapper.find('Button').at(1).simulate('click');
     expect(ocpFunc).toBeCalled();
+  });
+
+  describe('User with no quota', () => {
+    it('should hide option to create managed and auto installed clusters', () => {
+      wrapper = shallow(
+        <ClusterListEmptyState
+          showCreationForm={managedFunc}
+          showOCPCreationForm={ocpFunc}
+        />,
+      );
+      expect(wrapper.find('Card').length).toEqual(1);
+    });
   });
 });

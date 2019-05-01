@@ -11,6 +11,7 @@ describe('<CreateClusterDropdown />', () => {
     wrapper = shallow(<CreateClusterDropdown
       showCreationForm={onClickFunc}
       showOCPCreationForm={onClickFunc}
+      hasQuota
     />);
   });
 
@@ -26,5 +27,17 @@ describe('<CreateClusterDropdown />', () => {
   it('calls showCreationForm when needed', () => {
     wrapper.find('MenuItem').at(2).simulate('click');
     expect(onClickFunc).toBeCalled();
+  });
+
+  describe('User with no quota', () => {
+    it('should hide option to create managed and auto installed clusters', () => {
+      wrapper = shallow(
+        <CreateClusterDropdown
+          showCreationForm={onClickFunc}
+          showOCPCreationForm={onClickFunc}
+        />,
+      );
+      expect(wrapper.find('MenuItem').length).toEqual(1);
+    });
   });
 });

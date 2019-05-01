@@ -18,7 +18,6 @@ import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import {
   Alert, Grid, Row, Col, EmptyState, Spinner,
@@ -40,10 +39,6 @@ import ViewPaginationRow from './components/viewPaginationRow';
 
 import helpers from '../../../common/helpers';
 import { viewConstants } from '../../../redux/constants';
-import { clustersActions } from '../../../redux/actions/clustersActions';
-import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
-import { viewActions } from '../../../redux/actions/viewOptionsActions';
-import { modalActions } from '../../common/Modal/ModalActions';
 
 import AlphaNotice from '../../common/AlphaNotice';
 
@@ -67,30 +62,22 @@ class ClusterList extends Component {
 
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
-    const { viewOptions, valid, pending } = this.props;
+    const {
+      viewOptions, valid, pending, organization, getQuota, quota,
+    } = this.props;
     if ((!valid && !pending)
         || helpers.viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
+    }
+
+    if (organization.fulfilled && !quota.pending && !quota.fulfilled && !quota.error) {
+      getQuota(organization.details.id);
     }
   }
 
   refresh() {
     const { fetchClusters, viewOptions } = this.props;
     fetchClusters(helpers.createViewQueryObject(viewOptions));
-  }
-
-  renderPendingMessage() {
-    const { pending } = this.props;
-
-    if (pending) {
-      return (
-        <LoadingModal>
-          Loading clusters...
-        </LoadingModal>
-      );
-    }
-
-    return null;
   }
 
   renderError() {
@@ -100,31 +87,44 @@ class ClusterList extends Component {
         <Alert type="error">
           <span>{`Error retrieving clusters: ${errorMessage}`}</span>
         </Alert>
-        {this.renderPendingMessage()}
       </EmptyState>
     );
   }
 
   render() {
     const {
-      error, pending, clusters, viewOptions, setSorting, openModal, invalidateClusters,
+      error,
+      pending,
+      clusters,
+      viewOptions,
+      setSorting,
+      openModal,
+      invalidateClusters,
+      hasQuota,
+      quota,
     } = this.props;
 
     if (error) {
       return this.renderError();
     }
 
-    if (!size(clusters) && pending && isEmpty(viewOptions.filter)) {
-      return this.renderPendingMessage();
+    if ((!size(clusters) && pending && isEmpty(viewOptions.filter)) || !quota.fulfilled) {
+      return (
+        <LoadingModal>
+          Loading clusters...
+        </LoadingModal>
+      );
     }
+
     if (!size(clusters) && !pending && isEmpty(viewOptions.filter)) {
       return (
         <React.Fragment>
           <ClusterListEmptyState
             showCreationForm={() => openModal('create-cluster')}
             showOCPCreationForm={() => openModal('create-cluster', { isManaged: false })}
+            hasQuota={hasQuota}
           />
-          {this.renderPendingMessage()}
+
           <CreateClusterModal />
         </React.Fragment>
       );
@@ -140,6 +140,7 @@ class ClusterList extends Component {
                 <CreateClusterDropdown
                   showCreationForm={() => openModal('create-cluster')}
                   showOCPCreationForm={() => openModal('create-cluster', { isManaged: false })}
+                  hasQuota={hasQuota}
                 />
               </Col>
               <Col xs={1}>
@@ -194,26 +195,10 @@ ClusterList.propTypes = {
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
+  organization: PropTypes.object.isRequired,
+  quota: PropTypes.object.isRequired,
+  getQuota: PropTypes.func.isRequired,
+  hasQuota: PropTypes.bool.isRequired,
 };
 
-const mapDispatchToProps = {
-  invalidateClusters: () => clustersActions.invalidateClusters(),
-  fetchClusters: queryObj => clustersActions.fetchClusters(queryObj),
-  setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
-  getCloudProviders: cloudProviderActions.getCloudProviders,
-  openModal: modalActions.openModal,
-};
-
-const mapStateToProps = state => Object.assign(
-  {},
-  state.clusters.clusters,
-  {
-    viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
-    cloudProviders: state.cloudProviders.cloudProviders,
-  },
-);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ClusterList);
+export default ClusterList;
