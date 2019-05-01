@@ -44,6 +44,8 @@ class ClusterDetails extends Component {
   }
 
   componentDidMount() {
+    document.title = 'Red Hat OpenShift Cluster Manager';
+
     const { cloudProviders, getCloudProviders } = this.props;
 
     this.refresh();
@@ -53,9 +55,14 @@ class ClusterDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { match } = this.props;
+    const { match, clusterDetails } = this.props;
     const clusterID = match.params.id;
     const oldClusterID = prevProps.match.params.id;
+
+    if (clusterID === oldClusterID && result(clusterDetails, 'cluster.id')) {
+      const clusterName = clusterDetails.cluster.display_name || clusterDetails.cluster.name || clusterDetails.external_id || 'Unnamed Cluster';
+      document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
+    }
 
     if (clusterID !== oldClusterID && isValid(clusterID)) {
       this.refresh();
