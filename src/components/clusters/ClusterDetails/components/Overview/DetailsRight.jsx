@@ -9,7 +9,7 @@ import { humanizeValueWithUnit } from '../../../../../common/unitParser';
 
 function DetailsRight({ cluster, routerShards }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
-    cluster.memory.total.value, cluster.memory.total.unit,
+    cluster.metrics.memory.total.value, cluster.metrics.memory.total.unit,
   );
 
   const clusterState = getClusterStateAndDescription(cluster);
@@ -29,7 +29,7 @@ function DetailsRight({ cluster, routerShards }) {
           Total CPU
         </dt>
         <dd>
-          {cluster.cpu.total.value}
+          {cluster.metrics.cpu.total.value}
           {' '}
           vCPU
         </dd>
