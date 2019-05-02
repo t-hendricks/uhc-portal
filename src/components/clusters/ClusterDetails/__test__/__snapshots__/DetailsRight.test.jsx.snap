@@ -38,7 +38,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
       B
     </dd>
     <dt>
-      Actual Nodes
+      Nodes
     </dt>
     <dd>
       <dl

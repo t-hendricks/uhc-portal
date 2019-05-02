@@ -13,6 +13,7 @@ function DetailsRight({ cluster, routerShards }) {
   );
 
   const clusterState = getClusterStateAndDescription(cluster);
+  const showDesiredNodes = cluster.managed;
 
   return (
     <React.Fragment>
@@ -42,7 +43,7 @@ function DetailsRight({ cluster, routerShards }) {
           {memoryTotalWithUnit.unit}
         </dd>
 
-        {cluster.managed && (
+        {showDesiredNodes && (
           <React.Fragment>
             <dt>
               Desired Nodes
@@ -71,7 +72,7 @@ function DetailsRight({ cluster, routerShards }) {
         }
 
         <dt>
-          Actual Nodes
+          {showDesiredNodes ? 'Actual Nodes' : 'Nodes'}
         </dt>
         <dd>
           <dl className="cluster-details-item-list left">
