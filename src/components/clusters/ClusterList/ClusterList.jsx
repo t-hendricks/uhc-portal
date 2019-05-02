@@ -52,6 +52,7 @@ class ClusterList extends Component {
   }
 
   componentDidMount() {
+    document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
     const { getCloudProviders, cloudProviders } = this.props;
 
     this.refresh();
