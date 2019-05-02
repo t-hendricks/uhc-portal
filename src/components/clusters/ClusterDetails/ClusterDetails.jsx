@@ -59,7 +59,7 @@ class ClusterDetails extends Component {
     const clusterID = match.params.id;
     const oldClusterID = prevProps.match.params.id;
 
-    if (clusterID === oldClusterID && result(clusterDetails, 'cluster.id')) {
+    if (result(clusterDetails, 'cluster.id') === clusterID) {
       const clusterName = clusterDetails.cluster.display_name || clusterDetails.cluster.name || clusterDetails.external_id || 'Unnamed Cluster';
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
     }
