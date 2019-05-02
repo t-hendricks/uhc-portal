@@ -140,6 +140,7 @@ if (APP_EMBEDDED) {
         authenticated: true,
       };
       store.dispatch(getCloudProviders());
+      store.dispatch(getOrganization());
       render();
     });
   });
