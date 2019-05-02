@@ -49,7 +49,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
            
         </dt>
         <dd>
-          N/A
+          2
         </dd>
       </dl>
       <dl
@@ -60,7 +60,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
            
         </dt>
         <dd>
-          N/A
+          1
         </dd>
       </dl>
     </dd>
@@ -80,17 +80,6 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
           "console": Object {
             "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
           },
-          "cpu": Object {
-            "total": Object {
-              "unit": "",
-              "value": 0,
-            },
-            "updated_timestamp": "0001-01-01T00:00:00Z",
-            "used": Object {
-              "unit": "",
-              "value": 0,
-            },
-          },
           "creation_timestamp": "2019-03-26T15:18:39.06783Z",
           "creator": "***REMOVED***",
           "display_name": "test-liza",
@@ -107,15 +96,44 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
           "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
           "kind": "Cluster",
           "managed": false,
-          "memory": Object {
-            "total": Object {
-              "unit": "B",
-              "value": 0,
+          "metrics": Object {
+            "cpu": Object {
+              "total": Object {
+                "unit": "",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "",
+                "value": 0,
+              },
             },
-            "updated_timestamp": "0001-01-01T00:00:00Z",
-            "used": Object {
-              "unit": "B",
-              "value": 0,
+            "memory": Object {
+              "total": Object {
+                "unit": "B",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "B",
+                "value": 0,
+              },
+            },
+            "nodes": Object {
+              "compute": 1,
+              "master": 2,
+              "total": 3,
+            },
+            "storage": Object {
+              "total": Object {
+                "unit": "B",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "B",
+                "value": 0,
+              },
             },
           },
           "multi_az": false,
@@ -137,17 +155,6 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
             "kind": "CloudRegionLink",
           },
           "state": "ready",
-          "storage": Object {
-            "total": Object {
-              "unit": "B",
-              "value": 0,
-            },
-            "updated_timestamp": "0001-01-01T00:00:00Z",
-            "used": Object {
-              "unit": "B",
-              "value": 0,
-            },
-          },
           "version": Object {
             "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
             "id": "openshift-v4.0-latest",
@@ -268,7 +275,7 @@ exports[`<DetailsRight /> should render 1`] = `
            
         </dt>
         <dd>
-          N/A
+          2
         </dd>
       </dl>
       <dl
@@ -279,7 +286,7 @@ exports[`<DetailsRight /> should render 1`] = `
            
         </dt>
         <dd>
-          N/A
+          1
         </dd>
       </dl>
     </dd>
