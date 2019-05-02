@@ -52,11 +52,16 @@ class ClusterList extends Component {
 
   componentDidMount() {
     document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
-    const { getCloudProviders, cloudProviders } = this.props;
+    const {
+      getCloudProviders, cloudProviders, organization, getOrganization,
+    } = this.props;
 
     this.refresh();
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
+    }
+    if (!organization.fulfilled && !organization.pending) {
+      getOrganization();
     }
   }
 
@@ -103,13 +108,15 @@ class ClusterList extends Component {
       hasQuota,
       quota,
       errorMessage,
+      organization,
     } = this.props;
 
     if (error && !size(clusters)) {
       return this.renderError();
     }
 
-    if ((!size(clusters) && pending && isEmpty(viewOptions.filter)) || !quota.fulfilled) {
+    if ((!size(clusters) && pending && isEmpty(viewOptions.filter))
+    || (!quota.fulfilled && !organization.error && !quota.error)) {
       return (
         <LoadingModal>
           Loading clusters...
@@ -218,6 +225,7 @@ ClusterList.propTypes = {
   quota: PropTypes.object.isRequired,
   getQuota: PropTypes.func.isRequired,
   hasQuota: PropTypes.bool.isRequired,
+  getOrganization: PropTypes.func.isRequired,
 };
 
 export default ClusterList;
