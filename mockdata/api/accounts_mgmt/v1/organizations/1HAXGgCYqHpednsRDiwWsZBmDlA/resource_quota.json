@@ -1,0 +1,11 @@
+{
+  "kind": "ResourceQuotaList",
+  "page": 1,
+  "items": [
+    {
+      "fake": "I don't have quota and don't know what it should look like, this is faked to pass the hasQuota() test",
+      "allowed": 42,
+      "reserved": 41
+    }
+  ]
+}
