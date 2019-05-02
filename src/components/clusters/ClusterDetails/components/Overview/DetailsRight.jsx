@@ -41,34 +41,34 @@ function DetailsRight({ cluster, routerShards }) {
           {' '}
           {memoryTotalWithUnit.unit}
         </dd>
-        {(cluster.managed || (!cluster.managed && cluster.nodes))
-        && (
-        <React.Fragment>
-          <dt>
-          Desired Nodes
-          </dt>
-          <dd>
-            <dl className="cluster-details-item-list left">
-              <dt>
-              Master:
-                {' '}
-              </dt>
-              <dd>
-                {result(cluster, 'nodes.master', 'N/A')}
-              </dd>
-            </dl>
-            <dl className="cluster-details-item-list left">
-              <dt>
-              Compute:
-                {' '}
-              </dt>
-              <dd>
-                {result(cluster, 'nodes.compute', 'N/A')}
-              </dd>
-            </dl>
-          </dd>
-        </React.Fragment>)
-      }
+
+        {cluster.managed && (
+          <React.Fragment>
+            <dt>
+              Desired Nodes
+            </dt>
+            <dd>
+              <dl className="cluster-details-item-list left">
+                <dt>
+                  Master:
+                  {' '}
+                </dt>
+                <dd>
+                  {result(cluster, 'nodes.master', 'N/A')}
+                </dd>
+              </dl>
+              <dl className="cluster-details-item-list left">
+                <dt>
+                  Compute:
+                  {' '}
+                </dt>
+                <dd>
+                  {result(cluster, 'nodes.compute', 'N/A')}
+                </dd>
+              </dl>
+            </dd>
+          </React.Fragment>)
+        }
 
         <dt>
           Actual Nodes
