@@ -1,7 +1,6 @@
 // ClusterListEmptyState is the empty state (no clusters) for ClusterList
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import {
   Button, Row, Col, EmptyState, Card, CardGrid, CardTitle, CardBody,
 } from 'patternfly-react';
@@ -27,11 +26,9 @@ function ClusterListEmptyState(props) {
 
   const createSelfManaged = (
     <EmptyState.Action>
-      <Link to="/install">
-        <Button bsStyle="primary" bsSize="large">
-          Create Self-Installed Cluster
-        </Button>
-      </Link>
+      <Button bsStyle="primary" bsSize="large" href={APP_EMBEDDED ? '/openshift/install' : '/install'} target="_blank">
+        Create Self-Installed Cluster
+      </Button>
     </EmptyState.Action>
   );
 
