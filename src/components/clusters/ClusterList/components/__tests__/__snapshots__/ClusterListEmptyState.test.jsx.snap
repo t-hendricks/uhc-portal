@@ -148,21 +148,18 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
               className=""
               secondary={false}
             >
-              <Link
-                replace={false}
-                to="/install"
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsSize="large"
+                bsStyle="primary"
+                disabled={false}
+                href="/install"
+                target="_blank"
               >
-                <Button
-                  active={false}
-                  block={false}
-                  bsClass="btn"
-                  bsSize="large"
-                  bsStyle="primary"
-                  disabled={false}
-                >
-                  Create Self-Installed Cluster
-                </Button>
-              </Link>
+                Create Self-Installed Cluster
+              </Button>
             </EmptyStateAction>
           </CardBody>
         </Card>
