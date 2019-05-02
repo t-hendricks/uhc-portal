@@ -1,0 +1,10 @@
+{
+  "id": "1HAXGgCYqHpednsRDiwWsZBmDlA",
+  "kind": "Organization",
+  "href": "/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA",
+  "name": "Red Hat1",
+  "external_id": "11009103",
+  "ebs_account_id": "5910538",
+  "created_at": "2019-02-14T12:03:02.538815Z",
+  "updated_at": "2019-05-02T12:00:35.11577Z"
+}
