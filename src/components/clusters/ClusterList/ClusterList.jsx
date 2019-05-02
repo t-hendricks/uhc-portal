@@ -41,8 +41,6 @@ import ViewPaginationRow from './components/viewPaginationRow';
 import helpers from '../../../common/helpers';
 import { viewConstants } from '../../../redux/constants';
 
-import AlphaNotice from '../../common/AlphaNotice';
-
 class ClusterList extends Component {
   constructor(props) {
     super(props);
@@ -152,7 +150,6 @@ class ClusterList extends Component {
 
     return (
       <div>
-        <AlphaNotice />
         <div className="cluster-list">
           <Grid fluid style={{ padding: 0 }}>
             <Row><Col sm={1}><h1>Clusters</h1></Col></Row>

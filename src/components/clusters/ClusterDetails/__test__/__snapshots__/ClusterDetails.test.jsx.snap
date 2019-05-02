@@ -2,7 +2,6 @@
 
 exports[`<ClusterDetails /> Cluster Details should render 1`] = `
 <div>
-  <AlphaNotice />
   <div
     id="clusterdetails-content"
   >
