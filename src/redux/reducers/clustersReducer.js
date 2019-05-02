@@ -90,6 +90,7 @@ function clustersReducer(state = initialState, action) {
           pending: false,
           valid: true,
           error: action.error,
+          clusters: state.clusters.clusters,
           errorMessage: helpers.getErrorMessage(action.payload),
         },
         {
