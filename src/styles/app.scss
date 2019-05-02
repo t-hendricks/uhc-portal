@@ -43,7 +43,7 @@ limitations under the License.
   color: #0189cf;
 }
 
-.cluster-list-top-row .spinner {
+.cluster-list-top-row .spinner, .cluster-list-top-row .clusterlist-error-triangle {
   margin-top: 25px;
   margin-left: 60px;
   @media (min-width: 1300px) {
