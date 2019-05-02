@@ -53,7 +53,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
         </dd>
         <dt>Owner</dt>
         <dd>
-          {result(cluster, 'subscriptionInfo.creator.name', 'N/A')}
+          {result(cluster, 'subscriptionInfo.creator.name') || result(cluster, 'subscriptionInfo.creator.username', 'N/A')}
         </dd>
       </dl>
     </React.Fragment>
