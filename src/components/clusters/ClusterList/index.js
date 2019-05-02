@@ -16,6 +16,7 @@ const mapDispatchToProps = {
   getCloudProviders: cloudProviderActions.getCloudProviders,
   openModal: modalActions.openModal,
   getQuota: orgID => userActions.fetchOrganizationQuota(orgID),
+  getOrganization: userActions.getOrganization,
 };
 
 
