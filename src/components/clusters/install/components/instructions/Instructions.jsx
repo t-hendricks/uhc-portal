@@ -93,7 +93,7 @@ class Instructions extends React.Component {
               Use this guide to install a new OpenShift 4 preview cluster on your Amazon Web
               Services (AWS) account. We’ll get you up and running in a few quick steps:
             </p>
-            <ol>
+            <ol className="embedded-indent">
               <li>Configure your DNS</li>
               <li>Configure your AWS credentials</li>
               <li>Download the OpenShift installer</li>

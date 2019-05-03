@@ -301,6 +301,11 @@ limitations under the License.
   }
 }
 
+/* This is a browser default that does not get applied while embedded */
+ol.embedded-indent {
+  padding-inline-start: 40px;
+}
+
 .cluster-install-step-callout-col {
   /* account for install-steps that have headers
      so callouts align with paragraph content

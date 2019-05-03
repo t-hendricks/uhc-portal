@@ -130,7 +130,9 @@ exports[`<Instructions /> with a valid token displays the token 1`] = `
       <p>
         Use this guide to install a new OpenShift 4 preview cluster on your Amazon Web Services (AWS) account. We’ll get you up and running in a few quick steps:
       </p>
-      <ol>
+      <ol
+        className="embedded-indent"
+      >
         <li>
           Configure your DNS
         </li>
@@ -788,7 +790,9 @@ exports[`<Instructions /> with an invalid token displays an error 1`] = `
       <p>
         Use this guide to install a new OpenShift 4 preview cluster on your Amazon Web Services (AWS) account. We’ll get you up and running in a few quick steps:
       </p>
-      <ol>
+      <ol
+        className="embedded-indent"
+      >
         <li>
           Configure your DNS
         </li>
