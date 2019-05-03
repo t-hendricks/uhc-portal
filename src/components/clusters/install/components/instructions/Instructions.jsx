@@ -66,6 +66,24 @@ class Instructions extends React.Component {
                 The OpenShift Development Team
               </p>
             </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={8} md={8} lg={8} className="left-col">
+            <h1>Install OpenShift 4 On Premise</h1>
+            <p>
+              The OpenShift 4 preview is now available for on premise deployments.
+            </p>
+            <p>
+              Please refer to the
+              <a href="https://docs.openshift.com/container-platform/4.1/welcome/index.html"> documentation for details. </a>
+              The same steps as the AWS install shown below will apply, but a few additional steps
+              around DNS and deploying Red Hat Enterprise Linux CoreOS are required.
+            </p>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={8} md={8} lg={8} className="left-col">
             <h1>Install OpenShift 4 on AWS</h1>
           </Col>
         </Row>
