@@ -22,7 +22,7 @@ exports[`<ResourceUsage /> should render 1`] = `
     >
       <ClusterUtilizationChart
         donutId="cpu_donut"
-        title="CPU"
+        title="vCPU"
         total={0}
         unit="Cores"
         used={0}
