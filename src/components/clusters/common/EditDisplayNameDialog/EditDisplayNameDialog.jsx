@@ -58,13 +58,15 @@ class EditDisplayNameDialog extends Component {
       <span>{`Error changing display name: ${editClusterResponse.errorMessage}`}</span>
     </Alert>);
 
+    const handleSubmit = () => { submit(clusterID, currentValue); };
+
     return isOpen && (
     <Modal show>
       <Modal.Header>
         <ModalHeader title="Edit Display Name" onClose={cancelEdit} />
       </Modal.Header>
       <Modal.Body>
-        <Form horizontal>
+        <Form horizontal onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
           <Grid>
             <Row>
               <Col sm={5}>
@@ -90,7 +92,7 @@ class EditDisplayNameDialog extends Component {
         <Button bsStyle="default" onClick={cancelEdit}>
             Cancel
         </Button>
-        <Button bsStyle="primary" onClick={() => submit(clusterID, currentValue)}>
+        <Button bsStyle="primary" onClick={handleSubmit}>
             Edit
         </Button>
       </Modal.Footer>
