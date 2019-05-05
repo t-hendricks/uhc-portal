@@ -27,7 +27,12 @@ function DetailsRight({ cluster, routerShards }) {
           {clusterState.description}
         </dd>
         <dt>
-          Total CPU
+          <React.Fragment>
+            Total
+            {' '}
+            <span className="lowerCase">v</span>
+            CPU
+          </React.Fragment>
         </dt>
         <dd>
           {cluster.metrics.cpu.total.value}

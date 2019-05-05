@@ -78,6 +78,8 @@ function ClusterListEmptyState(props) {
                 <CardTitle>Self-Installed Cluster</CardTitle>
                 <p>
                   Install an OCP cluster manually, and manage it yourself.
+                  Once installation is complete the cluster will get automatically
+                  registered to the Cluster Manager.
                 </p>
                 {createSelfManaged}
               </CardBody>

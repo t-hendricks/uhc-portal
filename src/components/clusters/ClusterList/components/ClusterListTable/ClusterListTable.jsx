@@ -166,7 +166,10 @@ function ClusterListTable(props) {
             isAscending
             {...statColSizes}
           >
-            CPU
+            <React.Fragment>
+              <span className="lowerCase">v</span>
+                CPU
+            </React.Fragment>
           </TableGrid.ColumnHeader>
           <TableGrid.ColumnHeader
             id="memory"
