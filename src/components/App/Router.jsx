@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
 import ClustersList from '../clusters/ClusterList';
@@ -25,51 +25,23 @@ import ClusterDetails from '../clusters/ClusterDetails';
 import InstallCluster from '../clusters/install/InstallCluster';
 import Tokens from '../tokens/Tokens';
 
-class Router extends React.Component {
-  renderRoutes() {
-    const { authenticated, userProfile } = this.props;
-    // note: in this condition, I've added !authenticated even though
-    // it shouldn't really happen. If the user is not authenticated,
-    // they would get a login page. However, I wanted to be extra-sure
-    // that if something changes in the future, the full router will
-    // be the "normal" one, and no exception will be raised if userProfile
-    // is undefined.
-    if (!authenticated || (userProfile.keycloakProfile.email && userProfile.keycloakProfile.email.endsWith('@redhat.com'))) {
-      return (
-        <Switch>
-          { APP_EMBEDDED && <Route path="/token" component={Tokens} /> }
-          <Route path="/install" component={InstallCluster} />
-          <Route path="/details/:id" component={ClusterDetails} />
-          <Route path="/" component={ClustersList} />
-        </Switch>
-      );
-    }
-    return (
+function Router(props) {
+  const { history } = props;
+
+  return (
+    <ConnectedRouter history={history}>
       <Switch>
+        { APP_EMBEDDED && <Route path="/token" component={Tokens} /> }
         <Route path="/install" component={InstallCluster} />
-        <Redirect from="/" to="/install" />
+        <Route path="/details/:id" component={ClusterDetails} />
+        <Route path="/" component={ClustersList} />
       </Switch>
-    );
-  }
-
-  render() {
-    const {
-      history,
-    } = this.props;
-
-    return (
-      <ConnectedRouter history={history}>
-        {this.renderRoutes()}
-      </ConnectedRouter>
-    );
-  }
+    </ConnectedRouter>
+  );
 }
 
 Router.propTypes = {
-  userProfile: PropTypes.object,
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
-  authenticated: PropTypes.bool.isRequired,
 };
-
 
 export default (withRouter(Router));
