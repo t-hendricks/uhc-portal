@@ -172,10 +172,10 @@ function push_build {
   cat >> target/config/config.json <<.
 {
   "apiGateway": "${gateway}",
-  "installerURL": "https://github.com/openshift/installer/releases",
+  "installerURL": "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/",
   "documentationURL": "https://github.com/openshift/installer/blob/master/README.md#quick-start",
   "terraformInstallURL": "https://www.terraform.io/downloads.html",
-  "commandLineToolsURL": "https://mirror.openshift.com/pub/openshift-v4/clients/4.1"
+  "commandLineToolsURL": "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/"
 }
 .
 
