@@ -22,7 +22,7 @@ function ResourceUsage({ cluster }) {
           { metricsAvailable ? (
             <React.Fragment>
               <ClusterUtilizationChart
-                title="CPU"
+                title="vCPU"
                 total={cluster.metrics.cpu.total.value}
                 unit="Cores"
                 used={cluster.metrics.cpu.used.value}
