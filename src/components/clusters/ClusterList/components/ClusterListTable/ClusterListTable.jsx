@@ -109,7 +109,7 @@ function ClusterListTable(props) {
         <Grid.Col {...statColSizes}>
           <NumberWithUnit valueWithUnit={cluster.metrics.memory.total} isBytes />
         </Grid.Col>
-        <Grid.Col {...statColSizes}>
+        <Grid.Col {...statColSizes} className="cluster-list-table-owner-name">
           {result(cluster, 'subscriptionInfo.creator.name') || result(cluster, 'subscriptionInfo.creator.username', 'N/A')}
         </Grid.Col>
         <Grid.Col {...locationColSizes}>
