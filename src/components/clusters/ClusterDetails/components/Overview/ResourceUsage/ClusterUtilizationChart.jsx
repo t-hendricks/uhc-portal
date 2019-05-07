@@ -47,7 +47,6 @@ function ClusterUtilizationChart(props) {
           size={{ width: 180, height: 180 }}
           data={{
             columns: [[usedColumnTitle, usedValue], [availableColumnTitle, available]],
-            groups: [['used', 'available']],
             order: null,
           }}
           tooltip={{ contents: pfGetUtilizationDonutTooltipContents }}
