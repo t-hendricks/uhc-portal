@@ -89,6 +89,22 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
                     "name": "Github",
                     "value": "GithubIdentityProvider",
                   },
+                  Object {
+                    "name": "Gitlab",
+                    "value": "GitlabIdentityProvider",
+                  },
+                  Object {
+                    "name": "Google",
+                    "value": "GoogleIdentityProvider",
+                  },
+                  Object {
+                    "name": "OpenID",
+                    "value": "OpenIDIdentityProvider",
+                  },
+                  Object {
+                    "name": "LDAP",
+                    "value": "LDAPIdentityProvider",
+                  },
                 ]
               }
             />
@@ -114,21 +130,8 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
               type="text"
               validate={[Function]}
             />
-            <Field
-              component={[Function]}
-              label="Client ID"
-              name="client_id"
-              placeholder="Client ID"
-              type="text"
-              validate={[Function]}
-            />
-            <Field
-              component={[Function]}
-              label="Client Secret"
-              name="client_secret"
-              placeholder="Client Secret"
-              type="password"
-              validate={[Function]}
+            <BasicFields
+              createIDPResponse={Object {}}
             />
           </Col>
           <Col
@@ -178,30 +181,11 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
               id="idp-advanced-options"
               sm={5}
             >
-              <Field
-                component={[Function]}
-                label="Hostname"
-                name="hostname"
-                placeholder="hostname"
-                type="text"
-              />
-              <Field
-                component={[Function]}
-                helpText=""
-                label="Organizations"
-                name="organizations"
-                onChange={[Function]}
-                placeholder="comma separated, example: 'org1,org2,org3"
-                type="text"
-              />
-              <Field
-                component={[Function]}
-                helpText=""
-                label="Teams"
-                name="teams"
-                onChange={[Function]}
-                placeholder="comma separated, example: 'team1,team2"
-                type="text"
+              <GithubForm
+                createIDPResponse={Object {}}
+                orgsDisabled={false}
+                teamsDisabled={false}
+                toggleDisable={[Function]}
               />
               <Field
                 component={[Function]}

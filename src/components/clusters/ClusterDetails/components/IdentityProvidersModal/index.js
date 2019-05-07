@@ -1,18 +1,19 @@
 import { connect } from 'react-redux';
-import { reduxForm, reset } from 'redux-form';
-import result from 'lodash/result';
+import { reduxForm, reset, formValueSelector } from 'redux-form';
 
 import IdentityProvidersModal from './IdentityProvidersModal';
 import { createClusterIdentityProvider, resetCreatedClusterIDPResponse, getClusterIdentityProviders } from './IdentityProvidersActions';
 import { closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
-import { omitEmptyFields, toCleanArray } from '../../../../../common/helpers';
+import getCreateIDPRequestData from './IdentityProvidersHelper';
 
 const reduxFormConfig = {
   form: 'CreateIdentityProvider',
 };
 const reduxFormCreateCluster = reduxForm(reduxFormConfig)(IdentityProvidersModal);
+
+const valueSelector = formValueSelector('CreateIdentityProvider');
 
 const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'create-identity-provider'),
@@ -22,33 +23,15 @@ const mapStateToProps = state => ({
     type: 'GithubIdentityProvider',
     client_id: '',
     client_secret: '',
-    github: undefined,
+    mappingMethod: 'claim',
   },
-  mappingMethod: 'claim',
+  selectedIDP: valueSelector(state, 'type') || 'GithubIdentityProvider',
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (formData) => {
-    const createIdentityProviderRequest = {
-      type: formData.type,
-      name: formData.name,
-      login: formData.login,
-      challenge: formData.challenge,
-      mappingMethod: formData.mappingMethod || 'claim',
-      github: {
-        client_id: formData.client_id,
-        client_secret: formData.client_secret,
-        hostname: formData.hostname,
-        organizations: result(formData, 'organizations', false)
-          ? toCleanArray(formData.organizations) : undefined,
-        teams: result(formData, 'teams', false) ? toCleanArray(formData.teams) : undefined,
-      },
-    };
-    dispatch(
-      createClusterIdentityProvider(
-        ownProps.clusterID, omitEmptyFields(createIdentityProviderRequest),
-      ),
-    );
+    const createIdentityProviderRequest = getCreateIDPRequestData(formData);
+    dispatch(createClusterIdentityProvider(ownProps.clusterID, createIdentityProviderRequest));
   },
   resetResponse: () => dispatch(resetCreatedClusterIDPResponse()),
   closeModal: () => dispatch(closeModal()),
