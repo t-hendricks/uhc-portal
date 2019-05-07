@@ -11,7 +11,7 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License. 
+limitations under the License.
 */
 
 @import "~@patternfly/patternfly/sass-utilities/_all";
@@ -310,7 +310,7 @@ ol.embedded-indent {
   /* account for install-steps that have headers
      so callouts align with paragraph content
   */
-  padding-top: 67px;
+  padding-top: 30px;
   @media (max-width: 767px) {
     padding-top: 0;
   }
@@ -321,6 +321,10 @@ ol.embedded-indent {
     border-left: 3px solid $color-pf-black-300;
     padding-left: 7px;
   }
+}
+
+.cluster-install-procedure, .cluster-install-prerequisites {
+  margin-top: -10px;
 }
 
 .form-loading-spinner {
