@@ -6,35 +6,35 @@ import {
 import { humanizeValueWithUnit } from '../../../../../../common/unitParser';
 import round from '../../../../../../common/math';
 
+// We must feed numbers as-is to the chart, but then we have two strategies for formatting them:
+// humanize: (45634027520, 'B') -> {value: 42.5, unit: 'GiB'}
+// just round: (1234.56789, 'Cores') -> {value: 1234.56, unit: 'Cores'}
+// Both have to round long fractions to few digits.
+// Both have to return {value, unit} separately, as we want value in larger font insidesdfaul donut.
+
+function roundValueWithUnit(value, unit) {
+  return {
+    value: round(value, 2),
+    unit,
+  };
+}
+
 function ClusterUtilizationChart(props) {
   const {
-    title, used, total, unit, donutId, usedBytes, totalBytes,
+    title, used, total, unit, humanize, donutId,
   } = props;
-  let available;
-  let usedValue;
-  let usedColumnTitle;
-  let availableColumnTitle;
-  if (usedBytes !== undefined) {
-    // bytes based donut, like memory or storage. We need to humanize it ourselves.
-    const usedHumanized = humanizeValueWithUnit(usedBytes, 'B');
-    usedValue = usedHumanized.value;
 
-    const availableBytes = totalBytes - usedBytes;
-    const availableHumanized = humanizeValueWithUnit(availableBytes, 'B');
-    available = availableHumanized.value;
+  const format = humanize ? humanizeValueWithUnit : roundValueWithUnit;
+  const formattedUsed = format(used, unit);
+  const donutCenter = { primary: `${formattedUsed.value}`, secondary: `${formattedUsed.unit} used` };
+  const available = total - used;
 
-    usedColumnTitle = `${usedHumanized.unit} used`;
-    availableColumnTitle = `${availableHumanized.unit} available`;
-  } else {
-    // unit provided, for example CPU
-    available = round(total - used, 2);
-    usedValue = round(used, 2);
-    usedColumnTitle = `${unit} used`;
-    availableColumnTitle = `${unit} available`;
-  }
-
-  // had to copy this from the patternfly storybook source code to get the tooltip :(
-  const pfGetUtilizationDonutTooltipContents = d => `<span class="donut-tooltip-pf" style="white-space: nowrap;">${d[0].value} ${d[0].name}</span>`;
+  // Based on pfGetUtilizationDonutTooltipContents from patternfly storybook, changed for our needs.
+  // Example input: d=[{"id":"used","value":6.2831853,"ratio":0.48320355,"index":0,"name":"used"}]
+  const tooltipContents = (d) => {
+    const formatted = format(d[0].value, unit);
+    return `<span class="donut-tooltip-pf" style="white-space: nowrap;">${formatted.value} ${formatted.unit} ${d[0].name}</span>`;
+  };
 
   return (
     <div>
@@ -45,12 +45,14 @@ function ClusterUtilizationChart(props) {
         <DonutChart
           id={donutId}
           size={{ width: 180, height: 180 }}
+          title={donutCenter}
           data={{
-            columns: [[usedColumnTitle, usedValue], [availableColumnTitle, available]],
-            order: null,
+            columns: [['used', used], ['available', available]],
+            order: null, // the order the data was loaded
           }}
-          tooltip={{ contents: pfGetUtilizationDonutTooltipContents }}
-          title={{ primary: usedValue, secondary: usedColumnTitle }}
+          tooltip={{
+            contents: tooltipContents,
+          }}
         />
       </div>
     </div>);
@@ -61,8 +63,7 @@ ClusterUtilizationChart.propTypes = {
   used: PropTypes.number,
   total: PropTypes.number,
   unit: PropTypes.string,
-  usedBytes: PropTypes.number,
-  totalBytes: PropTypes.number,
+  humanize: PropTypes.bool,
   donutId: PropTypes.string.isRequired,
 };
 

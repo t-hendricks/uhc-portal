@@ -22,6 +22,7 @@ exports[`<ResourceUsage /> should render 1`] = `
     >
       <ClusterUtilizationChart
         donutId="cpu_donut"
+        humanize={false}
         title="vCPU"
         total={0}
         unit="Cores"
@@ -29,9 +30,11 @@ exports[`<ResourceUsage /> should render 1`] = `
       />
       <ClusterUtilizationChart
         donutId="memory_donut"
+        humanize={true}
         title="MEMORY"
-        totalBytes={0}
-        usedBytes={0}
+        total={0}
+        unit="B"
+        used={0}
       />
     </div>
   </div>
