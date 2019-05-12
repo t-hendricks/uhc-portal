@@ -142,6 +142,10 @@ limitations under the License.
   word-wrap: break-word;
 }
 
+.cluster-list .table-grid-pf-row .cluster-list-table-owner-name {
+  word-wrap: normal;
+}
+
 .cluster-details-item {
   padding: 30px;
   dt {
