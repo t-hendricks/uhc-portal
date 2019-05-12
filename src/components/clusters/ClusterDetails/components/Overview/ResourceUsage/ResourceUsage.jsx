@@ -4,7 +4,7 @@ import { Grid } from 'patternfly-react';
 
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import { metricsStatusMessages, maxMetricsTimeDelta } from './ResourceUsage.consts';
-import { parseValueWithUnit } from '../../../../../../common/unitParser';
+import { parseValueWithUnit } from '../../../../../../common/units';
 import { getMetricsTimeDelta } from '../../../../../../common/helpers';
 
 function ResourceUsage({ cluster }) {

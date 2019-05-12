@@ -1,4 +1,4 @@
-import { humanizeValueWithUnit, parseValueWithUnit } from './unitParser';
+import { humanizeValueWithUnit, parseValueWithUnit } from './units';
 
 test('Parse value with unit works', () => {
   expect(parseValueWithUnit(5, 'KB')).toBe(5000);

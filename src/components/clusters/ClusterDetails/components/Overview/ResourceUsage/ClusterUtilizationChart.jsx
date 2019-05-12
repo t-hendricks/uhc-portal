@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   DonutChart,
 } from 'patternfly-react';
-import { humanizeValueWithUnit } from '../../../../../../common/unitParser';
+import { humanizeValueWithUnit } from '../../../../../../common/units';
 import round from '../../../../../../common/math';
 
 // We must feed numbers as-is to the chart, but then we have two strategies for formatting them:
