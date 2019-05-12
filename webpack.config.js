@@ -34,7 +34,7 @@ module.exports = (env, argv) => {
   let copyConfig = null;
   let bundleAnalyzer = null;
   const embeddedApp = process.env.EMBEDDED === 'true';
-  const appDeployment = devMode ? 'beta/apps' : 'apps';
+  const appDeployment = 'apps';
   if (devMode) {
     copyConfig = new CopyWebpackPlugin([{ from: 'src/config', to: `${outDir}/config` }]);
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: false });
