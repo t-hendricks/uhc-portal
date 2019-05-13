@@ -41,10 +41,6 @@ const mapDispatchToProps = dispatch => ({
       nodes: {
         compute: parseInt(formData.nodes_compute, 10),
       },
-      aws: {
-        access_key_id: formData.aws_access_key_id,
-        secret_access_key: formData.aws_secret_access_key,
-      },
       multi_az: formData.multi_az,
       network: {
         machine_cidr: formData.network_machine_cidr,
