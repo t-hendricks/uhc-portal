@@ -1,4 +1,5 @@
 import filesize from 'filesize';
+import round from './math';
 
 function parseValueWithUnit(value, unit) {
   // takes a value + unit from the API and converts it to bytes
@@ -18,6 +19,15 @@ function parseValueWithUnit(value, unit) {
   return value * units[unit.trim()];
 }
 
+// We have two strategies for formatting numbers:
+// humanize: (45634027520, 'B') -> {value: 42.5, unit: 'GiB'}
+// just round: (1234.56789, 'Cores') -> {value: 1234.57, unit: 'Cores'}
+// Both have to round long fractions to few digits.
+// Both have to return {value, unit} separately, to allow different styling (value in larger font).
+
+// The resulting .value is imprecise, should never be used for further computations.
+// TODO: consider making it a string to prevent such usage?
+
 function humanizeValueWithUnit(value, unit) {
   const result = filesize(parseValueWithUnit(value, unit), { output: 'object', standard: 'iec' });
   return {
@@ -26,4 +36,11 @@ function humanizeValueWithUnit(value, unit) {
   };
 }
 
-export { parseValueWithUnit, humanizeValueWithUnit };
+function roundValueWithUnit(value, unit) {
+  return {
+    value: round(value, 2),
+    unit,
+  };
+}
+
+export { parseValueWithUnit, humanizeValueWithUnit, roundValueWithUnit };

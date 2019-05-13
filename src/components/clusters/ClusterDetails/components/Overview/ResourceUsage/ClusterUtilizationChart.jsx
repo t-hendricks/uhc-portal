@@ -3,21 +3,7 @@ import PropTypes from 'prop-types';
 import {
   DonutChart,
 } from 'patternfly-react';
-import { humanizeValueWithUnit } from '../../../../../../common/units';
-import round from '../../../../../../common/math';
-
-// We must feed numbers as-is to the chart, but then we have two strategies for formatting them:
-// humanize: (45634027520, 'B') -> {value: 42.5, unit: 'GiB'}
-// just round: (1234.56789, 'Cores') -> {value: 1234.56, unit: 'Cores'}
-// Both have to round long fractions to few digits.
-// Both have to return {value, unit} separately, as we want value in larger font insidesdfaul donut.
-
-function roundValueWithUnit(value, unit) {
-  return {
-    value: round(value, 2),
-    unit,
-  };
-}
+import { humanizeValueWithUnit, roundValueWithUnit } from '../../../../../../common/units';
 
 function ClusterUtilizationChart(props) {
   const {
