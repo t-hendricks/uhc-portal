@@ -96,6 +96,18 @@ const FULFILLED_ACTION = base => `${base}_FULFILLED`;
 const PENDING_ACTION = base => `${base}_PENDING`;
 const REJECTED_ACTION = base => `${base}_REJECTED`;
 
+const toCleanArray = str => str.split(',').map(item => item.trim()).filter(item => item);
+
+
+const omitEmptyFields = (obj) => {
+  const objToClean = obj;
+  Object.keys(objToClean).forEach((key) => {
+    if (objToClean[key] && typeof objToClean[key] === 'object') omitEmptyFields(objToClean[key]);
+    else if (!obj[key] && obj[key] !== false) delete objToClean[key];
+  });
+  return objToClean;
+};
+
 const helpers = {
   noop,
   setStateProp,
@@ -104,12 +116,16 @@ const helpers = {
   getErrorMessage,
   getMetricsTimeDelta,
   isValid,
+  omitEmptyFields,
+  toCleanArray,
   INVALIDATE_ACTION,
   FULFILLED_ACTION,
   PENDING_ACTION,
   REJECTED_ACTION,
 };
 
-export { noop, getMetricsTimeDelta, isValid };
+export {
+  noop, getMetricsTimeDelta, isValid, omitEmptyFields, toCleanArray,
+};
 
 export default helpers;

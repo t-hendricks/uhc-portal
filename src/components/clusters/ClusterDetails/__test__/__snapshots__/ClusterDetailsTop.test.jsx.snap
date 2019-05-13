@@ -238,5 +238,23 @@ clusters:
       </ButtonGroup>
     </Col>
   </Row>
+  <Row
+    bsClass="row"
+    componentClass="div"
+  >
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={12}
+    >
+      <Spinner
+        className=""
+        inline={false}
+        inverse={false}
+        loading={true}
+        size="md"
+      />
+    </Col>
+  </Row>
 </Grid>
 `;

@@ -107,6 +107,11 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           },
         }
       }
+      clusterIdentityProviders={
+        Object {
+          "clusterIDPList": Array [],
+        }
+      }
       credentials={
         Object {
           "credentials": Object {
@@ -528,6 +533,9 @@ clusters:
     />
     <Connect(DeleteClusterDialog)
       onClose={[Function]}
+    />
+    <Connect(ReduxForm)
+      clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
     />
   </div>
 </div>

@@ -418,6 +418,31 @@ p.notfound {
   margin-top: 15px;
 }
 
+#idpHint {
+  margin: 10px 0 10px;
+  border: 2px solid #b1afaf;
+}
+
+#idp-advanced-options {
+  padding-top: 10px;
+}
+
+// make <Button> look like <a href= ...>
+.buttonHref {
+  background: none!important;
+  color: inherit;
+  border: none;
+  padding: 0!important;
+  font: inherit;
+  border-bottom: 1px solid #0000EE;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+#idpHint .buttonHref{
+  border-bottom: 1px solid #004368;
+}
+
 #clusterdetails-content {
   margin: 20px 30px 0 30px;
 }

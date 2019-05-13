@@ -20,6 +20,7 @@ import { Redirect } from 'react-router';
 import {
   Modal, Button, Alert, Spinner,
 } from 'patternfly-react';
+
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
 import constants from './CreateClusterModalHelper';
 import ManagedClusterForm from './ManagedClusterForm';
@@ -35,7 +36,6 @@ function CreateClusterModal(props) {
     resetForm();
     closeModal('create-cluster');
   };
-
 
   if (createClusterResponse.fulfilled) {
     onClose();

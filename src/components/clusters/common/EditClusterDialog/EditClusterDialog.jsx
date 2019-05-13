@@ -5,7 +5,7 @@ import {
   Button, Form, Modal, Alert, Grid, Col, Row, FormGroup, ControlLabel, Spinner,
 } from 'patternfly-react';
 
-import ReduxVerticalFormGroup from '../../../common/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../common/validators';
 import ModalHeader from '../../../common/Modal/components/ModalHeader';
 

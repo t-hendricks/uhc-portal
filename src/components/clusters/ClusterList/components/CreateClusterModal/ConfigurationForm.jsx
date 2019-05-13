@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
 import { Col } from 'patternfly-react';
-import ReduxVerticalFormGroup from '../../../../common/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import validators from '../../../../../common/validators';
-import ReduxCheckbox from '../../../../common/ReduxCheckbox';
+import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
 import { ConfigurationHint, RegionsHint } from './CreateClusterModalHelper';
 
 function ConfigurationForm(props) {
