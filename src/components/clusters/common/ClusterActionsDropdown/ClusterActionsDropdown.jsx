@@ -69,6 +69,7 @@ const ClusterActionsDropdown = (props) => {
     const deleteModalData = {
       clusterID: cluster.id,
       clusterName: cluster.name,
+      infraID: cluster.infra_id,
       managed: cluster.managed,
     };
 

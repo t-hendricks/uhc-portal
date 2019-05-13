@@ -3,6 +3,7 @@
   "id": "1GRoczjlSc54Rk7So1R8Vx3fW9y",
   "href": "/api/clusters_mgmt/v1/clusters/1GRoczjlSc54Rk7So1R8Vx3fW9y",
   "name": "fake-selfmanaged-cluster",
+  "infra_id": "fake-selfmanaged-cluster-a1c4",
   "external_id": "8b00e902-f675-4903-9118-91a8f9f5110a",
   "display_name": "fake-selfmanaged-cluster",
   "creation_timestamp": "2019-01-29T16:04:15.281411Z",

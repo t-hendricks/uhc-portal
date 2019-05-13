@@ -2,7 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  Button, Icon, Alert, FormControl, Spinner, MessageDialog,
+  Alert,
+  Button,
+  ControlLabel,
+  FormControl,
+  FormGroup,
+  Icon,
+  MessageDialog,
+  Spinner,
 } from 'patternfly-react';
 
 import { deleteClusterDialogActions } from './DeleteClusterDialogActions';
@@ -13,6 +20,21 @@ import { noop } from '../../../../common/helpers';
 class DeleteClusterDialog extends React.Component {
   state = {
     clusterNameInput: '',
+    infraIdInput: '',
+    awsKeyInput: '',
+    awsSecretInput: '',
+  }
+
+  componentWillReceiveProps(props) {
+    const { modalData } = props;
+    const { infraIdInput } = this.state;
+
+    if (modalData.infraID && !infraIdInput) {
+      // Fill in the infraID input field if available
+      this.setState({
+        infraIdInput: modalData.infraID,
+      });
+    }
   }
 
   componentDidUpdate() {
@@ -23,9 +45,9 @@ class DeleteClusterDialog extends React.Component {
     }
   }
 
-  setValue(event) {
+  setValue(field, event) {
     this.setState({
-      clusterNameInput: event.target.value,
+      [field]: event.target.value,
     });
   }
 
@@ -34,6 +56,9 @@ class DeleteClusterDialog extends React.Component {
     // reset the input, so it'll be empty next time the dialog is opened.
     this.setState({
       clusterNameInput: '',
+      infraIdInput: '',
+      awsKeyInput: '',
+      awsSecretInput: '',
     });
     clearDeleteClusterResponse(); // clear the response for the next time the dialog is shown.
     close(); // Close the dialog.
@@ -42,56 +67,69 @@ class DeleteClusterDialog extends React.Component {
 
   render() {
     const {
-      isOpen, modalData, submit, deleteClusterResponse,
+      isOpen,
+      modalData,
+      deleteCluster,
+      updateAndDeleteCluster,
+      deleteClusterResponse,
     } = this.props;
 
-    const { clusterID, clusterName, managed } = modalData;
+    const {
+      clusterID,
+      clusterName,
+      infraID,
+      managed,
+    } = modalData;
 
-    const { clusterNameInput } = this.state;
+    const {
+      clusterNameInput,
+      infraIdInput,
+      awsKeyInput,
+      awsSecretInput,
+    } = this.state;
 
     const errorContainer = deleteClusterResponse.error ? (
       <Alert>
         <span>{`Error deleting cluster: ${deleteClusterResponse.errorMessage}`}</span>
       </Alert>) : null;
 
-
     const isPending = deleteClusterResponse.pending;
-    const isValid = clusterNameInput === clusterName;
+    const isValid = managed
+      ? clusterNameInput === clusterName
+      : (infraIdInput && awsKeyInput && awsSecretInput);
+
+    const doSubmit = () => {
+      if (managed) {
+        deleteCluster(clusterID);
+      } else {
+        updateAndDeleteCluster(clusterID, {
+          infra_id: infraIdInput,
+          aws: {
+            access_key_id: awsKeyInput,
+            secret_access_key: awsSecretInput,
+          },
+        });
+      }
+    };
 
     const deleteBtn = (
-      <Button id="deleteClusterBtn" bsStyle={!isPending ? 'danger' : 'default'} disabled={!isValid || isPending} onClick={() => submit(clusterID, managed)}>
+      <Button id="deleteClusterBtn" bsStyle={!isPending ? 'danger' : 'default'} disabled={!isValid || isPending} onClick={() => doSubmit(clusterID)}>
         {!isPending ? 'Delete' : <Spinner size="sm" inline loading />}
       </Button>
     );
 
     const icon = <Icon type="pf" name="warning-triangle-o" />;
 
-    const managedMessage = (
-      <p>
-      This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
-      </p>
-    );
-    const selfManagedMessage = (
-      <p>
-      This action cannot be undone.
-        <br />
-        Since this is a self managed cluster, this action will only detach the cluster
-        from the portal.
-        <br />
-        Delete the cluster resources externally before performing this action.
-      </p>
-    );
-
-
-    const message = managed ? managedMessage : selfManagedMessage;
-
     const primaryContent = (
       <React.Fragment>
         {errorContainer}
-        {message}
+        <p>
+          This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
+        </p>
       </React.Fragment>
     );
-    const secondaryContent = (
+
+    const managedForm = (
       <React.Fragment>
         <p>
           Confirm deletion by typing
@@ -104,10 +142,59 @@ class DeleteClusterDialog extends React.Component {
           type="text"
           value={clusterNameInput}
           placeholder="Enter name"
-          onChange={e => this.setValue(e)}
+          onChange={e => this.setValue('clusterNameInput', e)}
+          disabled={isPending}
           autoFocus
         />
-      </React.Fragment>);
+      </React.Fragment>
+    );
+
+    const selfManagedForm = (
+      <React.Fragment>
+        <p>
+          Please enter all the necessary information to delete the
+          {' '}
+          <span style={{ fontWeight: 'bold' }}>{clusterName}</span>
+          {' '}
+          cluster:
+        </p>
+        <FormGroup>
+          <ControlLabel htmlFor="infra-id">Infra ID</ControlLabel>
+          <FormControl
+            id="infra-id"
+            type="text"
+            value={infraIdInput}
+            placeholder="Enter Infra ID"
+            onChange={e => this.setValue('infraIdInput', e)}
+            disabled={isPending || !!infraID}
+            autoFocus={!infraID}
+          />
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel htmlFor="aws-key">AWS access key ID</ControlLabel>
+          <FormControl
+            id="aws-key"
+            type="password"
+            value={awsKeyInput}
+            placeholder="AWS access key ID"
+            onChange={e => this.setValue('awsKeyInput', e)}
+            disabled={isPending}
+            autoFocus={!!infraID}
+          />
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel htmlFor="aws-secret">AWS secret access key</ControlLabel>
+          <FormControl
+            id="aws-secret"
+            type="password"
+            value={awsSecretInput}
+            placeholder="AWS secret access key"
+            onChange={e => this.setValue('awsSecretInput', e)}
+            disabled={isPending}
+          />
+        </FormGroup>
+      </React.Fragment>
+    );
 
     const footer = (
       <React.Fragment>
@@ -125,7 +212,7 @@ class DeleteClusterDialog extends React.Component {
         title="Delete Cluster"
         icon={icon}
         primaryContent={primaryContent}
-        secondaryContent={secondaryContent}
+        secondaryContent={managed ? managedForm : selfManagedForm}
         footer={footer}
       />
     );
@@ -137,7 +224,8 @@ DeleteClusterDialog.propTypes = {
   modalData: PropTypes.object,
   clearDeleteClusterResponse: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
-  submit: PropTypes.func.isRequired,
+  deleteCluster: PropTypes.func.isRequired,
+  updateAndDeleteCluster: PropTypes.func.isRequired,
   deleteClusterResponse: PropTypes.object,
   onClose: PropTypes.func,
 };
@@ -154,7 +242,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   clearDeleteClusterResponse: () => deleteClusterDialogActions.deletedClusterResponse(),
-  submit: (clusterID, managed) => deleteClusterDialogActions.deleteCluster(clusterID, managed),
+  updateAndDeleteCluster: (clusterID, attrs) => deleteClusterDialogActions
+    .updateAndDeleteCluster(clusterID, attrs),
+  deleteCluster: clusterID => deleteClusterDialogActions.deleteCluster(clusterID),
   close: () => closeModal('delete-cluster'),
 };
 
