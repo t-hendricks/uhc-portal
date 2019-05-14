@@ -98,7 +98,6 @@ const REJECTED_ACTION = base => `${base}_REJECTED`;
 
 const toCleanArray = str => str.split(',').map(item => item.trim()).filter(item => item);
 
-
 const omitEmptyFields = (obj) => {
   const objToClean = obj;
   Object.keys(objToClean).forEach((key) => {

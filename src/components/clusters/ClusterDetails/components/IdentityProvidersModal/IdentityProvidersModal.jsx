@@ -26,7 +26,6 @@ import ReduxFormDropdown from '../../../../common/ReduxFormComponents/ReduxFormD
 import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
 import validators from '../../../../../common/validators';
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
-import { toCleanArray } from '../../../../../common/helpers';
 
 class IdentityProvidersModal extends React.Component {
   componentDidUpdate() {
@@ -201,7 +200,6 @@ class IdentityProvidersModal extends React.Component {
                     type="text"
                     placeholder="comma separated, example: 'org1,org2,org3"
                     disabled={createIDPResponse.pending}
-                    normalize={toCleanArray}
                   />
                   <Field
                     component={ReduxVerticalFormGroup}
@@ -210,7 +208,6 @@ class IdentityProvidersModal extends React.Component {
                     type="text"
                     placeholder="comma separated, example: 'team1,team2"
                     disabled={createIDPResponse.pending}
-                    normalize={toCleanArray}
                   />
                   <Field
                     component={ReduxFormDropdown}
