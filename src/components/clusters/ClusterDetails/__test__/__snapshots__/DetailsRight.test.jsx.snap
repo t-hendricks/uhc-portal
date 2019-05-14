@@ -95,8 +95,8 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
           },
           "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
           "flavour": Object {
-            "href": "/api/clusters_mgmt/v1/flavours/4",
-            "id": "4",
+            "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+            "id": "osd-4",
             "kind": "FlavourLink",
           },
           "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
@@ -328,8 +328,8 @@ exports[`<DetailsRight /> should render 1`] = `
           },
           "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
           "flavour": Object {
-            "href": "/api/clusters_mgmt/v1/flavours/4",
-            "id": "4",
+            "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+            "id": "osd-4",
             "kind": "FlavourLink",
           },
           "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",

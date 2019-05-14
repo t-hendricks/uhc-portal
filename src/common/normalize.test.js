@@ -75,8 +75,8 @@ const clusterWithMetricsAtTopLevel = {
   state: 'error',
   flavour: {
     kind: 'FlavourLink',
-    id: '4',
-    href: '/api/clusters_mgmt/v1/flavours/4',
+    id: 'osd-4',
+    href: '/api/clusters_mgmt/v1/flavours/osd-4',
   },
   groups: {
     kind: 'GroupListLink',
@@ -149,8 +149,8 @@ const clusterWithMetricsSubobject = {
   state: 'error',
   flavour: {
     kind: 'FlavourLink',
-    id: '4',
-    href: '/api/clusters_mgmt/v1/flavours/4',
+    id: 'osd-4',
+    href: '/api/clusters_mgmt/v1/flavours/osd-4',
   },
   groups: {
     kind: 'GroupListLink',
@@ -262,8 +262,8 @@ const clusterWithMissingMetrics = {
   state: 'error',
   flavour: {
     kind: 'FlavourLink',
-    id: '4',
-    href: '/api/clusters_mgmt/v1/flavours/4',
+    id: 'osd-4',
+    href: '/api/clusters_mgmt/v1/flavours/osd-4',
   },
   groups: {
     kind: 'GroupListLink',
