@@ -6,7 +6,7 @@ import { createClusterIdentityProvider, resetCreatedClusterIDPResponse, getClust
 import { closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
-import { omitEmptyFields } from '../../../../../common/helpers';
+import { omitEmptyFields, toCleanArray } from '../../../../../common/helpers';
 
 const reduxFormConfig = {
   form: 'CreateIdentityProvider',
@@ -38,8 +38,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         client_id: formData.client_id,
         client_secret: formData.client_secret,
         hostname: formData.hostname,
-        organizations: formData.organizations.length ? formData.organizations : undefined,
-        teams: formData.teams.length ? formData.teams : undefined,
+        organizations: formData.organizations.length
+          ? toCleanArray(formData.organizations) : undefined,
+        teams: formData.teams.length ? toCleanArray(formData.teams) : undefined,
       },
     };
     dispatch(

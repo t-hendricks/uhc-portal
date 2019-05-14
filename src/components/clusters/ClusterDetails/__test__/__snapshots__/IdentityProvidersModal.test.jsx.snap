@@ -189,7 +189,6 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
                 component={[Function]}
                 label="Organizations"
                 name="organizations"
-                normalize={[Function]}
                 placeholder="comma separated, example: 'org1,org2,org3"
                 type="text"
               />
@@ -197,7 +196,6 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
                 component={[Function]}
                 label="Teams"
                 name="teams"
-                normalize={[Function]}
                 placeholder="comma separated, example: 'team1,team2"
                 type="text"
               />
