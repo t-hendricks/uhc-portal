@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { humanizeValueWithUnit } from '../../../../../common/unitParser';
+import { humanizeValueWithUnit } from '../../../../../common/units';
 
 function NumberWithUnit({ valueWithUnit, unitOverride, isBytes }) {
   let { value } = valueWithUnit;

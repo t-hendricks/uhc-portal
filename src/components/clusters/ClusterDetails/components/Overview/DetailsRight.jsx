@@ -5,7 +5,7 @@ import result from 'lodash/result';
 import ClusterNetwork from './ClusterNetwork';
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
 import { getClusterStateAndDescription } from '../../../common/clusterStates';
-import { humanizeValueWithUnit } from '../../../../../common/unitParser';
+import { humanizeValueWithUnit } from '../../../../../common/units';
 
 function DetailsRight({ cluster, routerShards }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(

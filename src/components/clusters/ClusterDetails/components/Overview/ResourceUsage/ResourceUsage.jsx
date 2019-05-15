@@ -4,7 +4,7 @@ import { Grid } from 'patternfly-react';
 
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import { metricsStatusMessages, maxMetricsTimeDelta } from './ResourceUsage.consts';
-import { parseValueWithUnit } from '../../../../../../common/unitParser';
+import { parseValueWithUnit } from '../../../../../../common/units';
 import { getMetricsTimeDelta } from '../../../../../../common/helpers';
 
 function ResourceUsage({ cluster }) {
@@ -13,6 +13,13 @@ function ResourceUsage({ cluster }) {
   const metricsAvailable = process.env.UHC_SHOW_OLD_METRICS === 'true'
     ? true
     : getMetricsTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta;
+
+  // Why parse memory but not cpu?
+  // In theory both are `ValueWithUnit` but openapi only documents units for the case of bytes,
+  // and we only implemented parseValueWithUnit() for "B", "KB", "KiB" etc.
+  // In practice server doesn't humanize at all, always sends "B"!
+  // TODO: make up our minds...
+  const getValue = ({ value, unit }) => parseValueWithUnit(value, unit);
 
   return (
     <Grid fluid>
@@ -24,20 +31,17 @@ function ResourceUsage({ cluster }) {
               <ClusterUtilizationChart
                 title="vCPU"
                 total={cluster.metrics.cpu.total.value}
-                unit="Cores"
                 used={cluster.metrics.cpu.used.value}
+                unit="Cores"
+                humanize={false}
                 donutId="cpu_donut"
               />
               <ClusterUtilizationChart
                 title="MEMORY"
-                totalBytes={
-                  parseValueWithUnit(cluster.metrics.memory.total.value,
-                    cluster.metrics.memory.total.unit)
-                }
-                usedBytes={
-                  parseValueWithUnit(cluster.metrics.memory.used.value,
-                    cluster.metrics.memory.used.unit)
-                }
+                total={getValue(cluster.metrics.memory.total)}
+                used={getValue(cluster.metrics.memory.used)}
+                unit="B"
+                humanize
                 donutId="memory_donut"
               />
             </React.Fragment>)
