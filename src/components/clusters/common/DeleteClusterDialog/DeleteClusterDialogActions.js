@@ -1,11 +1,16 @@
 import { deleteClusterDialogConstants } from './DeleteClusterDialogConstants';
 import { clusterService } from '../../../../services';
 
-const deleteCluster = (clusterID, managed) => ({
+const deleteCluster = clusterID => ({
   type: deleteClusterDialogConstants.DELETE_CLUSTER,
-  payload: managed
-    ? clusterService.deleteCluster(clusterID)
-    : clusterService.deleteSelfManagedCluster(clusterID),
+  payload: clusterService.deleteCluster(clusterID),
+});
+
+// This updates the cluster (typically for AWS credentials and such) so that it can be deleted
+const updateAndDeleteCluster = (clusterID, attrs) => ({
+  type: deleteClusterDialogConstants.DELETE_CLUSTER,
+  payload: clusterService.editCluster(clusterID, attrs)
+    .then(() => clusterService.deleteCluster(clusterID)),
 });
 
 const deletedClusterResponse = () => ({
@@ -14,11 +19,13 @@ const deletedClusterResponse = () => ({
 
 const deleteClusterDialogActions = {
   deleteCluster,
+  updateAndDeleteCluster,
   deletedClusterResponse,
 };
 
 export {
   deleteClusterDialogActions,
   deleteCluster,
+  updateAndDeleteCluster,
   deletedClusterResponse,
 };

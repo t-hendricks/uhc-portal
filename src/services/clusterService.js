@@ -30,12 +30,7 @@ const editCluster = (id, data) => apiRequest({
 
 const deleteCluster = id => apiRequest({
   method: 'delete',
-  url: `/api/clusters_mgmt/v1/clusters/${id}/`,
-});
-
-const deleteSelfManagedCluster = id => apiRequest({
-  method: 'delete',
-  url: `/api/clusters_mgmt/v1/clusters/${id}?deprovision=false`,
+  url: `/api/clusters_mgmt/v1/clusters/${id}`,
 });
 
 const getCloudProviders = () => apiRequest({
@@ -102,7 +97,6 @@ const clusterService = {
   getCloudProviders,
   getCloudRegions,
   deleteCluster,
-  deleteSelfManagedCluster,
   getClusterCredentials,
   createClusterRouterShard,
   editClusterRouterShard,
