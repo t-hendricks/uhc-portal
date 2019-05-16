@@ -247,13 +247,7 @@ clusters:
       componentClass="div"
       sm={12}
     >
-      <Spinner
-        className=""
-        inline={false}
-        inverse={false}
-        loading={true}
-        size="md"
-      />
+      <IdentityProvidersHint />
     </Col>
   </Row>
 </Grid>
