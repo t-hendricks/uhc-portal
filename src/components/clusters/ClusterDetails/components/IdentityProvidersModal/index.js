@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
+import result from 'lodash/result';
 
 import IdentityProvidersModal from './IdentityProvidersModal';
 import { createClusterIdentityProvider, resetCreatedClusterIDPResponse, getClusterIdentityProviders } from './IdentityProvidersActions';
@@ -38,9 +39,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         client_id: formData.client_id,
         client_secret: formData.client_secret,
         hostname: formData.hostname,
-        organizations: formData.organizations.length
+        organizations: result(formData, 'organizations', false)
           ? toCleanArray(formData.organizations) : undefined,
-        teams: formData.teams.length ? toCleanArray(formData.teams) : undefined,
+        teams: result(formData, 'teams', false) ? toCleanArray(formData.teams) : undefined,
       },
     };
     dispatch(

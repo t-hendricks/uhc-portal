@@ -38,8 +38,6 @@ class ClusterDetailsTop extends React.Component {
 
     const { showIDPHint } = this.state;
 
-    const loadingIDP = !clusterIdentityProviders.fulfilled;
-
     const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
 
     const openIDPModal = () => {
@@ -143,7 +141,7 @@ class ClusterDetailsTop extends React.Component {
         {cluster.managed && !hasIdentityProviders && showIDPHint && (
         <Row>
           <Col sm={12}>
-            {loadingIDP ? <Spinner loading /> : <IdentityProvidersHint />}
+            {clusterIdentityProviders.pending ? <Spinner loading /> : <IdentityProvidersHint />}
           </Col>
         </Row>)}
       </Grid>
