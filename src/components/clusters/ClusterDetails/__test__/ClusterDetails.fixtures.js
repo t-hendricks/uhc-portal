@@ -87,8 +87,8 @@ const clusterDetails = {
     state: 'ready',
     flavour: {
       kind: 'FlavourLink',
-      id: '4',
-      href: '/api/clusters_mgmt/v1/flavours/4',
+      id: 'osd-4',
+      href: '/api/clusters_mgmt/v1/flavours/osd-4',
     },
     dns: {
       base_domain: 'sdev.devshift.net',

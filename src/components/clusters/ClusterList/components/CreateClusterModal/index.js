@@ -35,9 +35,6 @@ const mapDispatchToProps = dispatch => ({
       region: {
         id: formData.region,
       },
-      flavour: {
-        id: '4',
-      },
       nodes: {
         compute: parseInt(formData.nodes_compute, 10),
       },
