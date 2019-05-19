@@ -2,17 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import result from 'lodash/result';
 
-import ClusterNetwork from './ClusterNetwork';
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
-import { getClusterStateAndDescription } from '../../../common/clusterStates';
 import { humanizeValueWithUnit } from '../../../../../common/units';
+
+import ClusterNetwork from './ClusterNetwork';
 
 function DetailsRight({ cluster, routerShards }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
     cluster.metrics.memory.total.value, cluster.metrics.memory.total.unit,
   );
 
-  const clusterState = getClusterStateAndDescription(cluster);
   const showDesiredNodes = cluster.managed;
 
   return (
@@ -21,10 +20,10 @@ function DetailsRight({ cluster, routerShards }) {
         <dt>
           Status
         </dt>
-        <dd style={clusterState.style}>
-          <ClusterStateIcon clusterState={clusterState.state} />
+        <dd style={cluster.state.style}>
+          <ClusterStateIcon clusterState={cluster.state.state} />
           {' '}
-          {clusterState.description}
+          {cluster.state.description}
         </dd>
         <dt>
           <React.Fragment>

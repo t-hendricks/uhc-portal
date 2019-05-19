@@ -82,7 +82,7 @@ function getErrorMessage(payload) {
   return JSON.stringify(response);
 }
 
-function getMetricsTimeDelta(t1, t2 = new Date()) {
+function getTimeDelta(t1, t2 = new Date()) {
   const timeDiff = Math.abs(t2.getTime() - t1.getTime());
   return Math.ceil(timeDiff / (1000 * 3600));
 }
@@ -113,7 +113,7 @@ const helpers = {
   viewPropsChanged,
   createViewQueryObject,
   getErrorMessage,
-  getMetricsTimeDelta,
+  getTimeDelta,
   isValid,
   omitEmptyFields,
   toCleanArray,
@@ -124,7 +124,7 @@ const helpers = {
 };
 
 export {
-  noop, getMetricsTimeDelta, isValid, omitEmptyFields, toCleanArray,
+  noop, getTimeDelta, isValid, omitEmptyFields, toCleanArray,
 };
 
 export default helpers;

@@ -5,14 +5,14 @@ import { Grid } from 'patternfly-react';
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import { metricsStatusMessages, maxMetricsTimeDelta } from './ResourceUsage.consts';
 import { parseValueWithUnit } from '../../../../../../common/units';
-import { getMetricsTimeDelta } from '../../../../../../common/helpers';
+import { getTimeDelta } from '../../../../../../common/helpers';
 
 function ResourceUsage({ cluster }) {
   const metricsLatsUpdate = new Date(cluster.metrics.cpu.updated_timestamp);
 
   const metricsAvailable = process.env.UHC_SHOW_OLD_METRICS === 'true'
     ? true
-    : getMetricsTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta;
+    : getTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta;
 
   // Why parse memory but not cpu?
   // In theory both are `ValueWithUnit` but openapi only documents units for the case of bytes,
@@ -47,7 +47,7 @@ function ResourceUsage({ cluster }) {
             </React.Fragment>)
             : (
               <p>
-                {metricsStatusMessages[cluster.state] || metricsStatusMessages.default}
+                {metricsStatusMessages[cluster.state.state] || metricsStatusMessages.default}
               </p>
             ) }
         </div>
