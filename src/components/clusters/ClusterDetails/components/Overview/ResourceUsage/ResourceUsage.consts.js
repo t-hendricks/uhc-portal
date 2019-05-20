@@ -6,6 +6,8 @@ const metricsStatusMessages = {
   [clusterStates.ERROR]: 'An error occured',
   [clusterStates.UNINSTALLING]: 'This cluster is being deleted so some data might not be available.',
   [clusterStates.PATCHING]: 'The cluster currently does not have any metrics data. Please try again later.',
+  [clusterStates.STALE]: 'No metrics sent during the last 12 hours.',
+  [clusterStates.ARCHIVED]: 'No metrics sent during the last week.',
   [clusterStates.UNKNOWN]: 'The cluster currently does not have any metrics data. Please try again later.',
   default: 'The cluster currently does not have any metrics data. Please try again later.',
 };

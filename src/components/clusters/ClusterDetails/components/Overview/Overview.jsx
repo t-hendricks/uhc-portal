@@ -2,14 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Row, Col } from 'patternfly-react';
 
+import { getClusterStateAndDescription } from '../../../common/clusterStates';
+
 import ResourceUsage from './ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
 
 function Overview({ cluster, cloudProviders, routerShards }) {
+  const clusterState = getClusterStateAndDescription(cluster);
   return (
     <React.Fragment>
-      <ResourceUsage cluster={cluster} />
+      <ResourceUsage cluster={{ ...cluster, state: clusterState }} />
       <Grid fluid>
         <div className="cl-details-card">
           <div className="cl-details-card-title"><h3>Details</h3></div>
@@ -19,7 +22,10 @@ function Overview({ cluster, cloudProviders, routerShards }) {
                 <DetailsLeft cluster={cluster} cloudProviders={cloudProviders} />
               </Col>
               <Col sm={6}>
-                <DetailsRight cluster={cluster} routerShards={routerShards} />
+                <DetailsRight
+                  cluster={{ ...cluster, state: clusterState }}
+                  routerShards={routerShards}
+                />
               </Col>
             </Row>
           </div>

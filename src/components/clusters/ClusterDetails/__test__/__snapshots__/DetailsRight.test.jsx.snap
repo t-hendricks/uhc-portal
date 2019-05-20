@@ -8,18 +8,9 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
     <dt>
       Status
     </dt>
-    <dd
-      style={
-        Object {
-          "textTransform": "capitalize",
-        }
-      }
-    >
-      <ClusterStateIcon
-        clusterState="ready"
-      />
+    <dd>
+      <ClusterStateIcon />
        
-      ready
     </dd>
     <dt>
       Total
@@ -214,18 +205,9 @@ exports[`<DetailsRight /> should render 1`] = `
     <dt>
       Status
     </dt>
-    <dd
-      style={
-        Object {
-          "textTransform": "capitalize",
-        }
-      }
-    >
-      <ClusterStateIcon
-        clusterState="ready"
-      />
+    <dd>
+      <ClusterStateIcon />
        
-      ready
     </dd>
     <dt>
       Total

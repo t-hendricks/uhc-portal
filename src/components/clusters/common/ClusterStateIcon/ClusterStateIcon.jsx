@@ -32,6 +32,12 @@ function ClusterStateIcon(props) {
     case clusterStates.WARNING:
       icon.name = 'warning-triangle-o';
       break;
+    case clusterStates.STALE:
+      icon.name = 'disconnected';
+      break;
+    case clusterStates.ARCHIVED:
+      icon = { type: 'fa', name: 'chain-broken' };
+      break;
     default:
       icon.name = 'unknown';
   }
