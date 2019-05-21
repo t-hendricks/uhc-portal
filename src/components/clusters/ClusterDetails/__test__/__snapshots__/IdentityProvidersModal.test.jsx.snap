@@ -187,15 +187,19 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
               />
               <Field
                 component={[Function]}
+                helpText=""
                 label="Organizations"
                 name="organizations"
+                onChange={[Function]}
                 placeholder="comma separated, example: 'org1,org2,org3"
                 type="text"
               />
               <Field
                 component={[Function]}
+                helpText=""
                 label="Teams"
                 name="teams"
+                onChange={[Function]}
                 placeholder="comma separated, example: 'team1,team2"
                 type="text"
               />

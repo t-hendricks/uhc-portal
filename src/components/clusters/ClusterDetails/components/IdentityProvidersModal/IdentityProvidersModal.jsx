@@ -28,6 +28,11 @@ import validators from '../../../../../common/validators';
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
 
 class IdentityProvidersModal extends React.Component {
+  state = {
+    teamsDisabled: false,
+    orgsDisabled: false,
+  }
+
   componentDidUpdate() {
     const { createIDPResponse, getClusterIdentityProviders } = this.props;
     if (createIDPResponse.fulfilled) {
@@ -43,10 +48,23 @@ class IdentityProvidersModal extends React.Component {
     closeModal();
   };
 
+  toggleDisable = (e, value, fieldToToggle) => {
+    // equivalent to const isDisabled = this.state[fieldToToggle]
+    const { [fieldToToggle]: isDisabled } = this.state;
+
+    if (value && !isDisabled) {
+      this.setState({ [fieldToToggle]: true });
+    } else if ((!value || value === '') && isDisabled) {
+      this.setState({ [fieldToToggle]: false });
+    }
+  };
+
   render() {
     const {
       isOpen, handleSubmit, createIDPResponse, clusterName,
     } = this.props;
+
+    const { teamsDisabled, orgsDisabled } = this.state;
 
     const createIDPError = createIDPResponse.error && (
     <Alert>
@@ -199,7 +217,9 @@ class IdentityProvidersModal extends React.Component {
                     label="Organizations"
                     type="text"
                     placeholder="comma separated, example: 'org1,org2,org3"
-                    disabled={createIDPResponse.pending}
+                    disabled={orgsDisabled || createIDPResponse.pending}
+                    helpText={orgsDisabled ? 'Cannot be used in combination with the teams field' : ''}
+                    onChange={(e, value) => this.toggleDisable(e, value, 'teamsDisabled')}
                   />
                   <Field
                     component={ReduxVerticalFormGroup}
@@ -207,7 +227,9 @@ class IdentityProvidersModal extends React.Component {
                     label="Teams"
                     type="text"
                     placeholder="comma separated, example: 'team1,team2"
-                    disabled={createIDPResponse.pending}
+                    disabled={teamsDisabled || createIDPResponse.pending}
+                    helpText={teamsDisabled ? 'Cannot be used in combination with the organizations field' : ''}
+                    onChange={(e, value) => this.toggleDisable(e, value, 'orgsDisabled')}
                   />
                   <Field
                     component={ReduxFormDropdown}
