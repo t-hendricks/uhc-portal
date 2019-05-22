@@ -15,13 +15,6 @@ const getCreateIDPRequestData = (formData) => {
     hosted_domain: formData.hosted_domain,
   };
 
-  const gitlab = {
-    client_id: formData.client_id,
-    client_secret: formData.client_secret,
-    url: formData.url,
-    ca: formData.gitlab_ca,
-  };
-
   const ldap = {
     attributes: {
       id: toCleanArray(formData.ldap_id),
@@ -55,7 +48,6 @@ const getCreateIDPRequestData = (formData) => {
 
   const IDPsData = {
     GithubIdentityProvider: github,
-    GitlabIdentityProvider: gitlab,
     GoogleIdentityProvider: google,
     OpenIDIdentityProvider: openId,
     LDAPIdentityProvider: ldap,
