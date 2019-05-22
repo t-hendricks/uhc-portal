@@ -30,8 +30,6 @@ import ModalHeader from '../../../../common/Modal/components/ModalHeader';
 import BasicFields from './components/BasicFields';
 import GithubForm from './components/GithubForm';
 import GoogleForm from './components/GoogleForm';
-import GitlabForm from './components/GitlabForm';
-import GitlabFormRequired from './components/GitlabFormRequired';
 import LDAPForm from './components/LDAPForm';
 import OpenIDForm from './components/OpenIDForm';
 import OpenIDFormRequired from './components/OpenIDFormRequired';
@@ -98,10 +96,6 @@ class IdentityProvidersModal extends React.Component {
         value: 'GithubIdentityProvider',
       },
       {
-        name: 'Gitlab',
-        value: 'GitlabIdentityProvider',
-      },
-      {
         name: 'Google',
         value: 'GoogleIdentityProvider',
       },
@@ -139,13 +133,11 @@ class IdentityProvidersModal extends React.Component {
       GoogleIdentityProvider: GoogleForm,
       OpenIDIdentityProvider: OpenIDForm,
       LDAPIdentityProvider: LDAPForm,
-      GitlabIdentityProvider: GitlabForm,
     };
 
     const providersRequiredFields = {
       LDAPIdentityProvider: LDAPFormRequired,
       OpenIDIdentityProvider: OpenIDFormRequired,
-      GitlabIdentityProvider: GitlabFormRequired,
       GithubIdentityProvider: BasicFields,
       GoogleIdentityProvider: BasicFields,
     };

@@ -90,10 +90,6 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
                     "value": "GithubIdentityProvider",
                   },
                   Object {
-                    "name": "Gitlab",
-                    "value": "GitlabIdentityProvider",
-                  },
-                  Object {
                     "name": "Google",
                     "value": "GoogleIdentityProvider",
                   },
