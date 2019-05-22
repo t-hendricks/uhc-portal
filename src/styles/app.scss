@@ -468,6 +468,14 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: 10px;
 }
 
+.archived {
+  color: #cc0000;
+};
+
+.stale {
+  color: #ec7a08;
+};
+
 // To display organization names in the masthead, we need a longer max length for the text
 .uhc_header .pf-c-page__header-tools .pf-c-dropdown__toggle-text {
   max-width: 50ch; // pf default is 20ch

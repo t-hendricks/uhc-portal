@@ -9,6 +9,7 @@ function ClusterStateIcon(props) {
   const { clusterState } = props;
 
   let icon = { type: 'pf' };
+  let extraClasses = '';
   // Icons from http://openshift.github.io/openshift-origin-design/web-console/4.0-designs/status/status
   switch (clusterState) {
     case clusterStates.PENDING:
@@ -33,10 +34,12 @@ function ClusterStateIcon(props) {
       icon.name = 'warning-triangle-o';
       break;
     case clusterStates.STALE:
-      icon.name = 'disconnected';
+      icon = { type: 'fa', name: 'chain-broken' };
+      extraClasses = 'stale';
       break;
     case clusterStates.ARCHIVED:
       icon = { type: 'fa', name: 'chain-broken' };
+      extraClasses = 'archived';
       break;
     default:
       icon.name = 'unknown';
@@ -44,7 +47,7 @@ function ClusterStateIcon(props) {
   // patternfly bug workaround: pf icons ignore the `size` prop.
   // Specifying className='fa-lg' makes them larger too.
   return (
-    <Icon className="fa-lg clusterstate" {...icon} />);
+    <Icon className={`fa-lg clusterstate ${extraClasses}`} {...icon} />);
 }
 
 ClusterStateIcon.propTypes = {
