@@ -2,7 +2,7 @@
 
 exports[`<ClusterStateIcon /> renders correctly for error status 1`] = `
 <Icon
-  className="fa-lg clusterstate"
+  className="fa-lg clusterstate "
   name="error-circle-o"
   type="pf"
 />
@@ -10,7 +10,7 @@ exports[`<ClusterStateIcon /> renders correctly for error status 1`] = `
 
 exports[`<ClusterStateIcon /> renders correctly for installing status 1`] = `
 <Icon
-  className="fa-lg clusterstate"
+  className="fa-lg clusterstate "
   name="in-progress"
   type="pf"
 />
@@ -18,7 +18,7 @@ exports[`<ClusterStateIcon /> renders correctly for installing status 1`] = `
 
 exports[`<ClusterStateIcon /> renders correctly for patching status 1`] = `
 <Icon
-  className="fa-lg clusterstate"
+  className="fa-lg clusterstate "
   name="hourglass-half"
   type="fa"
 />
@@ -26,7 +26,7 @@ exports[`<ClusterStateIcon /> renders correctly for patching status 1`] = `
 
 exports[`<ClusterStateIcon /> renders correctly for pending status 1`] = `
 <Icon
-  className="fa-lg clusterstate"
+  className="fa-lg clusterstate "
   name="hourglass-half"
   type="fa"
 />
@@ -34,7 +34,7 @@ exports[`<ClusterStateIcon /> renders correctly for pending status 1`] = `
 
 exports[`<ClusterStateIcon /> renders correctly for ready status 1`] = `
 <Icon
-  className="fa-lg clusterstate"
+  className="fa-lg clusterstate "
   name="ok"
   type="pf"
 />
@@ -42,7 +42,7 @@ exports[`<ClusterStateIcon /> renders correctly for ready status 1`] = `
 
 exports[`<ClusterStateIcon /> renders correctly for uninstalling status 1`] = `
 <Icon
-  className="fa-lg clusterstate"
+  className="fa-lg clusterstate "
   name="ban"
   type="fa"
 />
@@ -50,7 +50,7 @@ exports[`<ClusterStateIcon /> renders correctly for uninstalling status 1`] = `
 
 exports[`<ClusterStateIcon /> renders correctly for unknown status 1`] = `
 <Icon
-  className="fa-lg clusterstate"
+  className="fa-lg clusterstate "
   name="unknown"
   type="pf"
 />
@@ -58,7 +58,7 @@ exports[`<ClusterStateIcon /> renders correctly for unknown status 1`] = `
 
 exports[`<ClusterStateIcon /> renders correctly for warning status 1`] = `
 <Icon
-  className="fa-lg clusterstate"
+  className="fa-lg clusterstate "
   name="warning-triangle-o"
   type="pf"
 />
