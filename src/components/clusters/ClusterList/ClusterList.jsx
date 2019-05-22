@@ -99,6 +99,7 @@ class ClusterList extends Component {
   render() {
     const {
       error,
+      valid,
       pending,
       clusters,
       viewOptions,
@@ -115,7 +116,7 @@ class ClusterList extends Component {
       return this.renderError();
     }
 
-    if ((!size(clusters) && pending && isEmpty(viewOptions.filter))
+    if ((!size(clusters) && pending && (isEmpty(viewOptions.filter) || !valid))
     || (!quota.fulfilled && !organization.error && !quota.error)) {
       return (
         <LoadingModal>
