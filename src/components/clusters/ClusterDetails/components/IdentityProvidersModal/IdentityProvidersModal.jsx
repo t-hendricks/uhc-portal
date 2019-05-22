@@ -27,10 +27,24 @@ import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox'
 import validators from '../../../../../common/validators';
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
 
+import BasicFields from './components/BasicFields';
+import GithubForm from './components/GithubForm';
+import GoogleForm from './components/GoogleForm';
+import GitlabForm from './components/GitlabForm';
+import GitlabFormRequired from './components/GitlabFormRequired';
+import LDAPForm from './components/LDAPForm';
+import OpenIDForm from './components/OpenIDForm';
+import OpenIDFormRequired from './components/OpenIDFormRequired';
+import LDAPFormRequired from './components/LDAPFormRequired';
+
 class IdentityProvidersModal extends React.Component {
-  state = {
-    teamsDisabled: false,
-    orgsDisabled: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      teamsDisabled: false,
+      orgsDisabled: false,
+    };
+    this.toggleDisable = this.toggleDisable.bind(this);
   }
 
   componentDidUpdate() {
@@ -48,8 +62,8 @@ class IdentityProvidersModal extends React.Component {
     closeModal();
   };
 
-  toggleDisable = (e, value, fieldToToggle) => {
-    // equivalent to const isDisabled = this.state[fieldToToggle]
+  toggleDisable(e, value, fieldToToggle) {
+    // equivalent to: const isDisabled = this.state[fieldToToggle]
     const { [fieldToToggle]: isDisabled } = this.state;
 
     if (value && !isDisabled) {
@@ -57,11 +71,11 @@ class IdentityProvidersModal extends React.Component {
     } else if ((!value || value === '') && isDisabled) {
       this.setState({ [fieldToToggle]: false });
     }
-  };
+  }
 
   render() {
     const {
-      isOpen, handleSubmit, createIDPResponse, clusterName,
+      isOpen, handleSubmit, createIDPResponse, clusterName, selectedIDP,
     } = this.props;
 
     const { teamsDisabled, orgsDisabled } = this.state;
@@ -71,7 +85,7 @@ class IdentityProvidersModal extends React.Component {
       <span>{`Error creating Identity Provider: ${createIDPResponse.errorMessage}`}</span>
     </Alert>);
 
-    const loadingSpinner = () => (
+    const LoadingSpinner = () => (
       <div className="form-loading-spinner">
         <span>Please wait...</span>
         <Spinner size="xs" loading inline />
@@ -83,22 +97,22 @@ class IdentityProvidersModal extends React.Component {
         name: 'Github',
         value: 'GithubIdentityProvider',
       },
-    // {
-    //   name: 'Gitlab',
-    //   value: 'GitlabIdentityProvider',
-    // },
-    // {
-    //   name: 'Google',
-    //   value: 'GoogleIdentityProvider',
-    // },
-    // {
-    //   name: 'OpenID',
-    //   value: 'OpenIDIdentityProvider',
-    // },
-    // {
-    //   name: 'LDAP',
-    //   value: 'LDAPIdentityProvider',
-    // },
+      {
+        name: 'Gitlab',
+        value: 'GitlabIdentityProvider',
+      },
+      {
+        name: 'Google',
+        value: 'GoogleIdentityProvider',
+      },
+      {
+        name: 'OpenID',
+        value: 'OpenIDIdentityProvider',
+      },
+      {
+        name: 'LDAP',
+        value: 'LDAPIdentityProvider',
+      },
     ];
 
     const mappingMethods = [
@@ -119,6 +133,25 @@ class IdentityProvidersModal extends React.Component {
         value: 'add',
       },
     ];
+
+    const providersAdvancedOptions = {
+      GithubIdentityProvider: GithubForm,
+      GoogleIdentityProvider: GoogleForm,
+      OpenIDIdentityProvider: OpenIDForm,
+      LDAPIdentityProvider: LDAPForm,
+      GitlabIdentityProvider: GitlabForm,
+    };
+
+    const providersRequiredFields = {
+      LDAPIdentityProvider: LDAPFormRequired,
+      OpenIDIdentityProvider: OpenIDFormRequired,
+      GitlabIdentityProvider: GitlabFormRequired,
+      GithubIdentityProvider: BasicFields,
+      GoogleIdentityProvider: BasicFields,
+    };
+
+    const SelectedProivderRequiredFields = providersRequiredFields[selectedIDP];
+    const SelectedProviderAdvancedOptions = providersAdvancedOptions[selectedIDP];
 
     return isOpen
     && (
@@ -163,26 +196,8 @@ class IdentityProvidersModal extends React.Component {
                   validate={validators.required}
                   disabled={createIDPResponse.pending}
                 />
-
-                <Field
-                  component={ReduxVerticalFormGroup}
-                  name="client_id"
-                  label="Client ID"
-                  type="text"
-                  placeholder="Client ID"
-                  validate={validators.required}
-                  disabled={createIDPResponse.pending}
-                />
-
-                <Field
-                  component={ReduxVerticalFormGroup}
-                  name="client_secret"
-                  label="Client Secret"
-                  type="password"
-                  placeholder="Client Secret"
-                  validate={validators.required}
-                  disabled={createIDPResponse.pending}
-                />
+                {SelectedProivderRequiredFields
+                  && (<SelectedProivderRequiredFields createIDPResponse={createIDPResponse} />)}
               </Col>
               <Col sm={4}>
                 <HintBlock
@@ -203,34 +218,15 @@ class IdentityProvidersModal extends React.Component {
             <Row>
               <ExpandCollapse>
                 <Col sm={5} id="idp-advanced-options">
-                  <Field
-                    component={ReduxVerticalFormGroup}
-                    name="hostname"
-                    label="Hostname"
-                    type="text"
-                    placeholder="hostname"
-                    disabled={createIDPResponse.pending}
-                  />
-                  <Field
-                    component={ReduxVerticalFormGroup}
-                    name="organizations"
-                    label="Organizations"
-                    type="text"
-                    placeholder="comma separated, example: 'org1,org2,org3"
-                    disabled={orgsDisabled || createIDPResponse.pending}
-                    helpText={orgsDisabled ? 'Cannot be used in combination with the teams field' : ''}
-                    onChange={(e, value) => this.toggleDisable(e, value, 'teamsDisabled')}
-                  />
-                  <Field
-                    component={ReduxVerticalFormGroup}
-                    name="teams"
-                    label="Teams"
-                    type="text"
-                    placeholder="comma separated, example: 'team1,team2"
-                    disabled={teamsDisabled || createIDPResponse.pending}
-                    helpText={teamsDisabled ? 'Cannot be used in combination with the organizations field' : ''}
-                    onChange={(e, value) => this.toggleDisable(e, value, 'orgsDisabled')}
-                  />
+                  {SelectedProviderAdvancedOptions
+                    && (
+                    <SelectedProviderAdvancedOptions
+                      createIDPResponse={createIDPResponse}
+                      toggleDisable={this.toggleDisable}
+                      teamsDisabled={teamsDisabled}
+                      orgsDisabled={orgsDisabled}
+                    />
+                    )}
                   <Field
                     component={ReduxFormDropdown}
                     options={mappingMethods}
@@ -262,12 +258,13 @@ class IdentityProvidersModal extends React.Component {
         <Button bsStyle="default" onClick={this.onClose} disabled={createIDPResponse.pending}>
           Cancel
         </Button>
-        {createIDPResponse.pending ? loadingSpinner() : null}
+        {createIDPResponse.pending ? <LoadingSpinner /> : null}
       </Modal.Footer>
     </Modal>
     );
   }
 }
+
 IdentityProvidersModal.propTypes = {
   clusterName: PropTypes.string,
   isOpen: PropTypes.bool,
@@ -277,11 +274,13 @@ IdentityProvidersModal.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   createIDPResponse: PropTypes.object,
   getClusterIdentityProviders: PropTypes.func,
+  selectedIDP: PropTypes.string,
 };
 
 IdentityProvidersModal.defaultProps = {
   clusterName: '',
   isOpen: false,
+  selectedIDP: 'GithubIdentityProvider',
 };
 
 export default IdentityProvidersModal;

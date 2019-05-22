@@ -96,7 +96,7 @@ const FULFILLED_ACTION = base => `${base}_FULFILLED`;
 const PENDING_ACTION = base => `${base}_PENDING`;
 const REJECTED_ACTION = base => `${base}_REJECTED`;
 
-const toCleanArray = str => str.split(',').map(item => item.trim()).filter(item => item);
+const toCleanArray = str => (str ? str.split(',').map(item => item.trim()).filter(item => item) : undefined);
 
 const omitEmptyFields = (obj) => {
   const objToClean = obj;
