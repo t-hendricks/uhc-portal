@@ -9,6 +9,7 @@ import { cloudProvidersReducer } from './cloudProvidersReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 import { LogsReducer } from '../../components/clusters/ClusterDetails/components/LogWindow/LogWindowReducer';
 import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersModal/IdentityProvidersReducer';
+import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/Users/UsersReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -21,6 +22,7 @@ const reducers = {
   modal: modalReducer,
   logs: LogsReducer,
   identityProviders: IdentityProvidersReducer,
+  clusterUsers: clusterUsersReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

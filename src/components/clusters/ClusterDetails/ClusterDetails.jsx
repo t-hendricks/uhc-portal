@@ -27,6 +27,7 @@ import {
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
+import Users from './components/Users';
 
 import LoadingModal from '../../common/LoadingModal';
 import EditClusterDialog from '../common/EditClusterDialog';
@@ -86,6 +87,7 @@ class ClusterDetails extends Component {
       fetchCredentials,
       fetchRouterShards,
       getLogs,
+      getUsers,
     } = this.props;
     const clusterID = match.params.id;
 
@@ -94,6 +96,7 @@ class ClusterDetails extends Component {
       fetchCredentials(clusterID);
       fetchRouterShards(clusterID);
       getLogs(clusterID);
+      getUsers(clusterID, 'dedicated-admins');
     }
   }
 
@@ -166,8 +169,13 @@ class ClusterDetails extends Component {
                 <NavItem eventKey={1}>
                   Overview
                 </NavItem>
+                {cluster.managed && (
+                  <NavItem eventKey={2}>
+                    Users
+                  </NavItem>
+                )}
                 {logs.lines && (
-                <NavItem eventKey={2}>
+                <NavItem eventKey={3}>
                   Logs
                 </NavItem>
                 )}
@@ -180,8 +188,13 @@ class ClusterDetails extends Component {
                     routerShards={routerShards}
                   />
                 </TabPane>
+                {cluster.managed && (
+                  <TabPane eventKey={2}>
+                    <Users clusterID={cluster.id} />
+                  </TabPane>
+                )}
                 {logs.lines && (
-                <TabPane eventKey={2}>
+                <TabPane eventKey={3}>
                   <LogWindow clusterID={cluster.id} />
                 </TabPane>
                 )}
@@ -212,6 +225,7 @@ ClusterDetails.propTypes = {
   fetchRouterShards: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getLogs: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   credentials: PropTypes.object.isRequired,

@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Users /> should render without users 1`] = `
+<EmptyState
+  className="cluster-details-user-tab-contents"
+>
+  <EmptyStateTitle
+    className=""
+  >
+    No users exist for this cluster
+  </EmptyStateTitle>
+  <EmptyStateInfo
+    className=""
+  >
+    You can add users to grant them access to the cluster. Users will be authenticated via your selected identity provider.
+  </EmptyStateInfo>
+  <EmptyStateAction
+    className=""
+    secondary={false}
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Add user
+    </Button>
+  </EmptyStateAction>
+</EmptyState>
+`;
+
+exports[`<Users /> with users should render 1`] = `
+<div
+  className="cluster-details-user-tab-contents"
+>
+  <Grid
+    bsClass="container"
+    componentClass="div"
+    fluid={true}
+  >
+    <Row
+      bsClass="row"
+      componentClass="div"
+      key="clusterusers-titlerow"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={2}
+      >
+        <h3>
+          User ID
+        </h3>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={2}
+      >
+        <h3>
+          Group
+        </h3>
+      </Col>
+    </Row>
+    <Row
+      bsClass="row"
+      componentClass="div"
+      key="user_name"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={2}
+      >
+        user_name
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={2}
+      >
+        dedicated-admins
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={1}
+      >
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="default"
+          disabled={false}
+          onClick={[Function]}
+        >
+          Delete
+        </Button>
+      </Col>
+    </Row>
+    <Row
+      bsClass="row"
+      componentClass="div"
+      key="clusterusers-addusers-title"
+    >
+      <h3>
+        Add user:
+      </h3>
+    </Row>
+    <Row
+      bsClass="row"
+      componentClass="div"
+      key="clusterusers-input-form"
+    >
+      <UserInputForm
+        clusterID="fake id"
+        pending={false}
+        saveUser={[MockFunction]}
+      />
+    </Row>
+  </Grid>
+</div>
+`;

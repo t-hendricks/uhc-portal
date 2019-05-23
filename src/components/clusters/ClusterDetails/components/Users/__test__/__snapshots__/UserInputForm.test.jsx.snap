@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UserInputForm /> should render 1`] = `
+<Fragment>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    sm={2}
+  >
+    <FormControl
+      bsClass="form-control"
+      componentClass="input"
+      disabled={false}
+      onChange={[Function]}
+      placeholder="Enter a user name or user ID"
+      type="text"
+      value=""
+    />
+  </Col>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    sm={2}
+  >
+    <FormControl
+      bsClass="form-control"
+      componentClass="select"
+      disabled={false}
+    >
+      <option>
+        dedicated-admins
+      </option>
+    </FormControl>
+  </Col>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    sm={1}
+  >
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      disabled={true}
+      onClick={[Function]}
+    >
+      Add
+    </Button>
+  </Col>
+</Fragment>
+`;
