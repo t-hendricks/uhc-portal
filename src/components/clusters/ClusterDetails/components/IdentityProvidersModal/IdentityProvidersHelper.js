@@ -1,7 +1,7 @@
 import { toCleanArray } from '../../../../../common/helpers';
 
 const getCreateIDPRequestData = (formData) => {
-  const github = {
+  const githubData = {
     client_id: formData.client_id,
     client_secret: formData.client_secret,
     organizations: toCleanArray(formData.organizations),
@@ -9,13 +9,13 @@ const getCreateIDPRequestData = (formData) => {
     hostname: formData.hostname,
   };
 
-  const google = {
+  const googleData = {
     client_id: formData.client_id,
     client_secret: formData.client_secret,
     hosted_domain: formData.hosted_domain,
   };
 
-  const ldap = {
+  const ldapData = {
     attributes: {
       id: toCleanArray(formData.ldap_id),
       email: toCleanArray(formData.ldap_email),
@@ -29,7 +29,7 @@ const getCreateIDPRequestData = (formData) => {
     ca: formData.ldap_ca,
   };
 
-  const openId = {
+  const openIdData = {
     ca: formData.openid_ca,
     claims: {
       email: toCleanArray(formData.openid_email),
@@ -46,11 +46,11 @@ const getCreateIDPRequestData = (formData) => {
     },
   };
 
-  const IDPsData = {
-    GithubIdentityProvider: github,
-    GoogleIdentityProvider: google,
-    OpenIDIdentityProvider: openId,
-    LDAPIdentityProvider: ldap,
+  const IDPs = {
+    GithubIdentityProvider: { name: 'github', data: githubData },
+    GoogleIdentityProvider: { name: 'google', data: googleData },
+    OpenIDIdentityProvider: { name: 'open_id', data: openIdData },
+    LDAPIdentityProvider: { name: 'ldap', data: ldapData },
   };
 
   const basicData = {
@@ -61,11 +61,12 @@ const getCreateIDPRequestData = (formData) => {
     mappingMethod: formData.mappingMethod || 'claim',
   };
 
-  const selectedIDPData = IDPsData[formData.type];
+  const selectedIDPData = IDPs[formData.type].data;
+  const selectedIDPName = IDPs[formData.type].name;
 
   const requestData = {
     ...basicData,
-    ...selectedIDPData,
+    [selectedIDPName]: { ...selectedIDPData },
   };
 
   return requestData;
