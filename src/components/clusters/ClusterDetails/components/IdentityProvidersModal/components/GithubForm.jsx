@@ -24,7 +24,7 @@ function GithubForm({
         name="organizations"
         label="Organizations"
         type="text"
-        placeholder="comma separated, example: 'org1,org2,org3"
+        placeholder="comma separated, example: org1,org2,org3"
         disabled={orgsDisabled || createIDPResponse.pending}
         onChange={(e, value) => toggleDisable(e, value, 'teamsDisabled')}
       />
@@ -33,7 +33,7 @@ function GithubForm({
         name="teams"
         label="Teams"
         type="text"
-        placeholder="comma separated, example: 'team1,team2"
+        placeholder="comma separated, example: team1,team2"
         disabled={teamsDisabled || createIDPResponse.pending}
         onChange={(e, value) => toggleDisable(e, value, 'orgsDisabled')}
       />
