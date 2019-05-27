@@ -16,7 +16,7 @@ const clusterStates = {
 function getClusterStateAndDescription(cluster) {
   if ((cluster.state === clusterStates.INSTALLING
       || cluster.state === clusterStates.PENDING)
-      && getTimeDelta(new Date(cluster.creation_timestamp)) >= 2) {
+      && getTimeDelta(new Date(cluster.creation_timestamp)) > 2) {
     return {
       state: clusterStates.WARNING,
       description: 'Installation is taking longer than expected',
