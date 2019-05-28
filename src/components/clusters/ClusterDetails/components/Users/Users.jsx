@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import {
   Button, EmptyState, EmptyStateTitle, EmptyStateInfo, EmptyStateAction,
-  Grid, Col, Row, Spinner, Alert,
+  Grid, Col, Row, Spinner, Alert, FieldLevelHelp,
 } from 'patternfly-react';
 
 import UserInputForm from './UserInputForm';
@@ -96,16 +96,44 @@ class Users extends React.Component {
             <span>{`Error deleting user: ${deleteUserResponse.errorMessage}`}</span>
           </Alert>
         )}
+        <p>
+          Grant permission to manage this cluster to users defined in your identity provider.
+        </p>
         <Grid fluid>
-          <Row key="clusterusers-titlerow">
-            <Col sm={2}><h3>User ID</h3></Col>
-            <Col sm={2}><h3>Group</h3></Col>
-            { deleteUserResponse.pending && (
-              <Col sm={1}>
-                <Spinner loading />
+          {!!userList.length && (
+            <Row key="clusterusers-titlerow">
+              <Col sm={2}>
+                <h3>
+                  User ID
+                  <FieldLevelHelp content={(
+                    <p>
+                      User IDs are matched by the cluster&apos;s identity providers.
+                    </p>)}
+                  />
+                </h3>
               </Col>
-            )}
-          </Row>
+              <Col sm={2}>
+                <h3>
+                  Group
+                  <FieldLevelHelp content={(
+                    <p>
+                      Groups are mapped to role bindings on the cluster.
+                      {' '}
+                      For more information check the
+                      {' '}
+                      <a href="https://docs.openshift.com/container-platform/4.1/authentication/understanding-authentication.html">OpenShift 4 documentation</a>
+                      .
+                    </p>)}
+                  />
+                </h3>
+              </Col>
+              { (deleteUserResponse.pending || clusterGroupUsers.pending) && (
+                <Col sm={1}>
+                  <Spinner loading />
+                </Col>
+              )}
+            </Row>
+          )}
           {userList.map(user => (
             <Row key={user.id}>
               <Col sm={2}>
@@ -122,7 +150,9 @@ class Users extends React.Component {
             </Row>
           ))}
           <Row key="clusterusers-addusers-title">
-            <h3>Add user:</h3>
+            <Col sm={3}>
+              <h3>Add user:</h3>
+            </Col>
           </Row>
           <Row key="clusterusers-input-form">
             <UserInputForm
