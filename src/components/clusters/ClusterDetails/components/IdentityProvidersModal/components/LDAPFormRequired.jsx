@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckbox';
 
 import validators from '../../../../../../common/validators';
 
@@ -12,18 +11,28 @@ function LDAPFormRequired({ createIDPResponse }) {
     <React.Fragment>
       <Field
         component={ReduxVerticalFormGroup}
+        name="bind_dn"
+        label="Bind DN"
+        type="text"
+        placeholder="Bind DN"
+        disabled={createIDPResponse.pending}
+      />
+      <Field
+        component={ReduxVerticalFormGroup}
+        name="bind_password"
+        label="Bind Password"
+        type="password"
+        placeholder="Bind Password"
+        disabled={createIDPResponse.pending}
+      />
+      <Field
+        component={ReduxVerticalFormGroup}
         name="ldap_url"
         label="LDAP url"
         type="text"
         placeholder="url"
         disabled={createIDPResponse.pending}
         validate={validators.required}
-      />
-      <Field
-        component={ReduxCheckbox}
-        name="ldap_insecure"
-        label="insecure"
-        disabled={createIDPResponse.pending}
       />
       <h4>Attributes</h4>
       <Field
