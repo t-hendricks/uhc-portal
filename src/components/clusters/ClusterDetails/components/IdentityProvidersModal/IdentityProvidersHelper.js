@@ -58,7 +58,7 @@ const getCreateIDPRequestData = (formData) => {
     name: formData.name,
     login: formData.login,
     challenge: formData.challenge,
-    mappingMethod: formData.mappingMethod || 'claim',
+    mapping_method: formData.mappingMethod || 'claim',
   };
 
   const selectedIDPData = IDPs[formData.type].data;
