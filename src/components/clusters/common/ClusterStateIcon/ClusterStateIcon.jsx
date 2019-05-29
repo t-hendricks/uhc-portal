@@ -37,9 +37,9 @@ function ClusterStateIcon(props) {
       icon = { type: 'fa', name: 'chain-broken' };
       extraClasses = 'stale';
       break;
-    case clusterStates.ARCHIVED:
+    case clusterStates.LONG_STALE:
       icon = { type: 'fa', name: 'chain-broken' };
-      extraClasses = 'archived';
+      extraClasses = 'long-stale';
       break;
     default:
       icon.name = 'unknown';
