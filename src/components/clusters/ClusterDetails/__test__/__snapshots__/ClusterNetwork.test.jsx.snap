@@ -47,7 +47,9 @@ exports[`<ClusterNetwork /> should render 1`] = `
           <li
             key="ofvv"
           >
-            <dt>
+            <dt
+              className="ellipsize"
+            >
               test1: 
             </dt>
             <dd>
@@ -78,7 +80,9 @@ exports[`<ClusterNetwork /> should render 1`] = `
           <li
             key="jhso"
           >
-            <dt>
+            <dt
+              className="ellipsize"
+            >
               test2: 
             </dt>
             <dd>

@@ -164,6 +164,13 @@ limitations under the License.
     display: inline;
     font-weight: bold;
     color: #808080;
+
+    &.ellipsize {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
   dd {
     display: inline;

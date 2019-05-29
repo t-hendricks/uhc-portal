@@ -3,10 +3,7 @@ import { reduxForm } from 'redux-form';
 
 import {
   clearClusterResponse,
-  createClusterRouterShard,
-  deleteClusterRouterShard,
-  editCluster,
-  editClusterRouterShard,
+  editClusterWithResources,
   fetchClusterRouterShards,
 } from '../../../../redux/actions/clustersActions';
 import EditClusterDialog from './EditClusterDialog';
@@ -40,13 +37,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: (formData, _dispatch, props) => {
+    const ops = [];
+
     // Update cluster nodes
     const clusterRequest = {
       nodes: {
         compute: parseInt(formData.nodes_compute, 10),
       },
     };
-    dispatch(editCluster(formData.id, clusterRequest));
+    ops.push({ action: 'editCluster', args: [clusterRequest] });
 
     // Update router shards
     formData.network_router_shards.forEach((routerShard, i) => {
@@ -54,22 +53,30 @@ const mapDispatchToProps = dispatch => ({
         // Only update router shard if label was changed
         if (routerShard.label) {
           if (routerShard.label !== props.initialFormValues.routerShards[i].label) {
-            dispatch(editClusterRouterShard(formData.id, routerShard.id, {
-              label: routerShard.label,
-              scheme: 'internet-facing',
-            }));
+            ops.push({
+              action: 'editClusterRouterShard',
+              args: [routerShard.id, {
+                label: routerShard.label,
+                scheme: 'internet-facing',
+              }],
+            });
           }
         } else {
           // If there was a router shard, but the label was removed, delete it
-          dispatch(deleteClusterRouterShard(formData.id, routerShard.id));
+          ops.push({ action: 'deleteClusterRouterShard', args: [routerShard.id] });
         }
       } else {
-        dispatch(createClusterRouterShard(formData.id, {
-          label: routerShard.label,
-          scheme: 'internet-facing',
-        }));
+        ops.push({
+          action: 'createClusterRouterShard',
+          args: [{
+            label: routerShard.label,
+            scheme: 'internet-facing',
+          }],
+        });
       }
     });
+
+    dispatch(editClusterWithResources(formData.id, ops));
   },
   resetResponse: () => dispatch(clearClusterResponse()),
   fetchRouterShards: clusterID => dispatch(fetchClusterRouterShards(clusterID)),

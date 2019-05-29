@@ -53,6 +53,23 @@ const editCluster = (id, cluster) => dispatch => dispatch({
   payload: clusterService.editCluster(id, cluster),
 });
 
+const editClusterWithResources = (id, updates) => dispatch => dispatch({
+  type: clustersConstants.EDIT_CLUSTER_DISPLAY_NAME,
+  payload: () => {
+    const responses = [];
+    // This chains all requests as sequential promises to avoid race
+    // conditions and 409 Conflicts when dealing with multiple updates
+    // to the same resource type (e.g. Router Shards).
+    return updates.reduce((p, update) => p.then(() => {
+      const fn = clusterService[update.action](id, ...update.args);
+      return fn.then((response) => {
+        responses.push(response);
+        return responses;
+      });
+    }), Promise.resolve());
+  },
+});
+
 const fetchClustersAndPermissions = (clusterRequestParams) => {
   let clusters;
   let canEdit;
@@ -201,6 +218,7 @@ const clustersActions = {
   clearClusterResponse,
   createCluster,
   editCluster,
+  editClusterWithResources,
   fetchClusters,
   fetchClusterDetails,
   fetchClusterCredentials,
@@ -217,6 +235,7 @@ export {
   clearClusterResponse,
   createCluster,
   editCluster,
+  editClusterWithResources,
   fetchClusters,
   fetchClusterDetails,
   fetchClusterCredentials,
