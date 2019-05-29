@@ -10,7 +10,7 @@ const clusterStates = {
   UNKNOWN: 'unknown',
   WARNING: 'warning',
   STALE: 'stale',
-  ARCHIVED: 'archived',
+  LONG_STALE: 'long stale',
 };
 
 function getClusterStateAndDescription(cluster) {
@@ -35,15 +35,15 @@ function getClusterStateAndDescription(cluster) {
 
     if (lastActive > 24 * 7) {
       return {
-        state: clusterStates.ARCHIVED,
+        state: clusterStates.LONG_STALE,
         description: 'No metrics sent during the last week',
         style: undefined,
       };
     }
-    if (lastActive > 12) {
+    if (lastActive > 24) {
       return {
         state: clusterStates.STALE,
-        description: 'No metrics sent during the last 12 hours',
+        description: 'No metrics sent during the last 24 hours',
         style: undefined,
       };
     }

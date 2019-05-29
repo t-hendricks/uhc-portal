@@ -98,7 +98,7 @@ exports[`<Overview /> should render 1`] = `
         },
         "state": Object {
           "description": "No metrics sent during the last week",
-          "state": "archived",
+          "state": "long stale",
           "style": undefined,
         },
         "version": Object {
@@ -525,7 +525,7 @@ exports[`<Overview /> should render 1`] = `
                   },
                   "state": Object {
                     "description": "No metrics sent during the last week",
-                    "state": "archived",
+                    "state": "long stale",
                     "style": undefined,
                   },
                   "version": Object {
