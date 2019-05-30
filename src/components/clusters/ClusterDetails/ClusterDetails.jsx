@@ -35,6 +35,7 @@ import EditClusterDialog from '../common/EditClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
+import DeleteIDPDialog from './components/DeleteIDPDialog';
 
 import { isValid } from '../../../common/helpers';
 
@@ -42,6 +43,7 @@ class ClusterDetails extends Component {
   constructor(props) {
     super(props);
     this.refresh = this.refresh.bind(this);
+    this.refreshIDP = this.refreshIDP.bind(this);
   }
 
   componentDidMount() {
@@ -104,6 +106,16 @@ class ClusterDetails extends Component {
       fetchRouterShards(clusterID);
       getLogs(clusterID);
       getUsers(clusterID, 'dedicated-admins');
+    }
+  }
+
+  refreshIDP() {
+    const { match, clusterIdentityProviders, getClusterIdentityProviders } = this.props;
+    const clusterID = match.params.id;
+
+    if (!clusterIdentityProviders.pending
+      && !clusterIdentityProviders.error) {
+      getClusterIdentityProviders(clusterID);
     }
   }
 
@@ -224,6 +236,12 @@ class ClusterDetails extends Component {
           }}
           />
           <IdentityProvidersModal clusterID={cluster.id} />
+          <DeleteIDPDialog onClose={() => {
+            this.refreshIDP();
+            onDialogClose();
+          }
+          }
+          />
         </div>
       </div>
     );

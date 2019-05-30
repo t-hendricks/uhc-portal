@@ -31,6 +31,12 @@ const initialState = {
     fulfilled: false,
     data: {},
   },
+  deletedIDP: {
+    error: false,
+    errorMessage: '',
+    pending: false,
+    fulfilled: false,
+  },
 };
 
 function IdentityProvidersReducer(state = initialState, action) {
@@ -127,6 +133,59 @@ function IdentityProvidersReducer(state = initialState, action) {
           initialState,
         },
       );
+
+
+    // DELETE_IDP
+    case helpers.PENDING_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
+      return helpers.setStateProp(
+        'deletedIDP',
+        {
+          pending: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.REJECTED_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
+      return helpers.setStateProp(
+        'deletedIDP',
+        {
+          pending: false,
+          error: action.error,
+          errorMessage: helpers.getErrorMessage(action.payload),
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+
+    case helpers.FULFILLED_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
+      return helpers.setStateProp(
+        'deletedIDP',
+        {
+          pending: false,
+          fulfilled: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case identityProvidersConstants.RESET_DELETED_IDP_RESPONSE:
+      return helpers.setStateProp(
+        'deletedIDP',
+        initialState.deletedIDP,
+        {
+          state,
+          initialState,
+        },
+      );
+
     default:
       return state;
   }
