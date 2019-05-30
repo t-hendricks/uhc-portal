@@ -310,27 +310,6 @@ ol.embedded-indent {
   padding-inline-start: 40px;
 }
 
-.cluster-install-step-callout-col {
-  /* account for install-steps that have headers
-     so callouts align with paragraph content
-  */
-  padding-top: 30px;
-  @media (max-width: 767px) {
-    padding-top: 0;
-  }
-}
-
-.cluster-install-callout {
-  @media (max-width: 767px) {
-    border-left: 3px solid $color-pf-black-300;
-    padding-left: 7px;
-  }
-}
-
-.cluster-install-procedure, .cluster-install-prerequisites {
-  margin-top: -10px;
-}
-
 .form-loading-spinner {
   padding-top: 20px;
   padding-bottom: 10px;
@@ -487,4 +466,73 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   .row {
     padding-bottom: 5px;
   }
+}
+
+.developer-preview {
+  //color: var(--pf-global--link--Color);
+  //padding-bottom: 20px;
+  background-color: var(--pf-global--warning-color--100);
+  /* height: 44px; */
+  /* vertical-align: middle; */
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-left: -20px;
+  margin-top: -22px;
+  margin-right: -20px;
+  padding-left: 22px;
+  font-weight: 800;
+  color: white;
+}
+
+.infra-logo {
+  height: 80px;
+  margin: 10px;
+}
+
+.infra-logo-vsphere {
+  height: 84px;
+  margin: 10px;
+}
+
+.grid-container{
+  margin: 30px auto;
+  width: 720px;
+  display: grid;
+  grid-template-columns: 360px 360px;
+  grid-row: auto auto;
+  grid-column-gap: 40px;
+  grid-row-gap: 40px;
+}
+
+.infra-card {
+  margin: initial;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: var(--pf-global--BoxShadow--md);
+  color: var(--pf-global--Color--100) !important; /* not sure how to properly override patternfly */
+  text-decoration: none !important; /* not sure how to properly override patternfly */
+}
+
+.infra-card:hover {
+  box-shadow: var(--pf-global--BoxShadow--lg);
+}
+
+.aws-ipi-upi-infra-logo {
+  height: 160px;
+  margin: 10px;
+}
+
+.aws-ipi-upi-infra-card {
+  align-items: initial;
+}
+
+.pf-c-button.popover-hover {
+  padding-left: 0;
+}
+
+.pf-c-content h3.downloads-subtitle {
+  margin-bottom: 6px;
 }

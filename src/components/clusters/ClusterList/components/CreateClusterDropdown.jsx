@@ -15,7 +15,7 @@ function CreateClusterDropdown(props) {
       bsSize="large"
       className="cluster-list-top"
     >
-      <MenuItem eventKey="1" href={APP_EMBEDDED ? '/openshift/install' : '/install'} target="_blank">
+      <MenuItem eventKey="1" href={APP_EMBEDDED ? '/openshift/install' : '/install'}>
           Self-Installed Cluster
       </MenuItem>
       {hasQuota && (
