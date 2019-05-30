@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import result from 'lodash/result';
+import get from 'lodash/result';
 
 import { LinkContainer } from 'react-router-bootstrap';
 import {
@@ -88,13 +88,16 @@ class ClusterDetailsTop extends React.Component {
           cluster={cluster}
           organization={organization.details}
           showConsoleButton={false}
+          showIDPButton
+          hasIDP={hasIdentityProviders}
+          idpID={get(clusterIdentityProviders, 'clusterIDPList[0].id', '')}
         />
       </DropdownButton>
     );
 
     const hasCredentials = (cluster.state === 'ready'
-      && result(credentials, 'credentials.admin.password', false)
-      && result(credentials, 'credentials.id') === cluster.id);
+                                && get(credentials, 'credentials.admin.password', false)
+                                && get(credentials, 'credentials.id') === cluster.id);
 
     const credentialsButton = hasCredentials
       ? (

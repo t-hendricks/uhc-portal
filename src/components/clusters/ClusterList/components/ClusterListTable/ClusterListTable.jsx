@@ -123,6 +123,7 @@ function ClusterListTable(props) {
             <ClusterActionsDropdown
               cluster={cluster}
               showConsoleButton
+              showIDPButton={false}
             />
           </DropdownKebab>
         </Grid.Col>

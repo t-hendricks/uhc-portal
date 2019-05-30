@@ -11,7 +11,7 @@ import getCreateIDPRequestData from './IdentityProvidersHelper';
 const reduxFormConfig = {
   form: 'CreateIdentityProvider',
 };
-const reduxFormCreateCluster = reduxForm(reduxFormConfig)(IdentityProvidersModal);
+const reduxFormCreateClusterIDP = reduxForm(reduxFormConfig)(IdentityProvidersModal);
 
 const valueSelector = formValueSelector('CreateIdentityProvider');
 
@@ -40,4 +40,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   getClusterIdentityProviders: () => dispatch(getClusterIdentityProviders(ownProps.clusterID)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateCluster);
+export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateClusterIDP);

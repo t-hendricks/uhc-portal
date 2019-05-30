@@ -7,7 +7,10 @@ const ClusterActionsDropdown = (props) => {
   const {
     cluster,
     showConsoleButton,
+    showIDPButton,
     openModal,
+    hasIDP,
+    idpID,
   } = props;
 
   const uninstallingMessage = 'The cluster is being uninstalled';
@@ -77,10 +80,22 @@ const ClusterActionsDropdown = (props) => {
       ? isUninstallingProps : { onClick: () => openModal('delete-cluster', deleteModalData) };
   };
 
+  const shouldShowIDPButton = showIDPButton && hasIDP && idpID;
+
+  const getDeleteIDPProps = () => {
+    const removeIDPModalData = {
+      clusterID: cluster.id,
+      idpID,
+    };
+
+    return { onClick: () => openModal('delete-idp', removeIDPModalData) };
+  };
+
   const adminConsoleItemProps = getAdminConosleProps();
   const editClusterItemProps = getEditClusterProps();
   const editDisplayNameItemProps = getEditDisplayNameProps();
   const deleteClusterItemProps = getDeleteItemProps();
+  const deleteIDPItemProps = getDeleteIDPProps();
 
   return (
     <React.Fragment>
@@ -88,6 +103,7 @@ const ClusterActionsDropdown = (props) => {
       {cluster.canEdit && <MenuItem {...editDisplayNameItemProps}>Edit Display Name</MenuItem>}
       {cluster.canEdit && <MenuItem {...editClusterItemProps}>Edit Cluster</MenuItem>}
       {cluster.canDelete && <MenuItem {...deleteClusterItemProps}>Delete Cluster</MenuItem>}
+      {shouldShowIDPButton && <MenuItem {...deleteIDPItemProps}>Remove Identity Provider</MenuItem>}
     </React.Fragment>
   );
 };
@@ -95,6 +111,7 @@ const ClusterActionsDropdown = (props) => {
 ClusterActionsDropdown.propTypes = {
   cluster: PropTypes.object.isRequired,
   showConsoleButton: PropTypes.bool.isRequired,
+  showIDPButton: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
 };
 

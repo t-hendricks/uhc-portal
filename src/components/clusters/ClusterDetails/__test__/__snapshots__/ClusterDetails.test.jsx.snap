@@ -751,6 +751,9 @@ clusters:
     <Connect(ReduxForm)
       clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
     />
+    <Connect(DeleteIDPDialog)
+      onClose={[Function]}
+    />
   </div>
 </div>
 `;
