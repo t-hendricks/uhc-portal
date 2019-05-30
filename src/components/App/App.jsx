@@ -21,21 +21,13 @@ import { Card, CardBody } from 'patternfly-react';
 import { hot } from 'react-hot-loader';
 import { Page, PageSection, PageSectionVariants } from '@patternfly/react-core';
 
-import routes from '../../routes';
-
 import Header from './Header';
 import Footer from './Footer';
 import Router from './Router';
 import LoginPage from './LoginPage';
 import ErrorBoundary from './ErrorBoundary';
 
-class App extends React.Component {
-  constructor() {
-    super();
-
-    this.menu = routes();
-  }
-
+class App extends React.PureComponent {
   render() {
     const {
       authenticated, loginFunction, userProfile, logoutFunction, children,

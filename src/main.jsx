@@ -32,6 +32,7 @@ import { getCloudProviders } from './redux/actions/cloudProviderActions';
 import config from './config';
 import App from './components/App/App';
 import { store, reloadReducers } from './redux/store';
+import getBaseName from './common/getBaseName';
 
 import './styles/main.scss';
 
@@ -40,14 +41,8 @@ if (!APP_EMBEDDED) {
 }
 
 let keycloak;
-let basename = '/clusters';
 
-if (APP_EMBEDDED) {
-  const pathName = window.location.pathname.split('/');
-  pathName.shift();
-  const release = pathName[0] === 'beta' ? '/beta/' : '/';
-  basename = `${release}${pathName[0]}`;
-}
+const basename = getBaseName();
 
 const render = () => {
   ReactDOM.render(
