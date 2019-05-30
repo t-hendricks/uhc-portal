@@ -312,12 +312,6 @@ exports[`<DetailsRight /> should render 1`] = `
         </dd>
       </dl>
     </dd>
-    <dt>
-      Support Level
-    </dt>
-    <dd>
-      None (Evaluation)
-    </dd>
     <ClusterNetwork
       cluster={
         Object {
