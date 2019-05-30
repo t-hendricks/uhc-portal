@@ -11,6 +11,7 @@ import { getLogs } from './components/LogWindow/LogWindowActions';
 import { getClusterIdentityProviders } from './components/IdentityProvidersModal/IdentityProvidersActions';
 import usersActions from './components/Users/UsersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
+import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 
 const mapStateToProps = (state) => {
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => {
   const { cloudProviders } = state.cloudProviders;
   const { logs } = state.logs;
   const { clusterIdentityProviders } = state.identityProviders;
+  const { organization } = state.userProfile;
 
   return ({
     clusterDetails: details,
@@ -26,6 +28,7 @@ const mapStateToProps = (state) => {
     routerShards,
     logs,
     clusterIdentityProviders,
+    organization,
   });
 };
 
@@ -34,6 +37,7 @@ const mapDispatchToProps = {
   fetchCredentials: clusterID => fetchClusterCredentials(clusterID),
   fetchRouterShards: clusterID => fetchClusterRouterShards(clusterID),
   getCloudProviders: cloudProviderActions.getCloudProviders,
+  getOrganization: userActions.getOrganization,
   invalidateClusters,
   openModal: modalActions.openModal,
   getLogs,

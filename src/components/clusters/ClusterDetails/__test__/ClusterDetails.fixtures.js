@@ -5,11 +5,33 @@ const fetchCredentials = jest.fn();
 const fetchRouterShards = jest.fn();
 const getCloudProviders = jest.fn();
 const invalidateClusters = jest.fn();
+const getOrganization = jest.fn();
 const refreshFunc = jest.fn();
 const openModal = jest.fn();
 const getLogs = jest.fn();
 const getUsers = jest.fn();
 const getClusterIdentityProviders = jest.fn();
+
+const subscription = {
+  id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
+  kind: 'Subscription',
+  href: '/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8',
+  plan: {
+    id: 'OCP',
+    kind: 'Plan',
+    href: '/api/accounts_mgmt/v1/plans/OCP',
+  },
+  registry_credential: {
+    id: '1EaZd2cDHH6ibIb1FFqav2Mles6',
+    kind: 'RegistryCredential',
+    href: '/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6',
+  },
+  cluster_id: '1IztzhAGrbjtKkMbiPewJanhTXk',
+  external_cluster_id: 'test-liza',
+  last_telemetry_date: '0001-01-01T00:00:00Z',
+  created_at: '2019-01-02T18:28:14.851121Z',
+  updated_at: '2019-01-02T18:28:14.851121Z',
+};
 
 const clusterDetails = {
   error: false,
@@ -114,6 +136,7 @@ const clusterDetails = {
     },
     canEdit: true,
     canDelete: true,
+    subscriptionInfo: subscription,
   },
 };
 
@@ -168,7 +191,6 @@ const routerShards = {
     ],
   },
 };
-
 
 const cloudProviders = {
   error: false,
@@ -357,6 +379,24 @@ const clusterIdentityProviders = {
   clusterIDPList: [],
 };
 
+const organization = {
+  error: false,
+  errorMessage: '',
+  pending: false,
+  fulfilled: true,
+  details: {
+    id: '1Iin1ev64UIFFjRPT5S8TfLr0Tj',
+    kind: 'Organization',
+    href: '/api/accounts_mgmt/v1/organizations/1Iin1ev64UIFFjRPT5S8TfLr0Tj',
+    created_at: '2019-01-02T18:28:14.851121Z',
+    updated_at: '2019-01-02T18:28:14.851121Z',
+    external_id: '9999999',
+    ebs_account_id: '8888888',
+    name: 'Test Corp',
+  },
+};
+
+
 export {
   match,
   history,
@@ -365,6 +405,7 @@ export {
   fetchRouterShards,
   getCloudProviders,
   getClusterIdentityProviders,
+  getOrganization,
   invalidateClusters,
   refreshFunc,
   openModal,
@@ -375,4 +416,5 @@ export {
   routerShards,
   credentials,
   clusterIdentityProviders,
+  organization,
 };

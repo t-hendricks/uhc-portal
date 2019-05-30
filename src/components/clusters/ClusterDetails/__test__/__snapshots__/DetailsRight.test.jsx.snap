@@ -62,6 +62,12 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
         </dd>
       </dl>
     </dd>
+    <dt>
+      Support Level
+    </dt>
+    <dd>
+      None (Evaluation)
+    </dd>
     <ClusterNetwork
       cluster={
         Object {
@@ -153,6 +159,26 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "subscriptionInfo": Object {
+            "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+            "created_at": "2019-01-02T18:28:14.851121Z",
+            "external_cluster_id": "test-liza",
+            "href": "/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8",
+            "id": "1FDpnxsGxqFFFp2VNIWp5VajPc8",
+            "kind": "Subscription",
+            "last_telemetry_date": "0001-01-01T00:00:00Z",
+            "plan": Object {
+              "href": "/api/accounts_mgmt/v1/plans/OCP",
+              "id": "OCP",
+              "kind": "Plan",
+            },
+            "registry_credential": Object {
+              "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
+              "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
+              "kind": "RegistryCredential",
+            },
+            "updated_at": "2019-01-02T18:28:14.851121Z",
+          },
           "version": Object {
             "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
             "id": "openshift-v4.0-latest",
@@ -286,6 +312,12 @@ exports[`<DetailsRight /> should render 1`] = `
         </dd>
       </dl>
     </dd>
+    <dt>
+      Support Level
+    </dt>
+    <dd>
+      None (Evaluation)
+    </dd>
     <ClusterNetwork
       cluster={
         Object {
@@ -381,6 +413,26 @@ exports[`<DetailsRight /> should render 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "subscriptionInfo": Object {
+            "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+            "created_at": "2019-01-02T18:28:14.851121Z",
+            "external_cluster_id": "test-liza",
+            "href": "/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8",
+            "id": "1FDpnxsGxqFFFp2VNIWp5VajPc8",
+            "kind": "Subscription",
+            "last_telemetry_date": "0001-01-01T00:00:00Z",
+            "plan": Object {
+              "href": "/api/accounts_mgmt/v1/plans/OCP",
+              "id": "OCP",
+              "kind": "Plan",
+            },
+            "registry_credential": Object {
+              "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
+              "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
+              "kind": "RegistryCredential",
+            },
+            "updated_at": "2019-01-02T18:28:14.851121Z",
+          },
           "version": Object {
             "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
             "id": "openshift-v4.0-latest",

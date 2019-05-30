@@ -32,6 +32,7 @@ class ClusterDetailsTop extends React.Component {
       routerShards,
       refreshFunc,
       clusterIdentityProviders,
+      organization,
     } = this.props;
 
     const clusterName = cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
@@ -58,7 +59,7 @@ class ClusterDetailsTop extends React.Component {
             to allow  others to log in.
             </p>
           </React.Fragment>
-    )}
+        )}
         onClose={() => this.hideIDPHint()}
       />
     );
@@ -85,14 +86,15 @@ class ClusterDetailsTop extends React.Component {
       >
         <ClusterActionsDropdown
           cluster={cluster}
+          organization={organization.details}
           showConsoleButton={false}
         />
       </DropdownButton>
     );
 
     const hasCredentials = (cluster.state === 'ready'
-                                && result(credentials, 'credentials.admin.password', false)
-                                && result(credentials, 'credentials.id') === cluster.id);
+      && result(credentials, 'credentials.admin.password', false)
+      && result(credentials, 'credentials.id') === cluster.id);
 
     const credentialsButton = hasCredentials
       ? (
@@ -103,7 +105,10 @@ class ClusterDetailsTop extends React.Component {
       )
       : <Button bsStyle="default" disabled>Admin Credentials</Button>;
 
-    const isRefreshing = pending || credentials.pending || routerShards.pending;
+    const isRefreshing = pending
+      || credentials.pending
+      || routerShards.pending
+      || organization.pending;
 
     return (
       <Grid fluid>
@@ -157,6 +162,7 @@ ClusterDetailsTop.propTypes = {
   pending: PropTypes.bool.isRequired,
   routerShards: PropTypes.object.isRequired,
   clusterIdentityProviders: PropTypes.object.isRequired,
+  organization: PropTypes.object.isRequired,
 };
 
 export default ClusterDetailsTop;

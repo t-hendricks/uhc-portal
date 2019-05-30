@@ -5,6 +5,147 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   <div
     id="clusterdetails-content"
   >
+    <SubscriptionCompliancy
+      cluster={
+        Object {
+          "api": Object {
+            "url": "https://api.test-liza.sdev.devshift.net:6443",
+          },
+          "canDelete": true,
+          "canEdit": true,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "console": Object {
+            "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
+          },
+          "creation_timestamp": "2019-03-26T15:18:39.06783Z",
+          "creator": "***REMOVED***",
+          "display_name": "test-liza",
+          "dns": Object {
+            "base_domain": "sdev.devshift.net",
+          },
+          "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
+          "flavour": Object {
+            "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+            "id": "osd-4",
+            "kind": "FlavourLink",
+          },
+          "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
+          "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+          "kind": "Cluster",
+          "managed": true,
+          "metrics": Object {
+            "cpu": Object {
+              "total": Object {
+                "unit": "",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "",
+                "value": 0,
+              },
+            },
+            "memory": Object {
+              "total": Object {
+                "unit": "B",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "B",
+                "value": 0,
+              },
+            },
+            "nodes": Object {
+              "compute": 1,
+              "master": 2,
+              "total": 3,
+            },
+            "storage": Object {
+              "total": Object {
+                "unit": "B",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "B",
+                "value": 0,
+              },
+            },
+          },
+          "multi_az": false,
+          "name": "test-liza",
+          "network": Object {
+            "machine_cidr": "10.0.0.0/16",
+            "pod_cidr": "10.128.0.0/14",
+            "router_shards": Object {
+              "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+              "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+              "kind": "RouterShardListLink",
+            },
+            "service_cidr": "172.30.0.0/16",
+          },
+          "nodes": Object {
+            "compute": 2,
+            "master": 3,
+            "total": 5,
+          },
+          "region": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+            "id": "us-east-1",
+            "kind": "CloudRegionLink",
+          },
+          "state": "ready",
+          "subscriptionInfo": Object {
+            "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+            "created_at": "2019-01-02T18:28:14.851121Z",
+            "external_cluster_id": "test-liza",
+            "href": "/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8",
+            "id": "1FDpnxsGxqFFFp2VNIWp5VajPc8",
+            "kind": "Subscription",
+            "last_telemetry_date": "0001-01-01T00:00:00Z",
+            "plan": Object {
+              "href": "/api/accounts_mgmt/v1/plans/OCP",
+              "id": "OCP",
+              "kind": "Plan",
+            },
+            "registry_credential": Object {
+              "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
+              "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
+              "kind": "RegistryCredential",
+            },
+            "updated_at": "2019-01-02T18:28:14.851121Z",
+          },
+          "version": Object {
+            "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+            "id": "openshift-v4.0-latest",
+            "kind": "VersionLink",
+          },
+        }
+      }
+      organization={
+        Object {
+          "details": Object {
+            "created_at": "2019-01-02T18:28:14.851121Z",
+            "ebs_account_id": "8888888",
+            "external_id": "9999999",
+            "href": "/api/accounts_mgmt/v1/organizations/1Iin1ev64UIFFjRPT5S8TfLr0Tj",
+            "id": "1Iin1ev64UIFFjRPT5S8TfLr0Tj",
+            "kind": "Organization",
+            "name": "Test Corp",
+            "updated_at": "2019-01-02T18:28:14.851121Z",
+          },
+          "error": false,
+          "errorMessage": "",
+          "fulfilled": true,
+          "pending": false,
+        }
+      }
+    />
     <ClusterDetailsTop
       cluster={
         Object {
@@ -100,6 +241,26 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "subscriptionInfo": Object {
+            "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+            "created_at": "2019-01-02T18:28:14.851121Z",
+            "external_cluster_id": "test-liza",
+            "href": "/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8",
+            "id": "1FDpnxsGxqFFFp2VNIWp5VajPc8",
+            "kind": "Subscription",
+            "last_telemetry_date": "0001-01-01T00:00:00Z",
+            "plan": Object {
+              "href": "/api/accounts_mgmt/v1/plans/OCP",
+              "id": "OCP",
+              "kind": "Plan",
+            },
+            "registry_credential": Object {
+              "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
+              "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
+              "kind": "RegistryCredential",
+            },
+            "updated_at": "2019-01-02T18:28:14.851121Z",
+          },
           "version": Object {
             "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
             "id": "openshift-v4.0-latest",
@@ -138,6 +299,24 @@ clusters:
         }
       }
       openModal={[MockFunction]}
+      organization={
+        Object {
+          "details": Object {
+            "created_at": "2019-01-02T18:28:14.851121Z",
+            "ebs_account_id": "8888888",
+            "external_id": "9999999",
+            "href": "/api/accounts_mgmt/v1/organizations/1Iin1ev64UIFFjRPT5S8TfLr0Tj",
+            "id": "1Iin1ev64UIFFjRPT5S8TfLr0Tj",
+            "kind": "Organization",
+            "name": "Test Corp",
+            "updated_at": "2019-01-02T18:28:14.851121Z",
+          },
+          "error": false,
+          "errorMessage": "",
+          "fulfilled": true,
+          "pending": false,
+        }
+      }
       pending={false}
       refreshFunc={[Function]}
       routerShards={
@@ -489,6 +668,26 @@ clusters:
                   "kind": "CloudRegionLink",
                 },
                 "state": "ready",
+                "subscriptionInfo": Object {
+                  "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                  "created_at": "2019-01-02T18:28:14.851121Z",
+                  "external_cluster_id": "test-liza",
+                  "href": "/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8",
+                  "id": "1FDpnxsGxqFFFp2VNIWp5VajPc8",
+                  "kind": "Subscription",
+                  "last_telemetry_date": "0001-01-01T00:00:00Z",
+                  "plan": Object {
+                    "href": "/api/accounts_mgmt/v1/plans/OCP",
+                    "id": "OCP",
+                    "kind": "Plan",
+                  },
+                  "registry_credential": Object {
+                    "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
+                    "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
+                    "kind": "RegistryCredential",
+                  },
+                  "updated_at": "2019-01-02T18:28:14.851121Z",
+                },
                 "version": Object {
                   "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
                   "id": "openshift-v4.0-latest",
