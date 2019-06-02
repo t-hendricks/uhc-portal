@@ -22,7 +22,13 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import ClustersList from '../clusters/ClusterList';
 import ClusterDetails from '../clusters/ClusterDetails';
-import InstallCluster from '../clusters/install/InstallCluster';
+import InstallInfrastructure from '../clusters/install/InstallInfrastructure';
+import InstallAWS from '../clusters/install/InstallAWS';
+import InstallAWSUPI from '../clusters/install/InstallAWSUPI';
+import InstallAWSIPI from '../clusters/install/InstallAWSIPI';
+import InstallBareMetal from '../clusters/install/InstallBareMetal';
+import InstallAzure from '../clusters/install/InstallAzure';
+import InstallVSphere from '../clusters/install/InstallVSphere';
 import Tokens from '../tokens/Tokens';
 
 function Router(props) {
@@ -32,7 +38,13 @@ function Router(props) {
     <ConnectedRouter history={history}>
       <Switch>
         { APP_EMBEDDED && <Route path="/token" component={Tokens} /> }
-        <Route path="/install" component={InstallCluster} />
+        <Route path="/install/aws/ipi" component={InstallAWSIPI} />
+        <Route path="/install/aws/upi" component={InstallAWSUPI} />
+        <Route path="/install/aws" component={InstallAWS} />
+        <Route path="/install/azure/upi" component={InstallAzure} />
+        <Route path="/install/metal/upi" component={InstallBareMetal} />
+        <Route path="/install/vsphere/upi" component={InstallVSphere} />
+        <Route path="/install" component={InstallInfrastructure} />
         <Route path="/details/:id" component={ClusterDetails} />
         <Route path="/" component={ClustersList} />
       </Switch>
