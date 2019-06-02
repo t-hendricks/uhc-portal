@@ -546,3 +546,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .pf-c-content h3.downloads-subtitle {
   margin-bottom: 6px;
 }
+
+.tippy-popper, .pf-tippy-theme.tippy-tooltip .tippy-content {
+  pointer-events: all !important;
+}
