@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {
   DropdownButton, MenuItem,
 } from 'patternfly-react';
+import { LinkContainer } from 'react-router-bootstrap';
+
 
 function CreateClusterDropdown(props) {
   const { showCreationForm, showOCPCreationForm, hasQuota } = props;
@@ -15,9 +17,11 @@ function CreateClusterDropdown(props) {
       bsSize="large"
       className="cluster-list-top"
     >
-      <MenuItem eventKey="1" href={APP_EMBEDDED ? '/openshift/install' : '/install'}>
-          Self-Installed Cluster
-      </MenuItem>
+      <LinkContainer to="/install">
+        <MenuItem eventKey="1">
+            Self-Installed Cluster
+        </MenuItem>
+      </LinkContainer>
       {hasQuota && (
         <React.Fragment>
           <MenuItem eventKey="2" onClick={showOCPCreationForm}>

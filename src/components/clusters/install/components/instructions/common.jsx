@@ -48,8 +48,9 @@ const TokenErrorAlert = ({ token }) => (
   <Alert
     variant="danger"
     className="install--errors"
-    title={token.error.msg}
   >
+    {token.error.msg}
+    {' '}
     Please try again by refreshing the page.
     If the problem persists, please report the issue to
     {' '}
@@ -229,11 +230,11 @@ const WhatIsInstallerSection = ({ isIPI }) => (
         </div>
       )}
     >
-      <a href="#" onClick={e => e.preventDefault()} className="popover-hover">
+      <button type="button" className="popover-hover buttonHref pf4-buttonHref">
         <span className="pficon pficon-info" />
         {' '}
         What is the OpenShift installer?
-      </a>
+      </button>
     </Popover>
   </React.Fragment>
 );

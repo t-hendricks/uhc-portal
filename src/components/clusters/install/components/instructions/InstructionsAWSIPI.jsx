@@ -184,11 +184,11 @@ class InstructionsAWSIPI extends React.Component {
               </div>
               )}
           >
-            <a href="#" onClick={e => e.preventDefault()} className="popover-hover">
+            <button type="button" className="popover-hover buttonHref pf4-buttonHref">
               <span className="pficon pficon-info" />
               {' '}
               Do you need to troubleshoot your installation?
-            </a>
+            </button>
           </Popover>
 
           <h3>Access Your Cluster</h3>
