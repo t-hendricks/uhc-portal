@@ -17,7 +17,7 @@ const InstructionsInfrastructure = () => (
           <img src={AWSLogo} alt="AWS" className="infra-logo" />
         </CardBody>
       </Link>
-      <Link to="/install/metal/upi" className="infra-card">
+      <Link to="/install/metal/user-provisioned" className="infra-card">
         <CardBody>
           Bare Metal
           <br />
@@ -26,12 +26,12 @@ const InstructionsInfrastructure = () => (
       </Link>
     </div>
     <div className="grid-container">
-      <Link to="/install/azure/upi" className="infra-card">
+      <Link to="/install/azure/user-provisioned" className="infra-card">
         <CardBody>
           <img src={AzureLogo} alt="Azure" className="infra-logo" />
         </CardBody>
       </Link>
-      <Link to="/install/vsphere/upi" className="infra-card">
+      <Link to="/install/vsphere/user-provisioned" className="infra-card">
         <CardBody>
           <img src={vSphereLogo} alt="vSphere" className="infra-logo-vsphere" />
         </CardBody>
