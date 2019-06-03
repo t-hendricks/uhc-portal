@@ -505,17 +505,14 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .grid-container{
-  margin: 30px auto;
-  width: 720px;
-  display: grid;
-  grid-template-columns: 360px 360px;
-  grid-row: auto auto;
-  grid-column-gap: 40px;
-  grid-row-gap: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .infra-card {
-  margin: initial;
+  flex: 0 0 380px;
+  margin: 20px;
   padding: 20px;
   display: flex;
   align-items: center;

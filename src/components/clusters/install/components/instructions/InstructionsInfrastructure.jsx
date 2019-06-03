@@ -24,6 +24,8 @@ const InstructionsInfrastructure = () => (
           <img src={bareMetalIcon} alt="Bare Metal" className="infra-logo" />
         </CardBody>
       </Link>
+    </div>
+    <div className="grid-container">
       <Link to="/install/azure/upi" className="infra-card">
         <CardBody>
           <img src={AzureLogo} alt="Azure" className="infra-logo" />
