@@ -7,7 +7,7 @@ import InstructionsAWSIPI from './components/instructions/InstructionsAWSIPI';
 
 class InstallAWSIPI extends Component {
   componentDidMount() {
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS IPI';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS Installer-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
