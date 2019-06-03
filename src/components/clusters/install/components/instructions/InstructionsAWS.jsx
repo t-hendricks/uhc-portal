@@ -10,7 +10,7 @@ const InstructionsAWS = () => (
   <div className="pf-c-content">
     <h1>Install on AWS: Infrastructure Type</h1>
     <div className="grid-container">
-      <Link to="/install/aws/ipi" className="aws-ipi-upi-infra-card infra-card">
+      <Link to="/install/aws/installer-provisioned" className="aws-ipi-upi-infra-card infra-card">
         <CardBody>
           Installer-Provisioned Infrastructure
           <br />
@@ -22,7 +22,7 @@ const InstructionsAWS = () => (
           provisions and the cluster maintains.
         </CardBody>
       </Link>
-      <Link to="/install/aws/upi" className="aws-ipi-upi-infra-card infra-card">
+      <Link to="/install/aws/user-provisioned" className="aws-ipi-upi-infra-card infra-card">
         <CardBody>
           User-Provisioned Infrastructure
           <br />

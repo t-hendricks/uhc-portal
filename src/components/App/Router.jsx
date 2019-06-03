@@ -38,12 +38,12 @@ function Router(props) {
     <ConnectedRouter history={history}>
       <Switch>
         { APP_EMBEDDED && <Route path="/token" component={Tokens} /> }
-        <Route path="/install/aws/ipi" component={InstallAWSIPI} />
-        <Route path="/install/aws/upi" component={InstallAWSUPI} />
+        <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
+        <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
         <Route path="/install/aws" component={InstallAWS} />
-        <Route path="/install/azure/upi" component={InstallAzure} />
-        <Route path="/install/metal/upi" component={InstallBareMetal} />
-        <Route path="/install/vsphere/upi" component={InstallVSphere} />
+        <Route path="/install/azure/user-provisioned" component={InstallAzure} />
+        <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
+        <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
         <Route path="/install" component={InstallInfrastructure} />
         <Route path="/details/:id" component={ClusterDetails} />
         <Route path="/" component={ClustersList} />
