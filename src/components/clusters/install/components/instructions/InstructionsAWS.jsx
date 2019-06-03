@@ -12,9 +12,9 @@ const InstructionsAWS = () => (
     <div className="grid-container">
       <Link to="/install/aws/ipi" className="aws-ipi-upi-infra-card infra-card">
         <CardBody>
-          Installer-Provisioned Infrastructure (IPI)
+          Installer-Provisioned Infrastructure
           <br />
-          <img src={ipiLogo} alt="IPI" className="aws-ipi-upi-infra-logo" />
+          <img src={ipiLogo} alt="Installer-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
           <br />
           <strong>Recommended:</strong>
           {' '}
@@ -24,9 +24,9 @@ const InstructionsAWS = () => (
       </Link>
       <Link to="/install/aws/upi" className="aws-ipi-upi-infra-card infra-card">
         <CardBody>
-          User-Provisioned Infrastructure (UPI)
+          User-Provisioned Infrastructure
           <br />
-          <img src={upiLogo} alt="UPI" className="aws-ipi-upi-infra-logo" />
+          <img src={upiLogo} alt="User-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
           <br />
           Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
         </CardBody>

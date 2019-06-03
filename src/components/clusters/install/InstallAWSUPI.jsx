@@ -7,7 +7,7 @@ import InstructionsAWSUPI from './components/instructions/InstructionsAWSUPI';
 
 class InstallAWSUPI extends Component {
   componentDidMount() {
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS UPI';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS User-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
