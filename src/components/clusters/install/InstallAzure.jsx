@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsAzure from './components/instructions/InstructionsAzure';
-
+import { scrollToTop } from '../../../common/helpers';
 
 class InstallAzure extends Component {
   componentDidMount() {
+    scrollToTop();
     document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure';
 
     const { dispatch } = this.props;
@@ -15,7 +16,9 @@ class InstallAzure extends Component {
 
   render() {
     const { token } = this.props;
-    return <InstructionsAzure token={token} />;
+
+    return (
+      <InstructionsAzure token={token} />);
   }
 }
 

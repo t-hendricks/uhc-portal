@@ -107,6 +107,17 @@ const omitEmptyFields = (obj) => {
   return objToClean;
 };
 
+
+const scrollToTop = () => {
+  let pageTop = document.querySelector('main#root :first-child');
+  if (!APP_EMBEDDED) {
+    pageTop = document.querySelector('#root main :first-child');
+    if (pageTop) {
+      pageTop.scrollIntoView();
+    }
+  }
+};
+
 const helpers = {
   noop,
   setStateProp,
@@ -117,6 +128,7 @@ const helpers = {
   isValid,
   omitEmptyFields,
   toCleanArray,
+  scrollToTop,
   INVALIDATE_ACTION,
   FULFILLED_ACTION,
   PENDING_ACTION,
@@ -124,7 +136,7 @@ const helpers = {
 };
 
 export {
-  noop, getTimeDelta, isValid, omitEmptyFields, toCleanArray,
+  noop, getTimeDelta, isValid, omitEmptyFields, toCleanArray, scrollToTop,
 };
 
 export default helpers;
