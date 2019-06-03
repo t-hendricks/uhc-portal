@@ -154,7 +154,7 @@ This is a one-time setup process. After this process is done, make sure to expor
 location of your proxy's git clone to the PROXY_PATH environment variable, for example
 
 ....
-export PROXY_PATH="~/Projects/insights-proxy"
+export PROXY_PATH=~/Projects/insights-proxy
 ....
 
 Make sure to start the mock server before starting the insights proxy.
