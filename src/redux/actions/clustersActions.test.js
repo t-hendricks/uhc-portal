@@ -57,7 +57,7 @@ describe('clustersActions', () => {
       clustersActions.editCluster()(mockDispatch);
       expect(mockDispatch).toBeCalledWith({
         payload: expect.anything(),
-        type: clustersConstants.EDIT_CLUSTER_DISPLAY_NAME,
+        type: clustersConstants.EDIT_CLUSTER,
       });
     });
 

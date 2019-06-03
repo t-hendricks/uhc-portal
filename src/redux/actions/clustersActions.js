@@ -49,12 +49,12 @@ const clearClusterResponse = () => (dispatch) => {
 };
 
 const editCluster = (id, cluster) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER_DISPLAY_NAME,
+  type: clustersConstants.EDIT_CLUSTER,
   payload: clusterService.editCluster(id, cluster),
 });
 
 const editClusterWithResources = (id, updates) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER_DISPLAY_NAME,
+  type: clustersConstants.EDIT_CLUSTER,
   payload: () => {
     const responses = [];
     // This chains all requests as sequential promises to avoid race

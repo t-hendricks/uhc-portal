@@ -307,8 +307,8 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
-    // EDIT_CLUSTER_DISPLAY_NAME
-    case helpers.REJECTED_ACTION(clustersConstants.EDIT_CLUSTER_DISPLAY_NAME):
+    // EDIT_CLUSTER
+    case helpers.REJECTED_ACTION(clustersConstants.EDIT_CLUSTER):
       return helpers.setStateProp(
         'editedCluster',
         {
@@ -322,7 +322,7 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(clustersConstants.EDIT_CLUSTER_DISPLAY_NAME):
+    case helpers.PENDING_ACTION(clustersConstants.EDIT_CLUSTER):
       return helpers.setStateProp(
         'editedCluster',
         {
@@ -334,7 +334,7 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER_DISPLAY_NAME):
+    case helpers.FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER):
       return helpers.setStateProp(
         'editedCluster',
         {
