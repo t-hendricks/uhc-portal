@@ -118,7 +118,7 @@ class ClusterDetailsTop extends React.Component {
         <Row>
           <Col sm={8}>
             <Breadcrumb>
-              <LinkContainer to="/clusters">
+              <LinkContainer to="">
                 <Breadcrumb.Item href="#">
                     Clusters
                 </Breadcrumb.Item>

@@ -23,7 +23,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           exact={false}
           replace={false}
           strict={false}
-          to="/clusters"
+          to=""
         >
           <BreadcrumbItem
             active={false}

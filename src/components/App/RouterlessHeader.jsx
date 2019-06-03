@@ -21,6 +21,8 @@ import { noop } from '../../common/helpers';
 import rhProductTitle from '../../styles/images/logo.png';
 import HeaderToolBar from './HeaderToolBar';
 
+const { insights } = require('../../../package.json');
+
 function RouterlessHeader(props) {
   const {
     isLoggedIn, userProfile, logoutUser,
@@ -30,7 +32,7 @@ function RouterlessHeader(props) {
       className="uhc_header"
       logo={<Brand src={rhProductTitle} alt="Red Hat OpenShift" />}
       logoProps={{
-        href: '/clusters',
+        href: `/${insights.appname}`,
       }}
       toolbar={
         <HeaderToolBar isLoggedIn={isLoggedIn} userProfile={userProfile} logoutUser={logoutUser} />

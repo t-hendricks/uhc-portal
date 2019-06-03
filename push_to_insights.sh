@@ -126,14 +126,15 @@ function push_build {
     --delete \
     --exclude=.git \
     --exclude=58231b16fdee45a03a4ee3cf94a9f2c3 \
-    build/clusters/ \
+    build/openshift/ \
     target/
 
-  # The `config.json` file is generated dynamicall by the portal server, but that
+  # The `config.json` file is generated dynamically by the portal server, but that
   # isn't possible in the _cloud.redhat.com_ environment, so we need to generate
   # it here. Note that this configuration doesn't contain the Keycloak parameters,
   # because authentication is managed by the chrome, not by the application.
   mkdir --parents target/config
+  rm --recursive --force target/config/config.json
   cat >> target/config/config.json <<.
 {
   "apiGateway": "${gateway}",
@@ -172,7 +173,7 @@ yarn install
 # Build the application in development mode for deployment to the beta branches
 # of the Insights platform:
 rm --recursive --force build
-yarn build-embedded
+yarn build-embedded --beta=true
 push_build "prod-beta" "https://api.openshift.com"
 
 # Build the application in production mode for deployment to the stable branches

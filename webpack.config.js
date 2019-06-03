@@ -27,19 +27,20 @@ const { insights } = require('./package.json');
 
 const modDir = path.resolve(__dirname, 'node_modules');
 const srcDir = path.resolve(__dirname, 'src');
-const outDir = path.resolve(__dirname, 'build', 'clusters');
+const outDir = path.resolve(__dirname, 'build', insights.appname);
 
 module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
+  const betaMode = argv.beta == 'true';
   let copyConfig = null;
   let bundleAnalyzer = null;
   const embeddedApp = process.env.EMBEDDED === 'true';
-  const appDeployment = 'apps';
+  const appDeployment = betaMode ? 'beta/apps' : 'apps';
   if (devMode) {
     copyConfig = new CopyWebpackPlugin([{ from: 'src/config', to: `${outDir}/config` }]);
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: false });
   }
-  const publicPath = embeddedApp ? `/${appDeployment}/${insights.appname}/` : '/clusters/';
+  const publicPath = embeddedApp ? `/${appDeployment}/${insights.appname}/` : `/${insights.appname}/`;
   return {
     mode: argv.mode || 'development',
     entry: {
@@ -77,6 +78,7 @@ module.exports = (env, argv) => {
         'process.env.UHC_GATEWAY_DOMAIN': JSON.stringify(process.env.UHC_GATEWAY_DOMAIN),
         'process.env.UHC_SHOW_OLD_METRICS': JSON.stringify(process.env.UHC_SHOW_OLD_METRICS),
         APP_EMBEDDED: embeddedApp,
+        APP_BETA: betaMode,
       }),
       new ReplaceWebpackPlugin([
         ...embeddedApp ? [{
