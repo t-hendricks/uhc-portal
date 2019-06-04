@@ -9,12 +9,11 @@ import {
 } from '@patternfly/react-core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Download from '@axetroy/react-download';
-import config from '../../../../../config';
 
-const DownloadButton = ({ token }) => (
+const DownloadButton = ({ token, installerURL }) => (
   <Button
     component="a"
-    href={config.configData.installerURL}
+    href={installerURL}
     target="_blank"
     variant="primary"
     className="install--download-installer"
@@ -26,6 +25,7 @@ const DownloadButton = ({ token }) => (
 );
 DownloadButton.propTypes = {
   token: PropTypes.object.isRequired,
+  installerURL: PropTypes.string.isRequired,
 };
 
 const TelemetryAlert = () => (
@@ -92,7 +92,7 @@ GetStarted.propTypes = {
   docURL: PropTypes.string.isRequired,
 };
 
-const CLISection = () => (
+const CLISection = ({ toolsURL }) => (
   <React.Fragment>
     <p>
       Download the OpenShift command-line tools and add them to your
@@ -101,7 +101,7 @@ const CLISection = () => (
       .
     </p>
     <div>
-      <a href={config.configData.commandLineToolsURL} target="_blank">
+      <a href={toolsURL} target="_blank">
         <Button
           variant="secondary"
           className="install--download-cli"
@@ -126,6 +126,9 @@ const CLISection = () => (
     </p>
   </React.Fragment>
 );
+CLISection.propTypes = {
+  toolsURL: PropTypes.string.isRequired,
+};
 
 const PullSecretSection = ({
   tokenView, token, onCopy, copied,

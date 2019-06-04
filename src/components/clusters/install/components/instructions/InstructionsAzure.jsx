@@ -65,7 +65,7 @@ class InstructionsAzure extends React.Component {
           </p>
 
           <p>
-            <DownloadButton token={token} />
+            <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.2.0-0.nightly-2019-06-03-135056/" token={token} />
           </p>
 
           <WhatIsInstallerSection isIPI={false} />
@@ -85,7 +85,7 @@ class InstructionsAzure extends React.Component {
           <p />
 
           <h3 className="pf-c-title pf-m-md downloads-subtitle">Command-Line Interface</h3>
-          <CLISection />
+          <CLISection toolsURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.2.0-0.nightly-2019-06-03-135056/" />
 
         </div>
       </div>
