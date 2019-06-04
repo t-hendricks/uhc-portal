@@ -10,7 +10,6 @@ describe('<CreateClusterDropdown />', () => {
     onClickFunc = jest.fn();
     wrapper = shallow(<CreateClusterDropdown
       showCreationForm={onClickFunc}
-      showOCPCreationForm={onClickFunc}
       hasQuota
     />);
   });
@@ -19,13 +18,8 @@ describe('<CreateClusterDropdown />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('calls showOCPCreationForm when needed', () => {
-    wrapper.find('MenuItem').at(1).simulate('click');
-    expect(onClickFunc).toBeCalled();
-  });
-
   it('calls showCreationForm when needed', () => {
-    wrapper.find('MenuItem').at(2).simulate('click');
+    wrapper.find('MenuItem').at(1).simulate('click');
     expect(onClickFunc).toBeCalled();
   });
 
@@ -34,7 +28,6 @@ describe('<CreateClusterDropdown />', () => {
       wrapper = shallow(
         <CreateClusterDropdown
           showCreationForm={onClickFunc}
-          showOCPCreationForm={onClickFunc}
         />,
       );
       expect(wrapper.find('MenuItem').length).toEqual(1);

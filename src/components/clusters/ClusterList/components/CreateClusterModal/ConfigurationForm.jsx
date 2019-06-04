@@ -73,7 +73,7 @@ function ConfigurationForm(props) {
 }
 
 ConfigurationForm.propTypes = {
-  header: PropTypes.oneOf([PropTypes.string, PropTypes.node]).isRequired,
+  header: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   pending: PropTypes.bool,
   showDNSBaseDomain: PropTypes.bool,
 };

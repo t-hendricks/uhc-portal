@@ -130,7 +130,6 @@ class ClusterList extends Component {
         <React.Fragment>
           <ClusterListEmptyState
             showCreationForm={() => openModal('create-cluster')}
-            showOCPCreationForm={() => openModal('create-cluster', { isManaged: false })}
             hasQuota={hasQuota}
           />
 
@@ -165,7 +164,6 @@ class ClusterList extends Component {
               <Col xs={2} sm={1}>
                 <CreateClusterDropdown
                   showCreationForm={() => openModal('create-cluster')}
-                  showOCPCreationForm={() => openModal('create-cluster', { isManaged: false })}
                   hasQuota={hasQuota}
                 />
               </Col>

@@ -12,7 +12,6 @@ describe('<ClusterListEmptyState />', () => {
     ocpFunc = jest.fn();
     wrapper = shallow(<ClusterListEmptyState
       showCreationForm={managedFunc}
-      showOCPCreationForm={ocpFunc}
       hasQuota
     />);
   });
@@ -21,14 +20,9 @@ describe('<ClusterListEmptyState />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('calls showOCPCreationForm when needed', () => {
+  it('calls showCreationForm when needed', () => {
     wrapper.find('Button').at(0).simulate('click');
     expect(managedFunc).toBeCalled();
-  });
-
-  it('calls showCreationForm when needed', () => {
-    wrapper.find('Button').at(1).simulate('click');
-    expect(ocpFunc).toBeCalled();
   });
 
   describe('User with no quota', () => {

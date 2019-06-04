@@ -29,16 +29,6 @@ exports[`<CreateClusterDropdown /> renders correctly 1`] = `
     bsClass="dropdown"
     disabled={false}
     divider={false}
-    eventKey="2"
-    header={false}
-    onClick={[MockFunction]}
-  >
-    Self-Managed Cluster
-  </MenuItem>
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
     eventKey="3"
     header={false}
     onClick={[MockFunction]}
