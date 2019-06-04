@@ -81,7 +81,7 @@ class InstructionsAWSIPI extends React.Component {
           </p>
 
           <p>
-            <DownloadButton token={token} />
+            <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
           </p>
 
           <WhatIsInstallerSection isIPI />
@@ -101,7 +101,7 @@ class InstructionsAWSIPI extends React.Component {
           <p />
 
           <h3 className="pf-c-title pf-m-md downloads-subtitle">Command-Line Interface</h3>
-          <CLISection />
+          <CLISection toolsURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" />
 
           <h3>Optional: Customize your deployment</h3>
           <p>
