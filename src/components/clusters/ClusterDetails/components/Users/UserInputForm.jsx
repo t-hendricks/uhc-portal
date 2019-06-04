@@ -21,6 +21,7 @@ class UserInputForm extends React.Component {
   save() {
     const { currentValue } = this.state;
     const { saveUser, clusterID } = this.props;
+    this.setState({ currentValue: '' });
     saveUser(clusterID, 'dedicated-admins', currentValue);
   }
 
