@@ -38,6 +38,11 @@ class Users extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { clearUsersResponses } = this.props;
+    clearUsersResponses();
+  }
+
   showAddUserRow() {
     this.setState({ showAddUserRow: true });
   }
@@ -145,6 +150,7 @@ Users.propTypes = {
   getUsers: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired,
   addUser: PropTypes.func.isRequired,
+  clearUsersResponses: PropTypes.func.isRequired,
 };
 
 export default Users;

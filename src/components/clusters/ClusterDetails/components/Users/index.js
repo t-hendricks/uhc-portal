@@ -15,6 +15,7 @@ const mapDispatchToProps = {
   getUsers: usersActions.getUsers,
   addUser: usersActions.addUser,
   deleteUser: usersActions.deleteUser,
+  clearUsersResponses: usersActions.clearUsersResponses,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Users);
