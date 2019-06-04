@@ -29,6 +29,12 @@ const InstructionsInfrastructure = () => (
       <Link to="/install/azure/user-provisioned" className="infra-card">
         <CardBody>
           <img src={AzureLogo} alt="Azure" className="infra-logo" />
+          <br />
+          <span className="azure-dev-preview-card">
+            <i className="fa fa-code" />
+            {' '}
+            Developer Preview
+          </span>
         </CardBody>
       </Link>
       <Link to="/install/vsphere/user-provisioned" className="infra-card">
