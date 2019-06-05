@@ -83,14 +83,14 @@ export UHC_TOKEN="eyJ..."
 ....
 
 To obtain the access token go to the
-https://cloud.openshift.com/clusters/token.html[token page] and copy the
-_refresh token_.
+https://cloud.redhat.com/openshift/token[token page] and copy the
+_offline token_.
 
 By default the backend proxy server will be available at http://localhost:8002,
 and the default configuration of the application is already prepared to use it.
 
 If you need to change the configuration used by this backend proxy, then create a
-YAML file and specify it with the `--config` commmand line option:
+YAML file and specify it with the `--config` command line option:
 
 ....
 ./backend --config=my.yml

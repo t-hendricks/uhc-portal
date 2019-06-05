@@ -143,7 +143,7 @@ func run(cmd *cobra.Command, argv []string) {
 		os.Exit(1)
 	}
 
-	// Try to get a bearer token, just to verify that the connection is work and exit early if
+	// Try to get a bearer token, just to verify that the connection is working and exit early if
 	// it doesn't:
 	_, _, err = connection.Tokens()
 	if err != nil {
