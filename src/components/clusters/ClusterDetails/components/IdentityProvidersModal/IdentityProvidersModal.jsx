@@ -34,6 +34,7 @@ import LDAPForm from './components/LDAPForm';
 import OpenIDForm from './components/OpenIDForm';
 import OpenIDFormRequired from './components/OpenIDFormRequired';
 import LDAPFormRequired from './components/LDAPFormRequired';
+import GithubFormRequired from './components/GithubFormRequired';
 
 class IdentityProvidersModal extends React.Component {
   constructor(props) {
@@ -138,8 +139,20 @@ class IdentityProvidersModal extends React.Component {
     const providersRequiredFields = {
       LDAPIdentityProvider: LDAPFormRequired,
       OpenIDIdentityProvider: OpenIDFormRequired,
-      GithubIdentityProvider: BasicFields,
+      GithubIdentityProvider: GithubFormRequired,
       GoogleIdentityProvider: BasicFields,
+    };
+
+    const LDAPLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-ldap-identity-provider';
+    const GithubLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-github-identity-provider';
+    const OpenIDLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-oidc-identity-provider';
+    const GoogleLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-google-identity-provider';
+
+    const providerDocumentationLink = {
+      LDAPIdentityProvider: LDAPLink,
+      OpenIDIdentityProvider: OpenIDLink,
+      GithubIdentityProvider: GithubLink,
+      GoogleIdentityProvider: GoogleLink,
     };
 
     const SelectedProivderRequiredFields = providersRequiredFields[selectedIDP];
@@ -189,7 +202,14 @@ class IdentityProvidersModal extends React.Component {
                   disabled={createIDPResponse.pending}
                 />
                 {SelectedProivderRequiredFields
-                  && (<SelectedProivderRequiredFields createIDPResponse={createIDPResponse} />)}
+                  && (
+                  <SelectedProivderRequiredFields
+                    createIDPResponse={createIDPResponse}
+                    toggleDisable={this.toggleDisable}
+                    teamsDisabled={teamsDisabled}
+                    orgsDisabled={orgsDisabled}
+                  />
+                  )}
               </Col>
               <Col sm={4}>
                 <HintBlock
@@ -200,7 +220,7 @@ class IdentityProvidersModal extends React.Component {
                         Learn more about identity providers in the OpenShift documentation.
                       </p>
                       <p>
-                        <a target="_blank" href="https://docs.openshift.com/enterprise/3.0/admin_guide/configuring_authentication.html">Learn more</a>
+                        <a target="_blank" href={providerDocumentationLink[selectedIDP]}>Learn more</a>
                       </p>
                     </React.Fragment>
                   )}
@@ -212,12 +232,7 @@ class IdentityProvidersModal extends React.Component {
                 <Col sm={5} id="idp-advanced-options">
                   {SelectedProviderAdvancedOptions
                     && (
-                    <SelectedProviderAdvancedOptions
-                      createIDPResponse={createIDPResponse}
-                      toggleDisable={this.toggleDisable}
-                      teamsDisabled={teamsDisabled}
-                      orgsDisabled={orgsDisabled}
-                    />
+                    <SelectedProviderAdvancedOptions createIDPResponse={createIDPResponse} />
                     )}
                   <Field
                     component={ReduxFormDropdown}
