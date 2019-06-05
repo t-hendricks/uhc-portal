@@ -41,10 +41,11 @@ const cidr = (value) => {
   return undefined;
 };
 
-// Function to validate number of nodes, which must be an integer equal or greater to one.
-const nodes = (value) => {
-  if (value === undefined || value < 1) {
-    return 'At least one node is required.';
+// Function to validate number of nodes. The 'min' is an object containing int 'value' of minimum
+// node count, and a string 'validationMsg' with an error message
+const nodes = (value, min) => {
+  if (value === undefined || value < min.value) {
+    return min.validationMsg;
   }
   // eslint-disable-next-line eqeqeq
   if (!parseInt(value, 10) || Math.floor(value) != value) {

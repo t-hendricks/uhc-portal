@@ -53,6 +53,11 @@ class EditClusterDialog extends Component {
     }
   }
 
+  validateNodes = (nodes) => {
+    const { min } = this.props;
+    return validators.nodes(nodes, min);
+  }
+
   render() {
     const {
       isOpen,
@@ -62,6 +67,7 @@ class EditClusterDialog extends Component {
       editRouterShardResponse,
       resetResponse,
       hasRouterShards,
+      min,
     } = this.props;
 
     const cancelEdit = () => {
@@ -90,8 +96,8 @@ class EditClusterDialog extends Component {
                     name="nodes_compute"
                     label="Compute nodes"
                     type="number"
-                    validate={validators.nodes}
-                    min="1"
+                    validate={this.validateNodes}
+                    min={min.value}
                   />
                 </Col>
               </Row>
@@ -151,6 +157,10 @@ EditClusterDialog.propTypes = {
   editClusterResponse: PropTypes.object,
   editRouterShardResponse: PropTypes.object,
   hasRouterShards: PropTypes.bool.isRequired,
+  min: PropTypes.shape({
+    value: PropTypes.number,
+    validationMsg: PropTypes.string,
+  }).isRequired,
   initialFormValues: PropTypes.shape({
     id: PropTypes.string,
     nodesCompute: PropTypes.number,

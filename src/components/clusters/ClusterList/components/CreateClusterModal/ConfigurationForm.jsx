@@ -7,69 +7,84 @@ import CloudRegionComboBox from './CloudRegionComboBox';
 import validators from '../../../../../common/validators';
 import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
 import { ConfigurationHint, RegionsHint } from './CreateClusterModalHelper';
+import minValueSelector from '../../../common/EditClusterDialog/EditClusterSelectors';
 
-function ConfigurationForm(props) {
-  const {
-    header, pending, showDNSBaseDomain,
-  } = props;
-  return (
-    <React.Fragment>
-      <h3>{header}</h3>
-      <Col sm={5}>
-        <Field
-          component={ReduxVerticalFormGroup}
-          name="name"
-          label="Cluster name"
-          type="text"
-          validate={validators.checkClusterName}
-          disabled={pending}
-        />
+class ConfigurationForm extends React.Component {
+  state = {
+    isMultiAz: false,
+  };
 
-        {showDNSBaseDomain && (
-        <Field
-          component={ReduxVerticalFormGroup}
-          name="dns_base_domain"
-          label="Base DNS domain"
-          type="text"
-          validate={validators.checkBaseDNSDomain}
-          disabled={pending}
-          normalize={value => value.toLowerCase()}
-        />
-        )}
+  handleMultiAZChange = () => {
+    const { isMultiAz } = this.state;
+    this.setState({ isMultiAz: !isMultiAz });
+  };
 
-        <Field
-          component={ReduxVerticalFormGroup}
-          name="nodes_compute"
-          label="Compute nodes"
-          type="number"
-          min="1"
-          validate={validators.nodes}
-          disabled={pending}
-        />
+  render() {
+    const {
+      header, pending, showDNSBaseDomain,
+    } = this.props;
+    const { isMultiAz } = this.state;
+    const min = minValueSelector(isMultiAz);
+    return (
+      <React.Fragment>
+        <h3>{header}</h3>
+        <Col sm={5}>
+          <Field
+            component={ReduxVerticalFormGroup}
+            name="name"
+            label="Cluster name"
+            type="text"
+            validate={validators.checkClusterName}
+            disabled={pending}
+          />
 
-        <Field
-          component={ReduxVerticalFormGroup}
-          name="region"
-          label="AWS region"
-          componentClass={CloudRegionComboBox}
-          cloudProviderID="aws"
-          validate={validators.required}
-          disabled={pending}
-        />
+          {showDNSBaseDomain && (
+            <Field
+              component={ReduxVerticalFormGroup}
+              name="dns_base_domain"
+              label="Base DNS domain"
+              type="text"
+              validate={validators.checkBaseDNSDomain}
+              disabled={pending}
+              normalize={value => value.toLowerCase()}
+            />
+          )}
 
-        <Field
-          component={ReduxCheckbox}
-          name="multi_az"
-          label="Deploy on multiple availability zones"
-          disabled={pending}
-        />
-      </Col>
-      <Col sm={4}>
-        <ConfigurationHint showDNSBaseDomain={showDNSBaseDomain} />
-        <RegionsHint />
-      </Col>
-    </React.Fragment>
-  );
+          <Field
+            component={ReduxVerticalFormGroup}
+            name="nodes_compute"
+            label="Compute nodes"
+            type="number"
+            min={min.value}
+            validate={value => validators.nodes(value, min)}
+            disabled={pending}
+          />
+
+          <Field
+            component={ReduxVerticalFormGroup}
+            name="region"
+            label="AWS region"
+            componentClass={CloudRegionComboBox}
+            cloudProviderID="aws"
+            validate={validators.required}
+            disabled={pending}
+          />
+
+          <Field
+            component={ReduxCheckbox}
+            name="multi_az"
+            label="Deploy on multiple availability zones"
+            disabled={pending}
+            onChange={this.handleMultiAZChange}
+          />
+        </Col>
+        <Col sm={4}>
+          <ConfigurationHint showDNSBaseDomain={showDNSBaseDomain} />
+          <RegionsHint />
+        </Col>
+      </React.Fragment>
+    );
+  }
 }
 
 ConfigurationForm.propTypes = {

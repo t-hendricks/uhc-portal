@@ -25,6 +25,7 @@ describe('<EditDisplayNameDialog />', () => {
       change={change}
       resetResponse={resetResponse}
       initialFormValues={{ id: 'test-id', nodesCompute: 4 }}
+      min={{ value: 4, validationMsg: 'error' }}
     />);
   });
   it('renders correctly', () => {

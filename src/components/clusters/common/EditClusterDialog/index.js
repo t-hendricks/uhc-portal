@@ -2,16 +2,17 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import {
-  editCluster,
   clearClusterResponse,
-  fetchClusterRouterShards,
   createClusterRouterShard,
-  editClusterRouterShard,
   deleteClusterRouterShard,
+  editCluster,
+  editClusterRouterShard,
+  fetchClusterRouterShards,
 } from '../../../../redux/actions/clustersActions';
 import EditClusterDialog from './EditClusterDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
+import minValueSelector from './EditClusterSelectors';
 
 const reduxFormConfig = {
   form: 'EditCluster',
@@ -28,6 +29,7 @@ const mapStateToProps = (state) => {
     hasRouterShards,
     editClusterResponse: state.clusters.editedCluster,
     editRouterShardResponse: state.clusters.editedRouterShards,
+    min: minValueSelector(modalData.multi_az),
     initialFormValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,
