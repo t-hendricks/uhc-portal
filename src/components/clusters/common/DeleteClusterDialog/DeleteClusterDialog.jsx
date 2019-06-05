@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import {
   Alert,
   Button,
-  ControlLabel,
   FormControl,
-  FormGroup,
   Icon,
   MessageDialog,
   Spinner,
@@ -20,21 +18,6 @@ import { noop } from '../../../../common/helpers';
 class DeleteClusterDialog extends React.Component {
   state = {
     clusterNameInput: '',
-    infraIdInput: '',
-    awsKeyInput: '',
-    awsSecretInput: '',
-  }
-
-  componentWillReceiveProps(props) {
-    const { modalData } = props;
-    const { infraIdInput } = this.state;
-
-    if (modalData.infraID && !infraIdInput) {
-      // Fill in the infraID input field if available
-      this.setState({
-        infraIdInput: modalData.infraID,
-      });
-    }
   }
 
   componentDidUpdate() {
@@ -56,9 +39,6 @@ class DeleteClusterDialog extends React.Component {
     // reset the input, so it'll be empty next time the dialog is opened.
     this.setState({
       clusterNameInput: '',
-      infraIdInput: '',
-      awsKeyInput: '',
-      awsSecretInput: '',
     });
     clearDeleteClusterResponse(); // clear the response for the next time the dialog is shown.
     close(); // Close the dialog.
@@ -70,22 +50,16 @@ class DeleteClusterDialog extends React.Component {
       isOpen,
       modalData,
       deleteCluster,
-      updateAndDeleteCluster,
       deleteClusterResponse,
     } = this.props;
 
     const {
       clusterID,
       clusterName,
-      infraID,
-      managed,
     } = modalData;
 
     const {
       clusterNameInput,
-      infraIdInput,
-      awsKeyInput,
-      awsSecretInput,
     } = this.state;
 
     const errorContainer = deleteClusterResponse.error ? (
@@ -94,22 +68,10 @@ class DeleteClusterDialog extends React.Component {
       </Alert>) : null;
 
     const isPending = deleteClusterResponse.pending;
-    const isValid = managed
-      ? clusterNameInput === clusterName
-      : (infraIdInput && awsKeyInput && awsSecretInput);
+    const isValid = clusterNameInput === clusterName;
 
     const doSubmit = () => {
-      if (managed) {
-        deleteCluster(clusterID);
-      } else {
-        updateAndDeleteCluster(clusterID, {
-          infra_id: infraIdInput,
-          aws: {
-            access_key_id: awsKeyInput,
-            secret_access_key: awsSecretInput,
-          },
-        });
-      }
+      deleteCluster(clusterID);
     };
 
     const deleteBtn = (
@@ -149,53 +111,6 @@ class DeleteClusterDialog extends React.Component {
       </React.Fragment>
     );
 
-    const selfManagedForm = (
-      <React.Fragment>
-        <p>
-          Please enter all the necessary information to delete the
-          {' '}
-          <span style={{ fontWeight: 'bold' }}>{clusterName}</span>
-          {' '}
-          cluster:
-        </p>
-        <FormGroup>
-          <ControlLabel htmlFor="infra-id">Infra ID</ControlLabel>
-          <FormControl
-            id="infra-id"
-            type="text"
-            value={infraIdInput}
-            placeholder="Enter Infra ID"
-            onChange={e => this.setValue('infraIdInput', e)}
-            disabled={isPending || !!infraID}
-            autoFocus={!infraID}
-          />
-        </FormGroup>
-        <FormGroup>
-          <ControlLabel htmlFor="aws-key">AWS access key ID</ControlLabel>
-          <FormControl
-            id="aws-key"
-            type="password"
-            value={awsKeyInput}
-            placeholder="AWS access key ID"
-            onChange={e => this.setValue('awsKeyInput', e)}
-            disabled={isPending}
-            autoFocus={!!infraID}
-          />
-        </FormGroup>
-        <FormGroup>
-          <ControlLabel htmlFor="aws-secret">AWS secret access key</ControlLabel>
-          <FormControl
-            id="aws-secret"
-            type="password"
-            value={awsSecretInput}
-            placeholder="AWS secret access key"
-            onChange={e => this.setValue('awsSecretInput', e)}
-            disabled={isPending}
-          />
-        </FormGroup>
-      </React.Fragment>
-    );
-
     const footer = (
       <React.Fragment>
         <Button bsStyle="default" onClick={() => this.closeDialog(false)} disabled={isPending}>
@@ -212,7 +127,7 @@ class DeleteClusterDialog extends React.Component {
         title="Delete Cluster"
         icon={icon}
         primaryContent={primaryContent}
-        secondaryContent={managed ? managedForm : selfManagedForm}
+        secondaryContent={managedForm}
         footer={footer}
       />
     );
@@ -225,7 +140,6 @@ DeleteClusterDialog.propTypes = {
   clearDeleteClusterResponse: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
   deleteCluster: PropTypes.func.isRequired,
-  updateAndDeleteCluster: PropTypes.func.isRequired,
   deleteClusterResponse: PropTypes.object,
   onClose: PropTypes.func,
 };
@@ -242,8 +156,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   clearDeleteClusterResponse: () => deleteClusterDialogActions.deletedClusterResponse(),
-  updateAndDeleteCluster: (clusterID, attrs) => deleteClusterDialogActions
-    .updateAndDeleteCluster(clusterID, attrs),
   deleteCluster: clusterID => deleteClusterDialogActions.deleteCluster(clusterID),
   close: () => closeModal('delete-cluster'),
 };

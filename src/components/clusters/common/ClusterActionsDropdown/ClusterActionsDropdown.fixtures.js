@@ -24,7 +24,6 @@ const managedReadyProps = {
 const deleteModalData = {
   clusterID: cluster.id,
   clusterName: cluster.name,
-  managed: cluster.managed,
 };
 
 const clusterUninstallingProps = {
