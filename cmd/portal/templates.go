@@ -61,13 +61,13 @@ DocumentRoot /var/www/html
   # index page of the application:
   RewriteEngine On
   RewriteBase /
-  RewriteRule ^$ /clusters
+  RewriteRule ^$ /openshift
   RewriteRule ^server-status$ - [L]
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
-  RewriteRule . /clusters/index.html [L]
+  RewriteRule . /openshift/index.html [L]
 </Directory>
 
 # Allow access to the directory that contains application configuration files,
