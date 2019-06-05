@@ -32,6 +32,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
         bsClass="col"
         componentClass="div"
         md={4}
+        mdOffset={2}
       >
         <Card
           accented={true}
@@ -71,49 +72,6 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
                 onClick={[MockFunction]}
               >
                 Create Red Hat-Managed Cluster
-              </Button>
-            </EmptyStateAction>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={4}
-      >
-        <Card
-          accented={false}
-          aggregated={false}
-          aggregatedMini={false}
-          cardRef={null}
-          className=""
-          matchHeight={true}
-        >
-          <CardBody
-            className=""
-          >
-            <CardTitle
-              className=""
-            >
-              Self-Managed Cluster
-            </CardTitle>
-            <p>
-              Create a self-managed cluster (OCP) to provision the cluster on Amazon Web Services and manage it yourself.
-            </p>
-            <EmptyStateAction
-              className=""
-              secondary={false}
-            >
-              <Button
-                active={false}
-                block={false}
-                bsClass="btn"
-                bsSize="large"
-                bsStyle="primary"
-                disabled={false}
-                onClick={[MockFunction]}
-              >
-                Create Self-Managed Cluster
               </Button>
             </EmptyStateAction>
           </CardBody>

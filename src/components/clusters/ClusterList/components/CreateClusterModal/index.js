@@ -29,7 +29,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (formData, reduxDispatch, ownProps) => {
+  onSubmit: (formData) => {
     const clusterRequest = {
       name: formData.name,
       region: {
@@ -44,7 +44,7 @@ const mapDispatchToProps = dispatch => ({
         service_cidr: formData.network_service_cidr,
         pod_cidr: formData.network_pod_cidr,
       },
-      managed: ownProps.isManaged,
+      managed: true,
     };
 
     // Add router shards
@@ -58,15 +58,6 @@ const mapDispatchToProps = dispatch => ({
           scheme: 'internet-facing',
         });
       });
-    }
-
-    // Fill aws credential only for self-managed clusters.
-    if (!ownProps.isManaged) {
-      clusterRequest.aws = {
-        access_key_id: formData.aws_access_key_id,
-        secret_access_key: formData.aws_secret_access_key,
-      };
-      clusterRequest.dns = { base_domain: formData.dns_base_domain };
     }
 
     dispatch(createCluster(clusterRequest));

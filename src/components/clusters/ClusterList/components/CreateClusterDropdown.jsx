@@ -8,7 +8,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 
 function CreateClusterDropdown(props) {
-  const { showCreationForm, showOCPCreationForm, hasQuota } = props;
+  const { showCreationForm, hasQuota } = props;
   return (
     <DropdownButton
       bsStyle="primary"
@@ -24,9 +24,6 @@ function CreateClusterDropdown(props) {
       </LinkContainer>
       {hasQuota && (
         <React.Fragment>
-          <MenuItem eventKey="2" onClick={showOCPCreationForm}>
-            Self-Managed Cluster
-          </MenuItem>
           <MenuItem eventKey="3" onClick={showCreationForm}>
             Red Hat-Managed Cluster
           </MenuItem>
@@ -38,7 +35,6 @@ function CreateClusterDropdown(props) {
 
 CreateClusterDropdown.propTypes = {
   showCreationForm: PropTypes.func.isRequired,
-  showOCPCreationForm: PropTypes.func.isRequired,
   hasQuota: PropTypes.bool.isRequired,
 };
 

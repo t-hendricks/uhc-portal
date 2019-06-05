@@ -24,11 +24,10 @@ import {
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
 import constants from './CreateClusterModalHelper';
 import ManagedClusterForm from './ManagedClusterForm';
-import SelfManagedClusterForm from './SelfManagedClusterForm';
 
 function CreateClusterModal(props) {
   const {
-    isOpen, isManaged, closeModal, handleSubmit, createClusterResponse, resetResponse, resetForm,
+    isOpen, closeModal, handleSubmit, createClusterResponse, resetResponse, resetForm,
   } = props;
 
   const onClose = () => {
@@ -59,20 +58,17 @@ function CreateClusterModal(props) {
     </div>
   );
 
-  const title = isManaged ? 'Create a Red Hat-Managed Cluster' : 'Create a Self-Managed Cluster';
-
   const formProps = { pending: createClusterResponse.pending };
 
   return isOpen
     && (
     <Modal show className="right-side-modal-pf" bsSize="large" onHide={onClose}>
       <Modal.Header>
-        <ModalHeader title={title} onClose={onClose} />
+        <ModalHeader title="Create a Red Hat-Managed Cluster" onClose={onClose} />
       </Modal.Header>
       <Modal.Body>
         {hasError}
-        {isManaged
-          ? <ManagedClusterForm {...formProps} /> : <SelfManagedClusterForm {...formProps} />}
+        <ManagedClusterForm {...formProps} />
       </Modal.Body>
       <Modal.Footer>
         <Button bsStyle="primary" type="submit" onClick={handleSubmit} disabled={createClusterResponse.pending}>
@@ -88,7 +84,6 @@ function CreateClusterModal(props) {
 }
 CreateClusterModal.propTypes = {
   isOpen: PropTypes.bool,
-  isManaged: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
@@ -98,7 +93,6 @@ CreateClusterModal.propTypes = {
 
 CreateClusterModal.defaultProps = {
   isOpen: false,
-  isManaged: true,
 };
 
 export default CreateClusterModal;

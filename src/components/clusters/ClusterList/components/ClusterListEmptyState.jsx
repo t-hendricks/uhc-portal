@@ -6,20 +6,12 @@ import {
 } from 'patternfly-react';
 
 function ClusterListEmptyState(props) {
-  const { showCreationForm, showOCPCreationForm, hasQuota } = props;
+  const { showCreationForm, hasQuota } = props;
 
   const createManaged = (
     <EmptyState.Action>
       <Button bsStyle="primary" bsSize="large" onClick={showCreationForm}>
         Create Red Hat-Managed Cluster
-      </Button>
-    </EmptyState.Action>
-  );
-
-  const createAutoSelfManaged = (
-    <EmptyState.Action>
-      <Button bsStyle="primary" bsSize="large" onClick={showOCPCreationForm}>
-        Create Self-Managed Cluster
       </Button>
     </EmptyState.Action>
   );
@@ -46,7 +38,7 @@ function ClusterListEmptyState(props) {
         <Row className="cluster-list-emptystate-options">
           {hasQuota && (
             <React.Fragment>
-              <Col md={4}>
+              <Col md={4} mdOffset={2}>
                 <Card className="cluster-list-emptystate-preferred" accented matchHeight>
                   <CardBody>
                     <p className="cluster-list-emptystate-preferred-string">Preferred method</p>
@@ -56,18 +48,6 @@ function ClusterListEmptyState(props) {
                   to provision the cluster on Amazon Web Services.
                     </p>
                     {createManaged}
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col md={4}>
-                <Card matchHeight>
-                  <CardBody>
-                    <CardTitle>Self-Managed Cluster</CardTitle>
-                    <p>
-                  Create a self-managed cluster (OCP)
-                  to provision the cluster on Amazon Web Services and manage it yourself.
-                    </p>
-                    {createAutoSelfManaged}
                   </CardBody>
                 </Card>
               </Col>
@@ -93,7 +73,6 @@ function ClusterListEmptyState(props) {
 
 ClusterListEmptyState.propTypes = {
   showCreationForm: PropTypes.func.isRequired,
-  showOCPCreationForm: PropTypes.func.isRequired,
   hasQuota: PropTypes.bool,
 };
 
