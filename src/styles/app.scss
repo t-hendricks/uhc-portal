@@ -406,6 +406,11 @@ p.notfound {
   padding-top: 10px;
 }
 
+.ca-textarea {
+  height: 200px;
+  min-height: 200px;
+}
+
 // make <Button> look like <a href= ...>
 .buttonHref {
   background: none!important;

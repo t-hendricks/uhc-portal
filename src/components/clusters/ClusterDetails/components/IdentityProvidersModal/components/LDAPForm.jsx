@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckbox';
+import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 function LDAPForm({ createIDPResponse }) {
   return (
@@ -16,6 +16,8 @@ function LDAPForm({ createIDPResponse }) {
         placeholder="CA"
         helpText="PEM encoded certificate bundle to use to validate server certificates for the configured URL"
         disabled={createIDPResponse.pending}
+        className="ca-textarea"
+        componentClass="textarea"
       />
       <Field
         component={ReduxCheckbox}
