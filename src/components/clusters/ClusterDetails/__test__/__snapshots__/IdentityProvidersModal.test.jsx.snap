@@ -126,8 +126,11 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
               type="text"
               validate={[Function]}
             />
-            <BasicFields
+            <GithubFormRequired
               createIDPResponse={Object {}}
+              orgsDisabled={false}
+              teamsDisabled={false}
+              toggleDisable={[Function]}
             />
           </Col>
           <Col
@@ -143,7 +146,7 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
                   </p>
                   <p>
                     <a
-                      href="https://docs.openshift.com/enterprise/3.0/admin_guide/configuring_authentication.html"
+                      href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-github-identity-provider"
                       target="_blank"
                     >
                       Learn more
@@ -179,9 +182,6 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
             >
               <GithubForm
                 createIDPResponse={Object {}}
-                orgsDisabled={false}
-                teamsDisabled={false}
-                toggleDisable={[Function]}
               />
               <Field
                 component={[Function]}
