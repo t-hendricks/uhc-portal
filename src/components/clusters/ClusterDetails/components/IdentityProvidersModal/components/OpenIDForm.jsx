@@ -15,6 +15,8 @@ function OpenIDForm({ createIDPResponse }) {
         placeholder="CA"
         helpText="PEM encoded certificate bundle to use to validate server certificates for the configured URL"
         disabled={createIDPResponse.pending}
+        className="ca-textarea"
+        componentClass="textarea"
       />
       <Field
         component={ReduxVerticalFormGroup}
