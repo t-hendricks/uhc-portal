@@ -161,7 +161,7 @@ function push_build {
     --delete \
     --exclude=.git \
     --exclude=58231b16fdee45a03a4ee3cf94a9f2c3 \
-    build/clusters/ \
+    build/openshift/ \
     target/
 
   # The `config.json` file is generated dynamicall by the portal server, but that
