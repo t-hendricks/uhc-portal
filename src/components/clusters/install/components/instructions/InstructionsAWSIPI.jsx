@@ -41,8 +41,9 @@ class InstructionsAWSIPI extends React.Component {
           <TelemetryAlert />
 
           <p>
-            The basic steps for performing an IPI-based install on Amazon Web Services are
-            outlined below. For detailed instructions, see the
+            With OpenShift Container Platform you can install a cluster on Amazon Web Services
+            (AWS) using infrastructure that the installation program provisions and the cluster
+            maintains. The basic steps are outlined below. For detailed instructions, see the
             {' '}
             <a href="https://docs.openshift.com/container-platform/4.1/welcome/index.html" target="_blank">
               official documentation
