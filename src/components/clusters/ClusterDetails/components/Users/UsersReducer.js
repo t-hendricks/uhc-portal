@@ -27,6 +27,8 @@ const initialState = {
 
 function UsersReducer(state = initialState, action) {
   switch (action.type) {
+    case UsersConstants.CLEAR_USER_RESPONSES:
+      return initialState;
     // GET_USERS
     case helpers.REJECTED_ACTION(UsersConstants.GET_USERS):
       return helpers.setStateProp(

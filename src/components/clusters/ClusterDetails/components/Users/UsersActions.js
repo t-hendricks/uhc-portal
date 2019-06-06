@@ -18,11 +18,16 @@ const deleteUser = (clusterID, groupID, userID) => dispatch => dispatch({
   payload: clusterService.deleteClusterGroupUser(clusterID, groupID, userID),
 });
 
+const clearUsersResponses = () => ({
+  type: UsersConstants.CLEAR_USER_RESPONSES,
+});
+
 
 const usersActions = {
   getUsers,
   addUser,
   deleteUser,
+  clearUsersResponses,
 };
 
 export default usersActions;
