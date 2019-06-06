@@ -27,7 +27,7 @@ import ManagedClusterForm from './ManagedClusterForm';
 
 function CreateClusterModal(props) {
   const {
-    isOpen, closeModal, handleSubmit, createClusterResponse, resetResponse, resetForm,
+    isOpen, closeModal, handleSubmit, createClusterResponse, resetResponse, resetForm, touch,
   } = props;
 
   const onClose = () => {
@@ -68,7 +68,7 @@ function CreateClusterModal(props) {
       </Modal.Header>
       <Modal.Body>
         {hasError}
-        <ManagedClusterForm {...formProps} />
+        <ManagedClusterForm {...formProps} touch={touch} />
       </Modal.Body>
       <Modal.Footer>
         <Button bsStyle="primary" type="submit" onClick={handleSubmit} disabled={createClusterResponse.pending}>
@@ -89,6 +89,7 @@ CreateClusterModal.propTypes = {
   resetForm: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
+  touch: PropTypes.func.isRequired,
 };
 
 CreateClusterModal.defaultProps = {
