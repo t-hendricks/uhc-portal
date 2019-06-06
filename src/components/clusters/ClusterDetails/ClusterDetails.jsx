@@ -235,7 +235,7 @@ class ClusterDetails extends Component {
             }
           }}
           />
-          <IdentityProvidersModal clusterID={cluster.id} />
+          <IdentityProvidersModal clusterID={cluster.id} onClose={() => this.refreshIDP()} />
           <DeleteIDPDialog onClose={() => {
             this.refreshIDP();
             onDialogClose();
