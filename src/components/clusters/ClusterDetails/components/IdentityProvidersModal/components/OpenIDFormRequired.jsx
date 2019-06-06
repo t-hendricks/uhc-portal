@@ -11,34 +11,15 @@ function OpenIDFormRequired({ createIDPResponse }) {
   return (
     <React.Fragment>
       <BasicFields />
-      <h4>URLs</h4>
       <Field
         component={ReduxVerticalFormGroup}
-        name="openid_authorize"
-        label="OAuth authorization URL"
+        name="issuer"
+        label="Issuer URL"
         type="text"
-        placeholder="OAuth authorization URL"
+        placeholder="Issuer URL"
         disabled={createIDPResponse.pending}
         validate={validators.required}
       />
-      <Field
-        component={ReduxVerticalFormGroup}
-        name="openid_token"
-        label="OAuth token granting URL"
-        type="text"
-        placeholder="OAuth token granting URL"
-        disabled={createIDPResponse.pending}
-        validate={validators.required}
-      />
-      <Field
-        component={ReduxVerticalFormGroup}
-        name="openid_userinfo"
-        label="Userinfo URL"
-        type="text"
-        placeholder="userInfo URL"
-        disabled={createIDPResponse.pending}
-      />
-
       <h4>Claims Mappings</h4>
       <Field
         component={ReduxVerticalFormGroup}

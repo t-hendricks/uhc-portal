@@ -208,16 +208,6 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
                   ]
                 }
               />
-              <Field
-                component={[Function]}
-                label="Challenge"
-                name="challenge"
-              />
-              <Field
-                component={[Function]}
-                label="Login"
-                name="login"
-              />
             </Col>
           </ExpandCollapse>
         </Row>

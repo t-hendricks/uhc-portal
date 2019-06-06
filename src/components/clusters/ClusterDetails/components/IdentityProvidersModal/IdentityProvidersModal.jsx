@@ -23,7 +23,6 @@ import {
 
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ReduxFormDropdown from '../../../../common/ReduxFormComponents/ReduxFormDropdown';
-import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
 import validators from '../../../../../common/validators';
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
 
@@ -237,18 +236,6 @@ class IdentityProvidersModal extends React.Component {
                     options={mappingMethods}
                     name="mappingMethod"
                     label="Mapping Method"
-                  />
-                  <Field
-                    component={ReduxCheckbox}
-                    name="challenge"
-                    label="Challenge"
-                    disabled={createIDPResponse.pending}
-                  />
-                  <Field
-                    component={ReduxCheckbox}
-                    name="login"
-                    label="Login"
-                    disabled={createIDPResponse.pending}
                   />
                 </Col>
               </ExpandCollapse>
