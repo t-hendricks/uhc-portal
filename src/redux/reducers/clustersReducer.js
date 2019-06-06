@@ -348,47 +348,6 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.REJECTED_ACTION(clustersConstants.EDIT_CLUSTER_ROUTER_SHARD):
-      return helpers.setStateProp(
-        'editedRouterShards',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.PENDING_ACTION(clustersConstants.EDIT_CLUSTER_ROUTER_SHARD):
-      return helpers.setStateProp(
-        'editedRouterShards',
-        {
-          pending: true,
-          routerShards: null,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER_ROUTER_SHARD):
-      return helpers.setStateProp(
-        'editedRouterShards',
-        {
-          routerShards: action.payload.data,
-          pending: false,
-          fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
     case clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE:
       return helpers.setStateProp(
         'editedCluster',

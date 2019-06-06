@@ -190,21 +190,6 @@ const fetchClusterCredentials = clusterID => dispatch => dispatch({
   payload: clusterService.getClusterCredentials(clusterID),
 });
 
-const createClusterRouterShard = (clusterID, data) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
-  payload: clusterService.createClusterRouterShard(clusterID, data),
-});
-
-const editClusterRouterShard = (clusterID, routerShardID, data) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
-  payload: clusterService.editClusterRouterShard(clusterID, routerShardID, data),
-});
-
-const deleteClusterRouterShard = (clusterID, routerShardID) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
-  payload: clusterService.deleteClusterRouterShard(clusterID, routerShardID),
-});
-
 const fetchClusterRouterShards = clusterID => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTER_ROUTER_SHARDS,
   payload: clusterService.getClusterRouterShards(clusterID),
@@ -222,9 +207,6 @@ const clustersActions = {
   fetchClusters,
   fetchClusterDetails,
   fetchClusterCredentials,
-  createClusterRouterShard,
-  editClusterRouterShard,
-  deleteClusterRouterShard,
   fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,
@@ -239,9 +221,6 @@ export {
   fetchClusters,
   fetchClusterDetails,
   fetchClusterCredentials,
-  createClusterRouterShard,
-  editClusterRouterShard,
-  deleteClusterRouterShard,
   fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,
