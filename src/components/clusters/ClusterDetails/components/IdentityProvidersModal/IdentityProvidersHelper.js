@@ -39,11 +39,7 @@ const getCreateIDPRequestData = (formData) => {
     client_id: formData.client_id,
     client_secret: formData.client_secret,
     extra_scopes: toCleanArray(formData.openid_extra_scopes),
-    urls: {
-      authorize: formData.openid_authorize,
-      token: formData.openid_token,
-      user_info: formData.openid_userinfo,
-    },
+    issuer: formData.issuer,
   };
 
   const IDPs = {
@@ -56,8 +52,6 @@ const getCreateIDPRequestData = (formData) => {
   const basicData = {
     type: formData.type,
     name: formData.name,
-    login: formData.login,
-    challenge: formData.challenge,
     mapping_method: formData.mappingMethod || 'claim',
   };
 
