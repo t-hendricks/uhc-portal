@@ -14,10 +14,25 @@ class ConfigurationForm extends React.Component {
     isMultiAz: false,
   };
 
-  handleMultiAZChange = () => {
-    const { isMultiAz } = this.state;
-    this.setState({ isMultiAz: !isMultiAz });
+  handleMultiAZChange = (event) => {
+    const { touch } = this.props;
+    this.setState({ isMultiAz: event.target.checked });
+    // mark Nodes input as touched to make sure validation is shown even if it's not touched.
+    touch('nodes_compute');
   };
+
+  validateNodes = (nodeCount) => {
+    const { isMultiAz } = this.state;
+    const min = minValueSelector(isMultiAz);
+    return validators.nodes(nodeCount, min);
+  }
+
+  // HACK: two validation functions that are the same. This allows to "replace" the validation
+  // func on the compute nodes field, re-triggering validation when the multiAZ checkbox changes.
+
+  validateNodesSingleAz = nodeCount => this.validateNodes(nodeCount);
+
+  validateNodesMultiAz = nodeCount => this.validateNodes(nodeCount);
 
   render() {
     const {
@@ -56,7 +71,7 @@ class ConfigurationForm extends React.Component {
             label="Compute nodes"
             type="number"
             min={min.value}
-            validate={value => validators.nodes(value, min)}
+            validate={isMultiAz ? this.validateNodesMultiAz : this.validateNodesSingleAz}
             disabled={pending}
           />
 
@@ -89,6 +104,7 @@ class ConfigurationForm extends React.Component {
 
 ConfigurationForm.propTypes = {
   header: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  touch: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   showDNSBaseDomain: PropTypes.bool,
 };

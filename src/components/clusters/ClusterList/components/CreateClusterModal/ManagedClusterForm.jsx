@@ -10,6 +10,7 @@ import RouterShardsForm from './RouterShardsForm';
 function ManagedClusterForm(props) {
   const {
     pending,
+    touch,
   } = props;
   return (
     <Form>
@@ -19,6 +20,7 @@ function ManagedClusterForm(props) {
             header={constants.configurationHeader}
             pending={pending}
             showDNSBaseDomain={false}
+            touch={touch}
           />
         </Row>
         <Row>
@@ -33,6 +35,7 @@ function ManagedClusterForm(props) {
 
 ManagedClusterForm.propTypes = {
   pending: PropTypes.bool,
+  touch: PropTypes.func.isRequired,
 };
 
 export default ManagedClusterForm;
