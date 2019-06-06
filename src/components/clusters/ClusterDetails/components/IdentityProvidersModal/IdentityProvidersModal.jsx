@@ -27,14 +27,13 @@ import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox'
 import validators from '../../../../../common/validators';
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
 
-import BasicFields from './components/BasicFields';
 import GithubForm from './components/GithubForm';
-import GoogleForm from './components/GoogleForm';
 import LDAPForm from './components/LDAPForm';
 import OpenIDForm from './components/OpenIDForm';
 import OpenIDFormRequired from './components/OpenIDFormRequired';
 import LDAPFormRequired from './components/LDAPFormRequired';
 import GithubFormRequired from './components/GithubFormRequired';
+import GoogleFormRequired from './components/GoogleFormRequired';
 
 class IdentityProvidersModal extends React.Component {
   constructor(props) {
@@ -131,7 +130,6 @@ class IdentityProvidersModal extends React.Component {
 
     const providersAdvancedOptions = {
       GithubIdentityProvider: GithubForm,
-      GoogleIdentityProvider: GoogleForm,
       OpenIDIdentityProvider: OpenIDForm,
       LDAPIdentityProvider: LDAPForm,
     };
@@ -140,7 +138,7 @@ class IdentityProvidersModal extends React.Component {
       LDAPIdentityProvider: LDAPFormRequired,
       OpenIDIdentityProvider: OpenIDFormRequired,
       GithubIdentityProvider: GithubFormRequired,
-      GoogleIdentityProvider: BasicFields,
+      GoogleIdentityProvider: GoogleFormRequired,
     };
 
     const LDAPLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-ldap-identity-provider';
