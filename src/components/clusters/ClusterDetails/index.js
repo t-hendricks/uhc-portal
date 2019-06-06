@@ -8,7 +8,7 @@ import {
   invalidateClusters,
 } from '../../../redux/actions/clustersActions';
 import { getLogs } from './components/LogWindow/LogWindowActions';
-import { getClusterIdentityProviders } from './components/IdentityProvidersModal/IdentityProvidersActions';
+import { getClusterIdentityProviders, resetIdentityProvidersState } from './components/IdentityProvidersModal/IdentityProvidersActions';
 import usersActions from './components/Users/UsersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 import { userActions } from '../../../redux/actions/userActions';
@@ -43,6 +43,7 @@ const mapDispatchToProps = {
   getLogs,
   getClusterIdentityProviders,
   getUsers: usersActions.getUsers,
+  resetIdentityProvidersState,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

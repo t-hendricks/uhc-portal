@@ -89,6 +89,11 @@ class ClusterDetails extends Component {
     }
   }
 
+  componentWillUnmount() {
+    const { resetIdentityProvidersState } = this.props;
+    resetIdentityProvidersState();
+  }
+
   refresh() {
     const {
       match,
@@ -274,6 +279,7 @@ ClusterDetails.propTypes = {
     history: PropTypes.object,
     pending: PropTypes.bool.isRequired,
   }),
+  resetIdentityProvidersState: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {
