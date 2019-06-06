@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import BasicFields from './BasicFields';
 import { noop } from '../../../../../../common/helpers';
+import { github } from '../../../../../../common/validators';
+
+import BasicFields from './BasicFields';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 function GithubFormRequired({
@@ -21,6 +23,7 @@ function GithubFormRequired({
         disabled={orgsDisabled || createIDPResponse.pending}
         helpText={orgsDisabled ? 'Cannot be used in combination with the teams field' : ''}
         onChange={(e, value) => toggleDisable(e, value, 'teamsDisabled')}
+        validate={orgsDisabled ? noop : github}
       />
       <Field
         component={ReduxVerticalFormGroup}
@@ -31,6 +34,7 @@ function GithubFormRequired({
         disabled={teamsDisabled || createIDPResponse.pending}
         helpText={teamsDisabled ? 'Cannot be used in combination with the organizations field' : ''}
         onChange={(e, value) => toggleDisable(e, value, 'orgsDisabled')}
+        validate={teamsDisabled ? noop : github}
       />
     </React.Fragment>
   );

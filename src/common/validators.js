@@ -54,12 +54,18 @@ const nodes = (value) => {
   return undefined;
 };
 
+const github = value => (value ? undefined : 'Either "Teams" or "Organizations" are required');
+
+
 const validators = {
   required,
   checkClusterName,
   checkBaseDNSDomain,
   cidr,
   nodes,
+  github,
 };
+
+export { github };
 
 export default validators;
