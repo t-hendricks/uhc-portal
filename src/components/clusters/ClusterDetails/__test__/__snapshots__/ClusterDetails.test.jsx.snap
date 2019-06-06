@@ -750,6 +750,7 @@ clusters:
     />
     <Connect(ReduxForm)
       clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
+      onClose={[Function]}
     />
     <Connect(DeleteIDPDialog)
       onClose={[Function]}

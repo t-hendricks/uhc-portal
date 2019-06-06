@@ -53,10 +53,13 @@ class IdentityProvidersModal extends React.Component {
   }
 
   onClose = () => {
-    const { resetResponse, resetForm, closeModal } = this.props;
+    const {
+      resetResponse, resetForm, closeModal, onClose,
+    } = this.props;
     resetResponse();
     resetForm();
     closeModal();
+    onClose();
   };
 
   toggleDisable(e, value, fieldToToggle) {
@@ -267,6 +270,7 @@ IdentityProvidersModal.propTypes = {
   createIDPResponse: PropTypes.object,
   getClusterIdentityProviders: PropTypes.func,
   selectedIDP: PropTypes.string,
+  onClose: PropTypes.func,
 };
 
 IdentityProvidersModal.defaultProps = {
