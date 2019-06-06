@@ -29,10 +29,11 @@ test('Field is valid CIDR range', () => {
 });
 
 test('Field is valid node count', () => {
-  expect(validators.nodes()).toBe('At least one node is required.');
-  expect(validators.nodes('-1')).toBe('At least one node is required.');
-  expect(validators.nodes('1.5')).toBe('\'1.5\' is not a valid number of nodes.');
-  expect(validators.nodes('5')).toBe(undefined);
-  expect(validators.nodes('1')).toBe(undefined);
-  expect(validators.nodes('aaa')).toBe('\'aaa\' is not a valid number of nodes.');
+  expect(validators.nodes(3, { value: 4, validationMsg: 'At least 4 nodes are required.' })).toBe('At least 4 nodes are required.');
+  expect(validators.nodes(4, { value: 4, validationMsg: 'At least 4 nodes are required.' })).toBe(undefined);
+  expect(validators.nodes(5, { value: 4, validationMsg: 'At least 4 nodes are required.' })).toBe(undefined);
+  expect(validators.nodes(4, { value: 9, validationMsg: 'At least 9 nodes are required for multiple availability zone cluster.' })).toBe('At least 9 nodes are required for multiple availability zone cluster.');
+  expect(validators.nodes(9, { value: 9, validationMsg: 'At least 9 nodes are required for multiple availability zone cluster.' })).toBe(undefined);
+  expect(validators.nodes(-1, { value: 4, validationMsg: 'At least 4 nodes are required.' })).toBe('At least 4 nodes are required.');
+  expect(validators.nodes('aaa', { value: 4, validationMsg: 'At least 4 nodes are required.' })).toBe('\'aaa\' is not a valid number of nodes.');
 });
