@@ -72,8 +72,6 @@ const ClusterActionsDropdown = (props) => {
     const deleteModalData = {
       clusterID: cluster.id,
       clusterName: cluster.name,
-      infraID: cluster.infra_id,
-      managed: cluster.managed,
     };
 
     return isClusterUninstalling
@@ -96,13 +94,14 @@ const ClusterActionsDropdown = (props) => {
   const editDisplayNameItemProps = getEditDisplayNameProps();
   const deleteClusterItemProps = getDeleteItemProps();
   const deleteIDPItemProps = getDeleteIDPProps();
+  const showDelete = cluster.canDelete && cluster.managed;
 
   return (
     <React.Fragment>
       {showConsoleButton && <MenuItem {...adminConsoleItemProps}>Launch Admin Console</MenuItem>}
       {cluster.canEdit && <MenuItem {...editDisplayNameItemProps}>Edit Display Name</MenuItem>}
       {cluster.canEdit && <MenuItem {...editClusterItemProps}>Edit Cluster</MenuItem>}
-      {cluster.canDelete && <MenuItem {...deleteClusterItemProps}>Delete Cluster</MenuItem>}
+      {showDelete && <MenuItem {...deleteClusterItemProps}>Delete Cluster</MenuItem>}
       {shouldShowIDPButton && <MenuItem {...deleteIDPItemProps}>Remove Identity Provider</MenuItem>}
     </React.Fragment>
   );
