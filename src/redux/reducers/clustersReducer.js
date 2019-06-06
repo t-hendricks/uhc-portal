@@ -307,8 +307,8 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
-    // EDIT_CLUSTER_DISPLAY_NAME
-    case helpers.REJECTED_ACTION(clustersConstants.EDIT_CLUSTER_DISPLAY_NAME):
+    // EDIT_CLUSTER
+    case helpers.REJECTED_ACTION(clustersConstants.EDIT_CLUSTER):
       return helpers.setStateProp(
         'editedCluster',
         {
@@ -322,7 +322,7 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(clustersConstants.EDIT_CLUSTER_DISPLAY_NAME):
+    case helpers.PENDING_ACTION(clustersConstants.EDIT_CLUSTER):
       return helpers.setStateProp(
         'editedCluster',
         {
@@ -334,52 +334,11 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER_DISPLAY_NAME):
+    case helpers.FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER):
       return helpers.setStateProp(
         'editedCluster',
         {
           cluster: action.payload.data,
-          pending: false,
-          fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.REJECTED_ACTION(clustersConstants.EDIT_CLUSTER_ROUTER_SHARD):
-      return helpers.setStateProp(
-        'editedRouterShards',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.PENDING_ACTION(clustersConstants.EDIT_CLUSTER_ROUTER_SHARD):
-      return helpers.setStateProp(
-        'editedRouterShards',
-        {
-          pending: true,
-          routerShards: null,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER_ROUTER_SHARD):
-      return helpers.setStateProp(
-        'editedRouterShards',
-        {
-          routerShards: action.payload.data,
           pending: false,
           fulfilled: true,
         },

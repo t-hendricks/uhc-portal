@@ -70,6 +70,8 @@ class EditClusterDialog extends Component {
       min,
     } = this.props;
 
+    const pending = editClusterResponse.pending || editRouterShardResponse.pending;
+
     const cancelEdit = () => {
       resetResponse();
       closeModal();
@@ -106,6 +108,7 @@ class EditClusterDialog extends Component {
                   <FormGroup>
                     <FormSection name="network_router_shards">
                       <ControlLabel>Router Shards</ControlLabel>
+                      {' '}
                       <Spinner loading={!hasRouterShards} inline size="xs" />
                       <Col sm={12}>
                         <Field
@@ -137,8 +140,14 @@ class EditClusterDialog extends Component {
           <Button bsStyle="default" onClick={cancelEdit}>
             Cancel
           </Button>
-          <Button bsStyle="primary" disabled={!hasRouterShards} onClick={handleSubmit}>
+          <Button
+            bsStyle="primary"
+            disabled={!hasRouterShards || pending}
+            onClick={handleSubmit}
+          >
             Edit
+            {' '}
+            <Spinner loading={pending} inline size="xs" />
           </Button>
         </Modal.Footer>
       </Modal>

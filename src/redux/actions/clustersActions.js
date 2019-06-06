@@ -49,8 +49,25 @@ const clearClusterResponse = () => (dispatch) => {
 };
 
 const editCluster = (id, cluster) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER_DISPLAY_NAME,
+  type: clustersConstants.EDIT_CLUSTER,
   payload: clusterService.editCluster(id, cluster),
+});
+
+const editClusterWithResources = (id, updates) => dispatch => dispatch({
+  type: clustersConstants.EDIT_CLUSTER,
+  payload: () => {
+    const responses = [];
+    // This chains all requests as sequential promises to avoid race
+    // conditions and 409 Conflicts when dealing with multiple updates
+    // to the same resource type (e.g. Router Shards).
+    return updates.reduce((p, update) => p.then(() => {
+      const fn = clusterService[update.action](id, ...update.args);
+      return fn.then((response) => {
+        responses.push(response);
+        return responses;
+      });
+    }), Promise.resolve());
+  },
 });
 
 const fetchClustersAndPermissions = (clusterRequestParams) => {
@@ -173,21 +190,6 @@ const fetchClusterCredentials = clusterID => dispatch => dispatch({
   payload: clusterService.getClusterCredentials(clusterID),
 });
 
-const createClusterRouterShard = (clusterID, data) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
-  payload: clusterService.createClusterRouterShard(clusterID, data),
-});
-
-const editClusterRouterShard = (clusterID, routerShardID, data) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
-  payload: clusterService.editClusterRouterShard(clusterID, routerShardID, data),
-});
-
-const deleteClusterRouterShard = (clusterID, routerShardID) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER_ROUTER_SHARD,
-  payload: clusterService.deleteClusterRouterShard(clusterID, routerShardID),
-});
-
 const fetchClusterRouterShards = clusterID => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTER_ROUTER_SHARDS,
   payload: clusterService.getClusterRouterShards(clusterID),
@@ -201,12 +203,10 @@ const clustersActions = {
   clearClusterResponse,
   createCluster,
   editCluster,
+  editClusterWithResources,
   fetchClusters,
   fetchClusterDetails,
   fetchClusterCredentials,
-  createClusterRouterShard,
-  editClusterRouterShard,
-  deleteClusterRouterShard,
   fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,
@@ -217,12 +217,10 @@ export {
   clearClusterResponse,
   createCluster,
   editCluster,
+  editClusterWithResources,
   fetchClusters,
   fetchClusterDetails,
   fetchClusterCredentials,
-  createClusterRouterShard,
-  editClusterRouterShard,
-  deleteClusterRouterShard,
   fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,

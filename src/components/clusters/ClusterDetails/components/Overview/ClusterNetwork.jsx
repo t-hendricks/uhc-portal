@@ -7,13 +7,13 @@ import {
 } from 'patternfly-react';
 
 function ClusterNetwork({ cluster, routerShards }) {
-  const hasRouterShards = (routerShards
+  const hasRouterShards = (routerShards && cluster.dns
         && result(routerShards, 'routerShards.id') === cluster.id
         && result(routerShards, 'routerShards.items', false));
 
   const routerShardList = hasRouterShards && routerShards.routerShards.items.map(routerShard => (
     <li key={routerShard.id}>
-      <dt>{`${routerShard.label}: `}</dt>
+      <dt className="ellipsize">{`${routerShard.label}: `}</dt>
       <dd>
         <OverlayTrigger overlay={<Tooltip id="router-shard-scheme-tooltip">{`${routerShard.id}.apps.${cluster.name}.${cluster.dns.base_domain}`}</Tooltip>}>
           <span>{routerShard.scheme === 'internal' ? 'Internal' : 'External'}</span>
