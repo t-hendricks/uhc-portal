@@ -41,6 +41,8 @@ const initialState = {
 
 function IdentityProvidersReducer(state = initialState, action) {
   switch (action.type) {
+    case identityProvidersConstants.RESET_IDENTITY_PROVIDERS_STATE:
+      return initialState;
     // GET_CLUSTER_IDENTITY_PROVIDERS
     case helpers.REJECTED_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
       return helpers.setStateProp(
