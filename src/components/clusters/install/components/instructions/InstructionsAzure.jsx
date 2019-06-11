@@ -26,7 +26,6 @@ class InstructionsAzure extends React.Component {
     return (
       <div className="pf-l-grid pf-m-gutter">
         <div className="pf-c-content">
-
           <div className="developer-preview">
             &lt;/&gt; Developer Preview
           </div>

@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsVSphere from './components/instructions/InstructionsVSphere';
-
+import { scrollToTop } from '../../../common/helpers';
 
 class InstallVSphere extends Component {
   componentDidMount() {
+    scrollToTop();
     document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere';
 
     const { dispatch } = this.props;
