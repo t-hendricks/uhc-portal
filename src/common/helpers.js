@@ -109,12 +109,12 @@ const omitEmptyFields = (obj) => {
 
 
 const scrollToTop = () => {
-  let pageTop = document.querySelector('main#root :first-child');
+  let pageTop = document.querySelector('header');
   if (!APP_EMBEDDED) {
     pageTop = document.querySelector('#root main :first-child');
-    if (pageTop) {
-      pageTop.scrollIntoView();
-    }
+  }
+  if (pageTop) {
+    pageTop.scrollIntoView();
   }
 };
 
