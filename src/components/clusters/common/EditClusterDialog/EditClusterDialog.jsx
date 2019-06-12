@@ -145,7 +145,7 @@ class EditClusterDialog extends Component {
             disabled={!hasRouterShards || pending}
             onClick={handleSubmit}
           >
-            Edit
+            Apply
             {' '}
             <Spinner loading={pending} inline size="xs" />
           </Button>

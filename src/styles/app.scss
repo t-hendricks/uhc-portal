@@ -266,11 +266,15 @@ limitations under the License.
   font-weight: 700;
 }
 
+#deleteClusterBtn{
+  width: 59px;
+}
+
 #deleteClusterBtn .spinner {
-  top: 2px;
+  top: 3px;
   left: 1px;
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
 }
 
 .noselect {
