@@ -18,6 +18,7 @@ function LDAPForm({ createIDPResponse }) {
         disabled={createIDPResponse.pending}
         className="ca-textarea"
         componentClass="textarea"
+        spellcheck="false"
       />
       <Field
         component={ReduxCheckbox}

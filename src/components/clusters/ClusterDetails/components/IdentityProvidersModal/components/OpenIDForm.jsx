@@ -17,6 +17,7 @@ function OpenIDForm({ createIDPResponse }) {
         disabled={createIDPResponse.pending}
         className="ca-textarea"
         componentClass="textarea"
+        spellcheck="false"
       />
       <Field
         component={ReduxVerticalFormGroup}
