@@ -12,8 +12,7 @@ const tollboothReducer = (state = initialState, action) => {
         ...state,
         token: {
           error: {
-            msg: 'Failed to obtain authorization token.',
-            status: helpers.getErrorMessage(action.payload),
+            message: helpers.getErrorMessage(action.payload),
           },
         },
       };
