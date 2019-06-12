@@ -49,17 +49,22 @@ const TokenErrorAlert = ({ token }) => (
     variant="danger"
     className="install--errors"
   >
-    {token.error.msg}
-    {' '}
-    Please try again by refreshing the page.
-    If the problem persists, please report the issue to
-    {' '}
-    <a href="mailto:***REMOVED***" target="_blank">
-      ***REMOVED***
+    <p>
+      Failed to obtain authorization token:
       {' '}
-      <span className="fa fa-external-link" aria-hidden="true" />
-    </a>
-    .
+      {token.error.message}
+    </p>
+    <p>
+      Please try again by refreshing the page.
+      If the problem persists, please report the issue to
+      {' '}
+      <a href="mailto:***REMOVED***" target="_blank">
+        ***REMOVED***
+        {' '}
+        <span className="fa fa-external-link" aria-hidden="true" />
+      </a>
+      .
+    </p>
   </Alert>
 );
 TokenErrorAlert.propTypes = {
