@@ -410,8 +410,10 @@ p.notfound {
 }
 
 .ca-textarea {
-  height: 200px;
-  min-height: 200px;
+  min-height: 442px;
+  min-width: 497px;
+  font-family: monospace;
+  white-space: nowrap;
 }
 
 // make <Button> look like <a href= ...>
