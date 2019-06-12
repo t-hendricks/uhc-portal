@@ -83,7 +83,7 @@ class EditClusterDialog extends Component {
       </Alert>) : null;
 
     return isOpen && (
-      <Modal show>
+      <Modal show onHide={cancelEdit}>
         <Modal.Header>
           <ModalHeader title="Edit Cluster" onClose={cancelEdit} />
         </Modal.Header>
