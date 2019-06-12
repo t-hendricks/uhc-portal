@@ -21,7 +21,6 @@ import React, { Component } from 'react';
 
 import {
   Alert, Grid, Row, Col, EmptyState, Spinner,
-  Icon, Tooltip, OverlayTrigger,
 } from 'patternfly-react';
 
 import ClusterListFilter from './components/ClusterListFilter';
@@ -30,6 +29,8 @@ import ClusterListTable from './components/ClusterListTable/ClusterListTable';
 import LoadingModal from '../../common/LoadingModal';
 import CreateClusterDropdown from './components/CreateClusterDropdown';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
+import ErrorTriangle from '../common/ErrorTriangle';
+
 
 import CreateClusterModal from './components/CreateClusterModal';
 import EditClusterDialog from '../common/EditClusterDialog';
@@ -138,23 +139,6 @@ class ClusterList extends Component {
       );
     }
 
-    const errorTriangle = () => (
-      <OverlayTrigger
-        overlay={(
-          <Tooltip id="cluster-list-error-tooltip">
-            An error occured when fetching clusters:
-            {' '}
-            {errorMessage}
-          </Tooltip>
-        )}
-        placement="top"
-        trigger={['hover', 'focus']}
-        rootClose={false}
-      >
-        <Icon type="pf" className="fa-2x clusterlist-error-triangle" name="warning-triangle-o" />
-      </OverlayTrigger>
-    );
-
     return (
       <div>
         <div className="cluster-list">
@@ -169,7 +153,7 @@ class ClusterList extends Component {
               </Col>
               <Col xs={1}>
                 {pending && <Spinner loading />}
-                {error && errorTriangle()}
+                {error && <ErrorTriangle errorMessage={errorMessage} />}
               </Col>
               <Col>
                 <RefreshBtn id="refresh" autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />

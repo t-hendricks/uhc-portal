@@ -24,7 +24,14 @@ describe('<ClusterDetails />', () => {
   });
 
   describe('Error', () => {
-    const props = { ...Fixtures, clusterDetails: { ...Fixtures.clusterDetails, error: true } };
+    const props = {
+      ...Fixtures,
+      clusterDetails: {
+        ...Fixtures.clusterDetails,
+        error: true,
+        cluster: undefined,
+      },
+    };
     const wrapper = shallow(<ClusterDetails {...props} />);
 
     it('should render error message', () => {

@@ -135,6 +135,7 @@ function clustersReducer(state = initialState, action) {
         {
           pending: false,
           error: action.error,
+          cluster: state.details.cluster, // preserve previous cluster even on error
           errorMessage: helpers.getErrorMessage(action.payload),
         },
         {
