@@ -48,33 +48,35 @@ const mapDispatchToProps = dispatch => ({
     ops.push({ action: 'editCluster', args: [clusterRequest] });
 
     // Update router shards
-    formData.network_router_shards.forEach((routerShard, i) => {
-      if (routerShard.id) {
-        // Only update router shard if label was changed
-        if (routerShard.label) {
-          if (routerShard.label !== props.initialFormValues.routerShards[i].label) {
-            ops.push({
-              action: 'editClusterRouterShard',
-              args: [routerShard.id, {
-                label: routerShard.label,
-                scheme: 'internet-facing',
-              }],
-            });
+    if (formData.network_router_shards) {
+      formData.network_router_shards.forEach((routerShard, i) => {
+        if (routerShard.id) {
+          // Only update router shard if label was changed
+          if (routerShard.label) {
+            if (routerShard.label !== props.initialFormValues.routerShards[i].label) {
+              ops.push({
+                action: 'editClusterRouterShard',
+                args: [routerShard.id, {
+                  label: routerShard.label,
+                  scheme: 'internet-facing',
+                }],
+              });
+            }
+          } else {
+            // If there was a router shard, but the label was removed, delete it
+            ops.push({ action: 'deleteClusterRouterShard', args: [routerShard.id] });
           }
         } else {
-          // If there was a router shard, but the label was removed, delete it
-          ops.push({ action: 'deleteClusterRouterShard', args: [routerShard.id] });
+          ops.push({
+            action: 'createClusterRouterShard',
+            args: [{
+              label: routerShard.label,
+              scheme: 'internet-facing',
+            }],
+          });
         }
-      } else {
-        ops.push({
-          action: 'createClusterRouterShard',
-          args: [{
-            label: routerShard.label,
-            scheme: 'internet-facing',
-          }],
-        });
-      }
-    });
+      });
+    }
 
     dispatch(editClusterWithResources(formData.id, ops));
   },
