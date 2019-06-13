@@ -36,10 +36,8 @@ class EditClusterDialog extends Component {
       }
 
       // update initial router shards values once they are available
-      if (!prevProps.hasRouterShards
-          && hasRouterShards
-          && initialFormValues.routerShards) {
-        change('network_router_shards', initialFormValues.routerShards);
+      if (!prevProps.hasRouterShards && hasRouterShards) {
+        change('network_router_shards', initialFormValues.routerShards || []);
       }
     }
 
