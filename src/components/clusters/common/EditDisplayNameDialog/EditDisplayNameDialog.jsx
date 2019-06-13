@@ -61,7 +61,7 @@ class EditDisplayNameDialog extends Component {
     const handleSubmit = () => { submit(clusterID, currentValue); };
 
     return isOpen && (
-    <Modal show>
+    <Modal show onHide={cancelEdit}>
       <Modal.Header>
         <ModalHeader title="Edit Display Name" onClose={cancelEdit} />
       </Modal.Header>
