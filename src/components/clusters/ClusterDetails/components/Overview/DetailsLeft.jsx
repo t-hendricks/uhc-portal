@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import result from 'lodash/result';
+import get from 'lodash/get';
 
 import Timestamp from '../../../../common/Timestamp';
 
 function DetailsLeft({ cluster, cloudProviders }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
   let cloudProvider;
-  let region = result(cluster, 'region.id', 'N/A');
+  let region = get(cluster, 'region.id', 'N/A');
 
   if (cloudProviderId && cloudProviders.fulfilled && cloudProviders.providers[cloudProviderId]) {
     const providerData = cloudProviders.providers[cloudProviderId];
@@ -25,7 +25,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
       <dl className="cluster-details-item left">
         <dt>Cluster ID</dt>
         <dd>
-          {result(cluster, 'external_id', 'N/A')}
+          {get(cluster, 'external_id', 'N/A')}
         </dd>
         <dt>Location</dt>
         <dd>
@@ -35,6 +35,10 @@ function DetailsLeft({ cluster, cloudProviders }) {
         <dd>
           {cloudProvider}
         </dd>
+        <dt>Availability</dt>
+        <dd>
+          {cluster.multi_az ? 'Multizone' : 'Single zone'}
+        </dd>
         <dt>Version</dt>
         <dd>
           <dl className="cluster-details-item-list left">
@@ -43,17 +47,17 @@ function DetailsLeft({ cluster, cloudProviders }) {
               {' '}
             </dt>
             <dd>
-              {result(cluster, 'openshift_version', 'N/A')}
+              {get(cluster, 'openshift_version', 'N/A')}
             </dd>
           </dl>
         </dd>
         <dt>Created at</dt>
         <dd>
-          <Timestamp value={result(cluster, 'creation_timestamp', 'N/A')} />
+          <Timestamp value={get(cluster, 'creation_timestamp', 'N/A')} />
         </dd>
         <dt>Owner</dt>
         <dd>
-          {result(cluster, 'subscriptionInfo.creator.name') || result(cluster, 'subscriptionInfo.creator.username', 'N/A')}
+          {get(cluster, 'subscriptionInfo.creator.name') || get(cluster, 'subscriptionInfo.creator.username', 'N/A')}
         </dd>
       </dl>
     </React.Fragment>
