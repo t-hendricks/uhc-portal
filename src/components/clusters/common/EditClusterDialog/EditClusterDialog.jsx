@@ -118,6 +118,7 @@ class EditClusterDialog extends Component {
                           placeholder="Label"
                           type="text"
                           normalize={val => val.toLowerCase()}
+                          validate={validators.routerShard}
                         />
                         <Field
                           component={ReduxVerticalFormGroup}
@@ -126,6 +127,7 @@ class EditClusterDialog extends Component {
                           placeholder="Label"
                           type="text"
                           normalize={val => val.toLowerCase()}
+                          validate={validators.routerShard}
                         />
                       </Col>
                     </FormSection>
