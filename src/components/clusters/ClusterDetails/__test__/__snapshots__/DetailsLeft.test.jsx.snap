@@ -24,6 +24,12 @@ exports[`<DetailsLeft /> should render 1`] = `
       Amazon Web Services
     </dd>
     <dt>
+      Availability
+    </dt>
+    <dd>
+      Single zone
+    </dd>
+    <dt>
       Version
     </dt>
     <dd>
