@@ -166,18 +166,26 @@ ${SUBJECT}
   popd
 }
 
-# Install dependencies:
-rm --recursive --force node_modules
-yarn install
-
-# Build the application in development mode for deployment to the beta branches
-# of the Insights platform:
-rm --recursive --force build
-yarn build-embedded --beta=true
-push_build "prod-beta" "https://api.openshift.com"
-
-# Build the application in production mode for deployment to the stable branches
-# of the Insights platform:
-rm --recursive --force build
-yarn build-embedded --mode=production
-push_build "prod-stable" "https://api.openshift.com"
+if [ "$1" == "beta" ]; then
+    echo "running beta push"
+    # Install dependencies:
+    rm --recursive --force node_modules
+    yarn install
+    # Build the application in development mode for deployment to the beta branches
+    # of the Insights platform:
+    rm --recursive --force build
+    yarn build-embedded --beta=true
+    push_build "prod-beta" "https://api.openshift.com"
+elif [ "$1" == "stable" ]; then
+    echo "running stable push"
+    # Install dependencies:
+    rm --recursive --force node_modules
+    yarn install
+    # Build the application in production mode for deployment to the stable branches
+    # of the Insights platform:
+    rm --recursive --force build
+    yarn build-embedded --mode=production
+    push_build "prod-stable" "https://api.openshift.com"
+else
+    echo "no mode specified, doing nothing"
+fi
