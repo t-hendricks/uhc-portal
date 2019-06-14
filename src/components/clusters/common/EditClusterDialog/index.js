@@ -49,8 +49,10 @@ const mapDispatchToProps = dispatch => ({
 
     // Update router shards
     if (formData.network_router_shards) {
+      const initialRouterShards = props.initialFormValues.routerShards
+                                  && props.initialFormValues.routerShards.length;
       formData.network_router_shards.forEach((routerShard, i) => {
-        if (routerShard.id) {
+        if (routerShard.id && initialRouterShards) {
           // Only update router shard if label was changed
           if (routerShard.label) {
             if (routerShard.label !== props.initialFormValues.routerShards[i].label) {
