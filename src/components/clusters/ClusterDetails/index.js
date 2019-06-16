@@ -11,6 +11,7 @@ import { getLogs } from './components/LogWindow/LogWindowActions';
 import { getClusterIdentityProviders, resetIdentityProvidersState } from './components/IdentityProvidersModal/IdentityProvidersActions';
 import usersActions from './components/Users/UsersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
+import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalErrorActions';
 import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 
@@ -44,6 +45,8 @@ const mapDispatchToProps = {
   getClusterIdentityProviders,
   getUsers: usersActions.getUsers,
   resetIdentityProvidersState,
+  clearGlobalError,
+  setGlobalError,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

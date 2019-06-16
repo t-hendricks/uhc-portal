@@ -57,7 +57,10 @@ class ClusterDetails extends Component {
       match,
       organization,
       getOrganization,
+      clearGlobalError,
     } = this.props;
+    clearGlobalError('clusterDetails');
+
     const clusterID = match.params.id;
     this.refresh();
 
@@ -139,6 +142,7 @@ class ClusterDetails extends Component {
       logs,
       clusterIdentityProviders,
       organization,
+      setGlobalError,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -169,6 +173,18 @@ class ClusterDetails extends Component {
     // show a full error state only if we don't have data at all,
     // or when we only have data for a different cluster
     if (clusterDetails.error && (!cluster || result(cluster, 'id') !== requestedClusterID)) {
+      if (clusterDetails.errorCode === 404) {
+        setGlobalError((
+          <React.Fragment>
+            Cluster
+            {' '}
+            <b>{requestedClusterID}</b>
+            {' '}
+            was not found, it might have been deleted or you don&apos;t have permission to see it.
+          </React.Fragment>
+        ), 'clusterDetails', clusterDetails.errorMessage);
+        history.push('/');
+      }
       return errorState();
     }
 
@@ -284,6 +300,8 @@ ClusterDetails.propTypes = {
     pending: PropTypes.bool.isRequired,
   }),
   resetIdentityProvidersState: PropTypes.func.isRequired,
+  setGlobalError: PropTypes.func.isRequired,
+  clearGlobalError: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

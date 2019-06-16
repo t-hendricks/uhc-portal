@@ -1,5 +1,7 @@
 const match = { params: { id: '1IztzhAGrbjtKkMbiPewJanhTXk' } };
-const history = {};
+const history = {
+  push: jest.fn(),
+};
 const fetchDetails = jest.fn();
 const fetchCredentials = jest.fn();
 const fetchRouterShards = jest.fn();
@@ -11,6 +13,8 @@ const openModal = jest.fn();
 const getLogs = jest.fn();
 const getUsers = jest.fn();
 const getClusterIdentityProviders = jest.fn();
+const clearGlobalError = jest.fn();
+const setGlobalError = jest.fn();
 
 const subscription = {
   id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
@@ -417,4 +421,6 @@ export {
   credentials,
   clusterIdentityProviders,
   organization,
+  clearGlobalError,
+  setGlobalError,
 };

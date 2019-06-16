@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import get from 'lodash/get';
 import helpers from '../../common/helpers';
 import { clustersConstants } from '../constants';
 
@@ -135,6 +136,7 @@ function clustersReducer(state = initialState, action) {
         {
           pending: false,
           error: action.error,
+          errorCode: get(action.payload, 'response.status'),
           cluster: state.details.cluster, // preserve previous cluster even on error
           errorMessage: helpers.getErrorMessage(action.payload),
         },
