@@ -75,4 +75,10 @@ describe('<ClusterDetailsTop />', () => {
       expect(adminCredentialsDisabled).toEqual(true);
     });
   });
+
+  it('should show error triangle if an error occured', () => {
+    wrapper.setProps({ error: true }, () => {
+      expect(wrapper.find('ErrorTriangle').length).toEqual(1);
+    });
+  });
 });

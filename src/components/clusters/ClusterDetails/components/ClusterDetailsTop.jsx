@@ -12,6 +12,8 @@ import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 import ClusterCredentialsModal from './ClusterCredentialsModal';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ClusterBadge from '../../common/ClusterBadge/ClusterBadge';
+import ErrorTriangle from '../../common/ErrorTriangle';
+
 
 function ClusterDetailsTop(props) {
   const {
@@ -23,6 +25,8 @@ function ClusterDetailsTop(props) {
     refreshFunc,
     clusterIdentityProviders,
     organization,
+    error,
+    errorMessage,
   } = props;
 
   const clusterName = cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
@@ -123,6 +127,7 @@ function ClusterDetailsTop(props) {
             <ClusterBadge clusterName={clusterName} />
           </h1>
           { isRefreshing ? <Spinner loading /> : false }
+          { error && <ErrorTriangle errorMessage={errorMessage} />}
         </Col>
         <Col lg={5} lgOffset={1}>
           <ButtonGroup id="cl-details-btns">
@@ -152,6 +157,8 @@ ClusterDetailsTop.propTypes = {
   routerShards: PropTypes.object.isRequired,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
+  error: PropTypes.bool,
+  errorMessage: PropTypes.string,
 };
 
 export default ClusterDetailsTop;

@@ -153,7 +153,7 @@ class ClusterDetails extends Component {
 
     const loadingModal = (<LoadingModal>Loading cluster details...</LoadingModal>);
 
-    const errorState = (
+    const errorState = () => (
       <EmptyState>
         <Alert type="error">
           <span>{`Error retrieving cluster details: ${clusterDetails.errorMessage}`}</span>
@@ -166,8 +166,10 @@ class ClusterDetails extends Component {
       return loadingModal;
     }
 
-    if (clusterDetails.error) {
-      return errorState;
+    // show a full error state only if we don't have data at all,
+    // or when we only have data for a different cluster
+    if (clusterDetails.error && (!cluster || result(cluster, 'id') !== requestedClusterID)) {
+      return errorState();
     }
 
     const onDialogClose = () => {
@@ -192,6 +194,8 @@ class ClusterDetails extends Component {
             refreshFunc={this.refresh}
             clusterIdentityProviders={clusterIdentityProviders}
             organization={organization}
+            error={clusterDetails.error}
+            errorMessage={clusterDetails.errorMessage}
           />
           <TabContainer id="cluster-details-tabs" defaultActiveKey={1}>
             <React.Fragment>

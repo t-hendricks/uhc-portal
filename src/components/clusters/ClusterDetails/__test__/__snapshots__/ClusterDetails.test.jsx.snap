@@ -298,6 +298,8 @@ clusters:
           "pending": false,
         }
       }
+      error={false}
+      errorMessage=""
       openModal={[MockFunction]}
       organization={
         Object {
