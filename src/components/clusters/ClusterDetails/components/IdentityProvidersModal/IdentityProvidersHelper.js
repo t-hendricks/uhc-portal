@@ -7,6 +7,7 @@ const getCreateIDPRequestData = (formData) => {
     organizations: toCleanArray(formData.organizations),
     teams: toCleanArray(formData.teams),
     hostname: formData.hostname,
+    ca: formData.github_ca,
   };
 
   const googleData = {
