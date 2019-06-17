@@ -35,15 +35,6 @@ import GithubFormRequired from './components/GithubFormRequired';
 import GoogleFormRequired from './components/GoogleFormRequired';
 
 class IdentityProvidersModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      teamsDisabled: false,
-      orgsDisabled: false,
-    };
-    this.toggleDisable = this.toggleDisable.bind(this);
-  }
-
   componentDidUpdate() {
     const { createIDPResponse, getClusterIdentityProviders } = this.props;
     if (createIDPResponse.fulfilled) {
@@ -62,23 +53,10 @@ class IdentityProvidersModal extends React.Component {
     onClose();
   };
 
-  toggleDisable(e, value, fieldToToggle) {
-    // equivalent to: const isDisabled = this.state[fieldToToggle]
-    const { [fieldToToggle]: isDisabled } = this.state;
-
-    if (value && !isDisabled) {
-      this.setState({ [fieldToToggle]: true });
-    } else if ((!value || value === '') && isDisabled) {
-      this.setState({ [fieldToToggle]: false });
-    }
-  }
-
   render() {
     const {
       isOpen, handleSubmit, createIDPResponse, clusterName, selectedIDP,
     } = this.props;
-
-    const { teamsDisabled, orgsDisabled } = this.state;
 
     const createIDPError = createIDPResponse.error && (
     <Alert>
@@ -203,12 +181,7 @@ class IdentityProvidersModal extends React.Component {
                 />
                 {SelectedProivderRequiredFields
                   && (
-                  <SelectedProivderRequiredFields
-                    createIDPResponse={createIDPResponse}
-                    toggleDisable={this.toggleDisable}
-                    teamsDisabled={teamsDisabled}
-                    orgsDisabled={orgsDisabled}
-                  />
+                  <SelectedProivderRequiredFields createIDPResponse={createIDPResponse} />
                   )}
               </Col>
               <Col sm={4}>
