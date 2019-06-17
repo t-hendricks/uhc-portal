@@ -37,3 +37,9 @@ test('Field is valid node count', () => {
   expect(validators.nodes(-1, { value: 4, validationMsg: 'At least 4 nodes are required.' })).toBe('At least 4 nodes are required.');
   expect(validators.nodes('aaa', { value: 4, validationMsg: 'At least 4 nodes are required.' })).toBe('\'aaa\' is not a valid number of nodes.');
 });
+
+test('Field is a valid router shard label', () => {
+  expect(validators.routerShard('foo.bar')).toBe('Router shard label \'foo.bar\' isn\'t valid, must consist of lower-case alphanumeric characters or \'-\', start with an alphabetic character, and end with an alphanumeric character. For example, \'my-label\', or \'abc-123\'.');
+  expect(validators.routerShard('qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm')).toBe('Router shard label \'qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\' is too long, it needs to be under 63 charcters long.');
+  expect(validators.routerShard('foo')).toBe(undefined);
+});
