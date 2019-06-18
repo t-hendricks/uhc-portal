@@ -35,10 +35,15 @@ function DetailsLeft({ cluster, cloudProviders }) {
         <dd>
           {cloudProvider}
         </dd>
-        <dt>Availability</dt>
-        <dd>
-          {cluster.multi_az ? 'Multizone' : 'Single zone'}
-        </dd>
+        { cluster.managed
+          && (
+          <React.Fragment>
+            <dt>Availability</dt>
+            <dd>
+              {cluster.multi_az ? 'Multizone' : 'Single zone'}
+            </dd>
+          </React.Fragment>
+          )}
         <dt>Version</dt>
         <dd>
           <dl className="cluster-details-item-list left">
