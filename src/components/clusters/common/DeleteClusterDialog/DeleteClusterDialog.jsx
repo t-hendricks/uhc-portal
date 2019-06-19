@@ -8,6 +8,7 @@ import {
   Icon,
   MessageDialog,
   Spinner,
+  Form,
 } from 'patternfly-react';
 
 import { deleteClusterDialogActions } from './DeleteClusterDialogActions';
@@ -74,6 +75,13 @@ class DeleteClusterDialog extends React.Component {
       deleteCluster(clusterID);
     };
 
+    const submitForm = (e) => {
+      e.preventDefault();
+      if (isValid && !isPending) {
+        doSubmit();
+      }
+    };
+
     const deleteBtn = (
       <Button id="deleteClusterBtn" bsStyle={!isPending ? 'danger' : 'default'} disabled={!isValid || isPending} onClick={() => doSubmit(clusterID)}>
         {!isPending ? 'Delete' : <Spinner size="sm" inline loading />}
@@ -92,7 +100,7 @@ class DeleteClusterDialog extends React.Component {
     );
 
     const managedForm = (
-      <React.Fragment>
+      <Form onSubmit={submitForm}>
         <p>
           Confirm deletion by typing
           {' '}
@@ -108,7 +116,7 @@ class DeleteClusterDialog extends React.Component {
           disabled={isPending}
           autoFocus
         />
-      </React.Fragment>
+      </Form>
     );
 
     const footer = (
