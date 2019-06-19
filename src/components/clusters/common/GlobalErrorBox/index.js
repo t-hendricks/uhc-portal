@@ -4,6 +4,7 @@ import { clearGlobalError } from '../../../../redux/actions/globalErrorActions';
 
 const mapStateToProps = state => ({
   errorMessage: state.globalError.errorMessage,
+  errorTitle: state.globalError.errorTitle,
 });
 
 const mapDispatchToProps = {

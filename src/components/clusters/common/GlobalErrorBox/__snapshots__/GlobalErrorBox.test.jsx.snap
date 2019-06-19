@@ -4,10 +4,13 @@ exports[`<GlobalErrorBox /> should not render when errorMessage is empty 1`] = `
 
 exports[`<GlobalErrorBox /> should render 1`] = `
 <Alert
-  className="global-error-box"
-  onDismiss={[MockFunction]}
-  type="error"
->
-  hello
-</Alert>
+  action={
+    <AlertActionCloseButton
+      onClose={[MockFunction]}
+    />
+  }
+  isInline={true}
+  title="hello"
+  variant="danger"
+/>
 `;

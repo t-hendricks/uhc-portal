@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Alert } from 'patternfly-react';
+import { Alert, AlertActionCloseButton } from '@patternfly/react-core';
 
-function GlobalErrorBox({ errorMessage, clearGlobalError }) {
-  if (errorMessage) {
+function GlobalErrorBox({ errorTitle, errorMessage, clearGlobalError }) {
+  if (errorMessage || errorTitle) {
     return (
-      <Alert className="global-error-box" onDismiss={clearGlobalError}>
+      <Alert
+        variant="danger"
+        isInline
+        title={errorTitle}
+        action={<AlertActionCloseButton onClose={clearGlobalError} />}
+      >
         {errorMessage}
       </Alert>
     );
@@ -14,6 +19,7 @@ function GlobalErrorBox({ errorMessage, clearGlobalError }) {
 }
 
 GlobalErrorBox.propTypes = {
+  errorTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   clearGlobalError: PropTypes.func.isRequired,
 };
