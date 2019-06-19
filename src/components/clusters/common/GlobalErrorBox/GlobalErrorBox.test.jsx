@@ -4,7 +4,7 @@ import GlobalErrorBox from './GlobalErrorBox';
 
 describe('<GlobalErrorBox />', () => {
   it('should render', () => {
-    const wrapper = shallow(<GlobalErrorBox errorMessage="hello" clearGlobalError={jest.fn()} />);
+    const wrapper = shallow(<GlobalErrorBox errorTitle="hello" clearGlobalError={jest.fn()} />);
     expect(wrapper).toMatchSnapshot();
   });
   it('should not render when errorMessage is empty', () => {
