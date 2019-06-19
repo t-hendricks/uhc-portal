@@ -30,6 +30,7 @@ import LoadingModal from '../../common/LoadingModal';
 import CreateClusterDropdown from './components/CreateClusterDropdown';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
+import GlobalErrorBox from '../common/GlobalErrorBox';
 
 
 import CreateClusterModal from './components/CreateClusterModal';
@@ -129,6 +130,7 @@ class ClusterList extends Component {
     if (!size(clusters) && !pending && isEmpty(viewOptions.filter)) {
       return (
         <React.Fragment>
+          <GlobalErrorBox />
           <ClusterListEmptyState
             showCreationForm={() => openModal('create-cluster')}
             hasQuota={hasQuota}
@@ -142,6 +144,7 @@ class ClusterList extends Component {
     return (
       <div>
         <div className="cluster-list">
+          <GlobalErrorBox />
           <Grid fluid style={{ padding: 0 }}>
             <Row><Col sm={1}><h1>Clusters</h1></Col></Row>
             <Row className="cluster-list-top-row">

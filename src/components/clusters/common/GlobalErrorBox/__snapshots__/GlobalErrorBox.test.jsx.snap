@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GlobalErrorBox /> should not render when errorMessage is empty 1`] = `""`;
+
+exports[`<GlobalErrorBox /> should render 1`] = `
+<Alert
+  className="global-error-box"
+  onDismiss={[MockFunction]}
+  type="error"
+>
+  hello
+</Alert>
+`;

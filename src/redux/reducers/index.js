@@ -10,6 +10,7 @@ import modalReducer from '../../components/common/Modal/ModalReducer';
 import { LogsReducer } from '../../components/clusters/ClusterDetails/components/LogWindow/LogWindowReducer';
 import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersModal/IdentityProvidersReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/Users/UsersReducer';
+import globalErrorReducer from './globalErrorReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -23,6 +24,7 @@ const reducers = {
   logs: LogsReducer,
   identityProviders: IdentityProvidersReducer,
   clusterUsers: clusterUsersReducer,
+  globalError: globalErrorReducer,
 };
 
 const reduxReducers = combineReducers(reducers);
