@@ -365,6 +365,15 @@ ol.embedded-indent {
   white-space: normal;
 }
 
+#osd_text{
+  @media (min-width: 996px) {
+    height: 56px;
+  }
+  @media (min-width: 1300px) {
+    height: 60px;
+  }
+}
+
 footer {
   background-color: $navbar-pf-vertical-bg-color;
 

@@ -44,7 +44,7 @@ function ClusterListEmptyState(props) {
                   <CardBody>
                     <p className="cluster-list-emptystate-preferred-string">Preferred method</p>
                     <CardTitle>Red Hat-Managed Cluster</CardTitle>
-                    <p>
+                    <p id="osd_text">
                   Create a Red Hat-managed cluster (OSD),
                   to provision the cluster on Amazon Web Services.
                     </p>
