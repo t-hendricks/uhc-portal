@@ -128,9 +128,6 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
             />
             <GithubFormRequired
               createIDPResponse={Object {}}
-              orgsDisabled={false}
-              teamsDisabled={false}
-              toggleDisable={[Function]}
             />
           </Col>
           <Col
