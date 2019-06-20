@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 import BasicFields from './BasicFields';
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
-import validators from '../../../../../../common/validators';
+import { required } from '../../../../../../../common/validators';
 
-function GoogleFormRequired({ createIDPResponse }) {
+function GoogleFormRequired({ isPending }) {
   return (
     <React.Fragment>
       <BasicFields />
@@ -17,19 +17,19 @@ function GoogleFormRequired({ createIDPResponse }) {
         label="Hosted Domain"
         type="text"
         placeholder="Hosted Domain"
-        disabled={createIDPResponse.pending}
-        validate={validators.required}
+        disabled={isPending}
+        validate={required}
       />
     </React.Fragment>
   );
 }
 
 GoogleFormRequired.propTypes = {
-  createIDPResponse: PropTypes.object,
+  isPending: PropTypes.bool,
 };
 
 GoogleFormRequired.defaultProps = {
-  createIDPResponse: {},
+  isPending: false,
 };
 
 export default GoogleFormRequired;

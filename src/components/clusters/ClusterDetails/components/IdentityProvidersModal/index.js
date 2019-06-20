@@ -6,7 +6,7 @@ import { createClusterIdentityProvider, resetCreatedClusterIDPResponse, getClust
 import { closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
-import getCreateIDPRequestData from './IdentityProvidersHelper';
+import { getCreateIDPRequestData } from './IdentityProvidersHelper';
 
 const reduxFormConfig = {
   form: 'CreateIdentityProvider',

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import IdentityProvidersModal from '../components/IdentityProvidersModal/IdentityProvidersModal';
 
-describe('<ClusterCredentialsModal />', () => {
+describe('<IdentityProvidersModal />', () => {
   let closeModal;
   let resetResponse;
   let resetForm;

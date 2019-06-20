@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import { noop } from '../../../../../../common/helpers';
-import { github } from '../../../../../../common/validators';
+import { noop } from '../../../../../../../common/helpers';
+import { github } from '../../../../../../../common/validators';
 
 import BasicFields from './BasicFields';
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 class GithubFormRequired extends React.Component {
     state = {
@@ -26,7 +26,7 @@ class GithubFormRequired extends React.Component {
     }
 
     render() {
-      const { createIDPResponse } = this.props;
+      const { isPending } = this.props;
       const { teamsDisabled, orgsDisabled } = this.state;
 
       return (
@@ -38,7 +38,7 @@ class GithubFormRequired extends React.Component {
             label="Organizations"
             type="text"
             placeholder="comma separated, example: org1,org2,org3"
-            disabled={orgsDisabled || createIDPResponse.pending}
+            disabled={orgsDisabled || isPending}
             helpText={orgsDisabled ? 'Cannot be used in combination with the teams field' : ''}
             onChange={(e, value) => this.toggleDisable(e, value, 'teamsDisabled')}
             validate={orgsDisabled ? noop : github}
@@ -49,7 +49,7 @@ class GithubFormRequired extends React.Component {
             label="Teams"
             type="text"
             placeholder="comma separated, example: team1,team2"
-            disabled={teamsDisabled || createIDPResponse.pending}
+            disabled={teamsDisabled || isPending}
             helpText={teamsDisabled ? 'Cannot be used in combination with the organizations field' : ''}
             onChange={(e, value) => this.toggleDisable(e, value, 'orgsDisabled')}
             validate={teamsDisabled ? noop : github}
@@ -60,11 +60,11 @@ class GithubFormRequired extends React.Component {
 }
 
 GithubFormRequired.propTypes = {
-  createIDPResponse: PropTypes.object,
+  isPending: PropTypes.bool,
 };
 
 GithubFormRequired.defaultProps = {
-  createIDPResponse: {},
+  isPending: false,
 };
 
 export default GithubFormRequired;

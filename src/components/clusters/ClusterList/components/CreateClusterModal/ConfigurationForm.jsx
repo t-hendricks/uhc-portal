@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import { Col } from 'patternfly-react';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import CloudRegionComboBox from './CloudRegionComboBox';
-import validators from '../../../../../common/validators';
+import validators, { required } from '../../../../../common/validators';
 import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
 import { ConfigurationHint, RegionsHint } from './CreateClusterModalHelper';
 import minValueSelector from '../../../common/EditClusterDialog/EditClusterSelectors';
@@ -81,7 +81,7 @@ class ConfigurationForm extends React.Component {
             label="AWS region"
             componentClass={CloudRegionComboBox}
             cloudProviderID="aws"
-            validate={validators.required}
+            validate={required}
             disabled={pending}
           />
 

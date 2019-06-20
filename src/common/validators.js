@@ -104,6 +104,6 @@ const validators = {
   github,
 };
 
-export { github };
+export { required, github, checkIdentityProviderName };
 
 export default validators;

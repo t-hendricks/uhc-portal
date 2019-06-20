@@ -1,16 +1,16 @@
-import validators from './validators';
+import validators, { required, checkIdentityProviderName } from './validators';
 
 test('Field is required', () => {
-  expect(validators.required()).toBe('Field is required');
-  expect(validators.required('foo')).toBe(undefined);
+  expect(required()).toBe('Field is required');
+  expect(required('foo')).toBe(undefined);
 });
 
 test('Field is a valid identity provider name', () => {
-  expect(validators.checkIdentityProviderName()).toBe('Name is required.');
-  expect(validators.checkIdentityProviderName('foo bar')).toBe('Name must not contain whitespaces.');
-  expect(validators.checkIdentityProviderName(' ')).toBe('Name must not contain whitespaces.');
-  expect(validators.checkIdentityProviderName('foobar ')).toBe('Name must not contain whitespaces.');
-  expect(validators.checkIdentityProviderName('foo')).toBe(undefined);
+  expect(checkIdentityProviderName()).toBe('Name is required.');
+  expect(checkIdentityProviderName('foo bar')).toBe('Name must not contain whitespaces.');
+  expect(checkIdentityProviderName(' ')).toBe('Name must not contain whitespaces.');
+  expect(checkIdentityProviderName('foobar ')).toBe('Name must not contain whitespaces.');
+  expect(checkIdentityProviderName('foo')).toBe(undefined);
 });
 
 test('Field is a valid cluster name', () => {

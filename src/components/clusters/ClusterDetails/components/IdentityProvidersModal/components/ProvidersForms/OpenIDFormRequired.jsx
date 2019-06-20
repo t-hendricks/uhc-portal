@@ -4,10 +4,10 @@ import { Field } from 'redux-form';
 
 import BasicFields from './BasicFields';
 
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import validators from '../../../../../../common/validators';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { required } from '../../../../../../../common/validators';
 
-function OpenIDFormRequired({ createIDPResponse }) {
+function OpenIDFormRequired({ isPending }) {
   return (
     <React.Fragment>
       <BasicFields />
@@ -17,8 +17,8 @@ function OpenIDFormRequired({ createIDPResponse }) {
         label="Issuer URL"
         type="text"
         placeholder="Issuer URL"
-        disabled={createIDPResponse.pending}
-        validate={validators.required}
+        disabled={isPending}
+        validate={required}
       />
       <h4>Claims Mappings</h4>
       <Field
@@ -27,8 +27,8 @@ function OpenIDFormRequired({ createIDPResponse }) {
         label="Email"
         type="text"
         placeholder="comma separated, example: ***REMOVED***, ***REMOVED***"
-        disabled={createIDPResponse.pending}
-        validate={validators.required}
+        disabled={isPending}
+        validate={required}
       />
       <Field
         component={ReduxVerticalFormGroup}
@@ -36,8 +36,8 @@ function OpenIDFormRequired({ createIDPResponse }) {
         label="Name"
         type="text"
         placeholder="comma separated, example: 'name1, name2"
-        disabled={createIDPResponse.pending}
-        validate={validators.required}
+        disabled={isPending}
+        validate={required}
       />
       <Field
         component={ReduxVerticalFormGroup}
@@ -45,19 +45,19 @@ function OpenIDFormRequired({ createIDPResponse }) {
         label="Preferred Username"
         type="text"
         placeholder="comma separated, example: 'name1, name2, name3"
-        disabled={createIDPResponse.pending}
-        validate={validators.required}
+        disabled={isPending}
+        validate={required}
       />
     </React.Fragment>
   );
 }
 
 OpenIDFormRequired.propTypes = {
-  createIDPResponse: PropTypes.object,
+  isPending: PropTypes.bool,
 };
 
 OpenIDFormRequired.defaultProps = {
-  createIDPResponse: {},
+  isPending: false,
 };
 
 export default OpenIDFormRequired;

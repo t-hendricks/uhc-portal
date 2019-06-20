@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import validators from '../../../../../../common/validators';
-import { noop } from '../../../../../../common/helpers';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { required } from '../../../../../../../common/validators';
+import { noop } from '../../../../../../../common/helpers';
 
 class GithubForm extends React.Component {
   state = {
@@ -20,7 +20,7 @@ class GithubForm extends React.Component {
   }
 
   render() {
-    const { createIDPResponse } = this.props;
+    const { isPending } = this.props;
     const { hostnameRequired } = this.state;
 
     return (
@@ -31,8 +31,8 @@ class GithubForm extends React.Component {
           label="Hostname"
           type="text"
           placeholder="hostname"
-          disabled={createIDPResponse.pending}
-          validate={hostnameRequired ? validators.required : noop}
+          disabled={isPending}
+          validate={hostnameRequired ? required : noop}
         />
         <Field
           component={ReduxVerticalFormGroup}
@@ -41,7 +41,7 @@ class GithubForm extends React.Component {
           type="text"
           placeholder="CA"
           helpText="PEM encoded certificate bundle to use to validate server certificates for the configured URL."
-          disabled={createIDPResponse.pending}
+          disabled={isPending}
           className="ca-textarea"
           componentClass="textarea"
           spellCheck="false"
@@ -55,11 +55,11 @@ class GithubForm extends React.Component {
 }
 
 GithubForm.propTypes = {
-  createIDPResponse: PropTypes.object,
+  isPending: PropTypes.bool,
 };
 
 GithubForm.defaultProps = {
-  createIDPResponse: {},
+  isPending: false,
 };
 
 export default GithubForm;

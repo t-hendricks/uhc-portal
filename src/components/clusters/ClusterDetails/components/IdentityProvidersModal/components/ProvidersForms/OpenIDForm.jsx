@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
-function OpenIDForm({ createIDPResponse }) {
+function OpenIDForm({ isPending }) {
   return (
     <React.Fragment>
       <Field
@@ -14,7 +14,7 @@ function OpenIDForm({ createIDPResponse }) {
         type="text"
         placeholder="CA"
         helpText="PEM encoded certificate bundle to use to validate server certificates for the configured URL"
-        disabled={createIDPResponse.pending}
+        disabled={isPending}
         className="ca-textarea"
         componentClass="textarea"
         spellCheck="false"
@@ -25,18 +25,18 @@ function OpenIDForm({ createIDPResponse }) {
         label="Additional Scopes"
         type="text"
         placeholder="comma separated, example: scope1, scope2"
-        disabled={createIDPResponse.pending}
+        disabled={isPending}
       />
     </React.Fragment>
   );
 }
 
 OpenIDForm.propTypes = {
-  createIDPResponse: PropTypes.object,
+  isPending: PropTypes.bool,
 };
 
 OpenIDForm.defaultProps = {
-  createIDPResponse: {},
+  isPending: false,
 };
 
 export default OpenIDForm;
