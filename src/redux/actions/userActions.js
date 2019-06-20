@@ -1,3 +1,5 @@
+import get from 'lodash/get';
+
 import { userConstants } from '../constants';
 import { accountsService } from '../../services';
 
@@ -8,8 +10,11 @@ const userInfoResponse = payload => ({
 
 const getOrganization = () => ({
   payload: accountsService.getCurrentAccount().then((response) => {
-    const organizationID = response.data.organization.id;
-    return accountsService.getOrganization(organizationID);
+    const organizationID = get(response.data, 'organization.id');
+    if (organizationID !== undefined) {
+      return accountsService.getOrganization(organizationID);
+    }
+    return Promise.reject(Error('No organization'));
   }),
   type: userConstants.GET_ORGANIZATION,
 });
