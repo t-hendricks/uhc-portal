@@ -8,6 +8,7 @@ test('Field is required', () => {
 test('Field is a valid cluster name', () => {
   expect(validators.checkClusterName()).toBe('Cluster name is required.');
   expect(validators.checkClusterName('foo.bar')).toBe('Cluster name \'foo.bar\' isn\'t valid, must consist of lower-case alphanumeric characters or \'-\', start with an alphabetic character, and end with an alphanumeric character. For example, \'my-name\', or \'abc-123\'.');
+  expect(validators.checkClusterName('foo'.repeat(34))).toBe('Cluster names may not exceed 100 characters.');
   expect(validators.checkClusterName('foo')).toBe(undefined);
 });
 
