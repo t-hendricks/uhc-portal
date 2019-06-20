@@ -185,11 +185,6 @@ const fetchClusterDetails = clusterID => dispatch => dispatch({
   payload: fetchSingleClusterAndPermissions(clusterID),
 });
 
-const fetchClusterCredentials = clusterID => dispatch => dispatch({
-  type: clustersConstants.GET_CLUSTER_CREDENTIALS,
-  payload: clusterService.getClusterCredentials(clusterID),
-});
-
 const fetchClusterRouterShards = clusterID => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTER_ROUTER_SHARDS,
   payload: clusterService.getClusterRouterShards(clusterID),
@@ -206,7 +201,6 @@ const clustersActions = {
   editClusterWithResources,
   fetchClusters,
   fetchClusterDetails,
-  fetchClusterCredentials,
   fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,
@@ -220,7 +214,6 @@ export {
   editClusterWithResources,
   fetchClusters,
   fetchClusterDetails,
-  fetchClusterCredentials,
   fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,

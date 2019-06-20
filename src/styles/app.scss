@@ -401,22 +401,6 @@ p.notfound {
   font-size: larger;
 }
 
-// TODO: This is used for the notice in the main page that explains that this is an alpha version of the
-// service. Should be removed once we get out of the alpha period.
-.alpha-notice {
-  margin: 10px 30px 0px 30px;
-  font-size: 1.2em;
-}
-
-.clustercredentials-copy-button .fa.fa-paste.fa-xs {
-  font-size: 14px;
-  margin-right: 0;
-}
-
-.clustercredentials-password-row {
-  margin-top: 15px;
-}
-
 #idpHint {
   margin: 10px 0 10px;
   border: 2px solid #b1afaf;

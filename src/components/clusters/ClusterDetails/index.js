@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import ClusterDetails from './ClusterDetails';
 import {
   fetchClusterDetails,
-  fetchClusterCredentials,
   fetchClusterRouterShards,
   invalidateClusters,
 } from '../../../redux/actions/clustersActions';
@@ -16,7 +15,7 @@ import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 
 const mapStateToProps = (state) => {
-  const { details, credentials, routerShards } = state.clusters;
+  const { details, routerShards } = state.clusters;
   const { cloudProviders } = state.cloudProviders;
   const { logs } = state.logs;
   const { clusterIdentityProviders } = state.identityProviders;
@@ -25,7 +24,6 @@ const mapStateToProps = (state) => {
   return ({
     clusterDetails: details,
     cloudProviders,
-    credentials,
     routerShards,
     logs,
     clusterIdentityProviders,
@@ -35,7 +33,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchDetails: clusterID => fetchClusterDetails(clusterID),
-  fetchCredentials: clusterID => fetchClusterCredentials(clusterID),
   fetchRouterShards: clusterID => fetchClusterRouterShards(clusterID),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganization: userActions.getOrganization,
