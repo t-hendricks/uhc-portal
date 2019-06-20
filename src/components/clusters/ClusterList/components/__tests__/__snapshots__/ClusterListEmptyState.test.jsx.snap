@@ -55,7 +55,9 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
             >
               Red Hat-Managed Cluster
             </CardTitle>
-            <p>
+            <p
+              id="osd_text"
+            >
               Create a Red Hat-managed cluster (OSD), to provision the cluster on Amazon Web Services.
             </p>
             <EmptyStateAction
