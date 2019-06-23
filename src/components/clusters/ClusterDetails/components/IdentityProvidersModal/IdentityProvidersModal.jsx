@@ -176,7 +176,7 @@ class IdentityProvidersModal extends React.Component {
                   label="Name"
                   type="text"
                   placeholder="name"
-                  validate={validators.required}
+                  validate={validators.checkIdentityProviderName}
                   disabled={createIDPResponse.pending}
                 />
                 {SelectedProivderRequiredFields

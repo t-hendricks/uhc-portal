@@ -14,6 +14,18 @@ const MAX_ROUTER_SHARD_LABEL = 63;
 // Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');
 
+// Function to validate that the identity provider name field doesn't include whitespaces:
+const checkIdentityProviderName = (value) => {
+  if (!value) {
+    return 'Name is required.';
+  }
+  if (/\s/.test(value)) {
+    return 'Name must not contain whitespaces.';
+  }
+  return undefined;
+};
+
+
 // Function to validate that the cluster name field contains a valid DNS label:
 const checkClusterName = (value) => {
   if (!value) {
@@ -77,6 +89,7 @@ const github = value => (value ? undefined : 'Either "Teams" or "Organizations" 
 
 const validators = {
   required,
+  checkIdentityProviderName,
   checkClusterName,
   checkBaseDNSDomain,
   cidr,
