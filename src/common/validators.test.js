@@ -5,6 +5,14 @@ test('Field is required', () => {
   expect(validators.required('foo')).toBe(undefined);
 });
 
+test('Field is a valid identity provider name', () => {
+  expect(validators.checkIdentityProviderName()).toBe('Name is required.');
+  expect(validators.checkIdentityProviderName('foo bar')).toBe('Name must not contain whitespaces.');
+  expect(validators.checkIdentityProviderName(' ')).toBe('Name must not contain whitespaces.');
+  expect(validators.checkIdentityProviderName('foobar ')).toBe('Name must not contain whitespaces.');
+  expect(validators.checkIdentityProviderName('foo')).toBe(undefined);
+});
+
 test('Field is a valid cluster name', () => {
   expect(validators.checkClusterName()).toBe('Cluster name is required.');
   expect(validators.checkClusterName('foo.bar')).toBe('Cluster name \'foo.bar\' isn\'t valid, must consist of lower-case alphanumeric characters or \'-\', start with an alphabetic character, and end with an alphanumeric character. For example, \'my-name\', or \'abc-123\'.');
