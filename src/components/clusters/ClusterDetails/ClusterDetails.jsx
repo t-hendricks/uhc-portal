@@ -219,7 +219,7 @@ class ClusterDetails extends Component {
                 <NavItem eventKey={1}>
                   Overview
                 </NavItem>
-                {cluster.managed && (
+                {(cluster.managed && cluster.canEdit) && (
                   <NavItem eventKey={2}>
                     Users
                   </NavItem>
@@ -238,7 +238,7 @@ class ClusterDetails extends Component {
                     routerShards={routerShards}
                   />
                 </TabPane>
-                {cluster.managed && (
+                {(cluster.managed && cluster.canEdit) && (
                   <TabPane eventKey={2}>
                     <Users clusterID={cluster.id} />
                   </TabPane>
