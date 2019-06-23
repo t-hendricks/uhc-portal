@@ -7,9 +7,11 @@ import bareMetalIcon from '../../../../../styles/images/Icon_RH_Hardware_Server-
 import AWSLogo from '../../../../../styles/images/AWS.png';
 import AzureLogo from '../../../../../styles/images/Microsoft_Azure_Logo.svg';
 import vSphereLogo from '../../../../../styles/images/vmware_vsphere.png';
+import openshiftLogo from '../../../../../styles/images/Logo-Red_Hat-OpenShift-A-Standard-RGB.svg';
 
 const InstructionsInfrastructure = () => (
   <div className="pf-c-content">
+    <img src={openshiftLogo} alt="OpenShift" className="openshift-logo-install" />
     <h1>Infrastructure Provider</h1>
     <div className="grid-container">
       <Link to="/install/aws" className="infra-card">
