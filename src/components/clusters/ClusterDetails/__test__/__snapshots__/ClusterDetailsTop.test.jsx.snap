@@ -86,37 +86,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
             Launch Console
           </Button>
         </a>
-        <Button
-          active={false}
-          block={false}
-          bsClass="btn"
-          bsStyle="default"
-          disabled={false}
-          onClick={[Function]}
-        >
-          Admin Credentials
-        </Button>
-        <Connect(ClusterCredentialsModal)
-          credentials={
-            Object {
-              "admin": Object {
-                "password": "testPassword",
-                "user": "kubeadmin",
-              },
-              "href": "/api/clusters_mgmt/v1/1IztzhAGrbjtKkMbiPewJanhTXk/credentials",
-              "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
-              "kind": "ClusterCredentials",
-              "kubeconfig": "apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: test",
-              "ssh": Object {
-                "private_key": "test",
-                "public_key": "test",
-              },
-            }
-          }
-        />
         <DropdownButton
           bsStyle="default"
           disabled={false}

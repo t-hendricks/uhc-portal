@@ -3,7 +3,6 @@ const history = {
   push: jest.fn(),
 };
 const fetchDetails = jest.fn();
-const fetchCredentials = jest.fn();
 const fetchRouterShards = jest.fn();
 const getCloudProviders = jest.fn();
 const invalidateClusters = jest.fn();
@@ -141,27 +140,6 @@ const clusterDetails = {
     canEdit: true,
     canDelete: true,
     subscriptionInfo: subscription,
-  },
-};
-
-const credentials = {
-  error: false,
-  errorMessage: '',
-  pending: false,
-  fulfilled: true,
-  credentials: {
-    kind: 'ClusterCredentials',
-    id: '1IztzhAGrbjtKkMbiPewJanhTXk',
-    href: '/api/clusters_mgmt/v1/1IztzhAGrbjtKkMbiPewJanhTXk/credentials',
-    ssh: {
-      private_key: 'test',
-      public_key: 'test',
-    },
-    kubeconfig: 'apiVersion: v1\nclusters:\n- cluster:\n    certificate-authority-data: test',
-    admin: {
-      user: 'kubeadmin',
-      password: 'testPassword',
-    },
   },
 };
 
@@ -405,7 +383,6 @@ export {
   match,
   history,
   fetchDetails,
-  fetchCredentials,
   fetchRouterShards,
   getCloudProviders,
   getClusterIdentityProviders,
@@ -418,7 +395,6 @@ export {
   clusterDetails,
   cloudProviders,
   routerShards,
-  credentials,
   clusterIdentityProviders,
   organization,
   clearGlobalError,

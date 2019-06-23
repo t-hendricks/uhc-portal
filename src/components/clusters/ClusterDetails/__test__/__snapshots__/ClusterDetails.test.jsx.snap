@@ -273,31 +273,6 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "clusterIDPList": Array [],
         }
       }
-      credentials={
-        Object {
-          "credentials": Object {
-            "admin": Object {
-              "password": "testPassword",
-              "user": "kubeadmin",
-            },
-            "href": "/api/clusters_mgmt/v1/1IztzhAGrbjtKkMbiPewJanhTXk/credentials",
-            "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
-            "kind": "ClusterCredentials",
-            "kubeconfig": "apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: test",
-            "ssh": Object {
-              "private_key": "test",
-              "public_key": "test",
-            },
-          },
-          "error": false,
-          "errorMessage": "",
-          "fulfilled": true,
-          "pending": false,
-        }
-      }
       error={false}
       errorMessage=""
       openModal={[MockFunction]}

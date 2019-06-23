@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import {
   clusterDetails,
-  credentials,
   openModal,
   routerShards,
   refreshFunc,
@@ -18,7 +17,6 @@ describe('<ClusterDetailsTop />', () => {
   beforeEach(() => {
     const props = {
       cluster: clusterDetails.cluster,
-      credentials,
       openModal,
       pending: clusterDetails.pending,
       routerShards,
@@ -53,26 +51,6 @@ describe('<ClusterDetailsTop />', () => {
     wrapper.setProps({ cluster }, () => {
       const launchConsoleDisabled = wrapper.find('Button').at(0).props().disabled;
       expect(launchConsoleDisabled).toEqual(true);
-    });
-  });
-
-  it('should enable admin credentials button when cluster is ready and has credential', () => {
-    const adminCredentialsDisabled = wrapper.find('Button').at(1).props().disabled;
-    expect(adminCredentialsDisabled).toEqual(false);
-  });
-
-  it('should disable admin credentials button when cluster is not ready', () => {
-    const cluster = { ...clusterDetails.cluster, state: clusterStates.INSTALLING };
-    wrapper.setProps({ cluster }, () => {
-      const adminCredentialsDisabled = wrapper.find('Button').at(1).props().disabled;
-      expect(adminCredentialsDisabled).toEqual(true);
-    });
-  });
-
-  it('should disable admin credentials button when credentials doesn\'t exist', () => {
-    wrapper.setProps({ credentials: {} }, () => {
-      const adminCredentialsDisabled = wrapper.find('Button').at(1).props().disabled;
-      expect(adminCredentialsDisabled).toEqual(true);
     });
   });
 

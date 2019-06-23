@@ -46,11 +46,6 @@ const getCloudRegions = providerID => apiRequest({
   url: `/api/clusters_mgmt/v1/cloud_providers/${providerID}/regions`,
 });
 
-const getClusterCredentials = clusterID => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/credentials`,
-});
-
 const createClusterRouterShard = (clusterID, data) => apiRequest({
   method: 'post',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/router_shards`,
@@ -123,7 +118,6 @@ const clusterService = {
   getCloudProviders,
   getCloudRegions,
   deleteCluster,
-  getClusterCredentials,
   createClusterRouterShard,
   editClusterRouterShard,
   deleteClusterRouterShard,

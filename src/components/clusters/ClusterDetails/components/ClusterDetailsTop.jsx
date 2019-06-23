@@ -9,7 +9,6 @@ import {
 
 import clusterStates from '../../common/clusterStates';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
-import ClusterCredentialsModal from './ClusterCredentialsModal';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ClusterBadge from '../../common/ClusterBadge/ClusterBadge';
 import ErrorTriangle from '../../common/ErrorTriangle';
@@ -18,7 +17,6 @@ import ErrorTriangle from '../../common/ErrorTriangle';
 function ClusterDetailsTop(props) {
   const {
     cluster,
-    credentials,
     openModal,
     pending,
     routerShards,
@@ -86,21 +84,7 @@ function ClusterDetailsTop(props) {
     </DropdownButton>
   );
 
-  const hasCredentials = (cluster.state === 'ready'
-                                && get(credentials, 'credentials.admin.password', false)
-                                && get(credentials, 'credentials.id') === cluster.id);
-
-  const credentialsButton = hasCredentials
-    ? (
-      <React.Fragment>
-        <Button bsStyle="default" onClick={() => { openModal('cluster-credentials'); }}>Admin Credentials</Button>
-        <ClusterCredentialsModal credentials={credentials.credentials} />
-      </React.Fragment>
-    )
-    : <Button bsStyle="default" disabled>Admin Credentials</Button>;
-
   const isRefreshing = pending
-      || credentials.pending
       || routerShards.pending
       || organization.pending;
 
@@ -132,7 +116,6 @@ function ClusterDetailsTop(props) {
         <Col lg={5} lgOffset={1}>
           <ButtonGroup id="cl-details-btns">
             {launchConsole}
-            {credentialsButton}
             {actions}
             <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
           </ButtonGroup>
@@ -150,7 +133,6 @@ function ClusterDetailsTop(props) {
 
 ClusterDetailsTop.propTypes = {
   cluster: PropTypes.object,
-  credentials: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   refreshFunc: PropTypes.func.isRequired,
   pending: PropTypes.bool.isRequired,

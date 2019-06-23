@@ -101,7 +101,6 @@ class ClusterDetails extends Component {
     const {
       match,
       fetchDetails,
-      fetchCredentials,
       fetchRouterShards,
       getLogs,
       getUsers,
@@ -110,7 +109,6 @@ class ClusterDetails extends Component {
 
     if (isValid(clusterID)) {
       fetchDetails(clusterID);
-      fetchCredentials(clusterID);
       fetchRouterShards(clusterID);
       getLogs(clusterID);
       getUsers(clusterID, 'dedicated-admins');
@@ -131,7 +129,6 @@ class ClusterDetails extends Component {
     const {
       clusterDetails,
       cloudProviders,
-      credentials,
       routerShards,
       fetchDetails,
       fetchRouterShards,
@@ -203,7 +200,6 @@ class ClusterDetails extends Component {
           />
           <ClusterDetailsTop
             cluster={cluster}
-            credentials={credentials}
             openModal={openModal}
             pending={clusterDetails.pending}
             routerShards={routerShards}
@@ -277,7 +273,6 @@ ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
-  fetchCredentials: PropTypes.func.isRequired,
   fetchRouterShards: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganization: PropTypes.func.isRequired,
@@ -285,7 +280,6 @@ ClusterDetails.propTypes = {
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
-  credentials: PropTypes.object.isRequired,
   routerShards: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,

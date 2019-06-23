@@ -33,13 +33,6 @@ const initialState = {
     fulfilled: false,
     cluster: null,
   },
-  credentials: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
-    credentials: null,
-  },
   routerShards: {
     error: false,
     errorMessage: '',
@@ -164,48 +157,6 @@ function clustersReducer(state = initialState, action) {
         'details',
         {
           cluster: action.payload.data,
-          pending: false,
-          fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    // GET_CLUSTER_CREDENTIALS
-    case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTER_CREDENTIALS):
-      return helpers.setStateProp(
-        'credentials',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.PENDING_ACTION(clustersConstants.GET_CLUSTER_CREDENTIALS):
-      return helpers.setStateProp(
-        'credentials',
-        {
-          pending: true,
-          credentials: state.credentials.credentials,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTER_CREDENTIALS):
-      return helpers.setStateProp(
-        'credentials',
-        {
-          credentials: action.payload.data,
           pending: false,
           fulfilled: true,
         },
