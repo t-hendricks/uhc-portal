@@ -18,7 +18,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 import {
-  Modal, Button, Alert, Spinner,
+  Modal, Form, Button, Alert, Spinner,
 } from 'patternfly-react';
 
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
@@ -63,22 +63,24 @@ function CreateClusterModal(props) {
   return isOpen
     && (
     <Modal show className="right-side-modal-pf" bsSize="large" onHide={onClose}>
-      <Modal.Header>
-        <ModalHeader title="Create a Red Hat-Managed Cluster" onClose={onClose} />
-      </Modal.Header>
-      <Modal.Body>
-        {hasError}
-        <ManagedClusterForm {...formProps} touch={touch} />
-      </Modal.Body>
-      <Modal.Footer>
-        <Button bsStyle="primary" type="submit" onClick={handleSubmit} disabled={createClusterResponse.pending}>
-          Create
-        </Button>
-        <Button bsStyle="default" onClick={onClose} disabled={createClusterResponse.pending}>
-          Cancel
-        </Button>
-        {createClusterResponse.pending ? loadingSpinner() : null}
-      </Modal.Footer>
+      <Form onSubmit={handleSubmit}>
+        <Modal.Header>
+          <ModalHeader title="Create a Red Hat-Managed Cluster" onClose={onClose} />
+        </Modal.Header>
+        <Modal.Body>
+          {hasError}
+          <ManagedClusterForm {...formProps} touch={touch} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button bsStyle="primary" type="submit" onClick={handleSubmit} disabled={createClusterResponse.pending}>
+            Create
+          </Button>
+          <Button bsStyle="default" onClick={onClose} disabled={createClusterResponse.pending}>
+            Cancel
+          </Button>
+          {createClusterResponse.pending ? loadingSpinner() : null}
+        </Modal.Footer>
+      </Form>
     </Modal>
     );
 }
