@@ -82,11 +82,11 @@ class EditClusterDialog extends Component {
 
     return isOpen && (
       <Modal show onHide={cancelEdit}>
-        <Modal.Header>
-          <ModalHeader title="Edit Cluster" onClose={cancelEdit} />
-        </Modal.Header>
-        <Modal.Body>
-          <Form horizontal onSubmit={handleSubmit}>
+        <Form horizontal onSubmit={handleSubmit}>
+          <Modal.Header>
+            <ModalHeader title="Edit Cluster" onClose={cancelEdit} />
+          </Modal.Header>
+          <Modal.Body>
             <Grid>
               <Row>
                 <Col sm={5}>
@@ -133,23 +133,23 @@ class EditClusterDialog extends Component {
                 </Col>
               </Row>
             </Grid>
-          </Form>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button bsStyle="default" onClick={cancelEdit}>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button bsStyle="default" onClick={cancelEdit} type="button">
             Cancel
-          </Button>
-          <Button
-            bsStyle="primary"
-            disabled={!hasRouterShards || pending}
-            onClick={handleSubmit}
-          >
+            </Button>
+            <Button
+              type="submit"
+              bsStyle="primary"
+              disabled={!hasRouterShards || pending}
+              onClick={handleSubmit}
+            >
             Apply
-            {' '}
-            <Spinner loading={pending} inline size="xs" />
-          </Button>
-        </Modal.Footer>
+              {' '}
+              <Spinner loading={pending} inline size="xs" />
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     );
   }

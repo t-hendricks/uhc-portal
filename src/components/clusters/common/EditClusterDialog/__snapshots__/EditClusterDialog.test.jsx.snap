@@ -26,26 +26,26 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
   restoreFocus={true}
   show={true}
 >
-  <ModalHeader
-    bsClass="modal-header"
-    closeButton={false}
-    closeLabel="Close"
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}
+    onSubmit={[MockFunction]}
   >
     <ModalHeader
-      onClose={[Function]}
-      title="Edit Cluster"
-    />
-  </ModalHeader>
-  <ModalBody
-    bsClass="modal-body"
-    componentClass="div"
-  >
-    <Form
-      bsClass="form"
-      componentClass="form"
-      horizontal={true}
-      inline={false}
-      onSubmit={[MockFunction]}
+      bsClass="modal-header"
+      closeButton={false}
+      closeLabel="Close"
+    >
+      <ModalHeader
+        onClose={[Function]}
+        title="Edit Cluster"
+      />
+    </ModalHeader>
+    <ModalBody
+      bsClass="modal-body"
+      componentClass="div"
     >
       <Grid
         bsClass="container"
@@ -130,41 +130,43 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
           </Col>
         </Row>
       </Grid>
-    </Form>
-  </ModalBody>
-  <ModalFooter
-    bsClass="modal-footer"
-    componentClass="div"
-  >
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="default"
-      disabled={false}
-      onClick={[Function]}
+    </ModalBody>
+    <ModalFooter
+      bsClass="modal-footer"
+      componentClass="div"
     >
-      Cancel
-    </Button>
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="primary"
-      disabled={true}
-      onClick={[MockFunction]}
-    >
-      Apply
-       
-      <Spinner
-        className=""
-        inline={true}
-        inverse={false}
-        loading={false}
-        size="xs"
-      />
-    </Button>
-  </ModalFooter>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="default"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Cancel
+      </Button>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="primary"
+        disabled={true}
+        onClick={[MockFunction]}
+        type="submit"
+      >
+        Apply
+         
+        <Spinner
+          className=""
+          inline={true}
+          inverse={false}
+          loading={false}
+          size="xs"
+        />
+      </Button>
+    </ModalFooter>
+  </Form>
 </Modal>
 `;
 
@@ -194,26 +196,26 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
   restoreFocus={true}
   show={true}
 >
-  <ModalHeader
-    bsClass="modal-header"
-    closeButton={false}
-    closeLabel="Close"
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}
+    onSubmit={[MockFunction]}
   >
     <ModalHeader
-      onClose={[Function]}
-      title="Edit Cluster"
-    />
-  </ModalHeader>
-  <ModalBody
-    bsClass="modal-body"
-    componentClass="div"
-  >
-    <Form
-      bsClass="form"
-      componentClass="form"
-      horizontal={true}
-      inline={false}
-      onSubmit={[MockFunction]}
+      bsClass="modal-header"
+      closeButton={false}
+      closeLabel="Close"
+    >
+      <ModalHeader
+        onClose={[Function]}
+        title="Edit Cluster"
+      />
+    </ModalHeader>
+    <ModalBody
+      bsClass="modal-body"
+      componentClass="div"
     >
       <Grid
         bsClass="container"
@@ -307,40 +309,42 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
           </Col>
         </Row>
       </Grid>
-    </Form>
-  </ModalBody>
-  <ModalFooter
-    bsClass="modal-footer"
-    componentClass="div"
-  >
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="default"
-      disabled={false}
-      onClick={[Function]}
+    </ModalBody>
+    <ModalFooter
+      bsClass="modal-footer"
+      componentClass="div"
     >
-      Cancel
-    </Button>
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="primary"
-      disabled={true}
-      onClick={[MockFunction]}
-    >
-      Apply
-       
-      <Spinner
-        className=""
-        inline={true}
-        inverse={false}
-        loading={false}
-        size="xs"
-      />
-    </Button>
-  </ModalFooter>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="default"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Cancel
+      </Button>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="primary"
+        disabled={true}
+        onClick={[MockFunction]}
+        type="submit"
+      >
+        Apply
+         
+        <Spinner
+          className=""
+          inline={true}
+          inverse={false}
+          loading={false}
+          size="xs"
+        />
+      </Button>
+    </ModalFooter>
+  </Form>
 </Modal>
 `;
