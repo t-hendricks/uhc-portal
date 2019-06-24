@@ -562,3 +562,13 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .azure-dev-preview-card {
   color: var(--pf-global--link--Color);
 }
+
+.openshift-logo-install {
+  float: left;
+  width: 100px;
+  border-right-color: var(--pf-global--BorderColor--200);
+  border-right-width: var(--pf-global--BorderWidth--sm);
+  border-right-style: solid;
+  padding-right: 10px;
+  margin-right: 10px;
+}

@@ -5,9 +5,11 @@ import {
 } from 'patternfly-react';
 import upiLogo from '../../../../../styles/images/Icon_RH_Diagram_DevelopmentModel_RGB_Flat.png';
 import ipiLogo from '../../../../../styles/images/Icon_RH_Diagram_Lifecycle_RGB_Flat.png';
+import openshiftLogo from '../../../../../styles/images/Logo-Red_Hat-OpenShift-A-Standard-RGB.svg';
 
 const InstructionsAWS = () => (
   <div className="pf-c-content">
+    <img src={openshiftLogo} alt="OpenShift" className="openshift-logo-install" />
     <h1>Install on AWS: Infrastructure Type</h1>
     <div className="grid-container">
       <Link to="/install/aws/installer-provisioned" className="aws-ipi-upi-infra-card infra-card">
