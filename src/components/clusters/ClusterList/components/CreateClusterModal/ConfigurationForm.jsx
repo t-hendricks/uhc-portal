@@ -27,13 +27,6 @@ class ConfigurationForm extends React.Component {
     return validators.nodes(nodeCount, min);
   }
 
-  // HACK: two validation functions that are the same. This allows to "replace" the validation
-  // func on the compute nodes field, re-triggering validation when the multiAZ checkbox changes.
-
-  validateNodesSingleAz = nodeCount => this.validateNodes(nodeCount);
-
-  validateNodesMultiAz = nodeCount => this.validateNodes(nodeCount);
-
   render() {
     const {
       header, pending, showDNSBaseDomain,
@@ -71,7 +64,10 @@ class ConfigurationForm extends React.Component {
             label="Compute nodes"
             type="number"
             min={min.value}
-            validate={isMultiAz ? this.validateNodesMultiAz : this.validateNodesSingleAz}
+            // Wrapper anonymous function needed here to call "validateNodes" to "replace"
+            // the validation func on this field, re-triggering validation when the multiAZ
+            // checkbox changes.
+            validate={nodesCount => this.validateNodes(nodesCount)}
             disabled={pending}
           />
 
