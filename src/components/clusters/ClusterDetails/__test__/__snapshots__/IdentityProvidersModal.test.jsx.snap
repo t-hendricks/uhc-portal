@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ClusterCredentialsModal /> doesn't render when closed 1`] = `""`;
+exports[`<IdentityProvidersModal /> doesn't render when closed 1`] = `""`;
 
-exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
+exports[`<IdentityProvidersModal /> renders correctly 1`] = `
 <Modal
   animation={true}
   autoFocus={true}
@@ -44,172 +44,10 @@ exports[`<ClusterCredentialsModal /> renders correctly 1`] = `
     bsClass="modal-body"
     componentClass="div"
   >
-    <Form
-      bsClass="form"
-      componentClass="form"
-      horizontal={false}
-      inline={false}
-    >
-      <Grid
-        bsClass="container"
-        componentClass="div"
-        fluid={false}
-      >
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <h4>
-            Identity providers determine how users log into the cluster. Add an identity provider by selecting a type from the dropdown
-             
-            <br />
-             
-            below.
-          </h4>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <h3>
-            Step 1: Select identity providers type
-          </h3>
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={5}
-          >
-            <Field
-              component={[Function]}
-              label="Identity Provider"
-              name="type"
-              options={
-                Array [
-                  Object {
-                    "name": "Github",
-                    "value": "GithubIdentityProvider",
-                  },
-                  Object {
-                    "name": "Google",
-                    "value": "GoogleIdentityProvider",
-                  },
-                  Object {
-                    "name": "OpenID",
-                    "value": "OpenIDIdentityProvider",
-                  },
-                  Object {
-                    "name": "LDAP",
-                    "value": "LDAPIdentityProvider",
-                  },
-                ]
-              }
-            />
-          </Col>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <h3>
-            Step 2: Enter Provider type information
-          </h3>
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={5}
-          >
-            <Field
-              component={[Function]}
-              label="Name"
-              name="name"
-              placeholder="name"
-              type="text"
-              validate={[Function]}
-            />
-            <GithubFormRequired
-              createIDPResponse={Object {}}
-            />
-          </Col>
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={4}
-          >
-            <HintBlock
-              body={
-                <React.Fragment>
-                  <p>
-                    Learn more about identity providers in the OpenShift documentation.
-                  </p>
-                  <p>
-                    <a
-                      href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-github-identity-provider"
-                      target="_blank"
-                    >
-                      Learn more
-                    </a>
-                  </p>
-                </React.Fragment>
-              }
-              buttonContent={null}
-              className=""
-              onButtonClick={[Function]}
-              onClose={null}
-              title="Learn more about ClientID and and Client Secret"
-            />
-          </Col>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <ExpandCollapse
-            align="left"
-            bordered={true}
-            className=""
-            expanded={false}
-            textCollapsed="Show Advanced Options"
-            textExpanded="Hide Advanced Options"
-          >
-            <Col
-              bsClass="col"
-              componentClass="div"
-              id="idp-advanced-options"
-              sm={5}
-            >
-              <GithubForm
-                createIDPResponse={Object {}}
-              />
-              <Field
-                component={[Function]}
-                label="Mapping Method"
-                name="mappingMethod"
-                options={
-                  Array [
-                    Object {
-                      "name": "claim",
-                      "value": "claim",
-                    },
-                    Object {
-                      "name": "lookup",
-                      "value": "lookup",
-                    },
-                    Object {
-                      "name": "generate",
-                      "value": "generate",
-                    },
-                    Object {
-                      "name": "add",
-                      "value": "add",
-                    },
-                  ]
-                }
-              />
-            </Col>
-          </ExpandCollapse>
-        </Row>
-      </Grid>
-    </Form>
+    <IDPForm
+      createIDPResponse={Object {}}
+      selectedIDP="GithubIdentityProvider"
+    />
   </ModalBody>
   <ModalFooter
     bsClass="modal-footer"

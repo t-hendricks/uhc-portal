@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckbox';
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { ReduxCheckbox, ReduxVerticalFormGroup } from '../../../../../../common/ReduxFormComponents';
 
 class LDAPForm extends React.Component {
   state = this.getInitialState();
@@ -24,7 +23,7 @@ class LDAPForm extends React.Component {
   };
 
   render() {
-    const { createIDPResponse } = this.props;
+    const { isPending } = this.props;
     const { isInsecure, caDisabledHelpText } = this.state;
 
     return (
@@ -36,7 +35,7 @@ class LDAPForm extends React.Component {
           type="text"
           placeholder="CA"
           helpText={`PEM encoded certificate bundle to use to validate server certificates for the configured URL ${caDisabledHelpText}.`}
-          disabled={isInsecure || createIDPResponse.pending}
+          disabled={isInsecure || isPending}
           className="ca-textarea"
           componentClass="textarea"
           spellcheck="false"
@@ -45,7 +44,7 @@ class LDAPForm extends React.Component {
           component={ReduxCheckbox}
           name="ldap_insecure"
           label="insecure"
-          disabled={createIDPResponse.pending}
+          disabled={isPending}
           onChange={this.toggleCADisabled}
         />
       </React.Fragment>
@@ -54,11 +53,11 @@ class LDAPForm extends React.Component {
 }
 
 LDAPForm.propTypes = {
-  createIDPResponse: PropTypes.object,
+  isPending: PropTypes.bool,
 };
 
 LDAPForm.defaultProps = {
-  createIDPResponse: {},
+  isPending: false,
 };
 
 export default LDAPForm;

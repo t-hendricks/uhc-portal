@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
-import validators from '../../../../../../common/validators';
+import { required } from '../../../../../../../common/validators';
 
 class LDAPFormRequired extends React.Component {
   state={
@@ -20,7 +20,7 @@ class LDAPFormRequired extends React.Component {
   }
 
   render() {
-    const { createIDPResponse } = this.props;
+    const { isPending } = this.props;
     const { hasBindDN } = this.state;
 
     return (
@@ -31,7 +31,7 @@ class LDAPFormRequired extends React.Component {
           label="Bind DN"
           type="text"
           placeholder="Bind DN"
-          disabled={createIDPResponse.pending}
+          disabled={isPending}
           onChange={this.toggleBindPasswordDisabled}
         />
         <Field
@@ -41,7 +41,7 @@ class LDAPFormRequired extends React.Component {
           type="password"
           placeholder="Bind Password"
           helpText={!hasBindDN ? 'Cannot be used if Bind DN is not set' : ''}
-          disabled={!hasBindDN || createIDPResponse.pending}
+          disabled={!hasBindDN || isPending}
         />
         <Field
           component={ReduxVerticalFormGroup}
@@ -49,8 +49,8 @@ class LDAPFormRequired extends React.Component {
           label="LDAP url"
           type="text"
           placeholder="url"
-          disabled={createIDPResponse.pending}
-          validate={validators.required}
+          disabled={isPending}
+          validate={required}
         />
         <h4>Attributes</h4>
         <Field
@@ -59,8 +59,8 @@ class LDAPFormRequired extends React.Component {
           label="ID"
           type="text"
           placeholder="comma separated, example: 'id1, id-2"
-          disabled={createIDPResponse.pending}
-          validate={validators.required}
+          disabled={isPending}
+          validate={required}
         />
         <Field
           component={ReduxVerticalFormGroup}
@@ -68,7 +68,7 @@ class LDAPFormRequired extends React.Component {
           label="Email"
           type="text"
           placeholder="comma separated, example: ***REMOVED***, ***REMOVED***"
-          disabled={createIDPResponse.pending}
+          disabled={isPending}
         />
         <Field
           component={ReduxVerticalFormGroup}
@@ -76,7 +76,7 @@ class LDAPFormRequired extends React.Component {
           label="Name"
           type="text"
           placeholder="comma separated, example: 'name1, name2"
-          disabled={createIDPResponse.pending}
+          disabled={isPending}
         />
         <Field
           component={ReduxVerticalFormGroup}
@@ -84,7 +84,7 @@ class LDAPFormRequired extends React.Component {
           label="Preferred Username"
           type="text"
           placeholder="comma separated, example: 'name1, name2, name3"
-          disabled={createIDPResponse.pending}
+          disabled={isPending}
         />
       </React.Fragment>
     );
@@ -92,11 +92,11 @@ class LDAPFormRequired extends React.Component {
 }
 
 LDAPFormRequired.propTypes = {
-  createIDPResponse: PropTypes.object,
+  isPending: PropTypes.bool,
 };
 
 LDAPFormRequired.defaultProps = {
-  createIDPResponse: {},
+  isPending: false,
 };
 
 export default LDAPFormRequired;

@@ -1,5 +1,48 @@
 import { toCleanArray } from '../../../../../common/helpers';
 
+const IDPtypes = [
+  {
+    name: 'Github',
+    value: 'GithubIdentityProvider',
+  },
+  {
+    name: 'Google',
+    value: 'GoogleIdentityProvider',
+  },
+  {
+    name: 'OpenID',
+    value: 'OpenIDIdentityProvider',
+  },
+  {
+    name: 'LDAP',
+    value: 'LDAPIdentityProvider',
+  },
+];
+
+const mappingMethods = [
+  {
+    name: 'claim',
+    value: 'claim',
+  },
+  {
+    name: 'lookup',
+    value: 'lookup',
+  },
+  {
+    name: 'generate',
+    value: 'generate',
+  },
+  {
+    name: 'add',
+    value: 'add',
+  },
+];
+
+const LDAPDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-ldap-identity-provider';
+const GithubDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-github-identity-provider';
+const OpenIDDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-oidc-identity-provider';
+const GoogleDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-google-identity-provider';
+
 const getCreateIDPRequestData = (formData) => {
   const githubData = {
     client_id: formData.client_id,
@@ -67,4 +110,12 @@ const getCreateIDPRequestData = (formData) => {
   return requestData;
 };
 
-export default getCreateIDPRequestData;
+export {
+  getCreateIDPRequestData,
+  IDPtypes,
+  mappingMethods,
+  LDAPDocLink,
+  GithubDocLink,
+  OpenIDDocLink,
+  GoogleDocLink,
+};

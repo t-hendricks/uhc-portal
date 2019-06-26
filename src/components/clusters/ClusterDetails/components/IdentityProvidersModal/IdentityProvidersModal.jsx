@@ -16,23 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
-import {
-  Modal, Button, Form, Alert, Grid, Row, Col, Spinner, HintBlock, ExpandCollapse,
-} from 'patternfly-react';
+import { Modal, Button, Spinner } from 'patternfly-react';
 
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxFormDropdown from '../../../../common/ReduxFormComponents/ReduxFormDropdown';
-import validators from '../../../../../common/validators';
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
 
-import GithubForm from './components/GithubForm';
-import LDAPForm from './components/LDAPForm';
-import OpenIDForm from './components/OpenIDForm';
-import OpenIDFormRequired from './components/OpenIDFormRequired';
-import LDAPFormRequired from './components/LDAPFormRequired';
-import GithubFormRequired from './components/GithubFormRequired';
-import GoogleFormRequired from './components/GoogleFormRequired';
+import IDPForm from './components/IDPForm';
 
 class IdentityProvidersModal extends React.Component {
   componentDidUpdate() {
@@ -58,10 +46,7 @@ class IdentityProvidersModal extends React.Component {
       isOpen, handleSubmit, createIDPResponse, clusterName, selectedIDP,
     } = this.props;
 
-    const createIDPError = createIDPResponse.error && (
-    <Alert>
-      <span>{`Error creating Identity Provider: ${createIDPResponse.errorMessage}`}</span>
-    </Alert>);
+    const isPending = createIDPResponse.pending;
 
     const LoadingSpinner = () => (
       <div className="form-loading-spinner">
@@ -70,72 +55,6 @@ class IdentityProvidersModal extends React.Component {
       </div>
     );
 
-    const IDPtypes = [
-      {
-        name: 'Github',
-        value: 'GithubIdentityProvider',
-      },
-      {
-        name: 'Google',
-        value: 'GoogleIdentityProvider',
-      },
-      {
-        name: 'OpenID',
-        value: 'OpenIDIdentityProvider',
-      },
-      {
-        name: 'LDAP',
-        value: 'LDAPIdentityProvider',
-      },
-    ];
-
-    const mappingMethods = [
-      {
-        name: 'claim',
-        value: 'claim',
-      },
-      {
-        name: 'lookup',
-        value: 'lookup',
-      },
-      {
-        name: 'generate',
-        value: 'generate',
-      },
-      {
-        name: 'add',
-        value: 'add',
-      },
-    ];
-
-    const providersAdvancedOptions = {
-      GithubIdentityProvider: GithubForm,
-      OpenIDIdentityProvider: OpenIDForm,
-      LDAPIdentityProvider: LDAPForm,
-    };
-
-    const providersRequiredFields = {
-      LDAPIdentityProvider: LDAPFormRequired,
-      OpenIDIdentityProvider: OpenIDFormRequired,
-      GithubIdentityProvider: GithubFormRequired,
-      GoogleIdentityProvider: GoogleFormRequired,
-    };
-
-    const LDAPLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-ldap-identity-provider';
-    const GithubLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-github-identity-provider';
-    const OpenIDLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-oidc-identity-provider';
-    const GoogleLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-google-identity-provider';
-
-    const providerDocumentationLink = {
-      LDAPIdentityProvider: LDAPLink,
-      OpenIDIdentityProvider: OpenIDLink,
-      GithubIdentityProvider: GithubLink,
-      GoogleIdentityProvider: GoogleLink,
-    };
-
-    const SelectedProivderRequiredFields = providersRequiredFields[selectedIDP];
-    const SelectedProviderAdvancedOptions = providersAdvancedOptions[selectedIDP];
-
     return isOpen
     && (
     <Modal show className="right-side-modal-pf" bsSize="large" onHide={this.onClose}>
@@ -143,90 +62,16 @@ class IdentityProvidersModal extends React.Component {
         <ModalHeader title={`Create Identity Provider (${clusterName})`} onClose={this.onClose} />
       </Modal.Header>
       <Modal.Body>
-        <Form>
-          {createIDPError}
-          <Grid>
-            <Row>
-              <h4>
-                Identity providers determine how users log into the cluster.
-                Add an identity provider by selecting a type from the dropdown
-                {' '}
-                <br />
-                {' '}
-                below.
-              </h4>
-            </Row>
-            <Row>
-              <h3>Step 1: Select identity providers type</h3>
-              <Col sm={5}>
-                <Field
-                  component={ReduxFormDropdown}
-                  options={IDPtypes}
-                  name="type"
-                  label="Identity Provider"
-                />
-              </Col>
-            </Row>
-            <Row>
-              <h3>Step 2: Enter Provider type information</h3>
-              <Col sm={5}>
-                <Field
-                  component={ReduxVerticalFormGroup}
-                  name="name"
-                  label="Name"
-                  type="text"
-                  placeholder="name"
-                  validate={validators.checkIdentityProviderName}
-                  disabled={createIDPResponse.pending}
-                />
-                {SelectedProivderRequiredFields
-                  && (
-                  <SelectedProivderRequiredFields createIDPResponse={createIDPResponse} />
-                  )}
-              </Col>
-              <Col sm={4}>
-                <HintBlock
-                  title="Learn more about ClientID and and Client Secret"
-                  body={(
-                    <React.Fragment>
-                      <p>
-                        Learn more about identity providers in the OpenShift documentation.
-                      </p>
-                      <p>
-                        <a target="_blank" href={providerDocumentationLink[selectedIDP]}>Learn more</a>
-                      </p>
-                    </React.Fragment>
-                  )}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <ExpandCollapse>
-                <Col sm={5} id="idp-advanced-options">
-                  {SelectedProviderAdvancedOptions
-                    && (
-                    <SelectedProviderAdvancedOptions createIDPResponse={createIDPResponse} />
-                    )}
-                  <Field
-                    component={ReduxFormDropdown}
-                    options={mappingMethods}
-                    name="mappingMethod"
-                    label="Mapping Method"
-                  />
-                </Col>
-              </ExpandCollapse>
-            </Row>
-          </Grid>
-        </Form>
+        <IDPForm selectedIDP={selectedIDP} createIDPResponse={createIDPResponse} />
       </Modal.Body>
       <Modal.Footer>
-        <Button bsStyle="primary" type="submit" onClick={handleSubmit} disabled={createIDPResponse.pending}>
+        <Button bsStyle="primary" type="submit" onClick={handleSubmit} disabled={isPending}>
           Create
         </Button>
-        <Button bsStyle="default" onClick={this.onClose} disabled={createIDPResponse.pending}>
+        <Button bsStyle="default" onClick={this.onClose} disabled={isPending}>
           Cancel
         </Button>
-        {createIDPResponse.pending ? <LoadingSpinner /> : null}
+        {isPending ? <LoadingSpinner /> : null}
       </Modal.Footer>
     </Modal>
     );
