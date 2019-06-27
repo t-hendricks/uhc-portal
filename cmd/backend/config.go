@@ -247,7 +247,9 @@ func (c *Config) mergeProxies(data *proxyData) error {
 
 // Keycloak is a read only view of the keycloak configuration.
 type Keycloak struct {
-	url string
+	url          string
+	clientID     string
+	clientSecret string
 }
 
 // URL returns the keycloak token URL the client should use to obtain tokens to.
@@ -255,14 +257,32 @@ func (k *Keycloak) URL() string {
 	return k.url
 }
 
+// ClientID returns the keycloak client ID.
+func (k *Keycloak) ClientID() string {
+	return k.clientID
+}
+
+// ClientSecret returns the keycloak client secret.
+func (k *Keycloak) ClientSecret() string {
+	return k.clientSecret
+}
+
 // keycloakData is the struct used internally to unmarshal the keycloak configuration.
 type keycloakData struct {
-	URL *string `json:"url,omitempty"`
+	URL          *string `json:"url,omitempty"`
+	ClientID     *string `json:"client_id,omitempty"`
+	ClientSecret *string `json:"client_secret,omitempty"`
 }
 
 func (k *Keycloak) merge(data *keycloakData) error {
 	if data.URL != nil {
 		k.url = *data.URL
+	}
+	if data.ClientID != nil {
+		k.clientID = *data.ClientID
+	}
+	if data.ClientSecret != nil {
+		k.clientSecret = *data.ClientSecret
 	}
 	return nil
 }
@@ -330,7 +350,9 @@ listener:
   address: localhost:8002
 
 keycloak:
-  url: https://developers.redhat.com/auth/realms/rhd/protocol/openid-connect/token
+  url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+  client_id: cloud-services
+  client_secret:
 
 proxies:
 - prefix: /api/

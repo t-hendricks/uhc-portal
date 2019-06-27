@@ -36,9 +36,9 @@ gateway_domain:=api.127.0.0.1.nip.io
 portal_domain:=cloud.127.0.0.1.nip.io
 
 # Keycloak details:
-keycloak_url:=https://developers.redhat.com/auth
-keycloak_realm:=rhd
-keycloak_client_id:=uhc
+keycloak_url:=https://sso.redhat.com/auth
+keycloak_realm:=redhat-external
+keycloak_client_id:=cloud-services
 
 # Installer URL:
 installer_url:=https://github.com/openshift/installer/releases
@@ -174,4 +174,5 @@ clean:
 		.gopath \
 		build \
 		node_modules \
+		vendor \
 		$(NULL)
