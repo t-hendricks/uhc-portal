@@ -66,6 +66,7 @@ class EditClusterDialog extends Component {
       resetResponse,
       hasRouterShards,
       min,
+      isMultiAz,
     } = this.props;
 
     const pending = editClusterResponse.pending || editRouterShardResponse.pending;
@@ -96,7 +97,8 @@ class EditClusterDialog extends Component {
                     name="nodes_compute"
                     label="Compute nodes"
                     type="number"
-                    validate={this.validateNodes}
+                    validate={isMultiAz ? [this.validateNodes, validators.nodesMultiAz]
+                      : this.validateNodes}
                     min={min.value}
                   />
                 </Col>
@@ -170,6 +172,7 @@ EditClusterDialog.propTypes = {
     value: PropTypes.number,
     validationMsg: PropTypes.string,
   }).isRequired,
+  isMultiAz: PropTypes.bool,
   initialFormValues: PropTypes.shape({
     id: PropTypes.string,
     nodesCompute: PropTypes.number,
