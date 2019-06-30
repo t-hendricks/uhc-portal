@@ -42,6 +42,7 @@ class LDAPFormRequired extends React.Component {
           placeholder="Bind Password"
           helpText={!hasBindDN ? 'Cannot be used if Bind DN is not set' : ''}
           disabled={!hasBindDN || isPending}
+          validate={hasBindDN ? required : undefined}
         />
         <Field
           component={ReduxVerticalFormGroup}
