@@ -76,6 +76,14 @@ const nodes = (value, min) => {
   return undefined;
 };
 
+const nodesMultiAz = (value) => {
+  if (value % 3 > 0) {
+    return 'Number of nodes must be multiple of 3 for Multi AZ cluster.';
+  }
+  return undefined;
+};
+
+
 // Function to validate that the router shard label contains a valid DNS label:
 const routerShard = (value) => {
   if (!value) {
@@ -100,6 +108,7 @@ const validators = {
   checkBaseDNSDomain,
   cidr,
   nodes,
+  nodesMultiAz,
   routerShard,
   github,
 };

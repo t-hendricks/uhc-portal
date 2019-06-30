@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
     editClusterResponse: state.clusters.editedCluster,
     editRouterShardResponse: state.clusters.editedRouterShards,
     min: minValueSelector(modalData.multi_az),
+    isMultiAz: modalData.multi_az,
     initialFormValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,
