@@ -32,10 +32,10 @@ import (
 )
 
 // #nosec G101
-const authPath = "/auth/realms/rhd/protocol/openid-connect/auth"
+const authPath = "/auth/realms/redhat-external/protocol/openid-connect/auth"
 
 // #nosec G101
-const tokenPath = "/auth/realms/rhd/protocol/openid-connect/token"
+const tokenPath = "/auth/realms/redhat-external/protocol/openid-connect/token"
 
 // tokenEnv is the name of the environment variable that should contain the offline access token of
 // the user.
@@ -44,7 +44,7 @@ const tokenEnv = "UHC_TOKEN"
 // tokenPage is the URL of the page where the user can obtain the offline access token.
 // If updating, be sure to keep README instructions in sync.
 // #nosec G101
-const tokenPage = "https://cloud.stage.openshift.com/openshift/token.html"
+const tokenPage = "https://cloud.redhat.com/openshift/token"
 
 var args struct {
 	configFiles []string
@@ -128,7 +128,8 @@ func run(cmd *cobra.Command, argv []string) {
 	}
 
 	// Create the connection:
-	logger, err := client.NewGlogLoggerBuilder().
+	logger, err := client.NewGoLoggerBuilder().
+		Debug(true).
 		Build()
 	if err != nil {
 		glog.Errorf("Can't create logger: %v", err)
@@ -136,6 +137,7 @@ func run(cmd *cobra.Command, argv []string) {
 	}
 	connection, err := client.NewConnectionBuilder().
 		Logger(logger).
+		Client(cfg.Keycloak().ClientID(), cfg.Keycloak().ClientSecret()).
 		TokenURL(cfg.Keycloak().URL()).
 		Tokens(token).
 		Build()

@@ -82,10 +82,9 @@ export UHC_TOKEN="eyJ..."
 ./backend
 ....
 
-The backend proxy doesn't yet work correctly with sso.redhat.com, so for now
-to obtain the access token go to the
-https://cloud.stage.openshift.com/openshift/token.html[old token page] and copy the
-_offline token_.
+To obtain the access token go to the
+https://cloud.redhat.com/openshift/token[token page] and copy the
+_offline access token_.
 
 By default the backend proxy server will be available at http://localhost:8002,
 and the default configuration of the application is already prepared to use it.
@@ -105,7 +104,9 @@ listener:
   address: localhost:8002
 
 keycloak:
-  url: https://developers.redhat.com/auth/realms/rhd/protocol/openid-connect/token
+  url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+  client_id: cloud-services
+  client_secret: # empty by default
 
 proxies:
 - prefix: /api/
@@ -115,7 +116,7 @@ token: eyJ...
 ----
 
 Note that this `--config` option and the configuration file are optional, the
-default configuration already uses `localhost`, `developers.redhat.com` and port
+default configuration already uses `localhost`, `sso.redhat.com` and port
 `8002`, and already forwards all API requests to the staging environment.
 
 If you need to use a service located in some other place, for example if you

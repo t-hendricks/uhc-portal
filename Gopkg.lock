@@ -2,6 +2,14 @@
 
 
 [[projects]]
+  digest = "1:707ebe952a8b3d00b343c01536c79c73771d100f63ec6babeaed5c79e2b8a8dd"
+  name = "github.com/beorn7/perks"
+  packages = ["quantile"]
+  pruneopts = "NUT"
+  revision = "4b2b341e8d7715fae06375aa633dbb6e91b3fb46"
+  version = "v1.0.0"
+
+[[projects]]
   digest = "1:7a6852b35eb5bbc184561443762d225116ae630c26a7c4d90546619f1e7d2ad2"
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
@@ -26,6 +34,14 @@
   revision = "23def4e6c14b4da8ac2ed8007337bc5eb5007998"
 
 [[projects]]
+  digest = "1:318f1c959a8a740366fce4b1e1eb2fd914036b4af58fbd0a003349b305f118ad"
+  name = "github.com/golang/protobuf"
+  packages = ["proto"]
+  pruneopts = "NUT"
+  revision = "b5d812f8a3706043e23a9cd5babf2e5423744d30"
+  version = "v1.3.1"
+
+[[projects]]
   digest = "1:2a26f9d34f80b0e53dc2d1526649a26d017f5dcd99576f863cb9d3c2021feec3"
   name = "github.com/gorilla/handlers"
   packages = ["."]
@@ -42,23 +58,79 @@
   version = "v1.0"
 
 [[projects]]
-  digest = "1:bf36b3cd1c92da7363c1f3fca9d1c0fd6eb032c0ae5b32522ec8900000a94417"
+  digest = "1:5985ef4caf91ece5d54817c11ea25f182697534f8ae6521eadcd628c142ac4b6"
+  name = "github.com/matttproud/golang_protobuf_extensions"
+  packages = ["pbutil"]
+  pruneopts = "NUT"
+  revision = "c12348ce28de40eed0136aa2b644d0ee0650e56c"
+  version = "v1.0.1"
+
+[[projects]]
+  digest = "1:8a1c35cc00aa3a5344c2dc4feab56fc9484a686580ecd9f91b5bbd2347c28711"
   name = "github.com/openshift-online/uhc-sdk-go"
   packages = [
     "pkg/client",
-    "pkg/client/internal",
+    "pkg/client/accountsmgmt",
+    "pkg/client/accountsmgmt/v1",
+    "pkg/client/clustersmgmt",
+    "pkg/client/clustersmgmt/v1",
+    "pkg/client/errors",
+    "pkg/client/helpers",
+    "pkg/client/internal"
   ]
   pruneopts = "NUT"
-  revision = "bcd7eb34e17a374a442d43667f8a3747d92c0a05"
-  version = "v0.1.5"
+  revision = "e42ae215d77e3eab60f0a8ca27e5ef6bf418854e"
+  version = "v0.1.21"
 
 [[projects]]
-  digest = "1:343d44e06621142ab09ae0c76c1799104cdfddd3ffb445d78b1adf8dc3ffaf3d"
+  digest = "1:623090ece42820e4121c5c85a4373b10b922e79f3b8c44caad67a45a50e10054"
+  name = "github.com/prometheus/client_golang"
+  packages = [
+    "prometheus",
+    "prometheus/internal"
+  ]
+  pruneopts = "NUT"
+  revision = "4ab88e80c249ed361d3299e2930427d9ac43ef8d"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:2d5cd61daa5565187e1d96bae64dbbc6080dacf741448e9629c64fd93203b0d4"
+  name = "github.com/prometheus/client_model"
+  packages = ["go"]
+  pruneopts = "NUT"
+  revision = "fd36f4220a901265f90734c3183c5f0c91daa0b8"
+
+[[projects]]
+  digest = "1:d03ca24670416dc8fccc78b05d6736ec655416ca7db0a028e8fb92cfdfe3b55e"
+  name = "github.com/prometheus/common"
+  packages = [
+    "expfmt",
+    "internal/bitbucket.org/ww/goautoneg",
+    "model"
+  ]
+  pruneopts = "NUT"
+  revision = "31bed53e4047fd6c510e43a941f90cb31be0972a"
+  version = "v0.6.0"
+
+[[projects]]
+  digest = "1:19305fc369377c111c865a7a01e11c675c57c52a932353bbd4ea360bd5b72d99"
+  name = "github.com/prometheus/procfs"
+  packages = [
+    ".",
+    "internal/fs"
+  ]
+  pruneopts = "NUT"
+  revision = "3f98efb27840a48a7a2898ec80be07674d19f9c8"
+  version = "v0.0.3"
+
+[[projects]]
+  digest = "1:d3533ee568fc00a971617ec09dc0f0b3eddfb4adbc1275f8f6332553d67506b4"
   name = "github.com/spf13/cobra"
   packages = ["."]
   pruneopts = "NUT"
-  revision = "ef82de70bb3f60c65fb8eebacbb2d122ef517385"
-  version = "v0.0.3"
+  revision = "f2b07da1e2c38d5f12845a4f607e2e1018cbb1f5"
+  version = "v0.0.5"
 
 [[projects]]
   digest = "1:9d8420bbf131d1618bde6530af37c3799340d3762cc47210c1d9532a4c3a2779"
@@ -67,6 +139,14 @@
   pruneopts = "NUT"
   revision = "298182f68c66c05229eb03ac171abe6e309ee79a"
   version = "v1.0.3"
+
+[[projects]]
+  branch = "master"
+  digest = "1:2218bfab73a751d6c9370548edc65d36c2c9f32025ddb0182b6310248b5a2c8a"
+  name = "golang.org/x/sys"
+  packages = ["windows"]
+  pruneopts = "NUT"
+  revision = "04f50cda93cbb67f2afa353c52f342100e80e625"
 
 [[projects]]
   digest = "1:18108594151654e9e696b27b181b953f9a90b16bf14d253dd1b397b025a1487f"
@@ -86,7 +166,7 @@
     "github.com/gorilla/handlers",
     "github.com/openshift-online/uhc-sdk-go/pkg/client",
     "github.com/spf13/cobra",
-    "github.com/spf13/pflag",
+    "github.com/spf13/pflag"
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

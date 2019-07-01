@@ -25,7 +25,8 @@ class ConfigurationForm extends React.Component {
     const { isMultiAz } = this.state;
     const min = minValueSelector(isMultiAz);
     return validators.nodes(nodeCount, min);
-  }
+  };
+
 
   // HACK: two validation functions that are the same. This allows to "replace" the validation
   // func on the compute nodes field, re-triggering validation when the multiAZ checkbox changes.
@@ -71,7 +72,8 @@ class ConfigurationForm extends React.Component {
             label="Compute nodes"
             type="number"
             min={min.value}
-            validate={isMultiAz ? this.validateNodesMultiAz : this.validateNodesSingleAz}
+            validate={isMultiAz ? [this.validateNodesMultiAz, validators.nodesMultiAz]
+              : this.validateNodesSingleAz}
             disabled={pending}
           />
 
