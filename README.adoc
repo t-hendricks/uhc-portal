@@ -82,8 +82,7 @@ export UHC_TOKEN="eyJ..."
 ./backend
 ....
 
-The backend proxy doesn't yet work correctly with sso.redhat.com, so for now
-to obtain the access token go to the
+To obtain the access token go to the
 https://cloud.redhat.com/openshift/token[token page] and copy the
 _offline access token_.
 

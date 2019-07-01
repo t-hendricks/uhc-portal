@@ -44,7 +44,7 @@ const tokenEnv = "UHC_TOKEN"
 // tokenPage is the URL of the page where the user can obtain the offline access token.
 // If updating, be sure to keep README instructions in sync.
 // #nosec G101
-const tokenPage = "https://cloud.stage.openshift.com/openshift/token.html"
+const tokenPage = "https://cloud.redhat.com/openshift/token"
 
 var args struct {
 	configFiles []string
