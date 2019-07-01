@@ -135,14 +135,18 @@ func (h *AuthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	userClaim, ok := claims["preferred_username"]
 	if !ok {
-		glog.Errorf("Can't get 'preferred_username' claim")
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		glog.Errorf("Can't get 'preferred_username' claim. Trying 'username'...")
+		userClaim, ok = claims["username"]
+		if !ok {
+			glog.Errorf("Can't get 'username' claim.")
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 	user, ok := userClaim.(string)
 	if !ok {
 		glog.Errorf(
-			"Expected 'preferred_username' claim containing string but got '%T'",
+			"Expected username claim containing string but got '%T'",
 			userClaim,
 		)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -621,14 +625,17 @@ func (h *ProxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		claim, ok := claims["preferred_username"]
 		if !ok {
-			glog.Errorf("Can't get preferred user name claim")
-			w.WriteHeader(http.StatusBadRequest)
-			return
+			glog.Errorf("Can't get preferred user name claim. Trying 'username'...")
+			claim, ok = claims["username"]
+			if !ok {
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
 		}
 		user, ok := claim.(string)
 		if !ok {
 			glog.Errorf(
-				"Expected preferred user name claim containing string bug got '%T'",
+				"Expected username claim containing string bug got '%T'",
 				claim,
 			)
 			w.WriteHeader(http.StatusBadRequest)

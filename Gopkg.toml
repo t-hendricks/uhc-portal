@@ -14,3 +14,7 @@
 [[constraint]]
   name = "github.com/spf13/cobra"
   version = "0.0.2"
+
+[[constraint]]
+  name = "github.com/openshift-online/uhc-sdk-go"
+  version = "0.1.18"
