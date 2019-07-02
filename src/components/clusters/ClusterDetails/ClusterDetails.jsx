@@ -15,7 +15,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import result from 'lodash/result';
 import {
-  Alert,
   EmptyState,
   TabContainer,
   Nav,
@@ -23,6 +22,7 @@ import {
   TabPane,
   TabContent,
 } from 'patternfly-react';
+import ErrorBox from '../../common/ErrorBox';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import SubscriptionCompliancy from './components/SubscriptionCompliancy';
@@ -156,10 +156,8 @@ class ClusterDetails extends Component {
 
     const errorState = () => (
       <EmptyState>
-        <Alert type="error">
-          <span>{`Error retrieving cluster details: ${clusterDetails.errorMessage}`}</span>
-        </Alert>
-        {isPending ? loadingModal : false}
+        <ErrorBox message="Error retrieving cluster details" response={clusterDetails} />
+        {isPending && loadingModal}
       </EmptyState>
     );
 

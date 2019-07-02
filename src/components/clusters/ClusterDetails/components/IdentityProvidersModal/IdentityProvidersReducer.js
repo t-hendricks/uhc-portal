@@ -47,11 +47,7 @@ function IdentityProvidersReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
       return helpers.setStateProp(
         'clusterIdentityProviders',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,
@@ -88,11 +84,7 @@ function IdentityProvidersReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(identityProvidersConstants.CREATE_CLUSTER_IDENTITY_PROVIDER):
       return helpers.setStateProp(
         'createdClusterIDP',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,
@@ -153,11 +145,7 @@ function IdentityProvidersReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
       return helpers.setStateProp(
         'deletedIDP',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Field } from 'redux-form';
 import {
-  Form, Alert, Grid, Row, Col, HintBlock, ExpandCollapse,
+  Form, Grid, Row, Col, HintBlock, ExpandCollapse,
 } from 'patternfly-react';
+import ErrorBox from '../../../../../common/ErrorBox';
 
 import { ReduxVerticalFormGroup, ReduxFormDropdown } from '../../../../../common/ReduxFormComponents';
 import { checkIdentityProviderName } from '../../../../../../common/validators';
@@ -29,10 +30,8 @@ function IDPForm(props) {
   const isPending = createIDPResponse.pending;
 
   const createIDPError = createIDPResponse.error && (
-    <Alert>
-      <span>{`Error creating Identity Provider: ${createIDPResponse.errorMessage}`}</span>
-    </Alert>);
-
+    <ErrorBox title="Error creating Identity Provider" response={createIDPResponse} />
+  );
 
   const providersAdvancedOptions = {
     GithubIdentityProvider: GithubForm,

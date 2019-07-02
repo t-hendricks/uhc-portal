@@ -31,11 +31,7 @@ function deleteClusterDialogReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
       return helpers.setStateProp(
         'deletedCluster',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,

@@ -4,7 +4,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Alert, Spinner } from 'patternfly-react';
+import { Spinner } from 'patternfly-react';
+import ErrorBox from '../../../../common/ErrorBox';
 import { cloudProviderActions } from '../../../../../redux/actions/cloudProviderActions';
 
 class CloudRegionComboBox extends React.Component {
@@ -58,9 +59,7 @@ class CloudRegionComboBox extends React.Component {
     }
 
     return cloudProviders.error ? (
-      <Alert>
-        <span>{`Error loading region list: ${cloudProviders.errorMessage}`}</span>
-      </Alert>
+      <ErrorBox message="Error loading region list" response={cloudProviders} />
     ) : (
       <React.Fragment>
         <Spinner size="sm" inline loading />

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  Alert,
   Button,
   FormControl,
   Icon,
@@ -14,6 +13,7 @@ import {
 import { deleteClusterDialogActions } from './DeleteClusterDialogActions';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
+import ErroBox from '../../../common/ErrorBox';
 import { noop } from '../../../../common/helpers';
 
 class DeleteClusterDialog extends React.Component {
@@ -63,10 +63,9 @@ class DeleteClusterDialog extends React.Component {
       clusterNameInput,
     } = this.state;
 
-    const errorContainer = deleteClusterResponse.error ? (
-      <Alert>
-        <span>{`Error deleting cluster: ${deleteClusterResponse.errorMessage}`}</span>
-      </Alert>) : null;
+    const errorContainer = deleteClusterResponse.error && (
+      <ErroBox message="Error deleting cluster" response={deleteClusterResponse} />
+    );
 
     const isPending = deleteClusterResponse.pending;
     const isValid = clusterNameInput === clusterName;

@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import get from 'lodash/get';
 import helpers from '../../common/helpers';
 import { clustersConstants } from '../constants';
 
@@ -82,11 +81,9 @@ function clustersReducer(state = initialState, action) {
       return helpers.setStateProp(
         'clusters',
         {
-          pending: false,
+          ...helpers.getErrorState(action),
           valid: true,
-          error: action.error,
           clusters: state.clusters.clusters,
-          errorMessage: helpers.getErrorMessage(action.payload),
         },
         {
           state,
@@ -127,11 +124,8 @@ function clustersReducer(state = initialState, action) {
       return helpers.setStateProp(
         'details',
         {
-          pending: false,
-          error: action.error,
-          errorCode: get(action.payload, 'response.status'),
+          ...helpers.getErrorState(action),
           cluster: state.details.cluster, // preserve previous cluster even on error
-          errorMessage: helpers.getErrorMessage(action.payload),
         },
         {
           state,
@@ -181,11 +175,7 @@ function clustersReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTER_ROUTER_SHARDS):
       return helpers.setStateProp(
         'routerShards',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,
@@ -223,11 +213,7 @@ function clustersReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(clustersConstants.CREATE_CLUSTER):
       return helpers.setStateProp(
         'createdCluster',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,
@@ -265,11 +251,7 @@ function clustersReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(clustersConstants.EDIT_CLUSTER):
       return helpers.setStateProp(
         'editedCluster',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,

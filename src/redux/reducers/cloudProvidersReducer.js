@@ -16,11 +16,7 @@ function cloudProvidersReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(cloudProviderConstants.GET_CLOUD_PROVIDERS):
       return helpers.setStateProp(
         'cloudProviders',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,
