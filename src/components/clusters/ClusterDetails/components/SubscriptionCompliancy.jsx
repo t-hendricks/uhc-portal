@@ -1,6 +1,6 @@
 import React from 'react';
 import get from 'lodash/get';
-import { Alert } from 'patternfly-react';
+import { Alert } from '@patternfly/react-core';
 import { getTimeDelta } from '../../../../common/helpers';
 
 function SubscriptionCompliancy(props) {
@@ -39,10 +39,7 @@ function SubscriptionCompliancy(props) {
   switch (subscription.entitlement_status) {
     case 'NotSet':
       return (
-        <Alert type={clusterCreationCloseTo30Days ? 'error' : 'warning'}>
-          <p>
-            <strong>This cluster is not attached to a subscription</strong>
-          </p>
+        <Alert isInline variant={clusterCreationCloseTo30Days ? 'danger' : 'warning'} title="This cluster is not attached to a subscription">
           {lastChecked}
           <p>
             Please find&nbsp;
@@ -63,10 +60,7 @@ function SubscriptionCompliancy(props) {
       );
     case 'Overcommitted':
       return (
-        <Alert type="error">
-          <p>
-            <strong>This cluster is overcommitting resources</strong>
-          </p>
+        <Alert isInline variant="danger" title="This cluster is overcommitting resources">
           {lastChecked}
           <p>
             Please check the&nbsp;
@@ -83,12 +77,7 @@ function SubscriptionCompliancy(props) {
       );
     case 'InconsistentServices':
       return (
-        <Alert type="warning">
-          <p>
-            <strong>
-              This cluster is attached to subscriptions with different service levels
-            </strong>
-          </p>
+        <Alert isInline variant="warning" title="This cluster is attached to subscriptions with different service levels">
           {lastChecked}
           <p>
             Please go to the&nbsp;
