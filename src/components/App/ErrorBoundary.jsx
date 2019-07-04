@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Alert, EmptyState,
+  EmptyState,
 } from 'patternfly-react';
+import { Alert } from '@patternfly/react-core';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -20,8 +21,7 @@ class ErrorBoundary extends React.Component {
       return (
         // Fallback UI
         <EmptyState>
-          <Alert type="error">
-            <h3>Something went wrong:</h3>
+          <Alert variant="danger" isInline title="Something went wrong">
             <div style={{ whiteSpace: 'pre-wrap', textAlign: 'left', fontFamily: 'monospace' }}>
               {error}
               {componentStack}
