@@ -159,7 +159,7 @@ class ClusterList extends Component {
                 {error && <ErrorTriangle errorMessage={errorMessage} />}
               </Col>
               <Col>
-                <RefreshBtn id="refresh" autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
+                <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
                 <ClusterListFilter />
               </Col>
             </Row>
