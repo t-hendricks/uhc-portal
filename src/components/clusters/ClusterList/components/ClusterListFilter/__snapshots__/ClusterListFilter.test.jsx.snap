@@ -2,7 +2,7 @@
 
 exports[`<ClusterListFilter /> renders correctly 1`] = `
 <getContext(ContextualFilter)
-  className="pull-right cluster-list-top"
+  className="pull-right cluster-list-filter"
 >
   <FormControl
     bsClass="form-control"
@@ -17,7 +17,7 @@ exports[`<ClusterListFilter /> renders correctly 1`] = `
 
 exports[`<ClusterListFilter /> renders correctly 2`] = `
 <getContext(ContextualFilter)
-  className="pull-right cluster-list-top"
+  className="pull-right cluster-list-filter"
 >
   <FormControl
     bsClass="form-control"

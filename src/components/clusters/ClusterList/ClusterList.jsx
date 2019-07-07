@@ -20,8 +20,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import {
-  Grid, Row, Col, EmptyState, Spinner,
+  EmptyState, Spinner,
 } from 'patternfly-react';
+import { Split, SplitItem } from '@patternfly/react-core';
 
 import ClusterListFilter from './components/ClusterListFilter';
 import ClusterListEmptyState from './components/ClusterListEmptyState';
@@ -144,25 +145,24 @@ class ClusterList extends Component {
       <div>
         <div className="cluster-list">
           <GlobalErrorBox />
-          <Grid fluid style={{ padding: 0 }}>
-            <Row><Col sm={1}><h1>Clusters</h1></Col></Row>
-            <Row className="cluster-list-top-row">
-              <Col xs={2} sm={1}>
-                <CreateClusterDropdown
-                  showCreationForm={() => openModal('create-cluster')}
-                  hasQuota={hasQuota}
-                />
-              </Col>
-              <Col xs={1}>
-                {pending && <Spinner loading />}
-                {error && <ErrorTriangle errorMessage={errorMessage} />}
-              </Col>
-              <Col>
-                <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
-                <ClusterListFilter />
-              </Col>
-            </Row>
-          </Grid>
+          <h1>Clusters</h1>
+          <Split gutter="sm">
+            <SplitItem>
+              <CreateClusterDropdown
+                showCreationForm={() => openModal('create-cluster')}
+                hasQuota={hasQuota}
+              />
+            </SplitItem>
+            <SplitItem className="save-space-for-spinner">
+              {pending && <Spinner loading />}
+              {error && <ErrorTriangle errorMessage={errorMessage} />}
+            </SplitItem>
+            <SplitItem isFilled />
+            <SplitItem>
+              <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
+              <ClusterListFilter />
+            </SplitItem>
+          </Split>
           <ClusterListTable
             clusters={clusters || []}
             viewOptions={viewOptions}

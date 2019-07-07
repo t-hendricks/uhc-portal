@@ -51,14 +51,21 @@ limitations under the License.
   }
 }
 
-.cluster-list-top {
-  margin: 20px 0 0 0;
-}
 .cluster-list-top-row {
   margin-bottom: 20px;
 }
 .cluster-list-row:hover{
   background-color: $color-pf-blue-25;
+}
+
+.save-space-for-spinner {
+  min-width: 24px;
+}
+
+.cluster-list-filter {
+  @media (max-width: 1032px) {
+    width: 60%;
+  }
 }
 
 // Styles for the page where the user can download the access tokens, for use
