@@ -2,15 +2,10 @@
 
 exports[`<SubscriptionCompliancy /> should render 1`] = `
 <Alert
-  className=""
-  onDismiss={null}
-  type="error"
+  isInline={true}
+  title="This cluster is not attached to a subscription"
+  variant="danger"
 >
-  <p>
-    <strong>
-      This cluster is not attached to a subscription
-    </strong>
-  </p>
   <p>
     Please find 
     this cluster in the 
