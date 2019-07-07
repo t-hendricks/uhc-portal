@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import result from 'lodash/result';
-import {
-  OverlayTrigger,
-  Tooltip,
-} from 'patternfly-react';
+import { Tooltip, TooltipPosition } from '@patternfly/react-core';
+
 
 function ClusterNetwork({ cluster, routerShards }) {
   const hasRouterShards = (routerShards && cluster.dns
@@ -15,9 +13,9 @@ function ClusterNetwork({ cluster, routerShards }) {
     <li key={routerShard.id}>
       <dt className="ellipsize">{`${routerShard.label}: `}</dt>
       <dd>
-        <OverlayTrigger overlay={<Tooltip id="router-shard-scheme-tooltip">{`${routerShard.id}.apps.${cluster.name}.${cluster.dns.base_domain}`}</Tooltip>}>
+        <Tooltip position={TooltipPosition.right} content={`${routerShard.id}.apps.${cluster.name}.${cluster.dns.base_domain}`}>
           <span>{routerShard.scheme === 'internal' ? 'Internal' : 'External'}</span>
-        </OverlayTrigger>
+        </Tooltip>
       </dd>
     </li>
   ));

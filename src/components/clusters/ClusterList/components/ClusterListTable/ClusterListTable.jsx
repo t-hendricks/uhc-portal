@@ -2,8 +2,9 @@ import result from 'lodash/result';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  Tooltip, OverlayTrigger, DropdownKebab, Grid,
+  DropdownKebab, Grid,
 } from 'patternfly-react';
+import { Tooltip, TooltipPosition } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import { TableGrid } from 'patternfly-react-extensions';
 import ClusterBadge from '../../../common/ClusterBadge/ClusterBadge';
@@ -50,46 +51,31 @@ function ClusterListTable(props) {
     const name = cluster.display_name || ''; // This would've been one trenary condition if the backend didn't have omitEmpty on display_name
 
     const clusterName = (
-      <OverlayTrigger
-        overlay={<Tooltip id={cluster.id}>{`cluster name: ${cluster.name}`}</Tooltip>}
-        placement="right"
-      >
+      <Tooltip content={`cluster name: ${cluster.name}`} position={TooltipPosition.right}>
         <Link to={`/details/${cluster.id}`}>{name.trim() !== '' ? name : cluster.name}</Link>
-      </OverlayTrigger>
+      </Tooltip>
     );
 
     const clusterState = getClusterStateAndDescription(cluster);
 
     const clusterStatus = (
-      <OverlayTrigger
-        overlay={<Tooltip style={clusterState.style} id={`${cluster.id}-status-tooltip`}>{clusterState.description}</Tooltip>}
-        placement="top"
-        trigger={['hover', 'focus']}
-        rootClose={false}
-      >
-        {/* The span here is needed to work around a bug that caused the tooltip
-        to not render after we moved the icon to its own component */}
+      <Tooltip style={clusterState.style} content={clusterState.description}>
         <span>
           <ClusterStateIcon clusterState={typeof clusterState.state !== 'undefined' ? clusterState.state : ''} />
         </span>
-      </OverlayTrigger>
+      </Tooltip>
     );
 
     const clusterType = (
-      <OverlayTrigger
-        overlay={(
-          <Tooltip id={`${cluster.id}-type-tooltip`}>
-            {cluster.managed
-              ? 'OpenShift Dedicated (OSD) cluster managed by Red Hat'
-              : 'Self-managed OpenShift Container Platform (OCP) cluster'
-            }
-          </Tooltip>)}
-        placement="top"
-        trigger={['hover', 'focus']}
-        rootClose={false}
+      <Tooltip
+        content={cluster.managed
+          ? 'OpenShift Dedicated (OSD) cluster managed by Red Hat' : 'Self-managed OpenShift Container Platform (OCP) cluster'
+                }
       >
-        <span>{cluster.managed ? 'Managed' : 'Self-managed'}</span>
-      </OverlayTrigger>
+        <span>
+          {cluster.managed ? 'Managed' : 'Self-managed'}
+        </span>
+      </Tooltip>
     );
 
     return (
