@@ -4,8 +4,9 @@ import get from 'lodash/result';
 
 import { LinkContainer } from 'react-router-bootstrap';
 import {
-  Button, Row, Col, Grid, DropdownButton, ButtonGroup, Breadcrumb, Spinner, HintBlock,
+  Row, Col, Grid, Breadcrumb, Spinner, HintBlock,
 } from 'patternfly-react';
+import { Button } from '@patternfly/react-core';
 
 import clusterStates from '../../common/clusterStates';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
@@ -43,7 +44,7 @@ function ClusterDetailsTop(props) {
           <p>
             Identity Providers determine how users log into the cluster.
             {' '}
-            <Button className="buttonHref" onClick={openIDPModal}>Add OAuth Configuration</Button>
+            <Button variant="link" isInline onClick={openIDPModal}>Add OAuth Configuration</Button>
             {' '}
             to allow  others to log in.
           </p>
@@ -56,31 +57,24 @@ function ClusterDetailsTop(props) {
 
   const launchConsole = consoleURL && (cluster.state !== clusterStates.UNINSTALLING) ? (
     <a href={consoleURL} target="_blank" rel="noreferrer" className="pull-left">
-      <Button bsStyle="primary">Launch Console</Button>
+      <Button variant="primary">Launch Console</Button>
     </a>)
     : (
-      <Button bsStyle="primary" disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
+      <Button variant="primary" isDisabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
         Launch Console
       </Button>
     );
 
   const actions = (
-    <DropdownButton
-      id="actions"
-      bsStyle="default"
-      title="Actions"
-      pullRight
+    <ClusterActionsDropdown
       disabled={!cluster.canEdit && !cluster.canDelete}
-    >
-      <ClusterActionsDropdown
-        cluster={cluster}
-        organization={organization.details}
-        showConsoleButton={false}
-        showIDPButton
-        hasIDP={hasIdentityProviders}
-        idpID={get(clusterIdentityProviders, 'clusterIDPList[0].id', '')}
-      />
-    </DropdownButton>
+      cluster={cluster}
+      organization={organization.details}
+      showConsoleButton={false}
+      showIDPButton
+      hasIDP={hasIdentityProviders}
+      idpID={get(clusterIdentityProviders, 'clusterIDPList[0].id', '')}
+    />
   );
 
   const isRefreshing = pending
@@ -111,11 +105,11 @@ function ClusterDetailsTop(props) {
             { error && <ErrorTriangle errorMessage={errorMessage} />}
           </Col>
           <Col lg={5} lgOffset={1}>
-            <ButtonGroup id="cl-details-btns">
+            <span id="cl-details-btns">
               {launchConsole}
               {actions}
               <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
-            </ButtonGroup>
+            </span>
           </Col>
         </Row>
         {cluster.managed && !hasIdentityProviders && (

@@ -1,39 +1,109 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<CreateClusterDropdown /> renders correctly 1`] = `
-<DropdownButton
-  bsSize="large"
-  bsStyle="primary"
-  className="cluster-list-top"
-  id="dropdown-example"
-  title="Create Cluster"
->
-  <LinkContainer
-    activeClassName="active"
-    exact={false}
-    replace={false}
-    strict={false}
-    to="/install"
-  >
-    <MenuItem
-      bsClass="dropdown"
-      disabled={false}
-      divider={false}
-      eventKey="1"
-      header={false}
+exports[`<CreateClusterDropdown /> User with no quota should hide option to create managed and auto installed clusters 1`] = `
+<Dropdown
+  className=""
+  direction="down"
+  dropdownItems={
+    Array [
+      <DropdownItem
+        className=""
+        component="a"
+        href=""
+        isDisabled={false}
+        isHovered={false}
+        tooltip={null}
+        tooltipProps={Object {}}
+      >
+        <Link
+          replace={false}
+          to="/install"
+        >
+          Self-Installed Cluster
+        </Link>
+      </DropdownItem>,
+    ]
+  }
+  isGrouped={false}
+  isOpen={false}
+  isPlain={false}
+  onSelect={[Function]}
+  position="left"
+  toggle={
+    <DropdownToggle
+      className="pf-c-button pf-m-primary"
+      iconComponent={[Function]}
+      id=""
+      isActive={false}
+      isFocused={false}
+      isHovered={false}
+      isOpen={false}
+      isPlain={false}
+      onToggle={[Function]}
+      parentRef={null}
     >
-      Self-Installed Cluster
-    </MenuItem>
-  </LinkContainer>
-  <MenuItem
-    bsClass="dropdown"
-    disabled={false}
-    divider={false}
-    eventKey="3"
-    header={false}
-    onClick={[MockFunction]}
-  >
-    Red Hat-Managed Cluster
-  </MenuItem>
-</DropdownButton>
+      Create Cluster
+    </DropdownToggle>
+  }
+/>
+`;
+
+exports[`<CreateClusterDropdown /> renders correctly 1`] = `
+<Dropdown
+  className=""
+  direction="down"
+  dropdownItems={
+    Array [
+      <DropdownItem
+        className=""
+        component="a"
+        href=""
+        isDisabled={false}
+        isHovered={false}
+        tooltip={null}
+        tooltipProps={Object {}}
+      >
+        <Link
+          replace={false}
+          to="/install"
+        >
+          Self-Installed Cluster
+        </Link>
+      </DropdownItem>,
+      <DropdownItem
+        className=""
+        component="button"
+        href=""
+        isDisabled={false}
+        isHovered={false}
+        onClick={[MockFunction]}
+        tooltip={null}
+        tooltipProps={Object {}}
+      >
+        Red Hat-Managed Cluster
+      </DropdownItem>,
+    ]
+  }
+  isGrouped={false}
+  isOpen={false}
+  isPlain={false}
+  onSelect={[Function]}
+  position="left"
+  toggle={
+    <DropdownToggle
+      className="pf-c-button pf-m-primary"
+      iconComponent={[Function]}
+      id=""
+      isActive={false}
+      isFocused={false}
+      isHovered={false}
+      isOpen={false}
+      isPlain={false}
+      onToggle={[Function]}
+      parentRef={null}
+    >
+      Create Cluster
+    </DropdownToggle>
+  }
+/>
 `;

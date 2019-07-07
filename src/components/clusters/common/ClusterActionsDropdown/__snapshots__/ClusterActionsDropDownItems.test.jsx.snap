@@ -1,0 +1,310 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cluster Actions Dropdown Items admin console url does not exist should render (no console) 1`] = `
+<Fragment>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={true}
+    isHovered={false}
+    key="undefined.menu.adminconsole"
+    tooltip={
+      <span>
+        Admin console is not yet available for this cluster
+      </span>
+    }
+    tooltipProps={Object {}}
+  >
+    Launch Admin Console
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={false}
+    isHovered={false}
+    key="undefined.menu.editdisplayname"
+    onClick={[Function]}
+    tooltip={null}
+    tooltipProps={Object {}}
+  >
+    Edit Display Name
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={true}
+    isHovered={false}
+    key="undefined.menu.editcluster"
+    tooltip={
+      <span>
+        Self managed cluster cannot be edited
+      </span>
+    }
+    tooltipProps={Object {}}
+  >
+    Edit Cluster
+  </DropdownItem>
+</Fragment>
+`;
+
+exports[`Cluster Actions Dropdown Items cluster with state not ready should render (not ready) 1`] = `
+<Fragment>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={true}
+    isHovered={false}
+    key="undefined.menu.adminconsole"
+    tooltip={
+      <span>
+        Admin console is not yet available for this cluster
+      </span>
+    }
+    tooltipProps={Object {}}
+  >
+    Launch Admin Console
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={false}
+    isHovered={false}
+    key="undefined.menu.editdisplayname"
+    onClick={[Function]}
+    tooltip={null}
+    tooltipProps={Object {}}
+  >
+    Edit Display Name
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={true}
+    isHovered={false}
+    key="undefined.menu.editcluster"
+    tooltip={
+      <span>
+        This cluster is not ready
+      </span>
+    }
+    tooltipProps={Object {}}
+  >
+    Edit Cluster
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={false}
+    isHovered={false}
+    key="undefined.menu.deletecluster"
+    onClick={[Function]}
+    tooltip={null}
+    tooltipProps={Object {}}
+  >
+    Delete Cluster
+  </DropdownItem>
+</Fragment>
+`;
+
+exports[`Cluster Actions Dropdown Items cluster with state ready and console url should render 1`] = `
+<Fragment>
+  <DropdownItem
+    className=""
+    component="button"
+    href="www.testuhc.com"
+    isDisabled={false}
+    isHovered={false}
+    key="1.menu.adminconsole"
+    rel="noreferrer"
+    target="_blank"
+    tooltip={null}
+    tooltipProps={Object {}}
+  >
+    Launch Admin Console
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={false}
+    isHovered={false}
+    key="1.menu.editdisplayname"
+    onClick={[Function]}
+    tooltip={null}
+    tooltipProps={Object {}}
+  >
+    Edit Display Name
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={false}
+    isHovered={false}
+    key="1.menu.editcluster"
+    onClick={[Function]}
+    tooltip={null}
+    tooltipProps={Object {}}
+  >
+    Edit Cluster
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={false}
+    isHovered={false}
+    key="1.menu.deletecluster"
+    onClick={[Function]}
+    tooltip={null}
+    tooltipProps={Object {}}
+  >
+    Delete Cluster
+  </DropdownItem>
+</Fragment>
+`;
+
+exports[`Cluster Actions Dropdown Items cluster with state uninstalling should render (uninstalling) 1`] = `
+<Fragment>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={true}
+    isHovered={false}
+    key="undefined.menu.adminconsole"
+    tooltip={
+      <span>
+        The cluster is being uninstalled
+      </span>
+    }
+    tooltipProps={Object {}}
+  >
+    Launch Admin Console
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={true}
+    isHovered={false}
+    key="undefined.menu.editdisplayname"
+    tooltip={
+      <span>
+        The cluster is being uninstalled
+      </span>
+    }
+    tooltipProps={Object {}}
+  >
+    Edit Display Name
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={true}
+    isHovered={false}
+    key="undefined.menu.editcluster"
+    tooltip={
+      <span>
+        The cluster is being uninstalled
+      </span>
+    }
+    tooltipProps={Object {}}
+  >
+    Edit Cluster
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={true}
+    isHovered={false}
+    key="undefined.menu.deletecluster"
+    tooltip={
+      <span>
+        The cluster is being uninstalled
+      </span>
+    }
+    tooltipProps={Object {}}
+  >
+    Delete Cluster
+  </DropdownItem>
+</Fragment>
+`;
+
+exports[`Cluster Actions Dropdown Items read only cluster should render correctly 1`] = `
+<Fragment>
+  <DropdownItem
+    className=""
+    component="button"
+    href="www.testuhc.com"
+    isDisabled={false}
+    isHovered={false}
+    key="1.menu.adminconsole"
+    rel="noreferrer"
+    target="_blank"
+    tooltip={null}
+    tooltipProps={Object {}}
+  >
+    Launch Admin Console
+  </DropdownItem>
+</Fragment>
+`;
+
+exports[`Cluster Actions Dropdown Items self managed cluster should render (self managed) 1`] = `
+<Fragment>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={true}
+    isHovered={false}
+    key="undefined.menu.adminconsole"
+    tooltip={
+      <span>
+        Admin console is not yet available for this cluster
+      </span>
+    }
+    tooltipProps={Object {}}
+  >
+    Launch Admin Console
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={false}
+    isHovered={false}
+    key="undefined.menu.editdisplayname"
+    onClick={[Function]}
+    tooltip={null}
+    tooltipProps={Object {}}
+  >
+    Edit Display Name
+  </DropdownItem>
+  <DropdownItem
+    className=""
+    component="button"
+    href=""
+    isDisabled={true}
+    isHovered={false}
+    key="undefined.menu.editcluster"
+    tooltip={
+      <span>
+        Self managed cluster cannot be edited
+      </span>
+    }
+    tooltipProps={Object {}}
+  >
+    Edit Cluster
+  </DropdownItem>
+</Fragment>
+`;

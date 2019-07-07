@@ -34,14 +34,14 @@ describe('<ClusterDetailsTop />', () => {
   });
 
   it('should enable launch console button when cluster has console url and cluster is not uninstalling', () => {
-    const launchConsoleDisabled = wrapper.find('Button').at(0).props().disabled;
-    expect(launchConsoleDisabled).toEqual(false);
+    const launchConsoleDisabled = wrapper.find('Button').at(0).props().isDisabled;
+    expect(launchConsoleDisabled).toBeFalsy();
   });
 
   it('should disable launch console button when console url is missing', () => {
     const cluster = { ...clusterDetails.cluster, console: { url: '' } };
     wrapper.setProps({ cluster }, () => {
-      const launchConsoleDisabled = wrapper.find('Button').at(0).props().disabled;
+      const launchConsoleDisabled = wrapper.find('Button').at(0).props().isDisabled;
       expect(launchConsoleDisabled).toEqual(true);
     });
   });
@@ -49,7 +49,7 @@ describe('<ClusterDetailsTop />', () => {
   it('should disable launch console button when cluster is unistalling', () => {
     const cluster = { ...clusterDetails.cluster, state: clusterStates.UNINSTALLING };
     wrapper.setProps({ cluster }, () => {
-      const launchConsoleDisabled = wrapper.find('Button').at(0).props().disabled;
+      const launchConsoleDisabled = wrapper.find('Button').at(0).props().isDisabled;
       expect(launchConsoleDisabled).toEqual(true);
     });
   });
