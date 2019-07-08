@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import {
   Button, EmptyState, EmptyStateTitle, EmptyStateInfo, EmptyStateAction,
-  Grid, Col, Row, Spinner, Alert, FieldLevelHelp,
+  Grid, Col, Row, Spinner, FieldLevelHelp,
 } from 'patternfly-react';
+
+import ErrorBox from '../../../../common/ErrorBox';
 
 import UserInputForm from './UserInputForm';
 
@@ -61,9 +63,7 @@ class Users extends React.Component {
     if (clusterGroupUsers.error) {
       return (
         <EmptyState>
-          <Alert type="error">
-            <span>{`Error getting cluster users: ${clusterGroupUsers.errorMessage}`}</span>
-          </Alert>
+          <ErrorBox message="Error getting cluster users" response={clusterGroupUsers} />
         </EmptyState>
       );
     }
@@ -92,14 +92,10 @@ class Users extends React.Component {
     return (
       <div className="cluster-details-user-tab-contents">
         { addUserResponse.error && (
-          <Alert type="error">
-            <span>{`Error adding user: ${addUserResponse.errorMessage}`}</span>
-          </Alert>
+          <ErrorBox message="Error adding user" response={addUserResponse} />
         )}
         { deleteUserResponse.error && (
-          <Alert type="error">
-            <span>{`Error deleting user: ${deleteUserResponse.errorMessage}`}</span>
-          </Alert>
+          <ErrorBox message="Error deleting user" response={deleteUserResponse} />
         )}
         <p>
           Grant permission to manage this cluster to users defined in your identity provider.

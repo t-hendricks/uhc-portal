@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Alert } from 'patternfly-react';
+import ErrorBox from '../../../common/ErrorBox';
 
 import EditDisplayNameDialog from './EditClusterDialog';
 
@@ -54,6 +54,6 @@ describe('<EditDisplayNameDialog />', () => {
   it('renders correctly when an erorr occurs', () => {
     wrapper.setProps({ editClusterResponse: { error: true, erorMessage: 'this is an error' } });
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(Alert).length).toEqual(1);
+    expect(wrapper.find(ErrorBox).length).toEqual(1);
   });
 });

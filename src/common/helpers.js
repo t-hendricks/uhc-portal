@@ -1,4 +1,5 @@
 import isEqual from 'lodash/isEqual';
+import get from 'lodash/get';
 
 const noop = Function.prototype;
 
@@ -82,6 +83,15 @@ function getErrorMessage(payload) {
   return JSON.stringify(response);
 }
 
+// getErrorState returns the standard error state for a rejected redux action
+const getErrorState = action => ({
+  pending: false,
+  error: action.error,
+  errorCode: get(action.payload, 'response.status'),
+  errorMessage: getErrorMessage(action.payload),
+  operationID: get(action.payload, 'response.operation_id'),
+});
+
 function getTimeDelta(t1, t2 = new Date()) {
   const timeDiff = Math.abs(t2.getTime() - t1.getTime());
   return Math.ceil(timeDiff / (1000 * 3600));
@@ -124,6 +134,7 @@ const helpers = {
   viewPropsChanged,
   createViewQueryObject,
   getErrorMessage,
+  getErrorState,
   getTimeDelta,
   isValid,
   omitEmptyFields,

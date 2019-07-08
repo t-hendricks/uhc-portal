@@ -31,11 +31,7 @@ function LogsReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(logWindowConstants.GET_LOGS):
       return helpers.setStateProp(
         'logs',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,

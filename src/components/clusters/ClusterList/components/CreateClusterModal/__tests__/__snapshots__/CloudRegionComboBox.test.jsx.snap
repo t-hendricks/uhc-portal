@@ -192,32 +192,86 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
     }
   }
 >
-  <Alert
-    className=""
-    onDismiss={null}
-    type="error"
+  <ErrorBox
+    message="Error loading region list"
+    response={
+      Object {
+        "error": true,
+        "errorMessage": "This is an error message",
+        "fulfilled": false,
+        "pending": false,
+        "providers": Object {},
+      }
+    }
   >
-    <div
-      className="alert alert-danger"
+    <Alert
+      isInline={true}
+      title="Error loading region list"
+      variant="danger"
     >
-      <Icon
-        name="error-circle-o"
-        type="pf"
+      <div
+        aria-label="Danger Alert"
+        className="pf-c-alert pf-m-inline pf-m-danger"
       >
-        <PatternflyIcon
-          className=""
-          name="error-circle-o"
+        <AlertIcon
+          variant="danger"
+        >
+          <div
+            className="pf-c-alert__icon"
+          >
+            <ExclamationCircleIcon
+              color="currentColor"
+              noVerticalAlign={false}
+              size="sm"
+              title={null}
+            >
+              <svg
+                aria-hidden={true}
+                aria-labelledby={null}
+                fill="currentColor"
+                height="1em"
+                role="img"
+                style={
+                  Object {
+                    "verticalAlign": "-0.125em",
+                  }
+                }
+                viewBox="0 0 512 512"
+                width="1em"
+              >
+                <path
+                  d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                  transform=""
+                />
+              </svg>
+            </ExclamationCircleIcon>
+          </div>
+        </AlertIcon>
+        <h4
+          className="pf-c-alert__title"
         >
           <span
-            aria-hidden="true"
-            className="pficon pficon-error-circle-o"
-          />
-        </PatternflyIcon>
-      </Icon>
-      <span>
-        Error loading region list: This is an error message
-      </span>
-    </div>
-  </Alert>
+            className="pf-u-screen-reader"
+          >
+            Danger alert:
+          </span>
+          Error loading region list
+        </h4>
+        <div
+          className="pf-c-alert__description"
+        >
+          <p>
+            <span>
+              This is an error message
+            </span>
+            <br />
+            <span>
+              Operation ID: N/A
+            </span>
+          </p>
+        </div>
+      </div>
+    </Alert>
+  </ErrorBox>
 </CloudRegionComboBox>
 `;

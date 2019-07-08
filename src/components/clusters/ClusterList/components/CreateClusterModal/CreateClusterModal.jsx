@@ -18,10 +18,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 import {
-  Modal, Form, Button, Alert, Spinner,
+  Modal, Form, Button, Spinner,
 } from 'patternfly-react';
 
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
+import ErrorBox from '../../../../common/ErrorBox';
 import constants from './CreateClusterModalHelper';
 import ManagedClusterForm from './ManagedClusterForm';
 
@@ -44,9 +45,7 @@ function CreateClusterModal(props) {
   }
 
   const hasError = createClusterResponse.error && (
-    <Alert>
-      <span>{`Error creating cluster: ${createClusterResponse.errorMessage}`}</span>
-    </Alert>
+    <ErrorBox message="Error creating cluster" response={createClusterResponse} />
   );
 
   const loadingSpinner = () => (

@@ -40,7 +40,7 @@ describe('<ClusterDetails />', () => {
 
     it('should render error message', () => {
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find('Alert').length).toEqual(1);
+      expect(wrapper.find('ErrorBox').length).toEqual(1);
     });
 
     it('should redirect back to cluster list and set global error on 404 error', () => {

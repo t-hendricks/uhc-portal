@@ -740,15 +740,18 @@ exports[`<ClusterDetails /> Error should render error message 1`] = `
 <EmptyState
   className=""
 >
-  <Alert
-    className=""
-    onDismiss={null}
-    type="error"
-  >
-    <span>
-      Error retrieving cluster details: 
-    </span>
-  </Alert>
+  <ErrorBox
+    message="Error retrieving cluster details"
+    response={
+      Object {
+        "cluster": undefined,
+        "error": true,
+        "errorMessage": "",
+        "fulfilled": true,
+        "pending": false,
+      }
+    }
+  />
 </EmptyState>
 `;
 
