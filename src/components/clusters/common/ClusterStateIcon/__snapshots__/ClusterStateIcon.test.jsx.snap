@@ -1,65 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ClusterStateIcon /> renders correctly for error status 1`] = `
-<Icon
-  className="fa-lg clusterstate "
-  name="error-circle-o"
-  type="pf"
+<ErrorCircleOIcon
+  className="clusterstate"
+  color="#c9190b"
+  noVerticalAlign={false}
+  size="sm"
+  title={null}
 />
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for installing status 1`] = `
-<Icon
-  className="fa-lg clusterstate "
-  name="in-progress"
-  type="pf"
+<InProgressIcon
+  className="clusterstate"
+  color="currentColor"
+  noVerticalAlign={false}
+  size="sm"
+  title={null}
 />
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for patching status 1`] = `
-<Icon
-  className="fa-lg clusterstate "
-  name="hourglass-half"
-  type="fa"
+<HourglassHalfIcon
+  className="clusterstate"
+  color="currentColor"
+  noVerticalAlign={false}
+  size="sm"
+  title={null}
 />
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for pending status 1`] = `
-<Icon
-  className="fa-lg clusterstate "
-  name="hourglass-half"
-  type="fa"
+<HourglassHalfIcon
+  className="clusterstate"
+  color="currentColor"
+  noVerticalAlign={false}
+  size="sm"
+  title={null}
 />
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for ready status 1`] = `
-<Icon
-  className="fa-lg clusterstate "
-  name="ok"
-  type="pf"
+<OkIcon
+  className="clusterstate"
+  color="#92d400"
+  noVerticalAlign={false}
+  size="sm"
+  title={null}
 />
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for uninstalling status 1`] = `
-<Icon
-  className="fa-lg clusterstate "
-  name="ban"
-  type="fa"
+<BanIcon
+  className="clusterstate"
+  color="#c9190b"
+  noVerticalAlign={false}
+  size="sm"
+  title={null}
 />
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for unknown status 1`] = `
-<Icon
-  className="fa-lg clusterstate "
-  name="unknown"
-  type="pf"
+<UnknownIcon
+  className="clusterstate"
+  color="currentColor"
+  noVerticalAlign={false}
+  size="sm"
+  title={null}
 />
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for warning status 1`] = `
-<Icon
-  className="fa-lg clusterstate "
-  name="warning-triangle-o"
-  type="pf"
+<WarningTriangleIcon
+  className="clusterstate"
+  color="#f0ab00"
+  noVerticalAlign={false}
+  size="sm"
+  title={null}
 />
 `;

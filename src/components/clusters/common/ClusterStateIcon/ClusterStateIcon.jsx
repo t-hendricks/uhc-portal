@@ -2,52 +2,59 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'patternfly-react';
+import {
+  HourglassHalfIcon,
+  InProgressIcon,
+  ErrorCircleOIcon,
+  OkIcon,
+  BanIcon,
+  WarningTriangleIcon,
+  UnlinkIcon,
+  UnknownIcon,
+} from '@patternfly/react-icons';
+// need to disable eslint for the react tokens because it's silly - it warns about these names
+// eslint-disable-next-line camelcase
+import { global_warning_color_100, global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
 import clusterStates from '../clusterStates';
 
 function ClusterStateIcon(props) {
   const { clusterState } = props;
 
-  let icon = { type: 'pf' };
-  let extraClasses = '';
+  const iconProps = {
+    className: 'clusterstate',
+    size: 'sm',
+  };
+  const staleIconProps = {
+    ...iconProps,
+    className: `stale ${iconProps.className}`,
+  };
+  const longStaleIconProps = {
+    ...iconProps,
+    className: `long-stale ${iconProps.className}`,
+  };
+
   // Icons from http://openshift.github.io/openshift-origin-design/web-console/4.0-designs/status/status
   switch (clusterState) {
     case clusterStates.PENDING:
-      icon = { type: 'fa', name: 'hourglass-half' };
-      break;
-    case clusterStates.INSTALLING:
-      icon.name = 'in-progress';
-      break;
-    case clusterStates.ERROR:
-      icon.name = 'error-circle-o';
-      break;
-    case clusterStates.READY:
-      icon.name = 'ok';
-      break;
-    case clusterStates.UNINSTALLING:
-      icon = { type: 'fa', name: 'ban' };
-      break;
     case clusterStates.PATCHING:
-      icon = { type: 'fa', name: 'hourglass-half' };
-      break;
+      return <HourglassHalfIcon {...iconProps} />;
+    case clusterStates.INSTALLING:
+      return <InProgressIcon {...iconProps} />;
+    case clusterStates.ERROR:
+      return <ErrorCircleOIcon color={global_danger_color_100.value} {...iconProps} />;
+    case clusterStates.READY:
+      return <OkIcon color={global_success_color_100.value} {...iconProps} />;
+    case clusterStates.UNINSTALLING:
+      return <BanIcon color={global_danger_color_100.value} {...iconProps} />;
     case clusterStates.WARNING:
-      icon.name = 'warning-triangle-o';
-      break;
+      return <WarningTriangleIcon color={global_warning_color_100.value} {...iconProps} />;
     case clusterStates.STALE:
-      icon = { type: 'fa', name: 'chain-broken' };
-      extraClasses = 'stale';
-      break;
+      return <UnlinkIcon {...staleIconProps} />;
     case clusterStates.LONG_STALE:
-      icon = { type: 'fa', name: 'chain-broken' };
-      extraClasses = 'long-stale';
-      break;
+      return <UnlinkIcon {...longStaleIconProps} />;
     default:
-      icon.name = 'unknown';
+      return <UnknownIcon {...iconProps} />;
   }
-  // patternfly bug workaround: pf icons ignore the `size` prop.
-  // Specifying className='fa-lg' makes them larger too.
-  return (
-    <Icon className={`fa-lg clusterstate ${extraClasses}`} {...icon} />);
 }
 
 ClusterStateIcon.propTypes = {

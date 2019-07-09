@@ -55,8 +55,9 @@ exports[`<ClusterNetwork /> should render 1`] = `
             <dd>
               <Tooltip
                 appendTo={[Function]}
-                className={null}
+                className=""
                 content="ofvv.apps.test-liza.sdev.devshift.net"
+                distance={15}
                 enableFlip={true}
                 entryDelay={500}
                 exitDelay={500}
@@ -83,8 +84,9 @@ exports[`<ClusterNetwork /> should render 1`] = `
             <dd>
               <Tooltip
                 appendTo={[Function]}
-                className={null}
+                className=""
                 content="jhso.apps.test-liza.sdev.devshift.net"
+                distance={15}
                 enableFlip={true}
                 entryDelay={500}
                 exitDelay={500}
