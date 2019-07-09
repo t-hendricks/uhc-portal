@@ -41,7 +41,7 @@ function Router(props) {
         <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
         <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
         <Route path="/install/aws" component={InstallAWS} />
-        <Route path="/install/azure/user-provisioned" component={InstallAzure} />
+        <Route path="/install/azure/installer-provisioned" component={InstallAzure} />
         <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
         <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
         <Route path="/install" component={InstallInfrastructure} />
