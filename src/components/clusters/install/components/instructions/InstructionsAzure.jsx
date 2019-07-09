@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import openshiftLogo from '../../../../../styles/images/Logo-Red_Hat-OpenShift-A-Standard-RGB.svg';
 import {
   CLISection,
   DownloadButton,
   GetStarted,
+  PageTitle,
   PullSecretSection,
   TelemetryAlert,
   TokenErrorAlert,
@@ -37,8 +37,7 @@ class InstructionsAzure extends React.Component {
             )
           }
 
-          <img src={openshiftLogo} alt="OpenShift" className="openshift-logo-install" />
-          <h1>Install on Azure: User-Provisioned Infrastructure</h1>
+          <PageTitle title="Install on Azure: User-Provisioned Infrastructure" />
 
           <TelemetryAlert />
 
