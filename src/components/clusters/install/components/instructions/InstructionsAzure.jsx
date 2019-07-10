@@ -37,7 +37,7 @@ class InstructionsAzure extends React.Component {
             )
           }
 
-          <PageTitle title="Install on Azure: User-Provisioned Infrastructure" />
+          <PageTitle title="Install on Azure: Installer-Provisioned Infrastructure" />
 
           <TelemetryAlert />
 
@@ -46,7 +46,8 @@ class InstructionsAzure extends React.Component {
             {' '}
             <strong>developer preview</strong>
             {' '}
-            you can install a cluster on Microsoft Azure using infrastructure that you provide.
+            you can install a cluster on Microsoft Azure using infrastructure that the installation
+            program provisions and the cluster maintains.
           </p>
 
           <GetStarted docURL="https://github.com/openshift/installer/tree/master/docs/user/azure" />

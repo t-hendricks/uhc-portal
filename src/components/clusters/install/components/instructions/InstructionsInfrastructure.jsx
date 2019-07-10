@@ -29,7 +29,7 @@ const InstructionsInfrastructure = () => (
       </Link>
     </div>
     <div className="grid-container">
-      <Link to="/install/azure/user-provisioned" className="infra-card">
+      <Link to="/install/azure/installer-provisioned" className="infra-card">
         <CardBody>
           <img src={AzureLogo} alt="Azure" className="infra-logo" />
           <br />
