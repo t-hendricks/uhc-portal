@@ -496,6 +496,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: -20px;
   margin-top: -22px;
   margin-right: -20px;
+  margin-bottom: 20px;
   padding-left: 22px;
   font-weight: 800;
   color: white;
@@ -567,4 +568,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   border-right-style: solid;
   padding-right: 10px;
   margin-right: 10px;
+}
+
+.install-page-title {
+  padding-top: 2px;
 }
