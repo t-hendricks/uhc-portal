@@ -3,8 +3,9 @@
 exports[`<RefreshButton /> renders correctly 1`] = `
 <Tooltip
   appendTo={[Function]}
-  className={null}
+  className=""
   content="Refresh"
+  distance={15}
   enableFlip={true}
   entryDelay={500}
   exitDelay={500}
@@ -23,9 +24,11 @@ exports[`<RefreshButton /> renders correctly 1`] = `
     disabled={false}
     onClick={[MockFunction]}
   >
-    <Icon
-      name="refresh"
-      type="fa"
+    <RedoIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+      title={null}
     />
   </Button>
 </Tooltip>
@@ -34,8 +37,9 @@ exports[`<RefreshButton /> renders correctly 1`] = `
 exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
 <Tooltip
   appendTo={[Function]}
-  className={null}
+  className=""
   content="Refresh"
+  distance={15}
   enableFlip={true}
   entryDelay={500}
   exitDelay={500}
@@ -54,9 +58,11 @@ exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
     disabled={false}
     onClick={[MockFunction]}
   >
-    <Icon
-      name="refresh"
-      type="fa"
+    <RedoIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+      title={null}
     />
   </Button>
 </Tooltip>

@@ -260,15 +260,13 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
         <div
           className="pf-c-alert__description"
         >
-          <p>
-            <span>
-              This is an error message
-            </span>
-            <br />
-            <span>
-              Operation ID: N/A
-            </span>
-          </p>
+          <span>
+            This is an error message
+          </span>
+          <br />
+          <span>
+            Operation ID: N/A
+          </span>
         </div>
       </div>
     </Alert>
