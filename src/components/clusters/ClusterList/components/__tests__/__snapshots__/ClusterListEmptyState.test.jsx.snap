@@ -2,129 +2,28 @@
 
 exports[`<ClusterListEmptyState /> renders correctly 1`] = `
 <EmptyState
-  className="full-page-blank-slate"
+  variant="large"
 >
-  <Row
-    bsClass="row"
-    componentClass="div"
+  <EmptyStateIcon
+    color="#c00"
+    icon={[Function]}
+  />
+  <Title
+    headingLevel="h4"
+    size="2xl"
   >
-    <EmptyStateTitle
-      className=""
-    >
-      No Clusters Exist
-    </EmptyStateTitle>
-    <EmptyStateInfo
-      className=""
-    >
-      There are no clusters to display. Create a cluster to get started.
-    </EmptyStateInfo>
-  </Row>
-  <CardGrid
-    className=""
-    matchHeight={true}
+    No OpenShift clusters to display
+  </Title>
+  <EmptyStateBody>
+    The Red Hat OpenShift Cluster Manager helps you create, register, and manage OpenShift 4 clusters. To get started, create your first cluster.
+  </EmptyStateBody>
+  <Link
+    replace={false}
+    to="/create"
   >
-    <Row
-      bsClass="row"
-      className="cluster-list-emptystate-options"
-      componentClass="div"
-    >
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={4}
-        mdOffset={2}
-      >
-        <Card
-          accented={true}
-          aggregated={false}
-          aggregatedMini={false}
-          cardRef={null}
-          className="cluster-list-emptystate-preferred"
-          matchHeight={true}
-        >
-          <CardBody
-            className=""
-          >
-            <p
-              className="cluster-list-emptystate-preferred-string"
-            >
-              Preferred method
-            </p>
-            <CardTitle
-              className=""
-            >
-              Red Hat-Managed Cluster
-            </CardTitle>
-            <p
-              id="osd_text"
-            >
-              Create a Red Hat-managed cluster (OSD), to provision the cluster on Amazon Web Services.
-            </p>
-            <EmptyStateAction
-              className=""
-              secondary={false}
-            >
-              <Button
-                active={false}
-                block={false}
-                bsClass="btn"
-                bsSize="large"
-                bsStyle="primary"
-                disabled={false}
-                onClick={[MockFunction]}
-              >
-                Create Red Hat-Managed Cluster
-              </Button>
-            </EmptyStateAction>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={4}
-        mdOffset={0}
-      >
-        <Card
-          accented={false}
-          aggregated={false}
-          aggregatedMini={false}
-          cardRef={null}
-          className=""
-          matchHeight={true}
-        >
-          <CardBody
-            className=""
-          >
-            <CardTitle
-              className=""
-            >
-              Self-Installed Cluster
-            </CardTitle>
-            <p>
-              Install an OCP cluster manually, and manage it yourself. Once installation is complete the cluster will get automatically registered to the Cluster Manager.
-            </p>
-            <EmptyStateAction
-              className=""
-              secondary={false}
-            >
-              <Button
-                active={false}
-                block={false}
-                bsClass="btn"
-                bsSize="large"
-                bsStyle="primary"
-                disabled={false}
-                href="/install"
-                target="_blank"
-              >
-                Create Self-Installed Cluster
-              </Button>
-            </EmptyStateAction>
-          </CardBody>
-        </Card>
-      </Col>
-    </Row>
-  </CardGrid>
+    <Button>
+      Create Cluster
+    </Button>
+  </Link>
 </EmptyState>
 `;

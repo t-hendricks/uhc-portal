@@ -7,7 +7,6 @@ import { viewConstants } from '../../../redux/constants';
 import { viewActions } from '../../../redux/actions/viewOptionsActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 import { userActions } from '../../../redux/actions/userActions';
-import hasQuota from './ClusterListSelectors';
 
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
@@ -31,7 +30,6 @@ const mapStateToProps = (state) => {
       cloudProviders: state.cloudProviders.cloudProviders,
       organization: state.userProfile.organization,
       quota,
-      hasQuota: hasQuota(quota.quotaList.items || []),
     },
   );
 };

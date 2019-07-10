@@ -18,24 +18,28 @@ import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   EmptyState, Spinner,
 } from 'patternfly-react';
-import { Split, SplitItem, Card } from '@patternfly/react-core';
+import {
+  Split,
+  SplitItem,
+  Card,
+  Button,
+} from '@patternfly/react-core';
 
 import ClusterListFilter from './components/ClusterListFilter';
 import ClusterListEmptyState from './components/ClusterListEmptyState';
 import ClusterListTable from './components/ClusterListTable/ClusterListTable';
 import LoadingModal from '../../common/LoadingModal';
-import CreateClusterDropdown from './components/CreateClusterDropdown';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
 import ErrorBox from '../../common/ErrorBox';
 
 
-import CreateClusterModal from './components/CreateClusterModal';
 import EditClusterDialog from '../common/EditClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
@@ -108,7 +112,6 @@ class ClusterList extends Component {
       setSorting,
       openModal,
       invalidateClusters,
-      hasQuota,
       quota,
       errorMessage,
       organization,
@@ -131,12 +134,7 @@ class ClusterList extends Component {
       return (
         <React.Fragment>
           <GlobalErrorBox />
-          <ClusterListEmptyState
-            showCreationForm={() => openModal('create-cluster')}
-            hasQuota={hasQuota}
-          />
-
-          <CreateClusterModal />
+          <ClusterListEmptyState />
         </React.Fragment>
       );
     }
@@ -148,10 +146,9 @@ class ClusterList extends Component {
           <h1>Clusters</h1>
           <Split>
             <SplitItem>
-              <CreateClusterDropdown
-                showCreationForm={() => openModal('create-cluster')}
-                hasQuota={hasQuota}
-              />
+              <Link to="/create">
+                <Button>Create Cluster</Button>
+              </Link>
             </SplitItem>
             <SplitItem>
               { pending && <Spinner loading className="cluster-list-spinner" /> }
@@ -181,7 +178,6 @@ class ClusterList extends Component {
             }
           }}
           />
-          <CreateClusterModal />
         </div>
         <ViewPaginationRow
           viewType={viewConstants.CLUSTERS_VIEW}
@@ -211,7 +207,6 @@ ClusterList.propTypes = {
   organization: PropTypes.object.isRequired,
   quota: PropTypes.object.isRequired,
   getQuota: PropTypes.func.isRequired,
-  hasQuota: PropTypes.bool.isRequired,
   getOrganization: PropTypes.func.isRequired,
   operationID: PropTypes.string,
 };
