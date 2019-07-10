@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  OverlayTrigger, Tooltip, Button, Icon,
+  Button,
 } from 'patternfly-react';
+import { RedoIcon } from '@patternfly/react-icons';
+import { Tooltip, TooltipPosition } from '@patternfly/react-core';
+
 
 class RefreshBtn extends React.Component {
   constructor(props) {
@@ -36,23 +39,19 @@ class RefreshBtn extends React.Component {
   }
 
   render() {
-    const { id, refreshFunc, classOptions } = this.props;
+    const { refreshFunc, classOptions } = this.props;
 
     return (
-      <OverlayTrigger
-        overlay={<Tooltip id={id}>Refresh</Tooltip>}
-        placement="bottom"
-      >
+      <Tooltip position={TooltipPosition.bottom} content="Refresh">
         <Button bsStyle="default" className={classOptions} onClick={refreshFunc}>
-          <Icon name="refresh" type="fa" />
+          <RedoIcon />
         </Button>
-      </OverlayTrigger>
+      </Tooltip>
     );
   }
 }
 
 RefreshBtn.propTypes = {
-  id: PropTypes.string.isRequired,
   classOptions: PropTypes.string,
   refreshFunc: PropTypes.func.isRequired,
   autoRefresh: PropTypes.bool,

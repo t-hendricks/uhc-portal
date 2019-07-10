@@ -3,16 +3,17 @@ import { Link } from 'react-router-dom';
 import {
   CardBody,
 } from 'patternfly-react';
+import {
+  PageTitle,
+} from './common';
 import bareMetalIcon from '../../../../../styles/images/Icon_RH_Hardware_Server-A-Single_RGB_Flat.png';
 import AWSLogo from '../../../../../styles/images/AWS.png';
 import AzureLogo from '../../../../../styles/images/Microsoft_Azure_Logo.svg';
 import vSphereLogo from '../../../../../styles/images/vmware_vsphere.png';
-import openshiftLogo from '../../../../../styles/images/Logo-Red_Hat-OpenShift-A-Standard-RGB.svg';
 
 const InstructionsInfrastructure = () => (
   <div className="pf-c-content">
-    <img src={openshiftLogo} alt="OpenShift" className="openshift-logo-install" />
-    <h1>Infrastructure Provider</h1>
+    <PageTitle title="Infrastructure Provider" />
     <div className="grid-container">
       <Link to="/install/aws" className="infra-card">
         <CardBody>
@@ -28,7 +29,7 @@ const InstructionsInfrastructure = () => (
       </Link>
     </div>
     <div className="grid-container">
-      <Link to="/install/azure/user-provisioned" className="infra-card">
+      <Link to="/install/azure/installer-provisioned" className="infra-card">
         <CardBody>
           <img src={AzureLogo} alt="Azure" className="infra-logo" />
           <br />

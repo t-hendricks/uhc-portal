@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, FormSection } from 'redux-form';
 import {
-  Button, Form, Modal, Alert, Grid, Col, Row, FormGroup, ControlLabel, Spinner,
+  Button, Form, Modal, Grid, Col, Row, FormGroup, ControlLabel, Spinner,
 } from 'patternfly-react';
 
 import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../common/validators';
 import ModalHeader from '../../../common/Modal/components/ModalHeader';
+import ErrorBox from '../../../common/ErrorBox';
 
 class EditClusterDialog extends Component {
   componentDidUpdate(prevProps) {
@@ -77,9 +78,8 @@ class EditClusterDialog extends Component {
     };
 
     const hasError = (editClusterResponse.error || editRouterShardResponse.error) ? (
-      <Alert>
-        <span>{`Error editing cluster: ${editClusterResponse.errorMessage || editRouterShardResponse.errorMessage}`}</span>
-      </Alert>) : null;
+      <ErrorBox message="Error editing cluster" response={editClusterResponse.error ? editClusterResponse : editRouterShardResponse} />
+    ) : null;
 
     return isOpen && (
       <Modal show onHide={cancelEdit}>

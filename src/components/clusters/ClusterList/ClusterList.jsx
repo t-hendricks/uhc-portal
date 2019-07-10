@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import {
-  Alert, Grid, Row, Col, EmptyState, Spinner,
+  Grid, Row, Col, EmptyState, Spinner,
 } from 'patternfly-react';
 
 import ClusterListFilter from './components/ClusterListFilter';
@@ -31,6 +31,7 @@ import CreateClusterDropdown from './components/CreateClusterDropdown';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
+import ErrorBox from '../../common/ErrorBox';
 
 
 import CreateClusterModal from './components/CreateClusterModal';
@@ -88,12 +89,10 @@ class ClusterList extends Component {
   }
 
   renderError() {
-    const { errorMessage } = this.props;
+    const { errorMessage, operationID } = this.props;
     return (
       <EmptyState>
-        <Alert type="error">
-          <span>{`Error retrieving clusters: ${errorMessage}`}</span>
-        </Alert>
+        <ErrorBox message="Error retreiving clusters" response={{ errorMessage, operationID }} />
       </EmptyState>
     );
   }
@@ -159,7 +158,7 @@ class ClusterList extends Component {
                 {error && <ErrorTriangle errorMessage={errorMessage} />}
               </Col>
               <Col>
-                <RefreshBtn id="refresh" autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
+                <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
                 <ClusterListFilter />
               </Col>
             </Row>
@@ -212,6 +211,7 @@ ClusterList.propTypes = {
   getQuota: PropTypes.func.isRequired,
   hasQuota: PropTypes.bool.isRequired,
   getOrganization: PropTypes.func.isRequired,
+  operationID: PropTypes.string,
 };
 
 export default ClusterList;

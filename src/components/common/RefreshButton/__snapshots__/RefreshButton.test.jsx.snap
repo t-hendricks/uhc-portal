@@ -1,24 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<RefreshButton /> renders correctly 1`] = `
-<OverlayTrigger
-  defaultOverlayShown={false}
-  overlay={
-    <Tooltip
-      bsClass="tooltip"
-      id="id"
-      placement="right"
-    >
-      Refresh
-    </Tooltip>
-  }
-  placement="bottom"
-  trigger={
-    Array [
-      "hover",
-      "focus",
-    ]
-  }
+<Tooltip
+  appendTo={[Function]}
+  className=""
+  content="Refresh"
+  distance={15}
+  enableFlip={true}
+  entryDelay={500}
+  exitDelay={500}
+  isAppLauncher={false}
+  maxWidth="18.75rem"
+  position="bottom"
+  trigger="mouseenter focus"
+  zIndex={9999}
 >
   <Button
     active={false}
@@ -29,33 +24,30 @@ exports[`<RefreshButton /> renders correctly 1`] = `
     disabled={false}
     onClick={[MockFunction]}
   >
-    <Icon
-      name="refresh"
-      type="fa"
+    <RedoIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+      title={null}
     />
   </Button>
-</OverlayTrigger>
+</Tooltip>
 `;
 
 exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
-<OverlayTrigger
-  defaultOverlayShown={false}
-  overlay={
-    <Tooltip
-      bsClass="tooltip"
-      id="id"
-      placement="right"
-    >
-      Refresh
-    </Tooltip>
-  }
-  placement="bottom"
-  trigger={
-    Array [
-      "hover",
-      "focus",
-    ]
-  }
+<Tooltip
+  appendTo={[Function]}
+  className=""
+  content="Refresh"
+  distance={15}
+  enableFlip={true}
+  entryDelay={500}
+  exitDelay={500}
+  isAppLauncher={false}
+  maxWidth="18.75rem"
+  position="bottom"
+  trigger="mouseenter focus"
+  zIndex={9999}
 >
   <Button
     active={false}
@@ -66,10 +58,12 @@ exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
     disabled={false}
     onClick={[MockFunction]}
   >
-    <Icon
-      name="refresh"
-      type="fa"
+    <RedoIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+      title={null}
     />
   </Button>
-</OverlayTrigger>
+</Tooltip>
 `;

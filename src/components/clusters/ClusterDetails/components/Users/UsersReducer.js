@@ -33,11 +33,7 @@ function UsersReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(UsersConstants.GET_USERS):
       return helpers.setStateProp(
         'groupUsers',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,
@@ -77,11 +73,7 @@ function UsersReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(UsersConstants.ADD_USER):
       return helpers.setStateProp(
         'addUserResponse',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,
@@ -117,11 +109,7 @@ function UsersReducer(state = initialState, action) {
     case helpers.REJECTED_ACTION(UsersConstants.DELETE_USER):
       return helpers.setStateProp(
         'deleteUserResponse',
-        {
-          pending: false,
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,

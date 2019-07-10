@@ -60,10 +60,7 @@ function userProfile(state = initialState, action) {
     case helpers.REJECTED_ACTION(userConstants.GET_ORGANIZATION):
       return helpers.setStateProp(
         'organization',
-        {
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        helpers.getErrorState(action),
         {
           state,
           initialState,
@@ -98,11 +95,8 @@ function userProfile(state = initialState, action) {
       );
     case helpers.REJECTED_ACTION(userConstants.GET_ORG_QUOTA):
       return helpers.setStateProp(
-        'organization',
-        {
-          error: action.error,
-          errorMessage: helpers.getErrorMessage(action.payload),
-        },
+        'quota',
+        helpers.getErrorState(action),
         {
           state,
           initialState,

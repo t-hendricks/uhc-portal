@@ -53,28 +53,24 @@ exports[`<ClusterNetwork /> should render 1`] = `
               test1: 
             </dt>
             <dd>
-              <OverlayTrigger
-                defaultOverlayShown={false}
-                overlay={
-                  <Tooltip
-                    bsClass="tooltip"
-                    id="router-shard-scheme-tooltip"
-                    placement="right"
-                  >
-                    ofvv.apps.test-liza.sdev.devshift.net
-                  </Tooltip>
-                }
-                trigger={
-                  Array [
-                    "hover",
-                    "focus",
-                  ]
-                }
+              <Tooltip
+                appendTo={[Function]}
+                className=""
+                content="ofvv.apps.test-liza.sdev.devshift.net"
+                distance={15}
+                enableFlip={true}
+                entryDelay={500}
+                exitDelay={500}
+                isAppLauncher={false}
+                maxWidth="18.75rem"
+                position="right"
+                trigger="mouseenter focus"
+                zIndex={9999}
               >
                 <span>
                   Internal
                 </span>
-              </OverlayTrigger>
+              </Tooltip>
             </dd>
           </li>
           <li
@@ -86,28 +82,24 @@ exports[`<ClusterNetwork /> should render 1`] = `
               test2: 
             </dt>
             <dd>
-              <OverlayTrigger
-                defaultOverlayShown={false}
-                overlay={
-                  <Tooltip
-                    bsClass="tooltip"
-                    id="router-shard-scheme-tooltip"
-                    placement="right"
-                  >
-                    jhso.apps.test-liza.sdev.devshift.net
-                  </Tooltip>
-                }
-                trigger={
-                  Array [
-                    "hover",
-                    "focus",
-                  ]
-                }
+              <Tooltip
+                appendTo={[Function]}
+                className=""
+                content="jhso.apps.test-liza.sdev.devshift.net"
+                distance={15}
+                enableFlip={true}
+                entryDelay={500}
+                exitDelay={500}
+                isAppLauncher={false}
+                maxWidth="18.75rem"
+                position="right"
+                trigger="mouseenter focus"
+                zIndex={9999}
               >
                 <span>
                   External
                 </span>
-              </OverlayTrigger>
+              </Tooltip>
             </dd>
           </li>
         </ul>

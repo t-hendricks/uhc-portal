@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErroBox /> should render with Operation ID 1`] = `
+<Alert
+  isInline={true}
+  title="some error message"
+  variant="danger"
+>
+  <span>
+    this is some error message
+  </span>
+  <br />
+  <span>
+    Operation ID: hello
+  </span>
+</Alert>
+`;
+
+exports[`<ErroBox /> should render without Operation ID 1`] = `
+<Alert
+  isInline={true}
+  title="some error description"
+  variant="danger"
+>
+  <span>
+    this is some error message
+  </span>
+  <br />
+  <span>
+    Operation ID: N/A
+  </span>
+</Alert>
+`;

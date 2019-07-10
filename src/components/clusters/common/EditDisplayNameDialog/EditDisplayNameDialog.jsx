@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Form, Modal, Alert, Grid, Col, Row, FormControl, ControlLabel, FormGroup,
+  Button, Form, Modal, Grid, Col, Row, FormControl, ControlLabel, FormGroup,
 } from 'patternfly-react';
 import ModalHeader from '../../../common/Modal/components/ModalHeader';
+import ErrorBox from '../../../common/ErrorBox';
+
 
 class EditDisplayNameDialog extends Component {
   constructor(props) {
@@ -54,9 +56,8 @@ class EditDisplayNameDialog extends Component {
     };
 
     const hasError = editClusterResponse.error && (
-    <Alert>
-      <span>{`Error changing display name: ${editClusterResponse.errorMessage}`}</span>
-    </Alert>);
+      <ErrorBox message="Error changing display name" response={editClusterResponse} />
+    );
 
     const handleSubmit = () => { submit(clusterID, currentValue); };
 

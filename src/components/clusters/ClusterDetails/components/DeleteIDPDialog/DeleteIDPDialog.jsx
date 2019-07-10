@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Alert,
   Button,
   Icon,
   MessageDialog,
   Spinner,
 } from 'patternfly-react';
+import ErrorBox from '../../../../common/ErrorBox';
 
 import { noop } from '../../../../../common/helpers';
 
@@ -40,10 +40,9 @@ class DeleteIDPDialog extends React.Component {
       idpID,
     } = modalData;
 
-    const errorContainer = deletedIDPResponse.error ? (
-      <Alert>
-        <span>{`Error removing Identity Provider: ${deletedIDPResponse.errorMessage}`}</span>
-      </Alert>) : null;
+    const errorContainer = deletedIDPResponse.error && (
+      <ErrorBox message="Error removing Identiy Provider" response={deletedIDPResponse} />
+    );
 
     const isPending = deletedIDPResponse.pending;
 
