@@ -89,7 +89,7 @@ const getErrorState = action => ({
   error: action.error,
   errorCode: get(action.payload, 'response.status'),
   errorMessage: getErrorMessage(action.payload),
-  operationID: get(action.payload, 'response.operation_id'),
+  operationID: get(action.payload, 'response.data.operation_id'),
 });
 
 function getTimeDelta(t1, t2 = new Date()) {
