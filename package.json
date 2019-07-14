@@ -18,6 +18,7 @@
     "@patternfly/react-core": "3.62.1",
     "@patternfly/react-icons": "^3.10.8",
     "@patternfly/react-tokens": "^2.6.5",
+    "@patternfly/react-table": "^2.13.43",
     "axios": "^0.18.0",
     "bootstrap-sass": "^3.3.7",
     "classnames": "^2.2.6",
