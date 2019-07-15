@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter, FormControl } from 'patternfly-react';
+import { TextInput } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 
 class ClusterListFilter extends React.Component {
@@ -29,25 +29,25 @@ class ClusterListFilter extends React.Component {
     setFilter(currentValue);
   }
 
-  updateCurrentValue(event) {
+  updateCurrentValue(value) {
     if (this.inputTimeoutID !== null) {
       clearTimeout(this.inputTimeoutID);
     }
-    this.setState({ currentValue: event.target.value });
+    this.setState({ currentValue: value });
     this.inputTimeoutID = setTimeout(this.updateFilter, 300);
   }
 
   render() {
     const { currentValue } = this.state;
     return (
-      <Filter className="pull-right cluster-list-filter">
-        <FormControl
-          type="text"
-          value={currentValue}
-          placeholder="Filter by name or ID..."
-          onChange={e => this.updateCurrentValue(e)}
-        />
-      </Filter>);
+      <TextInput
+        type="text"
+        className="cluster-list-filter"
+        value={currentValue}
+        placeholder="Filter by name or ID..."
+        onChange={value => this.updateCurrentValue(value)}
+      />
+    );
   }
 }
 
