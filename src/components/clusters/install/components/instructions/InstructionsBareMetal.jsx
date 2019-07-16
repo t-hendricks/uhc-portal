@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  CLISection,
-  DownloadButton,
-  GetStarted,
-  PageTitle,
-  PullSecretSection,
-  RHCOSSection,
-  TelemetryAlert,
-  TokenErrorAlert,
-  WhatIsInstallerSection,
-} from './common';
+import CLISection from './components/CLISection';
+import DownloadButton from './components/DownloadButton';
+import GetStarted from './components/GetStarted';
+import PageTitle from './components/PageTitle';
+import PullSecretSection from './components/PullSecretSection';
+import RHCOSSection from './components/RHCOSSection';
+import TelemetryAlert from './components/TelemetryAlert';
+import TokenErrorAlert from './components/TokenErrorAlert';
+import WhatIsInstallerSection from './components/WhatIsInstallerSection';
 
 class InstructionsBareMetal extends React.Component {
   constructor(props) {
