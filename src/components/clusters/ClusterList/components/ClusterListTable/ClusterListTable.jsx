@@ -2,12 +2,19 @@ import result from 'lodash/result';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  DropdownKebab, Grid,
+  DropdownKebab,
 } from 'patternfly-react';
 import { Tooltip, TooltipPosition } from '@patternfly/react-core';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  sortable,
+  classNames,
+  Visibility,
+  SortByDirection,
+} from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
-import { TableGrid } from 'patternfly-react-extensions';
-import ClusterBadge from '../../../common/ClusterBadge/ClusterBadge';
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
 import NumberWithUnit from './NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
@@ -22,31 +29,19 @@ function ClusterListTable(props) {
     return <p className="notfound">No Results Match the Filter Criteria.</p>;
   }
 
-  const nameColSizes = {
-    xs: 9, sm: 8, md: 5, lg: 3,
+  const sortBy = {
+    index: 0, // TODO support more fields
+    direction: viewOptions.sorting.isAscending ? SortByDirection.asc : SortByDirection.desc,
   };
-  const statusColSizes = { xs: 1 };
-  const statColSizes = {
-    md: 1, mdHidden: true, smHidden: true, xsHidden: true,
-  };
-  const locationColSizes = {
-    md: 3, lg: 2, smHidden: true, xsHidden: true,
-  };
-  const typesSizes = { sm: 2, xsHidden: true };
-  const kebabColSizes = { xs: 1 };
 
-  const isSorted = columnID => viewOptions.sorting.sortField === columnID;
-
-  const onSortToggle = (id) => {
+  const onSortToggle = (_event, _index, direction) => {
     const sorting = Object.assign({}, viewOptions.sorting);
-    if (viewOptions.sorting.sortField === id) {
-      sorting.isAscending = !sorting.isAscending;
-    }
-    sorting.sortField = id;
+    sorting.isAscending = direction === SortByDirection.asc;
+    sorting.sortField = 'name'; // TODO support more fields
     setSorting(sorting);
   };
 
-  const clusterRow = (cluster, index) => {
+  const clusterRow = (cluster) => {
     const provider = result(cluster, 'cloud_provider.id', 'N/A');
     const name = cluster.display_name || ''; // This would've been one trenary condition if the backend didn't have omitEmpty on display_name
 
@@ -78,123 +73,66 @@ function ClusterListTable(props) {
       </Tooltip>
     );
 
-    return (
-      <TableGrid.Row key={index} className="cluster-list-row">
-        <Grid.Col {...nameColSizes}>
-          <ClusterBadge clusterName={clusterName} />
-        </Grid.Col>
-        <Grid.Col {...statusColSizes}>
-          {clusterStatus}
-        </Grid.Col>
-        <Grid.Col {...typesSizes}>
-          {clusterType}
-        </Grid.Col>
-        <Grid.Col {...statColSizes}>
-          <NumberWithUnit valueWithUnit={cluster.metrics.cpu.total} unit="vCPU" />
-        </Grid.Col>
-        <Grid.Col {...statColSizes}>
-          <NumberWithUnit valueWithUnit={cluster.metrics.memory.total} isBytes />
-        </Grid.Col>
-        <Grid.Col {...statColSizes} className="cluster-list-table-owner-name">
-          {result(cluster, 'subscriptionInfo.creator.name') || result(cluster, 'subscriptionInfo.creator.username', 'N/A')}
-        </Grid.Col>
-        <Grid.Col {...locationColSizes}>
-          <ClusterLocationLabel
-            regionID={result(cluster, 'region.id', 'N/A')}
-            cloudProviderID={provider}
-          />
-        </Grid.Col>
-        <Grid.Col {...kebabColSizes}>
-          <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
-            <ClusterActionsDropdown
-              cluster={cluster}
-              showConsoleButton
-              showIDPButton={false}
-            />
-          </DropdownKebab>
-        </Grid.Col>
-      </TableGrid.Row>
+    const dropDownKebab = (
+      <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
+        <ClusterActionsDropdown
+          cluster={cluster}
+          showConsoleButton
+          showIDPButton={false}
+        />
+      </DropdownKebab>
     );
+
+
+    return [
+      { title: clusterName },
+      { title: clusterStatus },
+      { title: clusterType },
+      { title: <NumberWithUnit valueWithUnit={cluster.metrics.cpu.total} unit="vCPU" /> },
+      { title: <NumberWithUnit valueWithUnit={cluster.metrics.memory.total} isBytes /> },
+      result(cluster, 'subscriptionInfo.creator.name') || result(cluster, 'subscriptionInfo.creator.username', 'N/A'),
+      {
+        title: <ClusterLocationLabel
+          regionID={result(cluster, 'region.id', 'N/A')}
+          cloudProviderID={provider}
+        />,
+      },
+      { title: dropDownKebab },
+    ];
   };
 
+  const hiddenOnMdOrSmaller = classNames(Visibility.visibleOnLg, Visibility.hiddenOnMd,
+    Visibility.hiddenOnSm);
+
+  const columns = [
+    { title: 'Name', transforms: [sortable] },
+    { title: 'Status' },
+    { title: 'Type' },
+    { title: 'vCPU', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Memory', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Owner', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
+    '',
+  ];
+
+
   return (
-    <React.Fragment>
-      <TableGrid id="table-grid">
-        <TableGrid.Head>
-          <TableGrid.ColumnHeader
-            id="name"
-            sortable
-            isSorted={isSorted('name')}
-            isAscending={viewOptions.sorting.isAscending}
-            onSortToggle={() => onSortToggle('name')}
-            {...nameColSizes}
-          >
-            Name
-          </TableGrid.ColumnHeader>
-          <TableGrid.ColumnHeader
-            id="status"
-            isSorted={false}
-            isAscending
-            {...statusColSizes}
-          >
-            Status
-          </TableGrid.ColumnHeader>
-          <TableGrid.ColumnHeader
-            id="type"
-            isSorted={false}
-            isAscending
-            {...typesSizes}
-          >
-            Type
-          </TableGrid.ColumnHeader>
-          <TableGrid.ColumnHeader
-            id="cpu"
-            isSorted={false}
-            isAscending
-            {...statColSizes}
-          >
-            <React.Fragment>
-              <span className="lowerCase">v</span>
-                CPU
-            </React.Fragment>
-          </TableGrid.ColumnHeader>
-          <TableGrid.ColumnHeader
-            id="memory"
-            isSorted={false}
-            isAscending
-            {...statColSizes}
-          >
-            Memory
-          </TableGrid.ColumnHeader>
-          <TableGrid.ColumnHeader
-            id="owner"
-            isSorted={false}
-            isAscending
-            {...statColSizes}
-          >
-            Owner
-          </TableGrid.ColumnHeader>
-          <TableGrid.ColumnHeader
-            id="location"
-            isSorted={false}
-            isAscending
-            {...locationColSizes}
-          >
-            Provider (Location)
-          </TableGrid.ColumnHeader>
-        </TableGrid.Head>
-        <TableGrid.Body>
-          {clusters.map((cluster, index) => clusterRow(cluster, index))}
-        </TableGrid.Body>
-      </TableGrid>
-    </React.Fragment>);
+    <Table
+      cells={columns}
+      rows={clusters.map(cluster => clusterRow(cluster))}
+      onSort={onSortToggle}
+      sortBy={sortBy}
+    >
+      <TableHeader />
+      <TableBody />
+    </Table>
+  );
 }
 
 ClusterListTable.propTypes = {
   clusters: PropTypes.array.isRequired,
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
-  openDeleteClusterDialog: PropTypes.func.isRequired,
 };
 
 export default ClusterListTable;
