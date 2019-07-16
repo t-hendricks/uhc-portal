@@ -580,3 +580,18 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .install-page-title {
   padding-top: 2px;
 }
+
+// TODO: remove when https://github.com/patternfly/patternfly-next/issues/1976 is fixed
+h4.pf-c-alert__title {
+  margin-top: 0 !important;
+}
+
+.token-error-alert {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.telemetry-alert {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

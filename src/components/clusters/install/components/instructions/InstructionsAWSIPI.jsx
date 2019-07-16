@@ -31,13 +31,13 @@ class InstructionsAWSIPI extends React.Component {
       <div className="pf-l-grid pf-m-gutter">
         <div className="pf-c-content">
 
+          <PageTitle title="Install on AWS: Installer-Provisioned Infrastructure" />
+
           {
             token.error && (
               <TokenErrorAlert token={token} />
             )
           }
-
-          <PageTitle title="Install on AWS: Installer-Provisioned Infrastructure" />
 
           <TelemetryAlert />
 

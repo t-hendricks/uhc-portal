@@ -31,13 +31,13 @@ class InstructionsAzure extends React.Component {
             &lt;/&gt; Developer Preview
           </div>
 
+          <PageTitle title="Install on Azure: Installer-Provisioned Infrastructure" />
+
           {
             token.error && (
               <TokenErrorAlert token={token} />
             )
           }
-
-          <PageTitle title="Install on Azure: Installer-Provisioned Infrastructure" />
 
           <TelemetryAlert />
 
