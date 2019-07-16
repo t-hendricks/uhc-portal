@@ -159,6 +159,8 @@ location of your proxy's git clone to the PROXY_PATH environment variable, for e
 export PROXY_PATH=~/Projects/insights-proxy
 ....
 
+It's a good idea to add this line to your '~/.bashrc file' so you don't have to type it each time.
+
 Make sure to start the backend proxy server (./backend) before starting the insights proxy.
 
 Now you can use
