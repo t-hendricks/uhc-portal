@@ -12,7 +12,7 @@ import ipiLogo from '../../../../../styles/images/Icon_RH_Diagram_Lifecycle_RGB_
 const InstructionsAWS = () => (
   <div className="pf-c-content">
     <PageTitle title="Install on AWS: Infrastructure Type" />
-    <div className="grid-container">
+    <div className="flex-container">
       <Link to="/install/aws/installer-provisioned" className="aws-ipi-upi-infra-card infra-card">
         <CardBody>
           Installer-Provisioned Infrastructure

@@ -14,7 +14,7 @@ import vSphereLogo from '../../../../../styles/images/vmware_vsphere.png';
 const InstructionsInfrastructure = () => (
   <div className="pf-c-content">
     <PageTitle title="Infrastructure Provider" />
-    <div className="grid-container">
+    <div className="flex-container">
       <Link to="/install/aws" className="infra-card">
         <CardBody>
           <img src={AWSLogo} alt="AWS" className="infra-logo" />
@@ -28,7 +28,7 @@ const InstructionsInfrastructure = () => (
         </CardBody>
       </Link>
     </div>
-    <div className="grid-container">
+    <div className="flex-container">
       <Link to="/install/azure/installer-provisioned" className="infra-card">
         <CardBody>
           <img src={AzureLogo} alt="Azure" className="infra-logo" />
