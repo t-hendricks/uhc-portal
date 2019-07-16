@@ -29,13 +29,13 @@ class InstructionsBareMetal extends React.Component {
       <div className="pf-l-grid pf-m-gutter">
         <div className="pf-c-content">
 
+          <PageTitle title="Install on Bare Metal: User-Provisioned Infrastructure" />
+
           {
             token.error && (
               <TokenErrorAlert token={token} />
             )
           }
-
-          <PageTitle title="Install on Bare Metal: User-Provisioned Infrastructure" />
 
           <TelemetryAlert />
 

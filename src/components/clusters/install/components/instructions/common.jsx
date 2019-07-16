@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Alert,
-} from 'patternfly-react';
-import {
   Button,
   Popover,
   Split,
@@ -45,33 +43,40 @@ DownloadButton.propTypes = {
   installerURL: PropTypes.string.isRequired,
 };
 
-const TelemetryAlert = () => (
-  <div className="alert alert-warning">
-    <span className="pficon pficon-warning-triangle-o" />
-    Red Hat collects a limited amount of telemetry data. By installing OpenShift Container
-    Platform 4, you accept our data collection policy.
-    {' '}
-    <a href="https://docs.openshift.com/container-platform/4.1/telemetry/about-telemetry.html" target="_blank">
-      Learn more
+const TelemetryAlert = () => {
+  const title = (
+    <React.Fragment>
+      Red Hat collects a limited amount of telemetry data. By installing OpenShift Container
+      Platform 4, you accept our data collection policy.
       {' '}
-      <span className="fa fa-external-link" aria-hidden="true" />
-    </a>
-    {' '}
-    about the data we collect.
-  </div>
-);
+      <a href="https://docs.openshift.com/container-platform/4.1/telemetry/about-telemetry.html" target="_blank">
+        Learn more
+        {' '}
+        <span className="fa fa-external-link" aria-hidden="true" />
+      </a>
+      {' '}
+      about the data we collect.
+    </React.Fragment>
+  );
 
-const TokenErrorAlert = ({ token }) => (
-  <Alert
-    variant="danger"
-    className="install--errors"
-  >
-    <p>
+  return (
+    <Alert
+      variant="warning"
+      isInline
+      title={title}
+      className="telemetry-alert"
+    />
+  );
+};
+
+const TokenErrorAlert = ({ token }) => {
+  const title = (
+    <React.Fragment>
       Failed to obtain authorization token:
       {' '}
       {token.error.message}
-    </p>
-    <p>
+      <br />
+      <br />
       Please try again by refreshing the page.
       If the problem persists, please report the issue to
       {' '}
@@ -81,9 +86,18 @@ const TokenErrorAlert = ({ token }) => (
         <span className="fa fa-external-link" aria-hidden="true" />
       </a>
       .
-    </p>
-  </Alert>
-);
+    </React.Fragment>
+  );
+
+  return (
+    <Alert
+      variant="danger"
+      isInline
+      className="token-error-alert"
+      title={title}
+    />
+  );
+};
 TokenErrorAlert.propTypes = {
   token: PropTypes.object.isRequired,
 };
