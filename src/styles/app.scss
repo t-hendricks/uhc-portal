@@ -62,12 +62,6 @@ limitations under the License.
   min-width: 24px;
 }
 
-.cluster-list-filter {
-  @media (max-width: 1032px) {
-    width: 60%;
-  }
-}
-
 // Styles for the page where the user can download the access tokens, for use
 // with API clients:
 .token-details {

@@ -146,7 +146,7 @@ class ClusterList extends Component {
         <div className="cluster-list">
           <GlobalErrorBox />
           <h1>Clusters</h1>
-          <Split gutter="sm">
+          <Split>
             <SplitItem>
               <CreateClusterDropdown
                 showCreationForm={() => openModal('create-cluster')}
@@ -159,8 +159,10 @@ class ClusterList extends Component {
             </SplitItem>
             <SplitItem isFilled />
             <SplitItem>
-              <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="pull-right cluster-list-top" />
               <ClusterListFilter />
+            </SplitItem>
+            <SplitItem>
+              <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
             </SplitItem>
           </Split>
           <ClusterListTable

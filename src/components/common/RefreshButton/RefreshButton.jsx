@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Button,
-} from 'patternfly-react';
 import { RedoIcon } from '@patternfly/react-icons';
-import { Tooltip, TooltipPosition } from '@patternfly/react-core';
+import { Tooltip, TooltipPosition, Button } from '@patternfly/react-core';
 
 
 class RefreshBtn extends React.Component {
@@ -43,7 +40,7 @@ class RefreshBtn extends React.Component {
 
     return (
       <Tooltip position={TooltipPosition.bottom} content="Refresh">
-        <Button bsStyle="default" className={classOptions} onClick={refreshFunc}>
+        <Button variant="plain" aria-label="Refresh" className={classOptions} onClick={refreshFunc}>
           <RedoIcon />
         </Button>
       </Tooltip>
