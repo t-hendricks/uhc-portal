@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+
+import { Card, CardBody } from '@patternfly/react-core';
 import {
   Button, EmptyState, EmptyStateTitle, EmptyStateInfo, EmptyStateAction,
   Grid, Col, Row, Spinner, FieldLevelHelp,
@@ -75,12 +77,12 @@ class Users extends React.Component {
         <EmptyState className="cluster-details-user-tab-contents">
           <EmptyStateTitle>No users exist for this cluster</EmptyStateTitle>
           <EmptyStateInfo>
-            You can add users to grant them access to the cluster. Users will be authenticated
-            via your selected identity provider.
+                You can add users to grant them access to the cluster. Users will be authenticated
+                via your selected identity provider.
           </EmptyStateInfo>
           <EmptyStateAction>
             <Button onClick={this.showAddUserRow}>
-              Add user
+                  Add user
             </Button>
           </EmptyStateAction>
         </EmptyState>
@@ -90,80 +92,84 @@ class Users extends React.Component {
     const userList = hasUsers ? clusterGroupUsers.users.items : [];
 
     return (
-      <div className="cluster-details-user-tab-contents">
-        { addUserResponse.error && (
-          <ErrorBox message="Error adding user" response={addUserResponse} />
-        )}
-        { deleteUserResponse.error && (
-          <ErrorBox message="Error deleting user" response={deleteUserResponse} />
-        )}
-        <p>
+      <Card>
+        <CardBody>
+          <div className="cluster-details-user-tab-contents">
+            { addUserResponse.error && (
+            <ErrorBox message="Error adding user" response={addUserResponse} />
+            )}
+            { deleteUserResponse.error && (
+            <ErrorBox message="Error deleting user" response={deleteUserResponse} />
+            )}
+            <p>
           Grant permission to manage this cluster to users defined in your identity provider.
-        </p>
-        <Grid fluid>
-          {!!userList.length && (
-            <Row key="clusterusers-titlerow">
-              <Col sm={2}>
-                <h3>
+            </p>
+            <Grid fluid>
+              {!!userList.length && (
+              <Row key="clusterusers-titlerow">
+                <Col sm={2}>
+                  <h3>
                   User ID
-                  <FieldLevelHelp content={(
-                    <p>
+                    <FieldLevelHelp content={(
+                      <p>
                       User IDs are matched by the cluster&apos;s identity providers.
-                    </p>)}
-                  />
-                </h3>
-              </Col>
-              <Col sm={2}>
-                <h3>
+                      </p>)}
+                    />
+                  </h3>
+                </Col>
+                <Col sm={2}>
+                  <h3>
                   Group
-                  <FieldLevelHelp content={(
-                    <p>
+                    <FieldLevelHelp content={(
+                      <p>
                       Groups are mapped to role bindings on the cluster.
-                      {' '}
+                        {' '}
                       For more information check the
-                      {' '}
-                      <a href="https://docs.openshift.com/container-platform/4.1/authentication/understanding-authentication.html">OpenShift 4 documentation</a>
+                        {' '}
+                        <a href="https://docs.openshift.com/container-platform/4.1/authentication/understanding-authentication.html">OpenShift 4 documentation</a>
                       .
-                    </p>)}
-                  />
-                </h3>
-              </Col>
-              { (deleteUserResponse.pending || clusterGroupUsers.pending) && (
+                      </p>)}
+                    />
+                  </h3>
+                </Col>
+                { (deleteUserResponse.pending || clusterGroupUsers.pending) && (
                 <Col sm={1}>
                   <Spinner loading />
                 </Col>
+                )}
+              </Row>
               )}
-            </Row>
-          )}
-          {userList.map(user => (
-            <Row key={user.id}>
-              <Col sm={2}>
-                {user.id}
-              </Col>
-              <Col sm={2}>
+              {userList.map(user => (
+                <Row key={user.id}>
+                  <Col sm={2}>
+                    {user.id}
+                  </Col>
+                  <Col sm={2}>
                 dedicated-admins
-              </Col>
-              <Col sm={1}>
-                <Button onClick={() => { deleteUser(clusterID, 'dedicated-admins', user.id); }}>
+                  </Col>
+                  <Col sm={1}>
+                    <Button onClick={() => { deleteUser(clusterID, 'dedicated-admins', user.id); }}>
                   Delete
-                </Button>
-              </Col>
-            </Row>
-          ))}
-          <Row key="clusterusers-addusers-title">
-            <Col sm={3}>
-              <h3>Add user:</h3>
-            </Col>
-          </Row>
-          <Row key="clusterusers-input-form">
-            <UserInputForm
-              clusterID={clusterID}
-              saveUser={addUser}
-              pending={addUserResponse.pending}
-            />
-          </Row>
-        </Grid>
-      </div>
+                    </Button>
+                  </Col>
+                </Row>
+              ))}
+              <Row key="clusterusers-addusers-title">
+                <Col sm={3}>
+                  <h3>Add user:</h3>
+                </Col>
+              </Row>
+              <Row key="clusterusers-input-form">
+                <UserInputForm
+                  clusterID={clusterID}
+                  saveUser={addUser}
+                  pending={addUserResponse.pending}
+                />
+              </Row>
+            </Grid>
+          </div>
+        </CardBody>
+      </Card>
     );
   }
 }

@@ -1,258 +1,259 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ClusterDetailsTop /> should render 1`] = `
-<Grid
-  bsClass="container"
-  componentClass="div"
-  fluid={true}
+<div
+  id="cl-details-top"
 >
-  <Row
-    bsClass="row"
+  <Grid
+    bsClass="container"
     componentClass="div"
+    fluid={true}
   >
-    <Col
-      bsClass="col"
+    <Row
+      bsClass="row"
       componentClass="div"
-      sm={8}
     >
-      <Breadcrumb
-        title={false}
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={8}
       >
-        <LinkContainer
-          activeClassName="active"
-          exact={false}
-          replace={false}
-          strict={false}
-          to=""
+        <Breadcrumb
+          title={false}
         >
+          <LinkContainer
+            activeClassName="active"
+            exact={false}
+            replace={false}
+            strict={false}
+            to=""
+          >
+            <BreadcrumbItem
+              active={false}
+              href="#"
+            >
+              Clusters
+            </BreadcrumbItem>
+          </LinkContainer>
           <BreadcrumbItem
-            active={false}
-            href="#"
+            active={true}
           >
-            Clusters
+            test-liza
           </BreadcrumbItem>
-        </LinkContainer>
-        <BreadcrumbItem
-          active={true}
-        >
-          test-liza
-        </BreadcrumbItem>
-      </Breadcrumb>
-    </Col>
-  </Row>
-  <hr />
-  <Row
-    bsClass="row"
-    componentClass="div"
-  >
-    <Col
-      bsClass="col"
-      className="cl-details-cluster-name"
+        </Breadcrumb>
+      </Col>
+    </Row>
+    <Row
+      bsClass="row"
       componentClass="div"
-      sm={6}
     >
-      <h1>
-        <ClusterBadge
-          clusterName="test-liza"
-        />
-      </h1>
-    </Col>
-    <Col
-      bsClass="col"
-      componentClass="div"
-      lg={5}
-      lgOffset={1}
-    >
-      <ButtonGroup
-        block={false}
-        bsClass="btn-group"
-        id="cl-details-btns"
-        justified={false}
-        vertical={false}
+      <Col
+        bsClass="col"
+        className="cl-details-cluster-name"
+        componentClass="div"
+        sm={6}
       >
-        <a
-          className="pull-left"
-          href="https://console-openshift-console.apps.test-liza.sdev.devshift.net"
-          rel="noreferrer"
-          target="_blank"
+        <h1>
+          test-liza
+        </h1>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        lg={5}
+        lgOffset={1}
+      >
+        <ButtonGroup
+          block={false}
+          bsClass="btn-group"
+          id="cl-details-btns"
+          justified={false}
+          vertical={false}
         >
-          <Button
-            active={false}
-            block={false}
-            bsClass="btn"
-            bsStyle="primary"
-            disabled={false}
+          <a
+            className="pull-left"
+            href="https://console-openshift-console.apps.test-liza.sdev.devshift.net"
+            rel="noreferrer"
+            target="_blank"
           >
-            Launch Console
-          </Button>
-        </a>
-        <DropdownButton
-          bsStyle="default"
-          disabled={false}
-          id="actions"
-          pullRight={true}
-          title="Actions"
-        >
-          <Connect(ClusterActionsDropdown)
-            cluster={
-              Object {
-                "api": Object {
-                  "url": "https://api.test-liza.sdev.devshift.net:6443",
-                },
-                "canDelete": true,
-                "canEdit": true,
-                "cloud_provider": Object {
-                  "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-                  "id": "aws",
-                  "kind": "CloudProviderLink",
-                },
-                "console": Object {
-                  "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
-                },
-                "creation_timestamp": "2019-03-26T15:18:39.06783Z",
-                "creator": "***REMOVED***",
-                "display_name": "test-liza",
-                "dns": Object {
-                  "base_domain": "sdev.devshift.net",
-                },
-                "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
-                "flavour": Object {
-                  "href": "/api/clusters_mgmt/v1/flavours/osd-4",
-                  "id": "osd-4",
-                  "kind": "FlavourLink",
-                },
-                "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
-                "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
-                "kind": "Cluster",
-                "managed": true,
-                "metrics": Object {
-                  "cpu": Object {
-                    "total": Object {
-                      "unit": "",
-                      "value": 0,
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsStyle="primary"
+              disabled={false}
+            >
+              Launch Console
+            </Button>
+          </a>
+          <DropdownButton
+            bsStyle="default"
+            disabled={false}
+            id="actions"
+            pullRight={true}
+            title="Actions"
+          >
+            <Connect(ClusterActionsDropdown)
+              cluster={
+                Object {
+                  "api": Object {
+                    "url": "https://api.test-liza.sdev.devshift.net:6443",
+                  },
+                  "canDelete": true,
+                  "canEdit": true,
+                  "cloud_provider": Object {
+                    "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                    "id": "aws",
+                    "kind": "CloudProviderLink",
+                  },
+                  "console": Object {
+                    "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
+                  },
+                  "creation_timestamp": "2019-03-26T15:18:39.06783Z",
+                  "creator": "***REMOVED***",
+                  "display_name": "test-liza",
+                  "dns": Object {
+                    "base_domain": "sdev.devshift.net",
+                  },
+                  "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
+                  "flavour": Object {
+                    "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+                    "id": "osd-4",
+                    "kind": "FlavourLink",
+                  },
+                  "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
+                  "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                  "kind": "Cluster",
+                  "managed": true,
+                  "metrics": Object {
+                    "cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
                     },
-                    "updated_timestamp": "0001-01-01T00:00:00Z",
-                    "used": Object {
-                      "unit": "",
-                      "value": 0,
+                    "memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                    "nodes": Object {
+                      "compute": 1,
+                      "master": 2,
+                      "total": 3,
+                    },
+                    "storage": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
                     },
                   },
-                  "memory": Object {
-                    "total": Object {
-                      "unit": "B",
-                      "value": 0,
+                  "multi_az": false,
+                  "name": "test-liza",
+                  "network": Object {
+                    "machine_cidr": "10.0.0.0/16",
+                    "pod_cidr": "10.128.0.0/14",
+                    "router_shards": Object {
+                      "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+                      "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                      "kind": "RouterShardListLink",
                     },
-                    "updated_timestamp": "0001-01-01T00:00:00Z",
-                    "used": Object {
-                      "unit": "B",
-                      "value": 0,
-                    },
+                    "service_cidr": "172.30.0.0/16",
                   },
                   "nodes": Object {
-                    "compute": 1,
-                    "master": 2,
-                    "total": 3,
+                    "compute": 2,
+                    "master": 3,
+                    "total": 5,
                   },
-                  "storage": Object {
-                    "total": Object {
-                      "unit": "B",
-                      "value": 0,
+                  "region": Object {
+                    "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                    "id": "us-east-1",
+                    "kind": "CloudRegionLink",
+                  },
+                  "state": "ready",
+                  "subscriptionInfo": Object {
+                    "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                    "created_at": "2019-01-02T18:28:14.851121Z",
+                    "external_cluster_id": "test-liza",
+                    "href": "/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8",
+                    "id": "1FDpnxsGxqFFFp2VNIWp5VajPc8",
+                    "kind": "Subscription",
+                    "last_telemetry_date": "0001-01-01T00:00:00Z",
+                    "plan": Object {
+                      "href": "/api/accounts_mgmt/v1/plans/OCP",
+                      "id": "OCP",
+                      "kind": "Plan",
                     },
-                    "updated_timestamp": "0001-01-01T00:00:00Z",
-                    "used": Object {
-                      "unit": "B",
-                      "value": 0,
+                    "registry_credential": Object {
+                      "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
+                      "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
+                      "kind": "RegistryCredential",
                     },
+                    "updated_at": "2019-01-02T18:28:14.851121Z",
                   },
-                },
-                "multi_az": false,
-                "name": "test-liza",
-                "network": Object {
-                  "machine_cidr": "10.0.0.0/16",
-                  "pod_cidr": "10.128.0.0/14",
-                  "router_shards": Object {
-                    "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
-                    "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
-                    "kind": "RouterShardListLink",
+                  "version": Object {
+                    "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+                    "id": "openshift-v4.0-latest",
+                    "kind": "VersionLink",
                   },
-                  "service_cidr": "172.30.0.0/16",
-                },
-                "nodes": Object {
-                  "compute": 2,
-                  "master": 3,
-                  "total": 5,
-                },
-                "region": Object {
-                  "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
-                  "id": "us-east-1",
-                  "kind": "CloudRegionLink",
-                },
-                "state": "ready",
-                "subscriptionInfo": Object {
-                  "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                }
+              }
+              hasIDP={false}
+              idpID=""
+              organization={
+                Object {
                   "created_at": "2019-01-02T18:28:14.851121Z",
-                  "external_cluster_id": "test-liza",
-                  "href": "/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8",
-                  "id": "1FDpnxsGxqFFFp2VNIWp5VajPc8",
-                  "kind": "Subscription",
-                  "last_telemetry_date": "0001-01-01T00:00:00Z",
-                  "plan": Object {
-                    "href": "/api/accounts_mgmt/v1/plans/OCP",
-                    "id": "OCP",
-                    "kind": "Plan",
-                  },
-                  "registry_credential": Object {
-                    "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
-                    "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
-                    "kind": "RegistryCredential",
-                  },
+                  "ebs_account_id": "8888888",
+                  "external_id": "9999999",
+                  "href": "/api/accounts_mgmt/v1/organizations/1Iin1ev64UIFFjRPT5S8TfLr0Tj",
+                  "id": "1Iin1ev64UIFFjRPT5S8TfLr0Tj",
+                  "kind": "Organization",
+                  "name": "Test Corp",
                   "updated_at": "2019-01-02T18:28:14.851121Z",
-                },
-                "version": Object {
-                  "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
-                  "id": "openshift-v4.0-latest",
-                  "kind": "VersionLink",
-                },
+                }
               }
-            }
-            hasIDP={false}
-            idpID=""
-            organization={
-              Object {
-                "created_at": "2019-01-02T18:28:14.851121Z",
-                "ebs_account_id": "8888888",
-                "external_id": "9999999",
-                "href": "/api/accounts_mgmt/v1/organizations/1Iin1ev64UIFFjRPT5S8TfLr0Tj",
-                "id": "1Iin1ev64UIFFjRPT5S8TfLr0Tj",
-                "kind": "Organization",
-                "name": "Test Corp",
-                "updated_at": "2019-01-02T18:28:14.851121Z",
-              }
-            }
-            showConsoleButton={false}
-            showIDPButton={true}
+              showConsoleButton={false}
+              showIDPButton={true}
+            />
+          </DropdownButton>
+          <RefreshBtn
+            autoRefresh={true}
+            classOptions=""
+            id="refresh"
+            refreshFunc={[MockFunction]}
           />
-        </DropdownButton>
-        <RefreshBtn
-          autoRefresh={true}
-          classOptions=""
-          id="refresh"
-          refreshFunc={[MockFunction]}
-        />
-      </ButtonGroup>
-    </Col>
-  </Row>
-  <Row
-    bsClass="row"
-    componentClass="div"
-  >
-    <Col
-      bsClass="col"
+        </ButtonGroup>
+      </Col>
+    </Row>
+    <Row
+      bsClass="row"
       componentClass="div"
-      sm={12}
     >
-      <IdentityProvidersHint />
-    </Col>
-  </Row>
-</Grid>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        sm={12}
+      >
+        <IdentityProvidersHint />
+      </Col>
+    </Row>
+  </Grid>
+</div>
 `;

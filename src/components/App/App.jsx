@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Card, CardBody } from 'patternfly-react';
 import { hot } from 'react-hot-loader';
 import { Page, PageSection, PageSectionVariants } from '@patternfly/react-core';
 
@@ -52,11 +51,7 @@ class App extends React.PureComponent {
     if (APP_EMBEDDED) {
       return (
         <section className="pf-c-page__main-section">
-          <Card>
-            <CardBody>
-              {content}
-            </CardBody>
-          </Card>
+          {content}
         </section>
       );
     }

@@ -10,9 +10,7 @@ import {
 import clusterStates from '../../common/clusterStates';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
-import ClusterBadge from '../../common/ClusterBadge/ClusterBadge';
 import ErrorTriangle from '../../common/ErrorTriangle';
-
 
 function ClusterDetailsTop(props) {
   const {
@@ -25,6 +23,7 @@ function ClusterDetailsTop(props) {
     organization,
     error,
     errorMessage,
+    children,
   } = props;
 
   const clusterName = cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
@@ -89,45 +88,45 @@ function ClusterDetailsTop(props) {
       || organization.pending;
 
   return (
-    <Grid fluid>
-      <Row>
-        <Col sm={8}>
-          <Breadcrumb>
-            <LinkContainer to="">
-              <Breadcrumb.Item href="#">
+    <div id="cl-details-top">
+      <Grid fluid>
+        <Row>
+          <Col sm={8}>
+            <Breadcrumb>
+              <LinkContainer to="">
+                <Breadcrumb.Item href="#">
                     Clusters
+                </Breadcrumb.Item>
+              </LinkContainer>
+              <Breadcrumb.Item active>
+                {clusterName}
               </Breadcrumb.Item>
-            </LinkContainer>
-            <Breadcrumb.Item active>
-              {clusterName}
-            </Breadcrumb.Item>
-          </Breadcrumb>
-        </Col>
-      </Row>
-      <hr />
-      <Row>
-        <Col sm={6} className="cl-details-cluster-name">
-          <h1>
-            <ClusterBadge clusterName={clusterName} />
-          </h1>
-          { isRefreshing ? <Spinner loading /> : false }
-          { error && <ErrorTriangle errorMessage={errorMessage} />}
-        </Col>
-        <Col lg={5} lgOffset={1}>
-          <ButtonGroup id="cl-details-btns">
-            {launchConsole}
-            {actions}
-            <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
-          </ButtonGroup>
-        </Col>
-      </Row>
-      {cluster.managed && !hasIdentityProviders && (
+            </Breadcrumb>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={6} className="cl-details-cluster-name">
+            <h1>{clusterName}</h1>
+            { isRefreshing ? <Spinner loading /> : false }
+            { error && <ErrorTriangle errorMessage={errorMessage} />}
+          </Col>
+          <Col lg={5} lgOffset={1}>
+            <ButtonGroup id="cl-details-btns">
+              {launchConsole}
+              {actions}
+              <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
+            </ButtonGroup>
+          </Col>
+        </Row>
+        {cluster.managed && !hasIdentityProviders && (
         <Row>
           <Col sm={12}>
             {clusterIdentityProviders.pending ? <Spinner loading /> : <IdentityProvidersHint />}
           </Col>
         </Row>)}
-    </Grid>
+      </Grid>
+      {children}
+    </div>
   );
 }
 
@@ -141,6 +140,7 @@ ClusterDetailsTop.propTypes = {
   organization: PropTypes.object.isRequired,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
+  children: PropTypes.any,
 };
 
 export default ClusterDetailsTop;

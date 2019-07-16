@@ -33,132 +33,136 @@ exports[`<Users /> should render without users 1`] = `
 `;
 
 exports[`<Users /> with users should render 1`] = `
-<div
-  className="cluster-details-user-tab-contents"
->
-  <p>
-    Grant permission to manage this cluster to users defined in your identity provider.
-  </p>
-  <Grid
-    bsClass="container"
-    componentClass="div"
-    fluid={true}
-  >
-    <Row
-      bsClass="row"
-      componentClass="div"
-      key="clusterusers-titlerow"
+<Card>
+  <CardBody>
+    <div
+      className="cluster-details-user-tab-contents"
     >
-      <Col
-        bsClass="col"
+      <p>
+        Grant permission to manage this cluster to users defined in your identity provider.
+      </p>
+      <Grid
+        bsClass="container"
         componentClass="div"
-        sm={2}
+        fluid={true}
       >
-        <h3>
-          User ID
-          <FieldLevelHelp
-            buttonClass=""
-            content={
-              <p>
-                User IDs are matched by the cluster's identity providers.
-              </p>
-            }
-            placement="top"
-            rootClose={true}
-          />
-        </h3>
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={2}
-      >
-        <h3>
-          Group
-          <FieldLevelHelp
-            buttonClass=""
-            content={
-              <p>
-                Groups are mapped to role bindings on the cluster.
-                 
-                For more information check the
-                 
-                <a
-                  href="https://docs.openshift.com/container-platform/4.1/authentication/understanding-authentication.html"
-                >
-                  OpenShift 4 documentation
-                </a>
-                .
-              </p>
-            }
-            placement="top"
-            rootClose={true}
-          />
-        </h3>
-      </Col>
-    </Row>
-    <Row
-      bsClass="row"
-      componentClass="div"
-      key="user_name"
-    >
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={2}
-      >
-        user_name
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={2}
-      >
-        dedicated-admins
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={1}
-      >
-        <Button
-          active={false}
-          block={false}
-          bsClass="btn"
-          bsStyle="default"
-          disabled={false}
-          onClick={[Function]}
+        <Row
+          bsClass="row"
+          componentClass="div"
+          key="clusterusers-titlerow"
         >
-          Delete
-        </Button>
-      </Col>
-    </Row>
-    <Row
-      bsClass="row"
-      componentClass="div"
-      key="clusterusers-addusers-title"
-    >
-      <Col
-        bsClass="col"
-        componentClass="div"
-        sm={3}
-      >
-        <h3>
-          Add user:
-        </h3>
-      </Col>
-    </Row>
-    <Row
-      bsClass="row"
-      componentClass="div"
-      key="clusterusers-input-form"
-    >
-      <UserInputForm
-        clusterID="fake id"
-        pending={false}
-        saveUser={[MockFunction]}
-      />
-    </Row>
-  </Grid>
-</div>
+          <Col
+            bsClass="col"
+            componentClass="div"
+            sm={2}
+          >
+            <h3>
+              User ID
+              <FieldLevelHelp
+                buttonClass=""
+                content={
+                  <p>
+                    User IDs are matched by the cluster's identity providers.
+                  </p>
+                }
+                placement="top"
+                rootClose={true}
+              />
+            </h3>
+          </Col>
+          <Col
+            bsClass="col"
+            componentClass="div"
+            sm={2}
+          >
+            <h3>
+              Group
+              <FieldLevelHelp
+                buttonClass=""
+                content={
+                  <p>
+                    Groups are mapped to role bindings on the cluster.
+                     
+                    For more information check the
+                     
+                    <a
+                      href="https://docs.openshift.com/container-platform/4.1/authentication/understanding-authentication.html"
+                    >
+                      OpenShift 4 documentation
+                    </a>
+                    .
+                  </p>
+                }
+                placement="top"
+                rootClose={true}
+              />
+            </h3>
+          </Col>
+        </Row>
+        <Row
+          bsClass="row"
+          componentClass="div"
+          key="user_name"
+        >
+          <Col
+            bsClass="col"
+            componentClass="div"
+            sm={2}
+          >
+            user_name
+          </Col>
+          <Col
+            bsClass="col"
+            componentClass="div"
+            sm={2}
+          >
+            dedicated-admins
+          </Col>
+          <Col
+            bsClass="col"
+            componentClass="div"
+            sm={1}
+          >
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsStyle="default"
+              disabled={false}
+              onClick={[Function]}
+            >
+              Delete
+            </Button>
+          </Col>
+        </Row>
+        <Row
+          bsClass="row"
+          componentClass="div"
+          key="clusterusers-addusers-title"
+        >
+          <Col
+            bsClass="col"
+            componentClass="div"
+            sm={3}
+          >
+            <h3>
+              Add user:
+            </h3>
+          </Col>
+        </Row>
+        <Row
+          bsClass="row"
+          componentClass="div"
+          key="clusterusers-input-form"
+        >
+          <UserInputForm
+            clusterID="fake id"
+            pending={false}
+            saveUser={[MockFunction]}
+          />
+        </Row>
+      </Grid>
+    </div>
+  </CardBody>
+</Card>
 `;

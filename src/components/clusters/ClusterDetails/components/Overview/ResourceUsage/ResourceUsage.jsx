@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid } from 'patternfly-react';
 
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import { metricsStatusMessages, maxMetricsTimeDelta } from './ResourceUsage.consts';
@@ -22,37 +21,32 @@ function ResourceUsage({ cluster }) {
   const getValue = ({ value, unit }) => parseValueWithUnit(value, unit);
 
   return (
-    <Grid fluid>
-      <div id="cl-details-charts" className="cl-details-card">
-        <div className="cl-details-card-title"><h3>Resource Usage</h3></div>
-        <div className="cl-details-card-body">
-          { metricsAvailable ? (
-            <React.Fragment>
-              <ClusterUtilizationChart
-                title="vCPU"
-                total={cluster.metrics.cpu.total.value}
-                used={cluster.metrics.cpu.used.value}
-                unit="Cores"
-                humanize={false}
-                donutId="cpu_donut"
-              />
-              <ClusterUtilizationChart
-                title="MEMORY"
-                total={getValue(cluster.metrics.memory.total)}
-                used={getValue(cluster.metrics.memory.used)}
-                unit="B"
-                humanize
-                donutId="memory_donut"
-              />
-            </React.Fragment>)
-            : (
-              <p>
-                {metricsStatusMessages[cluster.state.state] || metricsStatusMessages.default}
-              </p>
-            ) }
-        </div>
-      </div>
-    </Grid>
+    <React.Fragment>
+      { metricsAvailable ? (
+        <React.Fragment>
+          <ClusterUtilizationChart
+            title="vCPU"
+            total={cluster.metrics.cpu.total.value}
+            used={cluster.metrics.cpu.used.value}
+            unit="Cores"
+            humanize={false}
+            donutId="cpu_donut"
+          />
+          <ClusterUtilizationChart
+            title="MEMORY"
+            total={getValue(cluster.metrics.memory.total)}
+            used={getValue(cluster.metrics.memory.used)}
+            unit="B"
+            humanize
+            donutId="memory_donut"
+          />
+        </React.Fragment>)
+        : (
+          <p>
+            {metricsStatusMessages[cluster.state.state] || metricsStatusMessages.default}
+          </p>
+        ) }
+    </React.Fragment>
   );
 }
 

@@ -22,7 +22,7 @@ import React, { Component } from 'react';
 import {
   EmptyState, Spinner,
 } from 'patternfly-react';
-import { Split, SplitItem } from '@patternfly/react-core';
+import { Split, SplitItem, Card } from '@patternfly/react-core';
 
 import ClusterListFilter from './components/ClusterListFilter';
 import ClusterListEmptyState from './components/ClusterListEmptyState';
@@ -142,7 +142,7 @@ class ClusterList extends Component {
     }
 
     return (
-      <div>
+      <Card>
         <div className="cluster-list">
           <GlobalErrorBox />
           <h1>Clusters</h1>
@@ -190,7 +190,7 @@ class ClusterList extends Component {
           totalCount={viewOptions.totalCount}
           totalPages={viewOptions.totalPages}
         />
-      </div>
+      </Card>
     );
   }
 }
