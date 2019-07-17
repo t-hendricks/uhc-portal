@@ -24,7 +24,6 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -593,68 +592,9 @@ func (b *ProxyHandlerBuilder) Build() (handler *ProxyHandler, err error) {
 
 // ServeHTTP is the implementation of the HTTP handler interface.
 func (h *ProxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	// If the authorization header was provided by the caller, then replace it with a token
-	// valid for the real gateway:
-	authorization := r.Header.Get("Authorization")
-	if authorization != "" {
-		parts := strings.Split(authorization, " ")
-		if len(parts) != 2 {
-			glog.Errorf(
-				"Expected two parts in authorization header but got %d",
-				len(parts),
-			)
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		scheme := parts[0]
-		bearer := parts[1]
-		if !strings.EqualFold(scheme, "Bearer") {
-			glog.Errorf(
-				"Expected authorization scheme 'bearer' but got '%s'",
-				scheme,
-			)
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		claims := jwt.MapClaims{}
-		_, _, err := h.parser.ParseUnverified(bearer, claims)
-		if err != nil {
-			glog.Errorf("Can't parse bearer token '%s': %v", bearer, err)
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		claim, ok := claims["preferred_username"]
-		if !ok {
-			glog.Errorf("Can't get preferred user name claim. Trying 'username'...")
-			claim, ok = claims["username"]
-			if !ok {
-				w.WriteHeader(http.StatusBadRequest)
-				return
-			}
-		}
-		user, ok := claim.(string)
-		if !ok {
-			glog.Errorf(
-				"Expected username claim containing string bug got '%T'",
-				claim,
-			)
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		session := h.sessions.Lookup(user)
-		if session == nil {
-			glog.Errorf("Can't find session for user '%s'", user)
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
-		bearer, _, err = h.connection.Tokens()
-		if err != nil {
-			glog.Errorf("Can't get real token for user '%s': %v", user, err)
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
-		authorization := fmt.Sprintf("Bearer %s", bearer)
-		r.Header.Set("Authorization", authorization)
+	err := h.insertAuthorizationHeader(w, r)
+	if err != nil {
+		return
 	}
 
 	// Replace the scheme and host with the ones of the real gateway:
@@ -664,4 +604,16 @@ func (h *ProxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// Let the proxy do the rest of the work:
 	h.proxy.ServeHTTP(w, r)
+}
+
+func (h *ProxyHandler) insertAuthorizationHeader(w http.ResponseWriter, r *http.Request) error {
+	bearer, _, err := h.connection.Tokens()
+	if err != nil {
+		glog.Errorf("Can't get real token: %v", err)
+		w.WriteHeader(http.StatusUnauthorized)
+		return err
+	}
+	authorization := fmt.Sprintf("Bearer %s", bearer)
+	r.Header.Set("Authorization", authorization)
+	return nil
 }
