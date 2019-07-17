@@ -1,52 +1,134 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<UserInputForm /> should render 1`] = `
-<Fragment>
-  <Col
-    bsClass="col"
-    componentClass="div"
+<Grid
+  className=""
+  gutter="sm"
+  lg={null}
+  md={null}
+  sm={null}
+  span={null}
+  xl={null}
+  xl2={null}
+>
+  <GridItem
+    className=""
+    lg={null}
+    lgOffset={null}
+    lgRowSpan={null}
+    md={null}
+    mdOffset={null}
+    mdRowSpan={null}
+    offset={null}
+    rowSpan={null}
     sm={2}
+    smOffset={null}
+    smRowSpan={null}
+    span={null}
+    xl={null}
+    xl2={null}
+    xl2Offset={null}
+    xl2RowSpan={null}
+    xlOffset={null}
+    xlRowSpan={null}
   >
-    <FormControl
-      bsClass="form-control"
-      componentClass="input"
-      disabled={false}
+    <TextInput
+      aria-label="User name or ID"
+      className=""
+      isDisabled={false}
+      isReadOnly={false}
+      isRequired={false}
+      isValid={true}
       onChange={[Function]}
       placeholder="Enter a user name or user ID"
       type="text"
       value=""
     />
-  </Col>
-  <Col
-    bsClass="col"
-    componentClass="div"
+  </GridItem>
+  <GridItem
+    className=""
+    lg={null}
+    lgOffset={null}
+    lgRowSpan={null}
+    md={null}
+    mdOffset={null}
+    mdRowSpan={null}
+    offset={null}
+    rowSpan={null}
     sm={2}
+    smOffset={null}
+    smRowSpan={null}
+    span={null}
+    xl={null}
+    xl2={null}
+    xl2Offset={null}
+    xl2RowSpan={null}
+    xlOffset={null}
+    xlRowSpan={null}
   >
-    <FormControl
-      bsClass="form-control"
-      componentClass="select"
-      disabled={false}
+    <Select
+      aria-label="Group"
+      ariaLabelClear="Clear all"
+      ariaLabelRemove="Remove"
+      ariaLabelToggle="Options menu"
+      ariaLabelTypeAhead=""
+      ariaLabelledBy=""
+      className=""
+      isDisabled={false}
+      isExpanded={false}
+      isGrouped={false}
+      onClear={[Function]}
+      onSelect={[Function]}
+      onToggle={[Function]}
+      placeholderText=""
+      selections=""
+      toggleId={null}
+      variant="single"
+      width=""
     >
-      <option>
-        dedicated-admins
-      </option>
-    </FormControl>
-  </Col>
-  <Col
-    bsClass="col"
-    componentClass="div"
+      <SelectOption
+        className=""
+        index={0}
+        isChecked={false}
+        isDisabled={false}
+        isFocused={false}
+        isPlaceholder={false}
+        isSelected={false}
+        key="dedicated-admins"
+        keyHandler={[Function]}
+        onClick={[Function]}
+        sendRef={[Function]}
+        value="dedicated-admins"
+      />
+    </Select>
+  </GridItem>
+  <GridItem
+    className=""
+    lg={null}
+    lgOffset={null}
+    lgRowSpan={null}
+    md={null}
+    mdOffset={null}
+    mdRowSpan={null}
+    offset={null}
+    rowSpan={null}
     sm={1}
+    smOffset={null}
+    smRowSpan={null}
+    span={null}
+    xl={null}
+    xl2={null}
+    xl2Offset={null}
+    xl2RowSpan={null}
+    xlOffset={null}
+    xlRowSpan={null}
   >
     <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="default"
-      disabled={true}
+      isDisabled={true}
       onClick={[Function]}
     >
       Add
     </Button>
-  </Col>
-</Fragment>
+  </GridItem>
+</Grid>
 `;

@@ -4,31 +4,23 @@ exports[`<Users /> should render without users 1`] = `
 <EmptyState
   className="cluster-details-user-tab-contents"
 >
-  <EmptyStateTitle
-    className=""
+  <EmptyStateIcon
+    icon={[Function]}
+  />
+  <Title
+    headingLevel="h5"
+    size="lg"
   >
     No users exist for this cluster
-  </EmptyStateTitle>
-  <EmptyStateInfo
-    className=""
-  >
+  </Title>
+  <EmptyStateBody>
     You can add users to grant them access to the cluster. Users will be authenticated via your selected identity provider.
-  </EmptyStateInfo>
-  <EmptyStateAction
-    className=""
-    secondary={false}
+  </EmptyStateBody>
+  <Button
+    onClick={[Function]}
   >
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="default"
-      disabled={false}
-      onClick={[Function]}
-    >
-      Add user
-    </Button>
-  </EmptyStateAction>
+    Add user
+  </Button>
 </EmptyState>
 `;
 
@@ -42,44 +34,114 @@ exports[`<Users /> with users should render 1`] = `
         Grant permission to manage this cluster to users defined in your identity provider.
       </p>
       <Grid
-        bsClass="container"
-        componentClass="div"
-        fluid={true}
+        className=""
+        gutter={null}
+        lg={null}
+        md={null}
+        sm={null}
+        span={null}
+        xl={null}
+        xl2={null}
       >
-        <Row
-          bsClass="row"
-          componentClass="div"
-          key="clusterusers-titlerow"
+        <Grid
+          className=""
+          gutter={null}
+          lg={null}
+          md={null}
+          sm={null}
+          span={null}
+          xl={null}
+          xl2={null}
         >
-          <Col
-            bsClass="col"
-            componentClass="div"
+          <GridItem
+            className=""
+            lg={null}
+            lgOffset={null}
+            lgRowSpan={null}
+            md={null}
+            mdOffset={null}
+            mdRowSpan={null}
+            offset={null}
+            rowSpan={null}
             sm={2}
+            smOffset={null}
+            smRowSpan={null}
+            span={null}
+            xl={null}
+            xl2={null}
+            xl2Offset={null}
+            xl2RowSpan={null}
+            xlOffset={null}
+            xlRowSpan={null}
           >
             <h3>
               User ID
-              <FieldLevelHelp
-                buttonClass=""
-                content={
+              <Popover
+                appendTo={[Function]}
+                aria-label="User IDs"
+                bodyContent={
                   <p>
                     User IDs are matched by the cluster's identity providers.
                   </p>
                 }
-                placement="top"
-                rootClose={true}
-              />
+                className=""
+                closeBtnAriaLabel="Close"
+                enableFlip={true}
+                footerContent={null}
+                headerContent={null}
+                hideOnOutsideClick={true}
+                isVisible={null}
+                maxWidth="calc(1.5rem + 18.75rem)"
+                onHidden={[Function]}
+                onHide={[Function]}
+                onMount={[Function]}
+                onShow={[Function]}
+                onShown={[Function]}
+                position="top"
+                shouldClose={[Function]}
+                zIndex={9999}
+              >
+                <Button
+                  isInline={true}
+                  variant="plain"
+                >
+                  <HelpIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                    title={null}
+                  />
+                </Button>
+              </Popover>
             </h3>
-          </Col>
-          <Col
-            bsClass="col"
-            componentClass="div"
+          </GridItem>
+          <GridItem
+            className=""
+            lg={null}
+            lgOffset={null}
+            lgRowSpan={null}
+            md={null}
+            mdOffset={null}
+            mdRowSpan={null}
+            offset={null}
+            rowSpan={null}
             sm={2}
+            smOffset={null}
+            smRowSpan={null}
+            span={null}
+            xl={null}
+            xl2={null}
+            xl2Offset={null}
+            xl2RowSpan={null}
+            xlOffset={null}
+            xlRowSpan={null}
           >
             <h3>
               Group
-              <FieldLevelHelp
-                buttonClass=""
-                content={
+              <Popover
+                appendTo={[Function]}
+                aria-label="Groups"
+                bodyContent={
                   <p>
                     Groups are mapped to role bindings on the cluster.
                      
@@ -93,74 +155,160 @@ exports[`<Users /> with users should render 1`] = `
                     .
                   </p>
                 }
-                placement="top"
-                rootClose={true}
-              />
+                className=""
+                closeBtnAriaLabel="Close"
+                enableFlip={true}
+                footerContent={null}
+                headerContent={null}
+                hideOnOutsideClick={true}
+                isVisible={null}
+                maxWidth="calc(1.5rem + 18.75rem)"
+                onHidden={[Function]}
+                onHide={[Function]}
+                onMount={[Function]}
+                onShow={[Function]}
+                onShown={[Function]}
+                position="top"
+                shouldClose={[Function]}
+                zIndex={9999}
+              >
+                <Button
+                  isInline={true}
+                  variant="plain"
+                >
+                  <HelpIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                    title={null}
+                  />
+                </Button>
+              </Popover>
             </h3>
-          </Col>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
+          </GridItem>
+        </Grid>
+        <Grid
+          className=""
+          gutter={null}
           key="user_name"
+          lg={null}
+          md={null}
+          sm={null}
+          span={null}
+          xl={null}
+          xl2={null}
         >
-          <Col
-            bsClass="col"
-            componentClass="div"
+          <GridItem
+            className=""
+            lg={null}
+            lgOffset={null}
+            lgRowSpan={null}
+            md={null}
+            mdOffset={null}
+            mdRowSpan={null}
+            offset={null}
+            rowSpan={null}
             sm={2}
+            smOffset={null}
+            smRowSpan={null}
+            span={null}
+            xl={null}
+            xl2={null}
+            xl2Offset={null}
+            xl2RowSpan={null}
+            xlOffset={null}
+            xlRowSpan={null}
           >
             user_name
-          </Col>
-          <Col
-            bsClass="col"
-            componentClass="div"
+          </GridItem>
+          <GridItem
+            className=""
+            lg={null}
+            lgOffset={null}
+            lgRowSpan={null}
+            md={null}
+            mdOffset={null}
+            mdRowSpan={null}
+            offset={null}
+            rowSpan={null}
             sm={2}
+            smOffset={null}
+            smRowSpan={null}
+            span={null}
+            xl={null}
+            xl2={null}
+            xl2Offset={null}
+            xl2RowSpan={null}
+            xlOffset={null}
+            xlRowSpan={null}
           >
             dedicated-admins
-          </Col>
-          <Col
-            bsClass="col"
-            componentClass="div"
+          </GridItem>
+          <GridItem
+            className=""
+            lg={null}
+            lgOffset={null}
+            lgRowSpan={null}
+            md={null}
+            mdOffset={null}
+            mdRowSpan={null}
+            offset={null}
+            rowSpan={null}
             sm={1}
+            smOffset={null}
+            smRowSpan={null}
+            span={null}
+            xl={null}
+            xl2={null}
+            xl2Offset={null}
+            xl2RowSpan={null}
+            xlOffset={null}
+            xlRowSpan={null}
           >
             <Button
-              active={false}
-              block={false}
-              bsClass="btn"
-              bsStyle="default"
-              disabled={false}
+              aria-label="Delete"
               onClick={[Function]}
+              variant="plain"
             >
-              Delete
+              <TimesIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+                title={null}
+              />
             </Button>
-          </Col>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
-          key="clusterusers-addusers-title"
+          </GridItem>
+        </Grid>
+        <GridItem
+          className=""
+          lg={null}
+          lgOffset={null}
+          lgRowSpan={null}
+          md={null}
+          mdOffset={null}
+          mdRowSpan={null}
+          offset={null}
+          rowSpan={null}
+          sm={3}
+          smOffset={null}
+          smRowSpan={null}
+          span={null}
+          xl={null}
+          xl2={null}
+          xl2Offset={null}
+          xl2RowSpan={null}
+          xlOffset={null}
+          xlRowSpan={null}
         >
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={3}
-          >
-            <h3>
-              Add user:
-            </h3>
-          </Col>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
-          key="clusterusers-input-form"
-        >
-          <UserInputForm
-            clusterID="fake id"
-            pending={false}
-            saveUser={[MockFunction]}
-          />
-        </Row>
+          <h3>
+            Add user:
+          </h3>
+        </GridItem>
+        <UserInputForm
+          clusterID="fake id"
+          pending={false}
+          saveUser={[MockFunction]}
+        />
       </Grid>
     </div>
   </CardBody>

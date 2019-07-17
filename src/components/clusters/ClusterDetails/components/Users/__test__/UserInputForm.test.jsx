@@ -6,11 +6,6 @@ import UserInputForm from '../UserInputForm';
 describe('<UserInputForm />', () => {
   let wrapper;
   let saveUser;
-  const fakeEvent = input => ({
-    preventDefault() {},
-    target: { value: input },
-  });
-
 
   beforeEach(() => {
     saveUser = jest.fn();
@@ -26,7 +21,7 @@ describe('<UserInputForm />', () => {
   });
 
   it('should call saveUser when button is pressed', () => {
-    wrapper.find('FormControl').at(0).simulate('change', fakeEvent('hello'));
+    wrapper.find('TextInput').at(0).simulate('change', 'hello');
     wrapper.find('Button').simulate('click');
     expect(saveUser).toHaveBeenCalledWith('fake id', 'dedicated-admins', 'hello');
   });

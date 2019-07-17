@@ -15,13 +15,13 @@ function Overview({ cluster, cloudProviders, routerShards }) {
   const clusterState = getClusterStateAndDescription(cluster);
   return (
     <React.Fragment>
-      <Card id="metrics-charts" className="pf4-details-card">
+      <Card id="metrics-charts">
         <CardHeader>Resource Usage</CardHeader>
         <CardBody>
           <ResourceUsage cluster={{ ...cluster, state: clusterState }} />
         </CardBody>
       </Card>
-      <Card className="pf4-details-card">
+      <Card>
         <CardHeader>Details</CardHeader>
         <CardBody>
           <Grid>

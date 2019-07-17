@@ -50,7 +50,7 @@ describe('<Users />', () => {
     });
 
     it('should call delete user when a user is deleted', () => {
-      wrapper.find('Button').simulate('click');
+      wrapper.find('Button').at(2).simulate('click');
       expect(deleteUser).toHaveBeenCalledWith('fake id', 'dedicated-admins', 'user_name');
     });
   });

@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import { Card, CardBody } from '@patternfly/react-core';
+import { UsersIcon, HelpIcon, TimesIcon } from '@patternfly/react-icons';
 import {
-  Button, EmptyState, EmptyStateTitle, EmptyStateInfo, EmptyStateAction,
-  Grid, Col, Row, Spinner, FieldLevelHelp,
+  Card, CardBody, EmptyState, EmptyStateBody, Title, EmptyStateIcon, Button, Grid, GridItem,
+  Popover, PopoverPosition,
+} from '@patternfly/react-core';
+import {
+  Spinner,
 } from 'patternfly-react';
 
 import ErrorBox from '../../../../common/ErrorBox';
@@ -75,16 +78,15 @@ class Users extends React.Component {
     if (!showAddUserRow && !hasUsers) {
       return (
         <EmptyState className="cluster-details-user-tab-contents">
-          <EmptyStateTitle>No users exist for this cluster</EmptyStateTitle>
-          <EmptyStateInfo>
+          <EmptyStateIcon icon={UsersIcon} />
+          <Title headingLevel="h5" size="lg">No users exist for this cluster</Title>
+          <EmptyStateBody>
                 You can add users to grant them access to the cluster. Users will be authenticated
                 via your selected identity provider.
-          </EmptyStateInfo>
-          <EmptyStateAction>
-            <Button onClick={this.showAddUserRow}>
-                  Add user
-            </Button>
-          </EmptyStateAction>
+          </EmptyStateBody>
+          <Button onClick={this.showAddUserRow}>
+            Add user
+          </Button>
         </EmptyState>
       );
     }
@@ -104,68 +106,78 @@ class Users extends React.Component {
             <p>
           Grant permission to manage this cluster to users defined in your identity provider.
             </p>
-            <Grid fluid>
+            <Grid>
               {!!userList.length && (
-              <Row key="clusterusers-titlerow">
-                <Col sm={2}>
+              <Grid>
+                <GridItem sm={2}>
                   <h3>
                   User ID
-                    <FieldLevelHelp content={(
-                      <p>
-                      User IDs are matched by the cluster&apos;s identity providers.
-                      </p>)}
-                    />
+                    <Popover
+                      position={PopoverPosition.top}
+                      aria-label="User IDs"
+                      bodyContent={(
+                        <p>
+                        User IDs are matched by the cluster&apos;s identity providers.
+                        </p>)}
+                    >
+                      <Button variant="plain" isInline>
+                        <HelpIcon size="sm" />
+                      </Button>
+                    </Popover>
                   </h3>
-                </Col>
-                <Col sm={2}>
+                </GridItem>
+                <GridItem sm={2}>
                   <h3>
                   Group
-                    <FieldLevelHelp content={(
-                      <p>
-                      Groups are mapped to role bindings on the cluster.
-                        {' '}
-                      For more information check the
-                        {' '}
-                        <a href="https://docs.openshift.com/container-platform/4.1/authentication/understanding-authentication.html">OpenShift 4 documentation</a>
-                      .
-                      </p>)}
-                    />
+                    <Popover
+                      position={PopoverPosition.top}
+                      aria-label="Groups"
+                      bodyContent={(
+                        <p>
+                        Groups are mapped to role bindings on the cluster.
+                          {' '}
+                        For more information check the
+                          {' '}
+                          <a href="https://docs.openshift.com/container-platform/4.1/authentication/understanding-authentication.html">OpenShift 4 documentation</a>
+                          .
+                        </p>)}
+                    >
+                      <Button variant="plain" isInline>
+                        <HelpIcon size="sm" />
+                      </Button>
+                    </Popover>
                   </h3>
-                </Col>
-                { (deleteUserResponse.pending || clusterGroupUsers.pending) && (
-                <Col sm={1}>
-                  <Spinner loading />
-                </Col>
-                )}
-              </Row>
+                </GridItem>
+                  { (deleteUserResponse.pending || clusterGroupUsers.pending) && (
+                  <GridItem sm={1}>
+                    <Spinner loading />
+                  </GridItem>
+                  )}
+              </Grid>
               )}
               {userList.map(user => (
-                <Row key={user.id}>
-                  <Col sm={2}>
+                <Grid key={user.id}>
+                  <GridItem sm={2}>
                     {user.id}
-                  </Col>
-                  <Col sm={2}>
+                  </GridItem>
+                  <GridItem sm={2}>
                 dedicated-admins
-                  </Col>
-                  <Col sm={1}>
-                    <Button onClick={() => { deleteUser(clusterID, 'dedicated-admins', user.id); }}>
-                  Delete
+                  </GridItem>
+                  <GridItem sm={1}>
+                    <Button variant="plain" aria-label="Delete" onClick={() => { deleteUser(clusterID, 'dedicated-admins', user.id); }}>
+                      <TimesIcon />
                     </Button>
-                  </Col>
-                </Row>
+                  </GridItem>
+                </Grid>
               ))}
-              <Row key="clusterusers-addusers-title">
-                <Col sm={3}>
-                  <h3>Add user:</h3>
-                </Col>
-              </Row>
-              <Row key="clusterusers-input-form">
-                <UserInputForm
-                  clusterID={clusterID}
-                  saveUser={addUser}
-                  pending={addUserResponse.pending}
-                />
-              </Row>
+              <GridItem sm={3}>
+                <h3>Add user:</h3>
+              </GridItem>
+              <UserInputForm
+                clusterID={clusterID}
+                saveUser={addUser}
+                pending={addUserResponse.pending}
+              />
             </Grid>
           </div>
         </CardBody>
