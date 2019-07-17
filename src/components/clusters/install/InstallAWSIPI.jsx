@@ -5,7 +5,6 @@ import { tollboothActions } from '../../../redux/actions';
 import InstructionsAWSIPI from './components/instructions/InstructionsAWSIPI';
 import { scrollToTop } from '../../../common/helpers';
 
-
 class InstallAWSIPI extends Component {
   componentDidMount() {
     scrollToTop();
