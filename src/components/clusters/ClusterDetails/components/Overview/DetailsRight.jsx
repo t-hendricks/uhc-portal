@@ -29,8 +29,7 @@ function DetailsRight({ cluster, routerShards }) {
           <React.Fragment>
             Total
             {' '}
-            <span className="lowerCase">v</span>
-            CPU
+            vCPU
           </React.Fragment>
         </dt>
         <dd>

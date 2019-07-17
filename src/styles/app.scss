@@ -150,8 +150,7 @@ limitations under the License.
 .cluster-details-item {
   padding: 30px;
   dt {
-    text-transform: uppercase;
-    font-weight: normal;
+    font-weight: bold;
   }
   dd {
     margin-bottom: 30px;
@@ -178,10 +177,6 @@ limitations under the License.
   }
 }
 
-.lowerCase {
-  text-transform: lowercase;
-}
-
 #cl-details-btns{
   float: right;
 }
@@ -193,6 +188,7 @@ limitations under the License.
 .cl-details-cluster-name h1 {
   margin-top: 0;
   display: inline-block;
+  font-weight: bold;
 }
 
 .cl-details-cluster-name .spinner {
@@ -437,6 +433,10 @@ p.notfound {
   padding-right: 0;
   padding-left: 0;
 }
+
+#clusterdetails-content .pf-c-card__header{
+  font-weight: bold;
+};
 
 h1 .badged-resource-pf span:first-child {
   display: table;
