@@ -8,7 +8,7 @@ import { Tooltip } from '@patternfly/react-core';
 
 const ErrorTriangle = ({ errorMessage }) => (
   <Tooltip content={`An error occured when fetching clusters: ${errorMessage}`}>
-    <WarningTriangleIcon size="lg" className="clusterlist-error-triangle" color={global_warning_color_100.value} />
+    <WarningTriangleIcon size="lg" className="cluster-error-triangle" color={global_warning_color_100.value} />
   </Tooltip>
 );
 ErrorTriangle.propTypes = {

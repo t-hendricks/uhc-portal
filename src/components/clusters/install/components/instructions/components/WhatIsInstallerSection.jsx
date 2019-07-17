@@ -30,7 +30,7 @@ const WhatIsInstallerSection = ({ isIPI }) => (
         </div>
       )}
     >
-      <button type="button" className="popover-hover buttonHref pf4-buttonHref">
+      <button type="button" className="popover-hover buttonHref">
         <span className="pficon pficon-info" />
         {' '}
         What is the OpenShift installer?
