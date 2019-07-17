@@ -1,36 +1,51 @@
 // CreateClusterDropdown is a button that shows a dropdown allowing to create OSD or OCP clusters
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  DropdownButton, MenuItem,
-} from 'patternfly-react';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Dropdown, DropdownToggle, DropdownItem } from '@patternfly/react-core';
+import { Link } from 'react-router-dom';
 
 
-function CreateClusterDropdown(props) {
-  const { showCreationForm, hasQuota } = props;
-  return (
-    <DropdownButton
-      bsStyle="primary"
-      title="Create Cluster"
-      id="dropdown-example"
-      bsSize="large"
-      className="cluster-list-top"
-    >
-      <LinkContainer to="/install">
-        <MenuItem eventKey="1">
-            Self-Installed Cluster
-        </MenuItem>
-      </LinkContainer>
-      {hasQuota && (
-        <React.Fragment>
-          <MenuItem eventKey="3" onClick={showCreationForm}>
-            Red Hat-Managed Cluster
-          </MenuItem>
-        </React.Fragment>
-      )}
-    </DropdownButton>
-  );
+class CreateClusterDropdown extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+    };
+    this.onToggle = (isOpen) => {
+      this.setState({
+        isOpen,
+      });
+    };
+    this.onSelect = () => {
+      this.setState(state => ({
+        isOpen: !state.isOpen,
+      }));
+    };
+  }
+
+  render() {
+    const { showCreationForm, hasQuota } = this.props;
+    const { isOpen } = this.state;
+    const menuItems = [
+      <DropdownItem key="selfmanaged">
+        <Link to="/install">
+          Self-Installed Cluster
+        </Link>
+      </DropdownItem>,
+      hasQuota && (
+      <DropdownItem component="button" key="managed" onClick={showCreationForm}>
+        Red Hat-Managed Cluster
+      </DropdownItem>),
+    ].filter(Boolean);
+    return (
+      <Dropdown
+        onSelect={this.onSelect}
+        dropdownItems={menuItems}
+        toggle={<DropdownToggle className="pf-c-button pf-m-primary" onToggle={this.onToggle}>Create Cluster</DropdownToggle>}
+        isOpen={isOpen}
+      />
+    );
+  }
 }
 
 CreateClusterDropdown.propTypes = {

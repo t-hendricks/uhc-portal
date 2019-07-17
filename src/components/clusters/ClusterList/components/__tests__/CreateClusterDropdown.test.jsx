@@ -18,11 +18,6 @@ describe('<CreateClusterDropdown />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('calls showCreationForm when needed', () => {
-    wrapper.find('MenuItem').at(1).simulate('click');
-    expect(onClickFunc).toBeCalled();
-  });
-
   describe('User with no quota', () => {
     it('should hide option to create managed and auto installed clusters', () => {
       wrapper = shallow(
@@ -30,7 +25,7 @@ describe('<CreateClusterDropdown />', () => {
           showCreationForm={onClickFunc}
         />,
       );
-      expect(wrapper.find('MenuItem').length).toEqual(1);
+      expect(wrapper).toMatchSnapshot();
     });
   });
 });

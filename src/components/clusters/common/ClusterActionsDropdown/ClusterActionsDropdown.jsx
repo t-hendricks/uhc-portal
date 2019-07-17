@@ -1,117 +1,72 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MenuItem } from 'patternfly-react';
-import clusterStates from '../clusterStates';
+import {
+  Dropdown, DropdownToggle, KebabToggle, DropdownPosition,
+} from '@patternfly/react-core';
+import dropdownItems from './ClusterActionsDropdownItems';
 
-const ClusterActionsDropdown = (props) => {
-  const {
-    cluster,
-    showConsoleButton,
-    showIDPButton,
-    openModal,
-    hasIDP,
-    idpID,
-  } = props;
-
-  const uninstallingMessage = 'The cluster is being uninstalled';
-  const consoleDisabledMessage = 'Admin console is not yet available for this cluster';
-  const selfManagedEditMessage = 'Self managed cluster cannot be edited';
-  const notReadyMessage = 'This cluster is not ready';
-
-  const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
-  const isClusterReady = cluster.state === clusterStates.READY;
-
-  const isUninstallingProps = isClusterUninstalling
-    ? { disabled: true, title: uninstallingMessage } : {};
-
-  const getAdminConosleProps = () => {
-    const consoleURL = cluster.console ? cluster.console.url : false;
-
-    const adminConsoleEnabled = {
-      href: consoleURL,
-      target: '_blank',
-      rel: 'noreferrer',
+class ClusterActionsDropdown extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
     };
-
-    const adminConsoleDisabled = {
-      disabled: true,
-      title: isClusterUninstalling ? uninstallingMessage : consoleDisabledMessage,
+    this.onToggle = (isOpen) => {
+      this.setState({
+        isOpen,
+      });
     };
-
-    return consoleURL && !isClusterUninstalling ? adminConsoleEnabled : adminConsoleDisabled;
-  };
-
-  const getEditClusterProps = () => {
-    const selfManagedEditProps = {
-      disabled: true,
-      title: isClusterUninstalling ? uninstallingMessage : selfManagedEditMessage,
+    this.onSelect = () => {
+      this.setState(state => ({
+        isOpen: !state.isOpen,
+      }));
     };
+  }
 
-    const managedEditProps = { onClick: () => openModal('edit-cluster', cluster) };
-
-    const disabledManagedEditProps = {
-      disabled: true,
-      title: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
-    };
-
-    if (!cluster.managed) {
-      return selfManagedEditProps;
-    }
-    return isClusterReady ? managedEditProps : disabledManagedEditProps;
-  };
-
-  const getEditDisplayNameProps = () => {
-    const editDisplayNameProps = {
-      onClick: () => openModal('edit-display-name', cluster),
-    };
-
-    return isClusterUninstalling ? isUninstallingProps : editDisplayNameProps;
-  };
-
-  const getDeleteItemProps = () => {
-    const deleteModalData = {
-      clusterID: cluster.id,
-      clusterName: cluster.name,
-    };
-
-    return isClusterUninstalling
-      ? isUninstallingProps : { onClick: () => openModal('delete-cluster', deleteModalData) };
-  };
-
-  const shouldShowIDPButton = showIDPButton && hasIDP && idpID;
-
-  const getDeleteIDPProps = () => {
-    const removeIDPModalData = {
-      clusterID: cluster.id,
+  render() {
+    const {
+      cluster,
+      showConsoleButton,
+      showIDPButton,
+      openModal,
+      hasIDP,
       idpID,
-    };
+      isKebab,
+      disabled,
+    } = this.props;
+    const { isOpen } = this.state;
 
-    return { onClick: () => openModal('delete-idp', removeIDPModalData) };
-  };
 
-  const adminConsoleItemProps = getAdminConosleProps();
-  const editClusterItemProps = getEditClusterProps();
-  const editDisplayNameItemProps = getEditDisplayNameProps();
-  const deleteClusterItemProps = getDeleteItemProps();
-  const deleteIDPItemProps = getDeleteIDPProps();
-  const showDelete = cluster.canDelete && cluster.managed;
+    const toggleComponent = isKebab
+      ? <KebabToggle isDisabled={disabled} onToggle={this.onToggle} />
+      : <DropdownToggle isDisabled={disabled} onToggle={this.onToggle}>Actions</DropdownToggle>;
 
-  return (
-    <React.Fragment>
-      {showConsoleButton && <MenuItem {...adminConsoleItemProps}>Launch Admin Console</MenuItem>}
-      {cluster.canEdit && <MenuItem {...editDisplayNameItemProps}>Edit Display Name</MenuItem>}
-      {cluster.canEdit && <MenuItem {...editClusterItemProps}>Edit Cluster</MenuItem>}
-      {showDelete && <MenuItem {...deleteClusterItemProps}>Delete Cluster</MenuItem>}
-      {shouldShowIDPButton && <MenuItem {...deleteIDPItemProps}>Remove Identity Provider</MenuItem>}
-    </React.Fragment>
-  );
-};
+    const menuItems = dropdownItems({
+      cluster, showConsoleButton, showIDPButton, openModal, hasIDP, idpID,
+    });
+
+    return (
+      <Dropdown
+        position={DropdownPosition.right}
+        onSelect={this.onSelect}
+        dropdownItems={menuItems}
+        toggle={toggleComponent}
+        isPlain={isKebab}
+        isOpen={isOpen}
+      />
+    );
+  }
+}
 
 ClusterActionsDropdown.propTypes = {
   cluster: PropTypes.object.isRequired,
+  hasIDP: PropTypes.bool,
+  idpID: PropTypes.string,
   showConsoleButton: PropTypes.bool.isRequired,
   showIDPButton: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
+  isKebab: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 export default ClusterActionsDropdown;
