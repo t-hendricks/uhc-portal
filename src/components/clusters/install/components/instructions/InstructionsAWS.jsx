@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   CardBody,
 } from 'patternfly-react';
-import {
-  PageTitle,
-} from './common';
+import PageTitle from './components/PageTitle';
 import upiLogo from '../../../../../styles/images/Icon_RH_Diagram_DevelopmentModel_RGB_Flat.png';
 import ipiLogo from '../../../../../styles/images/Icon_RH_Diagram_Lifecycle_RGB_Flat.png';
 

@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  CLISection,
-  DownloadButton,
-  GetStarted,
-  PageTitle,
-  PullSecretSection,
-  TelemetryAlert,
-  TokenErrorAlert,
-  WhatIsInstallerSection,
-} from './common';
+import CLISection from './components/CLISection';
+import DownloadButton from './components/DownloadButton';
+import GetStarted from './components/GetStarted';
+import PageTitle from './components/PageTitle';
+import PullSecretSection from './components/PullSecretSection';
+import TelemetryAlert from './components/TelemetryAlert';
+import TokenErrorAlert from './components/TokenErrorAlert';
+import WhatIsInstallerSection from './components/WhatIsInstallerSection';
 
 class InstructionsAzure extends React.Component {
   constructor(props) {

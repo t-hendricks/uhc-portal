@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   CardBody,
 } from 'patternfly-react';
-import {
-  PageTitle,
-} from './common';
+import PageTitle from './components/PageTitle';
 import bareMetalIcon from '../../../../../styles/images/Icon_RH_Hardware_Server-A-Single_RGB_Flat.png';
 import AWSLogo from '../../../../../styles/images/AWS.png';
 import AzureLogo from '../../../../../styles/images/Microsoft_Azure_Logo.svg';

@@ -3,16 +3,13 @@ import PropTypes from 'prop-types';
 import {
   Popover,
 } from '@patternfly/react-core';
-
-import {
-  CLISection,
-  DownloadButton,
-  PageTitle,
-  PullSecretSection,
-  TelemetryAlert,
-  TokenErrorAlert,
-  WhatIsInstallerSection,
-} from './common';
+import CLISection from './components/CLISection';
+import DownloadButton from './components/DownloadButton';
+import PageTitle from './components/PageTitle';
+import PullSecretSection from './components/PullSecretSection';
+import TelemetryAlert from './components/TelemetryAlert';
+import TokenErrorAlert from './components/TokenErrorAlert';
+import WhatIsInstallerSection from './components/WhatIsInstallerSection';
 
 class InstructionsAWSIPI extends React.Component {
   constructor(props) {
