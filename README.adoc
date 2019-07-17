@@ -159,22 +159,29 @@ location of your proxy's git clone to the PROXY_PATH environment variable, for e
 export PROXY_PATH=~/Projects/insights-proxy
 ....
 
-Make sure to start the mock server before starting the insights proxy.
+Make sure to start the backend proxy server (./backend) before starting the insights proxy.
 
 Now you can use
 ....
-SPANDX_CONFIG="./profiles/local-frontend-mock.js" bash $PROXY_PATH/scripts/run.sh
+SPANDX_CONFIG="./profiles/local-frontend.js" bash $PROXY_PATH/scripts/run.sh
 ....
 to run the insights proxy and pass API requests to the mock server described above.
 
 Run webpack with
 ....
-$ yarn build-embedded; yarn startmock-embedded
+$ yarn build-embedded; yarn start-embedded
 ....
 The "build-embedded" step is crucial at the moment, but we should work to make it not required in the future.
 
 Once the server is running you can access your UI on https://qa.foo.redhat.com:1337/openshift
 It should ask you to authenticate with QA SSO, which should accept every user and the password is "redhat"
+
+=== Chromed application with a mock server
+Perform the exact steps detailed above, but use
+....
+SPANDX_CONFIG="./profiles/local-frontend-mock.js"
+....
+instead, and make sure you start the mock server (mockdata/mockserver.py) BEFORE starting the insights proxy.
 
 == Deploying
 
