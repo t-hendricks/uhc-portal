@@ -14,29 +14,25 @@ limitations under the License.
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import result from 'lodash/result';
-import {
-  EmptyState,
-  TabContainer,
-  Nav,
-  NavItem,
-  TabPane,
-  TabContent,
-} from 'patternfly-react';
-import ErrorBox from '../../common/ErrorBox';
 
-import ClusterDetailsTop from './components/ClusterDetailsTop';
+import { TabContent } from '@patternfly/react-core';
+import { EmptyState } from 'patternfly-react';
+
 import SubscriptionCompliancy from './components/SubscriptionCompliancy';
+import ClusterDetailsTop from './components/ClusterDetailsTop';
+import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
 import Users from './components/Users';
+import IdentityProvidersModal from './components/IdentityProvidersModal';
+import DeleteIDPDialog from './components/DeleteIDPDialog';
 
 import LoadingModal from '../../common/LoadingModal';
 import EditClusterDialog from '../common/EditClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
-import IdentityProvidersModal from './components/IdentityProvidersModal';
-import DeleteIDPDialog from './components/DeleteIDPDialog';
 
+import ErrorBox from '../../common/ErrorBox';
 import { isValid } from '../../../common/helpers';
 
 class ClusterDetails extends Component {
@@ -44,6 +40,10 @@ class ClusterDetails extends Component {
     super(props);
     this.refresh = this.refresh.bind(this);
     this.refreshIDP = this.refreshIDP.bind(this);
+
+    this.overviewTabRef = React.createRef();
+    this.usersTabRef = React.createRef();
+    this.logsTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -190,78 +190,59 @@ class ClusterDetails extends Component {
     };
 
     return (
-      <div>
-        <div id="clusterdetails-content">
-          <SubscriptionCompliancy
-            cluster={cluster}
-            organization={organization}
+      <div id="clusterdetails-content">
+        <SubscriptionCompliancy
+          cluster={cluster}
+          organization={organization}
+        />
+        <ClusterDetailsTop
+          cluster={cluster}
+          openModal={openModal}
+          pending={clusterDetails.pending}
+          routerShards={routerShards}
+          refreshFunc={this.refresh}
+          clusterIdentityProviders={clusterIdentityProviders}
+          organization={organization}
+          error={clusterDetails.error}
+          errorMessage={clusterDetails.errorMessage}
+        >
+          <TabsRow
+            displayLogs={!!logs.lines}
+            displayUsersTab={cluster.managed && cluster.canEdit}
+            overviewTabRef={this.overviewTabRef}
+            usersTabRef={this.usersTabRef}
+            logsTabRef={this.logsTabRef}
           />
-          <ClusterDetailsTop
+        </ClusterDetailsTop>
+        <TabContent eventKey={0} id="overviewTabContent" ref={this.overviewTabRef} aria-label="Overview">
+          <Overview
             cluster={cluster}
-            openModal={openModal}
-            pending={clusterDetails.pending}
+            cloudProviders={cloudProviders}
             routerShards={routerShards}
-            refreshFunc={this.refresh}
-            clusterIdentityProviders={clusterIdentityProviders}
-            organization={organization}
-            error={clusterDetails.error}
-            errorMessage={clusterDetails.errorMessage}
           />
-          <TabContainer id="cluster-details-tabs" defaultActiveKey={1}>
-            <React.Fragment>
-              <Nav bsClass="nav nav-tabs nav-tabs-pf">
-                <NavItem eventKey={1}>
-                  Overview
-                </NavItem>
-                {(cluster.managed && cluster.canEdit) && (
-                  <NavItem eventKey={2}>
-                    Users
-                  </NavItem>
-                )}
-                {logs.lines && (
-                <NavItem eventKey={3}>
-                  Logs
-                </NavItem>
-                )}
-              </Nav>
-              <TabContent animation>
-                <TabPane eventKey={1}>
-                  <Overview
-                    cluster={cluster}
-                    cloudProviders={cloudProviders}
-                    routerShards={routerShards}
-                  />
-                </TabPane>
-                {(cluster.managed && cluster.canEdit) && (
-                  <TabPane eventKey={2}>
-                    <Users clusterID={cluster.id} />
-                  </TabPane>
-                )}
-                {logs.lines && (
-                <TabPane eventKey={3}>
-                  <LogWindow clusterID={cluster.id} />
-                </TabPane>
-                )}
-              </TabContent>
-            </React.Fragment>
-          </TabContainer>
-          <EditClusterDialog onClose={onDialogClose} />
-          <EditDisplayNameDialog onClose={onDialogClose} />
-          <DeleteClusterDialog onClose={(shouldRefresh) => {
-            if (shouldRefresh) {
-              invalidateClusters();
-              history.push('/');
-            }
-          }}
-          />
-          <IdentityProvidersModal clusterID={cluster.id} onClose={() => this.refreshIDP()} />
-          <DeleteIDPDialog onClose={() => {
-            this.refreshIDP();
-            onDialogClose();
+        </TabContent>
+        <TabContent eventKey={1} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
+          <Users clusterID={cluster.id} />
+        </TabContent>
+        <TabContent eventKey={2} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
+          <LogWindow clusterID={cluster.id} />
+        </TabContent>
+        <EditClusterDialog onClose={onDialogClose} />
+        <EditDisplayNameDialog onClose={onDialogClose} />
+        <DeleteClusterDialog onClose={(shouldRefresh) => {
+          if (shouldRefresh) {
+            invalidateClusters();
+            history.push('/');
           }
+        }}
+        />
+        <IdentityProvidersModal clusterID={cluster.id} onClose={() => this.refreshIDP()} />
+        <DeleteIDPDialog onClose={() => {
+          this.refreshIDP();
+          onDialogClose();
+        }
           }
-          />
-        </div>
+        />
       </div>
     );
   }

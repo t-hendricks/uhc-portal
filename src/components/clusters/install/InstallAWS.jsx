@@ -5,7 +5,6 @@ import { tollboothActions } from '../../../redux/actions';
 import InstructionsAWS from './components/instructions/InstructionsAWS';
 import { scrollToTop } from '../../../common/helpers';
 
-
 class InstallAWS extends Component {
   componentDidMount() {
     scrollToTop();

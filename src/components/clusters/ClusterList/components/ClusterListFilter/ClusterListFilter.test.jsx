@@ -9,10 +9,7 @@ describe('<ClusterListFilter />', () => {
   let setFilter;
   let wrapper;
   let wrapperWithPrefilledText;
-  const fakeEvent = input => ({
-    preventDefault() {},
-    target: { value: input },
-  });
+
   beforeEach(() => {
     setFilter = jest.fn();
     wrapper = shallow(<ClusterListFilter
@@ -32,20 +29,20 @@ describe('<ClusterListFilter />', () => {
   });
 
   it('sets up a timeout properly', () => {
-    wrapper.find('FormControl').simulate('change', fakeEvent('hello'));
+    wrapper.find('TextInput').simulate('change', 'hello');
     expect(setTimeout).toBeCalled();
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 300);
   });
 
   it('calls setFilter after timeout has passed', () => {
-    wrapper.find('FormControl').simulate('change', fakeEvent('world'));
+    wrapper.find('TextInput').simulate('change', 'world');
     jest.runOnlyPendingTimers();
     expect(setFilter).toHaveBeenCalledWith('world');
   });
 
   it('calls setFilter only when the user stops typing', () => {
-    wrapper.find('FormControl').simulate('change', fakeEvent('a'));
-    wrapper.find('FormControl').simulate('change', fakeEvent('abc'));
+    wrapper.find('TextInput').simulate('change', 'a');
+    wrapper.find('TextInput').simulate('change', 'abc');
     jest.runOnlyPendingTimers();
     expect(setFilter).not.toHaveBeenCalledWith('a');
     expect(setFilter).toHaveBeenCalledWith('abc');

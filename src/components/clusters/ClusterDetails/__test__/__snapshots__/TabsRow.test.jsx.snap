@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TabsRow /> should render 1`] = `
+<Tabs
+  activeKey={0}
+  className=""
+  isFilled={false}
+  isSecondary={false}
+  leftScrollAriaLabel="Scroll left"
+  onSelect={[Function]}
+  rightScrollAriaLabel="Scroll Right"
+  variant="div"
+>
+  <ForwardRef
+    eventKey={0}
+    key="0"
+    tabContentId="overviewTabContent"
+    tabContentRef={
+      Object {
+        "current": null,
+      }
+    }
+    title="Overview"
+  />
+</Tabs>
+`;

@@ -1,70 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ResourceUsage /> should render 1`] = `
-<Grid
-  bsClass="container"
-  componentClass="div"
-  fluid={true}
->
-  <div
-    className="cl-details-card"
-    id="cl-details-charts"
-  >
-    <div
-      className="cl-details-card-title"
-    >
-      <h3>
-        Resource Usage
-      </h3>
-    </div>
-    <div
-      className="cl-details-card-body"
-    >
-      <ClusterUtilizationChart
-        donutId="cpu_donut"
-        humanize={false}
-        title="vCPU"
-        total={0}
-        unit="Cores"
-        used={0}
-      />
-      <ClusterUtilizationChart
-        donutId="memory_donut"
-        humanize={true}
-        title="MEMORY"
-        total={0}
-        unit="B"
-        used={0}
-      />
-    </div>
-  </div>
-</Grid>
+<Fragment>
+  <ClusterUtilizationChart
+    donutId="cpu_donut"
+    humanize={false}
+    title="vCPU"
+    total={0}
+    unit="Cores"
+    used={0}
+  />
+  <ClusterUtilizationChart
+    donutId="memory_donut"
+    humanize={true}
+    title="MEMORY"
+    total={0}
+    unit="B"
+    used={0}
+  />
+</Fragment>
 `;
 
 exports[`<ResourceUsage /> should render status message when metrics are not available 1`] = `
-<Grid
-  bsClass="container"
-  componentClass="div"
-  fluid={true}
->
-  <div
-    className="cl-details-card"
-    id="cl-details-charts"
-  >
-    <div
-      className="cl-details-card-title"
-    >
-      <h3>
-        Resource Usage
-      </h3>
-    </div>
-    <div
-      className="cl-details-card-body"
-    >
-      <p>
-        The cluster currently does not have any metrics data. Please try again later.
-      </p>
-    </div>
-  </div>
-</Grid>
+<Fragment>
+  <p>
+    The cluster currently does not have any metrics data. Please try again later.
+  </p>
+</Fragment>
 `;

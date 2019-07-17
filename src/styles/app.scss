@@ -51,14 +51,15 @@ limitations under the License.
   }
 }
 
-.cluster-list-top {
-  margin: 20px 0 0 0;
-}
 .cluster-list-top-row {
   margin-bottom: 20px;
 }
 .cluster-list-row:hover{
   background-color: $color-pf-blue-25;
+}
+
+.save-space-for-spinner {
+  min-width: 24px;
 }
 
 // Styles for the page where the user can download the access tokens, for use
@@ -224,38 +225,17 @@ limitations under the License.
   margin-bottom: 40px;
 }
 
-.cl-details-card {
-  padding: 20px 0 20px;
+.pf4-details-card {
+  margin-top: 40px;
 }
 
-.cl-details-card-title {
-  border: 1px solid #ccc;
-  background-color: #f5f5f5;
-  padding: 10px 15px;
-}
-
-.cl-details-card-title h3 {
-  margin: 0px
-}
-
-.cl-details-card-body {
-  border: 1px solid #ccc;
-  border-top: none;
-  padding: 20px 0 20px;
-}
-
-
-#cl-details-charts .cl-details-card-body{
+#metrics-charts .pf-c-card__body{
   display: flex;
   justify-content: space-evenly;
   margin: 0;
     @media (max-width: 767px) {
       flex-direction: column;
     }
-}
-
-#cl-details-charts p{
-  padding: 30px;
 }
 
 #deleteClusterHint {
@@ -402,7 +382,7 @@ p.notfound {
 }
 
 #idpHint {
-  margin: 10px 0 10px;
+  margin: 25px 0 35px;
   border: 2px solid #b1afaf;
 }
 
@@ -443,11 +423,14 @@ p.notfound {
   border-bottom: 1px solid #004368;
 }
 
-#clusterdetails-content {
-  margin: 20px 30px 0 30px;
-}
-#clusterdetails-content .breadcrumb {
-  margin-bottom: 0;
+#cl-details-top{
+  background-color: #ffffff;
+  margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
+  margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
+  margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
+  padding-top: var(--pf-c-page__main-section--PaddingTop) ;
+  padding-right: var(--pf-c-page__main-section--PaddingRight);
+  padding-left: var(--pf-c-page__main-section--PaddingLeft);
 }
 
 #clusterdetails-content .container-fluid {
@@ -493,9 +476,9 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   background-color: var(--pf-global--warning-color--100);
   padding-top: 8px;
   padding-bottom: 8px;
-  margin-left: -20px;
-  margin-top: -22px;
-  margin-right: -20px;
+  margin-left: -30px;
+  margin-top: -30px;
+  margin-right: -30px;
   margin-bottom: 20px;
   padding-left: 22px;
   font-weight: 800;
@@ -512,7 +495,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 10px;
 }
 
-.grid-container{
+.flex-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -572,4 +555,23 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .install-page-title {
   padding-top: 2px;
+}
+
+// TODO: remove when https://github.com/patternfly/patternfly-next/issues/1976 is fixed
+h4.pf-c-alert__title {
+  margin-top: 0 !important;
+}
+
+.token-error-alert {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.telemetry-alert {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.install-page {
+  margin: 30px;
 }
