@@ -33,7 +33,7 @@ function ResourceUsage({ cluster }) {
             donutId="cpu_donut"
           />
           <ClusterUtilizationChart
-            title="MEMORY"
+            title="Memory"
             total={getValue(cluster.metrics.memory.total)}
             used={getValue(cluster.metrics.memory.used)}
             unit="B"

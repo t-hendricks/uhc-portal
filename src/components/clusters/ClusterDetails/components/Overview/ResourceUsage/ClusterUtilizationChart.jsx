@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  DonutChart,
-} from 'patternfly-react';
+
+import { ChartDonut } from '@patternfly/react-charts';
+// eslint-disable-next-line camelcase
+import { chart_global_success_Color_100, chart_global_Fill_Color_200 } from '@patternfly/react-tokens';
+
 import { humanizeValueWithUnit, roundValueWithUnit } from '../../../../../../common/units';
 
 function ClusterUtilizationChart(props) {
@@ -12,33 +14,30 @@ function ClusterUtilizationChart(props) {
 
   const format = humanize ? humanizeValueWithUnit : roundValueWithUnit;
   const formattedUsed = format(used, unit);
-  const donutCenter = { primary: `${formattedUsed.value}`, secondary: `${formattedUsed.unit} used` };
+  const formattedTotal = format(total, unit);
   const available = total - used;
+  const donutCenter = { primary: `${formattedUsed.value} ${formattedUsed.unit}`, secondary: `of ${formattedTotal.value} ${formattedTotal.unit} used` };
 
-  // Based on pfGetUtilizationDonutTooltipContents from patternfly storybook, changed for our needs.
-  // Example input: d=[{"id":"used","value":6.2831853,"ratio":0.48320355,"index":0,"name":"used"}]
-  const tooltipContents = (d) => {
-    const formatted = format(d[0].value, unit);
-    return `<span class="donut-tooltip-pf" style="white-space: nowrap;">${formatted.value} ${formatted.unit} ${d[0].name}</span>`;
+  const tooltipContents = (datum) => {
+    const formatted = format(datum.y, unit);
+    return `${formatted.value} ${formatted.unit} ${datum.x}`;
   };
 
   return (
     <div>
-      <h4 className="center">
+      <h4 className="metrics-chart">
         {title}
       </h4>
-      <div className="center">
-        <DonutChart
+      <div className="metrics-chart">
+        <ChartDonut
           id={donutId}
-          size={{ width: 180, height: 180 }}
-          title={donutCenter}
-          data={{
-            columns: [['used', used], ['available', available]],
-            order: null, // the order the data was loaded
-          }}
-          tooltip={{
-            contents: tooltipContents,
-          }}
+          height={180}
+          width={180}
+          title={donutCenter.primary}
+          subTitle={donutCenter.secondary}
+          labels={datum => tooltipContents(datum)}
+          data={[{ x: 'used', y: used }, { x: 'available', y: available }]}
+          colorScale={[chart_global_success_Color_100.value, chart_global_Fill_Color_200.value]}
         />
       </div>
     </div>);
