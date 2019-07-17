@@ -39,11 +39,6 @@ describe('<CreateCluster />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('open OSD creation dialog when needed', () => {
-    wrapper.find('.create-cluster-card').at(0).simulate('click');
-    expect(openModal).toBeCalled();
-  });
-
   describe('User with no quota', () => {
     it('should hide option to create managed and auto installed clusters', () => {
       wrapper = shallow(

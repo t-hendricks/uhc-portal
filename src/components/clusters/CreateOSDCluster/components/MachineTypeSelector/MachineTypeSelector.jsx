@@ -6,8 +6,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Radio, Gallery, GalleryItem } from '@patternfly/react-core';
 import { Spinner } from 'patternfly-react';
-import ErrorBox from '../../../../../common/ErrorBox';
-import { humanizeValueWithUnit } from '../../../../../../common/units';
+import ErrorBox from '../../../../common/ErrorBox';
+import { humanizeValueWithUnit } from '../../../../../common/units';
 
 class MachineTypeSelector extends React.Component {
   componentDidMount() {

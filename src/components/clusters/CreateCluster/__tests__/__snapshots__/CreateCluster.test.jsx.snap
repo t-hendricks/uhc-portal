@@ -12,10 +12,10 @@ exports[`<CreateCluster /> renders correctly 1`] = `
       <div
         className="flex-container"
       >
-        <Card
-          className="infra-card create-cluster-card"
-          component="a"
-          onClick={[Function]}
+        <Link
+          className="infra-card pf-c-card create-cluster-card"
+          replace={false}
+          to="/create/osd"
         >
           <div
             className="create-cluster-favorite-btn-container"
@@ -38,7 +38,7 @@ exports[`<CreateCluster /> renders correctly 1`] = `
           <CardBody>
             Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services.
           </CardBody>
-        </Card>
+        </Link>
         <Link
           className="infra-card pf-c-card create-cluster-card"
           replace={false}
@@ -60,6 +60,5 @@ exports[`<CreateCluster /> renders correctly 1`] = `
       </div>
     </div>
   </Card>
-  <Connect(ReduxForm) />
 </Fragment>
 `;

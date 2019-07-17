@@ -1,19 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CreateClusterModal from '../CreateClusterModal';
+import CreateOSDCluster from '../CreateOSDCluster';
 import ManagedClusterForm from '../ManagedClusterForm';
 
-describe('CreateClusterModal', () => {
-  let closeModal;
+describe('CreateOSDCluster', () => {
   let resetResponse;
+  let resetForm;
   let handleSubmit;
   let createClusterResponse;
   let managedWrapper;
 
   beforeEach(() => {
-    closeModal = jest.fn();
     resetResponse = jest.fn();
+    resetForm = jest.fn();
     handleSubmit = jest.fn();
     createClusterResponse = {
       error: false,
@@ -23,13 +23,11 @@ describe('CreateClusterModal', () => {
       cluster: null,
     };
 
-    managedWrapper = shallow(<CreateClusterModal
-      closeModal={closeModal}
+    managedWrapper = shallow(<CreateOSDCluster
       resetResponse={resetResponse}
+      resetForm={resetForm}
       handleSubmit={handleSubmit}
       createClusterResponse={createClusterResponse}
-      isManaged
-      isOpen
     />);
   });
 
@@ -43,8 +41,13 @@ describe('CreateClusterModal', () => {
       expect(handleSubmit).toBeCalled();
     });
 
-    it('should display ManagedClusterForm for managed CreateClusterModal', () => {
+    it('should display ManagedClusterForm for managed CreateOSDCluster', () => {
       expect(managedWrapper.find(ManagedClusterForm).exists()).toBe(true);
+    });
+
+    it('should call resetResponse and resetForm on mount', () => {
+      expect(resetResponse).toBeCalled();
+      expect(resetForm).toBeCalled();
     });
   });
 });
