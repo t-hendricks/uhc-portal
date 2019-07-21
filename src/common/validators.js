@@ -12,7 +12,7 @@ const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0
 const MAX_ROUTER_SHARD_LABEL = 63;
 
 // Maximum length for a cluster name
-const MAX_CLUSTER_NAME_LENGTH = 100;
+const MAX_CLUSTER_NAME_LENGTH = 50;
 
 // Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');
@@ -38,7 +38,7 @@ const checkClusterName = (value) => {
     return `Cluster name '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-name', or 'abc-123'.`;
   }
   if (value.length > MAX_CLUSTER_NAME_LENGTH) {
-    return 'Cluster names may not exceed 100 characters.';
+    return `Cluster names may not exceed ${MAX_CLUSTER_NAME_LENGTH} characters.`;
   }
   return undefined;
 };
