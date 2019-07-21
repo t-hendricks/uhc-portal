@@ -184,21 +184,36 @@ limitations under the License.
   }
 }
 
-#cl-details-btns{
-  float: right;
+.vertical-align{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #cl-details-btns > * {
-  margin-left: 10px !important;
+  margin-left: 10px;
 }
 
-.cl-details-cluster-name h1 {
-  margin-top: 0;
-  display: inline-block;
+#cl-details-btns a{
+  @media (max-width: 480px) {
+    margin-left: 0;
+  }
+}
+
+#cl-details-cluster-name{
+  flex-wrap: wrap;
+}
+
+#cl-details-cluster-name h1 {
   font-weight: bold;
+  margin: 0;
+  @media (max-width: 480px) {
+    display: block;
+    padding-bottom: 20px;
+  }
 }
 
-.cl-details-cluster-name .spinner {
+#cl-details-cluster-name .spinner {
   display: inline-block;
   margin-left: 15px;
   vertical-align: middle;
@@ -421,7 +436,6 @@ p.notfound {
   --pf-c-content--a--TextDecoration: var(--pf-c-content--a--hover--TextDecoration);
 }
 
-
 #cl-details-top{
   background-color: #ffffff;
   margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
@@ -430,6 +444,10 @@ p.notfound {
   padding-top: var(--pf-c-page__main-section--PaddingTop) ;
   padding-right: var(--pf-c-page__main-section--PaddingRight);
   padding-left: var(--pf-c-page__main-section--PaddingLeft);
+}
+
+#cl-details-top .pf-c-breadcrumb {
+  padding-bottom: 15px;
 }
 
 #clusterdetails-content .container-fluid {

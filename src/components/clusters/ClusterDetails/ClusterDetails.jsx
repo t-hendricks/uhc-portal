@@ -15,8 +15,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import result from 'lodash/result';
 
-import { TabContent } from '@patternfly/react-core';
-import { EmptyState } from 'patternfly-react';
+import { TabContent, EmptyState } from '@patternfly/react-core';
 
 import SubscriptionCompliancy from './components/SubscriptionCompliancy';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
