@@ -13,7 +13,7 @@ exports[`<ResourceUsage /> should render 1`] = `
   <ClusterUtilizationChart
     donutId="memory_donut"
     humanize={true}
-    title="MEMORY"
+    title="Memory"
     total={0}
     unit="B"
     used={0}

@@ -133,8 +133,15 @@ limitations under the License.
   border: 2px solid $color-pf-gold-400 !important;
 }
 
-.center {
+.metrics-chart {
   text-align: center;
+  font-weight: bold;
+}
+
+// fix donut chart tooltip css
+.metrics-chart .VictoryContainer > div > svg > g > text > tspan {
+ stroke: none !important;
+ fill: #ffffff !important;
 }
 
 // Enable word wrapping in the cluster list
