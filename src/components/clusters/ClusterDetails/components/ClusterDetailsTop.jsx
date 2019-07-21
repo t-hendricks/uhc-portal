@@ -4,9 +4,9 @@ import get from 'lodash/result';
 
 import { LinkContainer } from 'react-router-bootstrap';
 import {
-  Row, Col, Grid, Breadcrumb, Spinner, HintBlock,
+  Row, Col, Grid, Breadcrumb, Spinner,
 } from 'patternfly-react';
-import { Button } from '@patternfly/react-core';
+import { Button, Alert } from '@patternfly/react-core';
 
 import clusterStates from '../../common/clusterStates';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
@@ -36,21 +36,18 @@ function ClusterDetailsTop(props) {
   };
 
   const IdentityProvidersHint = () => (
-    <HintBlock
+    <Alert
       id="idpHint"
+      variant="warning"
+      isInline
       title="Missing Identity Providers"
-      body={(
-        <React.Fragment>
-          <p>
-            Identity Providers determine how users log into the cluster.
-            {' '}
-            <Button variant="link" isInline onClick={openIDPModal}>Add OAuth Configuration</Button>
-            {' '}
-            to allow  others to log in.
-          </p>
-        </React.Fragment>
-        )}
-    />
+    >
+      Identity Providers determine how users log into the cluster.
+      {' '}
+      <Button variant="link" isInline onClick={openIDPModal}>Add OAuth Configuration</Button>
+      {' '}
+      to allow  others to log in.
+    </Alert>
   );
 
   const consoleURL = cluster.console ? cluster.console.url : false;
