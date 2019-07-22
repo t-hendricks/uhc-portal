@@ -37,6 +37,9 @@ const mapDispatchToProps = dispatch => ({
       },
       nodes: {
         compute: parseInt(formData.nodes_compute, 10),
+        compute_machine_type: {
+          id: formData.machine_type,
+        },
       },
       multi_az: formData.multi_az,
       network: {

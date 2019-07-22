@@ -4,6 +4,7 @@ import { Field } from 'redux-form';
 import { Col } from 'patternfly-react';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import CloudRegionComboBox from './CloudRegionComboBox';
+import MachineTypesSelector from './MachineTypeSelector';
 import validators, { required } from '../../../../../common/validators';
 import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
 import { ConfigurationHint, RegionsHint } from './CreateClusterModalHelper';
@@ -93,6 +94,13 @@ class ConfigurationForm extends React.Component {
             label="Deploy on multiple availability zones"
             disabled={pending}
             onChange={this.handleMultiAZChange}
+          />
+
+          <Field
+            component={MachineTypesSelector}
+            name="machine_type"
+            validate={required}
+            disabled={pending}
           />
         </Col>
         <Col sm={4}>
