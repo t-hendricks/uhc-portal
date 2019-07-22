@@ -733,9 +733,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
 `;
 
 exports[`<ClusterDetails /> Error should render error message 1`] = `
-<EmptyState
-  className=""
->
+<EmptyState>
   <ErrorBox
     message="Error retrieving cluster details"
     response={

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import get from 'lodash/result';
 
 import { LinkContainer } from 'react-router-bootstrap';
+import { Spinner } from 'patternfly-react';
 import {
-  Row, Col, Grid, Breadcrumb, Spinner,
-} from 'patternfly-react';
-import { Button, Alert } from '@patternfly/react-core';
+  Breadcrumb, BreadcrumbItem, Button, Alert, Split, SplitItem,
+} from '@patternfly/react-core';
 
 import clusterStates from '../../common/clusterStates';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
@@ -80,42 +80,41 @@ function ClusterDetailsTop(props) {
 
   return (
     <div id="cl-details-top">
-      <Grid fluid>
-        <Row>
-          <Col sm={8}>
-            <Breadcrumb>
-              <LinkContainer to="">
-                <Breadcrumb.Item href="#">
-                    Clusters
-                </Breadcrumb.Item>
-              </LinkContainer>
-              <Breadcrumb.Item active>
-                {clusterName}
-              </Breadcrumb.Item>
-            </Breadcrumb>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={6} className="cl-details-cluster-name">
-            <h1>{clusterName}</h1>
-            { isRefreshing ? <Spinner loading /> : false }
-            { error && <ErrorTriangle errorMessage={errorMessage} />}
-          </Col>
-          <Col lg={5} lgOffset={1}>
-            <span id="cl-details-btns">
-              {launchConsole}
-              {actions}
-              <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
-            </span>
-          </Col>
-        </Row>
-        {cluster.managed && !hasIdentityProviders && (
-        <Row>
-          <Col sm={12}>
-            {clusterIdentityProviders.pending ? <Spinner loading /> : <IdentityProvidersHint />}
-          </Col>
-        </Row>)}
-      </Grid>
+      <Split>
+        <SplitItem>
+          <Breadcrumb>
+            <LinkContainer to="">
+              <BreadcrumbItem to="#">
+                Clusters
+              </BreadcrumbItem>
+            </LinkContainer>
+            <BreadcrumbItem isActive>
+              {clusterName}
+            </BreadcrumbItem>
+          </Breadcrumb>
+        </SplitItem>
+      </Split>
+      <Split id="cl-details-cluster-name">
+        <SplitItem isFilled>
+          <h1 className="vertical-align">{clusterName}</h1>
+          { isRefreshing ? <Spinner loading /> : false }
+          { error && <ErrorTriangle errorMessage={errorMessage} />}
+        </SplitItem>
+        <SplitItem>
+          <span id="cl-details-btns">
+            {launchConsole}
+            {actions}
+            <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
+          </span>
+        </SplitItem>
+      </Split>
+      {cluster.managed && !hasIdentityProviders && (
+      <Split>
+        <SplitItem isFilled>
+          {clusterIdentityProviders.pending ? <Spinner loading /> : <IdentityProvidersHint />}
+        </SplitItem>
+      </Split>)
+          }
       {children}
     </div>
   );
