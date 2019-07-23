@@ -95,11 +95,14 @@ function ClusterDetailsTop(props) {
         </SplitItem>
       </Split>
       <Split id="cl-details-cluster-name">
-        <SplitItem isFilled>
+        <SplitItem>
           <h1 className="vertical-align">{clusterName}</h1>
-          { isRefreshing ? <Spinner loading /> : false }
-          { error && <ErrorTriangle errorMessage={errorMessage} />}
         </SplitItem>
+        <SplitItem>
+          { isRefreshing && <Spinner loading className="cluster-details-spinner" /> }
+          { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-details-warning" /> }
+        </SplitItem>
+        <SplitItem isFilled />
         <SplitItem>
           <span id="cl-details-btns">
             {launchConsole}

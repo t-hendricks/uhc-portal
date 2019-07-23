@@ -36,31 +36,6 @@ limitations under the License.
 .cluster-list {
   margin: 0px 30px 0 30px;
 }
-.cluster-list .table-grid-pf-column-header {
-  color: #838383;
-}
-.cluster-list .table-grid-pf .table-grid-pf-column-header .btn.btn-link {
-  color: #0189cf;
-}
-
-.cluster-list-top-row .spinner, .cluster-list-top-row .clusterlist-error-triangle {
-  margin-top: 25px;
-  margin-left: 60px;
-  @media (min-width: 1300px) {
-    margin-left: 0;
-  }
-}
-
-.cluster-list-top-row {
-  margin-bottom: 20px;
-}
-.cluster-list-row:hover{
-  background-color: $color-pf-blue-25;
-}
-
-.save-space-for-spinner {
-  min-width: 24px;
-}
 
 // Styles for the page where the user can download the access tokens, for use
 // with API clients:
@@ -82,30 +57,8 @@ limitations under the License.
   padding-right: 10px;
 }
 
-.btn-text-link {
-  color: #0189cf;
-  border: none;
-  font-size: 14px;
-}
-
-.btn-text-link:-moz-focusring {
-  outline: 1px dotted ButtonText;
-}
-
-.btn:-moz-focusring {
-  outline: 1px dotted ButtonText;
-}
-
-.layout-pf {
-  height: 100%;
-}
-
 .navbar-pf-vertical .navbar-brand .navbar-brand-name {
   height: 33px;
-}
-
-.container-pf-nav-pf-vertical {
-  height: 100%
 }
 
 .coc-content {
@@ -145,6 +98,7 @@ limitations under the License.
 }
 
 // Enable word wrapping in the cluster list
+// TODO -- fix, .table-grid-pf-row was the PF3 one
 .cluster-list .table-grid-pf-row > div {
   white-space: normal;
   word-wrap: break-word;
@@ -170,7 +124,7 @@ limitations under the License.
     text-transform: none;
     display: inline;
     font-weight: bold;
-    color: #808080;
+    color: var(--pf-global--Color--400);
 
     &.ellipsize {
       display: block;
@@ -213,16 +167,25 @@ limitations under the License.
   }
 }
 
-#cl-details-cluster-name .spinner {
+.cluster-error-triangle {
+  margin-left: 16px;
+}
+
+.cluster-list-spinner {
+  margin-top: 6px;
+  margin-left: 16px;
+}
+
+.cluster-details-spinner {
   display: inline-block;
-  margin-left: 15px;
-  vertical-align: middle;
+  margin-left: 16px;
+  margin-top: 2px;
 }
 
 .displayNameForm {
   .control-label, .name-label {
     text-transform: uppercase;
-    color: #808080;
+    color: var(--pf-global--Color--400);
     font-weight: normal;
   }
   .form-group {
@@ -285,35 +248,6 @@ limitations under the License.
                                   supported by Chrome and Opera */
 }
 
-@media (min-width: 768px) {
-  .row:not(:last-child) {
-    .left-col {
-      position: relative;
-    }
-
-    .left-col::after {
-      /* Gap filler hack to handle left column being shorter than right */
-      background-color: $color-pf-black-300;
-      bottom: -60px;
-      content: '';
-      height: 60px;
-      right: -1px;
-      position: absolute;
-      width: 1px;
-    }
-  }
-}
-
-.left-col {
-  border-right: 1px solid $color-pf-black-300;
-  font-size: 14px;
-
-  @media (max-width: 767px) {
-    /* Target devices narrower than 768px. */
-    border-right: none;
-  }
-}
-
 /* This is a browser default that does not get applied while embedded */
 ol.embedded-indent {
   padding-inline-start: 40px;
@@ -373,14 +307,15 @@ ol.embedded-indent {
 }
 
 footer {
-  background-color: $navbar-pf-vertical-bg-color;
+  background-color: var(--pf-global--BackgroundColor--dark-100);
 
   ul {
     margin: 10px auto;
 
     li {
       display: inline;
-      border-right: 1px solid;
+      border-right-width: var(--pf-global--BorderWidth--sm);
+      border-right-style: solid;
 
       &:last-child {
         border-right: none;
@@ -390,7 +325,7 @@ footer {
 
   a, a:hover, a:focus, a:visited {
     margin: auto 10px;
-    color: $navbar-pf-color;
+    color: var(--pf-global--Color--200);
   }
 }
 
@@ -410,34 +345,31 @@ p.notfound {
 .ca-textarea {
   min-height: 442px;
   min-width: 497px;
-  font-family: monospace;
+  font-family: var(--pf-global--FontFamily--monospace);
   white-space: nowrap;
 }
 
 // make <Button> look like <a href= ...>
 .buttonHref {
-  background: none!important;
-  color: inherit;
+  background: none !important;
+  color: var(--pf-c-content--a--Color);
   border: none;
-  padding: 0!important;
+  padding: 0 !important;
   font: inherit;
-  border-bottom: 1px solid #0000EE;
+  font-weight: var(--pf-global--link--FontWeight);
   cursor: pointer;
   box-shadow: none;
-}
-
-.pf4-buttonHref {
   border-bottom: none;
-  color: var(--pf-c-content--a--Color);
   text-decoration: var(--pf-c-content--a--TextDecoration);
 }
-.pf4-buttonHref:hover {
+
+.buttonHref:hover {
   --pf-c-content--a--Color: var(--pf-c-content--a--hover--Color);
   --pf-c-content--a--TextDecoration: var(--pf-c-content--a--hover--TextDecoration);
 }
 
 #cl-details-top{
-  background-color: #ffffff;
+  background-color: var(--pf-global--BackgroundColor--100);
   margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
   margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
   margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
@@ -473,11 +405,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .long-stale {
-  color: #cc0000;
+  color: var(--pf-global--danger-color--100);
 };
 
 .stale {
-  color: #ec7a08;
+  color: var(--pf-global--warning-color--100);
 };
 
 // To display organization names in the masthead, we need a longer max length for the text
@@ -503,7 +435,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-bottom: 20px;
   padding-left: 22px;
   font-weight: 800;
-  color: white;
+  color: var(--pf-global--Color--light-100);
 }
 
 .infra-logo {

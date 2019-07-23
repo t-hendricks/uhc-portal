@@ -43,7 +43,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
   >
     <SplitItem
       className=""
-      isFilled={true}
+      isFilled={false}
     >
       <h1
         className="vertical-align"
@@ -51,6 +51,14 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
         test-liza
       </h1>
     </SplitItem>
+    <SplitItem
+      className=""
+      isFilled={false}
+    />
+    <SplitItem
+      className=""
+      isFilled={true}
+    />
     <SplitItem
       className=""
       isFilled={false}

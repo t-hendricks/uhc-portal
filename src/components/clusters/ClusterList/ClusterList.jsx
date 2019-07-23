@@ -153,9 +153,9 @@ class ClusterList extends Component {
                 hasQuota={hasQuota}
               />
             </SplitItem>
-            <SplitItem className="save-space-for-spinner">
-              {pending && <Spinner loading />}
-              {error && <ErrorTriangle errorMessage={errorMessage} />}
+            <SplitItem>
+              { pending && <Spinner loading className="cluster-list-spinner" /> }
+              { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }
             </SplitItem>
             <SplitItem isFilled />
             <SplitItem>
