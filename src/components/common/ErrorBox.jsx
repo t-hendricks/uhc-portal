@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from '@patternfly/react-core';
 
-function ErrorBox({ message, response }) {
+function ErrorBox({ message, response, ...extraProps }) {
   return (
-    <Alert variant="danger" isInline title={message}>
+    <Alert variant="danger" isInline title={message} {...extraProps}>
       <span>{response.errorMessage}</span>
       <br />
       <span>{`Operation ID: ${response.operationID || 'N/A'}`}</span>

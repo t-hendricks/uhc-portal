@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button, Form, Modal, Grid, Col, Row, FormControl, ControlLabel, FormGroup,
-} from 'patternfly-react';
-import ModalHeader from '../../../common/Modal/components/ModalHeader';
+
+import { Form, TextInput } from '@patternfly/react-core';
+
+import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
 
 
@@ -38,9 +38,9 @@ class EditDisplayNameDialog extends Component {
     }
   }
 
-  setValue(event) {
+  setValue(newValue) {
     this.setState({
-      currentValue: event.target.value,
+      currentValue: newValue,
     });
   }
 
@@ -56,48 +56,34 @@ class EditDisplayNameDialog extends Component {
     };
 
     const hasError = editClusterResponse.error && (
-      <ErrorBox message="Error changing display name" response={editClusterResponse} />
+      <ErrorBox id="edit-cl-name-error" message="Error changing display name" response={editClusterResponse} />
     );
 
     const handleSubmit = () => { submit(clusterID, currentValue); };
 
     return isOpen && (
-    <Modal show onHide={cancelEdit}>
-      <Modal.Header>
-        <ModalHeader title="Edit Display Name" onClose={cancelEdit} />
-      </Modal.Header>
-      <Modal.Body>
-        <Form horizontal onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
-          <Grid>
-            <Row>
-              <Col sm={5}>
-                {hasError}
-                <FormGroup>
-                  <ControlLabel>
-                    Display Name
-                  </ControlLabel>
-                  <FormControl
-                    type="text"
-                    value={currentValue}
-                    placeholder="Enter display name"
-                    onChange={e => this.setValue(e)}
-                    autoFocus
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-          </Grid>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button bsStyle="default" onClick={cancelEdit}>
-            Cancel
-        </Button>
-        <Button bsStyle="primary" onClick={handleSubmit}>
-            Edit
-        </Button>
-      </Modal.Footer>
-    </Modal>
+
+      <Modal
+        title="Edit Display Name"
+        onClose={cancelEdit}
+        primaryText="Edit"
+        secondaryText="Cancel"
+        onPrimaryClick={handleSubmit}
+        onSecondaryClick={cancelEdit}
+      >
+        <React.Fragment>
+          {hasError}
+          <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
+            <TextInput
+              type="text"
+              value={currentValue}
+              placeholder="Enter display name"
+              onChange={newValue => this.setValue(newValue)}
+              aria-label="Edit display name"
+            />
+          </Form>
+        </React.Fragment>
+      </Modal>
     );
   }
 }
