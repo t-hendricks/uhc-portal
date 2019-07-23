@@ -175,7 +175,7 @@ if [ "$1" == "beta" ]; then
     # of the Insights platform:
     rm --recursive --force build
     yarn build-embedded --beta=true
-    push_build "prod-beta" "https://api.openshift.com"
+    push_build "prod-beta" "https://api.stage.openshift.com"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
     # Install dependencies:
