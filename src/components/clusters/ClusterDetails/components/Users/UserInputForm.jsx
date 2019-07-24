@@ -1,7 +1,11 @@
 import React from 'react';
 import {
-  Spinner, Col, FormControl, Button,
+  Spinner,
 } from 'patternfly-react';
+import {
+  Button, GridItem, Grid, TextInput, Select, SelectOption, SelectVariant,
+} from '@patternfly/react-core';
+
 import PropTypes from 'prop-types';
 
 class UserInputForm extends React.Component {
@@ -9,13 +13,19 @@ class UserInputForm extends React.Component {
     super(props);
     this.state = {
       currentValue: '',
+      isSelectOpen: false,
     };
     this.updateCurrentValue = this.updateCurrentValue.bind(this);
+    this.onSelectToggle = this.onSelectToggle.bind(this);
     this.save = this.save.bind(this);
   }
 
-  updateCurrentValue(e) {
-    this.setState({ currentValue: e.target.value });
+  onSelectToggle() {
+    this.setState(state => ({ isSelectOpen: !state.isSelectOpen }));
+  }
+
+  updateCurrentValue(value) {
+    this.setState({ currentValue: value });
   }
 
   save() {
@@ -26,37 +36,43 @@ class UserInputForm extends React.Component {
   }
 
   render() {
-    const { currentValue } = this.state;
+    const { currentValue, isSelectOpen } = this.state;
     const { pending } = this.props;
     return (
-      <React.Fragment>
-        <Col sm={2}>
-          <FormControl
+      <Grid gutter="sm">
+        <GridItem sm={2}>
+          <TextInput
+            aria-label="User name or ID"
             type="text"
             value={currentValue}
             placeholder="Enter a user name or user ID"
-            onChange={e => this.updateCurrentValue(e)}
-            disabled={pending}
+            onChange={this.updateCurrentValue}
+            isDisabled={pending}
           />
-        </Col>
-        <Col sm={2}>
-          <FormControl componentClass="select" disabled={pending}>
-            <option>
-              dedicated-admins
-            </option>
-          </FormControl>
-        </Col>
-        <Col sm={1}>
-          <Button onClick={this.save} disabled={pending || !currentValue.length}>
+        </GridItem>
+        <GridItem sm={2}>
+          <Select
+            variant={SelectVariant.single}
+            isDisabled={pending}
+            onToggle={this.onSelectToggle}
+            onSelect={() => { this.setState({ isSelectOpen: false }); }}
+            isExpanded={isSelectOpen}
+            aria-label="Group"
+          >
+            {[<SelectOption key="dedicated-admins" value="dedicated-admins" />]}
+          </Select>
+        </GridItem>
+        <GridItem sm={1}>
+          <Button onClick={this.save} isDisabled={pending || !currentValue.length}>
             Add
           </Button>
-        </Col>
+        </GridItem>
         {pending && (
-          <Col sm={1}>
+          <GridItem sm={1}>
             <Spinner loading />
-          </Col>
+          </GridItem>
         )}
-      </React.Fragment>
+      </Grid>
     );
   }
 }

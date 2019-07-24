@@ -3,7 +3,6 @@
 exports[`<Overview /> should render 1`] = `
 <Fragment>
   <Card
-    className="pf4-details-card"
     id="metrics-charts"
   >
     <CardHeader>
@@ -139,9 +138,7 @@ exports[`<Overview /> should render 1`] = `
       />
     </CardBody>
   </Card>
-  <Card
-    className="pf4-details-card"
-  >
+  <Card>
     <CardHeader>
       Details
     </CardHeader>
