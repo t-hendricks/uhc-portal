@@ -2,6 +2,7 @@
 
 exports[`<ErroBox /> should render with Operation ID 1`] = `
 <Alert
+  className="error-box"
   isInline={true}
   title="some error message"
   variant="danger"
@@ -18,6 +19,7 @@ exports[`<ErroBox /> should render with Operation ID 1`] = `
 
 exports[`<ErroBox /> should render without Operation ID 1`] = `
 <Alert
+  className="error-box"
   isInline={true}
   title="some error description"
   variant="danger"

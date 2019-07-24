@@ -2,7 +2,7 @@
 
 exports[`<ClusterListFilter /> renders correctly 1`] = `
 <TextInput
-  aria-label={null}
+  aria-label="Filter"
   className="cluster-list-filter"
   isDisabled={false}
   isReadOnly={false}
@@ -17,7 +17,7 @@ exports[`<ClusterListFilter /> renders correctly 1`] = `
 
 exports[`<ClusterListFilter /> renders correctly 2`] = `
 <TextInput
-  aria-label={null}
+  aria-label="Filter"
   className="cluster-list-filter"
   isDisabled={false}
   isReadOnly={false}

@@ -56,7 +56,7 @@ class EditDisplayNameDialog extends Component {
     };
 
     const hasError = editClusterResponse.error && (
-      <ErrorBox id="edit-cl-name-error" message="Error changing display name" response={editClusterResponse} />
+      <ErrorBox message="Error changing display name" response={editClusterResponse} />
     );
 
     const handleSubmit = () => { submit(clusterID, currentValue); };
