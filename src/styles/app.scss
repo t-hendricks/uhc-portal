@@ -505,3 +505,39 @@ h4.pf-c-alert__title {
   margin-top: 55px;
   padding-top: 0;
 }
+
+// Temporary hacks to make PF4 components look okay in a PF3 form
+// TODO: REMOVE THIS when we move the rest of the cluster creation form to PF4
+.node-type-input {
+  font-size: 12px;
+  margin-top: 25px;
+  .error {
+    color: #cc0000;
+  }
+  label.pf-c-radio__label {
+    font-size: 12px;
+  }
+  label.pf-c-radio__label > h4 {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+  .pf-c-radio {
+    margin-bottom: 5px;
+  }
+  .node-type-label {
+    // emulating HTML <label> styles to match the rest of the form
+    font-weight: 600;
+    max-width: 100%;
+    margin-bottom: 5px;
+  }
+  .pf-l-gallery { 
+    grid-template-columns: 50% 50%;
+  }
+}
+
+// Make sure modal has scrollbar if it overflows, otherwise it'll look weird
+// https://jira.coreos.com/browse/SDA-382
+.right-side-modal-pf .modal-content {
+  overflow-y: auto;
+}

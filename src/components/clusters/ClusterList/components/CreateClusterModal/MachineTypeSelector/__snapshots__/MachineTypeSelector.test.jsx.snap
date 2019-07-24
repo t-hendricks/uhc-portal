@@ -1,0 +1,400 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MachineTypeSelector /> when machine type list needs to be fetched renders correctly 1`] = `
+<MachineTypeSelector
+  getMachineTypes={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  input={
+    Object {
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      },
+    }
+  }
+  machineTypes={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": false,
+      "machineTypes": Array [],
+      "pending": false,
+    }
+  }
+  meta={Object {}}
+>
+  <Spinner
+    className=""
+    inline={true}
+    inverse={false}
+    loading={true}
+    size="sm"
+  >
+    <div
+      className="spinner spinner-sm spinner-inline"
+    />
+  </Spinner>
+  Loading node types..
+</MachineTypeSelector>
+`;
+
+exports[`<MachineTypeSelector /> when the machine types list is available renders correctly 1`] = `
+<MachineTypeSelector
+  cloudProviderID="aws"
+  getMachineTypes={[MockFunction]}
+  input={
+    Object {
+      "onChange": [MockFunction],
+    }
+  }
+  machineTypes={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": true,
+      "machineTypes": Array [],
+      "pending": false,
+      "types": Array [
+        Object {
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 16,
+          },
+          "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+          "id": "r5.4xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 137438953472,
+          },
+          "name": "Memory optimized - R5.4XLarge",
+        },
+        Object {
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 4,
+          },
+          "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+          "id": "r5.xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 34359738368,
+          },
+          "name": "Memory optimized - R5.XLarge",
+        },
+      ],
+    }
+  }
+  meta={Object {}}
+>
+  <div
+    className="node-type-input"
+  >
+    <div
+      className="node-type-label"
+    >
+      Node type
+    </div>
+    <Gallery>
+      <div
+        className="pf-l-gallery"
+      >
+        <GalleryItem
+          key="r5.4xlarge"
+        >
+          <div>
+            <Radio
+              className=""
+              id="machineTypeRadio.r5.4xlarge"
+              isDisabled={false}
+              isValid={true}
+              label={
+                <React.Fragment>
+                  <h4>
+                    16 vCPU 128 GiB RAM
+                  </h4>
+                  Memory optimized - R5.4XLarge
+                </React.Fragment>
+              }
+              onChange={[Function]}
+              value="r5.4xlarge"
+            >
+              <div
+                className="pf-c-radio"
+              >
+                <input
+                  aria-invalid={false}
+                  className="pf-c-radio__input"
+                  disabled={false}
+                  id="machineTypeRadio.r5.4xlarge"
+                  onChange={[Function]}
+                  type="radio"
+                  value="r5.4xlarge"
+                />
+                <label
+                  className="pf-c-radio__label"
+                  htmlFor="machineTypeRadio.r5.4xlarge"
+                >
+                  <h4>
+                    16 vCPU 128 GiB RAM
+                  </h4>
+                  Memory optimized - R5.4XLarge
+                </label>
+              </div>
+            </Radio>
+          </div>
+        </GalleryItem>
+        <GalleryItem
+          key="r5.xlarge"
+        >
+          <div>
+            <Radio
+              className=""
+              id="machineTypeRadio.r5.xlarge"
+              isDisabled={false}
+              isValid={true}
+              label={
+                <React.Fragment>
+                  <h4>
+                    4 vCPU 32 GiB RAM
+                  </h4>
+                  Memory optimized - R5.XLarge
+                </React.Fragment>
+              }
+              onChange={[Function]}
+              value="r5.xlarge"
+            >
+              <div
+                className="pf-c-radio"
+              >
+                <input
+                  aria-invalid={false}
+                  className="pf-c-radio__input"
+                  disabled={false}
+                  id="machineTypeRadio.r5.xlarge"
+                  onChange={[Function]}
+                  type="radio"
+                  value="r5.xlarge"
+                />
+                <label
+                  className="pf-c-radio__label"
+                  htmlFor="machineTypeRadio.r5.xlarge"
+                >
+                  <h4>
+                    4 vCPU 32 GiB RAM
+                  </h4>
+                  Memory optimized - R5.XLarge
+                </label>
+              </div>
+            </Radio>
+          </div>
+        </GalleryItem>
+      </div>
+    </Gallery>
+  </div>
+</MachineTypeSelector>
+`;
+
+exports[`<MachineTypeSelector /> when the request is pending renders correctly 1`] = `
+<MachineTypeSelector
+  cloudProviderID="aws"
+  getMachineTypes={[MockFunction]}
+  input={
+    Object {
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      },
+    }
+  }
+  machineTypes={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": false,
+      "pending": true,
+      "types": Array [],
+    }
+  }
+  meta={Object {}}
+>
+  <Spinner
+    className=""
+    inline={true}
+    inverse={false}
+    loading={true}
+    size="sm"
+  >
+    <div
+      className="spinner spinner-sm spinner-inline"
+    />
+  </Spinner>
+  Loading node types..
+</MachineTypeSelector>
+`;
+
+exports[`<MachineTypeSelector /> when there was an error renders correctly 1`] = `
+<MachineTypeSelector
+  cloudProviderID="aws"
+  getMachineTypes={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "isThrow": false,
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  input={
+    Object {
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      },
+    }
+  }
+  machineTypes={
+    Object {
+      "error": true,
+      "errorMessage": "This is an error message",
+      "fulfilled": false,
+      "machineTypes": Array [],
+      "pending": false,
+    }
+  }
+  meta={Object {}}
+>
+  <ErrorBox
+    message="Error loading node types"
+    response={
+      Object {
+        "error": true,
+        "errorMessage": "This is an error message",
+        "fulfilled": false,
+        "machineTypes": Array [],
+        "pending": false,
+      }
+    }
+  >
+    <Alert
+      isInline={true}
+      title="Error loading node types"
+      variant="danger"
+    >
+      <div
+        aria-label="Danger Alert"
+        className="pf-c-alert pf-m-inline pf-m-danger"
+      >
+        <AlertIcon
+          variant="danger"
+        >
+          <div
+            className="pf-c-alert__icon"
+          >
+            <ExclamationCircleIcon
+              color="currentColor"
+              noVerticalAlign={false}
+              size="sm"
+              title={null}
+            >
+              <svg
+                aria-hidden={true}
+                aria-labelledby={null}
+                fill="currentColor"
+                height="1em"
+                role="img"
+                style={
+                  Object {
+                    "verticalAlign": "-0.125em",
+                  }
+                }
+                viewBox="0 0 512 512"
+                width="1em"
+              >
+                <path
+                  d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                  transform=""
+                />
+              </svg>
+            </ExclamationCircleIcon>
+          </div>
+        </AlertIcon>
+        <h4
+          className="pf-c-alert__title"
+        >
+          <span
+            className="pf-u-screen-reader"
+          >
+            Danger alert:
+          </span>
+          Error loading node types
+        </h4>
+        <div
+          className="pf-c-alert__description"
+        >
+          <span>
+            This is an error message
+          </span>
+          <br />
+          <span>
+            Operation ID: N/A
+          </span>
+        </div>
+      </div>
+    </Alert>
+  </ErrorBox>
+</MachineTypeSelector>
+`;
