@@ -16,48 +16,37 @@ limitations under the License.
 import helpers from '../../common/helpers';
 import { clustersConstants } from '../constants';
 
+const baseState = {
+  error: false,
+  errorMessage: '',
+  pending: false,
+  fulfilled: false,
+};
+
 const initialState = {
   clusters: {
+    ...baseState,
     valid: false,
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
     clusters: [],
   },
   details: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseState,
     cluster: null,
   },
   routerShards: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseState,
     routerShards: null,
   },
   createdCluster: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseState,
     cluster: null,
   },
   editedCluster: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseState,
     cluster: null,
   },
   editedRouterShards: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseState,
     routerShards: null,
   },
 };

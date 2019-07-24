@@ -3,7 +3,13 @@ import * as viewConstants from './viewConstants';
 import * as viewPaginationConstants from './viewPaginationConstants';
 import * as userConstants from './userConstants';
 import * as cloudProviderConstants from './cloudProviderConstants';
+import * as machineTypesConstants from './machineTypesConstants';
 
 export {
-  clustersConstants, viewConstants, viewPaginationConstants, userConstants, cloudProviderConstants,
+  clustersConstants,
+  viewConstants,
+  viewPaginationConstants,
+  userConstants,
+  cloudProviderConstants,
+  machineTypesConstants,
 };

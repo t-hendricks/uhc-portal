@@ -186,7 +186,7 @@ class InstructionsAWSIPI extends React.Component {
                 </div>
                 )}
             >
-              <button type="button" className="popover-hover buttonHref pf4-buttonHref">
+              <button type="button" className="popover-hover buttonHref">
                 <span className="pficon pficon-info" />
                 {' '}
                 Do you need to troubleshoot your installation?

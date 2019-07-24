@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import get from 'lodash/result';
 
 import { LinkContainer } from 'react-router-bootstrap';
+import { Spinner } from 'patternfly-react';
 import {
-  Button, Row, Col, Grid, DropdownButton, ButtonGroup, Breadcrumb, Spinner, HintBlock,
-} from 'patternfly-react';
+  Breadcrumb, BreadcrumbItem, Button, Alert, Split, SplitItem,
+} from '@patternfly/react-core';
 
 import clusterStates from '../../common/clusterStates';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
@@ -35,52 +36,42 @@ function ClusterDetailsTop(props) {
   };
 
   const IdentityProvidersHint = () => (
-    <HintBlock
+    <Alert
       id="idpHint"
+      variant="warning"
+      isInline
       title="Missing Identity Providers"
-      body={(
-        <React.Fragment>
-          <p>
-            Identity Providers determine how users log into the cluster.
-            {' '}
-            <Button className="buttonHref" onClick={openIDPModal}>Add OAuth Configuration</Button>
-            {' '}
-            to allow  others to log in.
-          </p>
-        </React.Fragment>
-        )}
-    />
+    >
+      Identity Providers determine how users log into the cluster.
+      {' '}
+      <Button variant="link" isInline onClick={openIDPModal}>Add OAuth Configuration</Button>
+      {' '}
+      to allow  others to log in.
+    </Alert>
   );
 
   const consoleURL = cluster.console ? cluster.console.url : false;
 
   const launchConsole = consoleURL && (cluster.state !== clusterStates.UNINSTALLING) ? (
     <a href={consoleURL} target="_blank" rel="noreferrer" className="pull-left">
-      <Button bsStyle="primary">Launch Console</Button>
+      <Button variant="primary">Launch Console</Button>
     </a>)
     : (
-      <Button bsStyle="primary" disabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
+      <Button variant="primary" isDisabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
         Launch Console
       </Button>
     );
 
   const actions = (
-    <DropdownButton
-      id="actions"
-      bsStyle="default"
-      title="Actions"
-      pullRight
+    <ClusterActionsDropdown
       disabled={!cluster.canEdit && !cluster.canDelete}
-    >
-      <ClusterActionsDropdown
-        cluster={cluster}
-        organization={organization.details}
-        showConsoleButton={false}
-        showIDPButton
-        hasIDP={hasIdentityProviders}
-        idpID={get(clusterIdentityProviders, 'clusterIDPList[0].id', '')}
-      />
-    </DropdownButton>
+      cluster={cluster}
+      organization={organization.details}
+      showConsoleButton={false}
+      showIDPButton
+      hasIDP={hasIdentityProviders}
+      idpID={get(clusterIdentityProviders, 'clusterIDPList[0].id', '')}
+    />
   );
 
   const isRefreshing = pending
@@ -89,42 +80,44 @@ function ClusterDetailsTop(props) {
 
   return (
     <div id="cl-details-top">
-      <Grid fluid>
-        <Row>
-          <Col sm={8}>
-            <Breadcrumb>
-              <LinkContainer to="">
-                <Breadcrumb.Item href="#">
-                    Clusters
-                </Breadcrumb.Item>
-              </LinkContainer>
-              <Breadcrumb.Item active>
-                {clusterName}
-              </Breadcrumb.Item>
-            </Breadcrumb>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={6} className="cl-details-cluster-name">
-            <h1>{clusterName}</h1>
-            { isRefreshing ? <Spinner loading /> : false }
-            { error && <ErrorTriangle errorMessage={errorMessage} />}
-          </Col>
-          <Col lg={5} lgOffset={1}>
-            <ButtonGroup id="cl-details-btns">
-              {launchConsole}
-              {actions}
-              <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
-            </ButtonGroup>
-          </Col>
-        </Row>
-        {cluster.managed && !hasIdentityProviders && (
-        <Row>
-          <Col sm={12}>
-            {clusterIdentityProviders.pending ? <Spinner loading /> : <IdentityProvidersHint />}
-          </Col>
-        </Row>)}
-      </Grid>
+      <Split>
+        <SplitItem>
+          <Breadcrumb>
+            <LinkContainer to="">
+              <BreadcrumbItem to="#">
+                Clusters
+              </BreadcrumbItem>
+            </LinkContainer>
+            <BreadcrumbItem isActive>
+              {clusterName}
+            </BreadcrumbItem>
+          </Breadcrumb>
+        </SplitItem>
+      </Split>
+      <Split id="cl-details-cluster-name">
+        <SplitItem>
+          <h1 className="vertical-align">{clusterName}</h1>
+        </SplitItem>
+        <SplitItem>
+          { isRefreshing && <Spinner loading className="cluster-details-spinner" /> }
+          { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-details-warning" /> }
+        </SplitItem>
+        <SplitItem isFilled />
+        <SplitItem>
+          <span id="cl-details-btns">
+            {launchConsole}
+            {actions}
+            <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
+          </span>
+        </SplitItem>
+      </Split>
+      {cluster.managed && !hasIdentityProviders && (
+      <Split>
+        <SplitItem isFilled>
+          {clusterIdentityProviders.pending ? <Spinner loading /> : <IdentityProvidersHint />}
+        </SplitItem>
+      </Split>)
+          }
       {children}
     </div>
   );

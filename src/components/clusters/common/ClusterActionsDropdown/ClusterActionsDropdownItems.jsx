@@ -1,0 +1,143 @@
+import React from 'react';
+import { DropdownItem } from '@patternfly/react-core';
+import clusterStates from '../clusterStates';
+
+// This is not a React component! It returns an array of DropDownItem instances.
+// Do not render it directly.
+function dropDownItems({
+  cluster, showConsoleButton, showIDPButton, openModal, hasIDP, idpID,
+}) {
+  const baseProps = {
+    component: 'button',
+  };
+
+  const uninstallingMessage = <span>The cluster is being uninstalled</span>;
+  const consoleDisabledMessage = <span>Admin console is not yet available for this cluster</span>;
+  const selfManagedEditMessage = <span>Self managed cluster cannot be edited</span>;
+  const notReadyMessage = <span>This cluster is not ready</span>;
+
+  const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
+  const isClusterReady = cluster.state === clusterStates.READY;
+
+  const isUninstallingProps = isClusterUninstalling
+    ? { isDisabled: true, tooltip: uninstallingMessage } : {};
+
+  const getKey = item => `${cluster.id}.menu.${item}`;
+
+  const getAdminConosleProps = () => {
+    const consoleURL = cluster.console ? cluster.console.url : false;
+
+    const adminConsoleEnabled = {
+      ...baseProps,
+      href: consoleURL,
+      target: '_blank',
+      rel: 'noreferrer',
+      key: getKey('adminconsole'),
+    };
+
+    const adminConsoleDisabled = {
+      ...baseProps,
+      isDisabled: true,
+      tooltip: isClusterUninstalling ? uninstallingMessage : consoleDisabledMessage,
+      key: getKey('adminconsole'),
+    };
+
+    return consoleURL && !isClusterUninstalling ? adminConsoleEnabled : adminConsoleDisabled;
+  };
+
+  const getEditClusterProps = () => {
+    const editClusterBaseProps = {
+      ...baseProps,
+      key: getKey('editcluster'),
+    };
+    const selfManagedEditProps = {
+      ...editClusterBaseProps,
+      isDisabled: true,
+      tooltip: isClusterUninstalling ? uninstallingMessage : selfManagedEditMessage,
+    };
+
+    const managedEditProps = {
+      ...editClusterBaseProps,
+      onClick: () => openModal('edit-cluster', cluster),
+    };
+
+    const disabledManagedEditProps = {
+      ...editClusterBaseProps,
+      isDisabled: true,
+      tooltip: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
+    };
+
+    if (!cluster.managed) {
+      return selfManagedEditProps;
+    }
+    return isClusterReady ? managedEditProps : disabledManagedEditProps;
+  };
+
+  const getEditDisplayNameProps = () => {
+    const editDisplayNameBaseProps = {
+      ...baseProps,
+      key: getKey('editdisplayname'),
+    };
+    const editDisplayNameProps = {
+      ...editDisplayNameBaseProps,
+      onClick: () => openModal('edit-display-name', cluster),
+    };
+    const editDisplayNamePropsUninstalling = {
+      ...editDisplayNameBaseProps,
+      ...isUninstallingProps,
+    };
+
+    return isClusterUninstalling ? editDisplayNamePropsUninstalling : editDisplayNameProps;
+  };
+
+  const getDeleteItemProps = () => {
+    const baseDeleteProps = {
+      ...baseProps,
+      key: getKey('deletecluster'),
+    };
+
+    const deleteModalData = {
+      clusterID: cluster.id,
+      clusterName: cluster.name,
+    };
+
+    return isClusterUninstalling
+      ? { ...baseDeleteProps, ...isUninstallingProps }
+      : { ...baseDeleteProps, onClick: () => openModal('delete-cluster', deleteModalData) };
+  };
+
+  const shouldShowIDPButton = showIDPButton && hasIDP && idpID;
+
+  const getDeleteIDPProps = () => {
+    const removeIDPModalData = {
+      clusterID: cluster.id,
+      idpID,
+    };
+
+    return {
+      ...baseProps,
+      key: getKey('deleteidp'),
+      onClick: () => openModal('delete-idp', removeIDPModalData),
+    };
+  };
+
+  const adminConsoleItemProps = getAdminConosleProps();
+  const editClusterItemProps = getEditClusterProps();
+  const editDisplayNameItemProps = getEditDisplayNameProps();
+  const deleteClusterItemProps = getDeleteItemProps();
+  const deleteIDPItemProps = getDeleteIDPProps();
+  const showDelete = cluster.canDelete && cluster.managed;
+
+  return [
+    showConsoleButton && (
+    <DropdownItem {...adminConsoleItemProps}>Launch Admin Console</DropdownItem>),
+    cluster.canEdit && (
+    <DropdownItem {...editDisplayNameItemProps}>Edit Display Name</DropdownItem>),
+    cluster.canEdit && <DropdownItem {...editClusterItemProps}>Edit Cluster</DropdownItem>,
+    showDelete && <DropdownItem {...deleteClusterItemProps}>Delete Cluster</DropdownItem>,
+    shouldShowIDPButton && (
+    <DropdownItem {...deleteIDPItemProps}>Remove Identity Provider</DropdownItem>),
+  ].filter(Boolean);
+}
+
+export default dropDownItems;

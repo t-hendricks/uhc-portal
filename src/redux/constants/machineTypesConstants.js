@@ -1,0 +1,4 @@
+const GET_MACHINE_TYPES = 'GET_MACHINE_TYPES';
+
+export default GET_MACHINE_TYPES;
+export { GET_MACHINE_TYPES };

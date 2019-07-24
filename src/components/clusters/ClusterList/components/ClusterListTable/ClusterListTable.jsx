@@ -1,9 +1,6 @@
 import result from 'lodash/result';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  DropdownKebab,
-} from 'patternfly-react';
 import { Tooltip, TooltipPosition } from '@patternfly/react-core';
 import {
   Table,
@@ -74,13 +71,12 @@ function ClusterListTable(props) {
     );
 
     const dropDownKebab = (
-      <DropdownKebab id={`${cluster.id}-dropdown`} pullRight>
-        <ClusterActionsDropdown
-          cluster={cluster}
-          showConsoleButton
-          showIDPButton={false}
-        />
-      </DropdownKebab>
+      <ClusterActionsDropdown
+        cluster={cluster}
+        showConsoleButton
+        showIDPButton={false}
+        isKebab
+      />
     );
 
 

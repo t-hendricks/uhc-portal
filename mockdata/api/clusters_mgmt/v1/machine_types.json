@@ -1,0 +1,161 @@
+{
+  "kind": "MachineTypeList",
+  "page": 1,
+  "size": 8,
+  "total": 8,
+  "items": [
+    {
+      "kind": "MachineType",
+      "name": "General purpose - C5.2XLarge",
+      "id": "c5.2xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/c5.2xlarge",
+      "memory": {
+        "value": 17179869184,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 8,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      }
+    },
+    {
+      "kind": "MachineType",
+      "name": "General purpose - C5.4XLarge",
+      "id": "c5.4xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/c5.4xlarge",
+      "memory": {
+        "value": 34359738368,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 16,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      }
+    },
+    {
+      "kind": "MachineType",
+      "name": "General purpose - M5.2XLarge",
+      "id": "m5.2xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/m5.2xlarge",
+      "memory": {
+        "value": 34359738368,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 8,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      }
+    },
+    {
+      "kind": "MachineType",
+      "name": "General purpose - M5.4XLarge",
+      "id": "m5.4xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+      "memory": {
+        "value": 68719476736,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 16,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      }
+    },
+    {
+      "kind": "MachineType",
+      "name": "General purpose - M5.XLarge",
+      "id": "m5.xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+      "memory": {
+        "value": 17179869184,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 4,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      }
+    },
+    {
+      "kind": "MachineType",
+      "name": "Memory optimized - R5.2XLarge",
+      "id": "r5.2xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/r5.2xlarge",
+      "memory": {
+        "value": 68719476736,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 8,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      }
+    },
+    {
+      "kind": "MachineType",
+      "name": "Memory optimized - R5.4XLarge",
+      "id": "r5.4xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+      "memory": {
+        "value": 137438953472,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 16,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      }
+    },
+    {
+      "kind": "MachineType",
+      "name": "Memory optimized - R5.XLarge",
+      "id": "r5.xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+      "memory": {
+        "value": 34359738368,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 4,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      }
+    }
+  ]
+}
+

@@ -11,6 +11,7 @@ import { LogsReducer } from '../../components/clusters/ClusterDetails/components
 import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersModal/IdentityProvidersReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/Users/UsersReducer';
 import globalErrorReducer from './globalErrorReducer';
+import machineTypesReducer from './machineTypesReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -25,6 +26,7 @@ const reducers = {
   identityProviders: IdentityProvidersReducer,
   clusterUsers: clusterUsersReducer,
   globalError: globalErrorReducer,
+  machineTypes: machineTypesReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

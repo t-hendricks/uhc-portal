@@ -15,12 +15,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
     <dt>
       Total
        
-      <span
-        className="lowerCase"
-      >
-        v
-      </span>
-      CPU
+      vCPU
     </dt>
     <dd>
       0
@@ -238,12 +233,7 @@ exports[`<DetailsRight /> should render 1`] = `
     <dt>
       Total
        
-      <span
-        className="lowerCase"
-      >
-        v
-      </span>
-      CPU
+      vCPU
     </dt>
     <dd>
       0

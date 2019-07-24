@@ -7,7 +7,8 @@ import { viewConstants } from '../../../redux/constants';
 import { viewActions } from '../../../redux/actions/viewOptionsActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 import { userActions } from '../../../redux/actions/userActions';
-import hasQuota from './ClusterListSelectors';
+
+import hasQuota from '../../../common/quotaSelector';
 
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
