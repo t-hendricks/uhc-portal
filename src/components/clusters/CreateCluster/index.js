@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 import CreateCluster from './CreateCluster';
 import { modalActions } from '../../common/Modal/ModalActions';
-
-export const hasQuota = quotas => quotas.some(quota => quota.allowed - quota.reserved > 0);
+import hasQuota from '../../../common/quotaSelector';
 
 export const mapDispatchToProps = {
   openModal: modalActions.openModal,

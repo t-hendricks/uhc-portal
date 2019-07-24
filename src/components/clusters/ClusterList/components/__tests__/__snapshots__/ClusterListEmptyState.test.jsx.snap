@@ -1,6 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ClusterListEmptyState /> renders correctly 1`] = `
+exports[`<ClusterListEmptyState /> renders correctly with no quota 1`] = `
+<EmptyState
+  variant="large"
+>
+  <EmptyStateIcon
+    color="#c00"
+    icon={[Function]}
+  />
+  <Title
+    headingLevel="h4"
+    size="2xl"
+  >
+    No OpenShift clusters to display
+  </Title>
+  <EmptyStateBody>
+    The Red Hat OpenShift Cluster Manager helps you create, register, and manage OpenShift 4 clusters. To get started, create your first cluster.
+  </EmptyStateBody>
+  <Link
+    replace={false}
+    to="/install"
+  >
+    <Button>
+      Create Cluster
+    </Button>
+  </Link>
+</EmptyState>
+`;
+
+exports[`<ClusterListEmptyState /> renders correctly with quota 1`] = `
 <EmptyState
   variant="large"
 >

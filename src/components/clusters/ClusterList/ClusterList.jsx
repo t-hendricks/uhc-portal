@@ -113,6 +113,7 @@ class ClusterList extends Component {
       openModal,
       invalidateClusters,
       quota,
+      hasQuota,
       errorMessage,
       organization,
     } = this.props;
@@ -134,7 +135,7 @@ class ClusterList extends Component {
       return (
         <React.Fragment>
           <GlobalErrorBox />
-          <ClusterListEmptyState />
+          <ClusterListEmptyState hasQuota={hasQuota} />
         </React.Fragment>
       );
     }
@@ -146,7 +147,7 @@ class ClusterList extends Component {
           <h1>Clusters</h1>
           <Split>
             <SplitItem>
-              <Link to="/create">
+              <Link to={hasQuota ? '/create' : '/install'}>
                 <Button>Create Cluster</Button>
               </Link>
             </SplitItem>
@@ -207,6 +208,7 @@ ClusterList.propTypes = {
   organization: PropTypes.object.isRequired,
   quota: PropTypes.object.isRequired,
   getQuota: PropTypes.func.isRequired,
+  hasQuota: PropTypes.bool.isRequired,
   getOrganization: PropTypes.func.isRequired,
   operationID: PropTypes.string,
 };
