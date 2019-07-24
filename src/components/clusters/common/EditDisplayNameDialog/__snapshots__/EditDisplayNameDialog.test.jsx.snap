@@ -1,236 +1,853 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
-<Modal
-  animation={true}
-  autoFocus={true}
-  backdrop={true}
-  bsClass="modal"
-  dialogComponentClass={[Function]}
-  enforceFocus={true}
-  keyboard={true}
-  manager={
-    ModalManager {
-      "add": [Function],
-      "containers": Array [],
-      "data": Array [],
-      "handleContainerOverflow": true,
-      "hideSiblingNodes": true,
-      "isTopModal": [Function],
-      "modals": Array [],
-      "remove": [Function],
+<EditDisplayNameDialog
+  closeModal={[MockFunction]}
+  clusterID="some-id"
+  displayName="some-name"
+  editClusterResponse={
+    Object {
+      "error": false,
+      "errorMessage": "",
     }
   }
-  onHide={[Function]}
-  renderBackdrop={[Function]}
-  restoreFocus={true}
-  show={true}
+  isOpen={true}
+  onClose={[MockFunction]}
+  resetResponse={[MockFunction]}
+  submit={[MockFunction]}
 >
-  <ModalHeader
-    bsClass="modal-header"
-    closeButton={false}
-    closeLabel="Close"
+  <Modal
+    isSmall={true}
+    onClose={[Function]}
+    onPrimaryClick={[Function]}
+    onSecondaryClick={[Function]}
+    primaryText="Edit"
+    secondaryText="Cancel"
+    title="Edit Display Name"
   >
-    <ModalHeader
+    <Modal
+      actions={
+        Array [
+          <Button
+            onClick={[Function]}
+            variant="secondary"
+          >
+            Cancel
+          </Button>,
+          <Button
+            onClick={[Function]}
+            type="submit"
+            variant="primary"
+          >
+            Edit
+          </Button>,
+        ]
+      }
+      ariaDescribedById=""
+      className=""
+      hideTitle={false}
+      isLarge={false}
+      isOpen={true}
+      isSmall={true}
       onClose={[Function]}
       title="Edit Display Name"
-    />
-  </ModalHeader>
-  <ModalBody
-    bsClass="modal-body"
-    componentClass="div"
-  >
-    <Form
-      bsClass="form"
-      componentClass="form"
-      horizontal={true}
-      inline={false}
-      onSubmit={[Function]}
     >
-      <Grid
-        bsClass="container"
-        componentClass="div"
-        fluid={false}
-      >
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={5}
-          >
-            <FormGroup
-              bsClass="form-group"
+      <Portal
+        containerInfo={
+          <div>
+            <div
+              class="pf-c-backdrop"
             >
-              <ControlLabel
-                bsClass="control-label"
-                srOnly={false}
+              <div
+                class="pf-l-bullseye"
               >
-                Display Name
-              </ControlLabel>
-              <FormControl
-                autoFocus={true}
-                bsClass="form-control"
-                componentClass="input"
-                onChange={[Function]}
-                placeholder="Enter display name"
-                type="text"
-                value=""
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-      </Grid>
-    </Form>
-  </ModalBody>
-  <ModalFooter
-    bsClass="modal-footer"
-    componentClass="div"
-  >
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="default"
-      disabled={false}
-      onClick={[Function]}
-    >
-      Cancel
-    </Button>
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="primary"
-      disabled={false}
-      onClick={[Function]}
-    >
-      Edit
-    </Button>
-  </ModalFooter>
-</Modal>
+                <div
+                  aria-describedby="pf-modal-0"
+                  aria-label="Edit Display Name"
+                  aria-modal="true"
+                  class="pf-c-modal-box pf-m-sm"
+                  role="dialog"
+                >
+                  <button
+                    aria-label="Close"
+                    class="pf-c-button pf-m-plain"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 352 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    class="pf-c-title pf-m-2xl"
+                  >
+                     
+                    Edit Display Name
+                     
+                  </h1>
+                  <div
+                    class="pf-c-modal-box__body"
+                    id="pf-modal-0"
+                  >
+                    <form
+                      class="pf-c-form"
+                      novalidate=""
+                    >
+                      <input
+                        aria-invalid="false"
+                        aria-label="Edit display name"
+                        class="pf-c-form-control"
+                        placeholder="Enter display name"
+                        type="text"
+                        value=""
+                      />
+                    </form>
+                  </div>
+                  <div
+                    class="pf-c-modal-box__footer"
+                  >
+                     
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-primary"
+                      type="submit"
+                    >
+                      Edit
+                    </button>
+                     
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      >
+        <ModalContent
+          actions={
+            Array [
+              <Button
+                onClick={[Function]}
+                variant="secondary"
+              >
+                Cancel
+              </Button>,
+              <Button
+                onClick={[Function]}
+                type="submit"
+                variant="primary"
+              >
+                Edit
+              </Button>,
+            ]
+          }
+          ariaDescribedById=""
+          className=""
+          hideTitle={false}
+          id="pf-modal-0"
+          isLarge={false}
+          isOpen={true}
+          isSmall={true}
+          onClose={[Function]}
+          title="Edit Display Name"
+        >
+          <Backdrop>
+            <div
+              className="pf-c-backdrop"
+            >
+              <FocusTrap
+                _createFocusTrap={[Function]}
+                active={true}
+                className="pf-l-bullseye"
+                focusTrapOptions={
+                  Object {
+                    "clickOutsideDeactivates": true,
+                  }
+                }
+                paused={false}
+                tag="div"
+              >
+                <div
+                  className="pf-l-bullseye"
+                >
+                  <ModalBox
+                    className=""
+                    id="pf-modal-0"
+                    isLarge={false}
+                    isSmall={true}
+                    style={Object {}}
+                    title="Edit Display Name"
+                  >
+                    <div
+                      aria-describedby="pf-modal-0"
+                      aria-label="Edit Display Name"
+                      aria-modal="true"
+                      className="pf-c-modal-box pf-m-sm"
+                      role="dialog"
+                      style={Object {}}
+                    >
+                      <ModalBoxCloseButton
+                        onClose={[Function]}
+                      >
+                        <Button
+                          aria-label="Close"
+                          className=""
+                          onClick={[Function]}
+                          variant="plain"
+                        >
+                          <button
+                            aria-disabled={null}
+                            aria-label="Close"
+                            className="pf-c-button pf-m-plain"
+                            disabled={false}
+                            onClick={[Function]}
+                            tabIndex={null}
+                            type="button"
+                          >
+                            <TimesIcon
+                              color="currentColor"
+                              noVerticalAlign={false}
+                              size="sm"
+                              title={null}
+                            >
+                              <svg
+                                aria-hidden={true}
+                                aria-labelledby={null}
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                style={
+                                  Object {
+                                    "verticalAlign": "-0.125em",
+                                  }
+                                }
+                                viewBox="0 0 352 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  transform=""
+                                />
+                              </svg>
+                            </TimesIcon>
+                          </button>
+                        </Button>
+                      </ModalBoxCloseButton>
+                      <ModalBoxHeader
+                        hideTitle={false}
+                      >
+                        <Title
+                          className=""
+                          headingLevel="h1"
+                          size="2xl"
+                        >
+                          <h1
+                            className="pf-c-title pf-m-2xl"
+                          >
+                             
+                            Edit Display Name
+                             
+                          </h1>
+                        </Title>
+                      </ModalBoxHeader>
+                      <ModalBoxBody
+                        id="pf-modal-0"
+                      >
+                        <div
+                          className="pf-c-modal-box__body"
+                          id="pf-modal-0"
+                        >
+                          <Form
+                            onSubmit={[Function]}
+                          >
+                            <form
+                              className="pf-c-form"
+                              noValidate={true}
+                              onSubmit={[Function]}
+                            >
+                              <TextInput
+                                aria-label="Edit display name"
+                                className=""
+                                isDisabled={false}
+                                isReadOnly={false}
+                                isRequired={false}
+                                isValid={true}
+                                onChange={[Function]}
+                                placeholder="Enter display name"
+                                type="text"
+                                value=""
+                              >
+                                <input
+                                  aria-invalid={false}
+                                  aria-label="Edit display name"
+                                  className="pf-c-form-control"
+                                  disabled={false}
+                                  onChange={[Function]}
+                                  placeholder="Enter display name"
+                                  readOnly={false}
+                                  required={false}
+                                  type="text"
+                                  value=""
+                                />
+                              </TextInput>
+                            </form>
+                          </Form>
+                        </div>
+                      </ModalBoxBody>
+                      <ModalBoxFooter>
+                        <div
+                          className="pf-c-modal-box__footer"
+                        >
+                           
+                          <Button
+                            key="cancel"
+                            onClick={[Function]}
+                            variant="secondary"
+                          >
+                            <button
+                              aria-disabled={null}
+                              aria-label={null}
+                              className="pf-c-button pf-m-secondary"
+                              disabled={false}
+                              onClick={[Function]}
+                              tabIndex={null}
+                              type="button"
+                            >
+                              Cancel
+                            </button>
+                          </Button>
+                          <Button
+                            key="confirm"
+                            onClick={[Function]}
+                            type="submit"
+                            variant="primary"
+                          >
+                            <button
+                              aria-disabled={null}
+                              aria-label={null}
+                              className="pf-c-button pf-m-primary"
+                              disabled={false}
+                              onClick={[Function]}
+                              tabIndex={null}
+                              type="submit"
+                            >
+                              Edit
+                            </button>
+                          </Button>
+                           
+                        </div>
+                      </ModalBoxFooter>
+                    </div>
+                  </ModalBox>
+                </div>
+              </FocusTrap>
+            </div>
+          </Backdrop>
+        </ModalContent>
+      </Portal>
+    </Modal>
+  </Modal>
+</EditDisplayNameDialog>
 `;
 
 exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = `
-<Modal
-  animation={true}
-  autoFocus={true}
-  backdrop={true}
-  bsClass="modal"
-  dialogComponentClass={[Function]}
-  enforceFocus={true}
-  keyboard={true}
-  manager={
-    ModalManager {
-      "add": [Function],
-      "containers": Array [],
-      "data": Array [],
-      "handleContainerOverflow": true,
-      "hideSiblingNodes": true,
-      "isTopModal": [Function],
-      "modals": Array [],
-      "remove": [Function],
+<EditDisplayNameDialog
+  closeModal={[MockFunction]}
+  clusterID="some-id"
+  displayName="some-name"
+  editClusterResponse={
+    Object {
+      "error": true,
+      "errorMessage": "this is an error",
     }
   }
-  onHide={[Function]}
-  renderBackdrop={[Function]}
-  restoreFocus={true}
-  show={true}
+  isOpen={true}
+  onClose={[MockFunction]}
+  resetResponse={[MockFunction]}
+  submit={[MockFunction]}
 >
-  <ModalHeader
-    bsClass="modal-header"
-    closeButton={false}
-    closeLabel="Close"
+  <Modal
+    isSmall={true}
+    onClose={[Function]}
+    onPrimaryClick={[Function]}
+    onSecondaryClick={[Function]}
+    primaryText="Edit"
+    secondaryText="Cancel"
+    title="Edit Display Name"
   >
-    <ModalHeader
+    <Modal
+      actions={
+        Array [
+          <Button
+            onClick={[Function]}
+            variant="secondary"
+          >
+            Cancel
+          </Button>,
+          <Button
+            onClick={[Function]}
+            type="submit"
+            variant="primary"
+          >
+            Edit
+          </Button>,
+        ]
+      }
+      ariaDescribedById=""
+      className=""
+      hideTitle={false}
+      isLarge={false}
+      isOpen={true}
+      isSmall={true}
       onClose={[Function]}
       title="Edit Display Name"
-    />
-  </ModalHeader>
-  <ModalBody
-    bsClass="modal-body"
-    componentClass="div"
-  >
-    <Form
-      bsClass="form"
-      componentClass="form"
-      horizontal={true}
-      inline={false}
-      onSubmit={[Function]}
     >
-      <Grid
-        bsClass="container"
-        componentClass="div"
-        fluid={false}
-      >
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <Col
-            bsClass="col"
-            componentClass="div"
-            sm={5}
-          >
-            <ErrorBox
-              message="Error changing display name"
-              response={
-                Object {
-                  "erorMessage": "this is an error",
-                  "error": true,
-                }
-              }
-            />
-            <FormGroup
-              bsClass="form-group"
+      <Portal
+        containerInfo={
+          <div>
+            <div
+              class="pf-c-backdrop"
             >
-              <ControlLabel
-                bsClass="control-label"
-                srOnly={false}
+              <div
+                class="pf-l-bullseye"
               >
-                Display Name
-              </ControlLabel>
-              <FormControl
-                autoFocus={true}
-                bsClass="form-control"
-                componentClass="input"
-                onChange={[Function]}
-                placeholder="Enter display name"
-                type="text"
-                value="some-name"
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-      </Grid>
-    </Form>
-  </ModalBody>
-  <ModalFooter
-    bsClass="modal-footer"
-    componentClass="div"
-  >
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="default"
-      disabled={false}
-      onClick={[Function]}
-    >
-      Cancel
-    </Button>
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="primary"
-      disabled={false}
-      onClick={[Function]}
-    >
-      Edit
-    </Button>
-  </ModalFooter>
-</Modal>
+                <div
+                  aria-describedby="pf-modal-4"
+                  aria-label="Edit Display Name"
+                  aria-modal="true"
+                  class="pf-c-modal-box pf-m-sm"
+                  role="dialog"
+                >
+                  <button
+                    aria-label="Close"
+                    class="pf-c-button pf-m-plain"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 352 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    class="pf-c-title pf-m-2xl"
+                  >
+                     
+                    Edit Display Name
+                     
+                  </h1>
+                  <div
+                    class="pf-c-modal-box__body"
+                    id="pf-modal-4"
+                  >
+                    <div
+                      aria-label="Danger Alert"
+                      class="pf-c-alert pf-m-inline pf-m-danger"
+                      id="edit-cl-name-error"
+                    >
+                      <div
+                        class="pf-c-alert__icon"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                            transform=""
+                          />
+                        </svg>
+                      </div>
+                      <h4
+                        class="pf-c-alert__title"
+                      >
+                        <span
+                          class="pf-u-screen-reader"
+                        >
+                          Danger alert:
+                        </span>
+                        Error changing display name
+                      </h4>
+                      <div
+                        class="pf-c-alert__description"
+                      >
+                        <span>
+                          this is an error
+                        </span>
+                        <br />
+                        <span>
+                          Operation ID: N/A
+                        </span>
+                      </div>
+                    </div>
+                    <form
+                      class="pf-c-form"
+                      novalidate=""
+                    >
+                      <input
+                        aria-invalid="false"
+                        aria-label="Edit display name"
+                        class="pf-c-form-control"
+                        placeholder="Enter display name"
+                        type="text"
+                        value="some-name"
+                      />
+                    </form>
+                  </div>
+                  <div
+                    class="pf-c-modal-box__footer"
+                  >
+                     
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-primary"
+                      type="submit"
+                    >
+                      Edit
+                    </button>
+                     
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      >
+        <ModalContent
+          actions={
+            Array [
+              <Button
+                onClick={[Function]}
+                variant="secondary"
+              >
+                Cancel
+              </Button>,
+              <Button
+                onClick={[Function]}
+                type="submit"
+                variant="primary"
+              >
+                Edit
+              </Button>,
+            ]
+          }
+          ariaDescribedById=""
+          className=""
+          hideTitle={false}
+          id="pf-modal-4"
+          isLarge={false}
+          isOpen={true}
+          isSmall={true}
+          onClose={[Function]}
+          title="Edit Display Name"
+        >
+          <Backdrop>
+            <div
+              className="pf-c-backdrop"
+            >
+              <FocusTrap
+                _createFocusTrap={[Function]}
+                active={true}
+                className="pf-l-bullseye"
+                focusTrapOptions={
+                  Object {
+                    "clickOutsideDeactivates": true,
+                  }
+                }
+                paused={false}
+                tag="div"
+              >
+                <div
+                  className="pf-l-bullseye"
+                >
+                  <ModalBox
+                    className=""
+                    id="pf-modal-4"
+                    isLarge={false}
+                    isSmall={true}
+                    style={Object {}}
+                    title="Edit Display Name"
+                  >
+                    <div
+                      aria-describedby="pf-modal-4"
+                      aria-label="Edit Display Name"
+                      aria-modal="true"
+                      className="pf-c-modal-box pf-m-sm"
+                      role="dialog"
+                      style={Object {}}
+                    >
+                      <ModalBoxCloseButton
+                        onClose={[Function]}
+                      >
+                        <Button
+                          aria-label="Close"
+                          className=""
+                          onClick={[Function]}
+                          variant="plain"
+                        >
+                          <button
+                            aria-disabled={null}
+                            aria-label="Close"
+                            className="pf-c-button pf-m-plain"
+                            disabled={false}
+                            onClick={[Function]}
+                            tabIndex={null}
+                            type="button"
+                          >
+                            <TimesIcon
+                              color="currentColor"
+                              noVerticalAlign={false}
+                              size="sm"
+                              title={null}
+                            >
+                              <svg
+                                aria-hidden={true}
+                                aria-labelledby={null}
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                style={
+                                  Object {
+                                    "verticalAlign": "-0.125em",
+                                  }
+                                }
+                                viewBox="0 0 352 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  transform=""
+                                />
+                              </svg>
+                            </TimesIcon>
+                          </button>
+                        </Button>
+                      </ModalBoxCloseButton>
+                      <ModalBoxHeader
+                        hideTitle={false}
+                      >
+                        <Title
+                          className=""
+                          headingLevel="h1"
+                          size="2xl"
+                        >
+                          <h1
+                            className="pf-c-title pf-m-2xl"
+                          >
+                             
+                            Edit Display Name
+                             
+                          </h1>
+                        </Title>
+                      </ModalBoxHeader>
+                      <ModalBoxBody
+                        id="pf-modal-4"
+                      >
+                        <div
+                          className="pf-c-modal-box__body"
+                          id="pf-modal-4"
+                        >
+                          <ErrorBox
+                            id="edit-cl-name-error"
+                            message="Error changing display name"
+                            response={
+                              Object {
+                                "error": true,
+                                "errorMessage": "this is an error",
+                              }
+                            }
+                          >
+                            <Alert
+                              id="edit-cl-name-error"
+                              isInline={true}
+                              title="Error changing display name"
+                              variant="danger"
+                            >
+                              <div
+                                aria-label="Danger Alert"
+                                className="pf-c-alert pf-m-inline pf-m-danger"
+                                id="edit-cl-name-error"
+                              >
+                                <AlertIcon
+                                  variant="danger"
+                                >
+                                  <div
+                                    className="pf-c-alert__icon"
+                                  >
+                                    <ExclamationCircleIcon
+                                      color="currentColor"
+                                      noVerticalAlign={false}
+                                      size="sm"
+                                      title={null}
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        aria-labelledby={null}
+                                        fill="currentColor"
+                                        height="1em"
+                                        role="img"
+                                        style={
+                                          Object {
+                                            "verticalAlign": "-0.125em",
+                                          }
+                                        }
+                                        viewBox="0 0 512 512"
+                                        width="1em"
+                                      >
+                                        <path
+                                          d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                                          transform=""
+                                        />
+                                      </svg>
+                                    </ExclamationCircleIcon>
+                                  </div>
+                                </AlertIcon>
+                                <h4
+                                  className="pf-c-alert__title"
+                                >
+                                  <span
+                                    className="pf-u-screen-reader"
+                                  >
+                                    Danger alert:
+                                  </span>
+                                  Error changing display name
+                                </h4>
+                                <div
+                                  className="pf-c-alert__description"
+                                >
+                                  <span>
+                                    this is an error
+                                  </span>
+                                  <br />
+                                  <span>
+                                    Operation ID: N/A
+                                  </span>
+                                </div>
+                              </div>
+                            </Alert>
+                          </ErrorBox>
+                          <Form
+                            onSubmit={[Function]}
+                          >
+                            <form
+                              className="pf-c-form"
+                              noValidate={true}
+                              onSubmit={[Function]}
+                            >
+                              <TextInput
+                                aria-label="Edit display name"
+                                className=""
+                                isDisabled={false}
+                                isReadOnly={false}
+                                isRequired={false}
+                                isValid={true}
+                                onChange={[Function]}
+                                placeholder="Enter display name"
+                                type="text"
+                                value="some-name"
+                              >
+                                <input
+                                  aria-invalid={false}
+                                  aria-label="Edit display name"
+                                  className="pf-c-form-control"
+                                  disabled={false}
+                                  onChange={[Function]}
+                                  placeholder="Enter display name"
+                                  readOnly={false}
+                                  required={false}
+                                  type="text"
+                                  value="some-name"
+                                />
+                              </TextInput>
+                            </form>
+                          </Form>
+                        </div>
+                      </ModalBoxBody>
+                      <ModalBoxFooter>
+                        <div
+                          className="pf-c-modal-box__footer"
+                        >
+                           
+                          <Button
+                            key="cancel"
+                            onClick={[Function]}
+                            variant="secondary"
+                          >
+                            <button
+                              aria-disabled={null}
+                              aria-label={null}
+                              className="pf-c-button pf-m-secondary"
+                              disabled={false}
+                              onClick={[Function]}
+                              tabIndex={null}
+                              type="button"
+                            >
+                              Cancel
+                            </button>
+                          </Button>
+                          <Button
+                            key="confirm"
+                            onClick={[Function]}
+                            type="submit"
+                            variant="primary"
+                          >
+                            <button
+                              aria-disabled={null}
+                              aria-label={null}
+                              className="pf-c-button pf-m-primary"
+                              disabled={false}
+                              onClick={[Function]}
+                              tabIndex={null}
+                              type="submit"
+                            >
+                              Edit
+                            </button>
+                          </Button>
+                           
+                        </div>
+                      </ModalBoxFooter>
+                    </div>
+                  </ModalBox>
+                </div>
+              </FocusTrap>
+            </div>
+          </Backdrop>
+        </ModalContent>
+      </Portal>
+    </Modal>
+  </Modal>
+</EditDisplayNameDialog>
 `;
