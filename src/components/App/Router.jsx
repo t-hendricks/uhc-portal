@@ -22,6 +22,7 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import ClustersList from '../clusters/ClusterList';
 import ClusterDetails from '../clusters/ClusterDetails';
+import CreateCluster from '../clusters/CreateCluster';
 import InstallInfrastructure from '../clusters/install/InstallInfrastructure';
 import InstallAWS from '../clusters/install/InstallAWS';
 import InstallAWSUPI from '../clusters/install/InstallAWSUPI';
@@ -46,6 +47,7 @@ function Router(props) {
         <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
         <Route path="/install" component={InstallInfrastructure} />
         <Route path="/details/:id" component={ClusterDetails} />
+        <Route path="/create" component={CreateCluster} />
         <Route path="/" component={ClustersList} />
       </Switch>
     </ConnectedRouter>
