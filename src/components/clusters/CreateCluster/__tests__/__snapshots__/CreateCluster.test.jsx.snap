@@ -4,7 +4,7 @@ exports[`<CreateCluster /> renders correctly 1`] = `
 <Fragment>
   <Card>
     <div
-      className="pf-c-content create-cluster-page"
+      className="pf-c-content ocm-page"
     >
       <PageTitle
         title="Create a Cluster to Get Started"
