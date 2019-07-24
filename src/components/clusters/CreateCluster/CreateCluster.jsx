@@ -30,7 +30,7 @@ function CreateCluster({ openModal, hasQuota }) {
   );
 
   const ocpCard = (
-    <Link to="/install" className="infra-card pf-c-card create-cluster-card" target="_blank">
+    <Link to="/install" className="infra-card pf-c-card create-cluster-card">
       <CardHeader className="create-cluster-header">
         <img src={openShiftContainerPlatformLogo} alt="OpenShift Container Platform" className="create-cluster-logo" />
       </CardHeader>
