@@ -42,7 +42,6 @@ exports[`<CreateCluster /> renders correctly 1`] = `
         <Link
           className="infra-card pf-c-card create-cluster-card"
           replace={false}
-          target="_blank"
           to="/install"
         >
           <CardHeader
