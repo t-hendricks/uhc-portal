@@ -6,7 +6,7 @@ import {
 } from '@patternfly/react-core';
 import CLISection from './components/CLISection';
 import DownloadButton from './components/DownloadButton';
-import PageTitle from './components/PageTitle';
+import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
@@ -27,7 +27,7 @@ class InstructionsAWSIPI extends React.Component {
 
     return (
       <Card>
-        <div className="pf-l-grid pf-m-gutter install-page">
+        <div className="pf-l-grid pf-m-gutter ocm-page">
           <div className="pf-c-content">
 
             <PageTitle title="Install on AWS: Installer-Provisioned Infrastructure" />

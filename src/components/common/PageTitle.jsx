@@ -4,15 +4,15 @@ import {
   Split,
   SplitItem,
 } from '@patternfly/react-core';
-import openshiftLogo from '../../../../../../styles/images/Logo-Red_Hat-OpenShift-A-Standard-RGB.svg';
+import openshiftLogo from '../../styles/images/Logo-Red_Hat-OpenShift-A-Standard-RGB.svg';
 
 const PageTitle = ({ title }) => (
   <Split>
     <SplitItem>
-      <img src={openshiftLogo} alt="OpenShift" className="openshift-logo-install" />
+      <img src={openshiftLogo} alt="OpenShift" className="openshift-logo-page-title" />
     </SplitItem>
     <SplitItem isFilled>
-      <h1 className="install-page-title">{title}</h1>
+      <h1 className="ocm-page-title">{title}</h1>
     </SplitItem>
   </Split>
 );

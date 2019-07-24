@@ -442,7 +442,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   color: var(--pf-global--link--Color);
 }
 
-.openshift-logo-install {
+.openshift-logo-page-title {
   float: left;
   width: 100px;
   border-right-color: var(--pf-global--BorderColor--200);
@@ -452,7 +452,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-right: 10px;
 }
 
-.install-page-title {
+.ocm-page-title {
   padding-top: 2px;
 }
 
@@ -471,7 +471,7 @@ h4.pf-c-alert__title {
   margin-bottom: 20px;
 }
 
-.install-page, .create-cluster-page {
+.ocm-page {
   margin: 30px;
 }
 
@@ -535,7 +535,7 @@ h4.pf-c-alert__title {
     max-width: 100%;
     margin-bottom: 5px;
   }
-  .pf-l-gallery { 
+  .pf-l-gallery {
     grid-template-columns: 50% 50%;
   }
 }

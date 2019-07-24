@@ -10,7 +10,7 @@ import openShiftDedicatedLogo from '../../../styles/images/Logo-Red_Hat-OpenShif
 import openShiftContainerPlatformLogo from '../../../styles/images/Logo-Red_Hat-OpenShift-Container_Platform-A-Standard-RGB.svg';
 import FavoriteButton from '../../common/FavoriteButton';
 import CreateClusterModal from '../ClusterList/components/CreateClusterModal';
-import PageTitle from '../install/components/instructions/components/PageTitle';
+import PageTitle from '../../common/PageTitle';
 
 
 class CreateCluster extends React.Component {
@@ -73,7 +73,7 @@ class CreateCluster extends React.Component {
     return (
       <React.Fragment>
         <Card>
-          <div className="pf-c-content create-cluster-page">
+          <div className="pf-c-content ocm-page">
             <PageTitle title="Create a Cluster to Get Started" />
             <div className="flex-container">
               {hasQuota && (<React.Fragment>{osdCard}</React.Fragment>)}

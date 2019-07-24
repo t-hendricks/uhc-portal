@@ -4,13 +4,13 @@ import {
   CardBody,
 } from 'patternfly-react';
 import { Card } from '@patternfly/react-core';
-import PageTitle from './components/PageTitle';
+import PageTitle from '../../../../common/PageTitle';
 import upiLogo from '../../../../../styles/images/Icon_RH_Diagram_DevelopmentModel_RGB_Flat.png';
 import ipiLogo from '../../../../../styles/images/Icon_RH_Diagram_Lifecycle_RGB_Flat.png';
 
 const InstructionsAWS = () => (
   <Card>
-    <div className="pf-c-content install-page">
+    <div className="pf-c-content ocm-page">
       <PageTitle title="Install on AWS: Infrastructure Type" />
       <div className="flex-container">
         <Link to="/install/aws/installer-provisioned" className="aws-ipi-upi-infra-card infra-card">
