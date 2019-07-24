@@ -1,5 +1,6 @@
 // ClusterListEmptyState is the empty state (no clusters) for ClusterList
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   EmptyState,
@@ -12,7 +13,7 @@ import {
 import { OpenshiftIcon } from '@patternfly/react-icons';
 
 
-function ClusterListEmptyState() {
+function ClusterListEmptyState({ hasQuota }) {
   return (
     <EmptyState variant={EmptyStateVariant.large}>
       <EmptyStateIcon icon={OpenshiftIcon} color="#c00" />
@@ -24,11 +25,15 @@ function ClusterListEmptyState() {
         register, and manage OpenShift 4 clusters. To get started,
         create your first cluster.
       </EmptyStateBody>
-      <Link to="/create">
+      <Link to={hasQuota ? '/create' : '/install'}>
         <Button>Create Cluster</Button>
       </Link>
     </EmptyState>
   );
 }
+
+ClusterListEmptyState.propTypes = {
+  hasQuota: PropTypes.bool.isRequired,
+};
 
 export default ClusterListEmptyState;
