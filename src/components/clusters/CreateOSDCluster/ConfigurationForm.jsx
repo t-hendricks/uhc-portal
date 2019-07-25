@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import { Col } from 'patternfly-react';
 import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import CloudRegionComboBox from './CloudRegionComboBox';
-import MachineTypesSelector from './components/MachineTypeSelector';
+import MachineTypeSelection from './components/MachineTypeSelection';
 import validators, { required } from '../../../common/validators';
 import ReduxCheckbox from '../../common/ReduxFormComponents/ReduxCheckbox';
 import { ConfigurationHint, RegionsHint } from './CreateOSDClusterHelper';
@@ -98,10 +98,11 @@ class ConfigurationForm extends React.Component {
           />
 
           <Field
-            component={MachineTypesSelector}
+            component={MachineTypeSelection}
             name="machine_type"
             validate={required}
             disabled={pending}
+            isMultiAz={isMultiAz}
           />
         </Col>
         <Col sm={4}>
