@@ -149,11 +149,16 @@ module.exports = (env, argv) => {
             name: 'images/[name].[hash].[ext]',
           },
         },
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: 'javascript/auto'
+        },
       ],
     },
 
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.mjs', '.js', '.jsx'],
       modules: [srcDir, modDir],
     },
 
