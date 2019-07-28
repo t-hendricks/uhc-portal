@@ -1,41 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Modal as PfModal, Button, Icon } from 'patternfly-react';
+
 import { Modal as PfModal, Button } from '@patternfly/react-core';
+import { Spinner } from 'patternfly-react';
 
 import { noop } from '../../../common/helpers';
 
 function Modal({
-  title,
-  onClose,
-  primaryText,
-  secondaryText,
-  onPrimaryClick,
-  onSecondaryClick,
+  title = '',
+  onClose = noop,
+  primaryText = 'Confirm',
+  secondaryText = 'Cancle',
+  onPrimaryClick = noop,
+  onSecondaryClick = noop,
   isSmall = true,
-  children,
+  isPrimaryDisabled = false,
+  isPending = false,
+  children = null,
   ...extraProps
 }) {
   return (
     <PfModal
-      // For a medium size modal use isSmall=false and isLarge=true.
-      // For a full screen modal use isSmall=false.
+        // For a medium size modal use isSmall=false and isLarge=true.
+        // For a full screen modal use isSmall=false.
+      className={isPending ? 'pending-modal' : null}
       isSmall={isSmall}
       title={title}
       isOpen
       onClose={onClose}
-      actions={[
+      actions={isPending ? [] : [
         <Button key="cancel" variant="secondary" onClick={onSecondaryClick}>
           {secondaryText}
         </Button>,
-        <Button key="confirm" variant="primary" onClick={onPrimaryClick} type="submit">
+        <Button key="confirm" variant="primary" onClick={onPrimaryClick} type="submit" isDisabled={isPrimaryDisabled}>
           {primaryText}
         </Button>,
       ]}
       {...extraProps}
     >
-      {children}
-    </PfModal>);
+      {isPending ? <Spinner loading size="lg" /> : children}
+    </PfModal>
+  );
 }
 
 Modal.propTypes = {
@@ -46,18 +51,8 @@ Modal.propTypes = {
   secondaryText: PropTypes.string,
   onPrimaryClick: PropTypes.func,
   onSecondaryClick: PropTypes.func,
+  isPrimaryDisabled: PropTypes.bool,
   children: PropTypes.node,
-};
-
-Modal.defaultProps = {
-  isSmall: true,
-  title: '',
-  onClose: noop,
-  primaryText: 'Confirm',
-  secondaryText: 'Cancle',
-  onPrimaryClick: noop,
-  onSecondaryClick: noop,
-  children: null,
 };
 
 export default Modal;

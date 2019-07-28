@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, FormSection } from 'redux-form';
-import {
-  Button, Form, Modal, Grid, Col, Row, FormGroup, ControlLabel, Spinner,
-} from 'patternfly-react';
+import { Form } from '@patternfly/react-core';
+import { ControlLabel, Spinner } from 'patternfly-react';
+
+import Modal from '../../../common/Modal/Modal';
 
 import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../common/validators';
-import ModalHeader from '../../../common/Modal/components/ModalHeader';
 import ErrorBox from '../../../common/ErrorBox';
 
 class EditClusterDialog extends Component {
@@ -77,81 +77,58 @@ class EditClusterDialog extends Component {
       closeModal();
     };
 
-    const hasError = (editClusterResponse.error || editRouterShardResponse.error) ? (
+    const error = (editClusterResponse.error || editRouterShardResponse.error) ? (
       <ErrorBox message="Error editing cluster" response={editClusterResponse.error ? editClusterResponse : editRouterShardResponse} />
     ) : null;
 
     return isOpen && (
-      <Modal show onHide={cancelEdit}>
-        <Form horizontal onSubmit={handleSubmit}>
-          <Modal.Header>
-            <ModalHeader title="Edit Cluster" onClose={cancelEdit} />
-          </Modal.Header>
-          <Modal.Body>
-            <Grid>
-              <Row>
-                <Col sm={5}>
-                  {hasError}
-                  <Field
-                    component={ReduxVerticalFormGroup}
-                    name="nodes_compute"
-                    label="Compute nodes"
-                    type="number"
-                    validate={isMultiAz ? [this.validateNodes, validators.nodesMultiAz]
-                      : this.validateNodes}
-                    min={min.value}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={5}>
-                  <FormGroup>
-                    <FormSection name="network_router_shards">
-                      <ControlLabel>Router Shards</ControlLabel>
-                      {' '}
-                      <Spinner loading={!hasRouterShards} inline size="xs" />
-                      <Col sm={12}>
-                        <Field
-                          component={ReduxVerticalFormGroup}
-                          name="0.label"
-                          label=""
-                          placeholder="Label"
-                          type="text"
-                          normalize={val => val.toLowerCase()}
-                          validate={validators.routerShard}
-                        />
-                        <Field
-                          component={ReduxVerticalFormGroup}
-                          name="1.label"
-                          label=""
-                          placeholder="Label"
-                          type="text"
-                          normalize={val => val.toLowerCase()}
-                          validate={validators.routerShard}
-                        />
-                      </Col>
-                    </FormSection>
-                  </FormGroup>
-                </Col>
-              </Row>
-            </Grid>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button bsStyle="default" onClick={cancelEdit} type="button">
-            Cancel
-            </Button>
-            <Button
-              type="submit"
-              bsStyle="primary"
-              disabled={!hasRouterShards || pending}
-              onClick={handleSubmit}
-            >
-            Apply
+      <Modal
+        title="Edit Cluster"
+        onClose={cancelEdit}
+        primaryText="Apply"
+        onPrimaryClick={handleSubmit}
+        onSecondaryClick={cancelEdit}
+        isPrimaryDisabled={!hasRouterShards || pending}
+        isPending={pending}
+      >
+        <React.Fragment>
+          <div className="">hi</div>
+          {error}
+          <Form onSubmit={handleSubmit}>
+            <Field
+              component={ReduxVerticalFormGroup}
+              name="nodes_compute"
+              label="Compute nodes"
+              type="number"
+              validate={isMultiAz ? [this.validateNodes, validators.nodesMultiAz]
+                : this.validateNodes}
+              min={min.value}
+            />
+            <FormSection name="network_router_shards">
+              <ControlLabel>Router Shards</ControlLabel>
               {' '}
-              <Spinner loading={pending} inline size="xs" />
-            </Button>
-          </Modal.Footer>
-        </Form>
+              <Spinner loading={!hasRouterShards} inline size="xs" />
+              <Field
+                component={ReduxVerticalFormGroup}
+                name="0.label"
+                label=""
+                placeholder="Label"
+                type="text"
+                normalize={val => val.toLowerCase()}
+                validate={validators.routerShard}
+              />
+              <Field
+                component={ReduxVerticalFormGroup}
+                name="1.label"
+                label=""
+                placeholder="Label"
+                type="text"
+                normalize={val => val.toLowerCase()}
+                validate={validators.routerShard}
+              />
+            </FormSection>
+          </Form>
+        </React.Fragment>
       </Modal>
     );
   }

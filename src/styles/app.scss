@@ -33,6 +33,10 @@ limitations under the License.
   overflow-x: hidden;
 }
 
+.pending-modal {
+  min-height: 300px;
+}
+
 .cluster-list {
   margin: 0px 30px 0 30px;
 }
@@ -228,7 +232,7 @@ limitations under the License.
   height: 14px;
 }
 
-#edit-cl-name-error{
+.pf-c-modal-box .error-box {
   margin-bottom: 15px;
 }
 

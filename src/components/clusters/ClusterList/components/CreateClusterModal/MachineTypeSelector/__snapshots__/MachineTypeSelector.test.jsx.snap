@@ -330,13 +330,14 @@ exports[`<MachineTypeSelector /> when there was an error renders correctly 1`] =
     }
   >
     <Alert
+      className="error-box"
       isInline={true}
       title="Error loading node types"
       variant="danger"
     >
       <div
         aria-label="Danger Alert"
-        className="pf-c-alert pf-m-inline pf-m-danger"
+        className="pf-c-alert pf-m-inline pf-m-danger error-box"
       >
         <AlertIcon
           variant="danger"
