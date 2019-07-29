@@ -1,21 +1,16 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
-import result from 'lodash/result';
 
-import { createCluster, resetCreatedClusterResponse } from '../../../../../redux/actions/clustersActions';
-import CreateClusterModal from './CreateClusterModal';
-import { closeModal } from '../../../../common/Modal/ModalActions';
-import shouldShowModal from '../../../../common/Modal/ModalSelectors';
+import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
+import CreateOSDCluster from './CreateOSDCluster';
 
 
 const reduxFormConfig = {
   form: 'CreateCluster',
 };
-const reduxFormCreateCluster = reduxForm(reduxFormConfig)(CreateClusterModal);
+const reduxFormCreateCluster = reduxForm(reduxFormConfig)(CreateOSDCluster);
 
 const mapStateToProps = state => ({
-  isOpen: shouldShowModal(state, 'create-cluster'),
-  isManaged: result(state.modal.activeModal, 'data.isManaged', true),
   createClusterResponse: state.clusters.createdCluster,
   initialValues: {
     name: '',
@@ -66,7 +61,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(createCluster(clusterRequest));
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
-  closeModal: () => dispatch(closeModal()),
   resetForm: () => dispatch(reset('CreateCluster')),
 });
 

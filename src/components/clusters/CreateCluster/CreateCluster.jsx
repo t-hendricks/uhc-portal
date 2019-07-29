@@ -9,7 +9,6 @@ import {
 import openShiftDedicatedLogo from '../../../styles/images/Logo-Red_Hat-OpenShift_Dedicated-A-Standard-RGB.svg';
 import openShiftContainerPlatformLogo from '../../../styles/images/Logo-Red_Hat-OpenShift-Container_Platform-A-Standard-RGB.svg';
 import FavoriteButton from '../../common/FavoriteButton';
-import CreateClusterModal from '../ClusterList/components/CreateClusterModal';
 import PageTitle from '../../common/PageTitle';
 
 
@@ -41,9 +40,9 @@ class CreateCluster extends React.Component {
   }
 
   render() {
-    const { openModal, hasQuota } = this.props;
+    const { hasQuota } = this.props;
     const osdCard = (
-      <Card component="a" onClick={() => openModal('create-cluster')} className="infra-card create-cluster-card">
+      <Link to="/create/osd" className="infra-card pf-c-card create-cluster-card">
         <div className="create-cluster-favorite-btn-container">
           <FavoriteButton isActive>Recommended</FavoriteButton>
         </div>
@@ -54,7 +53,7 @@ class CreateCluster extends React.Component {
           Create a Red Hat-managed cluster (OSD),
           provisioned on Amazon Web Services.
         </CardBody>
-      </Card>
+      </Link>
     );
 
     const ocpCard = (
@@ -81,14 +80,12 @@ class CreateCluster extends React.Component {
             </div>
           </div>
         </Card>
-        <CreateClusterModal />
       </React.Fragment>
     );
   }
 }
 
 CreateCluster.propTypes = {
-  openModal: PropTypes.func.isRequired,
   hasQuota: PropTypes.bool.isRequired,
   getOrganization: PropTypes.func.isRequired,
   getQuota: PropTypes.func.isRequired,
