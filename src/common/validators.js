@@ -14,6 +14,9 @@ const MAX_ROUTER_SHARD_LABEL = 63;
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 50;
 
+// Maximum node count
+const MAX_NODE_COUNT = 180;
+
 // Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');
 
@@ -67,6 +70,9 @@ const cidr = (value) => {
 const nodes = (value, min) => {
   if (value === undefined || value < min.value) {
     return min.validationMsg;
+  }
+  if (value > MAX_NODE_COUNT) {
+    return `Maximum number allowed is ${MAX_NODE_COUNT}.`;
   }
   // eslint-disable-next-line eqeqeq
   if (!parseInt(value, 10) || Math.floor(value) != value) {
