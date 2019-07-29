@@ -12,14 +12,12 @@ function ManagedClusterForm(props) {
   } = props;
   return (
     <Grid className="osd-configuration-form">
-      <Row>
-        <ConfigurationForm
-          header={constants.configurationHeader}
-          pending={pending}
-          showDNSBaseDomain={false}
-          touch={touch}
-        />
-      </Row>
+      <ConfigurationForm
+        header={constants.configurationHeader}
+        pending={pending}
+        showDNSBaseDomain={false}
+        touch={touch}
+      />
       <Row>
         <ExpandCollapse>
           <RouterShardsForm pending={pending} />
