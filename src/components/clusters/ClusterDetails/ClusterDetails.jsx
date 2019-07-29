@@ -188,6 +188,8 @@ class ClusterDetails extends Component {
       fetchRouterShards(cluster.id);
     };
 
+    const hasLogs = !!logs.lines;
+
     return (
       <div id="clusterdetails-content">
         <SubscriptionCompliancy
@@ -206,7 +208,7 @@ class ClusterDetails extends Component {
           errorMessage={clusterDetails.errorMessage}
         >
           <TabsRow
-            displayLogs={!!logs.lines}
+            displayLogs={hasLogs}
             displayUsersTab={cluster.managed && cluster.canEdit}
             overviewTabRef={this.overviewTabRef}
             usersTabRef={this.usersTabRef}
@@ -223,9 +225,11 @@ class ClusterDetails extends Component {
         <TabContent eventKey={1} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
           <Users clusterID={cluster.id} />
         </TabContent>
+        {hasLogs && (
         <TabContent eventKey={2} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
           <LogWindow clusterID={cluster.id} />
         </TabContent>
+        )}
         <EditClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {

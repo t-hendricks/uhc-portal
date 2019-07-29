@@ -703,16 +703,6 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
     />
   </ForwardRef>
-  <ForwardRef
-    aria-label="Logs"
-    eventKey={2}
-    hidden={true}
-    id="logsTabContent"
-  >
-    <Connect(LogWindow)
-      clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
-    />
-  </ForwardRef>
   <Connect(ReduxForm)
     onClose={[Function]}
   />
