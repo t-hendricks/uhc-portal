@@ -4,7 +4,7 @@ import { getMachineTypes } from '../../../../../redux/actions/machineTypesAction
 
 const mapStateToProps = state => ({
   machineTypes: state.machineTypes,
-  quota: state.userProfile.quota.quotaList,
+  quota: state.userProfile.quota,
 });
 
 const mapDispatchToProps = {

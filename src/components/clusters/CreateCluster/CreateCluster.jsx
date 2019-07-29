@@ -15,27 +15,9 @@ import PageTitle from '../../common/PageTitle';
 class CreateCluster extends React.Component {
   componentDidMount() {
     // Try to get quota or organization when the component is first mounted.
-    // Quota requires the organization, so we can only get it when we have the organization.
-    this.getOrganizationAndQuota();
-  }
-
-  componentDidUpdate() {
-    // If the request for organization was complete, we can get quota now.
-    this.getOrganizationAndQuota();
-  }
-
-  getOrganizationAndQuota() {
-    // TODO! Remove this and make it a part of the redux action + reducer
-    const {
-      organization, getOrganization, quota, getQuota,
-    } = this.props;
-
-    if (!organization.fulfilled && !organization.pending && !organization.error) {
-      getOrganization();
-    }
-
-    if (organization.fulfilled && !quota.pending && !quota.fulfilled && !quota.error) {
-      getQuota(organization.details.id);
+    const { getOrganizationAndQuota, organization } = this.props;
+    if (!organization.fulfilled && !organization.pending) {
+      getOrganizationAndQuota();
     }
   }
 
@@ -87,9 +69,7 @@ class CreateCluster extends React.Component {
 
 CreateCluster.propTypes = {
   hasQuota: PropTypes.bool.isRequired,
-  getOrganization: PropTypes.func.isRequired,
-  getQuota: PropTypes.func.isRequired,
-  quota: PropTypes.object.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
 };
 

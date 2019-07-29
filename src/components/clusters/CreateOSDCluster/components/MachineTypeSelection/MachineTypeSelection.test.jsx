@@ -180,13 +180,16 @@ describe('<MachineTypeSelection />', () => {
       };
 
       const quota = {
-        nodeQuota: {
-          rhInfra: {
-            multiAz: {
-              'r5.xlarge': 5,
-            },
-            singleAz: {
-              'r5.xlarge': 0,
+        fulfilled: true,
+        quotaList: {
+          nodeQuota: {
+            rhInfra: {
+              multiAz: {
+                'r5.xlarge': 5,
+              },
+              singleAz: {
+                'r5.xlarge': 0,
+              },
             },
           },
         },

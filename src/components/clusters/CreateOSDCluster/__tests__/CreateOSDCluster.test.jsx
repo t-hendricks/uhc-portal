@@ -7,12 +7,14 @@ import ManagedClusterForm from '../ManagedClusterForm';
 describe('CreateOSDCluster', () => {
   let resetResponse;
   let resetForm;
+  let getOrganizationAndQuota;
   let handleSubmit;
   let createClusterResponse;
   let managedWrapper;
 
   beforeEach(() => {
     resetResponse = jest.fn();
+    getOrganizationAndQuota = jest.fn();
     resetForm = jest.fn();
     handleSubmit = jest.fn();
     createClusterResponse = {
@@ -28,6 +30,7 @@ describe('CreateOSDCluster', () => {
       resetForm={resetForm}
       handleSubmit={handleSubmit}
       createClusterResponse={createClusterResponse}
+      getOrganizationAndQuota={getOrganizationAndQuota}
     />);
   });
 

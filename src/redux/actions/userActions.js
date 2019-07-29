@@ -8,18 +8,7 @@ const userInfoResponse = payload => ({
   type: userConstants.USER_INFO_RESPONSE,
 });
 
-const getOrganization = () => ({
-  payload: accountsService.getCurrentAccount().then((response) => {
-    const organizationID = get(response.data, 'organization.id');
-    if (organizationID !== undefined) {
-      return accountsService.getOrganization(organizationID);
-    }
-    return Promise.reject(Error('No organization'));
-  }),
-  type: userConstants.GET_ORGANIZATION,
-});
-
-const fetchOrganizationQuota = organiztionID => ({
+const fetchQuota = organiztionID => ({
   type: userConstants.GET_ORG_QUOTA,
   payload: accountsService.getOrganizationQuota(organiztionID).then((response) => {
     /* construct an easy to query structure to figure out how many of each node type
@@ -48,12 +37,23 @@ const fetchOrganizationQuota = organiztionID => ({
   }),
 });
 
+const getOrganizationAndQuota = () => dispatch => ({
+  payload: accountsService.getCurrentAccount().then((response) => {
+    const organizationID = get(response.data, 'organization.id');
+    if (organizationID !== undefined) {
+      dispatch(fetchQuota(organizationID));
+      return accountsService.getOrganization(organizationID);
+    }
+    return Promise.reject(Error('No organization'));
+  }),
+  type: userConstants.GET_ORGANIZATION,
+});
+
 const userActions = {
   userInfoResponse,
-  getOrganization,
-  fetchOrganizationQuota,
+  getOrganizationAndQuota,
 };
 
 export {
-  userActions, userInfoResponse, getOrganization, fetchOrganizationQuota,
+  userActions, userInfoResponse, getOrganizationAndQuota,
 };

@@ -121,13 +121,16 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
   meta={Object {}}
   quota={
     Object {
-      "nodeQuota": Object {
-        "rhInfra": Object {
-          "multiAz": Object {
-            "r5.xlarge": 5,
-          },
-          "singleAz": Object {
-            "r5.xlarge": 0,
+      "fulfilled": true,
+      "quotaList": Object {
+        "nodeQuota": Object {
+          "rhInfra": Object {
+            "multiAz": Object {
+              "r5.xlarge": 5,
+            },
+            "singleAz": Object {
+              "r5.xlarge": 0,
+            },
           },
         },
       },

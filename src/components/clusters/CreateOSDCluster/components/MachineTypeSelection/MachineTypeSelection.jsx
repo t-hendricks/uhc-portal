@@ -53,7 +53,10 @@ class MachineTypeSelection extends React.Component {
 
   hasQuota(machineType) {
     const { isMultiAz, quota } = this.props;
-    const available = quota.nodeQuota.rhInfra[isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
+    if (!quota.fulfilled) {
+      return false;
+    }
+    const available = quota.quotaList.nodeQuota.rhInfra[isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
     return available > 0;
   }
 
