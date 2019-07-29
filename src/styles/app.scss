@@ -82,7 +82,6 @@ limitations under the License.
 
 .metrics-chart {
   text-align: center;
-  font-weight: bold;
 }
 
 // fix donut chart tooltip css
@@ -104,9 +103,6 @@ limitations under the License.
 
 .cluster-details-item {
   padding: 30px;
-  dt {
-    font-weight: bold;
-  }
   dd {
     margin-bottom: 30px;
   }
@@ -153,7 +149,6 @@ limitations under the License.
 }
 
 #cl-details-cluster-name h1 {
-  font-weight: bold;
   margin: 0;
   @media (max-width: 480px) {
     display: block;
@@ -336,10 +331,6 @@ p.notfound {
   padding-right: 0;
   padding-left: 0;
 }
-
-#clusterdetails-content .pf-c-card__header{
-  font-weight: bold;
-};
 
 h1 .badged-resource-pf span:first-child {
   display: table;

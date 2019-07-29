@@ -45,11 +45,13 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
       className=""
       isFilled={false}
     >
-      <h1
+      <Title
         className="vertical-align"
+        headingLevel="h1"
+        size="4xl"
       >
         test-liza
-      </h1>
+      </Title>
     </SplitItem>
     <SplitItem
       className=""
