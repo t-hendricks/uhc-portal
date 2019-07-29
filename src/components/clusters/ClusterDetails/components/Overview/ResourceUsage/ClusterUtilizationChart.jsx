@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { ChartDonut } from '@patternfly/react-charts';
+import { Title } from '@patternfly/react-core';
 // eslint-disable-next-line camelcase
 import { chart_global_success_Color_100, chart_global_Fill_Color_200 } from '@patternfly/react-tokens';
 
@@ -25,9 +26,7 @@ function ClusterUtilizationChart(props) {
 
   return (
     <div>
-      <h4 className="metrics-chart">
-        {title}
-      </h4>
+      <Title className="metrics-chart" headingLevel="h4" size="xl">{title}</Title>
       <div className="metrics-chart">
         <ChartDonut
           id={donutId}

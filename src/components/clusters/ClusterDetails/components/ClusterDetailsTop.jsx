@@ -5,7 +5,7 @@ import get from 'lodash/result';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Spinner } from 'patternfly-react';
 import {
-  Breadcrumb, BreadcrumbItem, Button, Alert, Split, SplitItem,
+  Breadcrumb, BreadcrumbItem, Button, Alert, Split, SplitItem, Title,
 } from '@patternfly/react-core';
 
 import clusterStates from '../../common/clusterStates';
@@ -96,7 +96,7 @@ function ClusterDetailsTop(props) {
       </Split>
       <Split id="cl-details-cluster-name">
         <SplitItem>
-          <h1 className="vertical-align">{clusterName}</h1>
+          <Title headingLevel="h1" size="4xl" className="vertical-align">{clusterName}</Title>
         </SplitItem>
         <SplitItem>
           { isRefreshing && <Spinner loading className="cluster-details-spinner" /> }

@@ -6,7 +6,12 @@ exports[`<Overview /> should render 1`] = `
     id="metrics-charts"
   >
     <CardHeader>
-      Resource Usage
+      <Title
+        headingLevel="h2"
+        size="3xl"
+      >
+        Resource Usage
+      </Title>
     </CardHeader>
     <CardBody>
       <ResourceUsage
@@ -140,7 +145,12 @@ exports[`<Overview /> should render 1`] = `
   </Card>
   <Card>
     <CardHeader>
-      Details
+      <Title
+        headingLevel="h2"
+        size="3xl"
+      >
+        Details
+      </Title>
     </CardHeader>
     <CardBody>
       <Grid
