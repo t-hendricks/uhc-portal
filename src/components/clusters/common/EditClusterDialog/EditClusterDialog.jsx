@@ -92,7 +92,6 @@ class EditClusterDialog extends Component {
         isPending={pending}
       >
         <React.Fragment>
-          <div className="">hi</div>
           {error}
           <Form onSubmit={handleSubmit}>
             <Field
