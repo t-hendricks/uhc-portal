@@ -72,6 +72,23 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             <SplitItem
               className=""
               isFilled={false}
+            >
+              <Link
+                replace={false}
+                to="/"
+              >
+                <Button
+                  disabled={false}
+                  onClick={[Function]}
+                  variant="secondary"
+                >
+                  Cancel
+                </Button>
+              </Link>
+            </SplitItem>
+            <SplitItem
+              className=""
+              isFilled={false}
             />
           </Split>
         </Row>

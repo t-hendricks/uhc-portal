@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 
 import {
   Breadcrumb,
@@ -87,6 +88,13 @@ class CreateOSDCluster extends React.Component {
                     <Button variant="primary" type="submit" onClick={handleSubmit} disabled={createClusterResponse.pending}>
                       Create
                     </Button>
+                  </SplitItem>
+                  <SplitItem>
+                    <Link to="/">
+                      <Button variant="secondary" onClick={this.reset} disabled={createClusterResponse.pending}>
+                        Cancel
+                      </Button>
+                    </Link>
                   </SplitItem>
                   <SplitItem>
                     {createClusterResponse.pending ? loadingSpinner() : null}
