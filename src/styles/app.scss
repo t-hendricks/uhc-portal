@@ -508,7 +508,6 @@ h4.pf-c-alert__title {
 // Temporary hacks to make PF4 components look okay in a PF3 form
 // TODO: REMOVE THIS when we move the rest of the cluster creation form to PF4
 .node-type-input {
-  font-size: 12px;
   margin-top: 25px;
   .error {
     color: #cc0000;
@@ -517,7 +516,7 @@ h4.pf-c-alert__title {
     font-size: 12px;
   }
   label.pf-c-radio__label > h4 {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     margin-bottom: 0;
   }
@@ -555,4 +554,15 @@ h4.pf-c-alert__title {
   margin-left: 0;
   padding-top: 0;
   margin-top: 0;
+}
+
+// HACK - make PF3 "advanced options" look okay with PF4 font sizes
+// remove this once the cluster creation form is PF4
+.expand-collapse-pf {
+  button {
+    font-size: var(--pf-c-content--FontSize);
+  }
+  .expand-collapse-pf-separator {
+    margin-top: var(--pf-c-content--FontSize);
+  }
 }
