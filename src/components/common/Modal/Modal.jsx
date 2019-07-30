@@ -10,13 +10,14 @@ function Modal({
   title = '',
   onClose = noop,
   primaryText = 'Confirm',
-  secondaryText = 'Cancle',
+  secondaryText = 'Cancel',
   onPrimaryClick = noop,
   onSecondaryClick = noop,
   isSmall = true,
   isPrimaryDisabled = false,
   isPending = false,
   children = null,
+  primaryVariant = 'primary',
   ...extraProps
 }) {
   return (
@@ -32,7 +33,7 @@ function Modal({
         <Button key="cancel" variant="secondary" onClick={onSecondaryClick}>
           {secondaryText}
         </Button>,
-        <Button key="confirm" variant="primary" onClick={onPrimaryClick} type="submit" isDisabled={isPrimaryDisabled}>
+        <Button key="confirm" variant={primaryVariant} onClick={onPrimaryClick} type="submit" isDisabled={isPrimaryDisabled}>
           {primaryText}
         </Button>,
       ]}

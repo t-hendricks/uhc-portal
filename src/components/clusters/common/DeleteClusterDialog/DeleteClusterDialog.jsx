@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  Button,
-  FormControl,
-  Icon,
-  MessageDialog,
-  Spinner,
-  Form,
-} from 'patternfly-react';
+
+import { Form, TextInput } from '@patternfly/react-core';
+
+import Modal from '../../../common/Modal/Modal';
 
 import { deleteClusterDialogActions } from './DeleteClusterDialogActions';
 import { closeModal } from '../../../common/Modal/ModalActions';
@@ -29,9 +25,9 @@ class DeleteClusterDialog extends React.Component {
     }
   }
 
-  setValue(field, event) {
+  setValue(newInput) {
     this.setState({
-      [field]: event.target.value,
+      clusterNameInput: newInput,
     });
   }
 
@@ -81,62 +77,40 @@ class DeleteClusterDialog extends React.Component {
       }
     };
 
-    const deleteBtn = (
-      <Button id="deleteClusterBtn" bsStyle={!isPending ? 'danger' : 'default'} disabled={!isValid || isPending} onClick={() => doSubmit(clusterID)}>
-        {!isPending ? 'Delete' : <Spinner size="sm" inline loading />}
-      </Button>
-    );
-
-    const icon = <Icon type="pf" name="warning-triangle-o" />;
-
-    const primaryContent = (
-      <React.Fragment>
-        {errorContainer}
-        <p>
-          This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
-        </p>
-      </React.Fragment>
-    );
-
-    const managedForm = (
-      <Form onSubmit={submitForm}>
-        <p>
-          Confirm deletion by typing
-          {' '}
-          <span style={{ fontWeight: 'bold' }}>{clusterName}</span>
-          {' '}
-          below:
-        </p>
-        <FormControl
-          type="text"
-          value={clusterNameInput}
-          placeholder="Enter name"
-          onChange={e => this.setValue('clusterNameInput', e)}
-          disabled={isPending}
-          autoFocus
-        />
-      </Form>
-    );
-
-    const footer = (
-      <React.Fragment>
-        <Button bsStyle="default" onClick={() => this.closeDialog(false)} disabled={isPending}>
-          Cancel
-        </Button>
-        {deleteBtn}
-      </React.Fragment>);
-
     return isOpen && (
-      <MessageDialog
-        show={isOpen}
-        onHide={() => this.closeDialog(false)}
-        primaryActionButtonBsStyle="danger"
+      <Modal
         title="Delete Cluster"
-        icon={icon}
-        primaryContent={primaryContent}
-        secondaryContent={managedForm}
-        footer={footer}
-      />
+        onClose={() => this.closeDialog(false)}
+        primaryText="Delete"
+        onPrimaryClick={() => doSubmit(clusterID)}
+        onSecondaryClick={() => this.closeDialog(false)}
+        isPrimaryDisabled={!isValid || isPending}
+        isPending={isPending}
+        primaryVariant="danger"
+      >
+        <React.Fragment>
+          {errorContainer}
+          <p>
+          This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
+          </p>
+        </React.Fragment>
+        <Form onSubmit={submitForm}>
+          <p>
+          Confirm deletion by typing
+            {' '}
+            <span style={{ fontWeight: 'bold' }}>{clusterName}</span>
+            {' '}
+          below:
+          </p>
+          <TextInput
+            type="text"
+            value={clusterNameInput}
+            placeholder="Enter name"
+            onChange={newInput => this.setValue(newInput)}
+            aria-label="cluster name"
+          />
+        </Form>
+      </Modal>
     );
   }
 }
