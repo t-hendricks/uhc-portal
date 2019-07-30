@@ -8,9 +8,6 @@ const BASE_DOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
 
-// Maximum length for a router shard label
-const MAX_ROUTER_SHARD_LABEL = 63;
-
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 50;
 
@@ -89,21 +86,6 @@ const nodesMultiAz = (value) => {
   return undefined;
 };
 
-
-// Function to validate that the router shard label contains a valid DNS label:
-const routerShard = (value) => {
-  if (!value) {
-    return undefined;
-  }
-  if (value.length > MAX_ROUTER_SHARD_LABEL) {
-    return `Router shard label '${value}' is too long, it needs to be under ${MAX_ROUTER_SHARD_LABEL} charcters long.`;
-  }
-  if (!DNS_LABEL_REGEXP.test(value)) {
-    return `Router shard label '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-label', or 'abc-123'.`;
-  }
-  return undefined;
-};
-
 const github = value => (value ? undefined : 'Either "Teams" or "Organizations" are required');
 
 
@@ -115,7 +97,6 @@ const validators = {
   cidr,
   nodes,
   nodesMultiAz,
-  routerShard,
   github,
 };
 

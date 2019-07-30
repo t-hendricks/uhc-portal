@@ -11,7 +11,7 @@ import ResourceUsage from './ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
 
-function Overview({ cluster, cloudProviders, routerShards }) {
+function Overview({ cluster, cloudProviders }) {
   const clusterState = getClusterStateAndDescription(cluster);
   return (
     <React.Fragment>
@@ -35,7 +35,6 @@ function Overview({ cluster, cloudProviders, routerShards }) {
             <GridItem sm={6}>
               <DetailsRight
                 cluster={{ ...cluster, state: clusterState }}
-                routerShards={routerShards}
               />
             </GridItem>
           </Grid>
@@ -47,7 +46,6 @@ function Overview({ cluster, cloudProviders, routerShards }) {
 Overview.propTypes = {
   cluster: PropTypes.object,
   cloudProviders: PropTypes.object.isRequired,
-  routerShards: PropTypes.object.isRequired,
 };
 
 export default Overview;

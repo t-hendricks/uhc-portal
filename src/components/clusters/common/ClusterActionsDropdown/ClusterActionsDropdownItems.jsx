@@ -133,7 +133,7 @@ function dropDownItems({
     <DropdownItem {...adminConsoleItemProps}>Launch Admin Console</DropdownItem>),
     cluster.canEdit && (
     <DropdownItem {...editDisplayNameItemProps}>Edit Display Name</DropdownItem>),
-    cluster.canEdit && <DropdownItem {...editClusterItemProps}>Edit Cluster</DropdownItem>,
+    cluster.canEdit && <DropdownItem {...editClusterItemProps}>Scale Cluster</DropdownItem>,
     showDelete && <DropdownItem {...deleteClusterItemProps}>Delete Cluster</DropdownItem>,
     shouldShowIDPButton && (
     <DropdownItem {...deleteIDPItemProps}>Remove Identity Provider</DropdownItem>),

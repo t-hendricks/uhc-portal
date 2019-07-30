@@ -1,25 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import result from 'lodash/result';
-import { Tooltip, TooltipPosition } from '@patternfly/react-core';
 
-
-function ClusterNetwork({ cluster, routerShards }) {
-  const hasRouterShards = (routerShards && cluster.dns
-        && result(routerShards, 'routerShards.id') === cluster.id
-        && result(routerShards, 'routerShards.items', false));
-
-  const routerShardList = hasRouterShards && routerShards.routerShards.items.map(routerShard => (
-    <li key={routerShard.id}>
-      <dt className="ellipsize">{`${routerShard.label}: `}</dt>
-      <dd>
-        <Tooltip position={TooltipPosition.right} content={`${routerShard.id}.apps.${cluster.name}.${cluster.dns.base_domain}`}>
-          <span>{routerShard.scheme === 'internal' ? 'Internal' : 'External'}</span>
-        </Tooltip>
-      </dd>
-    </li>
-  ));
-
+function ClusterNetwork({ cluster }) {
   return (
     cluster.managed && cluster.network && (
     <React.Fragment>
@@ -49,16 +31,6 @@ function ClusterNetwork({ cluster, routerShards }) {
           </dl>
           )
         }
-        { hasRouterShards
-          && (
-          <dl className="cluster-details-item-list left">
-            <dt>Router Shards: </dt>
-            <dd>
-              <ul>{routerShardList}</ul>
-            </dd>
-          </dl>
-          )
-        }
       </dd>
     </React.Fragment>
     )
@@ -67,7 +39,6 @@ function ClusterNetwork({ cluster, routerShards }) {
 
 ClusterNetwork.propTypes = {
   cluster: PropTypes.object.isRequired,
-  routerShards: PropTypes.object.isRequired,
 };
 
 export default ClusterNetwork;

@@ -181,38 +181,6 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
           },
         }
       }
-      routerShards={
-        Object {
-          "error": false,
-          "errorMessage": "",
-          "fulfilled": true,
-          "pending": false,
-          "routerShards": Object {
-            "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
-            "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
-            "items": Array [
-              Object {
-                "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards/ofvv",
-                "id": "ofvv",
-                "kind": "RouterShard",
-                "label": "test1",
-                "scheme": "internal",
-              },
-              Object {
-                "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards/jhso",
-                "id": "jhso",
-                "kind": "RouterShard",
-                "label": "test2",
-                "scheme": "internet-facing",
-              },
-            ],
-            "kind": "RouterShardList",
-            "page": 1,
-            "size": 2,
-            "total": 2,
-          },
-        }
-      }
     />
   </dl>
 </Fragment>
@@ -421,38 +389,6 @@ exports[`<DetailsRight /> should render 1`] = `
             "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
             "id": "openshift-v4.0-latest",
             "kind": "VersionLink",
-          },
-        }
-      }
-      routerShards={
-        Object {
-          "error": false,
-          "errorMessage": "",
-          "fulfilled": true,
-          "pending": false,
-          "routerShards": Object {
-            "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
-            "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
-            "items": Array [
-              Object {
-                "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards/ofvv",
-                "id": "ofvv",
-                "kind": "RouterShard",
-                "label": "test1",
-                "scheme": "internal",
-              },
-              Object {
-                "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards/jhso",
-                "id": "jhso",
-                "kind": "RouterShard",
-                "label": "test2",
-                "scheme": "internet-facing",
-              },
-            ],
-            "kind": "RouterShardList",
-            "page": 1,
-            "size": 2,
-            "total": 2,
           },
         }
       }

@@ -33,10 +33,6 @@ const initialState = {
     ...baseState,
     cluster: null,
   },
-  routerShards: {
-    ...baseState,
-    routerShards: null,
-  },
   createdCluster: {
     ...baseState,
     cluster: null,
@@ -44,10 +40,6 @@ const initialState = {
   editedCluster: {
     ...baseState,
     cluster: null,
-  },
-  editedRouterShards: {
-    ...baseState,
-    routerShards: null,
   },
 };
 
@@ -149,55 +141,6 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTER_ROUTER_SHARDS):
-      return helpers.setStateProp(
-        'routerShards',
-        {
-          valid: false,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTER_ROUTER_SHARDS):
-      return helpers.setStateProp(
-        'routerShards',
-        helpers.getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.PENDING_ACTION(clustersConstants.GET_CLUSTER_ROUTER_SHARDS):
-      return helpers.setStateProp(
-        'routerShards',
-        {
-          pending: true,
-          routerShards: state.routerShards.routerShards,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTER_ROUTER_SHARDS):
-      return helpers.setStateProp(
-        'routerShards',
-        {
-          routerShards: action.payload.data,
-          pending: false,
-          fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
     // CREATE_CLUSTER
     case helpers.REJECTED_ACTION(clustersConstants.CREATE_CLUSTER):
       return helpers.setStateProp(
@@ -277,16 +220,6 @@ function clustersReducer(state = initialState, action) {
       return helpers.setStateProp(
         'editedCluster',
         initialState.editedCluster,
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case clustersConstants.CLEAR_ROUTER_SHARD_RESPONSE:
-      return helpers.setStateProp(
-        'editedRouterShards',
-        initialState.editedRouterShards,
         {
           state,
           initialState,

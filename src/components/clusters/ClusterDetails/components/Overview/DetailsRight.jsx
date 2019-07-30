@@ -7,7 +7,7 @@ import { humanizeValueWithUnit } from '../../../../../common/units';
 
 import ClusterNetwork from './ClusterNetwork';
 
-function DetailsRight({ cluster, routerShards }) {
+function DetailsRight({ cluster }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
     cluster.metrics.memory.total.value, cluster.metrics.memory.total.unit,
   );
@@ -107,7 +107,7 @@ function DetailsRight({ cluster, routerShards }) {
             </dd>
           </React.Fragment>
         )}
-        <ClusterNetwork cluster={cluster} routerShards={routerShards} />
+        <ClusterNetwork cluster={cluster} />
       </dl>
     </React.Fragment>
   );
@@ -115,7 +115,6 @@ function DetailsRight({ cluster, routerShards }) {
 
 DetailsRight.propTypes = {
   cluster: PropTypes.any,
-  routerShards: PropTypes.object.isRequired,
 };
 
 export default DetailsRight;
