@@ -31,6 +31,10 @@ class CreateOSDCluster extends React.Component {
     getOrganizationAndQuota();
   }
 
+  componentWillUnmount() {
+    this.reset();
+  }
+
   reset() {
     const {
       resetResponse, resetForm,
