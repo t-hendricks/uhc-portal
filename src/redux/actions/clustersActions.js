@@ -20,14 +20,9 @@ import { clusterService, authorizationsService, accountsService } from '../../se
 import helpers from '../../common/helpers';
 import { normalizeCluster } from '../../common/normalize';
 
-const invalidateClusters = () => (dispatch) => {
-  dispatch({
-    type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
-  });
-  dispatch({
-    type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTER_ROUTER_SHARDS),
-  });
-};
+const invalidateClusters = () => dispatch => dispatch({
+  type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
+});
 
 const createCluster = params => dispatch => dispatch({
   type: clustersConstants.CREATE_CLUSTER,
@@ -39,35 +34,13 @@ const createCluster = params => dispatch => dispatch({
   }),
 });
 
-const clearClusterResponse = () => (dispatch) => {
-  dispatch({
-    type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
-  });
-  dispatch({
-    type: clustersConstants.CLEAR_ROUTER_SHARD_RESPONSE,
-  });
-};
+const clearClusterResponse = () => dispatch => dispatch({
+  type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
+});
 
 const editCluster = (id, cluster) => dispatch => dispatch({
   type: clustersConstants.EDIT_CLUSTER,
   payload: clusterService.editCluster(id, cluster),
-});
-
-const editClusterWithResources = (id, updates) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER,
-  payload: () => {
-    const responses = [];
-    // This chains all requests as sequential promises to avoid race
-    // conditions and 409 Conflicts when dealing with multiple updates
-    // to the same resource type (e.g. Router Shards).
-    return updates.reduce((p, update) => p.then(() => {
-      const fn = clusterService[update.action](id, ...update.args);
-      return fn.then((response) => {
-        responses.push(response);
-        return responses;
-      });
-    }), Promise.resolve());
-  },
 });
 
 const fetchClustersAndPermissions = (clusterRequestParams) => {
@@ -185,11 +158,6 @@ const fetchClusterDetails = clusterID => dispatch => dispatch({
   payload: fetchSingleClusterAndPermissions(clusterID),
 });
 
-const fetchClusterRouterShards = clusterID => dispatch => dispatch({
-  type: clustersConstants.GET_CLUSTER_ROUTER_SHARDS,
-  payload: clusterService.getClusterRouterShards(clusterID),
-});
-
 const resetCreatedClusterResponse = () => dispatch => dispatch({
   type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
 });
@@ -198,10 +166,8 @@ const clustersActions = {
   clearClusterResponse,
   createCluster,
   editCluster,
-  editClusterWithResources,
   fetchClusters,
   fetchClusterDetails,
-  fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,
 };
@@ -211,10 +177,8 @@ export {
   clearClusterResponse,
   createCluster,
   editCluster,
-  editClusterWithResources,
   fetchClusters,
   fetchClusterDetails,
-  fetchClusterRouterShards,
   invalidateClusters,
   resetCreatedClusterResponse,
 };

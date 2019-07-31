@@ -7,16 +7,9 @@ describe('<CreateCluster />', () => {
   let openModal;
   let wrapper;
   const getOrganization = jest.fn();
-  const getQuota = jest.fn();
+  const getOrganizationAndQuota = jest.fn();
   const organization = {
     details: null,
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
-  };
-  const quota = {
-    quotaList: {},
     error: false,
     errorMessage: '',
     pending: false,
@@ -28,10 +21,9 @@ describe('<CreateCluster />', () => {
     wrapper = shallow(<CreateCluster
       openModal={openModal}
       hasQuota
-      getQuota={getQuota}
+      getOrganizationAndQuota={getOrganizationAndQuota}
       getOrganization={getOrganization}
       organization={organization}
-      quota={quota}
     />);
   });
 
@@ -39,20 +31,13 @@ describe('<CreateCluster />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('open OSD creation dialog when needed', () => {
-    wrapper.find('.create-cluster-card').at(0).simulate('click');
-    expect(openModal).toBeCalled();
-  });
-
   describe('User with no quota', () => {
     it('should hide option to create managed and auto installed clusters', () => {
       wrapper = shallow(
         <CreateCluster
           openModal={openModal}
-          getQuota={getQuota}
-          getOrganization={getOrganization}
+          getOrganizationAndQuota={getOrganizationAndQuota}
           organization={organization}
-          quota={quota}
         />,
       );
       expect(wrapper.find('.create-cluster-card').length).toEqual(1);

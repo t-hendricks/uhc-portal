@@ -32,18 +32,6 @@ describe('<EditDisplayNameDialog />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('when cancelled, calls closeModal but not onClose ', () => {
-    wrapper.find('ModalFooter Button').at(0).simulate('click');
-    expect(closeModal).toBeCalled();
-    expect(resetResponse).toBeCalled();
-    expect(onClose).not.toBeCalled();
-  });
-
-  it('submits correctly', () => {
-    wrapper.find('ModalFooter Button').at(1).simulate('click');
-    expect(handleSubmit).toBeCalled();
-  });
-
   it('when fulfilled, closes dialog', () => {
     wrapper.setProps({ editClusterResponse: { fulfilled: true } });
     expect(closeModal).toBeCalled();

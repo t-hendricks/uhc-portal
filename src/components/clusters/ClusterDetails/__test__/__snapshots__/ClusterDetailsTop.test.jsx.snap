@@ -39,17 +39,19 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
     className=""
     component="div"
     gutter={null}
-    id="cl-details-cluster-name"
+    id="cl-details-top-row"
   >
     <SplitItem
       className=""
       isFilled={false}
     >
-      <h1
+      <Title
         className="vertical-align"
+        headingLevel="h1"
+        size="4xl"
       >
         test-liza
-      </h1>
+      </Title>
     </SplitItem>
     <SplitItem
       className=""

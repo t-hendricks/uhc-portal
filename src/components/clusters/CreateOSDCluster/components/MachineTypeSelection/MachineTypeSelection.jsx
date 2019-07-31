@@ -6,10 +6,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Radio, Gallery, GalleryItem } from '@patternfly/react-core';
 import { Spinner } from 'patternfly-react';
-import ErrorBox from '../../../../../common/ErrorBox';
-import { humanizeValueWithUnit } from '../../../../../../common/units';
+import ErrorBox from '../../../../common/ErrorBox';
+import { humanizeValueWithUnit } from '../../../../../common/units';
+import sortMachineTypes from './sortMachineTypes';
 
-class MachineTypeSelector extends React.Component {
+class MachineTypeSelection extends React.Component {
+  state = {
+    currentValue: '',
+  }
+
   componentDidMount() {
     const { getMachineTypes, machineTypes } = this.props;
     if (!machineTypes.fulfilled) {
@@ -24,9 +29,18 @@ class MachineTypeSelector extends React.Component {
 
   componentDidUpdate() {
     const { machineTypes } = this.props;
-    if (machineTypes.error || machineTypes.pending) {
+    const { currentValue } = this.state;
+    if (machineTypes.error || machineTypes.pending || !this.hasQuota(currentValue)) {
       // Don't let the user submit if we couldn't get machine types.
       this.setInvalidValue();
+    }
+
+    // if some external param changed, like MultiAz, and we no longer have quota
+    // for the selected instance type, we need to unselect it, and mark ourselves as invalid.
+    if (currentValue && !this.hasQuota(currentValue)) {
+      // this setState is guarded so the linter error can be ignored.
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ currentValue: '' });
     }
   }
 
@@ -37,21 +51,42 @@ class MachineTypeSelector extends React.Component {
     input.onChange('');
   }
 
+  hasQuota(machineType) {
+    const { isMultiAz, quota } = this.props;
+    if (!quota.fulfilled) {
+      return false;
+    }
+    const available = quota.quotaList.nodeQuota.rhInfra[isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
+    return available > 0;
+  }
+
   render() {
     // getMachineTypes is unused here, but it's needed so it won't
     // go into extraProps and then get to the DOM, generating a React warning.
     const {
-      cloudProviderID, machineTypes, getMachineTypes, input, meta: { error, touched }, ...extraProps
+      machineTypes,
+      getMachineTypes,
+      isMultiAz,
+      quota,
+      input,
+      meta: { error, touched },
+      ...extraProps
     } = this.props;
+    const { currentValue } = this.state;
+
 
     const changeHandler = (_, event) => {
-      input.onChange(event.target.value);
+      const { value } = event.target;
+      this.setState({ currentValue: value });
+      input.onChange(value);
     };
 
     const machineTypeRadio = (machineType) => {
       const humanizedMemory = humanizeValueWithUnit(machineType.memory.value,
         machineType.memory.unit);
       const labelTitle = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
+
+      const hasQuota = this.hasQuota(machineType.id);
       return (
         <GalleryItem key={machineType.id}>
           <Radio
@@ -59,6 +94,8 @@ class MachineTypeSelector extends React.Component {
             {...extraProps}
             id={`machineTypeRadio.${machineType.id}`}
             value={machineType.id}
+            isDisabled={!hasQuota}
+            isChecked={hasQuota && currentValue === machineType.id}
             label={(
               <React.Fragment>
                 <h4>
@@ -74,6 +111,7 @@ class MachineTypeSelector extends React.Component {
     };
 
     if (machineTypes.fulfilled) {
+      machineTypes.types.sort(sortMachineTypes);
       return (
         <div className="node-type-input">
           <div className="node-type-label">Node type</div>
@@ -96,11 +134,13 @@ class MachineTypeSelector extends React.Component {
   }
 }
 
-MachineTypeSelector.propTypes = {
+MachineTypeSelection.propTypes = {
   input: PropTypes.shape({ onChange: PropTypes.func.isRequired }).isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
+  isMultiAz: PropTypes.bool.isRequired,
+  quota: PropTypes.object.isRequired,
   // Plus extraprops passed by redux Field
 };
 
-export default MachineTypeSelector;
+export default MachineTypeSelection;

@@ -5,7 +5,6 @@ import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import {
   clusterDetails,
   openModal,
-  routerShards,
   refreshFunc,
   clusterIdentityProviders,
   organization,
@@ -19,7 +18,6 @@ describe('<ClusterDetailsTop />', () => {
       cluster: clusterDetails.cluster,
       openModal,
       pending: clusterDetails.pending,
-      routerShards,
       refreshFunc,
       clusterIdentityProviders,
       organization,

@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
+<Card>
+  <div
+    className="pf-c-content ocm-page"
+  >
+    <Breadcrumb
+      className="breadcrumbs-in-card"
+      title={false}
+    >
+      <LinkContainer
+        activeClassName="active"
+        exact={false}
+        replace={false}
+        strict={false}
+        to=""
+      >
+        <BreadcrumbItem
+          active={false}
+          href="#"
+        >
+          Clusters
+        </BreadcrumbItem>
+      </LinkContainer>
+      <BreadcrumbItem
+        active={true}
+      >
+        Create a Red Hat-Managed Cluster
+      </BreadcrumbItem>
+    </Breadcrumb>
+    <PageTitle
+      title="Create a Red Hat-Managed Cluster"
+    />
+    <Form
+      bsClass="form"
+      componentClass="form"
+      horizontal={false}
+      inline={false}
+      onSubmit={[MockFunction]}
+    >
+      <ManagedClusterForm
+        pending={false}
+      />
+      <Grid
+        bsClass="container"
+        componentClass="div"
+        fluid={false}
+      >
+        <Row
+          bsClass="row"
+          componentClass="div"
+        >
+          <Split
+            className="create-osd-form-button-split"
+            component="div"
+            gutter="sm"
+          >
+            <SplitItem
+              className=""
+              isFilled={false}
+            >
+              <Button
+                disabled={false}
+                onClick={[MockFunction]}
+                type="submit"
+                variant="primary"
+              >
+                Create
+              </Button>
+            </SplitItem>
+            <SplitItem
+              className=""
+              isFilled={false}
+            >
+              <Link
+                replace={false}
+                to="/"
+              >
+                <Button
+                  disabled={false}
+                  onClick={[Function]}
+                  variant="secondary"
+                >
+                  Cancel
+                </Button>
+              </Link>
+            </SplitItem>
+            <SplitItem
+              className=""
+              isFilled={false}
+            />
+          </Split>
+        </Row>
+      </Grid>
+    </Form>
+  </div>
+</Card>
+`;

@@ -27,7 +27,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 import Keycloak from 'keycloak-js';
-import { userInfoResponse, getOrganization } from './redux/actions/userActions';
+import { userInfoResponse, getOrganizationAndQuota } from './redux/actions/userActions';
 import { getCloudProviders } from './redux/actions/cloudProviderActions';
 import config from './config';
 import App from './components/App/App';
@@ -87,7 +87,7 @@ function initKeycloak() {
       store.dispatch(userInfoResponse(keycloak.idTokenParsed));
       // fetch cloud providers + organization as soon as possible, for lower latency
       store.dispatch(getCloudProviders());
-      store.dispatch(getOrganization());
+      store.dispatch(getOrganizationAndQuota());
       render();
 
       const IDLE_TIMEOUT_SECONDS = 18 * 60 * 60; // 18 hours
@@ -135,7 +135,7 @@ if (APP_EMBEDDED) {
         authenticated: true,
       };
       store.dispatch(getCloudProviders());
-      store.dispatch(getOrganization());
+      store.dispatch(getOrganizationAndQuota());
       render();
     });
   });

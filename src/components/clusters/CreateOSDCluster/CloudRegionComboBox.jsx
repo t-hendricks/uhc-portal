@@ -5,8 +5,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Spinner } from 'patternfly-react';
-import ErrorBox from '../../../../common/ErrorBox';
-import { cloudProviderActions } from '../../../../../redux/actions/cloudProviderActions';
+import ErrorBox from '../../common/ErrorBox';
+import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 
 class CloudRegionComboBox extends React.Component {
   componentDidMount() {

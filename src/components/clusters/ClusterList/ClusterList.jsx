@@ -61,7 +61,7 @@ class ClusterList extends Component {
   componentDidMount() {
     document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
     const {
-      getCloudProviders, cloudProviders, organization, getOrganization,
+      getCloudProviders, cloudProviders, organization, getOrganizationAndQuota,
     } = this.props;
 
     this.refresh();
@@ -69,22 +69,18 @@ class ClusterList extends Component {
       getCloudProviders();
     }
     if (!organization.fulfilled && !organization.pending) {
-      getOrganization();
+      getOrganizationAndQuota();
     }
   }
 
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
     const {
-      viewOptions, valid, pending, organization, getQuota, quota,
+      viewOptions, valid, pending,
     } = this.props;
     if ((!valid && !pending)
         || helpers.viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
-    }
-
-    if (organization.fulfilled && !quota.pending && !quota.fulfilled && !quota.error) {
-      getQuota(organization.details.id);
     }
   }
 
@@ -145,7 +141,7 @@ class ClusterList extends Component {
         <div className="cluster-list">
           <GlobalErrorBox />
           <h1>Clusters</h1>
-          <Split>
+          <Split id="cluster-list-top">
             <SplitItem>
               <Link to={hasQuota ? '/create' : '/install'}>
                 <Button>Create Cluster</Button>
@@ -207,9 +203,8 @@ ClusterList.propTypes = {
   openModal: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
   quota: PropTypes.object.isRequired,
-  getQuota: PropTypes.func.isRequired,
   hasQuota: PropTypes.bool.isRequired,
-  getOrganization: PropTypes.func.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
   operationID: PropTypes.string,
 };
 

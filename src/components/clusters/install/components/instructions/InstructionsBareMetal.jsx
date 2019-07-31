@@ -4,7 +4,7 @@ import { Card } from '@patternfly/react-core';
 import CLISection from './components/CLISection';
 import DownloadButton from './components/DownloadButton';
 import GetStarted from './components/GetStarted';
-import PageTitle from './components/PageTitle';
+import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import RHCOSSection from './components/RHCOSSection';
 import TelemetryAlert from './components/TelemetryAlert';
@@ -26,7 +26,7 @@ class InstructionsBareMetal extends React.Component {
 
     return (
       <Card>
-        <div className="pf-l-grid pf-m-gutter install-page">
+        <div className="pf-l-grid pf-m-gutter ocm-page">
           <div className="pf-c-content">
 
             <PageTitle title="Install on Bare Metal: User-Provisioned Infrastructure" />

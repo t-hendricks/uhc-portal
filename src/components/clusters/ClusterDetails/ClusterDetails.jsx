@@ -55,7 +55,7 @@ class ClusterDetails extends Component {
       getClusterIdentityProviders,
       match,
       organization,
-      getOrganization,
+      getOrganizationAndQuota,
       clearGlobalError,
     } = this.props;
     clearGlobalError('clusterDetails');
@@ -72,7 +72,7 @@ class ClusterDetails extends Component {
       getClusterIdentityProviders(clusterID); // TODO: get IDP only for managed cluster
     }
     if (!organization.pending && !organization.error && !organization.fulfilled) {
-      getOrganization();
+      getOrganizationAndQuota();
     }
   }
 
@@ -100,7 +100,6 @@ class ClusterDetails extends Component {
     const {
       match,
       fetchDetails,
-      fetchRouterShards,
       getLogs,
       getUsers,
     } = this.props;
@@ -108,7 +107,6 @@ class ClusterDetails extends Component {
 
     if (isValid(clusterID)) {
       fetchDetails(clusterID);
-      fetchRouterShards(clusterID);
       getLogs(clusterID);
       getUsers(clusterID, 'dedicated-admins');
     }
@@ -128,9 +126,7 @@ class ClusterDetails extends Component {
     const {
       clusterDetails,
       cloudProviders,
-      routerShards,
       fetchDetails,
-      fetchRouterShards,
       invalidateClusters,
       openModal,
       history,
@@ -185,8 +181,9 @@ class ClusterDetails extends Component {
     const onDialogClose = () => {
       invalidateClusters();
       fetchDetails(cluster.id);
-      fetchRouterShards(cluster.id);
     };
+
+    const hasLogs = !!logs.lines;
 
     return (
       <div id="clusterdetails-content">
@@ -198,7 +195,6 @@ class ClusterDetails extends Component {
           cluster={cluster}
           openModal={openModal}
           pending={clusterDetails.pending}
-          routerShards={routerShards}
           refreshFunc={this.refresh}
           clusterIdentityProviders={clusterIdentityProviders}
           organization={organization}
@@ -206,7 +202,7 @@ class ClusterDetails extends Component {
           errorMessage={clusterDetails.errorMessage}
         >
           <TabsRow
-            displayLogs={!!logs.lines}
+            displayLogs={hasLogs}
             displayUsersTab={cluster.managed && cluster.canEdit}
             overviewTabRef={this.overviewTabRef}
             usersTabRef={this.usersTabRef}
@@ -217,15 +213,16 @@ class ClusterDetails extends Component {
           <Overview
             cluster={cluster}
             cloudProviders={cloudProviders}
-            routerShards={routerShards}
           />
         </TabContent>
         <TabContent eventKey={1} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
           <Users clusterID={cluster.id} />
         </TabContent>
+        {hasLogs && (
         <TabContent eventKey={2} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
           <LogWindow clusterID={cluster.id} />
         </TabContent>
+        )}
         <EditClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {
@@ -251,14 +248,12 @@ ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
-  fetchRouterShards: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
-  getOrganization: PropTypes.func.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
   getLogs: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
-  routerShards: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   logs: PropTypes.object,

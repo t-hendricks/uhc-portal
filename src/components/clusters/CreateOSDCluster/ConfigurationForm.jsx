@@ -2,13 +2,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
 import { Col } from 'patternfly-react';
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import CloudRegionComboBox from './CloudRegionComboBox';
-import MachineTypesSelector from './MachineTypeSelector';
-import validators, { required } from '../../../../../common/validators';
-import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
-import { ConfigurationHint, RegionsHint } from './CreateClusterModalHelper';
-import minValueSelector from '../../../common/EditClusterDialog/EditClusterSelectors';
+import MachineTypeSelection from './components/MachineTypeSelection';
+import validators, { required } from '../../../common/validators';
+import ReduxCheckbox from '../../common/ReduxFormComponents/ReduxCheckbox';
+import { ConfigurationHint, RegionsHint } from './CreateOSDClusterHelper';
+import minValueSelector from '../common/EditClusterDialog/EditClusterSelectors';
+
 
 class ConfigurationForm extends React.Component {
   state = {
@@ -97,10 +98,11 @@ class ConfigurationForm extends React.Component {
           />
 
           <Field
-            component={MachineTypesSelector}
+            component={MachineTypeSelection}
             name="machine_type"
             validate={required}
             disabled={pending}
+            isMultiAz={isMultiAz}
           />
         </Col>
         <Col sm={4}>

@@ -513,7 +513,7 @@ type ProxyHandler struct {
 	proxy      *httputil.ReverseProxy
 }
 
-// NewProxyHandler creates a buider that can then be used to configure and create an proxy handler.
+// NewProxyHandler creates a builder that can then be used to configure and create an proxy handler.
 func NewProxyHandler() *ProxyHandlerBuilder {
 	return new(ProxyHandlerBuilder)
 }

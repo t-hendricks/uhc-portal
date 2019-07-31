@@ -6,7 +6,7 @@ import { cloudProviderActions } from '../../../redux/actions/cloudProviderAction
 import { viewConstants } from '../../../redux/constants';
 import { viewActions } from '../../../redux/actions/viewOptionsActions';
 import { modalActions } from '../../common/Modal/ModalActions';
-import { userActions } from '../../../redux/actions/userActions';
+import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
 
 import hasQuota from '../../../common/quotaSelector';
 
@@ -16,8 +16,7 @@ const mapDispatchToProps = {
   setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   openModal: modalActions.openModal,
-  getQuota: orgID => userActions.fetchOrganizationQuota(orgID),
-  getOrganization: userActions.getOrganization,
+  getOrganizationAndQuota,
 };
 
 

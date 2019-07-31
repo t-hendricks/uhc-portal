@@ -20,6 +20,7 @@
     "@patternfly/react-icons": "^3.10.8",
     "@patternfly/react-table": "^2.13.43",
     "@patternfly/react-tokens": "^2.6.5",
+    "@red-hat-insights/insights-frontend-components": "^3.41.69",
     "axios": "^0.18.0",
     "bootstrap-sass": "^3.3.7",
     "classnames": "^2.2.6",
@@ -28,7 +29,6 @@
     "detect-passive-events": "^1.0.4",
     "filesize": "^3.6.1",
     "history": "^4.7.2",
-    "jquery": "^3.3.1",
     "keycloak-js": "4.3.0",
     "lodash": "^4.7.11",
     "path-to-regexp": "^1.7.0",
@@ -48,8 +48,7 @@
     "redux": "^4.0.0",
     "redux-form": "^7.4.2",
     "redux-promise-middleware": "^5.0.0",
-    "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.1",

@@ -45,7 +45,7 @@ exports[`Cluster Actions Dropdown Items admin console url does not exist should 
     }
     tooltipProps={Object {}}
   >
-    Edit Cluster
+    Scale Cluster
   </DropdownItem>
 </Fragment>
 `;
@@ -95,7 +95,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
     }
     tooltipProps={Object {}}
   >
-    Edit Cluster
+    Scale Cluster
   </DropdownItem>
   <DropdownItem
     className=""
@@ -153,7 +153,7 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
     tooltip={null}
     tooltipProps={Object {}}
   >
-    Edit Cluster
+    Scale Cluster
   </DropdownItem>
   <DropdownItem
     className=""
@@ -219,7 +219,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
     }
     tooltipProps={Object {}}
   >
-    Edit Cluster
+    Scale Cluster
   </DropdownItem>
   <DropdownItem
     className=""
@@ -304,7 +304,7 @@ exports[`Cluster Actions Dropdown Items self managed cluster should render (self
     }
     tooltipProps={Object {}}
   >
-    Edit Cluster
+    Scale Cluster
   </DropdownItem>
 </Fragment>
 `;

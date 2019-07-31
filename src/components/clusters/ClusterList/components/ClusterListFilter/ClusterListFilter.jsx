@@ -42,6 +42,7 @@ class ClusterListFilter extends React.Component {
     return (
       <TextInput
         type="text"
+        aria-label="Filter"
         className="cluster-list-filter"
         value={currentValue}
         placeholder="Filter by name or ID..."

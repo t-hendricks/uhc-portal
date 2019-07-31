@@ -85,7 +85,7 @@ function NetworkConfugurationHint() {
         <React.Fragment>
           <p>
             You can override the default CIDR values for your Machine (Host), Service,
-            and Cluster (Pod), as well as define Router Shards.
+            and Cluster (Pod).
           </p>
           <p>
             Valid CIDR notation includes a prefix, shown as a 4-octet quantity,
@@ -100,32 +100,10 @@ function NetworkConfugurationHint() {
   );
 }
 
-function RouterShardsHint() {
-  return (
-    <HintBlock
-      title="Router Shards"
-      body={(
-        <React.Fragment>
-          <p>
-            Router shards are made up of a user-readable label and a scheme. The scheme
-            can be either Internal or External (internet-facing). Once provisioned, the
-            cluster will be accessible from auto-generated URLs matching the configuration.
-          </p>
-          <p>
-            <em>Only external routers are supported currently.</em>
-          </p>
-        </React.Fragment>
-      )}
-    />
-  );
-}
-
-
 const constants = {
   spinnerMessage: 'Do not refresh this page. This request may take a moment...',
   credentialsHeader: 'Cloud Provider Credentials',
   configurationHeader: 'Configuration',
-  routerShardsHeader: 'Router Shards',
 };
 
 export {
@@ -133,7 +111,6 @@ export {
   ConfigurationHint,
   RegionsHint,
   NetworkConfugurationHint,
-  RouterShardsHint,
 };
 
 export default constants;

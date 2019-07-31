@@ -53,9 +53,3 @@ test('Field is valid node count for multi AZ', () => {
   expect(validators.nodesMultiAz(5)).toBe('Number of nodes must be multiple of 3 for Multi AZ cluster.');
   expect(validators.nodesMultiAz(6)).toBe(undefined);
 });
-
-test('Field is a valid router shard label', () => {
-  expect(validators.routerShard('foo.bar')).toBe('Router shard label \'foo.bar\' isn\'t valid, must consist of lower-case alphanumeric characters or \'-\', start with an alphabetic character, and end with an alphanumeric character. For example, \'my-label\', or \'abc-123\'.');
-  expect(validators.routerShard('qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm')).toBe('Router shard label \'qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm\' is too long, it needs to be under 63 charcters long.');
-  expect(validators.routerShard('foo')).toBe(undefined);
-});

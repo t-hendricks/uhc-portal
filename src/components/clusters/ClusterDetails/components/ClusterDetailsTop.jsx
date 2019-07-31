@@ -5,7 +5,7 @@ import get from 'lodash/result';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Spinner } from 'patternfly-react';
 import {
-  Breadcrumb, BreadcrumbItem, Button, Alert, Split, SplitItem,
+  Breadcrumb, BreadcrumbItem, Button, Alert, Split, SplitItem, Title,
 } from '@patternfly/react-core';
 
 import clusterStates from '../../common/clusterStates';
@@ -18,7 +18,6 @@ function ClusterDetailsTop(props) {
     cluster,
     openModal,
     pending,
-    routerShards,
     refreshFunc,
     clusterIdentityProviders,
     organization,
@@ -75,7 +74,6 @@ function ClusterDetailsTop(props) {
   );
 
   const isRefreshing = pending
-      || routerShards.pending
       || organization.pending;
 
   return (
@@ -94,9 +92,9 @@ function ClusterDetailsTop(props) {
           </Breadcrumb>
         </SplitItem>
       </Split>
-      <Split id="cl-details-cluster-name">
+      <Split id="cl-details-top-row">
         <SplitItem>
-          <h1 className="vertical-align">{clusterName}</h1>
+          <Title headingLevel="h1" size="4xl" className="vertical-align">{clusterName}</Title>
         </SplitItem>
         <SplitItem>
           { isRefreshing && <Spinner loading className="cluster-details-spinner" /> }
@@ -128,7 +126,6 @@ ClusterDetailsTop.propTypes = {
   openModal: PropTypes.func.isRequired,
   refreshFunc: PropTypes.func.isRequired,
   pending: PropTypes.bool.isRequired,
-  routerShards: PropTypes.object.isRequired,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   error: PropTypes.bool,

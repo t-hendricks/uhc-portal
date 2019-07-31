@@ -3,10 +3,9 @@ const history = {
   push: jest.fn(),
 };
 const fetchDetails = jest.fn();
-const fetchRouterShards = jest.fn();
 const getCloudProviders = jest.fn();
 const invalidateClusters = jest.fn();
-const getOrganization = jest.fn();
+const getOrganizationAndQuota = jest.fn();
 const refreshFunc = jest.fn();
 const openModal = jest.fn();
 const getLogs = jest.fn();
@@ -140,37 +139,6 @@ const clusterDetails = {
     canEdit: true,
     canDelete: true,
     subscriptionInfo: subscription,
-  },
-};
-
-const routerShards = {
-  error: false,
-  errorMessage: '',
-  pending: false,
-  fulfilled: true,
-  routerShards: {
-    kind: 'RouterShardList',
-    href: '/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards',
-    id: '1IztzhAGrbjtKkMbiPewJanhTXk',
-    page: 1,
-    size: 2,
-    total: 2,
-    items: [
-      {
-        kind: 'RouterShard',
-        href: '/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards/ofvv',
-        id: 'ofvv',
-        scheme: 'internal',
-        label: 'test1',
-      },
-      {
-        kind: 'RouterShard',
-        href: '/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards/jhso',
-        id: 'jhso',
-        scheme: 'internet-facing',
-        label: 'test2',
-      },
-    ],
   },
 };
 
@@ -383,10 +351,9 @@ export {
   match,
   history,
   fetchDetails,
-  fetchRouterShards,
   getCloudProviders,
   getClusterIdentityProviders,
-  getOrganization,
+  getOrganizationAndQuota,
   invalidateClusters,
   refreshFunc,
   openModal,
@@ -394,7 +361,6 @@ export {
   getUsers,
   clusterDetails,
   cloudProviders,
-  routerShards,
   clusterIdentityProviders,
   organization,
   clearGlobalError,

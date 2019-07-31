@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Grid, Row, ExpandCollapse } from 'patternfly-react';
-import constants from './CreateClusterModalHelper';
+import constants from './CreateOSDClusterHelper';
 import ConfigurationForm from './ConfigurationForm';
-import RouterShardsForm from './RouterShardsForm';
+import AdvancedSettingsForm from './AdvancedSettingsForm';
 
 function ManagedClusterForm(props) {
   const {
@@ -11,7 +11,7 @@ function ManagedClusterForm(props) {
     touch,
   } = props;
   return (
-    <Grid>
+    <Grid className="osd-configuration-form">
       <Row>
         <ConfigurationForm
           header={constants.configurationHeader}
@@ -22,7 +22,7 @@ function ManagedClusterForm(props) {
       </Row>
       <Row>
         <ExpandCollapse>
-          <RouterShardsForm pending={pending} />
+          <AdvancedSettingsForm pending={pending} />
         </ExpandCollapse>
       </Row>
     </Grid>

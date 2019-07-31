@@ -33,8 +33,16 @@ limitations under the License.
   overflow-x: hidden;
 }
 
+.pending-modal {
+  min-height: 300px;
+}
+
 .cluster-list {
   margin: 0px 30px 0 30px;
+}
+
+#cluster-list-top {
+  margin: 20px 0 20px 0;
 }
 
 // Styles for the page where the user can download the access tokens, for use
@@ -78,7 +86,6 @@ limitations under the License.
 
 .metrics-chart {
   text-align: center;
-  font-weight: bold;
 }
 
 // fix donut chart tooltip css
@@ -100,9 +107,6 @@ limitations under the License.
 
 .cluster-details-item {
   padding: 30px;
-  dt {
-    font-weight: bold;
-  }
   dd {
     margin-bottom: 30px;
   }
@@ -144,17 +148,20 @@ limitations under the License.
   }
 }
 
-#cl-details-cluster-name{
+#cl-details-top-row{
   flex-wrap: wrap;
 }
 
-#cl-details-cluster-name h1 {
-  font-weight: bold;
+#cl-details-top-row h1 {
   margin: 0;
   @media (max-width: 480px) {
     display: block;
     padding-bottom: 20px;
   }
+}
+
+#cl-details-top .pf-c-tabs{
+  margin-top: 15px;
 }
 
 .cluster-error-triangle {
@@ -228,7 +235,7 @@ limitations under the License.
   height: 14px;
 }
 
-#edit-cl-name-error{
+.pf-c-modal-box .error-box {
   margin-bottom: 15px;
 }
 
@@ -281,7 +288,7 @@ p.notfound {
 }
 
 #idpHint {
-  margin: 25px 0 35px;
+  margin: 20px 0;
 }
 
 #idp-advanced-options {
@@ -332,10 +339,6 @@ p.notfound {
   padding-right: 0;
   padding-left: 0;
 }
-
-#clusterdetails-content .pf-c-card__header{
-  font-weight: bold;
-};
 
 h1 .badged-resource-pf span:first-child {
   display: table;
@@ -442,7 +445,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   color: var(--pf-global--link--Color);
 }
 
-.openshift-logo-install {
+.openshift-logo-page-title {
   float: left;
   width: 100px;
   border-right-color: var(--pf-global--BorderColor--200);
@@ -452,7 +455,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-right: 10px;
 }
 
-.install-page-title {
+.ocm-page-title {
   padding-top: 2px;
 }
 
@@ -471,7 +474,7 @@ h4.pf-c-alert__title {
   margin-bottom: 20px;
 }
 
-.install-page, .create-cluster-page {
+.ocm-page {
   margin: 30px;
 }
 
@@ -505,7 +508,7 @@ h4.pf-c-alert__title {
   filter: grayscale(0);
 }
 
-.create-cluster-header.pf-c-card__header {
+.infra-card .create-cluster-header.pf-c-card__header {
   margin-top: 55px;
   padding-top: 0;
 }
@@ -513,7 +516,6 @@ h4.pf-c-alert__title {
 // Temporary hacks to make PF4 components look okay in a PF3 form
 // TODO: REMOVE THIS when we move the rest of the cluster creation form to PF4
 .node-type-input {
-  font-size: 12px;
   margin-top: 25px;
   .error {
     color: #cc0000;
@@ -522,7 +524,7 @@ h4.pf-c-alert__title {
     font-size: 12px;
   }
   label.pf-c-radio__label > h4 {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     margin-bottom: 0;
   }
@@ -535,7 +537,7 @@ h4.pf-c-alert__title {
     max-width: 100%;
     margin-bottom: 5px;
   }
-  .pf-l-gallery { 
+  .pf-l-gallery {
     grid-template-columns: 50% 50%;
   }
 }
@@ -544,4 +546,31 @@ h4.pf-c-alert__title {
 // https://jira.coreos.com/browse/SDA-382
 .right-side-modal-pf .modal-content {
   overflow-y: auto;
+}
+
+.create-osd-form-button-split {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.osd-configuration-form {
+  margin-top: 20px;
+}
+
+.pf-c-content > ol.breadcrumbs-in-card {
+  padding-left: 0;
+  margin-left: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+// HACK - make PF3 "advanced options" look okay with PF4 font sizes
+// remove this once the cluster creation form is PF4
+.expand-collapse-pf {
+  button {
+    font-size: var(--pf-c-content--FontSize);
+  }
+  .expand-collapse-pf-separator {
+    margin-top: var(--pf-c-content--FontSize);
+  }
 }

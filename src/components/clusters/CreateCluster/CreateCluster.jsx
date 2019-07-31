@@ -9,41 +9,22 @@ import {
 import openShiftDedicatedLogo from '../../../styles/images/Logo-Red_Hat-OpenShift_Dedicated-A-Standard-RGB.svg';
 import openShiftContainerPlatformLogo from '../../../styles/images/Logo-Red_Hat-OpenShift-Container_Platform-A-Standard-RGB.svg';
 import FavoriteButton from '../../common/FavoriteButton';
-import CreateClusterModal from '../ClusterList/components/CreateClusterModal';
-import PageTitle from '../install/components/instructions/components/PageTitle';
+import PageTitle from '../../common/PageTitle';
 
 
 class CreateCluster extends React.Component {
   componentDidMount() {
     // Try to get quota or organization when the component is first mounted.
-    // Quota requires the organization, so we can only get it when we have the organization.
-    this.getOrganizationAndQuota();
-  }
-
-  componentDidUpdate() {
-    // If the request for organization was complete, we can get quota now.
-    this.getOrganizationAndQuota();
-  }
-
-  getOrganizationAndQuota() {
-    // TODO! Remove this and make it a part of the redux action + reducer
-    const {
-      organization, getOrganization, quota, getQuota,
-    } = this.props;
-
-    if (!organization.fulfilled && !organization.pending && !organization.error) {
-      getOrganization();
-    }
-
-    if (organization.fulfilled && !quota.pending && !quota.fulfilled && !quota.error) {
-      getQuota(organization.details.id);
+    const { getOrganizationAndQuota, organization } = this.props;
+    if (!organization.fulfilled && !organization.pending) {
+      getOrganizationAndQuota();
     }
   }
 
   render() {
-    const { openModal, hasQuota } = this.props;
+    const { hasQuota } = this.props;
     const osdCard = (
-      <Card component="a" onClick={() => openModal('create-cluster')} className="infra-card create-cluster-card">
+      <Link to="/create/osd" className="infra-card pf-c-card create-cluster-card">
         <div className="create-cluster-favorite-btn-container">
           <FavoriteButton isActive>Recommended</FavoriteButton>
         </div>
@@ -54,7 +35,7 @@ class CreateCluster extends React.Component {
           Create a Red Hat-managed cluster (OSD),
           provisioned on Amazon Web Services.
         </CardBody>
-      </Card>
+      </Link>
     );
 
     const ocpCard = (
@@ -73,7 +54,7 @@ class CreateCluster extends React.Component {
     return (
       <React.Fragment>
         <Card>
-          <div className="pf-c-content create-cluster-page">
+          <div className="pf-c-content ocm-page">
             <PageTitle title="Create a Cluster to Get Started" />
             <div className="flex-container">
               {hasQuota && (<React.Fragment>{osdCard}</React.Fragment>)}
@@ -81,18 +62,14 @@ class CreateCluster extends React.Component {
             </div>
           </div>
         </Card>
-        <CreateClusterModal />
       </React.Fragment>
     );
   }
 }
 
 CreateCluster.propTypes = {
-  openModal: PropTypes.func.isRequired,
   hasQuota: PropTypes.bool.isRequired,
-  getOrganization: PropTypes.func.isRequired,
-  getQuota: PropTypes.func.isRequired,
-  quota: PropTypes.object.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
 };
 
