@@ -45,18 +45,27 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
   meta={Object {}}
   quota={Object {}}
 >
-  <Spinner
-    className=""
-    inline={true}
-    inverse={false}
-    loading={true}
-    size="sm"
+  <div
+    className="spinner-fit-container"
   >
-    <div
-      className="spinner spinner-sm spinner-inline"
-    />
-  </Spinner>
-  Loading node types..
+    <Spinner>
+      <div
+        className="ins-c-spinner"
+        role="status"
+      >
+        <span
+          className="pf-u-screen-reader"
+        >
+          Loading...
+        </span>
+      </div>
+    </Spinner>
+  </div>
+  <div
+    className="spinner-loading-text"
+  >
+    Loading node types..
+  </div>
 </MachineTypeSelection>
 `;
 
@@ -418,18 +427,27 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
   meta={Object {}}
   quota={Object {}}
 >
-  <Spinner
-    className=""
-    inline={true}
-    inverse={false}
-    loading={true}
-    size="sm"
+  <div
+    className="spinner-fit-container"
   >
-    <div
-      className="spinner spinner-sm spinner-inline"
-    />
-  </Spinner>
-  Loading node types..
+    <Spinner>
+      <div
+        className="ins-c-spinner"
+        role="status"
+      >
+        <span
+          className="pf-u-screen-reader"
+        >
+          Loading...
+        </span>
+      </div>
+    </Spinner>
+  </div>
+  <div
+    className="spinner-loading-text"
+  >
+    Loading node types..
+  </div>
 </MachineTypeSelection>
 `;
 

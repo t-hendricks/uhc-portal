@@ -23,7 +23,7 @@ describe('<ClusterDetails />', () => {
 
     it('should render loading modal when pending', () => {
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find('LoadingModal').length).toEqual(1);
+      expect(wrapper.find('.cluster-loading-container').length).toEqual(1);
     });
   });
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/result';
 
 import { LinkContainer } from 'react-router-bootstrap';
-import { Spinner } from 'patternfly-react';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
   Breadcrumb, BreadcrumbItem, Button, Alert, Split, SplitItem, Title,
 } from '@patternfly/react-core';
@@ -97,7 +97,7 @@ function ClusterDetailsTop(props) {
           <Title headingLevel="h1" size="4xl" className="vertical-align">{clusterName}</Title>
         </SplitItem>
         <SplitItem>
-          { isRefreshing && <Spinner loading className="cluster-details-spinner" /> }
+          { isRefreshing && <Spinner className="cluster-details-spinner" /> }
           { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-details-warning" /> }
         </SplitItem>
         <SplitItem isFilled />
@@ -112,7 +112,7 @@ function ClusterDetailsTop(props) {
       {cluster.managed && !hasIdentityProviders && (
       <Split>
         <SplitItem isFilled>
-          {clusterIdentityProviders.pending ? <Spinner loading /> : <IdentityProvidersHint />}
+          {clusterIdentityProviders.pending ? <Spinner centered /> : <IdentityProvidersHint />}
         </SplitItem>
       </Split>)
           }
