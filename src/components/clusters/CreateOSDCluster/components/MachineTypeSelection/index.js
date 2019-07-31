@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
-import MachineTypeSelector from './MachineTypeSelector';
+import MachineTypeSelection from './MachineTypeSelection';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
 
 const mapStateToProps = state => ({
   machineTypes: state.machineTypes,
+  quota: state.userProfile.quota,
 });
 
 const mapDispatchToProps = {
   getMachineTypes,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MachineTypeSelector);
+export default connect(mapStateToProps, mapDispatchToProps)(MachineTypeSelection);

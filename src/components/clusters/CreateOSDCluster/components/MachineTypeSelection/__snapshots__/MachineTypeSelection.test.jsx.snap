@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<MachineTypeSelector /> when machine type list needs to be fetched renders correctly 1`] = `
-<MachineTypeSelector
+exports[`<MachineTypeSelection /> when machine type list needs to be fetched renders correctly 1`] = `
+<MachineTypeSelection
   getMachineTypes={
     [MockFunction] {
       "calls": Array [
@@ -32,6 +32,7 @@ exports[`<MachineTypeSelector /> when machine type list needs to be fetched rend
       },
     }
   }
+  isMultiAz={false}
   machineTypes={
     Object {
       "error": false,
@@ -42,6 +43,7 @@ exports[`<MachineTypeSelector /> when machine type list needs to be fetched rend
     }
   }
   meta={Object {}}
+  quota={Object {}}
 >
   <Spinner
     className=""
@@ -55,18 +57,18 @@ exports[`<MachineTypeSelector /> when machine type list needs to be fetched rend
     />
   </Spinner>
   Loading node types..
-</MachineTypeSelector>
+</MachineTypeSelection>
 `;
 
-exports[`<MachineTypeSelector /> when the machine types list is available renders correctly 1`] = `
-<MachineTypeSelector
-  cloudProviderID="aws"
+exports[`<MachineTypeSelection /> when the machine types list is available renders correctly 1`] = `
+<MachineTypeSelection
   getMachineTypes={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction],
     }
   }
+  isMultiAz={true}
   machineTypes={
     Object {
       "error": false,
@@ -75,25 +77,6 @@ exports[`<MachineTypeSelector /> when the machine types list is available render
       "machineTypes": Array [],
       "pending": false,
       "types": Array [
-        Object {
-          "cloud_provider": Object {
-            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-            "id": "aws",
-            "kind": "CloudProviderLink",
-          },
-          "cpu": Object {
-            "unit": "vCPU",
-            "value": 16,
-          },
-          "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
-          "id": "r5.4xlarge",
-          "kind": "MachineType",
-          "memory": Object {
-            "unit": "B",
-            "value": 137438953472,
-          },
-          "name": "Memory optimized - R5.4XLarge",
-        },
         Object {
           "cloud_provider": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
@@ -113,10 +96,46 @@ exports[`<MachineTypeSelector /> when the machine types list is available render
           },
           "name": "Memory optimized - R5.XLarge",
         },
+        Object {
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 16,
+          },
+          "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+          "id": "r5.4xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 137438953472,
+          },
+          "name": "Memory optimized - R5.4XLarge",
+        },
       ],
     }
   }
   meta={Object {}}
+  quota={
+    Object {
+      "fulfilled": true,
+      "quotaList": Object {
+        "nodeQuota": Object {
+          "rhInfra": Object {
+            "multiAz": Object {
+              "r5.xlarge": 5,
+            },
+            "singleAz": Object {
+              "r5.xlarge": 0,
+            },
+          },
+        },
+      },
+    }
+  }
 >
   <div
     className="node-type-input"
@@ -131,57 +150,13 @@ exports[`<MachineTypeSelector /> when the machine types list is available render
         className="pf-l-gallery"
       >
         <GalleryItem
-          key="r5.4xlarge"
-        >
-          <div>
-            <Radio
-              className=""
-              id="machineTypeRadio.r5.4xlarge"
-              isDisabled={false}
-              isValid={true}
-              label={
-                <React.Fragment>
-                  <h4>
-                    16 vCPU 128 GiB RAM
-                  </h4>
-                  Memory optimized - R5.4XLarge
-                </React.Fragment>
-              }
-              onChange={[Function]}
-              value="r5.4xlarge"
-            >
-              <div
-                className="pf-c-radio"
-              >
-                <input
-                  aria-invalid={false}
-                  className="pf-c-radio__input"
-                  disabled={false}
-                  id="machineTypeRadio.r5.4xlarge"
-                  onChange={[Function]}
-                  type="radio"
-                  value="r5.4xlarge"
-                />
-                <label
-                  className="pf-c-radio__label"
-                  htmlFor="machineTypeRadio.r5.4xlarge"
-                >
-                  <h4>
-                    16 vCPU 128 GiB RAM
-                  </h4>
-                  Memory optimized - R5.4XLarge
-                </label>
-              </div>
-            </Radio>
-          </div>
-        </GalleryItem>
-        <GalleryItem
           key="r5.xlarge"
         >
           <div>
             <Radio
               className=""
               id="machineTypeRadio.r5.xlarge"
+              isChecked={false}
               isDisabled={false}
               isValid={true}
               label={
@@ -200,6 +175,7 @@ exports[`<MachineTypeSelector /> when the machine types list is available render
               >
                 <input
                   aria-invalid={false}
+                  checked={false}
                   className="pf-c-radio__input"
                   disabled={false}
                   id="machineTypeRadio.r5.xlarge"
@@ -220,15 +196,61 @@ exports[`<MachineTypeSelector /> when the machine types list is available render
             </Radio>
           </div>
         </GalleryItem>
+        <GalleryItem
+          key="r5.4xlarge"
+        >
+          <div>
+            <Radio
+              className=""
+              id="machineTypeRadio.r5.4xlarge"
+              isChecked={false}
+              isDisabled={true}
+              isValid={true}
+              label={
+                <React.Fragment>
+                  <h4>
+                    16 vCPU 128 GiB RAM
+                  </h4>
+                  Memory optimized - R5.4XLarge
+                </React.Fragment>
+              }
+              onChange={[Function]}
+              value="r5.4xlarge"
+            >
+              <div
+                className="pf-c-radio"
+              >
+                <input
+                  aria-invalid={false}
+                  checked={false}
+                  className="pf-c-radio__input"
+                  disabled={true}
+                  id="machineTypeRadio.r5.4xlarge"
+                  onChange={[Function]}
+                  type="radio"
+                  value="r5.4xlarge"
+                />
+                <label
+                  className="pf-c-radio__label pf-m-disabled"
+                  htmlFor="machineTypeRadio.r5.4xlarge"
+                >
+                  <h4>
+                    16 vCPU 128 GiB RAM
+                  </h4>
+                  Memory optimized - R5.4XLarge
+                </label>
+              </div>
+            </Radio>
+          </div>
+        </GalleryItem>
       </div>
     </Gallery>
   </div>
-</MachineTypeSelector>
+</MachineTypeSelection>
 `;
 
-exports[`<MachineTypeSelector /> when the request is pending renders correctly 1`] = `
-<MachineTypeSelector
-  cloudProviderID="aws"
+exports[`<MachineTypeSelection /> when the request is pending renders correctly 1`] = `
+<MachineTypeSelection
   getMachineTypes={[MockFunction]}
   input={
     Object {
@@ -247,6 +269,7 @@ exports[`<MachineTypeSelector /> when the request is pending renders correctly 1
       },
     }
   }
+  isMultiAz={false}
   machineTypes={
     Object {
       "error": false,
@@ -257,6 +280,7 @@ exports[`<MachineTypeSelector /> when the request is pending renders correctly 1
     }
   }
   meta={Object {}}
+  quota={Object {}}
 >
   <Spinner
     className=""
@@ -270,12 +294,11 @@ exports[`<MachineTypeSelector /> when the request is pending renders correctly 1
     />
   </Spinner>
   Loading node types..
-</MachineTypeSelector>
+</MachineTypeSelection>
 `;
 
-exports[`<MachineTypeSelector /> when there was an error renders correctly 1`] = `
-<MachineTypeSelector
-  cloudProviderID="aws"
+exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] = `
+<MachineTypeSelection
   getMachineTypes={
     [MockFunction] {
       "calls": Array [
@@ -306,6 +329,7 @@ exports[`<MachineTypeSelector /> when there was an error renders correctly 1`] =
       },
     }
   }
+  isMultiAz={false}
   machineTypes={
     Object {
       "error": true,
@@ -316,6 +340,7 @@ exports[`<MachineTypeSelector /> when there was an error renders correctly 1`] =
     }
   }
   meta={Object {}}
+  quota={Object {}}
 >
   <ErrorBox
     message="Error loading node types"
@@ -397,5 +422,5 @@ exports[`<MachineTypeSelector /> when there was an error renders correctly 1`] =
       </div>
     </Alert>
   </ErrorBox>
-</MachineTypeSelector>
+</MachineTypeSelection>
 `;

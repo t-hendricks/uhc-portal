@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import MachineTypeSelector from './MachineTypeSelector';
+import MachineTypeSelection from './MachineTypeSelection';
 
 const baseState = {
   error: false,
@@ -11,7 +11,7 @@ const baseState = {
   machineTypes: [],
 };
 
-describe('<MachineTypeSelector />', () => {
+describe('<MachineTypeSelection />', () => {
   describe('when machine type list needs to be fetched', () => {
     let getMachineTypes;
     let onChange;
@@ -20,11 +20,13 @@ describe('<MachineTypeSelector />', () => {
       getMachineTypes = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
-        <MachineTypeSelector
+        <MachineTypeSelection
           machineTypes={baseState}
           input={{ onChange }}
           meta={{}}
           getMachineTypes={getMachineTypes}
+          isMultiAz={false}
+          quota={{}}
         />,
       );
     });
@@ -56,12 +58,13 @@ describe('<MachineTypeSelector />', () => {
       getMachineTypes = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
-        <MachineTypeSelector
-          cloudProviderID="aws"
+        <MachineTypeSelection
           machineTypes={state}
           input={{ onChange }}
           meta={{}}
           getMachineTypes={getMachineTypes}
+          isMultiAz={false}
+          quota={{}}
         />,
       );
     });
@@ -94,12 +97,13 @@ describe('<MachineTypeSelector />', () => {
       getMachineTypes = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
-        <MachineTypeSelector
-          cloudProviderID="aws"
+        <MachineTypeSelection
           machineTypes={state}
           input={{ onChange }}
           meta={{}}
           getMachineTypes={getMachineTypes}
+          isMultiAz={false}
+          quota={{}}
         />,
       );
     });
@@ -175,15 +179,32 @@ describe('<MachineTypeSelector />', () => {
         ],
       };
 
+      const quota = {
+        fulfilled: true,
+        quotaList: {
+          nodeQuota: {
+            rhInfra: {
+              multiAz: {
+                'r5.xlarge': 5,
+              },
+              singleAz: {
+                'r5.xlarge': 0,
+              },
+            },
+          },
+        },
+      };
+
       getMachineTypes = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
-        <MachineTypeSelector
-          cloudProviderID="aws"
+        <MachineTypeSelection
           machineTypes={state}
           input={{ onChange }}
           meta={{}}
           getMachineTypes={getMachineTypes}
+          quota={quota}
+          isMultiAz
         />,
       );
     });
