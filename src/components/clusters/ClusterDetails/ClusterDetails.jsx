@@ -55,7 +55,7 @@ class ClusterDetails extends Component {
       getClusterIdentityProviders,
       match,
       organization,
-      getOrganization,
+      getOrganizationAndQuota,
       clearGlobalError,
     } = this.props;
     clearGlobalError('clusterDetails');
@@ -72,7 +72,7 @@ class ClusterDetails extends Component {
       getClusterIdentityProviders(clusterID); // TODO: get IDP only for managed cluster
     }
     if (!organization.pending && !organization.error && !organization.fulfilled) {
-      getOrganization();
+      getOrganizationAndQuota();
     }
   }
 
@@ -257,7 +257,7 @@ ClusterDetails.propTypes = {
   fetchDetails: PropTypes.func.isRequired,
   fetchRouterShards: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
-  getOrganization: PropTypes.func.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
   getLogs: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,

@@ -6,7 +6,7 @@ const fetchDetails = jest.fn();
 const fetchRouterShards = jest.fn();
 const getCloudProviders = jest.fn();
 const invalidateClusters = jest.fn();
-const getOrganization = jest.fn();
+const getOrganizationAndQuota = jest.fn();
 const refreshFunc = jest.fn();
 const openModal = jest.fn();
 const getLogs = jest.fn();
@@ -386,7 +386,7 @@ export {
   fetchRouterShards,
   getCloudProviders,
   getClusterIdentityProviders,
-  getOrganization,
+  getOrganizationAndQuota,
   invalidateClusters,
   refreshFunc,
   openModal,
