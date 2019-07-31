@@ -35,7 +35,7 @@ const mapDispatchToProps = {
   fetchDetails: clusterID => fetchClusterDetails(clusterID),
   fetchRouterShards: clusterID => fetchClusterRouterShards(clusterID),
   getCloudProviders: cloudProviderActions.getCloudProviders,
-  getOrganization: userActions.getOrganization,
+  getOrganizationAndQuota: userActions.getOrganizationAndQuota,
   invalidateClusters,
   openModal: modalActions.openModal,
   getLogs,
