@@ -18,7 +18,6 @@ function ClusterDetailsTop(props) {
     cluster,
     openModal,
     pending,
-    routerShards,
     refreshFunc,
     clusterIdentityProviders,
     organization,
@@ -75,7 +74,6 @@ function ClusterDetailsTop(props) {
   );
 
   const isRefreshing = pending
-      || routerShards.pending
       || organization.pending;
 
   return (
@@ -128,7 +126,6 @@ ClusterDetailsTop.propTypes = {
   openModal: PropTypes.func.isRequired,
   refreshFunc: PropTypes.func.isRequired,
   pending: PropTypes.bool.isRequired,
-  routerShards: PropTypes.object.isRequired,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   error: PropTypes.bool,

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Field, FormSection } from 'redux-form';
+import { Field } from 'redux-form';
 import { Form } from '@patternfly/react-core';
-import { ControlLabel, Spinner } from 'patternfly-react';
 
 import Modal from '../../../common/Modal/Modal';
 
@@ -14,14 +13,11 @@ class EditClusterDialog extends Component {
   componentDidUpdate(prevProps) {
     const {
       editClusterResponse,
-      editRouterShardResponse,
       resetResponse,
       closeModal,
       onClose,
       initialFormValues,
       change,
-      hasRouterShards,
-      fetchRouterShards,
     } = this.props;
 
     if (initialFormValues.id) {
@@ -29,23 +25,13 @@ class EditClusterDialog extends Component {
       if (prevProps.initialFormValues.id !== initialFormValues.id) {
         change('id', initialFormValues.id);
         change('nodes_compute', initialFormValues.nodesCompute);
-
-        // fetch router shards
-        if (!hasRouterShards) {
-          fetchRouterShards(initialFormValues.id);
-        }
-      }
-
-      // update initial router shards values once they are available
-      if (!prevProps.hasRouterShards && hasRouterShards) {
-        change('network_router_shards', initialFormValues.routerShards || []);
       }
     }
 
     // Only finalize when all responses are out of their pending state
-    if ((editClusterResponse.fulfilled || editRouterShardResponse.fulfilled)
-        && !editClusterResponse.pending && !editRouterShardResponse.pending
-        && !editRouterShardResponse.error && !editClusterResponse.error) {
+    if (editClusterResponse.fulfilled
+        && !editClusterResponse.pending
+        && !editClusterResponse.error) {
       resetResponse();
       onClose();
       closeModal();
@@ -63,32 +49,30 @@ class EditClusterDialog extends Component {
       closeModal,
       handleSubmit,
       editClusterResponse,
-      editRouterShardResponse,
       resetResponse,
-      hasRouterShards,
       min,
       isMultiAz,
     } = this.props;
 
-    const pending = editClusterResponse.pending || editRouterShardResponse.pending;
+    const { pending } = editClusterResponse;
 
     const cancelEdit = () => {
       resetResponse();
       closeModal();
     };
 
-    const error = (editClusterResponse.error || editRouterShardResponse.error) ? (
-      <ErrorBox message="Error editing cluster" response={editClusterResponse.error ? editClusterResponse : editRouterShardResponse} />
+    const error = editClusterResponse.error ? (
+      <ErrorBox message="Error editing cluster" response={editClusterResponse} />
     ) : null;
 
     return isOpen && (
       <Modal
-        title="Edit Cluster"
+        title="Scale Cluster"
         onClose={cancelEdit}
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={cancelEdit}
-        isPrimaryDisabled={!hasRouterShards || pending}
+        isPrimaryDisabled={pending}
         isPending={pending}
       >
         <React.Fragment>
@@ -103,29 +87,6 @@ class EditClusterDialog extends Component {
                 : this.validateNodes}
               min={min.value}
             />
-            <FormSection name="network_router_shards">
-              <ControlLabel>Router Shards</ControlLabel>
-              {' '}
-              <Spinner loading={!hasRouterShards} inline size="xs" />
-              <Field
-                component={ReduxVerticalFormGroup}
-                name="0.label"
-                label=""
-                placeholder="Label"
-                type="text"
-                normalize={val => val.toLowerCase()}
-                validate={validators.routerShard}
-              />
-              <Field
-                component={ReduxVerticalFormGroup}
-                name="1.label"
-                label=""
-                placeholder="Label"
-                type="text"
-                normalize={val => val.toLowerCase()}
-                validate={validators.routerShard}
-              />
-            </FormSection>
           </Form>
         </React.Fragment>
       </Modal>
@@ -140,10 +101,7 @@ EditClusterDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   resetResponse: PropTypes.func.isRequired,
-  fetchRouterShards: PropTypes.func.isRequired,
   editClusterResponse: PropTypes.object,
-  editRouterShardResponse: PropTypes.object,
-  hasRouterShards: PropTypes.bool.isRequired,
   min: PropTypes.shape({
     value: PropTypes.number,
     validationMsg: PropTypes.string,
@@ -152,14 +110,12 @@ EditClusterDialog.propTypes = {
   initialFormValues: PropTypes.shape({
     id: PropTypes.string,
     nodesCompute: PropTypes.number,
-    routerShards: PropTypes.array,
   }).isRequired,
 };
 
 EditClusterDialog.defaultProps = {
   isOpen: false,
   editClusterResponse: {},
-  editRouterShardResponse: {},
 };
 
 export default EditClusterDialog;

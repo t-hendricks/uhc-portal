@@ -46,19 +46,6 @@ const mapDispatchToProps = dispatch => ({
       managed: true,
     };
 
-    // Add router shards
-    if (formData.network_router_shards) {
-      clusterRequest.network.router_shards = {
-        items: [],
-      };
-      formData.network_router_shards.forEach((routerShard) => {
-        clusterRequest.network.router_shards.items.push({
-          label: routerShard.label,
-          scheme: 'internet-facing',
-        });
-      });
-    }
-
     dispatch(createCluster(clusterRequest));
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
