@@ -94,7 +94,7 @@ function ClusterDetailsTop(props) {
           </Breadcrumb>
         </SplitItem>
       </Split>
-      <Split id="cl-details-cluster-name">
+      <Split id="cl-details-top-row">
         <SplitItem>
           <Title headingLevel="h1" size="4xl" className="vertical-align">{clusterName}</Title>
         </SplitItem>

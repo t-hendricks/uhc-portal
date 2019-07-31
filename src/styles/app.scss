@@ -41,6 +41,10 @@ limitations under the License.
   margin: 0px 30px 0 30px;
 }
 
+#cluster-list-top {
+  margin: 20px 0 20px 0;
+}
+
 // Styles for the page where the user can download the access tokens, for use
 // with API clients:
 .token-details {
@@ -144,16 +148,20 @@ limitations under the License.
   }
 }
 
-#cl-details-cluster-name{
+#cl-details-top-row{
   flex-wrap: wrap;
 }
 
-#cl-details-cluster-name h1 {
+#cl-details-top-row h1 {
   margin: 0;
   @media (max-width: 480px) {
     display: block;
     padding-bottom: 20px;
   }
+}
+
+#cl-details-top .pf-c-tabs{
+  margin-top: 15px;
 }
 
 .cluster-error-triangle {
@@ -280,7 +288,7 @@ p.notfound {
 }
 
 #idpHint {
-  margin: 25px 0 35px;
+  margin: 20px 0;
 }
 
 #idp-advanced-options {

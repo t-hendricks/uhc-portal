@@ -145,7 +145,7 @@ class ClusterList extends Component {
         <div className="cluster-list">
           <GlobalErrorBox />
           <h1>Clusters</h1>
-          <Split>
+          <Split id="cluster-list-top">
             <SplitItem>
               <Link to={hasQuota ? '/create' : '/install'}>
                 <Button>Create Cluster</Button>

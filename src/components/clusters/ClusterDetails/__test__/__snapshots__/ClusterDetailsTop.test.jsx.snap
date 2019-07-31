@@ -39,7 +39,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
     className=""
     component="div"
     gutter={null}
-    id="cl-details-cluster-name"
+    id="cl-details-top-row"
   >
     <SplitItem
       className=""
