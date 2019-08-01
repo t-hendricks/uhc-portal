@@ -48,7 +48,7 @@ class GithubFormRequired extends React.Component {
             name="teams"
             label="Teams"
             type="text"
-            placeholder="comma separated, example: team1,team2"
+            placeholder="comma separated, example: org1/team1,org2/team2"
             disabled={teamsDisabled || isPending}
             helpText={teamsDisabled ? 'Cannot be used in combination with the organizations field' : ''}
             onChange={(e, value) => this.toggleDisable(e, value, 'orgsDisabled')}
