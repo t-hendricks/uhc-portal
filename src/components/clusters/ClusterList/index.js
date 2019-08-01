@@ -16,6 +16,7 @@ const mapDispatchToProps = {
   setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   openModal: modalActions.openModal,
+  closeModal: modalActions.closeModal,
   getOrganizationAndQuota,
 };
 

@@ -84,6 +84,11 @@ class ClusterList extends Component {
     }
   }
 
+  componentWillUnmount() {
+    const { closeModal } = this.props;
+    closeModal();
+  }
+
   refresh() {
     const { fetchClusters, viewOptions } = this.props;
     fetchClusters(helpers.createViewQueryObject(viewOptions));
@@ -201,6 +206,7 @@ ClusterList.propTypes = {
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
   quota: PropTypes.object.isRequired,
   hasQuota: PropTypes.bool.isRequired,

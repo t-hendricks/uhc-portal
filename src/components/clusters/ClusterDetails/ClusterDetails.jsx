@@ -92,8 +92,9 @@ class ClusterDetails extends Component {
   }
 
   componentWillUnmount() {
-    const { resetIdentityProvidersState } = this.props;
+    const { resetIdentityProvidersState, closeModal } = this.props;
     resetIdentityProvidersState();
+    closeModal();
   }
 
   refresh() {
@@ -255,6 +256,7 @@ ClusterDetails.propTypes = {
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   logs: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,

@@ -8,6 +8,7 @@ const invalidateClusters = jest.fn();
 const getOrganizationAndQuota = jest.fn();
 const refreshFunc = jest.fn();
 const openModal = jest.fn();
+const closeModal = jest.fn();
 const getLogs = jest.fn();
 const getUsers = jest.fn();
 const getClusterIdentityProviders = jest.fn();
@@ -357,6 +358,7 @@ export {
   invalidateClusters,
   refreshFunc,
   openModal,
+  closeModal,
   getLogs,
   getUsers,
   clusterDetails,
