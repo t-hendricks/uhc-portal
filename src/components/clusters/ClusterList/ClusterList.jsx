@@ -151,6 +151,9 @@ class ClusterList extends Component {
           <h1>Clusters</h1>
           <Split id="cluster-list-top">
             <SplitItem>
+              <ClusterListFilter />
+            </SplitItem>
+            <SplitItem className="create-cluster-button-split">
               <Link to={hasQuota ? '/create' : '/install'}>
                 <Button>Create Cluster</Button>
               </Link>
@@ -161,7 +164,14 @@ class ClusterList extends Component {
             </SplitItem>
             <SplitItem isFilled />
             <SplitItem>
-              <ClusterListFilter />
+              <ViewPaginationRow
+                viewType={viewConstants.CLUSTERS_VIEW}
+                currentPage={viewOptions.currentPage}
+                pageSize={viewOptions.pageSize}
+                totalCount={viewOptions.totalCount}
+                totalPages={viewOptions.totalPages}
+                variant="top"
+              />
             </SplitItem>
             <SplitItem>
               <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
@@ -175,6 +185,14 @@ class ClusterList extends Component {
               openModal('delete-cluster', modalData);
             }}
           />
+          <ViewPaginationRow
+            viewType={viewConstants.CLUSTERS_VIEW}
+            currentPage={viewOptions.currentPage}
+            pageSize={viewOptions.pageSize}
+            totalCount={viewOptions.totalCount}
+            totalPages={viewOptions.totalPages}
+            variant="bottom"
+          />
           <EditDisplayNameDialog onClose={invalidateClusters} />
           <EditClusterDialog onClose={invalidateClusters} />
           <DeleteClusterDialog onClose={(shouldRefresh) => {
@@ -184,13 +202,6 @@ class ClusterList extends Component {
           }}
           />
         </div>
-        <ViewPaginationRow
-          viewType={viewConstants.CLUSTERS_VIEW}
-          currentPage={viewOptions.currentPage}
-          pageSize={viewOptions.pageSize}
-          totalCount={viewOptions.totalCount}
-          totalPages={viewOptions.totalPages}
-        />
       </Card>
     );
   }
