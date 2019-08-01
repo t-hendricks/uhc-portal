@@ -19,6 +19,14 @@ import { shallow } from 'enzyme';
 
 import Tokens from '../Tokens';
 
+window.insights = {
+  chrome: {
+    auth: {
+      getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello offline access token!' } }),
+    },
+  },
+};
+
 describe('<Tokens />', () => {
   it('Renders correctly', () => {
     const component = shallow(<Tokens

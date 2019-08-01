@@ -1,7 +1,7 @@
 /*global module*/
 
 const APP_ID = 'openshift';
-const API_PORT = 8002;
+const API_PORT = 8010;
 const routes = {};
 
 routes[`/beta/${APP_ID}`] = { host: 'http://localhost:8001' };

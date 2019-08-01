@@ -34,18 +34,16 @@ module.exports = (env, argv) => {
   const betaMode = argv.beta == 'true';
   let copyConfig = null;
   let bundleAnalyzer = null;
-  const embeddedApp = process.env.EMBEDDED === 'true';
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
   if (devMode) {
     copyConfig = new CopyWebpackPlugin([{ from: 'src/config', to: `${outDir}/config` }]);
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: false });
   }
-  const publicPath = embeddedApp ? `/${appDeployment}/${insights.appname}/` : `/${insights.appname}/`;
+  const publicPath = `/${appDeployment}/${insights.appname}/`;
   return {
     mode: argv.mode || 'development',
     entry: {
       main: path.resolve(srcDir, 'main.jsx'),
-      token: path.resolve(srcDir, 'token.jsx'),
     },
 
     output: {
@@ -64,38 +62,27 @@ module.exports = (env, argv) => {
       }),
       new HtmlWebpackPlugin({
         hash: true, // cache invalidation on bundle updates
-        chunks: ['token'],
-        template: 'src/token.html',
-        filename: 'token.html',
-      }),
-      new HtmlWebpackPlugin({
-        hash: true, // cache invalidation on bundle updates
         chunks: ['main'],
         template: 'src/index.html',
       }),
       new webpack.DefinePlugin({
-        'process.env.UHC_DISABLE_KEYCLOAK': JSON.stringify(process.env.UHC_DISABLE_KEYCLOAK),
         'process.env.UHC_GATEWAY_DOMAIN': JSON.stringify(process.env.UHC_GATEWAY_DOMAIN),
         'process.env.UHC_SHOW_OLD_METRICS': JSON.stringify(process.env.UHC_SHOW_OLD_METRICS),
-        APP_EMBEDDED: embeddedApp,
         APP_BETA: betaMode,
       }),
-      new ReplaceWebpackPlugin([
-        ...embeddedApp ? [{
-          pattern: '<div id="root"></div>',
+      new ReplaceWebpackPlugin(
+        [{
+          pattern: '@@insights-esi-body@@',
           replacement: `<esi:include src="/${appDeployment}/chrome/snippets/body.html" />`
         }, {
-          pattern: '@@head-snippet@@',
+          pattern: '@@insights-esi-head@@',
           replacement: `<esi:include src="/${appDeployment}/chrome/snippets/head.html" />`
-        }] : [{
-          pattern: '@@head-snippet@@',
-          replacement: '',
         }],
-      ]),
+      ),
       new CopyWebpackPlugin([
         { from: 'public', to: outDir, toType: 'dir' },
       ]),
-      !embeddedApp && bundleAnalyzer,
+      process.env.BUNDLE_ANALYZER && bundleAnalyzer,
       copyConfig,
     ].filter(Boolean),
 

@@ -174,7 +174,7 @@ if [ "$1" == "beta" ]; then
     # Build the application in development mode for deployment to the beta branches
     # of the Insights platform:
     rm --recursive --force build
-    yarn build-embedded --mode=production --beta=true
+    yarn build --mode=production --beta=true
     push_build "prod-beta" "https://api.stage.openshift.com"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
@@ -184,7 +184,7 @@ elif [ "$1" == "stable" ]; then
     # Build the application in production mode for deployment to the stable branches
     # of the Insights platform:
     rm --recursive --force build
-    yarn build-embedded --mode=production
+    yarn build --mode=production
     push_build "prod-stable" "https://api.openshift.com"
 else
     echo "no mode specified, doing nothing"
