@@ -10,7 +10,7 @@ import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
-import WhatIsInstallerSection from './components/WhatIsInstallerSection';
+import LookingForPreReleaseSection from './components/LookingForPreReleaseSection';
 
 class InstructionsAWSIPI extends React.Component {
   constructor(props) {
@@ -86,7 +86,7 @@ class InstructionsAWSIPI extends React.Component {
               <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
             </p>
 
-            <WhatIsInstallerSection isIPI />
+            <LookingForPreReleaseSection />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection
