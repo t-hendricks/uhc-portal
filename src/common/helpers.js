@@ -71,15 +71,38 @@ const createViewQueryObject = (viewOptions, queryObj) => {
   return queryObject;
 };
 
+function overrideErrorMessage(payload) {
+  if (!payload || !payload.details || !payload.details.length) {
+    return '';
+  }
+
+  switch (payload.details[0].kind) {
+    case 'ExcessResources':
+      return `You are not authorized to create the cluster because your request exceeds available quota.
+              In order to fulfill this request, you will need quota/subscriptions for:`;
+    default:
+      return '';
+  }
+}
+
 function getErrorMessage(payload) {
   if (payload.response === undefined) {
     // Handle edge cases in which `payload` might be an Error type
     return String(payload);
   }
+
   const response = payload.response.data;
+
+  // Determine if error needs to be overridden
+  const message = overrideErrorMessage(response);
+  if (message) {
+    return message;
+  }
+
   if (response !== undefined && response.kind === 'Error') {
     return `${response.code}:\n${response.reason}`;
   }
+
   return JSON.stringify(response);
 }
 
@@ -89,6 +112,7 @@ const getErrorState = action => ({
   error: action.error,
   errorCode: get(action.payload, 'response.status'),
   errorMessage: getErrorMessage(action.payload),
+  errorDetails: get(action.payload, 'response.data.details'),
   operationID: get(action.payload, 'response.data.operation_id'),
 });
 

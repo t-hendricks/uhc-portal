@@ -19,6 +19,7 @@ import { clustersConstants } from '../constants';
 const baseState = {
   error: false,
   errorMessage: '',
+  errorDetails: null,
   pending: false,
   fulfilled: false,
 };
