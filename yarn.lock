@@ -1067,12 +1067,80 @@
     redux-promise-middleware "^5.1.1"
     urijs "^1.19.1"
 
+"@redhat-cloud-services/frontend-components-utilities@~0.0.7":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-0.0.8.tgz#7432860e6c9bfec2bb2718fd72b80faeed84b68c"
+  integrity sha512-GgNA+ycDRkW2YqvrwwSUP2t/hOz5FZYM1U7xZZJuh0FoxF/z/f1BRoRkXYa2/zfZ1k1PbitHRFjO8W4p3Y1FMg==
+  dependencies:
+    "@sentry/browser" "^5.4.0"
+    axios "^0.19.0"
+    react-content-loader "^3.4.1"
+
+"@redhat-cloud-services/frontend-components@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components/-/frontend-components-0.0.9.tgz#3e96a7f8281b4eba4612510df1f39cbf1a3e79b6"
+  integrity sha512-jTiE7Vd1NQGlxuLgvJpQF9qx7ktq8etE0LWg9B93xMg3LMCd+VRSr49+W5u/fJ/KYDv9wo1XZ1AgzQWWuulOMw==
+  dependencies:
+    "@redhat-cloud-services/frontend-components-utilities" "~0.0.7"
+
 "@redhat-cloud-services/host-inventory-client@^1.0.12":
   version "1.0.27"
   resolved "https://registry.yarnpkg.com/@redhat-cloud-services/host-inventory-client/-/host-inventory-client-1.0.27.tgz#936c42b9dc0df59a3c53382d9cf5c5be76bee384"
   integrity sha512-cs0IxRVbdTlABkcABC4f1bmaoSKvfhhMptSTpCTJbtJpF4JHo+MnMx9MmbJH6q4Xd2CYGliAK1zjrDv4rqQ0Fw==
   dependencies:
     axios "^0.19.0"
+
+"@sentry/browser@^5.4.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-5.5.0.tgz#ec99ea6897d23affc46d58e6ada32016b27721b5"
+  integrity sha512-QZw4EXK47Qp9Q+vNpL5H4P4tYyfAN8qpWWeLIM0RDiNLlOugTVUdkfkeNTEJZ9VlqJ5RLx/2G/PITG4R6pwh/A==
+  dependencies:
+    "@sentry/core" "5.5.0"
+    "@sentry/types" "5.5.0"
+    "@sentry/utils" "5.5.0"
+    tslib "^1.9.3"
+
+"@sentry/core@5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-5.5.0.tgz#574fdc9228c8b4a909c0140eb0d8b098175c0f47"
+  integrity sha512-xOcBud0t5mfhFdyd2tQQti4uuWSrLiJihpXzxeRpdCfk2ic+xmpeQs3G4UqnluvQDc48ug/Igt7LXfSBRBx4eg==
+  dependencies:
+    "@sentry/hub" "5.5.0"
+    "@sentry/minimal" "5.5.0"
+    "@sentry/types" "5.5.0"
+    "@sentry/utils" "5.5.0"
+    tslib "^1.9.3"
+
+"@sentry/hub@5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-5.5.0.tgz#6b8eecf769fa693260d45e771f4bca15bdbc6f4b"
+  integrity sha512-+jKh5U1nv8ufoquGciWoZPOmKuEjFPH5m0VifCs6t3NcEbAq2qnfF26KUGqhUNznlUN/PkbWB4qMfKn14uNE2Q==
+  dependencies:
+    "@sentry/types" "5.5.0"
+    "@sentry/utils" "5.5.0"
+    tslib "^1.9.3"
+
+"@sentry/minimal@5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-5.5.0.tgz#ea7939b8efe307d25775b23227a3f85dfb46b274"
+  integrity sha512-o6O30+/pNrO7fTgwKxgZynHB7cMScJlw9HXgnNXgLXS6LBiqjYCQfVnWAgV//SyyG0uUlcjH3P6PnV6TsJOmVQ==
+  dependencies:
+    "@sentry/hub" "5.5.0"
+    "@sentry/types" "5.5.0"
+    tslib "^1.9.3"
+
+"@sentry/types@5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.5.0.tgz#0e7d8e8359c7af685258d92b23831072bb79f46a"
+  integrity sha512-3otF/miVDth91o+iign00x0o31McUPeyIFbMjLbgeTRRW9rXpu2jGrcRrvHfofECtoqCf5Y734hwvvlBvFZeIw==
+
+"@sentry/utils@5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.5.0.tgz#5c516be0568f4d462ad550c723b78e3ad7776c4e"
+  integrity sha512-gO8Bs/QcKDn7ncc2f2fIOTPx2AiZKrGj4us1Yxu6mBU8JZqMQRl9XjDMFAUECJQvquBAta+TFJyYj71ZedeQUQ==
+  dependencies:
+    "@sentry/types" "5.5.0"
+    tslib "^1.9.3"
 
 "@tippy.js/react@^1.1.1":
   version "1.1.1"
@@ -11194,6 +11262,11 @@ react-collapse@^4.0.3:
   dependencies:
     prop-types "^15.5.8"
 
+react-content-loader@^3.4.1:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/react-content-loader/-/react-content-loader-3.4.2.tgz#187fbec2aa389635e4613faa046713f196173f40"
+  integrity sha512-UsL3uyPUBZbaPXr52E+MMIOjs7qr6QpcCiF9Xt7we0ACEMAFYp6rWNxVwJbk4/1Peqe9Deajs0PRW5ymvyF5SA==
+
 react-copy-to-clipboard@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.1.tgz#8eae107bb400be73132ed3b6a7b4fb156090208e"
@@ -11956,11 +12029,6 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
-
-reselect@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/reselect/-/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
-  integrity sha1-79qpjqdFEyTQkrKyFjpqHXqaIUc=
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
