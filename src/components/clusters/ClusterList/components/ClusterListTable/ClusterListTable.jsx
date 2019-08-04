@@ -10,6 +10,7 @@ import {
   classNames,
   Visibility,
   SortByDirection,
+  cellWidth,
 } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
@@ -101,7 +102,7 @@ function ClusterListTable(props) {
     Visibility.hiddenOnSm);
 
   const columns = [
-    { title: 'Name', transforms: [sortable] },
+    { title: 'Name', transforms: [sortable, cellWidth(30)] },
     { title: 'Status' },
     { title: 'Type' },
     { title: 'vCPU', columnTransforms: [hiddenOnMdOrSmaller] },
