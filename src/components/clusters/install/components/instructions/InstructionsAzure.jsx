@@ -8,7 +8,6 @@ import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
-import WhatIsInstallerSection from './components/WhatIsInstallerSection';
 
 class InstructionsAzure extends React.Component {
   constructor(props) {
@@ -69,8 +68,6 @@ class InstructionsAzure extends React.Component {
             <p>
               <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.2.0-0.nightly-2019-06-03-135056/" token={token} />
             </p>
-
-            <WhatIsInstallerSection isIPI={false} />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection

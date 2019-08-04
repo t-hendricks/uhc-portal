@@ -35,6 +35,7 @@ const mapDispatchToProps = {
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
   invalidateClusters,
   openModal: modalActions.openModal,
+  closeModal: modalActions.closeModal,
   getLogs,
   getClusterIdentityProviders,
   getUsers: usersActions.getUsers,
