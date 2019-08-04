@@ -168,7 +168,7 @@ exports[`<ClusterActionsDropdown /> cluster with state ready and console url sho
     Array [
       <DropdownItem
         className=""
-        component="button"
+        component="a"
         href="www.testuhc.com"
         isDisabled={false}
         isHovered={false}
@@ -341,7 +341,7 @@ exports[`<ClusterActionsDropdown /> read only cluster should render correctly 1`
     Array [
       <DropdownItem
         className=""
-        component="button"
+        component="a"
         href="www.testuhc.com"
         isDisabled={false}
         isHovered={false}

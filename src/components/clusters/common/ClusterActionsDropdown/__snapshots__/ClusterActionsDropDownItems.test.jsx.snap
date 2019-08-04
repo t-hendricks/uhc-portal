@@ -117,7 +117,7 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
 <Fragment>
   <DropdownItem
     className=""
-    component="button"
+    component="a"
     href="www.testuhc.com"
     isDisabled={false}
     isHovered={false}
@@ -244,7 +244,7 @@ exports[`Cluster Actions Dropdown Items read only cluster should render correctl
 <Fragment>
   <DropdownItem
     className=""
-    component="button"
+    component="a"
     href="www.testuhc.com"
     isDisabled={false}
     isHovered={false}

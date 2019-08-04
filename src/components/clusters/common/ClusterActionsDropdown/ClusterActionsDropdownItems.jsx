@@ -28,7 +28,6 @@ function dropDownItems({
     const consoleURL = cluster.console ? cluster.console.url : false;
 
     const adminConsoleEnabled = {
-      ...baseProps,
       href: consoleURL,
       target: '_blank',
       rel: 'noreferrer',
