@@ -347,7 +347,7 @@ func (p *Proxy) merge(data *proxyData) error {
 // defaultConfig is the default configuration that is always loaded before any configuration file.
 var defaultConfig = []byte(`
 listener:
-  address: localhost:8002
+  address: localhost:8010
 
 keycloak:
   url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token

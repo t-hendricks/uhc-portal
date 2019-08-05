@@ -39,7 +39,7 @@ function Router(props) {
   return (
     <ConnectedRouter history={history}>
       <Switch>
-        { APP_EMBEDDED && <Route path="/token" component={Tokens} /> }
+        <Route path="/token" component={Tokens} />
         <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
         <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
         <Route path="/install/aws" component={InstallAWS} />

@@ -24,15 +24,10 @@ const serviceConfig = (passedConfig = {}, token) => {
   );
 };
 
-const apiRequest = (params) => {
-  if (APP_EMBEDDED) {
-    return insights.chrome.auth.getUser().then(
-      () => insights.chrome.auth.getToken().then(
-        token => axios(serviceConfig(params, token)),
-      ),
-    );
-  }
-  return axios(serviceConfig(params, sessionStorage.getItem('kctoken')));
-};
+const apiRequest = params => insights.chrome.auth.getUser().then(
+  () => insights.chrome.auth.getToken().then(
+    token => axios(serviceConfig(params, token)),
+  ),
+);
 
 export default apiRequest;

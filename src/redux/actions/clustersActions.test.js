@@ -3,6 +3,8 @@ import { clusterService } from '../../services';
 import { clustersConstants } from '../constants';
 import helpers from '../../common/helpers';
 
+jest.mock('../../services/accountsService.js');
+jest.mock('../../services/authorizationsService.js');
 jest.mock('../../services/clusterService.js');
 
 describe('clustersActions', () => {

@@ -93,9 +93,6 @@
     "webpack-dev-server": "^3.7.2"
   },
   "jest": {
-    "globals": {
-      "APP_EMBEDDED": false
-    },
     "verbose": true,
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
@@ -115,12 +112,9 @@
     }
   },
   "scripts": {
-    "build-embedded": "EMBEDDED=true webpack --progress",
     "build": "webpack --progress",
-    "start": "webpack-dev-server --progress --hot",
-    "start-embedded": "EMBEDDED=true UHC_GATEWAY_DOMAIN='https://qa.foo.redhat.com:1337' webpack-dev-server --progress --hot ",
-    "startmock": "UHC_GATEWAY_DOMAIN=http://localhost:8000 UHC_DISABLE_KEYCLOAK=true UHC_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
-    "startmock-embedded": "EMBEDDED=true UHC_GATEWAY_DOMAIN='https://qa.foo.redhat.com:1337' UHC_DISABLE_KEYCLOAK=true UHC_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
+    "start": "UHC_GATEWAY_DOMAIN='https://qa.foo.redhat.com:1337' webpack-dev-server --progress --hot",
+    "startmock": "UHC_GATEWAY_DOMAIN='https://qa.foo.redhat.com:1337' UHC_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
     "lint": "eslint src --ext js,jsx",
     "test": "jest --env=jsdom"
   },

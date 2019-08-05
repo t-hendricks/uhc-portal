@@ -70,7 +70,7 @@ To test the application in your development environment run the following comman
 $ yarn start
 ....
 
-That will start the the Webpack development server, at http://localhost:8001.
+That will start the the Webpack development server. See below for instructions regarding the "chromed environment".
 
 You will also need to start start the backend proxy server, which acts as a proxy
 for the _OpenID_ and API services that are required by the application. Before
@@ -171,9 +171,9 @@ to run the insights proxy and pass API requests to the mock server described abo
 
 Run webpack with
 ....
-$ yarn build-embedded; yarn start-embedded
+$ yarn build; yarn start
 ....
-The "build-embedded" step is crucial at the moment, but we should work to make it not required in the future.
+The "build" step is crucial at the moment, but we should work to make it not required in the future.
 
 Once the server is running you can access your UI on https://qa.foo.redhat.com:1337/openshift
 It should ask you to authenticate with QA SSO, which should accept every user and the password is "redhat"

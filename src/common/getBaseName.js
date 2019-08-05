@@ -5,13 +5,7 @@ function getBaseName() {
 }
 
 function getResourcesBase() {
-  let resourcesBase = `/${insights.appname}`;
-  if (APP_BETA) {
-    resourcesBase = `/beta/apps/${insights.appname}`;
-  } else if (APP_EMBEDDED) {
-    resourcesBase = `/apps/${insights.appname}`;
-  }
-  return resourcesBase;
+  return APP_BETA ? `/beta/apps/${insights.appname}` : `/apps/${insights.appname}`;
 }
 
 export { getResourcesBase };
