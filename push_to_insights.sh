@@ -132,19 +132,15 @@ function push_build {
     build/openshift/ \
     target/
 
-  # The `config.json` file is generated dynamically when using the development
-  # environment (templates.go). We generate it here for Insights.
+  # The development copy of `config.json` file is served from the webpack
+  # development server while developing, but we generate it here for Insights.
   # Note that this configuration doesn't contain the Keycloak parameters,
   # because authentication is managed by Insights, not by us.
   mkdir --parents target/config
   rm --recursive --force target/config/config.json
   cat >> target/config/config.json <<.
 {
-  "apiGateway": "${gateway}",
-  "installerURL": "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/",
-  "documentationURL": "https://github.com/openshift/installer/blob/master/README.md#quick-start",
-  "terraformInstallURL": "https://www.terraform.io/downloads.html",
-  "commandLineToolsURL": "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/"
+  "apiGateway": "${gateway}"
 }
 .
 

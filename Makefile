@@ -14,58 +14,17 @@
 # limitations under the License.
 #
 
-# The details of the build:
-build_id:=unknown
-build_ts:=$(shell date --utc --iso-8601=seconds)
-
-# The details of the application:
+# binaries to build (currently only backend)
 binaries:=$(shell ls cmd)
-namespace:=unified-hybrid-cloud
-version:=latest
-
-# The details of the image:
-image_registry:=quay.io
-image_repository:=app-sre/uhc-portal
-image:=$(image_registry)/$(image_repository)
-image_tag:=$(version)
-image_tar:=$(shell echo $(image_tag) | tr /:. ---).tar
-image_pull_policy:=IfNotPresent
-
-# The DNS domain names of the gateway and the portal:
-gateway_domain:=api.127.0.0.1.nip.io
-portal_domain:=cloud.127.0.0.1.nip.io
-
-# Keycloak details:
-keycloak_url:=https://sso.redhat.com/auth
-keycloak_realm:=redhat-external
-keycloak_client_id:=cloud-services
-
-# Installer URL:
-installer_url:=https://github.com/openshift/installer/releases
-
-# Documentation URL:
-documentation_url:=https://github.com/openshift/installer/blob/master/README.md#quick-start
-
-# Terraform install URL:
-terraform_install_url:=https://www.terraform.io/downloads.html
-
-# Command-line tools URL:
-command_line_tools_url:=https://mirror.openshift.com/pub/openshift-v3/clients/4.0.0-0.139.0/
 
 .PHONY: \
 	app \
 	binary \
 	$(binaries) \
 	clean \
-	deploy \
 	fmt \
-	image \
 	lint \
 	node_modules \
-	project \
-	push \
-	tar \
-	undeploy \
 	$(NULL)
 
 binary: $(binaries)
@@ -115,61 +74,9 @@ node_modules:
 app: node_modules
 	yarn build --mode=production
 
-image: portal app
-	docker build -t $(image):$(image_tag) .
-
-tar:
-	docker save -o $(image_tar) $(image):$(image_tag)
-
-push:
-	docker push $(image):$(image_tag)
-
-%-template:
-	oc process \
-		--filename="$*-template.yml" \
-		--local="true" \
-		--ignore-unknown-parameters="true" \
-		--param="BUILD_ID=$(build_id)" \
-		--param="BUILD_TS=$(build_ts)" \
-		--param="GATEWAY_DOMAIN=$(gateway_domain)" \
-		--param="IMAGE=$(image)" \
-		--param="IMAGE_PULL_POLICY=$(image_pull_policy)" \
-		--param="IMAGE_TAG=$(image_tag)" \
-		--param="INSTALLER_URL=$(installer_url)" \
-		--param="DOCUMENTATION_URL=$(documentation_url)" \
-		--param="TERRAFORM_INSTALL_URL=$(terraform_install_url)" \
-		--param="COMMAND_LINE_TOOLS_URL=$(command_line_tools_url)" \
-		--param="KEYCLOAK_CLIENT_ID=$(keycloak_client_id)" \
-		--param="KEYCLOAK_REALM=$(keycloak_realm)" \
-		--param="KEYCLOAK_URL=$(keycloak_url)" \
-		--param="NAMESPACE=$(namespace)" \
-		--param="PORTAL_DOMAIN=$(portal_domain)" \
-		--param="VERSION=$(version)" \
-	> "$*-template.json"
-
-project:
-	oc new-project "$(namespace)" || oc project "$(namespace)" || true
-
-deploy-%: project %-template
-	oc apply --filename="$*-template.json"
-
-undeploy-%: project %-template
-	oc delete --filename="$*-template.json"
-
-deploy: \
-	deploy-service \
-	deploy-route \
-        $(NULL)
-
-undeploy: \
-	undeploy-service \
-	undeploy-route \
-        $(NULL)
-
 clean:
 	rm -rf \
 		$(binaries) \
-		*-template.json \
 		*.tar \
 		.gopath \
 		build \

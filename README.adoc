@@ -2,7 +2,10 @@
 
 This repository contains the UI components for the OpenShift Cluster Manager site.
 
-Building the Go parts requires checking out this repo in the correct place under GOPATH:
+The UI is a pure JavaScript application written in React and Redux. Additionally it
+contains a helper development server, `backend`, written in Go.
+
+Building the Go backend requires checking out this repo in the correct place under GOPATH:
 
 ....
 git clone https://gitlab.cee.redhat.com/service/uhc-portal $GOPATH/src/gitlab.cee.redhat.com/service/uhc-portal
