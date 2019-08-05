@@ -203,7 +203,7 @@ ${SUBJECT}
 # Build the application in development mode for deployment to the beta branches
 # of the Insights platform:
 rm --recursive --force build
-yarn build-embedded
+yarn build-embedded --mode=production
 push_build "ci-beta" "https://api.stage.openshift.com"
 push_build "qa-beta" "https://api.stage.openshift.com"
 #push_build "prod-beta" "https://api.openshift.com"
