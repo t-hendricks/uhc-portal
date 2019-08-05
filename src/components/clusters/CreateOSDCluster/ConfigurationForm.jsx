@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import { Col } from 'patternfly-react';
+import { Col, Row } from 'patternfly-react';
 import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import MachineTypeSelection from './components/MachineTypeSelection';
@@ -45,70 +45,75 @@ class ConfigurationForm extends React.Component {
     const min = minValueSelector(isMultiAz);
     return (
       <React.Fragment>
-        <h3>{header}</h3>
-        <Col sm={5}>
-          <Field
-            component={ReduxVerticalFormGroup}
-            name="name"
-            label="Cluster name"
-            type="text"
-            validate={validators.checkClusterName}
-            disabled={pending}
-          />
-
-          {showDNSBaseDomain && (
+        <Row>
+          <h3>{header}</h3>
+          <Col sm={5}>
             <Field
               component={ReduxVerticalFormGroup}
-              name="dns_base_domain"
-              label="Base DNS domain"
+              name="name"
+              label="Cluster name"
               type="text"
-              validate={validators.checkBaseDNSDomain}
+              validate={validators.checkClusterName}
               disabled={pending}
-              normalize={value => value.toLowerCase()}
             />
-          )}
 
-          <Field
-            component={ReduxVerticalFormGroup}
-            name="nodes_compute"
-            label="Compute nodes"
-            type="number"
-            min={min.value}
-            validate={isMultiAz ? [this.validateNodesMultiAz, validators.nodesMultiAz]
-              : this.validateNodesSingleAz}
-            disabled={pending}
-          />
+            {showDNSBaseDomain && (
+              <Field
+                component={ReduxVerticalFormGroup}
+                name="dns_base_domain"
+                label="Base DNS domain"
+                type="text"
+                validate={validators.checkBaseDNSDomain}
+                disabled={pending}
+                normalize={value => value.toLowerCase()}
+              />
+            )}
 
-          <Field
-            component={ReduxVerticalFormGroup}
-            name="region"
-            label="AWS region"
-            componentClass={CloudRegionComboBox}
-            cloudProviderID="aws"
-            validate={required}
-            disabled={pending}
-          />
+            <Field
+              component={ReduxVerticalFormGroup}
+              name="nodes_compute"
+              label="Compute nodes"
+              type="number"
+              min={min.value}
+              validate={isMultiAz ? [this.validateNodesMultiAz, validators.nodesMultiAz]
+                : this.validateNodesSingleAz}
+              disabled={pending}
+            />
 
-          <Field
-            component={ReduxCheckbox}
-            name="multi_az"
-            label="Deploy on multiple availability zones"
-            disabled={pending}
-            onChange={this.handleMultiAZChange}
-          />
+            <Field
+              component={ReduxVerticalFormGroup}
+              name="region"
+              label="AWS region"
+              componentClass={CloudRegionComboBox}
+              cloudProviderID="aws"
+              validate={required}
+              disabled={pending}
+            />
 
-          <Field
-            component={MachineTypeSelection}
-            name="machine_type"
-            validate={required}
-            disabled={pending}
-            isMultiAz={isMultiAz}
-          />
-        </Col>
-        <Col sm={4}>
-          <ConfigurationHint showDNSBaseDomain={showDNSBaseDomain} />
-          <RegionsHint />
-        </Col>
+            <Field
+              component={ReduxCheckbox}
+              name="multi_az"
+              label="Deploy on multiple availability zones"
+              disabled={pending}
+              onChange={this.handleMultiAZChange}
+            />
+          </Col>
+          <Col sm={4}>
+            <ConfigurationHint showDNSBaseDomain={showDNSBaseDomain} />
+            <RegionsHint />
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={11}>
+            <Field
+              component={MachineTypeSelection}
+              name="machine_type"
+              validate={required}
+              disabled={pending}
+              isMultiAz={isMultiAz}
+            />
+          </Col>
+        </Row>
       </React.Fragment>
     );
   }
