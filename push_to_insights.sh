@@ -15,16 +15,19 @@
 # limitations under the License.
 #
 
-# This script builds the UHC portal image, and pushes it to the insights
-# deployment repositories.
+# This script builds the OCM portal code and pushes it to the Insights
+# deployment repositories. It is called via uhc-portal git hooks, when
+# code is merged to master and stable branches. (Master gets deployed to
+# prod-beta, and stable gets deployed to prod-stable.) See app-interface
+# for the job definition:
+# https://gitlab.cee.redhat.com/service/app-interface/blob/master/resources/jenkins/uhc/job-templates.yaml
+#
 #
 # PUSH_KEY - Base64 encoded SSH private key used to push to the Insights
-# platform git repository.
+# platform git repository. Available in Jenkins via Vault. If you run this
+# script locally for some reason, you must set PUSH_KEY.
 #
-# The machines that run this script need to have access to internet, so that the
-# built images can be pushed to quay.io.
-
-# URL of the Insights deployment repository for UHC:
+# URL of the Insights deployment repository for OCM:
 PUSH_URL="git@github.com:RedHatInsights/uhc-portal-frontend-deploy.git"
 
 # Public key of GitHub:
@@ -129,10 +132,10 @@ function push_build {
     build/openshift/ \
     target/
 
-  # The `config.json` file is generated dynamically by the portal server, but that
-  # isn't possible in the _cloud.redhat.com_ environment, so we need to generate
-  # it here. Note that this configuration doesn't contain the Keycloak parameters,
-  # because authentication is managed by the chrome, not by the application.
+  # The `config.json` file is generated dynamically when using the development
+  # environment (templates.go). We generate it here for Insights.
+  # Note that this configuration doesn't contain the Keycloak parameters,
+  # because authentication is managed by Insights, not by us.
   mkdir --parents target/config
   rm --recursive --force target/config/config.json
   cat >> target/config/config.json <<.
@@ -171,7 +174,7 @@ if [ "$1" == "beta" ]; then
     # Install dependencies:
     rm --recursive --force node_modules
     yarn install
-    # Build the application in development mode for deployment to the beta branches
+    # Build the application for deployment to the prod-beta branch
     # of the Insights platform:
     rm --recursive --force build
     yarn build --mode=production --beta=true
@@ -181,7 +184,7 @@ elif [ "$1" == "stable" ]; then
     # Install dependencies:
     rm --recursive --force node_modules
     yarn install
-    # Build the application in production mode for deployment to the stable branches
+    # Build the application for deployment to the prod-stable branch
     # of the Insights platform:
     rm --recursive --force build
     yarn build --mode=production
