@@ -154,6 +154,7 @@ limitations under the License.
 
 #cl-details-top-row h1 {
   margin: 0;
+  word-break: break-word;
   @media (max-width: 480px) {
     display: block;
     padding-bottom: 20px;
@@ -602,3 +603,9 @@ h4.pf-c-alert__title {
   }
 }
 // end FlatRadioButton related styles
+
+// Enable word wrapping in tooltips, this is useful in case of extremely long cluster names
+.pf-c-tooltip__content {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
