@@ -9,6 +9,8 @@ import PullSecretSection from './components/PullSecretSection';
 import RHCOSSection from './components/RHCOSSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
+import LookingForPreReleaseSection from './components/LookingForPreReleaseSection';
+
 
 class InstructionsBareMetal extends React.Component {
   constructor(props) {
@@ -62,6 +64,8 @@ class InstructionsBareMetal extends React.Component {
             <p>
               <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
             </p>
+            <LookingForPreReleaseSection />
+
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection

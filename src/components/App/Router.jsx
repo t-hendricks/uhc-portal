@@ -31,6 +31,7 @@ import InstallAWSIPI from '../clusters/install/InstallAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallAzure from '../clusters/install/InstallAzure';
 import InstallVSphere from '../clusters/install/InstallVSphere';
+import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import Tokens from '../tokens/Tokens';
 
 function Router(props) {
@@ -46,6 +47,7 @@ function Router(props) {
         <Route path="/install/azure/installer-provisioned" component={InstallAzure} />
         <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
         <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
+        <Route path="/install/pre-release" component={InstallPreRelease} />
         <Route path="/install" component={InstallInfrastructure} />
         <Route path="/details/:id" component={ClusterDetails} />
         <Route path="/create/osd" component={CreateOSDCluster} />
