@@ -78,5 +78,10 @@
     "pod_cidr": "10.128.0.0/14"
   },
   "multi_az": false,
-  "managed": true
+  "managed": true,
+  "identity_providers": {
+    "href": "/api/clusters_mgmt/v1/clusters/1K5FAQ7lEtAwuzyYVFK58lxsHrJ/identity_providers",
+    "kind": "IdentityProviderListLink"
+  }
+
 }

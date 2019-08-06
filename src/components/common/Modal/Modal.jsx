@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Modal as PfModal, Button } from '@patternfly/react-core';
-import { Spinner } from 'patternfly-react';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import { noop } from '../../../common/helpers';
 
@@ -39,7 +39,7 @@ function Modal({
       ]}
       {...extraProps}
     >
-      {isPending ? <Spinner loading size="lg" /> : children}
+      {isPending ? <Spinner centered /> : children}
     </PfModal>
   );
 }

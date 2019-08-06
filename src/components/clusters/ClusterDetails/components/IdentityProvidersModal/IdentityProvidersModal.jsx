@@ -16,7 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, Spinner } from 'patternfly-react';
+import { Modal, Button } from 'patternfly-react';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import ModalHeader from '../../../../common/Modal/components/ModalHeader';
 
@@ -51,7 +52,7 @@ class IdentityProvidersModal extends React.Component {
     const LoadingSpinner = () => (
       <div className="form-loading-spinner">
         <span>Please wait...</span>
-        <Spinner size="xs" loading inline />
+        <Spinner />
       </div>
     );
 

@@ -6,7 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Gallery, GalleryItem } from '@patternfly/react-core';
 import { CpuIcon, MemoryIcon, ContainerNodeIcon } from '@patternfly/react-icons';
-import { Spinner } from 'patternfly-react';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 import FlatRadioButton from '../../../../common/FlatRadioButton';
 import ErrorBox from '../../../../common/ErrorBox';
 import { humanizeValueWithUnit } from '../../../../../common/units';
@@ -155,8 +155,8 @@ class MachineTypeSelection extends React.Component {
       <ErrorBox message="Error loading node types" response={machineTypes} />
     ) : (
       <React.Fragment>
-        <Spinner size="sm" inline loading />
-        Loading node types..
+        <div className="spinner-fit-container"><Spinner /></div>
+        <div className="spinner-loading-text">Loading node types..</div>
       </React.Fragment>
     );
   }

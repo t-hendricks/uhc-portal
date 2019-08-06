@@ -169,15 +169,8 @@ limitations under the License.
   margin-left: 16px;
 }
 
-.cluster-list-spinner {
-  margin-top: 6px;
-  margin-left: 16px;
-}
-
 .cluster-details-spinner {
-  display: inline-block;
-  margin-left: 16px;
-  margin-top: 2px;
+  margin: 6px 0 0 16px;
 }
 
 .displayNameForm {
@@ -608,4 +601,30 @@ h4.pf-c-alert__title {
 .pf-c-tooltip__content {
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+.delete-idp-spinner-container {
+  height: 20px;
+  width: 36px;
+  .ins-c-spinner {
+    margin-top: -5px;
+  }
+}
+
+.spinner-fit-container {
+  height: 0;
+}
+
+.cluster-list-spinner, .cluster-user-form-spinner {
+  padding-top: 3px;
+  margin-left: 16px;
+}
+
+.spinner-loading-text {
+  margin-left: 32px;
+  padding-top: 5px;
+}
+
+.cluster-loading-container {
+  height: 132px;
 }

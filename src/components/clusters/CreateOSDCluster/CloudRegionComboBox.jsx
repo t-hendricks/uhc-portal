@@ -4,7 +4,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Spinner } from 'patternfly-react';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../common/ErrorBox';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 
@@ -62,8 +62,8 @@ class CloudRegionComboBox extends React.Component {
       <ErrorBox message="Error loading region list" response={cloudProviders} />
     ) : (
       <React.Fragment>
-        <Spinner size="sm" inline loading />
-        Loading region list...
+        <div className="spinner-fit-container"><Spinner /></div>
+        <div className="spinner-loading-text">Loading region list...</div>
       </React.Fragment>
     );
   }

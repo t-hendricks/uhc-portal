@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import result from 'lodash/result';
 
 import { TabContent, EmptyState } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import SubscriptionCompliancy from './components/SubscriptionCompliancy';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
@@ -26,7 +27,6 @@ import Users from './components/Users';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 
-import LoadingModal from '../../common/LoadingModal';
 import EditClusterDialog from '../common/EditClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
@@ -148,17 +148,21 @@ class ClusterDetails extends Component {
 
     const isPending = (result(cluster, 'id') !== requestedClusterID) && !clusterDetails.error;
 
-    const loadingModal = (<LoadingModal>Loading cluster details...</LoadingModal>);
-
     const errorState = () => (
       <EmptyState>
         <ErrorBox message="Error retrieving cluster details" response={clusterDetails} />
-        {isPending && loadingModal}
+        {isPending && <Spinner />}
       </EmptyState>
     );
 
     if (isPending) {
-      return loadingModal;
+      return (
+        <div id="clusterdetails-content">
+          <div className="cluster-loading-container">
+            <Spinner centered />
+          </div>
+        </div>
+      );
     }
 
     // show a full error state only if we don't have data at all,
