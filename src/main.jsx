@@ -60,7 +60,7 @@ const renderDevEnvError = () => {
       <p>
         If you&apos;re already running the Insights Chrome Proxy, you just got the URL wrong.
         {' '}
-        <a href="https://qa.foo.redhat.com:1337/">
+        <a href="https://qa.foo.redhat.com:1337/openshift">
           Click here to access the app.
         </a>
       </p>
