@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  CardBody,
-} from 'patternfly-react';
-import { Card } from '@patternfly/react-core';
+import { Card, CardBody } from '@patternfly/react-core';
 import PageTitle from '../../../../common/PageTitle';
 import bareMetalIcon from '../../../../../styles/images/Icon_RH_Hardware_Server-A-Single_RGB_Flat.png';
 import AWSLogo from '../../../../../styles/images/AWS.png';
