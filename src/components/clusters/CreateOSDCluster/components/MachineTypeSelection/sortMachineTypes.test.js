@@ -7,12 +7,18 @@ const machineTypes = [
       value: 16 * 1024 * 1024 * 1024,
       unit: 'B',
     },
+    cpu: {
+      value: '8',
+    },
   },
   {
     id: 'c5.4xlarge',
     memory: {
       value: 32 * 1024 * 1024 * 1024,
       unit: 'B',
+    },
+    cpu: {
+      value: '16',
     },
   },
   {
@@ -21,12 +27,18 @@ const machineTypes = [
       value: 32 * 1024 * 1024 * 1024,
       unit: 'B',
     },
+    cpu: {
+      value: '8',
+    },
   },
   {
     id: 'm5.4xlarge',
     memory: {
       value: 64 * 1024 * 1024 * 1024,
       unit: 'B',
+    },
+    cpu: {
+      value: '16',
     },
   },
   {
@@ -35,12 +47,18 @@ const machineTypes = [
       value: 16 * 1024 * 1024 * 1024,
       unit: 'B',
     },
+    cpu: {
+      value: '4',
+    },
   },
   {
     id: 'r5.2xlarge',
     memory: {
       value: 64 * 1024 * 1024 * 1024,
       unit: 'B',
+    },
+    cpu: {
+      value: '8',
     },
   },
   {
@@ -49,12 +67,18 @@ const machineTypes = [
       value: 128 * 1024 * 1024 * 1024,
       unit: 'B',
     },
+    cpu: {
+      value: '16',
+    },
   },
   {
     id: 'r5.xlarge',
     memory: {
       value: 32 * 1024 * 1024 * 1024,
       unit: 'B',
+    },
+    cpu: {
+      value: '4',
     },
   },
 ];

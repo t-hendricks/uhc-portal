@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardBody,
 } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 import openShiftDedicatedLogo from '../../../styles/images/Logo-Red_Hat-OpenShift_Dedicated-A-Standard-RGB.svg';
 import openShiftContainerPlatformLogo from '../../../styles/images/Logo-Red_Hat-OpenShift-Container_Platform-A-Standard-RGB.svg';
 import FavoriteButton from '../../common/FavoriteButton';
@@ -15,14 +16,14 @@ import PageTitle from '../../common/PageTitle';
 class CreateCluster extends React.Component {
   componentDidMount() {
     // Try to get quota or organization when the component is first mounted.
-    const { getOrganizationAndQuota, organization } = this.props;
-    if (!organization.fulfilled && !organization.pending) {
+    const { getOrganizationAndQuota, organization, quota } = this.props;
+    if (!quota.pending && !organization.pending) {
       getOrganizationAndQuota();
     }
   }
 
   render() {
-    const { hasQuota } = this.props;
+    const { hasQuota, quota } = this.props;
     const osdCard = (
       <Link to="/create/osd" className="infra-card pf-c-card create-cluster-card">
         <div className="create-cluster-favorite-btn-container">
@@ -51,26 +52,28 @@ class CreateCluster extends React.Component {
       </Link>
     );
 
-    return (
-      <React.Fragment>
-        <Card>
-          <div className="pf-c-content ocm-page">
-            <PageTitle title="Create a Cluster to Get Started" />
-            <div className="flex-container">
-              {hasQuota && (<React.Fragment>{osdCard}</React.Fragment>)}
-              {ocpCard}
-            </div>
+    const quotaRequestComplete = quota.fulfilled || quota.error;
+    return quotaRequestComplete ? (
+      <Card>
+        <div className="pf-c-content ocm-page">
+          <PageTitle title="Create a Cluster to Get Started" />
+          <div className="flex-container">
+            {hasQuota && (<React.Fragment>{osdCard}</React.Fragment>)}
+            {ocpCard}
           </div>
-        </Card>
-      </React.Fragment>
+        </div>
+      </Card>
+    ) : (
+      <Spinner centered />
     );
   }
 }
 
 CreateCluster.propTypes = {
   hasQuota: PropTypes.bool.isRequired,
-  getOrganizationAndQuota: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
+  quota: PropTypes.object.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
 };
 
 export default CreateCluster;

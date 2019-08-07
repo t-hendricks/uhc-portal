@@ -72,6 +72,7 @@ class MachineTypeSelection extends React.Component {
   setDefaultValue() {
     // Find the first machineType we have quota for, and set it as default
     const { machineTypes, input } = this.props;
+    machineTypes.types.sort(sortMachineTypes);
     const defaultType = machineTypes.types.find(type => this.hasQuota(type.id));
     if (defaultType) {
       this.setState({ currentValue: defaultType.id });
@@ -139,7 +140,6 @@ class MachineTypeSelection extends React.Component {
     };
 
     if (machineTypes.fulfilled) {
-      machineTypes.types.sort(sortMachineTypes);
       return (
         <div className="node-type-input">
           <div className="node-type-label">Node type</div>

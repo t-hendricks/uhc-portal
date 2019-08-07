@@ -5,13 +5,7 @@ function sortByMemory(a, b) {
   // sort by memory, ascending order
   const memoryBytesA = parseValueWithUnit(a.memory.value, a.memory.unit);
   const memoryBytesB = parseValueWithUnit(b.memory.value, b.memory.unit);
-  if (memoryBytesA > memoryBytesB) {
-    return 1;
-  }
-  if (memoryBytesB < memoryBytesA) {
-    return -1;
-  }
-  return 0;
+  return memoryBytesA - memoryBytesB;
 }
 
 function sortMachineTypes(a, b) {
@@ -20,8 +14,12 @@ function sortMachineTypes(a, b) {
   const categoryB = b.id.toLowerCase().charAt(0);
   if (categoryA === categoryB) {
     // the categories are equal. Within the category, we need to sort by size.
-    // memory is enough for now.
-    return sortByMemory(a, b);
+    const memorySortResult = sortByMemory(a, b);
+    if (memorySortResult === 0) {
+      // sort by CPU if two machine types have the same amount of memory
+      return a.cpu.value - b.cpu.value;
+    }
+    return memorySortResult;
   }
   if (categoryA === 'm') {
     return -1;
