@@ -1,3 +1,17 @@
 {
-    "apiGateway": "http://localhost:8002"
+    "apiGateway": "http://localhost:8002",
+    "environments": {
+        "production": {
+            "apiGateway": "https://api.openshift.com"
+        },
+        "staging": {
+            "apiGateway": "https://api.stage.openshift.com"
+        },
+        "integration": {
+            "apiGateway": "https://api-integration.6943.hive-integration.openshiftapps.com"
+        },
+        "development": {
+            "apiGateway": "http://localhost:8002"
+        }
+    }
 }

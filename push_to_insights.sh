@@ -110,6 +110,7 @@ function push_build {
   # Get the parameters:
   local branch="$1"
   local gateway="$2"
+  local overrides="$3"
 
   # Fetch the target branch:
   pushd target
@@ -138,11 +139,33 @@ function push_build {
   # because authentication is managed by Insights, not by us.
   mkdir --parents target/config
   rm --recursive --force target/config/config.json
-  cat >> target/config/config.json <<.
+  if [ "$overrides" == "true" ]; then
+    cat >> target/config/config.json <<.
+{
+  "apiGateway": "${gateway}",
+  "environments": {
+    "production": {
+      "apiGateway": "https://api.openshift.com"
+    },
+    "staging": {
+      "apiGateway": "https://api.stage.openshift.com"
+    },
+    "integration": {
+      "apiGateway": "https://api-integration.6943.hive-integration.openshiftapps.com"
+    },
+    "development": {
+      "apiGateway": "http://localhost:8002"
+    }
+  }
+}
+.
+  else
+    cat >> target/config/config.json <<.
 {
   "apiGateway": "${gateway}"
 }
 .
+  fi
 
   # Create a commit for the new build and push it:
   cat > message <<.
@@ -174,7 +197,7 @@ if [ "$1" == "beta" ]; then
     # of the Insights platform:
     rm --recursive --force build
     yarn build --mode=production --beta=true
-    push_build "prod-beta" "https://api.stage.openshift.com"
+    push_build "prod-beta" "https://api.stage.openshift.com" "true"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
     # Install dependencies:
@@ -184,7 +207,7 @@ elif [ "$1" == "stable" ]; then
     # of the Insights platform:
     rm --recursive --force build
     yarn build --mode=production
-    push_build "prod-stable" "https://api.openshift.com"
+    push_build "prod-stable" "https://api.openshift.com" "false"
 else
     echo "no mode specified, doing nothing"
 fi

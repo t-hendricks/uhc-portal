@@ -17,7 +17,7 @@ const serviceConfig = (passedConfig = {}, token) => {
       // NOTE: If running using webpack-server development server, and setting env
       // variable `GATEWAY_DOMAIN` to a development api server, we can test that
       // api server without editing the `config.json` file.
-      url: process.env.UHC_GATEWAY_DOMAIN
+      url: process.env.UHC_GATEWAY_DOMAIN && !config.configData.overrideEnvironment
         ? `${process.env.UHC_GATEWAY_DOMAIN}${passedConfig.url}`
         : `${BASE_URL}${passedConfig.url}`,
     },
