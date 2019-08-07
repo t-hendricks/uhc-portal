@@ -20,7 +20,7 @@ describe('<TabsRow />', () => {
 
   it('should display users tab and logs tab', () => {
     wrapper.setProps({ displayLogs: true, displayUsersTab: true }, () => {
-      expect(wrapper.find('ForwardRef').length).toEqual(3);
+      expect(wrapper.find('ForwardRef').length).toEqual(4);
     });
   });
 });

@@ -14,6 +14,8 @@ const getUsers = jest.fn();
 const getClusterIdentityProviders = jest.fn();
 const clearGlobalError = jest.fn();
 const setGlobalError = jest.fn();
+const getAlerts = jest.fn();
+const getNodes = jest.fn();
 
 const subscription = {
   id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
@@ -366,4 +368,6 @@ export {
   organization,
   clearGlobalError,
   setGlobalError,
+  getAlerts,
+  getNodes,
 };

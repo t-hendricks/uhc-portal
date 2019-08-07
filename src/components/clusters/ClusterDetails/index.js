@@ -12,6 +12,7 @@ import { cloudProviderActions } from '../../../redux/actions/cloudProviderAction
 import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalErrorActions';
 import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
+import { getAlerts, getNodes } from './components/Monitoring/MonitoringActions';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
@@ -42,6 +43,8 @@ const mapDispatchToProps = {
   resetIdentityProvidersState,
   clearGlobalError,
   setGlobalError,
+  getAlerts,
+  getNodes,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

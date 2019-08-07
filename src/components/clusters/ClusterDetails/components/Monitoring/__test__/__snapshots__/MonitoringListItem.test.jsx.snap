@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MonitoringListItem /> should render 1`] = `
+<DataListItem
+  aria-labelledby=""
+  isExpanded={false}
+>
+  <DataListItemRow>
+    <DataListToggle
+      aria-controls="-toggle-expand"
+      id="-toggle"
+      isExpanded={false}
+      onClick={[Function]}
+    />
+    <DataListItemCells
+      dataListCells={
+        Array [
+          <DataListCell>
+            <Split>
+              <SplitItem
+                isFilled={true}
+              >
+                <Title
+                  headingLevel="h4"
+                  size="2xl"
+                >
+                  
+                </Title>
+              </SplitItem>
+              <SplitItem />
+            </Split>
+          </DataListCell>,
+        ]
+      }
+    />
+  </DataListItemRow>
+  <DataListContent
+    aria-label="Primary Content Details"
+    id="-expand"
+    isHidden={true}
+  />
+</DataListItem>
+`;
