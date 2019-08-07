@@ -1,9 +1,11 @@
-= OpenShift Unified Hybrid Cloud
+= OpenShift Cluster Manager
 
-This repository contains the UI components for the OpenShift Unified Hybrid
-Cloud site.
+This repository contains the UI components for the OpenShift Cluster Manager site.
 
-Building the Go parts requires checking out this repo in the correct place under GOPATH:
+The UI is a pure JavaScript application written in React and Redux. Additionally it
+contains a helper development server, `backend`, written in Go.
+
+Building the Go backend requires checking out this repo in the correct place under GOPATH:
 
 ....
 git clone https://gitlab.cee.redhat.com/service/uhc-portal $GOPATH/src/gitlab.cee.redhat.com/service/uhc-portal
@@ -21,11 +23,11 @@ export GOPATH=$HOME/go
 == Style
 
 To promote consistency in the code base and prevent bike-shedding over style
-issues, UHC follows the JavaScript and React style guides produced by airbnb.
+issues, OCM follows the JavaScript and React style guides produced by airbnb.
 
 https://github.com/airbnb/javascript[airbnb style guides]
 
-To guide and aid developers in style consistency, UHC uses eslint and the eslint
+To guide and aid developers in style consistency, OCM uses eslint and the eslint
 tools provided by airbnb.
 
 https://eslint.org/[eslint]
@@ -70,7 +72,7 @@ To test the application in your development environment run the following comman
 $ yarn start
 ....
 
-That will start the the Webpack development server, at http://localhost:8001.
+That will start the the Webpack development server. See below for instructions regarding the "chromed environment".
 
 You will also need to start start the backend proxy server, which acts as a proxy
 for the _OpenID_ and API services that are required by the application. Before
@@ -171,9 +173,9 @@ to run the insights proxy and pass API requests to the mock server described abo
 
 Run webpack with
 ....
-$ yarn build-embedded; yarn start-embedded
+$ yarn build; yarn start
 ....
-The "build-embedded" step is crucial at the moment, but we should work to make it not required in the future.
+The "build" step is crucial at the moment, but we should work to make it not required in the future.
 
 Once the server is running you can access your UI on https://qa.foo.redhat.com:1337/openshift
 It should ask you to authenticate with QA SSO, which should accept every user and the password is "redhat"
@@ -187,54 +189,6 @@ instead, and make sure you start the mock server (mockdata/mockserver.py) BEFORE
 
 == Deploying
 
-In order to deploy the application to an _OpenShift_ cluster first you need to
-build the image:
-
-....
-$ make image
-....
-
-As the image isn't currently uploaded to any image repository, you will need
-then to save it to a `tar` file:
-
-....
-$ make tar
-....
-
-That will generate the `openshift-unified-hybrid-cloud_portal_latest.tar`. You
-need to manually copy it to the nodes of the cluster where you want to deploy
-the application, and load it into the docker daemon of the node. For example,
-assuming that the name of the node is `sandbox` and that you have configured SSH
-access without password, you can use the `scp` and `ssh` commands:
-
-....
-$ scp openshift-unified-hybrid-cloud_portal_latest.tar sandbox:
-$ ssh sadnbox docker load -i openshift-unified-hybrid-cloud_portal_latest.tar
-....
-
-Once the image is loaded, you can run `deploy` target of the `Makefile` that
-processes the `template.yml` template and creates all the required _OpenShift_
-objects:
-
-....
-$ make deploy
-....
-
-That will create a `unified-hybrid-cloud` namespace, and inside that namespace a
-`portal-server` deployment. Check that it is running:
-
-....
-$ oc project unified-hybrid-cloud
-$ oc get pods
-NAME                            READY STATUS  RESTARTS AGE
-portal-server-c7664975c-sx6rr   1/1   Running 0        54m
-....
-
-A route for the `cloud.127.0.0.1.nip.io` DNS domain will also be created. So you
-can go with your browser to https://cloud.127.0.0.1.nip.io, and you should see
-the application running. To do so you can use the `route.yml` file, and the
-following command:
-
-....
-$ oc create -f route.yml
-....
+The staging and production OCM sites are deployed into the Insights enviroments
+using the `push_to_insights.sh` script. This script is called via git hooks. See
+the script for more details.

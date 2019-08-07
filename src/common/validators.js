@@ -11,6 +11,9 @@ const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 50;
 
+// Maximum length of a cluster display name
+const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
+
 // Maximum node count
 const MAX_NODE_COUNT = 180;
 
@@ -39,6 +42,17 @@ const checkClusterName = (value) => {
   }
   if (value.length > MAX_CLUSTER_NAME_LENGTH) {
     return `Cluster names may not exceed ${MAX_CLUSTER_NAME_LENGTH} characters.`;
+  }
+  return undefined;
+};
+
+// Function to validate the cluster display name length
+const checkClusterDisplayName = (value) => {
+  if (!value) {
+    return undefined;
+  }
+  if (value.length > MAX_CLUSTER_DISPLAY_NAME_LENGTH) {
+    return `Cluster display name may not exceed ${MAX_CLUSTER_DISPLAY_NAME_LENGTH} characters.`;
   }
   return undefined;
 };
@@ -93,6 +107,7 @@ const validators = {
   required,
   checkIdentityProviderName,
   checkClusterName,
+  checkClusterDisplayName,
   checkBaseDNSDomain,
   cidr,
   nodes,
@@ -100,6 +115,8 @@ const validators = {
   github,
 };
 
-export { required, github, checkIdentityProviderName };
+export {
+  required, github, checkIdentityProviderName, checkClusterDisplayName,
+};
 
 export default validators;

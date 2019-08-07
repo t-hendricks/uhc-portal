@@ -15,7 +15,7 @@ exports[`<Tokens /> Renders correctly 1`] = `
       className="token-value"
     >
       <pre>
-        hello offline access token!
+        loading, please wait
       </pre>
     </div>
     <p>
@@ -38,7 +38,7 @@ exports[`<Tokens /> Renders correctly 1`] = `
     >
       <pre>
         OFFLINE_ACCESS_TOKEN="\\
-hello offline access token!\\
+loading, please wait\\
 "
 curl \\
 --silent \\

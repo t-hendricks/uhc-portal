@@ -154,6 +154,7 @@ limitations under the License.
 
 #cl-details-top-row h1 {
   margin: 0;
+  word-break: break-word;
   @media (max-width: 480px) {
     display: block;
     padding-bottom: 20px;
@@ -168,15 +169,8 @@ limitations under the License.
   margin-left: 16px;
 }
 
-.cluster-list-spinner {
-  margin-top: 6px;
-  margin-left: 16px;
-}
-
 .cluster-details-spinner {
-  display: inline-block;
-  margin-left: 16px;
-  margin-top: 2px;
+  margin: 6px 0 0 16px;
 }
 
 .displayNameForm {
@@ -520,25 +514,11 @@ h4.pf-c-alert__title {
   .error {
     color: #cc0000;
   }
-  label.pf-c-radio__label {
-    font-size: 12px;
-  }
-  label.pf-c-radio__label > h4 {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 0;
-  }
-  .pf-c-radio {
-    margin-bottom: 5px;
-  }
   .node-type-label {
     // emulating HTML <label> styles to match the rest of the form
     font-weight: 600;
     max-width: 100%;
     margin-bottom: 5px;
-  }
-  .pf-l-gallery {
-    grid-template-columns: 50% 50%;
   }
 }
 
@@ -573,4 +553,78 @@ h4.pf-c-alert__title {
   .expand-collapse-pf-separator {
     margin-top: var(--pf-c-content--FontSize);
   }
+}
+// Custom component FlatRadioButton
+.ocm-flat-radio-button {
+  &.pf-c-button.pf-m-tertiary::after { // specific selector to override PF4 button
+    border-width: var(--pf-global--BorderWidth--sm);
+    border-color: var(--pf-global--Color--100);
+  }
+  text-align: left;
+  width: 100%;
+  color: var(--pf-global--Color--100);
+  h4 {
+    margin-bottom: 0;
+  }
+
+  &:hover, &.selected {
+    // hover+selected colors
+    &.pf-c-button.pf-m-tertiary::after {
+      border-color: var(--pf-global--active-color--100);
+      border-width: var(--pf-global--BorderWidth--md);
+    }
+    .ocm-flat-button-icon svg, h4 {
+      color: var(--pf-global--active-color--100);
+    }
+  }
+
+  &.selected.pf-c-button.pf-m-tertiary::after {
+    // wider border for selected
+    border-width: var(--pf-global--BorderWidth--lg);
+  }
+
+
+  &.pf-c-button.pf-m-disabled {
+    // disabled styles
+    .pf-l-split, .ocm-flat-button-icon svg, h4.pf-c-title {
+      color: var(---pf-global--Color--200);
+    }
+    &.pf-c-button.pf-m-tertiary::after {
+      border-width: 0;
+    }
+    background-color: var(--pf-global--disabled-color--300);
+  }
+}
+// end FlatRadioButton related styles
+
+// Enable word wrapping in tooltips, this is useful in case of extremely long cluster names
+.pf-c-tooltip__content {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.delete-idp-spinner-container {
+  height: 20px;
+  width: 36px;
+  .ins-c-spinner {
+    margin-top: -5px;
+  }
+}
+
+.spinner-fit-container {
+  height: 0;
+}
+
+.cluster-list-spinner, .cluster-user-form-spinner {
+  padding-top: 3px;
+  margin-left: 16px;
+}
+
+.spinner-loading-text {
+  margin-left: 32px;
+  padding-top: 5px;
+}
+
+.cluster-loading-container {
+  height: 132px;
 }

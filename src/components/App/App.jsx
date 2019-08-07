@@ -18,75 +18,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { hot } from 'react-hot-loader';
-import { Page, PageSection, PageSectionVariants } from '@patternfly/react-core';
-
-import Header from './Header';
-import Footer from './Footer';
 import Router from './Router';
-import LoginPage from './LoginPage';
 import ErrorBoundary from './ErrorBoundary';
 
 class App extends React.PureComponent {
   render() {
-    const {
-      authenticated, loginFunction, userProfile, logoutFunction, children,
-    } = this.props;
-
-    let { HeaderComponent } = this.props;
-
-    if (!authenticated) {
-      return <LoginPage loginFunction={loginFunction} />;
-    }
+    const { children } = this.props;
 
     const content = (
       <ErrorBoundary>
-        {children || (
-          <Router
-            authenticated={authenticated}
-            userProfile={userProfile}
-          />)}
+        {children || <Router />}
       </ErrorBoundary>
     );
 
-    if (APP_EMBEDDED) {
-      return (
-        <section className="pf-c-page__main-section">
-          {content}
-        </section>
-      );
-    }
-
-    HeaderComponent = HeaderComponent || Header;
-    const header = (
-      <HeaderComponent
-        isLoggedIn
-        userProfile={userProfile}
-        logoutUser={logoutFunction}
-      />);
-
     return (
-      <Page header={header}>
-        <PageSection variant={PageSectionVariants.light}>
-          <div className="coc-content">
-            {content}
-          </div>
-        </PageSection>
-        <Footer />
-      </Page>
+      <section className="pf-c-page__main-section">
+        {content}
+      </section>
     );
   }
 }
 
+
 App.propTypes = {
-  userProfile: PropTypes.object,
-  authenticated: PropTypes.bool.isRequired,
-  loginFunction: PropTypes.func.isRequired,
-  logoutFunction: PropTypes.func.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
-  HeaderComponent: PropTypes.func,
 };
 
 const mapStateToProps = state => ({

@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FlatRadioButton /> should render normally 1`] = `
+<Button
+  className="ocm-flat-radio-button"
+  isDisabled={false}
+  onClick={[Function]}
+  variant="tertiary"
+>
+  <Split
+    className=""
+    component="div"
+    gutter="sm"
+  >
+    <SplitItem
+      className=""
+      isFilled={true}
+    >
+      <Title
+        headingLevel="h4"
+        size="lg"
+      >
+        hello
+      </Title>
+      test
+    </SplitItem>
+  </Split>
+</Button>
+`;
+
+exports[`<FlatRadioButton /> should render when disabled 1`] = `
+<Button
+  className="ocm-flat-radio-button"
+  isDisabled={true}
+  onClick={[Function]}
+  variant="tertiary"
+>
+  <Split
+    className=""
+    component="div"
+    gutter="sm"
+  >
+    <SplitItem
+      className=""
+      isFilled={true}
+    >
+      <Title
+        headingLevel="h4"
+        size="lg"
+      >
+        hello
+      </Title>
+      test
+    </SplitItem>
+  </Split>
+</Button>
+`;
+
+exports[`<FlatRadioButton /> should render when selected 1`] = `
+<Button
+  className="ocm-flat-radio-button selected"
+  isDisabled={false}
+  onClick={[Function]}
+  variant="tertiary"
+>
+  <Split
+    className=""
+    component="div"
+    gutter="sm"
+  >
+    <SplitItem
+      className=""
+      isFilled={true}
+    >
+      <Title
+        headingLevel="h4"
+        size="lg"
+      >
+        hello
+      </Title>
+      test
+    </SplitItem>
+  </Split>
+</Button>
+`;

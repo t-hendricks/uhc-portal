@@ -9,7 +9,7 @@ import {
 } from '@patternfly/react-core';
 import {
   Spinner,
-} from 'patternfly-react';
+} from '@redhat-cloud-services/frontend-components';
 
 import ErrorBox from '../../../../common/ErrorBox';
 
@@ -150,7 +150,9 @@ class Users extends React.Component {
                 </GridItem>
                   { (deleteUserResponse.pending || clusterGroupUsers.pending) && (
                   <GridItem sm={1}>
-                    <Spinner loading />
+                    <h3 className="spinner-fit-container">
+                      <Spinner className="cluster-user-form-spinner" />
+                    </h3>
                   </GridItem>
                   )}
               </Grid>

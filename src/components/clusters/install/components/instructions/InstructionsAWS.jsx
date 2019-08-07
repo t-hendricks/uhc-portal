@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  CardBody,
-} from 'patternfly-react';
-import { Card } from '@patternfly/react-core';
+import { Card, CardBody } from '@patternfly/react-core';
 import PageTitle from '../../../../common/PageTitle';
 import upiLogo from '../../../../../styles/images/Icon_RH_Diagram_DevelopmentModel_RGB_Flat.png';
 import ipiLogo from '../../../../../styles/images/Icon_RH_Diagram_Lifecycle_RGB_Flat.png';

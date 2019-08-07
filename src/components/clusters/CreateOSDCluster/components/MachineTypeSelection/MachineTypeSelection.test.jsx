@@ -217,8 +217,8 @@ describe('<MachineTypeSelection />', () => {
       expect(getMachineTypes).not.toBeCalled();
     });
 
-    it('does not call onChange', () => {
-      expect(onChange).not.toBeCalled();
+    it('calls onChange with the first item that has quota', () => {
+      expect(onChange).toBeCalledWith('r5.xlarge');
     });
   });
 });

@@ -4,11 +4,27 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Radio, Gallery, GalleryItem } from '@patternfly/react-core';
-import { Spinner } from 'patternfly-react';
+import { Gallery, GalleryItem } from '@patternfly/react-core';
+import { CpuIcon, MemoryIcon, ContainerNodeIcon } from '@patternfly/react-icons';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
+import FlatRadioButton from '../../../../common/FlatRadioButton';
 import ErrorBox from '../../../../common/ErrorBox';
 import { humanizeValueWithUnit } from '../../../../../common/units';
 import sortMachineTypes from './sortMachineTypes';
+
+const machineTypeIcon = (machineType) => {
+  const machineTypeFamily = machineType.charAt(0);
+  switch (machineTypeFamily) {
+    case 'r':
+      return <MemoryIcon size="lg" />;
+    case 'c':
+      return <CpuIcon size="lg" />;
+    case 'm':
+      return <ContainerNodeIcon size="lg" />;
+    default:
+      return null;
+  }
+};
 
 class MachineTypeSelection extends React.Component {
   state = {
@@ -25,6 +41,10 @@ class MachineTypeSelection extends React.Component {
       // fetch cloud providers from server only if needed.
       getMachineTypes();
     }
+
+    if (machineTypes.fulfilled) {
+      this.setDefaultValue();
+    }
   }
 
   componentDidUpdate() {
@@ -35,12 +55,27 @@ class MachineTypeSelection extends React.Component {
       this.setInvalidValue();
     }
 
+    if (currentValue === '' && machineTypes.fulfilled) {
+      // we got the machine types, and the user hasn't selected one yet - set to default.
+      this.setDefaultValue();
+    }
+
     // if some external param changed, like MultiAz, and we no longer have quota
     // for the selected instance type, we need to unselect it, and mark ourselves as invalid.
     if (currentValue && !this.hasQuota(currentValue)) {
       // this setState is guarded so the linter error can be ignored.
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ currentValue: '' });
+    }
+  }
+
+  setDefaultValue() {
+    // Find the first machineType we have quota for, and set it as default
+    const { machineTypes, input } = this.props;
+    const defaultType = machineTypes.types.find(type => this.hasQuota(type.id));
+    if (defaultType) {
+      this.setState({ currentValue: defaultType.id });
+      input.onChange(defaultType.id);
     }
   }
 
@@ -75,8 +110,7 @@ class MachineTypeSelection extends React.Component {
     const { currentValue } = this.state;
 
 
-    const changeHandler = (_, event) => {
-      const { value } = event.target;
+    const changeHandler = (value) => {
       this.setState({ currentValue: value });
       input.onChange(value);
     };
@@ -89,21 +123,15 @@ class MachineTypeSelection extends React.Component {
       const hasQuota = this.hasQuota(machineType.id);
       return (
         <GalleryItem key={machineType.id}>
-          <Radio
-            {...input}
+          <FlatRadioButton
             {...extraProps}
             id={`machineTypeRadio.${machineType.id}`}
             value={machineType.id}
             isDisabled={!hasQuota}
-            isChecked={hasQuota && currentValue === machineType.id}
-            label={(
-              <React.Fragment>
-                <h4>
-                  {labelTitle}
-                </h4>
-                {machineType.name}
-              </React.Fragment>
-            )}
+            isSelected={hasQuota && currentValue === machineType.id}
+            titleText={labelTitle}
+            secondaryText={machineType.name}
+            icon={machineTypeIcon(machineType.id)}
             onChange={changeHandler}
           />
         </GalleryItem>
@@ -116,7 +144,7 @@ class MachineTypeSelection extends React.Component {
         <div className="node-type-input">
           <div className="node-type-label">Node type</div>
           {(touched && error) && (<span className="error">{error}</span>)}
-          <Gallery>
+          <Gallery gutter="sm">
             {machineTypes.types.map(type => machineTypeRadio(type))}
           </Gallery>
         </div>
@@ -127,8 +155,8 @@ class MachineTypeSelection extends React.Component {
       <ErrorBox message="Error loading node types" response={machineTypes} />
     ) : (
       <React.Fragment>
-        <Spinner size="sm" inline loading />
-        Loading node types..
+        <div className="spinner-fit-container"><Spinner /></div>
+        <div className="spinner-loading-text">Loading node types..</div>
       </React.Fragment>
     );
   }

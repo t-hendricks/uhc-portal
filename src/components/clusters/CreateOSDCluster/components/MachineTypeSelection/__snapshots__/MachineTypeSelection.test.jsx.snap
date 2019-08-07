@@ -45,18 +45,27 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
   meta={Object {}}
   quota={Object {}}
 >
-  <Spinner
-    className=""
-    inline={true}
-    inverse={false}
-    loading={true}
-    size="sm"
+  <div
+    className="spinner-fit-container"
   >
-    <div
-      className="spinner spinner-sm spinner-inline"
-    />
-  </Spinner>
-  Loading node types..
+    <Spinner>
+      <div
+        className="ins-c-spinner"
+        role="status"
+      >
+        <span
+          className="pf-u-screen-reader"
+        >
+          Loading...
+        </span>
+      </div>
+    </Spinner>
+  </div>
+  <div
+    className="spinner-loading-text"
+  >
+    Loading node types..
+  </div>
 </MachineTypeSelection>
 `;
 
@@ -65,7 +74,19 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
   getMachineTypes={[MockFunction]}
   input={
     Object {
-      "onChange": [MockFunction],
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "r5.xlarge",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      },
     }
   }
   isMultiAz={true}
@@ -145,102 +166,226 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
     >
       Node type
     </div>
-    <Gallery>
+    <Gallery
+      gutter="sm"
+    >
       <div
-        className="pf-l-gallery"
+        className="pf-l-gallery pf-m-gutter"
       >
         <GalleryItem
           key="r5.xlarge"
         >
           <div>
-            <Radio
-              className=""
-              id="machineTypeRadio.r5.xlarge"
-              isChecked={false}
-              isDisabled={false}
-              isValid={true}
-              label={
-                <React.Fragment>
-                  <h4>
-                    4 vCPU 32 GiB RAM
-                  </h4>
-                  Memory optimized - R5.XLarge
-                </React.Fragment>
+            <FlatRadioButton
+              icon={
+                <MemoryIcon
+                  color="currentColor"
+                  noVerticalAlign={false}
+                  size="lg"
+                  title={null}
+                />
               }
+              id="machineTypeRadio.r5.xlarge"
+              isDisabled={false}
+              isSelected={true}
               onChange={[Function]}
+              secondaryText="Memory optimized - R5.XLarge"
+              titleText="4 vCPU 32 GiB RAM"
               value="r5.xlarge"
             >
-              <div
-                className="pf-c-radio"
+              <Button
+                className="ocm-flat-radio-button selected"
+                id="machineTypeRadio.r5.xlarge"
+                isDisabled={false}
+                onClick={[Function]}
+                variant="tertiary"
               >
-                <input
-                  aria-invalid={false}
-                  checked={false}
-                  className="pf-c-radio__input"
+                <button
+                  aria-disabled={null}
+                  aria-label={null}
+                  className="pf-c-button pf-m-tertiary ocm-flat-radio-button selected"
                   disabled={false}
                   id="machineTypeRadio.r5.xlarge"
-                  onChange={[Function]}
-                  type="radio"
-                  value="r5.xlarge"
-                />
-                <label
-                  className="pf-c-radio__label"
-                  htmlFor="machineTypeRadio.r5.xlarge"
+                  onClick={[Function]}
+                  tabIndex={null}
+                  type="button"
                 >
-                  <h4>
-                    4 vCPU 32 GiB RAM
-                  </h4>
-                  Memory optimized - R5.XLarge
-                </label>
-              </div>
-            </Radio>
+                  <Split
+                    className=""
+                    component="div"
+                    gutter="sm"
+                  >
+                    <div
+                      className="pf-l-split pf-m-gutter"
+                    >
+                      <SplitItem
+                        className="ocm-flat-button-icon"
+                        isFilled={false}
+                      >
+                        <div
+                          className="pf-l-split__item ocm-flat-button-icon"
+                        >
+                          <MemoryIcon
+                            color="currentColor"
+                            noVerticalAlign={false}
+                            size="lg"
+                            title={null}
+                          >
+                            <svg
+                              aria-hidden={true}
+                              aria-labelledby={null}
+                              fill="currentColor"
+                              height="2em"
+                              role="img"
+                              style={
+                                Object {
+                                  "verticalAlign": "-0.25em",
+                                }
+                              }
+                              viewBox="0 0 640 512"
+                              width="2em"
+                            >
+                              <path
+                                d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z"
+                                transform=""
+                              />
+                            </svg>
+                          </MemoryIcon>
+                        </div>
+                      </SplitItem>
+                      <SplitItem
+                        className=""
+                        isFilled={true}
+                      >
+                        <div
+                          className="pf-l-split__item pf-m-fill"
+                        >
+                          <Title
+                            headingLevel="h4"
+                            size="lg"
+                          >
+                            <h4
+                              className="pf-c-title pf-m-lg"
+                            >
+                              4 vCPU 32 GiB RAM
+                            </h4>
+                          </Title>
+                          Memory optimized - R5.XLarge
+                        </div>
+                      </SplitItem>
+                    </div>
+                  </Split>
+                </button>
+              </Button>
+            </FlatRadioButton>
           </div>
         </GalleryItem>
         <GalleryItem
           key="r5.4xlarge"
         >
           <div>
-            <Radio
-              className=""
-              id="machineTypeRadio.r5.4xlarge"
-              isChecked={false}
-              isDisabled={true}
-              isValid={true}
-              label={
-                <React.Fragment>
-                  <h4>
-                    16 vCPU 128 GiB RAM
-                  </h4>
-                  Memory optimized - R5.4XLarge
-                </React.Fragment>
+            <FlatRadioButton
+              icon={
+                <MemoryIcon
+                  color="currentColor"
+                  noVerticalAlign={false}
+                  size="lg"
+                  title={null}
+                />
               }
+              id="machineTypeRadio.r5.4xlarge"
+              isDisabled={true}
+              isSelected={false}
               onChange={[Function]}
+              secondaryText="Memory optimized - R5.4XLarge"
+              titleText="16 vCPU 128 GiB RAM"
               value="r5.4xlarge"
             >
-              <div
-                className="pf-c-radio"
+              <Button
+                className="ocm-flat-radio-button"
+                id="machineTypeRadio.r5.4xlarge"
+                isDisabled={true}
+                onClick={[Function]}
+                variant="tertiary"
               >
-                <input
-                  aria-invalid={false}
-                  checked={false}
-                  className="pf-c-radio__input"
+                <button
+                  aria-disabled={null}
+                  aria-label={null}
+                  className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
                   disabled={true}
                   id="machineTypeRadio.r5.4xlarge"
-                  onChange={[Function]}
-                  type="radio"
-                  value="r5.4xlarge"
-                />
-                <label
-                  className="pf-c-radio__label pf-m-disabled"
-                  htmlFor="machineTypeRadio.r5.4xlarge"
+                  onClick={[Function]}
+                  tabIndex={null}
+                  type="button"
                 >
-                  <h4>
-                    16 vCPU 128 GiB RAM
-                  </h4>
-                  Memory optimized - R5.4XLarge
-                </label>
-              </div>
-            </Radio>
+                  <Split
+                    className=""
+                    component="div"
+                    gutter="sm"
+                  >
+                    <div
+                      className="pf-l-split pf-m-gutter"
+                    >
+                      <SplitItem
+                        className="ocm-flat-button-icon"
+                        isFilled={false}
+                      >
+                        <div
+                          className="pf-l-split__item ocm-flat-button-icon"
+                        >
+                          <MemoryIcon
+                            color="currentColor"
+                            noVerticalAlign={false}
+                            size="lg"
+                            title={null}
+                          >
+                            <svg
+                              aria-hidden={true}
+                              aria-labelledby={null}
+                              fill="currentColor"
+                              height="2em"
+                              role="img"
+                              style={
+                                Object {
+                                  "verticalAlign": "-0.25em",
+                                }
+                              }
+                              viewBox="0 0 640 512"
+                              width="2em"
+                            >
+                              <path
+                                d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z"
+                                transform=""
+                              />
+                            </svg>
+                          </MemoryIcon>
+                        </div>
+                      </SplitItem>
+                      <SplitItem
+                        className=""
+                        isFilled={true}
+                      >
+                        <div
+                          className="pf-l-split__item pf-m-fill"
+                        >
+                          <Title
+                            headingLevel="h4"
+                            size="lg"
+                          >
+                            <h4
+                              className="pf-c-title pf-m-lg"
+                            >
+                              16 vCPU 128 GiB RAM
+                            </h4>
+                          </Title>
+                          Memory optimized - R5.4XLarge
+                        </div>
+                      </SplitItem>
+                    </div>
+                  </Split>
+                </button>
+              </Button>
+            </FlatRadioButton>
           </div>
         </GalleryItem>
       </div>
@@ -282,18 +427,27 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
   meta={Object {}}
   quota={Object {}}
 >
-  <Spinner
-    className=""
-    inline={true}
-    inverse={false}
-    loading={true}
-    size="sm"
+  <div
+    className="spinner-fit-container"
   >
-    <div
-      className="spinner spinner-sm spinner-inline"
-    />
-  </Spinner>
-  Loading node types..
+    <Spinner>
+      <div
+        className="ins-c-spinner"
+        role="status"
+      >
+        <span
+          className="pf-u-screen-reader"
+        >
+          Loading...
+        </span>
+      </div>
+    </Spinner>
+  </div>
+  <div
+    className="spinner-loading-text"
+  >
+    Loading node types..
+  </div>
 </MachineTypeSelection>
 `;
 

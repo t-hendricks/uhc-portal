@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Spinner,
-} from 'patternfly-react';
+} from '@redhat-cloud-services/frontend-components';
 import {
   Button, GridItem, Grid, TextInput, Select, SelectOption, SelectVariant,
 } from '@patternfly/react-core';
@@ -69,7 +69,7 @@ class UserInputForm extends React.Component {
         </GridItem>
         {pending && (
           <GridItem sm={1}>
-            <Spinner loading />
+            <Spinner className="cluster-user-form-spinner" />
           </GridItem>
         )}
       </Grid>

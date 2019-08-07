@@ -85,7 +85,7 @@ const addClusterGroupUser = (clusterID, groupID, userID) => apiRequest({
 
 const deleteClusterGroupUser = (clusterID, groupID, userID) => apiRequest({
   method: 'delete',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/groups/${groupID}/users/${userID}`,
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/groups/${groupID}/users/${encodeURIComponent(userID)}`,
 });
 
 const getMachineTypes = () => apiRequest({

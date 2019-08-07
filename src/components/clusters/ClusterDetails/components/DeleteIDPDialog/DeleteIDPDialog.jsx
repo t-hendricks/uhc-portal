@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
   Button,
   Icon,
   MessageDialog,
-  Spinner,
 } from 'patternfly-react';
 import ErrorBox from '../../../../common/ErrorBox';
 
@@ -48,7 +48,7 @@ class DeleteIDPDialog extends React.Component {
 
     const deleteBtn = (
       <Button id="deleteIDPBtn" bsStyle={!isPending ? 'danger' : 'default'} disabled={isPending} onClick={() => deleteIDP(clusterID, idpID)}>
-        {!isPending ? 'Delete' : <Spinner size="sm" inline loading />}
+        {!isPending ? 'Delete' : <div className="delete-idp-spinner-container"><Spinner /></div>}
       </Button>
     );
 

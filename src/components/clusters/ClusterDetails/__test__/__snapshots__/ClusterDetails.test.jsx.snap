@@ -676,7 +676,15 @@ exports[`<ClusterDetails /> Error should render error message 1`] = `
 `;
 
 exports[`<ClusterDetails /> Loading should render loading modal when pending 1`] = `
-<LoadingModal>
-  Loading cluster details...
-</LoadingModal>
+<div
+  id="clusterdetails-content"
+>
+  <div
+    className="cluster-loading-container"
+  >
+    <Spinner
+      centered={true}
+    />
+  </div>
+</div>
 `;

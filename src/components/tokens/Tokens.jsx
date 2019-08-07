@@ -18,7 +18,6 @@ limitations under the License.
 // copy it and use it with command line utitilites like `curl` or UHC.
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 /**
  * Splits the given text into lines of 72 characters each, so that they look
@@ -60,31 +59,25 @@ class Tokens extends React.Component {
   }
 
   componentDidMount() {
-    if (APP_EMBEDDED) {
-      const that = this;
-      insights.chrome.auth.getOfflineToken().then((response) => {
-        that.setState({ offlineAccessToken: response.data.refresh_token });
-      }).catch((reason) => {
-        if (reason === 'not available') {
-          insights.chrome.auth.doOffline();
-        } else {
-          that.setState({ offlineAccessToken: reason });
-        }
-      });
-    }
+    const that = this;
+    insights.chrome.auth.getOfflineToken().then((response) => {
+      that.setState({ offlineAccessToken: response.data.refresh_token });
+    }).catch((reason) => {
+      if (reason === 'not available') {
+        insights.chrome.auth.doOffline();
+      } else {
+        that.setState({ offlineAccessToken: reason });
+      }
+    });
   }
 
   render() {
-    // If we're embedded (in insights chrome), use the token from state
-    // else, expect the non-embedded token page to provide it.
     const { offlineAccessToken } = this.state;
-    const { token } = this.props;
-    const tokenToUse = (!APP_EMBEDDED && token) ? token : offlineAccessToken;
 
     // Prepare the snippet of code that shows how to use the offline access token:
     const offlineAccessTokenSnippet = [
       'OFFLINE_ACCESS_TOKEN="\\',
-      splitToken(tokenToUse),
+      splitToken(offlineAccessToken),
       '"',
       'curl \\',
       '--silent \\',
@@ -109,7 +102,7 @@ class Tokens extends React.Component {
           <p>
             This is a long lived token that you can use to obtain access tokens:
           </p>
-          {tokenBox(tokenToUse)}
+          {tokenBox(offlineAccessToken)}
           <p>
             Copy it, and then use it o request an access token. For example, to
             obtain an access token using the {curlLink} and {jqLink} command
@@ -123,9 +116,5 @@ class Tokens extends React.Component {
     /* eslint-enable react/jsx-one-expression-per-line */
   }
 }
-
-Tokens.propTypes = {
-  token: PropTypes.string,
-};
 
 export default Tokens;

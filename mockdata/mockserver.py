@@ -31,8 +31,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     return self.do_GET()
 
 def main():
-    server_address = ('localhost', 8000)
+    server_address = ('localhost', 8010)
     httpd = http.server.ThreadingHTTPServer(server_address, Handler)
+    print("Listening on http://localhost:8010")
     httpd.serve_forever()
 
 if __name__ == '__main__':

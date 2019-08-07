@@ -19,14 +19,12 @@ import 'core-js/modules/es6.string.starts-with';
 import 'core-js/modules/es6.string.ends-with';
 import 'core-js/modules/es6.number.is-nan';
 import 'core-js/modules/es7.object.values';
-import detectPassiveEvents from 'detect-passive-events';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
-import Keycloak from 'keycloak-js';
 import { userInfoResponse, getOrganizationAndQuota } from './redux/actions/userActions';
 import { getCloudProviders } from './redux/actions/cloudProviderActions';
 import config from './config';
@@ -36,12 +34,6 @@ import getBaseName from './common/getBaseName';
 
 import './styles/main.scss';
 
-if (!APP_EMBEDDED) {
-    import('./styles/overrides.scss');
-}
-
-let keycloak;
-
 const basename = getBaseName();
 
 const render = () => {
@@ -49,15 +41,36 @@ const render = () => {
     <AppContainer>
       <Provider store={store}>
         <BrowserRouter basename={basename}>
-          <App
-            loginFunction={keycloak.login}
-            logoutFunction={keycloak.logout}
-            authenticated={keycloak.authenticated}
-          />
+          <App />
         </BrowserRouter>
       </Provider>
     </AppContainer>,
     document.getElementById('root'),
+  );
+};
+
+const renderDevEnvError = () => {
+  ReactDOM.render(
+    <div style={{ margin: '25px' }}>
+      <h1>Development environment error</h1>
+      <h2>You&apos;re accessing the webpack dev server directly</h2>
+      <p>
+        This app is designed to run within the Insights Chrome, and can&apos;t run without it.
+      </p>
+      <p>
+        If you&apos;re already running the Insights Chrome Proxy, you just got the URL wrong.
+        {' '}
+        <a href="https://qa.foo.redhat.com:1337/openshift">
+          Click here to access the app.
+        </a>
+      </p>
+      <p>
+        If you don&apos;t know what the Insights Chrome Proxy is or how to run it,
+        {' '}
+        consult README.adoc and README-tldr.md
+      </p>
+    </div>,
+    document.body,
   );
 };
 
@@ -69,90 +82,19 @@ if (module.hot) {
   module.hot.accept();
 }
 
-function addPassiveListener(eventName, callback) {
-  if (detectPassiveEvents.hasSupport) {
-    // passive tells browser it won't preventDefault(), allowing scroll optimizations
-    document.addEventListener(eventName, callback, { capture: false, passive: true });
-  } else {
-    document.addEventListener(eventName, callback, false);
-  }
-}
-
-function initKeycloak() {
-  keycloak = Keycloak(config.configData.keycloak);
-  keycloak.init({ onLoad: 'login-required', checkLoginIframe: false }).success((authenticated) => {
-    if (authenticated) {
-      sessionStorage.setItem('kctoken', keycloak.token);
-
-      store.dispatch(userInfoResponse(keycloak.idTokenParsed));
-      // fetch cloud providers + organization as soon as possible, for lower latency
-      store.dispatch(getCloudProviders());
-      store.dispatch(getOrganizationAndQuota());
-      render();
-
-      const IDLE_TIMEOUT_SECONDS = 18 * 60 * 60; // 18 hours
-      const resetCounter = () => {
-        localStorage.setItem('lastActiveTimestamp', Math.floor(Date.now() / 1000));
-      };
-      resetCounter();
-
-      addPassiveListener('click', resetCounter);
-      addPassiveListener('keypress', resetCounter);
-      addPassiveListener('touchstart', resetCounter);
-      addPassiveListener('touchmove', resetCounter);
-      addPassiveListener('wheel', resetCounter);
-
-      const tokenRefreshTimer = () => {
-        const lastActiveTimestamp = parseInt(localStorage.getItem('lastActiveTimestamp') || '0', 10);
-        const idleSeconds = Math.floor(Date.now() / 1000) - lastActiveTimestamp;
-        if (idleSeconds < IDLE_TIMEOUT_SECONDS) {
-          keycloak.updateToken(60)
-            .success(() => sessionStorage.setItem('kctoken', keycloak.token))
-            .error(() => keycloak.logout());
-        } else if (document.visibilityState === 'visible') {
-          keycloak.logout();
-        }
-      };
-      setInterval(tokenRefreshTimer, 5000);
-      // ensure the keycloak token is refreshed if the document becomes visible
-      // and the idle timeout was not reached
-      document.addEventListener('visibilitychange', tokenRefreshTimer, false);
-    } else {
-      render();
-    }
-  });
-}
-
-if (APP_EMBEDDED) {
+if (!window.insights && process.env.NODE_ENV === 'development') {
+  // we don't want this info to ever be complied to the prod build,
+  // so I made sure it's only ever called in development mode
+  renderDevEnvError();
+} else {
   insights.chrome.init();
   insights.chrome.identifyApp('clusters');
   insights.chrome.auth.getUser().then((data) => {
     store.dispatch(userInfoResponse(data.identity.user));
     config.fetchConfig().then(() => {
-      keycloak = {
-        login: () => undefined,
-        logout: () => insights.chrome.auth.logout(),
-        authenticated: true,
-      };
       store.dispatch(getCloudProviders());
       store.dispatch(getOrganizationAndQuota());
       render();
     });
-  });
-} else {
-  config.fetchConfig().then(() => {
-    // If running using webpack-server development server, and setting env
-    // variable `UHC_DISABLE_KEYCLOAK` to `true`, disable keycloak.
-    if (process.env.UHC_DISABLE_KEYCLOAK === 'true') {
-      keycloak = {
-        login: () => { },
-        logout: () => { },
-        authenticated: true,
-      };
-      store.dispatch(userInfoResponse({ email: '***REMOVED***', name: 'mock username' }));
-      render();
-    } else {
-      initKeycloak();
-    }
   });
 }

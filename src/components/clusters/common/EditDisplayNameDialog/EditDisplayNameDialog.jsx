@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, TextInput } from '@patternfly/react-core';
+import { Form, TextInput, FormGroup } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
+import { checkClusterDisplayName } from '../../../../common/validators';
 
 
 class EditDisplayNameDialog extends Component {
@@ -59,7 +60,8 @@ class EditDisplayNameDialog extends Component {
       <ErrorBox message="Error changing display name" response={editClusterResponse} />
     );
 
-    const handleSubmit = () => { submit(clusterID, currentValue); };
+    const validationMessage = checkClusterDisplayName(currentValue);
+    const handleSubmit = () => { if (!validationMessage) { submit(clusterID, currentValue); } };
 
     return isOpen && (
 
@@ -70,17 +72,26 @@ class EditDisplayNameDialog extends Component {
         secondaryText="Cancel"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={cancelEdit}
+        isPrimaryDisabled={!!validationMessage}
       >
         <React.Fragment>
           {hasError}
           <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
-            <TextInput
-              type="text"
-              value={currentValue}
-              placeholder="Enter display name"
-              onChange={newValue => this.setValue(newValue)}
-              aria-label="Edit display name"
-            />
+            <FormGroup
+              helperTextInvalid={validationMessage}
+              isValid={!validationMessage}
+              fieldId="edit-display-name-input"
+            >
+              <TextInput
+                type="text"
+                isValid={!validationMessage}
+                value={currentValue}
+                placeholder="Enter display name"
+                onChange={newValue => this.setValue(newValue)}
+                aria-label="Edit display name"
+                id="edit-display-name-input"
+              />
+            </FormGroup>
           </Form>
         </React.Fragment>
       </Modal>

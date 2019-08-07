@@ -4,12 +4,12 @@ import { Redirect } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
   Breadcrumb,
   Grid,
   Row,
   Form,
-  Spinner,
 } from 'patternfly-react';
 import {
   Card,
@@ -63,7 +63,7 @@ class CreateOSDCluster extends React.Component {
         <span>
           {constants.spinnerMessage}
         </span>
-        <Spinner size="xs" loading inline />
+        <Spinner />
       </div>
     );
 

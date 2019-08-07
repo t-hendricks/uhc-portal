@@ -20,9 +20,8 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import {
-  EmptyState, Spinner,
-} from 'patternfly-react';
+import { EmptyState } from 'patternfly-react';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
   Split,
   SplitItem,
@@ -33,7 +32,6 @@ import {
 import ClusterListFilter from './components/ClusterListFilter';
 import ClusterListEmptyState from './components/ClusterListEmptyState';
 import ClusterListTable from './components/ClusterListTable/ClusterListTable';
-import LoadingModal from '../../common/LoadingModal';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
@@ -126,9 +124,14 @@ class ClusterList extends Component {
     if ((!size(clusters) && pending && (isEmpty(viewOptions.filter) || !valid))
     || (!quota.fulfilled && !organization.error && !quota.error)) {
       return (
-        <LoadingModal>
-          Loading clusters...
-        </LoadingModal>
+        <Card>
+          <div className="cluster-list">
+            <h1>Clusters</h1>
+            <div className="cluster-loading-container">
+              <Spinner centered />
+            </div>
+          </div>
+        </Card>
       );
     }
 
@@ -152,8 +155,8 @@ class ClusterList extends Component {
                 <Button>Create Cluster</Button>
               </Link>
             </SplitItem>
-            <SplitItem>
-              { pending && <Spinner loading className="cluster-list-spinner" /> }
+            <SplitItem className="spinner-fit-container">
+              { pending && <Spinner className="cluster-list-spinner" /> }
               { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }
             </SplitItem>
             <SplitItem isFilled />
