@@ -152,9 +152,6 @@ function push_build {
     },
     "integration": {
       "apiGateway": "https://api-integration.6943.hive-integration.openshiftapps.com"
-    },
-    "development": {
-      "apiGateway": "http://localhost:8002"
     }
   }
 }

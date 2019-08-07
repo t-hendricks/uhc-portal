@@ -1,5 +1,5 @@
 {
-    "apiGateway": "http://localhost:8002",
+    "apiGateway": "http://localhost:8010",
     "environments": {
         "production": {
             "apiGateway": "https://api.openshift.com"
@@ -9,9 +9,6 @@
         },
         "integration": {
             "apiGateway": "https://api-integration.6943.hive-integration.openshiftapps.com"
-        },
-        "development": {
-            "apiGateway": "http://localhost:8002"
         }
     }
 }
