@@ -25,7 +25,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
-import { userInfoResponse, getOrganizationAndQuota } from './redux/actions/userActions';
+import { userInfoResponse } from './redux/actions/userActions';
 import { getCloudProviders } from './redux/actions/cloudProviderActions';
 import config from './config';
 import App from './components/App/App';
@@ -93,7 +93,6 @@ if (!window.insights && process.env.NODE_ENV === 'development') {
     store.dispatch(userInfoResponse(data.identity.user));
     config.fetchConfig().then(() => {
       store.dispatch(getCloudProviders());
-      store.dispatch(getOrganizationAndQuota());
       render();
     });
   });

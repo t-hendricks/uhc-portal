@@ -15,6 +15,7 @@ export function mapStateToProps(state) {
   return {
     hasQuota: hasQuota(quota.quotaList.items || []),
     organization: state.userProfile.organization,
+    quota,
   };
 }
 

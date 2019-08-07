@@ -4,9 +4,6 @@ import { shallow } from 'enzyme';
 import CreateCluster from '../CreateCluster';
 
 describe('<CreateCluster />', () => {
-  let openModal;
-  let wrapper;
-  const getOrganization = jest.fn();
   const getOrganizationAndQuota = jest.fn();
   const organization = {
     details: null,
@@ -15,32 +12,51 @@ describe('<CreateCluster />', () => {
     pending: false,
     fulfilled: false,
   };
-
-  beforeEach(() => {
-    openModal = jest.fn();
-    wrapper = shallow(<CreateCluster
-      openModal={openModal}
-      hasQuota
-      getOrganizationAndQuota={getOrganizationAndQuota}
-      getOrganization={getOrganization}
-      organization={organization}
-    />);
-  });
+  const quota = {
+    fulfilled: true,
+  };
 
   it('renders correctly', () => {
+    const wrapper = shallow(<CreateCluster
+      hasQuota
+      getOrganizationAndQuota={getOrganizationAndQuota}
+      organization={organization}
+      quota={quota}
+    />);
     expect(wrapper).toMatchSnapshot();
   });
 
   describe('User with no quota', () => {
     it('should hide option to create managed and auto installed clusters', () => {
-      wrapper = shallow(
+      const wrapper = shallow(
         <CreateCluster
-          openModal={openModal}
+          hasQuota={false}
           getOrganizationAndQuota={getOrganizationAndQuota}
           organization={organization}
+          quota={quota}
         />,
       );
       expect(wrapper.find('.create-cluster-card').length).toEqual(1);
+    });
+  });
+
+  describe('Quota not fetched yet', () => {
+    let wrapper;
+    beforeAll(() => {
+      wrapper = shallow(<CreateCluster
+        hasQuota
+        getOrganizationAndQuota={getOrganizationAndQuota}
+        organization={organization}
+        quota={{ fulfilled: false, pending: false, error: false }}
+      />);
+    });
+
+    it('should render', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('should fetch quota', () => {
+      expect(getOrganizationAndQuota).toBeCalled();
     });
   });
 });
