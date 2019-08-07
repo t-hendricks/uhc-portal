@@ -1,33 +1,29 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { PaginationRow } from 'patternfly-react';
+import { Pagination } from '@patternfly/react-core';
 import { connect } from 'react-redux';
 
 import * as actions from '../../../../redux/actions/viewOptionsActions';
 
 const ViewPaginationRow = ({
-  currentPage, pageSize, totalCount, totalPages, onFirstPage,
-  onLastPage, onPreviousPage, onNextPage, onPageInput, onPerPageSelect,
-}) => totalCount > pageSize && (
-  <PaginationRow
-    viewType="list"
-    pagination={{
-      page: currentPage,
-      perPage: pageSize,
-      perPageOptions: [5, 10, 25, 50, 100],
-    }}
-    amountOfPages={totalPages}
-    pageInputValue={currentPage}
+  currentPage, pageSize, totalCount, onFirstPage,
+  onLastPage, onPreviousPage, onNextPage, onPageInput, onPerPageSelect, variant,
+}) => (
+  <Pagination
+    page={currentPage}
+    perPage={pageSize}
     itemCount={totalCount}
     itemsStart={(currentPage - 1) * pageSize + 1}
     itemsEnd={Math.min(currentPage * pageSize, totalCount)}
-    onFirstPage={onFirstPage}
-    onLastPage={onLastPage}
-    onPreviousPage={onPreviousPage}
-    onNextPage={onNextPage}
-    onPageInput={onPageInput}
+    onFirstClick={onFirstPage}
+    onLastClick={onLastPage}
+    onPreviousClick={onPreviousPage}
+    onNextClick={onNextPage}
+    onSetPage={onPageInput}
     onPerPageSelect={onPerPageSelect}
+    variant={variant}
+    dropDirection={variant === 'bottom' ? 'up' : 'down'}
   />
 );
 
@@ -39,13 +35,13 @@ ViewPaginationRow.propTypes = {
   currentPage: PropTypes.number,
   pageSize: PropTypes.number,
   totalCount: PropTypes.number,
-  totalPages: PropTypes.number,
   onFirstPage: PropTypes.func,
   onLastPage: PropTypes.func,
   onNextPage: PropTypes.func,
   onPreviousPage: PropTypes.func,
   onPageInput: PropTypes.func,
   onPerPageSelect: PropTypes.func,
+  variant: PropTypes.oneOf(['top', 'bottom']).isRequired,
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -53,11 +49,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onLastPage: () => dispatch(actions.onLastPage(ownProps.viewType)),
   onNextPage: () => dispatch(actions.onNextPage(ownProps.viewType)),
   onPreviousPage: () => dispatch(actions.onPreviousPage(ownProps.viewType)),
-  onPageInput: (event) => {
-    const pageIndex = parseInt(event.target.value, 10);
-    dispatch(actions.onPageInput(pageIndex, ownProps.viewType));
+  onPageInput: (_event, pageIndex) => dispatch(actions.onPageInput(pageIndex, ownProps.viewType)),
+  onPerPageSelect: (_event, perPage) => {
+    dispatch(actions.onPerPageSelect(perPage, ownProps.viewType));
   },
-  onPerPageSelect: pageSize => dispatch(actions.onPerPageSelect(pageSize, ownProps.viewType)),
 });
 
 export default connect(
