@@ -1,0 +1,353 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Subscriptions /> OCPSubscriptionCard Empty should render empty OCP subscriptions 1`] = `
+<EmptyState>
+  <Title
+    headingLevel="h4"
+    size="2xl"
+  >
+    You do not have any clusters
+  </Title>
+  <EmptyStateBody>
+    <p>
+      Create a cluster to get started.
+    </p>
+  </EmptyStateBody>
+  <Link
+    replace={false}
+    to="/install"
+  >
+    <Button>
+      Create Cluster
+    </Button>
+  </Link>
+</EmptyState>
+`;
+
+exports[`<Subscriptions /> OCPSubscriptionCard Error should render error OCP subscriptions 1`] = `
+<EmptyState>
+  <Title
+    headingLevel="h4"
+    size="2xl"
+  >
+    Unable to retrieve subscription status
+  </Title>
+  <EmptyStateBody>
+    <p>
+      An error has occured! Please try again or contact support by including this error message:
+    </p>
+    <q />
+    <p>
+      Operation ID: N/A
+    </p>
+  </EmptyStateBody>
+  <Button
+    onClick={[MockFunction]}
+  >
+    Try again
+  </Button>
+</EmptyState>
+`;
+
+exports[`<Subscriptions /> OCPSubscriptionCard Loading should render loading OCP subscriptions 1`] = `
+<Spinner
+  centered={true}
+/>
+`;
+
+exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
+<Card>
+  <CardHeader>
+    OpenShift Container Platform
+  </CardHeader>
+  <CardBody>
+    The summary of subscription status for all self-managed clusters. Please follow the individual links to see the specific clusters in each of the corresponding status.
+  </CardBody>
+  <CardBody>
+    <OCPSubscriptionSummary
+      organizationID="org-1"
+      stats={
+        Object {
+          "": 1,
+          "InconsistentServices": 1,
+          "NotSet": 1,
+          "Ok": 1,
+          "Overcommitted": 1,
+        }
+      }
+    />
+  </CardBody>
+</Card>
+`;
+
+exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
+<Fragment>
+  <h4>
+    Subscription Status
+  </h4>
+  <Stack
+    className="status-group"
+  >
+    <StackItem
+      className="status-label ok-label"
+    >
+      <CheckCircleIcon
+        className="status-icon ok-icon"
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+        title={null}
+      />
+      Properly entitled
+    </StackItem>
+    <StackItem>
+      <a
+        href="/openshift?entitlement_status=Ok&organization_id=org-1"
+        target="_blank"
+      >
+        1 Clusters
+      </a>
+    </StackItem>
+  </Stack>
+  <Stack
+    className="status-group"
+  >
+    <StackItem
+      className="status-label warn-label"
+    >
+      <ExclamationTriangleIcon
+        className="status-icon warn-icon"
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+        title={null}
+      />
+      Subscription issues
+    </StackItem>
+    <StackItem>
+      Not subscribed
+      <PopoverHint
+        hint="Clusters do not have subscriptions attached."
+      />
+    </StackItem>
+    <StackItem>
+      <a
+        href="/openshift?entitlement_status=NotSet&organization_id=org-1"
+        target="_blank"
+      >
+        1 Clusters
+      </a>
+    </StackItem>
+  </Stack>
+  <Stack
+    className="status-group"
+  >
+    <StackItem>
+      Insufficient
+      <PopoverHint
+        hint="Clusters are consuming more resources than they are entitled to."
+      />
+    </StackItem>
+    <StackItem>
+      <a
+        href="/openshift?entitlement_status=Overcommitted&organization_id=org-1"
+        target="_blank"
+      >
+        1 Clusters
+      </a>
+    </StackItem>
+  </Stack>
+  <Stack
+    className="status-group"
+  >
+    <StackItem>
+      Invalid
+      <PopoverHint
+        hint="Clusters are attached to subscriptions with different support levels."
+      />
+    </StackItem>
+    <StackItem>
+      <a
+        href="/openshift?entitlement_status=InconsistentServices&organization_id=org-1"
+        target="_blank"
+      >
+        1 Clusters
+      </a>
+    </StackItem>
+  </Stack>
+</Fragment>
+`;
+
+exports[`<Subscriptions /> OSDSubscriptionCard Empty should render empty OSD quota summary 1`] = `
+<EmptyState>
+  <Title
+    headingLevel="h4"
+    size="2xl"
+  >
+    You do not have any quota
+  </Title>
+  <EmptyStateBody>
+    <p>
+      Contact sales to get started with OpenShift Dedicated.
+    </p>
+  </EmptyStateBody>
+</EmptyState>
+`;
+
+exports[`<Subscriptions /> OSDSubscriptionCard Error should render error OSD quota summary 1`] = `
+<EmptyState>
+  <Title
+    headingLevel="h4"
+    size="2xl"
+  >
+    Unable to retrieve quota information
+  </Title>
+  <EmptyStateBody>
+    <p>
+      An error has occured! Please try again or contact support by including this error message:
+    </p>
+    <q />
+    <p>
+      Operation ID: N/A
+    </p>
+  </EmptyStateBody>
+  <Button
+    onClick={[MockFunction]}
+  >
+    Try again
+  </Button>
+</EmptyState>
+`;
+
+exports[`<Subscriptions /> OSDSubscriptionCard Loading should render loading OSD quota summary 1`] = `
+<Spinner
+  centered={true}
+/>
+`;
+
+exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
+<Card>
+  <CardHeader>
+    OpenShift Dedicated
+  </CardHeader>
+  <CardBody>
+    The summary of all subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat.
+  </CardBody>
+  <CardBody>
+    <h4>
+      Quota
+    </h4>
+    <OSDSubscriptionTable
+      rows={
+        Array [
+          Array [
+            "cluster.aws",
+            "c5.4xlarge",
+            "multi",
+            "BYOC",
+            10,
+            15,
+            Object {
+              "title": <ResourcesAlmostFullIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+                title={null}
+              />,
+            },
+          ],
+          Array [
+            "cluster.aws",
+            "m5.xlarge",
+            "multi",
+            "BYOC",
+            15,
+            15,
+            Object {
+              "title": <ResourcesFullIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+                title={null}
+              />,
+            },
+          ],
+          Array [
+            "compute.node.aws",
+            "c5.4xlarge",
+            "multi",
+            "BYOC",
+            0,
+            4,
+            Object {
+              "title": <ResourcesAlmostEmptyIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+                title={null}
+              />,
+            },
+          ],
+        ]
+      }
+    />
+  </CardBody>
+</Card>
+`;
+
+exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
+<Fragment>
+  <Table
+    borders={true}
+    cells={
+      Array [
+        "Resource type",
+        "Resource name",
+        "Availability",
+        Object {
+          "title": "Plan type",
+          "transforms": Array [
+            [Function],
+          ],
+        },
+        "Used",
+        "Max",
+        "Capacity",
+      ]
+    }
+    className=""
+    contentId="expanded-content"
+    dropdownDirection="down"
+    dropdownPosition="right"
+    expandId="expandable-toggle"
+    gridBreakPoint="grid-md"
+    onCollapse={null}
+    onExpand={null}
+    role="grid"
+    rowLabeledBy="simple-node"
+    variant={null}
+  >
+    <TableHeader
+      className=""
+    />
+    <TableBody
+      className=""
+      onRowClick={[Function]}
+      rowKey="id"
+    />
+  </Table>
+</Fragment>
+`;
+
+exports[`<Subscriptions /> Subscriptions should render 1`] = `
+<div
+  id="subscriptions-content"
+>
+  <Connect(OCPSubscriptionCard)
+    organizationID="org-1"
+  />
+  <Connect(OSDSubscriptionCard)
+    organizationID="org-1"
+  />
+</div>
+`;

@@ -158,6 +158,8 @@ const scrollToTop = () => {
   }
 };
 
+const buildUrlParams = params => Object.keys(params).map(key => `${key}=${encodeURIComponent(params[key])}`).join('&');
+
 const helpers = {
   noop,
   setStateProp,
@@ -170,6 +172,7 @@ const helpers = {
   omitEmptyFields,
   toCleanArray,
   scrollToTop,
+  buildUrlParams,
   INVALIDATE_ACTION,
   FULFILLED_ACTION,
   PENDING_ACTION,
@@ -177,7 +180,7 @@ const helpers = {
 };
 
 export {
-  noop, getTimeDelta, isValid, omitEmptyFields, toCleanArray, scrollToTop,
+  noop, getTimeDelta, isValid, omitEmptyFields, toCleanArray, scrollToTop, buildUrlParams,
 };
 
 export default helpers;

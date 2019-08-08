@@ -735,3 +735,38 @@ span.dev-preview-label svg {
   margin: 0;
   padding: 0;
 }
+
+#subscriptions-content {
+  .pf-c-card {
+    margin-top: var(--pf-global--spacer--lg);
+  }
+  .info-icon {
+    fill: var(--pf-global--info-color--100);
+    margin: 0 -5px 0 5px;
+  }
+  .status-group {
+    padding-left: var(--pf-global--spacer--lg);
+    margin-top: var(--pf-global--spacer--sm);
+    height: auto;
+  }
+  .status-label {
+    font-size: var(--pf-global--FontSize--sm);
+    font-weight: var(--pf-global--FontWeight--bold);
+  }
+  .status-icon {
+    margin-left: calc(-1 * var(--pf-global--spacer--lg));
+    margin-right: calc(var(--pf-global--spacer--lg) - var(--pf-global--FontSize--sm))
+  }
+  .ok-label {
+    color: var(--pf-global--success-color--200);
+  }
+  .ok-icon {
+    fill: var(--pf-global--success-color--100);
+  }
+  .warn-label {
+    color: var(--pf-global--warning-color--200);
+  }
+  .warn-icon {
+    fill: var(--pf-global--warning-color--100);
+  }
+}

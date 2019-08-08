@@ -15,7 +15,7 @@ const PopoverHint = ({ hint }) => (
   </React.Fragment>
 );
 PopoverHint.propTypes = {
-  hint: PropTypes.string.isRequired,
+  hint: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]).isRequired,
 };
 
 export default PopoverHint;
