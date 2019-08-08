@@ -109,12 +109,18 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    },
+    "globals": {
+      "APP_DEVMODE": false,
+      "APP_BETA": false,
+      "APP_DEV_SERVER": false,
+      "OCM_SHOW_OLD_METRICS": false
     }
   },
   "scripts": {
     "build": "webpack --progress",
-    "start": "UHC_GATEWAY_DOMAIN='https://qa.foo.redhat.com:1337' webpack-dev-server --progress --hot",
-    "startmock": "UHC_GATEWAY_DOMAIN='https://qa.foo.redhat.com:1337' UHC_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
+    "start": "webpack-dev-server --progress --hot",
+    "startmock": "OCM_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
     "lint": "eslint src --ext js,jsx",
     "test": "jest --env=jsdom"
   },

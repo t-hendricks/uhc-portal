@@ -9,9 +9,8 @@ import { getTimeDelta } from '../../../../../../common/helpers';
 function ResourceUsage({ cluster }) {
   const metricsLatsUpdate = new Date(cluster.metrics.cpu.updated_timestamp);
 
-  const metricsAvailable = process.env.UHC_SHOW_OLD_METRICS === 'true'
-    ? true
-    : getTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta;
+  const metricsAvailable = (OCM_SHOW_OLD_METRICS
+    || getTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta);
 
   // Why parse memory but not cpu?
   // In theory both are `ValueWithUnit` but openapi only documents units for the case of bytes,

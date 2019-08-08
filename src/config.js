@@ -1,38 +1,58 @@
-import axios from 'axios';
-import { getResourcesBase } from './common/getBaseName';
+const ENV_OVERRIDE_LOCALSTORAGE_KEY = 'ocmOverridenEnvironment';
+const configs = {};
+
+// Specify configs to load below. The `webpackMode` comments are to ensure configs
+// get bundled in the main chunk, and not spilt to tiny chunks
+
+configs.production = import(/* webpackMode: "eager" */ './config/production.json');
+if (APP_BETA || APP_DEVMODE) {
+  configs.staging = import(/* webpackMode: "eager" */ './config/staging.json');
+  configs.integration = import(/* webpackMode: "eager" */ './config/integration.json');
+}
+if (APP_DEV_SERVER) {
+  // running in webpack dev server, default to development config
+  configs.development = import(/* webpackMode: "eager" */ './config/development.json');
+  configs.default = configs.development;
+} else {
+  // running in a real build, select config according to the APP_BETA flag
+  configs.default = APP_BETA ? configs.staging : configs.production;
+}
+
+const parseEnvQueryParam = () => {
+  let ret;
+  window.location.search.substring(1).split('&').forEach((queryString) => {
+    const [key, val] = queryString.split('=');
+    if (key === 'env' && !!configs[val]) {
+      ret = val;
+    }
+  });
+  return ret;
+};
+
 
 const config = {
   configData: {},
+  override: false,
   fetchConfig() {
+    const that = this;
     return new Promise((resolve) => {
-      const that = this;
-      const BASE = getResourcesBase();
-      axios.get(`${BASE}/config/config.json`).then((response) => {
-        that.configData = response.data;
-
-        // Environment overrides
-        if (response.data.environments) {
-          window.location.search.substring(1).split('&').forEach((queryString) => {
-            const [key, val] = queryString.split('=');
-            if (key === 'env' && !!response.data.environments[val]) {
-              // Override global configuration with data from configured environment
-              Object.keys(response.data.environments[val]).forEach((override) => {
-                that.configData[override] = response.data.environments[val][override];
-              });
-
-              // Mark as overridden
-              that.configData.overrideEnvironment = true;
-            }
-          });
-
-          // Remove data from unused environments
-          delete that.configData.environments;
-        }
-
-        resolve();
-      });
+      const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
+      if (queryEnv) {
+        configs[queryEnv].then((data) => {
+          that.configData = data;
+          that.override = queryEnv;
+          localStorage.setItem(ENV_OVERRIDE_LOCALSTORAGE_KEY, queryEnv);
+          resolve();
+        });
+      } else {
+        configs.default.then((data) => {
+          that.configData = data;
+          resolve();
+        });
+      }
     });
   },
 };
 
+export { ENV_OVERRIDE_LOCALSTORAGE_KEY };
 export default config;
