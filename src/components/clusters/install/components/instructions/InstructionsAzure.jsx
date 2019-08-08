@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '@patternfly/react-core';
+import { CodeIcon } from '@patternfly/react-icons';
 import CLISection from './components/CLISection';
 import DownloadButton from './components/DownloadButton';
 import GetStarted from './components/GetStarted';
@@ -27,7 +28,9 @@ class InstructionsAzure extends React.Component {
         <div className="pf-l-grid pf-m-gutter ocm-page">
           <div className="pf-c-content">
             <div className="developer-preview">
-              &lt;/&gt; Developer Preview
+              <CodeIcon />
+              {' '}
+              Developer Preview
             </div>
 
             <PageTitle title="Install on Azure: Installer-Provisioned Infrastructure" />
