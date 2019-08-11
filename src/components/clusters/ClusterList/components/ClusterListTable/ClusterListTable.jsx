@@ -87,7 +87,6 @@ function ClusterListTable(props) {
       { title: clusterType },
       { title: <NumberWithUnit valueWithUnit={cluster.metrics.cpu.total} unit="vCPU" /> },
       { title: <NumberWithUnit valueWithUnit={cluster.metrics.memory.total} isBytes /> },
-      result(cluster, 'subscriptionInfo.creator.name') || result(cluster, 'subscriptionInfo.creator.username', 'N/A'),
       {
         title: <ClusterLocationLabel
           regionID={result(cluster, 'region.id', 'N/A')}
@@ -107,7 +106,6 @@ function ClusterListTable(props) {
     { title: 'Type' },
     { title: 'vCPU', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Memory', columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Owner', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
     '',
   ];
