@@ -20,13 +20,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { EmptyState } from 'patternfly-react';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
   Split,
   SplitItem,
   Card,
   Button,
+  EmptyState,
 } from '@patternfly/react-core';
 
 import ClusterListFilter from './components/ClusterListFilter';
