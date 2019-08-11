@@ -183,9 +183,9 @@ It should ask you to authenticate with QA SSO, which should accept every user an
 === Chromed application with a mock server
 Perform the exact steps detailed above, but use
 ....
-SPANDX_CONFIG="./profiles/local-frontend-mock.js"
+mockdata/mockserver.py
 ....
-instead, and make sure you start the mock server (mockdata/mockserver.py) BEFORE starting the insights proxy.
+instead of the backend proxy.
 
 == Deploying
 
