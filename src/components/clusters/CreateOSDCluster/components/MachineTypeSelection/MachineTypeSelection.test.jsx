@@ -11,6 +11,11 @@ const baseState = {
   machineTypes: [],
 };
 
+const organizationState = {
+  fulfilled: true,
+  pending: false,
+};
+
 describe('<MachineTypeSelection />', () => {
   describe('when machine type list needs to be fetched', () => {
     let getMachineTypes;
@@ -27,6 +32,7 @@ describe('<MachineTypeSelection />', () => {
           getMachineTypes={getMachineTypes}
           isMultiAz={false}
           quota={{}}
+          organization={organizationState}
         />,
       );
     });
@@ -65,6 +71,7 @@ describe('<MachineTypeSelection />', () => {
           getMachineTypes={getMachineTypes}
           isMultiAz={false}
           quota={{}}
+          organization={organizationState}
         />,
       );
     });
@@ -104,6 +111,7 @@ describe('<MachineTypeSelection />', () => {
           getMachineTypes={getMachineTypes}
           isMultiAz={false}
           quota={{}}
+          organization={organizationState}
         />,
       );
     });
@@ -180,16 +188,13 @@ describe('<MachineTypeSelection />', () => {
       };
 
       const quota = {
-        fulfilled: true,
-        quotaList: {
-          nodeQuota: {
-            rhInfra: {
-              multiAz: {
-                'r5.xlarge': 5,
-              },
-              singleAz: {
-                'r5.xlarge': 0,
-              },
+        nodeQuota: {
+          rhInfra: {
+            multiAz: {
+              'r5.xlarge': 5,
+            },
+            singleAz: {
+              'r5.xlarge': 0,
             },
           },
         },
@@ -204,6 +209,7 @@ describe('<MachineTypeSelection />', () => {
           meta={{}}
           getMachineTypes={getMachineTypes}
           quota={quota}
+          organization={organizationState}
           isMultiAz
         />,
       );

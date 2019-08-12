@@ -16,14 +16,14 @@ import PageTitle from '../../common/PageTitle';
 class CreateCluster extends React.Component {
   componentDidMount() {
     // Try to get quota or organization when the component is first mounted.
-    const { getOrganizationAndQuota, organization, quota } = this.props;
-    if (!quota.pending && !organization.pending) {
+    const { getOrganizationAndQuota, organization } = this.props;
+    if (!organization.pending) {
       getOrganizationAndQuota();
     }
   }
 
   render() {
-    const { hasQuota, quota } = this.props;
+    const { hasQuota, organization } = this.props;
     const osdCard = (
       <Link to="/create/osd" className="infra-card pf-c-card create-cluster-card">
         <div className="create-cluster-favorite-btn-container">
@@ -52,7 +52,7 @@ class CreateCluster extends React.Component {
       </Link>
     );
 
-    const quotaRequestComplete = quota.fulfilled || quota.error;
+    const quotaRequestComplete = organization.fulfilled || organization.error;
     return quotaRequestComplete ? (
       <Card>
         <div className="pf-c-content ocm-page">
@@ -72,7 +72,6 @@ class CreateCluster extends React.Component {
 CreateCluster.propTypes = {
   hasQuota: PropTypes.bool.isRequired,
   organization: PropTypes.object.isRequired,
-  quota: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
 };
 

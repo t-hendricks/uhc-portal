@@ -21,21 +21,16 @@ const mapDispatchToProps = {
 };
 
 
-const mapStateToProps = (state) => {
-  const { quota } = state.userProfile;
-
-  return Object.assign(
-    {},
-    state.clusters.clusters,
-    {
-      viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
-      cloudProviders: state.cloudProviders.cloudProviders,
-      organization: state.userProfile.organization,
-      quota,
-      hasQuota: hasQuota(quota.quotaList.items || []),
-    },
-  );
-};
+const mapStateToProps = state => Object.assign(
+  {},
+  state.clusters.clusters,
+  {
+    viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
+    cloudProviders: state.cloudProviders.cloudProviders,
+    organization: state.userProfile.organization,
+    hasQuota: hasQuota(state.userProfile.organization.quotaList.items || []),
+  },
+);
 
 export default connect(
   mapStateToProps,

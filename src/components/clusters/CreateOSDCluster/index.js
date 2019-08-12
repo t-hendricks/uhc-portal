@@ -1,7 +1,5 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
-import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
-
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import CreateOSDCluster from './CreateOSDCluster';
 
@@ -50,8 +48,6 @@ const mapDispatchToProps = dispatch => ({
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
-  getOrganizationAndQuota,
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateCluster);

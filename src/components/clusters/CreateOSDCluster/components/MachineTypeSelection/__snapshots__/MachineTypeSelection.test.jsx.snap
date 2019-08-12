@@ -43,6 +43,12 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
     }
   }
   meta={Object {}}
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
   quota={Object {}}
 >
   <div
@@ -140,18 +146,21 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
     }
   }
   meta={Object {}}
-  quota={
+  organization={
     Object {
       "fulfilled": true,
-      "quotaList": Object {
-        "nodeQuota": Object {
-          "rhInfra": Object {
-            "multiAz": Object {
-              "r5.xlarge": 5,
-            },
-            "singleAz": Object {
-              "r5.xlarge": 0,
-            },
+      "pending": false,
+    }
+  }
+  quota={
+    Object {
+      "nodeQuota": Object {
+        "rhInfra": Object {
+          "multiAz": Object {
+            "r5.xlarge": 5,
+          },
+          "singleAz": Object {
+            "r5.xlarge": 0,
           },
         },
       },
@@ -425,6 +434,12 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
     }
   }
   meta={Object {}}
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
   quota={Object {}}
 >
   <div
@@ -494,6 +509,12 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
     }
   }
   meta={Object {}}
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
   quota={Object {}}
 >
   <ErrorBox
