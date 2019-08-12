@@ -1,7 +1,13 @@
 import result from 'lodash/result';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Tooltip, TooltipPosition } from '@patternfly/react-core';
+import {
+  Button,
+  Popover,
+  Tooltip,
+  TooltipPosition,
+} from '@patternfly/react-core';
+import { InfoCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
 import {
   Table,
   TableHeader,
@@ -71,6 +77,40 @@ function ClusterListTable(props) {
       </Tooltip>
     );
 
+    const clusterUpdate = cluster.console && cluster.console.url ? (
+      <a href={`${cluster.console.url}/settings/cluster`} target="_blank" rel="noreferrer">
+        <Button variant="link" icon={<OutlinedArrowAltCircleUpIcon />}>
+          Update
+        </Button>
+      </a>
+    ) : (
+      <Popover
+        position="top"
+        aria-label="Update"
+        bodyContent={(
+          <div>
+            An update is available for this cluster.
+            Navigate to the Cluster settings page in the cluster&apos;s web console to update.
+            {' '}
+            <a href="https://docs.openshift.com/container-platform/latest/updating/updating-cluster.html" target="_blank">
+              Learn more
+            </a>
+          </div>
+        )}
+      >
+        <Button variant="link" icon={<InfoCircleIcon />}>
+          Update
+        </Button>
+      </Popover>
+    );
+    const clusterVersion = (
+      <span>
+        {cluster.openshift_version || 'Unknown'}
+        {' '}
+        { !cluster.managed && cluster.metrics.version_update_available && (clusterUpdate) }
+      </span>
+    );
+
     const dropDownKebab = (
       <ClusterActionsDropdown
         cluster={cluster}
@@ -87,6 +127,7 @@ function ClusterListTable(props) {
       { title: clusterType },
       { title: <NumberWithUnit valueWithUnit={cluster.metrics.cpu.total} unit="vCPU" /> },
       { title: <NumberWithUnit valueWithUnit={cluster.metrics.memory.total} isBytes /> },
+      { title: clusterVersion },
       {
         title: <ClusterLocationLabel
           regionID={result(cluster, 'region.id', 'N/A')}
@@ -106,6 +147,7 @@ function ClusterListTable(props) {
     { title: 'Type' },
     { title: 'vCPU', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Memory', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
     '',
   ];
