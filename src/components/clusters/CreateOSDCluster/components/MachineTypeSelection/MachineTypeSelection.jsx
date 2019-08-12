@@ -32,13 +32,19 @@ class MachineTypeSelection extends React.Component {
   }
 
   componentDidMount() {
-    const { getMachineTypes, machineTypes } = this.props;
+    const {
+      getMachineTypes, machineTypes, organization, getOrganizationAndQuota,
+    } = this.props;
+    if (!organization.fulfilled && !organization.pending) {
+      // we need to know the quota so we can know which types to enable.
+      getOrganizationAndQuota();
+    }
     if (!machineTypes.fulfilled) {
       // Don't let the user submit if we couldn't get machine types yet.
       this.setInvalidValue();
     }
     if (!machineTypes.pending && !machineTypes.fulfilled) {
-      // fetch cloud providers from server only if needed.
+      // fetch machine types from server only if needed.
       getMachineTypes();
     }
 
@@ -88,11 +94,11 @@ class MachineTypeSelection extends React.Component {
   }
 
   hasQuota(machineType) {
-    const { isMultiAz, quota } = this.props;
-    if (!quota.fulfilled) {
+    const { isMultiAz, organization, quota } = this.props;
+    if (!organization.fulfilled) {
       return false;
     }
-    const available = quota.quotaList.nodeQuota.rhInfra[isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
+    const available = quota.nodeQuota.rhInfra[isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
     return available > 0;
   }
 
@@ -104,6 +110,7 @@ class MachineTypeSelection extends React.Component {
       getMachineTypes,
       isMultiAz,
       quota,
+      organization,
       input,
       meta: { error, touched },
       ...extraProps
@@ -139,7 +146,7 @@ class MachineTypeSelection extends React.Component {
       );
     };
 
-    if (machineTypes.fulfilled) {
+    if (machineTypes.fulfilled && organization.fulfilled) {
       return (
         <div className="node-type-input">
           <div className="node-type-label">Node type</div>
@@ -168,6 +175,7 @@ MachineTypeSelection.propTypes = {
   machineTypes: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   quota: PropTypes.object.isRequired,
+  organization: PropTypes.object.isRequired,
   // Plus extraprops passed by redux Field
 };
 

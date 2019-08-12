@@ -111,7 +111,6 @@ class ClusterList extends Component {
       setSorting,
       openModal,
       invalidateClusters,
-      quota,
       hasQuota,
       errorMessage,
       organization,
@@ -122,7 +121,7 @@ class ClusterList extends Component {
     }
 
     if ((!size(clusters) && pending && (isEmpty(viewOptions.filter) || !valid))
-    || (!quota.fulfilled && !organization.error && !quota.error)) {
+    || (!organization.fulfilled && !organization.error)) {
       return (
         <Card>
           <div className="cluster-list">
@@ -222,7 +221,6 @@ ClusterList.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
-  quota: PropTypes.object.isRequired,
   hasQuota: PropTypes.bool.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   operationID: PropTypes.string,

@@ -8,14 +8,13 @@ const userInfoResponse = payload => ({
   type: userConstants.USER_INFO_RESPONSE,
 });
 
-const fetchQuota = organiztionID => ({
-  type: userConstants.GET_ORG_QUOTA,
-  payload: accountsService.getOrganizationQuota(organiztionID).then((response) => {
+const fetchQuota = organiztionID => accountsService.getOrganizationQuota(organiztionID).then(
+  (response) => {
     /* construct an easy to query structure to figure out how many of each node type
-    we have available.
-    This is done here to ensure the calculation is done every time we get the quota,
-    and that we won't have to replicate it across different components
-    which might need to query this data. */
+      we have available.
+      This is done here to ensure the calculation is done every time we get the quota,
+      and that we won't have to replicate it across different components
+      which might need to query this data. */
     response.data.nodeQuota = {
       byoc: {
         singleAz: {},
@@ -34,15 +33,25 @@ const fetchQuota = organiztionID => ({
       response.data.nodeQuota[category][zoneType][item.resource_name] = available;
     });
     return response;
-  }),
-});
+  },
+);
 
-const getOrganizationAndQuota = () => dispatch => ({
+
+const getOrganizationAndQuota = () => ({
   payload: accountsService.getCurrentAccount().then((response) => {
     const organizationID = get(response.data, 'organization.id');
     if (organizationID !== undefined) {
-      dispatch(fetchQuota(organizationID));
-      return accountsService.getOrganization(organizationID);
+      const ret = {
+        quota: undefined,
+        organization: undefined,
+      };
+      const promises = [
+        fetchQuota(organizationID).then((quota) => { ret.quota = quota; }),
+        accountsService.getOrganization(organizationID).then(
+          (organization) => { ret.organization = organization; },
+        ),
+      ];
+      return Promise.all(promises).then(() => ret);
     }
     return Promise.reject(Error('No organization'));
   }),
