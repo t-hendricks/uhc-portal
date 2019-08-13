@@ -1,13 +1,7 @@
 import result from 'lodash/result';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  Button,
-  Popover,
-  Tooltip,
-  TooltipPosition,
-} from '@patternfly/react-core';
-import { InfoCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
+import { Tooltip, TooltipPosition } from '@patternfly/react-core';
 import {
   Table,
   TableHeader,
@@ -24,6 +18,7 @@ import NumberWithUnit from './NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
 import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
 import { getClusterStateAndDescription } from '../../../common/clusterStates';
+import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
 
 
 function ClusterListTable(props) {
@@ -77,37 +72,11 @@ function ClusterListTable(props) {
       </Tooltip>
     );
 
-    const clusterUpdate = cluster.console && cluster.console.url ? (
-      <a href={`${cluster.console.url}/settings/cluster`} target="_blank" rel="noreferrer">
-        <Button variant="link" icon={<OutlinedArrowAltCircleUpIcon />}>
-          Update
-        </Button>
-      </a>
-    ) : (
-      <Popover
-        position="top"
-        aria-label="Update"
-        bodyContent={(
-          <div>
-            An update is available for this cluster.
-            Navigate to the Cluster settings page in the cluster&apos;s web console to update.
-            {' '}
-            <a href="https://docs.openshift.com/container-platform/latest/updating/updating-cluster.html" target="_blank">
-              Learn more
-            </a>
-          </div>
-        )}
-      >
-        <Button variant="link" icon={<InfoCircleIcon />}>
-          Update
-        </Button>
-      </Popover>
-    );
     const clusterVersion = (
       <span>
         {cluster.openshift_version || 'Unknown'}
         {' '}
-        { !cluster.managed && cluster.metrics.version_update_available && (clusterUpdate) }
+        <ClusterUpdateLink cluster={cluster} />
       </span>
     );
 

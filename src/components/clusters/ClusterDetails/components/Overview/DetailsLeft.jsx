@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 import Timestamp from '../../../../common/Timestamp';
+import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
 
 function DetailsLeft({ cluster, cloudProviders }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
@@ -52,7 +53,9 @@ function DetailsLeft({ cluster, cloudProviders }) {
               {' '}
             </dt>
             <dd>
-              {get(cluster, 'openshift_version', 'N/A')}
+              {get(cluster, 'openshift_version', 'Unknown')}
+              {' '}
+              <ClusterUpdateLink cluster={cluster} />
             </dd>
           </dl>
         </dd>
