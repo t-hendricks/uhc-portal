@@ -19,7 +19,7 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
       ],
       "results": Array [
         Object {
-          "isThrow": false,
+          "type": "return",
           "value": undefined,
         },
       ],
@@ -34,7 +34,7 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
       ],
       "results": Array [
         Object {
-          "isThrow": false,
+          "type": "return",
           "value": undefined,
         },
       ],
@@ -138,7 +138,7 @@ exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1
       ],
       "results": Array [
         Object {
-          "isThrow": false,
+          "type": "return",
           "value": undefined,
         },
       ],
@@ -188,7 +188,7 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
       ],
       "results": Array [
         Object {
-          "isThrow": false,
+          "type": "return",
           "value": undefined,
         },
       ],
@@ -203,7 +203,7 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
       ],
       "results": Array [
         Object {
-          "isThrow": false,
+          "type": "return",
           "value": undefined,
         },
       ],

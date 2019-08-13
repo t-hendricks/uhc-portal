@@ -51,6 +51,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
       isOpen={true}
       isSmall={true}
       onClose={[Function]}
+      showClose={true}
       title="Edit Display Name"
     >
       <Portal
@@ -122,7 +123,6 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                   <div
                     class="pf-c-modal-box__footer"
                   >
-                     
                     <button
                       class="pf-c-button pf-m-secondary"
                       type="button"
@@ -135,7 +135,6 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                     >
                       Edit
                     </button>
-                     
                   </div>
                 </div>
               </div>
@@ -170,6 +169,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
           isOpen={true}
           isSmall={true}
           onClose={[Function]}
+          showClose={true}
           title="Edit Display Name"
         >
           <Backdrop>
@@ -330,7 +330,6 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                         <div
                           className="pf-c-modal-box__footer"
                         >
-                           
                           <Button
                             key="cancel"
                             onClick={[Function]}
@@ -367,7 +366,6 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                               Edit
                             </button>
                           </Button>
-                           
                         </div>
                       </ModalBoxFooter>
                     </div>
@@ -434,6 +432,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
       isOpen={true}
       isSmall={true}
       onClose={[Function]}
+      showClose={true}
       title="Edit Display Name"
     >
       <Portal
@@ -549,7 +548,6 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                   <div
                     class="pf-c-modal-box__footer"
                   >
-                     
                     <button
                       class="pf-c-button pf-m-secondary"
                       type="button"
@@ -562,7 +560,6 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                     >
                       Edit
                     </button>
-                     
                   </div>
                 </div>
               </div>
@@ -597,6 +594,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
           isOpen={true}
           isSmall={true}
           onClose={[Function]}
+          showClose={true}
           title="Edit Display Name"
         >
           <Backdrop>
@@ -834,7 +832,6 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                         <div
                           className="pf-c-modal-box__footer"
                         >
-                           
                           <Button
                             key="cancel"
                             onClick={[Function]}
@@ -871,7 +868,6 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                               Edit
                             </button>
                           </Button>
-                           
                         </div>
                       </ModalBoxFooter>
                     </div>

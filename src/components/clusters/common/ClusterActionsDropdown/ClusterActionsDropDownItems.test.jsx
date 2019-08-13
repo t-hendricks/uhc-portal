@@ -42,10 +42,10 @@ describe('Cluster Actions Dropdown Items', () => {
       const editDisplayNameDisabled = wrapper.find('DropdownItem').at(1).props().isDisabled;
       const editDisabled = wrapper.find('DropdownItem').at(2).props().isDisabled;
       const deleteDisabled = wrapper.find('DropdownItem').at(3).props().isDisabled;
-      expect(launchConsoleDisabled).toEqual(false);
-      expect(editDisplayNameDisabled).toEqual(false);
-      expect(editDisabled).toEqual(false);
-      expect(deleteDisabled).toEqual(false);
+      expect(launchConsoleDisabled).toBeFalsy();
+      expect(editDisplayNameDisabled).toBeFalsy();
+      expect(editDisabled).toBeFalsy();
+      expect(deleteDisabled).toBeFalsy();
     });
   });
 
@@ -81,9 +81,9 @@ describe('Cluster Actions Dropdown Items', () => {
       const editDisabled = wrapper.find('DropdownItem').at(2).props().isDisabled;
       const deleteDisabled = wrapper.find('DropdownItem').at(3).props().isDisabled;
       expect(launchConsoleDisabled).toEqual(true);
-      expect(editDisplayNameDisabled).toEqual(false);
+      expect(editDisplayNameDisabled).toBeFalsy();
       expect(editDisabled).toEqual(true);
-      expect(deleteDisabled).toEqual(false);
+      expect(deleteDisabled).toBeFalsy();
     });
   });
 

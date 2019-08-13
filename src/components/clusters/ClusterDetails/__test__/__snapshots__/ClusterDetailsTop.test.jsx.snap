@@ -4,15 +4,8 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
 <div
   id="cl-details-top"
 >
-  <Split
-    className=""
-    component="div"
-    gutter={null}
-  >
-    <SplitItem
-      className=""
-      isFilled={false}
-    >
+  <Split>
+    <SplitItem>
       <Breadcrumb>
         <LinkContainer
           activeClassName="active"
@@ -36,15 +29,9 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
     </SplitItem>
   </Split>
   <Split
-    className=""
-    component="div"
-    gutter={null}
     id="cl-details-top-row"
   >
-    <SplitItem
-      className=""
-      isFilled={false}
-    >
+    <SplitItem>
       <Title
         className="vertical-align"
         headingLevel="h1"
@@ -53,18 +40,11 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
         test-liza
       </Title>
     </SplitItem>
+    <SplitItem />
     <SplitItem
-      className=""
-      isFilled={false}
-    />
-    <SplitItem
-      className=""
       isFilled={true}
     />
-    <SplitItem
-      className=""
-      isFilled={false}
-    >
+    <SplitItem>
       <span
         id="cl-details-btns"
       >
@@ -229,13 +209,8 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
       </span>
     </SplitItem>
   </Split>
-  <Split
-    className=""
-    component="div"
-    gutter={null}
-  >
+  <Split>
     <SplitItem
-      className=""
       isFilled={true}
     >
       <IdentityProvidersHint />
