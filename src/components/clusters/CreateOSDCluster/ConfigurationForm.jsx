@@ -1,24 +1,27 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import { Col, Row } from 'patternfly-react';
-import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import {
+  FormGroup,
+  GridItem,
+} from '@patternfly/react-core';
+import PopoverHint from '../../common/PopoverHint';
+import ReduxVerticalFormGroupPF4 from '../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import MachineTypeSelection from './components/MachineTypeSelection';
 import validators, { required } from '../../../common/validators';
-import ReduxCheckbox from '../../common/ReduxFormComponents/ReduxCheckbox';
-import { ConfigurationHint, RegionsHint } from './CreateOSDClusterHelper';
 import minValueSelector from '../common/EditClusterDialog/EditClusterSelectors';
-
+import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
+import constants from './CreateOSDClusterHelper';
 
 class ConfigurationForm extends React.Component {
   state = {
     isMultiAz: false,
   };
 
-  handleMultiAZChange = (event) => {
+  handleMultiAZChange = (_, value) => {
     const { touch } = this.props;
-    this.setState({ isMultiAz: event.target.checked });
+    this.setState({ isMultiAz: value === 'true' });
     // mark Nodes input as touched to make sure validation is shown even if it's not touched.
     touch('nodes_compute');
   };
@@ -29,7 +32,6 @@ class ConfigurationForm extends React.Component {
     return validators.nodes(nodeCount, min);
   };
 
-
   // HACK: two validation functions that are the same. This allows to "replace" the validation
   // func on the compute nodes field, re-triggering validation when the multiAZ checkbox changes.
 
@@ -39,27 +41,35 @@ class ConfigurationForm extends React.Component {
 
   render() {
     const {
-      header, pending, showDNSBaseDomain,
+      pending, showDNSBaseDomain,
     } = this.props;
     const { isMultiAz } = this.state;
     const min = minValueSelector(isMultiAz);
     return (
       <React.Fragment>
-        <Row>
-          <h3>{header}</h3>
-          <Col sm={5}>
-            <Field
-              component={ReduxVerticalFormGroup}
-              name="name"
-              label="Cluster name"
-              type="text"
-              validate={validators.checkClusterName}
-              disabled={pending}
-            />
+        <GridItem span={12}>
+          <h3 className="osd-page-header">Cluster Details</h3>
+        </GridItem>
 
-            {showDNSBaseDomain && (
+        <GridItem span={4}>
+          <Field
+            component={ReduxVerticalFormGroupPF4}
+            name="name"
+            label="Cluster name"
+            type="text"
+            validate={validators.checkClusterName}
+            disabled={pending}
+            isRequired
+            extendedHelpText={constants.clusterNameHint}
+          />
+        </GridItem>
+        <GridItem span={8} />
+
+        {showDNSBaseDomain && (
+          <React.Fragment>
+            <GridItem span={4}>
               <Field
-                component={ReduxVerticalFormGroup}
+                component={ReduxVerticalFormGroupPF4}
                 name="dns_base_domain"
                 label="Base DNS domain"
                 type="text"
@@ -67,44 +77,65 @@ class ConfigurationForm extends React.Component {
                 disabled={pending}
                 normalize={value => value.toLowerCase()}
               />
-            )}
+            </GridItem>
+            <GridItem span={8} />
+          </React.Fragment>
+        )}
 
+        <GridItem span={4}>
+          <FormGroup
+            label="Region"
+            isRequired
+            fieldId="region"
+          >
+            <PopoverHint hint={constants.regionHint} />
             <Field
-              component={ReduxVerticalFormGroup}
-              name="nodes_compute"
-              label="Compute nodes"
-              type="number"
-              min={min.value}
-              validate={isMultiAz ? [this.validateNodesMultiAz, validators.nodesMultiAz]
-                : this.validateNodesSingleAz}
-              disabled={pending}
-            />
-
-            <Field
-              component={ReduxVerticalFormGroup}
+              component={CloudRegionComboBox}
               name="region"
-              label="AWS region"
-              componentClass={CloudRegionComboBox}
               cloudProviderID="aws"
               validate={required}
               disabled={pending}
+              isRequired
             />
+          </FormGroup>
+        </GridItem>
+        <GridItem span={8} />
 
+        <GridItem span={4}>
+          <FormGroup
+            label="Availability"
+            isRequired
+            fieldId="availability-toggle"
+          >
+            <PopoverHint hint={constants.availabilityHint} />
             <Field
-              component={ReduxCheckbox}
+              component={RadioButtons}
               name="multi_az"
-              label="Deploy on multiple availability zones"
               disabled={pending}
               onChange={this.handleMultiAZChange}
+              options={[{ value: 'false', label: 'Single Zone' }, { value: 'true', label: 'Multizone' }]}
+              defaultValue="false"
             />
-          </Col>
-          <Col sm={4}>
-            <ConfigurationHint showDNSBaseDomain={showDNSBaseDomain} />
-            <RegionsHint />
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={11}>
+          </FormGroup>
+        </GridItem>
+        <GridItem span={8} />
+
+        <GridItem span={12}>
+          <h3>Scale</h3>
+          <p>
+            The number and instance type of compute nodes in your cluster. After cluster creation
+            you will be able to change the number of compute nodes in your cluster, but you will
+            not be able to change the worker node instance type.
+          </p>
+        </GridItem>
+
+        <GridItem span={9}>
+          <FormGroup
+            label="Compute node instance type"
+            isRequired
+            fieldId="node_type"
+          >
+            <PopoverHint hint={constants.computeNodeInstanceTypeHint} />
             <Field
               component={MachineTypeSelection}
               name="machine_type"
@@ -112,15 +143,31 @@ class ConfigurationForm extends React.Component {
               disabled={pending}
               isMultiAz={isMultiAz}
             />
-          </Col>
-        </Row>
+          </FormGroup>
+        </GridItem>
+
+        <GridItem span={4}>
+          <Field
+            component={ReduxVerticalFormGroupPF4}
+            name="nodes_compute"
+            label="Compute node count"
+            type="number"
+            min={min.value}
+            validate={isMultiAz ? [this.validateNodesMultiAz, validators.nodesMultiAz]
+              : this.validateNodesSingleAz}
+            disabled={pending}
+            isRequired
+            extendedHelpText={constants.computeNodeCountHint}
+          />
+        </GridItem>
+        <GridItem span={8} />
+
       </React.Fragment>
     );
   }
 }
 
 ConfigurationForm.propTypes = {
-  header: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   touch: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   showDNSBaseDomain: PropTypes.bool,

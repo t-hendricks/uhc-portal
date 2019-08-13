@@ -4,11 +4,41 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+  Select,
+  SelectOption,
+  SelectVariant,
+} from '@patternfly/react-core';
+
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../common/ErrorBox';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 
 class CloudRegionComboBox extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isExpanded: false,
+    };
+
+    this.onToggle = (isExpanded) => {
+      this.setState({
+        isExpanded,
+      });
+    };
+
+    this.onSelect = (event, selection) => {
+      const {
+        input,
+      } = this.props;
+      this.setState({
+        isExpanded: false,
+      });
+      input.onChange(selection);
+    };
+  }
+
   componentDidMount() {
     const { getCloudProviders, cloudProviders } = this.props;
     if (!cloudProviders.fulfilled) {
@@ -32,29 +62,43 @@ class CloudRegionComboBox extends React.Component {
   setInvalidValue() {
     // Tell redux form the current value of this field is empty.
     // This will cause it to not pass validation if it is required.
-    const { onChange } = this.props;
-    onChange('');
+    const { input } = this.props;
+    input.onChange('');
   }
 
   render() {
     // getCloudProviders is unused here, but it's needed so it won't
     // go into extraProps and then get to the DOM, generating a React warning.
     const {
-      cloudProviderID, cloudProviders, getCloudProviders, ...extraProps
+      input, cloudProviderID, cloudProviders, disabled,
     } = this.props;
+    const {
+      isExpanded,
+    } = this.state;
     const regionOption = region => (
-      <option value={region.id} key={region.id}>
-        {region.id}
-        {', '}
-        {region.display_name}
-      </option>);
+      <SelectOption
+        key={region.id}
+        value={region.id}
+      >
+        {`${region.id}, ${region.display_name}`}
+      </SelectOption>
+    );
 
     if (cloudProviders.fulfilled) {
       const regions = Object.values(cloudProviders.providers[cloudProviderID].regions);
       return (
-        <select {...extraProps}>
+        <Select
+          className="cloud-region-combo-box"
+          variant={SelectVariant.single}
+          aria-label="Region"
+          onToggle={this.onToggle}
+          onSelect={this.onSelect}
+          selections={input.value}
+          isExpanded={isExpanded}
+          disabled={disabled}
+        >
           {regions.map(region => regionOption(region))}
-        </select>
+        </Select>
       );
     }
 
@@ -73,6 +117,8 @@ CloudRegionComboBox.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  input: PropTypes.object.isRequired,
+  disabled: PropTypes.bool.isRequired,
   // Plus extraprops passed by react-bootstrap / patternfly-react FormControl
 };
 

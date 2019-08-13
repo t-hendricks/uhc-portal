@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch => ({
           id: formData.machine_type,
         },
       },
-      multi_az: formData.multi_az,
+      multi_az: formData.multi_az === 'true',
       network: {
         machine_cidr: formData.network_machine_cidr,
         service_cidr: formData.network_service_cidr,
