@@ -18,6 +18,7 @@ import NumberWithUnit from './NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
 import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
 import { getClusterStateAndDescription } from '../../../common/clusterStates';
+import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
 
 
 function ClusterListTable(props) {
@@ -71,6 +72,13 @@ function ClusterListTable(props) {
       </Tooltip>
     );
 
+    const clusterVersion = (
+      <span>
+        {cluster.openshift_version || 'Unknown'}
+        <ClusterUpdateLink cluster={cluster} />
+      </span>
+    );
+
     const dropDownKebab = (
       <ClusterActionsDropdown
         cluster={cluster}
@@ -87,7 +95,7 @@ function ClusterListTable(props) {
       { title: clusterType },
       { title: <NumberWithUnit valueWithUnit={cluster.metrics.cpu.total} unit="vCPU" /> },
       { title: <NumberWithUnit valueWithUnit={cluster.metrics.memory.total} isBytes /> },
-      result(cluster, 'subscriptionInfo.creator.name') || result(cluster, 'subscriptionInfo.creator.username', 'N/A'),
+      { title: clusterVersion },
       {
         title: <ClusterLocationLabel
           regionID={result(cluster, 'region.id', 'N/A')}
@@ -107,7 +115,7 @@ function ClusterListTable(props) {
     { title: 'Type' },
     { title: 'vCPU', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Memory', columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Owner', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
     '',
   ];
