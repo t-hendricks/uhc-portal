@@ -3,6 +3,7 @@
 exports[`<RefreshButton /> renders correctly 1`] = `
 <Tooltip
   appendTo={[Function]}
+  aria="describedby"
   className=""
   content="Refresh"
   distance={15}
@@ -34,6 +35,7 @@ exports[`<RefreshButton /> renders correctly 1`] = `
 exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
 <Tooltip
   appendTo={[Function]}
+  aria="describedby"
   className=""
   content="Refresh"
   distance={15}

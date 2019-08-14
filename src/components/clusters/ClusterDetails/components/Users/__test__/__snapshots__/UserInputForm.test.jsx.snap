@@ -2,35 +2,10 @@
 
 exports[`<UserInputForm /> should render 1`] = `
 <Grid
-  className=""
   gutter="sm"
-  lg={null}
-  md={null}
-  sm={null}
-  span={null}
-  xl={null}
-  xl2={null}
 >
   <GridItem
-    className=""
-    lg={null}
-    lgOffset={null}
-    lgRowSpan={null}
-    md={null}
-    mdOffset={null}
-    mdRowSpan={null}
-    offset={null}
-    rowSpan={null}
     sm={2}
-    smOffset={null}
-    smRowSpan={null}
-    span={null}
-    xl={null}
-    xl2={null}
-    xl2Offset={null}
-    xl2RowSpan={null}
-    xlOffset={null}
-    xlRowSpan={null}
   >
     <TextInput
       aria-label="User name or ID"
@@ -46,25 +21,7 @@ exports[`<UserInputForm /> should render 1`] = `
     />
   </GridItem>
   <GridItem
-    className=""
-    lg={null}
-    lgOffset={null}
-    lgRowSpan={null}
-    md={null}
-    mdOffset={null}
-    mdRowSpan={null}
-    offset={null}
-    rowSpan={null}
     sm={2}
-    smOffset={null}
-    smRowSpan={null}
-    span={null}
-    xl={null}
-    xl2={null}
-    xl2Offset={null}
-    xl2RowSpan={null}
-    xlOffset={null}
-    xlRowSpan={null}
   >
     <Select
       aria-label="Group"
@@ -77,6 +34,7 @@ exports[`<UserInputForm /> should render 1`] = `
       isDisabled={false}
       isExpanded={false}
       isGrouped={false}
+      isPlain={false}
       onClear={[Function]}
       onSelect={[Function]}
       onToggle={[Function]}
@@ -103,25 +61,7 @@ exports[`<UserInputForm /> should render 1`] = `
     </Select>
   </GridItem>
   <GridItem
-    className=""
-    lg={null}
-    lgOffset={null}
-    lgRowSpan={null}
-    md={null}
-    mdOffset={null}
-    mdRowSpan={null}
-    offset={null}
-    rowSpan={null}
     sm={1}
-    smOffset={null}
-    smRowSpan={null}
-    span={null}
-    xl={null}
-    xl2={null}
-    xl2Offset={null}
-    xl2RowSpan={null}
-    xlOffset={null}
-    xlRowSpan={null}
   >
     <Button
       isDisabled={true}

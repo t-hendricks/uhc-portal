@@ -153,36 +153,9 @@ exports[`<Overview /> should render 1`] = `
       </Title>
     </CardHeader>
     <CardBody>
-      <Grid
-        className=""
-        gutter={null}
-        lg={null}
-        md={null}
-        sm={null}
-        span={null}
-        xl={null}
-        xl2={null}
-      >
+      <Grid>
         <GridItem
-          className=""
-          lg={null}
-          lgOffset={null}
-          lgRowSpan={null}
-          md={null}
-          mdOffset={null}
-          mdRowSpan={null}
-          offset={null}
-          rowSpan={null}
           sm={6}
-          smOffset={null}
-          smRowSpan={null}
-          span={null}
-          xl={null}
-          xl2={null}
-          xl2Offset={null}
-          xl2RowSpan={null}
-          xlOffset={null}
-          xlRowSpan={null}
         >
           <DetailsLeft
             cloudProviders={
@@ -493,25 +466,7 @@ exports[`<Overview /> should render 1`] = `
           />
         </GridItem>
         <GridItem
-          className=""
-          lg={null}
-          lgOffset={null}
-          lgRowSpan={null}
-          md={null}
-          mdOffset={null}
-          mdRowSpan={null}
-          offset={null}
-          rowSpan={null}
           sm={6}
-          smOffset={null}
-          smRowSpan={null}
-          span={null}
-          xl={null}
-          xl2={null}
-          xl2Offset={null}
-          xl2RowSpan={null}
-          xlOffset={null}
-          xlRowSpan={null}
         >
           <DetailsRight
             cluster={

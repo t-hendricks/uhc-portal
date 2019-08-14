@@ -8,12 +8,9 @@ exports[`<FlatRadioButton /> should render normally 1`] = `
   variant="tertiary"
 >
   <Split
-    className=""
-    component="div"
     gutter="sm"
   >
     <SplitItem
-      className=""
       isFilled={true}
     >
       <Title
@@ -36,12 +33,9 @@ exports[`<FlatRadioButton /> should render when disabled 1`] = `
   variant="tertiary"
 >
   <Split
-    className=""
-    component="div"
     gutter="sm"
   >
     <SplitItem
-      className=""
       isFilled={true}
     >
       <Title
@@ -64,12 +58,9 @@ exports[`<FlatRadioButton /> should render when selected 1`] = `
   variant="tertiary"
 >
   <Split
-    className=""
-    component="div"
     gutter="sm"
   >
     <SplitItem
-      className=""
       isFilled={true}
     >
       <Title
