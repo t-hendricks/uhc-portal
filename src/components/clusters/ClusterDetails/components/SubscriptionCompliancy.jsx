@@ -4,14 +4,9 @@ import { Alert } from '@patternfly/react-core';
 import { getTimeDelta } from '../../../../common/helpers';
 
 function SubscriptionCompliancy(props) {
-  const { cluster, organization } = props;
+  const { cluster } = props;
 
-  const organizationDetails = organization.details;
   const subscription = cluster.subscriptionInfo;
-
-  if (get(organizationDetails, 'ebs_account_id', '').length === 0) {
-    return null;
-  }
 
   const ocpSubscriptionType = get(subscription, 'plan.id') === 'OCP';
   if (!ocpSubscriptionType) {
@@ -31,7 +26,7 @@ function SubscriptionCompliancy(props) {
   const lastChecked = lastReconcileDate
     ? (
       <p>
-        Last checked:
+        Last checked:&nbsp;
         {new Date(lastReconcileDate).toLocaleString()}
       </p>)
     : '';
@@ -39,7 +34,7 @@ function SubscriptionCompliancy(props) {
   switch (subscription.entitlement_status) {
     case 'NotSet':
       return (
-        <Alert isInline variant={clusterCreationCloseTo30Days ? 'danger' : 'warning'} title="This cluster is not attached to a subscription">
+        <Alert id="subs-hint" isInline variant={clusterCreationCloseTo30Days ? 'danger' : 'warning'} title="This cluster is not attached to a subscription">
           {lastChecked}
           <p>
             Please find&nbsp;
@@ -60,7 +55,7 @@ function SubscriptionCompliancy(props) {
       );
     case 'Overcommitted':
       return (
-        <Alert isInline variant="danger" title="This cluster is overcommitting resources">
+        <Alert id="subs-hint" isInline variant="danger" title="This cluster is overcommitting resources">
           {lastChecked}
           <p>
             Please check the&nbsp;
@@ -77,7 +72,7 @@ function SubscriptionCompliancy(props) {
       );
     case 'InconsistentServices':
       return (
-        <Alert isInline variant="warning" title="This cluster is attached to subscriptions with different service levels">
+        <Alert id="subs-hint" isInline variant="warning" title="This cluster is attached to subscriptions with different service levels">
           {lastChecked}
           <p>
             Please go to the&nbsp;

@@ -2,6 +2,7 @@
 
 exports[`<SubscriptionCompliancy /> should render 1`] = `
 <Alert
+  id="subs-hint"
   isInline={true}
   title="This cluster is not attached to a subscription"
   variant="danger"
