@@ -27,8 +27,6 @@ import ManagedClusterForm from './ManagedClusterForm';
 class CreateOSDCluster extends React.Component {
   componentDidMount() {
     this.reset();
-    const { getOrganizationAndQuota } = this.props;
-    getOrganizationAndQuota();
   }
 
   componentWillUnmount() {

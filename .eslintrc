@@ -13,7 +13,8 @@
           "**/*setupTests.js",
           "**/*.test.js*",
           "**/*test.js*",
-          "**/*.spec.js*"
+          "**/*.spec.js*",
+          "webpack.config.js"
         ]
       }
     ],
@@ -31,8 +32,10 @@
   }],
   "parser": "babel-eslint",
   "globals": {
-    "insights": true,
-    "APP_EMBEDDED": true,
-    "APP_BETA": false
+    "insights": "readonly",
+    "APP_BETA": "readonly",
+    "APP_DEVMODE": "readonly",
+    "APP_DEV_SERVER": "readonly",
+    "OCM_SHOW_OLD_METRICS": "readonly",
   }
 }

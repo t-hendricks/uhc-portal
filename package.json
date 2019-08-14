@@ -14,12 +14,12 @@
   "dependencies": {
     "@axetroy/react-download": "^1.1.1",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@patternfly/patternfly": "2.17.2",
-    "@patternfly/react-charts": "^4.4.7",
-    "@patternfly/react-core": "3.62.1",
-    "@patternfly/react-icons": "^3.10.8",
-    "@patternfly/react-table": "^2.13.43",
-    "@patternfly/react-tokens": "^2.6.5",
+    "@patternfly/patternfly": "^2.26.1",
+    "@patternfly/react-charts": "^4.7.6",
+    "@patternfly/react-core": "^3.86.1",
+    "@patternfly/react-icons": "^3.10.17",
+    "@patternfly/react-table": "^2.16.15",
+    "@patternfly/react-tokens": "^2.6.16",
     "@redhat-cloud-services/frontend-components": "^0.0.9",
     "axios": "^0.18.0",
     "bootstrap-sass": "^3.3.7",
@@ -59,7 +59,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge",
     "babel-eslint": "^9.0.0",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.2",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
@@ -79,8 +79,8 @@
     "file-loader": "^2.0.0",
     "html-replace-webpack-plugin": "^2.5.5",
     "html-webpack-plugin": "^3.2.0",
-    "jest-cli": "^23.6.0",
-    "jest-environment-jsdom": "^23.4.0",
+    "jest-cli": "^24.8.0",
+    "jest-environment-jsdom": "^24.8.0",
     "mini-css-extract-plugin": "^0.4.2",
     "node-sass": "^4.9.3",
     "react-test-renderer": "^16.5.2",
@@ -109,12 +109,18 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    },
+    "globals": {
+      "APP_DEVMODE": false,
+      "APP_BETA": false,
+      "APP_DEV_SERVER": false,
+      "OCM_SHOW_OLD_METRICS": false
     }
   },
   "scripts": {
     "build": "webpack --progress",
-    "start": "UHC_GATEWAY_DOMAIN='https://qa.foo.redhat.com:1337' webpack-dev-server --progress --hot",
-    "startmock": "UHC_GATEWAY_DOMAIN='https://qa.foo.redhat.com:1337' UHC_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
+    "start": "webpack-dev-server --progress --hot",
+    "startmock": "OCM_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
     "lint": "eslint src --ext js,jsx",
     "test": "jest --env=jsdom"
   },

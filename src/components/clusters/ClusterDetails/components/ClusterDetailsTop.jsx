@@ -74,7 +74,8 @@ function ClusterDetailsTop(props) {
   );
 
   const isRefreshing = pending
-      || organization.pending;
+      || organization.pending
+      || clusterIdentityProviders.pending;
 
   return (
     <div id="cl-details-top">
@@ -112,7 +113,7 @@ function ClusterDetailsTop(props) {
       {cluster.managed && !hasIdentityProviders && (
       <Split>
         <SplitItem isFilled>
-          {clusterIdentityProviders.pending ? <Spinner centered /> : <IdentityProvidersHint />}
+          {!clusterIdentityProviders.pending && <IdentityProvidersHint />}
         </SplitItem>
       </Split>)
           }

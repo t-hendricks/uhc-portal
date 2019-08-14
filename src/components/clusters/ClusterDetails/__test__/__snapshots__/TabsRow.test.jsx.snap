@@ -8,7 +8,7 @@ exports[`<TabsRow /> should render 1`] = `
   isSecondary={false}
   leftScrollAriaLabel="Scroll left"
   onSelect={[Function]}
-  rightScrollAriaLabel="Scroll Right"
+  rightScrollAriaLabel="Scroll right"
   variant="div"
 >
   <ForwardRef

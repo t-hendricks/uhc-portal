@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  EmptyState,
-} from 'patternfly-react';
-import { Alert } from '@patternfly/react-core';
+import { Alert, EmptyState } from '@patternfly/react-core';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {

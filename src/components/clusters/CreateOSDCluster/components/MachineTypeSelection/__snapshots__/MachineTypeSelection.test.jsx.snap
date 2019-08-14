@@ -9,7 +9,7 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
       ],
       "results": Array [
         Object {
-          "isThrow": false,
+          "type": "return",
           "value": undefined,
         },
       ],
@@ -25,7 +25,7 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
         ],
         "results": Array [
           Object {
-            "isThrow": false,
+            "type": "return",
             "value": undefined,
           },
         ],
@@ -43,6 +43,12 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
     }
   }
   meta={Object {}}
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
   quota={Object {}}
 >
   <div
@@ -82,7 +88,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
         ],
         "results": Array [
           Object {
-            "isThrow": false,
+            "type": "return",
             "value": undefined,
           },
         ],
@@ -140,18 +146,21 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
     }
   }
   meta={Object {}}
-  quota={
+  organization={
     Object {
       "fulfilled": true,
-      "quotaList": Object {
-        "nodeQuota": Object {
-          "rhInfra": Object {
-            "multiAz": Object {
-              "r5.xlarge": 5,
-            },
-            "singleAz": Object {
-              "r5.xlarge": 0,
-            },
+      "pending": false,
+    }
+  }
+  quota={
+    Object {
+      "nodeQuota": Object {
+        "rhInfra": Object {
+          "multiAz": Object {
+            "r5.xlarge": 5,
+          },
+          "singleAz": Object {
+            "r5.xlarge": 0,
           },
         },
       },
@@ -211,8 +220,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                   type="button"
                 >
                   <Split
-                    className=""
-                    component="div"
                     gutter="sm"
                   >
                     <div
@@ -220,7 +227,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                     >
                       <SplitItem
                         className="ocm-flat-button-icon"
-                        isFilled={false}
                       >
                         <div
                           className="pf-l-split__item ocm-flat-button-icon"
@@ -254,7 +260,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                         </div>
                       </SplitItem>
                       <SplitItem
-                        className=""
                         isFilled={true}
                       >
                         <div
@@ -319,8 +324,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                   type="button"
                 >
                   <Split
-                    className=""
-                    component="div"
                     gutter="sm"
                   >
                     <div
@@ -328,7 +331,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                     >
                       <SplitItem
                         className="ocm-flat-button-icon"
-                        isFilled={false}
                       >
                         <div
                           className="pf-l-split__item ocm-flat-button-icon"
@@ -362,7 +364,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                         </div>
                       </SplitItem>
                       <SplitItem
-                        className=""
                         isFilled={true}
                       >
                         <div
@@ -407,7 +408,7 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
         ],
         "results": Array [
           Object {
-            "isThrow": false,
+            "type": "return",
             "value": undefined,
           },
         ],
@@ -425,6 +426,12 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
     }
   }
   meta={Object {}}
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
   quota={Object {}}
 >
   <div
@@ -460,7 +467,7 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
       ],
       "results": Array [
         Object {
-          "isThrow": false,
+          "type": "return",
           "value": undefined,
         },
       ],
@@ -476,7 +483,7 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
         ],
         "results": Array [
           Object {
-            "isThrow": false,
+            "type": "return",
             "value": undefined,
           },
         ],
@@ -494,6 +501,12 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
     }
   }
   meta={Object {}}
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
   quota={Object {}}
 >
   <ErrorBox

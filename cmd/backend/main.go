@@ -234,7 +234,13 @@ func run(cmd *cobra.Command, argv []string) {
 	logHandler := handlers.LoggingHandler(os.Stdout, mainMux)
 
 	// Start the web server:
-	go http.ListenAndServe(cfg.Listener().Address(), logHandler)
+	go func() {
+		err = http.ListenAndServe(cfg.Listener().Address(), logHandler)
+		if err != nil {
+			glog.Errorf("Can't start server: %v", err)
+			os.Exit(1)
+		}
+	}()
 	glog.Infof("Listening in 'http://%s'", cfg.Listener().Address())
 
 	// Wait for the stop signal:

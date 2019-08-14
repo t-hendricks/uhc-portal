@@ -53,13 +53,9 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
         >
           <Split
             className="create-osd-form-button-split"
-            component="div"
             gutter="sm"
           >
-            <SplitItem
-              className=""
-              isFilled={false}
-            >
+            <SplitItem>
               <Button
                 disabled={false}
                 onClick={[MockFunction]}
@@ -69,10 +65,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
                 Create
               </Button>
             </SplitItem>
-            <SplitItem
-              className=""
-              isFilled={false}
-            >
+            <SplitItem>
               <Link
                 replace={false}
                 to="/"
@@ -86,10 +79,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
                 </Button>
               </Link>
             </SplitItem>
-            <SplitItem
-              className=""
-              isFilled={false}
-            />
+            <SplitItem />
           </Split>
         </Row>
       </Grid>

@@ -20,21 +20,23 @@ import { connect } from 'react-redux';
 import { hot } from 'react-hot-loader';
 import Router from './Router';
 import ErrorBoundary from './ErrorBoundary';
+import EnvOverrideMessage from './EnvOverrideMessage';
+
+import config from '../../config';
 
 class App extends React.PureComponent {
   render() {
     const { children } = this.props;
 
-    const content = (
-      <ErrorBoundary>
-        {children || <Router />}
-      </ErrorBoundary>
-    );
-
     return (
-      <section className="pf-c-page__main-section">
-        {content}
-      </section>
+      <React.Fragment>
+        {config.override && <EnvOverrideMessage env={config.override} />}
+        <section className="pf-c-page__main-section">
+          <ErrorBoundary>
+            {children || <Router />}
+          </ErrorBoundary>
+        </section>
+      </React.Fragment>
     );
   }
 }

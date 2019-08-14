@@ -12,16 +12,12 @@ describe('<CreateCluster />', () => {
     pending: false,
     fulfilled: false,
   };
-  const quota = {
-    fulfilled: true,
-  };
 
   it('renders correctly', () => {
     const wrapper = shallow(<CreateCluster
       hasQuota
       getOrganizationAndQuota={getOrganizationAndQuota}
-      organization={organization}
-      quota={quota}
+      organization={{ ...organization, fulfilled: true }}
     />);
     expect(wrapper).toMatchSnapshot();
   });
@@ -32,8 +28,7 @@ describe('<CreateCluster />', () => {
         <CreateCluster
           hasQuota={false}
           getOrganizationAndQuota={getOrganizationAndQuota}
-          organization={organization}
-          quota={quota}
+          organization={{ ...organization, fulfilled: true }}
         />,
       );
       expect(wrapper.find('.create-cluster-card').length).toEqual(1);
@@ -44,10 +39,8 @@ describe('<CreateCluster />', () => {
     let wrapper;
     beforeAll(() => {
       wrapper = shallow(<CreateCluster
-        hasQuota
         getOrganizationAndQuota={getOrganizationAndQuota}
         organization={organization}
-        quota={{ fulfilled: false, pending: false, error: false }}
       />);
     });
 

@@ -2,71 +2,44 @@
 
 exports[`<ClusterActionsDropdown /> admin console url does not exist should render (no console) 1`] = `
 <Dropdown
-  className=""
-  direction="down"
   dropdownItems={
     Array [
       <DropdownItem
-        className=""
         component="button"
-        href=""
         isDisabled={true}
-        isHovered={false}
         tooltip={
           <span>
             Admin console is not yet available for this cluster
           </span>
         }
-        tooltipProps={Object {}}
       >
         Launch Admin Console
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
-        isDisabled={false}
-        isHovered={false}
         onClick={[Function]}
-        tooltip={null}
-        tooltipProps={Object {}}
       >
         Edit Display Name
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
         isDisabled={true}
-        isHovered={false}
         tooltip={
           <span>
             Self managed cluster cannot be edited
           </span>
         }
-        tooltipProps={Object {}}
       >
         Scale Cluster
       </DropdownItem>,
     ]
   }
-  isGrouped={false}
   isOpen={false}
-  isPlain={false}
   onSelect={[Function]}
   position="right"
   toggle={
     <DropdownToggle
-      className=""
-      iconComponent={[Function]}
-      id=""
-      isActive={false}
-      isFocused={false}
-      isHovered={false}
-      isOpen={false}
-      isPlain={false}
       onToggle={[Function]}
-      parentRef={null}
     >
       Actions
     </DropdownToggle>
@@ -76,83 +49,50 @@ exports[`<ClusterActionsDropdown /> admin console url does not exist should rend
 
 exports[`<ClusterActionsDropdown /> cluster with state not ready should render (not ready) 1`] = `
 <Dropdown
-  className=""
-  direction="down"
   dropdownItems={
     Array [
       <DropdownItem
-        className=""
         component="button"
-        href=""
         isDisabled={true}
-        isHovered={false}
         tooltip={
           <span>
             Admin console is not yet available for this cluster
           </span>
         }
-        tooltipProps={Object {}}
       >
         Launch Admin Console
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
-        isDisabled={false}
-        isHovered={false}
         onClick={[Function]}
-        tooltip={null}
-        tooltipProps={Object {}}
       >
         Edit Display Name
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
         isDisabled={true}
-        isHovered={false}
         tooltip={
           <span>
             This cluster is not ready
           </span>
         }
-        tooltipProps={Object {}}
       >
         Scale Cluster
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
-        isDisabled={false}
-        isHovered={false}
         onClick={[Function]}
-        tooltip={null}
-        tooltipProps={Object {}}
       >
         Delete Cluster
       </DropdownItem>,
     ]
   }
-  isGrouped={false}
   isOpen={false}
-  isPlain={false}
   onSelect={[Function]}
   position="right"
   toggle={
     <DropdownToggle
-      className=""
-      iconComponent={[Function]}
-      id=""
-      isActive={false}
-      isFocused={false}
-      isHovered={false}
-      isOpen={false}
-      isPlain={false}
       onToggle={[Function]}
-      parentRef={null}
     >
       Actions
     </DropdownToggle>
@@ -162,78 +102,41 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
 
 exports[`<ClusterActionsDropdown /> cluster with state ready and console url should render 1`] = `
 <Dropdown
-  className=""
-  direction="down"
   dropdownItems={
     Array [
       <DropdownItem
-        className=""
-        component="a"
         href="www.testuhc.com"
-        isDisabled={false}
-        isHovered={false}
         rel="noreferrer"
         target="_blank"
-        tooltip={null}
-        tooltipProps={Object {}}
       >
         Launch Admin Console
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
-        isDisabled={false}
-        isHovered={false}
         onClick={[Function]}
-        tooltip={null}
-        tooltipProps={Object {}}
       >
         Edit Display Name
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
-        isDisabled={false}
-        isHovered={false}
         onClick={[Function]}
-        tooltip={null}
-        tooltipProps={Object {}}
       >
         Scale Cluster
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
-        isDisabled={false}
-        isHovered={false}
         onClick={[Function]}
-        tooltip={null}
-        tooltipProps={Object {}}
       >
         Delete Cluster
       </DropdownItem>,
     ]
   }
-  isGrouped={false}
   isOpen={false}
-  isPlain={false}
   onSelect={[Function]}
   position="right"
   toggle={
     <DropdownToggle
-      className=""
-      iconComponent={[Function]}
-      id=""
-      isActive={false}
-      isFocused={false}
-      isHovered={false}
-      isOpen={false}
-      isPlain={false}
       onToggle={[Function]}
-      parentRef={null}
     >
       Actions
     </DropdownToggle>
@@ -243,89 +146,60 @@ exports[`<ClusterActionsDropdown /> cluster with state ready and console url sho
 
 exports[`<ClusterActionsDropdown /> cluster with state uninstalling should render (uninstalling) 1`] = `
 <Dropdown
-  className=""
-  direction="down"
   dropdownItems={
     Array [
       <DropdownItem
-        className=""
         component="button"
-        href=""
         isDisabled={true}
-        isHovered={false}
         tooltip={
           <span>
             The cluster is being uninstalled
           </span>
         }
-        tooltipProps={Object {}}
       >
         Launch Admin Console
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
         isDisabled={true}
-        isHovered={false}
         tooltip={
           <span>
             The cluster is being uninstalled
           </span>
         }
-        tooltipProps={Object {}}
       >
         Edit Display Name
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
         isDisabled={true}
-        isHovered={false}
         tooltip={
           <span>
             The cluster is being uninstalled
           </span>
         }
-        tooltipProps={Object {}}
       >
         Scale Cluster
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
         isDisabled={true}
-        isHovered={false}
         tooltip={
           <span>
             The cluster is being uninstalled
           </span>
         }
-        tooltipProps={Object {}}
       >
         Delete Cluster
       </DropdownItem>,
     ]
   }
-  isGrouped={false}
   isOpen={false}
-  isPlain={false}
   onSelect={[Function]}
   position="right"
   toggle={
     <DropdownToggle
-      className=""
-      iconComponent={[Function]}
-      id=""
-      isActive={false}
-      isFocused={false}
-      isHovered={false}
-      isOpen={false}
-      isPlain={false}
       onToggle={[Function]}
-      parentRef={null}
     >
       Actions
     </DropdownToggle>
@@ -335,42 +209,23 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
 
 exports[`<ClusterActionsDropdown /> read only cluster should render correctly 1`] = `
 <Dropdown
-  className=""
-  direction="down"
   dropdownItems={
     Array [
       <DropdownItem
-        className=""
-        component="a"
         href="www.testuhc.com"
-        isDisabled={false}
-        isHovered={false}
         rel="noreferrer"
         target="_blank"
-        tooltip={null}
-        tooltipProps={Object {}}
       >
         Launch Admin Console
       </DropdownItem>,
     ]
   }
-  isGrouped={false}
   isOpen={false}
-  isPlain={false}
   onSelect={[Function]}
   position="right"
   toggle={
     <DropdownToggle
-      className=""
-      iconComponent={[Function]}
-      id=""
-      isActive={false}
-      isFocused={false}
-      isHovered={false}
-      isOpen={false}
-      isPlain={false}
       onToggle={[Function]}
-      parentRef={null}
     >
       Actions
     </DropdownToggle>
@@ -380,71 +235,44 @@ exports[`<ClusterActionsDropdown /> read only cluster should render correctly 1`
 
 exports[`<ClusterActionsDropdown /> self managed cluster should render (self managed) 1`] = `
 <Dropdown
-  className=""
-  direction="down"
   dropdownItems={
     Array [
       <DropdownItem
-        className=""
         component="button"
-        href=""
         isDisabled={true}
-        isHovered={false}
         tooltip={
           <span>
             Admin console is not yet available for this cluster
           </span>
         }
-        tooltipProps={Object {}}
       >
         Launch Admin Console
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
-        isDisabled={false}
-        isHovered={false}
         onClick={[Function]}
-        tooltip={null}
-        tooltipProps={Object {}}
       >
         Edit Display Name
       </DropdownItem>,
       <DropdownItem
-        className=""
         component="button"
-        href=""
         isDisabled={true}
-        isHovered={false}
         tooltip={
           <span>
             Self managed cluster cannot be edited
           </span>
         }
-        tooltipProps={Object {}}
       >
         Scale Cluster
       </DropdownItem>,
     ]
   }
-  isGrouped={false}
   isOpen={false}
-  isPlain={false}
   onSelect={[Function]}
   position="right"
   toggle={
     <DropdownToggle
-      className=""
-      iconComponent={[Function]}
-      id=""
-      isActive={false}
-      isFocused={false}
-      isHovered={false}
-      isOpen={false}
-      isPlain={false}
       onToggle={[Function]}
-      parentRef={null}
     >
       Actions
     </DropdownToggle>

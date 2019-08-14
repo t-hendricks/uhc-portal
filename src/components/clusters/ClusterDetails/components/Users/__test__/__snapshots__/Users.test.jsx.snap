@@ -33,46 +33,10 @@ exports[`<Users /> with users should render 1`] = `
       <p>
         Grant permission to manage this cluster to users defined in your identity provider.
       </p>
-      <Grid
-        className=""
-        gutter={null}
-        lg={null}
-        md={null}
-        sm={null}
-        span={null}
-        xl={null}
-        xl2={null}
-      >
-        <Grid
-          className=""
-          gutter={null}
-          lg={null}
-          md={null}
-          sm={null}
-          span={null}
-          xl={null}
-          xl2={null}
-        >
+      <Grid>
+        <Grid>
           <GridItem
-            className=""
-            lg={null}
-            lgOffset={null}
-            lgRowSpan={null}
-            md={null}
-            mdOffset={null}
-            mdRowSpan={null}
-            offset={null}
-            rowSpan={null}
             sm={2}
-            smOffset={null}
-            smRowSpan={null}
-            span={null}
-            xl={null}
-            xl2={null}
-            xl2Offset={null}
-            xl2RowSpan={null}
-            xlOffset={null}
-            xlRowSpan={null}
           >
             <h3>
               User ID
@@ -91,7 +55,7 @@ exports[`<Users /> with users should render 1`] = `
                 headerContent={null}
                 hideOnOutsideClick={true}
                 isVisible={null}
-                maxWidth="calc(1.5rem + 18.75rem)"
+                maxWidth="calc(2rem + 18.75rem)"
                 onHidden={[Function]}
                 onHide={[Function]}
                 onMount={[Function]}
@@ -116,25 +80,7 @@ exports[`<Users /> with users should render 1`] = `
             </h3>
           </GridItem>
           <GridItem
-            className=""
-            lg={null}
-            lgOffset={null}
-            lgRowSpan={null}
-            md={null}
-            mdOffset={null}
-            mdRowSpan={null}
-            offset={null}
-            rowSpan={null}
             sm={2}
-            smOffset={null}
-            smRowSpan={null}
-            span={null}
-            xl={null}
-            xl2={null}
-            xl2Offset={null}
-            xl2RowSpan={null}
-            xlOffset={null}
-            xlRowSpan={null}
           >
             <h3>
               Group
@@ -162,7 +108,7 @@ exports[`<Users /> with users should render 1`] = `
                 headerContent={null}
                 hideOnOutsideClick={true}
                 isVisible={null}
-                maxWidth="calc(1.5rem + 18.75rem)"
+                maxWidth="calc(2rem + 18.75rem)"
                 onHidden={[Function]}
                 onHide={[Function]}
                 onMount={[Function]}
@@ -188,82 +134,20 @@ exports[`<Users /> with users should render 1`] = `
           </GridItem>
         </Grid>
         <Grid
-          className=""
-          gutter={null}
           key="user_name"
-          lg={null}
-          md={null}
-          sm={null}
-          span={null}
-          xl={null}
-          xl2={null}
         >
           <GridItem
-            className=""
-            lg={null}
-            lgOffset={null}
-            lgRowSpan={null}
-            md={null}
-            mdOffset={null}
-            mdRowSpan={null}
-            offset={null}
-            rowSpan={null}
             sm={2}
-            smOffset={null}
-            smRowSpan={null}
-            span={null}
-            xl={null}
-            xl2={null}
-            xl2Offset={null}
-            xl2RowSpan={null}
-            xlOffset={null}
-            xlRowSpan={null}
           >
             user_name
           </GridItem>
           <GridItem
-            className=""
-            lg={null}
-            lgOffset={null}
-            lgRowSpan={null}
-            md={null}
-            mdOffset={null}
-            mdRowSpan={null}
-            offset={null}
-            rowSpan={null}
             sm={2}
-            smOffset={null}
-            smRowSpan={null}
-            span={null}
-            xl={null}
-            xl2={null}
-            xl2Offset={null}
-            xl2RowSpan={null}
-            xlOffset={null}
-            xlRowSpan={null}
           >
             dedicated-admins
           </GridItem>
           <GridItem
-            className=""
-            lg={null}
-            lgOffset={null}
-            lgRowSpan={null}
-            md={null}
-            mdOffset={null}
-            mdRowSpan={null}
-            offset={null}
-            rowSpan={null}
             sm={1}
-            smOffset={null}
-            smRowSpan={null}
-            span={null}
-            xl={null}
-            xl2={null}
-            xl2Offset={null}
-            xl2RowSpan={null}
-            xlOffset={null}
-            xlRowSpan={null}
           >
             <Button
               aria-label="Delete"
@@ -280,25 +164,7 @@ exports[`<Users /> with users should render 1`] = `
           </GridItem>
         </Grid>
         <GridItem
-          className=""
-          lg={null}
-          lgOffset={null}
-          lgRowSpan={null}
-          md={null}
-          mdOffset={null}
-          mdRowSpan={null}
-          offset={null}
-          rowSpan={null}
           sm={3}
-          smOffset={null}
-          smRowSpan={null}
-          span={null}
-          xl={null}
-          xl2={null}
-          xl2Offset={null}
-          xl2RowSpan={null}
-          xlOffset={null}
-          xlRowSpan={null}
         >
           <h3>
             Add user:

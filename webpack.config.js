@@ -32,11 +32,11 @@ const outDir = path.resolve(__dirname, 'build', insights.appname);
 module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
   const betaMode = argv.beta == 'true';
-  let copyConfig = null;
+  const isDevServer = !!process.argv.find(v => v.includes('webpack-dev-server'));
+
   let bundleAnalyzer = null;
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
   if (devMode) {
-    copyConfig = new CopyWebpackPlugin([{ from: 'src/config', to: `${outDir}/config` }]);
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: false });
   }
   const publicPath = `/${appDeployment}/${insights.appname}/`;
@@ -66,9 +66,10 @@ module.exports = (env, argv) => {
         template: 'src/index.html',
       }),
       new webpack.DefinePlugin({
-        'process.env.UHC_GATEWAY_DOMAIN': JSON.stringify(process.env.UHC_GATEWAY_DOMAIN),
-        'process.env.UHC_SHOW_OLD_METRICS': JSON.stringify(process.env.UHC_SHOW_OLD_METRICS),
+        OCM_SHOW_OLD_METRICS: process.env.OCM_SHOW_OLD_METRICS === 'true',
         APP_BETA: betaMode,
+        APP_DEVMODE: devMode,
+        APP_DEV_SERVER: isDevServer,
       }),
       new ReplaceWebpackPlugin(
         [{
@@ -83,7 +84,6 @@ module.exports = (env, argv) => {
         { from: 'public', to: outDir, toType: 'dir' },
       ]),
       process.env.BUNDLE_ANALYZER && bundleAnalyzer,
-      copyConfig,
     ].filter(Boolean),
 
     module: {

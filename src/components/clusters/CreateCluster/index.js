@@ -10,12 +10,9 @@ export const mapDispatchToProps = {
 };
 
 export function mapStateToProps(state) {
-  const { quota } = state.userProfile;
-
   return {
-    hasQuota: hasQuota(quota.quotaList.items || []),
+    hasQuota: hasQuota(state.userProfile.organization.quotaList.items || []),
     organization: state.userProfile.organization,
-    quota,
   };
 }
 
