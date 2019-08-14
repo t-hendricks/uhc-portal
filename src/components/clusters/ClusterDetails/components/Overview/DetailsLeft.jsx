@@ -54,7 +54,6 @@ function DetailsLeft({ cluster, cloudProviders }) {
             </dt>
             <dd>
               {get(cluster, 'openshift_version', 'Unknown')}
-              {' '}
               <ClusterUpdateLink cluster={cluster} />
             </dd>
           </dl>

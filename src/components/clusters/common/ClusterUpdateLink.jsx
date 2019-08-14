@@ -12,7 +12,7 @@ const ClusterUpdateLink = ({ cluster }) => {
   if (cluster.console && cluster.console.url) {
     return (
       <a href={`${cluster.console.url}/settings/cluster`} target="_blank" rel="noreferrer">
-        <Button variant="link" icon={<OutlinedArrowAltCircleUpIcon />}>
+        <Button className="cluster-update-link" variant="link" icon={<OutlinedArrowAltCircleUpIcon />}>
           Update
         </Button>
       </a>
@@ -34,7 +34,7 @@ const ClusterUpdateLink = ({ cluster }) => {
         </div>
       )}
     >
-      <Button variant="link" icon={<InfoCircleIcon />}>
+      <Button className="cluster-update-link" variant="link" icon={<InfoCircleIcon />}>
         Update
       </Button>
     </Popover>
