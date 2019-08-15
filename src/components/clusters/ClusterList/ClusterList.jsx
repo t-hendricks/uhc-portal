@@ -96,7 +96,7 @@ class ClusterList extends Component {
     const { errorMessage, operationID } = this.props;
     return (
       <EmptyState>
-        <ErrorBox message="Error retreiving clusters" response={{ errorMessage, operationID }} />
+        <ErrorBox message="Error retrieving clusters" response={{ errorMessage, operationID }} />
       </EmptyState>
     );
   }
