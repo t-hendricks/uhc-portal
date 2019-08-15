@@ -74,7 +74,7 @@ function ClusterListTable(props) {
 
     const clusterVersion = (
       <span>
-        {cluster.openshift_version || 'Unknown'}
+        {cluster.openshift_version || 'N/A'}
         <ClusterUpdateLink cluster={cluster} />
       </span>
     );
