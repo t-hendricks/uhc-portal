@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SubscriptionStatusIndicator /> should not crash when the cluster has no subscription info 1`] = `
+<Popover
+  appendTo={[Function]}
+  aria-label="Unknown"
+  bodyContent="Subscription information for this cluster is not available yet. It may take up to 12 hours for this information to become available."
+  className=""
+  closeBtnAriaLabel="Close"
+  enableFlip={true}
+  footerContent={null}
+  headerContent={null}
+  hideOnOutsideClick={true}
+  isVisible={null}
+  maxWidth="calc(2rem + 18.75rem)"
+  onHidden={[Function]}
+  onHide={[Function]}
+  onMount={[Function]}
+  onShow={[Function]}
+  onShown={[Function]}
+  position="top"
+  shouldClose={[Function]}
+  zIndex={9999}
+>
+  <Button
+    icon={
+      <UnknownIcon
+        color="black"
+        noVerticalAlign={false}
+        size="sm"
+        title={null}
+      />
+    }
+    isInline={true}
+    variant="link"
+  >
+    Unknown
+  </Button>
+</Popover>
+`;
+
+exports[`<SubscriptionStatusIndicator /> should render when subscription is InconsistentServices 1`] = `
+<Popover
+  appendTo={[Function]}
+  aria-label="Invalid"
+  bodyContent="This cluster is attached to subscriptions with different support levels."
+  className=""
+  closeBtnAriaLabel="Close"
+  enableFlip={true}
+  footerContent={null}
+  headerContent={null}
+  hideOnOutsideClick={true}
+  isVisible={null}
+  maxWidth="calc(2rem + 18.75rem)"
+  onHidden={[Function]}
+  onHide={[Function]}
+  onMount={[Function]}
+  onShow={[Function]}
+  onShown={[Function]}
+  position="top"
+  shouldClose={[Function]}
+  zIndex={9999}
+>
+  <Button
+    icon={
+      <WarningTriangleIcon
+        color="#f0ab00"
+        noVerticalAlign={false}
+        size="sm"
+        title={null}
+      />
+    }
+    isInline={true}
+    variant="link"
+  >
+    Invalid
+  </Button>
+</Popover>
+`;
+
+exports[`<SubscriptionStatusIndicator /> should render when subscription is NotSet 1`] = `
+<Popover
+  appendTo={[Function]}
+  aria-label="Not Subscribed"
+  bodyContent="This cluster does not have a subscription attached."
+  className=""
+  closeBtnAriaLabel="Close"
+  enableFlip={true}
+  footerContent={null}
+  headerContent={null}
+  hideOnOutsideClick={true}
+  isVisible={null}
+  maxWidth="calc(2rem + 18.75rem)"
+  onHidden={[Function]}
+  onHide={[Function]}
+  onMount={[Function]}
+  onShow={[Function]}
+  onShown={[Function]}
+  position="top"
+  shouldClose={[Function]}
+  zIndex={9999}
+>
+  <Button
+    icon={
+      <WarningTriangleIcon
+        color="#f0ab00"
+        noVerticalAlign={false}
+        size="sm"
+        title={null}
+      />
+    }
+    isInline={true}
+    variant="link"
+  >
+    Not Subscribed
+  </Button>
+</Popover>
+`;
+
+exports[`<SubscriptionStatusIndicator /> should render when subscription is Ok 1`] = `
+<Fragment>
+  <CheckCircleIcon
+    color="#92d400"
+    noVerticalAlign={false}
+    size="sm"
+    title={null}
+  />
+   
+  Subscribed
+</Fragment>
+`;
+
+exports[`<SubscriptionStatusIndicator /> should render when subscription is Overcommitted 1`] = `
+<Popover
+  appendTo={[Function]}
+  aria-label="Insufficient"
+  bodyContent="This cluster is consuming more resources than it's entitled to."
+  className=""
+  closeBtnAriaLabel="Close"
+  enableFlip={true}
+  footerContent={null}
+  headerContent={null}
+  hideOnOutsideClick={true}
+  isVisible={null}
+  maxWidth="calc(2rem + 18.75rem)"
+  onHidden={[Function]}
+  onHide={[Function]}
+  onMount={[Function]}
+  onShow={[Function]}
+  onShown={[Function]}
+  position="top"
+  shouldClose={[Function]}
+  zIndex={9999}
+>
+  <Button
+    icon={
+      <WarningTriangleIcon
+        color="#f0ab00"
+        noVerticalAlign={false}
+        size="sm"
+        title={null}
+      />
+    }
+    isInline={true}
+    variant="link"
+  >
+    Insufficient
+  </Button>
+</Popover>
+`;
+
+exports[`<SubscriptionStatusIndicator /> should render when subscription is Valid 1`] = `
+<Fragment>
+  <CheckCircleIcon
+    color="#92d400"
+    noVerticalAlign={false}
+    size="sm"
+    title={null}
+  />
+   
+  Valid
+</Fragment>
+`;
