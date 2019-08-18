@@ -116,7 +116,7 @@ function ClusterDetailsTop(props) {
           {!clusterIdentityProviders.pending && <IdentityProvidersHint />}
         </SplitItem>
       </Split>)
-          }
+      }
       {children}
     </div>
   );

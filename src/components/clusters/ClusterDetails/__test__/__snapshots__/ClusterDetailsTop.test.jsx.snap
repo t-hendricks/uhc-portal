@@ -188,7 +188,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           organization={
             Object {
               "created_at": "2019-01-02T18:28:14.851121Z",
-              "ebs_account_id": "8888888",
               "external_id": "9999999",
               "href": "/api/accounts_mgmt/v1/organizations/1Iin1ev64UIFFjRPT5S8TfLr0Tj",
               "id": "1Iin1ev64UIFFjRPT5S8TfLr0Tj",
