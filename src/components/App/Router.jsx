@@ -30,6 +30,7 @@ import InstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import InstallAWSIPI from '../clusters/install/InstallAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallAzure from '../clusters/install/InstallAzure';
+import InstallGCP from '../clusters/install/InstallGCP';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import Tokens from '../tokens/Tokens';
 
@@ -43,6 +44,7 @@ function Router(props) {
         <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
         <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
         <Route path="/install/aws" component={InstallAWS} />
+        <Route path="/install/gcp/installer-provisioned" component={InstallGCP} />
         <Route path="/install/azure/installer-provisioned" component={InstallAzure} />
         <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
         <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />

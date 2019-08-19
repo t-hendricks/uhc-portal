@@ -10,7 +10,7 @@ import PullSecretSection from './components/PullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 
-class InstructionsAzure extends React.Component {
+class InstructionsGCP extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,7 +33,7 @@ class InstructionsAzure extends React.Component {
               Developer Preview
             </div>
 
-            <PageTitle title="Install on Azure: Installer-Provisioned Infrastructure" />
+            <PageTitle title="Install on GCP: Installer-Provisioned Infrastructure" />
 
             {
               token.error && (
@@ -48,11 +48,11 @@ class InstructionsAzure extends React.Component {
               {' '}
               <strong>developer preview</strong>
               {' '}
-              you can install a cluster on Microsoft Azure using infrastructure that the
+              you can install a cluster on GCP using infrastructure that the
               installation program provisions and the cluster maintains.
             </p>
 
-            <GetStarted docURL="https://github.com/openshift/installer/tree/master/docs/user/azure" />
+            <GetStarted docURL="https://github.com/openshift/installer/tree/master/docs/user/gcp" />
 
             <h3>
               Downloads
@@ -96,8 +96,8 @@ class InstructionsAzure extends React.Component {
   }
 }
 
-InstructionsAzure.propTypes = {
+InstructionsGCP.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default InstructionsAzure;
+export default InstructionsGCP;
