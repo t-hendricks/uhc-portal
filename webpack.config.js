@@ -152,6 +152,7 @@ module.exports = (env, argv) => {
     devServer: {
       historyApiFallback: true,
       contentBase: outDir,
+      disableHostCheck: true,
       publicPath,
       hot: true,
       inline: true,
