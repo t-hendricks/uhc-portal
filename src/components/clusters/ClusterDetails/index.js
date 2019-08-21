@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 
 import ClusterDetails from './ClusterDetails';
 import {
+  clustersActions,
   fetchClusterDetails,
   invalidateClusters,
 } from '../../../redux/actions/clustersActions';
@@ -15,18 +16,20 @@ import { modalActions } from '../../common/Modal/ModalActions';
 import { getAlerts, getNodes } from './components/Monitoring/MonitoringActions';
 
 const mapStateToProps = (state) => {
-  const { details } = state.clusters;
+  const { details, archivedCluster, unarchivedCluster } = state.clusters;
   const { cloudProviders } = state.cloudProviders;
   const { logs } = state.logs;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
 
   return ({
-    clusterDetails: details,
     cloudProviders,
+    clusterDetails: details,
     logs,
     clusterIdentityProviders,
     organization,
+    showArchivedToast: archivedCluster.showToast,
+    showUnarchivedToast: unarchivedCluster.showToast,
   });
 };
 
@@ -45,6 +48,8 @@ const mapDispatchToProps = {
   setGlobalError,
   getAlerts,
   getNodes,
+  closeArchivedToast: clustersActions.clearClusterArchiveToast,
+  closeUnarchivedToast: clustersActions.clearClusterUnarchiveToast,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

@@ -17,7 +17,9 @@ import result from 'lodash/result';
 import isUuid from 'uuid-validate';
 import { Redirect } from 'react-router';
 
-import { TabContent, EmptyState } from '@patternfly/react-core';
+import {
+  Alert, AlertActionCloseButton, EmptyState, TabContent,
+} from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
@@ -35,6 +37,8 @@ import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDial
 
 import ErrorBox from '../../common/ErrorBox';
 import { isValid } from '../../../common/helpers';
+import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
+import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -84,7 +88,14 @@ class ClusterDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { match, clusterDetails } = this.props;
+    const {
+      match,
+      clusterDetails,
+      closeArchivedToast,
+      closeUnarchivedToast,
+      showArchivedToast,
+      showUnarchivedToast,
+    } = this.props;
     const clusterID = match.params.id;
     const oldClusterID = prevProps.match.params.id;
 
@@ -95,6 +106,12 @@ class ClusterDetails extends Component {
 
     if (clusterID !== oldClusterID && isValid(clusterID)) {
       this.refresh();
+    }
+    if (!prevProps.showArchivedToast && showArchivedToast) {
+      setTimeout(closeArchivedToast, 8000);
+    }
+    if (!prevProps.showUnarchivedToast && showUnarchivedToast) {
+      setTimeout(closeUnarchivedToast, 8000);
     }
   }
 
@@ -151,6 +168,10 @@ class ClusterDetails extends Component {
       clusterIdentityProviders,
       organization,
       setGlobalError,
+      showArchivedToast,
+      showUnarchivedToast,
+      closeArchivedToast,
+      closeUnarchivedToast,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -163,6 +184,18 @@ class ClusterDetails extends Component {
         <Redirect to={`/details/${cluster.id}`} />
       );
     }
+
+    const toast = (showArchivedToast || showUnarchivedToast) && (
+    <Alert
+      className="archived-cluster-toast"
+      variant="success"
+      title={showArchivedToast ? 'Cluster successfully archived' : 'Cluster successfully unarchived'}
+      action={(
+        <AlertActionCloseButton onClose={
+          showArchivedToast ? () => closeArchivedToast() : () => closeUnarchivedToast()}
+        />)}
+    />
+    );
 
     // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
     // the redux state will have the data for the previous cluster. We want to ensure we only
@@ -214,6 +247,7 @@ class ClusterDetails extends Component {
 
     return (
       <div id="clusterdetails-content">
+        {toast}
         <ClusterDetailsTop
           cluster={cluster}
           openModal={openModal}
@@ -253,6 +287,8 @@ class ClusterDetails extends Component {
         )}
         <EditClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
+        <ArchiveClusterDialog onClose={onDialogClose} />
+        <UnarchiveClusterDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {
           if (shouldRefresh) {
             invalidateClusters();
@@ -300,6 +336,10 @@ ClusterDetails.propTypes = {
   resetIdentityProvidersState: PropTypes.func.isRequired,
   setGlobalError: PropTypes.func.isRequired,
   clearGlobalError: PropTypes.func.isRequired,
+  showArchivedToast: PropTypes.bool.isRequired,
+  showUnarchivedToast: PropTypes.bool.isRequired,
+  closeArchivedToast: PropTypes.func.isRequired,
+  closeUnarchivedToast: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

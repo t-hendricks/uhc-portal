@@ -61,6 +61,32 @@ const editClusterDisplayName = (id, subscriptionID, displayName) => dispatch => 
   ),
 });
 
+const archiveCluster = id => dispatch => dispatch({
+  type: clustersConstants.ARCHIVE_CLUSTER,
+  payload: clusterService.archiveCluster(id),
+});
+
+const clearClusterArchiveResponse = () => dispatch => dispatch({
+  type: clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE,
+});
+
+const clearClusterArchiveToast = () => dispatch => dispatch({
+  type: clustersConstants.ARCHIVE_CLUSTER_RESET_SHOW_TOAST,
+});
+
+const unarchiveCluster = id => dispatch => dispatch({
+  type: clustersConstants.UNARCHIVE_CLUSTER,
+  payload: clusterService.unarchiveCluster(id),
+});
+
+const clearClusterUnarchiveResponse = () => dispatch => dispatch({
+  type: clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE,
+});
+
+const clearClusterUnarchiveToast = () => dispatch => dispatch({
+  type: clustersConstants.UNARCHIVE_CLUSTER_RESET_SHOW_TOAST,
+});
+
 /** Build a dict mapping a cluster ID to a specific permission state
  * @param {*} response - a response from selfResourceReview
  */
@@ -145,7 +171,7 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
       });
       clusters.data.items = sorted;
       clusters.data.page = subscriptions.data.page;
-      clusters.data.total = subscriptions.data.total;
+      clusters.data.total = subscriptions.data.total || 0;
       return clusters;
     });
   });
@@ -210,6 +236,10 @@ const clustersActions = {
   invalidateClusters,
   resetCreatedClusterResponse,
   editClusterDisplayName,
+  archiveCluster,
+  clearClusterArchiveToast,
+  unarchiveCluster,
+  clearClusterUnarchiveToast,
 };
 
 export {
@@ -223,4 +253,10 @@ export {
   invalidateClusters,
   resetCreatedClusterResponse,
   editClusterDisplayName,
+  archiveCluster,
+  clearClusterArchiveResponse,
+  clearClusterArchiveToast,
+  unarchiveCluster,
+  clearClusterUnarchiveResponse,
+  clearClusterUnarchiveToast,
 };

@@ -80,6 +80,30 @@ function dropDownItems({
     return isClusterUninstalling ? editDisplayNamePropsUninstalling : editDisplayNameProps;
   };
 
+  const getArchiveClusterProps = () => {
+    const baseArchiveProps = {
+      ...baseProps,
+      key: getKey('archivecluster'),
+    };
+    const archiveModalData = {
+      subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+    };
+
+    return { ...baseArchiveProps, onClick: () => openModal('archive-cluster', archiveModalData) };
+  };
+
+  const getUnarchiveClusterProps = () => {
+    const baseArchiveProps = {
+      ...baseProps,
+      key: getKey('unarchivecluster'),
+    };
+    const unarchiveModalData = {
+      subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+    };
+
+    return { ...baseArchiveProps, onClick: () => openModal('unarchive-cluster', unarchiveModalData) };
+  };
+
   const getDeleteItemProps = () => {
     const baseDeleteProps = {
       ...baseProps,
@@ -115,9 +139,13 @@ function dropDownItems({
   const editClusterItemProps = getEditClusterProps();
   const editDisplayNameItemProps = getEditDisplayNameProps();
   const deleteClusterItemProps = getDeleteItemProps();
+  const archiveClusterItemProps = getArchiveClusterProps();
+  const unarchiveClusterItemProps = getUnarchiveClusterProps();
   const deleteIDPItemProps = getDeleteIDPProps();
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed;
+  const showArchive = !cluster.managed && cluster.subscription && cluster.subscription.status !== 'Archived';
+  const showUnarchive = !cluster.managed && cluster.subscription && cluster.subscription.status === 'Archived';
 
   return [
     showConsoleButton && (
@@ -126,6 +154,8 @@ function dropDownItems({
     <DropdownItem {...editDisplayNameItemProps}>Edit Display Name</DropdownItem>),
     showScale && <DropdownItem {...editClusterItemProps}>Scale Cluster</DropdownItem>,
     showDelete && <DropdownItem {...deleteClusterItemProps}>Delete Cluster</DropdownItem>,
+    showArchive && <DropdownItem {...archiveClusterItemProps}>Archive Cluster</DropdownItem>,
+    showUnarchive && <DropdownItem {...unarchiveClusterItemProps}>Unarchive Cluster</DropdownItem>,
     shouldShowIDPButton && (
     <DropdownItem {...deleteIDPItemProps}>Remove Identity Provider</DropdownItem>),
   ].filter(Boolean);

@@ -1,29 +1,24 @@
 import result from 'lodash/result';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Tooltip, TooltipPosition } from '@patternfly/react-core';
+import { Button, Tooltip, TooltipPosition } from '@patternfly/react-core';
 import {
-  Table,
-  TableHeader,
-  TableBody,
-  sortable,
-  classNames,
-  Visibility,
-  SortByDirection,
   cellWidth,
+  classNames,
+  sortable,
+  SortByDirection,
+  Table,
+  TableBody,
+  TableHeader,
+  Visibility,
 } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
-import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel/ClusterLocationLabel';
-import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
-import { getClusterStateAndDescription } from '../../../common/clusterStates';
-import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
-import SubscriptionStatusIndicator from '../../../common/SubscriptionStatusIndicator';
 
 
-function ClusterListTable(props) {
+function ArchivedClusterListTable(props) {
   const { viewOptions, setSorting } = props;
-  const { clusters } = props;
+  const { clusters, openModal } = props;
   if (!clusters || clusters.length === 0) {
     return <p className="notfound">No Results Match the Filter Criteria.</p>;
   }
@@ -50,58 +45,26 @@ function ClusterListTable(props) {
       </Tooltip>
     );
 
-    const clusterState = getClusterStateAndDescription(cluster);
+    const openUnarchiveModal = () => openModal('unarchive-cluster',
+      { subscriptionID: cluster.subscription ? cluster.subscription.id : '' });
 
-    const clusterStatus = (
-      <Tooltip style={clusterState.style} content={clusterState.description}>
-        <span>
-          <ClusterStateIcon clusterState={typeof clusterState.state !== 'undefined' ? clusterState.state : ''} />
-        </span>
-      </Tooltip>
+    const unarchiveButton = (
+      <Button variant="secondary" onClick={openUnarchiveModal}>
+        Unarchive
+      </Button>
     );
-
-    const clusterType = (
-      <Tooltip
-        content={cluster.managed
-          ? 'OpenShift Dedicated (OSD) cluster managed by Red Hat' : 'Self-managed OpenShift Container Platform (OCP) cluster'
-                }
-      >
-        <span>
-          {cluster.managed ? 'Managed' : 'Self-managed'}
-        </span>
-      </Tooltip>
-    );
-
-    const clusterVersion = (
-      <span>
-        {cluster.openshift_version || 'N/A'}
-        <ClusterUpdateLink cluster={cluster} />
-      </span>
-    );
-
-    const dropDownKebab = (
-      <ClusterActionsDropdown
-        cluster={cluster}
-        showConsoleButton
-        showIDPButton={false}
-        isKebab
-      />
-    );
-
 
     return [
       { title: clusterName },
-      { title: clusterStatus },
-      { title: clusterType },
-      { title: <SubscriptionStatusIndicator cluster={cluster} /> },
-      { title: clusterVersion },
       {
         title: <ClusterLocationLabel
           regionID={result(cluster, 'region.id', 'N/A')}
           cloudProviderID={provider}
         />,
       },
-      { title: dropDownKebab },
+      {
+        title: unarchiveButton,
+      },
     ];
   };
 
@@ -109,11 +72,7 @@ function ClusterListTable(props) {
     Visibility.hiddenOnSm);
 
   const columns = [
-    { title: 'Name', transforms: [sortable, cellWidth(30)] },
-    { title: 'Status' },
-    { title: 'Type' },
-    { title: 'Subscription Status', columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Name', transforms: [sortable, cellWidth(70)] },
     { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
     '',
   ];
@@ -132,10 +91,11 @@ function ClusterListTable(props) {
   );
 }
 
-ClusterListTable.propTypes = {
+ArchivedClusterListTable.propTypes = {
   clusters: PropTypes.array.isRequired,
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
-export default ClusterListTable;
+export default ArchivedClusterListTable;

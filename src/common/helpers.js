@@ -60,18 +60,23 @@ const createViewQueryObject = (viewOptions, queryObj) => {
     /* HACK: the backend defers all search query complexity to the UI. This means we have to escape
     singlequotes, otherwise users will get an error they won't understand if
     they accidentally type a singlequote. It also means that the query we send to the backend is
-    extremely complicated - it tries to search by display_name, because that's the name shown
-    to the user, but for clusters without display_name we show 'name'
-    so we search by name if display_name is empty.
+    quite complicated.
     */
-    const baseFilter = 'cluster_id!=\'\' AND status NOT IN (\'Deprovisioned\', \'Archived\')';
+    let statusClause;
+    if (viewOptions.flags.showArchived) {
+      statusClause = 'status=\'Archived\'';
+    } else {
+      statusClause = 'status NOT IN (\'Deprovisioned\', \'Archived\')';
+    }
+    const baseFilter = `cluster_id!='' AND ${statusClause}`;
+
     const escaped = viewOptions.filter ? viewOptions.filter.replace(/(')/g, '\'\'') : '';
-    queryObject.filter = viewOptions.filter ? `(${baseFilter}) AND (display_name LIKE '%${escaped}%' OR external_cluster_id LIKE '%${escaped}%')` : baseFilter;
+    const displayNameFilter = `display_name LIKE '%${escaped}%' OR external_cluster_id LIKE '%${escaped}%'`;
+    queryObject.filter = viewOptions.filter ? `(${baseFilter}) AND (${displayNameFilter})` : baseFilter;
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
       const statusList = viewOptions.flags.subscriptionFilter.map(item => `'${item}'`).join(',');
-      const statusClause = `entitlement_status in (${statusList})`;
-      queryObject.filter = queryObject.filter ? `(${queryObject.filter}) AND ${statusClause}` : statusClause;
+      queryObject.filter = `(${queryObject.filter}) AND entitlement_status in (${statusList})`;
     }
   }
 

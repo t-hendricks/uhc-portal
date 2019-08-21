@@ -21,6 +21,7 @@ import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
 import ClustersList from '../clusters/ClusterList';
+import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetails from '../clusters/ClusterDetails';
 import CreateCluster from '../clusters/CreateCluster';
 import RegisterCluster from '../clusters/RegisterCluster';
@@ -63,6 +64,7 @@ function Router(props) {
         <Route path="/create" component={CreateCluster} />
         <Route path="/register" component={RegisterCluster} />
         <Route path="/subscriptions" component={Subscriptions} />
+        <Route path="/archived" component={ArchivedClusterList} />
         <Route path="/" exact component={ClustersList} />
         <Route component={NotFoundError} />
       </Switch>
