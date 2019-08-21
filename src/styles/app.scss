@@ -193,6 +193,10 @@ limitations under the License.
   margin-top: 40px;
 }
 
+#subs-hint {
+  margin-top: 40px;
+}
+
 #metrics-charts .pf-c-card__body{
   display: flex;
   justify-content: space-evenly;
@@ -307,7 +311,7 @@ p.notfound {
   --pf-c-content--a--TextDecoration: var(--pf-c-content--a--hover--TextDecoration);
 }
 
-.cluster-update-link {
+.pf-c-button.cluster-update-link {
   padding: 5px;
 }
 

@@ -44,14 +44,4 @@ describe('<SubscriptionCompliancy />', () => {
       expect(wrapper.find('Alert').length).toEqual(1);
     });
   });
-
-  it('should not warn when user is not a paying customer', () => {
-    const c = clusterDetails.cluster;
-    c.subscriptionInfo.entitlement_status = 'NotSet';
-    const org = organization;
-    organization.details.ebs_account_id = undefined;
-    wrapper.setProps({ cluster: c, organization: org }, () => {
-      expect(wrapper.find('Alert').length).toEqual(0);
-    });
-  });
 });

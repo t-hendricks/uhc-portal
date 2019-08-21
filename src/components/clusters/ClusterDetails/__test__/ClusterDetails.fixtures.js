@@ -342,7 +342,6 @@ const organization = {
     created_at: '2019-01-02T18:28:14.851121Z',
     updated_at: '2019-01-02T18:28:14.851121Z',
     external_id: '9999999',
-    ebs_account_id: '8888888',
     name: 'Test Corp',
   },
 };

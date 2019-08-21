@@ -18,7 +18,6 @@ import result from 'lodash/result';
 import { TabContent, EmptyState } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
-import SubscriptionCompliancy from './components/SubscriptionCompliancy';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
@@ -192,10 +191,6 @@ class ClusterDetails extends Component {
 
     return (
       <div id="clusterdetails-content">
-        <SubscriptionCompliancy
-          cluster={cluster}
-          organization={organization}
-        />
         <ClusterDetailsTop
           cluster={cluster}
           openModal={openModal}

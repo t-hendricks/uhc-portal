@@ -6,6 +6,7 @@ import {
 } from '@patternfly/react-core';
 
 import { getClusterStateAndDescription } from '../../../common/clusterStates';
+import SubscriptionCompliancy from '../SubscriptionCompliancy';
 
 import ResourceUsage from './ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
@@ -15,6 +16,7 @@ function Overview({ cluster, cloudProviders }) {
   const clusterState = getClusterStateAndDescription(cluster);
   return (
     <React.Fragment>
+      <SubscriptionCompliancy cluster={cluster} />
       <Card id="metrics-charts">
         <CardHeader>
           <Title headingLevel="h2" size="3xl">Resource Usage</Title>

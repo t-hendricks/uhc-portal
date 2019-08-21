@@ -41,7 +41,7 @@ exports[`<DetailsLeft /> should render 1`] = `
            
         </dt>
         <dd>
-          Unknown
+          N/A
           <ClusterUpdateLink
             cluster={
               Object {
