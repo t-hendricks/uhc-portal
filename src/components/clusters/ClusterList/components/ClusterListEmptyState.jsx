@@ -8,6 +8,7 @@ import {
   EmptyStateIcon,
   Title,
   EmptyStateBody,
+  EmptyStateSecondaryActions,
   Button,
 } from '@patternfly/react-core';
 import { OpenshiftIcon } from '@patternfly/react-icons';
@@ -28,6 +29,11 @@ function ClusterListEmptyState({ hasQuota }) {
       <Link to={hasQuota ? '/create' : '/install'}>
         <Button>Create Cluster</Button>
       </Link>
+      <EmptyStateSecondaryActions>
+        <Link to="/register">
+          <Button variant="link">Register disconnected cluster</Button>
+        </Link>
+      </EmptyStateSecondaryActions>
     </EmptyState>
   );
 }

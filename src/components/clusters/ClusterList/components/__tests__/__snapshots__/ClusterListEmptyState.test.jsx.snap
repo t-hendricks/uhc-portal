@@ -25,6 +25,18 @@ exports[`<ClusterListEmptyState /> renders correctly with no quota 1`] = `
       Create Cluster
     </Button>
   </Link>
+  <EmptyStateSecondaryActions>
+    <Link
+      replace={false}
+      to="/register"
+    >
+      <Button
+        variant="link"
+      >
+        Register disconnected cluster
+      </Button>
+    </Link>
+  </EmptyStateSecondaryActions>
 </EmptyState>
 `;
 
@@ -53,5 +65,17 @@ exports[`<ClusterListEmptyState /> renders correctly with quota 1`] = `
       Create Cluster
     </Button>
   </Link>
+  <EmptyStateSecondaryActions>
+    <Link
+      replace={false}
+      to="/register"
+    >
+      <Button
+        variant="link"
+      >
+        Register disconnected cluster
+      </Button>
+    </Link>
+  </EmptyStateSecondaryActions>
 </EmptyState>
 `;

@@ -78,7 +78,7 @@ function ClusterDetailsTop(props) {
       || clusterIdentityProviders.pending;
 
   return (
-    <div id="cl-details-top">
+    <div id="cl-details-top" className="top-row">
       <Split>
         <SplitItem>
           <Breadcrumb>
