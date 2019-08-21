@@ -36,6 +36,7 @@ const viewPropsChanged = (nextViewOptions, currentViewOptions) => (
     || nextViewOptions.pageSize !== currentViewOptions.pageSize
     || !isEqual(nextViewOptions.sorting, currentViewOptions.sorting)
     || !isEqual(nextViewOptions.filter, currentViewOptions.filter)
+    || !isEqual(nextViewOptions.flags, currentViewOptions.flags)
 );
 
 const createViewQueryObject = (viewOptions, queryObj) => {
