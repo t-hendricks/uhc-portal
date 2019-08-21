@@ -1,9 +1,12 @@
 import apiRequest from './apiRequest';
 
 const getClusters = params => apiRequest({
-  method: 'get',
-  url: '/api/clusters_mgmt/v1/clusters',
-  params: {
+  method: 'post',
+  url: '/api/clusters_mgmt/v1/clusters?method=get',
+  // yes, POST with ?method=get. I know it's weird.
+  // the backend does not have a /search endpoint,
+  // and we might need to send a query that is longer than the GET length limit
+  data: {
     page: params.page,
     size: params.page_size,
     order: params.order,

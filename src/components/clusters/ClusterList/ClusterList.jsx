@@ -30,6 +30,9 @@ import {
 } from '@patternfly/react-core';
 
 import ClusterListFilter from './components/ClusterListFilter';
+import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
+import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup';
+
 import ClusterListEmptyState from './components/ClusterListEmptyState';
 import ClusterListTable from './components/ClusterListTable/ClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
@@ -47,6 +50,17 @@ import ViewPaginationRow from './components/viewPaginationRow';
 import helpers from '../../../common/helpers';
 import { viewConstants } from '../../../redux/constants';
 
+const getEntitlementStatusQueryParam = () => {
+  let ret;
+  window.location.search.substring(1).split('&').forEach((queryString) => {
+    const [key, val] = queryString.split('=');
+    if (key === 'entitlement_status') {
+      ret = val;
+    }
+  });
+  return ret;
+};
+
 class ClusterList extends Component {
   constructor(props) {
     super(props);
@@ -59,10 +73,18 @@ class ClusterList extends Component {
   componentDidMount() {
     document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
     const {
-      getCloudProviders, cloudProviders, organization, getOrganizationAndQuota,
+      getCloudProviders, cloudProviders, organization, getOrganizationAndQuota, setListFlag,
     } = this.props;
 
-    this.refresh();
+    const entitelmentStatusFilter = getEntitlementStatusQueryParam();
+    if (entitelmentStatusFilter) {
+      setListFlag('subscriptionFilter', entitelmentStatusFilter.split(',').filter(Boolean));
+    } else {
+      // only call refresh if we're not setting the filter flag. When the flag is set, refresh
+      // will be called via componentDidUpdate() after the redux state transition
+      this.refresh();
+    }
+
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
     }
@@ -134,7 +156,8 @@ class ClusterList extends Component {
       );
     }
 
-    if (!size(clusters) && !pending && isEmpty(viewOptions.filter)) {
+    if (!size(clusters) && !pending && isEmpty(viewOptions.filter)
+        && isEmpty(viewOptions.flags.subscriptionFilter)) {
       return (
         <React.Fragment>
           <GlobalErrorBox />
@@ -152,7 +175,10 @@ class ClusterList extends Component {
             <SplitItem>
               <ClusterListFilter />
             </SplitItem>
-            <SplitItem className="create-cluster-button-split">
+            <SplitItem className="split-margin-left">
+              <ClusterListFilterDropdown />
+            </SplitItem>
+            <SplitItem className="split-margin-left">
               <Link to={hasQuota ? '/create' : '/install'}>
                 <Button>Create Cluster</Button>
               </Link>
@@ -176,6 +202,7 @@ class ClusterList extends Component {
               <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
             </SplitItem>
           </Split>
+          <ClusterListFilterChipGroup />
           <ClusterListTable
             clusters={clusters || []}
             viewOptions={viewOptions}
@@ -223,6 +250,7 @@ ClusterList.propTypes = {
   organization: PropTypes.object.isRequired,
   hasQuota: PropTypes.bool.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
+  setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
 };
 
