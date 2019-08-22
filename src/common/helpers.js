@@ -144,7 +144,7 @@ const omitEmptyFields = (obj) => {
 
 
 const scrollToTop = () => {
-  const pageTop = document.querySelector('header');
+  const pageTop = document.querySelector('section.pf-c-page__main-section');
   if (pageTop) {
     pageTop.scrollIntoView();
   }
