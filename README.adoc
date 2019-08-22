@@ -8,16 +8,16 @@ contains a helper development server, `backend`, written in Go.
 Building the Go backend requires checking out this repo in the correct place under GOPATH:
 
 ....
-git clone https://gitlab.cee.redhat.com/service/uhc-portal $GOPATH/src/gitlab.cee.redhat.com/service/uhc-portal
+$ git clone https://gitlab.cee.redhat.com/service/uhc-portal $GOPATH/src/gitlab.cee.redhat.com/service/uhc-portal
 # OR (clones into same place)
-go get -d gitlab.cee.redhat.com/service/uhc-portal/...
+$ go get -d gitlab.cee.redhat.com/service/uhc-portal/...
 ....
 
 If you don't have GOPATH set, you can pick any directory e.g.:
 
 ....
-mkdir $HOME/go
-export GOPATH=$HOME/go
+$ mkdir $HOME/go
+$ export GOPATH=$HOME/go
 ....
 
 == Style
@@ -47,7 +47,7 @@ installation.
 
 https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb#eslint-config-airbnb-1[Installation instructions]
 
-== Bulding
+== Building
 
 To build the application install the `yarn` tool and then run these commands:
 
@@ -72,7 +72,7 @@ To test the application in your development environment run the following comman
 $ yarn start
 ....
 
-That will start the the Webpack development server. See below for instructions regarding the "chromed environment".
+That will start the the Webpack development server. See below for instructions regarding the "chromed environment" in order to interact with the user interface.
 
 You will also need to start start the backend proxy server, which acts as a proxy
 for the _OpenID_ and API services that are required by the application. Before
@@ -80,8 +80,8 @@ starting it make sure to have an offline access token, either in the `UHC_TOKEN`
 environment variable or in the `token` parameter of the configuration file:
 
 ....
-export UHC_TOKEN="eyJ..."
-./backend
+$ export UHC_TOKEN="eyJ..."
+$ ./backend
 ....
 
 To obtain the access token go to the
@@ -95,7 +95,7 @@ If you need to change the configuration used by this backend proxy, then create 
 YAML file and specify it with the `--config` command line option:
 
 ....
-./backend --config=my.yml
+$ ./backend --config=my.yml
 ....
 
 The content of this file should be something like this (or any subset of it):
@@ -142,32 +142,35 @@ it should allow you to run the UI and test basic read-only functionality.
 
 To run it, run `mockdata/mockserver.py`.
 
-Then in another terminal, run `yarn startmock` instead of `yarn start`, and you'll get a working UI showing mock data.
+Then in another terminal, run `yarn startmock` instead of `yarn start`, and you'll get a working UI showing mock data running with the chromed environment.
 
-=== Chromed application
+=== Chromed environment
 Start by cloning https://github.com/RedHatInsights/insights-proxy[insights-proxy] and following its setup instructions.
 
 ....
-git clone https://github.com/RedHatInsights/insights-proxy.git
-cd insights-proxy
-sudo bash scripts/patch-etc-hosts.sh
-bash scripts/update.sh
+$ git clone https://github.com/RedHatInsights/insights-proxy.git
+$ cd insights-proxy
+$ sudo bash scripts/patch-etc-hosts.sh
+$ bash scripts/update.sh
 ....
 
 This is a one-time setup process. After this process is done, make sure to export the
 location of your proxy's git clone to the PROXY_PATH environment variable, for example
 
 ....
-export PROXY_PATH=~/Projects/insights-proxy
+$ export PROXY_PATH=~/Projects/insights-proxy
 ....
 
 It's a good idea to add this line to your '~/.bashrc file' so you don't have to type it each time.
 
-Make sure to start the backend proxy server (./backend) before starting the insights proxy.
+Make sure to start the backend proxy server before starting the insights proxy.
+....
+$ ./backend
+....
 
 Now you can use
 ....
-SPANDX_CONFIG="./profiles/local-frontend.js" bash $PROXY_PATH/scripts/run.sh
+$ SPANDX_CONFIG="./profiles/local-frontend.js" bash $PROXY_PATH/scripts/run.sh
 ....
 to run the insights proxy and pass API requests to the mock server described above.
 
@@ -183,7 +186,7 @@ It should ask you to authenticate with QA SSO, which should accept every user an
 === Chromed application with a mock server
 Perform the exact steps detailed above, but use
 ....
-mockdata/mockserver.py
+$ mockdata/mockserver.py
 ....
 instead of the backend proxy.
 
