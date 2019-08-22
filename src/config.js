@@ -37,7 +37,7 @@ const config = {
     const that = this;
     return new Promise((resolve) => {
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
-      if (queryEnv) {
+      if (queryEnv && configs[queryEnv]) {
         configs[queryEnv].then((data) => {
           that.configData = data;
           that.override = queryEnv;
