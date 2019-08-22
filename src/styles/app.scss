@@ -630,3 +630,16 @@ h4.pf-c-alert__title {
 .create-cluster-button-split {
   margin-left: 15px;
 }
+
+ul.dev-preview-warnings li {
+  font-weight: var(--pf-global--FontWeight--bold);
+}
+
+span.dev-preview-label {
+  background: var(--pf-global--BackgroundColor--150);
+  color: var(--pf-global--Color--100);
+}
+
+span.dev-preview-label svg {
+  color: var(--ins-color--orange);
+}

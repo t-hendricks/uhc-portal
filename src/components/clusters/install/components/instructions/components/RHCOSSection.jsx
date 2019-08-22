@@ -4,6 +4,7 @@ import {
   Button,
 } from '@patternfly/react-core';
 
+
 const RHCOSSection = ({ learnMoreURL, token }) => (
   <React.Fragment>
     <p>
