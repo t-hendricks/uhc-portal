@@ -396,7 +396,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .infra-card {
-  flex: 0 0 380px;
+  flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
   margin: 20px;
   padding: 20px;
   display: flex;
@@ -409,7 +409,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .pf-c-card__body.infra-card-placeholder {
-  flex: 0 0 380px;
+  flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
   margin: 20px;
   padding: 20px;
   display: flex;
