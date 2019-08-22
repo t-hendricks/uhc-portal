@@ -408,6 +408,13 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   text-decoration: none !important; /* not sure how to properly override patternfly */
 }
 
+.pf-c-card__body.infra-card-placeholder {
+  flex: 0 0 380px;
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+}
+
 .infra-card:hover {
   box-shadow: var(--pf-global--BoxShadow--lg);
 }
@@ -433,7 +440,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   pointer-events: all !important;
 }
 
-.azure-dev-preview-card {
+.azure-dev-preview-card, .gcp-dev-preview-card {
   color: var(--pf-global--link--Color);
 }
 
