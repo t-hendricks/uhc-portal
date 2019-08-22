@@ -37,15 +37,19 @@ class InstructionsPreRelease extends React.Component {
 
           <TelemetryAlert />
 
-          As Red Hat OpenShift Container Platform (OCP) has moved to become a more
-          agile and rapidly deployable kubernetes offering, we want to allow
-          existing and evaluation customers and partners access to the latest
-          pre-release nightly builds to see a real-time view into the next version
-          of OpenShift.
+          <p>
+            As Red Hat OpenShift Container Platform (OCP) has moved to become a more
+            agile and rapidly deployable kubernetes offering, we want to allow
+            existing and evaluation customers and partners access to the latest
+            pre-release nightly builds to see a real-time view into the next version
+            of OpenShift.
+          </p>
 
           <p />
 
-          Because these are developer preview builds:
+          <p>
+            Because these are developer preview builds:
+          </p>
           <ul className="dev-preview-warnings">
             <li>
               Production use is not permitted.
@@ -61,22 +65,28 @@ class InstructionsPreRelease extends React.Component {
             </li>
           </ul>
 
-          These nightly builds are useful for those who would like to stay up
-          to date on features being developed in the next release of OpenShift.
-          Such builds are advantageous for planning future deployments,
-          ISV integrations, or other educational purposes.
+          <p>
+            These nightly builds are useful for those who would like to stay up
+            to date on features being developed in the next release of OpenShift.
+            Such builds are advantageous for planning future deployments,
+            ISV integrations, or other educational purposes.
+          </p>
 
           <h3>
             Feature Completion in Nightly Builds
           </h3>
 
-          Each OpenShift minor release will target initiatives or focus areas.
-          These features will not be the same in every nightly build.
-          Because these are experimental nightly builds, some features
-          may be incomplete or have bugs. This is the beauty of the development process.
+          <p>
+            Each OpenShift minor release will target initiatives or focus areas.
+            These features will not be the same in every nightly build.
+            Because these are experimental nightly builds, some features
+            may be incomplete or have bugs. This is the beauty of the development process.
+          </p>
 
-          The following features have passed automated testing in the current OCP 4.2
-          dev preview nightly builds:
+          <p>
+            The following features have passed automated testing in the current OCP 4.2
+            dev preview nightly builds:
+          </p>
 
           <ul>
             <li>
@@ -97,9 +107,11 @@ class InstructionsPreRelease extends React.Component {
             </li>
           </ul>
 
-          The following features have not passed automated testing in the
-          OCP 4.2 dev preview nightly builds, but will be completed in a
-          future nightly build:
+          <p>
+            The following features have not passed automated testing in the
+            OCP 4.2 dev preview nightly builds, but will be completed in a
+            future nightly build:
+          </p>
           <ul>
             <li>
               Red Hat OpenStack IPI installation method
@@ -110,16 +122,16 @@ class InstructionsPreRelease extends React.Component {
             </li>
           </ul>
 
-          Find out more about test blockers for the OCP 4.2 dev previews via
-
-          {' '}
-          <a href="https://red.ht/31U3YhX" target="_blank">
-            https://red.ht/31U3YhX
+          <p>
+            Find out more about test blockers for the OCP 4.2 dev previews by viewing the
             {' '}
-            <span className="fa fa-external-link" aria-hidden="true" />
-          </a>
-          .
-
+            <a href="https://red.ht/31U3YhX" target="_blank">
+              test blockers bug list
+              {' '}
+              <span className="fa fa-external-link" aria-hidden="true" />
+            </a>
+            .
+          </p>
 
           <h3>
             Downloads
@@ -149,7 +161,6 @@ class InstructionsPreRelease extends React.Component {
           <p>
             <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/" token={token} />
           </p>
-
 
           <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
           <PullSecretSection
@@ -183,24 +194,21 @@ class InstructionsPreRelease extends React.Component {
 
           <h3 className="pf-c-title pf-m-md downloads-subtitle">Feedback and Support</h3>
           <p />
-          If you are a Red Hat customer or partner and have feedback about these nightly builds,
-          please email
-          {' '}
-          <a href="mailto:***REMOVED***">
-            ***REMOVED***
-          </a>
-          . Do not try to leverage the formal Red Hat support service ticket process.
-          You can read more about support handling in the following
-
-          {' '}
-          <a href="https://access.redhat.com/articles/4307871" target="_blank">
-            knowledge article
-          </a>
-          .
-
-          To increase the likelihood of a timely response via email,
-          please place &#91;dev preview build&#93; in the subject line.
-
+          <p>
+            If you are a Red Hat customer or partner and have feedback about these nightly builds,
+            please email
+            {' '}
+            <a href="mailto:***REMOVED***?subject=[dev preview build]">
+              ***REMOVED***
+            </a>
+            . Do not use the formal Red Hat support service ticket process.
+            You can read more about support handling in the following
+            {' '}
+            <a href="https://access.redhat.com/articles/4307871" target="_blank">
+              knowledge article
+            </a>
+            .
+          </p>
         </div>
       </Card>
     );
