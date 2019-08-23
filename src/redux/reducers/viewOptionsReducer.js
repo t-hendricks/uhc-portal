@@ -15,6 +15,8 @@ const INITAL_VIEW_STATE = {
     sortField: 'name',
     isAscending: true,
   },
+  flags: {
+  },
 };
 
 const initialState = {
@@ -103,6 +105,15 @@ const viewOptionsReducer = (state = initialState, action) => {
     case viewPaginationConstants.VIEW_CHANGE_SORT:
       updateState[action.viewType] = Object.assign({}, state[action.viewType], {
         sorting: action.sorting,
+      });
+      return Object.assign({}, state, updateState);
+
+    case viewPaginationConstants.VIEW_SET_LIST_FLAGS:
+      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
+        flags: {
+          ...state[action.viewType].flags,
+          [action.key]: action.value,
+        },
       });
       return Object.assign({}, state, updateState);
 

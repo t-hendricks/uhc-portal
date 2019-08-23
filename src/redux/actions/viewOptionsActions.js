@@ -38,6 +38,14 @@ const onListFilterSet = (filter, viewType) => dispatch => dispatch({
   type: viewPaginationConstants.VIEW_SET_LIST_FILTER,
 });
 
+const onListFlagsSet = (key, value, viewType) => dispatch => dispatch({
+  key,
+  value,
+  viewType,
+  type: viewPaginationConstants.VIEW_SET_LIST_FLAGS,
+});
+
+
 const onListSortBy = (sorting, viewType) => dispatch => dispatch({
   sorting,
   viewType,
@@ -52,10 +60,11 @@ const viewActions = {
   onPageInput,
   onPerPageSelect,
   onListFilterSet,
+  onListFlagsSet,
   onListSortBy,
 };
 
 export {
   viewActions, onFirstPage, onLastPage, onPreviousPage, onNextPage, onPageInput, onPerPageSelect,
-  onListFilterSet, onListSortBy,
+  onListFilterSet, onListFlagsSet, onListSortBy,
 };

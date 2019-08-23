@@ -14,11 +14,11 @@ import {
 } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
-import NumberWithUnit from './NumberWithUnit';
 import ClusterLocationLabel from './ClusterLocationLabel';
 import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
 import { getClusterStateAndDescription } from '../../../common/clusterStates';
 import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
+import SubscriptionStatusIndicator from '../../../common/SubscriptionStatusIndicator';
 
 
 function ClusterListTable(props) {
@@ -93,8 +93,7 @@ function ClusterListTable(props) {
       { title: clusterName },
       { title: clusterStatus },
       { title: clusterType },
-      { title: <NumberWithUnit valueWithUnit={cluster.metrics.cpu.total} unit="vCPU" /> },
-      { title: <NumberWithUnit valueWithUnit={cluster.metrics.memory.total} isBytes /> },
+      { title: <SubscriptionStatusIndicator subscriptionInfo={cluster.subscriptionInfo} /> },
       { title: clusterVersion },
       {
         title: <ClusterLocationLabel
@@ -111,10 +110,9 @@ function ClusterListTable(props) {
 
   const columns = [
     { title: 'Name', transforms: [sortable, cellWidth(30)] },
-    { title: 'Status' },
+    { title: 'Health' },
     { title: 'Type' },
-    { title: 'vCPU', columnTransforms: [hiddenOnMdOrSmaller] },
-    { title: 'Memory', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Subscription Status', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
     '',

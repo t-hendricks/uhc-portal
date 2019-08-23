@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '@patternfly/react-core';
+import { CodeIcon } from '@patternfly/react-icons';
 import CLISection from './components/CLISection';
 import DownloadButton from './components/DownloadButton';
 import GetStarted from './components/GetStarted';
 import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
-import RHCOSSection from './components/RHCOSSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DeveloperPreviewSection from './components/DeveloperPreviewSection';
 
-class InstructionsVSphere extends React.Component {
+class InstructionsGCP extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,8 +28,13 @@ class InstructionsVSphere extends React.Component {
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
           <div className="pf-c-content">
+            <div className="developer-preview">
+              <CodeIcon />
+              {' '}
+              Developer Preview
+            </div>
 
-            <PageTitle title="Install on vSphere: User-Provisioned Infrastructure" />
+            <PageTitle title="Install on GCP: Installer-Provisioned Infrastructure" />
 
             {
               token.error && (
@@ -40,11 +45,15 @@ class InstructionsVSphere extends React.Component {
             <TelemetryAlert />
 
             <p>
-              With OpenShift Container Platform you can install a cluster on vSphere using
-              infrastructure that you provide.
+              With OpenShift Container Platform
+              {' '}
+              <strong>developer preview</strong>
+              {' '}
+              you can install a cluster on GCP using infrastructure that the
+              installation program provisions and the cluster maintains.
             </p>
 
-            <GetStarted docURL="https://docs.openshift.com/container-platform/4.1/installing/installing_vsphere/installing-vsphere.html" />
+            <GetStarted docURL="https://github.com/openshift/installer/tree/master/docs/user/gcp" />
 
             <h3>
               Downloads
@@ -61,9 +70,9 @@ class InstructionsVSphere extends React.Component {
             </p>
 
             <p>
-              <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
+              <DownloadButton installerURL="http://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/" token={token} />
             </p>
-            <DeveloperPreviewSection isDevPreview={false} />
+            <DeveloperPreviewSection isDevPreview />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection
@@ -79,16 +88,8 @@ class InstructionsVSphere extends React.Component {
 
             <p />
 
-            <h3 className="pf-c-title pf-m-md downloads-subtitle">
-              Red Hat Enterprise Linux CoreOS (RHCOS)
-            </h3>
-            <RHCOSSection
-              learnMoreURL="https://docs.openshift.com/container-platform/4.1/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere"
-              token={token}
-            />
-
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Command-Line Interface</h3>
-            <CLISection toolsURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" />
+            <CLISection toolsURL="http://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/" />
 
           </div>
         </div>
@@ -97,8 +98,8 @@ class InstructionsVSphere extends React.Component {
   }
 }
 
-InstructionsVSphere.propTypes = {
+InstructionsGCP.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default InstructionsVSphere;
+export default InstructionsGCP;

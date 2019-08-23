@@ -396,7 +396,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .infra-card {
-  flex: 0 0 380px;
+  flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
   margin: 20px;
   padding: 20px;
   display: flex;
@@ -406,6 +406,13 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   box-shadow: var(--pf-global--BoxShadow--md);
   color: var(--pf-global--Color--100) !important; /* not sure how to properly override patternfly */
   text-decoration: none !important; /* not sure how to properly override patternfly */
+}
+
+.pf-c-card__body.infra-card-placeholder {
+  flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
+  margin: 20px;
+  padding: 20px;
+  display: flex;
 }
 
 .infra-card:hover {
@@ -433,7 +440,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   pointer-events: all !important;
 }
 
-.azure-dev-preview-card {
+.azure-dev-preview-card, .gcp-dev-preview-card {
   color: var(--pf-global--link--Color);
 }
 
@@ -629,4 +636,17 @@ h4.pf-c-alert__title {
 
 .create-cluster-button-split {
   margin-left: 15px;
+}
+
+ul.dev-preview-warnings li {
+  font-weight: var(--pf-global--FontWeight--bold);
+}
+
+span.dev-preview-label {
+  background: var(--pf-global--BackgroundColor--150);
+  color: var(--pf-global--Color--100);
+}
+
+span.dev-preview-label svg {
+  color: var(--ins-color--orange);
 }
