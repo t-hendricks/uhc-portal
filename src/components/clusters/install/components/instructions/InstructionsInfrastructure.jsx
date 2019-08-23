@@ -14,12 +14,12 @@ const InstructionsInfrastructure = () => (
     <div className="pf-c-content ocm-page">
       <PageTitle title="Infrastructure Provider" />
       <div className="flex-container">
-        <Link to="/install/aws" className="infra-card">
+        <Link to="/install/aws" className="infra-card infra-card-cloud-provider">
           <CardBody>
             <img src={AWSLogo} alt="AWS" className="infra-logo" />
           </CardBody>
         </Link>
-        <Link to="/install/metal/user-provisioned" className="infra-card">
+        <Link to="/install/metal/user-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
             Bare Metal
             <br />
@@ -28,7 +28,7 @@ const InstructionsInfrastructure = () => (
         </Link>
       </div>
       <div className="flex-container">
-        <Link to="/install/azure/installer-provisioned" className="infra-card">
+        <Link to="/install/azure/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
             <img src={AzureLogo} alt="Azure" className="infra-logo" />
             <br />
@@ -39,16 +39,16 @@ const InstructionsInfrastructure = () => (
             </span>
           </CardBody>
         </Link>
-        <Link to="/install/vsphere/user-provisioned" className="infra-card">
+        <Link to="/install/vsphere/user-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
             <img src={vSphereLogo} alt="vSphere" className="infra-logo-vsphere" />
           </CardBody>
         </Link>
       </div>
       <div className="flex-container">
-        <Link to="/install/gcp/installer-provisioned" className="infra-card">
-          <CardBody>
-            <img src={GCPLogo} alt="GCP" className="infra-logo" />
+        <Link to="/install/gcp/installer-provisioned" className="infra-card infra-card-cloud-provider">
+          <CardBody className="gcp-card-body">
+            <img src={GCPLogo} alt="GCP" className="infra-logo-google-cloud" />
             <br />
             <span className="gcp-dev-preview-card">
               <CodeIcon />
