@@ -9,6 +9,7 @@ import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
+import DeveloperPreviewSection from './components/DeveloperPreviewSection';
 
 class InstructionsGCP extends React.Component {
   constructor(props) {
@@ -71,6 +72,7 @@ class InstructionsGCP extends React.Component {
             <p>
               <DownloadButton installerURL="http://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/" token={token} />
             </p>
+            <DeveloperPreviewSection isDevPreview />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection
