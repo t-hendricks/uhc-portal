@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { CodeIcon } from '@patternfly/react-icons';
 
-const LookingForPreReleaseSection = () => (
+const DeveloperPreviewSection = ({ isDevPreview }) => (
   <React.Fragment>
     <span className="pf-c-label pf-m-compact dev-preview-label">
       <CodeIcon />
@@ -11,9 +12,15 @@ const LookingForPreReleaseSection = () => (
     </span>
     {' '}
     <Link to="/install/pre-release">
-     Download pre-release builds
+      { isDevPreview ? 'About' : 'Download'}
+      { ' ' }
+      pre-release builds
     </Link>
   </React.Fragment>
 );
 
-export default LookingForPreReleaseSection;
+DeveloperPreviewSection.propTypes = {
+  isDevPreview: PropTypes.bool.isRequired,
+};
+
+export default DeveloperPreviewSection;
