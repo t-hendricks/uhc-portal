@@ -420,9 +420,9 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   height: 212px;
 }
 
-.gcp-card-body {
-  padding-left: 0;
-  padding-right: 0;
+.pf-c-card__body.gcp-card-body {
+  padding-left: 0 !important; /* important is hacking around a difference in insights chrome in dev vs prod */
+  padding-right: 0 !important; /* important is hacking around a difference in insights chrome in dev vs prod */
 }
 
 .pf-c-card__body.infra-card-placeholder {
