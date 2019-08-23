@@ -134,7 +134,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Over
 <Popover
   appendTo={[Function]}
   aria-label="Insufficient"
-  bodyContent="This cluster is consuming more resources than it's entitled to."
+  bodyContent="This cluster is consuming more resources than it is entitled to."
   className=""
   closeBtnAriaLabel="Close"
   enableFlip={true}
