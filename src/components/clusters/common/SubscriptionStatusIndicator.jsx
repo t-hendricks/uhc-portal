@@ -42,7 +42,7 @@ function SubscriptionStatusIndicator({ subscriptionInfo }) {
       return (
         <Popover
           position={PopoverPosition.top}
-          bodyContent="This cluster is consuming more resources than it's entitled to."
+          bodyContent="This cluster is consuming more resources than it is entitled to."
           aria-label="Insufficient"
         >
           <Button variant="link" isInline icon={<WarningTriangleIcon color={global_warning_color_100.value} />}>
