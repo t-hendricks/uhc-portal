@@ -389,6 +389,14 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 10px;
 }
 
+.infra-logo-google-cloud {
+  height: 51px;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -406,6 +414,15 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   box-shadow: var(--pf-global--BoxShadow--md);
   color: var(--pf-global--Color--100) !important; /* not sure how to properly override patternfly */
   text-decoration: none !important; /* not sure how to properly override patternfly */
+}
+
+.infra-card-cloud-provider {
+  height: 212px;
+}
+
+.gcp-card-body {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .pf-c-card__body.infra-card-placeholder {
