@@ -197,7 +197,7 @@ limitations under the License.
   margin-top: 40px;
 }
 
-#metrics-charts .pf-c-card__body{
+#metrics-charts .pf-c-card__body, .metrics-chart{
   display: flex;
   justify-content: space-evenly;
   margin: 0;
@@ -366,6 +366,14 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   .row {
     padding-bottom: 5px;
   }
+}
+
+#cluster-health svg{
+  margin-right: 10px;
+}
+
+#monitoring .status-icon{
+  margin-right: 5px;
 }
 
 .developer-preview {
