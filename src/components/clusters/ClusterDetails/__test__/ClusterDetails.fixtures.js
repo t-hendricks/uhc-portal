@@ -17,7 +17,7 @@ const setGlobalError = jest.fn();
 const getAlerts = jest.fn();
 const getNodes = jest.fn();
 
-const subscription = {
+const subscriptionInfo = {
   id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
   kind: 'Subscription',
   href: '/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8',
@@ -141,7 +141,7 @@ const clusterDetails = {
     },
     canEdit: true,
     canDelete: true,
-    subscriptionInfo: subscription,
+    subscription: subscriptionInfo,
   },
 };
 
