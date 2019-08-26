@@ -6,8 +6,9 @@ import { CheckCircleIcon, WarningTriangleIcon, UnknownIcon } from '@patternfly/r
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
 
-function SubscriptionStatusIndicator({ subscriptionInfo }) {
-  const entitlementStatus = get(subscriptionInfo, 'entitlement_status');
+function SubscriptionStatusIndicator({ cluster }) {
+  const managed = get(cluster, 'managed');
+  const entitlementStatus = get(cluster, 'subscription.entitlement_status');
 
   switch (entitlementStatus) {
     case 'Ok':
@@ -63,6 +64,15 @@ function SubscriptionStatusIndicator({ subscriptionInfo }) {
         </Popover>
       );
     default:
+      if (managed) {
+        return (
+          <React.Fragment>
+            <CheckCircleIcon color={global_success_color_100.value} />
+            {' '}
+            Subscribed
+          </React.Fragment>
+        );
+      }
       return (
         <Popover
           position={PopoverPosition.top}
@@ -78,8 +88,11 @@ function SubscriptionStatusIndicator({ subscriptionInfo }) {
 }
 
 SubscriptionStatusIndicator.propTypes = {
-  subscriptionInfo: PropTypes.shape({
-    entitlement_status: PropTypes.string,
+  cluster: PropTypes.shape({
+    managed: PropTypes.bool,
+    subscription: PropTypes.shape({
+      entitlement_status: PropTypes.string,
+    }),
   }),
 };
 

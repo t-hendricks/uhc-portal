@@ -93,7 +93,7 @@ function ClusterListTable(props) {
       { title: clusterName },
       { title: clusterStatus },
       { title: clusterType },
-      { title: <SubscriptionStatusIndicator subscriptionInfo={cluster.subscriptionInfo} /> },
+      { title: <SubscriptionStatusIndicator cluster={cluster} /> },
       { title: clusterVersion },
       {
         title: <ClusterLocationLabel

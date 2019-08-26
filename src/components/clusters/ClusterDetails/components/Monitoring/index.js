@@ -9,7 +9,7 @@ import {
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
   const { alerts, nodes } = state.monitoring;
-  const lastTelemetryDate = cluster.subscriptionInfo.last_telemetry_date;
+  const lastTelemetryDate = cluster.subscription.last_telemetry_date;
   const cpu = get(state, 'clusters.details.cluster.metrics.cpu', null);
   const memory = get(state, 'clusters.details.cluster.metrics.memory', null);
   const alertsIssues = issuesSelector(alerts.data, 'severity', 'critical');

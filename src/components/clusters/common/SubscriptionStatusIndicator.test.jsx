@@ -4,27 +4,76 @@ import SubscriptionStatusIndicator from './SubscriptionStatusIndicator';
 
 describe('<SubscriptionStatusIndicator />', () => {
   it('should not crash when the cluster has no subscription info', () => {
-    const wrapper = shallow(<SubscriptionStatusIndicator subscriptionInfo={undefined} />);
+    const cluster = {
+      managed: false,
+    };
+    const wrapper = shallow(<SubscriptionStatusIndicator cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
   });
+
   it('should render when subscription is Ok', () => {
-    const wrapper = shallow(<SubscriptionStatusIndicator subscriptionInfo={{ entitlement_status: 'Ok' }} />);
+    const cluster = {
+      managed: false,
+      subscription: {
+        entitlement_status: 'Ok',
+      },
+    };
+    const wrapper = shallow(<SubscriptionStatusIndicator cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
   });
+
   it('should render when subscription is Valid', () => {
-    const wrapper = shallow(<SubscriptionStatusIndicator subscriptionInfo={{ entitlement_status: 'Valid' }} />);
+    const cluster = {
+      managed: false,
+      subscription: {
+        entitlement_status: 'Valid',
+      },
+    };
+    const wrapper = shallow(<SubscriptionStatusIndicator cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
   });
+
   it('should render when subscription is NotSet', () => {
-    const wrapper = shallow(<SubscriptionStatusIndicator subscriptionInfo={{ entitlement_status: 'NotSet' }} />);
+    const cluster = {
+      managed: false,
+      subscription: {
+        entitlement_status: 'NotSet',
+      },
+    };
+    const wrapper = shallow(<SubscriptionStatusIndicator cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
   });
+
   it('should render when subscription is Overcommitted', () => {
-    const wrapper = shallow(<SubscriptionStatusIndicator subscriptionInfo={{ entitlement_status: 'Overcommitted' }} />);
+    const cluster = {
+      managed: false,
+      subscription: {
+        entitlement_status: 'Overcommitted',
+      },
+    };
+    const wrapper = shallow(<SubscriptionStatusIndicator cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
   });
+
   it('should render when subscription is InconsistentServices', () => {
-    const wrapper = shallow(<SubscriptionStatusIndicator subscriptionInfo={{ entitlement_status: 'InconsistentServices' }} />);
+    const cluster = {
+      managed: false,
+      subscription: {
+        entitlement_status: 'InconsistentServices',
+      },
+    };
+    const wrapper = shallow(<SubscriptionStatusIndicator cluster={cluster} />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should render when subscription is blank and cluster is managed', () => {
+    const cluster = {
+      managed: true,
+      subscription: {
+        entitlement_status: '',
+      },
+    };
+    const wrapper = shallow(<SubscriptionStatusIndicator cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

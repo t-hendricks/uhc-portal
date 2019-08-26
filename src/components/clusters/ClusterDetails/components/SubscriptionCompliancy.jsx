@@ -6,7 +6,7 @@ import { getTimeDelta } from '../../../../common/helpers';
 function SubscriptionCompliancy(props) {
   const { cluster } = props;
 
-  const subscription = cluster.subscriptionInfo;
+  const subscription = get(cluster, 'subscription');
 
   const ocpSubscriptionType = get(subscription, 'plan.id') === 'OCP';
   if (!ocpSubscriptionType) {
