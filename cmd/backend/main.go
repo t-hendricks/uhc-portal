@@ -26,7 +26,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/gorilla/handlers"
-	"github.com/openshift-online/uhc-sdk-go/pkg/client"
+	"github.com/openshift-online/uhc-sdk-go"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -128,14 +128,14 @@ func run(cmd *cobra.Command, argv []string) {
 	}
 
 	// Create the connection:
-	logger, err := client.NewGoLoggerBuilder().
+	logger, err := sdk.NewGoLoggerBuilder().
 		Debug(true).
 		Build()
 	if err != nil {
 		glog.Errorf("Can't create logger: %v", err)
 		os.Exit(1)
 	}
-	connection, err := client.NewConnectionBuilder().
+	connection, err := sdk.NewConnectionBuilder().
 		Logger(logger).
 		Client(cfg.Keycloak().ClientID(), cfg.Keycloak().ClientSecret()).
 		TokenURL(cfg.Keycloak().URL()).

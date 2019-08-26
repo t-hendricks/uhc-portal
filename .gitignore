@@ -1,5 +1,4 @@
 .idea
-/.gopath/
 /backend
 /build/
 /node_modules/

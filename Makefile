@@ -14,27 +14,19 @@
 # limitations under the License.
 #
 
-# binaries to build (currently only backend)
+
+# Binaries to build:
 binaries:=$(shell ls cmd)
 
-.PHONY: \
-	app \
-	binary \
-	$(binaries) \
-	clean \
-	fmt \
-	lint \
-	node_modules \
-	$(NULL)
+# These are declared phony so `make binaries` always rebuilds them:
+.PHONY: binaries
+binaries:
+	for binary in $(binaries); do \
+		go build -o "$${binary}" "./cmd/$${binary}" || exit 1; \
+	done
 
-binary: $(binaries)
-
-# These are declared phony so `make backend` or `make binary` always rebuilds them.
-# (there is no easy way to list all .go prerequisites)
-$(binaries): %: vendor
-	go build "./cmd/$*"
-
-lint: vendor node_modules
+.PHONY: lint
+lint: node_modules
 	yarn lint
 	golangci-lint \
 		run \
@@ -59,27 +51,26 @@ lint: vendor node_modules
 		--enable=varcheck \
 		$(NULL)
 
+.PHONY: fmt
 fmt:
 	gofmt -s -l -w ./cmd/ ./pkg/.
 
+.PHONY: test
 test: node_modules
 	yarn test
 
-vendor: Gopkg.lock
-	dep ensure -vendor-only -v
-
+.PHONY: node_modules
 node_modules:
 	yarn install
 
+.PHONY: app
 app: node_modules
 	yarn build --mode=production
 
+.PHONY: clean
 clean:
 	rm -rf \
 		$(binaries) \
-		*.tar \
-		.gopath \
 		build \
 		node_modules \
-		vendor \
 		$(NULL)
