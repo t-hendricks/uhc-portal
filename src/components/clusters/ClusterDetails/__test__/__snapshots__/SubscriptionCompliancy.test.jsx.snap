@@ -16,8 +16,7 @@ exports[`<SubscriptionCompliancy /> should render 1`] = `
     >
       Red Hat Customer Portal
     </a>
-     and attach subscription(s) that covers 
-    the current size of this cluster. You may need to 
+     and attach subscription(s) that covers the current size of this cluster. You may need to 
     <a
       href="https://www.redhat.com/en/contact"
       target="_blank"

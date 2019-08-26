@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterHealthCard /> should render 1`] = `
+<Card
+  id="cluster-health"
+>
+  <CardHeader>
+    <Split>
+      <SplitItem
+        isFilled={true}
+      >
+        <Split>
+          <SplitItem>
+            <UnknownIcon
+              color="currentColor"
+              noVerticalAlign={false}
+              size="md"
+              title={null}
+            />
+          </SplitItem>
+          <SplitItem>
+            <Title
+              headingLevel="h2"
+              size="3xl"
+            >
+              Cluster health is unknown
+            </Title>
+          </SplitItem>
+        </Split>
+      </SplitItem>
+      <SplitItem>
+        <ExclamationCircleIcon
+          color="#c9190b"
+          noVerticalAlign={false}
+          size="md"
+          title={null}
+        />
+      </SplitItem>
+    </Split>
+  </CardHeader>
+  <CardBody />
+</Card>
+`;

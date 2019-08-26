@@ -106,7 +106,7 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
         // Enrich cluster results with subscription information
         response.data.items.forEach((subscriptionItem) => {
           const index = subscriptionMap[subscriptionItem.id];
-          clusters.data.items[index].subscriptionInfo = subscriptionItem;
+          clusters.data.items[index].subscription = subscriptionItem;
         });
         return clusters;
       }).catch(() => clusters); // catch to return clusters even if subscription query fails
@@ -145,7 +145,7 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
       // FIXME accounts service does not support fetching account info for a single
       // subscription, so we have to use the search endpoint here
       return accountsService.getSubscriptions(`id='${subscriptionID}'`).then((subscriptions) => {
-        cluster.data.subscriptionInfo = result(subscriptions, 'data.items[0]');
+        cluster.data.subscription = result(subscriptions, 'data.items[0]');
         return cluster;
       }).catch(() => cluster);
     }

@@ -93,6 +93,16 @@ const getMachineTypes = () => apiRequest({
   url: '/api/clusters_mgmt/v1/machine_types',
 });
 
+const getAlerts = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/alerts`,
+});
+
+const getNodes = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/nodes`,
+});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -109,6 +119,8 @@ const clusterService = {
   deleteClusterGroupUser,
   deleteIdentityProvider,
   getMachineTypes,
+  getNodes,
+  getAlerts,
 };
 
 export default clusterService;

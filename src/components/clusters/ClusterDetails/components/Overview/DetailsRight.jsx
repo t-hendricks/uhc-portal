@@ -103,7 +103,7 @@ function DetailsRight({ cluster }) {
               Support Level
             </dt>
             <dd>
-              {result(cluster, 'subscriptionInfo.support_level', 'None (Evaluation)')}
+              {result(cluster, 'subscription.support_level', 'None (Evaluation)')}
             </dd>
           </React.Fragment>
         )}
