@@ -60,11 +60,9 @@ const InstructionsInfrastructure = () => (
         </Link>
         <Link to="/install/crc/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
-            <span className="infra-crc-alignment">
-              <img src={CRCLogo} alt="CRC" className="infra-logo-crc" />
-              <span className="infra-crc-laptop">Laptop</span>
-              <span className="infra-crc-icon-text">CodeReady Containers</span>
-            </span>
+            <img src={CRCLogo} alt="CRC" className="infra-logo-crc" />
+            <span className="infra-crc-laptop">Laptop</span>
+            <span className="infra-crc-icon-text">Powered by Red Hat CodeReady Containers</span>
             <span className="crc-dev-preview-card">
               <CodeIcon />
               {' '}
