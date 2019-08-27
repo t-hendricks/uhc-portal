@@ -9,6 +9,7 @@ import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
+import DeveloperPreviewSection from './components/DeveloperPreviewSection';
 
 class InstructionsAzure extends React.Component {
   constructor(props) {
@@ -69,8 +70,9 @@ class InstructionsAzure extends React.Component {
             </p>
 
             <p>
-              <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.2.0-0.nightly-2019-06-03-135056/" token={token} />
+              <DownloadButton installerURL="http://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/" token={token} />
             </p>
+            <DeveloperPreviewSection isDevPreview />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection
@@ -87,7 +89,7 @@ class InstructionsAzure extends React.Component {
             <p />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Command-Line Interface</h3>
-            <CLISection toolsURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.2.0-0.nightly-2019-06-03-135056/" />
+            <CLISection toolsURL="http://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/" />
 
           </div>
         </div>

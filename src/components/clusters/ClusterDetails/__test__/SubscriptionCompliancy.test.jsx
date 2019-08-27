@@ -15,7 +15,7 @@ describe('<SubscriptionCompliancy />', () => {
 
   it('should render', () => {
     const c = clusterDetails.cluster;
-    c.subscriptionInfo.entitlement_status = 'NotSet';
+    c.subscription.entitlement_status = 'NotSet';
     wrapper.setProps({ cluster: c }, () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -23,7 +23,7 @@ describe('<SubscriptionCompliancy />', () => {
 
   it('should warn when subscription is not attached', () => {
     const c = clusterDetails.cluster;
-    c.subscriptionInfo.entitlement_status = 'NotSet';
+    c.subscription.entitlement_status = 'NotSet';
     wrapper.setProps({ cluster: c }, () => {
       expect(wrapper.find('Alert').length).toEqual(1);
     });
@@ -31,7 +31,7 @@ describe('<SubscriptionCompliancy />', () => {
 
   it('should warn when cluster is overcommitting resources', () => {
     const c = clusterDetails.cluster;
-    c.subscriptionInfo.entitlement_status = 'Overcommitted';
+    c.subscription.entitlement_status = 'Overcommitted';
     wrapper.setProps({ cluster: c }, () => {
       expect(wrapper.find('Alert').length).toEqual(1);
     });
@@ -39,7 +39,7 @@ describe('<SubscriptionCompliancy />', () => {
 
   it('should warn when subscriptions attached are inconsistent', () => {
     const c = clusterDetails.cluster;
-    c.subscriptionInfo.entitlement_status = 'InconsistentServices';
+    c.subscription.entitlement_status = 'InconsistentServices';
     wrapper.setProps({ cluster: c }, () => {
       expect(wrapper.find('Alert').length).toEqual(1);
     });

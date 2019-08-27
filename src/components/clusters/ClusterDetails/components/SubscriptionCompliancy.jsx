@@ -6,7 +6,7 @@ import { getTimeDelta } from '../../../../common/helpers';
 function SubscriptionCompliancy(props) {
   const { cluster } = props;
 
-  const subscription = cluster.subscriptionInfo;
+  const subscription = get(cluster, 'subscription');
 
   const ocpSubscriptionType = get(subscription, 'plan.id') === 'OCP';
   if (!ocpSubscriptionType) {
@@ -43,11 +43,8 @@ function SubscriptionCompliancy(props) {
               { candlepinConsumerUUID ? 'this cluster in the ' : '' }
               Red Hat Customer Portal
             </a>
-            &nbsp;and attach subscription(s) that covers&nbsp;
-            { cluster.metrics.cpu.total.value
-              ? `at least the amount of ${cluster.metrics.cpu.total.value} vCPUs which is `
-              : '' }
-            the current size of this cluster. You may need to&nbsp;
+            &nbsp;and attach subscription(s) that covers the current size of
+            this cluster. You may need to&nbsp;
             <a href={salesURL} target="_blank">contact sales</a>
             &nbsp;in case you don&apos;t own enough subscriptions to cover it.
           </p>
@@ -60,10 +57,7 @@ function SubscriptionCompliancy(props) {
           <p>
             Please check the&nbsp;
             <a href={customerPortalURL} target="_blank">Red Hat Customer Portal</a>
-            &nbsp;to make sure this cluster has subscription(s) attached that covers&nbsp;
-            { cluster.metrics.cpu.total.value
-              ? `at least the amount of ${cluster.metrics.cpu.total.value} vCPUs which is `
-              : '' }
+            &nbsp;to make sure this cluster has subscription(s) attached that covers
             the current size of this cluster. You may need to&nbsp;
             <a href={salesURL} target="_blank">contact sales</a>
             &nbsp;in case you don&apos;t own enough subscriptions to cover it.

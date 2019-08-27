@@ -137,7 +137,7 @@ exports[`<DetailsLeft /> should render 1`] = `
                   "kind": "CloudRegionLink",
                 },
                 "state": "ready",
-                "subscriptionInfo": Object {
+                "subscription": Object {
                   "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
                   "created_at": "2019-01-02T18:28:14.851121Z",
                   "external_cluster_id": "test-liza",

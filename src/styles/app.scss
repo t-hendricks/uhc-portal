@@ -197,7 +197,7 @@ limitations under the License.
   margin-top: 40px;
 }
 
-#metrics-charts .pf-c-card__body{
+#metrics-charts .pf-c-card__body, .metrics-chart{
   display: flex;
   justify-content: space-evenly;
   margin: 0;
@@ -368,6 +368,14 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
+#cluster-health svg{
+  margin-right: 10px;
+}
+
+#monitoring .status-icon{
+  margin-right: 5px;
+}
+
 .developer-preview {
   background-color: var(--pf-global--warning-color--100);
   padding-top: 10px;
@@ -389,6 +397,14 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 10px;
 }
 
+.infra-logo-google-cloud {
+  height: 51px;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -396,7 +412,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .infra-card {
-  flex: 0 0 380px;
+  flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
   margin: 20px;
   padding: 20px;
   display: flex;
@@ -406,6 +422,22 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   box-shadow: var(--pf-global--BoxShadow--md);
   color: var(--pf-global--Color--100) !important; /* not sure how to properly override patternfly */
   text-decoration: none !important; /* not sure how to properly override patternfly */
+}
+
+.infra-card-cloud-provider {
+  height: 212px;
+}
+
+.pf-c-card__body.gcp-card-body {
+  padding-left: 0 !important; /* important is hacking around a difference in insights chrome in dev vs prod */
+  padding-right: 0 !important; /* important is hacking around a difference in insights chrome in dev vs prod */
+}
+
+.pf-c-card__body.infra-card-placeholder {
+  flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
+  margin: 20px;
+  padding: 20px;
+  display: flex;
 }
 
 .infra-card:hover {
@@ -433,7 +465,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   pointer-events: all !important;
 }
 
-.azure-dev-preview-card {
+.azure-dev-preview-card, .gcp-dev-preview-card {
   color: var(--pf-global--link--Color);
 }
 
@@ -629,6 +661,19 @@ h4.pf-c-alert__title {
 
 .split-margin-left {
   margin-left: 15px;
+}
+
+ul.dev-preview-warnings li {
+  font-weight: var(--pf-global--FontWeight--bold);
+}
+
+span.dev-preview-label {
+  background: var(--pf-global--BackgroundColor--150);
+  color: var(--pf-global--Color--100);
+}
+
+span.dev-preview-label svg {
+  color: var(--ins-color--orange);
 }
 
 .cluster-list .pf-c-chip-group .pf-c-chip-group__label {

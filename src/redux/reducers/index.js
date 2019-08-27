@@ -9,6 +9,7 @@ import { cloudProvidersReducer } from './cloudProvidersReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 import { LogsReducer } from '../../components/clusters/ClusterDetails/components/LogWindow/LogWindowReducer';
 import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersModal/IdentityProvidersReducer';
+import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/Users/UsersReducer';
 import globalErrorReducer from './globalErrorReducer';
 import machineTypesReducer from './machineTypesReducer';
@@ -27,6 +28,7 @@ const reducers = {
   clusterUsers: clusterUsersReducer,
   globalError: globalErrorReducer,
   machineTypes: machineTypesReducer,
+  monitoring: MonitoringReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

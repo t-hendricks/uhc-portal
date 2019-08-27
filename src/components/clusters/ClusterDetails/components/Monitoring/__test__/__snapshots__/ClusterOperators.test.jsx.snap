@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterOperators /> should render 1`] = `
+<Table
+  borders={false}
+  cells={
+    Array [
+      Object {
+        "title": "Name",
+      },
+      Object {
+        "title": "Status",
+      },
+      Object {
+        "title": "Version",
+      },
+    ]
+  }
+  className=""
+  contentId="expanded-content"
+  dropdownDirection="down"
+  dropdownPosition="right"
+  expandId="expandable-toggle"
+  gridBreakPoint="grid-md"
+  onCollapse={null}
+  onExpand={null}
+  role="grid"
+  rowLabeledBy="simple-node"
+  rows={Array []}
+  variant="compact"
+>
+  <TableHeader
+    className=""
+  />
+  <TableBody
+    className=""
+    onRowClick={[Function]}
+    rowKey="id"
+  />
+</Table>
+`;

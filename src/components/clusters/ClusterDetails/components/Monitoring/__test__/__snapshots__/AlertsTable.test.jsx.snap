@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterHealthCard /> should render 1`] = `
+<Table
+  borders={true}
+  cells={
+    Array [
+      Object {
+        "title": "Name",
+      },
+      Object {
+        "title": "Severity",
+      },
+    ]
+  }
+  className=""
+  contentId="expanded-content"
+  dropdownDirection="down"
+  dropdownPosition="right"
+  expandId="expandable-toggle"
+  gridBreakPoint="grid-md"
+  onCollapse={null}
+  onExpand={null}
+  role="grid"
+  rowLabeledBy="simple-node"
+  rows={Array []}
+  variant="compact"
+>
+  <TableHeader
+    className=""
+  />
+  <TableBody
+    className=""
+    onRowClick={[Function]}
+    rowKey="id"
+  />
+</Table>
+`;

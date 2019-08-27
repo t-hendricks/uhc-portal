@@ -134,7 +134,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Over
 <Popover
   appendTo={[Function]}
   aria-label="Insufficient"
-  bodyContent="This cluster is consuming more resources than it's entitled to."
+  bodyContent="This cluster is consuming more resources than it is entitled to."
   className=""
   closeBtnAriaLabel="Close"
   enableFlip={true}
@@ -179,5 +179,18 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Vali
   />
    
   Valid
+</Fragment>
+`;
+
+exports[`<SubscriptionStatusIndicator /> should render when subscription is blank and cluster is managed 1`] = `
+<Fragment>
+  <CheckCircleIcon
+    color="#92d400"
+    noVerticalAlign={false}
+    size="sm"
+    title={null}
+  />
+   
+  Subscribed
 </Fragment>
 `;

@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Monitoring /> should render 1`] = `
+<Fragment>
+  <ClusterHealthCard
+    lastCheckIn=""
+  />
+  <Card
+    id="monitoring"
+  >
+    <CardHeader>
+      <Title
+        headingLevel="h2"
+        size="3xl"
+      >
+        Status
+      </Title>
+    </CardHeader>
+    <CardBody>
+      <MonitoringList
+        alerts={Object {}}
+        cluster={Object {}}
+        nodes={Object {}}
+        resourceUsage={Object {}}
+      />
+    </CardBody>
+  </Card>
+</Fragment>
+`;

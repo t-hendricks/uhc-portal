@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MonitoringList /> should render 1`] = `
+<DataList
+  aria-label="monitoring-table"
+>
+  <MonitoringListItem
+    expanded={Array []}
+    title="Alerts firing"
+    toggle={[Function]}
+  >
+    <AlertsTable />
+  </MonitoringListItem>
+  <MonitoringListItem
+    expanded={Array []}
+    title="Nodes"
+    toggle={[Function]}
+  >
+    <NodesTable />
+  </MonitoringListItem>
+  <MonitoringListItem
+    expanded={Array []}
+    title="Cluster operators"
+    toggle={[Function]}
+  >
+    <ClusterOperatorsTable />
+  </MonitoringListItem>
+  <MonitoringListItem
+    expanded={Array []}
+    title="Resource usage"
+    toggle={[Function]}
+  >
+    <div
+      className="metrics-chart"
+    >
+      <ResourceUsage
+        cluster={
+          Object {
+            "state": Object {
+              "description": undefined,
+              "state": undefined,
+              "style": Object {
+                "textTransform": "capitalize",
+              },
+            },
+          }
+        }
+      />
+    </div>
+  </MonitoringListItem>
+</DataList>
+`;

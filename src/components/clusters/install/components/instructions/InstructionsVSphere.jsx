@@ -9,6 +9,7 @@ import PullSecretSection from './components/PullSecretSection';
 import RHCOSSection from './components/RHCOSSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
+import DeveloperPreviewSection from './components/DeveloperPreviewSection';
 
 class InstructionsVSphere extends React.Component {
   constructor(props) {
@@ -62,6 +63,7 @@ class InstructionsVSphere extends React.Component {
             <p>
               <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
             </p>
+            <DeveloperPreviewSection isDevPreview={false} />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection

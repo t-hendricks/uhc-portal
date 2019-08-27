@@ -124,6 +124,7 @@ const getErrorState = action => ({
   operationID: get(action.payload, 'response.data.operation_id'),
 });
 
+// returns the time delta in hours between two date objects
 function getTimeDelta(t1, t2 = new Date()) {
   const timeDiff = Math.abs(t2.getTime() - t1.getTime());
   return Math.ceil(timeDiff / (1000 * 3600));
@@ -151,7 +152,7 @@ const omitEmptyFields = (obj) => {
 
 
 const scrollToTop = () => {
-  const pageTop = document.querySelector('header');
+  const pageTop = document.querySelector('section.pf-c-page__main-section');
   if (pageTop) {
     pageTop.scrollIntoView();
   }
