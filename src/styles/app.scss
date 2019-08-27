@@ -406,23 +406,19 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .infra-logo-crc {
-  height: 210px;
-  float: left;
-  margin: -60px;
-  padding-left: 15px;
+  height: 70px;
 }
 
 .infra-crc-laptop {
   font-size: var(--pf-global--FontSize--4xl);
-  margin-right: 60px;
+  vertical-align: middle;
 }
 
 .infra-crc-icon-text {
   display: block;
-}
-
-.infra-crc-alignment {
-  float: left;
+  font-size: var(--pf-global--FontSize--sm);
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .flex-container {
