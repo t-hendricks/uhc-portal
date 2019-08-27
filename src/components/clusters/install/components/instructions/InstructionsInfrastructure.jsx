@@ -8,7 +8,7 @@ import AWSLogo from '../../../../../styles/images/AWS.png';
 import AzureLogo from '../../../../../styles/images/Microsoft_Azure_Logo.svg';
 import GCPLogo from '../../../../../styles/images/google-cloud-logo.svg';
 import vSphereLogo from '../../../../../styles/images/vmware_vsphere.png';
-import CRCLogo from '../../../../../styles/images/Red_Hat_Code_Ready_Containers.png';
+import CRCLogo from '../../../../../styles/images/Icon_RH_Hardware_Laptop-A_RGB_Flat.svg';
 
 const InstructionsInfrastructure = () => (
   <Card>
@@ -60,8 +60,11 @@ const InstructionsInfrastructure = () => (
         </Link>
         <Link to="/install/crc/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
-            <img src={CRCLogo} alt="CRC" className="infra-logo-crc" />
-            <br />
+            <span className="infra-crc-alignment">
+              <img src={CRCLogo} alt="CRC" className="infra-logo-crc" />
+              <span className="infra-crc-laptop">Laptop</span>
+              <span className="infra-crc-icon-text">CodeReady Containers</span>
+            </span>
             <span className="crc-dev-preview-card">
               <CodeIcon />
               {' '}

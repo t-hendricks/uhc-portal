@@ -74,7 +74,7 @@ class InstructionsCRC extends React.Component {
                 <p>
                   Windows:
                   <a
-                    href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/"
+                    href="https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-windows-amd64.zip"
                     disabled={!!token.error}
                   >
                     {' '}
@@ -86,7 +86,7 @@ class InstructionsCRC extends React.Component {
                 <p>
                   macOS:
                   <a
-                    href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/"
+                    href="https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.tar.xz"
                     disabled={!token.error}
                   >
                     {' '}
@@ -98,7 +98,7 @@ class InstructionsCRC extends React.Component {
                 <p>
                   Linux:
                   <a
-                    href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/"
+                    href="https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
                     disabled={!!token.error}
                   >
                     {' '}
