@@ -659,7 +659,7 @@ h4.pf-c-alert__title {
   height: 132px;
 }
 
-.create-cluster-button-split {
+.split-margin-left {
   margin-left: 15px;
 }
 
@@ -674,4 +674,9 @@ span.dev-preview-label {
 
 span.dev-preview-label svg {
   color: var(--ins-color--orange);
+}
+
+.cluster-list .pf-c-chip-group .pf-c-chip-group__label {
+  margin-right: 10px;
+  overflow: visible;
 }

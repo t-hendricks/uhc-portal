@@ -1,5 +1,6 @@
 import isEqual from 'lodash/isEqual';
 import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 
 const noop = Function.prototype;
 
@@ -47,6 +48,7 @@ const createViewQueryObject = (viewOptions, queryObj) => {
   if (viewOptions) {
     queryObject.page = viewOptions.currentPage;
     queryObject.page_size = viewOptions.pageSize;
+
     if (viewOptions.sorting.sortField !== null) {
       const direction = viewOptions.sorting.isAscending ? 'asc' : 'desc';
       if (viewOptions.sorting.sortField === 'name') {
@@ -67,6 +69,11 @@ const createViewQueryObject = (viewOptions, queryObj) => {
     */
     const escaped = viewOptions.filter ? viewOptions.filter.replace(/(')/g, '\'\'') : '';
     queryObject.filter = viewOptions.filter ? `display_name like '%${escaped}%' or (display_name = '' and name like '%${escaped}%') or external_id like '%${escaped}%'` : undefined;
+
+    if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
+      const statusList = viewOptions.flags.subscriptionFilter.map(item => `'${item}'`).join(',');
+      queryObject.subscriptionFilter = `entitlement_status in (${statusList})`;
+    }
   }
 
   return queryObject;

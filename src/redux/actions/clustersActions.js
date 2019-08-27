@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import result from 'lodash/result';
+import get from 'lodash/get';
 
 import { clustersConstants } from '../constants';
 import { clusterService, authorizationsService, accountsService } from '../../services';
@@ -43,34 +43,46 @@ const editCluster = (id, cluster) => dispatch => dispatch({
   payload: clusterService.editCluster(id, cluster),
 });
 
-const fetchClustersAndPermissions = (clusterRequestParams) => {
+/** Build a dict mapping a cluster ID to a specific permission state
+ * @param {*} response - a response from selfResourceReview
+ */
+const buildPermissionDict = (response) => {
+  const ret = {};
+  if (!response || !response.data || !response.data.cluster_ids) {
+    return ret;
+  }
+  response.data.cluster_ids.forEach((clusterID) => {
+    ret[clusterID] = true;
+  });
+  return ret;
+};
+
+/**
+ * Collect a list of object IDs and build a SQL-like query searching for these IDs.
+ * For example, to collect subscription IDs from clusters, so we can query
+ * for the subscription info.
+ * @param {*} response A response containing a collection of items
+ * @param {string} field The field containing the ID to collect for the search
+ */
+const buildSearchQuery = (response, field) => {
+  const IDs = new Set();
+  const items = get(response, 'data.items', []);
+  items.forEach((item) => {
+    const objectID = get(item, field);
+    if (objectID) {
+      IDs.add(`'${objectID}'`);
+    }
+  });
+  if (IDs.length === 0) {
+    return false;
+  }
+  return `id in (${Array.from(IDs).join(',')})`;
+};
+
+const fetchClustersAndPermissions = (clusterRequestParams, subscriptions) => {
   let clusters;
   let canEdit;
   let canDelete;
-  const buildPermissionDict = (response) => {
-    const ret = {};
-    if (!response || !response.data || !response.data.cluster_ids) {
-      return ret;
-    }
-    response.data.cluster_ids.forEach((clusterID) => {
-      ret[clusterID] = true;
-    });
-    return ret;
-  };
-
-  const buildSearchQuery = (response, field) => {
-    const IDs = new Set();
-    response.data.items.forEach((cluster) => {
-      const subscriptionID = result(cluster, field);
-      if (subscriptionID) {
-        IDs.add(`'${subscriptionID}'`);
-      }
-    });
-    if (IDs.length === 0) {
-      return false;
-    }
-    return `id in (${Array.from(IDs).join(',')})`;
-  };
 
   const promises = [
     clusterService.getClusters(clusterRequestParams).then((response) => {
@@ -90,35 +102,64 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
       const cluster = clusters.data.items[i];
       clusters.data.items[i].canEdit = canEdit['*'] || !!canEdit[cluster.id];
       clusters.data.items[i].canDelete = canDelete['*'] || !!canDelete[cluster.id];
-      const subscription = result(cluster, 'subscription.id');
-      if (subscription) {
-        subscriptionMap[subscription] = i;
+      const subscriptionID = get(cluster, 'subscription.id');
+      if (subscriptionID) {
+        if (!subscriptions) {
+          // we don't have subscriptions yet.
+          // Add this to the map, so we can fetch subscriptions later
+          subscriptionMap[subscriptionID] = i;
+        } else {
+          // We got subscriptions as a parameter, enrich the cluster with the subscription info
+          clusters.data.items[i].subscription = subscriptions[subscriptionID];
+        }
       }
     }
-    if (clusters.data.items.length > 0) {
+
+    if (!subscriptions && clusters.data.items.length > 0) {
       // We got clusters, so we need to find their subscriptions and accounts
       const query = buildSearchQuery(clusters, 'subscription.id');
-      if (!query) {
-        // Guard against cases in which all clusters have no subscription info.
-        return clusters;
+      if (query) {
+        return accountsService.getSubscriptions(query).then((response) => {
+          // Enrich cluster results with subscription information
+          response.data.items.forEach((subscriptionItem) => {
+            const index = subscriptionMap[subscriptionItem.id];
+            clusters.data.items[index].subscription = subscriptionItem;
+          });
+          return clusters;
+        }).catch(() => clusters); // catch to return clusters even if subscription query fails
       }
-      return accountsService.getSubscriptions(query).then((response) => {
-        // Enrich cluster results with subscription information
-        response.data.items.forEach((subscriptionItem) => {
-          const index = subscriptionMap[subscriptionItem.id];
-          clusters.data.items[index].subscription = subscriptionItem;
-        });
-        return clusters;
-      }).catch(() => clusters); // catch to return clusters even if subscription query fails
     }
-    // return empty result.
+
     return clusters;
   });
 };
 
+const fetchClustersBySubscription = requestParams => accountsService.getSubscriptions(
+  requestParams.subscriptionFilter,
+).then(
+  (response) => {
+    const clustersQuery = buildSearchQuery(response, 'cluster_id');
+    if (!clustersQuery) {
+      return response;
+    }
+    const params = {
+      ...requestParams,
+      filter: requestParams.filter ? `${clustersQuery} AND (${requestParams.filter})` : clustersQuery,
+    };
+      // convert the subscription list into a id -> subscription map
+    const subscriptions = {};
+    get(response, 'data.items', []).forEach((subscription) => {
+      subscriptions[subscription.id] = subscription;
+    });
+    return fetchClustersAndPermissions(params, subscriptions);
+  },
+);
+
 const fetchClusters = params => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTERS,
-  payload: fetchClustersAndPermissions(params),
+  payload: params.subscriptionFilter
+    ? fetchClustersBySubscription(params)
+    : fetchClustersAndPermissions(params),
 });
 
 const fetchSingleClusterAndPermissions = (clusterID) => {
@@ -140,12 +181,12 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
   return Promise.all(promises).then(() => {
     cluster.data.canEdit = canEdit;
     cluster.data.canDelete = canDelete;
-    const subscriptionID = result(cluster.data, 'subscription.id');
+    const subscriptionID = get(cluster.data, 'subscription.id');
     if (subscriptionID) {
       // FIXME accounts service does not support fetching account info for a single
       // subscription, so we have to use the search endpoint here
       return accountsService.getSubscriptions(`id='${subscriptionID}'`).then((subscriptions) => {
-        cluster.data.subscription = result(subscriptions, 'data.items[0]');
+        cluster.data.subscription = get(subscriptions, 'data.items[0]');
         return cluster;
       }).catch(() => cluster);
     }
