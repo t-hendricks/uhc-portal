@@ -33,6 +33,7 @@ import InstallAzure from '../clusters/install/InstallAzure';
 import InstallGCP from '../clusters/install/InstallGCP';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
+import InstallCRC from '../clusters/install/InstallCRC';
 import Tokens from '../tokens/Tokens';
 
 function Router(props) {
@@ -49,6 +50,7 @@ function Router(props) {
         <Route path="/install/azure/installer-provisioned" component={InstallAzure} />
         <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
         <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
+        <Route path="/install/crc/installer-provisioned" component={InstallCRC} />
         <Route path="/install/pre-release" component={InstallPreRelease} />
         <Route path="/install" component={InstallInfrastructure} />
         <Route path="/details/:id" component={ClusterDetails} />

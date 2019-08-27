@@ -405,6 +405,26 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-top: 10px;
 }
 
+.infra-logo-crc {
+  height: 210px;
+  float: left;
+  margin: -60px;
+  padding-left: 15px;
+}
+
+.infra-crc-laptop {
+  font-size: var(--pf-global--FontSize--4xl);
+  margin-right: 60px;
+}
+
+.infra-crc-icon-text {
+  display: block;
+}
+
+.infra-crc-alignment {
+  float: left;
+}
+
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -465,7 +485,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   pointer-events: all !important;
 }
 
-.azure-dev-preview-card, .gcp-dev-preview-card {
+.azure-dev-preview-card, .gcp-dev-preview-card, .crc-dev-preview-card {
   color: var(--pf-global--link--Color);
 }
 
