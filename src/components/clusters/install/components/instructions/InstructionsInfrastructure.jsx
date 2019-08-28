@@ -8,6 +8,7 @@ import AWSLogo from '../../../../../styles/images/AWS.png';
 import AzureLogo from '../../../../../styles/images/Microsoft_Azure_Logo.svg';
 import GCPLogo from '../../../../../styles/images/google-cloud-logo.svg';
 import vSphereLogo from '../../../../../styles/images/vmware_vsphere.png';
+import CRCLogo from '../../../../../styles/images/Icon_RH_Hardware_Laptop-A_RGB_Flat.svg';
 
 const InstructionsInfrastructure = () => (
   <Card>
@@ -47,7 +48,7 @@ const InstructionsInfrastructure = () => (
       </div>
       <div className="flex-container">
         <Link to="/install/gcp/installer-provisioned" className="infra-card infra-card-cloud-provider">
-          <CardBody className="gcp-card-body">
+          <CardBody>
             <img src={GCPLogo} alt="GCP" className="infra-logo-google-cloud" />
             <br />
             <span className="gcp-dev-preview-card">
@@ -57,7 +58,18 @@ const InstructionsInfrastructure = () => (
             </span>
           </CardBody>
         </Link>
-        <CardBody className="infra-card-placeholder" />
+        <Link to="/install/crc/installer-provisioned" className="infra-card infra-card-cloud-provider">
+          <CardBody>
+            <img src={CRCLogo} alt="CRC" className="infra-logo-crc" />
+            <span className="infra-crc-laptop">Laptop</span>
+            <span className="infra-crc-icon-text">Powered by Red Hat CodeReady Containers</span>
+            <span className="crc-dev-preview-card">
+              <CodeIcon />
+              {' '}
+              Developer Preview
+            </span>
+          </CardBody>
+        </Link>
       </div>
     </div>
   </Card>

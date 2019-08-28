@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterListFilterChipGroup /> should render 1`] = `
+<ChipGroup
+  className=""
+  collapsedText="\${remaining} more"
+  expandedText="Show Less"
+  withToolbar={true}
+>
+  <ChipGroupToolbarItem
+    categoryName="Subscription status"
+    key="Subscription status"
+  >
+    <Chip
+      className=""
+      closeBtnAriaLabel="close"
+      component="div"
+      isOverflowChip={false}
+      isReadOnly={false}
+      key="NotSet"
+      onClick={[Function]}
+      tooltipPosition="top"
+    >
+      Not Subscribed
+    </Chip>
+  </ChipGroupToolbarItem>
+</ChipGroup>
+`;

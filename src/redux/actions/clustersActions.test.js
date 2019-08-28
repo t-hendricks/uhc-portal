@@ -66,7 +66,7 @@ describe('clustersActions', () => {
 
   describe('fetchClusters', () => {
     it('dispatches successfully', () => {
-      clustersActions.fetchClusters()(mockDispatch);
+      clustersActions.fetchClusters({})(mockDispatch);
       expect(mockDispatch).toBeCalledWith({
         payload: expect.anything(),
         type: clustersConstants.GET_CLUSTERS,
