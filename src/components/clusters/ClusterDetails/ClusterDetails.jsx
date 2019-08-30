@@ -22,7 +22,6 @@ import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
-import Monitoring from './components/Monitoring';
 import Users from './components/Users';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
@@ -41,7 +40,6 @@ class ClusterDetails extends Component {
     this.refreshIDP = this.refreshIDP.bind(this);
 
     this.overviewTabRef = React.createRef();
-    this.monitoringTabRef = React.createRef();
     this.usersTabRef = React.createRef();
     this.logsTabRef = React.createRef();
   }
@@ -211,7 +209,6 @@ class ClusterDetails extends Component {
             displayLogs={hasLogs}
             displayUsersTab={cluster.managed && cluster.canEdit}
             overviewTabRef={this.overviewTabRef}
-            monitoringTabRef={this.monitoringTabRef}
             usersTabRef={this.usersTabRef}
             logsTabRef={this.logsTabRef}
           />
@@ -222,14 +219,11 @@ class ClusterDetails extends Component {
             cloudProviders={cloudProviders}
           />
         </TabContent>
-        <TabContent eventKey={1} id="monitoringTabContent" ref={this.monitoringTabRef} aria-label="Monitoring" hidden>
-          <Monitoring cluster={cluster} />
-        </TabContent>
-        <TabContent eventKey={2} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
+        <TabContent eventKey={1} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
           <Users clusterID={cluster.id} />
         </TabContent>
         {hasLogs && (
-        <TabContent eventKey={3} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
+        <TabContent eventKey={2} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
           <LogWindow clusterID={cluster.id} />
         </TabContent>
         )}
