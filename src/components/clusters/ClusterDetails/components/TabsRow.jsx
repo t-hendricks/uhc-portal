@@ -19,7 +19,7 @@ class TabsRow extends React.Component {
 
   render() {
     const {
-      displayLogs, displayUsersTab, overviewTabRef, monitoringTabRef, usersTabRef, logsTabRef,
+      displayLogs, displayUsersTab, overviewTabRef, usersTabRef, logsTabRef,
     } = this.props;
     const { activeTabKey } = this.state;
 
@@ -27,19 +27,15 @@ class TabsRow extends React.Component {
       <Tab key={0} eventKey={0} title="Overview" tabContentId="overviewTabContent" tabContentRef={overviewTabRef} />
     );
 
-    const monitoringTab = (
-      <Tab key={1} eventKey={1} title="Monitoring" tabContentId="monitoringTabContent" tabContentRef={monitoringTabRef} />
-    );
-
     const usersTab = displayUsersTab && (
-    <Tab key={2} eventKey={2} title="Users" tabContentId="usersTabContent" tabContentRef={usersTabRef} />
+    <Tab key={1} eventKey={1} title="Users" tabContentId="usersTabContent" tabContentRef={usersTabRef} />
     );
 
     const logsTab = displayLogs && (
-    <Tab key={3} eventKey={3} title="Logs" tabContentId="logsTabContent" tabContentRef={logsTabRef} />
+    <Tab key={2} eventKey={2} title="Logs" tabContentId="logsTabContent" tabContentRef={logsTabRef} />
     );
 
-    const tabsToDisplay = [overviewTab, monitoringTab, usersTab, logsTab].filter(Boolean);
+    const tabsToDisplay = [overviewTab, usersTab, logsTab].filter(Boolean);
 
     return (
       <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
@@ -52,7 +48,6 @@ TabsRow.propTypes = {
   displayLogs: PropTypes.bool,
   displayUsersTab: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
-  monitoringTabRef: PropTypes.object.isRequired,
   logsTabRef: PropTypes.object.isRequired,
   usersTabRef: PropTypes.object.isRequired,
 };
