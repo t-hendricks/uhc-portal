@@ -7,7 +7,7 @@ import {
 import MonitoringListItem from './MonitoringListItem';
 import AlertsTable from './AlertsTable';
 import NodesTable from './NodesTable';
-import ClusterOperators from './ClusterOperators';
+// import ClusterOperators from './ClusterOperators';
 import ResourceUsage from '../../Overview/ResourceUsage/ResourceUsage';
 
 import { getClusterStateAndDescription } from '../../../../common/clusterStates';
@@ -39,12 +39,12 @@ class MonitoringList extends React.Component {
         <MonitoringListItem title="Alerts firing" numOfIssues={alerts.numOfIssues} toggle={this.toggle} expanded={expanded}>
           <AlertsTable alerts={alerts.data} />
         </MonitoringListItem>
-        <MonitoringListItem title="Nodes" toggle={this.toggle} expanded={expanded}>
+        <MonitoringListItem title="Nodes" numOfIssues={nodes.numOfIssues} toggle={this.toggle} expanded={expanded}>
           <NodesTable nodes={nodes.data} />
         </MonitoringListItem>
-        <MonitoringListItem title="Cluster operators" toggle={this.toggle} expanded={expanded}>
+        {/* <MonitoringListItem title="Cluster operators" toggle={this.toggle} expanded={expanded}>
           <ClusterOperators />
-        </MonitoringListItem>
+        </MonitoringListItem> */}
         <MonitoringListItem title="Resource usage" numOfIssues={resourceUsage.numOfIssues} toggle={this.toggle} expanded={expanded}>
           <div className="metrics-chart">
             <ResourceUsage cluster={{ ...cluster, state: clusterState }} />

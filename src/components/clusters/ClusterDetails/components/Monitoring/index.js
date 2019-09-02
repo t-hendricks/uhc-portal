@@ -9,15 +9,26 @@ import {
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
   const { alerts, nodes } = state.monitoring;
-  const lastTelemetryDate = cluster.subscription.last_telemetry_date;
+
   const cpu = get(state, 'clusters.details.cluster.metrics.cpu', null);
   const memory = get(state, 'clusters.details.cluster.metrics.memory', null);
+  const isPending = alerts.pending || nodes.pending || state.clusters.details.pending;
+
   const alertsIssues = issuesSelector(alerts.data, 'severity', 'critical');
   const nodesIssues = issuesSelector(nodes.data, 'up', 0);
-  const lastCheckIn = lastCheckInSelector(lastTelemetryDate);
+  const lastCheckIn = lastCheckInSelector(cluster.activity_timestamp);
   const resourceUsageIssues = resourceUsageIssuesSelector(cpu, memory);
+  const discoveredIssues = (alertsIssues + nodesIssues + resourceUsageIssues) || null;
   const healthStatus = clusterHealthSelector(
-    cluster, lastCheckIn, alertsIssues, nodesIssues, resourceUsageIssues,
+    cluster,
+    lastCheckIn,
+    nodes.data,
+    alerts.data,
+    cpu,
+    memory,
+    alertsIssues,
+    nodesIssues,
+    resourceUsageIssues,
   );
 
   return ({
@@ -25,6 +36,8 @@ const mapStateToProps = (state) => {
     alerts: { ...alerts, numOfIssues: nodesIssues },
     lastCheckIn: lastCheckIn.message,
     resourceUsage: { numOfIssues: resourceUsageIssues },
+    discoveredIssues,
+    isPending,
     healthStatus,
   });
 };

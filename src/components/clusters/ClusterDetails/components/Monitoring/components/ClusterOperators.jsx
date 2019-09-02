@@ -13,8 +13,7 @@ import {
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
 
-import { statuses } from '../statusHelper';
-
+import { opertatorsStatuses } from '../statusHelper';
 
 function ClusterOperatorsTable({ operators = [] }) {
   const columns = [
@@ -27,15 +26,15 @@ function ClusterOperatorsTable({ operators = [] }) {
     let icon;
     let statusStr;
     switch (status) {
-      case statuses.AVAILABLE:
+      case opertatorsStatuses.AVAILABLE:
         icon = <OkIcon className="status-icon" color={global_success_color_100.value} size="md" />;
         statusStr = 'Available';
         break;
-      case statuses.FAILING:
+      case opertatorsStatuses.FAILING:
         icon = <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />;
         statusStr = 'Failing';
         break;
-      case statuses.UPDATING:
+      case opertatorsStatuses.UPDATING:
         icon = <InProgressIcon className="status-icon" size="md" />;
         statusStr = 'Updating';
         break;

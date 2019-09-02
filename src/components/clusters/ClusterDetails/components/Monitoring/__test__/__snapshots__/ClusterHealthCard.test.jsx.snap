@@ -11,8 +11,8 @@ exports[`<ClusterHealthCard /> should render 1`] = `
       >
         <Split>
           <SplitItem>
-            <UnknownIcon
-              color="currentColor"
+            <WarningTriangleIcon
+              color="#f0ab00"
               noVerticalAlign={false}
               size="md"
               title={null}
@@ -23,21 +23,13 @@ exports[`<ClusterHealthCard /> should render 1`] = `
               headingLevel="h2"
               size="3xl"
             >
-              Cluster health is unknown
+              Cluster has no metrics
             </Title>
           </SplitItem>
         </Split>
       </SplitItem>
-      <SplitItem>
-        <ExclamationCircleIcon
-          color="#c9190b"
-          noVerticalAlign={false}
-          size="md"
-          title={null}
-        />
-      </SplitItem>
+      <SplitItem />
     </Split>
   </CardHeader>
-  <CardBody />
 </Card>
 `;
