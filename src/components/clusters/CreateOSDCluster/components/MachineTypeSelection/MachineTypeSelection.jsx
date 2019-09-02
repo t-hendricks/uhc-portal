@@ -4,7 +4,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Gallery, GalleryItem } from '@patternfly/react-core';
 import { CpuIcon, MemoryIcon, ContainerNodeIcon } from '@patternfly/react-icons';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import FlatRadioButton from '../../../../common/FlatRadioButton';
@@ -113,10 +112,10 @@ class MachineTypeSelection extends React.Component {
       organization,
       input,
       meta: { error, touched },
+      getOrganizationAndQuota,
       ...extraProps
     } = this.props;
     const { currentValue } = this.state;
-
 
     const changeHandler = (value) => {
       this.setState({ currentValue: value });
@@ -130,31 +129,29 @@ class MachineTypeSelection extends React.Component {
 
       const hasQuota = this.hasQuota(machineType.id);
       return (
-        <GalleryItem key={machineType.id}>
-          <FlatRadioButton
-            {...extraProps}
-            id={`machineTypeRadio.${machineType.id}`}
-            value={machineType.id}
-            isDisabled={!hasQuota}
-            isSelected={hasQuota && currentValue === machineType.id}
-            titleText={labelTitle}
-            secondaryText={machineType.name}
-            icon={machineTypeIcon(machineType.id)}
-            onChange={changeHandler}
-          />
-        </GalleryItem>
+        <FlatRadioButton
+          {...extraProps}
+          key={machineType.id}
+          id={`machineTypeRadio.${machineType.id}`}
+          value={machineType.id}
+          isDisabled={!hasQuota}
+          isSelected={hasQuota && currentValue === machineType.id}
+          titleText={labelTitle}
+          secondaryText={machineType.name}
+          icon={machineTypeIcon(machineType.id)}
+          onChange={changeHandler}
+        />
       );
     };
 
     if (machineTypes.fulfilled && organization.fulfilled) {
       return (
-        <div className="node-type-input">
-          <div className="node-type-label">Node type</div>
+        <React.Fragment>
           {(touched && error) && (<span className="error">{error}</span>)}
-          <Gallery gutter="sm">
+          <div className="machine-types-flex-container">
             {machineTypes.types.map(type => machineTypeRadio(type))}
-          </Gallery>
-        </div>
+          </div>
+        </React.Fragment>
       );
     }
 
@@ -163,7 +160,7 @@ class MachineTypeSelection extends React.Component {
     ) : (
       <React.Fragment>
         <div className="spinner-fit-container"><Spinner /></div>
-        <div className="spinner-loading-text">Loading node types..</div>
+        <div className="spinner-loading-text">Loading node types...</div>
       </React.Fragment>
     );
   }

@@ -11,6 +11,28 @@ exports[`<CreateCluster /> renders correctly 1`] = `
   <div
     className="pf-c-content ocm-page"
   >
+    <Breadcrumb
+      className="breadcrumbs-in-card"
+    >
+      <LinkContainer
+        activeClassName="active"
+        exact={false}
+        replace={false}
+        strict={false}
+        to=""
+      >
+        <BreadcrumbItem
+          to="#"
+        >
+          Clusters
+        </BreadcrumbItem>
+      </LinkContainer>
+      <BreadcrumbItem
+        isActive={true}
+      >
+        Create
+      </BreadcrumbItem>
+    </Breadcrumb>
     <PageTitle
       title="Create a Cluster to Get Started"
     />

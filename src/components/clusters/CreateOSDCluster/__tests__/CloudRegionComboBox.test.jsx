@@ -23,7 +23,7 @@ describe('<CloudRegionComboBox />', () => {
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
-          onChange={onChange}
+          input={{ onChange }}
           getCloudProviders={getCloudProviders}
         />,
       );
@@ -61,7 +61,7 @@ describe('<CloudRegionComboBox />', () => {
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
-          onChange={onChange}
+          input={{ onChange }}
           getCloudProviders={getCloudProviders}
         />,
       );
@@ -98,7 +98,7 @@ describe('<CloudRegionComboBox />', () => {
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
-          onChange={onChange}
+          input={{ onChange }}
           getCloudProviders={getCloudProviders}
         />,
       );
@@ -151,7 +151,7 @@ describe('<CloudRegionComboBox />', () => {
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
-          onChange={onChange}
+          input={{ onChange }}
           getCloudProviders={getCloudProviders}
         />,
       );

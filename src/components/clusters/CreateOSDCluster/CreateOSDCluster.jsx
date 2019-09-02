@@ -3,17 +3,15 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
-
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
   Breadcrumb,
-  Grid,
-  Row,
-  Form,
-} from 'patternfly-react';
-import {
-  Card,
+  BreadcrumbItem,
   Button,
+  Card,
+  Form,
+  Grid,
+  GridItem,
   Split,
   SplitItem,
 } from '@patternfly/react-core';
@@ -22,7 +20,6 @@ import PageTitle from '../../common/PageTitle';
 import ErrorBox from '../../common/ErrorBox';
 import constants from './CreateOSDClusterHelper';
 import ManagedClusterForm from './ManagedClusterForm';
-
 
 class CreateOSDCluster extends React.Component {
   componentDidMount() {
@@ -72,30 +69,38 @@ class CreateOSDCluster extends React.Component {
         <div className="pf-c-content ocm-page">
           <Breadcrumb className="breadcrumbs-in-card">
             <LinkContainer to="">
-              <Breadcrumb.Item href="#">
+              <BreadcrumbItem to="#">
                 Clusters
-              </Breadcrumb.Item>
+              </BreadcrumbItem>
             </LinkContainer>
-            <Breadcrumb.Item active>
-              Create a Red Hat-Managed Cluster
-            </Breadcrumb.Item>
+            <LinkContainer to="/create">
+              <BreadcrumbItem to="#">
+                Create
+              </BreadcrumbItem>
+            </LinkContainer>
+            <BreadcrumbItem isActive>
+              OpenShift Dedicated
+            </BreadcrumbItem>
           </Breadcrumb>
 
-          <PageTitle title="Create a Red Hat-Managed Cluster" />
+          <PageTitle title="Create an OpenShift Dedicated Cluster" />
+
           <Form onSubmit={handleSubmit}>
-            {hasError}
-            <ManagedClusterForm {...formProps} touch={touch} />
-            <Grid>
-              <Row>
+            <Grid gutter="sm">
+
+              {hasError}
+              <ManagedClusterForm pending={formProps.pending} touch={touch} />
+
+              <GridItem>
                 <Split gutter="sm" className="create-osd-form-button-split">
                   <SplitItem>
                     <Button variant="primary" type="submit" onClick={handleSubmit} disabled={createClusterResponse.pending}>
-                      Create
+                      Create cluster
                     </Button>
                   </SplitItem>
                   <SplitItem>
                     <Link to="/">
-                      <Button variant="secondary" onClick={this.reset} disabled={createClusterResponse.pending}>
+                      <Button variant="secondary" disabled={createClusterResponse.pending}>
                         Cancel
                       </Button>
                     </Link>
@@ -104,9 +109,11 @@ class CreateOSDCluster extends React.Component {
                     {createClusterResponse.pending ? loadingSpinner() : null}
                   </SplitItem>
                 </Split>
-              </Row>
+              </GridItem>
+
             </Grid>
           </Form>
+
         </div>
       </Card>
     );
