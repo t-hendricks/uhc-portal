@@ -15,7 +15,7 @@ function NodesTable({ nodes = [] }) {
   const columns = [
     { title: 'Name' },
     { title: 'Status' },
-    { title: 'Node addreess' },
+    { title: 'Node address' },
   ];
 
   const nodeStatus = (status) => {

@@ -12,7 +12,7 @@ exports[`<ClusterHealthCard /> should render 1`] = `
         "title": "Status",
       },
       Object {
-        "title": "Node addreess",
+        "title": "Node address",
       },
     ]
   }
