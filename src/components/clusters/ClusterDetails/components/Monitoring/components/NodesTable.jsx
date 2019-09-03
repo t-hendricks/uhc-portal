@@ -15,7 +15,7 @@ function NodesTable({ nodes = [] }) {
   const columns = [
     { title: 'Name' },
     { title: 'Status' },
-    { title: 'Node addreess' },
+    { title: 'Node address' },
   ];
 
   const nodeStatus = (status) => {
@@ -36,9 +36,9 @@ function NodesTable({ nodes = [] }) {
   };
 
   const rows = nodes.map(node => ([
-    { title: node.node },
+    { title: node.hostname },
     { title: nodeStatus(node.up) },
-    { title: `Internal IP: ${node.instance}` },
+    { title: `Internal IP: ${node.internal_ip}` },
   ]));
 
 
