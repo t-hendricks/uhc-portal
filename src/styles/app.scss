@@ -409,6 +409,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   height: 70px;
 }
 
+.infra-logo-osp {
+  height: 84px;
+  margin: 10px;
+}
+
 .infra-crc-laptop {
   font-size: var(--pf-global--FontSize--4xl);
   vertical-align: middle;
@@ -493,7 +498,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   pointer-events: all !important;
 }
 
-.azure-dev-preview-card, .gcp-dev-preview-card, .crc-dev-preview-card {
+.azure-dev-preview-card, .gcp-dev-preview-card, .crc-dev-preview-card, .osp-dev-preview-card {
   color: var(--pf-global--link--Color);
 }
 
