@@ -13,7 +13,6 @@ function dropDownItems({
 
   const uninstallingMessage = <span>The cluster is being uninstalled</span>;
   const consoleDisabledMessage = <span>Admin console is not yet available for this cluster</span>;
-  const selfManagedEditMessage = <span>Self managed cluster cannot be edited</span>;
   const notReadyMessage = <span>This cluster is not ready</span>;
 
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
@@ -49,11 +48,6 @@ function dropDownItems({
       ...baseProps,
       key: getKey('editcluster'),
     };
-    const selfManagedEditProps = {
-      ...editClusterBaseProps,
-      isDisabled: true,
-      tooltip: isClusterUninstalling ? uninstallingMessage : selfManagedEditMessage,
-    };
 
     const managedEditProps = {
       ...editClusterBaseProps,
@@ -66,9 +60,6 @@ function dropDownItems({
       tooltip: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
     };
 
-    if (!cluster.managed) {
-      return selfManagedEditProps;
-    }
     return isClusterReady ? managedEditProps : disabledManagedEditProps;
   };
 
@@ -126,13 +117,14 @@ function dropDownItems({
   const deleteClusterItemProps = getDeleteItemProps();
   const deleteIDPItemProps = getDeleteIDPProps();
   const showDelete = cluster.canDelete && cluster.managed;
+  const showScale = cluster.canEdit && cluster.managed;
 
   return [
     showConsoleButton && (
     <DropdownItem {...adminConsoleItemProps}>Launch Admin Console</DropdownItem>),
     cluster.canEdit && (
     <DropdownItem {...editDisplayNameItemProps}>Edit Display Name</DropdownItem>),
-    cluster.canEdit && <DropdownItem {...editClusterItemProps}>Scale Cluster</DropdownItem>,
+    showScale && <DropdownItem {...editClusterItemProps}>Scale Cluster</DropdownItem>,
     showDelete && <DropdownItem {...deleteClusterItemProps}>Delete Cluster</DropdownItem>,
     shouldShowIDPButton && (
     <DropdownItem {...deleteIDPItemProps}>Remove Identity Provider</DropdownItem>),
