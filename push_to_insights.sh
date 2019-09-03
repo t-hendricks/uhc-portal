@@ -54,20 +54,6 @@ fi
 VERSION="$(git log --pretty=format:'%h' -n 1)"
 SUBJECT="$(git log --pretty=format:'%s' -n 1)"
 
-# Set the Go path:
-export GOPATH="${PWD}/.gopath"
-export PATH="${PATH}:${GOPATH}/bin"
-
-# Create the project directory inside the Go path and copy all the files of
-# the project:
-PROJECT="${GOPATH}/src/gitlab.cee.redhat.com/service/uhc-portal"
-mkdir -p "${PROJECT}"
-rsync -ap \
-  --exclude=.gopath \
-  --exclude=.git \
-  . "${PROJECT}"
-cd "${PROJECT}"
-
 # Save the push key:
 rm --force key
 echo "${PUSH_KEY}" | base64 --decode > key

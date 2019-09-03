@@ -28,21 +28,21 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/golang/glog"
-	"github.com/openshift-online/uhc-sdk-go/pkg/client"
+	"github.com/openshift-online/uhc-sdk-go"
 )
 
 // AuthHandlerBuilder contains the configuration and logic needed to create an authentication
 // handler.
 type AuthHandlerBuilder struct {
 	sessions   *SessionStore
-	connection *client.Connection
+	connection *sdk.Connection
 }
 
 // AuthHandler is an authentication handler.
 type AuthHandler struct {
 	sessions   *SessionStore
 	parser     *jwt.Parser
-	connection *client.Connection
+	connection *sdk.Connection
 }
 
 // NewAuthHandler creates a builder that can then be used to configure and create authentication
@@ -59,7 +59,7 @@ func (b *AuthHandlerBuilder) Sessions(value *SessionStore) *AuthHandlerBuilder {
 }
 
 // Connection sets the connection to the server that will be used to obtain access tokens.
-func (b *AuthHandlerBuilder) Connection(value *client.Connection) *AuthHandlerBuilder {
+func (b *AuthHandlerBuilder) Connection(value *sdk.Connection) *AuthHandlerBuilder {
 	b.connection = value
 	return b
 }
@@ -498,7 +498,7 @@ const (
 
 // ProxyHandlerBuilder contains the configuration and logic needed to build proxy handlers.
 type ProxyHandlerBuilder struct {
-	connection *client.Connection
+	connection *sdk.Connection
 	target     string
 	sessions   *SessionStore
 }
@@ -506,7 +506,7 @@ type ProxyHandlerBuilder struct {
 // ProxyHandler is an an HTTP handler that forwards requests to a real API gateway, replacing the
 // authorization header with a valid token.
 type ProxyHandler struct {
-	connection *client.Connection
+	connection *sdk.Connection
 	target     *url.URL
 	sessions   *SessionStore
 	parser     *jwt.Parser
@@ -519,7 +519,7 @@ func NewProxyHandler() *ProxyHandlerBuilder {
 }
 
 // Connection sets the connection that will be used to obtain real bearer tokens for the user.
-func (b *ProxyHandlerBuilder) Connection(value *client.Connection) *ProxyHandlerBuilder {
+func (b *ProxyHandlerBuilder) Connection(value *sdk.Connection) *ProxyHandlerBuilder {
 	b.connection = value
 	return b
 }
