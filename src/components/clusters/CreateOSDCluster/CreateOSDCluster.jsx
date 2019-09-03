@@ -23,7 +23,21 @@ import ManagedClusterForm from './ManagedClusterForm';
 
 class CreateOSDCluster extends React.Component {
   componentDidMount() {
+    const {
+      machineTypes, organization, cloudProviders,
+      getMachineTypes, getOrganizationAndQuota, getCloudProviders,
+    } = this.props;
+
     this.reset();
+    if (!organization.fulfilled && !organization.pending) {
+      getOrganizationAndQuota();
+    }
+    if (!machineTypes.fulfilled && !machineTypes.pending) {
+      getMachineTypes();
+    }
+    if (!cloudProviders.fulfilled && !cloudProviders.pending) {
+      getCloudProviders();
+    }
   }
 
   componentWillUnmount() {
@@ -41,6 +55,7 @@ class CreateOSDCluster extends React.Component {
   render() {
     const {
       handleSubmit, createClusterResponse, touch,
+      machineTypes, organization, cloudProviders,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -62,7 +77,9 @@ class CreateOSDCluster extends React.Component {
       </div>
     );
 
-    const formProps = { pending: createClusterResponse.pending };
+    if (machineTypes.pending || organization.pending || cloudProviders.pending) {
+      return <Spinner centered />;
+    }
 
     return (
       <Card>
@@ -89,7 +106,7 @@ class CreateOSDCluster extends React.Component {
             <Grid gutter="sm">
 
               {hasError}
-              <ManagedClusterForm pending={formProps.pending} touch={touch} />
+              <ManagedClusterForm pending={createClusterResponse.pending} touch={touch} />
 
               <GridItem>
                 <Split gutter="sm" className="create-osd-form-button-split">
@@ -125,6 +142,12 @@ CreateOSDCluster.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
   touch: PropTypes.func.isRequired,
+  machineTypes: PropTypes.object.isRequired,
+  cloudProviders: PropTypes.object.isRequired,
+  organization: PropTypes.object.isRequired,
+  getMachineTypes: PropTypes.func.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
+  getCloudProviders: PropTypes.func.isRequired,
 };
 
 export default CreateOSDCluster;

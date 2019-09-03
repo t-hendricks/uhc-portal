@@ -12,7 +12,7 @@ describe('CreateOSDCluster', () => {
   let createClusterResponse;
   let managedWrapper;
 
-  beforeEach(() => {
+  beforeAll(() => {
     resetResponse = jest.fn();
     getOrganizationAndQuota = jest.fn();
     resetForm = jest.fn();
@@ -24,6 +24,11 @@ describe('CreateOSDCluster', () => {
       fulfilled: false,
       cluster: null,
     };
+    const fulfilledRequest = {
+      pending: false,
+      error: false,
+      fulfilled: true,
+    };
 
     managedWrapper = shallow(<CreateOSDCluster
       resetResponse={resetResponse}
@@ -31,6 +36,11 @@ describe('CreateOSDCluster', () => {
       handleSubmit={handleSubmit}
       createClusterResponse={createClusterResponse}
       getOrganizationAndQuota={getOrganizationAndQuota}
+      getMachineTypes={jest.fn()}
+      getCloudProviders={jest.fn()}
+      organization={fulfilledRequest}
+      cloudProviders={fulfilledRequest}
+      machineTypes={fulfilledRequest}
     />);
   });
 
@@ -51,6 +61,41 @@ describe('CreateOSDCluster', () => {
     it('should call resetResponse and resetForm on mount', () => {
       expect(resetResponse).toBeCalled();
       expect(resetForm).toBeCalled();
+    });
+
+    it('should fetch cloud providers, machine types, and quota when first mounted', () => {
+      const getMachineTypes = jest.fn();
+      const getCloudProviders = jest.fn();
+      const initialRequestStatus = {
+        pending: false,
+        fulfilled: false,
+        error: false,
+      };
+      const pendingRequest = {
+        ...initialRequestStatus,
+        pending: true,
+      };
+      const wrapper = shallow(<CreateOSDCluster
+        resetResponse={resetResponse}
+        resetForm={resetForm}
+        handleSubmit={handleSubmit}
+        createClusterResponse={createClusterResponse}
+        getOrganizationAndQuota={getOrganizationAndQuota}
+        getMachineTypes={getMachineTypes}
+        getCloudProviders={getCloudProviders}
+        organization={initialRequestStatus}
+        cloudProviders={initialRequestStatus}
+        machineTypes={initialRequestStatus}
+      />);
+      expect(getOrganizationAndQuota).toBeCalled();
+      expect(getMachineTypes).toBeCalled();
+      expect(getCloudProviders).toBeCalled();
+      wrapper.setProps({
+        organization: pendingRequest,
+        cloudProviders: pendingRequest,
+        machineTypes: pendingRequest,
+      });
+      expect(wrapper).toMatchSnapshot();
     });
   });
 });

@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
+import { getMachineTypes } from '../../../redux/actions/machineTypesActions';
+import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
+import { getCloudProviders } from '../../../redux/actions/cloudProviderActions';
 import CreateOSDCluster from './CreateOSDCluster';
 
 
@@ -11,6 +14,9 @@ const reduxFormCreateCluster = reduxForm(reduxFormConfig)(CreateOSDCluster);
 
 const mapStateToProps = state => ({
   createClusterResponse: state.clusters.createdCluster,
+  machineTypes: state.machineTypes,
+  organization: state.userProfile.organization,
+  cloudProviders: state.cloudProviders.cloudProviders,
   initialValues: {
     name: '',
     nodes_compute: '4',
@@ -48,6 +54,9 @@ const mapDispatchToProps = dispatch => ({
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
+  getOrganizationAndQuota,
+  getMachineTypes,
+  getCloudProviders,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateCluster);
