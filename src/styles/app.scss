@@ -611,8 +611,8 @@ h4.pf-c-alert__title {
 }
 
 // Custom component FlatRadioButton
-.ocm-flat-radio-button {
-  &.pf-c-button.pf-m-tertiary::after { // specific selector to override PF4 button
+.pf-c-button.ocm-flat-radio-button {
+  &.pf-m-tertiary::after { // specific selector to override PF4 button
     border-width: var(--pf-global--BorderWidth--sm);
     border-color: var(--pf-global--Color--100);
   }
@@ -625,7 +625,7 @@ h4.pf-c-alert__title {
 
   &:hover, &.selected {
     // hover+selected colors
-    &.pf-c-button.pf-m-tertiary::after {
+    &.pf-m-tertiary::after {
       border-color: var(--pf-global--active-color--100);
       border-width: var(--pf-global--BorderWidth--md);
     }
@@ -634,18 +634,18 @@ h4.pf-c-alert__title {
     }
   }
 
-  &.selected.pf-c-button.pf-m-tertiary::after {
+  &.selected.pf-m-tertiary::after {
     // wider border for selected
     border-width: var(--pf-global--BorderWidth--lg);
   }
 
 
-  &.pf-c-button.pf-m-disabled {
+  &.pf-m-disabled {
     // disabled styles
     .pf-l-split, .ocm-flat-button-icon svg, h4.pf-c-title {
       color: var(---pf-global--Color--200);
     }
-    &.pf-c-button.pf-m-tertiary::after {
+    &.pf-m-tertiary::after {
       border-width: 0;
     }
     background-color: var(--pf-global--disabled-color--300);
