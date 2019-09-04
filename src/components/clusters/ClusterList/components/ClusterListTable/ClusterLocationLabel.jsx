@@ -58,7 +58,7 @@ class ClusterLocationLabel extends React.Component {
       return (
         <React.Fragment>
           {cloudProviders.providers[cloudProviderID].display_name}
-          {` (${region}`}
+          {` (${region})`}
         </React.Fragment>
       );
     }
