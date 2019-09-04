@@ -110,7 +110,7 @@ function ClusterListTable(props) {
 
   const columns = [
     { title: 'Name', transforms: [sortable, cellWidth(30)] },
-    { title: 'Health' },
+    { title: 'Status' },
     { title: 'Type' },
     { title: 'Subscription Status', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
