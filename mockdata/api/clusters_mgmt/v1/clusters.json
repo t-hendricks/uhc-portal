@@ -94,6 +94,7 @@
       "external_id": "b0c2d108-0603-41c3-9a8f-0a37eba5df49",
       "display_name": "b0c2d108-0603-41c3-9a8f-0a37eba5df49",
       "creation_timestamp": "2019-02-11T09:28:16.000143Z",
+      "openshift_version": "4.0",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
@@ -149,7 +150,12 @@
             "unit": "B"
           }
         },
-        "nodes": {}
+        "nodes": {},
+        "upgrade": {
+          "available": true,
+          "state": "running",
+          "version": "5.0"
+        }
       },
       "state": "error",
       "flavour": {

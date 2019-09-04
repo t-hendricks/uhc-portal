@@ -409,6 +409,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   height: 70px;
 }
 
+.infra-logo-osp {
+  height: 84px;
+  margin: 10px;
+}
+
 .infra-crc-laptop {
   font-size: var(--pf-global--FontSize--4xl);
   vertical-align: middle;
@@ -426,6 +431,18 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.machine-types-flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  flex-direction: row;
+  button {
+    max-width: 320px;
+    margin: 1em;
+  }
+}
+
 
 .infra-card {
   flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
@@ -481,7 +498,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   pointer-events: all !important;
 }
 
-.azure-dev-preview-card, .gcp-dev-preview-card, .crc-dev-preview-card {
+.azure-dev-preview-card, .gcp-dev-preview-card, .crc-dev-preview-card, .osp-dev-preview-card {
   color: var(--pf-global--link--Color);
 }
 
@@ -576,30 +593,23 @@ h4.pf-c-alert__title {
 
 .create-osd-form-button-split {
   margin-top: 20px;
-  margin-left: 20px;
 }
 
 .osd-configuration-form {
   margin-top: 20px;
 }
 
-.pf-c-content > ol.breadcrumbs-in-card {
+.pf-c-content > nav.breadcrumbs-in-card > ol {
   padding-left: 0;
   margin-left: 0;
   padding-top: 0;
   margin-top: 0;
+  padding-bottom: 15px;
+  li {
+    margin-top: 0;
+  }
 }
 
-// HACK - make PF3 "advanced options" look okay with PF4 font sizes
-// remove this once the cluster creation form is PF4
-.expand-collapse-pf {
-  button {
-    font-size: var(--pf-c-content--FontSize);
-  }
-  .expand-collapse-pf-separator {
-    margin-top: var(--pf-c-content--FontSize);
-  }
-}
 // Custom component FlatRadioButton
 .ocm-flat-radio-button {
   &.pf-c-button.pf-m-tertiary::after { // specific selector to override PF4 button
@@ -695,4 +705,21 @@ span.dev-preview-label svg {
 .cluster-list .pf-c-chip-group .pf-c-chip-group__label {
   margin-right: 10px;
   overflow: visible;
+}
+
+
+.pf-c-form__group .pf-c-radio__input {
+  margin-top: -3px;
+}
+
+.pf-c-content h3.osd-page-header {
+  margin-top: 20px;
+  margin-bottom: -10px;
+}
+
+// .pf-c-content puts bullets and padding on the uls in select -- override that
+.cloud-region-combo-box ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }

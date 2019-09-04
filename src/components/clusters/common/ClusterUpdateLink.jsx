@@ -4,11 +4,25 @@ import { Button, Popover } from '@patternfly/react-core';
 import { InfoCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
 
 const ClusterUpdateLink = ({ cluster }) => {
-  // Only show this for OCP clusters that have available updates
-  if (cluster.managed || !cluster.metrics.version_update_available) {
+  const { upgrade } = cluster.metrics;
+
+  // Show which version the cluster is currently updating to
+  if (upgrade.state === 'running' && upgrade.version) {
+    return (
+      <span>
+        {' '}
+        &rarr;
+        {` ${upgrade.version}`}
+      </span>
+    );
+  }
+
+  // Only show Update tooltip/link for OCP clusters that have available updates
+  if (cluster.managed || !upgrade.available) {
     return null;
   }
 
+  // Display a link to the cluster settings page in the console
   if (cluster.console && cluster.console.url) {
     return (
       <a href={`${cluster.console.url}/settings/cluster`} target="_blank" rel="noreferrer">
@@ -19,6 +33,7 @@ const ClusterUpdateLink = ({ cluster }) => {
     );
   }
 
+  // If console link is not available, display a popover with data about the update
   return (
     <Popover
       position="top"

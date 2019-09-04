@@ -7,7 +7,6 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
   >
     <Breadcrumb
       className="breadcrumbs-in-card"
-      title={false}
     >
       <LinkContainer
         activeClassName="active"
@@ -17,40 +16,43 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
         to=""
       >
         <BreadcrumbItem
-          active={false}
-          href="#"
+          to="#"
         >
           Clusters
         </BreadcrumbItem>
       </LinkContainer>
-      <BreadcrumbItem
-        active={true}
+      <LinkContainer
+        activeClassName="active"
+        exact={false}
+        replace={false}
+        strict={false}
+        to="/create"
       >
-        Create a Red Hat-Managed Cluster
+        <BreadcrumbItem
+          to="#"
+        >
+          Create
+        </BreadcrumbItem>
+      </LinkContainer>
+      <BreadcrumbItem
+        isActive={true}
+      >
+        OpenShift Dedicated
       </BreadcrumbItem>
     </Breadcrumb>
     <PageTitle
-      title="Create a Red Hat-Managed Cluster"
+      title="Create an OpenShift Dedicated Cluster"
     />
     <Form
-      bsClass="form"
-      componentClass="form"
-      horizontal={false}
-      inline={false}
       onSubmit={[MockFunction]}
     >
-      <ManagedClusterForm
-        pending={false}
-      />
       <Grid
-        bsClass="container"
-        componentClass="div"
-        fluid={false}
+        gutter="sm"
       >
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
+        <ManagedClusterForm
+          pending={false}
+        />
+        <GridItem>
           <Split
             className="create-osd-form-button-split"
             gutter="sm"
@@ -62,7 +64,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
                 type="submit"
                 variant="primary"
               >
-                Create
+                Create cluster
               </Button>
             </SplitItem>
             <SplitItem>
@@ -72,7 +74,6 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
               >
                 <Button
                   disabled={false}
-                  onClick={[Function]}
                   variant="secondary"
                 >
                   Cancel
@@ -81,7 +82,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             </SplitItem>
             <SplitItem />
           </Split>
-        </Row>
+        </GridItem>
       </Grid>
     </Form>
   </div>

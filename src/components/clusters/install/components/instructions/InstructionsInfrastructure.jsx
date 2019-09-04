@@ -9,6 +9,7 @@ import AzureLogo from '../../../../../styles/images/Microsoft_Azure_Logo.svg';
 import GCPLogo from '../../../../../styles/images/google-cloud-logo.svg';
 import vSphereLogo from '../../../../../styles/images/vmware_vsphere.png';
 import CRCLogo from '../../../../../styles/images/Icon_RH_Hardware_Laptop-A_RGB_Flat.svg';
+import OSPLogo from '../../../../../styles/images/logotype_rh_openstackplatform_rgb_black-2.png';
 
 const InstructionsInfrastructure = () => (
   <Card>
@@ -58,6 +59,19 @@ const InstructionsInfrastructure = () => (
             </span>
           </CardBody>
         </Link>
+        <Link to="/install/osp/installer-provisioned" className="infra-card infra-card-cloud-provider">
+          <CardBody>
+            <img src={OSPLogo} alt="OSP" className="infra-logo-osp" />
+            <br />
+            <span className="osp-dev-preview-card">
+              <CodeIcon />
+              {' '}
+              Developer Preview
+            </span>
+          </CardBody>
+        </Link>
+      </div>
+      <div className="flex-container">
         <Link to="/install/crc/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
             <img src={CRCLogo} alt="CRC" className="infra-logo-crc" />
@@ -70,6 +84,7 @@ const InstructionsInfrastructure = () => (
             </span>
           </CardBody>
         </Link>
+        <CardBody className="infra-card-placeholder" />
       </div>
     </div>
   </Card>

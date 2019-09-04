@@ -18,23 +18,9 @@
 # This script is executed by a Jenkins job for each change request. If it
 # doesn't succeed the change won't be merged.
 
-# Set the Go path:
-export GOPATH="${PWD}/.gopath"
-export PATH="${PATH}:${GOPATH}/bin"
-
-# Create the project directory inside the Go path and copy all the files of
-# the project:
-PROJECT="${GOPATH}/src/gitlab.cee.redhat.com/service/uhc-portal"
-mkdir -p "${PROJECT}"
-rsync -ap \
-  --exclude=.gopath \
-  --exclude=.git \
-  . "${PROJECT}"
-cd "${PROJECT}"
-
 # Run the checks:
 make \
   lint \
   app \
   test \
-  binary
+  binaries
