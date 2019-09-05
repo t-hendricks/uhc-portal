@@ -21,18 +21,6 @@ exports[`Cluster Actions Dropdown Items admin console url does not exist should 
   >
     Edit Display Name
   </DropdownItem>
-  <DropdownItem
-    component="button"
-    isDisabled={true}
-    key="undefined.menu.editcluster"
-    tooltip={
-      <span>
-        Self managed cluster cannot be edited
-      </span>
-    }
-  >
-    Scale Cluster
-  </DropdownItem>
 </Fragment>
 `;
 
@@ -199,18 +187,6 @@ exports[`Cluster Actions Dropdown Items self managed cluster should render (self
     onClick={[Function]}
   >
     Edit Display Name
-  </DropdownItem>
-  <DropdownItem
-    component="button"
-    isDisabled={true}
-    key="undefined.menu.editcluster"
-    tooltip={
-      <span>
-        Self managed cluster cannot be edited
-      </span>
-    }
-  >
-    Scale Cluster
   </DropdownItem>
 </Fragment>
 `;
