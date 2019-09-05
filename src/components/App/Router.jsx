@@ -36,6 +36,7 @@ import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallCRC from '../clusters/install/InstallCRC';
 import Tokens from '../tokens/Tokens';
+import NotFoundError from './NotFoundError';
 
 function Router(props) {
   const { history } = props;
@@ -58,7 +59,8 @@ function Router(props) {
         <Route path="/details/:id" component={ClusterDetails} />
         <Route path="/create/osd" component={CreateOSDCluster} />
         <Route path="/create" component={CreateCluster} />
-        <Route path="/" component={ClustersList} />
+        <Route path="/" exact component={ClustersList} />
+        <Route component={NotFoundError} />
       </Switch>
     </ConnectedRouter>
   );
