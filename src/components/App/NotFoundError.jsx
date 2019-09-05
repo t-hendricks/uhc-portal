@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import { Alert, EmptyState } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 
+import getBaseName from '../../common/getBaseName';
+
 function NotFoundError({ location }) {
-  const prefix = APP_BETA ? '/openshift/beta' : '/openshift';
-  const URLWithPrefix = `${prefix}${location.pathname}`;
+  const locationWithPrefix = `${getBaseName()}${location.pathname}`;
   return (
     <EmptyState>
       <Alert variant="danger" isInline title="Not Found">
         The URL&nbsp;
-        {URLWithPrefix}
+        {locationWithPrefix}
         &nbsp;was not found in this application.
         <br />
         <Link to="/">
