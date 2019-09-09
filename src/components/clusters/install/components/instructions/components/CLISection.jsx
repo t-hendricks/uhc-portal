@@ -19,7 +19,7 @@ const CLISection = ({ toolsURL }) => (
           className="install--download-cli"
           tabIndex="-1"
         >
-          Download Command-Line Tools
+          Download command-line tools
         </Button>
       </a>
     </div>
