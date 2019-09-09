@@ -20,7 +20,7 @@ const PullSecretSection = ({
           variant="secondary"
           disabled={!token || !!token.error}
         >
-          Download Pull Secret
+          Download pull secret
         </Button>
       </Download>
       <CopyToClipboard

@@ -9,12 +9,12 @@ const DownloadButton = ({ token, installerURL }) => (
     component="a"
     href={installerURL}
     target="_blank"
-    variant="primary"
+    variant="secondary"
     className="install--download-installer"
     disabled={!!token.error}
     tabIndex="-1"
   >
-    Download Installer
+    Download installer
   </Button>
 );
 DownloadButton.propTypes = {

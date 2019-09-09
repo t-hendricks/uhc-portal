@@ -17,8 +17,8 @@ const GetStarted = ({ docURL }) => (
       {' '}
       for detailed installation instructions.
     </p>
-    <Button component="a" href={docURL} target="_blank" variant="primary">
-      Get Started
+    <Button component="a" href={docURL} target="_blank" variant="secondary">
+      Get started
     </Button>
     <p />
     <p>
