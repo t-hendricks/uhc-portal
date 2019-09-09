@@ -31,6 +31,11 @@ const getClusterDetails = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}`,
 });
 
+const fetchClusterByExternalId = clusterExternalID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters?&search=external_id='${clusterExternalID}'`,
+});
+
 const editCluster = (id, data) => apiRequest({
   method: 'patch',
   url: `/api/clusters_mgmt/v1/clusters/${id}`,
@@ -117,6 +122,7 @@ const clusterService = {
   postNewCluster,
   postDisconnectedCluster,
   getClusterDetails,
+  fetchClusterByExternalId,
   editCluster,
   getCloudProviders,
   getCloudRegions,
