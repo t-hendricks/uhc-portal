@@ -5,7 +5,6 @@ import { CodeIcon } from '@patternfly/react-icons';
 import GetStarted from './components/GetStarted';
 import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
-import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DeveloperPreviewSection from './components/DeveloperPreviewSection';
 
@@ -41,7 +40,7 @@ class InstructionsCRC extends React.Component {
               )
             }
 
-            <TelemetryAlert />
+            <br />
 
             <p>
               Red Hat CodeReady Containers brings a minimal OpenShift 4.1 or newer cluster
@@ -124,6 +123,12 @@ class InstructionsCRC extends React.Component {
             />
 
             <p />
+
+            <p>
+              Note: Your CodeReady Container cluster will not show in your list of clusters in
+              OpenShift Cluster Manager since it is short lived and occasionally running.
+              OpenShift Cluster Manager currently shows only production-level clusters.
+            </p>
 
           </div>
         </div>
