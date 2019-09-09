@@ -28,6 +28,12 @@ const getSubscription = subscriptionID => apiRequest({
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}`,
 });
 
+const editSubscription = (subscriptionID, data) => apiRequest({
+  method: 'patch',
+  data,
+  url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}`,
+});
+
 const getOrganizationQuota = organizationID => apiRequest({
   method: 'get',
   url: `/api/accounts_mgmt/v1/organizations/${organizationID}/quota_summary?search=resource_type='cluster.aws'`,
@@ -39,6 +45,7 @@ const accountsService = {
   getSubscription,
   getSubscriptions,
   getOrganizationQuota,
+  editSubscription,
 };
 
 export default accountsService;
