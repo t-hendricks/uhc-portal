@@ -10,6 +10,7 @@ function Modal({
   title = '',
   onClose = noop,
   primaryText = 'Confirm',
+  showSecondery = true,
   secondaryText = 'Cancel',
   onPrimaryClick = noop,
   onSecondaryClick = noop,
@@ -30,9 +31,11 @@ function Modal({
       isOpen
       onClose={onClose}
       actions={isPending ? [] : [
+        showSecondery && (
         <Button key="cancel" variant="secondary" onClick={onSecondaryClick}>
           {secondaryText}
-        </Button>,
+        </Button>
+        ),
         <Button key="confirm" variant={primaryVariant} onClick={onPrimaryClick} type="submit" isDisabled={isPrimaryDisabled}>
           {primaryText}
         </Button>,
@@ -54,6 +57,7 @@ Modal.propTypes = {
   onSecondaryClick: PropTypes.func,
   isPrimaryDisabled: PropTypes.bool,
   children: PropTypes.node,
+  showSecondery: PropTypes.bool,
 };
 
 export default Modal;

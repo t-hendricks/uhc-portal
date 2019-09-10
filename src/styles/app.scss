@@ -315,7 +315,19 @@ p.notfound {
   padding: 5px;
 }
 
-#cl-details-top{
+#register-cluster{
+  margin-top: 30px;
+}
+
+#register-cluster .pf-m-primary {
+  margin-right: 20px;
+}
+
+#register-cluster-top-row {
+  padding-bottom: 20px;
+}
+
+.top-row {
   background-color: var(--pf-global--BackgroundColor--100);
   margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
   margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);

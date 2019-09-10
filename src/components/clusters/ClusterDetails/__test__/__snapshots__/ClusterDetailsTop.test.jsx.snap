@@ -2,6 +2,7 @@
 
 exports[`<ClusterDetailsTop /> should render 1`] = `
 <div
+  className="top-row"
   id="cl-details-top"
 >
   <Split>

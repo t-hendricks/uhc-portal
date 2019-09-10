@@ -34,6 +34,16 @@ const createCluster = params => dispatch => dispatch({
   }),
 });
 
+const registerDisconnectedCluster = params => dispatch => dispatch({
+  type: clustersConstants.CREATE_CLUSTER,
+  payload: clusterService.postDisconnectedCluster(params).then((response) => {
+    // TODO: this artificially delays CREATE_CLUSTER_FULLFILLED action
+    // until after the INVALIDATE action.
+    invalidateClusters()(dispatch);
+    return response;
+  }),
+});
+
 const clearClusterResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
 });
@@ -206,6 +216,7 @@ const resetCreatedClusterResponse = () => dispatch => dispatch({
 const clustersActions = {
   clearClusterResponse,
   createCluster,
+  registerDisconnectedCluster,
   editCluster,
   fetchClusters,
   fetchClusterDetails,
@@ -217,6 +228,7 @@ export {
   clustersActions,
   clearClusterResponse,
   createCluster,
+  registerDisconnectedCluster,
   editCluster,
   fetchClusters,
   fetchClusterDetails,

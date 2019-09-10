@@ -5,6 +5,9 @@ const DNS_LABEL_REGEXP = /^[a-z]([-a-z0-9]*[a-z0-9])?$/;
 // Regular expression used to check base DNS domains, based on RFC-1035
 const BASE_DOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z0-9])?$/;
 
+// Regular expression used to check UUID as specified in RFC4122.
+const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
 
@@ -42,6 +45,17 @@ const checkClusterName = (value) => {
   }
   if (value.length > MAX_CLUSTER_NAME_LENGTH) {
     return `Cluster names may not exceed ${MAX_CLUSTER_NAME_LENGTH} characters.`;
+  }
+  return undefined;
+};
+
+// Function to validate that the cluster ID field is a UUID:
+const checkClusterUUID = (value) => {
+  if (!value) {
+    return 'Cluster ID is required.';
+  }
+  if (!UUID_REGEXP.test(value)) {
+    return `Cluster ID '${value}' is not a valid UUID.`;
   }
   return undefined;
 };
@@ -107,6 +121,7 @@ const validators = {
   required,
   checkIdentityProviderName,
   checkClusterName,
+  checkClusterUUID,
   checkClusterDisplayName,
   checkBaseDNSDomain,
   cidr,
@@ -116,7 +131,7 @@ const validators = {
 };
 
 export {
-  required, github, checkIdentityProviderName, checkClusterDisplayName,
+  required, github, checkClusterUUID, checkIdentityProviderName, checkClusterDisplayName,
 };
 
 export default validators;
