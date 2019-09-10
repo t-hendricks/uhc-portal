@@ -72,12 +72,6 @@ describe('clustersActions', () => {
         type: clustersConstants.GET_CLUSTERS,
       });
     });
-
-    it('calls clusterService.getClusters', () => {
-      const fakeParams = { fake: 'params' };
-      clustersActions.fetchClusters(fakeParams)(mockDispatch);
-      expect(clusterService.getClusters).toBeCalledWith(fakeParams);
-    });
   });
 
   describe('fetchClusterDetails', () => {

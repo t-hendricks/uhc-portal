@@ -97,15 +97,14 @@ const buildSearchQuery = (response, field) => {
   return `id in (${Array.from(IDs).join(',')})`;
 };
 
-const fetchClustersAndPermissions = (clusterRequestParams, subscriptions) => {
-  let clusters;
+const fetchClustersAndPermissions = (clusterRequestParams) => {
+  let subscriptions;
   let canEdit;
   let canDelete;
 
   const promises = [
-    clusterService.getClusters(clusterRequestParams).then((response) => {
-      clusters = response;
-      clusters.data.items = clusters.data.items.map(normalizeCluster);
+    accountsService.getSubscriptions(clusterRequestParams).then((response) => {
+      subscriptions = response;
     }),
     authorizationsService.selfResourceReview(
       { action: 'delete', resource_type: 'Cluster' },
@@ -115,69 +114,46 @@ const fetchClustersAndPermissions = (clusterRequestParams, subscriptions) => {
     ).then((response) => { canEdit = buildPermissionDict(response); }),
   ];
   return Promise.all(promises).then(() => {
-    const subscriptionMap = {}; // map subscription ID to cluster index
-    for (let i = 0; i < clusters.data.items.length; i += 1) {
-      const cluster = clusters.data.items[i];
-      clusters.data.items[i].canEdit = canEdit['*'] || !!canEdit[cluster.id];
-      clusters.data.items[i].canDelete = canDelete['*'] || !!canDelete[cluster.id];
-      const subscriptionID = get(cluster, 'subscription.id');
-      if (subscriptionID) {
-        if (!subscriptions) {
-          // we don't have subscriptions yet.
-          // Add this to the map, so we can fetch subscriptions later
-          subscriptionMap[subscriptionID] = i;
-        } else {
-          // We got subscriptions as a parameter, enrich the cluster with the subscription info
-          clusters.data.items[i].subscription = subscriptions[subscriptionID];
+    const clustersQuery = buildSearchQuery(subscriptions, 'cluster_id');
+    if (!clustersQuery) {
+      return subscriptions;
+    }
+    const subscriptionMap = {}; // map subscription ID to subscription info
+    const subscriptionItems = get(subscriptions, 'data.items', []);
+    for (let i = 0; i < subscriptionItems.length; i += 1) {
+      // regular for loop, because we need the index
+      subscriptionMap[subscriptionItems[i].cluster_id] = { data: subscriptionItems[i], order: i };
+    }
+
+    // fetch clusters by subscription
+    return clusterService.getClusters(clustersQuery).then((response) => {
+      const clusters = response;
+      const sorted = [];
+
+      clusters.data.items.forEach((rawCluster) => {
+        const normalizedCluster = normalizeCluster(rawCluster);
+
+        normalizedCluster.canEdit = canEdit['*'] || !!canEdit[normalizedCluster.id];
+        normalizedCluster.canDelete = canDelete['*'] || !!canDelete[normalizedCluster.id];
+
+        if (normalizedCluster.id && subscriptionMap[normalizedCluster.id]) {
+          const subscriptionInfo = subscriptionMap[normalizedCluster.id];
+
+          normalizedCluster.subscription = subscriptionInfo.data;
+          sorted[subscriptionInfo.order] = normalizedCluster;
         }
-      }
-    }
-
-    if (!subscriptions && clusters.data.items.length > 0) {
-      // We got clusters, so we need to find their subscriptions and accounts
-      const query = buildSearchQuery(clusters, 'subscription.id');
-      if (query) {
-        return accountsService.getSubscriptions(query).then((response) => {
-          // Enrich cluster results with subscription information
-          response.data.items.forEach((subscriptionItem) => {
-            const index = subscriptionMap[subscriptionItem.id];
-            clusters.data.items[index].subscription = subscriptionItem;
-          });
-          return clusters;
-        }).catch(() => clusters); // catch to return clusters even if subscription query fails
-      }
-    }
-
-    return clusters;
+      });
+      clusters.data.items = sorted;
+      clusters.data.page = subscriptions.data.page;
+      clusters.data.total = subscriptions.data.total;
+      return clusters;
+    });
   });
 };
 
-const fetchClustersBySubscription = requestParams => accountsService.getSubscriptions(
-  requestParams.subscriptionFilter,
-).then(
-  (response) => {
-    const clustersQuery = buildSearchQuery(response, 'cluster_id');
-    if (!clustersQuery) {
-      return response;
-    }
-    const params = {
-      ...requestParams,
-      filter: requestParams.filter ? `${clustersQuery} AND (${requestParams.filter})` : clustersQuery,
-    };
-      // convert the subscription list into a id -> subscription map
-    const subscriptions = {};
-    get(response, 'data.items', []).forEach((subscription) => {
-      subscriptions[subscription.id] = subscription;
-    });
-    return fetchClustersAndPermissions(params, subscriptions);
-  },
-);
-
 const fetchClusters = params => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTERS,
-  payload: params.subscriptionFilter
-    ? fetchClustersBySubscription(params)
-    : fetchClustersAndPermissions(params),
+  payload: fetchClustersAndPermissions(params),
 });
 
 const fetchSingleClusterAndPermissions = (clusterID) => {
@@ -205,10 +181,8 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
       cluster.data.canDelete = canDelete;
       const subscriptionID = get(cluster.data, 'subscription.id');
       if (subscriptionID) {
-        // FIXME accounts service does not support fetching account info for a single
-        // subscription, so we have to use the search endpoint here
-        return accountsService.getSubscriptions(`id='${subscriptionID}'`).then((subscriptions) => {
-          cluster.data.subscription = get(subscriptions, 'data.items[0]');
+        return accountsService.getSubscription(subscriptionID).then((subscription) => {
+          cluster.data.subscription = subscription.data;
           return cluster;
         }).catch(() => cluster);
       }

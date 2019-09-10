@@ -52,10 +52,7 @@ const createViewQueryObject = (viewOptions, queryObj) => {
     if (viewOptions.sorting.sortField !== null) {
       const direction = viewOptions.sorting.isAscending ? 'asc' : 'desc';
       if (viewOptions.sorting.sortField === 'name') {
-        // special casing name sorting, should sort by display name first, name second
-        // Note that this is buggy if the user ever sets a cluster to have an empty display name
-        // https://jira.coreos.com/browse/SDA-274
-        queryObject.order = `display_name ${direction}, name ${direction}`;
+        queryObject.order = `display_name ${direction}`;
       } else {
         queryObject.order = `${viewOptions.sorting.sortField} ${direction}`;
       }
@@ -67,12 +64,14 @@ const createViewQueryObject = (viewOptions, queryObj) => {
     to the user, but for clusters without display_name we show 'name'
     so we search by name if display_name is empty.
     */
+    const baseFilter = 'cluster_id!=\'\' AND status NOT IN (\'Deprovisioned\', \'Archived\')';
     const escaped = viewOptions.filter ? viewOptions.filter.replace(/(')/g, '\'\'') : '';
-    queryObject.filter = viewOptions.filter ? `display_name like '%${escaped}%' or (display_name = '' and name like '%${escaped}%') or external_id like '%${escaped}%'` : undefined;
+    queryObject.filter = viewOptions.filter ? `(${baseFilter}) AND (display_name LIKE '%${escaped}%' OR external_cluster_id LIKE '%${escaped}%')` : baseFilter;
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
       const statusList = viewOptions.flags.subscriptionFilter.map(item => `'${item}'`).join(',');
-      queryObject.subscriptionFilter = `entitlement_status in (${statusList})`;
+      const statusClause = `entitlement_status in (${statusList})`;
+      queryObject.filter = queryObject.filter ? `(${queryObject.filter}) AND ${statusClause}` : statusClause;
     }
   }
 
