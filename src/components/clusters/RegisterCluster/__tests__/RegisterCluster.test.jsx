@@ -7,6 +7,7 @@ describe('<RegisterCluster />', () => {
   it('renders correctly', () => {
     const handleSubmit = jest.fn();
     const resetResponse = jest.fn();
+    const resetForm = jest.fn();
     const registerClusterResponse = {
       error: false,
       errorMessage: '',
@@ -18,6 +19,7 @@ describe('<RegisterCluster />', () => {
     const wrapper = shallow(<RegisterCluster
       resetResponse={resetResponse}
       handleSubmit={handleSubmit}
+      resetForm={resetForm}
       registerClusterResponse={registerClusterResponse}
     />);
 
