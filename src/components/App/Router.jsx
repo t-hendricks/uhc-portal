@@ -38,6 +38,7 @@ import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallCRC from '../clusters/install/InstallCRC';
 import Tokens from '../tokens/Tokens';
 import NotFoundError from './NotFoundError';
+import Subscriptions from '../subscriptions';
 
 function Router(props) {
   const { history } = props;
@@ -61,6 +62,7 @@ function Router(props) {
         <Route path="/create/osd" component={CreateOSDCluster} />
         <Route path="/create" component={CreateCluster} />
         <Route path="/register" component={RegisterCluster} />
+        <Route path="/subscriptions" component={Subscriptions} />
         <Route path="/" exact component={ClustersList} />
         <Route component={NotFoundError} />
       </Switch>

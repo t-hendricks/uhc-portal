@@ -4,6 +4,7 @@ import * as viewPaginationConstants from './viewPaginationConstants';
 import * as userConstants from './userConstants';
 import * as cloudProviderConstants from './cloudProviderConstants';
 import * as machineTypesConstants from './machineTypesConstants';
+import * as subscriptionsConstants from './subscriptionsConstants';
 
 export {
   clustersConstants,
@@ -12,4 +13,5 @@ export {
   userConstants,
   cloudProviderConstants,
   machineTypesConstants,
+  subscriptionsConstants,
 };

@@ -1,4 +1,4 @@
-import helpers from './helpers';
+import helpers, { buildUrlParams } from './helpers';
 
 test('Error message is properly extracted from the Error API object', () => {
   const err = {
@@ -29,4 +29,9 @@ test('Error message is properly extracted from unexpected object', () => {
 test('Fail gracefully when getting JS Error objects', () => {
   const err = new Error('Hello');
   expect(helpers.getErrorMessage(err)).toBe('Error: Hello');
+});
+
+test('Test buildUrlParams', () => {
+  const params = { key1: 'a ', key2: 'a?' };
+  expect(buildUrlParams(params)).toBe('key1=a%20&key2=a%3F');
 });

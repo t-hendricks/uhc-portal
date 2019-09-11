@@ -13,6 +13,7 @@ import { MonitoringReducer } from '../../components/clusters/ClusterDetails/comp
 import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/Users/UsersReducer';
 import globalErrorReducer from './globalErrorReducer';
 import machineTypesReducer from './machineTypesReducer';
+import { subscriptionsReducer } from './subscriptionsReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -29,6 +30,7 @@ const reducers = {
   globalError: globalErrorReducer,
   machineTypes: machineTypesReducer,
   monitoring: MonitoringReducer,
+  subscriptions: subscriptionsReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

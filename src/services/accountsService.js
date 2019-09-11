@@ -39,6 +39,19 @@ const getOrganizationQuota = organizationID => apiRequest({
   url: `/api/accounts_mgmt/v1/organizations/${organizationID}/quota_summary?search=resource_type='cluster.aws'`,
 });
 
+function getRequest(pathParams, params = {}) {
+  const type = pathParams[0];
+  let url;
+  if (type === 'subscriptions') {
+    url = '/api/accounts_mgmt/v1/subscriptions';
+  } else if (type === 'quota_summary') {
+    url = `/api/accounts_mgmt/v1/organizations/${pathParams[1]}/quota_summary`;
+  } else {
+    url = null;
+  }
+  return apiRequest({ method: 'get', params, url });
+}
+
 const accountsService = {
   getCurrentAccount,
   getOrganization,
@@ -46,6 +59,7 @@ const accountsService = {
   getSubscriptions,
   getOrganizationQuota,
   editSubscription,
+  getRequest,
 };
 
 export default accountsService;
