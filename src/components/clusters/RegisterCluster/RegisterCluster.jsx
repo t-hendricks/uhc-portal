@@ -33,8 +33,7 @@ class RegisterCluster extends React.Component {
   }
 
   componentDidMount() {
-    const { resetResponse } = this.props;
-    resetResponse();
+    this.reset();
   }
 
   componentDidUpdate() {
@@ -44,8 +43,20 @@ class RegisterCluster extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.reset();
+  }
+
   toggleSystemType = (_, value) => {
     this.setState({ systemType: value });
+  }
+
+  reset() {
+    const {
+      resetResponse, resetForm,
+    } = this.props;
+    resetResponse();
+    resetForm();
   }
 
   render() {
@@ -224,6 +235,7 @@ RegisterCluster.propTypes = {
   closeModal: PropTypes.func,
   resetResponse: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
+  resetForm: PropTypes.func.isRequired,
 };
 
 export default RegisterCluster;
