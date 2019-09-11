@@ -46,7 +46,7 @@ class OSDSubscriptionCard extends Component {
       const rows = quotaSummary.items.map(quotaItem => [
         quotaItem.resource_type,
         quotaItem.resource_name,
-        quotaItem.availability_zone_type,
+        `${quotaItem.availability_zone_type}-zone`,
         quotaItem.byoc ? 'BYOC' : 'Standard',
         quotaItem.reserved,
         quotaItem.allowed,

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import forOwn from 'lodash/forOwn';
 import {
   Stack,
@@ -23,11 +24,11 @@ import PopoverHint from '../../common/PopoverHint';
 function OCPSubscriptionSummary({ stats, organizationID }) {
   const links = {};
   forOwn(stats, (numClusters, entitlementStatus) => {
-    const params = { entitlement_status: entitlementStatus, organization_id: organizationID };
+    const params = { entitlement_status: entitlementStatus, organization_id: organizationID, managed: 'false' };
     links[entitlementStatus] = (
-      <a target="_blank" href={`/openshift?${buildUrlParams(params)}`}>
-        {`${numClusters} Clusters`}
-      </a>
+      <Link to={{ pathname: '/', search: buildUrlParams(params) }}>
+        {`${numClusters} Cluster${numClusters === 1 ? '' : 's'}`}
+      </Link>
     );
   });
 

@@ -101,12 +101,17 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
       Properly entitled
     </StackItem>
     <StackItem>
-      <a
-        href="/openshift?entitlement_status=Ok&organization_id=org-1"
-        target="_blank"
+      <Link
+        replace={false}
+        to={
+          Object {
+            "pathname": "/",
+            "search": "entitlement_status=Ok&organization_id=org-1&managed=false",
+          }
+        }
       >
-        1 Clusters
-      </a>
+        1 Cluster
+      </Link>
     </StackItem>
   </Stack>
   <Stack
@@ -131,12 +136,17 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
       />
     </StackItem>
     <StackItem>
-      <a
-        href="/openshift?entitlement_status=NotSet&organization_id=org-1"
-        target="_blank"
+      <Link
+        replace={false}
+        to={
+          Object {
+            "pathname": "/",
+            "search": "entitlement_status=NotSet&organization_id=org-1&managed=false",
+          }
+        }
       >
-        1 Clusters
-      </a>
+        1 Cluster
+      </Link>
     </StackItem>
   </Stack>
   <Stack
@@ -149,12 +159,17 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
       />
     </StackItem>
     <StackItem>
-      <a
-        href="/openshift?entitlement_status=Overcommitted&organization_id=org-1"
-        target="_blank"
+      <Link
+        replace={false}
+        to={
+          Object {
+            "pathname": "/",
+            "search": "entitlement_status=Overcommitted&organization_id=org-1&managed=false",
+          }
+        }
       >
-        1 Clusters
-      </a>
+        1 Cluster
+      </Link>
     </StackItem>
   </Stack>
   <Stack
@@ -167,12 +182,17 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
       />
     </StackItem>
     <StackItem>
-      <a
-        href="/openshift?entitlement_status=InconsistentServices&organization_id=org-1"
-        target="_blank"
+      <Link
+        replace={false}
+        to={
+          Object {
+            "pathname": "/",
+            "search": "entitlement_status=InconsistentServices&organization_id=org-1&managed=false",
+          }
+        }
       >
-        1 Clusters
-      </a>
+        1 Cluster
+      </Link>
     </StackItem>
   </Stack>
 </Fragment>
@@ -243,7 +263,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
           Array [
             "cluster.aws",
             "c5.4xlarge",
-            "multi",
+            "multi-zone",
             "BYOC",
             10,
             15,
@@ -259,7 +279,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
           Array [
             "cluster.aws",
             "m5.xlarge",
-            "multi",
+            "multi-zone",
             "BYOC",
             15,
             15,
@@ -275,7 +295,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
           Array [
             "compute.node.aws",
             "c5.4xlarge",
-            "multi",
+            "multi-zone",
             "BYOC",
             0,
             4,
