@@ -47,7 +47,7 @@ class EditDisplayNameDialog extends Component {
 
   render() {
     const {
-      isOpen, closeModal, submit, editClusterResponse, resetResponse, clusterID,
+      isOpen, closeModal, submit, editClusterResponse, resetResponse, clusterID, subscriptionID,
     } = this.props;
     const { currentValue } = this.state;
 
@@ -61,7 +61,11 @@ class EditDisplayNameDialog extends Component {
     );
 
     const validationMessage = checkClusterDisplayName(currentValue);
-    const handleSubmit = () => { if (!validationMessage) { submit(clusterID, currentValue); } };
+    const handleSubmit = () => {
+      if (!validationMessage) {
+        submit(clusterID, subscriptionID, currentValue);
+      }
+    };
 
     return isOpen && (
 
@@ -108,6 +112,7 @@ EditDisplayNameDialog.propTypes = {
   editClusterResponse: PropTypes.object,
   displayName: PropTypes.string,
   clusterID: PropTypes.string,
+  subscriptionID: PropTypes.string,
 };
 
 EditDisplayNameDialog.defaultProps = {
