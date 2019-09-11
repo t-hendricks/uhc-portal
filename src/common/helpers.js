@@ -160,6 +160,13 @@ const scrollToTop = () => {
 
 const buildUrlParams = params => Object.keys(params).map(key => `${key}=${encodeURIComponent(params[key])}`).join('&');
 
+const normalizeNodeCount = (value, previousValue) => {
+  if (Number.isNaN(Number(value))) {
+    return previousValue;
+  }
+  return value;
+};
+
 const helpers = {
   noop,
   setStateProp,
@@ -180,7 +187,14 @@ const helpers = {
 };
 
 export {
-  noop, getTimeDelta, isValid, omitEmptyFields, toCleanArray, scrollToTop, buildUrlParams,
+  noop,
+  getTimeDelta,
+  isValid,
+  omitEmptyFields,
+  toCleanArray,
+  scrollToTop,
+  buildUrlParams,
+  normalizeNodeCount,
 };
 
 export default helpers;
