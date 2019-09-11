@@ -77,7 +77,7 @@ describe('<Subscriptions />', () => {
       expect(wrapper).toMatchSnapshot();
     });
     it('should have all links', () => {
-      expect(wrapper.find('a').length).toEqual(4);
+      expect(wrapper.find('Link').length).toEqual(4);
     });
   });
 
