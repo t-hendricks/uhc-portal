@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RegisterCluster /> renders correctly 1`] = `
+<Fragment>
+  <div
+    className="top-row"
+    id="register-cluster-top-row"
+  >
+    <Split>
+      <SplitItem>
+        <Title
+          className="vertical-align"
+          headingLevel="h1"
+          size="4xl"
+        >
+          Cluster registration
+        </Title>
+      </SplitItem>
+    </Split>
+  </div>
+  <Card
+    id="register-cluster"
+  >
+    <CardBody>
+      <Grid>
+        <GridItem
+          span={8}
+        >
+          <Form
+            onSubmit={[MockFunction]}
+          >
+            <Field
+              component={[Function]}
+              disabled={false}
+              extendedHelpText="The Cluster ID may be found on the About page of the cluster web console"
+              isRequired={true}
+              label="Cluster ID"
+              name="cluster_id"
+              type="text"
+              validate={[Function]}
+            />
+            <Field
+              component={[Function]}
+              disabled={false}
+              label="Display name"
+              name="display_name"
+              type="text"
+              validate={[Function]}
+            />
+            <Field
+              component={[Function]}
+              disabled={false}
+              label="Web console URL"
+              name="web_console_url"
+              type="text"
+            />
+            <FormGroup
+              fieldId="operating_system"
+              isRequired={true}
+              label="Operating System"
+            >
+              <Field
+                component={[Function]}
+                defaultValue="Red Hat Enterprise Linux CoreOS"
+                disabled={false}
+                name="operating_system"
+                options={
+                  Array [
+                    Object {
+                      "label": "Red Hat Enterprise Linux CoreOS",
+                      "value": "Red Hat Enterprise Linux CoreOS",
+                    },
+                    Object {
+                      "label": "Red Hat Enterprise Linux",
+                      "value": "Red Hat Enterprise Linux",
+                    },
+                  ]
+                }
+                validate={[Function]}
+              />
+            </FormGroup>
+            <FormGroup
+              fieldId="system_type"
+              isRequired={true}
+              label="System Type"
+            >
+              <Field
+                component={[Function]}
+                defaultValue="physical"
+                disabled={false}
+                name="system_type"
+                onChange={[Function]}
+                options={
+                  Array [
+                    Object {
+                      "label": "Physical",
+                      "value": "physical",
+                    },
+                    Object {
+                      "label": "Virtual",
+                      "value": "virtual",
+                    },
+                  ]
+                }
+                validate={[Function]}
+              />
+            </FormGroup>
+            <Field
+              component={[Function]}
+              disabled={false}
+              isRequired={true}
+              label="Number of sockets or LAPRs"
+              name="socket_num"
+              type="number"
+              validate={[Function]}
+            />
+            <Field
+              component={[Function]}
+              disabled={false}
+              label="Memory capacity (GiB)"
+              name="memory_gib"
+              step="any"
+              type="number"
+            />
+            <Field
+              component={[Function]}
+              disabled={false}
+              label="Number of compute nodes"
+              name="nodes_compute"
+              type="number"
+            />
+          </Form>
+        </GridItem>
+      </Grid>
+    </CardBody>
+    <CardFooter>
+      <Button
+        disabled={false}
+        onClick={[MockFunction]}
+        type="submit"
+        variant="primary"
+      >
+        Register cluster
+      </Button>
+      <Link
+        replace={false}
+        to="/"
+      >
+        <Button
+          disabled={false}
+          variant="secondary"
+        >
+          Cancel
+        </Button>
+      </Link>
+    </CardFooter>
+  </Card>
+</Fragment>
+`;

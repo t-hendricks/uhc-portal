@@ -23,6 +23,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import ClustersList from '../clusters/ClusterList';
 import ClusterDetails from '../clusters/ClusterDetails';
 import CreateCluster from '../clusters/CreateCluster';
+import RegisterCluster from '../clusters/RegisterCluster';
 import CreateOSDCluster from '../clusters/CreateOSDCluster';
 import InstallInfrastructure from '../clusters/install/InstallInfrastructure';
 import InstallAWS from '../clusters/install/InstallAWS';
@@ -36,6 +37,8 @@ import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallCRC from '../clusters/install/InstallCRC';
 import Tokens from '../tokens/Tokens';
+import NotFoundError from './NotFoundError';
+import Subscriptions from '../subscriptions';
 
 function Router(props) {
   const { history } = props;
@@ -58,7 +61,10 @@ function Router(props) {
         <Route path="/details/:id" component={ClusterDetails} />
         <Route path="/create/osd" component={CreateOSDCluster} />
         <Route path="/create" component={CreateCluster} />
-        <Route path="/" component={ClustersList} />
+        <Route path="/register" component={RegisterCluster} />
+        <Route path="/subscriptions" component={Subscriptions} />
+        <Route path="/" exact component={ClustersList} />
+        <Route component={NotFoundError} />
       </Switch>
     </ConnectedRouter>
   );

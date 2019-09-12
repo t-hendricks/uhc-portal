@@ -24,6 +24,7 @@ describe('<EditDisplayNameDialog />', () => {
       resetResponse={resetResponse}
       displayName="some-name"
       clusterID="some-id"
+      subscriptionID="some-other-id"
       editClusterResponse={{ errorMessage: '', error: false }}
     />);
   });
@@ -43,7 +44,7 @@ describe('<EditDisplayNameDialog />', () => {
     input.instance().value = 'hello';
     input.at(0).simulate('change');
     wrapper.find('.pf-m-primary').simulate('click');
-    expect(submit).toBeCalledWith('some-id', 'hello');
+    expect(submit).toBeCalledWith('some-id', 'some-other-id', 'hello');
   });
 
   it('when fulfilled, closes dialog', () => {

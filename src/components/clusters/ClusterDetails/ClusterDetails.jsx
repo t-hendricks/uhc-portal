@@ -14,6 +14,8 @@ limitations under the License.
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import result from 'lodash/result';
+import isUuid from 'uuid-validate';
+import { Redirect } from 'react-router';
 
 import { TabContent, EmptyState } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
@@ -22,6 +24,7 @@ import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
+import Monitoring from './components/Monitoring';
 import Users from './components/Users';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
@@ -40,6 +43,7 @@ class ClusterDetails extends Component {
     this.refreshIDP = this.refreshIDP.bind(this);
 
     this.overviewTabRef = React.createRef();
+    this.monitoringTabRef = React.createRef();
     this.usersTabRef = React.createRef();
     this.logsTabRef = React.createRef();
   }
@@ -57,17 +61,21 @@ class ClusterDetails extends Component {
       getOrganizationAndQuota,
       clearGlobalError,
     } = this.props;
+
     clearGlobalError('clusterDetails');
 
     const clusterID = match.params.id;
+
     this.refresh();
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
     }
-    if (!clusterIdentityProviders.pending
-       && !clusterIdentityProviders.error
-       && !clusterIdentityProviders.fulfilled) {
+    if (isValid(clusterID)
+      && !isUuid(clusterID)
+      && !clusterIdentityProviders.pending
+      && !clusterIdentityProviders.error
+      && !clusterIdentityProviders.fulfilled) {
       getClusterIdentityProviders(clusterID); // TODO: get IDP only for managed cluster
     }
     if (!organization.pending && !organization.error && !organization.fulfilled) {
@@ -109,6 +117,8 @@ class ClusterDetails extends Component {
 
     if (isValid(clusterID)) {
       fetchDetails(clusterID);
+    }
+    if (isValid(clusterID) && !isUuid(clusterID)) {
       getLogs(clusterID);
       getUsers(clusterID, 'dedicated-admins');
       getAlerts(clusterID);
@@ -120,7 +130,9 @@ class ClusterDetails extends Component {
     const { match, clusterIdentityProviders, getClusterIdentityProviders } = this.props;
     const clusterID = match.params.id;
 
-    if (!clusterIdentityProviders.pending
+    if (isValid(clusterID)
+      && !isUuid(clusterID)
+      && !clusterIdentityProviders.pending
       && !clusterIdentityProviders.error) {
       getClusterIdentityProviders(clusterID);
     }
@@ -143,7 +155,14 @@ class ClusterDetails extends Component {
 
     const { cluster } = clusterDetails;
 
+    // ClusterDetails can be entered via normal id from OCM, or via external_id (a uuid)
+    // from openshift console. if we enter via the uuid, switch to the normal id.
     const requestedClusterID = match.params.id;
+    if (cluster && cluster.shouldRedirect && isUuid(requestedClusterID)) {
+      return (
+        <Redirect to={`/details/${cluster.id}`} />
+      );
+    }
 
     // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
     // the redux state will have the data for the previous cluster. We want to ensure we only
@@ -209,6 +228,7 @@ class ClusterDetails extends Component {
             displayLogs={hasLogs}
             displayUsersTab={cluster.managed && cluster.canEdit}
             overviewTabRef={this.overviewTabRef}
+            monitoringTabRef={this.monitoringTabRef}
             usersTabRef={this.usersTabRef}
             logsTabRef={this.logsTabRef}
           />
@@ -219,11 +239,15 @@ class ClusterDetails extends Component {
             cloudProviders={cloudProviders}
           />
         </TabContent>
-        <TabContent eventKey={1} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
+        <TabContent eventKey={1} id="monitoringTabContent" ref={this.monitoringTabRef} aria-label="Monitoring" hidden>
+          <Monitoring cluster={cluster} />
+        </TabContent>
+
+        <TabContent eventKey={2} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
           <Users clusterID={cluster.id} />
         </TabContent>
         {hasLogs && (
-        <TabContent eventKey={2} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
+        <TabContent eventKey={3} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
           <LogWindow clusterID={cluster.id} />
         </TabContent>
         )}

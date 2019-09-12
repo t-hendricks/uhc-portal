@@ -93,11 +93,6 @@ describe('Cluster Actions Dropdown Items', () => {
     it('should render (self managed)', () => {
       expect(wrapper).toMatchSnapshot();
     });
-
-    it('edit cluster should be disabled', () => {
-      const editDisabled = wrapper.find('DropdownItem').at(2).props().isDisabled;
-      expect(editDisabled).toEqual(true);
-    });
   });
 
   describe('admin console url does not exist', () => {
@@ -105,11 +100,6 @@ describe('Cluster Actions Dropdown Items', () => {
 
     it('should render (no console)', () => {
       expect(wrapper).toMatchSnapshot();
-    });
-
-    it('launch admin console should be disabled', () => {
-      const launchConsoleDisabled = wrapper.find('DropdownItem').at(2).props().isDisabled;
-      expect(launchConsoleDisabled).toEqual(true);
     });
   });
   describe('read only cluster', () => {

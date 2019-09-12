@@ -13,6 +13,7 @@ import validators, { required } from '../../../common/validators';
 import minValueSelector from '../common/EditClusterDialog/EditClusterSelectors';
 import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
 import constants from './CreateOSDClusterHelper';
+import { normalizeNodeCount } from '../../../common/helpers';
 
 class ConfigurationForm extends React.Component {
   state = {
@@ -151,8 +152,9 @@ class ConfigurationForm extends React.Component {
             component={ReduxVerticalFormGroupPF4}
             name="nodes_compute"
             label="Compute node count"
-            type="number"
+            inputMode="numeric"
             min={min.value}
+            normalize={normalizeNodeCount}
             validate={isMultiAz ? [this.validateNodesMultiAz, validators.nodesMultiAz]
               : this.validateNodesSingleAz}
             disabled={pending}

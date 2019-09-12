@@ -18,8 +18,8 @@ function NodesTable({ nodes = [] }) {
     { title: 'Node address' },
   ];
 
-  const nodeStatus = (status) => {
-    if (status === 1) {
+  const nodeStatus = (isUp) => {
+    if (isUp) {
       return (
         <React.Fragment>
           <OkIcon className="status-icon" color={global_success_color_100.value} size="md" />
@@ -40,7 +40,6 @@ function NodesTable({ nodes = [] }) {
     { title: nodeStatus(node.up) },
     { title: `Internal IP: ${node.internal_ip}` },
   ]));
-
 
   return (
     <Table variant={TableVariant.compact} borders={false} cells={columns} rows={rows}>

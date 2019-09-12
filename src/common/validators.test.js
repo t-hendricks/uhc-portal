@@ -1,4 +1,4 @@
-import validators, { required, checkIdentityProviderName } from './validators';
+import validators, { required, checkIdentityProviderName, checkClusterUUID } from './validators';
 
 test('Field is required', () => {
   expect(required()).toBe('Field is required');
@@ -18,6 +18,12 @@ test('Field is a valid cluster name', () => {
   expect(validators.checkClusterName('foo.bar')).toBe('Cluster name \'foo.bar\' isn\'t valid, must consist of lower-case alphanumeric characters or \'-\', start with an alphabetic character, and end with an alphanumeric character. For example, \'my-name\', or \'abc-123\'.');
   expect(validators.checkClusterName('foo'.repeat(34))).toBe('Cluster names may not exceed 50 characters.');
   expect(validators.checkClusterName('foo')).toBe(undefined);
+});
+
+test('Field is a valid UUID', () => {
+  expect(checkClusterUUID()).toBe('Cluster ID is required.');
+  expect(checkClusterUUID('foo.bar')).toBe('Cluster ID \'foo.bar\' is not a valid UUID.');
+  expect(checkClusterUUID('1e479c87-9b83-41c5-854d-e5fec41ce7f8')).toBe(undefined);
 });
 
 test('Field is a valid DNS domain', () => {

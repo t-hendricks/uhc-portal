@@ -183,6 +183,11 @@ class ClusterList extends Component {
                 <Button>Create Cluster</Button>
               </Link>
             </SplitItem>
+            <SplitItem>
+              <Link to="/register">
+                <Button variant="link">Register Cluster</Button>
+              </Link>
+            </SplitItem>
             <SplitItem className="spinner-fit-container">
               { pending && <Spinner className="cluster-list-spinner" /> }
               { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }

@@ -20,9 +20,20 @@ const postNewCluster = params => apiRequest({
   data: params,
 });
 
+const postDisconnectedCluster = params => apiRequest({
+  method: 'post',
+  url: '/api/clusters_mgmt/v1/register_disconnected',
+  data: params,
+});
+
 const getClusterDetails = clusterID => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}`,
+});
+
+const fetchClusterByExternalId = clusterExternalID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters?&search=external_id='${clusterExternalID}'`,
 });
 
 const editCluster = (id, data) => apiRequest({
@@ -109,7 +120,9 @@ const getNodes = clusterID => apiRequest({
 const clusterService = {
   getClusters,
   postNewCluster,
+  postDisconnectedCluster,
   getClusterDetails,
+  fetchClusterByExternalId,
   editCluster,
   getCloudProviders,
   getCloudRegions,

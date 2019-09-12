@@ -28,7 +28,7 @@ function AlertsTable({ alerts = [] }) {
     if (alert.severity === alertsSeverity.WARNING) {
       severityIcon = warningIcon;
     }
-    if (alerts.severity === alertsSeverity.CRITICAL) {
+    if (alert.severity === alertsSeverity.CRITICAL) {
       severityIcon = errorIcon;
     }
     return ([{ title: alert.name }, { title: severityIcon }]);

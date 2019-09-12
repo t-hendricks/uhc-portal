@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CreateOSDCluster ManagedClusterForm should fetch cloud providers, machine types, and quota when first mounted 1`] = `
+<Spinner
+  centered={true}
+/>
+`;
+
 exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
 <Card>
   <div
