@@ -58,6 +58,10 @@ function DetailsLeft({ cluster, cloudProviders }) {
             </dd>
           </dl>
         </dd>
+        <dt>Operating system</dt>
+        <dd>
+          {get(cluster, 'metrics.operating_system', 'N/A')}
+        </dd>
         <dt>Created at</dt>
         <dd>
           <Timestamp value={get(cluster, 'creation_timestamp', 'N/A')} />

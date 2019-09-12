@@ -121,6 +121,17 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
                   "master": 2,
                   "total": 3,
                 },
+                "sockets": Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                  "updated_timestamp": "0001-01-01T00:00:00Z",
+                  "used": Object {
+                    "unit": "",
+                    "value": 0,
+                  },
+                },
                 "storage": Object {
                   "total": Object {
                     "unit": "B",
