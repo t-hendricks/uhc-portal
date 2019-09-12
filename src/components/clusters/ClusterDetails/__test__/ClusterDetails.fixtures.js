@@ -95,6 +95,17 @@ const clusterDetails = {
           unit: '',
         },
       },
+      sockets: {
+        updated_timestamp: '0001-01-01T00:00:00Z',
+        used: {
+          value: 0,
+          unit: '',
+        },
+        total: {
+          value: 0,
+          unit: '',
+        },
+      },
       storage: {
         updated_timestamp: '0001-01-01T00:00:00Z',
         used: {

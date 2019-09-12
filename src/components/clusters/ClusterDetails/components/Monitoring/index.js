@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
   const isPending = alerts.pending || nodes.pending || state.clusters.details.pending;
 
   const alertsIssues = issuesSelector(alerts.data, 'severity', 'critical');
-  const nodesIssues = issuesSelector(nodes.data, 'up', 0);
+  const nodesIssues = issuesSelector(nodes.data, 'up', false);
   const lastCheckIn = lastCheckInSelector(cluster.activity_timestamp);
   const resourceUsageIssues = resourceUsageIssuesSelector(cpu, memory);
   const discoveredIssues = (alertsIssues + nodesIssues + resourceUsageIssues) || null;
@@ -32,8 +32,8 @@ const mapStateToProps = (state) => {
   );
 
   return ({
-    nodes: { ...nodes, numOfIssues: alertsIssues },
-    alerts: { ...alerts, numOfIssues: nodesIssues },
+    nodes: { ...nodes, numOfIssues: nodesIssues },
+    alerts: { ...alerts, numOfIssues: alertsIssues },
     lastCheckIn: lastCheckIn.message,
     resourceUsage: { numOfIssues: resourceUsageIssues },
     discoveredIssues,
