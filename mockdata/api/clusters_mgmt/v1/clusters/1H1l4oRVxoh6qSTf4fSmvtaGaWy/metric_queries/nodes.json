@@ -1,0 +1,46 @@
+{
+  "nodes": [
+    {
+      "time": "2019-09-12T12:50:19Z",
+      "internal_ip": "10.235.58.34",
+      "hostname": "ip-10-235-58-34.ec2.internal",
+      "up": true
+    },
+    {
+      "time": "2019-09-12T12:50:19Z",
+      "internal_ip": "10.235.58.36",
+      "hostname": "ip-10-235-58-36.ec2.internal",
+      "up": true
+    },
+    {
+      "time": "2019-09-12T12:50:19Z",
+      "internal_ip": "10.235.58.40",
+      "hostname": "ip-10-235-58-40.ec2.internal",
+      "up": true
+    },
+    {
+      "time": "2019-09-12T12:50:19Z",
+      "internal_ip": "10.235.58.43",
+      "hostname": "ip-10-235-58-43.ec2.internal",
+      "up": true
+    },
+    {
+      "time": "2019-09-12T12:50:19Z",
+      "internal_ip": "10.235.58.4",
+      "hostname": "ip-10-235-58-4.ec2.internal",
+      "up": true
+    },
+    {
+      "time": "2019-09-12T12:50:19Z",
+      "internal_ip": "10.235.58.54",
+      "hostname": "ip-10-235-58-54.ec2.internal",
+      "up": false
+    },
+    {
+      "time": "2019-09-12T12:50:19Z",
+      "internal_ip": "10.235.58.8",
+      "hostname": "ip-10-235-58-8.ec2.internal",
+      "up": true
+    }
+  ]
+}
