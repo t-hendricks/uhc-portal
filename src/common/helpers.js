@@ -160,7 +160,7 @@ const scrollToTop = () => {
 
 const buildUrlParams = params => Object.keys(params).map(key => `${key}=${encodeURIComponent(params[key])}`).join('&');
 
-const normalizeNodeCount = (value, previousValue) => {
+const normalizeNumericInput = (value, previousValue) => {
   if (Number.isNaN(Number(value))) {
     return previousValue;
   }
@@ -194,7 +194,7 @@ export {
   toCleanArray,
   scrollToTop,
   buildUrlParams,
-  normalizeNodeCount,
+  normalizeNumericInput,
 };
 
 export default helpers;
