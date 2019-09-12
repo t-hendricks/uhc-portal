@@ -76,7 +76,6 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
                     },
                   ]
                 }
-                validate={[Function]}
               />
             </FormGroup>
             <FormGroup
@@ -102,7 +101,6 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
                     },
                   ]
                 }
-                validate={[Function]}
               />
             </FormGroup>
             <Field
