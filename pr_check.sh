@@ -18,6 +18,10 @@
 # This script is executed by a Jenkins job for each change request. If it
 # doesn't succeed the change won't be merged.
 
+# install the cert required to connect to Nexus:
+curl https://password.corp.redhat.com/RH-IT-Root-CA.crt > ~/RH-IT-Root-CA.crt
+yarn config set cafile ~/RH-IT-Root-CA.crt
+
 # Run the checks:
 make \
   lint \

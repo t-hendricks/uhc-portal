@@ -14,6 +14,8 @@ limitations under the License.
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import result from 'lodash/result';
+import isUuid from 'uuid-validate';
+import { Redirect } from 'react-router';
 
 import { TabContent, EmptyState } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
@@ -57,17 +59,21 @@ class ClusterDetails extends Component {
       getOrganizationAndQuota,
       clearGlobalError,
     } = this.props;
+
     clearGlobalError('clusterDetails');
 
     const clusterID = match.params.id;
+
     this.refresh();
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
     }
-    if (!clusterIdentityProviders.pending
-       && !clusterIdentityProviders.error
-       && !clusterIdentityProviders.fulfilled) {
+    if (isValid(clusterID)
+      && !isUuid(clusterID)
+      && !clusterIdentityProviders.pending
+      && !clusterIdentityProviders.error
+      && !clusterIdentityProviders.fulfilled) {
       getClusterIdentityProviders(clusterID); // TODO: get IDP only for managed cluster
     }
     if (!organization.pending && !organization.error && !organization.fulfilled) {
@@ -109,6 +115,8 @@ class ClusterDetails extends Component {
 
     if (isValid(clusterID)) {
       fetchDetails(clusterID);
+    }
+    if (isValid(clusterID) && !isUuid(clusterID)) {
       getLogs(clusterID);
       getUsers(clusterID, 'dedicated-admins');
       getAlerts(clusterID);
@@ -120,7 +128,9 @@ class ClusterDetails extends Component {
     const { match, clusterIdentityProviders, getClusterIdentityProviders } = this.props;
     const clusterID = match.params.id;
 
-    if (!clusterIdentityProviders.pending
+    if (isValid(clusterID)
+      && !isUuid(clusterID)
+      && !clusterIdentityProviders.pending
       && !clusterIdentityProviders.error) {
       getClusterIdentityProviders(clusterID);
     }
@@ -143,7 +153,14 @@ class ClusterDetails extends Component {
 
     const { cluster } = clusterDetails;
 
+    // ClusterDetails can be entered via normal id from OCM, or via external_id (a uuid)
+    // from openshift console. if we enter via the uuid, switch to the normal id.
     const requestedClusterID = match.params.id;
+    if (cluster && cluster.shouldRedirect && isUuid(requestedClusterID)) {
+      return (
+        <Redirect to={`/details/${cluster.id}`} />
+      );
+    }
 
     // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
     // the redux state will have the data for the previous cluster. We want to ensure we only

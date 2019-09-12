@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import get from 'lodash/get';
+import isUuid from 'uuid-validate';
 
 import { clustersConstants } from '../constants';
 import { clusterService, authorizationsService, accountsService } from '../../services';
@@ -183,31 +184,36 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
   let cluster;
   let canEdit;
   let canDelete;
-  const promises = [
-    clusterService.getClusterDetails(clusterID).then((response) => {
-      cluster = response;
-      cluster.data = normalizeCluster(cluster.data);
-    }),
-    authorizationsService.selfAccessReview(
-      { action: 'delete', resource_type: 'Cluster', cluster_id: clusterID },
-    ).then((response) => { canDelete = response.data.allowed; }),
-    authorizationsService.selfAccessReview(
-      { action: 'update', resource_type: 'Cluster', cluster_id: clusterID },
-    ).then((response) => { canEdit = response.data.allowed; }),
-  ];
-  return Promise.all(promises).then(() => {
-    cluster.data.canEdit = canEdit;
-    cluster.data.canDelete = canDelete;
-    const subscriptionID = get(cluster.data, 'subscription.id');
-    if (subscriptionID) {
-      // FIXME accounts service does not support fetching account info for a single
-      // subscription, so we have to use the search endpoint here
-      return accountsService.getSubscriptions(`id='${subscriptionID}'`).then((subscriptions) => {
-        cluster.data.subscription = get(subscriptions, 'data.items[0]');
-        return cluster;
-      }).catch(() => cluster);
-    }
-    return cluster;
+  const clusterIdIsUUID = isUuid(clusterID);
+  const clusterPromise = clusterIdIsUUID ? clusterService.fetchClusterByExternalId(clusterID)
+    : clusterService.getClusterDetails(clusterID);
+  // fetchClusterByExternalId returns an array. getClusterDetails returns a single cluster
+  return clusterPromise.then((clusterResponse) => {
+    cluster = clusterIdIsUUID ? { data: get(clusterResponse, 'data.items[0]') } : clusterResponse;
+    cluster.data = normalizeCluster(cluster.data);
+    const promises = [
+      authorizationsService.selfAccessReview(
+        { action: 'delete', resource_type: 'Cluster', cluster_id: clusterID },
+      ).then((response) => { canDelete = response.data.allowed; }),
+      authorizationsService.selfAccessReview(
+        { action: 'update', resource_type: 'Cluster', cluster_id: clusterID },
+      ).then((response) => { canEdit = response.data.allowed; }),
+    ];
+    return Promise.all(promises).then(() => {
+      cluster.data.shouldRedirect = clusterIdIsUUID;
+      cluster.data.canEdit = canEdit;
+      cluster.data.canDelete = canDelete;
+      const subscriptionID = get(cluster.data, 'subscription.id');
+      if (subscriptionID) {
+        // FIXME accounts service does not support fetching account info for a single
+        // subscription, so we have to use the search endpoint here
+        return accountsService.getSubscriptions(`id='${subscriptionID}'`).then((subscriptions) => {
+          cluster.data.subscription = get(subscriptions, 'data.items[0]');
+          return cluster;
+        }).catch(() => cluster);
+      }
+      return cluster;
+    }).catch(() => cluster);
   });
 };
 
