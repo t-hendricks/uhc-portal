@@ -154,7 +154,6 @@ class RegisterCluster extends React.Component {
                       name="operating_system"
                       options={[{ value: 'Red Hat Enterprise Linux CoreOS', label: 'Red Hat Enterprise Linux CoreOS' },
                         { value: 'Red Hat Enterprise Linux', label: 'Red Hat Enterprise Linux' }]}
-                      validate={required}
                       disabled={registerClusterResponse.pending}
                       defaultValue="Red Hat Enterprise Linux CoreOS"
                     />
@@ -169,7 +168,6 @@ class RegisterCluster extends React.Component {
                       name="system_type"
                       options={[{ value: 'physical', label: 'Physical' },
                         { value: 'virtual', label: 'Virtual' }]}
-                      validate={required}
                       defaultValue="physical"
                       disabled={registerClusterResponse.pending}
                       onChange={this.toggleSystemType}
