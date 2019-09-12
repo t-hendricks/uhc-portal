@@ -25,7 +25,7 @@ import Modal from '../../common/Modal/Modal';
 import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
 import { required, checkClusterDisplayName, checkClusterUUID } from '../../../common/validators';
 import constants from './RegisterClusterHelper';
-
+import { normalizeNumericInput } from '../../../common/helpers';
 
 class RegisterCluster extends React.Component {
   state = {
@@ -178,7 +178,8 @@ class RegisterCluster extends React.Component {
                     component={ReduxVerticalFormGroupPF4}
                     name="socket_num"
                     label="Number of sockets or LAPRs"
-                    type="number"
+                    inputMode="numeric"
+                    normalize={normalizeNumericInput}
                     disabled={registerClusterResponse.pending}
                     validate={required}
                     isRequired
@@ -189,7 +190,8 @@ class RegisterCluster extends React.Component {
                     component={ReduxVerticalFormGroupPF4}
                     name="cpu"
                     label="Number of vCPUs"
-                    type="number"
+                    inputMode="numeric"
+                    normalize={normalizeNumericInput}
                     disabled={registerClusterResponse.pending}
                     validate={required}
                     isRequired
@@ -199,7 +201,8 @@ class RegisterCluster extends React.Component {
                     component={ReduxVerticalFormGroupPF4}
                     name="memory_gib"
                     label="Memory capacity (GiB)"
-                    type="number"
+                    inputMode="numeric"
+                    normalize={normalizeNumericInput}
                     step="any"
                     disabled={registerClusterResponse.pending}
                   />
@@ -207,7 +210,8 @@ class RegisterCluster extends React.Component {
                     component={ReduxVerticalFormGroupPF4}
                     name="nodes_compute"
                     label="Number of compute nodes"
-                    type="number"
+                    inputMode="numeric"
+                    normalize={normalizeNumericInput}
                     disabled={registerClusterResponse.pending}
                   />
                 </Form>

@@ -106,26 +106,29 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
             <Field
               component={[Function]}
               disabled={false}
+              inputMode="numeric"
               isRequired={true}
               label="Number of sockets or LAPRs"
               name="socket_num"
-              type="number"
+              normalize={[Function]}
               validate={[Function]}
             />
             <Field
               component={[Function]}
               disabled={false}
+              inputMode="numeric"
               label="Memory capacity (GiB)"
               name="memory_gib"
+              normalize={[Function]}
               step="any"
-              type="number"
             />
             <Field
               component={[Function]}
               disabled={false}
+              inputMode="numeric"
               label="Number of compute nodes"
               name="nodes_compute"
-              type="number"
+              normalize={[Function]}
             />
           </Form>
         </GridItem>
