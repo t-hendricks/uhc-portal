@@ -4,6 +4,7 @@ import get from 'lodash/get';
 
 import Timestamp from '../../../../common/Timestamp';
 import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
+import { metricsStatusMessages } from './ResourceUsage/ResourceUsage.consts';
 
 function DetailsLeft({ cluster, cloudProviders }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
