@@ -11,6 +11,7 @@ const clusterStates = {
   WARNING: 'warning',
   STALE: 'stale',
   LONG_STALE: 'long stale',
+  DISCONNECTED: 'disconnected',
 };
 
 function getClusterStateAndDescription(cluster) {
@@ -25,12 +26,10 @@ function getClusterStateAndDescription(cluster) {
   }
   if (cluster.state === clusterStates.READY) {
     const { cpu, memory, storage } = cluster.metrics;
-
     const cpuLastActive = getTimeDelta(new Date(cpu.updated_timestamp));
     const memoryLastActive = getTimeDelta(new Date(memory.updated_timestamp));
     const storageLastActive = getTimeDelta(new Date(storage.updated_timestamp));
     const creationDelta = getTimeDelta(new Date(cluster.creation_timestamp));
-
     const lastActive = Math.min(cpuLastActive, memoryLastActive, storageLastActive, creationDelta);
 
     if (lastActive > 24 * 7) {

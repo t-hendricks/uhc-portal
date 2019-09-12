@@ -1,10 +1,15 @@
-const statuses = {
-  HEALTHY: 'HEALTHY',
-  HAS_ISSUES: 'HAS_ISSUES',
+const common = {
   UPDATING: 'UPDATING',
   UNKNOWN: 'UNKNOWN',
-  AVAILABLE: 'AVAILABLE',
-  FAILING: 'FAILING',
+};
+
+const statuses = {
+  ...common,
+  HEALTHY: 'HEALTHY',
+  HAS_ISSUES: 'HAS_ISSUES',
+  DISCONNECTED: 'DISCONNECTED',
+  NO_METRICS: 'NO_METRICS',
+  INSTALLING: 'INSTALLING',
 };
 
 const alertsSeverity = {
@@ -12,4 +17,10 @@ const alertsSeverity = {
   CRITICAL: 'critical',
 };
 
-export { statuses, alertsSeverity };
+const opertatorsStatuses = {
+  ...common,
+  AVAILABLE: 'AVAILABLE',
+  FAILING: 'FAILING',
+};
+
+export { statuses, alertsSeverity, opertatorsStatuses };

@@ -7,12 +7,12 @@ import clusterStates from '../../../common/clusterStates';
 // of the definition of issue for this data.
 // Example: An Alert has an issues if alert's severity is crtitical.
 // Therefore:  issuesSelector(alerts, 'severity', 'crtitical' )
-const issuesSelector = (data, healtCriteria, isIssue) => (
+const issuesSelector = (data, healtCriteria, isIssue) => (data.length > 0 ? (
   data.filter(item => item[healtCriteria] === isIssue)
-).length;
+).length : null);
 
 const lastCheckInSelector = (lastCheckIn) => {
-  const maxDiffDays = 2;
+  const maxDiffHours = 3;
   const date = new Date(lastCheckIn);
 
   if (date.getTime() > 0) {
@@ -24,14 +24,13 @@ const lastCheckInSelector = (lastCheckIn) => {
     // calculate time delta in minutes
     const minutes = Math.floor(diff / 1000 / 60);
     // more then 3 hours -> not healty
-    // const isHealty = hours > 3 && minutes > 0;
 
     const values = { hours, minutes };
 
-    if (hours > maxDiffDays * 24) {
+    if (hours > maxDiffHours) {
       return {
         ...values,
-        message: `more then ${maxDiffDays} days ago`,
+        message: `more then ${maxDiffHours} hours ago`,
       };
     } if (hours) {
       return {
@@ -52,13 +51,26 @@ const lastCheckInSelector = (lastCheckIn) => {
   };
 };
 
+const hasCpuAndMemory = (cpu, memory) => {
+  const totalCPU = cpu.total.value;
+  const totalMemory = cpu.total.value;
+  const cpuTimeStampEmpty = new Date(cpu.updated_timestamp).getTime() < 0;
+  const memoryTimeStampEmpty = new Date(cpu.updated_timestamp).getTime() < 0;
+
+  if (!cpu || !memory || cpuTimeStampEmpty || memoryTimeStampEmpty || !totalCPU || !totalMemory) {
+    return false;
+  }
+  return true;
+};
+
 const resourceUsageIssuesSelector = (cpu, memory) => {
   const totalCPU = cpu.total.value;
   const totalMemory = cpu.total.value;
 
-  if ((!cpu && !memory) || (!totalCPU && !totalMemory)) {
+  if (!hasCpuAndMemory(cpu, memory)) {
     return null;
   }
+
   let numOfIssues = 0;
   if (cpu && totalCPU && (cpu.used.value / cpu.total.value > 0.95)) {
     numOfIssues += 1;
@@ -70,21 +82,33 @@ const resourceUsageIssuesSelector = (cpu, memory) => {
 };
 
 const clusterHealthSelector = (
-  cluster, lastCheckIn, alertsIssues, nodesIssues, resourceUsageIssues,
+  cluster, lastCheckIn, nodes, alerts, cpu, memory, alertsIssues, nodesIssues, resourceUsageIssues,
 ) => {
   const { hours, minutes } = lastCheckIn;
-  const noMetrics = (hours > 3 && minutes > 0);
 
-  if ((cluster.disconnected && !cluster.managed)
-      || cluster.status === clusterStates.INSTALLING
-      || noMetrics
-  ) {
-    return statuses.UNKNOWN;
+  const noFreshActivity = hours > 3 || (hours === 3 && minutes > 0);
+  const noData = !alerts
+  || !alerts.length
+   || !nodes
+   || !nodes.length
+   || !hasCpuAndMemory(cpu, memory);
+
+  if (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.PENDING) {
+    return statuses.INSTALLING;
+  }
+
+  if (cluster.state === clusterStates.DISCONNECTED) {
+    return statuses.DISCONNECTED;
+  }
+
+  if (noFreshActivity || noData) {
+    return statuses.NO_METRICS;
   }
 
   if (alertsIssues > 0 || nodesIssues > 0 || resourceUsageIssues > 0) {
     return statuses.HAS_ISSUES;
   }
+
   return statuses.HEALTHY;
 };
 

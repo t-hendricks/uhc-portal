@@ -3,6 +3,7 @@
 exports[`<Monitoring /> should render 1`] = `
 <Fragment>
   <ClusterHealthCard
+    discoveredIssues={null}
     lastCheckIn=""
   />
   <Card
