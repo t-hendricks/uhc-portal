@@ -13,6 +13,9 @@ function DetailsRight({ cluster }) {
   );
 
   const showDesiredNodes = cluster.managed;
+  const showSockets = cluster.metrics.sockets.total.value > 0;
+  const showVCPU = !showSockets;
+
 
   return (
     <React.Fragment>
@@ -25,18 +28,18 @@ function DetailsRight({ cluster }) {
           {' '}
           {cluster.state.description}
         </dd>
-        <dt>
+        {showVCPU && (
           <React.Fragment>
-            Total
-            {' '}
-            vCPU
-          </React.Fragment>
-        </dt>
-        <dd>
-          {cluster.metrics.cpu.total.value}
-          {' '}
-          vCPU
-        </dd>
+            <dt>
+              Total vCPU
+            </dt>
+            <dd>
+              {cluster.metrics.cpu.total.value}
+              {' '}
+              vCPU
+            </dd>
+          </React.Fragment>)
+        }
         <dt>
           Total Memory
         </dt>
@@ -45,6 +48,16 @@ function DetailsRight({ cluster }) {
           {' '}
           {memoryTotalWithUnit.unit}
         </dd>
+        {showSockets && (
+          <React.Fragment>
+            <dt>
+              Total Sockets
+            </dt>
+            <dd>
+              {cluster.metrics.sockets.total.value}
+            </dd>
+          </React.Fragment>)
+        }
 
         {showDesiredNodes && (
           <React.Fragment>
