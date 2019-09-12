@@ -13,11 +13,6 @@ class ClusterListFilterDropdown extends React.Component {
     this.onToggle = (isOpen) => {
       this.setState({ isOpen });
     };
-    this.onSelect = () => {
-      this.setState(state => ({
-        isOpen: !state.isOpen,
-      }));
-    };
   }
 
   render() {
@@ -44,7 +39,6 @@ class ClusterListFilterDropdown extends React.Component {
             } else {
               setFilter(currentFilter.filter(item => item !== key));
             }
-            this.onSelect();
           };
           return (
             <DropdownItem key={key}>
