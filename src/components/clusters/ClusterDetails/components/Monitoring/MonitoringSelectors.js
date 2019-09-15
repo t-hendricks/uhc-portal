@@ -40,7 +40,7 @@ const lastCheckInSelector = (lastCheckIn) => {
     } if (minutes) {
       return {
         ...values,
-        message: minutes === 1 ? 'one minutes ago' : `${minutes} minutes ago`,
+        message: minutes === 1 ? 'one minute ago' : `${minutes} minutes ago`,
       };
     }
   }
