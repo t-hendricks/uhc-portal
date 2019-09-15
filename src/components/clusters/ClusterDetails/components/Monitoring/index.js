@@ -2,9 +2,14 @@ import { connect } from 'react-redux';
 import get from 'lodash/get';
 
 import Monitoring from './Monitoring';
+import { clearMonitoringState } from './MonitoringActions';
 import {
   issuesSelector, lastCheckInSelector, resourceUsageIssuesSelector, clusterHealthSelector,
 } from './MonitoringSelectors';
+
+const mapDispatchToProps = {
+  clearMonitoringState,
+};
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
@@ -12,7 +17,6 @@ const mapStateToProps = (state) => {
 
   const cpu = get(state, 'clusters.details.cluster.metrics.cpu', null);
   const memory = get(state, 'clusters.details.cluster.metrics.memory', null);
-  const isPending = alerts.pending || nodes.pending || state.clusters.details.pending;
 
   const alertsIssues = issuesSelector(alerts.data, 'severity', 'critical');
   const nodesIssues = issuesSelector(nodes.data, 'up', false);
@@ -37,9 +41,8 @@ const mapStateToProps = (state) => {
     lastCheckIn: lastCheckIn.message,
     resourceUsage: { numOfIssues: resourceUsageIssues },
     discoveredIssues,
-    isPending,
     healthStatus,
   });
 };
 
-export default connect(mapStateToProps, null)(Monitoring);
+export default connect(mapStateToProps, mapDispatchToProps)(Monitoring);
