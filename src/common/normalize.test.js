@@ -96,7 +96,6 @@ const clusterWithMetricsAtTopLevel = {
     },
   },
   multi_az: false,
-  creator: '***REMOVED***',
   managed: true,
   version: {
     kind: 'VersionLink',
@@ -170,7 +169,6 @@ const clusterWithMetricsSubobject = {
     },
   },
   multi_az: false,
-  creator: '***REMOVED***',
   managed: true,
   version: {
     kind: 'VersionLink',
@@ -283,7 +281,6 @@ const clusterWithMissingMetrics = {
     },
   },
   multi_az: false,
-  creator: '***REMOVED***',
   managed: true,
   version: {
     kind: 'VersionLink',
