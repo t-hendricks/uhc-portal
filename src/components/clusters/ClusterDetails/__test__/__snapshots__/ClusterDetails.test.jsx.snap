@@ -21,7 +21,6 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
         },
         "creation_timestamp": "2019-03-26T15:18:39.06783Z",
-        "creator": "***REMOVED***",
         "display_name": "test-liza",
         "dns": Object {
           "base_domain": "sdev.devshift.net",
@@ -396,7 +395,6 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
           },
           "creation_timestamp": "2019-03-26T15:18:39.06783Z",
-          "creator": "***REMOVED***",
           "display_name": "test-liza",
           "dns": Object {
             "base_domain": "sdev.devshift.net",
@@ -537,7 +535,6 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
           },
           "creation_timestamp": "2019-03-26T15:18:39.06783Z",
-          "creator": "***REMOVED***",
           "display_name": "test-liza",
           "dns": Object {
             "base_domain": "sdev.devshift.net",
