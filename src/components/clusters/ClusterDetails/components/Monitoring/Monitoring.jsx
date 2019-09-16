@@ -34,21 +34,31 @@ class Monitoring extends React.Component {
       return <Spinner id="monitoring-spinner" />;
     }
 
-    const emptyState = (
-      <EmptyState className="cluster-details-user-tab-contents">
+    const lastCheckInText = lastCheckIn && `Last check-in: ${lastCheckIn}`;
+
+    const emptyState = body => (
+      <EmptyState>
         <EmptyStateIcon icon={WarningTriangleIcon} />
         <Title headingLevel="h5" size="lg">Monitoring Data is not available</Title>
         <EmptyStateBody>
-    Monitoring Data is not available if a cluster goes more then
-    three hours without sending metrics.
-    Check the cluster&apos;s web console if you think that this cludter shoud
-    be sending metrics.
+          <>
+            {body}
+            <p>{lastCheckInText}</p>
+          </>
         </EmptyStateBody>
       </EmptyState>
     );
 
     if (healthStatus === statuses.NO_METRICS) {
-      return emptyState;
+      return emptyState(
+        <p>
+        Monitoring Data is not available if a cluster goes more than
+        three hours without sending metrics.
+          <br />
+        Check the cluster&apos;s web console if you think that this cluster should
+        be sending metrics.
+        </p>,
+      );
     }
 
     if (healthStatus === statuses.DISCONNECTED) {
@@ -64,23 +74,18 @@ class Monitoring extends React.Component {
       );
     }
 
+    const isInProgress = healthStatus === statuses.INSTALLING || healthStatus === statuses.UPDATING;
+
     return (
       <React.Fragment>
         <ClusterHealthCard
-          lastCheckIn={lastCheckIn}
+          lastCheckIn={!isInProgress ? lastCheckIn : null}
           status={healthStatus}
           discoveredIssues={discoveredIssues}
         />
-        { (healthStatus === statuses.INSTALLING
-        || healthStatus === statuses.UPDATING)
-          ? (
-            <EmptyState className="cluster-details-user-tab-contents">
-              <EmptyStateIcon icon={WarningTriangleIcon} />
-              <Title headingLevel="h5" size="lg">Monitoring Data is not available</Title>
-              <EmptyStateBody>
-          Monitoring Data is not available at this time. Please check back later.
-              </EmptyStateBody>
-            </EmptyState>
+        { isInProgress
+          ? emptyState(
+            <p>Monitoring Data is not available at this time. Please check back later.</p>,
           )
           : (
             <Card id="monitoring">

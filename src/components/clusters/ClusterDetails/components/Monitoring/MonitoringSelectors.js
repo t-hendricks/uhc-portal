@@ -23,14 +23,14 @@ const lastCheckInSelector = (lastCheckIn) => {
     const hours = Math.floor(diff / 1000 / 60 / 60);
     // calculate time delta in minutes
     const minutes = Math.floor(diff / 1000 / 60);
-    // more then 3 hours -> not healty
+    // more than 3 hours -> not healty
 
     const values = { hours, minutes };
 
     if (hours > maxDiffHours) {
       return {
         ...values,
-        message: `more then ${maxDiffHours} hours ago`,
+        message: `more than ${maxDiffHours} hours ago`,
       };
     } if (hours) {
       return {
@@ -40,7 +40,7 @@ const lastCheckInSelector = (lastCheckIn) => {
     } if (minutes) {
       return {
         ...values,
-        message: minutes === 1 ? 'one minutes ago' : `${minutes} minutes ago`,
+        message: minutes === 1 ? 'one minute ago' : `${minutes} minutes ago`,
       };
     }
   }
