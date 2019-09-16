@@ -52,10 +52,10 @@ class Monitoring extends React.Component {
     if (healthStatus === statuses.NO_METRICS) {
       return emptyState(
         <p>
-        Monitoring Data is not available if a cluster goes more then
+        Monitoring Data is not available if a cluster goes more than
         three hours without sending metrics.
           <br />
-        Check the cluster&apos;s web console if you think that this cludter shoud
+        Check the cluster&apos;s web console if you think that this cluster should
         be sending metrics.
         </p>,
       );
