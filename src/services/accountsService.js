@@ -10,12 +10,14 @@ const getOrganization = organizationID => apiRequest({
   url: `/api/accounts_mgmt/v1/organizations/${organizationID}`,
 });
 
-const getSubscriptions = search => apiRequest({
+const getSubscriptions = params => apiRequest({
   method: 'get',
   params: {
-    search,
+    page: params.page,
+    size: params.page_size,
+    orderBy: params.order,
+    search: params.filter,
     fetchAccounts: true,
-    size: -1,
   },
   url: '/api/accounts_mgmt/v1/subscriptions',
 });

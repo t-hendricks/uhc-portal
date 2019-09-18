@@ -26,7 +26,7 @@ function ClusterDetailsTop(props) {
     children,
   } = props;
 
-  const clusterName = cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
+  const clusterName = get(cluster, 'subscription.display_name', false) || cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
 
   const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
 

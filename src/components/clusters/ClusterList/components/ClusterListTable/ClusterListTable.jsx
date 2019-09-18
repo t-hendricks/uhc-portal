@@ -42,7 +42,7 @@ function ClusterListTable(props) {
 
   const clusterRow = (cluster) => {
     const provider = result(cluster, 'cloud_provider.id', 'N/A');
-    const name = cluster.display_name || ''; // This would've been one trenary condition if the backend didn't have omitEmpty on display_name
+    const name = cluster.subscription.display_name || cluster.display_name || '';
 
     const clusterName = (
       <Tooltip content={`cluster name: ${cluster.name}`} position={TooltipPosition.right}>
