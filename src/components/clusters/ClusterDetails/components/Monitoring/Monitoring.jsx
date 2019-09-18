@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
   Card,
   CardHeader,
@@ -25,14 +24,15 @@ class Monitoring extends React.Component {
     getAlerts(cluster.id);
   }
 
+  componentWillUnmount() {
+    const { clearMonitoringState } = this.props;
+    clearMonitoringState();
+  }
+
   render() {
     const {
-      cluster, alerts, nodes, lastCheckIn, resourceUsage, healthStatus, discoveredIssues, isPending,
+      cluster, alerts, nodes, lastCheckIn, resourceUsage, healthStatus, discoveredIssues,
     } = this.props;
-
-    if (isPending) {
-      return <Spinner id="monitoring-spinner" />;
-    }
 
     const lastCheckInText = lastCheckIn && `Last check-in: ${lastCheckIn}`;
 
@@ -112,13 +112,13 @@ Monitoring.propTypes = {
   cluster: PropTypes.object,
   getNodes: PropTypes.func,
   getAlerts: PropTypes.func,
+  clearMonitoringState: PropTypes.func,
   alerts: PropTypes.object,
   nodes: PropTypes.object,
   resourceUsage: PropTypes.object,
   lastCheckIn: PropTypes.string,
   healthStatus: PropTypes.string,
   discoveredIssues: PropTypes.number,
-  isPending: PropTypes.bool,
 };
 
 Monitoring.defaultProps = {
@@ -127,9 +127,9 @@ Monitoring.defaultProps = {
   nodes: {},
   getNodes: noop,
   getAlerts: noop,
+  clearMonitoringState: noop,
   lastCheckIn: '',
   discoveredIssues: null,
-  isPending: false,
 };
 
 export default Monitoring;

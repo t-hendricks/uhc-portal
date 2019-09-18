@@ -143,7 +143,6 @@ const clusterDetails = {
       },
     },
     multi_az: false,
-    creator: '***REMOVED***',
     managed: true,
     version: {
       kind: 'VersionLink',
