@@ -50,6 +50,7 @@ function MonitoringReducer(state = initialState, action) {
       return helpers.setStateProp(
         'alerts',
         {
+          data: state.alerts.data,
           pending: true,
         },
         {
@@ -87,6 +88,7 @@ function MonitoringReducer(state = initialState, action) {
       return helpers.setStateProp(
         'nodes',
         {
+          data: state.nodes.data,
           pending: true,
         },
         {
@@ -108,6 +110,9 @@ function MonitoringReducer(state = initialState, action) {
           initialState,
         },
       );
+
+    case monitoringConstants.CLEAR_MONITORING_STATE:
+      return initialState;
     default:
       return state;
   }
