@@ -4,9 +4,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import get from 'lodash/get';
-
-import { cloudProviderActions } from '../../../../../redux/actions/cloudProviderActions';
+import { cloudProviderActions } from '../../../../redux/actions/cloudProviderActions';
 
 const awsRegions = {
   'us-east-2': 'US East, Ohio',
@@ -53,12 +51,13 @@ class ClusterLocationLabel extends React.Component {
       );
     }
     if (cloudProviders.fulfilled
-        && cloudProviders.providers[cloudProviderID]) {
-      const region = get(cloudProviders.providers[cloudProviderID], `regions.${regionID}.display_name`, 'N/A');
+        && cloudProviders.providers[cloudProviderID]
+        && cloudProviders.providers[cloudProviderID].regions
+        && cloudProviders.providers[cloudProviderID].regions[regionID]) {
       return (
         <React.Fragment>
           {cloudProviders.providers[cloudProviderID].display_name}
-          {` (${region})`}
+          {` (${cloudProviders.providers[cloudProviderID].regions[regionID].display_name})`}
         </React.Fragment>
       );
     }

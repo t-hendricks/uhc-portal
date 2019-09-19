@@ -22,14 +22,17 @@ import { Link } from 'react-router-dom';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
+  Alert,
+  AlertActionCloseButton,
+  Button,
+  Card,
+  EmptyState,
   Split,
   SplitItem,
-  Card,
-  Button,
-  EmptyState,
 } from '@patternfly/react-core';
 
-import ClusterListFilter from './components/ClusterListFilter';
+import ClusterListFilter from '../common/ClusterListFilter';
+import ClusterListExtraActions from './components/ClusterListExtraActions';
 import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup';
 
@@ -42,10 +45,12 @@ import ErrorBox from '../../common/ErrorBox';
 
 
 import EditClusterDialog from '../common/EditClusterDialog';
+import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
+import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
 
-import ViewPaginationRow from './components/viewPaginationRow';
+import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
 import helpers from '../../../common/helpers';
 import { viewConstants } from '../../../redux/constants';
@@ -65,7 +70,7 @@ class ClusterList extends Component {
   constructor(props) {
     super(props);
 
-    // refresh needs to be bound because it is passed to another componenet
+    // refresh needs to be bound because it is passed to another component
     this.refresh = this.refresh.bind(this);
     // the various open dialog methods get called from the table component
   }
@@ -96,11 +101,14 @@ class ClusterList extends Component {
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
     const {
-      viewOptions, valid, pending,
+      viewOptions, valid, pending, archivedCluster, closeToast,
     } = this.props;
     if ((!valid && !pending)
         || helpers.viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
+    }
+    if (!prevProps.archivedCluster.showToast && archivedCluster.showToast) {
+      setTimeout(closeToast, 8000);
     }
   }
 
@@ -112,15 +120,6 @@ class ClusterList extends Component {
   refresh() {
     const { fetchClusters, viewOptions } = this.props;
     fetchClusters(helpers.createViewQueryObject(viewOptions));
-  }
-
-  renderError() {
-    const { errorMessage, operationID } = this.props;
-    return (
-      <EmptyState>
-        <ErrorBox message="Error retrieving clusters" response={{ errorMessage, operationID }} />
-      </EmptyState>
-    );
   }
 
   render() {
@@ -136,23 +135,50 @@ class ClusterList extends Component {
       hasQuota,
       errorMessage,
       organization,
+      archivedCluster,
+      operationID,
+      closeToast,
     } = this.props;
 
+    const toast = archivedCluster.showToast && (
+      <Alert
+        className="archived-cluster-toast"
+        variant="success"
+        title="Cluster successfully archived"
+        action={<AlertActionCloseButton onClose={() => closeToast()} />}
+      />
+    );
+
     if (error && !size(clusters)) {
-      return this.renderError();
+      return (
+        <React.Fragment>
+          {toast}
+          <EmptyState>
+            <ErrorBox
+              message="Error retrieving clusters"
+              response={{
+                errorMessage,
+                operationID,
+              }}
+            />
+          </EmptyState>
+        </React.Fragment>);
     }
 
     if ((!size(clusters) && pending && (isEmpty(viewOptions.filter) || !valid))
     || (!organization.fulfilled && !organization.error)) {
       return (
-        <Card>
-          <div className="cluster-list">
-            <h1>Clusters</h1>
-            <div className="cluster-loading-container">
-              <Spinner centered />
+        <React.Fragment>
+          {toast}
+          <Card>
+            <div className="cluster-list">
+              <h1>Clusters</h1>
+              <div className="cluster-loading-container">
+                <Spinner centered />
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </React.Fragment>
       );
     }
 
@@ -160,6 +186,7 @@ class ClusterList extends Component {
         && isEmpty(viewOptions.flags.subscriptionFilter)) {
       return (
         <React.Fragment>
+          {toast}
           <GlobalErrorBox />
           <ClusterListEmptyState hasQuota={hasQuota} />
         </React.Fragment>
@@ -169,11 +196,12 @@ class ClusterList extends Component {
     return (
       <Card>
         <div className="cluster-list">
+          {toast}
           <GlobalErrorBox />
           <h1>Clusters</h1>
           <Split id="cluster-list-top">
             <SplitItem>
-              <ClusterListFilter />
+              <ClusterListFilter view={viewConstants.CLUSTERS_VIEW} />
             </SplitItem>
             <SplitItem className="split-margin-left">
               <ClusterListFilterDropdown />
@@ -184,9 +212,7 @@ class ClusterList extends Component {
               </Link>
             </SplitItem>
             <SplitItem>
-              <Link to="/register">
-                <Button variant="link">Register Cluster</Button>
-              </Link>
+              <ClusterListExtraActions />
             </SplitItem>
             <SplitItem className="spinner-fit-container">
               { pending && <Spinner className="cluster-list-spinner" /> }
@@ -226,6 +252,8 @@ class ClusterList extends Component {
           />
           <EditDisplayNameDialog onClose={invalidateClusters} />
           <EditClusterDialog onClose={invalidateClusters} />
+          <ArchiveClusterDialog onClose={invalidateClusters} />
+          <UnarchiveClusterDialog onClose={invalidateClusters} />
           <DeleteClusterDialog onClose={(shouldRefresh) => {
             if (shouldRefresh) {
               invalidateClusters();
@@ -257,6 +285,10 @@ ClusterList.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
+  archivedCluster: PropTypes.shape({
+    showToast: PropTypes.bool.isRequired,
+  }),
+  closeToast: PropTypes.func.isRequired,
 };
 
 export default ClusterList;

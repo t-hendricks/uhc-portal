@@ -1,8 +1,10 @@
 const CLUSTERS_VIEW = 'CLUSTERS_VIEW';
+const ARCHIVED_CLUSTERS_VIEW = 'ARCHIVED_CLUSTERS_VIEW';
 
 const viewConstants = {
   CLUSTERS_VIEW,
+  ARCHIVED_CLUSTERS_VIEW,
 };
 
-export { CLUSTERS_VIEW };
+export { CLUSTERS_VIEW, ARCHIVED_CLUSTERS_VIEW };
 export default viewConstants;

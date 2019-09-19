@@ -16,6 +16,7 @@ const INITAL_VIEW_STATE = {
     isAscending: true,
   },
   flags: {
+    showArchived: false,
   },
 };
 
@@ -23,6 +24,7 @@ const initialState = {
 };
 
 initialState[viewConstants.CLUSTERS_VIEW] = Object.assign(INITAL_VIEW_STATE);
+initialState[viewConstants.ARCHIVED_CLUSTERS_VIEW] = Object.assign(INITAL_VIEW_STATE);
 
 const viewOptionsReducer = (state = initialState, action) => {
   const updateState = {};
@@ -93,6 +95,7 @@ const viewOptionsReducer = (state = initialState, action) => {
 
     case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
       updatePageCounts(viewConstants.CLUSTERS_VIEW, action.payload.data.total);
+      updatePageCounts(viewConstants.ARCHIVED_CLUSTERS_VIEW, action.payload.data.total);
       return Object.assign({}, state, updateState);
 
     case viewPaginationConstants.VIEW_SET_LIST_FILTER:
