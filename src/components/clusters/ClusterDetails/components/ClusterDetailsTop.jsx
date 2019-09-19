@@ -94,6 +94,13 @@ function ClusterDetailsTop(props) {
                 Clusters
               </BreadcrumbItem>
             </LinkContainer>
+            {cluster.subscription && cluster.subscription.status === 'Archived' && (
+              <LinkContainer to="/archived">
+                <BreadcrumbItem to="/archived">
+                  Archived clusters
+                </BreadcrumbItem>
+              </LinkContainer>
+            )}
             <BreadcrumbItem isActive>
               {clusterName}
             </BreadcrumbItem>
