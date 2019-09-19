@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
@@ -104,6 +105,23 @@ function dropDownItems({
     return { ...baseArchiveProps, onClick: () => openModal('unarchive-cluster', unarchiveModalData) };
   };
 
+  const getEditConsoleURLProps = () => {
+    const editConsoleURLBaseProps = {
+      ...baseProps,
+      key: getKey('editconsoleurl'),
+    };
+    const editConsoleURLProps = {
+      ...editConsoleURLBaseProps,
+      onClick: () => openModal('edit-console-url', cluster),
+    };
+    const editConsoleURLPropsUninstalling = {
+      ...editConsoleURLBaseProps,
+      ...isUninstallingProps,
+    };
+
+    return isClusterUninstalling ? editConsoleURLPropsUninstalling : editConsoleURLProps;
+  };
+
   const getDeleteItemProps = () => {
     const baseDeleteProps = {
       ...baseProps,
@@ -138,6 +156,7 @@ function dropDownItems({
   const adminConsoleItemProps = getAdminConosleProps();
   const editClusterItemProps = getEditClusterProps();
   const editDisplayNameItemProps = getEditDisplayNameProps();
+  const editConsoleURLItemProps = getEditConsoleURLProps();
   const deleteClusterItemProps = getDeleteItemProps();
   const archiveClusterItemProps = getArchiveClusterProps();
   const unarchiveClusterItemProps = getUnarchiveClusterProps();
@@ -148,12 +167,19 @@ function dropDownItems({
     && cluster.subscription.status !== 'Archived';
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && cluster.subscription.status === 'Archived';
+  const hasConsoleURL = get(cluster, 'console.url', false);
+  const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
 
   return [
     showConsoleButton && (
     <DropdownItem {...adminConsoleItemProps}>Launch Admin Console</DropdownItem>),
     cluster.canEdit && (
     <DropdownItem {...editDisplayNameItemProps}>Edit Display Name</DropdownItem>),
+    showEditURL && (
+    <DropdownItem {...editConsoleURLItemProps}>
+      {
+       hasConsoleURL ? 'Edit Console URL' : 'Add Console URL'}
+    </DropdownItem>),
     showScale && <DropdownItem {...editClusterItemProps}>Scale Cluster</DropdownItem>,
     showDelete && <DropdownItem {...deleteClusterItemProps}>Delete Cluster</DropdownItem>,
     showArchive && <DropdownItem {...archiveClusterItemProps}>Archive Cluster</DropdownItem>,

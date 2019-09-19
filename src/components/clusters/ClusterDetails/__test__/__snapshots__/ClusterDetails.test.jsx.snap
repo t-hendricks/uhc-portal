@@ -674,6 +674,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   <Connect(UnarchiveClusterDialog)
     onClose={[Function]}
   />
+  <Connect(EditConsoleURLDialog)
+    onClose={[Function]}
+  />
   <Connect(DeleteClusterDialog)
     onClose={[Function]}
   />

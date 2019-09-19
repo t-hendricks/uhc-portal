@@ -33,6 +33,7 @@ import DeleteIDPDialog from './components/DeleteIDPDialog';
 
 import EditClusterDialog from '../common/EditClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
+import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
 
 import ErrorBox from '../../common/ErrorBox';
@@ -289,6 +290,7 @@ class ClusterDetails extends Component {
         <EditDisplayNameDialog onClose={onDialogClose} />
         <ArchiveClusterDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
+        <EditConsoleURLDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {
           if (shouldRefresh) {
             invalidateClusters();

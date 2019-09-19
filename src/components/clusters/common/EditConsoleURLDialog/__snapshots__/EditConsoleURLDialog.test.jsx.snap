@@ -1,0 +1,974 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
+<EditConsoleURLDialog
+  closeModal={[MockFunction]}
+  clusterID="some-id"
+  consoleURL="http://www.example.com"
+  editClusterResponse={
+    Object {
+      "error": false,
+      "errorMessage": "",
+    }
+  }
+  isOpen={true}
+  onClose={[MockFunction]}
+  resetResponse={[MockFunction]}
+  submit={[MockFunction]}
+>
+  <Modal
+    isPrimaryDisabled={true}
+    onClose={[Function]}
+    onPrimaryClick={[Function]}
+    onSecondaryClick={[Function]}
+    primaryText="Save"
+    secondaryText="Cancel"
+    title="Edit Console URL"
+  >
+    <Modal
+      actions={
+        Array [
+          <Button
+            onClick={[Function]}
+            variant="secondary"
+          >
+            Cancel
+          </Button>,
+          <Button
+            isDisabled={true}
+            onClick={[Function]}
+            type="submit"
+            variant="primary"
+          >
+            Save
+          </Button>,
+        ]
+      }
+      ariaDescribedById=""
+      className={null}
+      hideTitle={false}
+      isLarge={false}
+      isOpen={true}
+      isSmall={true}
+      onClose={[Function]}
+      showClose={true}
+      title="Edit Console URL"
+    >
+      <Portal
+        containerInfo={
+          <div>
+            <div
+              class="pf-c-backdrop"
+            >
+              <div
+                class="pf-l-bullseye"
+              >
+                <div
+                  aria-describedby="pf-modal-0"
+                  aria-label="Edit Console URL"
+                  aria-modal="true"
+                  class="pf-c-modal-box pf-m-sm"
+                  role="dialog"
+                >
+                  <button
+                    aria-label="Close"
+                    class="pf-c-button pf-m-plain"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 352 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    class="pf-c-title pf-m-2xl"
+                  >
+                     
+                    Edit Console URL
+                     
+                  </h1>
+                  <div
+                    class="pf-c-modal-box__body"
+                    id="pf-modal-0"
+                  >
+                    <form
+                      class="pf-c-form"
+                      novalidate=""
+                    >
+                      <div
+                        class="pf-c-form__group"
+                      >
+                        <label
+                          class="pf-c-form__label"
+                          for="edit-console-url-input"
+                        >
+                          <span
+                            class="pf-c-form__label-text"
+                          >
+                            Web console URL
+                          </span>
+                        </label>
+                        <input
+                          aria-invalid="false"
+                          aria-label="Web console URL"
+                          class="pf-c-form-control"
+                          id="edit-console-url-input"
+                          placeholder="https://www.example.com/"
+                          type="text"
+                          value=""
+                        />
+                        <div
+                          aria-live="polite"
+                          class="pf-c-form__helper-text"
+                          id="edit-console-url-input-helper"
+                        >
+                          <p>
+                            URL should include the hostname only, with no path.
+                          </p>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="pf-c-modal-box__footer"
+                  >
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-primary pf-m-disabled"
+                      disabled=""
+                      type="submit"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      >
+        <ModalContent
+          actions={
+            Array [
+              <Button
+                onClick={[Function]}
+                variant="secondary"
+              >
+                Cancel
+              </Button>,
+              <Button
+                isDisabled={true}
+                onClick={[Function]}
+                type="submit"
+                variant="primary"
+              >
+                Save
+              </Button>,
+            ]
+          }
+          ariaDescribedById=""
+          className={null}
+          hideTitle={false}
+          id="pf-modal-0"
+          isLarge={false}
+          isOpen={true}
+          isSmall={true}
+          onClose={[Function]}
+          showClose={true}
+          title="Edit Console URL"
+        >
+          <Backdrop>
+            <div
+              className="pf-c-backdrop"
+            >
+              <FocusTrap
+                _createFocusTrap={[Function]}
+                active={true}
+                className="pf-l-bullseye"
+                focusTrapOptions={
+                  Object {
+                    "clickOutsideDeactivates": true,
+                  }
+                }
+                paused={false}
+                tag="div"
+              >
+                <div
+                  className="pf-l-bullseye"
+                >
+                  <ModalBox
+                    className={null}
+                    id="pf-modal-0"
+                    isLarge={false}
+                    isSmall={true}
+                    style={Object {}}
+                    title="Edit Console URL"
+                  >
+                    <div
+                      aria-describedby="pf-modal-0"
+                      aria-label="Edit Console URL"
+                      aria-modal="true"
+                      className="pf-c-modal-box pf-m-sm"
+                      role="dialog"
+                      style={Object {}}
+                    >
+                      <ModalBoxCloseButton
+                        onClose={[Function]}
+                      >
+                        <Button
+                          aria-label="Close"
+                          className=""
+                          onClick={[Function]}
+                          variant="plain"
+                        >
+                          <button
+                            aria-disabled={null}
+                            aria-label="Close"
+                            className="pf-c-button pf-m-plain"
+                            disabled={false}
+                            onClick={[Function]}
+                            tabIndex={null}
+                            type="button"
+                          >
+                            <TimesIcon
+                              color="currentColor"
+                              noVerticalAlign={false}
+                              size="sm"
+                              title={null}
+                            >
+                              <svg
+                                aria-hidden={true}
+                                aria-labelledby={null}
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                style={
+                                  Object {
+                                    "verticalAlign": "-0.125em",
+                                  }
+                                }
+                                viewBox="0 0 352 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  transform=""
+                                />
+                              </svg>
+                            </TimesIcon>
+                          </button>
+                        </Button>
+                      </ModalBoxCloseButton>
+                      <ModalBoxHeader
+                        hideTitle={false}
+                      >
+                        <Title
+                          className=""
+                          headingLevel="h1"
+                          size="2xl"
+                        >
+                          <h1
+                            className="pf-c-title pf-m-2xl"
+                          >
+                             
+                            Edit Console URL
+                             
+                          </h1>
+                        </Title>
+                      </ModalBoxHeader>
+                      <ModalBoxBody
+                        id="pf-modal-0"
+                      >
+                        <div
+                          className="pf-c-modal-box__body"
+                          id="pf-modal-0"
+                        >
+                          <Form
+                            onSubmit={[Function]}
+                          >
+                            <form
+                              className="pf-c-form"
+                              noValidate={true}
+                              onSubmit={[Function]}
+                            >
+                              <FormGroup
+                                fieldId="edit-console-url-input"
+                                helperText={
+                                  <p>
+                                    URL should include the hostname only, with no path.
+                                  </p>
+                                }
+                                helperTextInvalid="Cluster console URL should not be empty"
+                                isValid={true}
+                                label="Web console URL"
+                              >
+                                <div
+                                  className="pf-c-form__group"
+                                >
+                                  <label
+                                    className="pf-c-form__label"
+                                    htmlFor="edit-console-url-input"
+                                  >
+                                    <span
+                                      className="pf-c-form__label-text"
+                                    >
+                                      Web console URL
+                                    </span>
+                                  </label>
+                                  <TextInput
+                                    aria-label="Web console URL"
+                                    className=""
+                                    id="edit-console-url-input"
+                                    isDisabled={false}
+                                    isReadOnly={false}
+                                    isRequired={false}
+                                    isValid={true}
+                                    onChange={[Function]}
+                                    placeholder="https://www.example.com/"
+                                    type="text"
+                                    value=""
+                                  >
+                                    <input
+                                      aria-invalid={false}
+                                      aria-label="Web console URL"
+                                      className="pf-c-form-control"
+                                      disabled={false}
+                                      id="edit-console-url-input"
+                                      onChange={[Function]}
+                                      placeholder="https://www.example.com/"
+                                      readOnly={false}
+                                      required={false}
+                                      type="text"
+                                      value=""
+                                    />
+                                  </TextInput>
+                                  <div
+                                    aria-live="polite"
+                                    className="pf-c-form__helper-text"
+                                    id="edit-console-url-input-helper"
+                                  >
+                                    <p>
+                                      URL should include the hostname only, with no path.
+                                    </p>
+                                  </div>
+                                </div>
+                              </FormGroup>
+                            </form>
+                          </Form>
+                        </div>
+                      </ModalBoxBody>
+                      <ModalBoxFooter>
+                        <div
+                          className="pf-c-modal-box__footer"
+                        >
+                          <Button
+                            key="cancel"
+                            onClick={[Function]}
+                            variant="secondary"
+                          >
+                            <button
+                              aria-disabled={null}
+                              aria-label={null}
+                              className="pf-c-button pf-m-secondary"
+                              disabled={false}
+                              onClick={[Function]}
+                              tabIndex={null}
+                              type="button"
+                            >
+                              Cancel
+                            </button>
+                          </Button>
+                          <Button
+                            isDisabled={true}
+                            key="confirm"
+                            onClick={[Function]}
+                            type="submit"
+                            variant="primary"
+                          >
+                            <button
+                              aria-disabled={null}
+                              aria-label={null}
+                              className="pf-c-button pf-m-primary pf-m-disabled"
+                              disabled={true}
+                              onClick={[Function]}
+                              tabIndex={null}
+                              type="submit"
+                            >
+                              Save
+                            </button>
+                          </Button>
+                        </div>
+                      </ModalBoxFooter>
+                    </div>
+                  </ModalBox>
+                </div>
+              </FocusTrap>
+            </div>
+          </Backdrop>
+        </ModalContent>
+      </Portal>
+    </Modal>
+  </Modal>
+</EditConsoleURLDialog>
+`;
+
+exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
+<EditConsoleURLDialog
+  closeModal={[MockFunction]}
+  clusterID="some-id"
+  consoleURL="http://www.example.com"
+  editClusterResponse={
+    Object {
+      "error": true,
+      "errorMessage": "this is an error",
+    }
+  }
+  isOpen={true}
+  onClose={[MockFunction]}
+  resetResponse={[MockFunction]}
+  submit={[MockFunction]}
+>
+  <Modal
+    isPrimaryDisabled={false}
+    onClose={[Function]}
+    onPrimaryClick={[Function]}
+    onSecondaryClick={[Function]}
+    primaryText="Save"
+    secondaryText="Cancel"
+    title="Edit Console URL"
+  >
+    <Modal
+      actions={
+        Array [
+          <Button
+            onClick={[Function]}
+            variant="secondary"
+          >
+            Cancel
+          </Button>,
+          <Button
+            isDisabled={false}
+            onClick={[Function]}
+            type="submit"
+            variant="primary"
+          >
+            Save
+          </Button>,
+        ]
+      }
+      ariaDescribedById=""
+      className={null}
+      hideTitle={false}
+      isLarge={false}
+      isOpen={true}
+      isSmall={true}
+      onClose={[Function]}
+      showClose={true}
+      title="Edit Console URL"
+    >
+      <Portal
+        containerInfo={
+          <div>
+            <div
+              class="pf-c-backdrop"
+            >
+              <div
+                class="pf-l-bullseye"
+              >
+                <div
+                  aria-describedby="pf-modal-4"
+                  aria-label="Edit Console URL"
+                  aria-modal="true"
+                  class="pf-c-modal-box pf-m-sm"
+                  role="dialog"
+                >
+                  <button
+                    aria-label="Close"
+                    class="pf-c-button pf-m-plain"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 352 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    class="pf-c-title pf-m-2xl"
+                  >
+                     
+                    Edit Console URL
+                     
+                  </h1>
+                  <div
+                    class="pf-c-modal-box__body"
+                    id="pf-modal-4"
+                  >
+                    <div
+                      aria-label="Danger Alert"
+                      class="pf-c-alert pf-m-inline pf-m-danger error-box"
+                    >
+                      <div
+                        class="pf-c-alert__icon"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                            transform=""
+                          />
+                        </svg>
+                      </div>
+                      <h4
+                        class="pf-c-alert__title"
+                      >
+                        <span
+                          class="pf-u-screen-reader"
+                        >
+                          Danger alert:
+                        </span>
+                        Error changing console URL
+                      </h4>
+                      <div
+                        class="pf-c-alert__description"
+                      >
+                        <span>
+                          this is an error
+                        </span>
+                        <br />
+                        <span>
+                          Operation ID: N/A
+                        </span>
+                      </div>
+                    </div>
+                    <form
+                      class="pf-c-form"
+                      novalidate=""
+                    >
+                      <div
+                        class="pf-c-form__group"
+                      >
+                        <label
+                          class="pf-c-form__label"
+                          for="edit-console-url-input"
+                        >
+                          <span
+                            class="pf-c-form__label-text"
+                          >
+                            Web console URL
+                          </span>
+                        </label>
+                        <input
+                          aria-invalid="false"
+                          aria-label="Web console URL"
+                          class="pf-c-form-control"
+                          id="edit-console-url-input"
+                          placeholder="https://www.example.com/"
+                          type="text"
+                          value="http://www.example.com"
+                        />
+                        <div
+                          aria-live="polite"
+                          class="pf-c-form__helper-text"
+                          id="edit-console-url-input-helper"
+                        >
+                          <p>
+                            URL should include the hostname only, with no path.
+                          </p>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="pf-c-modal-box__footer"
+                  >
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-primary"
+                      type="submit"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      >
+        <ModalContent
+          actions={
+            Array [
+              <Button
+                onClick={[Function]}
+                variant="secondary"
+              >
+                Cancel
+              </Button>,
+              <Button
+                isDisabled={false}
+                onClick={[Function]}
+                type="submit"
+                variant="primary"
+              >
+                Save
+              </Button>,
+            ]
+          }
+          ariaDescribedById=""
+          className={null}
+          hideTitle={false}
+          id="pf-modal-4"
+          isLarge={false}
+          isOpen={true}
+          isSmall={true}
+          onClose={[Function]}
+          showClose={true}
+          title="Edit Console URL"
+        >
+          <Backdrop>
+            <div
+              className="pf-c-backdrop"
+            >
+              <FocusTrap
+                _createFocusTrap={[Function]}
+                active={true}
+                className="pf-l-bullseye"
+                focusTrapOptions={
+                  Object {
+                    "clickOutsideDeactivates": true,
+                  }
+                }
+                paused={false}
+                tag="div"
+              >
+                <div
+                  className="pf-l-bullseye"
+                >
+                  <ModalBox
+                    className={null}
+                    id="pf-modal-4"
+                    isLarge={false}
+                    isSmall={true}
+                    style={Object {}}
+                    title="Edit Console URL"
+                  >
+                    <div
+                      aria-describedby="pf-modal-4"
+                      aria-label="Edit Console URL"
+                      aria-modal="true"
+                      className="pf-c-modal-box pf-m-sm"
+                      role="dialog"
+                      style={Object {}}
+                    >
+                      <ModalBoxCloseButton
+                        onClose={[Function]}
+                      >
+                        <Button
+                          aria-label="Close"
+                          className=""
+                          onClick={[Function]}
+                          variant="plain"
+                        >
+                          <button
+                            aria-disabled={null}
+                            aria-label="Close"
+                            className="pf-c-button pf-m-plain"
+                            disabled={false}
+                            onClick={[Function]}
+                            tabIndex={null}
+                            type="button"
+                          >
+                            <TimesIcon
+                              color="currentColor"
+                              noVerticalAlign={false}
+                              size="sm"
+                              title={null}
+                            >
+                              <svg
+                                aria-hidden={true}
+                                aria-labelledby={null}
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                style={
+                                  Object {
+                                    "verticalAlign": "-0.125em",
+                                  }
+                                }
+                                viewBox="0 0 352 512"
+                                width="1em"
+                              >
+                                <path
+                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  transform=""
+                                />
+                              </svg>
+                            </TimesIcon>
+                          </button>
+                        </Button>
+                      </ModalBoxCloseButton>
+                      <ModalBoxHeader
+                        hideTitle={false}
+                      >
+                        <Title
+                          className=""
+                          headingLevel="h1"
+                          size="2xl"
+                        >
+                          <h1
+                            className="pf-c-title pf-m-2xl"
+                          >
+                             
+                            Edit Console URL
+                             
+                          </h1>
+                        </Title>
+                      </ModalBoxHeader>
+                      <ModalBoxBody
+                        id="pf-modal-4"
+                      >
+                        <div
+                          className="pf-c-modal-box__body"
+                          id="pf-modal-4"
+                        >
+                          <ErrorBox
+                            message="Error changing console URL"
+                            response={
+                              Object {
+                                "error": true,
+                                "errorMessage": "this is an error",
+                              }
+                            }
+                          >
+                            <Alert
+                              className="error-box"
+                              isInline={true}
+                              title="Error changing console URL"
+                              variant="danger"
+                            >
+                              <div
+                                aria-label="Danger Alert"
+                                className="pf-c-alert pf-m-inline pf-m-danger error-box"
+                              >
+                                <AlertIcon
+                                  variant="danger"
+                                >
+                                  <div
+                                    className="pf-c-alert__icon"
+                                  >
+                                    <ExclamationCircleIcon
+                                      color="currentColor"
+                                      noVerticalAlign={false}
+                                      size="sm"
+                                      title={null}
+                                    >
+                                      <svg
+                                        aria-hidden={true}
+                                        aria-labelledby={null}
+                                        fill="currentColor"
+                                        height="1em"
+                                        role="img"
+                                        style={
+                                          Object {
+                                            "verticalAlign": "-0.125em",
+                                          }
+                                        }
+                                        viewBox="0 0 512 512"
+                                        width="1em"
+                                      >
+                                        <path
+                                          d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                                          transform=""
+                                        />
+                                      </svg>
+                                    </ExclamationCircleIcon>
+                                  </div>
+                                </AlertIcon>
+                                <h4
+                                  className="pf-c-alert__title"
+                                >
+                                  <span
+                                    className="pf-u-screen-reader"
+                                  >
+                                    Danger alert:
+                                  </span>
+                                  Error changing console URL
+                                </h4>
+                                <div
+                                  className="pf-c-alert__description"
+                                >
+                                  <span>
+                                    this is an error
+                                  </span>
+                                  <br />
+                                  <span>
+                                    Operation ID: N/A
+                                  </span>
+                                </div>
+                              </div>
+                            </Alert>
+                          </ErrorBox>
+                          <Form
+                            onSubmit={[Function]}
+                          >
+                            <form
+                              className="pf-c-form"
+                              noValidate={true}
+                              onSubmit={[Function]}
+                            >
+                              <FormGroup
+                                fieldId="edit-console-url-input"
+                                helperText={
+                                  <p>
+                                    URL should include the hostname only, with no path.
+                                  </p>
+                                }
+                                isValid={true}
+                                label="Web console URL"
+                              >
+                                <div
+                                  className="pf-c-form__group"
+                                >
+                                  <label
+                                    className="pf-c-form__label"
+                                    htmlFor="edit-console-url-input"
+                                  >
+                                    <span
+                                      className="pf-c-form__label-text"
+                                    >
+                                      Web console URL
+                                    </span>
+                                  </label>
+                                  <TextInput
+                                    aria-label="Web console URL"
+                                    className=""
+                                    id="edit-console-url-input"
+                                    isDisabled={false}
+                                    isReadOnly={false}
+                                    isRequired={false}
+                                    isValid={true}
+                                    onChange={[Function]}
+                                    placeholder="https://www.example.com/"
+                                    type="text"
+                                    value="http://www.example.com"
+                                  >
+                                    <input
+                                      aria-invalid={false}
+                                      aria-label="Web console URL"
+                                      className="pf-c-form-control"
+                                      disabled={false}
+                                      id="edit-console-url-input"
+                                      onChange={[Function]}
+                                      placeholder="https://www.example.com/"
+                                      readOnly={false}
+                                      required={false}
+                                      type="text"
+                                      value="http://www.example.com"
+                                    />
+                                  </TextInput>
+                                  <div
+                                    aria-live="polite"
+                                    className="pf-c-form__helper-text"
+                                    id="edit-console-url-input-helper"
+                                  >
+                                    <p>
+                                      URL should include the hostname only, with no path.
+                                    </p>
+                                  </div>
+                                </div>
+                              </FormGroup>
+                            </form>
+                          </Form>
+                        </div>
+                      </ModalBoxBody>
+                      <ModalBoxFooter>
+                        <div
+                          className="pf-c-modal-box__footer"
+                        >
+                          <Button
+                            key="cancel"
+                            onClick={[Function]}
+                            variant="secondary"
+                          >
+                            <button
+                              aria-disabled={null}
+                              aria-label={null}
+                              className="pf-c-button pf-m-secondary"
+                              disabled={false}
+                              onClick={[Function]}
+                              tabIndex={null}
+                              type="button"
+                            >
+                              Cancel
+                            </button>
+                          </Button>
+                          <Button
+                            isDisabled={false}
+                            key="confirm"
+                            onClick={[Function]}
+                            type="submit"
+                            variant="primary"
+                          >
+                            <button
+                              aria-disabled={null}
+                              aria-label={null}
+                              className="pf-c-button pf-m-primary"
+                              disabled={false}
+                              onClick={[Function]}
+                              tabIndex={null}
+                              type="submit"
+                            >
+                              Save
+                            </button>
+                          </Button>
+                        </div>
+                      </ModalBoxFooter>
+                    </div>
+                  </ModalBox>
+                </div>
+              </FocusTrap>
+            </div>
+          </Backdrop>
+        </ModalContent>
+      </Portal>
+    </Modal>
+  </Modal>
+</EditConsoleURLDialog>
+`;
