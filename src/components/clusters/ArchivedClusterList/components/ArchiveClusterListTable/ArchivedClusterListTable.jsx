@@ -49,7 +49,7 @@ function ArchivedClusterListTable(props) {
       { subscriptionID: cluster.subscription ? cluster.subscription.id : '' });
 
     const unarchiveButton = (
-      <Button variant="secondary" onClick={openUnarchiveModal}>
+      <Button variant="secondary" onClick={openUnarchiveModal} isDisabled={!cluster.canEdit}>
         Unarchive
       </Button>
     );
