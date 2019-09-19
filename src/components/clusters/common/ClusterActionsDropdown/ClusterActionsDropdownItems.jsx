@@ -144,8 +144,10 @@ function dropDownItems({
   const deleteIDPItemProps = getDeleteIDPProps();
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed;
-  const showArchive = !cluster.managed && cluster.subscription && cluster.subscription.status !== 'Archived';
-  const showUnarchive = !cluster.managed && cluster.subscription && cluster.subscription.status === 'Archived';
+  const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription
+    && cluster.subscription.status !== 'Archived';
+  const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
+    && cluster.subscription.status === 'Archived';
 
   return [
     showConsoleButton && (
