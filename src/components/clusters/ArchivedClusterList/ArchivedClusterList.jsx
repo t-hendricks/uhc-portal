@@ -126,7 +126,7 @@ class ArchivedClusterList extends Component {
           </BreadcrumbItem>
         </LinkContainer>
         <BreadcrumbItem isActive>
-          Archived Clusters
+          Archived clusters
         </BreadcrumbItem>
       </Breadcrumb>
     );
