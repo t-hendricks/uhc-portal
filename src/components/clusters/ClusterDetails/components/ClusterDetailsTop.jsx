@@ -65,7 +65,7 @@ function ClusterDetailsTop(props) {
       </Button>
     );
   } else if (cluster.canEdit) {
-    launchConsole = (<Button variant="primary" onClick={() => openModal('edit-console-url')}>Add Console URL</Button>);
+    launchConsole = (<Button variant="primary" onClick={() => openModal('edit-console-url', cluster)}>Add Console URL</Button>);
   }
 
   const actions = (
