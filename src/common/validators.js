@@ -11,6 +11,11 @@ const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
 
+/** Regular expression for a valid URL for a console in a self managed cluster.
+ * allowing only domain names with label separated with dots, optionally a port number,
+ * and one trailing slash. */
+const CONSOLE_URL_REGEXP = /^((https?):\/\/)?[0-9a-z]+((\.){1}[0-9a-z]+)+([a-z]){0,63}(:[0-9]{1,5})?(\/)?$/i;
+
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 50;
 
@@ -67,6 +72,17 @@ const checkClusterDisplayName = (value) => {
   }
   if (value.length > MAX_CLUSTER_DISPLAY_NAME_LENGTH) {
     return `Cluster display name may not exceed ${MAX_CLUSTER_DISPLAY_NAME_LENGTH} characters.`;
+  }
+  return undefined;
+};
+
+// Function to validate the cluster console URL
+const checkClusterConsoleURL = (value) => {
+  if (!value) {
+    return 'Cluster console URL should not be empty';
+  }
+  if (!CONSOLE_URL_REGEXP.test(value)) {
+    return 'Invalid URL. URL should include the hostname only, with no path';
   }
   return undefined;
 };
@@ -131,7 +147,12 @@ const validators = {
 };
 
 export {
-  required, github, checkClusterUUID, checkIdentityProviderName, checkClusterDisplayName,
+  required,
+  github,
+  checkClusterUUID,
+  checkIdentityProviderName,
+  checkClusterDisplayName,
+  checkClusterConsoleURL,
 };
 
 export default validators;

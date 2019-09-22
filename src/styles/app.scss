@@ -724,7 +724,6 @@ span.dev-preview-label svg {
   overflow: visible;
 }
 
-
 .pf-c-form__group .pf-c-radio__input {
   margin-top: -3px;
 }
@@ -741,6 +740,16 @@ span.dev-preview-label svg {
   padding: 0;
 }
 
+div.pf-c-alert.archived-cluster-toast {
+  width: 20%;
+  right: 1%;
+  top: 9%;
+  position: absolute;
+}
+
+.show-active-clusters-link {
+  margin-top: 6px;
+}
 #subscriptions-content {
   .pf-c-card {
     margin-top: var(--pf-global--spacer--lg);

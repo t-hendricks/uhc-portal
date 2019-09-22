@@ -1,4 +1,6 @@
-import validators, { required, checkIdentityProviderName, checkClusterUUID } from './validators';
+import validators, {
+  required, checkIdentityProviderName, checkClusterUUID, checkClusterConsoleURL,
+} from './validators';
 
 test('Field is required', () => {
   expect(required()).toBe('Field is required');
@@ -58,4 +60,12 @@ test('Field is valid node count for multi AZ', () => {
   expect(validators.nodesMultiAz(4)).toBe('Number of nodes must be multiple of 3 for Multi AZ cluster.');
   expect(validators.nodesMultiAz(5)).toBe('Number of nodes must be multiple of 3 for Multi AZ cluster.');
   expect(validators.nodesMultiAz(6)).toBe(undefined);
+});
+
+test('Field is a valid console URL', () => {
+  expect(checkClusterConsoleURL()).toBe('Cluster console URL should not be empty');
+  expect(checkClusterConsoleURL('http://www.example.com')).toBe(undefined);
+  expect(checkClusterConsoleURL('www.example.hey/hey')).toBe('Invalid URL. URL should include the hostname only, with no path');
+  expect(checkClusterConsoleURL('ftp://hello.com')).toBe('Invalid URL. URL should include the hostname only, with no path');
+  expect(checkClusterConsoleURL('http://example.com\noa')).toBe('Invalid URL. URL should include the hostname only, with no path');
 });

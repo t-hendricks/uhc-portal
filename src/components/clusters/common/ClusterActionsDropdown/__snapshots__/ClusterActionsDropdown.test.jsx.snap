@@ -21,6 +21,12 @@ exports[`<ClusterActionsDropdown /> admin console url does not exist should rend
       >
         Edit Display Name
       </DropdownItem>,
+      <DropdownItem
+        component="button"
+        onClick={[Function]}
+      >
+        Add Console URL
+      </DropdownItem>,
     ]
   }
   isOpen={false}
@@ -242,6 +248,12 @@ exports[`<ClusterActionsDropdown /> self managed cluster should render (self man
         onClick={[Function]}
       >
         Edit Display Name
+      </DropdownItem>,
+      <DropdownItem
+        component="button"
+        onClick={[Function]}
+      >
+        Add Console URL
       </DropdownItem>,
     ]
   }

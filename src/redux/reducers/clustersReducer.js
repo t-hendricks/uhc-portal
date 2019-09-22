@@ -42,6 +42,16 @@ const initialState = {
     ...baseState,
     cluster: null,
   },
+  archivedCluster: {
+    ...baseState,
+    cluster: null,
+    showToast: false,
+  },
+  unarchivedCluster: {
+    ...baseState,
+    cluster: null,
+    showToast: false,
+  },
 };
 
 function clustersReducer(state = initialState, action) {
@@ -221,6 +231,133 @@ function clustersReducer(state = initialState, action) {
       return helpers.setStateProp(
         'editedCluster',
         initialState.editedCluster,
+        {
+          state,
+          initialState,
+        },
+      );
+
+
+    // Archive cluster
+    case helpers.FULFILLED_ACTION(clustersConstants.ARCHIVE_CLUSTER):
+      return helpers.setStateProp(
+        'archivedCluster',
+        {
+          cluster: action.payload.data,
+          pending: false,
+          fulfilled: true,
+          showToast: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.REJECTED_ACTION(clustersConstants.ARCHIVE_CLUSTER):
+      return helpers.setStateProp(
+        'archivedCluster',
+        helpers.getErrorState(action),
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.PENDING_ACTION(clustersConstants.ARCHIVE_CLUSTER):
+      return helpers.setStateProp(
+        'archivedCluster',
+        {
+          pending: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE:
+      return helpers.setStateProp(
+        'archivedCluster',
+        {
+          ...initialState.archivedCluster,
+          showToast: state.archivedCluster.fulfilled,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case clustersConstants.ARCHIVE_CLUSTER_RESET_SHOW_TOAST:
+      return helpers.setStateProp(
+        'archivedCluster',
+        {
+          showToast: false,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    // UnArchive cluster
+    case helpers.FULFILLED_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
+      return helpers.setStateProp(
+        'unarchivedCluster',
+        {
+          cluster: action.payload.data,
+          pending: false,
+          fulfilled: true,
+          showToast: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.REJECTED_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
+      return helpers.setStateProp(
+        'unarchivedCluster',
+        helpers.getErrorState(action),
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.PENDING_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
+      return helpers.setStateProp(
+        'unarchivedCluster',
+        {
+          pending: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE:
+      return helpers.setStateProp(
+        'unarchivedCluster',
+        {
+          ...initialState.unarchivedCluster,
+          showToast: state.unarchivedCluster.fulfilled,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case clustersConstants.UNARCHIVE_CLUSTER_RESET_SHOW_TOAST:
+      return helpers.setStateProp(
+        'unarchivedCluster',
+        {
+          showToast: false,
+        },
         {
           state,
           initialState,

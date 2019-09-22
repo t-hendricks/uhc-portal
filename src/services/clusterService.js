@@ -115,6 +115,18 @@ const getNodes = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/nodes`,
 });
 
+const archiveCluster = id => apiRequest({
+  method: 'patch',
+  url: `/api/accounts_mgmt/v1/subscriptions/${id}`,
+  data: '{"status":"Archived"}',
+});
+
+const unarchiveCluster = id => apiRequest({
+  method: 'patch',
+  url: `/api/accounts_mgmt/v1/subscriptions/${id}`,
+  data: '{"status":"Active"}',
+});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -135,6 +147,8 @@ const clusterService = {
   getMachineTypes,
   getNodes,
   getAlerts,
+  archiveCluster,
+  unarchiveCluster,
 };
 
 export default clusterService;

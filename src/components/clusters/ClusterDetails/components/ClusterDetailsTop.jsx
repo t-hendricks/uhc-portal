@@ -51,15 +51,22 @@ function ClusterDetailsTop(props) {
 
   const consoleURL = cluster.console ? cluster.console.url : false;
 
-  const launchConsole = consoleURL && (cluster.state !== clusterStates.UNINSTALLING) ? (
-    <a href={consoleURL} target="_blank" rel="noreferrer" className="pull-left">
-      <Button variant="primary">Launch Console</Button>
-    </a>)
-    : (
+  let launchConsole;
+  if (consoleURL && (cluster.state !== clusterStates.UNINSTALLING)) {
+    launchConsole = (
+      <a href={consoleURL} target="_blank" rel="noreferrer" className="pull-left">
+        <Button variant="primary">Launch Console</Button>
+      </a>
+    );
+  } else if (cluster.managed) {
+    launchConsole = (
       <Button variant="primary" isDisabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
-        Launch Console
+      Launch Console
       </Button>
     );
+  } else if (cluster.canEdit) {
+    launchConsole = (<Button variant="primary" onClick={() => openModal('edit-console-url', cluster)}>Add Console URL</Button>);
+  }
 
   const actions = (
     <ClusterActionsDropdown
@@ -87,6 +94,13 @@ function ClusterDetailsTop(props) {
                 Clusters
               </BreadcrumbItem>
             </LinkContainer>
+            {cluster.subscription && cluster.subscription.status === 'Archived' && (
+              <LinkContainer to="/archived">
+                <BreadcrumbItem to="/archived">
+                  Archived clusters
+                </BreadcrumbItem>
+              </LinkContainer>
+            )}
             <BreadcrumbItem isActive>
               {clusterName}
             </BreadcrumbItem>
