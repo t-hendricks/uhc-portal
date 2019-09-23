@@ -71,7 +71,7 @@ const createViewQueryObject = (viewOptions, queryObj) => {
     const baseFilter = `cluster_id!='' AND ${statusClause}`;
 
     const escaped = viewOptions.filter ? viewOptions.filter.replace(/(')/g, '\'\'') : '';
-    const displayNameFilter = `display_name LIKE '%${escaped}%' OR external_cluster_id LIKE '%${escaped}%'`;
+    const displayNameFilter = `display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%'`;
     queryObject.filter = viewOptions.filter ? `(${baseFilter}) AND (${displayNameFilter})` : baseFilter;
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
