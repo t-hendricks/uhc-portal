@@ -96,11 +96,6 @@ class EditConsoleURLDialog extends Component {
             <FormGroup
               label="Web console URL"
               helperTextInvalid={validationMessage}
-              helperText={(
-                <p>
-                  URL should include the hostname only, with no path.
-                </p>
-              )}
               isValid={beenSet ? !validationMessage : true}
               fieldId="edit-console-url-input"
             >
@@ -108,7 +103,7 @@ class EditConsoleURLDialog extends Component {
                 type="text"
                 isValid={beenSet ? !validationMessage : true}
                 value={currentValue}
-                placeholder="https://www.example.com/"
+                placeholder="https://console-openshift-console.apps.mycluster.example.com/"
                 onChange={newValue => this.setValue(newValue)}
                 aria-label="Web console URL"
                 id="edit-console-url-input"
