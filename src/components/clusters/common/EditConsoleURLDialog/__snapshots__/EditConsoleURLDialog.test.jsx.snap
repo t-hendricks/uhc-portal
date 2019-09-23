@@ -123,19 +123,10 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                           aria-label="Web console URL"
                           class="pf-c-form-control"
                           id="edit-console-url-input"
-                          placeholder="https://www.example.com/"
+                          placeholder="https://console-openshift-console.apps.mycluster.example.com/"
                           type="text"
                           value=""
                         />
-                        <div
-                          aria-live="polite"
-                          class="pf-c-form__helper-text"
-                          id="edit-console-url-input-helper"
-                        >
-                          <p>
-                            URL should include the hostname only, with no path.
-                          </p>
-                        </div>
                       </div>
                     </form>
                   </div>
@@ -308,11 +299,6 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                             >
                               <FormGroup
                                 fieldId="edit-console-url-input"
-                                helperText={
-                                  <p>
-                                    URL should include the hostname only, with no path.
-                                  </p>
-                                }
                                 helperTextInvalid="Cluster console URL should not be empty"
                                 isValid={true}
                                 label="Web console URL"
@@ -339,7 +325,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                                     isRequired={false}
                                     isValid={true}
                                     onChange={[Function]}
-                                    placeholder="https://www.example.com/"
+                                    placeholder="https://console-openshift-console.apps.mycluster.example.com/"
                                     type="text"
                                     value=""
                                   >
@@ -350,22 +336,13 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                                       disabled={false}
                                       id="edit-console-url-input"
                                       onChange={[Function]}
-                                      placeholder="https://www.example.com/"
+                                      placeholder="https://console-openshift-console.apps.mycluster.example.com/"
                                       readOnly={false}
                                       required={false}
                                       type="text"
                                       value=""
                                     />
                                   </TextInput>
-                                  <div
-                                    aria-live="polite"
-                                    className="pf-c-form__helper-text"
-                                    id="edit-console-url-input-helper"
-                                  >
-                                    <p>
-                                      URL should include the hostname only, with no path.
-                                    </p>
-                                  </div>
                                 </div>
                               </FormGroup>
                             </form>
@@ -594,19 +571,10 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                           aria-label="Web console URL"
                           class="pf-c-form-control"
                           id="edit-console-url-input"
-                          placeholder="https://www.example.com/"
+                          placeholder="https://console-openshift-console.apps.mycluster.example.com/"
                           type="text"
                           value="http://www.example.com"
                         />
-                        <div
-                          aria-live="polite"
-                          class="pf-c-form__helper-text"
-                          id="edit-console-url-input-helper"
-                        >
-                          <p>
-                            URL should include the hostname only, with no path.
-                          </p>
-                        </div>
                       </div>
                     </form>
                   </div>
@@ -855,11 +823,6 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                             >
                               <FormGroup
                                 fieldId="edit-console-url-input"
-                                helperText={
-                                  <p>
-                                    URL should include the hostname only, with no path.
-                                  </p>
-                                }
                                 isValid={true}
                                 label="Web console URL"
                               >
@@ -885,7 +848,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                                     isRequired={false}
                                     isValid={true}
                                     onChange={[Function]}
-                                    placeholder="https://www.example.com/"
+                                    placeholder="https://console-openshift-console.apps.mycluster.example.com/"
                                     type="text"
                                     value="http://www.example.com"
                                   >
@@ -896,22 +859,13 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                                       disabled={false}
                                       id="edit-console-url-input"
                                       onChange={[Function]}
-                                      placeholder="https://www.example.com/"
+                                      placeholder="https://console-openshift-console.apps.mycluster.example.com/"
                                       readOnly={false}
                                       required={false}
                                       type="text"
                                       value="http://www.example.com"
                                     />
                                   </TextInput>
-                                  <div
-                                    aria-live="polite"
-                                    className="pf-c-form__helper-text"
-                                    id="edit-console-url-input-helper"
-                                  >
-                                    <p>
-                                      URL should include the hostname only, with no path.
-                                    </p>
-                                  </div>
                                 </div>
                               </FormGroup>
                             </form>
