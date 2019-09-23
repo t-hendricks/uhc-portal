@@ -28,7 +28,7 @@ class ClusterListExtraActions extends React.Component {
       <DropdownItem key="registercluster">
         <div>
           <Link to="/register" className="pf-c-dropdown__menu-item">
-            Register Cluster
+            Register cluster
           </Link>
         </div>
       </DropdownItem>,

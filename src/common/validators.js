@@ -14,7 +14,7 @@ const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0
 /** Regular expression for a valid URL for a console in a self managed cluster.
  * allowing only domain names with label separated with dots, optionally a port number,
  * and one trailing slash. */
-const CONSOLE_URL_REGEXP = /^((https?):\/\/)?[0-9a-z]+((\.){1}[0-9a-z]+)+([a-z]){0,63}(:[0-9]{1,5})?(\/)?$/i;
+const CONSOLE_URL_REGEXP = /^https?:\/\/[\w-]+(?:\.[\w-]+)+[\w\-._:/]+$/i;
 
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 50;
@@ -82,7 +82,7 @@ const checkClusterConsoleURL = (value) => {
     return 'Cluster console URL should not be empty';
   }
   if (!CONSOLE_URL_REGEXP.test(value)) {
-    return 'Invalid URL. URL should include the hostname only, with no path';
+    return 'Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)';
   }
   return undefined;
 };
