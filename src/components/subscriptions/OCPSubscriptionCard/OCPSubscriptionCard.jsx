@@ -14,6 +14,7 @@ import {
   ENTITLEMENT_NOT_SET,
   ENTITLEMENT_OVERCOMMITTED,
   ENTITLEMENT_INCONSISTENT_SERVICES,
+  ENTITLEMENT_UNKNOWN,
 } from '../../../common/subscriptionTypes';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 import OCPSubscriptionSummary from './OCPSubscriptionSummary';
@@ -38,7 +39,7 @@ class OCPSubscriptionCard extends Component {
   }
 
   render() {
-    const { organizationID, subscriptions } = this.props;
+    const { subscriptions } = this.props;
 
     let content;
     if (subscriptions.fulfilled) {
@@ -48,8 +49,9 @@ class OCPSubscriptionCard extends Component {
         [ENTITLEMENT_NOT_SET]: 0,
         [ENTITLEMENT_OVERCOMMITTED]: 0,
         [ENTITLEMENT_INCONSISTENT_SERVICES]: 0,
+        [ENTITLEMENT_UNKNOWN]: 0,
       }, inputStats);
-      content = <OCPSubscriptionSummary stats={stats} organizationID={organizationID} />;
+      content = <OCPSubscriptionSummary stats={stats} />;
     } else {
       subscriptions.type = 'ocp';
       subscriptions.empty = true;
@@ -58,8 +60,8 @@ class OCPSubscriptionCard extends Component {
 
     return (
       <Card>
-        <CardHeader>OpenShift Container Platform</CardHeader>
-        <CardBody>
+        <CardHeader className="section-header">OpenShift Container Platform</CardHeader>
+        <CardBody className="section-text">
         The summary of subscription status for all self-managed clusters.
         Please follow the individual links to see the specific clusters
         in each of the corresponding status.

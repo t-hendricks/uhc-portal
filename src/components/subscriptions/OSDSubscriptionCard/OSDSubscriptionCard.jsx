@@ -52,7 +52,7 @@ class OSDSubscriptionCard extends Component {
         quotaItem.allowed,
         { title: this.getCapacityIcon(quotaItem.reserved, quotaItem.allowed) },
       ]);
-      content = <><h4>Quota</h4><OSDSubscriptionTable rows={rows} /></>;
+      content = <><h4 className="content-header">Quota</h4><OSDSubscriptionTable rows={rows} /></>;
     } else {
       quotaSummary.type = 'osd';
       quotaSummary.empty = true;
@@ -61,12 +61,12 @@ class OSDSubscriptionCard extends Component {
 
     return (
       <Card>
-        <CardHeader>OpenShift Dedicated</CardHeader>
-        <CardBody>
+        <CardHeader className="section-header">OpenShift Dedicated</CardHeader>
+        <CardBody className="section-text">
         The summary of all subscriptions for OpenShift Dedicated
         purchased by your organization or granted by Red Hat.
         </CardBody>
-        <CardBody>
+        <CardBody className="osd-table-container">
           {content}
         </CardBody>
       </Card>

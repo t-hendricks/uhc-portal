@@ -11,6 +11,7 @@ import Subscriptions from '../Subscriptions';
 import OCPSubscriptionCard from '../OCPSubscriptionCard/OCPSubscriptionCard';
 import OSDSubscriptionCard from '../OSDSubscriptionCard/OSDSubscriptionCard';
 import OCPSubscriptionSummary from '../OCPSubscriptionCard/OCPSubscriptionSummary';
+import OCPSubscriptionCategory from '../OCPSubscriptionCard/OCPSubscriptionCategory';
 import OSDSubscriptionTable from '../OSDSubscriptionCard/OSDSubscriptionTable';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 
@@ -24,7 +25,8 @@ describe('<Subscriptions />', () => {
     it('should call fetch method', () => {
       expect(Fixtures.fetchAccount).toBeCalled();
     });
-    it('should have OCP and OSD cards', () => {
+    it('should have Header, OCP and OSD cards', () => {
+      expect(wrapper.find('PageHeader').length).toEqual(1);
       expect(wrapper.find('Connect(OCPSubscriptionCard)').length).toEqual(1);
       expect(wrapper.find('Connect(OSDSubscriptionCard)').length).toEqual(1);
     });
@@ -76,8 +78,23 @@ describe('<Subscriptions />', () => {
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });
+    it('should have all categories', () => {
+      expect(wrapper.find('OCPSubscriptionCategory').length).toEqual(3);
+    });
+  });
+
+  describe('OCPSubscriptionCategory', () => {
+    const nonEmptyCategory = shallow(<OCPSubscriptionCategory {...Fixtures.categories.nonEmpty} />);
+    it('should render non-empty category', () => {
+      expect(nonEmptyCategory).toMatchSnapshot();
+    });
     it('should have all links', () => {
-      expect(wrapper.find('Link').length).toEqual(4);
+      expect(nonEmptyCategory.find('Link').length).toEqual(2);
+    });
+
+    const emptyCategory = shallow(<OCPSubscriptionCategory {...Fixtures.categories.empty} />);
+    it('should not render empty category', () => {
+      expect(emptyCategory.type()).toBeNull();
     });
   });
 
