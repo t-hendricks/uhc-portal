@@ -11,10 +11,8 @@ const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
 
-/** Regular expression for a valid URL for a console in a self managed cluster.
- * allowing only domain names with label separated with dots, optionally a port number,
- * and one trailing slash. */
-const CONSOLE_URL_REGEXP = /^https?:\/\/[\w-]+(?:\.[\w-]+)+[\w\-._:/]+$/i;
+// Regular expression for a valid URL for a console in a self managed cluster.
+const CONSOLE_URL_REGEXP = /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
 
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 50;
