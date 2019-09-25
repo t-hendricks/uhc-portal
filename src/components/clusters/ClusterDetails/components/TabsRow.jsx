@@ -19,7 +19,13 @@ class TabsRow extends React.Component {
 
   render() {
     const {
-      displayLogs, displayUsersTab, overviewTabRef, monitoringTabRef, usersTabRef, logsTabRef,
+      displayLogs,
+      displayUsersTab,
+      displayMonitoringTab,
+      overviewTabRef,
+      monitoringTabRef,
+      usersTabRef,
+      logsTabRef,
     } = this.props;
     const { activeTabKey } = this.state;
 
@@ -27,7 +33,7 @@ class TabsRow extends React.Component {
       <Tab key={0} eventKey={0} title="Overview" tabContentId="overviewTabContent" tabContentRef={overviewTabRef} />
     );
 
-    const monitoringTab = (
+    const monitoringTab = displayMonitoringTab && (
       <Tab key={1} eventKey={1} title="Monitoring" tabContentId="monitoringTabContent" tabContentRef={monitoringTabRef} />
     );
 
@@ -50,6 +56,7 @@ class TabsRow extends React.Component {
 TabsRow.propTypes = {
   displayLogs: PropTypes.bool,
   displayUsersTab: PropTypes.bool,
+  displayMonitoringTab: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   logsTabRef: PropTypes.object.isRequired,
@@ -59,6 +66,7 @@ TabsRow.propTypes = {
 TabsRow.defaultProps = {
   displayLogs: false,
   displayUsersTab: false,
+  displayMonitoringTab: true,
 };
 
 export default TabsRow;

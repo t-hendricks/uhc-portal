@@ -23,5 +23,15 @@ describe('<DetailsRight />', () => {
       );
       expect(wrapper).toMatchSnapshot();
     });
+
+    it('should render status correctly for archived cluster', () => {
+      const wrapper = shallow(
+        <DetailsRight
+          cluster={{ ...clusterDetails.cluster, managed: false, subscription: { status: 'Archived' } }}
+        />,
+      );
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.find('ClusterStateIcon').length).toEqual(0);
+    });
   });
 });

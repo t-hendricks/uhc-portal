@@ -15,7 +15,7 @@ function DetailsRight({ cluster }) {
   const showDesiredNodes = cluster.managed;
   const showSockets = cluster.metrics.sockets.total.value > 0;
   const showVCPU = !showSockets;
-
+  const isArchived = cluster.subscription && cluster.subscription.status === 'Archived';
 
   return (
     <React.Fragment>
@@ -23,11 +23,17 @@ function DetailsRight({ cluster }) {
         <dt>
           Status
         </dt>
-        <dd style={cluster.state.style}>
-          <ClusterStateIcon clusterState={cluster.state.state} />
-          {' '}
-          {cluster.state.description}
-        </dd>
+        { isArchived ? (
+          <dd>
+            Archived
+          </dd>
+        ) : (
+          <dd style={cluster.state.style}>
+            <ClusterStateIcon clusterState={cluster.state.state} />
+            {' '}
+            {cluster.state.description}
+          </dd>
+        )}
         {showVCPU && (
           <React.Fragment>
             <dt>

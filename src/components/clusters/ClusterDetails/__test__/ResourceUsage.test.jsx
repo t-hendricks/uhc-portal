@@ -14,7 +14,14 @@ describe('<ResourceUsage />', () => {
 
   it('should render status message when metrics are not available', () => {
     cluster.metrics.cpu.updated_timestamp = new Date(0);
-    const wrapper = shallow(<ResourceUsage cluster={clusterDetails.cluster} />);
+    const wrapper = shallow(<ResourceUsage cluster={cluster} />);
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find('p').length).toEqual(1);
+  });
+
+  it('should render correct status message when archived', () => {
+    cluster.subscription = { status: 'Archived' };
+    const wrapper = shallow(<ResourceUsage cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('p').length).toEqual(1);
   });

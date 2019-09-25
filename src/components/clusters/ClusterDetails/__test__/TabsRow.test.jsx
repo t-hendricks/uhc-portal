@@ -3,11 +3,18 @@ import { shallow } from 'enzyme';
 
 import TabsRow from '../components/TabsRow';
 
+
 describe('<TabsRow />', () => {
   let wrapper;
+  let props;
   beforeEach(() => {
     const mockRef = { current: null };
-    const props = { overviewTabRef: mockRef, usersTabRef: mockRef, logsTabRef: mockRef };
+    props = {
+      overviewTabRef: mockRef,
+      usersTabRef: mockRef,
+      logsTabRef: mockRef,
+      monitoringTabRef: mockRef,
+    };
 
     wrapper = shallow(
       <TabsRow {...props} />,
@@ -18,9 +25,21 @@ describe('<TabsRow />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should display users tab and logs tab', () => {
+  it('should display users tab, monitoring tab and logs tab', () => {
     wrapper.setProps({ displayLogs: true, displayUsersTab: true }, () => {
       expect(wrapper.find('ForwardRef').length).toEqual(4);
     });
+  });
+
+  it('should hide monitoring tab if needed (eg. when we archive a cluster)', () => {
+    wrapper.setProps({
+      displayLogs: true,
+      displayUsersTab: true,
+      displayMonitoringTab: false,
+    }, () => {
+      expect(wrapper.find('ForwardRef').length).toEqual(3);
+    });
+    wrapper = shallow(<TabsRow {...props} displayMonitoringTab={false} />);
+    expect(wrapper).toMatchSnapshot();
   });
 });
