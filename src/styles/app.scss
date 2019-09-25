@@ -454,9 +454,12 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   flex-wrap: wrap;
   justify-content: left;
   flex-direction: row;
-  button {
+  >button, >div {
     max-width: 320px;
     margin: 1em;
+  }
+  >div {
+    width: 100%;
   }
 }
 

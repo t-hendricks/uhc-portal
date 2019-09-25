@@ -28,4 +28,8 @@ describe('<FlatRadioButton />', () => {
     wrapper.simulate('click');
     expect(props.onChange).toBeCalledWith(props.value);
   });
+  it('should render with tooltip', () => {
+    const wrapper = shallow(<FlatRadioButton {...props} tooltip="hello world!" />);
+    expect(wrapper).toMatchSnapshot();
+  });
 });
