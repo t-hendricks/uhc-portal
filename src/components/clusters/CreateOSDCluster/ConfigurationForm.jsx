@@ -13,7 +13,6 @@ import validators, { required } from '../../../common/validators';
 import minValueSelector from '../common/EditClusterDialog/EditClusterSelectors';
 import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
 import constants from './CreateOSDClusterHelper';
-import { normalizeNumericInput } from '../../../common/helpers';
 
 class ConfigurationForm extends React.Component {
   state = {
@@ -154,7 +153,6 @@ class ConfigurationForm extends React.Component {
             label="Compute node count"
             inputMode="numeric"
             min={min.value}
-            normalize={normalizeNumericInput}
             validate={isMultiAz ? [this.validateNodesMultiAz, validators.nodesMultiAz]
               : this.validateNodesSingleAz}
             disabled={pending}

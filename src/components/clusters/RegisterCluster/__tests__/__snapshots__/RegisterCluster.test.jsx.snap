@@ -53,6 +53,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
               label="Web console URL"
               name="web_console_url"
               type="text"
+              validate={[Function]}
             />
             <FormGroup
               fieldId="operating_system"
@@ -110,8 +111,12 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
               isRequired={true}
               label="Number of sockets or LAPRs"
               name="socket_num"
-              normalize={[Function]}
-              validate={[Function]}
+              validate={
+                Array [
+                  [Function],
+                  [Function],
+                ]
+              }
             />
             <Field
               component={[Function]}
@@ -119,8 +124,8 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
               inputMode="numeric"
               label="Memory capacity (GiB)"
               name="memory_gib"
-              normalize={[Function]}
               step="any"
+              validate={[Function]}
             />
             <Field
               component={[Function]}
@@ -128,7 +133,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
               inputMode="numeric"
               label="Number of compute nodes"
               name="nodes_compute"
-              normalize={[Function]}
+              validate={[Function]}
             />
           </Form>
         </GridItem>

@@ -66,7 +66,7 @@ class EditConsoleURLDialog extends Component {
       <ErrorBox message="Error changing console URL" response={editClusterResponse} />
     );
 
-    const validationMessage = checkClusterConsoleURL(currentValue);
+    const validationMessage = checkClusterConsoleURL(currentValue, true);
     const handleSubmit = () => {
       if (!validationMessage) {
         submit(clusterID, currentValue);

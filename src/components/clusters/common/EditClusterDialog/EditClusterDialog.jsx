@@ -8,7 +8,6 @@ import Modal from '../../../common/Modal/Modal';
 import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../common/validators';
 import ErrorBox from '../../../common/ErrorBox';
-import { normalizeNumericInput } from '../../../../common/helpers';
 
 
 class EditClusterDialog extends Component {
@@ -85,7 +84,6 @@ class EditClusterDialog extends Component {
               name="nodes_compute"
               label="Compute nodes"
               inputMode="numeric"
-              normalize={normalizeNumericInput}
               validate={isMultiAz ? [this.validateNodes, validators.nodesMultiAz]
                 : this.validateNodes}
               min={min.value}

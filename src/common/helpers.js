@@ -164,13 +164,6 @@ const scrollToTop = () => {
 
 const buildUrlParams = params => Object.keys(params).map(key => `${key}=${encodeURIComponent(params[key])}`).join('&');
 
-const normalizeNumericInput = (value, previousValue) => {
-  if (Number.isNaN(Number(value))) {
-    return previousValue;
-  }
-  return value;
-};
-
 const helpers = {
   noop,
   setStateProp,
@@ -198,7 +191,6 @@ export {
   toCleanArray,
   scrollToTop,
   buildUrlParams,
-  normalizeNumericInput,
 };
 
 export default helpers;
