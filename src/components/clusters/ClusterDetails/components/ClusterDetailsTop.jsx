@@ -54,7 +54,7 @@ function ClusterDetailsTop(props) {
   let launchConsole;
   if (consoleURL && (cluster.state !== clusterStates.UNINSTALLING)) {
     launchConsole = (
-      <a href={consoleURL} target="_blank" rel="noreferrer" className="pull-left">
+      <a href={consoleURL} target="_blank" rel="noopener noreferrer" className="pull-left">
         <Button variant="primary">Launch Console</Button>
       </a>
     );

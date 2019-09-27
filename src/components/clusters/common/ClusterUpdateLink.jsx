@@ -25,7 +25,7 @@ const ClusterUpdateLink = ({ cluster }) => {
   // Display a link to the cluster settings page in the console
   if (cluster.console && cluster.console.url) {
     return (
-      <a href={`${cluster.console.url}/settings/cluster`} target="_blank" rel="noreferrer">
+      <a href={`${cluster.console.url}/settings/cluster`} target="_blank" rel="noopener noreferrer">
         <Button className="cluster-update-link" variant="link" icon={<OutlinedArrowAltCircleUpIcon />}>
           Update
         </Button>
