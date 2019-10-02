@@ -30,7 +30,7 @@ function dropDownItems({
     const adminConsoleEnabled = {
       href: consoleURL,
       target: '_blank',
-      rel: 'noreferrer',
+      rel: 'noopener noreferrer',
       key: getKey('adminconsole'),
     };
 
