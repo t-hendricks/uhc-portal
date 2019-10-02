@@ -28,6 +28,26 @@ import validators, {
 } from '../../../common/validators';
 import constants from './RegisterClusterHelper';
 
+const validateNodeCount = value => (
+  validators.nodes(Number(value), { value: 4 })
+);
+
+const validateSockets = value => (
+  validators.validateNumericInput(value)
+);
+
+const validateMemCapacity = value => (
+  validators.validateNumericInput(value, { allowDecimal: true })
+);
+
+const validatevCPU = value => (
+  validators.validateNumericInput(value)
+);
+
+const validateConsoleURL = value => (
+  checkClusterConsoleURL(value, false)
+);
+
 class RegisterCluster extends React.Component {
   state = {
     systemType: 'physical',
@@ -69,26 +89,6 @@ class RegisterCluster extends React.Component {
       isOpen,
     } = this.props;
     const { systemType } = this.state;
-
-    const validateNodeCount = value => (
-      validators.nodes(Number(value), { value: 4 })
-    );
-
-    const validateSockets = value => (
-      validators.validateNumericInput(value)
-    );
-
-    const validateMemCapacity = value => (
-      validators.validateNumericInput(value, { allowDecimal: true })
-    );
-
-    const validatevCPU = value => (
-      validators.validateNumericInput(value)
-    );
-
-    const validateConsoleURL = value => (
-      checkClusterConsoleURL(value, false)
-    );
 
     if (registerClusterResponse.fulfilled) {
       return (
