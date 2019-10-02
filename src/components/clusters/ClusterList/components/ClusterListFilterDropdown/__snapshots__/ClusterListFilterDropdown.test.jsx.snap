@@ -59,6 +59,19 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
             />
           </div>
         </DropdownItem>
+        <DropdownItem>
+          <div>
+            <Checkbox
+              className="pf-c-dropdown__menu-item"
+              id="NotReconciled"
+              isChecked={false}
+              isDisabled={false}
+              isValid={true}
+              label="Unknown"
+              onChange={[Function]}
+            />
+          </div>
+        </DropdownItem>
       </DropdownGroup>,
     ]
   }
