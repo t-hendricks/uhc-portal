@@ -194,6 +194,186 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
 </Fragment>
 `;
 
+exports[`<DetailsRight /> Self Managed cluster should render status correctly for archived cluster 1`] = `
+<Fragment>
+  <dl
+    className="cluster-details-item left"
+  >
+    <dt>
+      Status
+    </dt>
+    <dd>
+      Archived
+    </dd>
+    <dt>
+      Total vCPU
+    </dt>
+    <dd>
+      0
+       
+      vCPU
+    </dd>
+    <dt>
+      Total Memory
+    </dt>
+    <dd>
+      0
+       
+      B
+    </dd>
+    <dt>
+      Nodes
+    </dt>
+    <dd>
+      <dl
+        className="cluster-details-item-list left"
+      >
+        <dt>
+          Master:
+           
+        </dt>
+        <dd>
+          2
+        </dd>
+      </dl>
+      <dl
+        className="cluster-details-item-list left"
+      >
+        <dt>
+          Compute:
+           
+        </dt>
+        <dd>
+          1
+        </dd>
+      </dl>
+    </dd>
+    <dt>
+      Support Level
+    </dt>
+    <dd>
+      None (Evaluation)
+    </dd>
+    <ClusterNetwork
+      cluster={
+        Object {
+          "api": Object {
+            "url": "https://api.test-liza.sdev.devshift.net:6443",
+          },
+          "canDelete": true,
+          "canEdit": true,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "console": Object {
+            "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
+          },
+          "creation_timestamp": "2019-03-26T15:18:39.06783Z",
+          "display_name": "test-liza",
+          "dns": Object {
+            "base_domain": "sdev.devshift.net",
+          },
+          "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
+          "flavour": Object {
+            "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+            "id": "osd-4",
+            "kind": "FlavourLink",
+          },
+          "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
+          "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+          "kind": "Cluster",
+          "managed": false,
+          "metrics": Object {
+            "cpu": Object {
+              "total": Object {
+                "unit": "",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "",
+                "value": 0,
+              },
+            },
+            "memory": Object {
+              "total": Object {
+                "unit": "B",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "B",
+                "value": 0,
+              },
+            },
+            "nodes": Object {
+              "compute": 1,
+              "master": 2,
+              "total": 3,
+            },
+            "sockets": Object {
+              "total": Object {
+                "unit": "",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "",
+                "value": 0,
+              },
+            },
+            "storage": Object {
+              "total": Object {
+                "unit": "B",
+                "value": 0,
+              },
+              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "used": Object {
+                "unit": "B",
+                "value": 0,
+              },
+            },
+          },
+          "multi_az": false,
+          "name": "test-liza",
+          "network": Object {
+            "machine_cidr": "10.0.0.0/16",
+            "pod_cidr": "10.128.0.0/14",
+            "router_shards": Object {
+              "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+              "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+              "kind": "RouterShardListLink",
+            },
+            "service_cidr": "172.30.0.0/16",
+          },
+          "nodes": Object {
+            "compute": 2,
+            "master": 3,
+            "total": 5,
+          },
+          "region": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+            "id": "us-east-1",
+            "kind": "CloudRegionLink",
+          },
+          "state": "ready",
+          "subscription": Object {
+            "status": "Archived",
+          },
+          "version": Object {
+            "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+            "id": "openshift-v4.0-latest",
+            "kind": "VersionLink",
+          },
+        }
+      }
+    />
+  </dl>
+</Fragment>
+`;
+
 exports[`<DetailsRight /> should render 1`] = `
 <Fragment>
   <dl

@@ -166,6 +166,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   >
     <TabsRow
       displayLogs={false}
+      displayMonitoringTab={true}
       displayUsersTab={true}
       logsTabRef={
         Object {

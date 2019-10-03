@@ -9,6 +9,7 @@ const metricsStatusMessages = {
   [clusterStates.STALE]: 'No metrics sent during the last 24 hours.',
   [clusterStates.LONG_STALE]: 'No metrics sent during the last week.',
   [clusterStates.UNKNOWN]: 'The cluster currently does not have any metrics data. Please try again later.',
+  archived: 'The cluster has been archived and does not have any metrics data.',
   default: 'The cluster currently does not have any metrics data. Please try again later.',
 };
 

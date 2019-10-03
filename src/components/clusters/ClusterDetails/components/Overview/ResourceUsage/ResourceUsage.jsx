@@ -8,9 +8,10 @@ import { getTimeDelta } from '../../../../../../common/helpers';
 
 function ResourceUsage({ cluster }) {
   const metricsLatsUpdate = new Date(cluster.metrics.cpu.updated_timestamp);
+  const isArchived = cluster.subscription && cluster.subscription.status === 'Archived';
 
   const metricsAvailable = (OCM_SHOW_OLD_METRICS
-    || getTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta);
+    || getTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta) && !isArchived;
 
   // Why parse memory but not cpu?
   // In theory both are `ValueWithUnit` but openapi only documents units for the case of bytes,
@@ -42,7 +43,8 @@ function ResourceUsage({ cluster }) {
         </React.Fragment>)
         : (
           <p>
-            {metricsStatusMessages[cluster.state.state] || metricsStatusMessages.default}
+            { isArchived ? metricsStatusMessages.archived
+              : metricsStatusMessages[cluster.state.state] || metricsStatusMessages.default}
           </p>
         ) }
     </React.Fragment>
