@@ -74,6 +74,13 @@ const checkClusterDisplayName = (value) => {
   return undefined;
 };
 
+const checkUserID = (value) => {
+  if (value.includes('/')) {
+    return 'User ID cannot contain \'/\'';
+  }
+  return undefined;
+};
+
 // Function to validate the cluster console URL
 const checkClusterConsoleURL = (value, isRequired) => {
   if (!value) {
@@ -169,6 +176,7 @@ const validators = {
   checkClusterName,
   checkClusterUUID,
   checkClusterDisplayName,
+  checkUserID,
   checkBaseDNSDomain,
   cidr,
   nodes,
@@ -183,6 +191,7 @@ export {
   checkClusterUUID,
   checkIdentityProviderName,
   checkClusterDisplayName,
+  checkUserID,
   checkClusterConsoleURL,
 };
 
