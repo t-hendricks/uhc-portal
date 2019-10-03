@@ -138,7 +138,6 @@ const github = value => (value ? undefined : 'Either "Teams" or "Organizations" 
  *                            false if it must be an integer
  * @param {*} allowNeg        true if input number may be negative, otherwise false
  * @param {*} allowZero       true if input number may be 0, otherwise false
- * @param {*} isRequired      true if input is required and may not be empty
  */
 const validateNumericInput = (
   input, {
@@ -147,6 +146,10 @@ const validateNumericInput = (
     allowZero = false,
   } = {},
 ) => {
+  if (!input) {
+    return undefined; // accept empty input. Further validation done according to field
+  }
+
   const value = Number(input);
   if (Number.isNaN(value)) {
     return 'Input must be a number.';
