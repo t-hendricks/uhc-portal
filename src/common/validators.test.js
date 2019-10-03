@@ -87,7 +87,7 @@ test('Field is a valid console URL', () => {
 });
 
 test('Field contains a numeric string', () => {
-  expect(validators.validateNumericInput()).toBe('Input must be a number.');
+  expect(validators.validateNumericInput()).toBe(undefined);
   expect(validators.validateNumericInput('8.8', { allowDecimal: true })).toBe(undefined);
   expect(validators.validateNumericInput('8.8')).toBe('Input must be an integer.');
   expect(validators.validateNumericInput('-10')).toBe('Input must be a positive number.');

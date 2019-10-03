@@ -28,7 +28,10 @@ import validators, {
 } from '../../../common/validators';
 import constants from './RegisterClusterHelper';
 
-const validateNodeCount = function (value) {
+const validateNodeCount = (value) => {
+  if (value === '') {
+    return undefined;
+  }
   if (Number.isNaN(Number(value))) {
     return 'Input must be a number.';
   }
