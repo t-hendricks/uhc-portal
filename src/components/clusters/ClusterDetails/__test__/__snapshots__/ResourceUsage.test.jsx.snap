@@ -21,6 +21,14 @@ exports[`<ResourceUsage /> should render 1`] = `
 </Fragment>
 `;
 
+exports[`<ResourceUsage /> should render correct status message when archived 1`] = `
+<Fragment>
+  <p>
+    The cluster has been archived and does not have any metrics data.
+  </p>
+</Fragment>
+`;
+
 exports[`<ResourceUsage /> should render status message when metrics are not available 1`] = `
 <Fragment>
   <p>

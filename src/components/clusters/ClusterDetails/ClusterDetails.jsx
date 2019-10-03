@@ -245,6 +245,7 @@ class ClusterDetails extends Component {
     };
 
     const hasLogs = !!logs.lines;
+    const isArchived = cluster.subscription && cluster.subscription.status === 'Archived';
 
     return (
       <div id="clusterdetails-content">
@@ -262,6 +263,7 @@ class ClusterDetails extends Component {
           <TabsRow
             displayLogs={hasLogs}
             displayUsersTab={cluster.managed && cluster.canEdit}
+            displayMonitoringTab={!isArchived}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             usersTabRef={this.usersTabRef}
@@ -274,9 +276,11 @@ class ClusterDetails extends Component {
             cloudProviders={cloudProviders}
           />
         </TabContent>
-        <TabContent eventKey={1} id="monitoringTabContent" ref={this.monitoringTabRef} aria-label="Monitoring" hidden>
-          <Monitoring cluster={cluster} />
-        </TabContent>
+        {!isArchived && (
+          <TabContent eventKey={1} id="monitoringTabContent" ref={this.monitoringTabRef} aria-label="Monitoring" hidden>
+            <Monitoring cluster={cluster} />
+          </TabContent>
+        )}
 
         <TabContent eventKey={2} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
           <Users clusterID={cluster.id} />

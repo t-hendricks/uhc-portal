@@ -52,7 +52,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
         <a
           className="pull-left"
           href="https://console-openshift-console.apps.test-liza.sdev.devshift.net"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           target="_blank"
         >
           <Button

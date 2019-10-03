@@ -23,9 +23,36 @@ import { global_danger_color_100 } from '@patternfly/react-tokens';
 import ReduxVerticalFormGroupPF4 from '../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
 import Modal from '../../common/Modal/Modal';
 import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
-import { required, checkClusterDisplayName, checkClusterUUID } from '../../../common/validators';
+import validators, {
+  required, checkClusterConsoleURL, checkClusterDisplayName, checkClusterUUID,
+} from '../../../common/validators';
 import constants from './RegisterClusterHelper';
-import { normalizeNumericInput } from '../../../common/helpers';
+
+const validateNodeCount = (value) => {
+  if (value === '') {
+    return undefined;
+  }
+  if (Number.isNaN(Number(value))) {
+    return 'Input must be a number.';
+  }
+  return validators.nodes(Number(value), { value: 4 });
+};
+
+const validateSockets = value => (
+  validators.validateNumericInput(value)
+);
+
+const validateMemCapacity = value => (
+  validators.validateNumericInput(value, { allowDecimal: true })
+);
+
+const validatevCPU = value => (
+  validators.validateNumericInput(value)
+);
+
+const validateConsoleURL = value => (
+  checkClusterConsoleURL(value, false)
+);
 
 class RegisterCluster extends React.Component {
   state = {
@@ -141,6 +168,7 @@ class RegisterCluster extends React.Component {
                     component={ReduxVerticalFormGroupPF4}
                     name="web_console_url"
                     label="Web console URL"
+                    validate={validateConsoleURL}
                     disabled={registerClusterResponse.pending}
                     type="text"
                   />
@@ -179,9 +207,8 @@ class RegisterCluster extends React.Component {
                     name="socket_num"
                     label="Number of sockets or LAPRs"
                     inputMode="numeric"
-                    normalize={normalizeNumericInput}
                     disabled={registerClusterResponse.pending}
-                    validate={required}
+                    validate={[required, validateSockets]}
                     isRequired
                   />
                   )}
@@ -191,9 +218,8 @@ class RegisterCluster extends React.Component {
                     name="cpu"
                     label="Number of vCPUs"
                     inputMode="numeric"
-                    normalize={normalizeNumericInput}
                     disabled={registerClusterResponse.pending}
-                    validate={required}
+                    validate={validatevCPU}
                     isRequired
                   />
                   )}
@@ -202,7 +228,7 @@ class RegisterCluster extends React.Component {
                     name="memory_gib"
                     label="Memory capacity (GiB)"
                     inputMode="numeric"
-                    normalize={normalizeNumericInput}
+                    validate={validateMemCapacity}
                     step="any"
                     disabled={registerClusterResponse.pending}
                   />
@@ -211,7 +237,7 @@ class RegisterCluster extends React.Component {
                     name="nodes_compute"
                     label="Number of compute nodes"
                     inputMode="numeric"
-                    normalize={normalizeNumericInput}
+                    validate={validateNodeCount}
                     disabled={registerClusterResponse.pending}
                   />
                 </Form>

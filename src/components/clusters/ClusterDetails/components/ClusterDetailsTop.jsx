@@ -30,6 +30,8 @@ function ClusterDetailsTop(props) {
 
   const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
 
+  const isArchived = cluster.subscription && cluster.subscription.status === 'Archived';
+
   const openIDPModal = () => {
     openModal('create-identity-provider', { clusterName });
   };
@@ -54,7 +56,7 @@ function ClusterDetailsTop(props) {
   let launchConsole;
   if (consoleURL && (cluster.state !== clusterStates.UNINSTALLING)) {
     launchConsole = (
-      <a href={consoleURL} target="_blank" rel="noreferrer" className="pull-left">
+      <a href={consoleURL} target="_blank" rel="noopener noreferrer" className="pull-left">
         <Button variant="primary">Launch Console</Button>
       </a>
     );
@@ -94,7 +96,7 @@ function ClusterDetailsTop(props) {
                 Clusters
               </BreadcrumbItem>
             </LinkContainer>
-            {cluster.subscription && cluster.subscription.status === 'Archived' && (
+            {isArchived && (
               <LinkContainer to="/archived">
                 <BreadcrumbItem to="/archived">
                   Archived clusters
@@ -118,8 +120,20 @@ function ClusterDetailsTop(props) {
         <SplitItem isFilled />
         <SplitItem>
           <span id="cl-details-btns">
-            {launchConsole}
-            {actions}
+            { !isArchived ? (
+              <React.Fragment>
+                {launchConsole}
+                {actions}
+              </React.Fragment>
+            ) : (
+              <Button
+                variant="secondary"
+                onClick={() => openModal('unarchive-cluster', { subscriptionID: cluster.subscription.id })}
+                isDisabled={!cluster.canEdit}
+              >
+                Unarchive
+              </Button>
+            )}
             <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
           </span>
         </SplitItem>

@@ -63,7 +63,8 @@ test('Field is valid node count for multi AZ', () => {
 });
 
 test('Field is a valid console URL', () => {
-  expect(checkClusterConsoleURL()).toBe('Cluster console URL should not be empty');
+  expect(checkClusterConsoleURL()).toBe(undefined);
+  expect(checkClusterConsoleURL('', true)).toBe('Cluster console URL should not be empty');
   expect(checkClusterConsoleURL('http://www.example.com')).toBe(undefined);
   expect(checkClusterConsoleURL('https://console-openshift-console.apps.example.com/')).toBe(undefined);
   expect(checkClusterConsoleURL('www.example.hey/hey')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
@@ -83,4 +84,14 @@ test('Field is a valid console URL', () => {
   expect(checkClusterConsoleURL('http://www.example.com/products?id=1&page=2')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
   expect(checkClusterConsoleURL('255.255.255.255')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
   expect(checkClusterConsoleURL('http://invalid.com/perl.cgi?key=')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
+});
+
+test('Field contains a numeric string', () => {
+  expect(validators.validateNumericInput()).toBe(undefined);
+  expect(validators.validateNumericInput('8.8', { allowDecimal: true })).toBe(undefined);
+  expect(validators.validateNumericInput('8.8')).toBe('Input must be an integer.');
+  expect(validators.validateNumericInput('-10')).toBe('Input must be a positive number.');
+  expect(validators.validateNumericInput('-10', { allowNeg: true })).toBe(undefined);
+  expect(validators.validateNumericInput('asdf')).toBe('Input must be a number.');
+  expect(validators.validateNumericInput('0', { allowZero: true })).toBe(undefined);
 });

@@ -75,9 +75,9 @@ const checkClusterDisplayName = (value) => {
 };
 
 // Function to validate the cluster console URL
-const checkClusterConsoleURL = (value) => {
+const checkClusterConsoleURL = (value, isRequired) => {
   if (!value) {
-    return 'Cluster console URL should not be empty';
+    return (isRequired ? 'Cluster console URL should not be empty' : undefined);
   }
   if (!CONSOLE_URL_REGEXP.test(value)) {
     return 'Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)';
@@ -108,7 +108,7 @@ const cidr = (value) => {
 // node count, and a string 'validationMsg' with an error message
 const nodes = (value, min) => {
   if (value === undefined || value < min.value) {
-    return min.validationMsg;
+    return (min.validationMsg || `The minimum number of nodes is ${min.value}.`);
   }
   if (value > MAX_NODE_COUNT) {
     return `Maximum number allowed is ${MAX_NODE_COUNT}.`;
@@ -130,6 +130,41 @@ const nodesMultiAz = (value) => {
 
 const github = value => (value ? undefined : 'Either "Teams" or "Organizations" are required');
 
+/**
+ * General function used to validate numeric user input according to some flags.
+ * Returns an informative error message when taking an illegal input.
+ * @param {*} input           Input string
+ * @param {*} allowDecimal    true if input number may have a decimal point,
+ *                            false if it must be an integer
+ * @param {*} allowNeg        true if input number may be negative, otherwise false
+ * @param {*} allowZero       true if input number may be 0, otherwise false
+ */
+const validateNumericInput = (
+  input, {
+    allowDecimal = false,
+    allowNeg = false,
+    allowZero = false,
+  } = {},
+) => {
+  if (!input) {
+    return undefined; // accept empty input. Further validation done according to field
+  }
+
+  const value = Number(input);
+  if (Number.isNaN(value)) {
+    return 'Input must be a number.';
+  }
+  if (!allowNeg && !allowZero && value <= 0) {
+    return 'Input must be a positive number.';
+  }
+  if (!allowNeg && allowZero && value < 0) {
+    return 'Input must be a non-negative number.';
+  }
+  if (!allowDecimal && input.includes('.')) {
+    return 'Input must be an integer.';
+  }
+  return undefined;
+};
 
 const validators = {
   required,
@@ -142,6 +177,7 @@ const validators = {
   nodes,
   nodesMultiAz,
   github,
+  validateNumericInput,
 };
 
 export {

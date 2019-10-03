@@ -135,6 +135,7 @@ class MachineTypeSelection extends React.Component {
           id={`machineTypeRadio.${machineType.id}`}
           value={machineType.id}
           isDisabled={!hasQuota}
+          tooltip={!hasQuota && 'You do not have quota for this node type. Contact sales to purchase additional quota.'}
           isSelected={hasQuota && currentValue === machineType.id}
           titleText={labelTitle}
           secondaryText={machineType.name}

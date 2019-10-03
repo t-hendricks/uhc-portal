@@ -79,7 +79,7 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
   <DropdownItem
     href="www.testuhc.com"
     key="1.menu.adminconsole"
-    rel="noreferrer"
+    rel="noopener noreferrer"
     target="_blank"
   >
     Launch Admin Console
@@ -166,7 +166,7 @@ exports[`Cluster Actions Dropdown Items read only cluster should render correctl
   <DropdownItem
     href="www.testuhc.com"
     key="1.menu.adminconsole"
-    rel="noreferrer"
+    rel="noopener noreferrer"
     target="_blank"
   >
     Launch Admin Console

@@ -57,4 +57,16 @@ describe('<ClusterDetailsTop />', () => {
       expect(wrapper.find('ErrorTriangle').length).toEqual(1);
     });
   });
+
+  it('should show only Unarchive button if the cluster is archived', () => {
+    const cluster = { ...clusterDetails.cluster, subscription: { status: 'Archived', id: 'fake' } };
+    wrapper.setProps({ cluster }, () => {
+      const unarchiveButton = wrapper.find('Button').at(0);
+      expect(unarchiveButton.props().variant).toEqual('secondary');
+      expect(unarchiveButton.props().children).toEqual('Unarchive');
+      expect(wrapper.find('ClusterActionsDropdown').length).toEqual(0); // no cluster actions dropdown
+      unarchiveButton.simulate('click');
+      expect(openModal).toBeCalledWith('unarchive-cluster', { subscriptionID: 'fake' });
+    });
+  });
 });
