@@ -3,10 +3,11 @@ import {
   Spinner,
 } from '@redhat-cloud-services/frontend-components';
 import {
-  Button, GridItem, Grid, TextInput, Select, SelectOption, SelectVariant,
+  Button, GridItem, Grid, TextInput, Select, SelectOption, SelectVariant, FormGroup,
 } from '@patternfly/react-core';
-
 import PropTypes from 'prop-types';
+
+import { checkUserID } from '../../../../../common/validators';
 
 class UserInputForm extends React.Component {
   constructor(props) {
@@ -31,24 +32,35 @@ class UserInputForm extends React.Component {
   save() {
     const { currentValue } = this.state;
     const { saveUser, clusterID } = this.props;
-    this.setState({ currentValue: '' });
-    saveUser(clusterID, 'dedicated-admins', currentValue);
+    if (!checkUserID(currentValue)) {
+      this.setState({ currentValue: '' });
+      saveUser(clusterID, 'dedicated-admins', currentValue);
+    }
   }
 
   render() {
     const { currentValue, isSelectOpen } = this.state;
     const { pending } = this.props;
+    const validationMessage = checkUserID(currentValue);
     return (
       <Grid gutter="sm">
         <GridItem sm={2}>
-          <TextInput
-            aria-label="User name or ID"
-            type="text"
-            value={currentValue}
-            placeholder="Enter a user name or user ID"
-            onChange={this.updateCurrentValue}
-            isDisabled={pending}
-          />
+          <FormGroup
+            helperTextInvalid={validationMessage}
+            isValid={!validationMessage}
+            fieldId="edit-user-id-input"
+          >
+            <TextInput
+              aria-label="User name or ID"
+              type="text"
+              value={currentValue}
+              isValid={!validationMessage}
+              placeholder="Enter a user name or user ID"
+              onChange={this.updateCurrentValue}
+              isDisabled={pending}
+              id="edit-user-id-input"
+            />
+          </FormGroup>
         </GridItem>
         <GridItem sm={2}>
           <Select
@@ -63,7 +75,10 @@ class UserInputForm extends React.Component {
           </Select>
         </GridItem>
         <GridItem sm={1}>
-          <Button onClick={this.save} isDisabled={pending || !currentValue.length}>
+          <Button
+            onClick={this.save}
+            isDisabled={pending || !currentValue.length || !!validationMessage}
+          >
             Add
           </Button>
         </GridItem>

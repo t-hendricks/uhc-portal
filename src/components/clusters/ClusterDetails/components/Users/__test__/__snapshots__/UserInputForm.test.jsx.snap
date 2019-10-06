@@ -7,18 +7,24 @@ exports[`<UserInputForm /> should render 1`] = `
   <GridItem
     sm={2}
   >
-    <TextInput
-      aria-label="User name or ID"
-      className=""
-      isDisabled={false}
-      isReadOnly={false}
-      isRequired={false}
+    <FormGroup
+      fieldId="edit-user-id-input"
       isValid={true}
-      onChange={[Function]}
-      placeholder="Enter a user name or user ID"
-      type="text"
-      value=""
-    />
+    >
+      <TextInput
+        aria-label="User name or ID"
+        className=""
+        id="edit-user-id-input"
+        isDisabled={false}
+        isReadOnly={false}
+        isRequired={false}
+        isValid={true}
+        onChange={[Function]}
+        placeholder="Enter a user name or user ID"
+        type="text"
+        value=""
+      />
+    </FormGroup>
   </GridItem>
   <GridItem
     sm={2}
