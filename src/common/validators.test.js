@@ -1,5 +1,5 @@
 import validators, {
-  required, checkIdentityProviderName, checkClusterUUID, checkClusterConsoleURL,
+  required, checkIdentityProviderName, checkClusterUUID, checkClusterConsoleURL, checkUserID,
 } from './validators';
 
 test('Field is required', () => {
@@ -26,6 +26,11 @@ test('Field is a valid UUID', () => {
   expect(checkClusterUUID()).toBe('Cluster ID is required.');
   expect(checkClusterUUID('foo.bar')).toBe('Cluster ID \'foo.bar\' is not a valid UUID.');
   expect(checkClusterUUID('1e479c87-9b83-41c5-854d-e5fec41ce7f8')).toBe(undefined);
+});
+
+test('User ID does not contain slash', () => {
+  expect(checkUserID('aaaaa/bbbbb')).toBe('User ID cannot contain \'/\'.');
+  expect(checkUserID('aaaa')).toBe(undefined);
 });
 
 test('Field is a valid DNS domain', () => {

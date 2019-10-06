@@ -76,7 +76,7 @@ const checkClusterDisplayName = (value) => {
 
 const checkUserID = (value) => {
   if (value.includes('/')) {
-    return 'User ID cannot contain \'/\'';
+    return 'User ID cannot contain \'/\'.';
   }
   return undefined;
 };
