@@ -197,6 +197,12 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
   // fetchClusterByExternalId returns an array. getClusterDetails returns a single cluster
   return clusterPromise.then((clusterResponse) => {
     cluster = clusterIdIsUUID ? { data: get(clusterResponse, 'data.items[0]') } : clusterResponse;
+    if (clusterIdIsUUID && !cluster.data) {
+      // create a fake 404 error so 404 handling in components will work as if it was a regular 404.
+      const error = Error('Cluster not found');
+      error.response = { status: 404 };
+      return Promise.reject(error);
+    }
     cluster.data = normalizeCluster(cluster.data);
     const promises = [
       authorizationsService.selfAccessReview(
