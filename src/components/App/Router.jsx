@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
 import ClustersList from '../clusters/ClusterList';
@@ -47,12 +47,13 @@ function Router(props) {
   return (
     <ConnectedRouter history={history}>
       <Switch>
+        <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
         <Route path="/token" component={Tokens} />
         <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
         <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
         <Route path="/install/aws" component={InstallAWS} />
         <Route path="/install/gcp/installer-provisioned" component={InstallGCP} />
-        <Route path="/install/osp/installer-provisioned" component={InstallOSP} />
+        <Route path="/install/openstack/installer-provisioned" component={InstallOSP} />
         <Route path="/install/azure/installer-provisioned" component={InstallAzure} />
         <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
         <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
