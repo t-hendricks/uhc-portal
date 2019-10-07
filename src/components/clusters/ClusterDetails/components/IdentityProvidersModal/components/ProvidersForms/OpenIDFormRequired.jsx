@@ -7,6 +7,13 @@ import BasicFields from './BasicFields';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { required } from '../../../../../../../common/validators';
 
+const validate = (_, allValues) => {
+  if (!allValues.openid_preferred_username && !allValues.openid_name && !allValues.openid_email) {
+    return 'At least one claim is required';
+  }
+  return undefined;
+};
+
 function OpenIDFormRequired({ isPending }) {
   return (
     <React.Fragment>
@@ -28,7 +35,7 @@ function OpenIDFormRequired({ isPending }) {
         type="text"
         placeholder="comma separated, example: ***REMOVED***, ***REMOVED***"
         disabled={isPending}
-        validate={required}
+        validate={validate}
       />
       <Field
         component={ReduxVerticalFormGroup}
@@ -37,7 +44,7 @@ function OpenIDFormRequired({ isPending }) {
         type="text"
         placeholder="comma separated, example: 'name1, name2"
         disabled={isPending}
-        validate={required}
+        validate={validate}
       />
       <Field
         component={ReduxVerticalFormGroup}
@@ -46,7 +53,7 @@ function OpenIDFormRequired({ isPending }) {
         type="text"
         placeholder="comma separated, example: 'name1, name2, name3"
         disabled={isPending}
-        validate={required}
+        validate={validate}
       />
     </React.Fragment>
   );
