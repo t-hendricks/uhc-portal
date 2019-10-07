@@ -42,7 +42,7 @@ import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
 import ErrorBox from '../../common/ErrorBox';
-
+import PreReleaseInfoBox from '../../common/PreReleaseInfoBox';
 
 import EditClusterDialog from '../common/EditClusterDialog';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
@@ -199,6 +199,7 @@ class ClusterList extends Component {
         <div className="cluster-list">
           {toast}
           <GlobalErrorBox />
+          <PreReleaseInfoBox />
           <h1>Clusters</h1>
           <Split id="cluster-list-top">
             <SplitItem>
