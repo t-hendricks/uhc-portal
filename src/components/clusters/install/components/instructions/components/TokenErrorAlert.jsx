@@ -3,20 +3,23 @@ import PropTypes from 'prop-types';
 import {
   Alert,
 } from '@patternfly/react-core';
+import get from 'lodash/get';
 
 const TokenErrorAlert = ({ token }) => {
-  const title = (
+  const code = get(token, 'error.code', '');
+  const message = get(token, 'error.message', '');
+  const title = code === 'ACCT-MGMT-22' ? message : (
     <React.Fragment>
       Failed to obtain authorization token:
       {' '}
-      {token.error.message}
+      {message}
       <br />
       <br />
       Please try again by refreshing the page.
       If the problem persists, please report the issue to
       {' '}
-      <a href="mailto:***REMOVED***" target="_blank">
-        ***REMOVED***
+      <a href="mailto:ocm-feedback@redhat.com" target="_blank">
+        ocm-feedback@redhat.com
         {' '}
         <span className="fa fa-external-link" aria-hidden="true" />
       </a>

@@ -131,7 +131,7 @@ ${SUBJECT}
       --all \
       --allow-empty \
       --file ../message \
-      --author "UHC Team <***REMOVED***>"
+      --author "OCM Team <ocm-feedback@redhat.com>"
     git push \
       origin \
       "${branch}:${branch}"
