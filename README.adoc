@@ -49,13 +49,14 @@ $ make binaries
 
 == Testing
 
-To test the application in your development environment run the following command:
+To test the application in your development environment, you need 3 things:
 
-....
-$ yarn start
-....
+1. either a real or mock backend
+2. insights "chrome" proxy
+3. webpack dev server
 
-That will start the the Webpack development server. See below for instructions regarding the "chromed environment" in order to interact with the user interface.
+=== A real backend
+
 
 You will also need to start start the backend proxy server, which acts as a proxy
 for the _OpenID_ and API services that are required by the application. Before
@@ -71,7 +72,7 @@ To obtain the access token go to the
 https://cloud.redhat.com/openshift/token[token page] and copy the
 _offline access token_.
 
-By default the backend proxy server will be available at http://localhost:8002,
+By default the backend proxy server will be available at http://localhost:8010,
 and the default configuration of the application is already prepared to use it.
 
 If you need to change the configuration used by this backend proxy, then create a
@@ -86,7 +87,7 @@ The content of this file should be something like this (or any subset of it):
 [source,yaml]
 ----
 listener:
-  address: localhost:8002
+  address: localhost:8010
 
 keycloak:
   url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
@@ -125,7 +126,7 @@ it should allow you to run the UI and test basic read-only functionality.
 
 To run it, run `mockdata/mockserver.py`.
 
-Then in another terminal, run `yarn startmock` instead of `yarn start`, and you'll get a working UI showing mock data running with the chromed environment.
+Then follow below in another terminal, run `yarn startmock` instead of `yarn start`, and you'll get a working UI showing mock data running with the chromed environment.
 
 === Chromed environment
 Start by cloning https://github.com/RedHatInsights/insights-proxy[insights-proxy] and following its setup instructions.
@@ -157,21 +158,22 @@ $ SPANDX_CONFIG="./profiles/local-frontend.js" bash $PROXY_PATH/scripts/run.sh
 ....
 to run the insights proxy and pass API requests to the mock server described above.
 
-Run webpack with
+=== Webpack dev server
+
+If using a real backend, run webpack with:
 ....
 $ yarn build; yarn start
 ....
+
+That also works with mockdata server, but all metrics timestamps will be "too old", hiding some of the UI.  To disable these checks and show old metrics, use:
+....
+$ yarn build; yarn startmock
+....
+
 The "build" step is crucial at the moment, but we should work to make it not required in the future.
 
 Once the server is running you can access your UI on https://qa.foo.redhat.com:1337/openshift
-It should ask you to authenticate with QA SSO, which should accept every user and the password is "redhat"
-
-=== Chromed application with a mock server
-Perform the exact steps detailed above, but use
-....
-$ mockdata/mockserver.py
-....
-instead of the backend proxy.
+It should ask you to authenticate with QA SSO, which should accept every user and the password is `redhat`.
 
 == Deploying
 

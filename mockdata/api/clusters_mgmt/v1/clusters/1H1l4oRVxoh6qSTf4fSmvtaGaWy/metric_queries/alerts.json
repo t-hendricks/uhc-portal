@@ -1,0 +1,16 @@
+{
+  "alerts": [
+    {
+      "severity": "warning",
+      "name": "KubeQuotaExceeded"
+    },
+    {
+      "severity": "warning",
+      "name": "TargetDown"
+    },
+    {
+      "severity": "none",
+      "name": "Watchdog"
+    }
+  ]
+}

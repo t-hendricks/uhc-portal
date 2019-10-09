@@ -8,7 +8,7 @@ import { scrollToTop } from '../../../common/helpers';
 class InstallOSP extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | OSP';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | OpenStack';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());

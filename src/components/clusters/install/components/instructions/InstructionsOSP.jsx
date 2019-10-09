@@ -34,7 +34,7 @@ class InstructionsOSP extends React.Component {
               Developer Preview
             </div>
 
-            <PageTitle title="Install on OpenStack: Installer-Provisioned Infrastructure" />
+            <PageTitle title="Install on Red Hat OpenStack Platform: Installer-Provisioned Infrastructure" />
 
             {
               token.error && (
@@ -49,8 +49,8 @@ class InstructionsOSP extends React.Component {
               {' '}
               <strong>developer preview</strong>
               {' '}
-              you can install a cluster on OpenStack using infrastructure that the
-              installation program provisions and the cluster maintains.
+              you can install a cluster on Red Hat OpenStack Platform using infrastructure that
+              the installation program provisions and the cluster maintains.
             </p>
 
             <GetStarted docURL="https://github.com/openshift/installer/tree/master/docs/user/openstack" />

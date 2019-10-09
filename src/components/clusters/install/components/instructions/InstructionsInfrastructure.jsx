@@ -59,9 +59,9 @@ const InstructionsInfrastructure = () => (
             </span>
           </CardBody>
         </Link>
-        <Link to="/install/osp/installer-provisioned" className="infra-card infra-card-cloud-provider">
+        <Link to="/install/openstack/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
-            <img src={OSPLogo} alt="OSP" className="infra-logo-osp" />
+            <img src={OSPLogo} alt="OpenStack" className="infra-logo-osp" />
             <br />
             <span className="osp-dev-preview-card">
               <CodeIcon />
