@@ -21,7 +21,9 @@ exports[`<ClusterListEmptyState /> renders correctly with no quota 1`] = `
     replace={false}
     to="/install"
   >
-    <Button>
+    <Button
+      id="cluster-list-emptystate-primary-action"
+    >
       Create Cluster
     </Button>
   </Link>
@@ -61,7 +63,9 @@ exports[`<ClusterListEmptyState /> renders correctly with quota 1`] = `
     replace={false}
     to="/create"
   >
-    <Button>
+    <Button
+      id="cluster-list-emptystate-primary-action"
+    >
       Create Cluster
     </Button>
   </Link>

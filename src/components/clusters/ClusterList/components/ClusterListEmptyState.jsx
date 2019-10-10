@@ -27,7 +27,7 @@ function ClusterListEmptyState({ hasQuota }) {
         create your first cluster.
       </EmptyStateBody>
       <Link to={hasQuota ? '/create' : '/install'}>
-        <Button>Create Cluster</Button>
+        <Button id="cluster-list-emptystate-primary-action">Create Cluster</Button>
       </Link>
       <EmptyStateSecondaryActions>
         <Link to="/register">
