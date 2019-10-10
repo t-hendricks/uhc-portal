@@ -748,10 +748,28 @@ span.dev-preview-label svg {
 }
 
 div.pf-c-alert.archived-cluster-toast {
-  width: 20%;
-  right: 1%;
-  top: 9%;
   position: absolute;
+  z-index: 1;
+  
+  width: 67%;
+  right: 9%;
+  top: 15%;
+
+  @media (min-width: 768px) {
+    width: 29%;
+    right: 3%;
+    top: 8%;
+  }
+  @media (min-width: 992px) {
+    width: 22%;
+    right: 3%;
+    top: 13%;
+  }
+  @media (min-width: 1200px) {
+    width: 20%;
+    right: 4%;
+    top: 20%;
+  }
 }
 
 .show-active-clusters-link {
