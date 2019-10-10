@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ChartDonut } from '@patternfly/react-charts';
+import { ChartDonutUtilization, ChartDonutThreshold } from '@patternfly/react-charts';
 import { Title } from '@patternfly/react-core';
-// eslint-disable-next-line camelcase
-import { chart_global_success_Color_100, chart_global_Fill_Color_200 } from '@patternfly/react-tokens';
 
 import { humanizeValueWithUnit, roundValueWithUnit } from '../../../../../../common/units';
 
@@ -16,28 +14,26 @@ function ClusterUtilizationChart(props) {
   const format = humanize ? humanizeValueWithUnit : roundValueWithUnit;
   const formattedUsed = format(used, unit);
   const formattedTotal = format(total, unit);
-  const available = total - used;
-  const donutCenter = { primary: `${formattedUsed.value} ${formattedUsed.unit}`, secondary: `of ${formattedTotal.value} ${formattedTotal.unit} used` };
-
-  const tooltipContents = (datum) => {
-    const formatted = format(datum.y, unit);
-    return `${formatted.value} ${formatted.unit} ${datum.x}`;
-  };
+  const usedPercentage = Math.round((formattedUsed.value / formattedTotal.value) * 100 * 100) / 100;
+  const donutCenter = { primary: `${usedPercentage}%`, secondary: `of ${formattedTotal.value} ${formattedTotal.unit} used` };
 
   return (
     <div>
       <Title className="metrics-chart" headingLevel="h4" size="xl">{title}</Title>
       <div className="metrics-chart">
-        <ChartDonut
-          id={donutId}
-          height={180}
-          width={180}
-          title={donutCenter.primary}
-          subTitle={donutCenter.secondary}
-          labels={datum => tooltipContents(datum)}
-          data={[{ x: 'used', y: used }, { x: 'available', y: available }]}
-          colorScale={[chart_global_success_Color_100.value, chart_global_Fill_Color_200.value]}
-        />
+        <ChartDonutThreshold
+          ariaDesc={title}
+          data={[{ x: '', y: 80 }, { x: 'Warning at 80%', y: 95 }, { x: 'Danger and 95%', y: 100 }]}
+          labels={datum => (datum.x ? datum.x : null)}
+        >
+          <ChartDonutUtilization
+            id={donutId}
+            title={donutCenter.primary}
+            subTitle={donutCenter.secondary}
+            data={{ x: `${formattedUsed.value} ${formattedUsed.unit}`, y: usedPercentage }}
+            thresholds={[{ value: 80 }, { value: 95 }]}
+          />
+        </ChartDonutThreshold>
       </div>
     </div>);
 }
