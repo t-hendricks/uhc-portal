@@ -39,15 +39,15 @@ const validateNodeCount = (value) => {
 };
 
 const validateSockets = value => (
-  validators.validateNumericInput(value)
+  validators.validateNumericInput(value, { max: 2000 })
 );
 
 const validateMemCapacity = value => (
-  validators.validateNumericInput(value, { allowDecimal: true })
+  validators.validateNumericInput(value, { allowDecimal: true, max: 256000 })
 );
 
 const validatevCPU = value => (
-  validators.validateNumericInput(value)
+  validators.validateNumericInput(value, { max: 16000 })
 );
 
 const validateConsoleURL = value => (

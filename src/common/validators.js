@@ -151,6 +151,7 @@ const validateNumericInput = (
     allowDecimal = false,
     allowNeg = false,
     allowZero = false,
+    max = NaN,
   } = {},
 ) => {
   if (!input) {
@@ -167,8 +168,11 @@ const validateNumericInput = (
   if (!allowNeg && allowZero && value < 0) {
     return 'Input must be a non-negative number.';
   }
-  if (!allowDecimal && input.includes('.')) {
+  if (!allowDecimal && input.toString().includes('.')) {
     return 'Input must be an integer.';
+  }
+  if (!Number.isNaN(max) && value > max) {
+    return `Input cannot be more than ${max}.`;
   }
   return undefined;
 };
