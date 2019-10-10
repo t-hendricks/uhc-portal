@@ -5,6 +5,7 @@ import {
   TableHeader,
   TableBody,
 } from '@patternfly/react-table';
+import orderBy from 'lodash/orderBy';
 
 import PopoverHint from '../../common/PopoverHint';
 
@@ -38,7 +39,7 @@ function OSDSubscriptionTable({ rows, children }) {
 
   return (
     <>
-      <Table cells={columns} rows={rows}>
+      <Table cells={columns} rows={orderBy(rows, [0, 1])}>
         <TableHeader />
         <TableBody />
       </Table>

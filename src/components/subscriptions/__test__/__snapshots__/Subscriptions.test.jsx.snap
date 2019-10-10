@@ -57,19 +57,22 @@ exports[`<Subscriptions /> OCPSubscriptionCard Loading should render loading OCP
 
 exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
 <Card>
-  <CardHeader>
+  <CardHeader
+    className="section-header"
+  >
     OpenShift Container Platform
   </CardHeader>
-  <CardBody>
+  <CardBody
+    className="section-text"
+  >
     The summary of subscription status for all self-managed clusters. Please follow the individual links to see the specific clusters in each of the corresponding status.
   </CardBody>
   <CardBody>
     <OCPSubscriptionSummary
-      organizationID="org-1"
       stats={
         Object {
-          "": 1,
           "InconsistentServices": 1,
+          "NotReconciled": 1,
           "NotSet": 1,
           "Ok": 1,
           "Overcommitted": 1,
@@ -80,17 +83,74 @@ exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
 </Card>
 `;
 
-exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
+exports[`<Subscriptions /> OCPSubscriptionCategory should render non-empty category 1`] = `
 <Fragment>
-  <h4>
-    Subscription Status
-  </h4>
+  <Stack
+    className="status-group status-group-header"
+  >
+    <StackItem
+      className="status-label "
+    >
+      full
+    </StackItem>
+  </Stack>
   <Stack
     className="status-group"
   >
-    <StackItem
-      className="status-label ok-label"
-    >
+    <StackItem>
+      <Link
+        replace={false}
+        to="/"
+      >
+        Link1
+      </Link>
+    </StackItem>
+  </Stack>
+  <Stack
+    className="status-group"
+  >
+    <StackItem>
+      <Link
+        replace={false}
+        to="/"
+      >
+        Link2
+      </Link>
+    </StackItem>
+  </Stack>
+</Fragment>
+`;
+
+exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
+<Fragment>
+  <h4
+    className="content-header"
+  >
+    Subscription Status
+  </h4>
+  <OCPSubscriptionCategory
+    items={
+      Array [
+        Object {
+          "hint": null,
+          "link": <Link
+            replace={false}
+            to={
+              Object {
+                "pathname": "/",
+                "search": "entitlement_status=Ok",
+              }
+            }
+          >
+            1 Cluster
+          </Link>,
+          "status": "Ok",
+          "text": null,
+        },
+      ]
+    }
+    labelClass="ok-label"
+    labelIcon={
       <CheckCircleIcon
         className="status-icon ok-icon"
         color="currentColor"
@@ -98,28 +158,64 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
         size="sm"
         title={null}
       />
-      Properly entitled
-    </StackItem>
-    <StackItem>
-      <Link
-        replace={false}
-        to={
-          Object {
-            "pathname": "/",
-            "search": "entitlement_status=Ok&organization_id=org-1&managed=false",
-          }
-        }
-      >
-        1 Cluster
-      </Link>
-    </StackItem>
-  </Stack>
-  <Stack
-    className="status-group"
-  >
-    <StackItem
-      className="status-label warn-label"
-    >
+    }
+    labelText="Properly entitled"
+  />
+  <OCPSubscriptionCategory
+    items={
+      Array [
+        Object {
+          "hint": "Clusters are attached to subscriptions with different support levels.",
+          "link": <Link
+            replace={false}
+            to={
+              Object {
+                "pathname": "/",
+                "search": "entitlement_status=InconsistentServices",
+              }
+            }
+          >
+            1 Cluster
+          </Link>,
+          "status": "InconsistentServices",
+          "text": "Invalid",
+        },
+        Object {
+          "hint": "Clusters do not have subscriptions attached.",
+          "link": <Link
+            replace={false}
+            to={
+              Object {
+                "pathname": "/",
+                "search": "entitlement_status=NotSet",
+              }
+            }
+          >
+            1 Cluster
+          </Link>,
+          "status": "NotSet",
+          "text": "Not subscribed",
+        },
+        Object {
+          "hint": "Clusters are consuming more resources than they are entitled to.",
+          "link": <Link
+            replace={false}
+            to={
+              Object {
+                "pathname": "/",
+                "search": "entitlement_status=Overcommitted",
+              }
+            }
+          >
+            1 Cluster
+          </Link>,
+          "status": "Overcommitted",
+          "text": "Insufficient",
+        },
+      ]
+    }
+    labelClass="warn-label"
+    labelIcon={
       <ExclamationTriangleIcon
         className="status-icon warn-icon"
         color="currentColor"
@@ -127,74 +223,43 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
         size="sm"
         title={null}
       />
-      Subscription issues
-    </StackItem>
-    <StackItem>
-      Not subscribed
-      <PopoverHint
-        hint="Clusters do not have subscriptions attached."
+    }
+    labelText="Subscription issues"
+  />
+  <OCPSubscriptionCategory
+    items={
+      Array [
+        Object {
+          "hint": null,
+          "link": <Link
+            replace={false}
+            to={
+              Object {
+                "pathname": "/",
+                "search": "entitlement_status=NotReconciled",
+              }
+            }
+          >
+            1 Cluster
+          </Link>,
+          "status": "NotReconciled",
+          "text": null,
+        },
+      ]
+    }
+    labelClass="unknown-label"
+    labelHint="Subscription status for new clusters may not be available for a few minutes after being created."
+    labelIcon={
+      <UnknownIcon
+        className="status-icon unknown-icon"
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+        title={null}
       />
-    </StackItem>
-    <StackItem>
-      <Link
-        replace={false}
-        to={
-          Object {
-            "pathname": "/",
-            "search": "entitlement_status=NotSet&organization_id=org-1&managed=false",
-          }
-        }
-      >
-        1 Cluster
-      </Link>
-    </StackItem>
-  </Stack>
-  <Stack
-    className="status-group"
-  >
-    <StackItem>
-      Insufficient
-      <PopoverHint
-        hint="Clusters are consuming more resources than they are entitled to."
-      />
-    </StackItem>
-    <StackItem>
-      <Link
-        replace={false}
-        to={
-          Object {
-            "pathname": "/",
-            "search": "entitlement_status=Overcommitted&organization_id=org-1&managed=false",
-          }
-        }
-      >
-        1 Cluster
-      </Link>
-    </StackItem>
-  </Stack>
-  <Stack
-    className="status-group"
-  >
-    <StackItem>
-      Invalid
-      <PopoverHint
-        hint="Clusters are attached to subscriptions with different support levels."
-      />
-    </StackItem>
-    <StackItem>
-      <Link
-        replace={false}
-        to={
-          Object {
-            "pathname": "/",
-            "search": "entitlement_status=InconsistentServices&organization_id=org-1&managed=false",
-          }
-        }
-      >
-        1 Cluster
-      </Link>
-    </StackItem>
-  </Stack>
+    }
+    labelText="Unknown"
+  />
 </Fragment>
 `;
 
@@ -208,7 +273,14 @@ exports[`<Subscriptions /> OSDSubscriptionCard Empty should render empty OSD quo
   </Title>
   <EmptyStateBody>
     <p>
-      Contact sales to get started with OpenShift Dedicated.
+      <a
+        href="https://www.openshift.com/products/dedicated/contact/"
+        target="_blank"
+      >
+        Contact sales
+      </a>
+       
+      to get started with OpenShift Dedicated.
     </p>
   </EmptyStateBody>
 </EmptyState>
@@ -247,14 +319,22 @@ exports[`<Subscriptions /> OSDSubscriptionCard Loading should render loading OSD
 
 exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
 <Card>
-  <CardHeader>
+  <CardHeader
+    className="section-header"
+  >
     OpenShift Dedicated
   </CardHeader>
-  <CardBody>
+  <CardBody
+    className="section-text"
+  >
     The summary of all subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat.
   </CardBody>
-  <CardBody>
-    <h4>
+  <CardBody
+    className="osd-table-container"
+  >
+    <h4
+      className="content-header"
+    >
       Quota
     </h4>
     <OSDSubscriptionTable
@@ -345,6 +425,7 @@ exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
     onExpand={null}
     role="grid"
     rowLabeledBy="simple-node"
+    rows={Array []}
     variant={null}
   >
     <TableHeader
@@ -363,6 +444,13 @@ exports[`<Subscriptions /> Subscriptions should render 1`] = `
 <div
   id="subscriptions-content"
 >
+  <PageHeader
+    className="page-header"
+  >
+    <PageHeaderTitle
+      title="Subscriptions"
+    />
+  </PageHeader>
   <Connect(OCPSubscriptionCard)
     organizationID="org-1"
   />

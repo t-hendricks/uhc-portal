@@ -758,25 +758,40 @@ div.pf-c-alert.archived-cluster-toast {
   margin-top: 6px;
 }
 #subscriptions-content {
+  .page-header {
+    margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
+    margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
+    margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
+    padding-top: var(--pf-c-page__main-section--PaddingTop);
+    padding-right: var(--pf-c-page__main-section--PaddingRight);
+    padding-left: var(--pf-c-page__main-section--PaddingLeft);
+    padding-bottom: var(--pf-c-page__main-section--PaddingBottom);
+  }
   .pf-c-card {
     margin-top: var(--pf-global--spacer--lg);
-  }
-  .info-icon {
-    fill: var(--pf-global--info-color--100);
-    margin: 0 -5px 0 5px;
   }
   .status-group {
     padding-left: var(--pf-global--spacer--lg);
     margin-top: var(--pf-global--spacer--sm);
     height: auto;
   }
+  .status-group-header {
+    margin-top: var(--pf-global--spacer--md);
+  }
+  .osd-table-container {
+    overflow-x: auto;
+  }
+  table {
+    margin-top: var(--pf-global--spacer--md);
+  }
   .status-label {
-    font-size: var(--pf-global--FontSize--sm);
+    font-size: var(--pf-global--FontSize--lg);
     font-weight: var(--pf-global--FontWeight--bold);
   }
   .status-icon {
+    font-size: var(--pf-global--icon--FontSize--md);
     margin-left: calc(-1 * var(--pf-global--spacer--lg));
-    margin-right: calc(var(--pf-global--spacer--lg) - var(--pf-global--FontSize--sm))
+    margin-right: calc(var(--pf-global--spacer--lg) - var(--pf-global--FontSize--lg))
   }
   .ok-label {
     color: var(--pf-global--success-color--200);
@@ -789,5 +804,18 @@ div.pf-c-alert.archived-cluster-toast {
   }
   .warn-icon {
     fill: var(--pf-global--warning-color--100);
+  }
+  .section-header {
+    font-size: var(--pf-global--FontSize--xl);
+    padding-bottom: 0;
+  }
+  .section-text {
+    margin-top: var(--pf-global--spacer--sm);
+    padding-bottom: 0;
+  }
+  .content-header {
+    font-size: var(--pf-global--FontSize--lg);
+    margin-top: var(--pf-global--spacer--lg);
+    margin-bottom: 0;
   }
 }

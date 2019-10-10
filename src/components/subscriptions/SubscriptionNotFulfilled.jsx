@@ -56,7 +56,13 @@ function SubscriptionNotFulfilled({ data, refresh }) {
     osd: {
       emptyTitle: 'You do not have any quota',
       errorTitle: 'Unable to retrieve quota information',
-      text: <p>Contact sales to get started with OpenShift Dedicated.</p>,
+      text: (
+        <p>
+          <a href="https://www.openshift.com/products/dedicated/contact/" target="_blank">Contact sales</a>
+          {' '}
+          to get started with OpenShift Dedicated.
+        </p>
+      ),
     },
   };
   const configType = config[data.type];
