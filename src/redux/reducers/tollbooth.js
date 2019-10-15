@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 import { ACTION_TYPE as tollboothActionType } from '../actions/tollbooth';
 import helpers from '../../common/helpers';
 
@@ -12,6 +13,7 @@ const tollboothReducer = (state = initialState, action) => {
         ...state,
         token: {
           error: {
+            code: get(action.payload, 'response.data.code'),
             message: helpers.getErrorMessage(action.payload),
           },
         },

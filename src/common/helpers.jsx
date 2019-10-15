@@ -1,3 +1,4 @@
+import React from 'react';
 import isEqual from 'lodash/isEqual';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
@@ -84,17 +85,46 @@ const createViewQueryObject = (viewOptions, queryObj) => {
 };
 
 function overrideErrorMessage(payload) {
-  if (!payload || !payload.details || !payload.details.length) {
+  if (!payload) {
     return '';
   }
 
-  switch (payload.details[0].kind) {
+  let message = '';
+
+  // override error by its kind
+  const errorKind = get(payload, 'details[0].kind', '');
+  switch (errorKind) {
     case 'ExcessResources':
-      return `You are not authorized to create the cluster because your request exceeds available quota.
+      message = `You are not authorized to create the cluster because your request exceeds available quota.
               In order to fulfill this request, you will need quota/subscriptions for:`;
+      break;
     default:
-      return '';
   }
+
+  // override error by its code
+  const errorCode = get(payload, 'code', '');
+  switch (errorCode) {
+    case 'ACCT-MGMT-22': // ErrorBanned
+      message = (
+        <span>
+          Your account has been placed on
+          {' '}
+          <a href="https://access.redhat.com/articles/1340183" target="_blank">Export Hold</a>
+          {' '}
+          based on export control screening.
+          <br />
+          The Export Compliance Team has been notified that your account is on hold,
+          {' '}
+          and must conduct additional due diligence to resolve the Export Hold.
+          <br />
+          Please try again in 24-48 hours.
+        </span>
+      );
+      break;
+    default:
+  }
+
+  return message;
 }
 
 function getErrorMessage(payload) {
