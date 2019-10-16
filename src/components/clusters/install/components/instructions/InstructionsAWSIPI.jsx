@@ -10,8 +10,6 @@ import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
-import DeveloperPreviewSection from './components/DeveloperPreviewSection';
-
 
 class InstructionsAWSIPI extends React.Component {
   constructor(props) {
@@ -46,7 +44,7 @@ class InstructionsAWSIPI extends React.Component {
               (AWS) using infrastructure that the installation program provisions and the cluster
               maintains. The basic steps are outlined below. For detailed instructions, see the
               {' '}
-              <a href="https://docs.openshift.com/container-platform/4.1/welcome/index.html" target="_blank">
+              <a href="https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-account.html" target="_blank">
                 official documentation
                 {' '}
                 <span className="fa fa-external-link" aria-hidden="true" />
@@ -59,7 +57,7 @@ class InstructionsAWSIPI extends React.Component {
             </h3>
             <ul aria-labelledby="prerequisites-title">
               <li>
-                <a href="https://docs.openshift.com/container-platform/4.1/installing/installing_aws/installing-aws-account.html" target="_blank">
+                <a href="https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-account.html" target="_blank">
                   Configure an AWS account
                   {' '}
                   <span className="fa fa-external-link" aria-hidden="true" />
@@ -86,7 +84,6 @@ class InstructionsAWSIPI extends React.Component {
             <p>
               <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
             </p>
-            <DeveloperPreviewSection isDevPreview={false} />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection
@@ -129,21 +126,21 @@ class InstructionsAWSIPI extends React.Component {
 
             <ul>
               <li>
-                <a href="https://docs.openshift.com/container-platform/4.1/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_install-customizations-cloud" target="_blank">
+                <a href="https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations" target="_blank">
                   Installation configuration parameters for AWS
                   {' '}
                   <span className="fa fa-external-link" aria-hidden="true" />
                 </a>
               </li>
               <li>
-                <a href="https://docs.openshift.com/container-platform/4.1/installing/installing_aws/installing-aws-customizations.html#installation-aws-config-yaml_install-customizations-cloud" target="_blank">
+                <a href="https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-customizations.html#installation-aws-config-yaml_installing-aws-customizations" target="_blank">
                   Sample customized install-config.yaml file for AWS
                   {' '}
                   <span className="fa fa-external-link" aria-hidden="true" />
                 </a>
               </li>
               <li>
-                <a href="https://docs.openshift.com/container-platform/4.1/installing/installing_aws/installing-aws-network-customizations.html" target="_blank">
+                <a href="https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-network-customizations.html" target="_blank">
                   Customizing your network configuration
                   {' '}
                   <span className="fa fa-external-link" aria-hidden="true" />
@@ -211,7 +208,7 @@ class InstructionsAWSIPI extends React.Component {
 
             <h3>Next Steps</h3>
             <p>
-              <a href="https://docs.openshift.com/container-platform/4.1/welcome/index.html" target="_blank">
+              <a href="https://docs.openshift.com/container-platform/4.2/welcome/index.html" target="_blank">
                 Learn more
                 {' '}
                 <span className="fa fa-external-link" aria-hidden="true" />

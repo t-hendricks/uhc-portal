@@ -33,12 +33,6 @@ const InstructionsInfrastructure = () => (
         <Link to="/install/azure/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
             <img src={AzureLogo} alt="Azure" className="infra-logo" />
-            <br />
-            <span className="azure-dev-preview-card">
-              <CodeIcon />
-              {' '}
-              Developer Preview
-            </span>
           </CardBody>
         </Link>
         <Link to="/install/vsphere/user-provisioned" className="infra-card infra-card-cloud-provider">
@@ -51,23 +45,11 @@ const InstructionsInfrastructure = () => (
         <Link to="/install/gcp/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
             <img src={GCPLogo} alt="GCP" className="infra-logo-google-cloud" />
-            <br />
-            <span className="gcp-dev-preview-card">
-              <CodeIcon />
-              {' '}
-              Developer Preview
-            </span>
           </CardBody>
         </Link>
         <Link to="/install/openstack/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
             <img src={OSPLogo} alt="OpenStack" className="infra-logo-osp" />
-            <br />
-            <span className="osp-dev-preview-card">
-              <CodeIcon />
-              {' '}
-              Developer Preview
-            </span>
           </CardBody>
         </Link>
       </div>
