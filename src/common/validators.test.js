@@ -99,4 +99,7 @@ test('Field contains a numeric string', () => {
   expect(validators.validateNumericInput('-10', { allowNeg: true })).toBe(undefined);
   expect(validators.validateNumericInput('asdf')).toBe('Input must be a number.');
   expect(validators.validateNumericInput('0', { allowZero: true })).toBe(undefined);
+  expect(validators.validateNumericInput('1000', { max: 999 })).toBe('Input cannot be more than 999.');
+  expect(validators.validateNumericInput('999', { max: 999 })).toBe(undefined);
+  expect(validators.validateNumericInput(Number.MAX_SAFE_INTEGER)).toBe(undefined);
 });

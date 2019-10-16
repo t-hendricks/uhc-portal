@@ -15,6 +15,7 @@ limitations under the License.
 */
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 
 import OCPSubscriptionCard from './OCPSubscriptionCard';
 import OSDSubscriptionCard from './OSDSubscriptionCard';
@@ -40,6 +41,9 @@ class Subscriptions extends Component {
       const organizationID = account.data.organization.id;
       content = (
         <div id="subscriptions-content">
+          <PageHeader className="page-header">
+            <PageHeaderTitle title="Subscriptions" />
+          </PageHeader>
           <OCPSubscriptionCard organizationID={organizationID} />
           <OSDSubscriptionCard organizationID={organizationID} />
         </div>

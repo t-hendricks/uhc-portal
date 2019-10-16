@@ -6,8 +6,6 @@ import GetStarted from './components/GetStarted';
 import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import TokenErrorAlert from './components/TokenErrorAlert';
-import DeveloperPreviewSection from './components/DeveloperPreviewSection';
-
 
 class InstructionsCRC extends React.Component {
   constructor(props) {
@@ -106,9 +104,6 @@ class InstructionsCRC extends React.Component {
                 </p>
               </ListItem>
             </List>
-
-            <DeveloperPreviewSection isDevPreview />
-
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection

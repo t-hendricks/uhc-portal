@@ -45,6 +45,10 @@ limitations under the License.
   margin: 20px 0 20px 0;
 }
 
+#cluster-list-emptystate-primary-action {
+  margin-top: 20px;
+}
+
 // Styles for the page where the user can download the access tokens, for use
 // with API clients:
 .token-details {
@@ -744,35 +748,68 @@ span.dev-preview-label svg {
 }
 
 div.pf-c-alert.archived-cluster-toast {
-  width: 20%;
-  right: 1%;
-  top: 9%;
   position: absolute;
+  z-index: 1;
+  
+  width: 67%;
+  right: 9%;
+  top: 15%;
+
+  @media (min-width: 768px) {
+    width: 29%;
+    right: 3%;
+    top: 8%;
+  }
+  @media (min-width: 992px) {
+    width: 22%;
+    right: 3%;
+    top: 13%;
+  }
+  @media (min-width: 1200px) {
+    width: 20%;
+    right: 4%;
+    top: 20%;
+  }
 }
 
 .show-active-clusters-link {
   margin-top: 6px;
 }
 #subscriptions-content {
+  .page-header {
+    margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
+    margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
+    margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
+    padding-top: var(--pf-c-page__main-section--PaddingTop);
+    padding-right: var(--pf-c-page__main-section--PaddingRight);
+    padding-left: var(--pf-c-page__main-section--PaddingLeft);
+    padding-bottom: var(--pf-c-page__main-section--PaddingBottom);
+  }
   .pf-c-card {
     margin-top: var(--pf-global--spacer--lg);
-  }
-  .info-icon {
-    fill: var(--pf-global--info-color--100);
-    margin: 0 -5px 0 5px;
   }
   .status-group {
     padding-left: var(--pf-global--spacer--lg);
     margin-top: var(--pf-global--spacer--sm);
     height: auto;
   }
+  .status-group-header {
+    margin-top: var(--pf-global--spacer--md);
+  }
+  .osd-table-container {
+    overflow-x: auto;
+  }
+  table {
+    margin-top: var(--pf-global--spacer--md);
+  }
   .status-label {
-    font-size: var(--pf-global--FontSize--sm);
+    font-size: var(--pf-global--FontSize--lg);
     font-weight: var(--pf-global--FontWeight--bold);
   }
   .status-icon {
+    font-size: var(--pf-global--icon--FontSize--md);
     margin-left: calc(-1 * var(--pf-global--spacer--lg));
-    margin-right: calc(var(--pf-global--spacer--lg) - var(--pf-global--FontSize--sm))
+    margin-right: calc(var(--pf-global--spacer--lg) - var(--pf-global--FontSize--lg))
   }
   .ok-label {
     color: var(--pf-global--success-color--200);
@@ -785,5 +822,18 @@ div.pf-c-alert.archived-cluster-toast {
   }
   .warn-icon {
     fill: var(--pf-global--warning-color--100);
+  }
+  .section-header {
+    font-size: var(--pf-global--FontSize--xl);
+    padding-bottom: 0;
+  }
+  .section-text {
+    margin-top: var(--pf-global--spacer--sm);
+    padding-bottom: 0;
+  }
+  .content-header {
+    font-size: var(--pf-global--FontSize--lg);
+    margin-top: var(--pf-global--spacer--lg);
+    margin-bottom: 0;
   }
 }

@@ -8,7 +8,6 @@ import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
-import DeveloperPreviewSection from './components/DeveloperPreviewSection';
 
 class InstructionsAWSUPI extends React.Component {
   constructor(props) {
@@ -43,7 +42,7 @@ class InstructionsAWSUPI extends React.Component {
               (AWS) using infrastructure that you provide.
             </p>
 
-            <GetStarted docURL="https://docs.openshift.com/container-platform/4.1/installing/installing_aws_user_infra/installing-aws-user-infra.html#installation-creating-aws-worker_installing-aws-user-infra" />
+            <GetStarted docURL="https://docs.openshift.com/container-platform/4.2/installing/installing_aws_user_infra/installing-aws-user-infra.html" />
 
             <h3>
               Downloads
@@ -62,7 +61,6 @@ class InstructionsAWSUPI extends React.Component {
             <p>
               <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
             </p>
-            <DeveloperPreviewSection isDevPreview={false} />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection

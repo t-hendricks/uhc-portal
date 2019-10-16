@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
 import CLISection from './components/CLISection';
 import DownloadButton from './components/DownloadButton';
 import GetStarted from './components/GetStarted';
@@ -9,7 +8,6 @@ import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
-import DeveloperPreviewSection from './components/DeveloperPreviewSection';
 
 class InstructionsGCP extends React.Component {
   constructor(props) {
@@ -28,11 +26,6 @@ class InstructionsGCP extends React.Component {
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
           <div className="pf-c-content">
-            <div className="developer-preview">
-              <CodeIcon />
-              {' '}
-              Developer Preview
-            </div>
 
             <PageTitle title="Install on GCP: Installer-Provisioned Infrastructure" />
 
@@ -46,14 +39,11 @@ class InstructionsGCP extends React.Component {
 
             <p>
               With OpenShift Container Platform
-              {' '}
-              <strong>developer preview</strong>
-              {' '}
               you can install a cluster on GCP using infrastructure that the
               installation program provisions and the cluster maintains.
             </p>
 
-            <GetStarted docURL="https://github.com/openshift/installer/tree/master/docs/user/gcp" />
+            <GetStarted docURL="https://docs.openshift.com/container-platform/4.2/installing/installing_gcp/installing-gcp-account.html" />
 
             <h3>
               Downloads
@@ -70,9 +60,8 @@ class InstructionsGCP extends React.Component {
             </p>
 
             <p>
-              <DownloadButton installerURL="http://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/" token={token} />
+              <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
             </p>
-            <DeveloperPreviewSection isDevPreview />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection
@@ -89,7 +78,7 @@ class InstructionsGCP extends React.Component {
             <p />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Command-Line Interface</h3>
-            <CLISection toolsURL="http://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/" />
+            <CLISection toolsURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" />
 
           </div>
         </div>

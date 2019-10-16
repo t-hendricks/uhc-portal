@@ -1,3 +1,6 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 const fetchAccount = jest.fn();
 const fetchSubscriptions = jest.fn();
 const fetchQuotaSummary = jest.fn();
@@ -43,14 +46,14 @@ const subscriptions = {
       id: 'subscription-2',
     },
     {
-      entitlement_status: '',
+      entitlement_status: 'NotReconciled',
       id: 'subscription-5',
     },
   ],
 };
 
 const stats = {
-  '': 1,
+  NotReconciled: 1,
   InconsistentServices: 1,
   NotSet: 1,
   Ok: 1,
@@ -93,6 +96,29 @@ const quotaSummary = {
   ],
 };
 
+const categories = {
+  nonEmpty: {
+    labelText: 'full',
+    labelIcon: <></>,
+    labelClass: '',
+    labelHint: '',
+    items: [{
+      link: <Link to="/">Link1</Link>,
+    }, {
+      link: <Link to="/">Link2</Link>,
+    }],
+  },
+  empty: {
+    labelText: 'full',
+    labelIcon: <></>,
+    labelClass: '',
+    labelHint: '',
+    items: [],
+  },
+};
+
+const rows = [];
+
 export {
   fetchAccount,
   fetchSubscriptions,
@@ -102,4 +128,6 @@ export {
   subscriptions,
   quotaSummary,
   stats,
+  categories,
+  rows,
 };

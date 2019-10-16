@@ -9,7 +9,7 @@ const TelemetryAlert = () => {
       Red Hat collects a limited amount of telemetry data. By installing OpenShift Container
       Platform 4, you accept our data collection policy.
       {' '}
-      <a href="https://docs.openshift.com/container-platform/4.1/telemetry/about-telemetry.html" target="_blank">
+      <a href="https://docs.openshift.com/container-platform/4.2/support/remote_health_monitoring/about-remote-health-monitoring.html" target="_blank">
         Learn more
         {' '}
         <span className="fa fa-external-link" aria-hidden="true" />
