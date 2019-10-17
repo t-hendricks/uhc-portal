@@ -63,7 +63,7 @@ class OCPSubscriptionCard extends Component {
         <CardHeader className="section-header">OpenShift Container Platform</CardHeader>
         <CardBody className="section-text">
         The summary of subscription status for all self-managed clusters.
-        Please follow the individual links to see the specific clusters
+        Follow the individual links to see the specific clusters
         in each of the corresponding status.
         </CardBody>
         <CardBody>

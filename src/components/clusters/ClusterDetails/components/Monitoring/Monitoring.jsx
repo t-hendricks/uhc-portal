@@ -85,7 +85,7 @@ class Monitoring extends React.Component {
         />
         { isInProgress
           ? emptyState(
-            <p>Monitoring Data is not available at this time. Please check back later.</p>,
+            <p>Monitoring Data is not available at this time. Try again later.</p>,
           )
           : (
             <Card id="monitoring">

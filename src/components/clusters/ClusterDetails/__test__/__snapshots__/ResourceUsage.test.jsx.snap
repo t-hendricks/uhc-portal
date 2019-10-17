@@ -32,7 +32,7 @@ exports[`<ResourceUsage /> should render correct status message when archived 1`
 exports[`<ResourceUsage /> should render status message when metrics are not available 1`] = `
 <Fragment>
   <p>
-    The cluster currently does not have any metrics data. Please try again later.
+    The cluster currently does not have any metrics data. Try again later.
   </p>
 </Fragment>
 `;

@@ -117,7 +117,7 @@ function overrideErrorMessage(payload) {
           {' '}
           and must conduct additional due diligence to resolve the Export Hold.
           <br />
-          Please try again in 24-48 hours.
+          Try again in 24-48 hours.
         </span>
       );
       break;

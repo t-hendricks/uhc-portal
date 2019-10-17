@@ -87,7 +87,7 @@ const checkClusterConsoleURL = (value, isRequired) => {
     return (isRequired ? 'Cluster console URL should not be empty' : undefined);
   }
   if (!CONSOLE_URL_REGEXP.test(value)) {
-    return 'Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)';
+    return 'Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)';
   }
   return undefined;
 };
