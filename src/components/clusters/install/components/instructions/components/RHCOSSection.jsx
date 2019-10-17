@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Button,
 } from '@patternfly/react-core';
-
+import links from '../../../../../../common/installLinks';
 
 const RHCOSSection = ({ learnMoreURL, token }) => (
   <React.Fragment>
@@ -18,7 +18,7 @@ const RHCOSSection = ({ learnMoreURL, token }) => (
       </a>
     </p>
     <p>
-      <a href="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.2/latest/" target="_blank">
+      <a href={links.DOWNLOAD_RHCOS_LATEST} target="_blank">
         <Button
           variant="secondary"
           className="install--download-installer"

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Popover } from '@patternfly/react-core';
 import { InfoCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
+import links from '../../../common/installLinks';
+
 
 const ClusterUpdateLink = ({ cluster }) => {
   const { upgrade } = cluster.metrics;
@@ -43,7 +45,7 @@ const ClusterUpdateLink = ({ cluster }) => {
           An update is available for this cluster.
           Navigate to the Cluster settings page in the cluster&apos;s web console to update.
           {' '}
-          <a href="https://docs.openshift.com/container-platform/latest/updating/updating-cluster.html" target="_blank">
+          <a href={links.UPDATING_CLUSTER} target="_blank">
             Learn more
           </a>
         </div>

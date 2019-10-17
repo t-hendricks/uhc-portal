@@ -4,6 +4,7 @@ import {
   Card,
   Popover,
 } from '@patternfly/react-core';
+import links from '../../../../../common/installLinks';
 import CLISection from './components/CLISection';
 import DownloadButton from './components/DownloadButton';
 import PageTitle from '../../../../common/PageTitle';
@@ -44,7 +45,7 @@ class InstructionsAWSIPI extends React.Component {
               (AWS) using infrastructure that the installation program provisions and the cluster
               maintains. The basic steps are outlined below. For detailed instructions, see the
               {' '}
-              <a href="https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-account.html" target="_blank">
+              <a href={links.INSTALL_AWSIPI_DOCS_LANDING} target="_blank">
                 official documentation
                 {' '}
                 <span className="fa fa-external-link" aria-hidden="true" />
@@ -57,7 +58,7 @@ class InstructionsAWSIPI extends React.Component {
             </h3>
             <ul aria-labelledby="prerequisites-title">
               <li>
-                <a href="https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-account.html" target="_blank">
+                <a href={links.INSTALL_AWSIPI_CONFIGURE_ACCOUNT} target="_blank">
                   Configure an AWS account
                   {' '}
                   <span className="fa fa-external-link" aria-hidden="true" />
@@ -82,7 +83,10 @@ class InstructionsAWSIPI extends React.Component {
             </p>
 
             <p>
-              <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
+              <DownloadButton
+                installerURL={links.INSTALL_AWSIPI_INSTALLER_LATEST}
+                token={token}
+              />
             </p>
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
@@ -100,7 +104,7 @@ class InstructionsAWSIPI extends React.Component {
             <p />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Command-Line Interface</h3>
-            <CLISection toolsURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" />
+            <CLISection toolsURL={links.INSTALL_AWSUPI_CLI_LATEST} />
 
             <h3>Optional: Customize your deployment</h3>
             <p>
@@ -126,21 +130,21 @@ class InstructionsAWSIPI extends React.Component {
 
             <ul>
               <li>
-                <a href="https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations" target="_blank">
+                <a href={links.INSTALL_AWSIPI_INSTALLATION_CONFIG} target="_blank">
                   Installation configuration parameters for AWS
                   {' '}
                   <span className="fa fa-external-link" aria-hidden="true" />
                 </a>
               </li>
               <li>
-                <a href="https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-customizations.html#installation-aws-config-yaml_installing-aws-customizations" target="_blank">
+                <a href={links.INSTALL_AWSIPI_SAMPLE_YAML} target="_blank">
                   Sample customized install-config.yaml file for AWS
                   {' '}
                   <span className="fa fa-external-link" aria-hidden="true" />
                 </a>
               </li>
               <li>
-                <a href="https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-network-customizations.html" target="_blank">
+                <a href={links.INSTALL_AWSIPI_CUSTOMIZING_NETWORK} target="_blank">
                   Customizing your network configuration
                   {' '}
                   <span className="fa fa-external-link" aria-hidden="true" />
@@ -165,7 +169,7 @@ class InstructionsAWSIPI extends React.Component {
                   Unfortunately, there will always be some cases where OpenShift fails to install
                   properly. In these events, it is helpful to understand the
                   {' '}
-                  <a href="https://github.com/openshift/installer/blob/master/docs/user/troubleshooting.md#common-failures" target="_blank">
+                  <a href={links.INSTALL_AWSIPI_LIKELY_FAILURE_MODES} target="_blank">
                     likely failure modes
                     {' '}
                     <span className="fa fa-external-link" aria-hidden="true" />
@@ -173,7 +177,7 @@ class InstructionsAWSIPI extends React.Component {
                   {' '}
                   as well as
                   {' '}
-                  <a href="https://github.com/openshift/installer/blob/master/docs/user/troubleshooting.md#generic-troubleshooting" target="_blank">
+                  <a href={links.INSTALL_AWSIPI_GENERIC_TROUBLESHOOTING} target="_blank">
                     how to troubleshoot
                     {' '}
                     <span className="fa fa-external-link" aria-hidden="true" />
@@ -208,7 +212,7 @@ class InstructionsAWSIPI extends React.Component {
 
             <h3>Next Steps</h3>
             <p>
-              <a href="https://docs.openshift.com/container-platform/4.2/welcome/index.html" target="_blank">
+              <a href={links.INSTALL_AWSIPI_DOCS_ENTRY} target="_blank">
                 Learn more
                 {' '}
                 <span className="fa fa-external-link" aria-hidden="true" />
