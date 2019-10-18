@@ -37,7 +37,7 @@ function SubscriptionCompliancy(props) {
         <Alert id="subs-hint" isInline variant={clusterCreationCloseTo30Days ? 'danger' : 'warning'} title="This cluster is not attached to a subscription">
           {lastChecked}
           <p>
-            Please find&nbsp;
+            Find&nbsp;
             { !candlepinConsumerUUID ? 'this cluster in the ' : '' }
             <a href={customerPortalURL} target="_blank">
               { candlepinConsumerUUID ? 'this cluster in the ' : '' }
@@ -55,7 +55,7 @@ function SubscriptionCompliancy(props) {
         <Alert id="subs-hint" isInline variant="danger" title="This cluster is overcommitting resources">
           {lastChecked}
           <p>
-            Please check the&nbsp;
+            Check the&nbsp;
             <a href={customerPortalURL} target="_blank">Red Hat Customer Portal</a>
             &nbsp;to make sure this cluster has subscription(s) attached that covers
             the current size of this cluster. You may need to&nbsp;
@@ -69,7 +69,7 @@ function SubscriptionCompliancy(props) {
         <Alert id="subs-hint" isInline variant="warning" title="This cluster is attached to subscriptions with different service levels">
           {lastChecked}
           <p>
-            Please go to the&nbsp;
+            Go to the&nbsp;
             <a href={customerPortalURL} target="_blank">Red Hat Customer Portal</a>
             &nbsp;to make sure all subscriptions attached are of the same service level
             (e.g. either Standard, Premium).

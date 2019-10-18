@@ -8,7 +8,7 @@ exports[`<SubscriptionCompliancy /> should render 1`] = `
   variant="danger"
 >
   <p>
-    Please find 
+    Find 
     this cluster in the 
     <a
       href="https://access.redhat.com/management/systems"

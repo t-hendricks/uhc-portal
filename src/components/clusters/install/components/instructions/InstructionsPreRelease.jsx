@@ -149,7 +149,7 @@ class InstructionsPreRelease extends React.Component {
           </p>
 
           <p />
-          For pre-release documentation, please refer to the
+          For pre-release documentation, refer to the
           {' '}
           <a href="https://github.com/openshift/installer/tree/master/docs/user" target="_blank">
             latest installer documentation
@@ -196,7 +196,7 @@ class InstructionsPreRelease extends React.Component {
           <p />
           <p>
             If you are a Red Hat customer or partner and have feedback about these nightly builds,
-            please email
+            email
             {' '}
             <a href="mailto:***REMOVED***?subject=[dev preview build]">
               ***REMOVED***

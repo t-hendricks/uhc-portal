@@ -28,7 +28,7 @@ function SubscriptionNotFulfilled({ data, refresh }) {
       <>
         <p>
         An error has occured!
-        Please try again or contact support by including this error message:
+        Try again or contact support by including this error message:
         </p>
         <q>
           {errorMessage}
@@ -45,7 +45,7 @@ function SubscriptionNotFulfilled({ data, refresh }) {
     account: {
       emptyTitle: 'Unable to retrieve account information',
       errorTitle: 'Unable to retrieve account information',
-      text: 'Please contact support to verify your account is valid',
+      text: 'Contact support to verify your account is valid',
     },
     ocp: {
       emptyTitle: 'You do not have any clusters',
