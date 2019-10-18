@@ -20,7 +20,11 @@ function GlobalErrorBox({ errorTitle, errorMessage, clearGlobalError }) {
 
 GlobalErrorBox.propTypes = {
   errorTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  errorMessage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.element,
+  ]),
   clearGlobalError: PropTypes.func.isRequired,
 };
 

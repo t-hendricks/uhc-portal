@@ -230,7 +230,11 @@ ArchivedClusterList.propTypes = {
   valid: PropTypes.bool.isRequired,
   clusters: PropTypes.array.isRequired,
   error: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string.isRequired,
+  errorMessage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.element,
+  ]).isRequired,
   pending: PropTypes.bool.isRequired,
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,

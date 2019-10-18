@@ -158,7 +158,11 @@ ClusterDetailsTop.propTypes = {
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   error: PropTypes.bool,
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.element,
+  ]),
   children: PropTypes.any,
 };
 

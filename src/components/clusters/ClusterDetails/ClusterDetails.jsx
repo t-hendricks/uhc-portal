@@ -335,7 +335,11 @@ ClusterDetails.propTypes = {
   clusterDetails: PropTypes.shape({
     cluster: PropTypes.object,
     error: PropTypes.bool,
-    errorMessage: PropTypes.string,
+    errorMessage: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+      PropTypes.element,
+    ]),
     history: PropTypes.object,
     pending: PropTypes.bool.isRequired,
   }),
