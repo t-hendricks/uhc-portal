@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, List, ListItem } from '@patternfly/react-core';
 import { CodeIcon } from '@patternfly/react-icons';
+import links from '../../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
@@ -45,7 +46,7 @@ class InstructionsCRC extends React.Component {
               to your local laptop or desktop computer.
             </p>
 
-            <GetStarted docURL="https://code-ready.github.io/crc/" />
+            <GetStarted docURL={links.INSTALL_CRC_GETTING_STARTED} />
 
             <h3>
               Downloads
@@ -71,7 +72,7 @@ class InstructionsCRC extends React.Component {
                 <p>
                   Windows:
                   <a
-                    href="https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-windows-amd64.zip"
+                    href={links.INSTALL_CRC_DOWNLOAD_WINDOWS}
                     disabled={!!token.error}
                   >
                     {' '}
@@ -83,7 +84,7 @@ class InstructionsCRC extends React.Component {
                 <p>
                   macOS:
                   <a
-                    href="https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.tar.xz"
+                    href={links.INSTALL_CRC_DOWNLOAD_MACOS}
                     disabled={!token.error}
                   >
                     {' '}
@@ -95,7 +96,7 @@ class InstructionsCRC extends React.Component {
                 <p>
                   Linux:
                   <a
-                    href="https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
+                    href={links.INSTALL_CRC_DOWNLOAD_LINUX}
                     disabled={!!token.error}
                   >
                     {' '}
