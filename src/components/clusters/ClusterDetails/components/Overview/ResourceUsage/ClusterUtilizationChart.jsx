@@ -23,7 +23,7 @@ function ClusterUtilizationChart(props) {
       <div className="metrics-chart">
         <ChartDonutThreshold
           ariaDesc={title}
-          data={[{ x: '', y: 80 }, { x: 'Warning at 80%', y: 95 }, { x: 'Danger and 95%', y: 100 }]}
+          data={[{ x: '', y: 80 }, { x: 'Warning at 80%', y: 95 }, { x: 'Danger at 95%', y: 100 }]}
           labels={datum => (datum.x ? datum.x : null)}
         >
           <ChartDonutUtilization
