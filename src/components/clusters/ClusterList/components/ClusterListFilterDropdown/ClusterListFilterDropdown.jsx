@@ -26,6 +26,7 @@ class ClusterListFilterDropdown extends React.Component {
       ['NotSet', 'Not Subscribed'],
       ['Overcommitted', 'Insufficient'],
       ['InconsistentServices', 'Invalid'],
+      ['NotReconciled', 'Unknown'],
     ];
 
     const dropdownItems = [
