@@ -59,7 +59,11 @@ function ErrorBox({ message, response }) {
 ErrorBox.propTypes = {
   message: PropTypes.string.isRequired,
   response: PropTypes.shape({
-    errorMessage: PropTypes.string.isRequired,
+    errorMessage: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+      PropTypes.element,
+    ]).isRequired,
     operationID: PropTypes.string,
   }),
 };

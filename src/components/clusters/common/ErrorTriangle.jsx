@@ -12,7 +12,11 @@ const ErrorTriangle = ({ errorMessage }) => (
   </Tooltip>
 );
 ErrorTriangle.propTypes = {
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.element,
+  ]),
 };
 
 export default ErrorTriangle;
