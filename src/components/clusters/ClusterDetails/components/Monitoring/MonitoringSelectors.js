@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 
 import { statuses } from './statusHelper';
 import clusterStates from '../../../common/clusterStates';
@@ -97,7 +98,7 @@ const clusterHealthSelector = (
     return statuses.INSTALLING;
   }
 
-  if (cluster.state === clusterStates.DISCONNECTED) {
+  if (get(cluster, 'subscription.status', false) === clusterStates.DISCONNECTED) {
     return statuses.DISCONNECTED;
   }
 
