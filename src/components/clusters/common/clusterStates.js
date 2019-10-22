@@ -11,7 +11,7 @@ const clusterStates = {
   WARNING: 'warning',
   STALE: 'stale',
   LONG_STALE: 'long stale',
-  DISCONNECTED: 'disconnected',
+  DISCONNECTED: 'Disconnected',
 };
 
 function getClusterStateAndDescription(cluster) {
