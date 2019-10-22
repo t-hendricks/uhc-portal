@@ -40,6 +40,7 @@ import ErrorBox from '../../common/ErrorBox';
 import { isValid } from '../../../common/helpers';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
+import getClusterName from '../../../common/getClusterName';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -101,7 +102,7 @@ class ClusterDetails extends Component {
     const oldClusterID = prevProps.match.params.id;
 
     if (result(clusterDetails, 'cluster.id') === clusterID) {
-      const clusterName = clusterDetails.cluster.display_name || clusterDetails.cluster.name || clusterDetails.external_id || 'Unnamed Cluster';
+      const clusterName = getClusterName(clusterDetails.cluster);
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
     }
 

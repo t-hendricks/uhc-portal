@@ -19,6 +19,7 @@ import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
 import { getClusterStateAndDescription } from '../../../common/clusterStates';
 import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
 import SubscriptionStatusIndicator from '../../../common/SubscriptionStatusIndicator';
+import getClusterName from '../../../../../common/getClusterName';
 
 
 function ClusterListTable(props) {
@@ -42,7 +43,7 @@ function ClusterListTable(props) {
 
   const clusterRow = (cluster) => {
     const provider = result(cluster, 'cloud_provider.id', 'N/A');
-    const name = cluster.subscription.display_name || cluster.display_name || '';
+    const name = getClusterName(cluster);
 
     const clusterName = (
       <Tooltip content={`cluster name: ${cluster.name}`} position={TooltipPosition.right}>
