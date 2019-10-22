@@ -53,9 +53,9 @@ const lastCheckInSelector = (lastCheckIn) => {
 
 const hasCpuAndMemory = (cpu, memory) => {
   const totalCPU = cpu.total.value;
-  const totalMemory = cpu.total.value;
+  const totalMemory = memory.total.value;
   const cpuTimeStampEmpty = new Date(cpu.updated_timestamp).getTime() < 0;
-  const memoryTimeStampEmpty = new Date(cpu.updated_timestamp).getTime() < 0;
+  const memoryTimeStampEmpty = new Date(memory.updated_timestamp).getTime() < 0;
 
   if (!cpu || !memory || cpuTimeStampEmpty || memoryTimeStampEmpty || !totalCPU || !totalMemory) {
     return false;
