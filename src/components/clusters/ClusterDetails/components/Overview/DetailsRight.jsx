@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import result from 'lodash/result';
+import get from 'lodash/get';
+
 
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
 import { humanizeValueWithUnit } from '../../../../../common/units';
+import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
 import ClusterNetwork from './ClusterNetwork';
 
@@ -15,7 +18,7 @@ function DetailsRight({ cluster }) {
   const showDesiredNodes = cluster.managed;
   const showSockets = cluster.metrics.sockets.total.value > 0;
   const showVCPU = !showSockets;
-  const isArchived = cluster.subscription && cluster.subscription.status === 'Archived';
+  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
   return (
     <React.Fragment>

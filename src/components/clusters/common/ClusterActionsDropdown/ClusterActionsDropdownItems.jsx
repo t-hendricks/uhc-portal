@@ -2,6 +2,7 @@ import get from 'lodash/get';
 import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
+import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 
 // This is not a React component! It returns an array of DropDownItem instances.
 // Do not render it directly.
@@ -163,10 +164,11 @@ function dropDownItems({
   const deleteIDPItemProps = getDeleteIDPProps();
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed;
+  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription
-    && cluster.subscription.status !== 'Archived';
+    && !isArchived;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
-    && cluster.subscription.status === 'Archived';
+    && isArchived;
   const hasConsoleURL = get(cluster, 'console.url', false);
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
 

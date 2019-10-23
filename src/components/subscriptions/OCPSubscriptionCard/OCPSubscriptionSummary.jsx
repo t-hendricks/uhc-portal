@@ -8,13 +8,7 @@ import {
   UnknownIcon,
 } from '@patternfly/react-icons';
 
-import {
-  ENTITLEMENT_OK,
-  ENTITLEMENT_NOT_SET,
-  ENTITLEMENT_OVERCOMMITTED,
-  ENTITLEMENT_INCONSISTENT_SERVICES,
-  ENTITLEMENT_UNKNOWN,
-} from '../../../common/subscriptionTypes';
+import { entitlementStatuses } from '../../../common/subscriptionTypes';
 import { buildUrlParams } from '../../../common/helpers';
 import OCPSubscriptionCategory from './OCPSubscriptionCategory';
 
@@ -31,15 +25,15 @@ function OCPSubscriptionSummary({ stats }) {
       };
 
       switch (entitlementStatus) {
-        case ENTITLEMENT_NOT_SET:
+        case entitlementStatuses.NOT_SET:
           item.text = 'Not subscribed';
           item.hint = 'Clusters do not have subscriptions attached.';
           break;
-        case ENTITLEMENT_OVERCOMMITTED:
+        case entitlementStatuses.OVERCOMMITTED:
           item.text = 'Insufficient';
           item.hint = 'Clusters are consuming more resources than they are entitled to.';
           break;
-        case ENTITLEMENT_INCONSISTENT_SERVICES:
+        case entitlementStatuses.INCONSISTENT_SERVICES:
           item.text = 'Invalid';
           item.hint = 'Clusters are attached to subscriptions with different support levels.';
           break;
@@ -58,15 +52,15 @@ function OCPSubscriptionSummary({ stats }) {
   });
 
   const okCategory = [
-    ENTITLEMENT_OK,
+    entitlementStatuses.OK,
   ];
   const warnCategory = [
-    ENTITLEMENT_NOT_SET,
-    ENTITLEMENT_OVERCOMMITTED,
-    ENTITLEMENT_INCONSISTENT_SERVICES,
+    entitlementStatuses.NOT_SET,
+    entitlementStatuses.OVERCOMMITTED,
+    entitlementStatuses.INCONSISTENT_SERVICES,
   ];
   const unknownCategory = [
-    ENTITLEMENT_UNKNOWN,
+    entitlementStatuses.UNKNOWN,
   ];
   return (
     <>

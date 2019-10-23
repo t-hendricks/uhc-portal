@@ -5,6 +5,7 @@ import {
   Dropdown, DropdownToggle, DropdownGroup, DropdownItem, Checkbox,
 } from '@patternfly/react-core';
 import { FilterIcon } from '@patternfly/react-icons';
+import { entitlementStatuses } from '../../../../../common/subscriptionTypes';
 
 class ClusterListFilterDropdown extends React.Component {
   constructor(props) {
@@ -22,11 +23,11 @@ class ClusterListFilterDropdown extends React.Component {
     currentFilter.forEach((activeFilter) => { selected[activeFilter] = true; });
 
     const filterOptions = [
-      ['Ok', 'Subscribed'],
-      ['NotSet', 'Not Subscribed'],
-      ['Overcommitted', 'Insufficient'],
-      ['InconsistentServices', 'Invalid'],
-      ['NotReconciled', 'Unknown'],
+      [entitlementStatuses.OK, 'Subscribed'],
+      [entitlementStatuses.NOT_SET, 'Not Subscribed'],
+      [entitlementStatuses.OVERCOMMITTED, 'Insufficient'],
+      [entitlementStatuses.INCONSISTENT_SERVICES, 'Invalid'],
+      [entitlementStatuses.UNKNOWN, 'Unknown'],
     ];
 
     const dropdownItems = [
