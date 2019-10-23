@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, List, ListItem } from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
 import links from '../../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import PageTitle from '../../../../common/PageTitle';
@@ -25,11 +24,6 @@ class InstructionsCRC extends React.Component {
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
           <div className="pf-c-content">
-            <div className="developer-preview">
-              <CodeIcon />
-              {' '}
-              Developer Preview
-            </div>
 
             <PageTitle title="Install on Laptop: Red Hat CodeReady Containers" />
 
@@ -42,7 +36,7 @@ class InstructionsCRC extends React.Component {
             <br />
 
             <p>
-              Red Hat CodeReady Containers brings a minimal OpenShift 4.1 or newer cluster
+              Red Hat CodeReady Containers brings a minimal OpenShift 4.2 or newer cluster
               to your local laptop or desktop computer.
             </p>
 
@@ -78,6 +72,11 @@ class InstructionsCRC extends React.Component {
                     {' '}
                   Download (HyperV)
                   </a>
+                  <br />
+                  Note: only supported on Windows 10 Pro or Home with the Fall Creatorʼs Update
+                  installed.
+                  <br />
+                  No other version or edition of Windows is supported at this time.
                 </p>
               </ListItem>
               <ListItem>

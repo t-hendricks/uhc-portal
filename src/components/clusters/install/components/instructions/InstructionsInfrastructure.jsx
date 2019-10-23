@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody } from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
 import PageTitle from '../../../../common/PageTitle';
 import bareMetalIcon from '../../../../../styles/images/Icon_RH_Hardware_Server-A-Single_RGB_Flat.png';
 import AWSLogo from '../../../../../styles/images/AWS.png';
@@ -59,11 +58,6 @@ const InstructionsInfrastructure = () => (
             <img src={CRCLogo} alt="CRC" className="infra-logo-crc" />
             <span className="infra-crc-laptop">Laptop</span>
             <span className="infra-crc-icon-text">Powered by Red Hat CodeReady Containers</span>
-            <span className="crc-dev-preview-card">
-              <CodeIcon />
-              {' '}
-              Developer Preview
-            </span>
           </CardBody>
         </Link>
         <CardBody className="infra-card-placeholder" />
