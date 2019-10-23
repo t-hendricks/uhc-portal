@@ -73,7 +73,7 @@ class InstructionsCRC extends React.Component {
                   Download (HyperV)
                   </a>
                   <br />
-                  Note: only supported on Windows 10 Pro or Home with the Fall Creatorʼs Update
+                  Note: Only supported on Windows 10 Pro or Home with the Fall Creatorʼs Update
                   installed.
                   <br />
                   No other version or edition of Windows is supported at this time.
