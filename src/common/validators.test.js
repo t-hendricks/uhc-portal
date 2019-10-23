@@ -72,23 +72,23 @@ test('Field is a valid console URL', () => {
   expect(checkClusterConsoleURL('', true)).toBe('Cluster console URL should not be empty');
   expect(checkClusterConsoleURL('http://www.example.com')).toBe(undefined);
   expect(checkClusterConsoleURL('https://console-openshift-console.apps.example.com/')).toBe(undefined);
-  expect(checkClusterConsoleURL('www.example.hey/hey')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
-  expect(checkClusterConsoleURL('ftp://hello.com')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
-  expect(checkClusterConsoleURL('http://example.com\noa')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
-  expect(checkClusterConsoleURL('http://www.example:55815.com')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('www.example.hey/hey')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('ftp://hello.com')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('http://example.com\noa')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('http://www.example:55815.com')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
   expect(checkClusterConsoleURL('https://www-whatever.apps.example.co.uk/')).toBe(undefined);
-  expect(checkClusterConsoleURL('http://www.example.com:foo')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
-  expect(checkClusterConsoleURL('http://www.example.com....')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('http://www.example.com:foo')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('http://www.example.com....')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
   expect(checkClusterConsoleURL('http://blog.example.com')).toBe(undefined);
   expect(checkClusterConsoleURL('http://255.255.255.255')).toBe(undefined);
   expect(checkClusterConsoleURL('http://www.site.com:8008')).toBe(undefined);
   expect(checkClusterConsoleURL('http://www.example.com/product')).toBe(undefined);
-  expect(checkClusterConsoleURL('example.com/')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
-  expect(checkClusterConsoleURL('www.example.com')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
-  expect(checkClusterConsoleURL('http://www.example.com#up')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
-  expect(checkClusterConsoleURL('http://www.example.com/products?id=1&page=2')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
-  expect(checkClusterConsoleURL('255.255.255.255')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
-  expect(checkClusterConsoleURL('http://invalid.com/perl.cgi?key=')).toBe('Invalid URL. Please provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('example.com/')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('www.example.com')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('http://www.example.com#up')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('http://www.example.com/products?id=1&page=2')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('255.255.255.255')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
+  expect(checkClusterConsoleURL('http://invalid.com/perl.cgi?key=')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
 });
 
 test('Field contains a numeric string', () => {

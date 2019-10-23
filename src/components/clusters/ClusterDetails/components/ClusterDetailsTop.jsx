@@ -12,6 +12,7 @@ import clusterStates from '../../common/clusterStates';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../../common/ErrorTriangle';
+import getClusterName from '../../../../common/getClusterName';
 
 function ClusterDetailsTop(props) {
   const {
@@ -26,8 +27,7 @@ function ClusterDetailsTop(props) {
     children,
   } = props;
 
-  const clusterName = get(cluster, 'subscription.display_name', false) || cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
-
+  const clusterName = getClusterName(cluster);
   const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
 
   const isArchived = cluster.subscription && cluster.subscription.status === 'Archived';
@@ -158,7 +158,11 @@ ClusterDetailsTop.propTypes = {
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   error: PropTypes.bool,
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.element,
+  ]),
   children: PropTypes.any,
 };
 

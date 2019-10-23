@@ -16,6 +16,7 @@ function ClusterListFilterChipGroup({ currentFilter, setFilter }) {
     NotSet: 'Not Subscribed',
     Overcommitted: 'Insufficient',
     InconsistentServices: 'Invalid',
+    NotReconciled: 'Unknown',
   };
 
 

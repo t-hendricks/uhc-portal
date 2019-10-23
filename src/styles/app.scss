@@ -837,3 +837,10 @@ div.pf-c-alert.archived-cluster-toast {
     margin-bottom: 0;
   }
 }
+
+button:focus {
+  &.install--copy-pull-secret::after {
+    --pf-c-button--BorderColor: var(--pf-c-button--m-secondary--focus--BorderColor);
+    --pf-c-button--BorderWidth: var(--pf-c-button--focus--BorderWidth);
+  }
+}

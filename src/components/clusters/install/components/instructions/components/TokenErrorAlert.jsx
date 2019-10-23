@@ -15,8 +15,8 @@ const TokenErrorAlert = ({ token }) => {
       {message}
       <br />
       <br />
-      Please try again by refreshing the page.
-      If the problem persists, please report the issue to
+      Try again by refreshing the page.
+      If the problem persists, report the issue to
       {' '}
       <a href="mailto:ocm-feedback@redhat.com" target="_blank">
         ocm-feedback@redhat.com

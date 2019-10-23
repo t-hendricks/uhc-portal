@@ -11,6 +11,7 @@ import {
   Spinner,
 } from '@redhat-cloud-services/frontend-components';
 
+import links from '../../../../../common/installLinks';
 import ErrorBox from '../../../../common/ErrorBox';
 
 import UserInputForm from './UserInputForm';
@@ -138,7 +139,7 @@ class Users extends React.Component {
                           {' '}
                         For more information check the
                           {' '}
-                          <a href="https://docs.openshift.com/container-platform/4.1/authentication/understanding-authentication.html">OpenShift 4 documentation</a>
+                          <a href={links.UNDERSTANDING_AUTHENTICATION}>OpenShift 4 documentation</a>
                           .
                         </p>)}
                     >

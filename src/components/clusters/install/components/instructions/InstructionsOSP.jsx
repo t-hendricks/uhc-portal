@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '@patternfly/react-core';
+import links from '../../../../../common/installLinks';
 import CLISection from './components/CLISection';
 import DownloadButton from './components/DownloadButton';
 import GetStarted from './components/GetStarted';
@@ -43,7 +44,7 @@ class InstructionsOSP extends React.Component {
               the installation program provisions and the cluster maintains.
             </p>
 
-            <GetStarted docURL="https://docs.openshift.com/container-platform/4.2/installing/installing_openstack/installing-openstack-installer-custom.html" />
+            <GetStarted docURL={links.INSTALL_OSP_GETTING_STARTED} />
 
             <h3>
               Downloads
@@ -60,7 +61,10 @@ class InstructionsOSP extends React.Component {
             </p>
 
             <p>
-              <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
+              <DownloadButton
+                installerURL={links.INSTALL_OSP_INSTALLER_LATEST}
+                token={token}
+              />
             </p>
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
@@ -78,7 +82,7 @@ class InstructionsOSP extends React.Component {
             <p />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Command-Line Interface</h3>
-            <CLISection toolsURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" />
+            <CLISection toolsURL={links.INSTALL_OSP_CLI_LATEST} />
 
           </div>
         </div>

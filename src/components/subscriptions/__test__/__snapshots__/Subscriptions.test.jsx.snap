@@ -34,7 +34,7 @@ exports[`<Subscriptions /> OCPSubscriptionCard Error should render error OCP sub
   </Title>
   <EmptyStateBody>
     <p>
-      An error has occured! Please try again or contact support by including this error message:
+      An error has occured! Try again or contact support by including this error message:
     </p>
     <q />
     <p>
@@ -65,7 +65,7 @@ exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
   <CardBody
     className="section-text"
   >
-    The summary of subscription status for all self-managed clusters. Please follow the individual links to see the specific clusters in each of the corresponding status.
+    The summary of subscription status for all self-managed clusters. Follow the individual links to see the specific clusters in each of the corresponding status.
   </CardBody>
   <CardBody>
     <OCPSubscriptionSummary
@@ -296,7 +296,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard Error should render error OSD quo
   </Title>
   <EmptyStateBody>
     <p>
-      An error has occured! Please try again or contact support by including this error message:
+      An error has occured! Try again or contact support by including this error message:
     </p>
     <q />
     <p>

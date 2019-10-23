@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '@patternfly/react-core';
+import links from '../../../../../common/installLinks';
 import CLISection from './components/CLISection';
 import DownloadButton from './components/DownloadButton';
 import GetStarted from './components/GetStarted';
@@ -43,7 +44,7 @@ class InstructionsBareMetal extends React.Component {
               infrastructure that you provide.
             </p>
 
-            <GetStarted docURL="https://docs.openshift.com/container-platform/4.2/installing/installing_bare_metal/installing-bare-metal.html" />
+            <GetStarted docURL={links.INSTALL_BAREMETAL_GETTING_STARTED} />
 
             <h3>
               Downloads
@@ -60,7 +61,10 @@ class InstructionsBareMetal extends React.Component {
             </p>
 
             <p>
-              <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" token={token} />
+              <DownloadButton
+                installerURL={links.INSTALL_BAREMETAL_INSTALLER_LATEST}
+                token={token}
+              />
             </p>
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
@@ -81,12 +85,12 @@ class InstructionsBareMetal extends React.Component {
               Red Hat Enterprise Linux CoreOS (RHCOS)
             </h3>
             <RHCOSSection
-              learnMoreURL="https://docs.openshift.com/container-platform/4.2/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal"
+              learnMoreURL={links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE}
               token={token}
             />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Command-Line Interface</h3>
-            <CLISection toolsURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/" />
+            <CLISection toolsURL={links.INSTALL_BAREMETAL_CLI_LATEST} />
 
           </div>
         </div>

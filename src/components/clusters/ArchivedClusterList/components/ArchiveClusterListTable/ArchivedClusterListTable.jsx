@@ -14,6 +14,7 @@ import {
 } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel/ClusterLocationLabel';
+import getClusterName from '../../../../../common/getClusterName';
 
 
 function ArchivedClusterListTable(props) {
@@ -37,7 +38,7 @@ function ArchivedClusterListTable(props) {
 
   const clusterRow = (cluster) => {
     const provider = result(cluster, 'cloud_provider.id', 'N/A');
-    const name = cluster.subscription.display_name || cluster.display_name || '';
+    const name = getClusterName(cluster);
 
     const clusterName = (
       <Tooltip content={`cluster name: ${cluster.name}`} position={TooltipPosition.right}>
