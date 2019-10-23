@@ -111,17 +111,23 @@ const cidr = (value) => {
   return undefined;
 };
 
-// Function to validate number of nodes. The 'min' is an object containing int 'value' of minimum
-// node count, and a string 'validationMsg' with an error message
-const nodes = (value, min) => {
+/**
+ * Function to validate number of nodes.
+ *
+ * @param {(string|number)} value - node count to validate.
+ * @param {*} min - object ontaining int 'value' of minimum node count,
+ * and a string 'validationMsg' with an error message.
+ * @param {number} [max=MAX_NODE_COUNT] - maximum allowed number of nodes.
+ */
+const nodes = (value, min, max = MAX_NODE_COUNT) => {
   if (value === undefined || value < min.value) {
     return (min.validationMsg || `The minimum number of nodes is ${min.value}.`);
   }
-  if (value > MAX_NODE_COUNT) {
-    return `Maximum number allowed is ${MAX_NODE_COUNT}.`;
+  if (value > max) {
+    return `Maximum number allowed is ${max}.`;
   }
   // eslint-disable-next-line eqeqeq
-  if (!parseInt(value, 10) || Math.floor(value) != value) {
+  if (Number.isNaN(parseInt(value, 10)) || Math.floor(value) != value) {
     // Using Math.floor to check for valid int because Number.isInteger doesn't work on IE.
     return `'${value}' is not a valid number of nodes.`;
   }

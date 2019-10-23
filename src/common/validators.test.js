@@ -60,6 +60,14 @@ test('Field is valid node count', () => {
   expect(validators.nodes('aaa', { value: 4, validationMsg: 'At least 4 nodes are required.' })).toBe('\'aaa\' is not a valid number of nodes.');
 });
 
+test('Field is valid node count for OCP cluster', () => {
+  expect(validators.nodes(0, { value: 0 }, 250)).toBe(undefined);
+  expect(validators.nodes(250, { value: 0 }, 250)).toBe(undefined);
+  expect(validators.nodes(-1, { value: 0 }, 250)).toBe('The minimum number of nodes is 0.');
+  expect(validators.nodes(251, { value: 0 }, 250)).toBe('Maximum number allowed is 250.');
+  expect(validators.nodes(250, { value: 0 })).toBe('Maximum number allowed is 180.');
+});
+
 test('Field is valid node count for multi AZ', () => {
   expect(validators.nodesMultiAz(3)).toBe(undefined);
   expect(validators.nodesMultiAz(4)).toBe('Number of nodes must be multiple of 3 for Multi AZ cluster.');
