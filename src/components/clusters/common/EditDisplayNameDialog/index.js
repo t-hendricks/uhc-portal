@@ -5,6 +5,7 @@ import { clearClusterResponse, editClusterDisplayName } from '../../../../redux/
 import EditDisplayNameDialog from './EditDisplayNameDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
+import getClusterName from '../../../../common/getClusterName';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.activeModal.data;
@@ -13,7 +14,7 @@ const mapStateToProps = (state) => {
     editClusterResponse: state.clusters.editedCluster,
     clusterID: modalData.id,
     subscriptionID: get(modalData, 'subscription.id'),
-    displayName: modalData.display_name || modalData.name,
+    displayName: getClusterName(modalData),
   });
 };
 
