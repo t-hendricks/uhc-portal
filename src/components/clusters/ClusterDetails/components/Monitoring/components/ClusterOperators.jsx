@@ -53,7 +53,7 @@ function ClusterOperatorsTable({ operators = [] }) {
 
   const rows = operators.map(operator => ([
     { title: operator.name },
-    { title: operatorStatus(operator.status) },
+    { title: operatorStatus(operator.condition) },
     { title: operator.version },
   ]));
 

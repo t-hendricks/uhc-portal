@@ -13,7 +13,7 @@ import { WarningTriangleIcon } from '@patternfly/react-icons';
 
 import ClusterHealthCard from './components/ClusterHealthCard';
 import MonitoringList from './components/MonitoringList';
-import { statuses } from './statusHelper';
+import { monitoringStatuses } from './statusHelper';
 
 import { noop } from '../../../../../common/helpers';
 
@@ -31,7 +31,7 @@ class Monitoring extends React.Component {
 
   render() {
     const {
-      cluster, alerts, nodes, lastCheckIn, resourceUsage, healthStatus, discoveredIssues,
+      cluster, alerts, nodes, operators, lastCheckIn, resourceUsage, healthStatus, discoveredIssues,
     } = this.props;
 
     const lastCheckInText = lastCheckIn && `Last check-in: ${lastCheckIn}`;
@@ -49,7 +49,7 @@ class Monitoring extends React.Component {
       </EmptyState>
     );
 
-    if (healthStatus === statuses.NO_METRICS) {
+    if (healthStatus === monitoringStatuses.NO_METRICS) {
       return emptyState(
         <p>
         Monitoring Data is not available if a cluster goes more than
@@ -61,7 +61,7 @@ class Monitoring extends React.Component {
       );
     }
 
-    if (healthStatus === statuses.DISCONNECTED) {
+    if (healthStatus === monitoringStatuses.DISCONNECTED) {
       return (
         <React.Fragment>
           <ClusterHealthCard
@@ -74,7 +74,8 @@ class Monitoring extends React.Component {
       );
     }
 
-    const isInProgress = healthStatus === statuses.INSTALLING || healthStatus === statuses.UPDATING;
+    const isInProgress = healthStatus === monitoringStatuses.INSTALLING
+    || healthStatus === monitoringStatuses.UPDATING;
 
     return (
       <React.Fragment>
@@ -98,6 +99,7 @@ class Monitoring extends React.Component {
                   alerts={alerts}
                   nodes={nodes}
                   resourceUsage={resourceUsage}
+                  operators={operators}
                 />
               </CardBody>
             </Card>
@@ -115,6 +117,7 @@ Monitoring.propTypes = {
   clearMonitoringState: PropTypes.func,
   alerts: PropTypes.object,
   nodes: PropTypes.object,
+  operators: PropTypes.object,
   resourceUsage: PropTypes.object,
   lastCheckIn: PropTypes.string,
   healthStatus: PropTypes.string,
@@ -125,6 +128,7 @@ Monitoring.defaultProps = {
   cluster: {},
   alerts: {},
   nodes: {},
+  operators: {},
   getNodes: noop,
   getAlerts: noop,
   clearMonitoringState: noop,
