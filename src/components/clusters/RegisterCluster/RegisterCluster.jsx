@@ -35,7 +35,7 @@ const validateNodeCount = (value) => {
   if (Number.isNaN(Number(value))) {
     return 'Input must be a number.';
   }
-  return validators.nodes(Number(value), { value: 4 });
+  return validators.nodes(Number(value), { value: 0 }, 250);
 };
 
 const validateSockets = value => (
