@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TabsRow /> should hide monitoring tab if needed (eg. when we archive a cluster) 1`] = `
+exports[`<TabsRow /> should hide monitoring and add-ons tabs if needed (eg. when we archive a cluster) 1`] = `
 <Component
   activeKey={0}
   onSelect={[Function]}

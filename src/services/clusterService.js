@@ -132,6 +132,27 @@ const unarchiveCluster = id => apiRequest({
   data: '{"status":"Active"}',
 });
 
+const getAddOns = () => apiRequest({
+  method: 'get',
+  url: '/api/clusters_mgmt/v1/addons',
+});
+
+const getClusterAddOns = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons`,
+});
+
+const addClusterAddOn = (clusterID, addOnID) => apiRequest({
+  method: 'post',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons`,
+  data: `{"id":"${addOnID}"}`,
+});
+
+const deleteClusterAddOn = (clusterID, addOnID) => apiRequest({
+  method: 'delete',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`,
+});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -155,6 +176,10 @@ const clusterService = {
   getClusterOperators,
   archiveCluster,
   unarchiveCluster,
+  getAddOns,
+  getClusterAddOns,
+  addClusterAddOn,
+  deleteClusterAddOn,
 };
 
 export default clusterService;

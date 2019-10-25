@@ -17,6 +17,7 @@ const setGlobalError = jest.fn();
 const getAlerts = jest.fn();
 const getNodes = jest.fn();
 const getClusterOperators = jest.fn();
+const getAddOns = jest.fn();
 
 const subscriptionInfo = {
   id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
@@ -381,4 +382,5 @@ export {
   getAlerts,
   getNodes,
   getClusterOperators,
+  getAddOns,
 };
