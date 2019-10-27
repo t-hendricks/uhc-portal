@@ -11,7 +11,7 @@ exports[`<ClusterListFilterChipGroup /> should render 1`] = `
     >
       <ChipGroupToolbarItem
         categoryName="Subscription status"
-        key="Subscription status"
+        key="chipgroup-entitlement_status"
       >
         <Chip
           className=""

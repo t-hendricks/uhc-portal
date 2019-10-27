@@ -5,7 +5,9 @@ import ClusterListFilterDropdown from './ClusterListFilterDropdown';
 
 describe('<ClusterListFilterDropdown />', () => {
   it('should render', () => {
-    const wrapper = shallow(<ClusterListFilterDropdown setFilter={jest.fn()} currentFilter={[]} />);
+    const wrapper = shallow(
+      <ClusterListFilterDropdown setFilter={jest.fn()} currentFilters={{}} />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 });

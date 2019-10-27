@@ -73,6 +73,36 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
           </div>
         </DropdownItem>
       </DropdownGroup>,
+      <DropdownGroup
+        label="Cluster Type"
+      >
+        <DropdownItem>
+          <div>
+            <Checkbox
+              className="pf-c-dropdown__menu-item"
+              id="OSD"
+              isChecked={false}
+              isDisabled={false}
+              isValid={true}
+              label="OSD"
+              onChange={[Function]}
+            />
+          </div>
+        </DropdownItem>
+        <DropdownItem>
+          <div>
+            <Checkbox
+              className="pf-c-dropdown__menu-item"
+              id="OCP"
+              isChecked={false}
+              isDisabled={false}
+              isValid={true}
+              label="OCP"
+              onChange={[Function]}
+            />
+          </div>
+        </DropdownItem>
+      </DropdownGroup>,
     ]
   }
   isGrouped={true}
