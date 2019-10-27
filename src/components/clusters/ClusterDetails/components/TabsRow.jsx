@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 
 import { Tabs, Tab } from '@patternfly/react-core';
 
+const tabs = {
+  overview: 0,
+  monitoring: 1,
+  users: 2,
+  logs: 3,
+};
+
 class TabsRow extends React.Component {
   constructor(props) {
     super(props);
@@ -15,6 +22,22 @@ class TabsRow extends React.Component {
         activeTabKey: tabIndex,
       });
     };
+  }
+
+  componentDidUpdate() {
+    const { activeTabKey } = this.state;
+    const {
+      displayLogs,
+      displayUsersTab,
+      displayMonitoringTab,
+      overviewTabRef,
+    } = this.props;
+    if ((activeTabKey === tabs.monitoring && !displayMonitoringTab)
+        || (activeTabKey === tabs.users && !displayUsersTab)
+        || (activeTabKey === tabs.logs && !displayLogs)) {
+      this.handleTabClick(undefined, tabs.overview);
+      overviewTabRef.current.hidden = false;
+    }
   }
 
   render() {
@@ -30,18 +53,18 @@ class TabsRow extends React.Component {
     const { activeTabKey } = this.state;
 
     const overviewTab = (
-      <Tab key={0} eventKey={0} title="Overview" tabContentId="overviewTabContent" tabContentRef={overviewTabRef} />
+      <Tab key={tabs.overview} eventKey={tabs.overview} title="Overview" tabContentId="overviewTabContent" tabContentRef={overviewTabRef} />
     );
 
     const monitoringTab = displayMonitoringTab && (
-      <Tab key={1} eventKey={1} title="Monitoring" tabContentId="monitoringTabContent" tabContentRef={monitoringTabRef} />
+      <Tab key={tabs.monitoring} eventKey={tabs.monitoring} title="Monitoring" tabContentId="monitoringTabContent" tabContentRef={monitoringTabRef} />
     );
 
     const usersTab = displayUsersTab && (
-    <Tab key={2} eventKey={2} title="Users" tabContentId="usersTabContent" tabContentRef={usersTabRef} />);
+    <Tab key={tabs.users} eventKey={tabs.users} title="Users" tabContentId="usersTabContent" tabContentRef={usersTabRef} />);
 
     const logsTab = displayLogs && (
-    <Tab key={3} eventKey={3} title="Logs" tabContentId="logsTabContent" tabContentRef={logsTabRef} />
+    <Tab key={tabs.logs} eventKey={tabs.logs} title="Logs" tabContentId="logsTabContent" tabContentRef={logsTabRef} />
     );
 
     const tabsToDisplay = [overviewTab, monitoringTab, usersTab, logsTab].filter(Boolean);
