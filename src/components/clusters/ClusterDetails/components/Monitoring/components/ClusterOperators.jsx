@@ -8,7 +8,7 @@ import {
 } from '@patternfly/react-table';
 
 import {
-  OkIcon, ExclamationCircleIcon, InProgressIcon, UnknownIcon,
+  ExclamationCircleIcon, InProgressIcon, UnknownIcon, CheckCircleIcon,
 } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
@@ -27,7 +27,7 @@ function ClusterOperatorsTable({ operators = [] }) {
     let statusStr;
     switch (status) {
       case opertatorsStatuses.AVAILABLE:
-        icon = <OkIcon className="status-icon" color={global_success_color_100.value} size="md" />;
+        icon = <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />;
         statusStr = 'Available';
         break;
       case opertatorsStatuses.FAILING:
