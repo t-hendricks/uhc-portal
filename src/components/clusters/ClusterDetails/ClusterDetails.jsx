@@ -131,6 +131,7 @@ class ClusterDetails extends Component {
       getUsers,
       getAlerts,
       getNodes,
+      getClusterOperators,
     } = this.props;
     const clusterID = match.params.id;
 
@@ -142,6 +143,7 @@ class ClusterDetails extends Component {
       getUsers(clusterID, 'dedicated-admins');
       getAlerts(clusterID);
       getNodes(clusterID);
+      getClusterOperators(clusterID);
     }
   }
 
@@ -324,6 +326,7 @@ ClusterDetails.propTypes = {
   getLogs: PropTypes.func.isRequired,
   getAlerts: PropTypes.func.isRequired,
   getNodes: PropTypes.func.isRequired,
+  getClusterOperators: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,

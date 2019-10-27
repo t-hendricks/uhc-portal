@@ -3,7 +3,7 @@ const common = {
   UNKNOWN: 'UNKNOWN',
 };
 
-const statuses = {
+const monitoringStatuses = {
   ...common,
   HEALTHY: 'HEALTHY',
   HAS_ISSUES: 'HAS_ISSUES',
@@ -18,9 +18,10 @@ const alertsSeverity = {
 };
 
 const opertatorsStatuses = {
-  ...common,
-  AVAILABLE: 'AVAILABLE',
-  FAILING: 'FAILING',
+  AVAILABLE: 'available',
+  FAILING: 'failing',
+  UPDATING: 'updating',
+  UNKNOWN: 'unknown',
 };
 
-export { statuses, alertsSeverity, opertatorsStatuses };
+export { monitoringStatuses, alertsSeverity, opertatorsStatuses };

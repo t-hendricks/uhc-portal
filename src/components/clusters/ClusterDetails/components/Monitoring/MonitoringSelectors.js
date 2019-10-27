@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 
-import { statuses } from './statusHelper';
+import { monitoringStatuses } from './statusHelper';
 import clusterStates from '../../../common/clusterStates';
 
 // Get the number of issues from a set of data
@@ -95,22 +95,22 @@ const clusterHealthSelector = (
    || !hasCpuAndMemory(cpu, memory);
 
   if (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.PENDING) {
-    return statuses.INSTALLING;
+    return monitoringStatuses.INSTALLING;
   }
 
   if (get(cluster, 'subscription.status', false) === clusterStates.DISCONNECTED) {
-    return statuses.DISCONNECTED;
+    return monitoringStatuses.DISCONNECTED;
   }
 
   if (noFreshActivity || noData) {
-    return statuses.NO_METRICS;
+    return monitoringStatuses.NO_METRICS;
   }
 
   if (alertsIssues > 0 || nodesIssues > 0 || resourceUsageIssues > 0) {
-    return statuses.HAS_ISSUES;
+    return monitoringStatuses.HAS_ISSUES;
   }
 
-  return statuses.HEALTHY;
+  return monitoringStatuses.HEALTHY;
 };
 
 export {

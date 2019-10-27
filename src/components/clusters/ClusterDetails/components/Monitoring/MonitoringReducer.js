@@ -32,6 +32,10 @@ const initialState = {
     ...request,
     data: [],
   },
+  operators: {
+    ...request,
+    data: [],
+  },
 };
 
 function MonitoringReducer(state = initialState, action) {
@@ -110,6 +114,45 @@ function MonitoringReducer(state = initialState, action) {
           initialState,
         },
       );
+
+
+    case helpers.REJECTED_ACTION(monitoringConstants.GET_OPERATORS):
+      return helpers.setStateProp(
+        'operators',
+        helpers.getErrorState(action),
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.PENDING_ACTION(monitoringConstants.GET_OPERATORS):
+      return helpers.setStateProp(
+        'operators',
+        {
+          data: state.operators.data,
+          pending: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case helpers.FULFILLED_ACTION(monitoringConstants.GET_OPERATORS):
+      return helpers.setStateProp(
+        'operators',
+        {
+          data: action.payload.data.operators,
+          pending: false,
+          fulfilled: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
 
     case monitoringConstants.CLEAR_MONITORING_STATE:
       return initialState;

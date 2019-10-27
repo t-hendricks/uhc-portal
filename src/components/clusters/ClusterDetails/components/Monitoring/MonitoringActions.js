@@ -11,6 +11,11 @@ const getNodes = clusterID => dispatch => dispatch({
   payload: clusterService.getNodes(clusterID),
 });
 
+const getClusterOperators = clusterID => dispatch => dispatch({
+  type: monitoringConstants.GET_OPERATORS,
+  payload: clusterService.getClusterOperators(clusterID),
+});
+
 const clearMonitoringState = () => dispatch => dispatch({
   type: monitoringConstants.CLEAR_MONITORING_STATE,
 });
@@ -25,5 +30,6 @@ export {
   MoniotoringActions,
   getAlerts,
   getNodes,
+  getClusterOperators,
   clearMonitoringState,
 };

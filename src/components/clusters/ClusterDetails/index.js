@@ -13,7 +13,7 @@ import { cloudProviderActions } from '../../../redux/actions/cloudProviderAction
 import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalErrorActions';
 import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
-import { getAlerts, getNodes } from './components/Monitoring/MonitoringActions';
+import { getAlerts, getNodes, getClusterOperators } from './components/Monitoring/MonitoringActions';
 
 const mapStateToProps = (state) => {
   const { details, archivedCluster, unarchivedCluster } = state.clusters;
@@ -48,6 +48,7 @@ const mapDispatchToProps = {
   setGlobalError,
   getAlerts,
   getNodes,
+  getClusterOperators,
   closeArchivedToast: clustersActions.clearClusterArchiveToast,
   closeUnarchivedToast: clustersActions.clearClusterUnarchiveToast,
 };
