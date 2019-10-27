@@ -18,12 +18,6 @@ import { monitoringStatuses } from './statusHelper';
 import { noop } from '../../../../../common/helpers';
 
 class Monitoring extends React.Component {
-  componentDidMount() {
-    const { getNodes, getAlerts, cluster } = this.props;
-    getNodes(cluster.id);
-    getAlerts(cluster.id);
-  }
-
   componentWillUnmount() {
     const { clearMonitoringState } = this.props;
     clearMonitoringState();
@@ -112,8 +106,6 @@ class Monitoring extends React.Component {
 
 Monitoring.propTypes = {
   cluster: PropTypes.object,
-  getNodes: PropTypes.func,
-  getAlerts: PropTypes.func,
   clearMonitoringState: PropTypes.func,
   alerts: PropTypes.object,
   nodes: PropTypes.object,
@@ -129,8 +121,6 @@ Monitoring.defaultProps = {
   alerts: {},
   nodes: {},
   operators: {},
-  getNodes: noop,
-  getAlerts: noop,
   clearMonitoringState: noop,
   lastCheckIn: '',
   discoveredIssues: null,

@@ -17,11 +17,12 @@ const alertsSeverity = {
   CRITICAL: 'critical',
 };
 
-const opertatorsStatuses = {
+const operatorsStatuses = {
   AVAILABLE: 'available',
   FAILING: 'failing',
-  UPDATING: 'updating',
+  UPGRADING: 'upgrading',
+  DEGRADED: 'degraded',
   UNKNOWN: 'unknown',
 };
 
-export { monitoringStatuses, alertsSeverity, opertatorsStatuses };
+export { monitoringStatuses, alertsSeverity, operatorsStatuses };
