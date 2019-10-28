@@ -56,11 +56,11 @@ import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 import helpers from '../../../common/helpers';
 import { viewConstants } from '../../../redux/constants';
 
-const getEntitlementStatusQueryParam = () => {
+const getQueryParam = (param) => {
   let ret;
   window.location.search.substring(1).split('&').forEach((queryString) => {
     const [key, val] = queryString.split('=');
-    if (key === 'entitlement_status') {
+    if (key === param) {
       ret = val;
     }
   });
@@ -82,9 +82,14 @@ class ClusterList extends Component {
       getCloudProviders, cloudProviders, organization, getOrganizationAndQuota, setListFlag,
     } = this.props;
 
-    const entitelmentStatusFilter = getEntitlementStatusQueryParam();
-    if (entitelmentStatusFilter) {
-      setListFlag('subscriptionFilter', entitelmentStatusFilter.split(',').filter(Boolean));
+    const entitelmentStatusFilter = getQueryParam('entitlement_status') || '';
+    const planIDFilter = getQueryParam('plan_id') || '';
+
+    if (!isEmpty(entitelmentStatusFilter) || !isEmpty(planIDFilter)) {
+      setListFlag('subscriptionFilter', {
+        entitlement_status: entitelmentStatusFilter.split(',').filter(Boolean),
+        plan_id: planIDFilter.split(',').filter(value => (value === 'OCP' || value === 'OSD')),
+      });
     } else {
       // only call refresh if we're not setting the filter flag. When the flag is set, refresh
       // will be called via componentDidUpdate() after the redux state transition
@@ -184,7 +189,7 @@ class ClusterList extends Component {
     }
 
     if (!size(clusters) && !pending && isEmpty(viewOptions.filter)
-        && isEmpty(viewOptions.flags.subscriptionFilter)) {
+        && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter)) {
       return (
         <React.Fragment>
           {toast}
