@@ -36,6 +36,7 @@ import InstallGCP from '../clusters/install/InstallGCP';
 import InstallOSP from '../clusters/install/InstallOSP';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
+import InstallPullSecret from '../clusters/install/InstallPullSecret';
 import InstallCRC from '../clusters/install/InstallCRC';
 import Tokens from '../tokens/Tokens';
 import NotFoundError from './NotFoundError';
@@ -59,6 +60,7 @@ function Router(props) {
         <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
         <Route path="/install/crc/installer-provisioned" component={InstallCRC} />
         <Route path="/install/pre-release" component={InstallPreRelease} />
+        <Route path="/install/pull-secret" component={InstallPullSecret} />
         <Route path="/install" component={InstallInfrastructure} />
         <Route path="/details/:id" component={ClusterDetails} />
         <Route path="/create/osd" component={CreateOSDCluster} />
