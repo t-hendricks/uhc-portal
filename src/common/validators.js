@@ -86,8 +86,23 @@ const checkClusterConsoleURL = (value, isRequired) => {
   if (!value) {
     return (isRequired ? 'Cluster console URL should not be empty' : undefined);
   }
+  let url;
+  try {
+    url = new URL(value);
+  } catch (error) {
+    if (!(value.startsWith('http://') || value.startsWith('https://'))) {
+      return 'The URL should include the scheme prefix (http://, https://)';
+    }
+    return 'Invalid URL';
+  }
   if (!CONSOLE_URL_REGEXP.test(value)) {
-    return 'Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)';
+    if (!(url.protocol === 'http:' || url.protocol === 'https:')) {
+      return 'The URL should include the scheme prefix (http://, https://)';
+    }
+    if (url.hash !== '' || url.search !== '') {
+      return 'The URL must not include a query string (?) or fragment (#)';
+    }
+    return 'Invalid URL';
   }
   return undefined;
 };
