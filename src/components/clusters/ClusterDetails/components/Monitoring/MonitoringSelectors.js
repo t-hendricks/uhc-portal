@@ -2,6 +2,7 @@ import get from 'lodash/get';
 
 import { monitoringStatuses } from './statusHelper';
 import clusterStates from '../../../common/clusterStates';
+import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
 // Get the number of issues from a set of data
 // An item is considered an issue if it's value of the health criteria mathces the value
@@ -98,7 +99,7 @@ const clusterHealthSelector = (
     return monitoringStatuses.INSTALLING;
   }
 
-  if (get(cluster, 'subscription.status', false) === clusterStates.DISCONNECTED) {
+  if (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED) {
     return monitoringStatuses.DISCONNECTED;
   }
 

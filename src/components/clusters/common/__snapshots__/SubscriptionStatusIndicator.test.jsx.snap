@@ -169,19 +169,6 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Over
 </Popover>
 `;
 
-exports[`<SubscriptionStatusIndicator /> should render when subscription is Valid 1`] = `
-<Fragment>
-  <CheckCircleIcon
-    color="#92d400"
-    noVerticalAlign={false}
-    size="sm"
-    title={null}
-  />
-   
-  Valid
-</Fragment>
-`;
-
 exports[`<SubscriptionStatusIndicator /> should render when subscription is blank and cluster is managed 1`] = `
 <Fragment>
   <CheckCircleIcon

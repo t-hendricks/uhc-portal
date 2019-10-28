@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import get from 'lodash/result';
+import get from 'lodash/get';
 
 import { LinkContainer } from 'react-router-bootstrap';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
@@ -13,6 +13,7 @@ import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../../common/ErrorTriangle';
 import getClusterName from '../../../../common/getClusterName';
+import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 
 function ClusterDetailsTop(props) {
   const {
@@ -30,7 +31,7 @@ function ClusterDetailsTop(props) {
   const clusterName = getClusterName(cluster);
   const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
 
-  const isArchived = cluster.subscription && cluster.subscription.status === 'Archived';
+  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
   const openIDPModal = () => {
     openModal('create-identity-provider', { clusterName });
