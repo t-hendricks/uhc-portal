@@ -37,7 +37,7 @@ class Monitoring extends React.Component {
         <EmptyStateBody>
           <>
             {body}
-            <p>{lastCheckInText}</p>
+            <p>{healthStatus !== monitoringStatuses.INSTALLING && lastCheckInText}</p>
           </>
         </EmptyStateBody>
       </EmptyState>
