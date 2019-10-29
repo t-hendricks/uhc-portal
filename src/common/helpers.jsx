@@ -210,6 +210,20 @@ const scrollToTop = () => {
 const buildUrlParams = params => Object.keys(params).map(key => `${key}=${encodeURIComponent(params[key])}`).join('&');
 
 /**
+ * Create URL params for the cluster list filter.
+ * The resulting filters are not escaped, comma separated, and empty arrays are omitted.
+ *
+* For example:
+ * ```
+ * buildFilterURLParams({ a: ['a', 'b'], c: [], d: ['e'] }) = 'a=a,b&d=e'
+ * ```
+ * @param {Object} params
+ */
+const buildFilterURLParams = params => Object.keys(params).map(
+  key => (!isEmpty(params[key]) && `${key}=${params[key].join(',')}`),
+).filter(Boolean).join('&');
+
+/**
  * Returns true if an object is empty or if all its direct children are empty.
  *
  * For example:
@@ -238,6 +252,7 @@ const helpers = {
   toCleanArray,
   scrollToTop,
   buildUrlParams,
+  buildFilterURLParams,
   nestedIsEmpty,
   INVALIDATE_ACTION,
   FULFILLED_ACTION,

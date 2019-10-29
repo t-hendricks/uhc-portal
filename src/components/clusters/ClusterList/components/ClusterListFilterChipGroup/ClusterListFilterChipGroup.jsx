@@ -8,10 +8,17 @@ import {
 
 import helpers from '../../../../../common/helpers';
 
-function ClusterListFilterChipGroup({ currentFilters, setFilter }) {
+function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
   if (helpers.nestedIsEmpty(currentFilters)) {
     return null;
   }
+
+  const setFilterAndQueryParams = (filter) => {
+    history.push({
+      search: helpers.buildFilterURLParams(filter),
+    });
+    setFilter(filter);
+  };
 
   const groups = [
     {
@@ -49,7 +56,7 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter }) {
                 {currentFilter.map((key) => {
                   const label = group.optionLabels[key];
                   const deleteItem = () => {
-                    setFilter({
+                    setFilterAndQueryParams({
                       ...currentFilters,
                       [group.key]: currentFilter.filter(item => item !== key),
                     });
@@ -66,7 +73,7 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter }) {
         </ChipGroup>
       </SplitItem>
       <SplitItem>
-        <Button variant="link" onClick={() => setFilter({})}>Clear filters</Button>
+        <Button variant="link" onClick={() => setFilterAndQueryParams({})}>Clear filters</Button>
       </SplitItem>
     </Split>
   );
@@ -75,6 +82,9 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter }) {
 ClusterListFilterChipGroup.propTypes = {
   setFilter: PropTypes.func.isRequired,
   currentFilters: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default ClusterListFilterChipGroup;

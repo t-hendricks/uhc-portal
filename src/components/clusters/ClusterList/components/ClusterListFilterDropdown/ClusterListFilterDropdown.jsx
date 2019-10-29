@@ -8,6 +8,7 @@ import { FilterIcon } from '@patternfly/react-icons';
 import get from 'lodash/get';
 
 import { entitlementStatuses } from '../../../../../common/subscriptionTypes';
+import helpers from '../../../../../common/helpers';
 
 
 class ClusterListFilterDropdown extends React.Component {
@@ -21,7 +22,7 @@ class ClusterListFilterDropdown extends React.Component {
 
   render() {
     const { isOpen } = this.state;
-    const { currentFilters, setFilter } = this.props;
+    const { currentFilters, setFilter, history } = this.props;
     const filterOptions = [
       {
         key: 'entitlement_status',
@@ -46,6 +47,13 @@ class ClusterListFilterDropdown extends React.Component {
       },
     ];
 
+    const setFilterAndQueryParams = (filter) => {
+      history.push({
+        search: helpers.buildFilterURLParams(filter),
+      });
+      setFilter(filter);
+    };
+
     const dropdownItems = filterOptions.map((group) => {
       const selected = {};
       const currentFilter = get(currentFilters, group.key, []);
@@ -57,9 +65,11 @@ class ClusterListFilterDropdown extends React.Component {
             const label = option[1];
             const onChange = (checked) => {
               if (checked) {
-                setFilter({ ...currentFilters, [group.key]: [...currentFilter, key] });
+                setFilterAndQueryParams({
+                  ...currentFilters, [group.key]: [...currentFilter, key],
+                });
               } else {
-                setFilter({
+                setFilterAndQueryParams({
                   ...currentFilters,
                   [group.key]: currentFilter.filter(item => item !== key),
                 });
@@ -108,6 +118,9 @@ class ClusterListFilterDropdown extends React.Component {
 ClusterListFilterDropdown.propTypes = {
   setFilter: PropTypes.func.isRequired,
   currentFilters: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default ClusterListFilterDropdown;

@@ -5,7 +5,11 @@ import ClusterListFilterChipGroup from './ClusterListFilterChipGroup';
 
 describe('<ClusterListFilterChipGroup />', () => {
   it('should render', () => {
-    const wrapper = shallow(<ClusterListFilterChipGroup setFilter={jest.fn()} currentFilters={{ entitlement_status: ['NotSet'] }} />);
+    const wrapper = shallow(<ClusterListFilterChipGroup
+      setFilter={jest.fn()}
+      currentFilters={{ entitlement_status: ['NotSet'] }}
+      history={{ push: jest.fn() }}
+    />);
     expect(wrapper).toMatchSnapshot();
   });
 });

@@ -74,7 +74,6 @@ class ClusterList extends Component {
 
     // refresh needs to be bound because it is passed to another component
     this.refresh = this.refresh.bind(this);
-    // the various open dialog methods get called from the table component
   }
 
   componentDidMount() {
@@ -145,6 +144,7 @@ class ClusterList extends Component {
       archivedCluster,
       operationID,
       closeToast,
+      history,
     } = this.props;
 
     const toast = archivedCluster.showToast && (
@@ -178,7 +178,10 @@ class ClusterList extends Component {
         </PageSection>);
     }
 
-    if ((!size(clusters) && pending && (isEmpty(viewOptions.filter) || !valid))
+    const hasNoFilters = isEmpty(viewOptions.filter)
+    && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
+
+    if ((!size(clusters) && pending && (hasNoFilters || !valid))
     || (!organization.fulfilled && !organization.error)) {
       return (
         <React.Fragment>
@@ -221,7 +224,7 @@ class ClusterList extends Component {
                   <ClusterListFilter view={viewConstants.CLUSTERS_VIEW} />
                 </SplitItem>
                 <SplitItem className="split-margin-left">
-                  <ClusterListFilterDropdown />
+                  <ClusterListFilterDropdown history={history} />
                 </SplitItem>
                 <SplitItem className="split-margin-left">
                   <Link to={hasQuota ? '/create' : '/install'}>
@@ -250,7 +253,7 @@ class ClusterList extends Component {
                   <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
                 </SplitItem>
               </Split>
-              <ClusterListFilterChipGroup />
+              <ClusterListFilterChipGroup history={history} />
               <ClusterListTable
                 clusters={clusters || []}
                 viewOptions={viewOptions}
@@ -313,6 +316,9 @@ ClusterList.propTypes = {
     showToast: PropTypes.bool.isRequired,
   }),
   closeToast: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default ClusterList;
