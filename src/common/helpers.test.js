@@ -42,6 +42,30 @@ test('buildFilterURLParams()', () => {
   expect(helpers.buildFilterURLParams({})).toBe('');
 });
 
+describe('sqlString', () => {
+  it('handles empty string', () => {
+    expect(helpers.sqlString('')).toBe("''");
+  });
+
+  it('doubles single quotes', () => {
+    expect(helpers.sqlString("1 quote ' 3 quote'''s 2 quotes ''"))
+      .toBe("'1 quote '' 3 quote''''''s 2 quotes '''''");
+  });
+
+  it('does not touch other quotes', () => {
+    expect(helpers.sqlString('double quote " backtick `'))
+      .toBe("'double quote \" backtick `'");
+  });
+
+  it('does not touch backslash, %, _', () => {
+    // % and _ are special characters in LIKE patterns, but they're
+    // not special in SQL syntax.
+    // LIKE optionally lets you specify any char as an escape char but again that's
+    // later interpretation of a string, it's regular char in SQL string literal.
+    expect(helpers.sqlString('path/%._/100\\%')).toBe("'path/%._/100\\%'");
+    expect(helpers.sqlString('\\')).toBe("'\\'");
+  });
+});
 
 describe('createViewQueryObject()', () => {
   const baseViewOptions = {
@@ -56,7 +80,7 @@ describe('createViewQueryObject()', () => {
   const baseResult = {
     page: 3,
     page_size: 50,
-    filter: 'cluster_id!=\'\' AND status NOT IN (\'Deprovisioned\', \'Archived\')',
+    filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived'))",
   };
 
   it('properly creates the query object when no filter is defined', () => {
@@ -110,7 +134,7 @@ describe('createViewQueryObject()', () => {
         showArchived: true,
       },
     };
-    expect(helpers.createViewQueryObject(viewOptions)).toEqual({ ...baseResult, filter: 'cluster_id!=\'\' AND status=\'Archived\'' });
+    expect(helpers.createViewQueryObject(viewOptions)).toEqual({ ...baseResult, filter: "(cluster_id!='') AND (status='Archived')" });
   });
 
   it('correctly formats filter when a filter is set', () => {
@@ -122,7 +146,7 @@ describe('createViewQueryObject()', () => {
     const escaped = "hello world''s";
     const expected = {
       ...baseResult,
-      filter: `(cluster_id!='' AND status NOT IN ('Deprovisioned', 'Archived')) AND (display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%')`,
+      filter: `(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%')`,
     };
     expect(helpers.createViewQueryObject(viewOptions)).toEqual(expected);
   });
@@ -139,7 +163,7 @@ describe('createViewQueryObject()', () => {
     };
     const expected = {
       ...baseResult,
-      filter: "(cluster_id!='' AND status NOT IN ('Deprovisioned', 'Archived')) AND entitlement_status IN ('a','b','c') AND type IN ('osd')",
+      filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (entitlement_status IN ('a','b','c')) AND (type IN ('osd'))",
     };
 
     expect(helpers.createViewQueryObject(viewOptions)).toEqual(expected);
