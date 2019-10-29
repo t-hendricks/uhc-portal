@@ -40,7 +40,7 @@ function OCPSubscriptionSummary({ stats }) {
         default:
       }
 
-      const params = { entitlement_status: entitlementStatus };
+      const params = { entitlement_status: entitlementStatus, plan_id: 'OCP' };
       item.link = (
         <Link to={{ pathname: '/', search: buildUrlParams(params) }}>
           {`${numClusters} Cluster${numClusters === 1 ? '' : 's'}`}
