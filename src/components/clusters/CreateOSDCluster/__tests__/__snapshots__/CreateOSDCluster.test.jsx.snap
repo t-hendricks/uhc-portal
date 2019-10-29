@@ -65,7 +65,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
           >
             <SplitItem>
               <Button
-                disabled={false}
+                isDisabled={false}
                 onClick={[MockFunction]}
                 type="submit"
                 variant="primary"
@@ -79,7 +79,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
                 to="/"
               >
                 <Button
-                  disabled={false}
+                  isDisabled={false}
                   variant="secondary"
                 >
                   Cancel

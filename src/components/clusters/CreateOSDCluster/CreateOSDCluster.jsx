@@ -111,13 +111,13 @@ class CreateOSDCluster extends React.Component {
               <GridItem>
                 <Split gutter="sm" className="create-osd-form-button-split">
                   <SplitItem>
-                    <Button variant="primary" type="submit" onClick={handleSubmit} disabled={createClusterResponse.pending}>
+                    <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={createClusterResponse.pending}>
                       Create cluster
                     </Button>
                   </SplitItem>
                   <SplitItem>
                     <Link to="/">
-                      <Button variant="secondary" disabled={createClusterResponse.pending}>
+                      <Button variant="secondary" isDisabled={createClusterResponse.pending}>
                         Cancel
                       </Button>
                     </Link>

@@ -245,9 +245,9 @@ class RegisterCluster extends React.Component {
             </Grid>
           </CardBody>
           <CardFooter>
-            <Button variant="primary" type="submit" onClick={handleSubmit} disabled={registerClusterResponse.pending}>Register cluster</Button>
+            <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={registerClusterResponse.pending}>Register cluster</Button>
             <Link to="/">
-              <Button variant="secondary" disabled={registerClusterResponse.pending}>Cancel</Button>
+              <Button variant="secondary" isDisabled={registerClusterResponse.pending}>Cancel</Button>
             </Link>
           </CardFooter>
         </Card>
