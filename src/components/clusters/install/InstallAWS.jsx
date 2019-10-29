@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { PageSection } from '@patternfly/react-core';
+
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsAWS from './components/instructions/InstructionsAWS';
 import { scrollToTop } from '../../../common/helpers';
@@ -15,7 +18,7 @@ class InstallAWS extends Component {
   }
 
   render() {
-    return <InstructionsAWS />;
+    return <PageSection><InstructionsAWS /></PageSection>;
   }
 }
 

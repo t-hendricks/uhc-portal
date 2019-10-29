@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { PageSection } from '@patternfly/react-core';
+
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsOSP from './components/instructions/InstructionsOSP';
 import { scrollToTop } from '../../../common/helpers';
@@ -18,7 +21,10 @@ class InstallOSP extends Component {
     const { token } = this.props;
 
     return (
-      <InstructionsOSP token={token} />);
+      <PageSection>
+        <InstructionsOSP token={token} />
+      </PageSection>
+    );
   }
 }
 

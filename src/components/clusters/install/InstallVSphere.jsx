@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { PageSection } from '@patternfly/react-core';
+
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsVSphere from './components/instructions/InstructionsVSphere';
 import { scrollToTop } from '../../../common/helpers';
@@ -16,7 +19,7 @@ class InstallVSphere extends Component {
 
   render() {
     const { token } = this.props;
-    return <InstructionsVSphere token={token} />;
+    return <PageSection><InstructionsVSphere token={token} /></PageSection>;
   }
 }
 

@@ -12,13 +12,13 @@ import {
   CardBody,
   Button,
   FormGroup,
-  Split,
-  SplitItem,
   Title,
+  PageSection,
 } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_danger_color_100 } from '@patternfly/react-tokens';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 
 import ReduxVerticalFormGroupPF4 from '../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
 import Modal from '../../common/Modal/Modal';
@@ -133,124 +133,122 @@ class RegisterCluster extends React.Component {
 
     return (
       <React.Fragment>
-        <div id="register-cluster-top-row" className="top-row">
-          <Split>
-            <SplitItem>
-              <Title headingLevel="h1" size="4xl" className="vertical-align">Cluster registration</Title>
-            </SplitItem>
-          </Split>
-        </div>
-        {isOpen && errorModal}
-        <Card id="register-cluster">
-          <CardBody>
-            <Grid>
-              <GridItem span={8}>
-                <Form onSubmit={handleSubmit}>
-                  <Field
-                    component={ReduxVerticalFormGroupPF4}
-                    name="cluster_id"
-                    label="Cluster ID"
-                    type="text"
-                    extendedHelpText={constants.clusterIDHint}
-                    disabled={registerClusterResponse.pending}
-                    validate={checkClusterUUID}
-                    isRequired
-                  />
-                  <Field
-                    component={ReduxVerticalFormGroupPF4}
-                    name="display_name"
-                    label="Display name"
-                    type="text"
-                    disabled={registerClusterResponse.pending}
-                    validate={checkClusterDisplayName}
-                  />
-                  <Field
-                    component={ReduxVerticalFormGroupPF4}
-                    name="web_console_url"
-                    label="Web console URL"
-                    validate={validateConsoleURL}
-                    disabled={registerClusterResponse.pending}
-                    type="text"
-                  />
-                  <FormGroup
-                    label="Operating System"
-                    isRequired
-                    fieldId="operating_system"
-                  >
+        <PageHeader>
+          <PageHeaderTitle title="Cluster registration" />
+        </PageHeader>
+        <PageSection>
+          {isOpen && errorModal}
+          <Card id="register-cluster">
+            <CardBody>
+              <Grid>
+                <GridItem span={8}>
+                  <Form onSubmit={handleSubmit}>
                     <Field
-                      component={RadioButtons}
-                      name="operating_system"
-                      options={[{ value: 'Red Hat Enterprise Linux CoreOS', label: 'Red Hat Enterprise Linux CoreOS' },
-                        { value: 'Red Hat Enterprise Linux', label: 'Red Hat Enterprise Linux' }]}
+                      component={ReduxVerticalFormGroupPF4}
+                      name="cluster_id"
+                      label="Cluster ID"
+                      type="text"
+                      extendedHelpText={constants.clusterIDHint}
                       disabled={registerClusterResponse.pending}
-                      defaultValue="Red Hat Enterprise Linux CoreOS"
+                      validate={checkClusterUUID}
+                      isRequired
                     />
-                  </FormGroup>
-                  <FormGroup
-                    label="System Type"
-                    isRequired
-                    fieldId="system_type"
-                  >
                     <Field
-                      component={RadioButtons}
-                      name="system_type"
-                      options={[{ value: 'physical', label: 'Physical' },
-                        { value: 'virtual', label: 'Virtual' }]}
-                      defaultValue="physical"
+                      component={ReduxVerticalFormGroupPF4}
+                      name="display_name"
+                      label="Display name"
+                      type="text"
                       disabled={registerClusterResponse.pending}
-                      onChange={this.toggleSystemType}
+                      validate={checkClusterDisplayName}
                     />
-                  </FormGroup>
-                  {systemType === 'physical' && (
-                  <Field
-                    component={ReduxVerticalFormGroupPF4}
-                    name="socket_num"
-                    label="Number of sockets or LAPRs"
-                    inputMode="numeric"
-                    disabled={registerClusterResponse.pending}
-                    validate={[required, validateSockets]}
-                    isRequired
-                  />
-                  )}
-                  {systemType === 'virtual' && (
-                  <Field
-                    component={ReduxVerticalFormGroupPF4}
-                    name="cpu"
-                    label="Number of vCPUs"
-                    inputMode="numeric"
-                    disabled={registerClusterResponse.pending}
-                    validate={validatevCPU}
-                    isRequired
-                  />
-                  )}
-                  <Field
-                    component={ReduxVerticalFormGroupPF4}
-                    name="memory_gib"
-                    label="Memory capacity (GiB)"
-                    inputMode="numeric"
-                    validate={validateMemCapacity}
-                    step="any"
-                    disabled={registerClusterResponse.pending}
-                  />
-                  <Field
-                    component={ReduxVerticalFormGroupPF4}
-                    name="nodes_compute"
-                    label="Number of compute nodes"
-                    inputMode="numeric"
-                    validate={validateNodeCount}
-                    disabled={registerClusterResponse.pending}
-                  />
-                </Form>
-              </GridItem>
-            </Grid>
-          </CardBody>
-          <CardFooter>
-            <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={registerClusterResponse.pending}>Register cluster</Button>
-            <Link to="/">
-              <Button variant="secondary" isDisabled={registerClusterResponse.pending}>Cancel</Button>
-            </Link>
-          </CardFooter>
-        </Card>
+                    <Field
+                      component={ReduxVerticalFormGroupPF4}
+                      name="web_console_url"
+                      label="Web console URL"
+                      validate={validateConsoleURL}
+                      disabled={registerClusterResponse.pending}
+                      type="text"
+                    />
+                    <FormGroup
+                      label="Operating System"
+                      isRequired
+                      fieldId="operating_system"
+                    >
+                      <Field
+                        component={RadioButtons}
+                        name="operating_system"
+                        options={[{ value: 'Red Hat Enterprise Linux CoreOS', label: 'Red Hat Enterprise Linux CoreOS' },
+                          { value: 'Red Hat Enterprise Linux', label: 'Red Hat Enterprise Linux' }]}
+                        disabled={registerClusterResponse.pending}
+                        defaultValue="Red Hat Enterprise Linux CoreOS"
+                      />
+                    </FormGroup>
+                    <FormGroup
+                      label="System Type"
+                      isRequired
+                      fieldId="system_type"
+                    >
+                      <Field
+                        component={RadioButtons}
+                        name="system_type"
+                        options={[{ value: 'physical', label: 'Physical' },
+                          { value: 'virtual', label: 'Virtual' }]}
+                        defaultValue="physical"
+                        disabled={registerClusterResponse.pending}
+                        onChange={this.toggleSystemType}
+                      />
+                    </FormGroup>
+                    {systemType === 'physical' && (
+                    <Field
+                      component={ReduxVerticalFormGroupPF4}
+                      name="socket_num"
+                      label="Number of sockets or LAPRs"
+                      inputMode="numeric"
+                      disabled={registerClusterResponse.pending}
+                      validate={[required, validateSockets]}
+                      isRequired
+                    />
+                    )}
+                    {systemType === 'virtual' && (
+                    <Field
+                      component={ReduxVerticalFormGroupPF4}
+                      name="cpu"
+                      label="Number of vCPUs"
+                      inputMode="numeric"
+                      disabled={registerClusterResponse.pending}
+                      validate={validatevCPU}
+                      isRequired
+                    />
+                    )}
+                    <Field
+                      component={ReduxVerticalFormGroupPF4}
+                      name="memory_gib"
+                      label="Memory capacity (GiB)"
+                      inputMode="numeric"
+                      validate={validateMemCapacity}
+                      step="any"
+                      disabled={registerClusterResponse.pending}
+                    />
+                    <Field
+                      component={ReduxVerticalFormGroupPF4}
+                      name="nodes_compute"
+                      label="Number of compute nodes"
+                      inputMode="numeric"
+                      validate={validateNodeCount}
+                      disabled={registerClusterResponse.pending}
+                    />
+                  </Form>
+                </GridItem>
+              </Grid>
+            </CardBody>
+            <CardFooter>
+              <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={registerClusterResponse.pending}>Register cluster</Button>
+              <Link to="/">
+                <Button variant="secondary" isDisabled={registerClusterResponse.pending}>Cancel</Button>
+              </Link>
+            </CardFooter>
+          </Card>
+        </PageSection>
       </React.Fragment>
     );
   }

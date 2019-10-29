@@ -19,7 +19,7 @@ import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -30,6 +30,7 @@ import {
   EmptyState,
   Split,
   SplitItem,
+  PageSection,
 } from '@patternfly/react-core';
 
 import ClusterListFilter from '../common/ClusterListFilter';
@@ -131,9 +132,16 @@ class ArchivedClusterList extends Component {
       </Breadcrumb>
     );
 
+    const pageHeader = (
+      <PageHeader>
+        {breadCrumbs}
+        <PageHeaderTitle title="Archived Clusters" />
+      </PageHeader>
+    );
+
     if (error && !size(clusters)) {
       return (
-        <React.Fragment>
+        <PageSection>
           {toast}
           <EmptyState>
             <ErrorBox
@@ -144,22 +152,23 @@ class ArchivedClusterList extends Component {
               }}
             />
           </EmptyState>
-        </React.Fragment>);
+        </PageSection>);
     }
 
     if ((!size(clusters) && pending && (isEmpty(viewOptions.filter) || !valid))) {
       return (
         <React.Fragment>
           {toast}
-          <Card>
-            <div className="cluster-list pf-c-content ocm-page">
-              {breadCrumbs}
-              <h1>Archived Clusters</h1>
-              <div className="cluster-loading-container">
-                <Spinner centered />
+          {pageHeader}
+          <PageSection>
+            <Card>
+              <div className="cluster-list pf-c-content ocm-page">
+                <div className="cluster-loading-container">
+                  <Spinner centered />
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </PageSection>
         </React.Fragment>
       );
     }
@@ -167,58 +176,59 @@ class ArchivedClusterList extends Component {
     return (
       <React.Fragment>
         {toast}
-        <Card>
-          <div className="cluster-list pf-c-content ocm-page">
-            {breadCrumbs}
-            <GlobalErrorBox />
-            <h1>Archived Clusters</h1>
-            <Split id="cluster-list-top">
-              <SplitItem>
-                <ClusterListFilter view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
-              </SplitItem>
-              <SplitItem className="pf-l-split__item split-margin-left">
-                <div className="show-active-clusters-link">
-                  <Link to="/">
-                    Show active clusters
-                  </Link>
-                </div>
-              </SplitItem>
-              <SplitItem className="spinner-fit-container">
-                { pending && <Spinner className="cluster-list-spinner" /> }
-                { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }
-              </SplitItem>
-              <SplitItem isFilled />
-              <SplitItem>
-                <ViewPaginationRow
-                  viewType={viewConstants.ARCHIVED_CLUSTERS_VIEW}
-                  currentPage={viewOptions.currentPage}
-                  pageSize={viewOptions.pageSize}
-                  totalCount={viewOptions.totalCount}
-                  totalPages={viewOptions.totalPages}
-                  variant="top"
-                />
-              </SplitItem>
-              <SplitItem>
-                <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
-              </SplitItem>
-            </Split>
-            <ArchivedClusterListTable
-              clusters={clusters || []}
-              viewOptions={viewOptions}
-              setSorting={setSorting}
-              openModal={openModal}
-            />
-            <ViewPaginationRow
-              viewType={viewConstants.ARCHIVED_CLUSTERS_VIEW}
-              currentPage={viewOptions.currentPage}
-              pageSize={viewOptions.pageSize}
-              totalCount={viewOptions.totalCount}
-              totalPages={viewOptions.totalPages}
-              variant="bottom"
-            />
-            <UnarchiveClusterDialog onClose={invalidateClusters} />
-          </div>
-        </Card>
+        {pageHeader}
+        <PageSection>
+          <Card>
+            <div className="cluster-list pf-c-content ocm-page">
+              <GlobalErrorBox />
+              <Split id="cluster-list-top">
+                <SplitItem>
+                  <ClusterListFilter view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
+                </SplitItem>
+                <SplitItem className="pf-l-split__item split-margin-left">
+                  <div className="show-active-clusters-link">
+                    <Link to="/">
+                      Show active clusters
+                    </Link>
+                  </div>
+                </SplitItem>
+                <SplitItem className="spinner-fit-container">
+                  { pending && <Spinner className="cluster-list-spinner" /> }
+                  { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }
+                </SplitItem>
+                <SplitItem isFilled />
+                <SplitItem>
+                  <ViewPaginationRow
+                    viewType={viewConstants.ARCHIVED_CLUSTERS_VIEW}
+                    currentPage={viewOptions.currentPage}
+                    pageSize={viewOptions.pageSize}
+                    totalCount={viewOptions.totalCount}
+                    totalPages={viewOptions.totalPages}
+                    variant="top"
+                  />
+                </SplitItem>
+                <SplitItem>
+                  <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
+                </SplitItem>
+              </Split>
+              <ArchivedClusterListTable
+                clusters={clusters || []}
+                viewOptions={viewOptions}
+                setSorting={setSorting}
+                openModal={openModal}
+              />
+              <ViewPaginationRow
+                viewType={viewConstants.ARCHIVED_CLUSTERS_VIEW}
+                currentPage={viewOptions.currentPage}
+                pageSize={viewOptions.pageSize}
+                totalCount={viewOptions.totalCount}
+                totalPages={viewOptions.totalPages}
+                variant="bottom"
+              />
+              <UnarchiveClusterDialog onClose={invalidateClusters} />
+            </div>
+          </Card>
+        </PageSection>
       </React.Fragment>
     );
   }
