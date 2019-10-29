@@ -88,7 +88,7 @@ if (!window.insights && process.env.NODE_ENV === 'development') {
   renderDevEnvError();
 } else {
   insights.chrome.init();
-  insights.chrome.identifyApp('clusters');
+  insights.chrome.identifyApp('openshift');
   insights.chrome.auth.getUser().then((data) => {
     store.dispatch(userInfoResponse(data.identity.user));
     config.fetchConfig().then(() => {
