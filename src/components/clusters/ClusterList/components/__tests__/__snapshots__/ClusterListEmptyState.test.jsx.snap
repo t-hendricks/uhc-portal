@@ -38,6 +38,16 @@ exports[`<ClusterListEmptyState /> renders correctly with no quota 1`] = `
         Register disconnected cluster
       </Button>
     </Link>
+    <Link
+      replace={false}
+      to="/archived"
+    >
+      <Button
+        variant="link"
+      >
+        View archived clusters
+      </Button>
+    </Link>
   </EmptyStateSecondaryActions>
 </EmptyState>
 `;
@@ -78,6 +88,16 @@ exports[`<ClusterListEmptyState /> renders correctly with quota 1`] = `
         variant="link"
       >
         Register disconnected cluster
+      </Button>
+    </Link>
+    <Link
+      replace={false}
+      to="/archived"
+    >
+      <Button
+        variant="link"
+      >
+        View archived clusters
       </Button>
     </Link>
   </EmptyStateSecondaryActions>
