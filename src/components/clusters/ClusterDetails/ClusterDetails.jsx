@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import result from 'lodash/result';
 import isUuid from 'uuid-validate';
 import { Redirect } from 'react-router';
+import get from 'lodash/get';
 
 import {
   Alert, AlertActionCloseButton, EmptyState, TabContent,
@@ -41,6 +42,7 @@ import { isValid } from '../../../common/helpers';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
+import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -131,6 +133,7 @@ class ClusterDetails extends Component {
       getUsers,
       getAlerts,
       getNodes,
+      getClusterOperators,
     } = this.props;
     const clusterID = match.params.id;
 
@@ -142,6 +145,7 @@ class ClusterDetails extends Component {
       getUsers(clusterID, 'dedicated-admins');
       getAlerts(clusterID);
       getNodes(clusterID);
+      getClusterOperators(clusterID);
     }
   }
 
@@ -246,7 +250,7 @@ class ClusterDetails extends Component {
     };
 
     const hasLogs = !!logs.lines;
-    const isArchived = cluster.subscription && cluster.subscription.status === 'Archived';
+    const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
     return (
       <div id="clusterdetails-content">
@@ -324,6 +328,7 @@ ClusterDetails.propTypes = {
   getLogs: PropTypes.func.isRequired,
   getAlerts: PropTypes.func.isRequired,
   getNodes: PropTypes.func.isRequired,
+  getClusterOperators: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,

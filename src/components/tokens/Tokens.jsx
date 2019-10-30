@@ -104,7 +104,7 @@ class Tokens extends React.Component {
           </p>
           {tokenBox(offlineAccessToken)}
           <p>
-            Copy it, and then use it o request an access token. For example, to
+            Copy it, and then use it to request an access token. For example, to
             obtain an access token using the {curlLink} and {jqLink} command
             line tools, use the following commands:
           </p>

@@ -64,20 +64,35 @@ const createViewQueryObject = (viewOptions, queryObj) => {
     quite complicated.
     */
     let statusClause;
+    // handle archived flag
     if (viewOptions.flags.showArchived) {
       statusClause = 'status=\'Archived\'';
     } else {
       statusClause = 'status NOT IN (\'Deprovisioned\', \'Archived\')';
     }
-    const baseFilter = `cluster_id!='' AND ${statusClause}`;
+    const baseFilter = `cluster_id!='' AND ${statusClause}`; // base filter: filter out clusters without IDs, add the status clause
 
-    const escaped = viewOptions.filter ? viewOptions.filter.replace(/(')/g, '\'\'') : '';
+    const escaped = viewOptions.filter ? viewOptions.filter.replace(/(')/g, '\'\'') : ''; // escape ' characters
+
+    // If we got a search string from the user, format it as a LIKE query and add the base filter.
+    // Otherwise, keep just the base filter.
     const displayNameFilter = `display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%'`;
     queryObject.filter = viewOptions.filter ? `(${baseFilter}) AND (${displayNameFilter})` : baseFilter;
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
-      const statusList = viewOptions.flags.subscriptionFilter.map(item => `'${item}'`).join(',');
-      queryObject.filter = `(${queryObject.filter}) AND entitlement_status in (${statusList})`;
+      // We got flags for filtering according to specific subscription properties
+      // subscriptionFilter is an object in the form of { key: ["possible", "values"] }
+      const clauses = [];
+      Object.keys(viewOptions.flags.subscriptionFilter).forEach((field) => {
+        const items = viewOptions.flags.subscriptionFilter[field];
+        if (!isEmpty(items)) {
+          // convert each list of selected filter values to a SQL-like clause
+          const quotedItems = viewOptions.flags.subscriptionFilter[field].map(item => `'${item}'`).join(',');
+          clauses.push(`AND ${field} IN (${quotedItems})`);
+        }
+      });
+      // add the generated clauses to the filter we constructed before
+      queryObject.filter = `(${queryObject.filter}) ${clauses.join(' ').trim()}`;
     }
   }
 
@@ -194,6 +209,22 @@ const scrollToTop = () => {
 
 const buildUrlParams = params => Object.keys(params).map(key => `${key}=${encodeURIComponent(params[key])}`).join('&');
 
+/**
+ * Returns true if an object is empty or if all its direct children are empty.
+ *
+ * For example:
+ * ```
+ * nestedIsEmpty({}) = true
+ * nestedIsEmpty({a: []}) = true
+ * nestedIsEmpty({a: [], b: ['a']}) = false
+ * ```
+ * @param {Object} obj
+ */
+const nestedIsEmpty = obj => (isEmpty(obj) || Object.keys(obj).map(
+  key => isEmpty(obj[key]),
+).every(item => item));
+
+
 const helpers = {
   noop,
   setStateProp,
@@ -207,6 +238,7 @@ const helpers = {
   toCleanArray,
   scrollToTop,
   buildUrlParams,
+  nestedIsEmpty,
   INVALIDATE_ACTION,
   FULFILLED_ACTION,
   PENDING_ACTION,

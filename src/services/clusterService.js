@@ -115,6 +115,11 @@ const getNodes = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/nodes`,
 });
 
+const getClusterOperators = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/cluster_operators`,
+});
+
 const archiveCluster = id => apiRequest({
   method: 'patch',
   url: `/api/accounts_mgmt/v1/subscriptions/${id}`,
@@ -147,6 +152,7 @@ const clusterService = {
   getMachineTypes,
   getNodes,
   getAlerts,
+  getClusterOperators,
   archiveCluster,
   unarchiveCluster,
 };

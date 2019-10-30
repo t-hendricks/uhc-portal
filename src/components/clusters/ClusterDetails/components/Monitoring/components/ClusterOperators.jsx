@@ -8,12 +8,12 @@ import {
 } from '@patternfly/react-table';
 
 import {
-  OkIcon, ExclamationCircleIcon, InProgressIcon, UnknownIcon,
+  ExclamationCircleIcon, InProgressIcon, UnknownIcon, CheckCircleIcon, WarningTriangleIcon,
 } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
-import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
+import { global_success_color_100, global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 
-import { opertatorsStatuses } from '../statusHelper';
+import { operatorsStatuses } from '../statusHelper';
 
 function ClusterOperatorsTable({ operators = [] }) {
   const columns = [
@@ -26,17 +26,21 @@ function ClusterOperatorsTable({ operators = [] }) {
     let icon;
     let statusStr;
     switch (status) {
-      case opertatorsStatuses.AVAILABLE:
-        icon = <OkIcon className="status-icon" color={global_success_color_100.value} size="md" />;
+      case operatorsStatuses.AVAILABLE:
+        icon = <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />;
         statusStr = 'Available';
         break;
-      case opertatorsStatuses.FAILING:
+      case operatorsStatuses.FAILING:
         icon = <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />;
         statusStr = 'Failing';
         break;
-      case opertatorsStatuses.UPDATING:
+      case operatorsStatuses.UPGRADING:
         icon = <InProgressIcon className="status-icon" size="md" />;
         statusStr = 'Updating';
+        break;
+      case operatorsStatuses.DEGRADED:
+        icon = <WarningTriangleIcon className="status-icon" size="md" color={global_warning_color_100.value} />;
+        statusStr = 'Degraded';
         break;
       default:
         icon = <UnknownIcon className="status-icon" size="md" />;
@@ -53,7 +57,7 @@ function ClusterOperatorsTable({ operators = [] }) {
 
   const rows = operators.map(operator => ([
     { title: operator.name },
-    { title: operatorStatus(operator.status) },
+    { title: operatorStatus(operator.condition) },
     { title: operator.version },
   ]));
 

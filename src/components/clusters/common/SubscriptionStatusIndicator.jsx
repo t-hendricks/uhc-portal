@@ -5,13 +5,14 @@ import { Popover, PopoverPosition, Button } from '@patternfly/react-core';
 import { CheckCircleIcon, WarningTriangleIcon, UnknownIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
+import { entitlementStatuses } from '../../../common/subscriptionTypes';
 
 function SubscriptionStatusIndicator({ cluster }) {
   const managed = get(cluster, 'managed');
   const entitlementStatus = get(cluster, 'subscription.entitlement_status');
 
   switch (entitlementStatus) {
-    case 'Ok':
+    case entitlementStatuses.OK:
       return (
         <React.Fragment>
           <CheckCircleIcon color={global_success_color_100.value} />
@@ -19,15 +20,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           Subscribed
         </React.Fragment>
       );
-    case 'Valid':
-      return (
-        <React.Fragment>
-          <CheckCircleIcon color={global_success_color_100.value} />
-          {' '}
-          Valid
-        </React.Fragment>
-      );
-    case 'NotSet':
+    case entitlementStatuses.NOT_SET:
       return (
         <Popover
           position={PopoverPosition.top}
@@ -39,7 +32,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           </Button>
         </Popover>
       );
-    case 'Overcommitted':
+    case entitlementStatuses.OVERCOMMITTED:
       return (
         <Popover
           position={PopoverPosition.top}
@@ -51,7 +44,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           </Button>
         </Popover>
       );
-    case 'InconsistentServices':
+    case entitlementStatuses.INCONSISTENT_SERVICES:
       return (
         <Popover
           position={PopoverPosition.top}

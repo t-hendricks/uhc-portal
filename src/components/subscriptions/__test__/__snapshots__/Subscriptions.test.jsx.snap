@@ -138,7 +138,7 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
             to={
               Object {
                 "pathname": "/",
-                "search": "entitlement_status=Ok",
+                "search": "entitlement_status=Ok&plan_id=OCP",
               }
             }
           >
@@ -171,7 +171,7 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
             to={
               Object {
                 "pathname": "/",
-                "search": "entitlement_status=InconsistentServices",
+                "search": "entitlement_status=InconsistentServices&plan_id=OCP",
               }
             }
           >
@@ -187,7 +187,7 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
             to={
               Object {
                 "pathname": "/",
-                "search": "entitlement_status=NotSet",
+                "search": "entitlement_status=NotSet&plan_id=OCP",
               }
             }
           >
@@ -203,7 +203,7 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
             to={
               Object {
                 "pathname": "/",
-                "search": "entitlement_status=Overcommitted",
+                "search": "entitlement_status=Overcommitted&plan_id=OCP",
               }
             }
           >
@@ -236,7 +236,7 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
             to={
               Object {
                 "pathname": "/",
-                "search": "entitlement_status=NotReconciled",
+                "search": "entitlement_status=NotReconciled&plan_id=OCP",
               }
             }
           >

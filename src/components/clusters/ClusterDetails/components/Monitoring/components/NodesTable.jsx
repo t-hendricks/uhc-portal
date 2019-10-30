@@ -7,7 +7,7 @@ import {
   TableVariant,
 } from '@patternfly/react-table';
 
-import { OkIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
 
@@ -22,7 +22,7 @@ function NodesTable({ nodes = [] }) {
     if (isUp) {
       return (
         <React.Fragment>
-          <OkIcon className="status-icon" color={global_success_color_100.value} size="md" />
+          <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />
           <span>Ready</span>
         </React.Fragment>
       );

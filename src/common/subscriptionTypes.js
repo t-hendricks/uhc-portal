@@ -1,23 +1,17 @@
-const ENTITLEMENT_OK = 'Ok';
-const ENTITLEMENT_NOT_SET = 'NotSet';
-const ENTITLEMENT_OVERCOMMITTED = 'Overcommitted';
-const ENTITLEMENT_INCONSISTENT_SERVICES = 'InconsistentServices';
-const ENTITLEMENT_UNKNOWN = 'NotReconciled';
-const SUBSCRIPTION_ACTIVE = 'Active';
-const SUBSCRIPTION_ARCHIVED = 'Archived';
-const SUBSCRIPTION_DEPROVISIONED = 'Deprovisioned';
-const SUBSCRIPTION_RESERVED = 'Reserved';
-const SUBSCRIPTION_STALE = 'Stale';
-
-export {
-  SUBSCRIPTION_ACTIVE,
-  SUBSCRIPTION_ARCHIVED,
-  SUBSCRIPTION_DEPROVISIONED,
-  SUBSCRIPTION_RESERVED,
-  SUBSCRIPTION_STALE,
-  ENTITLEMENT_OK,
-  ENTITLEMENT_NOT_SET,
-  ENTITLEMENT_OVERCOMMITTED,
-  ENTITLEMENT_INCONSISTENT_SERVICES,
-  ENTITLEMENT_UNKNOWN,
+const entitlementStatuses = {
+  OK: 'Ok',
+  NOT_SET: 'NotSet',
+  OVERCOMMITTED: 'Overcommitted',
+  INCONSISTENT_SERVICES: 'InconsistentServices',
+  UNKNOWN: 'NotReconciled',
 };
+
+const subscriptionStatuses = {
+  ACTIVE: 'Active',
+  ARCHIVED: 'Archived',
+  DEPROVISIONED: 'Deprovisioned',
+  RESERVED: 'Reserved',
+  STALE: 'Stale',
+};
+
+export { subscriptionStatuses, entitlementStatuses };

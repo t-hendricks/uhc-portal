@@ -68,7 +68,7 @@ function ClusterListTable(props) {
                 }
       >
         <span>
-          {cluster.managed ? 'Managed' : 'Self-managed'}
+          {cluster.managed ? 'OSD' : 'OCP'}
         </span>
       </Tooltip>
     );

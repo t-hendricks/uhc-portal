@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -5,10 +6,11 @@ import ClusterUtilizationChart from './ClusterUtilizationChart';
 import { metricsStatusMessages, maxMetricsTimeDelta } from './ResourceUsage.consts';
 import { parseValueWithUnit } from '../../../../../../common/units';
 import { getTimeDelta } from '../../../../../../common/helpers';
+import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 
 function ResourceUsage({ cluster }) {
   const metricsLatsUpdate = new Date(cluster.metrics.cpu.updated_timestamp);
-  const isArchived = cluster.subscription && cluster.subscription.status === 'Archived';
+  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
   const metricsAvailable = (OCM_SHOW_OLD_METRICS
     || getTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta) && !isArchived;

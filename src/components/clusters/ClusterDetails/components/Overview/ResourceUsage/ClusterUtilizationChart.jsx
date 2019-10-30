@@ -14,7 +14,10 @@ function ClusterUtilizationChart(props) {
   const format = humanize ? humanizeValueWithUnit : roundValueWithUnit;
   const formattedUsed = format(used, unit);
   const formattedTotal = format(total, unit);
-  const usedPercentage = Math.round((formattedUsed.value / formattedTotal.value) * 100 * 100) / 100;
+
+  // Step 1: used / total * 100 - calculate "used" in percentage out of the total
+  // Step 2: Math.round(Step1 * 100) / 100 - round to 2 decimal places
+  const usedPercentage = Math.round((used / total) * 100 * 100) / 100;
   const donutCenter = { primary: `${usedPercentage}%`, secondary: `of ${formattedTotal.value} ${formattedTotal.unit} used` };
 
   return (

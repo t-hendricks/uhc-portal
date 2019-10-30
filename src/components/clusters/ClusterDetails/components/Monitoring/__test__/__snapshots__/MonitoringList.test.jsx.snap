@@ -20,6 +20,13 @@ exports[`<MonitoringList /> should render 1`] = `
   </MonitoringListItem>
   <MonitoringListItem
     expanded={Array []}
+    title="Cluster operators"
+    toggle={[Function]}
+  >
+    <ClusterOperatorsTable />
+  </MonitoringListItem>
+  <MonitoringListItem
+    expanded={Array []}
     title="Resource usage"
     toggle={[Function]}
   >

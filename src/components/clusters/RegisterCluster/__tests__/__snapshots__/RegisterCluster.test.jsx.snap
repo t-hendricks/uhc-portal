@@ -141,7 +141,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
     </CardBody>
     <CardFooter>
       <Button
-        disabled={false}
+        isDisabled={false}
         onClick={[MockFunction]}
         type="submit"
         variant="primary"
@@ -153,7 +153,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
         to="/"
       >
         <Button
-          disabled={false}
+          isDisabled={false}
           variant="secondary"
         >
           Cancel

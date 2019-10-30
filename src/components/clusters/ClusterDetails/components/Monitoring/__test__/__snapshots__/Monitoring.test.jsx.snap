@@ -22,6 +22,7 @@ exports[`<Monitoring /> should render 1`] = `
         alerts={Object {}}
         cluster={Object {}}
         nodes={Object {}}
+        operators={Object {}}
         resourceUsage={Object {}}
       />
     </CardBody>

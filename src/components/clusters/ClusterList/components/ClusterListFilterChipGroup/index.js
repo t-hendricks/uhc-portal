@@ -5,7 +5,7 @@ import { viewConstants } from '../../../../../redux/constants';
 import ClusterListFilterChipGroup from './ClusterListFilterChipGroup';
 
 const mapStateToProps = state => ({
-  currentFilter: state.viewOptions[viewConstants.CLUSTERS_VIEW].flags.subscriptionFilter || [],
+  currentFilters: state.viewOptions[viewConstants.CLUSTERS_VIEW].flags.subscriptionFilter || {},
 });
 
 const mapDispatchToProps = {

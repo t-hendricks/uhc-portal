@@ -35,7 +35,7 @@ const validateNodeCount = (value) => {
   if (Number.isNaN(Number(value))) {
     return 'Input must be a number.';
   }
-  return validators.nodes(Number(value), { value: 4 });
+  return validators.nodes(Number(value), { value: 0 }, 250);
 };
 
 const validateSockets = value => (
@@ -245,9 +245,9 @@ class RegisterCluster extends React.Component {
             </Grid>
           </CardBody>
           <CardFooter>
-            <Button variant="primary" type="submit" onClick={handleSubmit} disabled={registerClusterResponse.pending}>Register cluster</Button>
+            <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={registerClusterResponse.pending}>Register cluster</Button>
             <Link to="/">
-              <Button variant="secondary" disabled={registerClusterResponse.pending}>Cancel</Button>
+              <Button variant="secondary" isDisabled={registerClusterResponse.pending}>Cancel</Button>
             </Link>
           </CardFooter>
         </Card>

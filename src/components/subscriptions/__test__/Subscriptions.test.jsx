@@ -1,10 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import {
-  SUBSCRIPTION_ARCHIVED,
-  SUBSCRIPTION_DEPROVISIONED,
-} from '../../../common/subscriptionTypes';
+import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 
 import * as Fixtures from './Subscriptions.fixtures';
 import Subscriptions from '../Subscriptions';
@@ -40,7 +37,7 @@ describe('<Subscriptions />', () => {
     });
     it('should call fetch method', () => {
       const search = [
-        `status NOT IN ('${SUBSCRIPTION_ARCHIVED}','${SUBSCRIPTION_DEPROVISIONED}')`,
+        `status NOT IN ('${subscriptionStatuses.ARCHIVED}','${subscriptionStatuses.DEPROVISIONED}')`,
         "managed = 'FALSE'",
         `organization_id='${Fixtures.organizationID}'`,
       ];

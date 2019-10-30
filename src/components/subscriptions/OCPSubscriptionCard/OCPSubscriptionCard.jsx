@@ -7,15 +7,7 @@ import {
   CardBody,
 } from '@patternfly/react-core';
 
-import {
-  SUBSCRIPTION_ARCHIVED,
-  SUBSCRIPTION_DEPROVISIONED,
-  ENTITLEMENT_OK,
-  ENTITLEMENT_NOT_SET,
-  ENTITLEMENT_OVERCOMMITTED,
-  ENTITLEMENT_INCONSISTENT_SERVICES,
-  ENTITLEMENT_UNKNOWN,
-} from '../../../common/subscriptionTypes';
+import { subscriptionStatuses, entitlementStatuses } from '../../../common/subscriptionTypes';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 import OCPSubscriptionSummary from './OCPSubscriptionSummary';
 
@@ -28,7 +20,7 @@ class OCPSubscriptionCard extends Component {
   refresh = () => {
     const { organizationID, fetchSubscriptions } = this.props;
     const search = [
-      `status NOT IN ('${SUBSCRIPTION_ARCHIVED}','${SUBSCRIPTION_DEPROVISIONED}')`,
+      `status NOT IN ('${subscriptionStatuses.ARCHIVED}','${subscriptionStatuses.DEPROVISIONED}')`,
       "managed = 'FALSE'",
       `organization_id='${organizationID}'`,
     ];
@@ -45,11 +37,11 @@ class OCPSubscriptionCard extends Component {
     if (subscriptions.fulfilled) {
       const inputStats = countBy(subscriptions.items, 'entitlement_status');
       const stats = Object.assign({
-        [ENTITLEMENT_OK]: 0,
-        [ENTITLEMENT_NOT_SET]: 0,
-        [ENTITLEMENT_OVERCOMMITTED]: 0,
-        [ENTITLEMENT_INCONSISTENT_SERVICES]: 0,
-        [ENTITLEMENT_UNKNOWN]: 0,
+        [entitlementStatuses.OK]: 0,
+        [entitlementStatuses.NOT_SET]: 0,
+        [entitlementStatuses.OVERCOMMITTED]: 0,
+        [entitlementStatuses.INCONSISTENT_SERVICES]: 0,
+        [entitlementStatuses.UNKNOWN]: 0,
       }, inputStats);
       content = <OCPSubscriptionSummary stats={stats} />;
     } else {

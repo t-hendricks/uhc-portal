@@ -6,41 +6,67 @@ import {
   Chip, ChipGroup, ChipGroupToolbarItem, Button, Split, SplitItem,
 } from '@patternfly/react-core';
 
-function ClusterListFilterChipGroup({ currentFilter, setFilter }) {
-  if (isEmpty(currentFilter)) {
+import helpers from '../../../../../common/helpers';
+
+function ClusterListFilterChipGroup({ currentFilters, setFilter }) {
+  if (helpers.nestedIsEmpty(currentFilters)) {
     return null;
   }
 
-  const filterLabels = {
-    Ok: 'Subscribed',
-    NotSet: 'Not Subscribed',
-    Overcommitted: 'Insufficient',
-    InconsistentServices: 'Invalid',
-    NotReconciled: 'Unknown',
-  };
-
+  const groups = [
+    {
+      key: 'entitlement_status',
+      label: 'Subscription status',
+      optionLabels: {
+        Ok: 'Subscribed',
+        NotSet: 'Not Subscribed',
+        Overcommitted: 'Insufficient',
+        InconsistentServices: 'Invalid',
+        NotReconciled: 'Unknown',
+      },
+    },
+    {
+      key: 'plan_id',
+      label: 'Cluster Type',
+      optionLabels: {
+        OSD: 'OSD',
+        OCP: 'OCP',
+      },
+    },
+  ];
 
   return (
     <Split>
       <SplitItem>
         <ChipGroup withToolbar>
-          <ChipGroupToolbarItem key="Subscription status" categoryName="Subscription status">
-            {currentFilter.map((key) => {
-              const label = filterLabels[key];
-              const deleteItem = () => {
-                setFilter(currentFilter.filter(item => item !== key));
-              };
-              return (
-                <Chip key={key} onClick={deleteItem}>
-                  {label}
-                </Chip>
-              );
-            })}
-          </ChipGroupToolbarItem>
+          {groups.map((group) => {
+            const currentFilter = currentFilters[group.key] || [];
+            if (isEmpty(currentFilter)) {
+              return null;
+            }
+            return (
+              <ChipGroupToolbarItem key={`chipgroup-${group.key}`} categoryName={group.label}>
+                {currentFilter.map((key) => {
+                  const label = group.optionLabels[key];
+                  const deleteItem = () => {
+                    setFilter({
+                      ...currentFilters,
+                      [group.key]: currentFilter.filter(item => item !== key),
+                    });
+                  };
+                  return (
+                    <Chip key={key} onClick={deleteItem}>
+                      {label}
+                    </Chip>
+                  );
+                })}
+              </ChipGroupToolbarItem>
+            );
+          }).filter(Boolean)}
         </ChipGroup>
       </SplitItem>
       <SplitItem>
-        <Button variant="link" onClick={() => setFilter([])}>Clear filters</Button>
+        <Button variant="link" onClick={() => setFilter({})}>Clear filters</Button>
       </SplitItem>
     </Split>
   );
@@ -48,7 +74,7 @@ function ClusterListFilterChipGroup({ currentFilter, setFilter }) {
 
 ClusterListFilterChipGroup.propTypes = {
   setFilter: PropTypes.func.isRequired,
-  currentFilter: PropTypes.arrayOf(PropTypes.string),
+  currentFilters: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
 };
 
 export default ClusterListFilterChipGroup;
