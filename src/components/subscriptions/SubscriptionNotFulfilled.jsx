@@ -7,20 +7,23 @@ import {
   EmptyStateBody,
   Title,
   Button,
+  PageSection,
 } from '@patternfly/react-core';
 
 
 function SubscriptionNotFulfilled({ data, refresh }) {
   const getEmptyState = (title, text, button) => (
-    <EmptyState>
-      <Title headingLevel="h4" size="2xl">
-        { title }
-      </Title>
-      <EmptyStateBody>
-        { text }
-      </EmptyStateBody>
-      { button }
-    </EmptyState>
+    <PageSection>
+      <EmptyState>
+        <Title headingLevel="h4" size="2xl">
+          { title }
+        </Title>
+        <EmptyStateBody>
+          { text }
+        </EmptyStateBody>
+        { button }
+      </EmptyState>
+    </PageSection>
   );
 
   const getErrorText = ({ errorMessage, operationID }) => {
@@ -73,7 +76,7 @@ function SubscriptionNotFulfilled({ data, refresh }) {
     const errorButton = <Button onClick={refresh}>Try again</Button>;
     content = getEmptyState(configType.errorTitle, errorText, errorButton);
   } else if (data.pending) {
-    content = <Spinner centered />;
+    content = <PageSection><Spinner centered /></PageSection>;
   } else if (data.empty) {
     content = getEmptyState(configType.emptyTitle, configType.text, configType.emptyButton);
   }

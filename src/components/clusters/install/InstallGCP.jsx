@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { PageSection } from '@patternfly/react-core';
+
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsGCP from './components/instructions/InstructionsGCP';
 import { scrollToTop } from '../../../common/helpers';
@@ -18,7 +21,9 @@ class InstallGCP extends Component {
     const { token } = this.props;
 
     return (
-      <InstructionsGCP token={token} />);
+      <PageSection>
+        <InstructionsGCP token={token} />
+      </PageSection>);
   }
 }
 

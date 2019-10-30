@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { PageSection } from '@patternfly/react-core';
+
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsAWSIPI from './components/instructions/InstructionsAWSIPI';
 import { scrollToTop } from '../../../common/helpers';
@@ -16,7 +19,7 @@ class InstallAWSIPI extends Component {
 
   render() {
     const { token } = this.props;
-    return <InstructionsAWSIPI token={token} />;
+    return <PageSection><InstructionsAWSIPI token={token} /></PageSection>;
   }
 }
 

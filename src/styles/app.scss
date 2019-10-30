@@ -319,16 +319,8 @@ p.notfound {
   padding: 5px;
 }
 
-#register-cluster{
-  margin-top: 30px;
-}
-
 #register-cluster .pf-m-primary {
   margin-right: 20px;
-}
-
-#register-cluster-top-row {
-  padding-bottom: 20px;
 }
 
 .top-row {
@@ -706,6 +698,7 @@ h4.pf-c-alert__title {
 }
 
 .cluster-loading-container {
+  margin-top: 15px;
   height: 132px;
 }
 
@@ -776,15 +769,6 @@ div.pf-c-alert.archived-cluster-toast {
   margin-top: 6px;
 }
 #subscriptions-content {
-  .page-header {
-    margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
-    margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
-    margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
-    padding-top: var(--pf-c-page__main-section--PaddingTop);
-    padding-right: var(--pf-c-page__main-section--PaddingRight);
-    padding-left: var(--pf-c-page__main-section--PaddingLeft);
-    padding-bottom: var(--pf-c-page__main-section--PaddingBottom);
-  }
   .pf-c-card {
     margin-top: var(--pf-global--spacer--lg);
   }

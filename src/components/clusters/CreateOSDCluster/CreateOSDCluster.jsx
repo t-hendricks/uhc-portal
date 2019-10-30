@@ -14,6 +14,7 @@ import {
   GridItem,
   Split,
   SplitItem,
+  PageSection,
 } from '@patternfly/react-core';
 
 import PageTitle from '../../common/PageTitle';
@@ -78,61 +79,63 @@ class CreateOSDCluster extends React.Component {
     );
 
     if (machineTypes.pending || organization.pending || cloudProviders.pending) {
-      return <Spinner centered />;
+      return <PageSection><Spinner centered /></PageSection>;
     }
 
     return (
-      <Card>
-        <div className="pf-c-content ocm-page">
-          <Breadcrumb className="breadcrumbs-in-card">
-            <LinkContainer to="">
-              <BreadcrumbItem to="#">
-                Clusters
+      <PageSection>
+        <Card>
+          <div className="pf-c-content ocm-page">
+            <Breadcrumb className="breadcrumbs-in-card">
+              <LinkContainer to="">
+                <BreadcrumbItem to="#">
+                  Clusters
+                </BreadcrumbItem>
+              </LinkContainer>
+              <LinkContainer to="/create">
+                <BreadcrumbItem to="#">
+                  Create
+                </BreadcrumbItem>
+              </LinkContainer>
+              <BreadcrumbItem isActive>
+                OpenShift Dedicated
               </BreadcrumbItem>
-            </LinkContainer>
-            <LinkContainer to="/create">
-              <BreadcrumbItem to="#">
-                Create
-              </BreadcrumbItem>
-            </LinkContainer>
-            <BreadcrumbItem isActive>
-              OpenShift Dedicated
-            </BreadcrumbItem>
-          </Breadcrumb>
+            </Breadcrumb>
 
-          <PageTitle title="Create an OpenShift Dedicated Cluster" />
+            <PageTitle title="Create an OpenShift Dedicated Cluster" />
 
-          <Form onSubmit={handleSubmit}>
-            <Grid gutter="sm">
+            <Form onSubmit={handleSubmit}>
+              <Grid gutter="sm">
 
-              {hasError}
-              <ManagedClusterForm pending={createClusterResponse.pending} touch={touch} />
+                {hasError}
+                <ManagedClusterForm pending={createClusterResponse.pending} touch={touch} />
 
-              <GridItem>
-                <Split gutter="sm" className="create-osd-form-button-split">
-                  <SplitItem>
-                    <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={createClusterResponse.pending}>
-                      Create cluster
-                    </Button>
-                  </SplitItem>
-                  <SplitItem>
-                    <Link to="/">
-                      <Button variant="secondary" isDisabled={createClusterResponse.pending}>
-                        Cancel
+                <GridItem>
+                  <Split gutter="sm" className="create-osd-form-button-split">
+                    <SplitItem>
+                      <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={createClusterResponse.pending}>
+                        Create cluster
                       </Button>
-                    </Link>
-                  </SplitItem>
-                  <SplitItem>
-                    {createClusterResponse.pending ? loadingSpinner() : null}
-                  </SplitItem>
-                </Split>
-              </GridItem>
+                    </SplitItem>
+                    <SplitItem>
+                      <Link to="/">
+                        <Button variant="secondary" isDisabled={createClusterResponse.pending}>
+                          Cancel
+                        </Button>
+                      </Link>
+                    </SplitItem>
+                    <SplitItem>
+                      {createClusterResponse.pending ? loadingSpinner() : null}
+                    </SplitItem>
+                  </Split>
+                </GridItem>
 
-            </Grid>
-          </Form>
+              </Grid>
+            </Form>
 
-        </div>
-      </Card>
+          </div>
+        </Card>
+      </PageSection>
     );
   }
 }
