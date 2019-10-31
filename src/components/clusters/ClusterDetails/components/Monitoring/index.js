@@ -23,7 +23,9 @@ const mapStateToProps = (state) => {
   const lastCheckIn = lastCheckInSelector(cluster.activity_timestamp);
   const resourceUsageIssues = resourceUsageIssuesSelector(cpu, memory);
   const operatorsIssues = issuesSelector(operators.data, 'condition', 'failing');
-  const discoveredIssues = (alertsIssues + nodesIssues + resourceUsageIssues) || null;
+  const discoveredIssues = (
+    alertsIssues + nodesIssues + resourceUsageIssues + operatorsIssues
+  ) || null;
   const healthStatus = clusterHealthSelector(
     cluster,
     lastCheckIn,
