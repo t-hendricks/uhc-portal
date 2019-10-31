@@ -11,7 +11,7 @@ exports[`<ClusterHealthCard /> should render 1`] = `
       >
         <Split>
           <SplitItem>
-            <WarningTriangleIcon
+            <ExclamationTriangleIcon
               color="#f0ab00"
               noVerticalAlign={false}
               size="md"

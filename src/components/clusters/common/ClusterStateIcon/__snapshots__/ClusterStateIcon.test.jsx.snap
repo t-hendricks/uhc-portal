@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ClusterStateIcon /> renders correctly for error status 1`] = `
-<ErrorCircleOIcon
+<ExclamationCircleIcon
   className="clusterstate"
   color="#c9190b"
   noVerticalAlign={false}
@@ -41,7 +41,7 @@ exports[`<ClusterStateIcon /> renders correctly for pending status 1`] = `
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for ready status 1`] = `
-<OkIcon
+<CheckCircleIcon
   className="clusterstate"
   color="#92d400"
   noVerticalAlign={false}
@@ -71,7 +71,7 @@ exports[`<ClusterStateIcon /> renders correctly for unknown status 1`] = `
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for warning status 1`] = `
-<WarningTriangleIcon
+<ExclamationTriangleIcon
   className="clusterstate"
   color="#f0ab00"
   noVerticalAlign={false}

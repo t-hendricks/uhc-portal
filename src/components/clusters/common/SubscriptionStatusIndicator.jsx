@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Popover, PopoverPosition, Button } from '@patternfly/react-core';
-import { CheckCircleIcon, WarningTriangleIcon, UnknownIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon, ExclamationTriangleIcon, UnknownIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
 import { entitlementStatuses } from '../../../common/subscriptionTypes';
@@ -27,7 +27,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           bodyContent="This cluster does not have a subscription attached."
           aria-label="Not Subscribed"
         >
-          <Button variant="link" isInline icon={<WarningTriangleIcon color={global_warning_color_100.value} />}>
+          <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
             Not Subscribed
           </Button>
         </Popover>
@@ -39,7 +39,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           bodyContent="This cluster is consuming more resources than it is entitled to."
           aria-label="Insufficient"
         >
-          <Button variant="link" isInline icon={<WarningTriangleIcon color={global_warning_color_100.value} />}>
+          <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
             Insufficient
           </Button>
         </Popover>
@@ -51,7 +51,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           bodyContent="This cluster is attached to subscriptions with different support levels."
           aria-label="Invalid"
         >
-          <Button variant="link" isInline icon={<WarningTriangleIcon color={global_warning_color_100.value} />}>
+          <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
             Invalid
           </Button>
         </Popover>

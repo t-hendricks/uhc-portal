@@ -14,7 +14,7 @@ import {
   InProgressIcon,
   UnknownIcon,
   DisconnectedIcon,
-  WarningTriangleIcon,
+  ExclamationTriangleIcon,
 } from '@patternfly/react-icons';
 
 // eslint-disable-next-line camelcase
@@ -57,7 +57,7 @@ function ClusterHealthCard({
       title = <Title headingLevel="h2" size="3xl">Disconnected cluster</Title>;
       break;
     case monitoringStatuses.NO_METRICS:
-      icon = <WarningTriangleIcon size="md" color={global_warning_color_100.value} />;
+      icon = <ExclamationTriangleIcon size="md" color={global_warning_color_100.value} />;
       title = <Title headingLevel="h2" size="3xl">Cluster has no metrics</Title>;
       break;
     default:
