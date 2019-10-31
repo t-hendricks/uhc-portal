@@ -7,7 +7,7 @@ import {
   TableVariant,
 } from '@patternfly/react-table';
 
-import { ExclamationCircleIcon, WarningTriangleIcon } from '@patternfly/react-icons';
+import { ExclamationCircleIcon, ExclamationTriangleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
 
@@ -16,7 +16,7 @@ import { alertsSeverity } from '../statusHelper';
 
 function AlertsTable({ alerts = [] }) {
   const errorIcon = <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />;
-  const warningIcon = <WarningTriangleIcon color={global_warning_color_100.value} size="md" />;
+  const warningIcon = <ExclamationTriangleIcon color={global_warning_color_100.value} size="md" />;
 
   const columns = [
     { title: 'Name' },

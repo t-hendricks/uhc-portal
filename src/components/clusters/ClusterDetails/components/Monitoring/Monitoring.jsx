@@ -9,7 +9,7 @@ import {
   EmptyStateBody,
   EmptyStateIcon,
 } from '@patternfly/react-core';
-import { WarningTriangleIcon } from '@patternfly/react-icons';
+import { ExclamationTriangleIcon } from '@patternfly/react-icons';
 
 import ClusterHealthCard from './components/ClusterHealthCard';
 import MonitoringList from './components/MonitoringList';
@@ -32,7 +32,7 @@ class Monitoring extends React.Component {
 
     const emptyState = body => (
       <EmptyState>
-        <EmptyStateIcon icon={WarningTriangleIcon} />
+        <EmptyStateIcon icon={ExclamationTriangleIcon} />
         <Title headingLevel="h5" size="lg">Monitoring Data is not available</Title>
         <EmptyStateBody>
           <>

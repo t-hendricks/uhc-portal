@@ -8,7 +8,7 @@ import {
 } from '@patternfly/react-table';
 
 import {
-  ExclamationCircleIcon, InProgressIcon, UnknownIcon, CheckCircleIcon, WarningTriangleIcon,
+  ExclamationCircleIcon, InProgressIcon, UnknownIcon, CheckCircleIcon, ExclamationTriangleIcon,
 } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
@@ -39,7 +39,7 @@ function ClusterOperatorsTable({ operators = [] }) {
         statusStr = 'Updating';
         break;
       case operatorsStatuses.DEGRADED:
-        icon = <WarningTriangleIcon className="status-icon" size="md" color={global_warning_color_100.value} />;
+        icon = <ExclamationTriangleIcon className="status-icon" size="md" color={global_warning_color_100.value} />;
         statusStr = 'Degraded';
         break;
       default:
