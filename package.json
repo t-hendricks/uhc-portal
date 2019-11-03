@@ -1,9 +1,5 @@
 {
   "name": "cloud.openshift.com",
-  "sideEffects": [
-    "*.css",
-    "*.scss"
-  ],
   "version": "0.0.0",
   "description": "OpenShift Unified Hybrid Cloud",
   "repository": {
