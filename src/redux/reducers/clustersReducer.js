@@ -22,6 +22,7 @@ const baseState = {
   errorDetails: null,
   pending: false,
   fulfilled: false,
+  valid: true,
 };
 
 const initialState = {
@@ -88,6 +89,7 @@ function clustersReducer(state = initialState, action) {
         'clusters',
         {
           pending: true,
+          valid: true,
           clusters: state.clusters.clusters,
         },
         {

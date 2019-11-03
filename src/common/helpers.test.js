@@ -36,6 +36,13 @@ test('Test buildUrlParams', () => {
   expect(buildUrlParams(params)).toBe('key1=a%20&key2=a%3F');
 });
 
+test('buildFilterURLParams()', () => {
+  const params = { key1: ['a', 'b'], key2: [], key3: ['c'] };
+  expect(helpers.buildFilterURLParams(params)).toBe('key1=a,b&key3=c');
+  expect(helpers.buildFilterURLParams({})).toBe('');
+});
+
+
 describe('createViewQueryObject()', () => {
   const baseViewOptions = {
     currentPage: 3,
