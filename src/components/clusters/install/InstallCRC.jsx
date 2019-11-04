@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { PageSection } from '@patternfly/react-core';
+
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsCRC from './components/instructions/InstructionsCRC';
 import { scrollToTop } from '../../../common/helpers';
@@ -18,7 +21,10 @@ class InstallCRC extends Component {
     const { token } = this.props;
 
     return (
-      <InstructionsCRC token={token} />);
+      <PageSection>
+        <InstructionsCRC token={token} />
+      </PageSection>
+    );
   }
 }
 

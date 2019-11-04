@@ -33,6 +33,9 @@ function ClusterListEmptyState({ hasQuota }) {
         <Link to="/register">
           <Button variant="link">Register disconnected cluster</Button>
         </Link>
+        <Link to="/archived">
+          <Button variant="link">View archived clusters</Button>
+        </Link>
       </EmptyStateSecondaryActions>
     </EmptyState>
   );

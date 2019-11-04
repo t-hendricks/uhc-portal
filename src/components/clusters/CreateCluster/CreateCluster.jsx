@@ -8,6 +8,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  PageSection,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import openShiftDedicatedLogo from '../../../styles/images/Logo-Red_Hat-OpenShift_Dedicated-A-Standard-RGB.svg';
@@ -57,27 +58,31 @@ class CreateCluster extends React.Component {
 
     const quotaRequestComplete = organization.fulfilled || organization.error;
     return quotaRequestComplete ? (
-      <Card>
-        <div className="pf-c-content ocm-page">
-          <Breadcrumb className="breadcrumbs-in-card">
-            <LinkContainer to="">
-              <BreadcrumbItem to="#">
-                Clusters
+      <PageSection>
+        <Card>
+          <div className="pf-c-content ocm-page">
+            <Breadcrumb className="breadcrumbs-in-card">
+              <LinkContainer to="">
+                <BreadcrumbItem to="#">
+                  Clusters
+                </BreadcrumbItem>
+              </LinkContainer>
+              <BreadcrumbItem isActive>
+                Create
               </BreadcrumbItem>
-            </LinkContainer>
-            <BreadcrumbItem isActive>
-              Create
-            </BreadcrumbItem>
-          </Breadcrumb>
-          <PageTitle title="Create a Cluster to Get Started" />
-          <div className="flex-container">
-            {hasQuota && (<React.Fragment>{osdCard}</React.Fragment>)}
-            {ocpCard}
+            </Breadcrumb>
+            <PageTitle title="Create a Cluster to Get Started" />
+            <div className="flex-container">
+              {hasQuota && (<React.Fragment>{osdCard}</React.Fragment>)}
+              {ocpCard}
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+      </PageSection>
     ) : (
-      <Spinner centered />
+      <PageSection>
+        <Spinner centered />
+      </PageSection>
     );
   }
 }

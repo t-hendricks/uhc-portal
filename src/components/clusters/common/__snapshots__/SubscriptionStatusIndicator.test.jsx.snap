@@ -63,7 +63,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Inco
 >
   <Button
     icon={
-      <WarningTriangleIcon
+      <ExclamationTriangleIcon
         color="#f0ab00"
         noVerticalAlign={false}
         size="sm"
@@ -102,7 +102,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is NotS
 >
   <Button
     icon={
-      <WarningTriangleIcon
+      <ExclamationTriangleIcon
         color="#f0ab00"
         noVerticalAlign={false}
         size="sm"
@@ -154,7 +154,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Over
 >
   <Button
     icon={
-      <WarningTriangleIcon
+      <ExclamationTriangleIcon
         color="#f0ab00"
         noVerticalAlign={false}
         size="sm"

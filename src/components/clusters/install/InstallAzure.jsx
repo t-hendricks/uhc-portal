@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { PageSection } from '@patternfly/react-core';
+
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsAzure from './components/instructions/InstructionsAzure';
 import { scrollToTop } from '../../../common/helpers';
@@ -18,7 +21,9 @@ class InstallAzure extends Component {
     const { token } = this.props;
 
     return (
-      <InstructionsAzure token={token} />);
+      <PageSection>
+        <InstructionsAzure token={token} />
+      </PageSection>);
   }
 }
 

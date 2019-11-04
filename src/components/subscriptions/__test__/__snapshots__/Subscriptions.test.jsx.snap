@@ -1,58 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Subscriptions /> OCPSubscriptionCard Empty should render empty OCP subscriptions 1`] = `
-<EmptyState>
-  <Title
-    headingLevel="h4"
-    size="2xl"
-  >
-    You do not have any clusters
-  </Title>
-  <EmptyStateBody>
-    <p>
-      Create a cluster to get started.
-    </p>
-  </EmptyStateBody>
-  <Link
-    replace={false}
-    to="/install"
-  >
-    <Button>
-      Create Cluster
-    </Button>
-  </Link>
-</EmptyState>
+<PageSection>
+  <EmptyState>
+    <Title
+      headingLevel="h4"
+      size="2xl"
+    >
+      You do not have any clusters
+    </Title>
+    <EmptyStateBody>
+      <p>
+        Create a cluster to get started.
+      </p>
+    </EmptyStateBody>
+    <Link
+      replace={false}
+      to="/install"
+    >
+      <Button>
+        Create Cluster
+      </Button>
+    </Link>
+  </EmptyState>
+</PageSection>
 `;
 
 exports[`<Subscriptions /> OCPSubscriptionCard Error should render error OCP subscriptions 1`] = `
-<EmptyState>
-  <Title
-    headingLevel="h4"
-    size="2xl"
-  >
-    Unable to retrieve subscription status
-  </Title>
-  <EmptyStateBody>
-    <p>
-      An error has occured! Try again or contact support by including this error message:
-    </p>
-    <q />
-    <p>
-      Operation ID: N/A
-    </p>
-  </EmptyStateBody>
-  <Button
-    onClick={[MockFunction]}
-  >
-    Try again
-  </Button>
-</EmptyState>
+<PageSection>
+  <EmptyState>
+    <Title
+      headingLevel="h4"
+      size="2xl"
+    >
+      Unable to retrieve subscription status
+    </Title>
+    <EmptyStateBody>
+      <p>
+        An error has occured! Try again or contact support by including this error message:
+      </p>
+      <q />
+      <p>
+        Operation ID: N/A
+      </p>
+    </EmptyStateBody>
+    <Button
+      onClick={[MockFunction]}
+    >
+      Try again
+    </Button>
+  </EmptyState>
+</PageSection>
 `;
 
 exports[`<Subscriptions /> OCPSubscriptionCard Loading should render loading OCP subscriptions 1`] = `
-<Spinner
-  centered={true}
-/>
+<PageSection>
+  <Spinner
+    centered={true}
+  />
+</PageSection>
 `;
 
 exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
@@ -264,57 +270,63 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
 `;
 
 exports[`<Subscriptions /> OSDSubscriptionCard Empty should render empty OSD quota summary 1`] = `
-<EmptyState>
-  <Title
-    headingLevel="h4"
-    size="2xl"
-  >
-    You do not have any quota
-  </Title>
-  <EmptyStateBody>
-    <p>
-      <a
-        href="https://www.openshift.com/products/dedicated/contact/"
-        target="_blank"
-      >
-        Contact sales
-      </a>
-       
-      to get started with OpenShift Dedicated.
-    </p>
-  </EmptyStateBody>
-</EmptyState>
+<PageSection>
+  <EmptyState>
+    <Title
+      headingLevel="h4"
+      size="2xl"
+    >
+      You do not have any quota
+    </Title>
+    <EmptyStateBody>
+      <p>
+        <a
+          href="https://www.openshift.com/products/dedicated/contact/"
+          target="_blank"
+        >
+          Contact sales
+        </a>
+         
+        to get started with OpenShift Dedicated.
+      </p>
+    </EmptyStateBody>
+  </EmptyState>
+</PageSection>
 `;
 
 exports[`<Subscriptions /> OSDSubscriptionCard Error should render error OSD quota summary 1`] = `
-<EmptyState>
-  <Title
-    headingLevel="h4"
-    size="2xl"
-  >
-    Unable to retrieve quota information
-  </Title>
-  <EmptyStateBody>
-    <p>
-      An error has occured! Try again or contact support by including this error message:
-    </p>
-    <q />
-    <p>
-      Operation ID: N/A
-    </p>
-  </EmptyStateBody>
-  <Button
-    onClick={[MockFunction]}
-  >
-    Try again
-  </Button>
-</EmptyState>
+<PageSection>
+  <EmptyState>
+    <Title
+      headingLevel="h4"
+      size="2xl"
+    >
+      Unable to retrieve quota information
+    </Title>
+    <EmptyStateBody>
+      <p>
+        An error has occured! Try again or contact support by including this error message:
+      </p>
+      <q />
+      <p>
+        Operation ID: N/A
+      </p>
+    </EmptyStateBody>
+    <Button
+      onClick={[MockFunction]}
+    >
+      Try again
+    </Button>
+  </EmptyState>
+</PageSection>
 `;
 
 exports[`<Subscriptions /> OSDSubscriptionCard Loading should render loading OSD quota summary 1`] = `
-<Spinner
-  centered={true}
-/>
+<PageSection>
+  <Spinner
+    centered={true}
+  />
+</PageSection>
 `;
 
 exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
@@ -441,21 +453,21 @@ exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
 `;
 
 exports[`<Subscriptions /> Subscriptions should render 1`] = `
-<div
-  id="subscriptions-content"
->
-  <PageHeader
-    className="page-header"
-  >
+<Fragment>
+  <PageHeader>
     <PageHeaderTitle
       title="Subscriptions"
     />
   </PageHeader>
-  <Connect(OCPSubscriptionCard)
-    organizationID="org-1"
-  />
-  <Connect(OSDSubscriptionCard)
-    organizationID="org-1"
-  />
-</div>
+  <PageSection
+    id="subscriptions-content"
+  >
+    <Connect(OCPSubscriptionCard)
+      organizationID="org-1"
+    />
+    <Connect(OSDSubscriptionCard)
+      organizationID="org-1"
+    />
+  </PageSection>
+</Fragment>
 `;

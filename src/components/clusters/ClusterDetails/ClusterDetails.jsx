@@ -19,7 +19,7 @@ import { Redirect } from 'react-router';
 import get from 'lodash/get';
 
 import {
-  Alert, AlertActionCloseButton, EmptyState, TabContent,
+  Alert, AlertActionCloseButton, EmptyState, TabContent, PageSection,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
@@ -253,7 +253,7 @@ class ClusterDetails extends Component {
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
     return (
-      <div id="clusterdetails-content">
+      <PageSection id="clusterdetails-content">
         {toast}
         <ClusterDetailsTop
           cluster={cluster}
@@ -314,7 +314,7 @@ class ClusterDetails extends Component {
         }
           }
         />
-      </div>
+      </PageSection>
     );
   }
 }

@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 import {
   Alert,
   AlertActionCloseButton,
@@ -29,6 +29,7 @@ import {
   EmptyState,
   Split,
   SplitItem,
+  PageSection,
 } from '@patternfly/react-core';
 
 import ClusterListFilter from '../common/ClusterListFilter';
@@ -73,7 +74,6 @@ class ClusterList extends Component {
 
     // refresh needs to be bound because it is passed to another component
     this.refresh = this.refresh.bind(this);
-    // the various open dialog methods get called from the table component
   }
 
   componentDidMount() {
@@ -144,6 +144,7 @@ class ClusterList extends Component {
       archivedCluster,
       operationID,
       closeToast,
+      history,
     } = this.props;
 
     const toast = archivedCluster.showToast && (
@@ -155,9 +156,15 @@ class ClusterList extends Component {
       />
     );
 
+    const pageHeader = (
+      <PageHeader>
+        <PageHeaderTitle title="Clusters" />
+      </PageHeader>
+    );
+
     if (error && !size(clusters)) {
       return (
-        <React.Fragment>
+        <PageSection>
           {toast}
           <EmptyState>
             <ErrorBox
@@ -168,22 +175,27 @@ class ClusterList extends Component {
               }}
             />
           </EmptyState>
-        </React.Fragment>);
+        </PageSection>);
     }
 
-    if ((!size(clusters) && pending && (isEmpty(viewOptions.filter) || !valid))
+    const hasNoFilters = isEmpty(viewOptions.filter)
+    && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
+
+    if ((!size(clusters) && pending && (hasNoFilters || !valid))
     || (!organization.fulfilled && !organization.error)) {
       return (
         <React.Fragment>
           {toast}
-          <Card>
-            <div className="cluster-list">
-              <h1>Clusters</h1>
-              <div className="cluster-loading-container">
-                <Spinner centered />
+          {pageHeader}
+          <PageSection>
+            <Card>
+              <div className="cluster-list">
+                <div className="cluster-loading-container">
+                  <Spinner centered />
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </PageSection>
         </React.Fragment>
       );
     }
@@ -191,84 +203,88 @@ class ClusterList extends Component {
     if (!size(clusters) && !pending && isEmpty(viewOptions.filter)
         && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter)) {
       return (
-        <React.Fragment>
+        <PageSection>
           {toast}
           <GlobalErrorBox />
           <ClusterListEmptyState hasQuota={hasQuota} />
-        </React.Fragment>
+        </PageSection>
       );
     }
 
     return (
-      <Card>
-        <div className="cluster-list">
-          {toast}
-          <GlobalErrorBox />
-          <h1>Clusters</h1>
-          <Split id="cluster-list-top">
-            <SplitItem>
-              <ClusterListFilter view={viewConstants.CLUSTERS_VIEW} />
-            </SplitItem>
-            <SplitItem className="split-margin-left">
-              <ClusterListFilterDropdown />
-            </SplitItem>
-            <SplitItem className="split-margin-left">
-              <Link to={hasQuota ? '/create' : '/install'}>
-                <Button>Create Cluster</Button>
-              </Link>
-            </SplitItem>
-            <SplitItem>
-              <ClusterListExtraActions />
-            </SplitItem>
-            <SplitItem className="spinner-fit-container">
-              { pending && <Spinner className="cluster-list-spinner" /> }
-              { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }
-            </SplitItem>
-            <SplitItem isFilled />
-            <SplitItem>
+      <React.Fragment>
+        {pageHeader}
+        <PageSection>
+          <Card>
+            <div className="cluster-list">
+              {toast}
+              <GlobalErrorBox />
+              <Split id="cluster-list-top">
+                <SplitItem>
+                  <ClusterListFilter view={viewConstants.CLUSTERS_VIEW} />
+                </SplitItem>
+                <SplitItem className="split-margin-left">
+                  <ClusterListFilterDropdown history={history} />
+                </SplitItem>
+                <SplitItem className="split-margin-left">
+                  <Link to={hasQuota ? '/create' : '/install'}>
+                    <Button>Create Cluster</Button>
+                  </Link>
+                </SplitItem>
+                <SplitItem>
+                  <ClusterListExtraActions />
+                </SplitItem>
+                <SplitItem className="spinner-fit-container">
+                  { pending && <Spinner className="cluster-list-spinner" /> }
+                  { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }
+                </SplitItem>
+                <SplitItem isFilled />
+                <SplitItem>
+                  <ViewPaginationRow
+                    viewType={viewConstants.CLUSTERS_VIEW}
+                    currentPage={viewOptions.currentPage}
+                    pageSize={viewOptions.pageSize}
+                    totalCount={viewOptions.totalCount}
+                    totalPages={viewOptions.totalPages}
+                    variant="top"
+                  />
+                </SplitItem>
+                <SplitItem>
+                  <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
+                </SplitItem>
+              </Split>
+              <ClusterListFilterChipGroup history={history} />
+              <ClusterListTable
+                clusters={clusters || []}
+                viewOptions={viewOptions}
+                setSorting={setSorting}
+                openDeleteClusterDialog={(modalData) => {
+                  openModal('delete-cluster', modalData);
+                }}
+              />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
                 currentPage={viewOptions.currentPage}
                 pageSize={viewOptions.pageSize}
                 totalCount={viewOptions.totalCount}
                 totalPages={viewOptions.totalPages}
-                variant="top"
+                variant="bottom"
               />
-            </SplitItem>
-            <SplitItem>
-              <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
-            </SplitItem>
-          </Split>
-          <ClusterListFilterChipGroup />
-          <ClusterListTable
-            clusters={clusters || []}
-            viewOptions={viewOptions}
-            setSorting={setSorting}
-            openDeleteClusterDialog={(modalData) => {
-              openModal('delete-cluster', modalData);
-            }}
-          />
-          <ViewPaginationRow
-            viewType={viewConstants.CLUSTERS_VIEW}
-            currentPage={viewOptions.currentPage}
-            pageSize={viewOptions.pageSize}
-            totalCount={viewOptions.totalCount}
-            totalPages={viewOptions.totalPages}
-            variant="bottom"
-          />
-          <EditDisplayNameDialog onClose={invalidateClusters} />
-          <EditConsoleURLDialog onClose={invalidateClusters} />
-          <EditClusterDialog onClose={invalidateClusters} />
-          <ArchiveClusterDialog onClose={invalidateClusters} />
-          <UnarchiveClusterDialog onClose={invalidateClusters} />
-          <DeleteClusterDialog onClose={(shouldRefresh) => {
-            if (shouldRefresh) {
-              invalidateClusters();
-            }
-          }}
-          />
-        </div>
-      </Card>
+              <EditDisplayNameDialog onClose={invalidateClusters} />
+              <EditConsoleURLDialog onClose={invalidateClusters} />
+              <EditClusterDialog onClose={invalidateClusters} />
+              <ArchiveClusterDialog onClose={invalidateClusters} />
+              <UnarchiveClusterDialog onClose={invalidateClusters} />
+              <DeleteClusterDialog onClose={(shouldRefresh) => {
+                if (shouldRefresh) {
+                  invalidateClusters();
+                }
+              }}
+              />
+            </div>
+          </Card>
+        </PageSection>
+      </React.Fragment>
     );
   }
 }
@@ -300,6 +316,9 @@ ClusterList.propTypes = {
     showToast: PropTypes.bool.isRequired,
   }),
   closeToast: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default ClusterList;

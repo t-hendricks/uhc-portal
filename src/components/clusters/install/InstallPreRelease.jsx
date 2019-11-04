@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { PageSection } from '@patternfly/react-core';
+
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsPreRelease from './components/instructions/InstructionsPreRelease';
 import { scrollToTop } from '../../../common/helpers';
@@ -17,7 +20,7 @@ class InstallPreRelease extends Component {
 
   render() {
     const { token } = this.props;
-    return <InstructionsPreRelease token={token} />;
+    return <PageSection><InstructionsPreRelease token={token} /></PageSection>;
   }
 }
 

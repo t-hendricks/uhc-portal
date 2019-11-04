@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { PageSection } from '@patternfly/react-core';
+
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsBareMetal from './components/instructions/InstructionsBareMetal';
 import { scrollToTop } from '../../../common/helpers';
@@ -16,7 +19,7 @@ class InstallBareMetal extends Component {
 
   render() {
     const { token } = this.props;
-    return <InstructionsBareMetal token={token} />;
+    return <PageSection><InstructionsBareMetal token={token} /></PageSection>;
   }
 }
 

@@ -31,11 +31,9 @@ class App extends React.PureComponent {
     return (
       <React.Fragment>
         {config.override && <EnvOverrideMessage env={config.override} />}
-        <section className="pf-c-page__main-section">
-          <ErrorBoundary>
-            {children || <Router />}
-          </ErrorBoundary>
-        </section>
+        <ErrorBoundary>
+          {children || <Router />}
+        </ErrorBoundary>
       </React.Fragment>
     );
   }

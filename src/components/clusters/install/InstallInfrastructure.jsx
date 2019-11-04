@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { PageSection } from '@patternfly/react-core';
+
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsInfrastructure from './components/instructions/InstructionsInfrastructure';
 
@@ -15,7 +18,7 @@ class InstallInfrastructure extends Component {
 
   render() {
     const { token } = this.props;
-    return <InstructionsInfrastructure token={token} />;
+    return <PageSection><InstructionsInfrastructure token={token} /></PageSection>;
   }
 }
 

@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import {
   HourglassHalfIcon,
   InProgressIcon,
-  ErrorCircleOIcon,
-  OkIcon,
+  ExclamationCircleIcon,
+  CheckCircleIcon,
   BanIcon,
-  WarningTriangleIcon,
+  ExclamationTriangleIcon,
   UnlinkIcon,
   UnknownIcon,
 } from '@patternfly/react-icons';
@@ -41,13 +41,13 @@ function ClusterStateIcon(props) {
     case clusterStates.INSTALLING:
       return <InProgressIcon {...iconProps} />;
     case clusterStates.ERROR:
-      return <ErrorCircleOIcon color={global_danger_color_100.value} {...iconProps} />;
+      return <ExclamationCircleIcon color={global_danger_color_100.value} {...iconProps} />;
     case clusterStates.READY:
-      return <OkIcon color={global_success_color_100.value} {...iconProps} />;
+      return <CheckCircleIcon color={global_success_color_100.value} {...iconProps} />;
     case clusterStates.UNINSTALLING:
       return <BanIcon color={global_danger_color_100.value} {...iconProps} />;
     case clusterStates.WARNING:
-      return <WarningTriangleIcon color={global_warning_color_100.value} {...iconProps} />;
+      return <ExclamationTriangleIcon color={global_warning_color_100.value} {...iconProps} />;
     case clusterStates.STALE:
       return <UnlinkIcon {...staleIconProps} />;
     case clusterStates.LONG_STALE:
