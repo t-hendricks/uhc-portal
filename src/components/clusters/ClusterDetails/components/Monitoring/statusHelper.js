@@ -1,15 +1,11 @@
-const common = {
-  UPDATING: 'UPDATING',
-  UNKNOWN: 'UNKNOWN',
-};
-
 const monitoringStatuses = {
-  ...common,
   HEALTHY: 'HEALTHY',
   HAS_ISSUES: 'HAS_ISSUES',
   DISCONNECTED: 'DISCONNECTED',
   NO_METRICS: 'NO_METRICS',
   INSTALLING: 'INSTALLING',
+  UPGRADING: 'UPGRADING',
+  UNKNOWN: 'UNKNOWN',
 };
 
 const alertsSeverity = {
