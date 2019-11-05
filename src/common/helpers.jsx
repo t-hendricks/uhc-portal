@@ -156,7 +156,9 @@ function getErrorMessage(payload) {
     return message;
   }
 
-  if (response !== undefined && response.kind === 'Error') {
+
+  // CMS uses "kind" for the error object, but AMS uses 'type'
+  if (response !== undefined && (response.kind === 'Error' || response.type === 'Error')) {
     return `${response.code}:\n${response.reason}`;
   }
 
@@ -168,6 +170,7 @@ const getErrorState = action => ({
   pending: false,
   error: action.error,
   errorCode: get(action.payload, 'response.status'),
+  internalErrorCode: get(action.payload, 'response.data.code'),
   errorMessage: getErrorMessage(action.payload),
   errorDetails: get(action.payload, 'response.data.details'),
   operationID: get(action.payload, 'response.data.operation_id'),

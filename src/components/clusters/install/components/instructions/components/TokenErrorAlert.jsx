@@ -3,16 +3,13 @@ import PropTypes from 'prop-types';
 import {
   Alert,
 } from '@patternfly/react-core';
-import get from 'lodash/get';
 
 const TokenErrorAlert = ({ token }) => {
-  const code = get(token, 'error.code', '');
-  const message = get(token, 'error.message', '');
-  const title = code === 'ACCT-MGMT-22' ? message : (
+  const code = token.internalErrorCode || '';
+  const errorMessage = token.errorMessage || '';
+  const message = code === 'ACCT-MGMT-22' ? errorMessage : (
     <React.Fragment>
-      Failed to obtain authorization token:
-      {' '}
-      {message}
+      {errorMessage}
       <br />
       <br />
       Try again by refreshing the page.
@@ -32,8 +29,10 @@ const TokenErrorAlert = ({ token }) => {
       variant="danger"
       isInline
       className="token-error-alert"
-      title={title}
-    />
+      title="Failed to obtain authorization token"
+    >
+      {message}
+    </Alert>
   );
 };
 TokenErrorAlert.propTypes = {
