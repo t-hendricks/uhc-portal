@@ -10,6 +10,7 @@ import {
   ResourcesAlmostEmptyIcon,
   ResourcesAlmostFullIcon,
   ResourcesFullIcon,
+  OutlinedCircleIcon,
 } from '@patternfly/react-icons';
 
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
@@ -34,6 +35,8 @@ class OSDSubscriptionCard extends Component {
       icon = <ResourcesFullIcon />;
     } else if (used >= max / 2) {
       icon = <ResourcesAlmostFullIcon />;
+    } else if (used === 0) {
+      icon = <OutlinedCircleIcon />;
     }
     return icon;
   }
