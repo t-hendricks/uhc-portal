@@ -2,6 +2,7 @@
 
 exports[`<ClusterListEmptyState /> renders correctly with no quota 1`] = `
 <EmptyState
+  className="cluster-list-empty-state"
   variant="large"
 >
   <EmptyStateIcon
@@ -54,6 +55,7 @@ exports[`<ClusterListEmptyState /> renders correctly with no quota 1`] = `
 
 exports[`<ClusterListEmptyState /> renders correctly with quota 1`] = `
 <EmptyState
+  className="cluster-list-empty-state"
   variant="large"
 >
   <EmptyStateIcon
