@@ -57,10 +57,10 @@ const mapDispatchToProps = dispatch => ({
     const clusterRequest = {
       external_id: formData.cluster_id,
       display_name: formData.display_name,
-      nodes: {
-        compute: parseInt(formData.nodes_compute, 10),
-      },
       metrics: {
+        nodes: {
+          compute: parseInt(formData.nodes_compute, 10),
+        },
         operating_system: formData.operating_system,
         ...cpuMetric,
         memory: {
