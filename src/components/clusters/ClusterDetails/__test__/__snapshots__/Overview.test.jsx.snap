@@ -252,9 +252,11 @@ exports[`<Overview /> should render 1`] = `
               "kind": "CloudRegionLink",
             },
             "state": Object {
-              "description": "No metrics sent during the last week",
-              "state": "long stale",
-              "style": undefined,
+              "description": "ready",
+              "state": "ready",
+              "style": Object {
+                "textTransform": "capitalize",
+              },
             },
             "subscription": Object {
               "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
@@ -726,9 +728,11 @@ exports[`<Overview /> should render 1`] = `
                   "kind": "CloudRegionLink",
                 },
                 "state": Object {
-                  "description": "No metrics sent during the last week",
-                  "state": "long stale",
-                  "style": undefined,
+                  "description": "ready",
+                  "state": "ready",
+                  "style": Object {
+                    "textTransform": "capitalize",
+                  },
                 },
                 "subscription": Object {
                   "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",

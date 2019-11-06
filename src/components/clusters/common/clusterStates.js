@@ -32,21 +32,24 @@ function getClusterStateAndDescription(cluster) {
     const creationDelta = getTimeDelta(new Date(cluster.creation_timestamp));
     const lastActive = Math.min(cpuLastActive, memoryLastActive, storageLastActive, creationDelta);
 
-    if (lastActive > 24 * 7) {
-      return {
-        state: clusterStates.LONG_STALE,
-        description: 'No metrics sent during the last week',
-        style: undefined,
-      };
-    }
-    if (lastActive > 24) {
-      return {
-        state: clusterStates.STALE,
-        description: 'No metrics sent during the last 24 hours',
-        style: undefined,
-      };
+    if (!cluster.managed) {
+      if (lastActive > 24 * 7) {
+        return {
+          state: clusterStates.LONG_STALE,
+          description: 'No metrics sent during the last week',
+          style: undefined,
+        };
+      }
+      if (lastActive > 24) {
+        return {
+          state: clusterStates.STALE,
+          description: 'No metrics sent during the last 24 hours',
+          style: undefined,
+        };
+      }
     }
   }
+
   return {
     state: cluster.state,
     description: cluster.state,
