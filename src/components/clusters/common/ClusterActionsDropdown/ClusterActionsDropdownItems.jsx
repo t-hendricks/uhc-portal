@@ -174,7 +174,7 @@ function dropDownItems({
 
   return [
     showConsoleButton && (
-    <DropdownItem {...adminConsoleItemProps}>Launch Admin Console</DropdownItem>),
+    <DropdownItem {...adminConsoleItemProps}>Launch Console</DropdownItem>),
     cluster.canEdit && (
     <DropdownItem {...editDisplayNameItemProps}>Edit Display Name</DropdownItem>),
     showEditURL && (
