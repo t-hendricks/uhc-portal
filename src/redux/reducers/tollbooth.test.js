@@ -35,7 +35,7 @@ describe('tollboothReducer', () => {
 
   describe('when action is rejected', () => {
     it('provides an error token', () => {
-      const action = { ...baseAction, type: `${type}_REJECTED` };
+      const action = { ...baseAction, error: true, type: `${type}_REJECTED` };
       const result = tollboothReducer(initialState, action);
 
       expect(result).toEqual(
