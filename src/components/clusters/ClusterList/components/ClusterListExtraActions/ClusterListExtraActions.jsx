@@ -23,7 +23,6 @@ class ClusterListExtraActions extends React.Component {
 
   render() {
     const { isOpen } = this.state;
-    const { invalidateClusters } = this.props;
     const dropdownItems = [
       <DropdownItem key="registercluster">
         <div>
@@ -34,7 +33,7 @@ class ClusterListExtraActions extends React.Component {
       </DropdownItem>,
       <DropdownItem key="archived">
         <div>
-          <Link to="archived" className="pf-c-dropdown__menu-item" onClick={invalidateClusters}>
+          <Link to="archived" className="pf-c-dropdown__menu-item">
             Show archived clusters
           </Link>
         </div>
@@ -56,7 +55,6 @@ ClusterListExtraActions.propTypes = {
   currentFlags: PropTypes.shape({
     showArchived: PropTypes.bool.isRequired,
   }).isRequired,
-  invalidateClusters: PropTypes.func.isRequired,
 };
 
 export default ClusterListExtraActions;

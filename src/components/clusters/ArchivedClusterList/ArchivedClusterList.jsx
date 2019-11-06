@@ -59,10 +59,11 @@ class ArchivedClusterList extends Component {
   componentDidMount() {
     document.title = 'Archived Clusters | Red Hat OpenShift Cluster Manager';
     const {
-      getCloudProviders, cloudProviders, setListFlag,
+      getCloudProviders, cloudProviders, setListFlag, invalidateClusters,
     } = this.props;
 
     setListFlag('showArchived', true);
+    invalidateClusters();
 
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
@@ -155,7 +156,7 @@ class ArchivedClusterList extends Component {
         </PageSection>);
     }
 
-    if ((!size(clusters) && pending && (isEmpty(viewOptions.filter) || !valid))) {
+    if ((!size(clusters) && pending && isEmpty(viewOptions.filter)) || !valid) {
       return (
         <React.Fragment>
           {toast}
