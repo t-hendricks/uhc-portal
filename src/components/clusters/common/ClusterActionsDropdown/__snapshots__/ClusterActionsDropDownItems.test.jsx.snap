@@ -12,7 +12,7 @@ exports[`Cluster Actions Dropdown Items admin console url does not exist should 
       </span>
     }
   >
-    Launch Admin Console
+    Launch Console
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -43,7 +43,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
       </span>
     }
   >
-    Launch Admin Console
+    Launch Console
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -82,7 +82,7 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
     rel="noopener noreferrer"
     target="_blank"
   >
-    Launch Admin Console
+    Launch Console
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -120,7 +120,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
       </span>
     }
   >
-    Launch Admin Console
+    Launch Console
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -169,7 +169,7 @@ exports[`Cluster Actions Dropdown Items read only cluster should render correctl
     rel="noopener noreferrer"
     target="_blank"
   >
-    Launch Admin Console
+    Launch Console
   </DropdownItem>
 </Fragment>
 `;
@@ -186,7 +186,7 @@ exports[`Cluster Actions Dropdown Items self managed cluster should render (self
       </span>
     }
   >
-    Launch Admin Console
+    Launch Console
   </DropdownItem>
   <DropdownItem
     component="button"

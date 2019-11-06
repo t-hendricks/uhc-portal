@@ -41,6 +41,17 @@ const viewPropsChanged = (nextViewOptions, currentViewOptions) => (
     || !isEqual(nextViewOptions.flags, currentViewOptions.flags)
 );
 
+// The backend accepts queries in https://github.com/yaacov/tree-search-language syntax,
+// which is effectively a subset of SQL.
+// This requires the UI to construct the syntax correctly (e.g. escape singlequotes).
+// It also means that the query we send to the backend is quite complicated.
+
+const sqlString = (s) => {
+  // escape ' characters by doubling
+  const escaped = s.replace(/'/g, "''");
+  return `'${escaped}'`;
+};
+
 const createViewQueryObject = (viewOptions, queryObj) => {
   const queryObject = {
     ...queryObj,
@@ -58,42 +69,39 @@ const createViewQueryObject = (viewOptions, queryObj) => {
         queryObject.order = `${viewOptions.sorting.sortField} ${direction}`;
       }
     }
-    /* HACK: the backend defers all search query complexity to the UI. This means we have to escape
-    singlequotes, otherwise users will get an error they won't understand if
-    they accidentally type a singlequote. It also means that the query we send to the backend is
-    quite complicated.
-    */
-    let statusClause;
+
+    const clauses = []; // will be joined with AND
+
+    // base filter: filter out clusters without IDs
+    clauses.push("cluster_id!=''");
+
     // handle archived flag
     if (viewOptions.flags.showArchived) {
-      statusClause = 'status=\'Archived\'';
+      clauses.push("status='Archived'");
     } else {
-      statusClause = 'status NOT IN (\'Deprovisioned\', \'Archived\')';
+      clauses.push("status NOT IN ('Deprovisioned', 'Archived')");
     }
-    const baseFilter = `cluster_id!='' AND ${statusClause}`; // base filter: filter out clusters without IDs, add the status clause
 
-    const escaped = viewOptions.filter ? viewOptions.filter.replace(/(')/g, '\'\'') : ''; // escape ' characters
-
-    // If we got a search string from the user, format it as a LIKE query and add the base filter.
-    // Otherwise, keep just the base filter.
-    const displayNameFilter = `display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%'`;
-    queryObject.filter = viewOptions.filter ? `(${baseFilter}) AND (${displayNameFilter})` : baseFilter;
+    // If we got a search string from the user, format it as a LIKE query.
+    if (viewOptions.filter) {
+      const likePattern = `%${viewOptions.filter}%`;
+      clauses.push(`display_name ILIKE ${sqlString(likePattern)} OR external_cluster_id ILIKE ${sqlString(likePattern)}`);
+    }
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
       // We got flags for filtering according to specific subscription properties
       // subscriptionFilter is an object in the form of { key: ["possible", "values"] }
-      const clauses = [];
       Object.keys(viewOptions.flags.subscriptionFilter).forEach((field) => {
         const items = viewOptions.flags.subscriptionFilter[field];
         if (!isEmpty(items)) {
           // convert each list of selected filter values to a SQL-like clause
-          const quotedItems = viewOptions.flags.subscriptionFilter[field].map(item => `'${item}'`).join(',');
-          clauses.push(`AND ${field} IN (${quotedItems})`);
+          const quotedItems = viewOptions.flags.subscriptionFilter[field].map(sqlString);
+          clauses.push(`${field} IN (${quotedItems.join(',')})`);
         }
       });
-      // add the generated clauses to the filter we constructed before
-      queryObject.filter = `(${queryObject.filter}) ${clauses.join(' ').trim()}`;
     }
+
+    queryObject.filter = clauses.map(c => `(${c})`).join(' AND ').trim();
   }
 
   return queryObject;
@@ -156,7 +164,9 @@ function getErrorMessage(payload) {
     return message;
   }
 
-  if (response !== undefined && response.kind === 'Error') {
+
+  // CMS uses "kind" for the error object, but AMS uses 'type'
+  if (response !== undefined && (response.kind === 'Error' || response.type === 'Error')) {
     return `${response.code}:\n${response.reason}`;
   }
 
@@ -168,6 +178,7 @@ const getErrorState = action => ({
   pending: false,
   error: action.error,
   errorCode: get(action.payload, 'response.status'),
+  internalErrorCode: get(action.payload, 'response.data.code'),
   errorMessage: getErrorMessage(action.payload),
   errorDetails: get(action.payload, 'response.data.details'),
   operationID: get(action.payload, 'response.data.operation_id'),
@@ -243,6 +254,7 @@ const helpers = {
   noop,
   setStateProp,
   viewPropsChanged,
+  sqlString,
   createViewQueryObject,
   getErrorMessage,
   getErrorState,
