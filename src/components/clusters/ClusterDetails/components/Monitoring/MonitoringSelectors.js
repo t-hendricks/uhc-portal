@@ -99,7 +99,7 @@ const clusterHealthSelector = (
     return monitoringStatuses.INSTALLING;
   }
 
-  if (!cluster.manged && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED)) {
+  if (!cluster.managed && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED)) {
     return monitoringStatuses.DISCONNECTED;
   }
 
