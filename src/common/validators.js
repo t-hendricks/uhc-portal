@@ -92,6 +92,21 @@ const checkUserID = (value) => {
   if (value.includes('/')) {
     return 'User ID cannot contain \'/\'.';
   }
+  if (value.includes(':')) {
+    return 'User ID cannot contain \':\'.';
+  }
+  if (value.includes('%')) {
+    return 'User ID cannot contain \'%\'.';
+  }
+  if (value === '~') {
+    return 'User ID cannot be \'~\'.';
+  }
+  if (value === '.') {
+    return 'User ID cannot be \'.\'.';
+  }
+  if (value === '..') {
+    return 'User ID cannot be \'..\'.';
+  }
   return undefined;
 };
 
