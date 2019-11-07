@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Button } from '@patternfly/react-core';
 
 import RefreshButton from './RefreshButton';
 
@@ -18,7 +19,7 @@ describe('<RefreshButton />', () => {
   });
 
   it('calls refreshFunc when clicked', () => {
-    wrapper.find('Button').simulate('click');
+    wrapper.find(Button).simulate('click');
     expect(onClickFunc).toBeCalled();
   });
 
@@ -40,7 +41,7 @@ describe('<RefreshButton autoRefresh />', () => {
   });
 
   it('calls refreshFunc when clicked', () => {
-    wrapper.find('Button').simulate('click');
+    wrapper.find(Button).simulate('click');
     expect(onClickFunc).toBeCalled();
   });
 

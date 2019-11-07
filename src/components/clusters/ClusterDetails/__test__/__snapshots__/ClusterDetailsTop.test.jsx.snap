@@ -7,7 +7,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
 >
   <Split>
     <SplitItem>
-      <Breadcrumb>
+      <Component>
         <LinkContainer
           activeClassName="active"
           exact={false}
@@ -26,7 +26,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
         >
           test-liza
         </BreadcrumbItem>
-      </Breadcrumb>
+      </Component>
     </SplitItem>
   </Split>
   <Split
@@ -55,11 +55,11 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           rel="noopener noreferrer"
           target="_blank"
         >
-          <Button
+          <Component
             variant="primary"
           >
             Launch Console
-          </Button>
+          </Component>
         </a>
         <Connect(ClusterActionsDropdown)
           cluster={

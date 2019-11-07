@@ -108,6 +108,15 @@ limitations under the License.
   word-wrap: normal;
 }
 
+#cluster-list-toolbar {
+  padding-left: 0;
+}
+
+.toolbar-item {
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
 .cluster-details-item {
   padding: 30px;
   dd {

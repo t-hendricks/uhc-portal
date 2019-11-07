@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ClusterOperators /> should render 1`] = `
-<Table
+<Component
   borders={false}
   cells={
     Array [
@@ -16,26 +16,10 @@ exports[`<ClusterOperators /> should render 1`] = `
       },
     ]
   }
-  className=""
-  contentId="expanded-content"
-  dropdownDirection="down"
-  dropdownPosition="right"
-  expandId="expandable-toggle"
-  gridBreakPoint="grid-md"
-  onCollapse={null}
-  onExpand={null}
-  role="grid"
-  rowLabeledBy="simple-node"
   rows={Array []}
   variant="compact"
 >
-  <TableHeader
-    className=""
-  />
-  <TableBody
-    className=""
-    onRowClick={[Function]}
-    rowKey="id"
-  />
-</Table>
+  <TableHeader />
+  <TableBody />
+</Component>
 `;

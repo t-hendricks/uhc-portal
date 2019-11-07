@@ -1,17 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<TabsRow /> should hide monitoring tab if needed (eg. when we archive a cluster) 1`] = `
-<Tabs
+<Component
   activeKey={0}
-  className=""
-  isFilled={false}
-  isSecondary={false}
-  leftScrollAriaLabel="Scroll left"
   onSelect={[Function]}
-  rightScrollAriaLabel="Scroll right"
-  variant="div"
 >
-  <ForwardRef
+  <Tab
     eventKey={0}
     key="0"
     tabContentId="overviewTabContent"
@@ -22,21 +16,15 @@ exports[`<TabsRow /> should hide monitoring tab if needed (eg. when we archive a
     }
     title="Overview"
   />
-</Tabs>
+</Component>
 `;
 
 exports[`<TabsRow /> should render 1`] = `
-<Tabs
+<Component
   activeKey={0}
-  className=""
-  isFilled={false}
-  isSecondary={false}
-  leftScrollAriaLabel="Scroll left"
   onSelect={[Function]}
-  rightScrollAriaLabel="Scroll right"
-  variant="div"
 >
-  <ForwardRef
+  <Tab
     eventKey={0}
     key="0"
     tabContentId="overviewTabContent"
@@ -47,7 +35,7 @@ exports[`<TabsRow /> should render 1`] = `
     }
     title="Overview"
   />
-  <ForwardRef
+  <Tab
     eventKey={1}
     key="1"
     tabContentId="monitoringTabContent"
@@ -58,5 +46,5 @@ exports[`<TabsRow /> should render 1`] = `
     }
     title="Monitoring"
   />
-</Tabs>
+</Component>
 `;

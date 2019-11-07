@@ -4,7 +4,7 @@ exports[`<CreateCluster /> Quota not fetched yet should render 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
-      <Breadcrumb
+      <Unknown
         className="breadcrumbs-in-card"
       >
         <LinkContainer
@@ -25,7 +25,7 @@ exports[`<CreateCluster /> Quota not fetched yet should render 1`] = `
         >
           Create
         </BreadcrumbItem>
-      </Breadcrumb>
+      </Unknown>
     }
     title="Create a Cluster to Get Started"
   />
@@ -41,7 +41,7 @@ exports[`<CreateCluster /> User with no quota should render 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
-      <Breadcrumb
+      <Unknown
         className="breadcrumbs-in-card"
       >
         <LinkContainer
@@ -62,7 +62,7 @@ exports[`<CreateCluster /> User with no quota should render 1`] = `
         >
           Create
         </BreadcrumbItem>
-      </Breadcrumb>
+      </Unknown>
     }
     title="Create a Cluster to Get Started"
   />
@@ -119,7 +119,7 @@ exports[`<CreateCluster /> renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
-      <Breadcrumb
+      <Unknown
         className="breadcrumbs-in-card"
       >
         <LinkContainer
@@ -140,7 +140,7 @@ exports[`<CreateCluster /> renders correctly 1`] = `
         >
           Create
         </BreadcrumbItem>
-      </Breadcrumb>
+      </Unknown>
     }
     title="Create a Cluster to Get Started"
   />

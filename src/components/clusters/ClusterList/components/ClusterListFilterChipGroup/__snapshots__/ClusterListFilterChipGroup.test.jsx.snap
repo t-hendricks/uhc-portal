@@ -6,35 +6,31 @@ exports[`<ClusterListFilterChipGroup /> should render 1`] = `
     <ChipGroup
       className=""
       collapsedText="\${remaining} more"
+      defaultIsOpen={false}
       expandedText="Show Less"
+      numChips={3}
       withToolbar={true}
     >
       <ChipGroupToolbarItem
         categoryName="Subscription status"
         key="chipgroup-entitlement_status"
       >
-        <Chip
-          className=""
-          closeBtnAriaLabel="close"
-          component="div"
-          isOverflowChip={false}
-          isReadOnly={false}
+        <Component
           key="NotSet"
           onClick={[Function]}
-          tooltipPosition="top"
         >
           Not Subscribed
-        </Chip>
+        </Component>
       </ChipGroupToolbarItem>
     </ChipGroup>
   </SplitItem>
   <SplitItem>
-    <Button
+    <Component
       onClick={[Function]}
       variant="link"
     >
       Clear filters
-    </Button>
+    </Component>
   </SplitItem>
 </Split>
 `;

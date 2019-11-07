@@ -24,6 +24,7 @@ const ViewPaginationRow = ({
     onPerPageSelect={onPerPageSelect}
     variant={variant}
     dropDirection={variant === 'bottom' ? 'up' : 'down'}
+    isCompact
   />
 );
 

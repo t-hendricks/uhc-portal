@@ -18,9 +18,9 @@ exports[`<Subscriptions /> OCPSubscriptionCard Empty should render empty OCP sub
       replace={false}
       to="/install"
     >
-      <Button>
+      <Component>
         Create Cluster
-      </Button>
+      </Component>
     </Link>
   </EmptyState>
 </PageSection>
@@ -44,11 +44,11 @@ exports[`<Subscriptions /> OCPSubscriptionCard Error should render error OCP sub
         Operation ID: N/A
       </p>
     </EmptyStateBody>
-    <Button
+    <Component
       onClick={[MockFunction]}
     >
       Try again
-    </Button>
+    </Component>
   </EmptyState>
 </PageSection>
 `;
@@ -312,11 +312,11 @@ exports[`<Subscriptions /> OSDSubscriptionCard Error should render error OSD quo
         Operation ID: N/A
       </p>
     </EmptyStateBody>
-    <Button
+    <Component
       onClick={[MockFunction]}
     >
       Try again
-    </Button>
+    </Component>
   </EmptyState>
 </PageSection>
 `;
@@ -409,8 +409,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
 
 exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
 <Fragment>
-  <Table
-    borders={true}
+  <Component
     cells={
       Array [
         "Resource type",
@@ -427,28 +426,11 @@ exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
         "Capacity",
       ]
     }
-    className=""
-    contentId="expanded-content"
-    dropdownDirection="down"
-    dropdownPosition="right"
-    expandId="expandable-toggle"
-    gridBreakPoint="grid-md"
-    onCollapse={null}
-    onExpand={null}
-    role="grid"
-    rowLabeledBy="simple-node"
     rows={Array []}
-    variant={null}
   >
-    <TableHeader
-      className=""
-    />
-    <TableBody
-      className=""
-      onRowClick={[Function]}
-      rowKey="id"
-    />
-  </Table>
+    <TableHeader />
+    <TableBody />
+  </Component>
 </Fragment>
 `;
 

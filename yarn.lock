@@ -999,50 +999,79 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@patternfly/patternfly@2.26.1", "@patternfly/patternfly@^2.26.1":
-  version "2.26.1"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/patternfly/-/patternfly-2.26.1.tgz#d554e4a5e1f042bfb27b3df77d37ddb388bbc594"
-  integrity sha512-htCkY40ONRMn9ECE+C+J1ADqlCNbPjJNUpMJ2unvgj0cpnfTVi0snHiDb4lKVcxG7d3jGg5x24hGmVmvkJ9MGw==
+"@patternfly/patternfly@2.40.6":
+  version "2.40.6"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/patternfly/-/patternfly-2.40.6.tgz#f1e13069c6c948e194de53bbd00a031bb0ddd051"
+  integrity sha512-YIusipnIPipCJNKN/Lw72MmV1dnsFQvc8Exwo5+IfROF2TnWMpVYaFPC3TvqnuMrysxrxpuGC2HzKJVX5bqbgA==
 
-"@patternfly/react-charts@^4.7.6":
-  version "4.7.6"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-charts/-/react-charts-4.7.6.tgz#a607baca4156e3ddd21accbc044e9e0628ab6f11"
-  integrity sha512-GAmAwGPwzdAQzzMNd5uFrHGZQPK4GSHlUVSBZRrzHY/XFWxSzwDOM2YkPFoLc/5wc96Uho9K6aTDUYR6LilqEA==
+"@patternfly/patternfly@2.43.1":
+  version "2.43.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/patternfly/-/patternfly-2.43.1.tgz#9961e331ac78f2cf55a73527656503f5555b053e"
+  integrity sha512-dWw4FeQfLHFXva1VmH8Epusu3VX91VrOH+9FVvRDsCEcajsq5Pc5BCF+H9KyQ4eA6EfTEMsW2F0zVWD/7B4RFA==
+
+"@patternfly/patternfly@^2.33.5":
+  version "2.40.9"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/patternfly/-/patternfly-2.40.9.tgz#3161e9dc221beaaddb0c45f9839dad46dfbaf2cb"
+  integrity sha512-ruMoGbRuWhIAOtWnQco9YK6wBhoZ3QW0S8juuV7qqsd30kvFEUT6q+NLrRAIFJzBwUhXhMd4KSS65JxMRwBTcA==
+
+"@patternfly/react-charts@^5.0.13":
+  version "5.1.5"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-charts/-/react-charts-5.1.5.tgz#00c13fd02985eb66805078e26234345f845eb054"
+  integrity sha512-V0lrhzrCEC8vPwKJkaH+g0+FQwUV+g13esQdIDKjVNpjhBlK6hCLCY8cvcRvvzB0UFULdqGfClK7YKzf3QjpXg==
   dependencies:
-    "@patternfly/react-styles" "^3.5.10"
-  optionalDependencies:
-    "@types/lodash" "^4.14.132"
-    "@types/victory" "^31.0.18"
+    "@patternfly/patternfly" "2.40.6"
+    "@patternfly/react-styles" "^3.6.5"
+    "@patternfly/react-tokens" "^2.7.5"
     hoist-non-react-statics "^3.3.0"
-    lodash "^4.17.11"
-    victory "^32.2.3"
-    victory-core "^32.2.3"
-    victory-legend "^32.2.3"
+    lodash "^4.17.15"
+    victory "^33.0.5"
+    victory-core "^33.0.1"
+    victory-legend "^33.0.1"
 
-"@patternfly/react-core@^3.86.1":
-  version "3.86.1"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-core/-/react-core-3.86.1.tgz#9fdc618917baeb7b62006b94cb93841d2d185d37"
-  integrity sha512-Y86jRVwUaYceIDNJktrC4RD3Q7/QRYOn+aW1oWGhpHSqLnWG7wE7YCghPcTLdVf4oL/ciHqcjChcb5OGD/rKPw==
+"@patternfly/react-core@^3.112.3":
+  version "3.120.5"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-core/-/react-core-3.120.5.tgz#5b0c68677e65359af6f47eec0af8064b7731da4f"
+  integrity sha512-OHENdm3/xj54Aacip5kyPXZVM8PXlFfB53SUf45dGU68kEtTMLdSXG0prfIRsxeX2Bgj/hrdfb2T7rjQK3UKQA==
   dependencies:
-    "@patternfly/react-icons" "^3.10.17"
-    "@patternfly/react-styles" "^3.5.10"
-    "@patternfly/react-tokens" "^2.6.16"
+    "@patternfly/react-icons" "^3.14.18"
+    "@patternfly/react-styles" "^3.6.5"
+    "@patternfly/react-tokens" "^2.7.5"
     emotion "^9.2.9"
     exenv "^1.2.2"
     focus-trap-react "^4.0.1"
-    tippy.js "^3.2.0"
+    tippy.js "3.4.1"
 
-"@patternfly/react-icons@^3.10.17":
-  version "3.10.17"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-icons/-/react-icons-3.10.17.tgz#4e3e104ea86bc47fe3c528e13d1fa6c7c8ec216a"
-  integrity sha512-UVmmH6gQSMcJg0EB2b0dMvC+SQEGhdSxhRkEyn7OVN1tJFYBZrcCRBeJxxFIQwY7PExIZ1ZinleRmVPD/ZI+jQ==
+"@patternfly/react-core@^3.124.1":
+  version "3.124.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-core/-/react-core-3.124.1.tgz#26cc7021126f1336840a312f42c9af6a7b1b529a"
+  integrity sha512-jKCTyyT3FmAiOMkm/Nt3zHoAyIlrLBKLWOFi+GuC+4PAVyQetK42+Hp8JyrSBPi4q+pfjGjQUngmpkhooGETlg==
+  dependencies:
+    "@patternfly/react-icons" "^3.14.23"
+    "@patternfly/react-styles" "^3.6.11"
+    "@patternfly/react-tokens" "^2.7.10"
+    emotion "^9.2.9"
+    exenv "^1.2.2"
+    focus-trap-react "^4.0.1"
+    tippy.js "3.4.1"
+
+"@patternfly/react-icons@^3.14.18", "@patternfly/react-icons@^3.14.7":
+  version "3.14.18"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-icons/-/react-icons-3.14.18.tgz#75c314c9009cbbe0c352a87ad0ef400743a49d57"
+  integrity sha512-dkJ4e37XKlXJmHk00mLQ8Tkqm4pacNvPlNtjgetzGQF9cwCi0Rr4m4f537uTNVPNNwMRGNhuJNI10Mqbu+eHng==
   dependencies:
     "@fortawesome/free-brands-svg-icons" "^5.8.1"
 
-"@patternfly/react-styles@^3.5.10":
-  version "3.5.10"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-styles/-/react-styles-3.5.10.tgz#022bdf67651de5a79117a731af646510b5bc8967"
-  integrity sha512-QzfT1GvCFAJKN8hP/d1WQ6GE4uIOG+EwQecdYqEQoIgBwjTNx54I2eI81Yxo0bLY6x8KfRoXKmlfB56byLu50w==
+"@patternfly/react-icons@^3.14.23":
+  version "3.14.24"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-icons/-/react-icons-3.14.24.tgz#9320e75c627a6159d73cd01ab761e5fe38112b77"
+  integrity sha512-R5vP/jpDScGJqbKYWA7gn0K9V4unhpu+THazxmDJtX55zR/AQgaiaQ70q+/URKtsQhWUFBPKjczuJnzOoo3S3Q==
+  dependencies:
+    "@fortawesome/free-brands-svg-icons" "^5.8.1"
+
+"@patternfly/react-styles@^3.6.11":
+  version "3.6.11"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-styles/-/react-styles-3.6.11.tgz#43fee9c24469a5e7fca824740c077033f7e532a8"
+  integrity sha512-iJsj+DPKUi5KAbSR7uQ76iJEDfw/254Vbt+zXm686NTgTR9cloVBUx3ww8ni+CPjk0A9kyaf64FfOXrgoIicAg==
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0-beta.48"
     camel-case "^3.0.0"
@@ -1058,24 +1087,48 @@
     resolve-from "^4.0.0"
     typescript "3.4.5"
 
-"@patternfly/react-table@^2.16.15":
-  version "2.16.15"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-table/-/react-table-2.16.15.tgz#11f4263c53ad7944d3df92bfab4df4281e6b836b"
-  integrity sha512-KvMCOFZHgixOZ7FcSnhAGZsMc2/qLlN97YFYmSbrRkz3QQpW6eJdFJXBum6GrT7SZj50Clg6p9dHUoDdWpeXwQ==
+"@patternfly/react-styles@^3.6.5":
+  version "3.6.5"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-styles/-/react-styles-3.6.5.tgz#3d6214f3cee6acccd96ccb10c96b30c61e4b7965"
+  integrity sha512-EhALRv+ZNSAFHFTAFpwaV9YjqbG0SbH0TK52q4AUtLBi4Y9kDLI9SkP/Q5AwZiSTUkq9tUTshj217tjJGeWGbg==
   dependencies:
-    "@patternfly/patternfly" "2.26.1"
-    "@patternfly/react-core" "^3.86.1"
-    "@patternfly/react-icons" "^3.10.17"
-    "@patternfly/react-styles" "^3.5.10"
-    "@patternfly/react-tokens" "^2.6.16"
+    "@babel/helper-plugin-utils" "^7.0.0-beta.48"
+    camel-case "^3.0.0"
+    css "^2.2.3"
+    cssom "^0.3.4"
+    cssstyle "^0.3.1"
+    emotion "^9.2.9"
+    emotion-server "^9.2.9"
+    fbjs-scripts "^0.8.3"
+    fs-extra "^6.0.1"
+    jsdom "^15.1.0"
+    relative "^3.0.2"
+    resolve-from "^4.0.0"
+    typescript "3.4.5"
+
+"@patternfly/react-table@^2.24.41":
+  version "2.24.41"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-table/-/react-table-2.24.41.tgz#3b5bc70fdc8c16f844c6fdefbfaff404c2aea6bd"
+  integrity sha512-aYfE8jA4tbYj0DxjA6FmtPRNsVNHDcsk+dG2I2mljREDOictMpGDtN0xVP95F9L5iu7YbldsP6Z4//MTe/CCIg==
+  dependencies:
+    "@patternfly/patternfly" "2.43.1"
+    "@patternfly/react-core" "^3.124.1"
+    "@patternfly/react-icons" "^3.14.23"
+    "@patternfly/react-styles" "^3.6.11"
+    "@patternfly/react-tokens" "^2.7.10"
     classnames "^2.2.5"
     exenv "^1.2.2"
-    lodash "^4.2.1"
+    lodash "^4.17.15"
 
-"@patternfly/react-tokens@^2.6.16":
-  version "2.6.16"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-tokens/-/react-tokens-2.6.16.tgz#c177a3960761d509b09a45b9a02a58a52d5f0ed1"
-  integrity sha512-dhr4ne4thSmSKBr4anV07KSzUXEs6KpCMDxxNiwrgFdZwNHtyNcaPc+F9pQZ5A0n4qYmMLpCrprb7m5o/83riQ==
+"@patternfly/react-tokens@^2.6.31", "@patternfly/react-tokens@^2.7.5":
+  version "2.7.5"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-tokens/-/react-tokens-2.7.5.tgz#3f5844e09d89f7a708a6a68631e70314713b9dfd"
+  integrity sha512-pHT6MwCN4ZWcx6WNUUgcX8FMgx1GMG4h9EdVi1yncGmPl+p7BSdz18KXSs3V7j6XBhKfElgGXWdYVc6nhL9tkw==
+
+"@patternfly/react-tokens@^2.7.10":
+  version "2.7.10"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-tokens/-/react-tokens-2.7.10.tgz#5e990e862b2311329066e8d005cdac6cd5e19af3"
+  integrity sha512-7p7L0CwSHVKnN2vu/zNTL0NN6K+tBPfS1Vw1fnynglWomBW2Uqb5lKlkORuySOCa3Zy/WMNmTI9feFrVpCIV+w==
 
 "@redhat-cloud-services/frontend-components-notifications@^0.0.7":
   version "0.0.7"
@@ -1454,11 +1507,6 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/lodash@^4.14.132":
-  version "4.14.136"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@types/lodash/-/lodash-4.14.136.tgz#413e85089046b865d960c9ff1d400e04c31ab60f"
-  integrity sha512-0GJhzBdvsW2RUccNHOBkabI8HZVdOXmXbXhuKlDEd5Vv12P7oAVGfomGp3Ne21o5D/qu1WmthlNKFaoZJJeErA==
-
 "@types/minimatch@*":
   version "3.0.3"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
@@ -1469,30 +1517,10 @@
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@types/node/-/node-10.12.0.tgz#ea6dcbddbc5b584c83f06c60e82736d8fbb0c235"
   integrity sha512-3TUHC3jsBAB7qVRGxT6lWyYo2v96BMmD2PTcl47H25Lu7UXtFH/2qqmKiVrnel6Ne//0TFYf6uvNX+HW2FRkLQ==
 
-"@types/prop-types@*":
-  version "15.7.1"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@types/prop-types/-/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
-  integrity sha512-CFzn9idOEpHrgdw8JsoTkaDDyRWk1jrzIV8djzcgpq0y9tG4B4lFT+Nxh52DVpDXV+n4+NPNv7M1Dj5uMp6XFg==
-
-"@types/react@*":
-  version "16.8.23"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@types/react/-/react-16.8.23.tgz#ec6be3ceed6353a20948169b6cb4c97b65b97ad2"
-  integrity sha512-abkEOIeljniUN9qB5onp++g0EY38h7atnDHxwKUFz1r3VH1+yG1OKi2sNPTyObL40goBmfKFpdii2lEzwLX1cA==
-  dependencies:
-    "@types/prop-types" "*"
-    csstype "^2.2.0"
-
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
-
-"@types/victory@^31.0.18":
-  version "31.0.20"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@types/victory/-/victory-31.0.20.tgz#205fae42b76b4fc28973c911cbc6d00f10963a6c"
-  integrity sha512-cjMUp/YE48Y5rP/U60VmPtFslLfRGxpty3nz2+3CvXhxR9HZ9TcePqW/vzMO0kuFxO+LYS9QBYDPEUHJDdg5Ng==
-  dependencies:
-    "@types/react" "*"
 
 "@types/yargs@^12.0.2", "@types/yargs@^12.0.9":
   version "12.0.12"
@@ -4643,11 +4671,6 @@ cssstyle@^1.2.2:
   dependencies:
     cssom "0.3.x"
 
-csstype@^2.2.0:
-  version "2.6.6"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/csstype/-/csstype-2.6.6.tgz#c34f8226a94bbb10c32cc0d714afdf942291fc41"
-  integrity sha512-RpFbQGUE74iyPgvr46U9t1xoQBM8T4BL8SxrN66Le2xYAPSaDJJKeztV3awugusb3g3G9iL8StmkBBXhcbbXhg==
-
 csstype@^2.5.2:
   version "2.6.2"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/csstype/-/csstype-2.6.2.tgz#3043d5e065454579afc7478a18de41909c8a2f01"
@@ -4988,10 +5011,10 @@ delaunator@^4.0.0:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/delaunator/-/delaunator-4.0.0.tgz#3630f477b4923f472f534c62a028aeca6fe22d96"
   integrity sha512-KzVgOHix5xaIVzZSfbv3Uzw9aI7mQNDet4Yd2p+tBNkfNHMFJbjbVa3q0nC7q7TjWZLX49QbzcT+pXazXX3Qmg==
 
-delaunay-find@0.0.3:
-  version "0.0.3"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/delaunay-find/-/delaunay-find-0.0.3.tgz#b9863465c4cbca963b3d75a54550e73b2fc56c30"
-  integrity sha512-Ex8DtJudrPsB0IhmJxFjHqzZnzbCOoFgw8kTGAnTlc6uU/v25nd7o2HeWhyZSaPhholsfL33PmLSEdaBi0qfug==
+delaunay-find@0.0.5:
+  version "0.0.5"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/delaunay-find/-/delaunay-find-0.0.5.tgz#5fb37e6509da934881b4b16c08898ac89862c097"
+  integrity sha512-7yAJ/wmKWj3SgqjtkGqT/RCwI0HWAo5YnHMoF5nYXD8cdci+YSo23iPmgrZUNOpDxRWN91PqxUvMMr2lKpjr+w==
   dependencies:
     delaunator "^4.0.0"
 
@@ -9426,7 +9449,7 @@ lodash.uniq@^4.5.0:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
-lodash@^4.17.13, lodash@^4.2.1:
+lodash@^4.17.13, lodash@^4.17.15:
   version "4.17.15"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -13809,7 +13832,7 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
-tippy.js@^3.2.0:
+tippy.js@3.4.1:
   version "3.4.1"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/tippy.js/-/tippy.js-3.4.1.tgz#f0eb3081824ad6c5d364336451ad77ae2f543da8"
   integrity sha512-ZiyGP9WZyCCcjxKM4G88cm4U1r1ytjeMDGa5FSKPaPzwc/3yZJVZsb1ffcmqUMCpryRp5LNxRNGKLzbs11sb/Q==
@@ -14342,285 +14365,285 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-victory-area@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-area/-/victory-area-32.3.2.tgz#3c0e6c9d5480b4f570810f28a1d9ea2fd0e23ffb"
-  integrity sha512-KonmBC4RdzdHU9hylIUS4Fa3m89P2K+ds27YC4s0Grb97q4FGzBivnkJqIlXJQgsYlIojK1YlUwpcBXKEUHYvQ==
+victory-area@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-area/-/victory-area-33.1.2.tgz#b3d65bfdf11a738cf4655366bb7fdb230ddea1cc"
+  integrity sha512-ZHpeXI0cdK3gJRdKzBHDKxe37x6ljO8nThyGcKWrgErsz1rqaG9ZNTEHvTkQWeepwVh3UZa32N8RR/RBCQpztQ==
   dependencies:
     d3-shape "^1.2.0"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-axis@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-axis/-/victory-axis-32.3.2.tgz#e061aa0628e41a44fed96b28f724011a05e15ce7"
-  integrity sha512-rIf1h1EbiZY9GVS3IKFW5JDAlYaeDng3vVdjQq8dDo3LU4LJzWGMgD/RT4+skldbeCCTz0qYpjggwSgjRjv8Ew==
+victory-axis@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-axis/-/victory-axis-33.1.2.tgz#e6161169b7827f387f78d021b666e729b90b7068"
+  integrity sha512-j8wDlN/Nv/nGu+DneI/xtcnlRMHXche4PzObZg/CJ91aZaAyBgEpJPnLKXSanwFWgK6eSL1D4chI8fEOBVOOlw==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-bar@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-bar/-/victory-bar-32.3.2.tgz#7268551c6f9cb00346ceb067f39a94a9f85eff6e"
-  integrity sha512-Z0rYAF3NU1FfeUqv0p8RH1HpV70F1G6H+3p0MofPnuVKQNtCc/NruJ9ZaS9IYxexdbiuYaFIx1ozd9cFpdAW8A==
+victory-bar@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-bar/-/victory-bar-33.1.2.tgz#e01938cc5a11ab43aede654fb1ef32bb12a3e91d"
+  integrity sha512-qSbFXSyioK6TautyhUb4QPOFDjwRO80M3CJKqE/wcRkt3cLykwQoPYYtjOqSIPlWZmBZa/JOBwxeXIsz6bhAzQ==
   dependencies:
     d3-shape "^1.2.0"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-box-plot@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-box-plot/-/victory-box-plot-32.3.2.tgz#a48bcd0c0ca6dce281a6539b53bf74bce1a2d24d"
-  integrity sha512-ECrc2W5OxN6pBkFLlmT+qj94nfphmZm40XAp1AcdvvUYF/EKEmb0RyvhhBemK5r2syDjFBLFOgIxrdOT8n9FYA==
+victory-box-plot@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-box-plot/-/victory-box-plot-33.1.2.tgz#1f691aba69ef47fd4164202cf0cc1ab72db2b693"
+  integrity sha512-pb1CayUXaGNeopkbw3t/yEPZxv4AJyKL0P+ja2QPXcOfL1ATjhHBLqogWyKGP0V+KurqXcni4oSTDc3yzEwsjA==
   dependencies:
     d3-array "^1.2.0"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-brush-container@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-brush-container/-/victory-brush-container-32.3.2.tgz#a3421bf69892fd74d67405e0134d79cc8fa54486"
-  integrity sha512-ESD1DXzmt+wT6sA7JEIue+e2MxhKxG8H/i+sHAYuqxhGhXdV/zA952mjcyzx3PTZPaopHXd0s6MukM1aWbOZCA==
+victory-brush-container@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-brush-container/-/victory-brush-container-33.1.2.tgz#3a8c854f82ab58e5f28131f55c086705884b6e9e"
+  integrity sha512-spYsIR7nBXXLb7TEq7/PUpiNbejkPZpuvkEzH1x3vEkbY6OX5tui10bPZdFSEgeB8qQv8J6tgRFfdZxp5+aMSQ==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-brush-line@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-brush-line/-/victory-brush-line-32.3.2.tgz#17cc5dc2b4693177a4998ee6beb9a6912a9d4175"
-  integrity sha512-yj3+qoFFnQZnNtIX+J6zGjOEUkNaVKmkqQ4PDK3NHef3OUmkQsOQgladyVPjc4vtCRWb5d+9TvVjCcosUYiytw==
+victory-brush-line@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-brush-line/-/victory-brush-line-33.1.2.tgz#a57e2ba816d1d324418482d228a43bde88dfddc9"
+  integrity sha512-qU+7UamqUqxl1OacWuhriiLRn5FDREO04HWp3Oixz9JqoIvpmjSc1mZcoJALYBHNZ0QIxkAhd1ZYol2cQrhnlQ==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-candlestick@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-candlestick/-/victory-candlestick-32.3.2.tgz#873fd02b3dc13df2a30f6c6378568e6e2583f1bf"
-  integrity sha512-yplTlyDmjS5C/VOt6nFsieGzZn6lwixRI7MX5Qe5t4LLSuyY/E+b+9oya8mimo1e7s4N/hbaXo7eVEDXGExuCw==
+victory-candlestick@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-candlestick/-/victory-candlestick-33.1.2.tgz#844a726cb24a414e6bd92907be1ec59b2d326d65"
+  integrity sha512-UaQ+bG3tXLrbdBjwhXvUOcgiYJhOkLh0JLFusSkJ0yCnSvvEaxI2LRaLHPOThK98CPvqvdrOnZ4teVUtQtL9IA==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-chart@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-chart/-/victory-chart-32.3.2.tgz#4781141fbd233f5d1c4a03474bfd679f5f5e48e8"
-  integrity sha512-xL8FUl9EYspHWw8XIQTrFhyQAMuHidIiYsyf2920bFgZB+DPLO8zhQHMVhhjnWNVgw4gVoW3Xx7XS2YXNmmLFg==
+victory-chart@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-chart/-/victory-chart-33.1.2.tgz#dd63cebf7bd090f8e8c1409cb29583deec6719b2"
+  integrity sha512-4wJh+os9hRGX8BR3Vz/ip1r3EjCv8ricixK6o14nslONUH7zTTB1ze9lAPDCFKnWfDDOJlYCCJaeQWYbMcu8Dg==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
     react-fast-compare "^2.0.0"
-    victory-axis "^32.3.2"
-    victory-core "^32.3.2"
-    victory-polar-axis "^32.3.2"
-    victory-shared-events "^32.3.2"
+    victory-axis "^33.1.2"
+    victory-core "^33.1.2"
+    victory-polar-axis "^33.1.2"
+    victory-shared-events "^33.1.2"
 
-victory-core@^32.2.3, victory-core@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-core/-/victory-core-32.3.2.tgz#6e2150b0b2807ffcd73106786c43f78f000e90c7"
-  integrity sha512-HXlxQOacxCuZqhXgalyz71ftLOmtOLvfaIUKTBaGqUFbaLFVhcTBwqWBM+xa7gnjOhgr/VjR5apx2X/Rr8jdgA==
+victory-core@^33.0.1, victory-core@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-core/-/victory-core-33.1.2.tgz#9ce6d21a1d524cbf952091d84126dbbb4dc3ad27"
+  integrity sha512-7IONalf4b4MSGJRaHiTBFcrt9exOnky0y+LvU04eddX1sYuqSSCtRGGC+HT9k9bNh56PPpgVT6GPbwWIz2RFCQ==
   dependencies:
     d3-ease "^1.0.0"
     d3-interpolate "^1.1.1"
     d3-scale "^1.0.0"
     d3-shape "^1.2.0"
     d3-timer "^1.0.0"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
     react-fast-compare "^2.0.0"
 
-victory-create-container@^32.3.3:
-  version "32.3.3"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-create-container/-/victory-create-container-32.3.3.tgz#a47235db0b194f455300611126f93ca9444501df"
-  integrity sha512-Y0NqvPAAbNgyVoU2hwz+6E4Df/qa5QV7S4OpvOyljZut/Q/R0Lx9QlGsdpz6qI1veNGvQfP0KyDiKof4kFieRg==
+victory-create-container@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-create-container/-/victory-create-container-33.1.2.tgz#df14c6d2e3cf7cbd263f7fd319cd20214241e00c"
+  integrity sha512-HiZfU8vDSYASB6mngHIz/QE9dXhTI64tvQZnUfuK76Uq/66J+hwxGOh56efnBWmJJRGWq2EWgSz9yNSzXsOq6Q==
   dependencies:
-    lodash "^4.17.11"
-    victory-brush-container "^32.3.2"
-    victory-core "^32.3.2"
-    victory-cursor-container "^32.3.2"
-    victory-selection-container "^32.3.2"
-    victory-voronoi-container "^32.3.3"
-    victory-zoom-container "^32.3.2"
+    lodash "^4.17.15"
+    victory-brush-container "^33.1.2"
+    victory-core "^33.1.2"
+    victory-cursor-container "^33.1.2"
+    victory-selection-container "^33.1.2"
+    victory-voronoi-container "^33.1.2"
+    victory-zoom-container "^33.1.2"
 
-victory-cursor-container@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-cursor-container/-/victory-cursor-container-32.3.2.tgz#ca49bccdc0d9cf9b587d89e77eda753f75e9e73f"
-  integrity sha512-w5ocJVLBhPMBliJNdUBIe+BSlTJQufrtF+WiT0g9V+b32hMAiNQuG4W/bH91Mjko8mHuJnTtawBMbdgz1KGQAQ==
+victory-cursor-container@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-cursor-container/-/victory-cursor-container-33.1.2.tgz#bf107a150178aefd59087a4ad5b447784af7074d"
+  integrity sha512-+rUem56YVdAX/JEUpLh6MtfHtTMVQbiiQXceDJPbghB0tNu9nqIlfh+eelSvdvP2C3nB3bAGcjJqdbgnV00fhg==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-errorbar@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-errorbar/-/victory-errorbar-32.3.2.tgz#497c9749eb4fa6ee5134b0ba6d32761537189277"
-  integrity sha512-tv6euhdhFT0iL4z2BV024HqNHCcXfNso7qjJErs1AjITCMFs/6/UbZ4VWOdAq8xTmqHDCdyd8zFiGtbpuSODDQ==
+victory-errorbar@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-errorbar/-/victory-errorbar-33.1.2.tgz#ef4d344e45323047f197271d35d9fa68d6a89791"
+  integrity sha512-Qf8EQAJAT9FB91woMKdgj3uzMu+SYQVcc/JGboB77awqg36cJHqqL3hsnsrPJb9TH6EMLyQIWlk/xsIkGgF8ow==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-group@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-group/-/victory-group-32.3.2.tgz#c79fa4c087c386f63f3acd40158002762c37d743"
-  integrity sha512-N47GVC2AW7NA9oV9UNFpRcrX2XSABUU2yoG68chnaZvNrkGxCBlkz3Y6RpxZkEkXo/VX49u/JaDLQOVhhhlM3w==
+victory-group@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-group/-/victory-group-33.1.2.tgz#1a2c0ba0257d859b637ffb407aae9f84d85088c8"
+  integrity sha512-BX4Gjw0zbm2RmgQNXo464Dr16tPWGKDJSwKoBczx3kKOaty7rJDdFWcYtoCJ2UXab9zNdVX0ouXevNyzYpSPqA==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
     react-fast-compare "^2.0.0"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-legend@^32.2.3, victory-legend@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-legend/-/victory-legend-32.3.2.tgz#494ddf3035804650dcd06de744caf5cb32552aa3"
-  integrity sha512-JAnlrepPUzK7FWFLQPDw/TVtC/ZweUpOYM5fL9rlOw4eX7suTHVu1pjhqOaHLK0CZXOc2uJeJe9L8TZZmRK4Gw==
+victory-legend@^33.0.1, victory-legend@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-legend/-/victory-legend-33.1.2.tgz#6e7141cd938fde20985a475f6878f19757d91ff2"
+  integrity sha512-au9IYRQOuRJqeHOTUelg8IoxdL4Uogy6PvlR5ecKj9t5NvgculI+deqKxvJhpfqlb78q8TYYYcADGZAfn0pAug==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-line@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-line/-/victory-line-32.3.2.tgz#b5580febf04c0c7ae3abe5b86d8ba08bcf6a699d"
-  integrity sha512-5Mk5c+7kQw/An+TgCPOzgaYxUxtfAtt9ZGVuwJ7ru02ieL9Ev0S8Q8jJdmj9vIPE4eG60ZuumzovLz+8Mw+elQ==
+victory-line@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-line/-/victory-line-33.1.2.tgz#a31300137c2b925e23fbacf908bc4def2c160cce"
+  integrity sha512-QsGX5edI7oPOfSqi98JgykgoDuKIWUiG8d9okx+Sj8QRuPSmRtxZ2f3n/N4K1lP5MoQRAEJFCqEAjfJLiuGEfg==
   dependencies:
     d3-shape "^1.2.0"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-pie@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-pie/-/victory-pie-32.3.2.tgz#873e5e38ed381f9a8e97070df772a8746799f7b4"
-  integrity sha512-naNoPWWHJjt4L6rHZ5U0/L2slUKkGLqQu2OnKU8/Zfbr2pBi2JXfHLFD8RIk6v+H1zApiqpU5ID+pp05u7o7/Q==
+victory-pie@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-pie/-/victory-pie-33.1.2.tgz#bc1e6f745f6ac08a9337abeb2cffbc47e8b3c471"
+  integrity sha512-ZCHqG1N8htc2x4i2AnRn6cfcs0+u/E+mk+dCFgRS85x/iwIZlqdPKKcC51kIJ6LTrcNuzKhMqcawx+OpFm+//Q==
   dependencies:
     d3-shape "^1.0.0"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-polar-axis@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-polar-axis/-/victory-polar-axis-32.3.2.tgz#fb134ccb1a75410ce904c131d38a33b7b43a3b51"
-  integrity sha512-2lNMEzJvDLfn720q3CyhyMGZeZRPA3C0fp3WbNyTDx9h6y1L9fDdPHtLSQRURx1UZOLDwHCHdNTD1TtNiH8txg==
+victory-polar-axis@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-polar-axis/-/victory-polar-axis-33.1.2.tgz#1d801c46549f252a7f6a363630049d6e231a6fc0"
+  integrity sha512-Nkl3n8WB1nSS8AFsxdRXlATfMpJsPNlS01xhOA2m/MstSHHErOC9tSj/GtXviV5+n8Dg0AA9srpStNa7z/Rx6g==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-scatter@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-scatter/-/victory-scatter-32.3.2.tgz#7cad3c7bf18f9c7d067a10caf873941904998128"
-  integrity sha512-5tw4CnLae0NBvQg5le7OS1KhB9O3HpXgntmK/R76+6L1DOUbuIiV+LOe6XyQYlPm1yX+dF8t1P93O3ykbqWyRg==
+victory-scatter@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-scatter/-/victory-scatter-33.1.2.tgz#0abe04d517460c1eaef8abd16d8d01183872c32f"
+  integrity sha512-wT6dLdoUWaM7wSWOmMKpJi12dRAjqvQn1iOvVpmngK0DqVxwbXeK0fJqvDqRs2RIScqJgx2UvZ+sIiMijlb8og==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-selection-container@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-selection-container/-/victory-selection-container-32.3.2.tgz#aec9bd24de3e292032242a2e58e9e4511384726f"
-  integrity sha512-imJjWYGkRm01SGxrpbbDEW16xZpVMW0/rKFzOr0ZVZHxmP7VkEx24f7futbX+DuXEYNxDO15imLOtMYXA4yhRg==
+victory-selection-container@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-selection-container/-/victory-selection-container-33.1.2.tgz#e3e3dbff0393966237c74ddfe2b25a93a2c6b51d"
+  integrity sha512-KR/c3Ij4W+JUiYA67t6wj4T3tnF8UK8373dPnAihNOliKB6d4CSX4JmgCEs6UySrJBTCciYcZ88rZVSpI7QIrA==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-shared-events@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-shared-events/-/victory-shared-events-32.3.2.tgz#cf31aadf55e9974669aa1bcb7d9bfdaad9d33d8b"
-  integrity sha512-Yilbcsh5YO2QHPdpxBIRIDNO9vDKb8ml5AxuUXpJcGgAH8uaASJCKj8VjQGHWH/REnJ9u0pJuC50dB6wtPuiiw==
+victory-shared-events@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-shared-events/-/victory-shared-events-33.1.2.tgz#c6f009d8e371a7a67034a68b95d54ec384af516e"
+  integrity sha512-TNnLZ0uY7tbZm56uDee0TA+501aTeikpuBKTx/vpfT6ifFwiYfQ9n5Orx3aVmJvkinmLaifqnxWA9UwAwuIL7w==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
     react-fast-compare "^2.0.0"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-stack@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-stack/-/victory-stack-32.3.2.tgz#fa9b2dae04e092795b69c4b190e52ffdf7f81de9"
-  integrity sha512-6H8Lt9OV6PYYjQI1Z2Rh5ulDhuESmP5+EIli2SZxeUqMWi2z6RbGcKCM46EMv7hTLO7CPH7FyBeTblKZeghbsA==
+victory-stack@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-stack/-/victory-stack-33.1.2.tgz#453919686f0c428ab6211ab22e92817ec43c9edf"
+  integrity sha512-4eOvyPx0EpmZGuwbtc+XlWuuM8CSC4RAiEsAcDuqNPmWPJShuuB9ABBHV04yVGF9Ub80d+kTowuQJD5PsxtRyA==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
     react-fast-compare "^2.0.0"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-tooltip@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-tooltip/-/victory-tooltip-32.3.2.tgz#14c04787a1947e504f3fc032ba4e1f69c2b98644"
-  integrity sha512-t4HUDrC2pEVSa7wJxDtyEUK0ngvgzmT4uplytVx6AvIS476Q47SYvLU1q667FLCKWbjR1yZHCcPOhO3+79akAw==
+victory-tooltip@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-tooltip/-/victory-tooltip-33.1.2.tgz#06ca60971d3a442a09d776c93035e4c078d4fed2"
+  integrity sha512-iFxQfsF2hwJR2ZnhNmkiBKfLlfyIcpSfn2x+vZlxA144BGTmvfrC05Pn17erZnAT50AiVf0aW5YJNKLv06MWaA==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-voronoi-container@^32.3.3:
-  version "32.3.3"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-voronoi-container/-/victory-voronoi-container-32.3.3.tgz#c8c99f9ce54c2d6508b35cb242150c71b4c9da9e"
-  integrity sha512-eNFOJbM3cUZb6t83xBT3O0MT5FGlX9oxO6WMUs7kZUSMGUa5by2vjV9lJ2FdL70Ix1qnMZDpyP2aYs4vMIWGZw==
+victory-voronoi-container@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-voronoi-container/-/victory-voronoi-container-33.1.2.tgz#89eb32c1ad3d418d231bba6a47e961b1dc4f42fd"
+  integrity sha512-ydsWYLGi9dSVbr+/5v1E6NvuV9C2OvdqTvHuH5r6BthSqFu0u+6bbv4QIbJY9sWc2L1zhknZByikV1ty9bGIfA==
   dependencies:
-    delaunay-find "0.0.3"
-    lodash "^4.17.11"
+    delaunay-find "0.0.5"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
-    victory-tooltip "^32.3.2"
+    victory-core "^33.1.2"
+    victory-tooltip "^33.1.2"
 
-victory-voronoi@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-voronoi/-/victory-voronoi-32.3.2.tgz#4abe8b170f5f1f1bf9e9bf5e492113b0bc1f0f02"
-  integrity sha512-Q7yTF0e1srAIfOprDAv2O8oDzmv21Y+6reslZrPOZiNISl5cxqfBQWmZJISVRoVQ/MOAF8jV5UHbq37o5914PQ==
+victory-voronoi@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-voronoi/-/victory-voronoi-33.1.2.tgz#59daf15d3c524fbc23a84bcd40f64483e5b6902e"
+  integrity sha512-oLoicPWgGHxEHAtCjzNQsN/fILmXV/6QBlJoCN04TzLyA063xvy2E+n6yuAtGHEkrpVCG7VTB/T5cJN7MCOyIQ==
   dependencies:
     d3-voronoi "^1.1.2"
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory-zoom-container@^32.3.2:
-  version "32.3.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-zoom-container/-/victory-zoom-container-32.3.2.tgz#834d022898991b7620856d86a3485eb0e18a473d"
-  integrity sha512-XWSOwjs+kscRdf1rbonXJK+AKjWANq6E9EfQgSkfvn+nCNoRd06SffczM3EaiSVoo9R8JevEsfywblh6hQ5jQA==
+victory-zoom-container@^33.1.2:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory-zoom-container/-/victory-zoom-container-33.1.2.tgz#8c0a32520a587710654c4f341c1315c6b4f99b5c"
+  integrity sha512-hNvBg/N64BhSTJunonuoiH38eKtgxJiobbcNPFM2BPiuKJAr7a8SKSngFgECrwTQQVgt2sC7qVX/+WYwrJCpYA==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     prop-types "^15.5.8"
-    victory-core "^32.3.2"
+    victory-core "^33.1.2"
 
-victory@^32.2.3:
-  version "32.3.3"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory/-/victory-32.3.3.tgz#cd3cb338d572faffdba84cf9be1a7838a0e7d132"
-  integrity sha512-JlHRC+EpA3Tst8LNMzGV3P1CG0TJ+/U/1ka/NPLIPpWd7ZqXxTmYlpnBTpFLm3tQmWTpiOm2tTQ867LtZ3JGQw==
+victory@^33.0.5:
+  version "33.1.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/victory/-/victory-33.1.2.tgz#95d3afb21cb5d67e07a1f370e4cc34508976bf93"
+  integrity sha512-Fl08yjwCWbK9TIcbL7IbfhyHSeQ3wo0ALkk4sfOz3CAyDL/RabvBZemHk+uLkFcske3gFkYig9ZKu8Xl6L1GOw==
   dependencies:
-    victory-area "^32.3.2"
-    victory-axis "^32.3.2"
-    victory-bar "^32.3.2"
-    victory-box-plot "^32.3.2"
-    victory-brush-container "^32.3.2"
-    victory-brush-line "^32.3.2"
-    victory-candlestick "^32.3.2"
-    victory-chart "^32.3.2"
-    victory-core "^32.3.2"
-    victory-create-container "^32.3.3"
-    victory-cursor-container "^32.3.2"
-    victory-errorbar "^32.3.2"
-    victory-group "^32.3.2"
-    victory-legend "^32.3.2"
-    victory-line "^32.3.2"
-    victory-pie "^32.3.2"
-    victory-polar-axis "^32.3.2"
-    victory-scatter "^32.3.2"
-    victory-selection-container "^32.3.2"
-    victory-shared-events "^32.3.2"
-    victory-stack "^32.3.2"
-    victory-tooltip "^32.3.2"
-    victory-voronoi "^32.3.2"
-    victory-voronoi-container "^32.3.3"
-    victory-zoom-container "^32.3.2"
+    victory-area "^33.1.2"
+    victory-axis "^33.1.2"
+    victory-bar "^33.1.2"
+    victory-box-plot "^33.1.2"
+    victory-brush-container "^33.1.2"
+    victory-brush-line "^33.1.2"
+    victory-candlestick "^33.1.2"
+    victory-chart "^33.1.2"
+    victory-core "^33.1.2"
+    victory-create-container "^33.1.2"
+    victory-cursor-container "^33.1.2"
+    victory-errorbar "^33.1.2"
+    victory-group "^33.1.2"
+    victory-legend "^33.1.2"
+    victory-line "^33.1.2"
+    victory-pie "^33.1.2"
+    victory-polar-axis "^33.1.2"
+    victory-scatter "^33.1.2"
+    victory-selection-container "^33.1.2"
+    victory-shared-events "^33.1.2"
+    victory-stack "^33.1.2"
+    victory-tooltip "^33.1.2"
+    victory-voronoi "^33.1.2"
+    victory-voronoi-container "^33.1.2"
+    victory-zoom-container "^33.1.2"
 
 vm-browserify@0.0.4:
   version "0.0.4"

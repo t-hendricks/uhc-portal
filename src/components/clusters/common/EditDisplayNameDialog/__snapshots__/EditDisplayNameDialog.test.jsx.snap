@@ -29,25 +29,116 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
     <Modal
       actions={
         Array [
-          <Button
+          <Unknown
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
-          </Button>,
-          <Button
+          </Unknown>,
+          <Unknown
             isDisabled={false}
             onClick={[Function]}
             type="submit"
             variant="primary"
           >
             Edit
-          </Button>,
+          </Unknown>,
         ]
+      }
+      appendTo={
+        <body
+          class="pf-c-backdrop__open"
+        >
+          <div>
+            <div
+              class="pf-c-backdrop"
+            >
+              <div
+                class="pf-l-bullseye"
+              >
+                <div
+                  aria-describedby="pf-modal-0"
+                  aria-label="Edit Display Name"
+                  aria-modal="true"
+                  class="pf-c-modal-box pf-m-sm"
+                  role="dialog"
+                >
+                  <button
+                    aria-label="Close"
+                    class="pf-c-button pf-m-plain"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 352 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    class="pf-c-title pf-m-2xl"
+                  >
+                     
+                    Edit Display Name
+                     
+                  </h1>
+                  <div
+                    class="pf-c-modal-box__body"
+                    id="pf-modal-0"
+                  >
+                    <form
+                      class="pf-c-form"
+                      novalidate=""
+                    >
+                      <div
+                        class="pf-c-form__group"
+                      >
+                        <input
+                          aria-invalid="false"
+                          aria-label="Edit display name"
+                          class="pf-c-form-control"
+                          id="edit-display-name-input"
+                          placeholder="Enter display name"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="pf-c-modal-box__footer"
+                  >
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-primary"
+                      type="submit"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </body>
       }
       ariaDescribedById=""
       className={null}
       hideTitle={false}
+      isFooterLeftAligned={false}
       isLarge={false}
       isOpen={true}
       isSmall={true}
@@ -146,26 +237,27 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
         <ModalContent
           actions={
             Array [
-              <Button
+              <Unknown
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
-              </Button>,
-              <Button
+              </Unknown>,
+              <Unknown
                 isDisabled={false}
                 onClick={[Function]}
                 type="submit"
                 variant="primary"
               >
                 Edit
-              </Button>,
+              </Unknown>,
             ]
           }
           ariaDescribedById=""
           className={null}
           hideTitle={false}
           id="pf-modal-0"
+          isFooterLeftAligned={false}
           isLarge={false}
           isOpen={true}
           isSmall={true}
@@ -211,49 +303,81 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                       <ModalBoxCloseButton
                         onClose={[Function]}
                       >
-                        <Button
+                        <Component
                           aria-label="Close"
                           className=""
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <button
-                            aria-disabled={null}
-                            aria-label="Close"
-                            className="pf-c-button pf-m-plain"
-                            disabled={false}
-                            onClick={[Function]}
-                            tabIndex={null}
-                            type="button"
+                          <ComponentWithOuia
+                            component={[Function]}
+                            componentProps={
+                              Object {
+                                "aria-label": "Close",
+                                "children": <TimesIcon
+                                  color="currentColor"
+                                  noVerticalAlign={false}
+                                  size="sm"
+                                  title={null}
+                                />,
+                                "className": "",
+                                "onClick": [Function],
+                                "variant": "plain",
+                              }
+                            }
+                            consumerContext={null}
                           >
-                            <TimesIcon
-                              color="currentColor"
-                              noVerticalAlign={false}
-                              size="sm"
-                              title={null}
-                            >
-                              <svg
-                                aria-hidden={true}
-                                aria-labelledby={null}
-                                fill="currentColor"
-                                height="1em"
-                                role="img"
-                                style={
-                                  Object {
-                                    "verticalAlign": "-0.125em",
-                                  }
+                            <Button
+                              aria-label="Close"
+                              className=""
+                              onClick={[Function]}
+                              ouiaContext={
+                                Object {
+                                  "isOuia": false,
+                                  "ouiaId": null,
                                 }
-                                viewBox="0 0 352 512"
-                                width="1em"
+                              }
+                              variant="plain"
+                            >
+                              <button
+                                aria-disabled={null}
+                                aria-label="Close"
+                                className="pf-c-button pf-m-plain"
+                                disabled={false}
+                                onClick={[Function]}
+                                tabIndex={null}
+                                type="button"
                               >
-                                <path
-                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                  transform=""
-                                />
-                              </svg>
-                            </TimesIcon>
-                          </button>
-                        </Button>
+                                <TimesIcon
+                                  color="currentColor"
+                                  noVerticalAlign={false}
+                                  size="sm"
+                                  title={null}
+                                >
+                                  <svg
+                                    aria-hidden={true}
+                                    aria-labelledby={null}
+                                    fill="currentColor"
+                                    height="1em"
+                                    role="img"
+                                    style={
+                                      Object {
+                                        "verticalAlign": "-0.125em",
+                                      }
+                                    }
+                                    viewBox="0 0 352 512"
+                                    width="1em"
+                                  >
+                                    <path
+                                      d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                      transform=""
+                                    />
+                                  </svg>
+                                </TimesIcon>
+                              </button>
+                            </Button>
+                          </ComponentWithOuia>
+                        </Component>
                       </ModalBoxCloseButton>
                       <ModalBoxHeader
                         hideTitle={false}
@@ -327,46 +451,98 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                           </Form>
                         </div>
                       </ModalBoxBody>
-                      <ModalBoxFooter>
+                      <ModalBoxFooter
+                        isLeftAligned={false}
+                      >
                         <div
                           className="pf-c-modal-box__footer"
                         >
-                          <Button
+                          <Component
                             key="cancel"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <button
-                              aria-disabled={null}
-                              aria-label={null}
-                              className="pf-c-button pf-m-secondary"
-                              disabled={false}
-                              onClick={[Function]}
-                              tabIndex={null}
-                              type="button"
+                            <ComponentWithOuia
+                              component={[Function]}
+                              componentProps={
+                                Object {
+                                  "children": "Cancel",
+                                  "onClick": [Function],
+                                  "variant": "secondary",
+                                }
+                              }
+                              consumerContext={null}
                             >
-                              Cancel
-                            </button>
-                          </Button>
-                          <Button
+                              <Button
+                                onClick={[Function]}
+                                ouiaContext={
+                                  Object {
+                                    "isOuia": false,
+                                    "ouiaId": null,
+                                  }
+                                }
+                                variant="secondary"
+                              >
+                                <button
+                                  aria-disabled={null}
+                                  aria-label={null}
+                                  className="pf-c-button pf-m-secondary"
+                                  disabled={false}
+                                  onClick={[Function]}
+                                  tabIndex={null}
+                                  type="button"
+                                >
+                                  Cancel
+                                </button>
+                              </Button>
+                            </ComponentWithOuia>
+                          </Component>
+                          <Component
                             isDisabled={false}
                             key="confirm"
                             onClick={[Function]}
                             type="submit"
                             variant="primary"
                           >
-                            <button
-                              aria-disabled={null}
-                              aria-label={null}
-                              className="pf-c-button pf-m-primary"
-                              disabled={false}
-                              onClick={[Function]}
-                              tabIndex={null}
-                              type="submit"
+                            <ComponentWithOuia
+                              component={[Function]}
+                              componentProps={
+                                Object {
+                                  "children": "Edit",
+                                  "isDisabled": false,
+                                  "onClick": [Function],
+                                  "type": "submit",
+                                  "variant": "primary",
+                                }
+                              }
+                              consumerContext={null}
                             >
-                              Edit
-                            </button>
-                          </Button>
+                              <Button
+                                isDisabled={false}
+                                onClick={[Function]}
+                                ouiaContext={
+                                  Object {
+                                    "isOuia": false,
+                                    "ouiaId": null,
+                                  }
+                                }
+                                type="submit"
+                                variant="primary"
+                              >
+                                <button
+                                  aria-disabled={null}
+                                  aria-label={null}
+                                  className="pf-c-button pf-m-primary"
+                                  disabled={false}
+                                  onClick={[Function]}
+                                  tabIndex={null}
+                                  type="submit"
+                                >
+                                  Edit
+                                </button>
+                              </Button>
+                            </ComponentWithOuia>
+                          </Component>
                         </div>
                       </ModalBoxFooter>
                     </div>
@@ -411,25 +587,504 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
     <Modal
       actions={
         Array [
-          <Button
+          <Unknown
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
-          </Button>,
-          <Button
+          </Unknown>,
+          <Unknown
             isDisabled={false}
             onClick={[Function]}
             type="submit"
             variant="primary"
           >
             Edit
-          </Button>,
+          </Unknown>,
         ]
+      }
+      appendTo={
+        <body
+          class="pf-c-backdrop__open"
+        >
+          <div
+            aria-hidden="true"
+          >
+            <div
+              class="pf-c-backdrop"
+            >
+              <div
+                class="pf-l-bullseye"
+              >
+                <div
+                  aria-describedby="pf-modal-0"
+                  aria-label="Edit Display Name"
+                  aria-modal="true"
+                  class="pf-c-modal-box pf-m-sm"
+                  role="dialog"
+                >
+                  <button
+                    aria-label="Close"
+                    class="pf-c-button pf-m-plain"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 352 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    class="pf-c-title pf-m-2xl"
+                  >
+                     
+                    Edit Display Name
+                     
+                  </h1>
+                  <div
+                    class="pf-c-modal-box__body"
+                    id="pf-modal-0"
+                  >
+                    <form
+                      class="pf-c-form"
+                      novalidate=""
+                    >
+                      <div
+                        class="pf-c-form__group"
+                      >
+                        <input
+                          aria-invalid="false"
+                          aria-label="Edit display name"
+                          class="pf-c-form-control"
+                          id="edit-display-name-input"
+                          placeholder="Enter display name"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="pf-c-modal-box__footer"
+                  >
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-primary"
+                      type="submit"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+          >
+            <div
+              class="pf-c-backdrop"
+            >
+              <div
+                class="pf-l-bullseye"
+              >
+                <div
+                  aria-describedby="pf-modal-1"
+                  aria-label="Edit Display Name"
+                  aria-modal="true"
+                  class="pf-c-modal-box pf-m-sm"
+                  role="dialog"
+                >
+                  <button
+                    aria-label="Close"
+                    class="pf-c-button pf-m-plain"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 352 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    class="pf-c-title pf-m-2xl"
+                  >
+                     
+                    Edit Display Name
+                     
+                  </h1>
+                  <div
+                    class="pf-c-modal-box__body"
+                    id="pf-modal-1"
+                  >
+                    <form
+                      class="pf-c-form"
+                      novalidate=""
+                    >
+                      <div
+                        class="pf-c-form__group"
+                      >
+                        <input
+                          aria-invalid="false"
+                          aria-label="Edit display name"
+                          class="pf-c-form-control"
+                          id="edit-display-name-input"
+                          placeholder="Enter display name"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="pf-c-modal-box__footer"
+                  >
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-primary"
+                      type="submit"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+          >
+            <div
+              class="pf-c-backdrop"
+            >
+              <div
+                class="pf-l-bullseye"
+              >
+                <div
+                  aria-describedby="pf-modal-2"
+                  aria-label="Edit Display Name"
+                  aria-modal="true"
+                  class="pf-c-modal-box pf-m-sm"
+                  role="dialog"
+                >
+                  <button
+                    aria-label="Close"
+                    class="pf-c-button pf-m-plain"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 352 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    class="pf-c-title pf-m-2xl"
+                  >
+                     
+                    Edit Display Name
+                     
+                  </h1>
+                  <div
+                    class="pf-c-modal-box__body"
+                    id="pf-modal-2"
+                  >
+                    <form
+                      class="pf-c-form"
+                      novalidate=""
+                    >
+                      <div
+                        class="pf-c-form__group"
+                      >
+                        <input
+                          aria-invalid="false"
+                          aria-label="Edit display name"
+                          class="pf-c-form-control"
+                          id="edit-display-name-input"
+                          placeholder="Enter display name"
+                          type="text"
+                          value="hello"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="pf-c-modal-box__footer"
+                  >
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-primary"
+                      type="submit"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+          >
+            <div
+              class="pf-c-backdrop"
+            >
+              <div
+                class="pf-l-bullseye"
+              >
+                <div
+                  aria-describedby="pf-modal-3"
+                  aria-label="Edit Display Name"
+                  aria-modal="true"
+                  class="pf-c-modal-box pf-m-sm"
+                  role="dialog"
+                >
+                  <button
+                    aria-label="Close"
+                    class="pf-c-button pf-m-plain"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 352 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    class="pf-c-title pf-m-2xl"
+                  >
+                     
+                    Edit Display Name
+                     
+                  </h1>
+                  <div
+                    class="pf-c-modal-box__body"
+                    id="pf-modal-3"
+                  >
+                    <form
+                      class="pf-c-form"
+                      novalidate=""
+                    >
+                      <div
+                        class="pf-c-form__group"
+                      >
+                        <input
+                          aria-invalid="false"
+                          aria-label="Edit display name"
+                          class="pf-c-form-control"
+                          id="edit-display-name-input"
+                          placeholder="Enter display name"
+                          type="text"
+                          value="some-name"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="pf-c-modal-box__footer"
+                  >
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-primary"
+                      type="submit"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="pf-c-backdrop"
+            >
+              <div
+                class="pf-l-bullseye"
+              >
+                <div
+                  aria-describedby="pf-modal-4"
+                  aria-label="Edit Display Name"
+                  aria-modal="true"
+                  class="pf-c-modal-box pf-m-sm"
+                  role="dialog"
+                >
+                  <button
+                    aria-label="Close"
+                    class="pf-c-button pf-m-plain"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 352 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                  <h1
+                    class="pf-c-title pf-m-2xl"
+                  >
+                     
+                    Edit Display Name
+                     
+                  </h1>
+                  <div
+                    class="pf-c-modal-box__body"
+                    id="pf-modal-4"
+                  >
+                    <div
+                      aria-label="Danger Alert"
+                      class="pf-c-alert pf-m-inline pf-m-danger error-box"
+                    >
+                      <div
+                        class="pf-c-alert__icon"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          fill="currentColor"
+                          height="1em"
+                          role="img"
+                          style="vertical-align: -0.125em;"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                        >
+                          <path
+                            d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                            transform=""
+                          />
+                        </svg>
+                      </div>
+                      <h4
+                        class="pf-c-alert__title"
+                      >
+                        <span
+                          class="pf-u-screen-reader"
+                        >
+                          Danger alert:
+                        </span>
+                        Error changing display name
+                      </h4>
+                      <div
+                        class="pf-c-alert__description"
+                      >
+                        <span>
+                          this is an error
+                        </span>
+                        <br />
+                        <span>
+                          Operation ID: N/A
+                        </span>
+                      </div>
+                    </div>
+                    <form
+                      class="pf-c-form"
+                      novalidate=""
+                    >
+                      <div
+                        class="pf-c-form__group"
+                      >
+                        <input
+                          aria-invalid="false"
+                          aria-label="Edit display name"
+                          class="pf-c-form-control"
+                          id="edit-display-name-input"
+                          placeholder="Enter display name"
+                          type="text"
+                          value="some-name"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="pf-c-modal-box__footer"
+                  >
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-primary"
+                      type="submit"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </body>
       }
       ariaDescribedById=""
       className={null}
       hideTitle={false}
+      isFooterLeftAligned={false}
       isLarge={false}
       isOpen={true}
       isSmall={true}
@@ -572,26 +1227,27 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
         <ModalContent
           actions={
             Array [
-              <Button
+              <Unknown
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
-              </Button>,
-              <Button
+              </Unknown>,
+              <Unknown
                 isDisabled={false}
                 onClick={[Function]}
                 type="submit"
                 variant="primary"
               >
                 Edit
-              </Button>,
+              </Unknown>,
             ]
           }
           ariaDescribedById=""
           className={null}
           hideTitle={false}
           id="pf-modal-4"
+          isFooterLeftAligned={false}
           isLarge={false}
           isOpen={true}
           isSmall={true}
@@ -637,49 +1293,81 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       <ModalBoxCloseButton
                         onClose={[Function]}
                       >
-                        <Button
+                        <Component
                           aria-label="Close"
                           className=""
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <button
-                            aria-disabled={null}
-                            aria-label="Close"
-                            className="pf-c-button pf-m-plain"
-                            disabled={false}
-                            onClick={[Function]}
-                            tabIndex={null}
-                            type="button"
+                          <ComponentWithOuia
+                            component={[Function]}
+                            componentProps={
+                              Object {
+                                "aria-label": "Close",
+                                "children": <TimesIcon
+                                  color="currentColor"
+                                  noVerticalAlign={false}
+                                  size="sm"
+                                  title={null}
+                                />,
+                                "className": "",
+                                "onClick": [Function],
+                                "variant": "plain",
+                              }
+                            }
+                            consumerContext={null}
                           >
-                            <TimesIcon
-                              color="currentColor"
-                              noVerticalAlign={false}
-                              size="sm"
-                              title={null}
-                            >
-                              <svg
-                                aria-hidden={true}
-                                aria-labelledby={null}
-                                fill="currentColor"
-                                height="1em"
-                                role="img"
-                                style={
-                                  Object {
-                                    "verticalAlign": "-0.125em",
-                                  }
+                            <Button
+                              aria-label="Close"
+                              className=""
+                              onClick={[Function]}
+                              ouiaContext={
+                                Object {
+                                  "isOuia": false,
+                                  "ouiaId": null,
                                 }
-                                viewBox="0 0 352 512"
-                                width="1em"
+                              }
+                              variant="plain"
+                            >
+                              <button
+                                aria-disabled={null}
+                                aria-label="Close"
+                                className="pf-c-button pf-m-plain"
+                                disabled={false}
+                                onClick={[Function]}
+                                tabIndex={null}
+                                type="button"
                               >
-                                <path
-                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                  transform=""
-                                />
-                              </svg>
-                            </TimesIcon>
-                          </button>
-                        </Button>
+                                <TimesIcon
+                                  color="currentColor"
+                                  noVerticalAlign={false}
+                                  size="sm"
+                                  title={null}
+                                >
+                                  <svg
+                                    aria-hidden={true}
+                                    aria-labelledby={null}
+                                    fill="currentColor"
+                                    height="1em"
+                                    role="img"
+                                    style={
+                                      Object {
+                                        "verticalAlign": "-0.125em",
+                                      }
+                                    }
+                                    viewBox="0 0 352 512"
+                                    width="1em"
+                                  >
+                                    <path
+                                      d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                      transform=""
+                                    />
+                                  </svg>
+                                </TimesIcon>
+                              </button>
+                            </Button>
+                          </ComponentWithOuia>
+                        </Component>
                       </ModalBoxCloseButton>
                       <ModalBoxHeader
                         hideTitle={false}
@@ -714,73 +1402,109 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                               }
                             }
                           >
-                            <Alert
+                            <Component
                               className="error-box"
                               isInline={true}
                               title="Error changing display name"
                               variant="danger"
                             >
-                              <div
-                                aria-label="Danger Alert"
-                                className="pf-c-alert pf-m-inline pf-m-danger error-box"
+                              <ComponentWithOuia
+                                component={[Function]}
+                                componentProps={
+                                  Object {
+                                    "children": Array [
+                                      <span>
+                                        this is an error
+                                      </span>,
+                                      Array [],
+                                      <br />,
+                                      <span>
+                                        Operation ID: N/A
+                                      </span>,
+                                    ],
+                                    "className": "error-box",
+                                    "isInline": true,
+                                    "title": "Error changing display name",
+                                    "variant": "danger",
+                                  }
+                                }
+                                consumerContext={null}
                               >
-                                <AlertIcon
+                                <Alert
+                                  className="error-box"
+                                  isInline={true}
+                                  ouiaContext={
+                                    Object {
+                                      "isOuia": false,
+                                      "ouiaId": null,
+                                    }
+                                  }
+                                  title="Error changing display name"
                                   variant="danger"
                                 >
                                   <div
-                                    className="pf-c-alert__icon"
+                                    aria-label="Danger Alert"
+                                    className="pf-c-alert pf-m-inline pf-m-danger error-box"
                                   >
-                                    <ExclamationCircleIcon
-                                      color="currentColor"
-                                      noVerticalAlign={false}
-                                      size="sm"
-                                      title={null}
+                                    <AlertIcon
+                                      variant="danger"
                                     >
-                                      <svg
-                                        aria-hidden={true}
-                                        aria-labelledby={null}
-                                        fill="currentColor"
-                                        height="1em"
-                                        role="img"
-                                        style={
-                                          Object {
-                                            "verticalAlign": "-0.125em",
-                                          }
-                                        }
-                                        viewBox="0 0 512 512"
-                                        width="1em"
+                                      <div
+                                        className="pf-c-alert__icon"
                                       >
-                                        <path
-                                          d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
-                                          transform=""
-                                        />
-                                      </svg>
-                                    </ExclamationCircleIcon>
+                                        <ExclamationCircleIcon
+                                          color="currentColor"
+                                          noVerticalAlign={false}
+                                          size="sm"
+                                          title={null}
+                                        >
+                                          <svg
+                                            aria-hidden={true}
+                                            aria-labelledby={null}
+                                            fill="currentColor"
+                                            height="1em"
+                                            role="img"
+                                            style={
+                                              Object {
+                                                "verticalAlign": "-0.125em",
+                                              }
+                                            }
+                                            viewBox="0 0 512 512"
+                                            width="1em"
+                                          >
+                                            <path
+                                              d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                                              transform=""
+                                            />
+                                          </svg>
+                                        </ExclamationCircleIcon>
+                                      </div>
+                                    </AlertIcon>
+                                    <h4
+                                      className="pf-c-alert__title"
+                                    >
+                                      <span
+                                        className="pf-u-screen-reader"
+                                      >
+                                        Danger alert:
+                                      </span>
+                                      Error changing display name
+                                    </h4>
+                                    <div
+                                      className="pf-c-alert__description"
+                                    >
+                                      <span>
+                                        this is an error
+                                      </span>
+                                      <br />
+                                      <span>
+                                        Operation ID: N/A
+                                      </span>
+                                    </div>
                                   </div>
-                                </AlertIcon>
-                                <h4
-                                  className="pf-c-alert__title"
-                                >
-                                  <span
-                                    className="pf-u-screen-reader"
-                                  >
-                                    Danger alert:
-                                  </span>
-                                  Error changing display name
-                                </h4>
-                                <div
-                                  className="pf-c-alert__description"
-                                >
-                                  <span>
-                                    this is an error
-                                  </span>
-                                  <br />
-                                  <span>
-                                    Operation ID: N/A
-                                  </span>
-                                </div>
-                              </div>
-                            </Alert>
+                                </Alert>
+                              </ComponentWithOuia>
+                            </Component>
                           </ErrorBox>
                           <Form
                             onSubmit={[Function]}
@@ -830,46 +1554,98 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                           </Form>
                         </div>
                       </ModalBoxBody>
-                      <ModalBoxFooter>
+                      <ModalBoxFooter
+                        isLeftAligned={false}
+                      >
                         <div
                           className="pf-c-modal-box__footer"
                         >
-                          <Button
+                          <Component
                             key="cancel"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <button
-                              aria-disabled={null}
-                              aria-label={null}
-                              className="pf-c-button pf-m-secondary"
-                              disabled={false}
-                              onClick={[Function]}
-                              tabIndex={null}
-                              type="button"
+                            <ComponentWithOuia
+                              component={[Function]}
+                              componentProps={
+                                Object {
+                                  "children": "Cancel",
+                                  "onClick": [Function],
+                                  "variant": "secondary",
+                                }
+                              }
+                              consumerContext={null}
                             >
-                              Cancel
-                            </button>
-                          </Button>
-                          <Button
+                              <Button
+                                onClick={[Function]}
+                                ouiaContext={
+                                  Object {
+                                    "isOuia": false,
+                                    "ouiaId": null,
+                                  }
+                                }
+                                variant="secondary"
+                              >
+                                <button
+                                  aria-disabled={null}
+                                  aria-label={null}
+                                  className="pf-c-button pf-m-secondary"
+                                  disabled={false}
+                                  onClick={[Function]}
+                                  tabIndex={null}
+                                  type="button"
+                                >
+                                  Cancel
+                                </button>
+                              </Button>
+                            </ComponentWithOuia>
+                          </Component>
+                          <Component
                             isDisabled={false}
                             key="confirm"
                             onClick={[Function]}
                             type="submit"
                             variant="primary"
                           >
-                            <button
-                              aria-disabled={null}
-                              aria-label={null}
-                              className="pf-c-button pf-m-primary"
-                              disabled={false}
-                              onClick={[Function]}
-                              tabIndex={null}
-                              type="submit"
+                            <ComponentWithOuia
+                              component={[Function]}
+                              componentProps={
+                                Object {
+                                  "children": "Edit",
+                                  "isDisabled": false,
+                                  "onClick": [Function],
+                                  "type": "submit",
+                                  "variant": "primary",
+                                }
+                              }
+                              consumerContext={null}
                             >
-                              Edit
-                            </button>
-                          </Button>
+                              <Button
+                                isDisabled={false}
+                                onClick={[Function]}
+                                ouiaContext={
+                                  Object {
+                                    "isOuia": false,
+                                    "ouiaId": null,
+                                  }
+                                }
+                                type="submit"
+                                variant="primary"
+                              >
+                                <button
+                                  aria-disabled={null}
+                                  aria-label={null}
+                                  className="pf-c-button pf-m-primary"
+                                  disabled={false}
+                                  onClick={[Function]}
+                                  tabIndex={null}
+                                  type="submit"
+                                >
+                                  Edit
+                                </button>
+                              </Button>
+                            </ComponentWithOuia>
+                          </Component>
                         </div>
                       </ModalBoxFooter>
                     </div>
