@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 import { noop } from '../../../../../../../common/helpers';
-import { github } from '../../../../../../../common/validators';
+import { github, checkGithubTeams } from '../../../../../../../common/validators';
 
 import BasicFields from './BasicFields';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -52,7 +52,7 @@ class GithubFormRequired extends React.Component {
             disabled={teamsDisabled || isPending}
             helpText={teamsDisabled ? 'Cannot be used in combination with the organizations field' : ''}
             onChange={(e, value) => this.toggleDisable(e, value, 'orgsDisabled')}
-            validate={teamsDisabled ? noop : github}
+            validate={teamsDisabled ? noop : [github, checkGithubTeams]}
           />
         </React.Fragment>
       );
