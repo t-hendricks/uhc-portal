@@ -30,6 +30,22 @@ function ClusterHealthCard({
   let icon;
   let title;
   switch (status) {
+    case monitoringStatuses.DISCONNECTED:
+      icon = <DisconnectedIcon size="md" />;
+      title = <Title headingLevel="h2" size="3xl">Disconnected cluster</Title>;
+      break;
+    case monitoringStatuses.UPGRADING:
+      icon = <InProgressIcon size="md" />;
+      title = <Title headingLevel="h2" size="3xl">Cluster is updating</Title>;
+      break;
+    case monitoringStatuses.INSTALLING:
+      icon = <InProgressIcon size="md" />;
+      title = <Title headingLevel="h2" size="3xl">Installation in progress</Title>;
+      break;
+    case monitoringStatuses.NO_METRICS:
+      icon = <ExclamationTriangleIcon size="md" color={global_warning_color_100.value} />;
+      title = <Title headingLevel="h2" size="3xl">Cluster has no metrics</Title>;
+      break;
     case monitoringStatuses.HEALTHY:
       icon = <CheckCircleIcon color={global_success_color_100.value} size="md" />;
       title = <Title headingLevel="h2" size="3xl">No Issues Detected</Title>;
@@ -43,22 +59,6 @@ function ClusterHealthCard({
           Issues detected
         </Title>
       );
-      break;
-    case monitoringStatuses.INSTALLING:
-      icon = <InProgressIcon size="md" />;
-      title = <Title headingLevel="h2" size="3xl">Installation in progress</Title>;
-      break;
-    case monitoringStatuses.UPDATING:
-      icon = <InProgressIcon size="md" />;
-      title = <Title headingLevel="h2" size="3xl">Cluster is updating</Title>;
-      break;
-    case monitoringStatuses.DISCONNECTED:
-      icon = <DisconnectedIcon size="md" />;
-      title = <Title headingLevel="h2" size="3xl">Disconnected cluster</Title>;
-      break;
-    case monitoringStatuses.NO_METRICS:
-      icon = <ExclamationTriangleIcon size="md" color={global_warning_color_100.value} />;
-      title = <Title headingLevel="h2" size="3xl">Cluster has no metrics</Title>;
       break;
     default:
       icon = <UnknownIcon size="md" />;

@@ -95,12 +95,16 @@ const clusterHealthSelector = (
    || !nodes.length
    || !hasCpuAndMemory(cpu, memory);
 
-  if (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.PENDING) {
-    return monitoringStatuses.INSTALLING;
-  }
-
   if (!cluster.managed && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED)) {
     return monitoringStatuses.DISCONNECTED;
+  }
+
+  if (cluster.metrics.upgrade.state === 'running') {
+    return monitoringStatuses.UPGRADING;
+  }
+
+  if (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.PENDING) {
+    return monitoringStatuses.INSTALLING;
   }
 
   if (noFreshActivity || noData) {
