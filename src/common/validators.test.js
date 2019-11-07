@@ -31,6 +31,11 @@ test('Field is a valid UUID', () => {
 
 test('User ID does not contain slash', () => {
   expect(checkUserID('aaaaa/bbbbb')).toBe('User ID cannot contain \'/\'.');
+  expect(checkUserID('aaaaa:bbbbb')).toBe('User ID cannot contain \':\'.');
+  expect(checkUserID('aaaaa%bbbbb')).toBe('User ID cannot contain \'%\'.');
+  expect(checkUserID('~')).toBe('User ID cannot be \'~\'.');
+  expect(checkUserID('.')).toBe('User ID cannot be \'.\'.');
+  expect(checkUserID('..')).toBe('User ID cannot be \'..\'.');
   expect(checkUserID('aaaa')).toBe(undefined);
 });
 
