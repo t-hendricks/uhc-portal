@@ -66,6 +66,41 @@ const checkClusterName = (value) => {
   return undefined;
 };
 
+// Function to validate that the github team is formatted: <org/team>
+const checkGithubTeams = (value) => {
+  if (!value) {
+    return undefined;
+  }
+  const teams = value.split(',');
+
+  for (let i = 0; i < teams.length; i += 1) {
+    const team = teams[i];
+    const orgTeam = team.split('/');
+
+    if (orgTeam.length !== 2) {
+      return "Each team must be of format 'org/team'.";
+    }
+
+    if (!orgTeam[0]) {
+      return "Each team must be of format 'org/team'.";
+    }
+
+    if (/\s/.test(orgTeam[0])) {
+      return 'Organization must not contain whitespaces.';
+    }
+
+    if (!orgTeam[1]) {
+      return "Each team must be of format 'org/team'.";
+    }
+
+    if (/\s/.test(orgTeam[1])) {
+      return 'Team must not contain whitespaces.';
+    }
+  }
+
+  return undefined;
+};
+
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value) => {
   if (!value) {
@@ -226,6 +261,7 @@ const validators = {
   github,
   validateNumericInput,
   checkOpenIDIssuer,
+  checkGithubTeams,
 };
 
 export {
@@ -237,6 +273,7 @@ export {
   checkUserID,
   checkClusterConsoleURL,
   checkOpenIDIssuer,
+  checkGithubTeams,
 };
 
 export default validators;
