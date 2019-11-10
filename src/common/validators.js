@@ -81,16 +81,12 @@ const checkGithubTeams = (value) => {
       return "Each team must be of format 'org/team'.";
     }
 
-    if (!orgTeam[0]) {
+    if (!orgTeam[0] || !orgTeam[1]) {
       return "Each team must be of format 'org/team'.";
     }
 
     if (/\s/.test(orgTeam[0])) {
       return 'Organization must not contain whitespaces.';
-    }
-
-    if (!orgTeam[1]) {
-      return "Each team must be of format 'org/team'.";
     }
 
     if (/\s/.test(orgTeam[1])) {
