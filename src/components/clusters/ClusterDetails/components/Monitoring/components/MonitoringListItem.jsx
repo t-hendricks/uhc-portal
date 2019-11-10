@@ -12,14 +12,41 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import { CheckCircleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon, ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
-import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
+import { global_success_color_100, global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 
 function MonitoringListItem({
-  title = '', numOfIssues = null, expanded, toggle, children,
+  title = '', numOfIssues = null, toggle, expanded, hasData, children,
 }) {
   const id = title.replace(/\s+/g, '-').toLowerCase();
+
+  const getSummery = () => {
+    if (!hasData) {
+      return (
+          <>
+            <ExclamationTriangleIcon className="status-icon" color={global_warning_color_100.value} size="md" />
+            <span>Metrics not available</span>
+          </>
+      );
+    }
+    if (numOfIssues !== null) {
+      return (
+        <>
+          { numOfIssues === 0
+            ? <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />
+            : <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />
+            }
+          <span>
+            {numOfIssues}
+            {' '}
+              discovered issues
+          </span>
+        </>);
+    }
+    return null;
+  };
+
 
   return (
     <DataListItem aria-labelledby={id} isExpanded={expanded.includes(id)}>
@@ -38,18 +65,7 @@ function MonitoringListItem({
                   <Title headingLevel="h4" size="2xl">{title}</Title>
                 </SplitItem>
                 <SplitItem>
-                  {numOfIssues !== null && (
-                  <React.Fragment>
-                    { numOfIssues === 0
-                      ? <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />
-                      : <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />
-                      }
-                    <span>
-                      {numOfIssues}
-                      {' '}
-                        discovered issues
-                    </span>
-                  </React.Fragment>)}
+                  {getSummery()}
                 </SplitItem>
               </Split>
             </DataListCell>,
@@ -72,6 +88,7 @@ MonitoringListItem.propTypes = {
   expanded: PropTypes.array,
   toggle: PropTypes.func,
   children: PropTypes.node,
+  hasData: PropTypes.bool,
 };
 
 MonitoringListItem.defaultProps = {

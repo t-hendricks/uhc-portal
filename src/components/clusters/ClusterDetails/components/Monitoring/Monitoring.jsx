@@ -5,14 +5,11 @@ import {
   CardHeader,
   CardBody,
   Title,
-  EmptyState,
-  EmptyStateBody,
-  EmptyStateIcon,
 } from '@patternfly/react-core';
-import { ExclamationTriangleIcon } from '@patternfly/react-icons';
 
 import ClusterHealthCard from './components/ClusterHealthCard';
 import MonitoringList from './components/MonitoringList';
+import MonitoringEmptyState from './components/MonitoringEmptyState';
 import { monitoringStatuses } from './statusHelper';
 
 import { noop } from '../../../../../common/helpers';
@@ -31,19 +28,6 @@ class Monitoring extends React.Component {
     const lastCheckInText = lastCheckIn && `Last check-in: ${lastCheckIn}`;
     const isInstalling = healthStatus === monitoringStatuses.INSTALLING;
 
-    const emptyState = body => (
-      <EmptyState>
-        <EmptyStateIcon icon={ExclamationTriangleIcon} />
-        <Title headingLevel="h5" size="lg">Monitoring Data is not available</Title>
-        <EmptyStateBody>
-          <>
-            {body}
-            <p>{!isInstalling && lastCheckInText}</p>
-          </>
-        </EmptyStateBody>
-      </EmptyState>
-    );
-
     if (healthStatus === monitoringStatuses.DISCONNECTED) {
       return (
         <React.Fragment>
@@ -52,7 +36,7 @@ class Monitoring extends React.Component {
             status={healthStatus}
             discoveredIssues={discoveredIssues}
           />
-          { emptyState }
+          <MonitoringEmptyState lastCheckInText={lastCheckInText} />
         </React.Fragment>
       );
     }
@@ -61,23 +45,24 @@ class Monitoring extends React.Component {
       return (
         <>
           <ClusterHealthCard status={healthStatus} />
-          { emptyState(
-            <p>Monitoring Data is not available at this time. Try again later.</p>,
-          )
-        }
+          <MonitoringEmptyState hideLastCheckIn>
+            <p>Monitoring Data is not available at this time. Try again later.</p>
+          </MonitoringEmptyState>
         </>
       );
     }
 
     if (healthStatus === monitoringStatuses.NO_METRICS) {
-      return emptyState(
-        <p>
+      return (
+        <MonitoringEmptyState lastCheckInText={lastCheckInText}>
+          <p>
         Monitoring Data is not available if a cluster goes more than
         three hours without sending metrics.
-          <br />
+            <br />
         Check the cluster&apos;s web console if you think that this cluster should
         be sending metrics.
-        </p>,
+          </p>
+        </MonitoringEmptyState>
       );
     }
 
@@ -97,8 +82,8 @@ class Monitoring extends React.Component {
               cluster={cluster}
               alerts={alerts}
               nodes={nodes}
-              resourceUsage={resourceUsage}
               operators={operators}
+              resourceUsage={resourceUsage}
             />
           </CardBody>
         </Card>
