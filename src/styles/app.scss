@@ -592,6 +592,18 @@ h4.pf-c-alert__title {
   -webkit-filter: grayscale(0);
   filter: grayscale(0);
 }
+.infra-card.create-cluster-card.card-disabled {
+  background: var(--pf-global--disabled-color--300);
+  color: var(--pf-black-600) !important;
+  box-shadow: none;
+  .create-cluster-favorite-btn-container {
+    background: var(--pf-global--disabled-color--200);
+  }
+  .create-cluster-logo, .create-cluster-favorite-btn-container {
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+  }
+}
 
 .infra-card .create-cluster-header.pf-c-card__header {
   margin-top: 55px;

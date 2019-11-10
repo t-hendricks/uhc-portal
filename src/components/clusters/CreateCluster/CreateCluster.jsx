@@ -28,8 +28,8 @@ class CreateCluster extends React.Component {
 
   render() {
     const { hasQuota, organization } = this.props;
-    const osdCard = (
-      <Link to="/create/osd" className="infra-card pf-c-card create-cluster-card">
+    const ocpCardBody = (
+      <React.Fragment>
         <div className="create-cluster-favorite-btn-container">
           <FavoriteButton isActive>Recommended</FavoriteButton>
         </div>
@@ -40,7 +40,15 @@ class CreateCluster extends React.Component {
           Create a Red Hat-managed cluster (OSD),
           provisioned on Amazon Web Services.
         </CardBody>
+      </React.Fragment>);
+    const osdCard = hasQuota ? (
+      <Link to="/create/osd" className="infra-card pf-c-card create-cluster-card">
+        {ocpCardBody}
       </Link>
+    ) : (
+      <Card className="infra-card create-cluster-card card-disabled">
+        {ocpCardBody}
+      </Card>
     );
 
     const ocpCard = (
@@ -73,7 +81,7 @@ class CreateCluster extends React.Component {
             </Breadcrumb>
             <PageTitle title="Create a Cluster to Get Started" />
             <div className="flex-container">
-              {hasQuota && (<React.Fragment>{osdCard}</React.Fragment>)}
+              {osdCard}
               {ocpCard}
             </div>
           </div>

@@ -133,7 +133,6 @@ class ClusterList extends Component {
       setSorting,
       openModal,
       invalidateClusters,
-      hasQuota,
       errorMessage,
       organization,
       operationID,
@@ -187,7 +186,7 @@ class ClusterList extends Component {
       return (
         <PageSection>
           <GlobalErrorBox />
-          <ClusterListEmptyState hasQuota={hasQuota} />
+          <ClusterListEmptyState />
         </PageSection>
       );
     }
@@ -207,7 +206,7 @@ class ClusterList extends Component {
                   <ClusterListFilterDropdown history={history} />
                 </SplitItem>
                 <SplitItem className="split-margin-left">
-                  <Link to={hasQuota ? '/create' : '/install'}>
+                  <Link to="/create">
                     <Button>Create Cluster</Button>
                   </Link>
                 </SplitItem>
@@ -288,7 +287,6 @@ ClusterList.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
-  hasQuota: PropTypes.bool.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,

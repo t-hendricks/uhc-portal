@@ -23,7 +23,7 @@ describe('<CreateCluster />', () => {
   });
 
   describe('User with no quota', () => {
-    it('should hide option to create managed and auto installed clusters', () => {
+    it('should render', () => {
       const wrapper = shallow(
         <CreateCluster
           hasQuota={false}
@@ -31,7 +31,7 @@ describe('<CreateCluster />', () => {
           organization={{ ...organization, fulfilled: true }}
         />,
       );
-      expect(wrapper.find('.create-cluster-card').length).toEqual(1);
+      expect(wrapper).toMatchSnapshot();
     });
   });
 

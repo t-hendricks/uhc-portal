@@ -8,8 +8,6 @@ import { viewActions } from '../../../redux/actions/viewOptionsActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
 
-import hasQuota from '../../../common/quotaSelector';
-
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
   fetchClusters: queryObj => clustersActions.fetchClusters(queryObj),
@@ -29,7 +27,6 @@ const mapStateToProps = state => Object.assign(
     viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
     cloudProviders: state.cloudProviders.cloudProviders,
     organization: state.userProfile.organization,
-    hasQuota: hasQuota(state.userProfile.organization.quotaList.items || []),
   },
 );
 
