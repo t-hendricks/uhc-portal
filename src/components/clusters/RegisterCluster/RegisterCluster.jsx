@@ -12,16 +12,12 @@ import {
   CardBody,
   Button,
   FormGroup,
-  Title,
   PageSection,
 } from '@patternfly/react-core';
-import { ExclamationCircleIcon } from '@patternfly/react-icons';
-// eslint-disable-next-line camelcase
-import { global_danger_color_100 } from '@patternfly/react-tokens';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 
 import ReduxVerticalFormGroupPF4 from '../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
-import Modal from '../../common/Modal/Modal';
+import ErrorModal from '../../common/ErrorModal';
 import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
 import validators, {
   required, checkClusterConsoleURL, checkClusterDisplayName, checkClusterUUID,
@@ -90,9 +86,8 @@ class RegisterCluster extends React.Component {
     const {
       handleSubmit,
       registerClusterResponse,
-      resetResponse,
-      closeModal,
       isOpen,
+      resetResponse,
     } = this.props;
     const { systemType } = this.state;
 
@@ -102,34 +97,12 @@ class RegisterCluster extends React.Component {
       );
     }
 
-    const close = () => {
-      resetResponse();
-      closeModal();
-    };
-
-    const errorModal = (
-      <Modal
-        header={(
-          <Title size="2xl">
-            <ExclamationCircleIcon color={global_danger_color_100.value} />
-            {' '}
-            Unable to register cluster
-          </Title>
-        )}
-        primaryText="Close"
-        onPrimaryClick={close}
-        onClose={close}
-        showClose={false}
-        showSecondery={false}
-      >
-        <p>
-          {registerClusterResponse.errorMessage}
-        </p>
-        <p>
-          {`Operation ID: ${registerClusterResponse.operationID || 'N/A'}`}
-        </p>
-      </Modal>
-    );
+    const errorModal = isOpen && (
+      <ErrorModal
+        title="Error Registering Cluster"
+        errorResponse={registerClusterResponse}
+        resetResponse={resetResponse}
+      />);
 
     return (
       <React.Fragment>
@@ -137,7 +110,7 @@ class RegisterCluster extends React.Component {
           <PageHeaderTitle title="Cluster registration" />
         </PageHeader>
         <PageSection>
-          {isOpen && errorModal}
+          {errorModal}
           <Card id="register-cluster">
             <CardBody>
               <Grid>
@@ -258,7 +231,6 @@ RegisterCluster.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   registerClusterResponse: PropTypes.object.isRequired,
   openModal: PropTypes.func,
-  closeModal: PropTypes.func,
   resetResponse: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
   resetForm: PropTypes.func.isRequired,
