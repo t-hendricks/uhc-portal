@@ -1,47 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Card,
+  Card, Title,
 } from '@patternfly/react-core';
 import TelemetryAlert from './components/TelemetryAlert';
+import TokenErrorAlert from './components/TokenErrorAlert';
 import PullSecretSection from './components/PullSecretSection';
-import PageTitle from '../../../../common/PageTitle';
 
-class InstructionsPullSecret extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      copied: false,
-    };
-  }
-
-  render() {
-    const { copied } = this.state;
-    const { token } = this.props;
-    const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
-
-    return (
+function InstructionsPullSecret({ token }) {
+  return (
+    <React.Fragment>
+      <Title headingLevel="h3" size="2xl">
+          Pull Secret
+      </Title>
       <Card>
-        <div className="pf-c-content ocm-page">
-          <PageTitle title="Pull Secret" />
-
+        <div className="pf-l-grid pf-m-gutter ocm-page">
+          {token.error && <TokenErrorAlert token={token} />}
           <TelemetryAlert />
-
-          <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
-          <PullSecretSection
-            copied={copied}
-            onCopy={() => {
-              this.setState({ copied: true });
-              // fix for IE
-              document.getElementById('copyPullSecret').focus();
-            }}
-            token={token}
-            tokenView={tokenView}
-          />
+          <div className="pf-c-content">
+            <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
+            <PullSecretSection token={token} />
+          </div>
         </div>
       </Card>
-    );
-  }
+    </React.Fragment>
+  );
 }
 
 

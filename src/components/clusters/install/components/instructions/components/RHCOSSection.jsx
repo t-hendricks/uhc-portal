@@ -7,16 +7,18 @@ import links from '../../../../../../common/installLinks';
 
 const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_LATEST }) => (
   <React.Fragment>
-    <p>
-      Download RHCOS to create machines for your cluster to use during installation.
-      {' '}
-      <a href={learnMoreURL} target="_blank">
-        Learn more
+    {learnMoreURL && (
+      <p>
+        Download RHCOS to create machines for your cluster to use during installation.
         {' '}
-        <span className="fa fa-external-link" aria-hidden="true" />
-        .
-      </a>
-    </p>
+        <a href={learnMoreURL} target="_blank">
+          Learn more
+          {' '}
+          <span className="fa fa-external-link" aria-hidden="true" />
+          .
+        </a>
+      </p>
+    )}
     <p>
       <a href={downloadURL} target="_blank">
         <Button
@@ -32,7 +34,7 @@ const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_
   </React.Fragment>
 );
 RHCOSSection.propTypes = {
-  learnMoreURL: PropTypes.string.isRequired,
+  learnMoreURL: PropTypes.string,
   downloadURL: PropTypes.string,
   token: PropTypes.object.isRequired,
 };

@@ -13,7 +13,6 @@ import {
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import openShiftDedicatedLogo from '../../../styles/images/Logo-Red_Hat-OpenShift_Dedicated-A-Standard-RGB.svg';
 import openShiftContainerPlatformLogo from '../../../styles/images/Logo-Red_Hat-OpenShift-Container_Platform-A-Standard-RGB.svg';
-import FavoriteButton from '../../common/FavoriteButton';
 import PageTitle from '../../common/PageTitle';
 
 
@@ -28,11 +27,26 @@ class CreateCluster extends React.Component {
 
   render() {
     const { hasQuota, organization } = this.props;
-    const ocpCardBody = (
+    const title = (
+      <PageTitle
+        title="Create a Cluster to Get Started"
+        breadcrumbs={(
+          <Breadcrumb className="breadcrumbs-in-card">
+            <LinkContainer to="">
+              <BreadcrumbItem to="#">
+                Clusters
+              </BreadcrumbItem>
+            </LinkContainer>
+            <BreadcrumbItem isActive>
+              Create
+            </BreadcrumbItem>
+          </Breadcrumb>
+        )}
+      />
+    );
+
+    const osdCardBody = (
       <React.Fragment>
-        <div className="create-cluster-favorite-btn-container">
-          <FavoriteButton isActive>Recommended</FavoriteButton>
-        </div>
         <CardHeader className="create-cluster-header">
           <img src={openShiftDedicatedLogo} alt="OpenShift Dedicated" className="create-cluster-logo" />
         </CardHeader>
@@ -40,14 +54,16 @@ class CreateCluster extends React.Component {
           Create a Red Hat-managed cluster (OSD),
           provisioned on Amazon Web Services.
         </CardBody>
-      </React.Fragment>);
+      </React.Fragment>
+    );
+
     const osdCard = hasQuota ? (
       <Link to="/create/osd" className="infra-card pf-c-card create-cluster-card">
-        {ocpCardBody}
+        {osdCardBody}
       </Link>
     ) : (
       <Card className="infra-card create-cluster-card card-disabled">
-        {ocpCardBody}
+        {osdCardBody}
       </Card>
     );
 
@@ -57,40 +73,35 @@ class CreateCluster extends React.Component {
           <img src={openShiftContainerPlatformLogo} alt="OpenShift Container Platform" className="create-cluster-logo" />
         </CardHeader>
         <CardBody>
-          Install an OCP cluster manually and manage it yourself.
-          Once installation is complete, the cluster will be automatically
-          registered to the Cluster Manager.
+          Create an OCP cluster using the command-line installer.
+          Your cluster will automatically register to
+          the Cluster Manager after installation completes.
         </CardBody>
       </Link>
     );
 
     const quotaRequestComplete = organization.fulfilled || organization.error;
     return quotaRequestComplete ? (
-      <PageSection>
-        <Card>
-          <div className="pf-c-content ocm-page">
-            <Breadcrumb className="breadcrumbs-in-card">
-              <LinkContainer to="">
-                <BreadcrumbItem to="#">
-                  Clusters
-                </BreadcrumbItem>
-              </LinkContainer>
-              <BreadcrumbItem isActive>
-                Create
-              </BreadcrumbItem>
-            </Breadcrumb>
-            <PageTitle title="Create a Cluster to Get Started" />
-            <div className="flex-container">
-              {osdCard}
-              {ocpCard}
+      <React.Fragment>
+        {title}
+        <PageSection>
+          <Card>
+            <div className="pf-c-content ocm-page">
+              <div className="flex-container">
+                {ocpCard}
+                {osdCard}
+              </div>
             </div>
-          </div>
-        </Card>
-      </PageSection>
+          </Card>
+        </PageSection>
+      </React.Fragment>
     ) : (
-      <PageSection>
-        <Spinner centered />
-      </PageSection>
+      <React.Fragment>
+        {title}
+        <PageSection>
+          <Spinner centered />
+        </PageSection>
+      </React.Fragment>
     );
   }
 }

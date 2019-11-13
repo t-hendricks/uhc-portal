@@ -5,16 +5,8 @@ import PullSecretSection from '../PullSecretSection';
 
 describe('<PullSecretSection />', () => {
   describe('PullSecretSection', () => {
-    const onCopy = () => jest.fn();
-    const copied = false;
     const token = { error: '' };
-    const tokenView = 'my token';
-    const wrapper = shallow(<PullSecretSection
-      copied={copied}
-      onCopy={onCopy}
-      token={token}
-      tokenView={tokenView}
-    />);
+    const wrapper = shallow(<PullSecretSection token={token} />);
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
@@ -36,16 +28,8 @@ describe('<PullSecretSection />', () => {
   });
 
   describe('PullSecretSection Disabled', () => {
-    const onCopy = () => jest.fn();
-    const copied = false;
     const token = { error: 'my error' };
-    const tokenView = 'my token';
-    const wrapper = shallow(<PullSecretSection
-      copied={copied}
-      onCopy={onCopy}
-      token={token}
-      tokenView={tokenView}
-    />);
+    const wrapper = shallow(<PullSecretSection token={token} />);
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
