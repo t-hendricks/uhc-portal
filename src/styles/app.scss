@@ -759,7 +759,7 @@ span.dev-preview-label svg {
 div.pf-c-alert.archived-cluster-toast {
   position: absolute;
   z-index: 1;
-  
+
   width: 67%;
   right: 9%;
   top: 15%;
@@ -835,6 +835,9 @@ div.pf-c-alert.archived-cluster-toast {
     font-size: var(--pf-global--FontSize--lg);
     margin-top: var(--pf-global--spacer--lg);
     margin-bottom: 0;
+  }
+  .quota-table-used, .quota-table-max {
+    word-break: normal;
   }
 }
 

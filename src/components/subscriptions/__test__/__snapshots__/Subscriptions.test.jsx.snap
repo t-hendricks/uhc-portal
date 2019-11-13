@@ -422,8 +422,18 @@ exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
             [Function],
           ],
         },
-        "Used",
-        "Max",
+        Object {
+          "props": Object {
+            "className": "quota-table-used",
+          },
+          "title": "Used",
+        },
+        Object {
+          "props": Object {
+            "className": "quota-table-max",
+          },
+          "title": "Max",
+        },
         "Capacity",
       ]
     }
