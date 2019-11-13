@@ -29,6 +29,7 @@ class Monitoring extends React.Component {
     } = this.props;
 
     const lastCheckInText = lastCheckIn && `Last check-in: ${lastCheckIn}`;
+    const isInstalling = healthStatus === monitoringStatuses.INSTALLING;
 
     const emptyState = body => (
       <EmptyState>
@@ -37,23 +38,11 @@ class Monitoring extends React.Component {
         <EmptyStateBody>
           <>
             {body}
-            <p>{healthStatus !== monitoringStatuses.INSTALLING && lastCheckInText}</p>
+            <p>{!isInstalling && lastCheckInText}</p>
           </>
         </EmptyStateBody>
       </EmptyState>
     );
-
-    if (healthStatus === monitoringStatuses.NO_METRICS) {
-      return emptyState(
-        <p>
-        Monitoring Data is not available if a cluster goes more than
-        three hours without sending metrics.
-          <br />
-        Check the cluster&apos;s web console if you think that this cluster should
-        be sending metrics.
-        </p>,
-      );
-    }
 
     if (healthStatus === monitoringStatuses.DISCONNECTED) {
       return (
@@ -68,37 +57,51 @@ class Monitoring extends React.Component {
       );
     }
 
-    const isInProgress = healthStatus === monitoringStatuses.INSTALLING
-    || healthStatus === monitoringStatuses.UPDATING;
+    if (isInstalling) {
+      return (
+        <>
+          <ClusterHealthCard status={healthStatus} />
+          { emptyState(
+            <p>Monitoring Data is not available at this time. Try again later.</p>,
+          )
+        }
+        </>
+      );
+    }
+
+    if (healthStatus === monitoringStatuses.NO_METRICS) {
+      return emptyState(
+        <p>
+        Monitoring Data is not available if a cluster goes more than
+        three hours without sending metrics.
+          <br />
+        Check the cluster&apos;s web console if you think that this cluster should
+        be sending metrics.
+        </p>,
+      );
+    }
 
     return (
       <React.Fragment>
         <ClusterHealthCard
-          lastCheckIn={!isInProgress ? lastCheckIn : null}
+          lastCheckIn={lastCheckIn}
           status={healthStatus}
           discoveredIssues={discoveredIssues}
         />
-        { isInProgress
-          ? emptyState(
-            <p>Monitoring Data is not available at this time. Try again later.</p>,
-          )
-          : (
-            <Card id="monitoring">
-              <CardHeader>
-                <Title headingLevel="h2" size="3xl">Status</Title>
-              </CardHeader>
-              <CardBody>
-                <MonitoringList
-                  cluster={cluster}
-                  alerts={alerts}
-                  nodes={nodes}
-                  resourceUsage={resourceUsage}
-                  operators={operators}
-                />
-              </CardBody>
-            </Card>
-          )
-          }
+        <Card id="monitoring">
+          <CardHeader>
+            <Title headingLevel="h2" size="3xl">Status</Title>
+          </CardHeader>
+          <CardBody>
+            <MonitoringList
+              cluster={cluster}
+              alerts={alerts}
+              nodes={nodes}
+              resourceUsage={resourceUsage}
+              operators={operators}
+            />
+          </CardBody>
+        </Card>
       </React.Fragment>
     );
   }

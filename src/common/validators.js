@@ -14,6 +14,9 @@ const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0
 // Regular expression for a valid URL for a console in a self managed cluster.
 const CONSOLE_URL_REGEXP = /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
 
+// Regular expression for a valid URL for issuer in github identity provider.
+const ISSUER_URL_REGEXP = /^https:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
+
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 50;
 
@@ -37,6 +40,17 @@ const checkIdentityProviderName = (value) => {
   return undefined;
 };
 
+// Function to validate that the issuer field uses https scheme:
+const checkOpenIDIssuer = (value) => {
+  if (!value) {
+    return 'Issuer is required.';
+  }
+  if (!ISSUER_URL_REGEXP.test(value)) {
+    return 'Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)';
+  }
+  return undefined;
+};
+
 
 // Function to validate that the cluster name field contains a valid DNS label:
 const checkClusterName = (value) => {
@@ -49,6 +63,37 @@ const checkClusterName = (value) => {
   if (value.length > MAX_CLUSTER_NAME_LENGTH) {
     return `Cluster names may not exceed ${MAX_CLUSTER_NAME_LENGTH} characters.`;
   }
+  return undefined;
+};
+
+// Function to validate that the github team is formatted: <org/team>
+const checkGithubTeams = (value) => {
+  if (!value) {
+    return undefined;
+  }
+  const teams = value.split(',');
+
+  for (let i = 0; i < teams.length; i += 1) {
+    const team = teams[i];
+    const orgTeam = team.split('/');
+
+    if (orgTeam.length !== 2) {
+      return "Each team must be of format 'org/team'.";
+    }
+
+    if (!orgTeam[0] || !orgTeam[1]) {
+      return "Each team must be of format 'org/team'.";
+    }
+
+    if (/\s/.test(orgTeam[0])) {
+      return 'Organization must not contain whitespaces.';
+    }
+
+    if (/\s/.test(orgTeam[1])) {
+      return 'Team must not contain whitespaces.';
+    }
+  }
+
   return undefined;
 };
 
@@ -77,6 +122,21 @@ const checkClusterDisplayName = (value) => {
 const checkUserID = (value) => {
   if (value.includes('/')) {
     return 'User ID cannot contain \'/\'.';
+  }
+  if (value.includes(':')) {
+    return 'User ID cannot contain \':\'.';
+  }
+  if (value.includes('%')) {
+    return 'User ID cannot contain \'%\'.';
+  }
+  if (value === '~') {
+    return 'User ID cannot be \'~\'.';
+  }
+  if (value === '.') {
+    return 'User ID cannot be \'.\'.';
+  }
+  if (value === '..') {
+    return 'User ID cannot be \'..\'.';
   }
   return undefined;
 };
@@ -196,6 +256,8 @@ const validators = {
   nodesMultiAz,
   github,
   validateNumericInput,
+  checkOpenIDIssuer,
+  checkGithubTeams,
 };
 
 export {
@@ -206,6 +268,8 @@ export {
   checkClusterDisplayName,
   checkUserID,
   checkClusterConsoleURL,
+  checkOpenIDIssuer,
+  checkGithubTeams,
 };
 
 export default validators;

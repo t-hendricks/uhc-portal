@@ -16,7 +16,7 @@ import { OpenshiftIcon } from '@patternfly/react-icons';
 
 function ClusterListEmptyState({ hasQuota }) {
   return (
-    <EmptyState variant={EmptyStateVariant.large}>
+    <EmptyState variant={EmptyStateVariant.large} className="cluster-list-empty-state">
       <EmptyStateIcon icon={OpenshiftIcon} color="#c00" />
       <Title headingLevel="h4" size="2xl">
         No OpenShift clusters to display

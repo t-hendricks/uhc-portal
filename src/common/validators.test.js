@@ -1,5 +1,6 @@
 import validators, {
-  required, checkIdentityProviderName, checkClusterUUID, checkClusterConsoleURL, checkUserID,
+  required, checkIdentityProviderName, checkClusterUUID,
+  checkClusterConsoleURL, checkUserID, checkOpenIDIssuer, checkGithubTeams,
 } from './validators';
 
 test('Field is required', () => {
@@ -30,6 +31,11 @@ test('Field is a valid UUID', () => {
 
 test('User ID does not contain slash', () => {
   expect(checkUserID('aaaaa/bbbbb')).toBe('User ID cannot contain \'/\'.');
+  expect(checkUserID('aaaaa:bbbbb')).toBe('User ID cannot contain \':\'.');
+  expect(checkUserID('aaaaa%bbbbb')).toBe('User ID cannot contain \'%\'.');
+  expect(checkUserID('~')).toBe('User ID cannot be \'~\'.');
+  expect(checkUserID('.')).toBe('User ID cannot be \'.\'.');
+  expect(checkUserID('..')).toBe('User ID cannot be \'..\'.');
   expect(checkUserID('aaaa')).toBe(undefined);
 });
 
@@ -99,6 +105,29 @@ test('Field is a valid console URL', () => {
   expect(checkClusterConsoleURL('http://invalid.com/perl.cgi?key=')).toBe('Invalid URL. Provide a valid URL address without a query string (?) or fragment (#)');
 });
 
+test('Field is a valid issuer', () => {
+  expect(checkOpenIDIssuer()).toBe('Issuer is required.');
+  expect(checkOpenIDIssuer('http://www.example.com')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://example.com/')).toBe(undefined);
+  expect(checkOpenIDIssuer('www.example.hey/hey')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('ftp://hello.com')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://example.com\noa')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://www.example:55815.com')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://www-whatever.apps.example.co.uk/')).toBe(undefined);
+  expect(checkOpenIDIssuer('https://www.example.com:foo')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://www.example.com....')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://blog.example.com')).toBe(undefined);
+  expect(checkOpenIDIssuer('https://255.255.255.255')).toBe(undefined);
+  expect(checkOpenIDIssuer('https://www.site.com:8008')).toBe(undefined);
+  expect(checkOpenIDIssuer('https://www.example.com/product')).toBe(undefined);
+  expect(checkOpenIDIssuer('example.com/')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('www.example.com')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://www.example.com#up')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://www.example.com/products?id=1&page=2')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('255.255.255.255')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://invalid.com/perl.cgi?key=')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+});
+
 test('Field contains a numeric string', () => {
   expect(validators.validateNumericInput()).toBe(undefined);
   expect(validators.validateNumericInput('8.8', { allowDecimal: true })).toBe(undefined);
@@ -110,4 +139,20 @@ test('Field contains a numeric string', () => {
   expect(validators.validateNumericInput('1000', { max: 999 })).toBe('Input cannot be more than 999.');
   expect(validators.validateNumericInput('999', { max: 999 })).toBe(undefined);
   expect(validators.validateNumericInput(Number.MAX_SAFE_INTEGER)).toBe(undefined);
+});
+
+test('Field is a valid list of github teams', () => {
+  expect(checkGithubTeams()).toBe(undefined);
+  expect(checkGithubTeams('org/team')).toBe(undefined);
+  expect(checkGithubTeams('org1/team1,org2/team2')).toBe(undefined);
+  expect(checkGithubTeams('org1/team1,,org2/team2')).toBe("Each team must be of format 'org/team'.");
+  expect(checkGithubTeams('org1/team1, org2/team2')).toBe('Organization must not contain whitespaces.');
+  expect(checkGithubTeams('org1/team1,team2')).toBe("Each team must be of format 'org/team'.");
+  expect(checkGithubTeams('/team')).toBe("Each team must be of format 'org/team'.");
+  expect(checkGithubTeams('org/')).toBe("Each team must be of format 'org/team'.");
+  expect(checkGithubTeams('org /team')).toBe('Organization must not contain whitespaces.');
+  expect(checkGithubTeams('org/team a')).toBe('Team must not contain whitespaces.');
+  expect(checkGithubTeams('team')).toBe("Each team must be of format 'org/team'.");
+  expect(checkGithubTeams('team2,')).toBe("Each team must be of format 'org/team'.");
+  expect(checkGithubTeams('team2,/')).toBe("Each team must be of format 'org/team'.");
 });

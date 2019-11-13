@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import BasicFields from './BasicFields';
 
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { required } from '../../../../../../../common/validators';
+import { checkOpenIDIssuer } from '../../../../../../../common/validators';
 
 const validate = (_, allValues) => {
   if (!allValues.openid_preferred_username && !allValues.openid_name && !allValues.openid_email) {
@@ -25,7 +25,7 @@ function OpenIDFormRequired({ isPending }) {
         type="text"
         placeholder="Issuer URL"
         disabled={isPending}
-        validate={required}
+        validate={checkOpenIDIssuer}
       />
       <h4>Claims Mappings</h4>
       <Field
