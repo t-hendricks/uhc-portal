@@ -62,7 +62,7 @@ class CreateOSDCluster extends React.Component {
 
   render() {
     const {
-      handleSubmit, createClusterResponse, touch,
+      handleSubmit, createClusterResponse, change,
       machineTypes, organization, cloudProviders, isOpen,
       resetResponse,
     } = this.props;
@@ -118,7 +118,10 @@ class CreateOSDCluster extends React.Component {
             {errorModal}
             <Form onSubmit={handleSubmit}>
               <Grid gutter="sm">
-                <ManagedClusterForm pending={createClusterResponse.pending} touch={touch} />
+                <ManagedClusterForm
+                  pending={createClusterResponse.pending}
+                  change={change}
+                />
                 <GridItem>
                   <Split gutter="sm" className="create-osd-form-button-split">
                     <SplitItem>
@@ -155,7 +158,7 @@ CreateOSDCluster.propTypes = {
   resetForm: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
-  touch: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
