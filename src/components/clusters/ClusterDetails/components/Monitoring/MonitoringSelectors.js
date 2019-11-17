@@ -1,17 +1,23 @@
 import get from 'lodash/get';
+import has from 'lodash/has';
 
 import { monitoringStatuses } from './statusHelper';
 import clusterStates from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
-// Get the number of issues from a set of data
-// An item is considered an issue if it's value of the health criteria mathces the value
-// of the definition of issue for this data.
-// Example: An Alert has an issues if alert's severity is crtitical.
-// Therefore:  issuesSelector(alerts, 'severity', 'crtitical' )
-const issuesSelector = (data, healtCriteria, isIssue) => (data.length > 0 ? (
-  data.filter(item => item[healtCriteria] === isIssue)
-).length : null);
+/**
+ * Get the number of issues from a set of data
+ * An item is considered an issue if it's value of the health criteria mathces the value
+ * of the definition of issue for this data.
+ * Example: An Alert has an issue if alert's severity is crtitical.
+ * Therefore:  issuesSelector(alerts, 'severity', 'crtitical' )
+ * @param {Object} data
+ * @param {string} healthCriteria
+ * @param {string} isIssue
+ */
+const issuesSelector = (data, healthCriteria, isIssue) => data.filter(
+  item => item[healthCriteria] === isIssue,
+).length;
 
 const lastCheckInSelector = (lastCheckIn) => {
   const maxDiffHours = 3;
@@ -54,10 +60,10 @@ const lastCheckInSelector = (lastCheckIn) => {
 };
 
 const hasCpuAndMemory = (cpu, memory) => {
-  const totalCPU = cpu.total.value;
-  const totalMemory = memory.total.value;
-  const cpuTimeStampEmpty = new Date(cpu.updated_timestamp).getTime() < 0;
-  const memoryTimeStampEmpty = new Date(memory.updated_timestamp).getTime() < 0;
+  const totalCPU = has(cpu, 'total.value');
+  const totalMemory = has(memory, 'total.value');
+  const cpuTimeStampEmpty = has(cpu, 'updated_timestamp') && new Date(cpu.updated_timestamp).getTime() < 0;
+  const memoryTimeStampEmpty = has(memory, 'updated_timestamp') && new Date(memory.updated_timestamp).getTime() < 0;
 
   if (!cpu || !memory || cpuTimeStampEmpty || memoryTimeStampEmpty || !totalCPU || !totalMemory) {
     return false;
@@ -83,17 +89,10 @@ const resourceUsageIssuesSelector = (cpu, memory) => {
   return numOfIssues;
 };
 
-const clusterHealthSelector = (
-  cluster, lastCheckIn, nodes, alerts, cpu, memory, alertsIssues, nodesIssues, resourceUsageIssues,
-) => {
+const clusterHealthSelector = (cluster, lastCheckIn, discoveredIssues) => {
   const { hours, minutes } = lastCheckIn;
 
   const noFreshActivity = hours > 3 || (hours === 3 && minutes > 0);
-  const noData = !alerts
-  || !alerts.length
-   || !nodes
-   || !nodes.length
-   || !hasCpuAndMemory(cpu, memory);
 
   if (!cluster.managed && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED)) {
     return monitoringStatuses.DISCONNECTED;
@@ -107,20 +106,28 @@ const clusterHealthSelector = (
     return monitoringStatuses.INSTALLING;
   }
 
-  if (noFreshActivity || noData) {
+  if (noFreshActivity) {
     return monitoringStatuses.NO_METRICS;
   }
 
-  if (alertsIssues > 0 || nodesIssues > 0 || resourceUsageIssues > 0) {
+  if (discoveredIssues > 0) {
     return monitoringStatuses.HAS_ISSUES;
   }
 
   return monitoringStatuses.HEALTHY;
 };
 
+/**
+ * Returns true if an object has a property named 'data' which is not empty.
+ * @param {Object} obj
+ */
+const hasDataSelector = obj => get(obj, 'data.length', 0) > 0;
+
 export {
   issuesSelector,
   lastCheckInSelector,
   resourceUsageIssuesSelector,
   clusterHealthSelector,
+  hasDataSelector,
+  hasCpuAndMemory,
 };
