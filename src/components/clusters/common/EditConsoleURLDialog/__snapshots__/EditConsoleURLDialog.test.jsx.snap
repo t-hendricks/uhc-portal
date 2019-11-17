@@ -29,18 +29,18 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
       actions={
         Array [
           <Unknown
-            onClick={[Function]}
-            variant="secondary"
-          >
-            Cancel
-          </Unknown>,
-          <Unknown
             isDisabled={true}
             onClick={[Function]}
             type="submit"
             variant="primary"
           >
             Save
+          </Unknown>,
+          <Unknown
+            onClick={[Function]}
+            variant="secondary"
+          >
+            Cancel
           </Unknown>,
         ]
       }
@@ -123,20 +123,20 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                     </form>
                   </div>
                   <div
-                    class="pf-c-modal-box__footer"
+                    class="pf-c-modal-box__footer pf-m-align-left"
                   >
-                    <button
-                      class="pf-c-button pf-m-secondary"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
                     <button
                       class="pf-c-button pf-m-primary"
                       disabled=""
                       type="submit"
                     >
                       Save
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -148,7 +148,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
       ariaDescribedById=""
       className={null}
       hideTitle={false}
-      isFooterLeftAligned={false}
+      isFooterLeftAligned={true}
       isLarge={false}
       isOpen={true}
       isSmall={true}
@@ -233,20 +233,20 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                     </form>
                   </div>
                   <div
-                    class="pf-c-modal-box__footer"
+                    class="pf-c-modal-box__footer pf-m-align-left"
                   >
-                    <button
-                      class="pf-c-button pf-m-secondary"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
                     <button
                       class="pf-c-button pf-m-primary"
                       disabled=""
                       type="submit"
                     >
                       Save
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -259,12 +259,6 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
           actions={
             Array [
               <Unknown
-                onClick={[Function]}
-                variant="secondary"
-              >
-                Cancel
-              </Unknown>,
-              <Unknown
                 isDisabled={true}
                 onClick={[Function]}
                 type="submit"
@@ -272,13 +266,19 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
               >
                 Save
               </Unknown>,
+              <Unknown
+                onClick={[Function]}
+                variant="secondary"
+              >
+                Cancel
+              </Unknown>,
             ]
           }
           ariaDescribedById=""
           className={null}
           hideTitle={false}
           id="pf-modal-0"
-          isFooterLeftAligned={false}
+          isFooterLeftAligned={true}
           isLarge={false}
           isOpen={true}
           isSmall={true}
@@ -485,51 +485,11 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                         </div>
                       </ModalBoxBody>
                       <ModalBoxFooter
-                        isLeftAligned={false}
+                        isLeftAligned={true}
                       >
                         <div
-                          className="pf-c-modal-box__footer"
+                          className="pf-c-modal-box__footer pf-m-align-left"
                         >
-                          <Component
-                            key="cancel"
-                            onClick={[Function]}
-                            variant="secondary"
-                          >
-                            <ComponentWithOuia
-                              component={[Function]}
-                              componentProps={
-                                Object {
-                                  "children": "Cancel",
-                                  "onClick": [Function],
-                                  "variant": "secondary",
-                                }
-                              }
-                              consumerContext={null}
-                            >
-                              <Button
-                                onClick={[Function]}
-                                ouiaContext={
-                                  Object {
-                                    "isOuia": false,
-                                    "ouiaId": null,
-                                  }
-                                }
-                                variant="secondary"
-                              >
-                                <button
-                                  aria-disabled={null}
-                                  aria-label={null}
-                                  className="pf-c-button pf-m-secondary"
-                                  disabled={false}
-                                  onClick={[Function]}
-                                  tabIndex={null}
-                                  type="button"
-                                >
-                                  Cancel
-                                </button>
-                              </Button>
-                            </ComponentWithOuia>
-                          </Component>
                           <Component
                             isDisabled={true}
                             key="confirm"
@@ -572,6 +532,46 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                                   type="submit"
                                 >
                                   Save
+                                </button>
+                              </Button>
+                            </ComponentWithOuia>
+                          </Component>
+                          <Component
+                            key="cancel"
+                            onClick={[Function]}
+                            variant="secondary"
+                          >
+                            <ComponentWithOuia
+                              component={[Function]}
+                              componentProps={
+                                Object {
+                                  "children": "Cancel",
+                                  "onClick": [Function],
+                                  "variant": "secondary",
+                                }
+                              }
+                              consumerContext={null}
+                            >
+                              <Button
+                                onClick={[Function]}
+                                ouiaContext={
+                                  Object {
+                                    "isOuia": false,
+                                    "ouiaId": null,
+                                  }
+                                }
+                                variant="secondary"
+                              >
+                                <button
+                                  aria-disabled={null}
+                                  aria-label={null}
+                                  className="pf-c-button pf-m-secondary"
+                                  disabled={false}
+                                  onClick={[Function]}
+                                  tabIndex={null}
+                                  type="button"
+                                >
+                                  Cancel
                                 </button>
                               </Button>
                             </ComponentWithOuia>
@@ -620,18 +620,18 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
       actions={
         Array [
           <Unknown
-            onClick={[Function]}
-            variant="secondary"
-          >
-            Cancel
-          </Unknown>,
-          <Unknown
             isDisabled={false}
             onClick={[Function]}
             type="submit"
             variant="primary"
           >
             Save
+          </Unknown>,
+          <Unknown
+            onClick={[Function]}
+            variant="secondary"
+          >
+            Cancel
           </Unknown>,
         ]
       }
@@ -716,20 +716,20 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     </form>
                   </div>
                   <div
-                    class="pf-c-modal-box__footer"
+                    class="pf-c-modal-box__footer pf-m-align-left"
                   >
-                    <button
-                      class="pf-c-button pf-m-secondary"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
                     <button
                       class="pf-c-button pf-m-primary"
                       disabled=""
                       type="submit"
                     >
                       Save
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -813,20 +813,20 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     </form>
                   </div>
                   <div
-                    class="pf-c-modal-box__footer"
+                    class="pf-c-modal-box__footer pf-m-align-left"
                   >
-                    <button
-                      class="pf-c-button pf-m-secondary"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
                     <button
                       class="pf-c-button pf-m-primary"
                       disabled=""
                       type="submit"
                     >
                       Save
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -910,19 +910,19 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     </form>
                   </div>
                   <div
-                    class="pf-c-modal-box__footer"
+                    class="pf-c-modal-box__footer pf-m-align-left"
                   >
-                    <button
-                      class="pf-c-button pf-m-secondary"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
                     <button
                       class="pf-c-button pf-m-primary"
                       type="submit"
                     >
                       Save
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -1006,19 +1006,19 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     </form>
                   </div>
                   <div
-                    class="pf-c-modal-box__footer"
+                    class="pf-c-modal-box__footer pf-m-align-left"
                   >
-                    <button
-                      class="pf-c-button pf-m-secondary"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
                     <button
                       class="pf-c-button pf-m-primary"
                       type="submit"
                     >
                       Save
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -1144,19 +1144,19 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     </form>
                   </div>
                   <div
-                    class="pf-c-modal-box__footer"
+                    class="pf-c-modal-box__footer pf-m-align-left"
                   >
-                    <button
-                      class="pf-c-button pf-m-secondary"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
                     <button
                       class="pf-c-button pf-m-primary"
                       type="submit"
                     >
                       Save
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -1168,7 +1168,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
       ariaDescribedById=""
       className={null}
       hideTitle={false}
-      isFooterLeftAligned={false}
+      isFooterLeftAligned={true}
       isLarge={false}
       isOpen={true}
       isSmall={true}
@@ -1297,19 +1297,19 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     </form>
                   </div>
                   <div
-                    class="pf-c-modal-box__footer"
+                    class="pf-c-modal-box__footer pf-m-align-left"
                   >
-                    <button
-                      class="pf-c-button pf-m-secondary"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
                     <button
                       class="pf-c-button pf-m-primary"
                       type="submit"
                     >
                       Save
+                    </button>
+                    <button
+                      class="pf-c-button pf-m-secondary"
+                      type="button"
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -1322,12 +1322,6 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
           actions={
             Array [
               <Unknown
-                onClick={[Function]}
-                variant="secondary"
-              >
-                Cancel
-              </Unknown>,
-              <Unknown
                 isDisabled={false}
                 onClick={[Function]}
                 type="submit"
@@ -1335,13 +1329,19 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
               >
                 Save
               </Unknown>,
+              <Unknown
+                onClick={[Function]}
+                variant="secondary"
+              >
+                Cancel
+              </Unknown>,
             ]
           }
           ariaDescribedById=""
           className={null}
           hideTitle={false}
           id="pf-modal-4"
-          isFooterLeftAligned={false}
+          isFooterLeftAligned={true}
           isLarge={false}
           isOpen={true}
           isSmall={true}
@@ -1660,51 +1660,11 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                         </div>
                       </ModalBoxBody>
                       <ModalBoxFooter
-                        isLeftAligned={false}
+                        isLeftAligned={true}
                       >
                         <div
-                          className="pf-c-modal-box__footer"
+                          className="pf-c-modal-box__footer pf-m-align-left"
                         >
-                          <Component
-                            key="cancel"
-                            onClick={[Function]}
-                            variant="secondary"
-                          >
-                            <ComponentWithOuia
-                              component={[Function]}
-                              componentProps={
-                                Object {
-                                  "children": "Cancel",
-                                  "onClick": [Function],
-                                  "variant": "secondary",
-                                }
-                              }
-                              consumerContext={null}
-                            >
-                              <Button
-                                onClick={[Function]}
-                                ouiaContext={
-                                  Object {
-                                    "isOuia": false,
-                                    "ouiaId": null,
-                                  }
-                                }
-                                variant="secondary"
-                              >
-                                <button
-                                  aria-disabled={null}
-                                  aria-label={null}
-                                  className="pf-c-button pf-m-secondary"
-                                  disabled={false}
-                                  onClick={[Function]}
-                                  tabIndex={null}
-                                  type="button"
-                                >
-                                  Cancel
-                                </button>
-                              </Button>
-                            </ComponentWithOuia>
-                          </Component>
                           <Component
                             isDisabled={false}
                             key="confirm"
@@ -1747,6 +1707,46 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                                   type="submit"
                                 >
                                   Save
+                                </button>
+                              </Button>
+                            </ComponentWithOuia>
+                          </Component>
+                          <Component
+                            key="cancel"
+                            onClick={[Function]}
+                            variant="secondary"
+                          >
+                            <ComponentWithOuia
+                              component={[Function]}
+                              componentProps={
+                                Object {
+                                  "children": "Cancel",
+                                  "onClick": [Function],
+                                  "variant": "secondary",
+                                }
+                              }
+                              consumerContext={null}
+                            >
+                              <Button
+                                onClick={[Function]}
+                                ouiaContext={
+                                  Object {
+                                    "isOuia": false,
+                                    "ouiaId": null,
+                                  }
+                                }
+                                variant="secondary"
+                              >
+                                <button
+                                  aria-disabled={null}
+                                  aria-label={null}
+                                  className="pf-c-button pf-m-secondary"
+                                  disabled={false}
+                                  onClick={[Function]}
+                                  tabIndex={null}
+                                  type="button"
+                                >
+                                  Cancel
                                 </button>
                               </Button>
                             </ComponentWithOuia>
