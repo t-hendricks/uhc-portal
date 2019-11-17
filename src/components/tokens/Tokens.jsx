@@ -18,6 +18,11 @@ limitations under the License.
 // copy it and use it with command line utitilites like `curl` or UHC.
 
 import React from 'react';
+import { Skeleton, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
+import {
+  PageSection, Card, CardHeader, CardBody, CardFooter, ClipboardCopy,
+} from '@patternfly/react-core';
+
 
 /**
  * Splits the given text into lines of 72 characters each, so that they look
@@ -35,7 +40,7 @@ const splitToken = (text) => {
  */
 const tokenBox = token => (
   <div className="token-value">
-    <pre>{token}</pre>
+    <ClipboardCopy isReadOnly>{token}</ClipboardCopy>
   </div>
 );
 
@@ -54,7 +59,7 @@ class Tokens extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      offlineAccessToken: 'loading, please wait',
+      offlineAccessToken: undefined,
     };
   }
 
@@ -74,6 +79,33 @@ class Tokens extends React.Component {
   render() {
     const { offlineAccessToken } = this.state;
 
+    const title = (
+      <PageHeader>
+        <PageHeaderTitle title="API Token" />
+      </PageHeader>
+    );
+
+    if (offlineAccessToken === undefined) {
+      return (
+        <React.Fragment>
+          {title}
+          <PageSection>
+            <Card className="ins-c-card__skeleton">
+              <CardHeader>
+                <Skeleton size="md" />
+              </CardHeader>
+              <CardBody>
+                <Skeleton size="lg" />
+              </CardBody>
+              <CardFooter>
+                <Skeleton size="sm" />
+              </CardFooter>
+            </Card>
+          </PageSection>
+        </React.Fragment>
+      );
+    }
+
     // Prepare the snippet of code that shows how to use the offline access token:
     const offlineAccessTokenSnippet = [
       'OFFLINE_ACCESS_TOKEN="\\',
@@ -92,26 +124,30 @@ class Tokens extends React.Component {
     const curlLink = <a href="https://curl.haxx.se">curl</a>;
     const jqLink = <a href="https://stedolan.github.io/jq">jq</a>;
 
-    // Render the component:
     /* eslint-disable react/jsx-one-expression-per-line */
     return (
-      <div>
-        <div className="token-details">
-
-          <h2>Offline Access Token</h2>
-          <p>
-            This is a long lived token that you can use to obtain access tokens:
-          </p>
-          {tokenBox(offlineAccessToken)}
-          <p>
-            Copy it, and then use it to request an access token. For example, to
-            obtain an access token using the {curlLink} and {jqLink} command
-            line tools, use the following commands:
-          </p>
-          {snippetBox(offlineAccessTokenSnippet)}
-
-        </div>
-      </div>
+      <React.Fragment>
+        {title}
+        <PageSection>
+          <Card>
+            <CardHeader>
+              <h2>Offline Access Token</h2>
+            </CardHeader>
+            <CardBody>
+              <p>
+                This is a long lived token that you can use to obtain access tokens:
+              </p>
+              {tokenBox(offlineAccessToken)}
+              <p>
+                Copy it, and then use it to request an access token. For example, to
+                obtain an access token using the {curlLink} and {jqLink} command
+                line tools, use the following commands:
+              </p>
+              {snippetBox(offlineAccessTokenSnippet)}
+            </CardBody>
+          </Card>
+        </PageSection>
+      </React.Fragment>
     );
     /* eslint-enable react/jsx-one-expression-per-line */
   }
