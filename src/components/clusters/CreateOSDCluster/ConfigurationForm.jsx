@@ -20,10 +20,10 @@ class ConfigurationForm extends React.Component {
   };
 
   handleMultiAZChange = (_, value) => {
-    const { touch } = this.props;
-    this.setState({ isMultiAz: value === 'true' });
-    // mark Nodes input as touched to make sure validation is shown even if it's not touched.
-    touch('nodes_compute');
+    const { change } = this.props;
+    const isMultiAz = value === 'true';
+    this.setState({ isMultiAz });
+    change('nodes_compute', isMultiAz ? '9' : '4');
   };
 
   validateNodes = (nodeCount) => {
@@ -168,7 +168,7 @@ class ConfigurationForm extends React.Component {
 }
 
 ConfigurationForm.propTypes = {
-  touch: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   showDNSBaseDomain: PropTypes.bool,
 };
