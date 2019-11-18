@@ -13,20 +13,23 @@ const reduxFormConfig = {
 };
 const reduxFormCreateClusterIDP = reduxForm(reduxFormConfig)(IdentityProvidersModal);
 
-const valueSelector = formValueSelector('CreateIdentityProvider');
+const mapStateToProps = (state) => {
+  const valueSelector = formValueSelector('CreateIdentityProvider');
 
-const mapStateToProps = state => ({
-  isOpen: shouldShowModal(state, 'create-identity-provider'),
-  createIDPResponse: state.identityProviders.createdClusterIDP,
-  clusterName: state.modal.activeModal.data.clusterName,
-  initialValues: {
-    type: 'GithubIdentityProvider',
-    client_id: '',
-    client_secret: '',
-    mappingMethod: 'claim',
-  },
-  selectedIDP: valueSelector(state, 'type') || 'GithubIdentityProvider',
-});
+  return ({
+    isOpen: shouldShowModal(state, 'create-identity-provider'),
+    createIDPResponse: state.identityProviders.createdClusterIDP,
+    clusterName: state.modal.activeModal.data.clusterName,
+    initialValues: {
+      type: 'GithubIdentityProvider',
+      client_id: '',
+      client_secret: '',
+      mappingMethod: 'claim',
+    },
+    selectedIDP: valueSelector(state, 'type') || 'GithubIdentityProvider',
+    selectedMappingMethod: valueSelector(state, 'mappingMethod'),
+  });
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (formData) => {
