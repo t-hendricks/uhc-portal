@@ -12,6 +12,7 @@ exports[`<MonitoringList /> should render 1`] = `
     <MonitoringEmptyState
       hideIcon={true}
       hideLastCheckIn={true}
+      title="No data available for this metric"
     >
       <p>
         Please check back later
@@ -26,6 +27,7 @@ exports[`<MonitoringList /> should render 1`] = `
     <MonitoringEmptyState
       hideIcon={true}
       hideLastCheckIn={true}
+      title="No data available for this metric"
     >
       <p>
         Please check back later
@@ -40,6 +42,7 @@ exports[`<MonitoringList /> should render 1`] = `
     <MonitoringEmptyState
       hideIcon={true}
       hideLastCheckIn={true}
+      title="No data available for this metric"
     >
       <p>
         Please check back later
@@ -54,6 +57,7 @@ exports[`<MonitoringList /> should render 1`] = `
     <MonitoringEmptyState
       hideIcon={true}
       hideLastCheckIn={true}
+      title="No data available for this metric"
     >
       <p>
         Please check back later

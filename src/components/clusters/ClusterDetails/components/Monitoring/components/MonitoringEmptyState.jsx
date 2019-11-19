@@ -12,13 +12,17 @@ import { ExclamationTriangleIcon } from '@patternfly/react-icons';
 
 function MonitoringEmptyState(
   {
-    children = null, hideLastCheckIn = false, lastCheckInText = null, hideIcon = false,
+    children = null,
+    hideLastCheckIn = false,
+    lastCheckInText = null,
+    hideIcon = false,
+    title = 'Monitoring Data is not available',
   },
 ) {
   return (
     <EmptyState>
       {!hideIcon && <EmptyStateIcon icon={ExclamationTriangleIcon} />}
-      <Title headingLevel="h5" size="lg">Monitoring Data is not available</Title>
+      <Title headingLevel="h5" size="lg">{title}</Title>
       <EmptyStateBody>
         {children}
         {!hideLastCheckIn && <p>{lastCheckInText}</p>}
@@ -32,6 +36,7 @@ MonitoringEmptyState.propTypes = {
   hideLastCheckIn: PropTypes.bool,
   lastCheckInText: PropTypes.string,
   hideIcon: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 export default MonitoringEmptyState;
