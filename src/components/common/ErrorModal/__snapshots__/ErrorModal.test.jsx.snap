@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorModal /> should render 1`] = `
+<Modal
+  header={
+    <Title
+      size="2xl"
+    >
+      <ExclamationCircleIcon
+        color="#c9190b"
+        noVerticalAlign={false}
+        size="sm"
+        title={null}
+      />
+       
+      Error Modal
+    </Title>
+  }
+  onClose={[Function]}
+  onPrimaryClick={[Function]}
+  primaryText="Close"
+  showClose={false}
+  showSecondery={false}
+>
+  <p>
+    Error Message
+  </p>
+  <p>
+    Operation ID: 1337
+  </p>
+</Modal>
+`;

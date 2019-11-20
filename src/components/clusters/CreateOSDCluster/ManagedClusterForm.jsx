@@ -17,7 +17,7 @@ class ManagedClusterForm extends React.Component {
   render() {
     const {
       pending,
-      touch,
+      change,
     } = this.props;
 
     const {
@@ -33,7 +33,7 @@ class ManagedClusterForm extends React.Component {
         <ConfigurationForm
           pending={pending}
           showDNSBaseDomain={false}
-          touch={touch}
+          change={change}
         />
 
         <GridItem span={12}>
@@ -79,7 +79,7 @@ class ManagedClusterForm extends React.Component {
 
 ManagedClusterForm.propTypes = {
   pending: PropTypes.bool,
-  touch: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
 };
 
 export default ManagedClusterForm;

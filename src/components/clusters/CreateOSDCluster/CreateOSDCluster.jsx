@@ -18,7 +18,7 @@ import {
 } from '@patternfly/react-core';
 
 import PageTitle from '../../common/PageTitle';
-import ErrorBox from '../../common/ErrorBox';
+import ErrorModal from '../../common/ErrorModal';
 import constants from './CreateOSDClusterHelper';
 import ManagedClusterForm from './ManagedClusterForm';
 
@@ -41,6 +41,13 @@ class CreateOSDCluster extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    const { createClusterResponse, openModal, isOpen } = this.props;
+    if (createClusterResponse.error && !isOpen) {
+      openModal();
+    }
+  }
+
   componentWillUnmount() {
     this.reset();
   }
@@ -55,8 +62,9 @@ class CreateOSDCluster extends React.Component {
 
   render() {
     const {
-      handleSubmit, createClusterResponse, touch,
-      machineTypes, organization, cloudProviders,
+      handleSubmit, createClusterResponse, change,
+      machineTypes, organization, cloudProviders, isOpen,
+      resetResponse,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -65,8 +73,12 @@ class CreateOSDCluster extends React.Component {
       );
     }
 
-    const hasError = createClusterResponse.error && (
-      <ErrorBox message="Error creating cluster" response={createClusterResponse} />
+    const errorModal = isOpen && (
+      <ErrorModal
+        title="Error Creating Cluster"
+        errorResponse={createClusterResponse}
+        resetResponse={resetResponse}
+      />
     );
 
     const loadingSpinner = () => (
@@ -103,13 +115,13 @@ class CreateOSDCluster extends React.Component {
             </Breadcrumb>
 
             <PageTitle title="Create an OpenShift Dedicated Cluster" />
-
+            {errorModal}
             <Form onSubmit={handleSubmit}>
               <Grid gutter="sm">
-
-                {hasError}
-                <ManagedClusterForm pending={createClusterResponse.pending} touch={touch} />
-
+                <ManagedClusterForm
+                  pending={createClusterResponse.pending}
+                  change={change}
+                />
                 <GridItem>
                   <Split gutter="sm" className="create-osd-form-button-split">
                     <SplitItem>
@@ -140,11 +152,13 @@ class CreateOSDCluster extends React.Component {
   }
 }
 CreateOSDCluster.propTypes = {
+  isOpen: PropTypes.bool,
+  openModal: PropTypes.func,
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   createClusterResponse: PropTypes.object,
-  touch: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,

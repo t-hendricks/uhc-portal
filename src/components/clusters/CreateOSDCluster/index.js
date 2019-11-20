@@ -5,7 +5,8 @@ import { getMachineTypes } from '../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
 import { getCloudProviders } from '../../../redux/actions/cloudProviderActions';
 import CreateOSDCluster from './CreateOSDCluster';
-
+import shouldShowModal from '../../common/Modal/ModalSelectors';
+import { openModal } from '../../common/Modal/ModalActions';
 
 const reduxFormConfig = {
   form: 'CreateCluster',
@@ -17,6 +18,7 @@ const mapStateToProps = state => ({
   machineTypes: state.machineTypes,
   organization: state.userProfile.organization,
   cloudProviders: state.cloudProviders.cloudProviders,
+  isOpen: shouldShowModal(state, 'osd-create-error'),
   initialValues: {
     name: '',
     nodes_compute: '4',
@@ -54,6 +56,7 @@ const mapDispatchToProps = dispatch => ({
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
+  openModal: () => { dispatch(openModal('osd-create-error')); },
   getOrganizationAndQuota,
   getMachineTypes,
   getCloudProviders,

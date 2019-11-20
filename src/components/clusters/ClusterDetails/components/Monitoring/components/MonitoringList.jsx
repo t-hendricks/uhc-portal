@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  DataList,
-} from '@patternfly/react-core';
+import { DataList } from '@patternfly/react-core';
 
 import MonitoringListItem from './MonitoringListItem';
 import AlertsTable from './AlertsTable';
 import NodesTable from './NodesTable';
 import ClusterOperators from './ClusterOperators';
 import ResourceUsage from '../../Overview/ResourceUsage/ResourceUsage';
+import MonitoringEmptyState from './MonitoringEmptyState';
 
 import { getClusterStateAndDescription } from '../../../../common/clusterStates';
 
@@ -34,21 +33,33 @@ class MonitoringList extends React.Component {
 
     const clusterState = getClusterStateAndDescription(cluster);
 
+
+    const EmptyState = (
+      <MonitoringEmptyState hideLastCheckIn hideIcon>
+        <p>Please check back later</p>
+      </MonitoringEmptyState>
+    );
+
+
     return (
       <DataList aria-label="monitoring-table">
-        <MonitoringListItem title="Alerts firing" numOfIssues={alerts.numOfIssues} toggle={this.toggle} expanded={expanded}>
-          <AlertsTable alerts={alerts.data} />
+        <MonitoringListItem title="Alerts firing" numOfIssues={alerts.numOfIssues} toggle={this.toggle} expanded={expanded} hasData={alerts.hasData}>
+          {alerts.hasData ? <AlertsTable alerts={alerts.data} /> : EmptyState}
         </MonitoringListItem>
-        <MonitoringListItem title="Nodes" numOfIssues={nodes.numOfIssues} toggle={this.toggle} expanded={expanded}>
-          <NodesTable nodes={nodes.data} />
+        <MonitoringListItem title="Nodes" numOfIssues={nodes.numOfIssues} toggle={this.toggle} expanded={expanded} hasData={nodes.hasData}>
+          {nodes.hasData ? <NodesTable nodes={nodes.data} /> : EmptyState }
         </MonitoringListItem>
-        <MonitoringListItem title="Cluster operators" numOfIssues={operators.numOfIssues} toggle={this.toggle} expanded={expanded}>
-          <ClusterOperators operators={operators.data} />
+        <MonitoringListItem title="Cluster operators" numOfIssues={operators.numOfIssues} toggle={this.toggle} expanded={expanded} hasData={operators.hasData}>
+          {operators.hasData ? <ClusterOperators operators={operators.data} /> : EmptyState }
         </MonitoringListItem>
-        <MonitoringListItem title="Resource usage" numOfIssues={resourceUsage.numOfIssues} toggle={this.toggle} expanded={expanded}>
-          <div className="metrics-chart">
-            <ResourceUsage cluster={{ ...cluster, state: clusterState }} />
-          </div>
+        <MonitoringListItem title="Resource usage" numOfIssues={resourceUsage.numOfIssues} toggle={this.toggle} expanded={expanded} hasData={resourceUsage.hasData}>
+          {resourceUsage.hasData
+            ? (
+              <div className="metrics-chart">
+                <ResourceUsage cluster={{ ...cluster, state: clusterState }} />
+              </div>
+            ) : EmptyState
+          }
         </MonitoringListItem>
       </DataList>
     );

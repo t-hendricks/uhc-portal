@@ -12,6 +12,7 @@ const subscriptionStatuses = {
   DEPROVISIONED: 'Deprovisioned',
   RESERVED: 'Reserved',
   STALE: 'Stale',
+  DISCONNECTED: 'Disconnected',
 };
 
 export { subscriptionStatuses, entitlementStatuses };

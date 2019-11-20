@@ -1,44 +1,96 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Tokens /> Renders correctly 1`] = `
-<div>
-  <div
-    className="token-details"
-  >
-    <h2>
-      Offline Access Token
-    </h2>
-    <p>
-      This is a long lived token that you can use to obtain access tokens:
-    </p>
-    <div
-      className="token-value"
+exports[`<Tokens /> Renders loading screen 1`] = `
+<Fragment>
+  <PageHeader>
+    <PageHeaderTitle
+      title="API Token"
+    />
+  </PageHeader>
+  <PageSection>
+    <Card
+      className="ins-c-card__skeleton"
     >
-      <pre>
-        loading, please wait
-      </pre>
-    </div>
-    <p>
-      Copy it, and then use it to request an access token. For example, to obtain an access token using the 
-      <a
-        href="https://curl.haxx.se"
-      >
-        curl
-      </a>
-       and 
-      <a
-        href="https://stedolan.github.io/jq"
-      >
-        jq
-      </a>
-       command line tools, use the following commands:
-    </p>
-    <div
-      className="token-snippet"
-    >
-      <pre>
-        OFFLINE_ACCESS_TOKEN="\\
-loading, please wait\\
+      <CardHeader>
+        <Skeleton
+          size="md"
+        />
+      </CardHeader>
+      <CardBody>
+        <Skeleton
+          size="lg"
+        />
+      </CardBody>
+      <CardFooter>
+        <Skeleton
+          size="sm"
+        />
+      </CardFooter>
+    </Card>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<Tokens /> Renders token 1`] = `
+<Fragment>
+  <PageHeader>
+    <PageHeaderTitle
+      title="API Token"
+    />
+  </PageHeader>
+  <PageSection>
+    <Card>
+      <CardHeader>
+        <h2>
+          Offline Access Token
+        </h2>
+      </CardHeader>
+      <CardBody>
+        <p>
+          This is a long lived token that you can use to obtain access tokens:
+        </p>
+        <div
+          className="token-value"
+        >
+          <ClipboardCopy
+            clickTip="Successfully copied to clipboard!"
+            entryDelay={100}
+            exitDelay={1600}
+            hoverTip="Copy to clipboard"
+            isReadOnly={true}
+            maxWidth="150px"
+            onChange={[Function]}
+            onCopy={[Function]}
+            position="top"
+            switchDelay={2000}
+            textAriaLabel="Copyable input"
+            toggleAriaLabel="Show content"
+            variant="inline"
+          >
+            hello offline access token!
+          </ClipboardCopy>
+        </div>
+        <p>
+          Copy it, and then use it to request an access token. For example, to obtain an access token using the 
+          <a
+            href="https://curl.haxx.se"
+          >
+            curl
+          </a>
+           and 
+          <a
+            href="https://stedolan.github.io/jq"
+          >
+            jq
+          </a>
+           command line tools, use the following commands:
+        </p>
+        <div
+          className="token-snippet"
+        >
+          <pre>
+            OFFLINE_ACCESS_TOKEN="\\
+hello offline access token!\\
 "
 curl \\
 --silent \\
@@ -47,8 +99,10 @@ curl \\
 --data-urlencode "refresh_token=\${OFFLINE_ACCESS_TOKEN}" \\
 https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token | \\
 jq -r .access_token
-      </pre>
-    </div>
-  </div>
-</div>
+          </pre>
+        </div>
+      </CardBody>
+    </Card>
+  </PageSection>
+</Fragment>
 `;

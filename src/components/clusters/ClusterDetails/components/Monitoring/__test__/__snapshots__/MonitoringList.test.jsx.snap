@@ -9,44 +9,56 @@ exports[`<MonitoringList /> should render 1`] = `
     title="Alerts firing"
     toggle={[Function]}
   >
-    <AlertsTable />
+    <MonitoringEmptyState
+      hideIcon={true}
+      hideLastCheckIn={true}
+    >
+      <p>
+        Please check back later
+      </p>
+    </MonitoringEmptyState>
   </MonitoringListItem>
   <MonitoringListItem
     expanded={Array []}
     title="Nodes"
     toggle={[Function]}
   >
-    <NodesTable />
+    <MonitoringEmptyState
+      hideIcon={true}
+      hideLastCheckIn={true}
+    >
+      <p>
+        Please check back later
+      </p>
+    </MonitoringEmptyState>
   </MonitoringListItem>
   <MonitoringListItem
     expanded={Array []}
     title="Cluster operators"
     toggle={[Function]}
   >
-    <ClusterOperatorsTable />
+    <MonitoringEmptyState
+      hideIcon={true}
+      hideLastCheckIn={true}
+    >
+      <p>
+        Please check back later
+      </p>
+    </MonitoringEmptyState>
   </MonitoringListItem>
   <MonitoringListItem
     expanded={Array []}
     title="Resource usage"
     toggle={[Function]}
   >
-    <div
-      className="metrics-chart"
+    <MonitoringEmptyState
+      hideIcon={true}
+      hideLastCheckIn={true}
     >
-      <ResourceUsage
-        cluster={
-          Object {
-            "state": Object {
-              "description": undefined,
-              "state": undefined,
-              "style": Object {
-                "textTransform": "capitalize",
-              },
-            },
-          }
-        }
-      />
-    </div>
+      <p>
+        Please check back later
+      </p>
+    </MonitoringEmptyState>
   </MonitoringListItem>
 </DataList>
 `;

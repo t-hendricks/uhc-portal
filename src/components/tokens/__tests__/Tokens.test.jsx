@@ -19,19 +19,32 @@ import { shallow } from 'enzyme';
 
 import Tokens from '../Tokens';
 
+const mockGetToken = jest.fn().mockResolvedValue({ data: { refresh_token: 'hello offline access token!' } });
+
 window.insights = {
   chrome: {
     auth: {
-      getOfflineToken: () => Promise.resolve({ data: { refresh_token: 'hello offline access token!' } }),
+      getOfflineToken: mockGetToken,
     },
   },
 };
 
 describe('<Tokens />', () => {
-  it('Renders correctly', () => {
-    const component = shallow(<Tokens
-      token="hello offline access token!"
-    />);
+  let component;
+  beforeAll(() => {
+    component = shallow(<Tokens />);
+  });
+
+  it('Renders loading screen', () => {
+    const loadingcomponent = shallow(<Tokens />);
+    expect(loadingcomponent).toMatchSnapshot();
+  });
+
+  it('Calls getOfflineToken', () => {
+    expect(mockGetToken).toBeCalled();
+  });
+
+  it('Renders token', () => {
     expect(component).toMatchSnapshot();
   });
 });

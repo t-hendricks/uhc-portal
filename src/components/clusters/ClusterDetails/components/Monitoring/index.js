@@ -4,7 +4,12 @@ import get from 'lodash/get';
 import Monitoring from './Monitoring';
 import { clearMonitoringState } from './MonitoringActions';
 import {
-  issuesSelector, lastCheckInSelector, resourceUsageIssuesSelector, clusterHealthSelector,
+  issuesSelector,
+  lastCheckInSelector,
+  resourceUsageIssuesSelector,
+  clusterHealthSelector,
+  hasDataSelector,
+  hasCpuAndMemory,
 } from './MonitoringSelectors';
 
 const mapDispatchToProps = {
@@ -18,32 +23,29 @@ const mapStateToProps = (state) => {
   const cpu = get(state, 'clusters.details.cluster.metrics.cpu', null);
   const memory = get(state, 'clusters.details.cluster.metrics.memory', null);
 
-  const alertsIssues = issuesSelector(alerts.data, 'severity', 'critical');
-  const nodesIssues = issuesSelector(nodes.data, 'up', false);
+  const hasAlerts = hasDataSelector(alerts);
+  const hasNodes = hasDataSelector(nodes);
+  const hasClusterOperators = hasDataSelector(operators);
+  const hasResourceUsageData = hasCpuAndMemory(cpu, memory);
+
+  const alertsIssues = hasAlerts ? issuesSelector(alerts.data, 'severity', 'critical') : null;
+  const nodesIssues = hasNodes ? issuesSelector(nodes.data, 'up', false) : null;
+  const operatorsIssues = hasClusterOperators ? issuesSelector(operators.data, 'condition', 'failing') : null;
+  const resourceUsageIssues = hasResourceUsageData
+    ? resourceUsageIssuesSelector(cpu, memory) : null;
+
+  const discoveredIssues = alertsIssues + nodesIssues + resourceUsageIssues + operatorsIssues;
+
   const lastCheckIn = lastCheckInSelector(cluster.activity_timestamp);
-  const resourceUsageIssues = resourceUsageIssuesSelector(cpu, memory);
-  const operatorsIssues = issuesSelector(operators.data, 'condition', 'failing');
-  const discoveredIssues = (
-    alertsIssues + nodesIssues + resourceUsageIssues + operatorsIssues
-  ) || null;
-  const healthStatus = clusterHealthSelector(
-    cluster,
-    lastCheckIn,
-    nodes.data,
-    alerts.data,
-    cpu,
-    memory,
-    alertsIssues,
-    nodesIssues,
-    resourceUsageIssues,
-  );
+
+  const healthStatus = clusterHealthSelector(cluster, lastCheckIn, discoveredIssues);
 
   return ({
-    nodes: { ...nodes, numOfIssues: nodesIssues },
-    alerts: { ...alerts, numOfIssues: alertsIssues },
-    operators: { ...operators, numOfIssues: operatorsIssues },
+    alerts: { ...alerts, numOfIssues: alertsIssues, hasData: hasAlerts },
+    nodes: { ...nodes, numOfIssues: nodesIssues, hasData: hasNodes },
+    operators: { ...operators, numOfIssues: operatorsIssues, hasData: hasClusterOperators },
+    resourceUsage: { numOfIssues: resourceUsageIssues, hasData: hasResourceUsageData },
     lastCheckIn: lastCheckIn.message,
-    resourceUsage: { numOfIssues: resourceUsageIssues },
     discoveredIssues,
     healthStatus,
   });
