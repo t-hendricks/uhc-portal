@@ -1,7 +1,7 @@
 import get from 'lodash/get';
-import has from 'lodash/has';
 
 import { monitoringStatuses } from './statusHelper';
+import hasCpuAndMemory from '../../clusterDetailsHelper';
 import clusterStates from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
@@ -57,18 +57,6 @@ const lastCheckInSelector = (lastCheckIn) => {
     unit: null,
     message: 'unknown',
   };
-};
-
-const hasCpuAndMemory = (cpu, memory) => {
-  const totalCPU = has(cpu, 'total.value');
-  const totalMemory = has(memory, 'total.value');
-  const cpuTimeStampEmpty = has(cpu, 'updated_timestamp') && new Date(cpu.updated_timestamp).getTime() < 0;
-  const memoryTimeStampEmpty = has(memory, 'updated_timestamp') && new Date(memory.updated_timestamp).getTime() < 0;
-
-  if (!cpu || !memory || cpuTimeStampEmpty || memoryTimeStampEmpty || !totalCPU || !totalMemory) {
-    return false;
-  }
-  return true;
 };
 
 const resourceUsageIssuesSelector = (cpu, memory) => {
@@ -129,5 +117,4 @@ export {
   resourceUsageIssuesSelector,
   clusterHealthSelector,
   hasDataSelector,
-  hasCpuAndMemory,
 };

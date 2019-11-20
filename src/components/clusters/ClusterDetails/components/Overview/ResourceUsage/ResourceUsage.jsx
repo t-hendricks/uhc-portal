@@ -7,13 +7,18 @@ import { metricsStatusMessages, maxMetricsTimeDelta } from './ResourceUsage.cons
 import { parseValueWithUnit } from '../../../../../../common/units';
 import { getTimeDelta } from '../../../../../../common/helpers';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
+import hasCpuAndMemory from '../../../clusterDetailsHelper';
 
 function ResourceUsage({ cluster }) {
-  const metricsLatsUpdate = new Date(cluster.metrics.cpu.updated_timestamp);
+  const metricsLatsUpdate = new Date(get(cluster, 'metrics.cpu.updated_timestamp', 0));
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+  const isDisconnected = get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED;
 
-  const metricsAvailable = (OCM_SHOW_OLD_METRICS
-    || getTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta) && !isArchived;
+  const metricsAvailable = !isArchived
+   && !isDisconnected
+   && hasCpuAndMemory(get(cluster, 'metrics.cpu', null), get(cluster, 'metrics.memory', null))
+   && (OCM_SHOW_OLD_METRICS
+   || (getTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta));
 
   // Why parse memory but not cpu?
   // In theory both are `ValueWithUnit` but openapi only documents units for the case of bytes,

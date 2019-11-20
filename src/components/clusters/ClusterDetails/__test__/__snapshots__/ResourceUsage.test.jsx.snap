@@ -6,17 +6,17 @@ exports[`<ResourceUsage /> should render 1`] = `
     donutId="cpu_donut"
     humanize={false}
     title="vCPU"
-    total={0}
+    total={16}
     unit="Cores"
-    used={0}
+    used={3.995410922987096}
   />
   <ClusterUtilizationChart
     donutId="memory_donut"
     humanize={true}
     title="Memory"
-    total={0}
+    total={82293346304}
     unit="B"
-    used={0}
+    used={16546058240}
   />
 </Fragment>
 `;
