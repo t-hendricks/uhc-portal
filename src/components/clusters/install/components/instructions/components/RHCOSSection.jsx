@@ -5,7 +5,7 @@ import {
 } from '@patternfly/react-core';
 import links from '../../../../../../common/installLinks';
 
-const RHCOSSection = ({ learnMoreURL, token }) => (
+const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_LATEST }) => (
   <React.Fragment>
     <p>
       Download RHCOS to create machines for your cluster to use during installation.
@@ -18,7 +18,7 @@ const RHCOSSection = ({ learnMoreURL, token }) => (
       </a>
     </p>
     <p>
-      <a href={links.DOWNLOAD_RHCOS_LATEST} target="_blank">
+      <a href={downloadURL} target="_blank">
         <Button
           variant="secondary"
           className="install--download-installer"
@@ -33,6 +33,7 @@ const RHCOSSection = ({ learnMoreURL, token }) => (
 );
 RHCOSSection.propTypes = {
   learnMoreURL: PropTypes.string.isRequired,
+  downloadURL: PropTypes.string,
   token: PropTypes.object.isRequired,
 };
 

@@ -1,4 +1,5 @@
 const MIRROR_CLIENTS_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/';
+const MIRROR_CLIENTS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/latest-4.2/';
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.2';
 
 const links = {
@@ -50,6 +51,12 @@ const links = {
   INSTALL_VSPHERE_CLI_LATEST: MIRROR_CLIENTS_LATEST,
   INSTALL_VSPHERE_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
   INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
+
+  INSTALL_IBMZ_INSTALLER_LATEST: MIRROR_CLIENTS_LATEST_IBMZ,
+  INSTALL_IBMZ_CLI_LATEST: MIRROR_CLIENTS_LATEST_IBMZ,
+  INSTALL_IBMZ_GETTING_STARTED: 'https://github.com/openshift/installer/tree/master/docs/user/zvm/install_upi.md',
+  INSTALL_IBMZ_RHCOS_LEARN_MORE: 'https://github.com/openshift/installer/blob/master/docs/user/zvm/install_upi.md#booting-machines-with-rhcos-and-ignition-configs',
+  DOWNLOAD_RHCOS_LATEST_IBMZ: 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/4.2/latest/',
 };
 
 export default links;
