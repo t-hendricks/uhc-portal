@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import { notifications } from '@redhat-cloud-services/frontend-components-notifications';
+
 import { clustersReducer } from './clustersReducer';
 import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
 import { viewOptionsReducer } from './viewOptionsReducer';
@@ -31,6 +33,7 @@ const reducers = {
   machineTypes: machineTypesReducer,
   monitoring: MonitoringReducer,
   subscriptions: subscriptionsReducer,
+  notifications,
 };
 
 const reduxReducers = combineReducers(reducers);

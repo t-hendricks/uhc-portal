@@ -14,12 +14,13 @@ const mapStateToProps = (state) => {
     isOpen: shouldShowModal(state, 'archive-cluster'),
     archiveClusterResponse: state.clusters.archivedCluster,
     subscriptionID: modalData.subscriptionID ? modalData.subscriptionID : '',
+    name: modalData.name ? modalData.name : '',
   });
 };
 
 const mapDispatchToProps = dispatch => ({
-  submit: (subscriptionID) => {
-    dispatch(archiveCluster(subscriptionID));
+  submit: (subscriptionID, name) => {
+    dispatch(archiveCluster(subscriptionID, name));
   },
   resetResponse: () => dispatch(clearClusterArchiveResponse()),
   closeModal: () => dispatch(closeModal()),

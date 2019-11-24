@@ -46,12 +46,10 @@ const initialState = {
   archivedCluster: {
     ...baseState,
     cluster: null,
-    showToast: false,
   },
   unarchivedCluster: {
     ...baseState,
     cluster: null,
-    showToast: false,
   },
 };
 
@@ -248,7 +246,6 @@ function clustersReducer(state = initialState, action) {
           cluster: action.payload.data,
           pending: false,
           fulfilled: true,
-          showToast: true,
         },
         {
           state,
@@ -283,19 +280,6 @@ function clustersReducer(state = initialState, action) {
         'archivedCluster',
         {
           ...initialState.archivedCluster,
-          showToast: state.archivedCluster.fulfilled,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case clustersConstants.ARCHIVE_CLUSTER_RESET_SHOW_TOAST:
-      return helpers.setStateProp(
-        'archivedCluster',
-        {
-          showToast: false,
         },
         {
           state,
@@ -311,7 +295,6 @@ function clustersReducer(state = initialState, action) {
           cluster: action.payload.data,
           pending: false,
           fulfilled: true,
-          showToast: true,
         },
         {
           state,
@@ -346,19 +329,6 @@ function clustersReducer(state = initialState, action) {
         'unarchivedCluster',
         {
           ...initialState.unarchivedCluster,
-          showToast: state.unarchivedCluster.fulfilled,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case clustersConstants.UNARCHIVE_CLUSTER_RESET_SHOW_TOAST:
-      return helpers.setStateProp(
-        'unarchivedCluster',
-        {
-          showToast: false,
         },
         {
           state,

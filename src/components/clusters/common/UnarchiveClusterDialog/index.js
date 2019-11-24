@@ -14,12 +14,13 @@ const mapStateToProps = (state) => {
     isOpen: shouldShowModal(state, 'unarchive-cluster'),
     unarchiveClusterResponse: state.clusters.unarchivedCluster,
     subscriptionID: modalData.subscriptionID ? modalData.subscriptionID : '',
+    name: modalData.name ? modalData.name : '',
   });
 };
 
 const mapDispatchToProps = dispatch => ({
-  submit: (subscriptionID) => {
-    dispatch(unarchiveCluster(subscriptionID));
+  submit: (subscriptionID, name) => {
+    dispatch(unarchiveCluster(subscriptionID, name));
   },
   resetResponse: () => dispatch(clearClusterUnarchiveResponse()),
   closeModal: () => dispatch(closeModal()),

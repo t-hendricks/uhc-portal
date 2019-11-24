@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 
 import ClusterDetails from './ClusterDetails';
 import {
-  clustersActions,
   fetchClusterDetails,
   invalidateClusters,
 } from '../../../redux/actions/clustersActions';
@@ -16,7 +15,7 @@ import { modalActions } from '../../common/Modal/ModalActions';
 import { getAlerts, getNodes, getClusterOperators } from './components/Monitoring/MonitoringActions';
 
 const mapStateToProps = (state) => {
-  const { details, archivedCluster, unarchivedCluster } = state.clusters;
+  const { details } = state.clusters;
   const { cloudProviders } = state.cloudProviders;
   const { logs } = state.logs;
   const { clusterIdentityProviders } = state.identityProviders;
@@ -28,8 +27,6 @@ const mapStateToProps = (state) => {
     logs,
     clusterIdentityProviders,
     organization,
-    showArchivedToast: archivedCluster.showToast,
-    showUnarchivedToast: unarchivedCluster.showToast,
   });
 };
 
@@ -49,8 +46,6 @@ const mapDispatchToProps = {
   getAlerts,
   getNodes,
   getClusterOperators,
-  closeArchivedToast: clustersActions.clearClusterArchiveToast,
-  closeUnarchivedToast: clustersActions.clearClusterUnarchiveToast,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

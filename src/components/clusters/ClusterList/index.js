@@ -19,7 +19,6 @@ const mapDispatchToProps = {
   openModal: modalActions.openModal,
   closeModal: modalActions.closeModal,
   getOrganizationAndQuota,
-  closeToast: clustersActions.clearClusterArchiveToast,
 };
 
 
@@ -31,9 +30,6 @@ const mapStateToProps = state => Object.assign(
     cloudProviders: state.cloudProviders.cloudProviders,
     organization: state.userProfile.organization,
     hasQuota: hasQuota(state.userProfile.organization.quotaList.items || []),
-    archivedCluster: {
-      showToast: state.clusters.archivedCluster.showToast,
-    },
   },
 );
 

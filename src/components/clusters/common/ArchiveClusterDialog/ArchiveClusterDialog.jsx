@@ -19,7 +19,7 @@ class ArchiveClusterDialog extends Component {
 
   render() {
     const {
-      isOpen, closeModal, submit, archiveClusterResponse, resetResponse, subscriptionID,
+      isOpen, closeModal, submit, archiveClusterResponse, resetResponse, subscriptionID, name,
     } = this.props;
 
     const cancelEdit = () => {
@@ -36,12 +36,12 @@ class ArchiveClusterDialog extends Component {
         title="Archive Cluster"
         onClose={cancelEdit}
         primaryText="Archive cluster"
-        onPrimaryClick={() => submit(subscriptionID)}
+        onPrimaryClick={() => submit(subscriptionID, name)}
         onSecondaryClick={cancelEdit}
       >
         <React.Fragment>
           {error}
-          <Form onSubmit={() => submit(subscriptionID)}>
+          <Form onSubmit={() => submit(subscriptionID, name)}>
             <p>
               Archiving a cluster will remove it from the cluster list and remove the cluster
               from subscription management.
@@ -67,6 +67,7 @@ ArchiveClusterDialog.propTypes = {
   resetResponse: PropTypes.func.isRequired,
   archiveClusterResponse: PropTypes.object,
   subscriptionID: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 ArchiveClusterDialog.defaultProps = {
