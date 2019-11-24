@@ -17,7 +17,7 @@ import get from 'lodash/get';
 import isUuid from 'uuid-validate';
 
 import { clustersConstants } from '../constants';
-import { clusterService, authorizationsService, accountsService } from '../../services';
+import { accountsService, authorizationsService, clusterService } from '../../services';
 import helpers from '../../common/helpers';
 import { normalizeCluster } from '../../common/normalize';
 
@@ -61,30 +61,47 @@ const editClusterDisplayName = (id, subscriptionID, displayName) => dispatch => 
   ),
 });
 
-const archiveCluster = id => dispatch => dispatch({
+/** Build a notification
+ * Meta object with notifications. Notifications middleware uses it to get prepared to response to:
+ * - <type>_PENDING (not used) - notification is sent right after the request was created
+ * - <type>_FULFILLED - once promise is resolved
+ * - <type>_PENDING (not used) - once promise is rejected
+ *
+ * @param {string} name - name of a cluster
+ * @param {string} action - action to display notification for (archive/unarchive)
+ * @returns {object} - notification object
+ *
+ * @see https://github.com/RedHatInsights/frontend-components/blob/master/packages/notifications/doc/notifications.md
+ */
+const buildNotificationsMeta = (name, action) => ({
+  notifications: {
+    fulfilled: {
+      variant: 'success',
+      title: `Cluster ${name} has been ${action}d`,
+      dismissDelay: 8000,
+      dismissable: false,
+    },
+  },
+});
+
+const archiveCluster = (id, name) => dispatch => dispatch({
   type: clustersConstants.ARCHIVE_CLUSTER,
   payload: clusterService.archiveCluster(id),
+  meta: buildNotificationsMeta(name, 'archive'),
 });
 
 const clearClusterArchiveResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE,
 });
 
-const clearClusterArchiveToast = () => dispatch => dispatch({
-  type: clustersConstants.ARCHIVE_CLUSTER_RESET_SHOW_TOAST,
-});
-
-const unarchiveCluster = id => dispatch => dispatch({
+const unarchiveCluster = (id, name) => dispatch => dispatch({
   type: clustersConstants.UNARCHIVE_CLUSTER,
   payload: clusterService.unarchiveCluster(id),
+  meta: buildNotificationsMeta(name, 'unarchive'),
 });
 
 const clearClusterUnarchiveResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE,
-});
-
-const clearClusterUnarchiveToast = () => dispatch => dispatch({
-  type: clustersConstants.UNARCHIVE_CLUSTER_RESET_SHOW_TOAST,
 });
 
 const editClusterConsoleURL = (id, consoleURL) => dispatch => dispatch({
@@ -248,9 +265,7 @@ const clustersActions = {
   resetCreatedClusterResponse,
   editClusterDisplayName,
   archiveCluster,
-  clearClusterArchiveToast,
   unarchiveCluster,
-  clearClusterUnarchiveToast,
 };
 
 export {
@@ -266,9 +281,7 @@ export {
   editClusterDisplayName,
   archiveCluster,
   clearClusterArchiveResponse,
-  clearClusterArchiveToast,
   unarchiveCluster,
   clearClusterUnarchiveResponse,
-  clearClusterUnarchiveToast,
   editClusterConsoleURL,
 };

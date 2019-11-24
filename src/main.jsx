@@ -25,11 +25,12 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
+import { NotificationsPortal } from '@redhat-cloud-services/frontend-components-notifications';
 import { userInfoResponse } from './redux/actions/userActions';
 import { getCloudProviders } from './redux/actions/cloudProviderActions';
 import config from './config';
 import App from './components/App/App';
-import { store, reloadReducers } from './redux/store';
+import { reloadReducers, store } from './redux/store';
 import getBaseName from './common/getBaseName';
 
 import './styles/main.scss';
@@ -40,9 +41,12 @@ const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <BrowserRouter basename={basename}>
-          <App />
-        </BrowserRouter>
+        <React.Fragment>
+          <NotificationsPortal store={store} />
+          <BrowserRouter basename={basename}>
+            <App />
+          </BrowserRouter>
+        </React.Fragment>
       </Provider>
     </AppContainer>,
     document.getElementById('root'),
@@ -89,11 +93,13 @@ if (!window.insights && process.env.NODE_ENV === 'development') {
 } else {
   insights.chrome.init();
   insights.chrome.identifyApp('openshift');
-  insights.chrome.auth.getUser().then((data) => {
-    store.dispatch(userInfoResponse(data.identity.user));
-    config.fetchConfig().then(() => {
-      store.dispatch(getCloudProviders());
-      render();
+  insights.chrome.auth.getUser()
+    .then((data) => {
+      store.dispatch(userInfoResponse(data.identity.user));
+      config.fetchConfig()
+        .then(() => {
+          store.dispatch(getCloudProviders());
+          render();
+        });
     });
-  });
 }

@@ -19,7 +19,7 @@ class UnarchiveClusterDialog extends Component {
 
   render() {
     const {
-      isOpen, closeModal, submit, unarchiveClusterResponse, resetResponse, subscriptionID,
+      isOpen, closeModal, submit, unarchiveClusterResponse, resetResponse, subscriptionID, name,
     } = this.props;
 
     const cancelEdit = () => {
@@ -36,12 +36,12 @@ class UnarchiveClusterDialog extends Component {
         title="Unarchive Cluster"
         onClose={cancelEdit}
         primaryText="Unarchive cluster"
-        onPrimaryClick={() => submit(subscriptionID)}
+        onPrimaryClick={() => submit(subscriptionID, name)}
         onSecondaryClick={cancelEdit}
       >
         <React.Fragment>
           {error}
-          <Form onSubmit={() => submit(subscriptionID)}>
+          <Form onSubmit={() => submit(subscriptionID, name)}>
             <p>
               Un-archiving a cluster will make it visible in the active (default) cluster list.
               You may need to manage subscriptions if the cluster is active.
@@ -61,6 +61,7 @@ UnarchiveClusterDialog.propTypes = {
   resetResponse: PropTypes.func.isRequired,
   unarchiveClusterResponse: PropTypes.object,
   subscriptionID: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 UnarchiveClusterDialog.defaultProps = {

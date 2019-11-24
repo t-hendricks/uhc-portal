@@ -22,8 +22,6 @@ import { Link } from 'react-router-dom';
 
 import { Spinner, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 import {
-  Alert,
-  AlertActionCloseButton,
   Button,
   Card,
   EmptyState,
@@ -107,14 +105,11 @@ class ClusterList extends Component {
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
     const {
-      viewOptions, valid, pending, archivedCluster, closeToast,
+      viewOptions, valid, pending,
     } = this.props;
     if ((!valid && !pending)
         || helpers.viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
-    }
-    if (!prevProps.archivedCluster.showToast && archivedCluster.showToast) {
-      setTimeout(closeToast, 8000);
     }
   }
 
@@ -141,20 +136,9 @@ class ClusterList extends Component {
       hasQuota,
       errorMessage,
       organization,
-      archivedCluster,
       operationID,
-      closeToast,
       history,
     } = this.props;
-
-    const toast = archivedCluster.showToast && (
-      <Alert
-        className="archived-cluster-toast"
-        variant="success"
-        title="Cluster successfully archived"
-        action={<AlertActionCloseButton onClose={() => closeToast()} />}
-      />
-    );
 
     const pageHeader = (
       <PageHeader>
@@ -165,7 +149,6 @@ class ClusterList extends Component {
     if (error && !size(clusters)) {
       return (
         <PageSection>
-          {toast}
           <EmptyState>
             <ErrorBox
               message="Error retrieving clusters"
@@ -185,7 +168,6 @@ class ClusterList extends Component {
     || (!organization.fulfilled && !organization.error)) {
       return (
         <React.Fragment>
-          {toast}
           {pageHeader}
           <PageSection>
             <Card>
@@ -204,7 +186,6 @@ class ClusterList extends Component {
         && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter)) {
       return (
         <PageSection>
-          {toast}
           <GlobalErrorBox />
           <ClusterListEmptyState hasQuota={hasQuota} />
         </PageSection>
@@ -217,7 +198,6 @@ class ClusterList extends Component {
         <PageSection>
           <Card>
             <div className="cluster-list">
-              {toast}
               <GlobalErrorBox />
               <Split id="cluster-list-top">
                 <SplitItem>
@@ -312,10 +292,6 @@ ClusterList.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
-  archivedCluster: PropTypes.shape({
-    showToast: PropTypes.bool.isRequired,
-  }),
-  closeToast: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

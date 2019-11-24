@@ -24,8 +24,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 
 import {
-  Alert,
-  AlertActionCloseButton, Breadcrumb, BreadcrumbItem,
+  Breadcrumb, BreadcrumbItem,
   Card,
   EmptyState,
   Split,
@@ -73,14 +72,11 @@ class ArchivedClusterList extends Component {
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
     const {
-      viewOptions, valid, pending, unarchivedCluster, closeToast,
+      viewOptions, valid, pending,
     } = this.props;
     if ((!valid && !pending)
       || helpers.viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
-    }
-    if (!prevProps.unarchivedCluster.showToast && unarchivedCluster.showToast) {
-      setTimeout(closeToast, 8000);
     }
   }
 
@@ -106,19 +102,8 @@ class ArchivedClusterList extends Component {
       openModal,
       invalidateClusters,
       errorMessage,
-      unarchivedCluster,
       operationID,
-      closeToast,
     } = this.props;
-
-    const toast = unarchivedCluster.showToast && (
-      <Alert
-        className="archived-cluster-toast"
-        variant="success"
-        title="Cluster successfully unarchived"
-        action={<AlertActionCloseButton onClose={() => closeToast()} />}
-      />
-    );
 
     const breadCrumbs = (
       <Breadcrumb className="breadcrumbs-in-card">
@@ -143,7 +128,6 @@ class ArchivedClusterList extends Component {
     if (error && !size(clusters)) {
       return (
         <PageSection>
-          {toast}
           <EmptyState>
             <ErrorBox
               message="Error retrieving archived clusters"
@@ -159,7 +143,6 @@ class ArchivedClusterList extends Component {
     if ((!size(clusters) && pending && isEmpty(viewOptions.filter)) || !valid) {
       return (
         <React.Fragment>
-          {toast}
           {pageHeader}
           <PageSection>
             <Card>
@@ -176,7 +159,6 @@ class ArchivedClusterList extends Component {
 
     return (
       <React.Fragment>
-        {toast}
         {pageHeader}
         <PageSection>
           <Card>
@@ -255,10 +237,6 @@ ArchivedClusterList.propTypes = {
   closeModal: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
-  unarchivedCluster: PropTypes.shape({
-    showToast: PropTypes.bool.isRequired,
-  }),
-  closeToast: PropTypes.func.isRequired,
 };
 
 export default ArchivedClusterList;

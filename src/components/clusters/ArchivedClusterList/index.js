@@ -17,7 +17,6 @@ const mapDispatchToProps = {
   getCloudProviders: cloudProviderActions.getCloudProviders,
   openModal: modalActions.openModal,
   closeModal: modalActions.closeModal,
-  closeToast: clustersActions.clearClusterUnarchiveToast,
 };
 
 
@@ -27,9 +26,6 @@ const mapStateToProps = state => Object.assign(
   {
     viewOptions: state.viewOptions[viewConstants.ARCHIVED_CLUSTERS_VIEW],
     cloudProviders: state.cloudProviders.cloudProviders,
-    unarchivedCluster: {
-      showToast: state.clusters.unarchivedCluster.showToast,
-    },
   },
 );
 

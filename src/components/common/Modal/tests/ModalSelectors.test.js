@@ -2,14 +2,14 @@ import reducer from '../ModalReducer';
 import shouldShowModal from '../ModalSelectors';
 
 describe('Modal Selector', () => {
-  it('should return true if modal name maches', () => {
+  it('should return true if modal name matches', () => {
     const activeModalState = { modal: { activeModal: { modalName: 'test-modal' } } };
     const result = shouldShowModal(activeModalState, 'test-modal');
 
     expect(result).toBeTruthy();
   });
 
-  it('should return false if modal name does not maches', () => {
+  it('should return false if modal name does not matches', () => {
     const state = { modal: reducer.initialState };
     const result = shouldShowModal(state, 'test-modal');
 

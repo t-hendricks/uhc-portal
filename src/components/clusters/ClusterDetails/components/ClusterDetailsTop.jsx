@@ -133,7 +133,10 @@ function ClusterDetailsTop(props) {
             ) : (
               <Button
                 variant="secondary"
-                onClick={() => openModal('unarchive-cluster', { subscriptionID: cluster.subscription.id })}
+                onClick={() => openModal('unarchive-cluster', {
+                  subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+                  name: cluster.name ? cluster.name : '',
+                })}
                 isDisabled={!cluster.canEdit}
               >
                 Unarchive
