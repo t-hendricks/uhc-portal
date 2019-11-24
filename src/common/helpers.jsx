@@ -268,11 +268,15 @@ const getCountdown = (timeString) => {
     now.getFullYear(),
     now.getMonth(),
     now.getDate(),
+    now.getHours(),
+    now.getMinutes(),
   );
   const expUTC = Date.UTC(
     expirationTime.getFullYear(),
     expirationTime.getMonth(),
     expirationTime.getDate(),
+    expirationTime.getHours(),
+    expirationTime.getMinutes(),
   );
   const msUntilExp = expUTC - nowUTC;
 
@@ -281,7 +285,6 @@ const getCountdown = (timeString) => {
     hours: Math.floor(msUntilExp / MS_PER_HOUR) % 24,
     minutes: Math.floor(msUntilExp / MS_PER_MINUTE) % 60,
   };
-
   return countdown;
 };
 
