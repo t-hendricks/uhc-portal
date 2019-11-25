@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody } from '@patternfly/react-core';
+import { CodeIcon } from '@patternfly/react-icons';
 import PageTitle from '../../../../common/PageTitle';
 import bareMetalIcon from '../../../../../styles/images/Icon_RH_Hardware_Server-A-Single_RGB_Flat.png';
 import AWSLogo from '../../../../../styles/images/AWS.png';
@@ -9,6 +10,7 @@ import GCPLogo from '../../../../../styles/images/google-cloud-logo.svg';
 import vSphereLogo from '../../../../../styles/images/vmware_vsphere.png';
 import CRCLogo from '../../../../../styles/images/Icon_RH_Hardware_Laptop-A_RGB_Flat.svg';
 import OSPLogo from '../../../../../styles/images/logotype_rh_openstackplatform_rgb_black-2.png';
+import IBMZLogo from '../../../../../styles/images/ibmz-logo.svg';
 
 const InstructionsInfrastructure = () => (
   <Card>
@@ -20,23 +22,9 @@ const InstructionsInfrastructure = () => (
             <img src={AWSLogo} alt="AWS" className="infra-logo" />
           </CardBody>
         </Link>
-        <Link to="/install/metal/user-provisioned" className="infra-card infra-card-cloud-provider">
-          <CardBody>
-            Bare Metal
-            <br />
-            <img src={bareMetalIcon} alt="Bare Metal" className="infra-logo" />
-          </CardBody>
-        </Link>
-      </div>
-      <div className="flex-container">
         <Link to="/install/azure/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
             <img src={AzureLogo} alt="Azure" className="infra-logo" />
-          </CardBody>
-        </Link>
-        <Link to="/install/vsphere/user-provisioned" className="infra-card infra-card-cloud-provider">
-          <CardBody>
-            <img src={vSphereLogo} alt="vSphere" className="infra-logo-vsphere" />
           </CardBody>
         </Link>
       </div>
@@ -46,13 +34,38 @@ const InstructionsInfrastructure = () => (
             <img src={GCPLogo} alt="GCP" className="infra-logo-google-cloud" />
           </CardBody>
         </Link>
+        <Link to="/install/vsphere/user-provisioned" className="infra-card infra-card-cloud-provider">
+          <CardBody>
+            <img src={vSphereLogo} alt="vSphere" className="infra-logo-vsphere" />
+          </CardBody>
+        </Link>
+      </div>
+      <div className="flex-container">
+        <Link to="/install/metal/user-provisioned" className="infra-card infra-card-cloud-provider">
+          <CardBody>
+            Bare Metal
+            <br />
+            <img src={bareMetalIcon} alt="Bare Metal" className="infra-logo" />
+          </CardBody>
+        </Link>
+        <Link to="/install/ibmz/user-provisioned" className="infra-card infra-card-cloud-provider">
+          <CardBody>
+            <img src={IBMZLogo} alt="IBM" className="infra-logo" />
+            <br />
+            <span className="ibmz-dev-preview-card">
+              <CodeIcon />
+              {' '}
+              Developer Preview
+            </span>
+          </CardBody>
+        </Link>
+      </div>
+      <div className="flex-container">
         <Link to="/install/openstack/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
             <img src={OSPLogo} alt="OpenStack" className="infra-logo-osp" />
           </CardBody>
         </Link>
-      </div>
-      <div className="flex-container">
         <Link to="/install/crc/installer-provisioned" className="infra-card infra-card-cloud-provider">
           <CardBody>
             <img src={CRCLogo} alt="CRC" className="infra-logo-crc" />
@@ -60,7 +73,6 @@ const InstructionsInfrastructure = () => (
             <span className="infra-crc-icon-text">Powered by Red Hat CodeReady Containers</span>
           </CardBody>
         </Link>
-        <CardBody className="infra-card-placeholder" />
       </div>
     </div>
   </Card>

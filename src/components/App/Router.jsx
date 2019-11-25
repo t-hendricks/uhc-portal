@@ -38,6 +38,7 @@ import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallPullSecret from '../clusters/install/InstallPullSecret';
 import InstallCRC from '../clusters/install/InstallCRC';
+import InstallIBM from '../clusters/install/InstallIBM';
 import Tokens from '../tokens/Tokens';
 import NotFoundError from './NotFoundError';
 import Subscriptions from '../subscriptions';
@@ -62,6 +63,7 @@ function Router(props) {
           <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
           <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
           <Route path="/install/crc/installer-provisioned" component={InstallCRC} />
+          <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
           <Route path="/install/pre-release" component={InstallPreRelease} />
           <Route path="/install/pull-secret" component={InstallPullSecret} />
           <Route path="/install" component={InstallInfrastructure} />
