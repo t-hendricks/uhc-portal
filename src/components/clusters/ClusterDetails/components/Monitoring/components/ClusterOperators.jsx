@@ -13,7 +13,7 @@ import {
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 
-import { operatorsStatuses } from '../statusHelper';
+import { operatorsStatuses } from '../monitoringHelper';
 
 function ClusterOperatorsTable({ operators = [] }) {
   const columns = [

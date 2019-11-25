@@ -20,7 +20,7 @@ import {
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_success_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
 
-import { monitoringStatuses } from '../statusHelper';
+import { monitoringStatuses } from '../monitoringHelper';
 
 function ClusterHealthCard({
   status = monitoringStatuses.NO_METRICS,
