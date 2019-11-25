@@ -3,13 +3,13 @@ import get from 'lodash/get';
 
 import Monitoring from './Monitoring';
 import { clearMonitoringState } from './MonitoringActions';
+import hasCpuAndMemory from '../../clusterDetailsHelper';
 import {
   issuesSelector,
   lastCheckInSelector,
   resourceUsageIssuesSelector,
   clusterHealthSelector,
   hasDataSelector,
-  hasCpuAndMemory,
 } from './MonitoringSelectors';
 
 const mapDispatchToProps = {

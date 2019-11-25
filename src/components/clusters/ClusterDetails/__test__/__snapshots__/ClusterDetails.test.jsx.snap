@@ -39,29 +39,29 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "cpu": Object {
             "total": Object {
               "unit": "",
-              "value": 0,
+              "value": 16,
             },
-            "updated_timestamp": "0001-01-01T00:00:00Z",
+            "updated_timestamp": "2019-04-28T14:23:18Z",
             "used": Object {
               "unit": "",
-              "value": 0,
+              "value": 3.995410922987096,
             },
           },
           "memory": Object {
             "total": Object {
               "unit": "B",
-              "value": 0,
+              "value": 82293346304,
             },
-            "updated_timestamp": "0001-01-01T00:00:00Z",
+            "updated_timestamp": "2019-04-28T14:23:19Z",
             "used": Object {
               "unit": "B",
-              "value": 0,
+              "value": 16546058240,
             },
           },
           "nodes": Object {
-            "compute": 1,
-            "master": 2,
-            "total": 3,
+            "compute": 4,
+            "master": 3,
+            "total": 7,
           },
           "sockets": Object {
             "total": Object {
@@ -414,29 +414,29 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "cpu": Object {
               "total": Object {
                 "unit": "",
-                "value": 0,
+                "value": 16,
               },
-              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "updated_timestamp": "2019-04-28T14:23:18Z",
               "used": Object {
                 "unit": "",
-                "value": 0,
+                "value": 3.995410922987096,
               },
             },
             "memory": Object {
               "total": Object {
                 "unit": "B",
-                "value": 0,
+                "value": 82293346304,
               },
-              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "updated_timestamp": "2019-04-28T14:23:19Z",
               "used": Object {
                 "unit": "B",
-                "value": 0,
+                "value": 16546058240,
               },
             },
             "nodes": Object {
-              "compute": 1,
-              "master": 2,
-              "total": 3,
+              "compute": 4,
+              "master": 3,
+              "total": 7,
             },
             "sockets": Object {
               "total": Object {
@@ -554,29 +554,29 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "cpu": Object {
               "total": Object {
                 "unit": "",
-                "value": 0,
+                "value": 16,
               },
-              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "updated_timestamp": "2019-04-28T14:23:18Z",
               "used": Object {
                 "unit": "",
-                "value": 0,
+                "value": 3.995410922987096,
               },
             },
             "memory": Object {
               "total": Object {
                 "unit": "B",
-                "value": 0,
+                "value": 82293346304,
               },
-              "updated_timestamp": "0001-01-01T00:00:00Z",
+              "updated_timestamp": "2019-04-28T14:23:19Z",
               "used": Object {
                 "unit": "B",
-                "value": 0,
+                "value": 16546058240,
               },
             },
             "nodes": Object {
-              "compute": 1,
-              "master": 2,
-              "total": 3,
+              "compute": 4,
+              "master": 3,
+              "total": 7,
             },
             "sockets": Object {
               "total": Object {
