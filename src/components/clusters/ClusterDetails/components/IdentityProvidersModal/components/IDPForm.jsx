@@ -14,18 +14,25 @@ import {
   GithubForm,
   LDAPForm,
   OpenIDForm,
+  GoogleFormRequired,
   GithubFormRequired,
   LDAPFormRequired,
   OpenIDFormRequired,
-  GoogleFormRequired,
 } from './ProvidersForms';
 
 import {
-  IDPtypes, mappingMethods, LDAPDocLink, GithubDocLink, OpenIDDocLink, GoogleDocLink,
+  IDPtypes,
+  mappingMethods,
+  IDPformValues,
+  mappingMethodsformValues,
+  LDAPDocLink,
+  GithubDocLink,
+  OpenIDDocLink,
+  GoogleDocLink,
 } from '../IdentityProvidersHelper';
 
 function IDPForm(props) {
-  const { createIDPResponse, selectedIDP } = props;
+  const { createIDPResponse, selectedIDP, selectedMappingMethod } = props;
 
   const isPending = createIDPResponse.pending;
 
@@ -96,8 +103,13 @@ function IDPForm(props) {
             />
             {SelectedProivderRequiredFields
                   && (
-                  <SelectedProivderRequiredFields isPending={isPending} />
-                  )}
+                  <SelectedProivderRequiredFields
+                    isPending={isPending}
+                    // make google required form optional when mapping method is lookup
+                    isRequired={selectedIDP === IDPformValues.GOOGLE
+                    && !(selectedMappingMethod === mappingMethodsformValues.LOOKUP)}
+                  />)
+            }
           </Col>
           <Col sm={4}>
             <HintBlock
@@ -139,6 +151,7 @@ function IDPForm(props) {
 IDPForm.propTypes = {
   createIDPResponse: PropTypes.object,
   selectedIDP: PropTypes.string,
+  selectedMappingMethod: PropTypes.string,
 };
 
 IDPForm.defaultProps = {

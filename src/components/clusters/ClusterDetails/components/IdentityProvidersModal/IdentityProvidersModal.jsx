@@ -44,7 +44,7 @@ class IdentityProvidersModal extends React.Component {
 
   render() {
     const {
-      isOpen, handleSubmit, createIDPResponse, clusterName, selectedIDP,
+      isOpen, handleSubmit, createIDPResponse, clusterName, selectedIDP, selectedMappingMethod,
     } = this.props;
 
     const isPending = createIDPResponse.pending;
@@ -63,7 +63,11 @@ class IdentityProvidersModal extends React.Component {
         <ModalHeader title={`Create Identity Provider (${clusterName})`} onClose={this.onClose} />
       </Modal.Header>
       <Modal.Body>
-        <IDPForm selectedIDP={selectedIDP} createIDPResponse={createIDPResponse} />
+        <IDPForm
+          selectedIDP={selectedIDP}
+          createIDPResponse={createIDPResponse}
+          selectedMappingMethod={selectedMappingMethod}
+        />
       </Modal.Body>
       <Modal.Footer>
         <Button bsStyle="primary" type="submit" onClick={handleSubmit} disabled={isPending}>
@@ -89,6 +93,7 @@ IdentityProvidersModal.propTypes = {
   createIDPResponse: PropTypes.object,
   getClusterIdentityProviders: PropTypes.func,
   selectedIDP: PropTypes.string,
+  selectedMappingMethod: PropTypes.string,
   onClose: PropTypes.func,
 };
 
