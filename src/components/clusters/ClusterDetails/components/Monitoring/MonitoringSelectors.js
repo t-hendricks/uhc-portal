@@ -61,7 +61,7 @@ const lastCheckInSelector = (lastCheckIn) => {
 
 const resourceUsageIssuesSelector = (cpu, memory) => {
   const totalCPU = cpu.total.value;
-  const totalMemory = cpu.total.value;
+  const totalMemory = memory.total.value;
 
   if (!hasCpuAndMemory(cpu, memory)) {
     return null;
