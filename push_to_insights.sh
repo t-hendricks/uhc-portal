@@ -148,6 +148,8 @@ if [ "$1" == "beta" ]; then
     rm --recursive --force build
     yarn build --mode=production --beta=true
     push_build "prod-beta"
+    push_build "qa-stable"
+    push_build "qa-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
     # Install dependencies:
