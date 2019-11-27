@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ReplaceWebpackPlugin = require('html-replace-webpack-plugin');
 const { insights } = require('./package.json');
 
@@ -32,6 +31,7 @@ const outDir = path.resolve(__dirname, 'build', insights.appname);
 module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
   const betaMode = argv.beta == 'true';
+  const isStaging = argv.staging == 'true';
   const isDevServer = !!process.argv.find(v => v.includes('webpack-dev-server'));
 
   let bundleAnalyzer = null;
@@ -70,6 +70,7 @@ module.exports = (env, argv) => {
         APP_BETA: betaMode,
         APP_DEVMODE: devMode,
         APP_DEV_SERVER: isDevServer,
+        APP_STAGING: isStaging,
       }),
       new ReplaceWebpackPlugin(
         [{
