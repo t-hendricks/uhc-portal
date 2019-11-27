@@ -21,7 +21,7 @@ function MonitoringListItem({
 }) {
   const id = title.replace(/\s+/g, '-').toLowerCase();
 
-  const getSummery = () => {
+  const getSummary = () => {
     if (!hasData) {
       return (
           <>
@@ -65,7 +65,7 @@ function MonitoringListItem({
                   <Title headingLevel="h4" size="2xl">{title}</Title>
                 </SplitItem>
                 <SplitItem>
-                  {getSummery()}
+                  {getSummary()}
                 </SplitItem>
               </Split>
             </DataListCell>,
