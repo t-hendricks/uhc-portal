@@ -17,6 +17,8 @@
     "@patternfly/react-table": "^2.16.15",
     "@patternfly/react-tokens": "^2.6.16",
     "@redhat-cloud-services/frontend-components": "^0.0.9",
+    "@redhat-cloud-services/frontend-components-notifications": "^0.0.7",
+    "@redhat-cloud-services/frontend-components-utilities": "^0.0.13",
     "axios": "^0.18.0",
     "bootstrap-sass": "^3.3.7",
     "classnames": "^2.2.6",

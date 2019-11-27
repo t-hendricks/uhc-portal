@@ -75,24 +75,24 @@ const clusterDetails = {
     },
     metrics: {
       memory: {
-        updated_timestamp: '0001-01-01T00:00:00Z',
+        updated_timestamp: '2019-04-28T14:23:19Z',
         used: {
-          value: 0,
+          value: 16546058240,
           unit: 'B',
         },
         total: {
-          value: 0,
+          value: 82293346304,
           unit: 'B',
         },
       },
       cpu: {
-        updated_timestamp: '0001-01-01T00:00:00Z',
+        updated_timestamp: '2019-04-28T14:23:18Z',
         used: {
-          value: 0,
+          value: 3.995410922987096,
           unit: '',
         },
         total: {
-          value: 0,
+          value: 16,
           unit: '',
         },
       },
@@ -119,9 +119,9 @@ const clusterDetails = {
         },
       },
       nodes: {
-        total: 3,
-        master: 2,
-        compute: 1,
+        total: 7,
+        master: 3,
+        compute: 4,
       },
     },
     state: 'ready',

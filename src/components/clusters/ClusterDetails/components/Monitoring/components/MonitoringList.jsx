@@ -35,7 +35,7 @@ class MonitoringList extends React.Component {
 
 
     const EmptyState = (
-      <MonitoringEmptyState hideLastCheckIn hideIcon>
+      <MonitoringEmptyState hideLastCheckIn hideIcon title="No data available for this metric">
         <p>Please check back later</p>
       </MonitoringEmptyState>
     );

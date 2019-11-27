@@ -47,7 +47,10 @@ function ArchivedClusterListTable(props) {
     );
 
     const openUnarchiveModal = () => openModal('unarchive-cluster',
-      { subscriptionID: cluster.subscription ? cluster.subscription.id : '' });
+      {
+        subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+        name: cluster.name ? cluster.name : '',
+      });
 
     const unarchiveButton = (
       <Button variant="secondary" onClick={openUnarchiveModal} isDisabled={!cluster.canEdit}>

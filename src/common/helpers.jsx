@@ -249,6 +249,44 @@ const nestedIsEmpty = obj => (isEmpty(obj) || Object.keys(obj).map(
   key => isEmpty(obj[key]),
 ).every(item => item));
 
+/**
+ * Returns a countdown object, containing the number of days, hours and minutes
+ * left from now until the time specified in the timestamp.
+ *
+ * @param {*} timeString A string value representing a date, specified in a
+ *                      format recognized by the Date.parse() method
+ */
+const getCountdown = (timeString) => {
+  const MS_PER_MINUTE = 1000 * 60;
+  const MS_PER_HOUR = MS_PER_MINUTE * 60;
+  const MS_PER_DAY = MS_PER_HOUR * 24;
+
+  const expirationTime = new Date(timeString);
+  const now = new Date();
+  // Converting the dates to UTC to condider DST and other oddities...
+  const nowUTC = Date.UTC(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    now.getHours(),
+    now.getMinutes(),
+  );
+  const expUTC = Date.UTC(
+    expirationTime.getFullYear(),
+    expirationTime.getMonth(),
+    expirationTime.getDate(),
+    expirationTime.getHours(),
+    expirationTime.getMinutes(),
+  );
+  const msUntilExp = expUTC - nowUTC;
+
+  const countdown = {
+    days: Math.floor(msUntilExp / MS_PER_DAY),
+    hours: Math.floor(msUntilExp / MS_PER_HOUR) % 24,
+    minutes: Math.floor(msUntilExp / MS_PER_MINUTE) % 60,
+  };
+  return countdown;
+};
 
 const helpers = {
   noop,
@@ -280,6 +318,7 @@ export {
   toCleanArray,
   scrollToTop,
   buildUrlParams,
+  getCountdown,
 };
 
 export default helpers;

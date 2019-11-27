@@ -14,6 +14,7 @@ import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../../common/ErrorTriangle';
 import getClusterName from '../../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import ExpirationAlert from './ExpirationAlert';
 
 function ClusterDetailsTop(props) {
   const {
@@ -132,7 +133,10 @@ function ClusterDetailsTop(props) {
             ) : (
               <Button
                 variant="secondary"
-                onClick={() => openModal('unarchive-cluster', { subscriptionID: cluster.subscription.id })}
+                onClick={() => openModal('unarchive-cluster', {
+                  subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+                  name: cluster.name ? cluster.name : '',
+                })}
                 isDisabled={!cluster.canEdit}
               >
                 Unarchive
@@ -149,6 +153,11 @@ function ClusterDetailsTop(props) {
         </SplitItem>
       </Split>)
       }
+      {cluster.expiration_timestamp
+      && (
+      <ExpirationAlert
+        expirationTimestamp={cluster.expiration_timestamp}
+      />)}
       {children}
     </div>
   );

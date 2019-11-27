@@ -165,7 +165,7 @@ limitations under the License.
 }
 
 #cl-details-top .pf-c-tabs{
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .cluster-error-triangle {
@@ -289,7 +289,11 @@ p.notfound {
 }
 
 #idpHint {
-  margin: 20px 0;
+  margin-top: 20px;
+}
+
+#expiration-alert {
+  margin-top: 20px;
 }
 
 #idp-advanced-options {
@@ -521,7 +525,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   pointer-events: all !important;
 }
 
-.azure-dev-preview-card, .gcp-dev-preview-card, .crc-dev-preview-card, .osp-dev-preview-card {
+.azure-dev-preview-card, .gcp-dev-preview-card, .crc-dev-preview-card, .osp-dev-preview-card, .ibmz-dev-preview-card {
   color: var(--pf-global--link--Color);
 }
 
@@ -540,8 +544,9 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 // TODO: remove when https://github.com/patternfly/patternfly-next/issues/1976 is fixed
+// Edit: As of 18-11-2019 the issue is still open but the value needs to change for alignment.
 h4.pf-c-alert__title {
-  margin-top: 0 !important;
+  margin-top: 5px !important;
 }
 
 .token-error-alert {

@@ -89,6 +89,7 @@ function dropDownItems({
     };
     const archiveModalData = {
       subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+      name: cluster.name ? cluster.name : '',
     };
 
     return { ...baseArchiveProps, onClick: () => openModal('archive-cluster', archiveModalData) };
@@ -101,6 +102,7 @@ function dropDownItems({
     };
     const unarchiveModalData = {
       subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+      name: cluster.name ? cluster.name : '',
     };
 
     return { ...baseArchiveProps, onClick: () => openModal('unarchive-cluster', unarchiveModalData) };

@@ -66,7 +66,7 @@ describe('<ClusterDetailsTop />', () => {
       expect(unarchiveButton.props().children).toEqual('Unarchive');
       expect(wrapper.find('ClusterActionsDropdown').length).toEqual(0); // no cluster actions dropdown
       unarchiveButton.simulate('click');
-      expect(openModal).toBeCalledWith('unarchive-cluster', { subscriptionID: 'fake' });
+      expect(openModal).toBeCalledWith('unarchive-cluster', { subscriptionID: 'fake', name: cluster.name });
     });
   });
 });

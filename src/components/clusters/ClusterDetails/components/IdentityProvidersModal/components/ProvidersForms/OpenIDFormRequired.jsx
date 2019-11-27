@@ -33,7 +33,6 @@ function OpenIDFormRequired({ isPending }) {
         name="openid_email"
         label="Email"
         type="text"
-        placeholder="comma separated, example: ***REMOVED***, ***REMOVED***"
         disabled={isPending}
         validate={validate}
       />
@@ -42,7 +41,6 @@ function OpenIDFormRequired({ isPending }) {
         name="openid_name"
         label="Name"
         type="text"
-        placeholder="comma separated, example: 'name1, name2"
         disabled={isPending}
         validate={validate}
       />
@@ -51,7 +49,6 @@ function OpenIDFormRequired({ isPending }) {
         name="openid_preferred_username"
         label="Preferred Username"
         type="text"
-        placeholder="comma separated, example: 'name1, name2, name3"
         disabled={isPending}
         validate={validate}
       />

@@ -1,40 +1,54 @@
 import { toCleanArray } from '../../../../../common/helpers';
 
+const IDPformValues = {
+  GITHUB: 'GithubIdentityProvider',
+  GOOGLE: 'GoogleIdentityProvider',
+  OPENID: 'OpenIDIdentityProvider',
+  LDAP: 'LDAPIdentityProvider',
+};
+
+const mappingMethodsformValues = {
+  CLAIM: 'claim',
+  LOOKUP: 'lookup',
+  GENERATE: 'generate',
+  ADD: 'add',
+};
+
 const IDPtypes = [
   {
     name: 'Github',
-    value: 'GithubIdentityProvider',
+    value: IDPformValues.GITHUB,
   },
   {
     name: 'Google',
-    value: 'GoogleIdentityProvider',
+    value: IDPformValues.GOOGLE,
   },
   {
     name: 'OpenID',
-    value: 'OpenIDIdentityProvider',
+    value: IDPformValues.OPENID,
   },
   {
     name: 'LDAP',
-    value: 'LDAPIdentityProvider',
+    value: IDPformValues.LDAP,
   },
 ];
 
 const mappingMethods = [
   {
-    name: 'claim',
-    value: 'claim',
+    name: mappingMethodsformValues.CLAIM,
+    value: mappingMethodsformValues.CLAIM,
   },
   {
-    name: 'lookup',
-    value: 'lookup',
+    name: mappingMethodsformValues.LOOKUP,
+    value: mappingMethodsformValues.LOOKUP,
   },
   {
-    name: 'generate',
-    value: 'generate',
+    name: mappingMethodsformValues.GENERATE,
+    value: mappingMethodsformValues.GENERATE,
   },
   {
-    name: 'add',
-    value: 'add',
+    name: mappingMethodsformValues.ADD,
+    value: mappingMethodsformValues.ADD,
   },
 ];
 
@@ -114,6 +128,8 @@ export {
   getCreateIDPRequestData,
   IDPtypes,
   mappingMethods,
+  IDPformValues,
+  mappingMethodsformValues,
   LDAPDocLink,
   GithubDocLink,
   OpenIDDocLink,
