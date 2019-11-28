@@ -5,7 +5,7 @@ const configs = {};
 // get bundled in the main chunk, and not spilt to tiny chunks
 
 configs.production = import(/* webpackMode: "eager" */ './config/production.json');
-if (APP_BETA || APP_DEVMODE) {
+if (APP_BETA || APP_DEVMODE || APP_STAGING) {
   configs.staging = import(/* webpackMode: "eager" */ './config/staging.json');
   configs.integration = import(/* webpackMode: "eager" */ './config/integration.json');
 }
@@ -14,8 +14,8 @@ if (APP_DEV_SERVER) {
   configs.development = import(/* webpackMode: "eager" */ './config/development.json');
   configs.default = configs.development;
 } else {
-  // running in a real build, select config according to the APP_BETA flag
-  configs.default = APP_BETA ? configs.staging : configs.production;
+  // running in a real build, select config according to the APP_STAGING flag
+  configs.default = APP_STAGING ? configs.staging : configs.production;
 }
 
 const parseEnvQueryParam = () => {

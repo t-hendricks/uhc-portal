@@ -113,6 +113,7 @@
       "APP_DEVMODE": false,
       "APP_BETA": false,
       "APP_DEV_SERVER": false,
+      "APP_STAGING": false,
       "OCM_SHOW_OLD_METRICS": false
     }
   },
