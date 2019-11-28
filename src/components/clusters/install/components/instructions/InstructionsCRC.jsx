@@ -1,46 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, List, ListItem } from '@patternfly/react-core';
+import {
+  Card, List, ListItem, Title,
+} from '@patternfly/react-core';
 import links from '../../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
-import PageTitle from '../../../../common/PageTitle';
 import PullSecretSection from './components/PullSecretSection';
 import TokenErrorAlert from './components/TokenErrorAlert';
 
-class InstructionsCRC extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      copied: false,
-    };
-  }
-
-  render() {
-    const { copied } = this.state;
-    const { token } = this.props;
-    const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
-
-    return (
+function InstructionsCRC({ token }) {
+  return (
+    <React.Fragment>
+      <Title headingLevel="h3" size="2xl">
+        Install on Laptop: Red Hat CodeReady Containers
+      </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
+          {token.error && <TokenErrorAlert token={token} />}
           <div className="pf-c-content">
-
-            <PageTitle title="Install on Laptop: Red Hat CodeReady Containers" />
-
-            {
-              token.error && (
-                <TokenErrorAlert token={token} />
-              )
-            }
-
-            <br />
-
             <p>
               Red Hat CodeReady Containers brings a minimal OpenShift 4.2 or newer cluster
               to your local laptop or desktop computer.
             </p>
 
             <GetStarted docURL={links.INSTALL_CRC_GETTING_STARTED} />
+          </div>
+        </div>
+      </Card>
+      <Card>
+        <div className="pf-l-grid pf-m-gutter ocm-page">
+          <div className="pf-c-content">
 
             <h3>
               Downloads
@@ -58,7 +47,6 @@ class InstructionsCRC extends React.Component {
               {' '}
               command to set up your host operating system for the
               CodeReady Containers virtual machine.
-
             </p>
 
             <List>
@@ -106,16 +94,7 @@ class InstructionsCRC extends React.Component {
             </List>
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
-            <PullSecretSection
-              copied={copied}
-              onCopy={() => {
-                this.setState({ copied: true });
-                // fix for IE
-                document.getElementById('copyPullSecret').focus();
-              }}
-              token={token}
-              tokenView={tokenView}
-            />
+            <PullSecretSection token={token} />
 
             <p />
 
@@ -128,8 +107,8 @@ class InstructionsCRC extends React.Component {
           </div>
         </div>
       </Card>
-    );
-  }
+    </React.Fragment>
+  );
 }
 
 InstructionsCRC.propTypes = {

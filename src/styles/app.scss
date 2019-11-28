@@ -404,25 +404,24 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   background-color: var(--pf-global--warning-color--100);
   padding-top: 10px;
   padding-bottom: 8px;
-  margin-left: -30px;
-  margin-top: -30px;
-  margin-right: -30px;
-  margin-bottom: 20px;
+  margin-left: -24px;
+  margin-top: -24px;
+  margin-right: -24px;
   padding-left: 22px;
 }
 
 .infra-logo {
-  height: 80px;
+  height: 54px;
   margin: 10px;
 }
 
 .infra-logo-vsphere {
-  height: 84px;
+  height: 54px;
   margin: 10px;
 }
 
 .infra-logo-google-cloud {
-  height: 51px;
+  height: 54px;
   margin-left: -10px;
   margin-right: -10px;
   margin-bottom: 10px;
@@ -430,23 +429,24 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .infra-logo-crc {
-  height: 70px;
+  height: 54px;
 }
 
 .infra-logo-osp {
-  height: 84px;
+  height: 54px;
   margin: 10px;
 }
 
 .infra-crc-laptop {
   font-size: var(--pf-global--FontSize--4xl);
   vertical-align: middle;
+  margin-right: 8px;
 }
 
 .infra-crc-icon-text {
   display: block;
   font-size: var(--pf-global--FontSize--sm);
-  margin-top: 10px;
+  margin-top: 16px;
   margin-bottom: 10px;
 }
 
@@ -471,17 +471,33 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 
-.infra-card {
+.infra-card, a.infra-card {
   flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
   margin: 20px;
   padding: 20px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  box-shadow: var(--pf-global--BoxShadow--md);
-  color: var(--pf-global--Color--100) !important; /* not sure how to properly override patternfly */
-  text-decoration: none !important; /* not sure how to properly override patternfly */
+  color: var(--pf-global--Color--100);
+  text-decoration: none;
+  border: var(--pf-global--BorderWidth--sm) solid;
+  border-color: var(--pf-global--Color--100);
+  border-radius: var(--pf-global--BorderRadius--sm);
+
+  h5, h3 {
+    color: var(--pf-global--Color--100);
+    font-weight: var(--pf-global--FontWeight--bold);
+  }
+
+  &:hover {
+    border-color: var(--pf-global--primary-color--100);
+    h5, h3, .infra-crc-icon-text {
+      color: var(--pf-global--primary-color--100);
+    }
+  }
+
 }
 
 .infra-card-cloud-provider {
@@ -500,17 +516,17 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   display: flex;
 }
 
-.infra-card:hover {
-  box-shadow: var(--pf-global--BoxShadow--lg);
-}
-
 .aws-ipi-upi-infra-logo {
   height: 160px;
   margin: 10px;
+  transform: scale(2);
 }
 
 .aws-ipi-upi-infra-card {
   align-items: initial;
+  .create-cluster-favorite-btn-container {
+    height: 22px;
+  }
 }
 
 .pf-c-button.popover-hover {
@@ -549,48 +565,56 @@ h4.pf-c-alert__title {
   margin-top: 5px !important;
 }
 
-.token-error-alert {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.telemetry-alert {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
 .ocm-page {
-  margin: 30px;
+  margin: 24px;
 }
 
-.favorite-button.pf-c-button.pf-m-link.pf-m-disabled {
+.ocp-instructions .pf-c-card {
+  margin-top: var(--pf-global--spacer--lg);
+}
+
+.pf-c-label.card-badge.pf-m-compact {
   background-color: var(--pf-global--BackgroundColor--300);
-  color: var(--pf-global--secondary-color--100);
-  border-radius: 3px;
+  font-size: 14px;
+  color: var(--pf-global--Color--300);
   padding: 5px 10px 5px 10px;
+  width: 95%;
+  margin: 8px;
+  min-height: 21px;
+  svg {
+    margin-right: var(--pf-global--spacer--xs);
+  }
+  &.card-badge-hidden {
+    // for card size/layout consistency, we want a "placeholder" badge that takes the same space, but is not visibile
+    visibility: hidden;
+  }
 }
 
-.create-cluster-favorite-btn-container {
-  height: 0px;
-  text-align: right;
-  width: 100%;
-  button {
-    font-size: 14px;
-  }
+.card-badge-container {
+  align-self: stretch;
+  margin-left: -7%;
+  margin-right: -7%;
+  margin-top: -20px;
+}
+
+.infra-card-cloud-provider .card-badge-container { 
+  margin-top: -15px;
 }
 
 .create-cluster-logo {
   height: 75px;
 }
-
-.create-cluster-card .create-cluster-logo {
-  -webkit-filter: grayscale(1);
-  filter: grayscale(1);
-}
-
-.create-cluster-card:hover .create-cluster-logo {
-  -webkit-filter: grayscale(0);
-  filter: grayscale(0);
+.infra-card.create-cluster-card.card-disabled {
+  background: var(--pf-global--disabled-color--300);
+  color: var(--pf-black-600) !important;
+  box-shadow: none;
+  .create-cluster-favorite-btn-container {
+    background: var(--pf-global--disabled-color--200);
+  }
+  .create-cluster-logo, .create-cluster-favorite-btn-container {
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+  }
 }
 
 .infra-card .create-cluster-header.pf-c-card__header {

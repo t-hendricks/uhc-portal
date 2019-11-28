@@ -1,33 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardBody } from '@patternfly/react-core';
-import PageTitle from '../../../../common/PageTitle';
-import upiLogo from '../../../../../styles/images/Icon_RH_Diagram_DevelopmentModel_RGB_Flat.png';
-import ipiLogo from '../../../../../styles/images/Icon_RH_Diagram_Lifecycle_RGB_Flat.png';
+import { Card, CardBody, Title } from '@patternfly/react-core';
+import { UserIcon, SyncAltIcon } from '@patternfly/react-icons';
+// eslint-disable-next-line camelcase
+import { global_primary_color_100 } from '@patternfly/react-tokens';
+import CardBadge from '../CardBadge';
+
 
 const InstructionsAWS = () => (
   <Card>
     <div className="pf-c-content ocm-page">
-      <PageTitle title="Install on AWS: Infrastructure Type" />
+      <Title headingLevel="h3" size="2xl">
+        AWS: Select an installation type
+      </Title>
       <div className="flex-container">
-        <Link to="/install/aws/installer-provisioned" className="aws-ipi-upi-infra-card infra-card">
+        <Link to="/install/aws/installer-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
+          <CardBadge isRecommened />
           <CardBody>
-            Installer-Provisioned Infrastructure
-            <br />
-            <img src={ipiLogo} alt="Installer-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
-            <br />
-            <strong>Recommended:</strong>
+            <SyncAltIcon color={global_primary_color_100.value} size="xl" alt="Installer-Provisioned Infrastracture" className="aws-ipi-upi-infra-logo" />
+            <Title headingLevel="h3" size="lg">Installer-Provisioned Infrastructure</Title>
             {' '}
             Deploy an OpenShift cluster on infrastructure that the installation program
             provisions and the cluster maintains.
           </CardBody>
         </Link>
-        <Link to="/install/aws/user-provisioned" className="aws-ipi-upi-infra-card infra-card">
+        <Link to="/install/aws/user-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
+          <CardBadge isHidden />
           <CardBody>
-            User-Provisioned Infrastructure
-            <br />
-            <img src={upiLogo} alt="User-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
-            <br />
+            <UserIcon color={global_primary_color_100.value} size="xl" alt="User-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
+            <Title headingLevel="h3" size="lg">User-Provisioned Infrastructure</Title>
             Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
           </CardBody>
         </Link>

@@ -1,19 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<CreateCluster /> Quota not fetched yet should render 1`] = `
-<PageSection>
-  <Spinner
-    centered={true}
-  />
-</PageSection>
-`;
-
-exports[`<CreateCluster /> renders correctly 1`] = `
-<PageSection>
-  <Card>
-    <div
-      className="pf-c-content ocm-page"
-    >
+<Fragment>
+  <PageTitle
+    breadcrumbs={
       <Breadcrumb
         className="breadcrumbs-in-card"
       >
@@ -36,59 +26,171 @@ exports[`<CreateCluster /> renders correctly 1`] = `
           Create
         </BreadcrumbItem>
       </Breadcrumb>
-      <PageTitle
-        title="Create a Cluster to Get Started"
-      />
-      <div
-        className="flex-container"
+    }
+    title="Create a Cluster to Get Started"
+  />
+  <PageSection>
+    <Spinner
+      centered={true}
+    />
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<CreateCluster /> User with no quota should render 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumb
+        className="breadcrumbs-in-card"
       >
-        <Link
-          className="infra-card pf-c-card create-cluster-card"
+        <LinkContainer
+          activeClassName="active"
+          exact={false}
           replace={false}
-          to="/create/osd"
+          strict={false}
+          to=""
         >
-          <div
-            className="create-cluster-favorite-btn-container"
+          <BreadcrumbItem
+            to="#"
           >
-            <FavoriteButton
-              isActive={true}
+            Clusters
+          </BreadcrumbItem>
+        </LinkContainer>
+        <BreadcrumbItem
+          isActive={true}
+        >
+          Create
+        </BreadcrumbItem>
+      </Breadcrumb>
+    }
+    title="Create a Cluster to Get Started"
+  />
+  <PageSection>
+    <Card>
+      <div
+        className="pf-c-content ocm-page"
+      >
+        <div
+          className="flex-container"
+        >
+          <Link
+            className="infra-card pf-c-card create-cluster-card"
+            replace={false}
+            to="/install"
+          >
+            <CardHeader
+              className="create-cluster-header"
             >
-              Recommended
-            </FavoriteButton>
-          </div>
-          <CardHeader
-            className="create-cluster-header"
+              <img
+                alt="OpenShift Container Platform"
+                className="create-cluster-logo"
+                src="test-file-stub"
+              />
+            </CardHeader>
+            <CardBody>
+              Create an OCP cluster using the command-line installer. Your cluster will automatically register to the Cluster Manager after installation completes.
+            </CardBody>
+          </Link>
+          <Card
+            className="infra-card create-cluster-card card-disabled"
           >
-            <img
-              alt="OpenShift Dedicated"
-              className="create-cluster-logo"
-              src="test-file-stub"
-            />
-          </CardHeader>
-          <CardBody>
-            Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services.
-          </CardBody>
-        </Link>
-        <Link
-          className="infra-card pf-c-card create-cluster-card"
-          replace={false}
-          to="/install"
-        >
-          <CardHeader
-            className="create-cluster-header"
-          >
-            <img
-              alt="OpenShift Container Platform"
-              className="create-cluster-logo"
-              src="test-file-stub"
-            />
-          </CardHeader>
-          <CardBody>
-            Install an OCP cluster manually and manage it yourself. Once installation is complete, the cluster will be automatically registered to the Cluster Manager.
-          </CardBody>
-        </Link>
+            <CardHeader
+              className="create-cluster-header"
+            >
+              <img
+                alt="OpenShift Dedicated"
+                className="create-cluster-logo"
+                src="test-file-stub"
+              />
+            </CardHeader>
+            <CardBody>
+              Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services.
+            </CardBody>
+          </Card>
+        </div>
       </div>
-    </div>
-  </Card>
-</PageSection>
+    </Card>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<CreateCluster /> renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumb
+        className="breadcrumbs-in-card"
+      >
+        <LinkContainer
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
+          to=""
+        >
+          <BreadcrumbItem
+            to="#"
+          >
+            Clusters
+          </BreadcrumbItem>
+        </LinkContainer>
+        <BreadcrumbItem
+          isActive={true}
+        >
+          Create
+        </BreadcrumbItem>
+      </Breadcrumb>
+    }
+    title="Create a Cluster to Get Started"
+  />
+  <PageSection>
+    <Card>
+      <div
+        className="pf-c-content ocm-page"
+      >
+        <div
+          className="flex-container"
+        >
+          <Link
+            className="infra-card pf-c-card create-cluster-card"
+            replace={false}
+            to="/install"
+          >
+            <CardHeader
+              className="create-cluster-header"
+            >
+              <img
+                alt="OpenShift Container Platform"
+                className="create-cluster-logo"
+                src="test-file-stub"
+              />
+            </CardHeader>
+            <CardBody>
+              Create an OCP cluster using the command-line installer. Your cluster will automatically register to the Cluster Manager after installation completes.
+            </CardBody>
+          </Link>
+          <Link
+            className="infra-card pf-c-card create-cluster-card"
+            replace={false}
+            to="/create/osd"
+          >
+            <CardHeader
+              className="create-cluster-header"
+            >
+              <img
+                alt="OpenShift Dedicated"
+                className="create-cluster-logo"
+                src="test-file-stub"
+              />
+            </CardHeader>
+            <CardBody>
+              Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services.
+            </CardBody>
+          </Link>
+        </div>
+      </div>
+    </Card>
+  </PageSection>
+</Fragment>
 `;

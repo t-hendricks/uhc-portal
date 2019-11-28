@@ -81,6 +81,29 @@ class CreateOSDCluster extends React.Component {
       />
     );
 
+    const title = (
+      <PageTitle
+        title="Create an OpenShift Dedicated Cluster"
+        breadcrumbs={(
+          <Breadcrumb className="breadcrumbs-in-card">
+            <LinkContainer to="">
+              <BreadcrumbItem to="#">
+                Clusters
+              </BreadcrumbItem>
+            </LinkContainer>
+            <LinkContainer to="/create">
+              <BreadcrumbItem to="#">
+                Create
+              </BreadcrumbItem>
+            </LinkContainer>
+            <BreadcrumbItem isActive>
+              OpenShift Dedicated
+            </BreadcrumbItem>
+          </Breadcrumb>
+        )}
+      />
+    );
+
     const loadingSpinner = () => (
       <div className="form-loading-spinner">
         <span>
@@ -91,63 +114,56 @@ class CreateOSDCluster extends React.Component {
     );
 
     if (machineTypes.pending || organization.pending || cloudProviders.pending) {
-      return <PageSection><Spinner centered /></PageSection>;
+      return (
+        <React.Fragment>
+          {title}
+          <PageSection>
+            <Spinner centered />
+          </PageSection>
+        </React.Fragment>
+      );
     }
 
     return (
-      <PageSection>
-        <Card>
-          <div className="pf-c-content ocm-page">
-            <Breadcrumb className="breadcrumbs-in-card">
-              <LinkContainer to="">
-                <BreadcrumbItem to="#">
-                  Clusters
-                </BreadcrumbItem>
-              </LinkContainer>
-              <LinkContainer to="/create">
-                <BreadcrumbItem to="#">
-                  Create
-                </BreadcrumbItem>
-              </LinkContainer>
-              <BreadcrumbItem isActive>
-                OpenShift Dedicated
-              </BreadcrumbItem>
-            </Breadcrumb>
-
-            <PageTitle title="Create an OpenShift Dedicated Cluster" />
-            {errorModal}
-            <Form onSubmit={handleSubmit}>
-              <Grid gutter="sm">
-                <ManagedClusterForm
-                  pending={createClusterResponse.pending}
-                  change={change}
-                />
-                <GridItem>
-                  <Split gutter="sm" className="create-osd-form-button-split">
-                    <SplitItem>
-                      <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={createClusterResponse.pending}>
+      <React.Fragment>
+        {title}
+        <PageSection>
+          <Card>
+            <div className="pf-c-content ocm-page">
+              {errorModal}
+              <Form onSubmit={handleSubmit}>
+                <Grid gutter="sm">
+                  <ManagedClusterForm
+                    pending={createClusterResponse.pending}
+                    change={change}
+                  />
+                  <GridItem>
+                    <Split gutter="sm" className="create-osd-form-button-split">
+                      <SplitItem>
+                        <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={createClusterResponse.pending}>
                         Create cluster
-                      </Button>
-                    </SplitItem>
-                    <SplitItem>
-                      <Link to="/">
-                        <Button variant="secondary" isDisabled={createClusterResponse.pending}>
-                          Cancel
                         </Button>
-                      </Link>
-                    </SplitItem>
-                    <SplitItem>
-                      {createClusterResponse.pending ? loadingSpinner() : null}
-                    </SplitItem>
-                  </Split>
-                </GridItem>
+                      </SplitItem>
+                      <SplitItem>
+                        <Link to="/">
+                          <Button variant="secondary" isDisabled={createClusterResponse.pending}>
+                          Cancel
+                          </Button>
+                        </Link>
+                      </SplitItem>
+                      <SplitItem>
+                        {createClusterResponse.pending ? loadingSpinner() : null}
+                      </SplitItem>
+                    </Split>
+                  </GridItem>
 
-              </Grid>
-            </Form>
+                </Grid>
+              </Form>
 
-          </div>
-        </Card>
-      </PageSection>
+            </div>
+          </Card>
+        </PageSection>
+      </React.Fragment>
     );
   }
 }

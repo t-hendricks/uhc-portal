@@ -1,31 +1,39 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import { PageSection } from '@patternfly/react-core';
+import PageTitle from '../../common/PageTitle';
 
-import { tollboothActions } from '../../../redux/actions';
+import Breadcrumbs from './components/Breadcrumbs';
 import InstructionsAWS from './components/instructions/InstructionsAWS';
+
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallAWS extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS';
-
-    const { dispatch } = this.props;
-    dispatch(tollboothActions.createAuthToken());
   }
 
   render() {
-    return <PageSection><InstructionsAWS /></PageSection>;
+    const breadcrumbs = (
+      <Breadcrumbs path={[
+        { label: 'Clusters' },
+        { label: 'Create', path: '/create' },
+        { label: 'OpenShift Container Platform', path: '/install' },
+        { label: 'Amazon Web Services' },
+      ]}
+      />
+    );
+
+    return (
+      <React.Fragment>
+        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
+        <PageSection>
+          <InstructionsAWS />
+        </PageSection>
+      </React.Fragment>
+    );
   }
 }
 
-InstallAWS.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => ({ token: state.tollbooth.token });
-
-export default connect(mapStateToProps)(InstallAWS);
+export default InstallAWS;
