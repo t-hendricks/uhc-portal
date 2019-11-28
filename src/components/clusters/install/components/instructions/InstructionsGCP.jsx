@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Card } from '@patternfly/react-core';
 import links from '../../../../../common/installLinks';
 import CLISection from './components/CLISection';
+import DeveloperPreviewSection from './components/DeveloperPreviewSection';
 import DownloadButton from './components/DownloadButton';
 import GetStarted from './components/GetStarted';
 import PageTitle from '../../../../common/PageTitle';
@@ -63,6 +64,8 @@ class InstructionsGCP extends React.Component {
             <p>
               <DownloadButton installerURL={links.INSTALL_GCP_INSTALLER_LATEST} token={token} />
             </p>
+
+            <DeveloperPreviewSection isDevPreview={false} />
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
             <PullSecretSection
