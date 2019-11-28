@@ -5,6 +5,7 @@ import {
   Button,
 } from '@patternfly/react-core';
 import { CodeIcon } from '@patternfly/react-icons';
+import links from '../../../../../common/installLinks';
 import DownloadButton from './components/DownloadButton';
 import TelemetryAlert from './components/TelemetryAlert';
 import PullSecretSection from './components/PullSecretSection';
@@ -39,7 +40,7 @@ class InstructionsPreRelease extends React.Component {
 
           <p>
             As Red Hat OpenShift Container Platform (OCP) has moved to become a more
-            agile and rapidly deployable kubernetes offering, we want to allow
+            agile and rapidly deployable Kubernetes offering, we want to allow
             existing and evaluation customers and partners access to the latest
             pre-release nightly builds to see a real-time view into the next version
             of OpenShift.
@@ -84,49 +85,106 @@ class InstructionsPreRelease extends React.Component {
           </p>
 
           <p>
-            The following features have passed automated testing in the current OCP 4.2
-            dev preview nightly builds:
+            The following features are being targeted for the OpenShift 4.3 release and will
+            eventually be working in the nightly builds as they approach production readiness:
           </p>
 
+          <h4>Core Enhancements</h4>
           <ul>
             <li>
-              Microsoft Azure IPI installation method
+              Rebase to Kubernetes 1.16
             </li>
             <li>
-              Google Cloud Platform IPI and UPI installation method
+              Promotion of OVN from Tech Preview to GA
             </li>
             <li>
-              <a href="https://docs.google.com/document/d/1cCnER-IMDCfinO7DiSvATt8WE4-YBngKrSb2aeBToZA/edit?usp=sharing" target="_blank">
-                Disconnect (air gapped or otherwise blackbox location) UPI installation
-                {' '}
-                <span className="fa fa-external-link" aria-hidden="true" />
-              </a>
+              Storage: Tech preview for re-size of Persistent Volumes with CSI, Promoting Storage
+              iSCSI raw block from TP to GA, Tech Preview of Cinder Raw Block
             </li>
             <li>
-              Kubernetes 1.14
+              Etcd encryption
+            </li>
+            <li>
+              A new configuration API that allows admins to select the cipher suites used by the
+              Kubernetes serverAPI, HAproxy, and OAuth operator
+            </li>
+            <li>
+              Tech Preview of Node Topology Manager that allows for policy defined and topology
+              aware allocation of pod resources on a OpenShift node
+            </li>
+          </ul>
+
+          <h4>Operational Enhancements</h4>
+          <ul>
+            <li>
+              RHEL CoreOS 4.3, RHEL 7.6 and RHEL 7.7 support
+            </li>
+            <li>
+              Ability to change the arguments to the Linux Kernel via MachineConfigs.
+            </li>
+            <li>
+              Openshift now uses FIPS 140-2 Level 1 validated cryptography when running on RHEL
+              CoreOS or RHEL in FIPS mode
+            </li>
+            <li>
+              RHEL CoreOS disk encryption
+            </li>
+            <li>
+              Automated machine health checking and remediation (when there is drift in state
+              between machines and nodes)
+            </li>
+            <li>
+              More observability with Machine Configuration Operator (MCO) now reporting metrics
+              for telemetry
+            </li>
+          </ul>
+
+          <h4>Installation Enhancements</h4>
+          <ul>
+            <li>
+              IPI installer support for deploying OpenShift clusters to customer managed,
+              pre-existing VPC (Virtual Private Cloud)/ & subnets on AWS, Azure and GCP
+            </li>
+            <li>
+              Ability to install OpenShift clusters with only private facing load balancer
+              endpoints (not publically accessible from the Internet) on AWS, Azure and GCP
+            </li>
+          </ul>
+
+          <h4>Advanced Networking Enhancements</h4>
+          <ul>
+            <li>
+              Promotion of SR-IOV from TP to GA
+            </li>
+            <li>
+              Enhancements to Multus: IP and MAC Address Management (IPAM), Logging and Metrics
+            </li>
+            <li>
+              High Performance Multicast: high-performance multicast data stream capability from
+              OpenShift pods to clients outside the cluster
+            </li>
+            <li>
+              Support for Precision Time Protocol (PTP)
+            </li>
+          </ul>
+
+          <h4>Monitoring Enhancements</h4>
+          <ul>
+            <li>
+              Tech Preview on the ability for customers to monitor their own workloads on
+              OpenShift
+            </li>
+            <li>
+              Tech Preview on the ability for customers to forward logs into another external
+              Elasticsearch based on the log type (audit, platform/infrastructure, app/container)
             </li>
           </ul>
 
           <p>
-            The following features have not passed automated testing in the
-            OCP 4.2 dev preview nightly builds, but will be completed in a
-            future nightly build:
-          </p>
-          <ul>
-            <li>
-              Red Hat OpenStack IPI installation method
-            </li>
-            <li>
-              Proxy (reaching the Red Hat container registry from within
-              your organization’s internet proxy)
-            </li>
-          </ul>
-
-          <p>
-            Find out more about test blockers for the OCP 4.2 dev previews by viewing the
+            Find out more about test blockers for the OCP 4.3 dev previews by viewing the
             {' '}
-            <a href="https://red.ht/31U3YhX" target="_blank">
-              test blockers bug list
+            <a href={links.INSTALL_PRE_RELEASE_BUG_LIST_43} target="_blank">
+              test blocker bug list
               {' '}
               <span className="fa fa-external-link" aria-hidden="true" />
             </a>
@@ -136,6 +194,12 @@ class InstructionsPreRelease extends React.Component {
           <h3>
             Downloads
           </h3>
+
+          <p>
+            As these are nightly builds, you will see multiple versions available at any one time
+            inside the mirror URLs. We strongly advise using the 4.3 nightlies until OpenShift 4.3
+            is released.
+          </p>
 
           <h3 className="pf-c-title pf-m-md downloads-subtitle">
             OpenShift Installer
@@ -151,7 +215,7 @@ class InstructionsPreRelease extends React.Component {
           <p />
           For pre-release documentation, refer to the
           {' '}
-          <a href="https://github.com/openshift/installer/tree/master/docs/user" target="_blank">
+          <a href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} target="_blank">
             latest installer documentation
             {' '}
             <span className="fa fa-external-link" aria-hidden="true" />
@@ -159,7 +223,10 @@ class InstructionsPreRelease extends React.Component {
           .
           <p />
           <p>
-            <DownloadButton installerURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/" token={token} />
+            <DownloadButton
+              installerURL={links.INSTALL_PRE_RELEASE_INSTALLER_LATEST_43}
+              token={token}
+            />
           </p>
 
           <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
@@ -178,7 +245,7 @@ class InstructionsPreRelease extends React.Component {
             Red Hat Enterprise Linux CoreOS (RHCOS)
           </h3>
           <p />
-          <a href="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/pre-release/latest" target="_blank">
+          <a href={links.INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_43} target="_blank">
             <Button
               variant="secondary"
               className="install--download-installer"
@@ -190,7 +257,8 @@ class InstructionsPreRelease extends React.Component {
           </a>
 
           <h3 className="pf-c-title pf-m-md downloads-subtitle">Command-Line Interface</h3>
-          <CLISection toolsURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest" />
+
+          <CLISection toolsURL={links.INSTALL_PRE_RELEASE_CLI_LATEST_43} />
 
           <h3 className="pf-c-title pf-m-md downloads-subtitle">Feedback and Support</h3>
           <p />
@@ -198,13 +266,13 @@ class InstructionsPreRelease extends React.Component {
             If you are a Red Hat customer or partner and have feedback about these nightly builds,
             email
             {' '}
-            <a href="mailto:***REMOVED***?subject=[dev preview build]">
+            <a href={links.INSTALL_PRE_RELEASE_FEEDBACK_MAILTO}>
               ***REMOVED***
             </a>
             . Do not use the formal Red Hat support service ticket process.
             You can read more about support handling in the following
             {' '}
-            <a href="https://access.redhat.com/articles/4307871" target="_blank">
+            <a href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS} target="_blank">
               knowledge article
             </a>
             .
