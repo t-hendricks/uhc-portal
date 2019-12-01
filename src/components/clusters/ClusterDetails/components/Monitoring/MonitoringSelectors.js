@@ -21,7 +21,7 @@ const issuesSelector = (data, healthCriteria, match) => data.filter(
 ).length;
 
 const lastCheckInSelector = (lastCheckIn) => {
-  const maxDiffHours = 3;
+  const MAX_DIFF_HOURS = 3;
   const date = new Date(lastCheckIn);
 
   if (date.getTime() > 0) {
@@ -31,27 +31,44 @@ const lastCheckInSelector = (lastCheckIn) => {
     // calculate time delta in hours
     const hours = Math.floor(diff / 1000 / 60 / 60);
     // calculate time delta in minutes
-    const minutes = Math.floor(diff / 1000 / 60);
-    // more than 3 hours -> not healty
+    const minutes = diff / 1000 / 60;
 
     const values = { hours, minutes };
 
-    if (hours > maxDiffHours) {
+    if (hours > MAX_DIFF_HOURS) {
       return {
         ...values,
-        message: `more than ${maxDiffHours} hours ago`,
+        message: `more than ${MAX_DIFF_HOURS} hours ago`,
       };
-    } if (hours) {
+    }
+    if (hours > 1) {
       return {
         ...values,
         message: hours === 1 ? 'one hour ago' : `${hours} hours ago`,
       };
-    } if (minutes) {
+    }
+    if (minutes > 1) {
       return {
         ...values,
-        message: minutes === 1 ? 'one minute ago' : `${minutes} minutes ago`,
+        message: `${minutes} minutes ago`,
       };
     }
+    if (minutes === 1) {
+      return {
+        ...values,
+        message: '1 minutes ago',
+      };
+    }
+    if (minutes === 0) {
+      return {
+        ...values,
+        message: 'less than 1 minute ago',
+      };
+    }
+    return {
+      ...values,
+      message: 'less than 1 minute ago',
+    };
   }
   return {
     value: null,
