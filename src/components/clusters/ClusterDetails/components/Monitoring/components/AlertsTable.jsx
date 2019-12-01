@@ -11,7 +11,7 @@ import { ExclamationCircleIcon, ExclamationTriangleIcon } from '@patternfly/reac
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
 
-import { alertsSeverity } from '../statusHelper';
+import { alertsSeverity } from '../monitoringHelper';
 
 
 function AlertsTable({ alerts = [] }) {

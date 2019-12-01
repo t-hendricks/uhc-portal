@@ -10,7 +10,7 @@ import {
 import ClusterHealthCard from './components/ClusterHealthCard';
 import MonitoringList from './components/MonitoringList';
 import MonitoringEmptyState from './components/MonitoringEmptyState';
-import { monitoringStatuses } from './statusHelper';
+import { monitoringStatuses } from './monitoringHelper';
 
 import { noop } from '../../../../../common/helpers';
 

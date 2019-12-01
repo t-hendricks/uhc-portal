@@ -1,22 +1,23 @@
 import get from 'lodash/get';
 
-import { monitoringStatuses } from './statusHelper';
+import { monitoringStatuses } from './monitoringHelper';
 import hasCpuAndMemory from '../../clusterDetailsHelper';
 import clusterStates from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
 /**
- * Get the number of issues from a set of data
+ * Get the number of items matches some criteria from a set of data
+ * Example:
  * An item is considered an issue if it's value of the health criteria mathces the value
  * of the definition of issue for this data.
- * Example: An Alert has an issue if alert's severity is crtitical.
- * Therefore:  issuesSelector(alerts, 'severity', 'crtitical' )
- * @param {Object} data
+ * An Alert has an issue if alert's severity is critical.
+ * Therefore: issuesSelector(alerts, 'severity', 'critical' )
+ * @param {Array} data
  * @param {string} healthCriteria
  * @param {string} isIssue
  */
-const issuesSelector = (data, healthCriteria, isIssue) => data.filter(
-  item => item[healthCriteria] === isIssue,
+const issuesSelector = (data, healthCriteria, match) => data.filter(
+  item => item[healthCriteria] === match,
 ).length;
 
 const lastCheckInSelector = (lastCheckIn) => {
@@ -59,7 +60,7 @@ const lastCheckInSelector = (lastCheckIn) => {
   };
 };
 
-const resourceUsageIssuesSelector = (cpu, memory) => {
+const resourceUsageIssuesSelector = (cpu, memory, threshold) => {
   const totalCPU = cpu.total.value;
   const totalMemory = memory.total.value;
 
@@ -68,10 +69,10 @@ const resourceUsageIssuesSelector = (cpu, memory) => {
   }
 
   let numOfIssues = 0;
-  if (cpu && totalCPU && (cpu.used.value / cpu.total.value > 0.95)) {
+  if (cpu && totalCPU && (cpu.used.value / cpu.total.value > threshold)) {
     numOfIssues += 1;
   }
-  if (memory && totalMemory && (memory.used.value / memory.total.value > 0.95)) {
+  if (memory && totalMemory && (memory.used.value / memory.total.value > threshold)) {
     numOfIssues += 1;
   }
   return numOfIssues;
@@ -106,7 +107,8 @@ const clusterHealthSelector = (cluster, lastCheckIn, discoveredIssues) => {
 };
 
 /**
- * Returns true if an object has a property named 'data' which is not empty.
+ * Returns true if an object has a property named 'data' which is not empty,
+ * otherwise returns false.
  * @param {Object} obj
  */
 const hasDataSelector = obj => get(obj, 'data.length', 0) > 0;

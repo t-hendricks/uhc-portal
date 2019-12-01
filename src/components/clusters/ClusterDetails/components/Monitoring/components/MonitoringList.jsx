@@ -40,19 +40,18 @@ class MonitoringList extends React.Component {
       </MonitoringEmptyState>
     );
 
-
     return (
       <DataList aria-label="monitoring-table">
-        <MonitoringListItem title="Alerts firing" numOfIssues={alerts.numOfIssues} toggle={this.toggle} expanded={expanded} hasData={alerts.hasData}>
+        <MonitoringListItem title="Alerts firing" numOfIssues={alerts.numOfIssues} numOfWarnings={alerts.numOfWarnings} toggle={this.toggle} expanded={expanded} hasData={alerts.hasData}>
           {alerts.hasData ? <AlertsTable alerts={alerts.data} /> : EmptyState}
         </MonitoringListItem>
         <MonitoringListItem title="Nodes" numOfIssues={nodes.numOfIssues} toggle={this.toggle} expanded={expanded} hasData={nodes.hasData}>
           {nodes.hasData ? <NodesTable nodes={nodes.data} /> : EmptyState }
         </MonitoringListItem>
-        <MonitoringListItem title="Cluster operators" numOfIssues={operators.numOfIssues} toggle={this.toggle} expanded={expanded} hasData={operators.hasData}>
+        <MonitoringListItem title="Cluster operators" numOfIssues={operators.numOfIssues} numOfWarnings={operators.numOfWarnings} toggle={this.toggle} expanded={expanded} hasData={operators.hasData}>
           {operators.hasData ? <ClusterOperators operators={operators.data} /> : EmptyState }
         </MonitoringListItem>
-        <MonitoringListItem title="Resource usage" numOfIssues={resourceUsage.numOfIssues} toggle={this.toggle} expanded={expanded} hasData={resourceUsage.hasData}>
+        <MonitoringListItem title="Resource usage" numOfIssues={resourceUsage.numOfIssues} numOfWarnings={resourceUsage.numOfWarnings} toggle={this.toggle} expanded={expanded} hasData={resourceUsage.hasData}>
           {resourceUsage.hasData
             ? (
               <div className="metrics-chart">

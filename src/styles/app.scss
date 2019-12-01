@@ -400,6 +400,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: 16px;
 }
 
+#monitoring .summary {
+  max-width: 185px;
+}
+
 .developer-preview {
   background-color: var(--pf-global--warning-color--100);
   padding-top: 10px;

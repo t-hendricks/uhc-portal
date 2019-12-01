@@ -16,32 +16,28 @@ exports[`<MonitoringListItem /> should render 1`] = `
       dataListCells={
         Array [
           <DataListCell>
-            <Split>
-              <SplitItem
-                isFilled={true}
-              >
-                <Title
-                  headingLevel="h4"
-                  size="2xl"
-                >
-                  
-                </Title>
-              </SplitItem>
-              <SplitItem>
-                <React.Fragment>
-                  <ExclamationTriangleIcon
-                    className="status-icon"
-                    color="#f0ab00"
-                    noVerticalAlign={false}
-                    size="md"
-                    title={null}
-                  />
-                  <span>
-                    Metrics not available
-                  </span>
-                </React.Fragment>
-              </SplitItem>
-            </Split>
+            <Title
+              headingLevel="h4"
+              size="2xl"
+            >
+              
+            </Title>
+          </DataListCell>,
+          <DataListCell
+            className="summary"
+          >
+            <React.Fragment>
+              <ExclamationTriangleIcon
+                className="status-icon"
+                color="#f0ab00"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Metrics not available
+              </span>
+            </React.Fragment>
           </DataListCell>,
         ]
       }
