@@ -6,6 +6,7 @@ exports[`Cluster Actions Dropdown Items admin console url does not exist should 
     component="button"
     isDisabled={true}
     key="undefined.menu.adminconsole"
+    title="Launch Console"
     tooltip={
       <span>
         Admin console is not yet available for this cluster
@@ -18,6 +19,7 @@ exports[`Cluster Actions Dropdown Items admin console url does not exist should 
     component="button"
     key="undefined.menu.editdisplayname"
     onClick={[Function]}
+    title="Edit Display Name"
   >
     Edit Display Name
   </DropdownItem>
@@ -25,6 +27,7 @@ exports[`Cluster Actions Dropdown Items admin console url does not exist should 
     component="button"
     key="undefined.menu.editconsoleurl"
     onClick={[Function]}
+    title="Add Console URL"
   >
     Add Console URL
   </DropdownItem>
@@ -37,6 +40,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
     component="button"
     isDisabled={true}
     key="undefined.menu.adminconsole"
+    title="Launch Console"
     tooltip={
       <span>
         Admin console is not yet available for this cluster
@@ -49,6 +53,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
     component="button"
     key="undefined.menu.editdisplayname"
     onClick={[Function]}
+    title="Edit Display Name"
   >
     Edit Display Name
   </DropdownItem>
@@ -56,6 +61,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
     component="button"
     isDisabled={true}
     key="undefined.menu.editcluster"
+    title="Scale Cluster"
     tooltip={
       <span>
         This cluster is not ready
@@ -68,6 +74,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
     component="button"
     key="undefined.menu.deletecluster"
     onClick={[Function]}
+    title="Delete Cluster"
   >
     Delete Cluster
   </DropdownItem>
@@ -81,6 +88,7 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
     key="1.menu.adminconsole"
     rel="noopener noreferrer"
     target="_blank"
+    title="Launch Console"
   >
     Launch Console
   </DropdownItem>
@@ -88,6 +96,7 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
     component="button"
     key="1.menu.editdisplayname"
     onClick={[Function]}
+    title="Edit Display Name"
   >
     Edit Display Name
   </DropdownItem>
@@ -95,6 +104,7 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
     component="button"
     key="1.menu.editcluster"
     onClick={[Function]}
+    title="Scale Cluster"
   >
     Scale Cluster
   </DropdownItem>
@@ -102,6 +112,7 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
     component="button"
     key="1.menu.deletecluster"
     onClick={[Function]}
+    title="Delete Cluster"
   >
     Delete Cluster
   </DropdownItem>
@@ -114,6 +125,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
     component="button"
     isDisabled={true}
     key="undefined.menu.adminconsole"
+    title="Launch Console"
     tooltip={
       <span>
         The cluster is being uninstalled
@@ -126,6 +138,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
     component="button"
     isDisabled={true}
     key="undefined.menu.editdisplayname"
+    title="Edit Display Name"
     tooltip={
       <span>
         The cluster is being uninstalled
@@ -138,6 +151,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
     component="button"
     isDisabled={true}
     key="undefined.menu.editcluster"
+    title="Scale Cluster"
     tooltip={
       <span>
         The cluster is being uninstalled
@@ -150,6 +164,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
     component="button"
     isDisabled={true}
     key="undefined.menu.deletecluster"
+    title="Delete Cluster"
     tooltip={
       <span>
         The cluster is being uninstalled
@@ -168,6 +183,7 @@ exports[`Cluster Actions Dropdown Items read only cluster should render correctl
     key="1.menu.adminconsole"
     rel="noopener noreferrer"
     target="_blank"
+    title="Launch Console"
   >
     Launch Console
   </DropdownItem>
@@ -180,6 +196,7 @@ exports[`Cluster Actions Dropdown Items self managed cluster should render (self
     component="button"
     isDisabled={true}
     key="undefined.menu.adminconsole"
+    title="Launch Console"
     tooltip={
       <span>
         Admin console is not yet available for this cluster
@@ -192,6 +209,7 @@ exports[`Cluster Actions Dropdown Items self managed cluster should render (self
     component="button"
     key="undefined.menu.editdisplayname"
     onClick={[Function]}
+    title="Edit Display Name"
   >
     Edit Display Name
   </DropdownItem>
@@ -199,6 +217,7 @@ exports[`Cluster Actions Dropdown Items self managed cluster should render (self
     component="button"
     key="undefined.menu.editconsoleurl"
     onClick={[Function]}
+    title="Add Console URL"
   >
     Add Console URL
   </DropdownItem>

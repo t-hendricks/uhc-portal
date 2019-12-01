@@ -166,6 +166,7 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
         ariaLabelledBy=""
         className="cloud-region-combo-box"
         createText="Create"
+        customContent={null}
         direction="down"
         isCreatable={false}
         isDisabled={false}

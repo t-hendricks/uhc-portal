@@ -234,6 +234,7 @@ exports[`<PersistentStorageComboBox /> when the storage list is available render
         ariaLabelledBy=""
         className="quota-combo-box"
         createText="Create"
+        customContent={null}
         direction="down"
         isCreatable={false}
         isDisabled={false}

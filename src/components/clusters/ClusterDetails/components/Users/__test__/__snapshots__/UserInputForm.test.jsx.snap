@@ -11,13 +11,10 @@ exports[`<UserInputForm /> should render 1`] = `
       fieldId="edit-user-id-input"
       isValid={true}
     >
-      <TextInput
+      <ForwardRef
         aria-label="User name or ID"
-        className=""
         id="edit-user-id-input"
         isDisabled={false}
-        isReadOnly={false}
-        isRequired={false}
         isValid={true}
         onChange={[Function]}
         placeholder="Enter a user name or user ID"

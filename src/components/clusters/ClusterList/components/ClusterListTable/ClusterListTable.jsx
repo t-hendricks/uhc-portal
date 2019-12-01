@@ -21,16 +21,15 @@ import {
 import { Link } from 'react-router-dom';
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel/ClusterLocationLabel';
-import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
 import clusterStates, { getClusterStateAndDescription } from '../../../common/clusterStates';
 import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
 import SubscriptionStatusIndicator from '../../../common/SubscriptionStatusIndicator';
 import getClusterName from '../../../../../common/getClusterName';
-
+import { actionResolver } from '../../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 
 function ClusterListTable(props) {
   const { viewOptions, setSorting } = props;
-  const { clusters } = props;
+  const { clusters, openModal } = props;
   if (!clusters || clusters.length === 0) {
     return <p className="notfound">No Results Match the Filter Criteria.</p>;
   }
@@ -122,34 +121,22 @@ function ClusterListTable(props) {
       </span>
     );
 
-    const dropDownKebab = (
-      <ClusterActionsDropdown
-        cluster={cluster}
-        showConsoleButton
-        showIDPButton={false}
-        isKebab
-      />
-    );
-
-
-    return (
-      {
-        cells: [
-          { title: clusterName },
-          { title: clusterStatus(clusterState.state) },
-          { title: clusterType },
-          { title: <SubscriptionStatusIndicator cluster={cluster} /> },
-          { title: clusterVersion },
-          {
-            title: <ClusterLocationLabel
-              regionID={get(cluster, 'region.id', 'N/A')}
-              cloudProviderID={provider}
-            />,
-          },
-          { title: dropDownKebab },
-        ],
-      }
-    );
+    return {
+      cells: [
+        { title: clusterName },
+        { title: clusterStatus(clusterState.state) },
+        { title: clusterType },
+        { title: <SubscriptionStatusIndicator cluster={cluster} /> },
+        { title: clusterVersion },
+        {
+          title: <ClusterLocationLabel
+            regionID={get(cluster, 'region.id', 'N/A')}
+            cloudProviderID={provider}
+          />,
+        },
+      ],
+      cluster,
+    };
   };
 
   const hiddenOnMdOrSmaller = classNames(Visibility.visibleOnLg, Visibility.hiddenOnMd,
@@ -168,11 +155,12 @@ function ClusterListTable(props) {
 
   return (
     <Table
+      aria-label="Cluster List"
       cells={columns}
       rows={clusters.map(cluster => clusterRow(cluster))}
+      actionResolver={rowData => actionResolver(rowData.cluster, true, false, openModal)}
       onSort={onSortToggle}
       sortBy={sortBy}
-      aria-label="Clusters"
     >
       <TableHeader />
       <TableBody />
@@ -181,6 +169,7 @@ function ClusterListTable(props) {
 }
 
 ClusterListTable.propTypes = {
+  openModal: PropTypes.func.isRequired,
   clusters: PropTypes.array.isRequired,
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,

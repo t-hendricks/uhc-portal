@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { TextInput } from '@patternfly/react-core';
 
 import ClusterListFilter from './ClusterListFilter';
 
@@ -29,20 +30,20 @@ describe('<ClusterListFilter />', () => {
   });
 
   it('sets up a timeout properly', () => {
-    wrapper.find('TextInput').simulate('change', 'hello');
+    wrapper.find(TextInput).simulate('change', 'hello');
     expect(setTimeout).toBeCalled();
     expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 300);
   });
 
   it('calls setFilter after timeout has passed', () => {
-    wrapper.find('TextInput').simulate('change', 'world');
+    wrapper.find(TextInput).simulate('change', 'world');
     jest.runOnlyPendingTimers();
     expect(setFilter).toHaveBeenCalledWith('world');
   });
 
   it('calls setFilter only when the user stops typing', () => {
-    wrapper.find('TextInput').simulate('change', 'a');
-    wrapper.find('TextInput').simulate('change', 'abc');
+    wrapper.find(TextInput).simulate('change', 'a');
+    wrapper.find(TextInput).simulate('change', 'abc');
     jest.runOnlyPendingTimers();
     expect(setFilter).not.toHaveBeenCalledWith('a');
     expect(setFilter).toHaveBeenCalledWith('abc');
