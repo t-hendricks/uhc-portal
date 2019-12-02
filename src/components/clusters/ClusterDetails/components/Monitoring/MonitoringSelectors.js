@@ -50,25 +50,21 @@ const lastCheckInSelector = (lastCheckIn) => {
     if (minutes > 1) {
       return {
         ...values,
-        message: `${minutes} minutes ago`,
+        message: `${Math.floor(minutes)} minutes ago`,
       };
     }
     if (minutes === 1) {
       return {
         ...values,
-        message: '1 minutes ago',
+        message: '1 minute ago',
       };
     }
-    if (minutes === 0) {
+    if (minutes > 0) {
       return {
         ...values,
         message: 'less than 1 minute ago',
       };
     }
-    return {
-      ...values,
-      message: 'less than 1 minute ago',
-    };
   }
   return {
     value: null,
