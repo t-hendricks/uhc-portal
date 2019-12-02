@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<FlatRadioButton /> should render normally 1`] = `
-<Button
+<Component
   className="ocm-flat-radio-button"
   isDisabled={false}
   onClick={[Function]}
@@ -22,11 +22,11 @@ exports[`<FlatRadioButton /> should render normally 1`] = `
       test
     </SplitItem>
   </Split>
-</Button>
+</Component>
 `;
 
 exports[`<FlatRadioButton /> should render when disabled 1`] = `
-<Button
+<Component
   className="ocm-flat-radio-button"
   isDisabled={true}
   onClick={[Function]}
@@ -47,11 +47,11 @@ exports[`<FlatRadioButton /> should render when disabled 1`] = `
       test
     </SplitItem>
   </Split>
-</Button>
+</Component>
 `;
 
 exports[`<FlatRadioButton /> should render when selected 1`] = `
-<Button
+<Component
   className="ocm-flat-radio-button selected"
   isDisabled={false}
   onClick={[Function]}
@@ -72,27 +72,43 @@ exports[`<FlatRadioButton /> should render when selected 1`] = `
       test
     </SplitItem>
   </Split>
-</Button>
+</Component>
 `;
 
 exports[`<FlatRadioButton /> should render with tooltip 1`] = `
 <Tooltip
   appendTo={[Function]}
   aria="describedby"
+  boundary="window"
   className=""
   content="hello world!"
   distance={15}
   enableFlip={true}
   entryDelay={500}
   exitDelay={500}
+  flipBehavior={
+    Array [
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "top",
+      "right",
+      "bottom",
+    ]
+  }
+  id=""
   isAppLauncher={false}
+  isContentLeftAligned={false}
+  isVisible={false}
   maxWidth="18.75rem"
   position="top"
+  tippyProps={Object {}}
   trigger="mouseenter focus"
   zIndex={9999}
 >
   <div>
-    <Button
+    <Component
       className="ocm-flat-radio-button"
       isDisabled={false}
       onClick={[Function]}
@@ -113,7 +129,7 @@ exports[`<FlatRadioButton /> should render with tooltip 1`] = `
           test
         </SplitItem>
       </Split>
-    </Button>
+    </Component>
   </div>
 </Tooltip>
 `;

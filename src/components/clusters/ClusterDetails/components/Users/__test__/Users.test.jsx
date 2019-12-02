@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Button } from '@patternfly/react-core';
 
 import { initialState } from '../UsersReducer';
 import { stateWithUsers } from './Users.fixtures';
@@ -50,7 +51,7 @@ describe('<Users />', () => {
     });
 
     it('should call delete user when a user is deleted', () => {
-      wrapper.find('Button').at(2).simulate('click');
+      wrapper.find(Button).at(2).simulate('click');
       expect(deleteUser).toHaveBeenCalledWith('fake id', 'dedicated-admins', 'user_name');
     });
   });

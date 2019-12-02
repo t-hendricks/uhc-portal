@@ -90,20 +90,24 @@ function ClusterListTable(props) {
     );
 
 
-    return [
-      { title: clusterName },
-      { title: clusterStatus },
-      { title: clusterType },
-      { title: <SubscriptionStatusIndicator cluster={cluster} /> },
-      { title: clusterVersion },
+    return (
       {
-        title: <ClusterLocationLabel
-          regionID={result(cluster, 'region.id', 'N/A')}
-          cloudProviderID={provider}
-        />,
-      },
-      { title: dropDownKebab },
-    ];
+        cells: [
+          { title: clusterName },
+          { title: clusterStatus },
+          { title: clusterType },
+          { title: <SubscriptionStatusIndicator cluster={cluster} /> },
+          { title: clusterVersion },
+          {
+            title: <ClusterLocationLabel
+              regionID={result(cluster, 'region.id', 'N/A')}
+              cloudProviderID={provider}
+            />,
+          },
+          { title: dropDownKebab },
+        ],
+      }
+    );
   };
 
   const hiddenOnMdOrSmaller = classNames(Visibility.visibleOnLg, Visibility.hiddenOnMd,
@@ -126,6 +130,7 @@ function ClusterListTable(props) {
       rows={clusters.map(cluster => clusterRow(cluster))}
       onSort={onSortToggle}
       sortBy={sortBy}
+      aria-label="Clusters"
     >
       <TableHeader />
       <TableBody />

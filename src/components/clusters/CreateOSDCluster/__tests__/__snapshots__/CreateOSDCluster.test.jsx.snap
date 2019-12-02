@@ -4,7 +4,7 @@ exports[`CreateOSDCluster ManagedClusterForm should fetch cloud providers, machi
 <Fragment>
   <PageTitle
     breadcrumbs={
-      <Breadcrumb
+      <Unknown
         className="breadcrumbs-in-card"
       >
         <LinkContainer
@@ -38,7 +38,7 @@ exports[`CreateOSDCluster ManagedClusterForm should fetch cloud providers, machi
         >
           OpenShift Dedicated
         </BreadcrumbItem>
-      </Breadcrumb>
+      </Unknown>
     }
     title="Create an OpenShift Dedicated Cluster"
   />
@@ -54,7 +54,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
-      <Breadcrumb
+      <Unknown
         className="breadcrumbs-in-card"
       >
         <LinkContainer
@@ -88,7 +88,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
         >
           OpenShift Dedicated
         </BreadcrumbItem>
-      </Breadcrumb>
+      </Unknown>
     }
     title="Create an OpenShift Dedicated Cluster"
   />
@@ -112,26 +112,26 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
                 gutter="sm"
               >
                 <SplitItem>
-                  <Button
+                  <Component
                     isDisabled={false}
                     onClick={[MockFunction]}
                     type="submit"
                     variant="primary"
                   >
                     Create cluster
-                  </Button>
+                  </Component>
                 </SplitItem>
                 <SplitItem>
                   <Link
                     replace={false}
                     to="/"
                   >
-                    <Button
+                    <Component
                       isDisabled={false}
                       variant="secondary"
                     >
                       Cancel
-                    </Button>
+                    </Component>
                   </Link>
                 </SplitItem>
                 <SplitItem />

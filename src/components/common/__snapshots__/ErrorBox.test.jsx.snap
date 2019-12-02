@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ErroBox /> should render with Operation ID 1`] = `
-<Alert
+<Component
   className="error-box"
   isInline={true}
   title="some error message"
@@ -14,11 +14,11 @@ exports[`<ErroBox /> should render with Operation ID 1`] = `
   <span>
     Operation ID: hello
   </span>
-</Alert>
+</Component>
 `;
 
 exports[`<ErroBox /> should render without Operation ID 1`] = `
-<Alert
+<Component
   className="error-box"
   isInline={true}
   title="some error description"
@@ -31,5 +31,5 @@ exports[`<ErroBox /> should render without Operation ID 1`] = `
   <span>
     Operation ID: N/A
   </span>
-</Alert>
+</Component>
 `;

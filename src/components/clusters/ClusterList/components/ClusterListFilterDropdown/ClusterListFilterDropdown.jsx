@@ -22,7 +22,12 @@ class ClusterListFilterDropdown extends React.Component {
 
   render() {
     const { isOpen } = this.state;
-    const { currentFilters, setFilter, history } = this.props;
+    const {
+      currentFilters,
+      setFilter,
+      history,
+      className,
+    } = this.props;
     const filterOptions = [
       {
         key: 'entitlement_status',
@@ -110,6 +115,7 @@ class ClusterListFilterDropdown extends React.Component {
         isOpen={isOpen}
         dropdownItems={dropdownItems}
         isGrouped
+        className={className}
       />
     );
   }
@@ -121,6 +127,7 @@ ClusterListFilterDropdown.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  className: PropTypes.string,
 };
 
 export default ClusterListFilterDropdown;

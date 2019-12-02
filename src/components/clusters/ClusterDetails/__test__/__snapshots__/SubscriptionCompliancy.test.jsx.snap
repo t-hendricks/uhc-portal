@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SubscriptionCompliancy /> should render 1`] = `
-<Alert
+<Component
   id="subs-hint"
   isInline={true}
   title="This cluster is not attached to a subscription"
@@ -25,5 +25,5 @@ exports[`<SubscriptionCompliancy /> should render 1`] = `
     </a>
      in case you don't own enough subscriptions to cover it.
   </p>
-</Alert>
+</Component>
 `;

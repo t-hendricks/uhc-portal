@@ -130,24 +130,24 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
         </Grid>
       </CardBody>
       <CardFooter>
-        <Button
+        <Component
           isDisabled={false}
           onClick={[MockFunction]}
           type="submit"
           variant="primary"
         >
           Register cluster
-        </Button>
+        </Component>
         <Link
           replace={false}
           to="/"
         >
-          <Button
+          <Component
             isDisabled={false}
             variant="secondary"
           >
             Cancel
-          </Button>
+          </Component>
         </Link>
       </CardFooter>
     </Card>

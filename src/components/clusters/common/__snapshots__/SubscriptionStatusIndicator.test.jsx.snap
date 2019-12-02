@@ -5,9 +5,22 @@ exports[`<SubscriptionStatusIndicator /> should not crash when the cluster has n
   appendTo={[Function]}
   aria-label="Unknown"
   bodyContent="Subscription information for this cluster is not available yet. It may take up to 12 hours for this information to become available."
+  boundary="window"
   className=""
   closeBtnAriaLabel="Close"
+  distance={25}
   enableFlip={true}
+  flipBehavior={
+    Array [
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "top",
+      "right",
+      "bottom",
+    ]
+  }
   footerContent={null}
   headerContent={null}
   hideOnOutsideClick={true}
@@ -20,9 +33,10 @@ exports[`<SubscriptionStatusIndicator /> should not crash when the cluster has n
   onShown={[Function]}
   position="top"
   shouldClose={[Function]}
+  tippyProps={Object {}}
   zIndex={9999}
 >
-  <Button
+  <Component
     icon={
       <UnknownIcon
         color="black"
@@ -35,7 +49,7 @@ exports[`<SubscriptionStatusIndicator /> should not crash when the cluster has n
     variant="link"
   >
     Unknown
-  </Button>
+  </Component>
 </Popover>
 `;
 
@@ -44,9 +58,22 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Inco
   appendTo={[Function]}
   aria-label="Invalid"
   bodyContent="This cluster is attached to subscriptions with different support levels."
+  boundary="window"
   className=""
   closeBtnAriaLabel="Close"
+  distance={25}
   enableFlip={true}
+  flipBehavior={
+    Array [
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "top",
+      "right",
+      "bottom",
+    ]
+  }
   footerContent={null}
   headerContent={null}
   hideOnOutsideClick={true}
@@ -59,9 +86,10 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Inco
   onShown={[Function]}
   position="top"
   shouldClose={[Function]}
+  tippyProps={Object {}}
   zIndex={9999}
 >
-  <Button
+  <Component
     icon={
       <ExclamationTriangleIcon
         color="#f0ab00"
@@ -74,7 +102,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Inco
     variant="link"
   >
     Invalid
-  </Button>
+  </Component>
 </Popover>
 `;
 
@@ -83,9 +111,22 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is NotS
   appendTo={[Function]}
   aria-label="Not Subscribed"
   bodyContent="This cluster does not have a subscription attached."
+  boundary="window"
   className=""
   closeBtnAriaLabel="Close"
+  distance={25}
   enableFlip={true}
+  flipBehavior={
+    Array [
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "top",
+      "right",
+      "bottom",
+    ]
+  }
   footerContent={null}
   headerContent={null}
   hideOnOutsideClick={true}
@@ -98,9 +139,10 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is NotS
   onShown={[Function]}
   position="top"
   shouldClose={[Function]}
+  tippyProps={Object {}}
   zIndex={9999}
 >
-  <Button
+  <Component
     icon={
       <ExclamationTriangleIcon
         color="#f0ab00"
@@ -113,7 +155,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is NotS
     variant="link"
   >
     Not Subscribed
-  </Button>
+  </Component>
 </Popover>
 `;
 
@@ -135,9 +177,22 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Over
   appendTo={[Function]}
   aria-label="Insufficient"
   bodyContent="This cluster is consuming more resources than it is entitled to."
+  boundary="window"
   className=""
   closeBtnAriaLabel="Close"
+  distance={25}
   enableFlip={true}
+  flipBehavior={
+    Array [
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "top",
+      "right",
+      "bottom",
+    ]
+  }
   footerContent={null}
   headerContent={null}
   hideOnOutsideClick={true}
@@ -150,9 +205,10 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Over
   onShown={[Function]}
   position="top"
   shouldClose={[Function]}
+  tippyProps={Object {}}
   zIndex={9999}
 >
-  <Button
+  <Component
     icon={
       <ExclamationTriangleIcon
         color="#f0ab00"
@@ -165,7 +221,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Over
     variant="link"
   >
     Insufficient
-  </Button>
+  </Component>
 </Popover>
 `;
 

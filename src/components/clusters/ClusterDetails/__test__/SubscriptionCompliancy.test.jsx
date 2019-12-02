@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Alert } from '@patternfly/react-core';
 
 import SubscriptionCompliancy from '../components/SubscriptionCompliancy';
 import { clusterDetails, organization } from './ClusterDetails.fixtures';
@@ -25,7 +26,7 @@ describe('<SubscriptionCompliancy />', () => {
     const c = clusterDetails.cluster;
     c.subscription.entitlement_status = 'NotSet';
     wrapper.setProps({ cluster: c }, () => {
-      expect(wrapper.find('Alert').length).toEqual(1);
+      expect(wrapper.find(Alert).length).toEqual(1);
     });
   });
 
@@ -33,7 +34,7 @@ describe('<SubscriptionCompliancy />', () => {
     const c = clusterDetails.cluster;
     c.subscription.entitlement_status = 'Overcommitted';
     wrapper.setProps({ cluster: c }, () => {
-      expect(wrapper.find('Alert').length).toEqual(1);
+      expect(wrapper.find(Alert).length).toEqual(1);
     });
   });
 
@@ -41,7 +42,7 @@ describe('<SubscriptionCompliancy />', () => {
     const c = clusterDetails.cluster;
     c.subscription.entitlement_status = 'InconsistentServices';
     wrapper.setProps({ cluster: c }, () => {
-      expect(wrapper.find('Alert').length).toEqual(1);
+      expect(wrapper.find(Alert).length).toEqual(1);
     });
   });
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Tab } from '@patternfly/react-core';
 
 import TabsRow from '../components/TabsRow';
 
@@ -27,7 +28,7 @@ describe('<TabsRow />', () => {
 
   it('should display users tab, monitoring tab and logs tab', () => {
     wrapper.setProps({ displayLogs: true, displayUsersTab: true }, () => {
-      expect(wrapper.find('ForwardRef').length).toEqual(4);
+      expect(wrapper.find(Tab).length).toEqual(4);
     });
   });
 
@@ -37,7 +38,7 @@ describe('<TabsRow />', () => {
       displayUsersTab: true,
       displayMonitoringTab: false,
     }, () => {
-      expect(wrapper.find('ForwardRef').length).toEqual(3);
+      expect(wrapper.find(Tab).length).toEqual(3);
     });
     wrapper = shallow(<TabsRow {...props} displayMonitoringTab={false} />);
     expect(wrapper).toMatchSnapshot();
