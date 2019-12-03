@@ -57,10 +57,10 @@ const InstructionsInfrastructure = () => (
             <Title headingLevel="h5" size="lg">Run on Bare Metal</Title>
           </CardBody>
         </Link>
-        <Link to="/install/ibmz/user-provisioned" className="infra-card infra-card-cloud-provider">
+        <Link to="/install/ibmz/user-provisioned" className="infra-card infra-card-cloud-provider" id="ibm">
           <CardBadge isDevPreview />
           <CardBody>
-            <img src={IBMZLogo} alt="IBM" className="infra-logo" />
+            <img src={IBMZLogo} alt="IBM" className="infra-logo-ibm" />
             <Title headingLevel="h5" size="lg">Run on IBM Z</Title>
           </CardBody>
         </Link>
