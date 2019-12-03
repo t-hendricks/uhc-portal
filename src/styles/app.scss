@@ -450,6 +450,21 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 10px;
 }
 
+#ibm img{
+  height: 95px;
+  position: relative;
+}
+
+#ibm .card-badge-container{
+  position: relative;
+  top: 11px;
+}
+
+#ibm h5{
+  position: relative;
+  bottom: 11px;
+}
+
 .infra-crc-laptop {
   font-size: var(--pf-global--FontSize--4xl);
   vertical-align: middle;
