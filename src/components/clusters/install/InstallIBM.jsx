@@ -26,7 +26,7 @@ class InstallIBM extends Component {
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
         { label: 'OpenShift Container Platform', path: '/install' },
-        { label: 'Google Cloud Platform' },
+        { label: 'IBM Z' },
       ]}
       />);
 
