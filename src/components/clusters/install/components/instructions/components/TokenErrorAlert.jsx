@@ -29,7 +29,7 @@ const TokenErrorAlert = ({ token }) => {
       variant="danger"
       isInline
       className="token-error-alert"
-      title="Failed to obtain authorization token"
+      title="Failed to obtain pull secret"
     >
       {message}
     </Alert>
