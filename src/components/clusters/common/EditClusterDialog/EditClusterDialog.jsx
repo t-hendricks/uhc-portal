@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form } from '@patternfly/react-core';
+import { Form, FormGroup } from '@patternfly/react-core';
+
+import { ControlLabel } from 'patternfly-react';
 
 import Modal from '../../../common/Modal/Modal';
 
 import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../common/validators';
 import ErrorBox from '../../../common/ErrorBox';
+import PersistentStorageComboBox from '../../CreateOSDCluster/components/PersistentStorageComboBox';
+import LoadBalancersComboBox from '../../CreateOSDCluster/components/LoadBalancersComboBox';
 
 
 class EditClusterDialog extends Component {
@@ -26,6 +30,8 @@ class EditClusterDialog extends Component {
       if (prevProps.initialFormValues.id !== initialFormValues.id) {
         change('id', initialFormValues.id);
         change('nodes_compute', initialFormValues.nodesCompute);
+        change('persistent_storage', initialFormValues.persistent_storage.value);
+        change('load_balancers', initialFormValues.load_balancers);
       }
     }
 
@@ -68,6 +74,7 @@ class EditClusterDialog extends Component {
 
     return isOpen && (
       <Modal
+        className="edit-cluster-modal"
         title="Scale Cluster"
         onClose={cancelEdit}
         primaryText="Apply"
@@ -88,6 +95,32 @@ class EditClusterDialog extends Component {
                 : this.validateNodes}
               min={min.value}
             />
+            <FormGroup
+              fieldId="load_balancers"
+            >
+              <ControlLabel>
+                Load Balancers
+              </ControlLabel>
+              <Field
+                label="Load Balancers"
+                name="load_balancers"
+                component={LoadBalancersComboBox}
+                disabled={pending}
+              />
+            </FormGroup>
+            <FormGroup
+              fieldId="persistent_storage"
+            >
+              <ControlLabel>
+                Persistent Storage
+              </ControlLabel>
+              <Field
+                label="Persistent Storage"
+                name="persistent_storage"
+                component={PersistentStorageComboBox}
+                disabled={pending}
+              />
+            </FormGroup>
           </Form>
         </React.Fragment>
       </Modal>

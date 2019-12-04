@@ -17,6 +17,8 @@ import addOnsReducer from '../../components/clusters/ClusterDetails/components/A
 import globalErrorReducer from './globalErrorReducer';
 import machineTypesReducer from './machineTypesReducer';
 import { subscriptionsReducer } from './subscriptionsReducer';
+import { loadBalancersReducer } from './loadBalancersReducer';
+import { persistentStorageReducer } from './persistentStorageReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -35,6 +37,8 @@ const reducers = {
   machineTypes: machineTypesReducer,
   monitoring: MonitoringReducer,
   subscriptions: subscriptionsReducer,
+  persistentStorageValues: persistentStorageReducer,
+  loadBalancerValues: loadBalancersReducer,
   notifications,
 };
 

@@ -19,9 +19,12 @@ function DetailsRight({ cluster }) {
   const showInfraNodes = (!cluster.managed && get(cluster, 'metrics.nodes.infra', null))
                          || get(cluster, 'nodes.infra', 0) > 0;
   const showSockets = cluster.metrics.sockets.total.value > 0;
+
+  const humanizedPersistentStorage = cluster.managed
+             && humanizeValueWithUnit(cluster.storage_quota.value, cluster.storage_quota.unit);
+
   const showVCPU = !showSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-
   return (
     <React.Fragment>
       <dl className="cluster-details-item left">
@@ -59,6 +62,24 @@ function DetailsRight({ cluster }) {
           {' '}
           {memoryTotalWithUnit.unit}
         </dd>
+        { cluster.managed && (
+        <React.Fragment>
+          <dt>
+            Load Balancers
+          </dt>
+          <dd>
+            {cluster.load_balancer_quota}
+          </dd>
+          <dt>
+            Persistent Storage
+          </dt>
+          <dd>
+            {humanizedPersistentStorage.value}
+            {' '}
+            {humanizedPersistentStorage.unit}
+          </dd>
+        </React.Fragment>)
+        }
         {showSockets && (
           <React.Fragment>
             <dt>

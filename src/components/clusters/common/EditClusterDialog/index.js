@@ -22,6 +22,8 @@ const mapStateToProps = (state) => {
     initialFormValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,
+      load_balancers: modalData.load_balancer_quota || null,
+      persistent_storage: modalData.storage_quota || null,
     },
   });
 };
@@ -33,6 +35,13 @@ const mapDispatchToProps = dispatch => ({
       nodes: {
         compute: parseInt(formData.nodes_compute, 10),
       },
+      load_balancer_quota: formData.load_balancers ? parseInt(formData.load_balancers, 10) : null,
+      // values in the passed are always in bytes.
+      // see comment in PersistentStorageComboBox.js#82.
+      storage_quota: formData.persistent_storage ? {
+        unit: 'B',
+        value: parseFloat(formData.persistent_storage),
+      } : null,
     };
     dispatch(editCluster(formData.id, clusterRequest));
   },

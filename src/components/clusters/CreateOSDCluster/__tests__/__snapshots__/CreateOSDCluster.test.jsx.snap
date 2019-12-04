@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CreateOSDCluster ManagedClusterForm should fetch cloud providers, machine types, and quota when first mounted 1`] = `
+exports[`CreateOSDCluster ManagedClusterForm should fetch cloud providers, machine types, load balancers, persistent storage and quota when first mounted 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
