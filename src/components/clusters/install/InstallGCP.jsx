@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { PageSection } from '@patternfly/react-core';
+import Breadcrumbs from './components/Breadcrumbs';
+import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsGCP from './components/instructions/InstructionsGCP';
@@ -19,11 +21,23 @@ class InstallGCP extends Component {
 
   render() {
     const { token } = this.props;
+    const breadcrumbs = (
+      <Breadcrumbs path={[
+        { label: 'Clusters' },
+        { label: 'Create', path: '/create' },
+        { label: 'OpenShift Container Platform', path: '/install' },
+        { label: 'Google Cloud Platform' },
+      ]}
+      />);
 
     return (
-      <PageSection>
-        <InstructionsGCP token={token} />
-      </PageSection>);
+      <React.Fragment>
+        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
+        <PageSection className="ocp-instructions">
+          <InstructionsGCP token={token} />
+        </PageSection>
+      </React.Fragment>
+    );
   }
 }
 

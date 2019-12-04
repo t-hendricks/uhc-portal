@@ -1,20 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreateOSDCluster ManagedClusterForm should fetch cloud providers, machine types, and quota when first mounted 1`] = `
-<PageSection>
-  <Spinner
-    centered={true}
-  />
-</PageSection>
-`;
-
-exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
-<PageSection>
-  <Card>
-    <div
-      className="pf-c-content ocm-page"
-    >
-      <Breadcrumb
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Unknown
         className="breadcrumbs-in-card"
       >
         <LinkContainer
@@ -48,53 +38,109 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
         >
           OpenShift Dedicated
         </BreadcrumbItem>
-      </Breadcrumb>
-      <PageTitle
-        title="Create an OpenShift Dedicated Cluster"
-      />
-      <Form
-        onSubmit={[MockFunction]}
+      </Unknown>
+    }
+    title="Create an OpenShift Dedicated Cluster"
+  />
+  <PageSection>
+    <Spinner
+      centered={true}
+    />
+  </PageSection>
+</Fragment>
+`;
+
+exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Unknown
+        className="breadcrumbs-in-card"
       >
-        <Grid
-          gutter="sm"
+        <LinkContainer
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
+          to=""
         >
-          <ManagedClusterForm
-            pending={false}
-          />
-          <GridItem>
-            <Split
-              className="create-osd-form-button-split"
-              gutter="sm"
-            >
-              <SplitItem>
-                <Button
-                  isDisabled={false}
-                  onClick={[MockFunction]}
-                  type="submit"
-                  variant="primary"
-                >
-                  Create cluster
-                </Button>
-              </SplitItem>
-              <SplitItem>
-                <Link
-                  replace={false}
-                  to="/"
-                >
-                  <Button
+          <BreadcrumbItem
+            to="#"
+          >
+            Clusters
+          </BreadcrumbItem>
+        </LinkContainer>
+        <LinkContainer
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
+          to="/create"
+        >
+          <BreadcrumbItem
+            to="#"
+          >
+            Create
+          </BreadcrumbItem>
+        </LinkContainer>
+        <BreadcrumbItem
+          isActive={true}
+        >
+          OpenShift Dedicated
+        </BreadcrumbItem>
+      </Unknown>
+    }
+    title="Create an OpenShift Dedicated Cluster"
+  />
+  <PageSection>
+    <Card>
+      <div
+        className="pf-c-content ocm-page"
+      >
+        <Form
+          onSubmit={[MockFunction]}
+        >
+          <Grid
+            gutter="sm"
+          >
+            <ManagedClusterForm
+              pending={false}
+            />
+            <GridItem>
+              <Split
+                className="create-osd-form-button-split"
+                gutter="sm"
+              >
+                <SplitItem>
+                  <Component
                     isDisabled={false}
-                    variant="secondary"
+                    onClick={[MockFunction]}
+                    type="submit"
+                    variant="primary"
                   >
-                    Cancel
-                  </Button>
-                </Link>
-              </SplitItem>
-              <SplitItem />
-            </Split>
-          </GridItem>
-        </Grid>
-      </Form>
-    </div>
-  </Card>
-</PageSection>
+                    Create cluster
+                  </Component>
+                </SplitItem>
+                <SplitItem>
+                  <Link
+                    replace={false}
+                    to="/"
+                  >
+                    <Component
+                      isDisabled={false}
+                      variant="secondary"
+                    >
+                      Cancel
+                    </Component>
+                  </Link>
+                </SplitItem>
+                <SplitItem />
+              </Split>
+            </GridItem>
+          </Grid>
+        </Form>
+      </div>
+    </Card>
+  </PageSection>
+</Fragment>
 `;

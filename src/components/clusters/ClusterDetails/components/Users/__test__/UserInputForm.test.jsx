@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Button } from '@patternfly/react-core';
 
 import UserInputForm from '../UserInputForm';
 
@@ -23,7 +24,7 @@ describe('<UserInputForm />', () => {
   it('reject admin user id with slash', () => {
     const textInput = wrapper.find('TextInput').at(0);
     textInput.simulate('change', 'aaa/bbb');
-    const btn = wrapper.find('Button');
+    const btn = wrapper.find(Button);
     btn.simulate('click');
     expect(btn.at(0).props().isDisabled).toBeTruthy();
     expect(saveUser).not.toHaveBeenCalled();
@@ -31,7 +32,7 @@ describe('<UserInputForm />', () => {
 
   it('should call saveUser when button is pressed', () => {
     wrapper.find('TextInput').at(0).simulate('change', 'hello');
-    wrapper.find('Button').simulate('click');
+    wrapper.find(Button).simulate('click');
     expect(saveUser).toHaveBeenCalledWith('fake id', 'dedicated-admins', 'hello');
   });
 });

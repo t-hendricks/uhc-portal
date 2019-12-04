@@ -20,13 +20,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Spinner, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
+import {
+  Spinner, PageHeader, PageHeaderTitle, TableToolbar,
+} from '@redhat-cloud-services/frontend-components';
 import {
   Button,
   Card,
   EmptyState,
-  Split,
-  SplitItem,
   PageSection,
 } from '@patternfly/react-core';
 
@@ -41,7 +41,6 @@ import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
 import ErrorBox from '../../common/ErrorBox';
-
 
 import EditClusterDialog from '../common/EditClusterDialog';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
@@ -133,7 +132,6 @@ class ClusterList extends Component {
       setSorting,
       openModal,
       invalidateClusters,
-      hasQuota,
       errorMessage,
       organization,
       operationID,
@@ -187,7 +185,7 @@ class ClusterList extends Component {
       return (
         <PageSection>
           <GlobalErrorBox />
-          <ClusterListEmptyState hasQuota={hasQuota} />
+          <ClusterListEmptyState />
         </PageSection>
       );
     }
@@ -199,40 +197,35 @@ class ClusterList extends Component {
           <Card>
             <div className="cluster-list">
               <GlobalErrorBox />
-              <Split id="cluster-list-top">
-                <SplitItem>
+              <TableToolbar id="cluster-list-toolbar">
+                <div className="toolbar-item">
                   <ClusterListFilter view={viewConstants.CLUSTERS_VIEW} />
-                </SplitItem>
-                <SplitItem className="split-margin-left">
-                  <ClusterListFilterDropdown history={history} />
-                </SplitItem>
-                <SplitItem className="split-margin-left">
-                  <Link to={hasQuota ? '/create' : '/install'}>
-                    <Button>Create Cluster</Button>
-                  </Link>
-                </SplitItem>
-                <SplitItem>
-                  <ClusterListExtraActions />
-                </SplitItem>
-                <SplitItem className="spinner-fit-container">
-                  { pending && <Spinner className="cluster-list-spinner" /> }
-                  { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }
-                </SplitItem>
-                <SplitItem isFilled />
-                <SplitItem>
-                  <ViewPaginationRow
-                    viewType={viewConstants.CLUSTERS_VIEW}
-                    currentPage={viewOptions.currentPage}
-                    pageSize={viewOptions.pageSize}
-                    totalCount={viewOptions.totalCount}
-                    totalPages={viewOptions.totalPages}
-                    variant="top"
-                  />
-                </SplitItem>
-                <SplitItem>
-                  <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
-                </SplitItem>
-              </Split>
+                </div>
+                <ClusterListFilterDropdown className="toolbar-item" history={history} />
+                <Link to="/create">
+                  <Button className="toolbar-item">Create Cluster</Button>
+                </Link>
+                <ClusterListExtraActions className="toolbar-item" />
+                { pending && (
+                  <Spinner className="cluster-list-spinner" />
+                ) }
+                { error && (
+                  <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
+                ) }
+                <ViewPaginationRow
+                  viewType={viewConstants.CLUSTERS_VIEW}
+                  currentPage={viewOptions.currentPage}
+                  pageSize={viewOptions.pageSize}
+                  totalCount={viewOptions.totalCount}
+                  totalPages={viewOptions.totalPages}
+                  variant="top"
+                />
+                <RefreshBtn
+                  autoRefresh
+                  refreshFunc={this.refresh}
+                  classOptions="cluster-list-top"
+                />
+              </TableToolbar>
               <ClusterListFilterChipGroup history={history} />
               <ClusterListTable
                 clusters={clusters || []}
@@ -288,7 +281,6 @@ ClusterList.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
-  hasQuota: PropTypes.bool.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,

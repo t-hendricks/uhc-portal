@@ -23,15 +23,16 @@ class ClusterListExtraActions extends React.Component {
 
   render() {
     const { isOpen } = this.state;
+    const { className } = this.props;
     const dropdownItems = [
-      <DropdownItem key="registercluster">
+      <DropdownItem component="button" key="registercluster">
         <div>
           <Link to="/register" className="pf-c-dropdown__menu-item">
             Register cluster
           </Link>
         </div>
       </DropdownItem>,
-      <DropdownItem key="archived">
+      <DropdownItem component="button" key="archived">
         <div>
           <Link to="archived" className="pf-c-dropdown__menu-item">
             Show archived clusters
@@ -46,6 +47,7 @@ class ClusterListExtraActions extends React.Component {
         isOpen={isOpen}
         isPlain
         dropdownItems={dropdownItems}
+        className={className}
       />
     );
   }
@@ -55,6 +57,7 @@ ClusterListExtraActions.propTypes = {
   currentFlags: PropTypes.shape({
     showArchived: PropTypes.bool.isRequired,
   }).isRequired,
+  className: PropTypes.string,
 };
 
 export default ClusterListExtraActions;

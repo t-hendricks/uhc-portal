@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { Button } from '@patternfly/react-core';
+
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 
 import * as Fixtures from './Subscriptions.fixtures';
@@ -154,8 +156,8 @@ describe('<Subscriptions />', () => {
 
     it('should render error OCP subscriptions', () => {
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find('Button').length).toEqual(1);
-      wrapper.find('Button').simulate('click');
+      expect(wrapper.find(Button).length).toEqual(1);
+      wrapper.find(Button).simulate('click');
       expect(refreshFn).toBeCalled();
     });
   });
@@ -167,8 +169,8 @@ describe('<Subscriptions />', () => {
 
     it('should render error OSD quota summary', () => {
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find('Button').length).toEqual(1);
-      wrapper.find('Button').simulate('click');
+      expect(wrapper.find(Button).length).toEqual(1);
+      wrapper.find(Button).simulate('click');
       expect(refreshFn).toBeCalled();
     });
   });

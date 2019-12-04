@@ -7,8 +7,6 @@ import {
   DataListToggle,
   DataListContent,
   DataListItemCells,
-  Split,
-  SplitItem,
   Title,
 } from '@patternfly/react-core';
 
@@ -17,36 +15,58 @@ import { CheckCircleIcon, ExclamationTriangleIcon, ExclamationCircleIcon } from 
 import { global_success_color_100, global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 
 function MonitoringListItem({
-  title = '', numOfIssues = null, toggle, expanded, hasData, children,
+  title = '', numOfIssues = null, numOfWarnings = null, toggle, expanded, hasData, children,
 }) {
   const id = title.replace(/\s+/g, '-').toLowerCase();
 
   const getSummary = () => {
+    // no metrics
     if (!hasData) {
       return (
-          <>
-            <ExclamationTriangleIcon className="status-icon" color={global_warning_color_100.value} size="md" />
-            <span>Metrics not available</span>
-          </>
+              <>
+                <ExclamationTriangleIcon className="status-icon" color={global_warning_color_100.value} size="md" />
+                <span>Metrics not available</span>
+              </>
       );
     }
-    if (numOfIssues !== null) {
+
+    // discovered issues summary
+    if (numOfIssues > 0) {
       return (
         <>
-          { numOfIssues === 0
-            ? <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />
-            : <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />
-            }
+          <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />
           <span>
             {numOfIssues}
             {' '}
-              discovered issues
+            discovered issues
           </span>
         </>);
     }
-    return null;
-  };
 
+    // warnings summary
+    if (numOfWarnings > 0) {
+      return (
+        <>
+          <ExclamationTriangleIcon className="status-icon" color={global_warning_color_100.value} size="md" />
+          <span>
+            {numOfWarnings}
+            {' '}
+            {numOfWarnings === 1 ? 'warning' : 'warnings' }
+          </span>
+        </>);
+    }
+
+    // no issues
+    return (
+      <>
+        <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />
+        <span>
+          {numOfIssues}
+          {' '}
+          discovered issues
+        </span>
+      </>);
+  };
 
   return (
     <DataListItem aria-labelledby={id} isExpanded={expanded.includes(id)}>
@@ -59,15 +79,11 @@ function MonitoringListItem({
         />
         <DataListItemCells
           dataListCells={[
-            <DataListCell key={id}>
-              <Split>
-                <SplitItem isFilled>
-                  <Title headingLevel="h4" size="2xl">{title}</Title>
-                </SplitItem>
-                <SplitItem>
-                  {getSummary()}
-                </SplitItem>
-              </Split>
+            <DataListCell key={`title-${id}`}>
+              <Title headingLevel="h4" size="2xl">{title}</Title>
+            </DataListCell>,
+            <DataListCell key={`summary-${id}`} className="summary">
+              {getSummary()}
             </DataListCell>,
           ]}
         />
@@ -85,6 +101,7 @@ function MonitoringListItem({
 MonitoringListItem.propTypes = {
   title: PropTypes.string,
   numOfIssues: PropTypes.number,
+  numOfWarnings: PropTypes.number,
   expanded: PropTypes.array,
   toggle: PropTypes.func,
   children: PropTypes.node,

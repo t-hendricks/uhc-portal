@@ -16,11 +16,11 @@ exports[`<Users /> should render without users 1`] = `
   <EmptyStateBody>
     You can add users to grant them access to the cluster. Users will be authenticated via your selected identity provider.
   </EmptyStateBody>
-  <Button
+  <Component
     onClick={[Function]}
   >
     Add user
-  </Button>
+  </Component>
 </EmptyState>
 `;
 
@@ -48,9 +48,22 @@ exports[`<Users /> with users should render 1`] = `
                     User IDs are matched by the cluster's identity providers.
                   </p>
                 }
+                boundary="window"
                 className=""
                 closeBtnAriaLabel="Close"
+                distance={25}
                 enableFlip={true}
+                flipBehavior={
+                  Array [
+                    "top",
+                    "right",
+                    "bottom",
+                    "left",
+                    "top",
+                    "right",
+                    "bottom",
+                  ]
+                }
                 footerContent={null}
                 headerContent={null}
                 hideOnOutsideClick={true}
@@ -63,9 +76,10 @@ exports[`<Users /> with users should render 1`] = `
                 onShown={[Function]}
                 position="top"
                 shouldClose={[Function]}
+                tippyProps={Object {}}
                 zIndex={9999}
               >
-                <Button
+                <Component
                   isInline={true}
                   variant="plain"
                 >
@@ -75,7 +89,7 @@ exports[`<Users /> with users should render 1`] = `
                     size="sm"
                     title={null}
                   />
-                </Button>
+                </Component>
               </Popover>
             </h3>
           </GridItem>
@@ -101,9 +115,22 @@ exports[`<Users /> with users should render 1`] = `
                     .
                   </p>
                 }
+                boundary="window"
                 className=""
                 closeBtnAriaLabel="Close"
+                distance={25}
                 enableFlip={true}
+                flipBehavior={
+                  Array [
+                    "top",
+                    "right",
+                    "bottom",
+                    "left",
+                    "top",
+                    "right",
+                    "bottom",
+                  ]
+                }
                 footerContent={null}
                 headerContent={null}
                 hideOnOutsideClick={true}
@@ -116,9 +143,10 @@ exports[`<Users /> with users should render 1`] = `
                 onShown={[Function]}
                 position="top"
                 shouldClose={[Function]}
+                tippyProps={Object {}}
                 zIndex={9999}
               >
-                <Button
+                <Component
                   isInline={true}
                   variant="plain"
                 >
@@ -128,7 +156,7 @@ exports[`<Users /> with users should render 1`] = `
                     size="sm"
                     title={null}
                   />
-                </Button>
+                </Component>
               </Popover>
             </h3>
           </GridItem>
@@ -149,7 +177,7 @@ exports[`<Users /> with users should render 1`] = `
           <GridItem
             sm={1}
           >
-            <Button
+            <Component
               aria-label="Delete"
               onClick={[Function]}
               variant="plain"
@@ -160,7 +188,7 @@ exports[`<Users /> with users should render 1`] = `
                 size="sm"
                 title={null}
               />
-            </Button>
+            </Component>
           </GridItem>
         </Grid>
         <GridItem

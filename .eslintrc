@@ -35,6 +35,7 @@
     "insights": "readonly",
     "APP_BETA": "readonly",
     "APP_DEVMODE": "readonly",
+    "APP_STAGING": "readonly",
     "APP_DEV_SERVER": "readonly",
     "OCM_SHOW_OLD_METRICS": "readonly",
   }

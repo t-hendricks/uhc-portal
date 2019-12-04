@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { CodeIcon } from '@patternfly/react-icons';
 
-const DeveloperPreviewSection = ({ isDevPreview }) => (
+const DeveloperPreviewSection = ({ isDevPreview = false }) => (
   <React.Fragment>
     <span className="pf-c-label pf-m-compact dev-preview-label">
       <CodeIcon />
@@ -20,7 +20,7 @@ const DeveloperPreviewSection = ({ isDevPreview }) => (
 );
 
 DeveloperPreviewSection.propTypes = {
-  isDevPreview: PropTypes.bool.isRequired,
+  isDevPreview: PropTypes.bool,
 };
 
 export default DeveloperPreviewSection;

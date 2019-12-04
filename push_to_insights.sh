@@ -139,17 +139,20 @@ ${SUBJECT}
 }
 
 if [ "$1" == "beta" ]; then
-    echo "running beta push"
+    echo "running staging push"
     # Install dependencies:
     rm --recursive --force node_modules
     yarn install
-    # Build the application for deployment to the prod-beta branch
+    # Build the application for deployment to staging
     # of the Insights platform:
     rm --recursive --force build
-    yarn build --mode=production --beta=true
-    push_build "prod-beta"
+    yarn build --mode=production --staging=true
     push_build "qa-stable"
+    rm --recursive --force build
+    yarn build --mode=production --beta=true --staging=true
+    push_build "prod-beta"
     push_build "qa-beta"
+
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
     # Install dependencies:

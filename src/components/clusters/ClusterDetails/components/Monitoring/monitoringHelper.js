@@ -21,4 +21,11 @@ const operatorsStatuses = {
   UNKNOWN: 'unknown',
 };
 
-export { monitoringStatuses, alertsSeverity, operatorsStatuses };
+const thresholds = {
+  WARNING: 0.8,
+  DANGER: 0.95,
+};
+
+export {
+  monitoringStatuses, alertsSeverity, operatorsStatuses, thresholds,
+};

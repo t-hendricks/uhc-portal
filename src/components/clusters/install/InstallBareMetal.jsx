@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { PageSection } from '@patternfly/react-core';
 
 import { tollboothActions } from '../../../redux/actions';
+import Breadcrumbs from './components/Breadcrumbs';
+import PageTitle from '../../common/PageTitle';
 import InstructionsBareMetal from './components/instructions/InstructionsBareMetal';
 import { scrollToTop } from '../../../common/helpers';
 
@@ -19,7 +21,23 @@ class InstallBareMetal extends Component {
 
   render() {
     const { token } = this.props;
-    return <PageSection><InstructionsBareMetal token={token} /></PageSection>;
+    const breadcrumbs = (
+      <Breadcrumbs path={[
+        { label: 'Clusters' },
+        { label: 'Create', path: '/create' },
+        { label: 'OpenShift Container Platform', path: '/install' },
+        { label: 'Bare Metal' },
+      ]}
+      />
+    );
+    return (
+      <React.Fragment>
+        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
+        <PageSection className="ocp-instructions">
+          <InstructionsBareMetal token={token} />
+        </PageSection>
+      </React.Fragment>
+    );
   }
 }
 
