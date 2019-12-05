@@ -285,6 +285,7 @@ const getCountdown = (timeString) => {
     hours: Math.floor(msUntilExp / MS_PER_HOUR) % 24,
     minutes: Math.floor(msUntilExp / MS_PER_MINUTE) % 60,
   };
+
   return countdown;
 };
 

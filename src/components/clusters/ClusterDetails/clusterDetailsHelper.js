@@ -1,4 +1,5 @@
 import has from 'lodash/has';
+import { getCountdown } from '../../../common/helpers';
 
 const hasCpuAndMemory = (cpu, memory) => {
   const totalCPU = has(cpu, 'total.value');
@@ -10,6 +11,20 @@ const hasCpuAndMemory = (cpu, memory) => {
     return false;
   }
   return true;
+};
+
+export const getRoundedCountdown = (timeString) => {
+  const countdown = getCountdown(timeString);
+  if (Object.values(countdown).every(value => value <= 0)) {
+    return countdown;
+  }
+  // n days, m hours ~~ n+1 days
+  if (countdown.days !== 0 && countdown.hours !== 0) {
+    countdown.days += 1;
+    countdown.hours = 0;
+    countdown.minutes = 0;
+  }
+  return countdown;
 };
 
 export default hasCpuAndMemory;
