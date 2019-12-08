@@ -1,5 +1,5 @@
 const MIRROR_CLIENTS_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/';
-const MIRROR_CLIENTS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/latest-4.2/';
+const MIRROR_CLIENTS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_43_PRE = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest-4.3/';
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.2';
 

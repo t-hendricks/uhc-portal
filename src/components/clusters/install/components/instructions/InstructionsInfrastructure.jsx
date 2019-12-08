@@ -58,7 +58,7 @@ const InstructionsInfrastructure = () => (
           </CardBody>
         </Link>
         <Link to="/install/ibmz/user-provisioned" className="infra-card infra-card-cloud-provider" id="ibm">
-          <CardBadge isDevPreview />
+          <CardBadge isHidden />
           <CardBody>
             <img src={IBMZLogo} alt="IBM" className="infra-logo-ibm" />
             <Title headingLevel="h5" size="lg">Run on IBM Z</Title>

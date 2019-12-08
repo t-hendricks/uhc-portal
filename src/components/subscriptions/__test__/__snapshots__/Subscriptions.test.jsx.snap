@@ -410,6 +410,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
 exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
 <Fragment>
   <Component
+    aria-label="Quota Table"
     cells={
       Array [
         "Resource type",
