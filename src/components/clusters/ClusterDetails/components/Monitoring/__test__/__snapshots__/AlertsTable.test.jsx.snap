@@ -12,6 +12,7 @@ exports[`<ClusterHealthCard /> should render 1`] = `
       },
     ]
   }
+  header="alerts"
   rows={Array []}
   variant="compact"
 >
