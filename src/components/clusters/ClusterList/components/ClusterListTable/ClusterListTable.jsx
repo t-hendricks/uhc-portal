@@ -1,7 +1,13 @@
 import result from 'lodash/result';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Tooltip, TooltipPosition } from '@patternfly/react-core';
+import {
+  Tooltip,
+  TooltipPosition,
+  Popover,
+  PopoverPosition,
+  Button,
+} from '@patternfly/react-core';
 import {
   Table,
   TableHeader,
@@ -16,7 +22,7 @@ import { Link } from 'react-router-dom';
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel/ClusterLocationLabel';
 import ClusterActionsDropdown from '../../../common/ClusterActionsDropdown';
-import { getClusterStateAndDescription } from '../../../common/clusterStates';
+import clusterStates, { getClusterStateAndDescription } from '../../../common/clusterStates';
 import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
 import SubscriptionStatusIndicator from '../../../common/SubscriptionStatusIndicator';
 import getClusterName from '../../../../../common/getClusterName';
@@ -52,14 +58,50 @@ function ClusterListTable(props) {
     );
 
     const clusterState = getClusterStateAndDescription(cluster);
-
-    const clusterStatus = (
-      <Tooltip style={clusterState.style} content={clusterState.description}>
-        <span>
-          <ClusterStateIcon clusterState={typeof clusterState.state !== 'undefined' ? clusterState.state : ''} />
+    const icon = <ClusterStateIcon clusterState={clusterState.state || ''} />;
+    const clusterStatus = (state) => {
+      if (state === clusterStates.ERROR) {
+        return (
+          <span>
+            <Popover
+              position={PopoverPosition.top}
+              bodyContent={(
+                <>
+                  Your cluster is in error state.
+                  {' '}
+                  <a
+                    href="https://access.redhat.com/support/cases/#/case/new"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Contact Red Hat Support
+                  </a>
+                  {' '}
+                  for further assistance.
+                </>
+                )
+              }
+              aria-label="Status: Error"
+            >
+              <Button
+                className="cluster-status-string"
+                variant="link"
+                isInline
+                icon={icon}
+              >
+                {state}
+              </Button>
+            </Popover>
+          </span>
+        );
+      }
+      return (
+        <span className="cluster-status-string">
+          {icon}
+          {state}
         </span>
-      </Tooltip>
-    );
+      );
+    };
 
     const clusterType = (
       <Tooltip
@@ -94,7 +136,7 @@ function ClusterListTable(props) {
       {
         cells: [
           { title: clusterName },
-          { title: clusterStatus },
+          { title: clusterStatus(clusterState.state) },
           { title: clusterType },
           { title: <SubscriptionStatusIndicator cluster={cluster} /> },
           { title: clusterVersion },
@@ -115,7 +157,7 @@ function ClusterListTable(props) {
 
   const columns = [
     { title: 'Name', transforms: [sortable, cellWidth(30)] },
-    { title: 'Status' },
+    { title: 'Status', transforms: [cellWidth(15)] },
     { title: 'Type', transforms: [cellWidth(10)] },
     { title: 'Subscription Status', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
