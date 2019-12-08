@@ -103,7 +103,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
           <Grid
             gutter="sm"
           >
-            <ManagedClusterForm
+            <CreateOSDClusterForm
               pending={false}
             />
             <GridItem>

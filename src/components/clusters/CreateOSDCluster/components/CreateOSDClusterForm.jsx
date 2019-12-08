@@ -5,24 +5,19 @@ import {
   FormGroup,
   GridItem,
 } from '@patternfly/react-core';
-import ConfigurationForm from './ConfigurationForm';
+import BasicFields from './BasicFields';
 import AdvancedSettingsForm from './AdvancedSettingsForm';
-import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
+import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
 
-class ManagedClusterForm extends React.Component {
+class CreateOSDClusterForm extends React.Component {
   state = {
     mode: 'basic',
   };
 
   render() {
-    const {
-      pending,
-      change,
-    } = this.props;
+    const { pending, change } = this.props;
 
-    const {
-      mode,
-    } = this.state;
+    const { mode } = this.state;
 
     const toggleNetwork = (_, value) => {
       this.setState({ mode: value });
@@ -30,12 +25,10 @@ class ManagedClusterForm extends React.Component {
 
     return (
       <React.Fragment>
-        <ConfigurationForm
-          pending={pending}
-          showDNSBaseDomain={false}
-          change={change}
-        />
+        {/* Form start */}
+        <BasicFields pending={pending} showDNSBaseDomain={false} change={change} />
 
+        {/* Networking section */}
         <GridItem span={12}>
           <h3>Networking</h3>
           <p>
@@ -51,7 +44,6 @@ class ManagedClusterForm extends React.Component {
             </li>
           </ul>
         </GridItem>
-
         <GridItem span={4}>
           <FormGroup
             label="Network configuration"
@@ -69,17 +61,15 @@ class ManagedClusterForm extends React.Component {
           </FormGroup>
         </GridItem>
         <GridItem span={8} />
-
         { mode === 'advanced' && <AdvancedSettingsForm pending={pending} /> }
-
       </React.Fragment>
     );
   }
 }
 
-ManagedClusterForm.propTypes = {
+CreateOSDClusterForm.propTypes = {
   pending: PropTypes.bool,
   change: PropTypes.func.isRequired,
 };
 
-export default ManagedClusterForm;
+export default CreateOSDClusterForm;

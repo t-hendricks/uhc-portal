@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { DisconnectedCloudRegionComboBox } from '../CloudRegionComboBox';
+import { DisconnectedCloudRegionComboBox } from '../components/CloudRegionComboBox';
 
 describe('<CloudRegionComboBox />', () => {
   describe('when region list needs to be fetched', () => {

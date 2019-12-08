@@ -11,8 +11,8 @@ import {
 } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-import ErrorBox from '../../common/ErrorBox';
-import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
+import ErrorBox from '../../../common/ErrorBox';
+import { cloudProviderActions } from '../../../../redux/actions/cloudProviderActions';
 
 class CloudRegionComboBox extends React.Component {
   constructor(props) {
