@@ -31,11 +31,15 @@ function AlertsTable({ alerts = [] }) {
     if (alert.severity === alertsSeverity.CRITICAL) {
       severityIcon = errorIcon;
     }
-    return ([{ title: alert.name }, { title: severityIcon }]);
+    return (
+      {
+        cells:
+        [{ title: alert.name }, { title: severityIcon }],
+      });
   });
 
   return (
-    <Table variant={TableVariant.compact} cells={columns} rows={rows}>
+    <Table variant={TableVariant.compact} cells={columns} rows={rows} header="alerts">
       <TableHeader />
       <TableBody />
     </Table>

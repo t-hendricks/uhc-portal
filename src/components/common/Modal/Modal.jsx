@@ -31,15 +31,16 @@ function Modal({
       isOpen
       onClose={onClose}
       actions={isPending ? [] : [
-        showSecondery && (
-        <Button key="cancel" variant="secondary" onClick={onSecondaryClick}>
-          {secondaryText}
-        </Button>
-        ),
         <Button key="confirm" variant={primaryVariant} onClick={onPrimaryClick} type="submit" isDisabled={isPrimaryDisabled}>
           {primaryText}
         </Button>,
+        showSecondery && (
+          <Button key="cancel" variant="secondary" onClick={onSecondaryClick}>
+            {secondaryText}
+          </Button>
+        ),
       ]}
+      isFooterLeftAligned
       {...extraProps}
     >
       {isPending ? <Spinner centered /> : children}

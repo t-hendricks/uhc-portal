@@ -11,6 +11,7 @@ import PopoverHint from '../../common/PopoverHint';
 
 
 function OSDSubscriptionTable({ rows, children }) {
+  const sortedRows = orderBy(rows, [0, 1]).map(cells => ({ cells }));
   const tipText = (
     <>
       <p>
@@ -39,7 +40,7 @@ function OSDSubscriptionTable({ rows, children }) {
 
   return (
     <>
-      <Table cells={columns} rows={orderBy(rows, [0, 1])}>
+      <Table aria-label="Quota Table" cells={columns} rows={sortedRows}>
         <TableHeader />
         <TableBody />
       </Table>

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from '@patternfly/react-core';
 
-import { getCountdown } from '../../../../common/helpers';
+import { getRoundedCountdown } from '../clusterDetailsHelper';
 
 function ExpirationAlert({ expirationTimestamp }) {
-  const countdown = getCountdown(expirationTimestamp);
+  const countdown = getRoundedCountdown(expirationTimestamp);
 
   if (Object.values(countdown).every(value => value <= 0)) {
     return null;
@@ -13,21 +13,30 @@ function ExpirationAlert({ expirationTimestamp }) {
 
   let variant;
   let title;
-  if (countdown.days >= 3) {
+  const { days, hours, minutes } = countdown;
+  const prefix = 'This cluster will be deleted in';
+
+  if (days >= 1) {
+    const daysPart = `${days} ${days === 1 ? 'day' : 'days'}`;
+    title = `${prefix} ${daysPart}.`;
+  } else if (hours > 0) { // 0 days, n hours
+    const hoursPart = `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+    if (minutes > 0) {
+      const minutesPart = `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
+      title = `${prefix} ${hoursPart} and ${minutesPart}.`;
+    } else {
+      title = `${prefix} ${hoursPart}.`;
+    }
+  } else { // 0 days, 0 hours, m minutes
+    title = `${prefix} ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}.`;
+  }
+
+  if (days >= 2) {
     variant = 'info';
-    title = `This cluster will be deleted in ${countdown.days} days.`;
-  } else if (countdown.days >= 1) {
+  } else if (days === 1) {
     variant = 'warning';
-    title = `This cluster will be deleted in ${countdown.days}
-     ${countdown.days === 1 ? 'day' : 'days'}.`;
-  } else if (countdown.hours >= 1) {
-    variant = 'danger';
-    title = `This cluster will be deleted in ${countdown.hours}
-     ${countdown.hours === 1 ? 'hour' : 'hours'}.`;
   } else {
     variant = 'danger';
-    title = `This cluster will be deleted in ${countdown.minutes}
-    ${countdown.minutes === 1 ? 'minute' : 'minutes'}.`;
   }
 
   return (
