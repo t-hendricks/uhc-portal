@@ -85,6 +85,15 @@ function DetailsRight({ cluster }) {
               </dl>
               <dl className="cluster-details-item-list left">
                 <dt>
+                  Infra:
+                  {' '}
+                </dt>
+                <dd>
+                  {result(cluster, 'nodes.infra', 'N/A')}
+                </dd>
+              </dl>
+              <dl className="cluster-details-item-list left">
+                <dt>
                   Compute:
                   {' '}
                 </dt>
@@ -107,6 +116,15 @@ function DetailsRight({ cluster }) {
             </dt>
             <dd>
               {result(cluster, 'metrics.nodes.master', 'N/A')}
+            </dd>
+          </dl>
+          <dl className="cluster-details-item-list left">
+            <dt>
+              Infra:
+              {' '}
+            </dt>
+            <dd>
+              {result(cluster, 'metrics.nodes.infra', 'N/A')}
             </dd>
           </dl>
           <dl className="cluster-details-item-list left">
