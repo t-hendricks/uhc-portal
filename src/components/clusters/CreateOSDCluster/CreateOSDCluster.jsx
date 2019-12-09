@@ -20,7 +20,7 @@ import {
 import PageTitle from '../../common/PageTitle';
 import ErrorModal from '../../common/ErrorModal';
 import constants from './CreateOSDClusterHelper';
-import ManagedClusterForm from './ManagedClusterForm';
+import CreateOSDClusterForm from './components/CreateOSDClusterForm';
 
 class CreateOSDCluster extends React.Component {
   componentDidMount() {
@@ -133,7 +133,7 @@ class CreateOSDCluster extends React.Component {
               {errorModal}
               <Form onSubmit={handleSubmit}>
                 <Grid gutter="sm">
-                  <ManagedClusterForm
+                  <CreateOSDClusterForm
                     pending={createClusterResponse.pending}
                     change={change}
                   />
@@ -156,10 +156,8 @@ class CreateOSDCluster extends React.Component {
                       </SplitItem>
                     </Split>
                   </GridItem>
-
                 </Grid>
               </Form>
-
             </div>
           </Card>
         </PageSection>

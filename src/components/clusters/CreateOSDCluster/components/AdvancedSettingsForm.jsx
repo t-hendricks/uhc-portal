@@ -4,11 +4,11 @@ import { Field } from 'redux-form';
 import {
   GridItem,
 } from '@patternfly/react-core';
-import ReduxVerticalFormGroupPF4 from '../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
-import validators from '../../../common/validators';
-import constants from './CreateOSDClusterHelper';
+import ReduxVerticalFormGroupPF4 from '../../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
+import validators from '../../../../common/validators';
+import constants from '../CreateOSDClusterHelper';
 
-function AdvancedSettingsForm(props) {
+function AdvancedNetworkFields(props) {
   const {
     pending,
   } = props;
@@ -56,8 +56,8 @@ function AdvancedSettingsForm(props) {
   );
 }
 
-AdvancedSettingsForm.propTypes = {
+AdvancedNetworkFields.propTypes = {
   pending: PropTypes.bool,
 };
 
-export default AdvancedSettingsForm;
+export default AdvancedNetworkFields;

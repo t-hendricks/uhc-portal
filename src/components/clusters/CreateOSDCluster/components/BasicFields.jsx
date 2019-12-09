@@ -5,16 +5,16 @@ import {
   FormGroup,
   GridItem,
 } from '@patternfly/react-core';
-import PopoverHint from '../../common/PopoverHint';
-import ReduxVerticalFormGroupPF4 from '../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
+import PopoverHint from '../../../common/PopoverHint';
+import ReduxVerticalFormGroupPF4 from '../../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
 import CloudRegionComboBox from './CloudRegionComboBox';
-import MachineTypeSelection from './components/MachineTypeSelection';
-import validators, { required } from '../../../common/validators';
-import minValueSelector from '../common/EditClusterDialog/EditClusterSelectors';
-import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
-import constants from './CreateOSDClusterHelper';
+import MachineTypeSelection from './MachineTypeSelection';
+import validators, { required } from '../../../../common/validators';
+import minValueSelector from '../../common/EditClusterDialog/EditClusterSelectors';
+import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
+import constants from '../CreateOSDClusterHelper';
 
-class ConfigurationForm extends React.Component {
+class BasicFields extends React.Component {
   state = {
     isMultiAz: false,
   };
@@ -45,12 +45,14 @@ class ConfigurationForm extends React.Component {
     } = this.props;
     const { isMultiAz } = this.state;
     const min = minValueSelector(isMultiAz);
+
     return (
       <React.Fragment>
         <GridItem span={12}>
           <h3 className="osd-page-header">Cluster Details</h3>
         </GridItem>
 
+        {/* cluster name */}
         <GridItem span={4}>
           <Field
             component={ReduxVerticalFormGroupPF4}
@@ -65,6 +67,7 @@ class ConfigurationForm extends React.Component {
         </GridItem>
         <GridItem span={8} />
 
+        {/* Base DNS domain */}
         {showDNSBaseDomain && (
           <React.Fragment>
             <GridItem span={4}>
@@ -82,6 +85,7 @@ class ConfigurationForm extends React.Component {
           </React.Fragment>
         )}
 
+        {/* Region */}
         <GridItem span={4}>
           <FormGroup
             label="Region"
@@ -101,6 +105,7 @@ class ConfigurationForm extends React.Component {
         </GridItem>
         <GridItem span={8} />
 
+        {/* Availability */}
         <GridItem span={4}>
           <FormGroup
             label="Availability"
@@ -120,6 +125,7 @@ class ConfigurationForm extends React.Component {
         </GridItem>
         <GridItem span={8} />
 
+        {/* Instance type */}
         <GridItem span={12}>
           <h3>Scale</h3>
           <p>
@@ -128,7 +134,6 @@ class ConfigurationForm extends React.Component {
             not be able to change the worker node instance type.
           </p>
         </GridItem>
-
         <GridItem span={9}>
           <FormGroup
             label="Compute node instance type"
@@ -146,6 +151,7 @@ class ConfigurationForm extends React.Component {
           </FormGroup>
         </GridItem>
 
+        {/* Compute nodes */}
         <GridItem span={4}>
           <Field
             component={ReduxVerticalFormGroupPF4}
@@ -161,16 +167,15 @@ class ConfigurationForm extends React.Component {
           />
         </GridItem>
         <GridItem span={8} />
-
       </React.Fragment>
     );
   }
 }
 
-ConfigurationForm.propTypes = {
+BasicFields.propTypes = {
   change: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   showDNSBaseDomain: PropTypes.bool,
 };
 
-export default ConfigurationForm;
+export default BasicFields;
