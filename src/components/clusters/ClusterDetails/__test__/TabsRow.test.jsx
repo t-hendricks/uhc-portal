@@ -15,6 +15,7 @@ describe('<TabsRow />', () => {
       usersTabRef: mockRef,
       logsTabRef: mockRef,
       monitoringTabRef: mockRef,
+      addOnsTabRef: mockRef,
     };
 
     wrapper = shallow(
@@ -26,17 +27,18 @@ describe('<TabsRow />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should display users tab, monitoring tab and logs tab', () => {
-    wrapper.setProps({ displayLogs: true, displayUsersTab: true }, () => {
-      expect(wrapper.find(Tab).length).toEqual(4);
+  it('should display users tab, monitoring tab, logs tab, and add-ons tab', () => {
+    wrapper.setProps({ displayLogs: true, displayUsersTab: true, displayAddOnsTab: true }, () => {
+      expect(wrapper.find(Tab).length).toEqual(5);
     });
   });
 
-  it('should hide monitoring tab if needed (eg. when we archive a cluster)', () => {
+  it('should hide monitoring and add-ons tabs if needed (eg. when we archive a cluster)', () => {
     wrapper.setProps({
       displayLogs: true,
       displayUsersTab: true,
       displayMonitoringTab: false,
+      displayAddOnsTab: false,
     }, () => {
       expect(wrapper.find(Tab).length).toEqual(3);
     });

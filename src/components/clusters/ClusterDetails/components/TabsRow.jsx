@@ -8,6 +8,7 @@ const tabs = {
   monitoring: 1,
   users: 2,
   logs: 3,
+  addons: 4,
 };
 
 class TabsRow extends React.Component {
@@ -30,11 +31,13 @@ class TabsRow extends React.Component {
       displayLogs,
       displayUsersTab,
       displayMonitoringTab,
+      displayAddOnsTab,
       overviewTabRef,
     } = this.props;
     if ((activeTabKey === tabs.monitoring && !displayMonitoringTab)
         || (activeTabKey === tabs.users && !displayUsersTab)
-        || (activeTabKey === tabs.logs && !displayLogs)) {
+        || (activeTabKey === tabs.logs && !displayLogs)
+        || (activeTabKey === tabs.addons && !displayAddOnsTab)) {
       this.handleTabClick(undefined, tabs.overview);
       overviewTabRef.current.hidden = false;
     }
@@ -45,10 +48,12 @@ class TabsRow extends React.Component {
       displayLogs,
       displayUsersTab,
       displayMonitoringTab,
+      displayAddOnsTab,
       overviewTabRef,
       monitoringTabRef,
       usersTabRef,
       logsTabRef,
+      addOnsTabRef,
     } = this.props;
     const { activeTabKey } = this.state;
 
@@ -67,7 +72,17 @@ class TabsRow extends React.Component {
     <Tab key={tabs.logs} eventKey={tabs.logs} title="Logs" tabContentId="logsTabContent" tabContentRef={logsTabRef} />
     );
 
-    const tabsToDisplay = [overviewTab, monitoringTab, usersTab, logsTab].filter(Boolean);
+    const addOnsTab = displayAddOnsTab && (
+    <Tab key={tabs.addons} eventKey={tabs.addons} title="Add-ons" tabContentId="addOnsTabContent" tabContentRef={addOnsTabRef} />
+    );
+
+    const tabsToDisplay = [
+      overviewTab,
+      monitoringTab,
+      usersTab,
+      logsTab,
+      addOnsTab,
+    ].filter(Boolean);
 
     return (
       <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
@@ -80,16 +95,19 @@ TabsRow.propTypes = {
   displayLogs: PropTypes.bool,
   displayUsersTab: PropTypes.bool,
   displayMonitoringTab: PropTypes.bool,
+  displayAddOnsTab: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   logsTabRef: PropTypes.object.isRequired,
   usersTabRef: PropTypes.object.isRequired,
+  addOnsTabRef: PropTypes.object.isRequired,
 };
 
 TabsRow.defaultProps = {
   displayLogs: false,
   displayUsersTab: false,
   displayMonitoringTab: true,
+  displayAddOnsTab: false,
 };
 
 export default TabsRow;

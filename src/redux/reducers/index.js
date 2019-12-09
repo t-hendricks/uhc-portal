@@ -13,6 +13,7 @@ import { LogsReducer } from '../../components/clusters/ClusterDetails/components
 import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersModal/IdentityProvidersReducer';
 import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/Users/UsersReducer';
+import addOnsReducer from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsReducer';
 import globalErrorReducer from './globalErrorReducer';
 import machineTypesReducer from './machineTypesReducer';
 import { subscriptionsReducer } from './subscriptionsReducer';
@@ -29,6 +30,7 @@ const reducers = {
   logs: LogsReducer,
   identityProviders: IdentityProvidersReducer,
   clusterUsers: clusterUsersReducer,
+  addOns: addOnsReducer,
   globalError: globalErrorReducer,
   machineTypes: machineTypesReducer,
   monitoring: MonitoringReducer,

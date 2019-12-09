@@ -27,6 +27,7 @@ import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
 import Monitoring from './components/Monitoring';
 import Users from './components/Users';
+import AddOns from './components/AddOns';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 
@@ -52,6 +53,7 @@ class ClusterDetails extends Component {
     this.monitoringTabRef = React.createRef();
     this.usersTabRef = React.createRef();
     this.logsTabRef = React.createRef();
+    this.addOnsTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -65,6 +67,8 @@ class ClusterDetails extends Component {
       match,
       organization,
       getOrganizationAndQuota,
+      addOns,
+      getAddOns,
       clearGlobalError,
     } = this.props;
 
@@ -86,6 +90,9 @@ class ClusterDetails extends Component {
     }
     if (!organization.pending && !organization.error && !organization.fulfilled) {
       getOrganizationAndQuota();
+    }
+    if (!addOns.pending && !addOns.error && !addOns.fulfilled) {
+      getAddOns();
     }
   }
 
@@ -159,6 +166,7 @@ class ClusterDetails extends Component {
       history,
       match,
       logs,
+      addOns,
       clusterIdentityProviders,
       organization,
       setGlobalError,
@@ -222,6 +230,7 @@ class ClusterDetails extends Component {
     };
 
     const hasLogs = !!logs.lines;
+    const hasAddOns = !!get(addOns, 'items.length', false);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
     return (
@@ -240,10 +249,12 @@ class ClusterDetails extends Component {
             displayLogs={hasLogs}
             displayUsersTab={cluster.managed && cluster.canEdit}
             displayMonitoringTab={!isArchived}
+            displayAddOnsTab={cluster.managed && hasAddOns}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             usersTabRef={this.usersTabRef}
             logsTabRef={this.logsTabRef}
+            addOnsTabRef={this.addOnsTabRef}
           />
         </ClusterDetailsTop>
         <TabContent eventKey={0} id="overviewTabContent" ref={this.overviewTabRef} aria-label="Overview">
@@ -264,6 +275,11 @@ class ClusterDetails extends Component {
         {hasLogs && (
         <TabContent eventKey={3} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
           <LogWindow clusterID={cluster.id} />
+        </TabContent>
+        )}
+        {hasAddOns && (
+        <TabContent eventKey={4} id="addOnsTabContent" ref={this.addOnsTabRef} aria-label="Add-ons" hidden>
+          <AddOns clusterID={cluster.id} />
         </TabContent>
         )}
         <EditClusterDialog onClose={onDialogClose} />
@@ -300,6 +316,7 @@ ClusterDetails.propTypes = {
   getAlerts: PropTypes.func.isRequired,
   getNodes: PropTypes.func.isRequired,
   getClusterOperators: PropTypes.func.isRequired,
+  getAddOns: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
@@ -307,6 +324,7 @@ ClusterDetails.propTypes = {
   closeModal: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   logs: PropTypes.object,
+  addOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({
@@ -332,6 +350,7 @@ ClusterDetails.defaultProps = {
     errorMessage: '',
   },
   logs: '',
+  addOns: '',
 };
 
 export default ClusterDetails;

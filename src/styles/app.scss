@@ -400,6 +400,24 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
+// cluster details -> add-ons
+.cluster-details-addons-tab-contents {
+
+  .addon-card {
+    display: inline-flex;
+
+    .addon-icon {
+      min-width: 200px;
+      min-height: 80px;
+
+      img {
+        max-width: 170px;
+        max-height: 80px;
+      }
+    }
+  }
+}
+
 #cluster-health svg{
   margin-right: 10px;
 }
