@@ -52,6 +52,10 @@ limitations under the License.
   margin-top: var(--pf-global--spacer--sm);
 }
 
+.pf-c-empty-state.pf-m-lg {
+  margin: 0 auto;
+}
+
 // Styles for the page where the user can download the access tokens, for use
 // with API clients:
 .token-details {
