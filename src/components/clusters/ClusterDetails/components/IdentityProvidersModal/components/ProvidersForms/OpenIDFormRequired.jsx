@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import BasicFields from './BasicFields';
+import IDPBasicFields from './IDPBasicFields';
 
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { checkOpenIDIssuer } from '../../../../../../../common/validators';
@@ -17,7 +17,7 @@ const validate = (_, allValues) => {
 function OpenIDFormRequired({ isPending }) {
   return (
     <React.Fragment>
-      <BasicFields />
+      <IDPBasicFields />
       <Field
         component={ReduxVerticalFormGroup}
         name="issuer"

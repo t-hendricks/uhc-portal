@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 import { required } from '../../../../../../../common/validators';
-import BasicFields from './BasicFields';
+import IDPBasicFields from './IDPBasicFields';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 function GoogleForm({ isPending, isRequired }) {
   return (
     <React.Fragment>
-      <BasicFields />
+      <IDPBasicFields />
       <Field
         component={ReduxVerticalFormGroup}
         name="hosted_domain"

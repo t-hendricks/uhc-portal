@@ -22,7 +22,7 @@ const mapStateToProps = state => ({
   cloudProviders: state.cloudProviders.cloudProviders,
   loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
   persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
-  isOpen: shouldShowModal(state, 'osd-create-error'),
+  isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
   initialValues: {
     name: '',
     nodes_compute: '4',
@@ -71,7 +71,7 @@ const mapDispatchToProps = dispatch => ({
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
-  openModal: () => { dispatch(openModal('osd-create-error')); },
+  openModal: (modalName) => { dispatch(openModal(modalName)); },
   getOrganizationAndQuota,
   getMachineTypes,
   getCloudProviders,
