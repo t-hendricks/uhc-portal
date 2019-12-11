@@ -55,8 +55,8 @@ const links = {
 
   INSTALL_IBMZ_INSTALLER_LATEST: MIRROR_CLIENTS_LATEST_IBMZ,
   INSTALL_IBMZ_CLI_LATEST: MIRROR_CLIENTS_LATEST_IBMZ,
-  INSTALL_IBMZ_GETTING_STARTED: 'https://github.com/openshift/installer/tree/master/docs/user/zvm/install_upi.md',
-  INSTALL_IBMZ_RHCOS_LEARN_MORE: 'https://github.com/openshift/installer/blob/master/docs/user/zvm/install_upi.md#booting-machines-with-rhcos-and-ignition-configs',
+  INSTALL_IBMZ_GETTING_STARTED: 'https://docs.openshift.com/container-platform/4.2/installing/installing_ibm_z/installing-ibm-z.html',
+  INSTALL_IBMZ_RHCOS_LEARN_MORE: 'https://docs.openshift.com/container-platform/4.2/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso_installing-ibm-z',
   DOWNLOAD_RHCOS_LATEST_IBMZ: 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/4.2/latest/',
 
   INSTALL_PRE_RELEASE_BUG_LIST_43: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-3-blocker&query_format=advanced&target_release=4.3.0',

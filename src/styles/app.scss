@@ -52,6 +52,10 @@ limitations under the License.
   margin-top: var(--pf-global--spacer--sm);
 }
 
+.pf-c-empty-state.pf-m-lg {
+  margin: 0 auto;
+}
+
 // Styles for the page where the user can download the access tokens, for use
 // with API clients:
 .token-details {
@@ -397,6 +401,24 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-top: 20px;
   .row {
     padding-bottom: 5px;
+  }
+}
+
+// cluster details -> add-ons
+.cluster-details-addons-tab-contents {
+
+  .addon-card {
+    display: inline-flex;
+
+    .addon-icon {
+      min-width: 200px;
+      min-height: 80px;
+
+      img {
+        max-width: 170px;
+        max-height: 80px;
+      }
+    }
   }
 }
 

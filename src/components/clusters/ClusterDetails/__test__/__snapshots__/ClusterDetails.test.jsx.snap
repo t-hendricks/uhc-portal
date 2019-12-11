@@ -165,6 +165,12 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
     refreshFunc={[Function]}
   >
     <TabsRow
+      addOnsTabRef={
+        Object {
+          "current": null,
+        }
+      }
+      displayAddOnsTab={false}
       displayLogs={false}
       displayMonitoringTab={true}
       displayUsersTab={true}

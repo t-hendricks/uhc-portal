@@ -16,6 +16,8 @@ function DetailsRight({ cluster }) {
   );
 
   const showDesiredNodes = cluster.managed;
+  const showInfraNodes = (!cluster.managed && get(cluster, 'metrics.nodes.infra', null))
+                         || get(cluster, 'nodes.infra', 0) > 0;
   const showSockets = cluster.metrics.sockets.total.value > 0;
   const showVCPU = !showSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
@@ -83,6 +85,17 @@ function DetailsRight({ cluster }) {
                   {result(cluster, 'nodes.master', 'N/A')}
                 </dd>
               </dl>
+              {showInfraNodes && (
+                <dl className="cluster-details-item-list left">
+                  <dt>
+                    Infra:
+                    {' '}
+                  </dt>
+                  <dd>
+                    {result(cluster, 'nodes.infra', 'N/A')}
+                  </dd>
+                </dl>
+              )}
               <dl className="cluster-details-item-list left">
                 <dt>
                   Compute:
@@ -109,6 +122,17 @@ function DetailsRight({ cluster }) {
               {result(cluster, 'metrics.nodes.master', 'N/A')}
             </dd>
           </dl>
+          {showInfraNodes && (
+            <dl className="cluster-details-item-list left">
+              <dt>
+                Infra:
+                {' '}
+              </dt>
+              <dd>
+                {result(cluster, 'metrics.nodes.infra', 'N/A')}
+              </dd>
+            </dl>
+          )}
           <dl className="cluster-details-item-list left">
             <dt>
               Compute:

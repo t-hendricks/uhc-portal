@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CreateOSDCluster from '../CreateOSDCluster';
-import ManagedClusterForm from '../ManagedClusterForm';
+import CreateOSDClusterForm from '../components/CreateOSDClusterForm';
 
 describe('CreateOSDCluster', () => {
   let resetResponse;
@@ -55,7 +55,7 @@ describe('CreateOSDCluster', () => {
     });
 
     it('should display ManagedClusterForm for managed CreateOSDCluster', () => {
-      expect(managedWrapper.find(ManagedClusterForm).exists()).toBe(true);
+      expect(managedWrapper.find(CreateOSDClusterForm).exists()).toBe(true);
     });
 
     it('should call resetResponse and resetForm on mount', () => {
