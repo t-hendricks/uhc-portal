@@ -8,7 +8,7 @@ function ExpirationAlert({ expirationTimestamp }) {
   const expirationTime = moment.utc(expirationTimestamp);
   const diff = expirationTime.diff(now, 'hours');
   const timeUntilExpiryString = now.to(expirationTime);
-  const expirationTimeString = expirationTime.format('dddd, MMMM Do YYYY, h:mm a');
+  const expirationTimeString = expirationTime.local().format('dddd, MMMM Do YYYY, h:mm a');
   let variant;
 
   if (diff >= 48) {
