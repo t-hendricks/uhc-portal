@@ -6,7 +6,7 @@ import {
 } from '@patternfly/react-core';
 import ReduxVerticalFormGroupPF4 from '../../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
 import validators from '../../../../common/validators';
-import constants from '../CreateOSDClusterHelper';
+import { constants } from '../CreateOSDClusterHelper';
 
 function AdvancedNetworkFields(props) {
   const {

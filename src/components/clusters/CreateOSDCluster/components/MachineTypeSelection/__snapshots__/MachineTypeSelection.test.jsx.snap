@@ -168,7 +168,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
   }
 >
   <div
-    className="machine-types-flex-container"
+    className="flat-radio-buttons-flex-container"
   >
     <FlatRadioButton
       icon={

@@ -47,6 +47,7 @@ class RadioButtons extends React.Component {
           aria-label={option.label}
           label={option.label}
           onChange={this.changeHandler}
+          isDisabled={option.disabled}
         />
       ))
     );
@@ -58,7 +59,11 @@ RadioButtons.propTypes = {
   input: PropTypes.object.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape(
-      { label: PropTypes.string.isRequired, value: PropTypes.string.isRequired },
+      {
+        label: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired,
+        disabled: PropTypes.bool,
+      },
     ),
   ).isRequired,
 };

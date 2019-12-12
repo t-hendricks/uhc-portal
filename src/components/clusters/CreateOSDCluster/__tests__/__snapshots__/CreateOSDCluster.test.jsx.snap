@@ -104,6 +104,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             gutter="sm"
           >
             <CreateOSDClusterForm
+              isBYOCModalOpen={false}
               pending={false}
             />
             <GridItem>

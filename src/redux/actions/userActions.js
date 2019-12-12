@@ -19,10 +19,12 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
       byoc: {
         singleAz: {},
         multiAz: {},
+        available: 0,
       },
       rhInfra: {
         singleAz: {},
         multiAz: {},
+        available: 0,
       },
     };
 
@@ -34,6 +36,7 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
           const category = item.byoc ? 'byoc' : 'rhInfra';
           const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
           response.data.nodeQuota[category][zoneType][item.resource_name] = available;
+          response.data.nodeQuota[category].available += available;
           break;
         }
         case 'addon':

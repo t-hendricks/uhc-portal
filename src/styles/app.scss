@@ -510,7 +510,29 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   justify-content: center;
 }
 
-.machine-types-flex-container {
+#billing-model #standard {
+  margin-left: 0;
+}
+
+#billing-model.flat-radio-buttons-flex-container {
+  div, button {
+  min-width: 460px;
+  }
+  button {
+    height: 85px;
+  }
+}
+
+.ccsModal {
+  ul {
+  padding-bottom: 15px;
+  }
+  h3 {
+  padding-top: 10px;
+  }
+};
+
+.flat-radio-buttons-flex-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
@@ -523,7 +545,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
     width: 100%;
   }
 }
-
 
 .infra-card, a.infra-card {
   flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
@@ -746,7 +767,7 @@ h4.pf-c-alert__title {
   }
 
 
-  &.pf-m-disabled {
+  &:disabled {
     // disabled styles
     .pf-l-split, .ocm-flat-button-icon svg, h4.pf-c-title {
       color: var(---pf-global--Color--200);
@@ -754,7 +775,7 @@ h4.pf-c-alert__title {
     &.pf-m-tertiary::after {
       border-width: 0;
     }
-    background-color: var(--pf-global--disabled-color--300);
+    background-color: var(--pf-global--disabled-color--200);
   }
 }
 // end FlatRadioButton related styles
