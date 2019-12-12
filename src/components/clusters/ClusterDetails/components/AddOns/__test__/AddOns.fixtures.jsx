@@ -38,7 +38,9 @@ export const mockClusterAddOns = {
     {
       kind: 'AddOnLink',
       href: '/api/clusters_mgmt/v1/addons/service-mesh',
-      id: 'service-mesh',
+      addon: {
+        id: 'service-mesh',
+      },
     },
   ],
 };
