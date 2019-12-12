@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import result from 'lodash/result';
 import get from 'lodash/get';
 
 
@@ -103,7 +102,7 @@ function DetailsRight({ cluster }) {
                   {' '}
                 </dt>
                 <dd>
-                  {result(cluster, 'nodes.master', 'N/A')}
+                  {get(cluster, 'nodes.master', 'N/A')}
                 </dd>
               </dl>
               {showInfraNodes && (
@@ -113,7 +112,7 @@ function DetailsRight({ cluster }) {
                     {' '}
                   </dt>
                   <dd>
-                    {result(cluster, 'nodes.infra', 'N/A')}
+                    {get(cluster, 'nodes.infra', 'N/A')}
                   </dd>
                 </dl>
               )}
@@ -123,7 +122,7 @@ function DetailsRight({ cluster }) {
                   {' '}
                 </dt>
                 <dd>
-                  {result(cluster, 'nodes.compute', 'N/A')}
+                  {get(cluster, 'nodes.compute', 'N/A')}
                 </dd>
               </dl>
             </dd>
@@ -140,7 +139,7 @@ function DetailsRight({ cluster }) {
               {' '}
             </dt>
             <dd>
-              {result(cluster, 'metrics.nodes.master', 'N/A')}
+              {get(cluster, 'metrics.nodes.master', 'N/A')}
             </dd>
           </dl>
           {showInfraNodes && (
@@ -150,7 +149,7 @@ function DetailsRight({ cluster }) {
                 {' '}
               </dt>
               <dd>
-                {result(cluster, 'metrics.nodes.infra', 'N/A')}
+                {get(cluster, 'metrics.nodes.infra', 'N/A')}
               </dd>
             </dl>
           )}
@@ -160,7 +159,7 @@ function DetailsRight({ cluster }) {
               {' '}
             </dt>
             <dd>
-              {result(cluster, 'metrics.nodes.compute', 'N/A')}
+              {get(cluster, 'metrics.nodes.compute', 'N/A')}
             </dd>
           </dl>
         </dd>
@@ -170,7 +169,7 @@ function DetailsRight({ cluster }) {
               Support Level
             </dt>
             <dd>
-              {result(cluster, 'subscription.support_level', 'None (Evaluation)')}
+              {get(cluster, 'subscription.support_level', 'None (Evaluation)')}
             </dd>
           </React.Fragment>
         )}
