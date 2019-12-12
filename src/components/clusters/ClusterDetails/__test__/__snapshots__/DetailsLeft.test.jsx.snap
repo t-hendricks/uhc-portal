@@ -12,6 +12,12 @@ exports[`<DetailsLeft /> should render 1`] = `
       9f50940b-fba8-4c59-9c6c-d64284b2026d
     </dd>
     <dt>
+      Type
+    </dt>
+    <dd>
+      OSD
+    </dd>
+    <dt>
       Location
     </dt>
     <dd>
