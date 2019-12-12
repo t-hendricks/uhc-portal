@@ -1,4 +1,4 @@
-import BasicFields from './BasicFields';
+import IDPBasicFields from './IDPBasicFields';
 import GithubForm from './GithubForm';
 import GithubFormRequired from './GithubFormRequired';
 import GoogleFormRequired from './GoogleFormRequired';
@@ -8,7 +8,7 @@ import OpenIDForm from './OpenIDForm';
 import OpenIDFormRequired from './OpenIDFormRequired';
 
 export {
-  BasicFields,
+  IDPBasicFields,
   GithubForm,
   GithubFormRequired,
   GoogleFormRequired,

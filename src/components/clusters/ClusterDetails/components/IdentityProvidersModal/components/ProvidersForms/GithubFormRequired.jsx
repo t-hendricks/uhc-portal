@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import { noop } from '../../../../../../../common/helpers';
 import { github, checkGithubTeams } from '../../../../../../../common/validators';
 
-import BasicFields from './BasicFields';
+import IDPBasicFields from './IDPBasicFields';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 class GithubFormRequired extends React.Component {
@@ -31,7 +31,7 @@ class GithubFormRequired extends React.Component {
 
       return (
         <React.Fragment>
-          <BasicFields />
+          <IDPBasicFields />
           <Field
             component={ReduxVerticalFormGroup}
             name="organizations"

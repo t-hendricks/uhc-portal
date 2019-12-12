@@ -50,9 +50,9 @@ class CreateOSDCluster extends React.Component {
   }
 
   componentDidUpdate() {
-    const { createClusterResponse, openModal, isOpen } = this.props;
-    if (createClusterResponse.error && !isOpen) {
-      openModal();
+    const { createClusterResponse, openModal, isErrorModalOpen } = this.props;
+    if (createClusterResponse.error && !isErrorModalOpen) {
+      openModal('osd-create-error');
     }
   }
 
@@ -70,9 +70,15 @@ class CreateOSDCluster extends React.Component {
 
   render() {
     const {
-      handleSubmit, createClusterResponse, change,
-      machineTypes, organization, cloudProviders,
-      loadBalancerValues, persistentStorageValues, isOpen,
+      handleSubmit,
+      createClusterResponse,
+      change,
+      machineTypes,
+      organization,
+      cloudProviders,
+      loadBalancerValues,
+      persistentStorageValues,
+      isErrorModalOpen,
       resetResponse,
     } = this.props;
 
@@ -82,7 +88,7 @@ class CreateOSDCluster extends React.Component {
       );
     }
 
-    const errorModal = isOpen && (
+    const errorModal = isErrorModalOpen && (
       <ErrorModal
         title="Error Creating Cluster"
         errorResponse={createClusterResponse}
@@ -179,7 +185,7 @@ class CreateOSDCluster extends React.Component {
   }
 }
 CreateOSDCluster.propTypes = {
-  isOpen: PropTypes.bool,
+  isErrorModalOpen: PropTypes.bool,
   openModal: PropTypes.func,
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
