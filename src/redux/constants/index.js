@@ -5,6 +5,8 @@ import * as userConstants from './userConstants';
 import * as cloudProviderConstants from './cloudProviderConstants';
 import * as machineTypesConstants from './machineTypesConstants';
 import * as subscriptionsConstants from './subscriptionsConstants';
+import * as persistentStorageConstants from './persistentStorageConstants';
+import * as loadBalancerConstants from './loadBalancerConstants';
 
 export {
   clustersConstants,
@@ -14,4 +16,6 @@ export {
   cloudProviderConstants,
   machineTypesConstants,
   subscriptionsConstants,
+  persistentStorageConstants,
+  loadBalancerConstants,
 };

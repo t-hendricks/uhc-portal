@@ -4,6 +4,8 @@ const constants = {
     for your cluster on openshiftapps.com.`,
   availabilityHint: 'Deploy to a single data center or to multiple data centers.',
   regionHint: 'The data center where your worker pool will be located.',
+  persistentStorageHint: 'The storage quota set on the deployed cluster.',
+  loadBalancersHint: 'The load balancer quota set on the deployed cluster.',
   computeNodeInstanceTypeHint: `The instance type for the compute nodes. Instance type
     determines the amount of memory and vCPU allocated to each compute node.`,
   computeNodeCountHint: `The number of compute, or worker, nodes to provision per zone.

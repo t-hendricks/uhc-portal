@@ -26,7 +26,9 @@ class CreateOSDCluster extends React.Component {
   componentDidMount() {
     const {
       machineTypes, organization, cloudProviders,
+      persistentStorageValues, loadBalancerValues,
       getMachineTypes, getOrganizationAndQuota, getCloudProviders,
+      getLoadBalancers, getPersistentStorage,
     } = this.props;
 
     this.reset();
@@ -38,6 +40,12 @@ class CreateOSDCluster extends React.Component {
     }
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
+    }
+    if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
+      getPersistentStorage();
+    }
+    if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
+      getLoadBalancers();
     }
   }
 
@@ -63,7 +71,8 @@ class CreateOSDCluster extends React.Component {
   render() {
     const {
       handleSubmit, createClusterResponse, change,
-      machineTypes, organization, cloudProviders, isOpen,
+      machineTypes, organization, cloudProviders,
+      loadBalancerValues, persistentStorageValues, isOpen,
       resetResponse,
     } = this.props;
 
@@ -80,6 +89,10 @@ class CreateOSDCluster extends React.Component {
         resetResponse={resetResponse}
       />
     );
+
+    const requests = [machineTypes, organization,
+      cloudProviders, loadBalancerValues, persistentStorageValues];
+    const anyRequestPending = requests.some(request => request.pending);
 
     const title = (
       <PageTitle
@@ -113,7 +126,7 @@ class CreateOSDCluster extends React.Component {
       </div>
     );
 
-    if (machineTypes.pending || organization.pending || cloudProviders.pending) {
+    if (anyRequestPending) {
       return (
         <React.Fragment>
           {title}
@@ -175,7 +188,11 @@ CreateOSDCluster.propTypes = {
   change: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  persistentStorageValues: PropTypes.object.isRequired,
+  loadBalancerValues: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
+  getLoadBalancers: PropTypes.func.isRequired,
+  getPersistentStorage: PropTypes.func.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,

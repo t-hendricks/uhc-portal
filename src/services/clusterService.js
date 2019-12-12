@@ -120,6 +120,16 @@ const getClusterOperators = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/cluster_operators`,
 });
 
+const getStorageQuotaValues = () => apiRequest({
+  method: 'get',
+  url: '/api/clusters_mgmt/v1/storage_quota_values',
+});
+
+const getLoadBalancerQuotaValues = () => apiRequest({
+  method: 'get',
+  url: '/api/clusters_mgmt/v1/load_balancer_quota_values',
+});
+
 const archiveCluster = id => apiRequest({
   method: 'patch',
   url: `/api/accounts_mgmt/v1/subscriptions/${id}`,
@@ -180,6 +190,8 @@ const clusterService = {
   getClusterAddOns,
   addClusterAddOn,
   deleteClusterAddOn,
+  getStorageQuotaValues,
+  getLoadBalancerQuotaValues,
 };
 
 export default clusterService;

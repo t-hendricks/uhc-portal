@@ -1,0 +1,536 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoadBalancerComboBox /> when load balancer list needs to be fetched renders correctly 1`] = `
+<LoadBalancersComboBox
+  getLoadBalancers={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  input={
+    Object {
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+    }
+  }
+  loadBalancerValues={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": false,
+      "pending": false,
+      "values": Array [],
+    }
+  }
+>
+  <div
+    className="spinner-fit-container"
+  >
+    <Spinner>
+      <div
+        className="ins-c-spinner"
+        role="status"
+      >
+        <span
+          className="pf-u-screen-reader"
+        >
+          Loading...
+        </span>
+      </div>
+    </Spinner>
+  </div>
+  <div
+    className="spinner-loading-text"
+  >
+    Loading load balancers list...
+  </div>
+</LoadBalancersComboBox>
+`;
+
+exports[`<LoadBalancerComboBox /> when the load balancer list is available renders correctly 1`] = `
+<LoadBalancersComboBox
+  getLoadBalancers={[MockFunction]}
+  input={
+    Object {
+      "onChange": [MockFunction],
+    }
+  }
+  loadBalancerValues={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": true,
+      "pending": false,
+      "values": Array [
+        0,
+        4,
+        8,
+      ],
+    }
+  }
+>
+  <Component
+    aria-label="Load Balancers"
+    className="quota-combo-box"
+    isExpanded={false}
+    onSelect={[Function]}
+    onToggle={[Function]}
+    variant="single"
+  >
+    <ComponentWithOuia
+      component={[Function]}
+      componentProps={
+        Object {
+          "aria-label": "Load Balancers",
+          "children": Array [
+            <SelectOption
+              className=""
+              component="button"
+              index={0}
+              isChecked={false}
+              isDisabled={false}
+              isFocused={false}
+              isPlaceholder={false}
+              isSelected={false}
+              keyHandler={[Function]}
+              onClick={[Function]}
+              sendRef={[Function]}
+              value="0"
+            >
+              0
+            </SelectOption>,
+            <SelectOption
+              className=""
+              component="button"
+              index={0}
+              isChecked={false}
+              isDisabled={false}
+              isFocused={false}
+              isPlaceholder={false}
+              isSelected={false}
+              keyHandler={[Function]}
+              onClick={[Function]}
+              sendRef={[Function]}
+              value="4"
+            >
+              4
+            </SelectOption>,
+            <SelectOption
+              className=""
+              component="button"
+              index={0}
+              isChecked={false}
+              isDisabled={false}
+              isFocused={false}
+              isPlaceholder={false}
+              isSelected={false}
+              keyHandler={[Function]}
+              onClick={[Function]}
+              sendRef={[Function]}
+              value="8"
+            >
+              8
+            </SelectOption>,
+          ],
+          "className": "quota-combo-box",
+          "disabled": undefined,
+          "isExpanded": false,
+          "onSelect": [Function],
+          "onToggle": [Function],
+          "selections": undefined,
+          "variant": "single",
+        }
+      }
+      consumerContext={null}
+    >
+      <Select
+        aria-label="Load Balancers"
+        ariaLabelClear="Clear all"
+        ariaLabelRemove="Remove"
+        ariaLabelToggle="Options menu"
+        ariaLabelTypeAhead=""
+        ariaLabelledBy=""
+        className="quota-combo-box"
+        createText="Create"
+        direction="down"
+        isCreatable={false}
+        isDisabled={false}
+        isExpanded={false}
+        isGrouped={false}
+        isPlain={false}
+        noResultsFoundText="No results found"
+        onClear={[Function]}
+        onCreateOption={[Function]}
+        onFilter={null}
+        onSelect={[Function]}
+        onToggle={[Function]}
+        ouiaContext={
+          Object {
+            "isOuia": false,
+            "ouiaId": null,
+          }
+        }
+        placeholderText=""
+        selections=""
+        toggleIcon={null}
+        toggleId={null}
+        variant="single"
+        width=""
+      >
+        <div
+          className="pf-c-select quota-combo-box"
+          style={
+            Object {
+              "width": "",
+            }
+          }
+        >
+          <SelectToggle
+            ariaLabelToggle="Options menu"
+            ariaLabelledBy=" pf-toggle-id-0"
+            className=""
+            handleTypeaheadKeys={[Function]}
+            id="pf-toggle-id-0"
+            isActive={false}
+            isDisabled={false}
+            isExpanded={false}
+            isFocused={false}
+            isHovered={false}
+            isPlain={false}
+            onClose={[Function]}
+            onEnter={[Function]}
+            onToggle={[Function]}
+            parentRef={
+              Object {
+                "current": <div
+                  class="pf-c-select quota-combo-box"
+                >
+                  <button
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-labelledby=" pf-toggle-id-0"
+                    class="pf-c-select__toggle"
+                    id="pf-toggle-id-0"
+                    type="button"
+                  >
+                    <div
+                      class="pf-c-select__toggle-wrapper"
+                    >
+                      <span
+                        class="pf-c-select__toggle-text"
+                      >
+                        0
+                      </span>
+                    </div>
+                    <svg
+                      aria-hidden="true"
+                      class="pf-c-select__toggle-arrow"
+                      fill="currentColor"
+                      height="1em"
+                      role="img"
+                      style="vertical-align: -0.125em;"
+                      viewBox="0 0 320 512"
+                      width="1em"
+                    >
+                      <path
+                        d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                        transform=""
+                      />
+                    </svg>
+                  </button>
+                </div>,
+              }
+            }
+            type="button"
+            variant="single"
+          >
+            <button
+              aria-expanded={false}
+              aria-haspopup="listbox"
+              aria-labelledby=" pf-toggle-id-0"
+              className="pf-c-select__toggle"
+              disabled={false}
+              id="pf-toggle-id-0"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              type="button"
+            >
+              <div
+                className="pf-c-select__toggle-wrapper"
+              >
+                <span
+                  className="pf-c-select__toggle-text"
+                >
+                  0
+                </span>
+              </div>
+              <CaretDownIcon
+                className="pf-c-select__toggle-arrow"
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+                title={null}
+              >
+                <svg
+                  aria-hidden={true}
+                  aria-labelledby={null}
+                  className="pf-c-select__toggle-arrow"
+                  fill="currentColor"
+                  height="1em"
+                  role="img"
+                  style={
+                    Object {
+                      "verticalAlign": "-0.125em",
+                    }
+                  }
+                  viewBox="0 0 320 512"
+                  width="1em"
+                >
+                  <path
+                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"
+                    transform=""
+                  />
+                </svg>
+              </CaretDownIcon>
+            </button>
+          </SelectToggle>
+        </div>
+      </Select>
+    </ComponentWithOuia>
+  </Component>
+</LoadBalancersComboBox>
+`;
+
+exports[`<LoadBalancerComboBox /> when the request is pending renders correctly 1`] = `
+<LoadBalancersComboBox
+  getLoadBalancers={[MockFunction]}
+  input={
+    Object {
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+    }
+  }
+  loadBalancerValues={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": false,
+      "pending": true,
+      "values": Array [],
+    }
+  }
+>
+  <div
+    className="spinner-fit-container"
+  >
+    <Spinner>
+      <div
+        className="ins-c-spinner"
+        role="status"
+      >
+        <span
+          className="pf-u-screen-reader"
+        >
+          Loading...
+        </span>
+      </div>
+    </Spinner>
+  </div>
+  <div
+    className="spinner-loading-text"
+  >
+    Loading load balancers list...
+  </div>
+</LoadBalancersComboBox>
+`;
+
+exports[`<LoadBalancerComboBox /> when there was an error renders correctly 1`] = `
+<LoadBalancersComboBox
+  getLoadBalancers={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  input={
+    Object {
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+    }
+  }
+  loadBalancerValues={
+    Object {
+      "error": true,
+      "errorMessage": "This is an error message",
+      "fulfilled": false,
+      "pending": false,
+      "values": Array [],
+    }
+  }
+>
+  <ErrorBox
+    message="Error loading load balancers list"
+    response={
+      Object {
+        "error": true,
+        "errorMessage": "This is an error message",
+        "fulfilled": false,
+        "pending": false,
+        "values": Array [],
+      }
+    }
+  >
+    <Component
+      className="error-box"
+      isInline={true}
+      title="Error loading load balancers list"
+      variant="danger"
+    >
+      <ComponentWithOuia
+        component={[Function]}
+        componentProps={
+          Object {
+            "children": Array [
+              <span>
+                This is an error message
+              </span>,
+              Array [],
+              <br />,
+              <span>
+                Operation ID: N/A
+              </span>,
+            ],
+            "className": "error-box",
+            "isInline": true,
+            "title": "Error loading load balancers list",
+            "variant": "danger",
+          }
+        }
+        consumerContext={null}
+      >
+        <Alert
+          className="error-box"
+          isInline={true}
+          ouiaContext={
+            Object {
+              "isOuia": false,
+              "ouiaId": null,
+            }
+          }
+          title="Error loading load balancers list"
+          variant="danger"
+        >
+          <div
+            aria-label="Danger Alert"
+            className="pf-c-alert pf-m-inline pf-m-danger error-box"
+          >
+            <AlertIcon
+              variant="danger"
+            >
+              <div
+                className="pf-c-alert__icon"
+              >
+                <ExclamationCircleIcon
+                  color="currentColor"
+                  noVerticalAlign={false}
+                  size="sm"
+                  title={null}
+                >
+                  <svg
+                    aria-hidden={true}
+                    aria-labelledby={null}
+                    fill="currentColor"
+                    height="1em"
+                    role="img"
+                    style={
+                      Object {
+                        "verticalAlign": "-0.125em",
+                      }
+                    }
+                    viewBox="0 0 512 512"
+                    width="1em"
+                  >
+                    <path
+                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                      transform=""
+                    />
+                  </svg>
+                </ExclamationCircleIcon>
+              </div>
+            </AlertIcon>
+            <h4
+              className="pf-c-alert__title"
+            >
+              <span
+                className="pf-u-screen-reader"
+              >
+                Danger alert:
+              </span>
+              Error loading load balancers list
+            </h4>
+            <div
+              className="pf-c-alert__description"
+            >
+              <span>
+                This is an error message
+              </span>
+              <br />
+              <span>
+                Operation ID: N/A
+              </span>
+            </div>
+          </div>
+        </Alert>
+      </ComponentWithOuia>
+    </Component>
+  </ErrorBox>
+</LoadBalancersComboBox>
+`;

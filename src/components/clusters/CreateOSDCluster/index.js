@@ -4,6 +4,8 @@ import { createCluster, resetCreatedClusterResponse } from '../../../redux/actio
 import { getMachineTypes } from '../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
 import { getCloudProviders } from '../../../redux/actions/cloudProviderActions';
+import getLoadBalancerValues from '../../../redux/actions/loadBalancerActions';
+import getPersistentStorageValues from '../../../redux/actions/persistentStorageActions';
 import CreateOSDCluster from './CreateOSDCluster';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal } from '../../common/Modal/ModalActions';
@@ -18,6 +20,8 @@ const mapStateToProps = state => ({
   machineTypes: state.machineTypes,
   organization: state.userProfile.organization,
   cloudProviders: state.cloudProviders.cloudProviders,
+  loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
+  persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
   isOpen: shouldShowModal(state, 'osd-create-error'),
   initialValues: {
     name: '',
@@ -27,6 +31,8 @@ const mapStateToProps = state => ({
     aws_secret_access_key: '',
     region: 'us-east-1',
     multi_az: false,
+    persistent_storage: '107374182400', // The default storage to 100 GiB (in bytes).
+    load_balancers: '0',
   },
 });
 
@@ -50,6 +56,15 @@ const mapDispatchToProps = dispatch => ({
         pod_cidr: formData.network_pod_cidr,
       },
       managed: true,
+      // default to zero load balancers
+      load_balancer_quota: parseInt(formData.load_balancers, 10),
+      // values in the passed are always in bytes.
+      // see comment in PersistentStorageComboBox.js#82.
+      // Default to 100 GiB in bytes
+      storage_quota: {
+        unit: 'B',
+        value: parseFloat(formData.persistent_storage),
+      },
     };
 
     dispatch(createCluster(clusterRequest));
@@ -60,6 +75,8 @@ const mapDispatchToProps = dispatch => ({
   getOrganizationAndQuota,
   getMachineTypes,
   getCloudProviders,
+  getPersistentStorage: getPersistentStorageValues,
+  getLoadBalancers: getLoadBalancerValues,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateCluster);

@@ -834,6 +834,19 @@ span.dev-preview-label svg {
   padding: 0;
 }
 
+.quota-combo-box ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px !important;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+.edit-cluster-modal {
+  min-height: 70%;
+}
+
 div.pf-c-alert.archived-cluster-toast {
   position: absolute;
   z-index: 1;
