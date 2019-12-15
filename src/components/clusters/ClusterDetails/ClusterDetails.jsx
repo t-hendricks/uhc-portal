@@ -13,7 +13,6 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import result from 'lodash/result';
 import isUuid from 'uuid-validate';
 import { Redirect } from 'react-router';
 import get from 'lodash/get';
@@ -104,7 +103,7 @@ class ClusterDetails extends Component {
     const clusterID = match.params.id;
     const oldClusterID = prevProps.match.params.id;
 
-    if (result(clusterDetails, 'cluster.id') === clusterID) {
+    if (get(clusterDetails, 'cluster.id') === clusterID) {
       const clusterName = getClusterName(clusterDetails.cluster);
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
     }
@@ -187,7 +186,7 @@ class ClusterDetails extends Component {
     // the redux state will have the data for the previous cluster. We want to ensure we only
     // show data for the requested cluster, so different data should be marked as pending.
 
-    const isPending = ((result(cluster, 'id') !== requestedClusterID) && !clusterDetails.error) || clusterIdentityProviders.pending;
+    const isPending = ((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error) || clusterIdentityProviders.pending;
 
     const errorState = () => (
       <EmptyState>
@@ -208,7 +207,7 @@ class ClusterDetails extends Component {
 
     // show a full error state only if we don't have data at all,
     // or when we only have data for a different cluster
-    if (clusterDetails.error && (!cluster || result(cluster, 'id') !== requestedClusterID)) {
+    if (clusterDetails.error && (!cluster || get(cluster, 'id') !== requestedClusterID)) {
       if (clusterDetails.errorCode === 404) {
         setGlobalError((
           <React.Fragment>
