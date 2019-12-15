@@ -173,7 +173,7 @@ class BasicFields extends React.Component {
         {/* Persistent Storage */}
         <GridItem span={4}>
           <FormGroup
-            label="Persistent Storage"
+            label="Persistent storage"
             fieldId="persistent_storage"
           >
             <PopoverHint hint={constants.persistentStorageHint} />
@@ -190,7 +190,7 @@ class BasicFields extends React.Component {
         {/* Load Balancers */}
         <GridItem span={4}>
           <FormGroup
-            label="Load Balancers"
+            label="Load balancers"
             fieldId="load_balancers"
           >
             <PopoverHint hint={constants.loadBalancersHint} />
