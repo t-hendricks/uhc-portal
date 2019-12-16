@@ -73,7 +73,7 @@ class AddOns extends React.Component {
       return false;
     }
 
-    return clusterAddOns.items.some(clusterAddOn => clusterAddOn.id === addOn.id);
+    return clusterAddOns.items.some(clusterAddOn => clusterAddOn.addon.id === addOn.id);
   }
 
   // An add-on can only be installed if the org has quota for this particular add-on

@@ -155,7 +155,7 @@ const getClusterAddOns = clusterID => apiRequest({
 const addClusterAddOn = (clusterID, addOnID) => apiRequest({
   method: 'post',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons`,
-  data: `{"id":"${addOnID}"}`,
+  data: `{"addon":{"id":"${addOnID}"}}`,
 });
 
 const deleteClusterAddOn = (clusterID, addOnID) => apiRequest({
