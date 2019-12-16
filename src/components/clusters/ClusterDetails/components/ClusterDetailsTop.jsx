@@ -149,7 +149,7 @@ function ClusterDetailsTop(props) {
       {showIDPMessage && (
       <Split>
         <SplitItem isFilled>
-          {!clusterIdentityProviders.pending && <IdentityProvidersHint />}
+          {!clusterIdentityProviders.pending && cluster.canEdit && <IdentityProvidersHint />}
         </SplitItem>
       </Split>)
       }
