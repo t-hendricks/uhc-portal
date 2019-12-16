@@ -4,7 +4,7 @@ import get from 'lodash/get';
 
 
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
-import { humanizeValueWithUnit } from '../../../../../common/units';
+import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../common/units';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
 import ClusterNetwork from './ClusterNetwork';
@@ -20,7 +20,7 @@ function DetailsRight({ cluster }) {
   const showSockets = cluster.metrics.sockets.total.value > 0;
 
   const humanizedPersistentStorage = cluster.managed
-             && humanizeValueWithUnit(cluster.storage_quota.value, cluster.storage_quota.unit);
+             && humanizeValueWithUnitGiB(cluster.storage_quota.value);
 
   const showVCPU = !showSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;

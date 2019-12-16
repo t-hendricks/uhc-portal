@@ -120,7 +120,7 @@ exports[`<PersistentStorageComboBox /> when the request is pending renders corre
 </PersistentStorageComboBox>
 `;
 
-exports[`<PersistentStorageComboBox /> when the storagep list is available renders correctly 1`] = `
+exports[`<PersistentStorageComboBox /> when the storage list is available renders correctly 1`] = `
 <PersistentStorageComboBox
   getPersistentStorage={[MockFunction]}
   input={
@@ -136,16 +136,16 @@ exports[`<PersistentStorageComboBox /> when the storagep list is available rende
       "pending": false,
       "values": Array [
         Object {
-          "unit": "GiB",
-          "value": "100",
+          "unit": "B",
+          "value": 107374182400,
         },
         Object {
-          "unit": "GiB",
-          "value": "600",
+          "unit": "B",
+          "value": 644245094400,
         },
         Object {
-          "unit": "GiB",
-          "value": "1100",
+          "unit": "B",
+          "value": 1181116006400,
         },
       ],
     }
@@ -177,7 +177,7 @@ exports[`<PersistentStorageComboBox /> when the storagep list is available rende
               keyHandler={[Function]}
               onClick={[Function]}
               sendRef={[Function]}
-              value="100"
+              value="107374182400"
             >
               100 GiB
             </SelectOption>,
@@ -193,7 +193,7 @@ exports[`<PersistentStorageComboBox /> when the storagep list is available rende
               keyHandler={[Function]}
               onClick={[Function]}
               sendRef={[Function]}
-              value="600"
+              value="644245094400"
             >
               600 GiB
             </SelectOption>,
@@ -209,9 +209,9 @@ exports[`<PersistentStorageComboBox /> when the storagep list is available rende
               keyHandler={[Function]}
               onClick={[Function]}
               sendRef={[Function]}
-              value="1100"
+              value="1181116006400"
             >
-              1.07 TiB
+              1100 GiB
             </SelectOption>,
           ],
           "className": "quota-combo-box",
