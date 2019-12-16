@@ -3,6 +3,7 @@
 exports[`<ClusterHealthCard /> should render 1`] = `
 <Component
   aria-label="alerts"
+  borders={false}
   cells={
     Array [
       Object {
