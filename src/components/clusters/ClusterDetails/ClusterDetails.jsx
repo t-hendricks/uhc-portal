@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import isUuid from 'uuid-validate';
 import { Redirect } from 'react-router';
 import get from 'lodash/get';
+import has from 'lodash/has';
 
 import { EmptyState, PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
@@ -229,7 +230,7 @@ class ClusterDetails extends Component {
     };
 
     const hasLogs = !!logs.lines;
-    const hasAddOns = !!get(addOns, 'items.length', false);
+    const hasAddOns = !!get(addOns, 'items.length', false) && has(organization.quotaList, 'addOnsQuota');
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
     return (

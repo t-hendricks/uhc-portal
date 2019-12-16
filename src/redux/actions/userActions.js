@@ -8,7 +8,7 @@ const userInfoResponse = payload => ({
   type: userConstants.USER_INFO_RESPONSE,
 });
 
-const fetchQuota = organiztionID => accountsService.getOrganizationQuota(organiztionID).then(
+const fetchQuota = organizationID => accountsService.getOrganizationQuota(organizationID).then(
   (response) => {
     /* construct an easy to query structure to figure out how many of each node type
       we have available.
@@ -25,12 +25,31 @@ const fetchQuota = organiztionID => accountsService.getOrganizationQuota(organiz
         multiAz: {},
       },
     };
+
     const items = get(response.data, 'items', []);
     items.forEach((item) => {
-      const available = item.allowed - item.reserved;
-      const category = item.byoc ? 'byoc' : 'rhInfra';
-      const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
-      response.data.nodeQuota[category][zoneType][item.resource_name] = available;
+      switch (item.resource_type) {
+        case 'cluster.aws': {
+          const available = item.allowed - item.reserved;
+          const category = item.byoc ? 'byoc' : 'rhInfra';
+          const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
+          response.data.nodeQuota[category][zoneType][item.resource_name] = available;
+          break;
+        }
+        case 'addon':
+          // Create a map of add-on resource names to track available quota
+          if (!response.data.addOnsQuota) {
+            response.data.addOnsQuota = {};
+          }
+          if (!response.data.addOnsQuota[item.resource_name]) {
+            response.data.addOnsQuota[item.resource_name] = 0;
+          }
+          // Accumulate all available quota per resource name
+          response.data.addOnsQuota[item.resource_name] += item.allowed - item.reserved;
+          break;
+        default:
+          break;
+      }
     });
     return response;
   },

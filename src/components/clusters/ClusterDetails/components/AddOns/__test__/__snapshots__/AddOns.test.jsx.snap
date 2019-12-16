@@ -5,6 +5,40 @@ exports[`<AddOns /> should render 1`] = `
   className="cluster-details-addons-tab-contents"
 >
   <Card
+    key="managed-integration"
+  >
+    <CardHead>
+      <Title
+        headingLevel="h2"
+        size="2xl"
+      >
+        Red Hat Managed Integration
+      </Title>
+      <CardActions>
+        <Component
+          aria-label="Install"
+          isDisabled={false}
+          onClick={[Function]}
+          variant="secondary"
+        >
+          Install
+        </Component>
+      </CardActions>
+    </CardHead>
+    <CardBody
+      className="addon-card"
+    >
+      <div
+        className="addon-icon"
+      />
+      <div
+        className="addon-description"
+      >
+        Red Hat managed integration, based on the integreatly project, is an opinionated installation of a number of independent middleware services and tools into an OpenShift Dedicated cluster.
+      </div>
+    </CardBody>
+  </Card>
+  <Card
     key="service-mesh"
   >
     <CardHead>
@@ -37,48 +71,14 @@ exports[`<AddOns /> should render 1`] = `
     </CardBody>
   </Card>
   <Card
-    key="managed-integration"
+    key="dba-operator"
   >
     <CardHead>
       <Title
         headingLevel="h2"
         size="2xl"
       >
-        Red Hat Managed Integration
-      </Title>
-      <CardActions>
-        <Component
-          aria-label="Install"
-          isDisabled={true}
-          onClick={[Function]}
-          variant="secondary"
-        >
-          Install
-        </Component>
-      </CardActions>
-    </CardHead>
-    <CardBody
-      className="addon-card"
-    >
-      <div
-        className="addon-icon"
-      />
-      <div
-        className="addon-description"
-      >
-        Red Hat managed integration, based on the integreatly project, is an opinionated installation of a number of independent middleware services and tools into an OpenShift Dedicated cluster.
-      </div>
-    </CardBody>
-  </Card>
-  <Card
-    key="crc-workspaces"
-  >
-    <CardHead>
-      <Title
-        headingLevel="h2"
-        size="2xl"
-      >
-        Red Hat CodeReady Workspaces
+        DBA Operator
       </Title>
       <CardActions>
         <Component
@@ -100,7 +100,75 @@ exports[`<AddOns /> should render 1`] = `
       <div
         className="addon-description"
       >
-        Built on the open Eclipse Che project, Red Hat CodeReady Workspaces provides developer workspaces, which include all the tools and the dependencies that are needed to code, build, test, run, and debug applications.
+        DBA Operator description
+      </div>
+    </CardBody>
+  </Card>
+  <Card
+    key="integreatly"
+  >
+    <CardHead>
+      <Title
+        headingLevel="h2"
+        size="2xl"
+      >
+        Integreatly Operator
+      </Title>
+      <CardActions>
+        <Component
+          aria-label="Install"
+          isDisabled={true}
+          onClick={[Function]}
+          variant="secondary"
+        >
+          Install
+        </Component>
+      </CardActions>
+    </CardHead>
+    <CardBody
+      className="addon-card"
+    >
+      <div
+        className="addon-icon"
+      />
+      <div
+        className="addon-description"
+      >
+        Install and configure the integreatly suite of Software
+      </div>
+    </CardBody>
+  </Card>
+  <Card
+    key="prow-operator"
+  >
+    <CardHead>
+      <Title
+        headingLevel="h2"
+        size="2xl"
+      >
+        Prow Operator
+      </Title>
+      <CardActions>
+        <Component
+          aria-label="Install"
+          isDisabled={false}
+          onClick={[Function]}
+          variant="secondary"
+        >
+          Install
+        </Component>
+      </CardActions>
+    </CardHead>
+    <CardBody
+      className="addon-card"
+    >
+      <div
+        className="addon-icon"
+      />
+      <div
+        className="addon-description"
+      >
+        Manage Prow CRDs
       </div>
     </CardBody>
   </Card>
