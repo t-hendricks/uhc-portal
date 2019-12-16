@@ -16,10 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button } from 'patternfly-react';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
 
-import ModalHeader from '../../../../common/Modal/components/ModalHeader';
+import Modal from '../../../../common/Modal/Modal';
 
 import IDPForm from './components/IDPForm';
 
@@ -27,19 +25,21 @@ class IdentityProvidersModal extends React.Component {
   componentDidUpdate() {
     const { createIDPResponse, getClusterIdentityProviders } = this.props;
     if (createIDPResponse.fulfilled) {
-      this.onClose();
+      this.onClose(true);
       getClusterIdentityProviders();
     }
   }
 
-  onClose = () => {
+  onClose = (refresh) => {
     const {
-      resetResponse, resetForm, closeModal, onClose,
+      resetResponse, resetForm, closeModal, refreshParent,
     } = this.props;
     resetResponse();
     resetForm();
     closeModal();
-    onClose();
+    if (refresh && refreshParent !== undefined) {
+      refreshParent();
+    }
   };
 
   render() {
@@ -49,35 +49,21 @@ class IdentityProvidersModal extends React.Component {
 
     const isPending = createIDPResponse.pending;
 
-    const LoadingSpinner = () => (
-      <div className="form-loading-spinner">
-        <span>Please wait...</span>
-        <Spinner />
-      </div>
-    );
-
     return isOpen
     && (
-    <Modal show className="right-side-modal-pf" bsSize="large" onHide={this.onClose}>
-      <Modal.Header>
-        <ModalHeader title={`Create Identity Provider (${clusterName})`} onClose={this.onClose} />
-      </Modal.Header>
-      <Modal.Body>
-        <IDPForm
-          selectedIDP={selectedIDP}
-          createIDPResponse={createIDPResponse}
-          selectedMappingMethod={selectedMappingMethod}
-        />
-      </Modal.Body>
-      <Modal.Footer>
-        <Button bsStyle="primary" type="submit" onClick={handleSubmit} disabled={isPending}>
-          Create
-        </Button>
-        <Button bsStyle="default" onClick={this.onClose} disabled={isPending}>
-          Cancel
-        </Button>
-        {isPending ? <LoadingSpinner /> : null}
-      </Modal.Footer>
+    <Modal
+      isLarge
+      onClose={() => this.onClose()}
+      title={`Create Identity Provider (${clusterName})`}
+      isPending={isPending}
+      onPrimaryClick={handleSubmit}
+      onSecondaryClick={() => this.onClose()}
+    >
+      <IDPForm
+        selectedIDP={selectedIDP}
+        createIDPResponse={createIDPResponse}
+        selectedMappingMethod={selectedMappingMethod}
+      />
     </Modal>
     );
   }
@@ -94,7 +80,7 @@ IdentityProvidersModal.propTypes = {
   getClusterIdentityProviders: PropTypes.func,
   selectedIDP: PropTypes.string,
   selectedMappingMethod: PropTypes.string,
-  onClose: PropTypes.func,
+  refreshParent: PropTypes.func,
 };
 
 IdentityProvidersModal.defaultProps = {

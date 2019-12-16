@@ -33,6 +33,8 @@ class GithubForm extends React.Component {
           placeholder="hostname"
           disabled={isPending}
           validate={hostnameRequired ? required : noop}
+          isRequired={hostnameRequired}
+          helpText="Optional domain to use with a hosted instance of GitHub Enterprise."
         />
         <Field
           component={ReduxVerticalFormGroup}
@@ -43,7 +45,7 @@ class GithubForm extends React.Component {
           helpText="PEM encoded certificate bundle to use to validate server certificates for the configured URL."
           disabled={isPending}
           className="ca-textarea"
-          componentClass="textarea"
+          isTextArea
           spellCheck="false"
           onChange={(e, value) => this.toggleHostnameRequired(e, value)}
         />

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
 import { GridItem, Alert } from '@patternfly/react-core';
-import ReduxVerticalFormGroupPF4 from '../../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
+import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 import { billingModelConstants } from '../CreateOSDClusterHelper';
 import { required } from '../../../../common/validators';
@@ -14,7 +14,7 @@ function AWSAccountDetailsFields(props) {
     <React.Fragment>
       <GridItem span={4}>
         <Field
-          component={ReduxVerticalFormGroupPF4}
+          component={ReduxVerticalFormGroup}
           name="access_key_id"
           label="AWS account ID"
           type="text"
@@ -34,7 +34,7 @@ function AWSAccountDetailsFields(props) {
       <GridItem span={4} />
       <GridItem span={4}>
         <Field
-          component={ReduxVerticalFormGroupPF4}
+          component={ReduxVerticalFormGroup}
           name="account_id"
           label="AWS access key ID"
           type="text"
@@ -46,7 +46,7 @@ function AWSAccountDetailsFields(props) {
       <GridItem span={8} />
       <GridItem span={4}>
         <Field
-          component={ReduxVerticalFormGroupPF4}
+          component={ReduxVerticalFormGroup}
           name="secret_access_key"
           label="AWS secret access key"
           type="text"

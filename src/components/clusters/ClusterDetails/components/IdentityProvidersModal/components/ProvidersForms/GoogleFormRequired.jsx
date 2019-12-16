@@ -17,6 +17,7 @@ function GoogleForm({ isPending, isRequired }) {
         type="text"
         placeholder="Hosted Domain"
         disabled={isPending}
+        isRequired={isRequired}
         validate={isRequired ? required : null}
       />
     </React.Fragment>

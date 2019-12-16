@@ -37,6 +37,7 @@ class GithubFormRequired extends React.Component {
             name="organizations"
             label="Organizations"
             type="text"
+            isRequired={!orgsDisabled}
             placeholder="comma separated, example: org1,org2,org3"
             disabled={orgsDisabled || isPending}
             helpText={orgsDisabled ? 'Cannot be used in combination with the teams field' : ''}
@@ -48,6 +49,7 @@ class GithubFormRequired extends React.Component {
             name="teams"
             label="Teams"
             type="text"
+            isRequired={!teamsDisabled}
             placeholder="comma separated, example: org1/team1,org2/team2"
             disabled={teamsDisabled || isPending}
             helpText={teamsDisabled ? 'Cannot be used in combination with the organizations field' : ''}

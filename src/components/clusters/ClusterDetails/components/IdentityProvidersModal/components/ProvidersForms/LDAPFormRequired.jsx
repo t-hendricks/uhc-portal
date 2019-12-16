@@ -33,6 +33,7 @@ class LDAPFormRequired extends React.Component {
           placeholder="Bind DN"
           disabled={isPending}
           onChange={this.toggleBindPasswordDisabled}
+          helpText="DN to bind with during the search phase."
         />
         <Field
           component={ReduxVerticalFormGroup}
@@ -40,9 +41,10 @@ class LDAPFormRequired extends React.Component {
           label="Bind Password"
           type="password"
           placeholder="Bind Password"
-          helpText={!hasBindDN ? 'Cannot be used if Bind DN is not set' : ''}
+          helpText={!hasBindDN ? 'Cannot be used if Bind DN is not set' : 'Password to bind with during the search phase.'}
           disabled={!hasBindDN || isPending}
           validate={hasBindDN ? required : undefined}
+          isRequired={hasBindDN}
         />
         <Field
           component={ReduxVerticalFormGroup}
@@ -52,6 +54,8 @@ class LDAPFormRequired extends React.Component {
           placeholder="url"
           disabled={isPending}
           validate={required}
+          isRequired
+          helpText="An RFC 2255 URL which specifies the LDAP search parameters to use."
         />
         <h4>Attributes</h4>
         <Field
@@ -62,14 +66,17 @@ class LDAPFormRequired extends React.Component {
           placeholder="comma separated, example: 'id1, id-2"
           disabled={isPending}
           validate={required}
+          isRequired
+          helpText="The list of attributes whose values should be used as the ID."
         />
         <Field
           component={ReduxVerticalFormGroup}
           name="ldap_email"
           label="Email"
           type="text"
-          placeholder="comma separated, example: ***REMOVED***, ***REMOVED***"
+          placeholder="comma separated"
           disabled={isPending}
+          helpText="The list of attributes whose values should be used as the email address."
         />
         <Field
           component={ReduxVerticalFormGroup}
@@ -78,6 +85,7 @@ class LDAPFormRequired extends React.Component {
           type="text"
           placeholder="comma separated, example: 'name1, name2"
           disabled={isPending}
+          helpText="The list of attributes whose values should be used as the display name."
         />
         <Field
           component={ReduxVerticalFormGroup}
@@ -86,6 +94,7 @@ class LDAPFormRequired extends React.Component {
           type="text"
           placeholder="comma separated, example: 'name1, name2, name3"
           disabled={isPending}
+          helpText="The list of attributes whose values should be used as the preferred username."
         />
       </React.Fragment>
     );

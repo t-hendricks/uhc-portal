@@ -15,6 +15,7 @@ function IDPBasicFields({ isPending }) {
         type="text"
         placeholder="Client ID"
         validate={required}
+        isRequired
         disabled={isPending}
       />
       <Field
@@ -24,6 +25,7 @@ function IDPBasicFields({ isPending }) {
         type="password"
         placeholder="Client Secret"
         validate={required}
+        isRequired
         disabled={isPending}
       />
     </React.Fragment>

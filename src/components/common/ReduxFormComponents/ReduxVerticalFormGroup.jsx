@@ -1,59 +1,79 @@
-/*
-Copyright (c) 2018 Red Hat, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  ControlLabel, HelpBlock, FormControl, FormGroup,
-} from 'patternfly-react';
+  FormGroup,
+  TextInput,
+  TextArea,
+} from '@patternfly/react-core';
+import PopoverHint from '../PopoverHint';
 
 // To be used inside redux-form Field component.
 function ReduxVerticalFormGroup(props) {
   const {
     label,
     helpText,
+    extendedHelpText,
+    isRequired,
     meta: { error, touched },
     input,
+    disabled,
+    isTextArea,
     ...extraProps // any extra props not specified above
   } = props;
 
+  const InputComponent = isTextArea ? TextArea : TextInput;
+  // TextArea and TextInput has different ways to specify if the component is disabled
+  // this forces us to do this trick:
+  const disabledPropName = isTextArea ? 'disabled' : 'isDisabled';
+  const disabledProp = {
+    [disabledPropName]: disabled,
+  };
+
   return (
-    <FormGroup controlId={input.name} validationState={touched && error ? 'error' : null}>
-      <ControlLabel>
-        {label}
-      </ControlLabel>
-      <FormControl name={input.name} {...input} {...extraProps} />
-      <HelpBlock>
-        {touched && error ? `${helpText} ${error}` : helpText}
-      </HelpBlock>
+    <FormGroup
+      fieldId={input.name}
+      isValid={!(touched && error)}
+      label={label}
+      helperText={helpText}
+      helperTextInvalid={touched && error ? `${helpText} ${error}` : ''}
+      isRequired={isRequired}
+    >
+      { extendedHelpText && (
+        <PopoverHint hint={extendedHelpText} />
+      )}
+      <InputComponent
+        value={input.value}
+        isRequired={isRequired}
+        id={input.name}
+        name={input.name}
+        isValid={!(touched && error)}
+        {...disabledProp}
+        {...input}
+        {...extraProps}
+      />
     </FormGroup>
   );
 }
 ReduxVerticalFormGroup.defaultProps = {
   helpText: '',
+  isRequired: false,
 };
 ReduxVerticalFormGroup.propTypes = {
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
+  extendedHelpText: PropTypes.string,
   // props passed by redux-form
   // collection of redux-form callbacks to be destructured into an html input element
   input: PropTypes.object.isRequired,
   // redux-form metadata like error or active states
   meta: PropTypes.object.isRequired,
-  // plus other props passed from the <Field> component to the control (extraProps, incl. children)…
+  // is this a required field?
+  isRequired: PropTypes.bool,
+  // Render a textarea instead of a textinput?
+  isTextArea: PropTypes.bool,
+  // plus other props passed from the <Field> component to the control (extraProps,
+  // incl. children)...
 };
 
 export default ReduxVerticalFormGroup;

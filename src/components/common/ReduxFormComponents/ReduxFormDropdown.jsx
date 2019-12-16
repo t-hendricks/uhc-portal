@@ -1,44 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  ControlLabel, HelpBlock, FormControl, FormGroup,
-} from 'patternfly-react';
+import { FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
 
-function DropDownSelect({
-  options,
-  label,
-  helpText,
-  meta: { error, touched },
-  input,
-  ...extraProps
-}) {
-  return (
-    <React.Fragment>
-      <FormGroup controlId={input.name} validationState={touched && error ? 'error' : null}>
-        <ControlLabel>
-          {label}
-        </ControlLabel>
-        <FormControl name={input.name} {...input} {...extraProps} componentClass="select">
+class DropDownSelect extends React.Component {
+  state = {
+    value: '',
+  };
+
+  onChange = (value, event) => {
+    const { input: { onChange } } = this.props;
+    this.setState({ value });
+    onChange(event, value); // redux form has the parameters the other way around from PF
+  };
+
+  render() {
+    const {
+      options,
+      label,
+      helpText,
+      meta: { error, touched },
+      input,
+      ...extraProps
+    } = this.props;
+    const { value } = this.state;
+    return (
+      <FormGroup
+        fieldId={input.name}
+        label={label}
+        validated={touched && error ? 'error' : null}
+        helperText={helpText}
+        helperTextInvalid={touched && error ? `${helpText} ${error}` : ''}
+      >
+        <FormSelect
+          id={input.name}
+          name={input.name}
+          value={value}
+          {...input}
+          onChange={this.onChange}
+          {...extraProps}
+        >
           {options.map(option => (
-            <option
+            <FormSelectOption
               key={option.value}
               value={option.value}
-            >
-              {option.name}
-            </option>
+              label={option.name}
+            />
           ))}
-        </FormControl>
-        <HelpBlock>
-          {touched && error ? `${helpText} ${error}` : helpText}
-        </HelpBlock>
+        </FormSelect>
       </FormGroup>
-    </React.Fragment>
-  );
+    );
+  }
 }
 
 DropDownSelect.propTypes = {
-  options: PropTypes.array.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
+  input: PropTypes.shape({
+    onChange: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default DropDownSelect;
