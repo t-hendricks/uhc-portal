@@ -27,7 +27,7 @@ function ClusterUtilizationChart(props) {
         <ChartDonutThreshold
           ariaDesc={title}
           data={[{ x: '', y: 80 }, { x: 'Warning at 80%', y: 95 }, { x: 'Danger at 95%', y: 100 }]}
-          labels={datum => (datum.x ? datum.x : null)}
+          labels={({ datum }) => datum.x || null}
         >
           <ChartDonutUtilization
             id={donutId}
