@@ -148,7 +148,7 @@ class AddOns extends React.Component {
                 <Button
                   variant="secondary"
                   aria-label="Install"
-                  isDisabled={!isClusterReady || !this.hasQuota(addOn)}
+                  isDisabled={!isClusterReady || !cluster.canEdit || !this.hasQuota(addOn)}
                   onClick={() => addClusterAddOn(clusterID, addOn.id)}
                 >
                   Install
