@@ -282,14 +282,14 @@ class ClusterDetails extends Component {
         <TabContent eventKey={2} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
           <Users clusterID={cluster.id} />
         </TabContent>
-        {hasLogs && (
-        <TabContent eventKey={3} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
-          <LogWindow clusterID={cluster.id} />
+        {displayAddOnsTab && (
+        <TabContent eventKey={3} id="addOnsTabContent" ref={this.addOnsTabRef} aria-label="Add-ons" hidden>
+          <AddOns clusterID={cluster.id} />
         </TabContent>
         )}
-        {displayAddOnsTab && (
-        <TabContent eventKey={4} id="addOnsTabContent" ref={this.addOnsTabRef} aria-label="Add-ons" hidden>
-          <AddOns clusterID={cluster.id} />
+        {hasLogs && (
+        <TabContent eventKey={4} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
+          <LogWindow clusterID={cluster.id} />
         </TabContent>
         )}
         <EditClusterDialog onClose={onDialogClose} />

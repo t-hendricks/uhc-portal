@@ -7,8 +7,8 @@ const tabs = {
   overview: 0,
   monitoring: 1,
   users: 2,
-  logs: 3,
-  addons: 4,
+  addons: 3,
+  logs: 4,
 };
 
 class TabsRow extends React.Component {
@@ -28,16 +28,16 @@ class TabsRow extends React.Component {
   componentDidUpdate() {
     const { activeTabKey } = this.state;
     const {
-      displayLogs,
-      displayUsersTab,
-      displayMonitoringTab,
-      displayAddOnsTab,
       overviewTabRef,
+      displayMonitoringTab,
+      displayUsersTab,
+      displayAddOnsTab,
+      displayLogs,
     } = this.props;
     if ((activeTabKey === tabs.monitoring && !displayMonitoringTab)
         || (activeTabKey === tabs.users && !displayUsersTab)
-        || (activeTabKey === tabs.logs && !displayLogs)
-        || (activeTabKey === tabs.addons && !displayAddOnsTab)) {
+        || (activeTabKey === tabs.addons && !displayAddOnsTab)
+        || (activeTabKey === tabs.logs && !displayLogs)) {
       this.handleTabClick(undefined, tabs.overview);
       overviewTabRef.current.hidden = false;
     }
@@ -45,15 +45,15 @@ class TabsRow extends React.Component {
 
   render() {
     const {
-      displayLogs,
-      displayUsersTab,
       displayMonitoringTab,
+      displayUsersTab,
       displayAddOnsTab,
+      displayLogs,
       overviewTabRef,
       monitoringTabRef,
       usersTabRef,
-      logsTabRef,
       addOnsTabRef,
+      logsTabRef,
     } = this.props;
     const { activeTabKey } = this.state;
 
@@ -68,20 +68,20 @@ class TabsRow extends React.Component {
     const usersTab = displayUsersTab && (
     <Tab key={tabs.users} eventKey={tabs.users} title="Users" tabContentId="usersTabContent" tabContentRef={usersTabRef} />);
 
-    const logsTab = displayLogs && (
-    <Tab key={tabs.logs} eventKey={tabs.logs} title="Logs" tabContentId="logsTabContent" tabContentRef={logsTabRef} />
-    );
-
     const addOnsTab = displayAddOnsTab && (
     <Tab key={tabs.addons} eventKey={tabs.addons} title="Add-ons" tabContentId="addOnsTabContent" tabContentRef={addOnsTabRef} />
+    );
+
+    const logsTab = displayLogs && (
+    <Tab key={tabs.logs} eventKey={tabs.logs} title="Logs" tabContentId="logsTabContent" tabContentRef={logsTabRef} />
     );
 
     const tabsToDisplay = [
       overviewTab,
       monitoringTab,
       usersTab,
-      logsTab,
       addOnsTab,
+      logsTab,
     ].filter(Boolean);
 
     return (
@@ -92,22 +92,22 @@ class TabsRow extends React.Component {
 }
 
 TabsRow.propTypes = {
-  displayLogs: PropTypes.bool,
-  displayUsersTab: PropTypes.bool,
   displayMonitoringTab: PropTypes.bool,
+  displayUsersTab: PropTypes.bool,
   displayAddOnsTab: PropTypes.bool,
+  displayLogs: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
-  logsTabRef: PropTypes.object.isRequired,
   usersTabRef: PropTypes.object.isRequired,
   addOnsTabRef: PropTypes.object.isRequired,
+  logsTabRef: PropTypes.object.isRequired,
 };
 
 TabsRow.defaultProps = {
-  displayLogs: false,
-  displayUsersTab: false,
   displayMonitoringTab: true,
+  displayUsersTab: false,
   displayAddOnsTab: false,
+  displayLogs: false,
 };
 
 export default TabsRow;
