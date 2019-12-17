@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { required } from '../../../../../../../common/validators';
 
-function BasicFields({ isPending }) {
+function IDPBasicFields({ isPending }) {
   return (
     <React.Fragment>
       <Field
@@ -30,12 +30,12 @@ function BasicFields({ isPending }) {
   );
 }
 
-BasicFields.propTypes = {
+IDPBasicFields.propTypes = {
   isPending: PropTypes.bool,
 };
 
-BasicFields.defaultProps = {
+IDPBasicFields.defaultProps = {
   isPending: false,
 };
 
-export default BasicFields;
+export default IDPBasicFields;

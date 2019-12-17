@@ -38,7 +38,7 @@ const editSubscription = (subscriptionID, data) => apiRequest({
 
 const getOrganizationQuota = organizationID => apiRequest({
   method: 'get',
-  url: `/api/accounts_mgmt/v1/organizations/${organizationID}/quota_summary?search=resource_type='cluster.aws'`,
+  url: `/api/accounts_mgmt/v1/organizations/${organizationID}/quota_summary?search=resource_type='cluster.aws' or resource_type='addon'`,
 });
 
 function getRequest(pathParams, params = {}) {

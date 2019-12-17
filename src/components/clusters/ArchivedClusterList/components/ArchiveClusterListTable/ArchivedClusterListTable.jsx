@@ -1,4 +1,4 @@
-import result from 'lodash/result';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Tooltip, TooltipPosition } from '@patternfly/react-core';
@@ -37,7 +37,7 @@ function ArchivedClusterListTable(props) {
   };
 
   const clusterRow = (cluster) => {
-    const provider = result(cluster, 'cloud_provider.id', 'N/A');
+    const provider = get(cluster, 'cloud_provider.id', 'N/A');
     const name = getClusterName(cluster);
 
     const clusterName = (
@@ -62,7 +62,7 @@ function ArchivedClusterListTable(props) {
       { title: clusterName },
       {
         title: <ClusterLocationLabel
-          regionID={result(cluster, 'region.id', 'N/A')}
+          regionID={get(cluster, 'region.id', 'N/A')}
           cloudProviderID={provider}
         />,
       },

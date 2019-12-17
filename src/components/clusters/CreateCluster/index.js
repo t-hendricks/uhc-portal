@@ -11,7 +11,7 @@ export const mapDispatchToProps = {
 
 export function mapStateToProps(state) {
   return {
-    hasQuota: hasQuota(state.userProfile.organization.quotaList.items || []),
+    hasQuota: hasQuota(state.userProfile.organization.quotaList.items || [], 'cluster.aws'),
     organization: state.userProfile.organization,
   };
 }

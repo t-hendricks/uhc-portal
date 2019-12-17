@@ -26,7 +26,9 @@ class CreateOSDCluster extends React.Component {
   componentDidMount() {
     const {
       machineTypes, organization, cloudProviders,
+      persistentStorageValues, loadBalancerValues,
       getMachineTypes, getOrganizationAndQuota, getCloudProviders,
+      getLoadBalancers, getPersistentStorage,
     } = this.props;
 
     this.reset();
@@ -39,12 +41,18 @@ class CreateOSDCluster extends React.Component {
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
     }
+    if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
+      getPersistentStorage();
+    }
+    if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
+      getLoadBalancers();
+    }
   }
 
   componentDidUpdate() {
-    const { createClusterResponse, openModal, isOpen } = this.props;
-    if (createClusterResponse.error && !isOpen) {
-      openModal();
+    const { createClusterResponse, openModal, isErrorModalOpen } = this.props;
+    if (createClusterResponse.error && !isErrorModalOpen) {
+      openModal('osd-create-error');
     }
   }
 
@@ -62,8 +70,15 @@ class CreateOSDCluster extends React.Component {
 
   render() {
     const {
-      handleSubmit, createClusterResponse, change,
-      machineTypes, organization, cloudProviders, isOpen,
+      handleSubmit,
+      createClusterResponse,
+      change,
+      machineTypes,
+      organization,
+      cloudProviders,
+      loadBalancerValues,
+      persistentStorageValues,
+      isErrorModalOpen,
       resetResponse,
     } = this.props;
 
@@ -73,13 +88,17 @@ class CreateOSDCluster extends React.Component {
       );
     }
 
-    const errorModal = isOpen && (
+    const errorModal = isErrorModalOpen && (
       <ErrorModal
         title="Error Creating Cluster"
         errorResponse={createClusterResponse}
         resetResponse={resetResponse}
       />
     );
+
+    const requests = [machineTypes, organization,
+      cloudProviders, loadBalancerValues, persistentStorageValues];
+    const anyRequestPending = requests.some(request => request.pending);
 
     const title = (
       <PageTitle
@@ -113,7 +132,7 @@ class CreateOSDCluster extends React.Component {
       </div>
     );
 
-    if (machineTypes.pending || organization.pending || cloudProviders.pending) {
+    if (anyRequestPending) {
       return (
         <React.Fragment>
           {title}
@@ -166,7 +185,7 @@ class CreateOSDCluster extends React.Component {
   }
 }
 CreateOSDCluster.propTypes = {
-  isOpen: PropTypes.bool,
+  isErrorModalOpen: PropTypes.bool,
   openModal: PropTypes.func,
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
@@ -175,7 +194,11 @@ CreateOSDCluster.propTypes = {
   change: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  persistentStorageValues: PropTypes.object.isRequired,
+  loadBalancerValues: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
+  getLoadBalancers: PropTypes.func.isRequired,
+  getPersistentStorage: PropTypes.func.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,

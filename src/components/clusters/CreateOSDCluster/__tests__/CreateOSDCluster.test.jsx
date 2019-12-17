@@ -37,10 +37,14 @@ describe('CreateOSDCluster', () => {
       createClusterResponse={createClusterResponse}
       getOrganizationAndQuota={getOrganizationAndQuota}
       getMachineTypes={jest.fn()}
+      getLoadBalancers={jest.fn()}
+      getPersistentStorage={jest.fn()}
       getCloudProviders={jest.fn()}
       organization={fulfilledRequest}
       cloudProviders={fulfilledRequest}
       machineTypes={fulfilledRequest}
+      loadBalancerValues={fulfilledRequest}
+      persistentStorageValues={fulfilledRequest}
     />);
   });
 
@@ -63,8 +67,10 @@ describe('CreateOSDCluster', () => {
       expect(resetForm).toBeCalled();
     });
 
-    it('should fetch cloud providers, machine types, and quota when first mounted', () => {
+    it('should fetch cloud providers, machine types, load balancers, persistent storage and quota when first mounted', () => {
       const getMachineTypes = jest.fn();
+      const getLoadBalancers = jest.fn();
+      const getPersistentStorage = jest.fn();
       const getCloudProviders = jest.fn();
       const initialRequestStatus = {
         pending: false,
@@ -83,9 +89,13 @@ describe('CreateOSDCluster', () => {
         getOrganizationAndQuota={getOrganizationAndQuota}
         getMachineTypes={getMachineTypes}
         getCloudProviders={getCloudProviders}
+        getLoadBalancers={getLoadBalancers}
+        getPersistentStorage={getPersistentStorage}
         organization={initialRequestStatus}
         cloudProviders={initialRequestStatus}
         machineTypes={initialRequestStatus}
+        persistentStorageValues={initialRequestStatus}
+        loadBalancerValues={initialRequestStatus}
       />);
       expect(getOrganizationAndQuota).toBeCalled();
       expect(getMachineTypes).toBeCalled();

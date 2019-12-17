@@ -28,7 +28,7 @@ class InstallAWSUPI extends Component {
         { label: 'Create', path: '/create' },
         { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Amazon Web Services', path: '/install/aws' },
-        { label: 'User-Provisioned Infrastracture' },
+        { label: 'User-Provisioned Infrastructure' },
       ]}
       />
     );

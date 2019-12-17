@@ -17,7 +17,7 @@ const InstructionsAWS = () => (
         <Link to="/install/aws/installer-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isRecommened />
           <CardBody>
-            <SyncAltIcon color={global_primary_color_100.value} size="xl" alt="Installer-Provisioned Infrastracture" className="aws-ipi-upi-infra-logo" />
+            <SyncAltIcon color={global_primary_color_100.value} size="xl" alt="Installer-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
             <Title headingLevel="h3" size="lg">Installer-Provisioned Infrastructure</Title>
             {' '}
             Deploy an OpenShift cluster on infrastructure that the installation program

@@ -74,6 +74,11 @@ const clusterDetails = {
       master: 3,
       compute: 2,
     },
+    storage_quota: {
+      value: '100',
+      unit: 'GiB',
+    },
+    load_balancer_quota: 0,
     metrics: {
       memory: {
         updated_timestamp: '2019-04-28T14:23:19Z',

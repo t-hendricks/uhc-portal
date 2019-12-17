@@ -1,4 +1,4 @@
-import result from 'lodash/result';
+import get from 'lodash/get';
 
 import { normalizeCluster } from './normalize';
 
@@ -335,6 +335,6 @@ test('Normalizes cluster from new API with .metrics subobject', () => {
 
 test('Normalizes cluster whose metrics fields completely missing', () => {
   const res = normalizeCluster(clusterWithMissingMetrics);
-  expect(result(res, 'metrics.cpu.total.value')).toBeUndefined();
-  expect(result(res, 'metrics.nodes.master')).toBeUndefined();
+  expect(get(res, 'metrics.cpu.total.value')).toBeUndefined();
+  expect(get(res, 'metrics.nodes.master')).toBeUndefined();
 });

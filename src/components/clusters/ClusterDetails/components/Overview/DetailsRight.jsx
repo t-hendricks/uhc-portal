@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import result from 'lodash/result';
 import get from 'lodash/get';
 
 
@@ -19,9 +18,12 @@ function DetailsRight({ cluster }) {
   const showInfraNodes = (!cluster.managed && get(cluster, 'metrics.nodes.infra', null))
                          || get(cluster, 'nodes.infra', 0) > 0;
   const showSockets = cluster.metrics.sockets.total.value > 0;
+
+  const humanizedPersistentStorage = cluster.managed
+             && humanizeValueWithUnit(cluster.storage_quota.value, cluster.storage_quota.unit);
+
   const showVCPU = !showSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-
   return (
     <React.Fragment>
       <dl className="cluster-details-item left">
@@ -59,6 +61,24 @@ function DetailsRight({ cluster }) {
           {' '}
           {memoryTotalWithUnit.unit}
         </dd>
+        { cluster.managed && (
+        <React.Fragment>
+          <dt>
+            Load Balancers
+          </dt>
+          <dd>
+            {cluster.load_balancer_quota}
+          </dd>
+          <dt>
+            Persistent Storage
+          </dt>
+          <dd>
+            {humanizedPersistentStorage.value}
+            {' '}
+            {humanizedPersistentStorage.unit}
+          </dd>
+        </React.Fragment>)
+        }
         {showSockets && (
           <React.Fragment>
             <dt>
@@ -82,7 +102,7 @@ function DetailsRight({ cluster }) {
                   {' '}
                 </dt>
                 <dd>
-                  {result(cluster, 'nodes.master', 'N/A')}
+                  {get(cluster, 'nodes.master', 'N/A')}
                 </dd>
               </dl>
               {showInfraNodes && (
@@ -92,7 +112,7 @@ function DetailsRight({ cluster }) {
                     {' '}
                   </dt>
                   <dd>
-                    {result(cluster, 'nodes.infra', 'N/A')}
+                    {get(cluster, 'nodes.infra', 'N/A')}
                   </dd>
                 </dl>
               )}
@@ -102,7 +122,7 @@ function DetailsRight({ cluster }) {
                   {' '}
                 </dt>
                 <dd>
-                  {result(cluster, 'nodes.compute', 'N/A')}
+                  {get(cluster, 'nodes.compute', 'N/A')}
                 </dd>
               </dl>
             </dd>
@@ -119,7 +139,7 @@ function DetailsRight({ cluster }) {
               {' '}
             </dt>
             <dd>
-              {result(cluster, 'metrics.nodes.master', 'N/A')}
+              {get(cluster, 'metrics.nodes.master', 'N/A')}
             </dd>
           </dl>
           {showInfraNodes && (
@@ -129,7 +149,7 @@ function DetailsRight({ cluster }) {
                 {' '}
               </dt>
               <dd>
-                {result(cluster, 'metrics.nodes.infra', 'N/A')}
+                {get(cluster, 'metrics.nodes.infra', 'N/A')}
               </dd>
             </dl>
           )}
@@ -139,7 +159,7 @@ function DetailsRight({ cluster }) {
               {' '}
             </dt>
             <dd>
-              {result(cluster, 'metrics.nodes.compute', 'N/A')}
+              {get(cluster, 'metrics.nodes.compute', 'N/A')}
             </dd>
           </dl>
         </dd>
@@ -149,7 +169,7 @@ function DetailsRight({ cluster }) {
               Support Level
             </dt>
             <dd>
-              {result(cluster, 'subscription.support_level', 'None (Evaluation)')}
+              {get(cluster, 'subscription.support_level', 'None (Evaluation)')}
             </dd>
           </React.Fragment>
         )}

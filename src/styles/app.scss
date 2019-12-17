@@ -834,10 +834,23 @@ span.dev-preview-label svg {
   padding: 0;
 }
 
+.quota-combo-box ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px !important;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+.edit-cluster-modal {
+  min-height: 70%;
+}
+
 div.pf-c-alert.archived-cluster-toast {
   position: absolute;
   z-index: 1;
-  
+
   width: 67%;
   right: 9%;
   top: 15%;
@@ -913,6 +926,9 @@ div.pf-c-alert.archived-cluster-toast {
     font-size: var(--pf-global--FontSize--lg);
     margin-top: var(--pf-global--spacer--lg);
     margin-bottom: 0;
+  }
+  .quota-table-used, .quota-table-max {
+    word-break: normal;
   }
 }
 

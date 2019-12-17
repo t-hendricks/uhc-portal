@@ -48,11 +48,11 @@ class CreateOSDClusterForm extends React.Component {
           <FormGroup
             label="Network configuration"
             isRequired
-            fieldId="network-congiguration-toggle"
+            fieldId="network-configuration-toggle"
           >
             <Field
               component={RadioButtons}
-              name="network-congiguration-toggle"
+              name="network-configuration-toggle"
               disabled={pending}
               onChange={toggleNetwork}
               options={[{ value: 'basic', label: 'Basic' }, { value: 'advanced', label: 'Advanced' }]}

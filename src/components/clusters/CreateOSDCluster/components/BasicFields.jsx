@@ -13,6 +13,8 @@ import validators, { required } from '../../../../common/validators';
 import minValueSelector from '../../common/EditClusterDialog/EditClusterSelectors';
 import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
 import constants from '../CreateOSDClusterHelper';
+import PersistentStorageComboBox from './PersistentStorageComboBox';
+import LoadBalancersComboBox from './LoadBalancersComboBox';
 
 class BasicFields extends React.Component {
   state = {
@@ -167,6 +169,40 @@ class BasicFields extends React.Component {
           />
         </GridItem>
         <GridItem span={8} />
+
+        {/* Persistent Storage */}
+        <GridItem span={4}>
+          <FormGroup
+            label="Persistent storage"
+            fieldId="persistent_storage"
+          >
+            <PopoverHint hint={constants.persistentStorageHint} />
+            <Field
+              name="persistent_storage"
+              component={PersistentStorageComboBox}
+              validate={required}
+              disabled={pending}
+            />
+          </FormGroup>
+        </GridItem>
+        <GridItem span={8} />
+
+        {/* Load Balancers */}
+        <GridItem span={4}>
+          <FormGroup
+            label="Load balancers"
+            fieldId="load_balancers"
+          >
+            <PopoverHint hint={constants.loadBalancersHint} />
+            <Field
+              name="load_balancers"
+              component={LoadBalancersComboBox}
+              validate={required}
+              disabled={pending}
+            />
+          </FormGroup>
+        </GridItem>
+
       </React.Fragment>
     );
   }

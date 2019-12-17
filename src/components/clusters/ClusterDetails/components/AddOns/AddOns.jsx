@@ -59,11 +59,9 @@ class AddOns extends React.Component {
     if (!addOn.enabled || !organization.fulfilled) {
       return false;
     }
+
     // If the add-on is not in the quota summary, it should not be available
-    if (!quota.addOnsQuota || !has(quota.addOnsQuota, addOn.id)) {
-      return false;
-    }
-    return true;
+    return has(quota.addOnsQuota, addOn.resource_name);
   }
 
   isInstalled(addOn) {
@@ -73,7 +71,7 @@ class AddOns extends React.Component {
       return false;
     }
 
-    return clusterAddOns.items.some(clusterAddOn => clusterAddOn.id === addOn.id);
+    return clusterAddOns.items.some(clusterAddOn => clusterAddOn.addon.id === addOn.id);
   }
 
   // An add-on can only be installed if the org has quota for this particular add-on
@@ -84,8 +82,7 @@ class AddOns extends React.Component {
       return false;
     }
 
-    const available = quota.addOnsQuota[addOn.id] || 0;
-    return available > 0;
+    return get(quota.addOnsQuota, addOn.resource_name, 0) >= addOn.resource_cost;
   }
 
   availableAddOns() {
@@ -112,7 +109,7 @@ class AddOns extends React.Component {
     const isClusterReady = cluster.state === clusterStates.READY;
     const hasAddOns = this.availableAddOns().length > 0;
 
-    if (addOns.error || !hasAddOns) {
+    if (!hasAddOns) {
       return (
         <EmptyState>
           <EmptyStateIcon icon={IntegrationIcon} />
@@ -121,7 +118,7 @@ class AddOns extends React.Component {
           )}
           <Title headingLevel="h5" size="lg">No add-ons available for this cluster</Title>
           <EmptyStateBody>
-            There are no add-ons available or there was an error getting the list of add-ons.
+            There are no add-ons available for this cluster.
           </EmptyStateBody>
         </EmptyState>
       );

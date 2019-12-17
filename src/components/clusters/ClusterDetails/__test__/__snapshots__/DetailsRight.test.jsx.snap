@@ -91,6 +91,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
           "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
           "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
           "kind": "Cluster",
+          "load_balancer_quota": 0,
           "managed": false,
           "metrics": Object {
             "cpu": Object {
@@ -162,6 +163,10 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "storage_quota": Object {
+            "unit": "GiB",
+            "value": "100",
+          },
           "subscription": Object {
             "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
             "created_at": "2019-01-02T18:28:14.851121Z",
@@ -284,6 +289,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
           "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
           "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
           "kind": "Cluster",
+          "load_balancer_quota": 0,
           "managed": false,
           "metrics": Object {
             "cpu": Object {
@@ -359,6 +365,10 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "storage_quota": Object {
+            "unit": "GiB",
+            "value": "100",
+          },
           "subscription": Object {
             "status": "Archived",
           },
@@ -399,6 +409,20 @@ exports[`<DetailsRight /> should render 1`] = `
     </dt>
     <dd>
       76.64
+       
+      GiB
+    </dd>
+    <dt>
+      Load Balancers
+    </dt>
+    <dd>
+      0
+    </dd>
+    <dt>
+      Persistent Storage
+    </dt>
+    <dd>
+      100
        
       GiB
     </dd>
@@ -486,6 +510,7 @@ exports[`<DetailsRight /> should render 1`] = `
           "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
           "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
           "kind": "Cluster",
+          "load_balancer_quota": 0,
           "managed": true,
           "metrics": Object {
             "cpu": Object {
@@ -561,6 +586,10 @@ exports[`<DetailsRight /> should render 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "storage_quota": Object {
+            "unit": "GiB",
+            "value": "100",
+          },
           "subscription": Object {
             "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
             "created_at": "2019-01-02T18:28:14.851121Z",
