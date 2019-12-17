@@ -28,6 +28,20 @@ function DetailsLeft({ cluster, cloudProviders }) {
         <dd>
           {get(cluster, 'external_id', 'N/A')}
         </dd>
+        <dt>
+          Type
+        </dt>
+        {
+          cluster.managed ? (
+            <dd>
+              OSD
+            </dd>
+          ) : (
+            <dd>
+              OCP
+            </dd>
+          )
+        }
         <dt>Location</dt>
         <dd>
           {region}
