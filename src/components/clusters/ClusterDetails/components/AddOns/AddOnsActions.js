@@ -4,7 +4,10 @@ import { clusterService } from '../../../../../services';
 const getAddOns = () => dispatch => dispatch({
   type: AddOnsConstants.GET_ADDONS,
   payload: clusterService.getAddOns().then(
-    response => ({ addOns: response }),
+    response => ({
+      addOns: response,
+      resourceNames: response.data.items.map(addOn => addOn.resource_name),
+    }),
   ),
 });
 
