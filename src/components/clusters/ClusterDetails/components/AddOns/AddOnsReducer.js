@@ -12,6 +12,7 @@ const initialState = {
   addOns: {
     ...request,
     items: [],
+    resourceNames: [],
   },
   clusterAddOns: {
     ...request,
@@ -63,6 +64,7 @@ function AddOnsReducer(state = initialState, action) {
           pending: false,
           fulfilled: true,
           items: action.payload.addOns.data.items,
+          resourceNames: action.payload.resourceNames,
         },
         {
           state,

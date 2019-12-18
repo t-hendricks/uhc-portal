@@ -116,7 +116,7 @@ describe('<PersistentStorageComboBox />', () => {
     });
   });
 
-  describe('when the storagep list is available', () => {
+  describe('when the storage list is available', () => {
     let getPersistentStorage;
     let onChange;
     let wrapper;
@@ -124,7 +124,7 @@ describe('<PersistentStorageComboBox />', () => {
       const state = {
         ...baseState,
         fulfilled: true,
-        values: [{ unit: 'GiB', value: '100' }, { unit: 'GiB', value: '600' }, { unit: 'GiB', value: '1100' }],
+        values: [{ unit: 'B', value: 107374182400 }, { unit: 'B', value: 644245094400 }, { unit: 'B', value: 1181116006400 }],
       };
 
       getPersistentStorage = jest.fn();

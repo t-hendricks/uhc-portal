@@ -1,4 +1,6 @@
-import { humanizeValueWithUnit, parseValueWithUnit, roundValueWithUnit } from './units';
+import {
+  humanizeValueWithUnit, parseValueWithUnit, roundValueWithUnit, humanizeValueWithUnitGiB,
+} from './units';
 
 test('Parse value with unit works', () => {
   expect(parseValueWithUnit(5, 'KB')).toBe(5000);
@@ -13,6 +15,11 @@ test('Humanizing produces human results', () => {
 
 test('Humanizing rounds long fractions', () => {
   expect(humanizeValueWithUnit(12345678, 'B')).toEqual({ value: 11.77, unit: 'MiB' });
+});
+
+test('Humanize bytes to GiB works', () => {
+  expect(humanizeValueWithUnitGiB(644245094400)).toEqual({ value: 600, unit: 'GiB' });
+  expect(humanizeValueWithUnitGiB(827318075392)).toEqual({ value: 770.5, unit: 'GiB' });
 });
 
 test('Rounding rounds long fractions', () => {

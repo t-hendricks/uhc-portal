@@ -75,8 +75,8 @@ const clusterDetails = {
       compute: 2,
     },
     storage_quota: {
-      value: '100',
-      unit: 'GiB',
+      value: 107374182400,
+      unit: 'B',
     },
     load_balancer_quota: 0,
     metrics: {

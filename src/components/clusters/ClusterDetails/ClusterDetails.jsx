@@ -17,6 +17,7 @@ import isUuid from 'uuid-validate';
 import { Redirect } from 'react-router';
 import get from 'lodash/get';
 import has from 'lodash/has';
+import intersection from 'lodash/intersection';
 
 import { EmptyState, PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
@@ -156,6 +157,16 @@ class ClusterDetails extends Component {
     }
   }
 
+  // Determine if the org has quota for existing add-ons
+  hasAddOns() {
+    const { addOns, organization } = this.props;
+    if (!has(organization.quotaList, 'addOnsQuota') || !get(addOns, 'resourceNames.length', 0)) {
+      return false;
+    }
+    const addOnsQuota = Object.keys(organization.quotaList.addOnsQuota);
+    return !!intersection(addOns.resourceNames, addOnsQuota).length;
+  }
+
   render() {
     const {
       clusterDetails,
@@ -166,7 +177,6 @@ class ClusterDetails extends Component {
       history,
       match,
       logs,
-      addOns,
       clusterIdentityProviders,
       organization,
       setGlobalError,
@@ -230,8 +240,8 @@ class ClusterDetails extends Component {
     };
 
     const hasLogs = !!logs.lines;
-    const hasAddOns = !!get(addOns, 'items.length', false) && has(organization.quotaList, 'addOnsQuota');
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+    const displayAddOnsTab = cluster.managed && this.hasAddOns();
 
     return (
       <PageSection id="clusterdetails-content">
@@ -249,7 +259,7 @@ class ClusterDetails extends Component {
             displayLogs={hasLogs}
             displayUsersTab={cluster.managed && cluster.canEdit}
             displayMonitoringTab={!isArchived}
-            displayAddOnsTab={cluster.managed && hasAddOns}
+            displayAddOnsTab={displayAddOnsTab}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             usersTabRef={this.usersTabRef}
@@ -272,14 +282,14 @@ class ClusterDetails extends Component {
         <TabContent eventKey={2} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
           <Users clusterID={cluster.id} />
         </TabContent>
-        {hasLogs && (
-        <TabContent eventKey={3} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
-          <LogWindow clusterID={cluster.id} />
+        {displayAddOnsTab && (
+        <TabContent eventKey={3} id="addOnsTabContent" ref={this.addOnsTabRef} aria-label="Add-ons" hidden>
+          <AddOns clusterID={cluster.id} />
         </TabContent>
         )}
-        {hasAddOns && (
-        <TabContent eventKey={4} id="addOnsTabContent" ref={this.addOnsTabRef} aria-label="Add-ons" hidden>
-          <AddOns clusterID={cluster.id} />
+        {hasLogs && (
+        <TabContent eventKey={4} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
+          <LogWindow clusterID={cluster.id} />
         </TabContent>
         )}
         <EditClusterDialog onClose={onDialogClose} />
