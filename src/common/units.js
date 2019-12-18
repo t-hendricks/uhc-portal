@@ -43,4 +43,19 @@ function roundValueWithUnit(value, unit) {
   };
 }
 
-export { parseValueWithUnit, humanizeValueWithUnit, roundValueWithUnit };
+
+/**
+ * Converts bytes to GiB and returns a pair {value: valueInGiB, unit: 'GiB'}.
+ * Example:
+ * humanizeValueWithUnitGiB(827318075392) => { value: 770.5, unit: 'GiB' }.
+ * @param {int} bytes
+ */
+function humanizeValueWithUnitGiB(bytes) {
+  const GiB = 2 ** 30;
+  // return a rounded value in GB to be rendered.
+  return roundValueWithUnit(bytes / GiB, 'GiB');
+}
+
+export {
+  parseValueWithUnit, humanizeValueWithUnit, roundValueWithUnit, humanizeValueWithUnitGiB,
+};

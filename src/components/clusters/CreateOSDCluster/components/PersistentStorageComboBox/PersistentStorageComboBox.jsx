@@ -12,7 +12,7 @@ import {
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../../common/ErrorBox';
-import { humanizeValueWithUnit } from '../../../../../common/units';
+import { humanizeValueWithUnitGiB } from '../../../../../common/units';
 
 class PersistentStorageComboBox extends React.Component {
   state = {
@@ -68,7 +68,7 @@ class PersistentStorageComboBox extends React.Component {
     // Set up options for storage values
     const storageOption = (value) => {
       // value is a tuple of {value, unit}
-      const valueWithUnit = humanizeValueWithUnit(value.value, value.unit);
+      const valueWithUnit = humanizeValueWithUnitGiB(value.value);
       // Values passed in the select are *always* in bytes, but we display them
       // in a humanize form.
 

@@ -109,8 +109,8 @@ exports[`<Overview /> should render 1`] = `
         },
         "state": "ready",
         "storage_quota": Object {
-          "unit": "GiB",
-          "value": "100",
+          "unit": "B",
+          "value": 107374182400,
         },
         "subscription": Object {
           "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
@@ -265,8 +265,8 @@ exports[`<Overview /> should render 1`] = `
               },
             },
             "storage_quota": Object {
-              "unit": "GiB",
-              "value": "100",
+              "unit": "B",
+              "value": 107374182400,
             },
             "subscription": Object {
               "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
@@ -603,8 +603,8 @@ exports[`<Overview /> should render 1`] = `
                 },
                 "state": "ready",
                 "storage_quota": Object {
-                  "unit": "GiB",
-                  "value": "100",
+                  "unit": "B",
+                  "value": 107374182400,
                 },
                 "subscription": Object {
                   "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
@@ -751,8 +751,8 @@ exports[`<Overview /> should render 1`] = `
                   },
                 },
                 "storage_quota": Object {
-                  "unit": "GiB",
-                  "value": "100",
+                  "unit": "B",
+                  "value": 107374182400,
                 },
                 "subscription": Object {
                   "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",

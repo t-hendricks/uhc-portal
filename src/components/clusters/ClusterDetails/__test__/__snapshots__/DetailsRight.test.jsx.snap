@@ -164,8 +164,8 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
           },
           "state": "ready",
           "storage_quota": Object {
-            "unit": "GiB",
-            "value": "100",
+            "unit": "B",
+            "value": 107374182400,
           },
           "subscription": Object {
             "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
@@ -366,8 +366,8 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
           },
           "state": "ready",
           "storage_quota": Object {
-            "unit": "GiB",
-            "value": "100",
+            "unit": "B",
+            "value": 107374182400,
           },
           "subscription": Object {
             "status": "Archived",
@@ -587,8 +587,8 @@ exports[`<DetailsRight /> should render 1`] = `
           },
           "state": "ready",
           "storage_quota": Object {
-            "unit": "GiB",
-            "value": "100",
+            "unit": "B",
+            "value": 107374182400,
           },
           "subscription": Object {
             "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
