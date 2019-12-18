@@ -25,6 +25,7 @@ exports[`<ErrorModal /> should render 1`] = `
   <p>
     Error Message
   </p>
+  <p />
   <p>
     Operation ID: 1337
   </p>
