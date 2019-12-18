@@ -383,14 +383,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: 10px;
 }
 
-.long-stale {
-  color: var(--pf-global--danger-color--100);
-};
-
-.stale {
-  color: var(--pf-global--warning-color--100);
-};
-
 // To display organization names in the masthead, we need a longer max length for the text
 .uhc_header .pf-c-page__header-tools .pf-c-dropdown__toggle-text {
   max-width: 50ch; // pf default is 20ch
@@ -587,6 +579,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   padding-left: 0;
 }
 
+.pf-c-popover__content {
+  font-family: var(--pf-global--FontFamily--sans-serif);
+  font-size: var(--pf-global--FontSize--md);
+}
+
 .pf-c-content h3.downloads-subtitle {
   margin-bottom: 6px;
 }
@@ -780,6 +777,14 @@ h4.pf-c-alert__title {
 .cluster-list-spinner, .cluster-user-form-spinner {
   padding-top: 3px;
   margin-left: 16px;
+}
+
+.cluster-list .clusterstate {
+  margin: 0 5px;
+}
+
+.cluster-status-string {
+  text-transform: capitalize;
 }
 
 .spinner-loading-text {
