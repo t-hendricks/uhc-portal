@@ -11,7 +11,9 @@ import { CheckCircleIcon, ExclamationCircleIcon } from '@patternfly/react-icons'
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
 
-function NodesTable({ nodes = [] }) {
+import { monitoringItemLinkProps, monitoringItemTypes } from '../monitoringHelper';
+
+function NodesTable({ nodes = [], clusterConsole }) {
   const columns = [
     { title: 'Name' },
     { title: 'Status' },
@@ -35,14 +37,25 @@ function NodesTable({ nodes = [] }) {
       </React.Fragment>);
   };
 
-  const rows = nodes.map(node => ([
-    { title: node.hostname },
-    { title: nodeStatus(node.up) },
-    { title: `Internal IP: ${node.internal_ip}` },
-  ]));
+  const rows = nodes.map((node) => {
+    const nodeLinkProps = monitoringItemLinkProps(
+      clusterConsole, monitoringItemTypes.NODE, node.hostname,
+    );
+    const nodeName = nodeLinkProps !== null
+      ? (<a {...nodeLinkProps}>{node.hostname}</a>) : node.hostname;
+    return (
+      {
+        cells: [
+          { title: nodeName },
+          { title: nodeStatus(node.up) },
+          { title: `Internal IP: ${node.internal_ip}` },
+        ],
+      }
+    );
+  });
 
   return (
-    <Table variant={TableVariant.compact} borders={false} cells={columns} rows={rows}>
+    <Table variant={TableVariant.compact} borders={false} cells={columns} rows={rows} aria-label="nodes">
       <TableHeader />
       <TableBody />
     </Table>
@@ -51,6 +64,7 @@ function NodesTable({ nodes = [] }) {
 
 NodesTable.propTypes = {
   nodes: PropTypes.array,
+  clusterConsole: PropTypes.object,
 };
 
 export default NodesTable;

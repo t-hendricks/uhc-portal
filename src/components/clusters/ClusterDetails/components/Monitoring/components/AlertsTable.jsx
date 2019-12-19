@@ -11,10 +11,14 @@ import { ExclamationCircleIcon, ExclamationTriangleIcon } from '@patternfly/reac
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
 
-import { alertsSeverity } from '../monitoringHelper';
+import {
+  alertsSeverity,
+  monitoringItemLinkProps,
+  monitoringItemTypes,
+} from '../monitoringHelper';
 
 
-function AlertsTable({ alerts = [] }) {
+function AlertsTable({ alerts = [], clusterConsole }) {
   const errorIcon = <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />;
   const warningIcon = <ExclamationTriangleIcon color={global_warning_color_100.value} size="md" />;
 
@@ -31,15 +35,20 @@ function AlertsTable({ alerts = [] }) {
     if (alert.severity === alertsSeverity.CRITICAL) {
       severityIcon = errorIcon;
     }
+    const alertLinkProps = monitoringItemLinkProps(
+      clusterConsole, monitoringItemTypes.ALERT, alert.name,
+    );
+    const alertName = alertLinkProps !== null
+      ? (<a {...alertLinkProps}>{alert.name}</a>) : alert.name;
     return (
       {
         cells:
-        [{ title: alert.name }, { title: severityIcon }],
+        [{ title: alertName }, { title: severityIcon }],
       });
   });
 
   return (
-    <Table variant={TableVariant.compact} cells={columns} rows={rows} header="alerts">
+    <Table variant={TableVariant.compact} cells={columns} rows={rows} aria-label="alerts">
       <TableHeader />
       <TableBody />
     </Table>
@@ -48,6 +57,7 @@ function AlertsTable({ alerts = [] }) {
 
 AlertsTable.propTypes = {
   alerts: PropTypes.array,
+  clusterConsole: PropTypes.object,
 };
 
 export default AlertsTable;
