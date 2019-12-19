@@ -197,7 +197,7 @@ class ClusterDetails extends Component {
     // the redux state will have the data for the previous cluster. We want to ensure we only
     // show data for the requested cluster, so different data should be marked as pending.
 
-    const isPending = ((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error) || clusterIdentityProviders.pending;
+    const isPending = ((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error);
 
     const errorState = () => (
       <EmptyState>
