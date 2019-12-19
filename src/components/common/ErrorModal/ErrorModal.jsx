@@ -4,6 +4,7 @@ import { Title } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_danger_color_100 } from '@patternfly/react-tokens';
+import helpers from '../../../common/helpers';
 import Modal from '../Modal/Modal';
 
 function ErrorModal({
@@ -13,6 +14,8 @@ function ErrorModal({
     resetResponse();
     closeModal();
   };
+
+  const errorDetails = helpers.parseErrorDetails(errorResponse.errorDetails);
 
   return (
     <Modal
@@ -32,6 +35,11 @@ function ErrorModal({
       <p>
         {errorResponse.errorMessage}
       </p>
+      { errorDetails && (
+      <p>
+        { errorDetails }
+      </p>
+      )}
       <p>
         {`Operation ID: ${errorResponse.operationID || 'N/A'}`}
       </p>
