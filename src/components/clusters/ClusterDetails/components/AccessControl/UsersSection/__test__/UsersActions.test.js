@@ -1,8 +1,8 @@
 import UsersActions from '../UsersActions';
-import { clusterService } from '../../../../../../services';
+import { clusterService } from '../../../../../../../services';
 import UsersConstants from '../UsersConstants';
 
-jest.mock('../../../../../../services/clusterService.js');
+jest.mock('../../../../../../../services/clusterService.js');
 
 describe('ClusterDetails UserActions', () => {
   let mockDispatch;

@@ -27,7 +27,7 @@ import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
 import Monitoring from './components/Monitoring';
-import Users from './components/Users';
+import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
@@ -52,7 +52,7 @@ class ClusterDetails extends Component {
 
     this.overviewTabRef = React.createRef();
     this.monitoringTabRef = React.createRef();
-    this.usersTabRef = React.createRef();
+    this.accessControlTabRef = React.createRef();
     this.logsTabRef = React.createRef();
     this.addOnsTabRef = React.createRef();
   }
@@ -257,12 +257,12 @@ class ClusterDetails extends Component {
         >
           <TabsRow
             displayLogs={hasLogs}
-            displayUsersTab={cluster.managed && cluster.canEdit}
+            displayAccessControlTab={cluster.managed && cluster.canEdit}
             displayMonitoringTab={!isArchived}
             displayAddOnsTab={displayAddOnsTab}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
-            usersTabRef={this.usersTabRef}
+            accessControlTabRef={this.accessControlTabRef}
             logsTabRef={this.logsTabRef}
             addOnsTabRef={this.addOnsTabRef}
           />
@@ -279,8 +279,8 @@ class ClusterDetails extends Component {
           </TabContent>
         )}
 
-        <TabContent eventKey={2} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
-          <Users clusterID={cluster.id} />
+        <TabContent eventKey={2} id="accessControlTabContent" ref={this.accessControlTabRef} aria-label="Access Control" hidden>
+          <AccessControl clusterID={cluster.id} />
         </TabContent>
         {displayAddOnsTab && (
         <TabContent eventKey={3} id="addOnsTabContent" ref={this.addOnsTabRef} aria-label="Add-ons" hidden>
@@ -306,14 +306,10 @@ class ClusterDetails extends Component {
         />
         <IdentityProvidersModal
           clusterID={cluster.id}
+          clusterName={getClusterName(cluster)}
           refreshParent={this.refreshIDP}
         />
-        <DeleteIDPDialog onClose={() => {
-          this.refreshIDP();
-          onDialogClose();
-        }
-          }
-        />
+        <DeleteIDPDialog refreshParent={this.refreshIDP} />
       </PageSection>
     );
   }

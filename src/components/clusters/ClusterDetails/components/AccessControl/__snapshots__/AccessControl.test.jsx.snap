@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AccessControl /> should render 1`] = `
+<div
+  className="cluster-details-user-tab-contents"
+>
+  <Connect(IDPSection)
+    clusterID="fake id"
+  />
+  <Connect(UsersSection)
+    clusterID="fake id"
+  />
+</div>
+`;

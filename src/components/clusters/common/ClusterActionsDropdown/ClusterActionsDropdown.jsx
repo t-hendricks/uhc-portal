@@ -27,10 +27,7 @@ class ClusterActionsDropdown extends React.Component {
     const {
       cluster,
       showConsoleButton,
-      showIDPButton,
       openModal,
-      hasIDP,
-      idpID,
       isKebab,
       disabled,
     } = this.props;
@@ -42,7 +39,7 @@ class ClusterActionsDropdown extends React.Component {
       : <DropdownToggle isDisabled={disabled} onToggle={this.onToggle}>Actions</DropdownToggle>;
 
     const menuItems = dropDownItems({
-      cluster, showConsoleButton, showIDPButton, openModal, hasIDP, idpID,
+      cluster, showConsoleButton, openModal,
     });
     return (
       <Dropdown
@@ -59,10 +56,7 @@ class ClusterActionsDropdown extends React.Component {
 
 ClusterActionsDropdown.propTypes = {
   cluster: PropTypes.object.isRequired,
-  hasIDP: PropTypes.bool,
-  idpID: PropTypes.string,
   showConsoleButton: PropTypes.bool.isRequired,
-  showIDPButton: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   isKebab: PropTypes.bool,
   disabled: PropTypes.bool,
