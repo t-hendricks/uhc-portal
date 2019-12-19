@@ -1,13 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ClusterListFilter /> renders correctly 1`] = `
-<TextInput
+<ForwardRef
   aria-label="Filter"
   className="cluster-list-filter"
-  isDisabled={false}
-  isReadOnly={false}
-  isRequired={false}
-  isValid={true}
   onChange={[Function]}
   placeholder="Filter by name or ID..."
   type="text"
@@ -16,13 +12,9 @@ exports[`<ClusterListFilter /> renders correctly 1`] = `
 `;
 
 exports[`<ClusterListFilter /> renders correctly 2`] = `
-<TextInput
+<ForwardRef
   aria-label="Filter"
   className="cluster-list-filter"
-  isDisabled={false}
-  isReadOnly={false}
-  isRequired={false}
-  isValid={true}
   onChange={[Function]}
   placeholder="Filter by name or ID..."
   type="text"

@@ -171,6 +171,7 @@ exports[`<LoadBalancerComboBox /> when the load balancer list is available rende
         ariaLabelledBy=""
         className="quota-combo-box"
         createText="Create"
+        customContent={null}
         direction="down"
         isCreatable={false}
         isDisabled={false}

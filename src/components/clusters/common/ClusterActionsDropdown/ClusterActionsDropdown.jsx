@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Dropdown, DropdownToggle, KebabToggle, DropdownPosition,
 } from '@patternfly/react-core';
-import dropdownItems from './ClusterActionsDropdownItems';
+import { dropDownItems } from './ClusterActionsDropdownItems';
 
 class ClusterActionsDropdown extends React.Component {
   constructor(props) {
@@ -41,10 +41,9 @@ class ClusterActionsDropdown extends React.Component {
       ? <KebabToggle isDisabled={disabled} onToggle={this.onToggle} />
       : <DropdownToggle isDisabled={disabled} onToggle={this.onToggle}>Actions</DropdownToggle>;
 
-    const menuItems = dropdownItems({
+    const menuItems = dropDownItems({
       cluster, showConsoleButton, showIDPButton, openModal, hasIDP, idpID,
     });
-
     return (
       <Dropdown
         position={DropdownPosition.right}

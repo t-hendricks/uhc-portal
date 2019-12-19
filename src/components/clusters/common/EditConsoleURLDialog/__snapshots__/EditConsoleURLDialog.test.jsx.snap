@@ -119,6 +119,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                           type="text"
                           value=""
                         />
+                        
                       </div>
                     </form>
                   </div>
@@ -229,6 +230,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                           type="text"
                           value=""
                         />
+                        
                       </div>
                     </form>
                   </div>
@@ -451,33 +453,45 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                                       Web console URL
                                     </span>
                                   </label>
-                                  <TextInput
+                                  <ForwardRef
                                     aria-label="Web console URL"
-                                    className=""
                                     id="edit-console-url-input"
-                                    isDisabled={false}
-                                    isReadOnly={false}
-                                    isRequired={false}
                                     isValid={true}
                                     onChange={[Function]}
                                     placeholder="https://console-openshift-console.apps.mycluster.example.com/"
                                     type="text"
                                     value=""
                                   >
-                                    <input
-                                      aria-invalid={false}
+                                    <TextInputBase
                                       aria-label="Web console URL"
-                                      className="pf-c-form-control"
-                                      disabled={false}
+                                      className=""
                                       id="edit-console-url-input"
+                                      innerRef={null}
+                                      isDisabled={false}
+                                      isReadOnly={false}
+                                      isRequired={false}
+                                      isValid={true}
                                       onChange={[Function]}
                                       placeholder="https://console-openshift-console.apps.mycluster.example.com/"
-                                      readOnly={false}
-                                      required={false}
                                       type="text"
+                                      validated="default"
                                       value=""
-                                    />
-                                  </TextInput>
+                                    >
+                                      <input
+                                        aria-invalid={false}
+                                        aria-label="Web console URL"
+                                        className="pf-c-form-control"
+                                        disabled={false}
+                                        id="edit-console-url-input"
+                                        onChange={[Function]}
+                                        placeholder="https://console-openshift-console.apps.mycluster.example.com/"
+                                        readOnly={false}
+                                        required={false}
+                                        type="text"
+                                        value=""
+                                      />
+                                    </TextInputBase>
+                                  </ForwardRef>
                                 </div>
                               </FormGroup>
                             </form>
@@ -712,6 +726,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                           type="text"
                           value=""
                         />
+                        
                       </div>
                     </form>
                   </div>
@@ -809,6 +824,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                           type="text"
                           value=""
                         />
+                        
                       </div>
                     </form>
                   </div>
@@ -906,6 +922,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                           type="text"
                           value="http://www.example.com"
                         />
+                        
                       </div>
                     </form>
                   </div>
@@ -1002,6 +1019,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                           type="text"
                           value="http://www.example.com"
                         />
+                        
                       </div>
                     </form>
                   </div>
@@ -1140,6 +1158,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                           type="text"
                           value="http://www.example.com"
                         />
+                        
                       </div>
                     </form>
                   </div>
@@ -1293,6 +1312,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                           type="text"
                           value="http://www.example.com"
                         />
+                        
                       </div>
                     </form>
                   </div>
@@ -1626,33 +1646,45 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                                       Web console URL
                                     </span>
                                   </label>
-                                  <TextInput
+                                  <ForwardRef
                                     aria-label="Web console URL"
-                                    className=""
                                     id="edit-console-url-input"
-                                    isDisabled={false}
-                                    isReadOnly={false}
-                                    isRequired={false}
                                     isValid={true}
                                     onChange={[Function]}
                                     placeholder="https://console-openshift-console.apps.mycluster.example.com/"
                                     type="text"
                                     value="http://www.example.com"
                                   >
-                                    <input
-                                      aria-invalid={false}
+                                    <TextInputBase
                                       aria-label="Web console URL"
-                                      className="pf-c-form-control"
-                                      disabled={false}
+                                      className=""
                                       id="edit-console-url-input"
+                                      innerRef={null}
+                                      isDisabled={false}
+                                      isReadOnly={false}
+                                      isRequired={false}
+                                      isValid={true}
                                       onChange={[Function]}
                                       placeholder="https://console-openshift-console.apps.mycluster.example.com/"
-                                      readOnly={false}
-                                      required={false}
                                       type="text"
+                                      validated="default"
                                       value="http://www.example.com"
-                                    />
-                                  </TextInput>
+                                    >
+                                      <input
+                                        aria-invalid={false}
+                                        aria-label="Web console URL"
+                                        className="pf-c-form-control"
+                                        disabled={false}
+                                        id="edit-console-url-input"
+                                        onChange={[Function]}
+                                        placeholder="https://console-openshift-console.apps.mycluster.example.com/"
+                                        readOnly={false}
+                                        required={false}
+                                        type="text"
+                                        value="http://www.example.com"
+                                      />
+                                    </TextInputBase>
+                                  </ForwardRef>
                                 </div>
                               </FormGroup>
                             </form>

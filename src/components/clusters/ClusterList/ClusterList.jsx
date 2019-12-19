@@ -228,12 +228,10 @@ class ClusterList extends Component {
               </TableToolbar>
               <ClusterListFilterChipGroup history={history} />
               <ClusterListTable
+                openModal={openModal}
                 clusters={clusters || []}
                 viewOptions={viewOptions}
                 setSorting={setSorting}
-                openDeleteClusterDialog={(modalData) => {
-                  openModal('delete-cluster', modalData);
-                }}
               />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
