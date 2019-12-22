@@ -78,7 +78,7 @@ const mapDispatchToProps = dispatch => ({
       },
     };
 
-    if (formData.byoc) {
+    if (formData.byoc === 'true') {
       clusterRequest.aws = {
         access_key_id: formData.access_key_id,
         account_id: formData.account_id,
