@@ -19,16 +19,27 @@ import {
 
 import PageTitle from '../../common/PageTitle';
 import ErrorModal from '../../common/ErrorModal';
-import constants from './CreateOSDClusterHelper';
+import { constants } from './CreateOSDClusterHelper';
 import CreateOSDClusterForm from './components/CreateOSDClusterForm';
 
+
 class CreateOSDCluster extends React.Component {
+  state = {
+    hasShownBYOCModal: false,
+  }
+
   componentDidMount() {
     const {
-      machineTypes, organization, cloudProviders,
-      persistentStorageValues, loadBalancerValues,
-      getMachineTypes, getOrganizationAndQuota, getCloudProviders,
-      getLoadBalancers, getPersistentStorage,
+      machineTypes,
+      organization,
+      cloudProviders,
+      persistentStorageValues,
+      loadBalancerValues,
+      getMachineTypes,
+      getOrganizationAndQuota,
+      getCloudProviders,
+      getLoadBalancers,
+      getPersistentStorage,
     } = this.props;
 
     this.reset();
@@ -49,10 +60,23 @@ class CreateOSDCluster extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    const { createClusterResponse, openModal, isErrorModalOpen } = this.props;
+  componentDidUpdate(prevProps) {
+    const { hasShownBYOCModal } = this.state;
+
+    const {
+      createClusterResponse, isErrorModalOpen, hasStandardQuota, hasBYOCQuota, openModal, change,
+    } = this.props;
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
+    }
+    // if user has only BYOC quota
+    if (!prevProps.isBYOCModalOpen && !hasStandardQuota && hasBYOCQuota && !hasShownBYOCModal) {
+      // open BYOC modal
+      openModal('customer-cloud-subscription');
+      // set byoc field value to true
+      change('byoc', 'true');
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ hasShownBYOCModal: true });
     }
   }
 
@@ -80,6 +104,11 @@ class CreateOSDCluster extends React.Component {
       persistentStorageValues,
       isErrorModalOpen,
       resetResponse,
+      hasBYOCQuota,
+      hasStandardQuota,
+      isBYOCModalOpen,
+      openModal,
+      closeModal,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -155,6 +184,11 @@ class CreateOSDCluster extends React.Component {
                   <CreateOSDClusterForm
                     pending={createClusterResponse.pending}
                     change={change}
+                    hasBYOCQuota={hasBYOCQuota}
+                    hasStandardQuota={hasStandardQuota}
+                    isBYOCModalOpen={isBYOCModalOpen}
+                    openModal={openModal}
+                    closeModal={closeModal}
                   />
                   <GridItem>
                     <Split gutter="sm" className="create-osd-form-button-split">
@@ -184,9 +218,14 @@ class CreateOSDCluster extends React.Component {
     );
   }
 }
+
 CreateOSDCluster.propTypes = {
   isErrorModalOpen: PropTypes.bool,
-  openModal: PropTypes.func,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  hasBYOCQuota: PropTypes.bool,
+  hasStandardQuota: PropTypes.bool.isRequired,
+  isBYOCModalOpen: PropTypes.bool.isRequired,
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
