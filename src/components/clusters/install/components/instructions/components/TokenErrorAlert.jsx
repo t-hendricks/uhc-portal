@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Alert,
-} from '@patternfly/react-core';
+import { Alert } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 
 const TokenErrorAlert = ({ token }) => {
   const code = token.internalErrorCode || '';
@@ -18,7 +17,7 @@ const TokenErrorAlert = ({ token }) => {
       <a href="mailto:ocm-feedback@redhat.com" target="_blank">
         ocm-feedback@redhat.com
         {' '}
-        <span className="fa fa-external-link" aria-hidden="true" />
+        <ExternalLinkAltIcon color="#0066cc" size="sm" />
       </a>
       .
     </React.Fragment>

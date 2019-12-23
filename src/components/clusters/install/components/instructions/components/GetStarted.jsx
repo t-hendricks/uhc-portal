@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-} from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 
 const GetStarted = ({ docURL }) => (
   <React.Fragment>
@@ -12,7 +11,7 @@ const GetStarted = ({ docURL }) => (
       <a href={docURL} target="_blank">
         official documentation
         {' '}
-        <span className="fa fa-external-link" aria-hidden="true" />
+        <ExternalLinkAltIcon color="#0066cc" size="sm" />
       </a>
       {' '}
       for detailed installation instructions.

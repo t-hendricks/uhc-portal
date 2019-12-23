@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 @import "~@patternfly/patternfly/sass-utilities/_all";
-@import "~patternfly/dist/sass/patternfly/variables";
 
 // override the blue patternfly header border to match other properties
 .navbar-pf-vertical {
@@ -85,10 +84,6 @@ limitations under the License.
     flex: 1;
     overflow-y: auto;
   }
-}
-
-.maintenance{
-  border: 2px solid $color-pf-gold-400 !important;
 }
 
 .metrics-chart {
@@ -629,12 +624,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .ocm-page-title {
   padding-top: 2px;
-}
-
-// TODO: remove when https://github.com/patternfly/patternfly-next/issues/1976 is fixed
-// Edit: As of 18-11-2019 the issue is still open but the value needs to change for alignment.
-h4.pf-c-alert__title {
-  margin-top: 5px !important;
 }
 
 .ocm-page {

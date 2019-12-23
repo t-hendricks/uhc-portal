@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-} from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+
 import links from '../../../../../../common/installLinks';
 
 const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_LATEST }) => (
@@ -14,7 +14,7 @@ const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_
         <a href={learnMoreURL} target="_blank">
           Learn more
           {' '}
-          <span className="fa fa-external-link" aria-hidden="true" />
+          <ExternalLinkAltIcon color="#0066cc" size="sm" />
           .
         </a>
       </p>
