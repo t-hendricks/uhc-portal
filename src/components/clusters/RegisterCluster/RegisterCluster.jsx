@@ -16,7 +16,7 @@ import {
 } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 
-import ReduxVerticalFormGroupPF4 from '../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
+import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ErrorModal from '../../common/ErrorModal';
 import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
 import validators, {
@@ -117,7 +117,7 @@ class RegisterCluster extends React.Component {
                 <GridItem span={8}>
                   <Form onSubmit={handleSubmit}>
                     <Field
-                      component={ReduxVerticalFormGroupPF4}
+                      component={ReduxVerticalFormGroup}
                       name="cluster_id"
                       label="Cluster ID"
                       type="text"
@@ -127,7 +127,7 @@ class RegisterCluster extends React.Component {
                       isRequired
                     />
                     <Field
-                      component={ReduxVerticalFormGroupPF4}
+                      component={ReduxVerticalFormGroup}
                       name="display_name"
                       label="Display name"
                       type="text"
@@ -135,7 +135,7 @@ class RegisterCluster extends React.Component {
                       validate={checkClusterDisplayName}
                     />
                     <Field
-                      component={ReduxVerticalFormGroupPF4}
+                      component={ReduxVerticalFormGroup}
                       name="web_console_url"
                       label="Web console URL"
                       validate={validateConsoleURL}
@@ -173,7 +173,7 @@ class RegisterCluster extends React.Component {
                     </FormGroup>
                     {systemType === 'physical' && (
                     <Field
-                      component={ReduxVerticalFormGroupPF4}
+                      component={ReduxVerticalFormGroup}
                       name="socket_num"
                       label="Number of sockets or LAPRs"
                       inputMode="numeric"
@@ -184,7 +184,7 @@ class RegisterCluster extends React.Component {
                     )}
                     {systemType === 'virtual' && (
                     <Field
-                      component={ReduxVerticalFormGroupPF4}
+                      component={ReduxVerticalFormGroup}
                       name="cpu"
                       label="Number of vCPUs"
                       inputMode="numeric"
@@ -194,7 +194,7 @@ class RegisterCluster extends React.Component {
                     />
                     )}
                     <Field
-                      component={ReduxVerticalFormGroupPF4}
+                      component={ReduxVerticalFormGroup}
                       name="memory_gib"
                       label="Memory capacity (GiB)"
                       inputMode="numeric"
@@ -203,7 +203,7 @@ class RegisterCluster extends React.Component {
                       disabled={registerClusterResponse.pending}
                     />
                     <Field
-                      component={ReduxVerticalFormGroupPF4}
+                      component={ReduxVerticalFormGroup}
                       name="nodes_compute"
                       label="Number of compute nodes"
                       inputMode="numeric"

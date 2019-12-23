@@ -704,7 +704,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   />
   <Connect(ReduxForm)
     clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
-    onClose={[Function]}
+    refreshParent={[Function]}
   />
   <Connect(DeleteIDPDialog)
     onClose={[Function]}

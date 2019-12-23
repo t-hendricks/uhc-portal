@@ -321,7 +321,7 @@ p.notfound {
   min-height: 442px;
   min-width: 497px;
   font-family: var(--pf-global--FontFamily--monospace);
-  white-space: nowrap;
+  white-space: pre;
 }
 
 // make <Button> look like <a href= ...>

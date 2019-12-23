@@ -5,7 +5,6 @@ import {
   FormGroup,
   GridItem,
 } from '@patternfly/react-core';
-
 import CloudRegionComboBox from './CloudRegionComboBox';
 import MachineTypeSelection from './MachineTypeSelection';
 import PersistentStorageComboBox from './PersistentStorageComboBox';
@@ -13,7 +12,7 @@ import LoadBalancersComboBox from './LoadBalancersComboBox';
 import { constants } from '../CreateOSDClusterHelper';
 
 import PopoverHint from '../../../common/PopoverHint';
-import ReduxVerticalFormGroupPF4 from '../../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
+import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators, { required } from '../../../../common/validators';
 import minValueSelector from '../../common/EditClusterDialog/EditClusterSelectors';
 import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
@@ -55,7 +54,7 @@ class BasicFields extends React.Component {
         {/* cluster name */}
         <GridItem span={4}>
           <Field
-            component={ReduxVerticalFormGroupPF4}
+            component={ReduxVerticalFormGroup}
             name="name"
             label="Cluster name"
             type="text"
@@ -72,7 +71,7 @@ class BasicFields extends React.Component {
           <React.Fragment>
             <GridItem span={4}>
               <Field
-                component={ReduxVerticalFormGroupPF4}
+                component={ReduxVerticalFormGroup}
                 name="dns_base_domain"
                 label="Base DNS domain"
                 type="text"
@@ -155,7 +154,7 @@ class BasicFields extends React.Component {
         {/* Compute nodes */}
         <GridItem span={4}>
           <Field
-            component={ReduxVerticalFormGroupPF4}
+            component={ReduxVerticalFormGroup}
             name="nodes_compute"
             label="Compute node count"
             inputMode="numeric"

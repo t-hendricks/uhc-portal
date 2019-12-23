@@ -16,7 +16,7 @@ function OpenIDForm({ isPending }) {
         helpText="PEM encoded certificate bundle to use to validate server certificates for the configured URL"
         disabled={isPending}
         className="ca-textarea"
-        componentClass="textarea"
+        isTextArea
         spellCheck="false"
       />
       <Field

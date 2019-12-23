@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Form, FormGroup } from '@patternfly/react-core';
 
-import { ControlLabel } from 'patternfly-react';
-
 import Modal from '../../../common/Modal/Modal';
 
 import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -97,10 +95,8 @@ class EditClusterDialog extends Component {
             />
             <FormGroup
               fieldId="load_balancers"
+              label="Load Balancers"
             >
-              <ControlLabel>
-                Load Balancers
-              </ControlLabel>
               <Field
                 label="Load Balancers"
                 name="load_balancers"
@@ -110,10 +106,8 @@ class EditClusterDialog extends Component {
             </FormGroup>
             <FormGroup
               fieldId="persistent_storage"
+              label="Persistent Storage"
             >
-              <ControlLabel>
-                Persistent Storage
-              </ControlLabel>
               <Field
                 label="Persistent Storage"
                 name="persistent_storage"

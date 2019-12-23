@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Field } from 'redux-form';
 import {
-  Form, Grid, Row, Col, HintBlock, ExpandCollapse,
-} from 'patternfly-react';
+  Form, Grid, GridItem, Expandable,
+} from '@patternfly/react-core';
 import ErrorBox from '../../../../../common/ErrorBox';
 
 import { ReduxVerticalFormGroup, ReduxFormDropdown } from '../../../../../common/ReduxFormComponents';
@@ -64,87 +64,62 @@ function IDPForm(props) {
   const SelectedProviderAdvancedOptions = providersAdvancedOptions[selectedIDP];
 
   return (
-    <Form>
-      {createIDPError}
-      <Grid>
-        <Row>
-          <h4>
-                Identity providers determine how users log into the cluster.
-                Add an identity provider by selecting a type from the dropdown
-            {' '}
-            <br />
-            {' '}
-                below.
-          </h4>
-        </Row>
-        <Row>
+    <Grid>
+      <GridItem span={8}>
+        <Form>
+          {createIDPError}
+          <p>
+        Identity providers determine how users log into the cluster.
+        Add an identity provider by selecting a type from the dropdown below.
+          </p>
+          <p>
+            <a target="_blank" href={providerDocumentationLink[selectedIDP]}>Learn more about identity providers in the OpenShift documentation.</a>
+          </p>
           <h3>Step 1: Select identity providers type</h3>
-          <Col sm={5}>
+          <Field
+            component={ReduxFormDropdown}
+            options={IDPtypes}
+            name="type"
+            label="Identity Provider"
+            disabled={isPending}
+          />
+          <h3>Step 2: Enter Provider type information</h3>
+          <Field
+            component={ReduxVerticalFormGroup}
+            name="name"
+            label="Name"
+            type="text"
+            placeholder="name"
+            validate={checkIdentityProviderName}
+            isRequired
+            disabled={isPending}
+            helpText="Unique name for the identity provider. This cannot be changed later."
+          />
+          {SelectedProivderRequiredFields
+        && (
+          <SelectedProivderRequiredFields
+            isPending={isPending}
+            // make google required form optional when mapping method is lookup
+            isRequired={selectedIDP === IDPformValues.GOOGLE
+            && !(selectedMappingMethod === mappingMethodsformValues.LOOKUP)}
+          />)
+      }
+          <Expandable toggleText="Show Advanced Options">
+            {SelectedProviderAdvancedOptions
+          && (
+            <SelectedProviderAdvancedOptions isPending={isPending} />
+          )}
             <Field
               component={ReduxFormDropdown}
-              options={IDPtypes}
-              name="type"
-              label="Identity Provider"
-              disabled={isPending}
+              options={mappingMethods}
+              name="mappingMethod"
+              label="Mapping Method"
+              helpText="Specifies how new identities are mapped to users when the log in. Claim is recommended in most cases."
             />
-          </Col>
-        </Row>
-        <Row>
-          <h3>Step 2: Enter Provider type information</h3>
-          <Col sm={5}>
-            <Field
-              component={ReduxVerticalFormGroup}
-              name="name"
-              label="Name"
-              type="text"
-              placeholder="name"
-              validate={checkIdentityProviderName}
-              disabled={isPending}
-            />
-            {SelectedProivderRequiredFields
-                  && (
-                  <SelectedProivderRequiredFields
-                    isPending={isPending}
-                    // make google required form optional when mapping method is lookup
-                    isRequired={selectedIDP === IDPformValues.GOOGLE
-                    && !(selectedMappingMethod === mappingMethodsformValues.LOOKUP)}
-                  />)
-            }
-          </Col>
-          <Col sm={4}>
-            <HintBlock
-              title="Learn more about ClientID and and Client Secret"
-              body={(
-                <React.Fragment>
-                  <p>
-                        Learn more about identity providers in the OpenShift documentation.
-                  </p>
-                  <p>
-                    <a target="_blank" href={providerDocumentationLink[selectedIDP]}>Learn more</a>
-                  </p>
-                </React.Fragment>
-                  )}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <ExpandCollapse>
-            <Col sm={5} id="idp-advanced-options">
-              {SelectedProviderAdvancedOptions
-                    && (
-                    <SelectedProviderAdvancedOptions isPending={isPending} />
-                    )}
-              <Field
-                component={ReduxFormDropdown}
-                options={mappingMethods}
-                name="mappingMethod"
-                label="Mapping Method"
-              />
-            </Col>
-          </ExpandCollapse>
-        </Row>
-      </Grid>
-    </Form>
+          </Expandable>
+        </Form>
+      </GridItem>
+    </Grid>
   );
 }
 
