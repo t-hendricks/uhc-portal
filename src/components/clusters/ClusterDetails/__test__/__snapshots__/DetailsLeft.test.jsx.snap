@@ -209,6 +209,12 @@ exports[`<DetailsLeft /> should render 1`] = `
     <dd>
       N/A
     </dd>
+    <dt>
+      Billing Model
+    </dt>
+    <dd>
+      Standard
+    </dd>
   </dl>
 </Fragment>
 `;

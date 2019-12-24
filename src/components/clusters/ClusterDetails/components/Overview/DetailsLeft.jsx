@@ -84,6 +84,16 @@ function DetailsLeft({ cluster, cloudProviders }) {
         <dd>
           {get(cluster, 'subscription.creator.name') || get(cluster, 'subscription.creator.username', 'N/A')}
         </dd>
+        {cluster.managed && (
+          <React.Fragment>
+            <dt>
+              Billing Model
+            </dt>
+            <dd>
+              {cluster.byoc ? 'Customer Cloud Subscription' : 'Standard'}
+            </dd>
+          </React.Fragment>
+        )}
       </dl>
     </React.Fragment>
   );
