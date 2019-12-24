@@ -18,6 +18,10 @@ import {
   SortByDirection,
   cellWidth,
 } from '@patternfly/react-table';
+import {
+  Skeleton,
+} from '@redhat-cloud-services/frontend-components';
+
 import { Link } from 'react-router-dom';
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel/ClusterLocationLabel';
@@ -28,9 +32,10 @@ import getClusterName from '../../../../../common/getClusterName';
 import { actionResolver } from '../../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 
 function ClusterListTable(props) {
-  const { viewOptions, setSorting } = props;
-  const { clusters, openModal } = props;
-  if (!clusters || clusters.length === 0) {
+  const {
+    viewOptions, setSorting, clusters, openModal, isPending,
+  } = props;
+  if (!isPending && (!clusters || clusters.length === 0)) {
     return <p className="notfound">No Results Match the Filter Criteria.</p>;
   }
 
@@ -44,6 +49,22 @@ function ClusterListTable(props) {
     sorting.isAscending = direction === SortByDirection.asc;
     sorting.sortField = 'name'; // TODO support more fields
     setSorting(sorting);
+  };
+
+  const skeletonRows = () => {
+    const row = {
+      cells: [
+        {
+          props: { colSpan: 6 },
+          title: <Skeleton size="lg" />,
+        },
+      ],
+    };
+    const ret = [];
+    for (let i = 0; i < 10; i += 1) {
+      ret.push(row);
+    }
+    return ret;
   };
 
   const clusterRow = (cluster) => {
@@ -152,13 +173,16 @@ function ClusterListTable(props) {
     '',
   ];
 
+  const rows = isPending ? skeletonRows() : clusters.map(cluster => clusterRow(cluster));
+  const resolver = isPending ? undefined
+    : rowData => actionResolver(rowData.cluster, true, openModal);
 
   return (
     <Table
       aria-label="Cluster List"
       cells={columns}
-      rows={clusters.map(cluster => clusterRow(cluster))}
-      actionResolver={rowData => actionResolver(rowData.cluster, true, openModal)}
+      rows={rows}
+      actionResolver={resolver}
       onSort={onSortToggle}
       sortBy={sortBy}
     >
@@ -173,6 +197,7 @@ ClusterListTable.propTypes = {
   clusters: PropTypes.array.isRequired,
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
+  isPending: PropTypes.bool,
 };
 
 export default ClusterListTable;
