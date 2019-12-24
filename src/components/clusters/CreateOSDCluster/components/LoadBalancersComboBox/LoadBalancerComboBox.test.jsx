@@ -11,6 +11,11 @@ const baseState = {
   values: [],
 };
 
+const organizationState = {
+  fulfilled: true,
+  pending: false,
+};
+
 describe('<LoadBalancerComboBox />', () => {
   describe('when load balancer list needs to be fetched', () => {
     let getLoadBalancers;
@@ -24,6 +29,8 @@ describe('<LoadBalancerComboBox />', () => {
           loadBalancerValues={baseState}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
+          quota={{}}
+          organization={organizationState}
         />,
       );
     });
@@ -59,6 +66,8 @@ describe('<LoadBalancerComboBox />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
+          quota={{}}
+          organization={organizationState}
         />,
       );
     });
@@ -91,6 +100,8 @@ describe('<LoadBalancerComboBox />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
+          quota={{}}
+          organization={organizationState}
         />,
       );
     });
@@ -105,7 +116,7 @@ describe('<LoadBalancerComboBox />', () => {
 
     it('does not call getLoadBalancers again if request returns an error', () => {
       wrapper.setProps({
-        machineTypes: { ...state, error: true, pending: false },
+        loadBalancerValues: { ...state, error: true, pending: false },
       }, () => {
         expect(getLoadBalancers).not.toBeCalled();
       });
@@ -123,6 +134,10 @@ describe('<LoadBalancerComboBox />', () => {
         values: [0, 4, 8],
       };
 
+      const quota = {
+        loadBalancerQuota: 4,
+      };
+
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
@@ -130,6 +145,8 @@ describe('<LoadBalancerComboBox />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
+          quota={quota}
+          organization={organizationState}
         />,
       );
     });

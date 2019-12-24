@@ -32,6 +32,12 @@ exports[`<PersistentStorageComboBox /> when persistent storage list needs to be 
       },
     }
   }
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
   persistentStorageValues={
     Object {
       "error": false,
@@ -41,6 +47,7 @@ exports[`<PersistentStorageComboBox /> when persistent storage list needs to be 
       "values": Array [],
     }
   }
+  quota={Object {}}
 >
   <div
     className="spinner-fit-container"
@@ -86,6 +93,12 @@ exports[`<PersistentStorageComboBox /> when the request is pending renders corre
       },
     }
   }
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
   persistentStorageValues={
     Object {
       "error": false,
@@ -95,6 +108,7 @@ exports[`<PersistentStorageComboBox /> when the request is pending renders corre
       "values": Array [],
     }
   }
+  quota={Object {}}
 >
   <div
     className="spinner-fit-container"
@@ -128,6 +142,12 @@ exports[`<PersistentStorageComboBox /> when the storage list is available render
       "onChange": [MockFunction],
     }
   }
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
   persistentStorageValues={
     Object {
       "error": false,
@@ -148,6 +168,11 @@ exports[`<PersistentStorageComboBox /> when the storage list is available render
           "value": 1181116006400,
         },
       ],
+    }
+  }
+  quota={
+    Object {
+      "persistentStorageQuota": 600,
     }
   }
 >
@@ -200,19 +225,6 @@ exports[`<PersistentStorageComboBox /> when the storage list is available render
           600 GiB
         </option>
       </FormSelectOption>
-      <FormSelectOption
-        key="1181116006400"
-        label="1100 GiB"
-        value="1181116006400"
-      >
-        <option
-          className=""
-          disabled={false}
-          value="1181116006400"
-        >
-          1100 GiB
-        </option>
-      </FormSelectOption>
     </select>
   </FormSelect>
 </PersistentStorageComboBox>
@@ -238,6 +250,12 @@ exports[`<PersistentStorageComboBox /> when there was an error renders correctly
       },
     }
   }
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
   persistentStorageValues={
     Object {
       "error": true,
@@ -247,6 +265,7 @@ exports[`<PersistentStorageComboBox /> when there was an error renders correctly
       "values": Array [],
     }
   }
+  quota={Object {}}
 >
   <ErrorBox
     message="Error loading persistent storage list"
