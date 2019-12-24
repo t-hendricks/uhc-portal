@@ -1,9 +1,87 @@
 {
   "kind": "ClusterList",
   "page": 1,
-  "size": 3,
-  "total": 3,
+  "size": 5,
+  "total": 5,
   "items": [
+    {
+      "kind": "Cluster",
+      "id": "1KgB0iDX8WjCDIlLMyavyIgM4Wr",
+      "href": "/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr",
+      "name": "61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
+      "external_id": "61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
+      "display_name": "61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
+      "creation_timestamp": "2019-05-02T13:18:58.077019Z",
+      "openshift_version": "4.1.0-rc.0",
+      "subscription": {
+        "kind": "SubscriptionLink",
+        "id": "1KgB0WcVBZBdRGAreuve29yoxUB",
+        "href": "/api/accounts_mgmt/v1/subscriptions/1KgB0WcVBZBdRGAreuve29yoxUB"
+      },
+      "nodes": {
+        "total": 0,
+        "master": 0,
+        "compute": 0
+      },
+      "state": "ready",
+      "groups": {
+        "kind": "GroupListLink",
+        "href": "/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr/groups"
+      },
+      "network": {
+        "router_shards": {
+          "kind": "RouterShardListLink",
+          "href": "/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr/router_shards",
+          "id": "1KgB0iDX8WjCDIlLMyavyIgM4Wr"
+        }
+      },
+      "multi_az": false,
+      "managed": false,
+      "identity_providers": {
+        "kind": "IdentityProviderListLink",
+        "href": "/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr/identity_providers"
+      },
+      "metrics": {
+        "memory": {
+          "updated_timestamp": "2019-05-02T14:56:38Z",
+          "used": {
+            "value": 11863199744,
+            "unit": "B"
+          },
+          "total": {
+            "value": 75519991808,
+            "unit": "B"
+          }
+        },
+        "cpu": {
+          "updated_timestamp": "2019-05-02T14:56:38Z",
+          "used": {
+            "value": 2.1283333333334067,
+            "unit": ""
+          },
+          "total": {
+            "value": 18,
+            "unit": ""
+          }
+        },
+        "storage": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": "B"
+          },
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
+        },
+        "nodes": {
+          "total": 6,
+          "master": 3,
+          "compute": 3
+        }
+      }
+    },
     {
       "kind": "Cluster",
       "id": "fake-installing-cluster",
@@ -16,6 +94,11 @@
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "subscription": {
+        "kind": "SubscriptionLink",
+        "id": "1SocPJ0uqEPS1DbacFnRQbnzfKm",
+        "href": "/api/accounts_mgmt/v1/subscriptions/1MmOwBoTq1uDmcpBk0NBqJ3dXej"
       },
       "region": {
         "kind": "CloudRegionLink",
@@ -248,99 +331,21 @@
     },
     {
       "kind": "Cluster",
-      "id": "1GRoczjlSc54Rk7So1R8Vx3fW9y",
-      "href": "/api/clusters_mgmt/v1/clusters/1GRoczjlSc54Rk7So1R8Vx3fW9y",
-      "name": "fake-selfmanaged-cluster",
-      "infra_id": "fake-selfmanaged-cluster-a1c4",
-      "external_id": "8b00e902-f675-4903-9118-91a8f9f5110a",
-      "display_name": "fake-selfmanaged-cluster",
-      "creation_timestamp": "2019-01-29T16:04:15.281411Z",
-      "cloud_provider": {
-        "kind": "CloudProviderLink",
-        "id": "aws",
-        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      },
-      "region": {
-        "kind": "CloudRegionLink",
-        "id": "us-east-1",
-        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1"
-      },
-      "console": {
-        "url": "https://console-openshift-console.apps.ealfassa-jan29-deleteme.sdev.devshift.net"
-      },
-      "api": {
-        "url": "https://ealfassa-jan29-deleteme-api.sdev.devshift.net:6443"
-      },
-      "nodes": {
-        "total": 6,
-        "master": 3,
-        "compute": 3
-      },
-      "metrics": {
-        "memory": {
-          "updated_timestamp": "0001-01-01T00:00:00Z",
-          "used": {
-            "value": 0,
-            "unit": "B"
-          },
-          "total": {
-            "value": 0,
-            "unit": "B"
-          }
-        },
-        "cpu": {
-          "updated_timestamp": "0001-01-01T00:00:00Z",
-          "used": {
-            "value": 0,
-            "unit": ""
-          },
-          "total": {
-            "value": 0,
-            "unit": ""
-          }
-        },
-        "storage": {
-          "updated_timestamp": "0001-01-01T00:00:00Z",
-          "used": {
-            "value": 0,
-            "unit": "B"
-          },
-          "total": {
-            "value": 0,
-            "unit": "B"
-          }
-        },
-        "nodes": {}
-      },
-      "state": "ready",
-      "flavour": {
-        "kind": "FlavourLink",
-        "id": "4",
-        "href": "/api/clusters_mgmt/v1/flavours/4"
-      },
-      "dns": {
-        "base_domain": "sdev.devshift.net"
-      },
-      "network": {
-        "machine_cidr": "10.0.0.0/16",
-        "service_cidr": "172.30.0.0/16",
-        "pod_cidr": "10.128.0.0/14"
-      },
-      "multi_az": false,
-      "managed": false
-    },
-    {
-      "kind": "Cluster",
       "id": "fakeclusterid",
       "href": "/api/clusters_mgmt/v1/clusters/fakeclusterid",
       "name": "fake-managed-cluster-2",
       "external_id": "b0c2d108-0603-41c3-9a8f-fake",
-      "display_name": "fake-managed-cluster",
+      "display_name": "fake-managed-cluster-2",
       "creation_timestamp": "2019-02-11T09:28:16.000143Z",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "subscription": {
+        "kind": "SubscriptionLink",
+        "id": "1Uk0VXX16bIDuBwpkBBkY9VCb3i",
+        "href": "/api/accounts_mgmt/v1/subscriptions/1Uk0VXX16bIDuBwpkBBkY9VCb3i"
       },
       "region": {
         "kind": "CloudRegionLink",
@@ -419,6 +424,144 @@
       },
       "multi_az": false,
       "managed": true
+    },
+    {
+      "kind": "Cluster",
+      "id": "1GRoczjlSc54Rk7So1R8Vx3fW9y",
+      "href": "/api/clusters_mgmt/v1/clusters/1GRoczjlSc54Rk7So1R8Vx3fW9y",
+      "name": "fake-selfmanaged-cluster",
+      "infra_id": "fake-selfmanaged-cluster-a1c4",
+      "external_id": "8b00e902-f675-4903-9118-91a8f9f5110a",
+      "display_name": "fake-selfmanaged-cluster",
+      "creation_timestamp": "2019-01-29T16:04:15.281411Z",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "subscription": {
+        "kind": "SubscriptionLink",
+        "id": "1MmOwBoTq1uDmcpBk0NBqJ3dXej",
+        "href": "/api/accounts_mgmt/v1/subscriptions/1MmOwBoTq1uDmcpBk0NBqJ3dXej"
+      },
+      "region": {
+        "kind": "CloudRegionLink",
+        "id": "us-east-1",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1"
+      },
+      "console": {
+        "url": "https://console-openshift-console.apps.ealfassa-jan29-deleteme.sdev.devshift.net"
+      },
+      "api": {
+        "url": "https://ealfassa-jan29-deleteme-api.sdev.devshift.net:6443"
+      },
+      "nodes": {
+        "total": 8,
+        "master": 3,
+        "infra": 1,
+        "compute": 4,
+        "compute_machine_type": {
+          "kind": "MachineTypeLink",
+          "id": "m5.xlarge",
+          "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge"
+        }
+      },
+      "metrics": {
+        "memory": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": "B"
+          },
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
+        },
+        "cpu": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": ""
+          },
+          "total": {
+            "value": 0,
+            "unit": ""
+          }
+        },
+        "sockets": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": ""
+          },
+          "total": {
+            "value": 0,
+            "unit": ""
+          }
+        },
+        "compute_nodes_memory": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
+        },
+        "compute_nodes_cpu": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "total": {
+            "value": 24,
+            "unit": ""
+          }
+        },
+        "storage": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": "B"
+          },
+          "total": {
+            "value": 0,
+            "unit": "B"
+          }
+        },
+        "nodes": {}
+      },
+      "state": "ready",
+      "flavour": {
+        "kind": "FlavourLink",
+        "id": "4",
+        "href": "/api/clusters_mgmt/v1/flavours/4"
+      },
+      "dns": {
+        "base_domain": "sdev.devshift.net"
+      },
+      "network": {
+        "machine_cidr": "10.0.0.0/16",
+        "service_cidr": "172.30.0.0/16",
+        "pod_cidr": "10.128.0.0/14"
+      },
+      "multi_az": false,
+      "managed": false,
+      "version": {
+        "kind": "VersionLink",
+        "id": "openshift-v4.2.9",
+        "href": "/api/clusters_mgmt/v1/versions/openshift-v4.2.9"
+      },
+      "storage_quota": {
+        "value": 107374182400,
+        "unit": "B"
+      },
+      "load_balancer_quota": 0,
+      "identity_providers": {
+        "href": "/api/clusters_mgmt/v1/clusters/1GRoczjlSc54Rk7So1R8Vx3fW9y/identity_providers",
+        "kind": "IdentityProviderListLink"
+      },
+      "addons": {
+        "kind": "AddOnInstallationListLink",
+        "href": "/api/clusters_mgmt/v1/clusters/1GRoczjlSc54Rk7So1R8Vx3fW9y/addons",
+        "items": null
+      }
     }
   ]
 }

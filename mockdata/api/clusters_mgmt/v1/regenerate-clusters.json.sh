@@ -1,24 +1,28 @@
-#!/bin/bash
+#!/bin/bash -e
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")"  # directory of this script
+cd "$(git rev-parse --show-toplevel)"
 
-(
-  echo '
-{
-  "kind": "ClusterList",
-  "page": 1,
-  "size": 3,
-  "total": 3,
-  "items": [
-'
-  cat clusters/fake-installing-cluster.json
-  echo ,
-  cat clusters/1H1l4oRVxoh6qSTf4fSmvtaGaWy.json
-  echo ,
-  cat clusters/1GRoczjlSc54Rk7So1R8Vx3fW9y.json
-  echo ,
-  cat clusters/fakeclusterid.json
-  echo '
-  ]
-}'
-) | jq . > clusters.json
+CLUSTERS=mockdata/api/clusters_mgmt/v1/clusters
+SUBSCRIPTIONS=mockdata/api/accounts_mgmt/v1/subscriptions
+
+jq --slurp '{
+  kind: "ClusterList",
+  page: 1,
+  size: . | length,
+  total: . | length,
+  items: . | sort_by(.display_name),
+}' "$CLUSTERS"/*.json > "$CLUSTERS.json"
+
+echo "Regenerated '$CLUSTERS.json'."
+git status --short "$CLUSTERS.json"
+
+echo
+echo "Checking consistency between '$CLUSTERS.json' and '$SUBSCRIPTIONS.json':"
+echo "# order is [cluster id, subscription id, external id, display name]"
+echo "# both sides should be sorted by display_name."
+
+diff --report-identical-files --side-by-side --label="from $CLUSTERS.json" --label="from $SUBSCRIPTIONS.json" \
+ <(jq '.items[] | [.id, .subscription.id, .external_id, .display_name]' "$CLUSTERS.json") \
+ <(jq '.items[] | [.cluster_id, .id, .external_cluster_id, .display_name]' "$SUBSCRIPTIONS.json") |
+(colordiff || cat)
