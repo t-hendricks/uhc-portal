@@ -15,7 +15,7 @@ function AWSAccountDetailsFields(props) {
       <GridItem span={4}>
         <Field
           component={ReduxVerticalFormGroup}
-          name="access_key_id"
+          name="account_id"
           label="AWS account ID"
           type="text"
           validate={required}
@@ -35,7 +35,7 @@ function AWSAccountDetailsFields(props) {
       <GridItem span={4}>
         <Field
           component={ReduxVerticalFormGroup}
-          name="account_id"
+          name="access_key_id"
           label="AWS access key ID"
           type="text"
           validate={required}
