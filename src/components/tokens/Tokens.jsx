@@ -30,6 +30,9 @@ import {
  * a backslash at the end, for line continuation.
  */
 const splitToken = (text) => {
+  if (!text || !text.match) {
+    return text;
+  }
   const chunks = text.match(/.{1,80}/g);
   const lines = chunks.map(chunk => `${chunk}\\`);
   return lines.join('\n');
