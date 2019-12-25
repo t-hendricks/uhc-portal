@@ -843,6 +843,23 @@ span.dev-preview-label svg {
   margin-top: -3px;
 }
 
+#field-array-label {
+  font-size: var(--pf-c-form__label--FontSize);
+}
+
+#field-array-help-text {
+  font-size: var(--pf-c-form__helper-text--FontSize);
+  margin-top: var(--pf-c-form__helper-text--MarginTop);
+}
+
+#field-array-title {
+  margin-bottom: 8px !important;
+}
+
+.field-grid-item {
+  margin-top: -16px;
+}
+
 .pf-c-content h3.osd-page-header {
   margin-top: 20px;
   margin-bottom: -10px;

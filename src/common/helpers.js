@@ -1,4 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
+import get from 'lodash/get';
 
 const noop = Function.prototype;
 
@@ -10,7 +11,23 @@ function getTimeDelta(t1, t2 = new Date()) {
 
 const isValid = id => id !== null && id !== undefined && id !== false && id !== '';
 
-const toCleanArray = str => (str ? str.split(',').map(item => item.trim()).filter(item => item) : undefined);
+const strToCleanArray = str => (str ? str.split(',').map(item => item.trim()).filter(item => item) : undefined);
+
+const multiInputToCleanArray = (formData, fieldName) => {
+  const fieldContents = formData[fieldName];
+  return (
+    fieldContents.map(fieldContent => get(fieldContent, `${fieldName}`, null)).filter(input => input)).map(item => item.trim());
+};
+
+/**
+ * Generates a random 4B string that can be used as a key.
+ */
+const getRandomID = () => {
+  const id = Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1);
+  return `${id}`;
+};
 
 const omitEmptyFields = (obj) => {
   const objToClean = obj;
@@ -49,7 +66,7 @@ const helpers = {
   getTimeDelta,
   isValid,
   omitEmptyFields,
-  toCleanArray,
+  strToCleanArray,
   scrollToTop,
   nestedIsEmpty,
 };
@@ -59,8 +76,10 @@ export {
   getTimeDelta,
   isValid,
   omitEmptyFields,
-  toCleanArray,
+  strToCleanArray,
+  multiInputToCleanArray,
   scrollToTop,
+  getRandomID,
 };
 
 export default helpers;
