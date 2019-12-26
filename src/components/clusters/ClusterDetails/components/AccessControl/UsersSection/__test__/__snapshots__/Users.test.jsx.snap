@@ -1,0 +1,383 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Users /> should render without users 1`] = `
+<Card>
+  <CardBody>
+    <Title
+      headingLevel="h3"
+      size="lg"
+    >
+      Cluster Administrative Users
+    </Title>
+    <p>
+      Grant permission to manage this cluster to users defined in your identity provider.
+       
+      <a
+        href="https://docs.openshift.com/dedicated/4/administering_a_cluster/dedicated-admin-role.html"
+        rel="noopener noreferrer"
+      >
+        Learn more.
+      </a>
+    </p>
+    <Component
+      actions={Array []}
+      aria-label="Users"
+      cells={
+        Array [
+          Object {
+            "title": <React.Fragment>
+              User ID
+              <Popover
+                appendTo={[Function]}
+                aria-label="User IDs"
+                bodyContent={
+                  <p>
+                    User IDs are matched by the cluster's identity providers.
+                  </p>
+                }
+                boundary="window"
+                className=""
+                closeBtnAriaLabel="Close"
+                distance={25}
+                enableFlip={true}
+                flipBehavior={
+                  Array [
+                    "top",
+                    "right",
+                    "bottom",
+                    "left",
+                    "top",
+                    "right",
+                    "bottom",
+                  ]
+                }
+                footerContent={null}
+                headerContent={null}
+                hideOnOutsideClick={true}
+                isVisible={null}
+                maxWidth="calc(2rem + 18.75rem)"
+                onHidden={[Function]}
+                onHide={[Function]}
+                onMount={[Function]}
+                onShow={[Function]}
+                onShown={[Function]}
+                position="top"
+                shouldClose={[Function]}
+                tippyProps={Object {}}
+                zIndex={9999}
+              >
+                <Unknown
+                  isInline={true}
+                  variant="plain"
+                >
+                  <HelpIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                    title={null}
+                  />
+                </Unknown>
+              </Popover>
+            </React.Fragment>,
+          },
+          Object {
+            "title": <React.Fragment>
+              Group
+              <Popover
+                appendTo={[Function]}
+                aria-label="Groups"
+                bodyContent={
+                  <p>
+                    Groups are mapped to role bindings on the cluster.
+                     
+                    For more information check the
+                     
+                    <a
+                      href="https://docs.openshift.com/container-platform/4.2/authentication/understanding-authentication.html"
+                    >
+                      OpenShift 4 documentation
+                    </a>
+                    .
+                  </p>
+                }
+                boundary="window"
+                className=""
+                closeBtnAriaLabel="Close"
+                distance={25}
+                enableFlip={true}
+                flipBehavior={
+                  Array [
+                    "top",
+                    "right",
+                    "bottom",
+                    "left",
+                    "top",
+                    "right",
+                    "bottom",
+                  ]
+                }
+                footerContent={null}
+                headerContent={null}
+                hideOnOutsideClick={true}
+                isVisible={null}
+                maxWidth="calc(2rem + 18.75rem)"
+                onHidden={[Function]}
+                onHide={[Function]}
+                onMount={[Function]}
+                onShow={[Function]}
+                onShown={[Function]}
+                position="top"
+                shouldClose={[Function]}
+                tippyProps={Object {}}
+                zIndex={9999}
+              >
+                <Unknown
+                  isInline={true}
+                  variant="plain"
+                >
+                  <HelpIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                    title={null}
+                  />
+                </Unknown>
+              </Popover>
+            </React.Fragment>,
+          },
+        ]
+      }
+      rows={
+        Array [
+          Object {
+            "cells": Array [
+              Object {
+                "props": Object {
+                  "colSpan": 2,
+                },
+                "title": <Bullseye>
+                  <EmptyState
+                    variant="small"
+                  >
+                    <Title
+                      headingLevel="h2"
+                      size="lg"
+                    >
+                      No users exist for this cluster
+                    </Title>
+                    <EmptyStateBody>
+                      You can add users to grant them administrator access to the cluster. Users will be authenticated via your selected identity provider.
+                       
+                      <a
+                        href="https://docs.openshift.com/dedicated/4/administering_a_cluster/dedicated-admin-role.html"
+                        rel="noopener noreferrer"
+                      >
+                        Learn more.
+                      </a>
+                    </EmptyStateBody>
+                  </EmptyState>
+                </Bullseye>,
+              },
+            ],
+            "heightAuto": true,
+          },
+        ]
+      }
+      variant="compact"
+    >
+      <TableHeader />
+      <TableBody />
+    </Component>
+    <h3>
+      Add user:
+    </h3>
+    <UserInputForm
+      clusterID="fake id"
+      pending={false}
+      saveUser={[MockFunction]}
+    />
+  </CardBody>
+</Card>
+`;
+
+exports[`<Users /> with users should render 1`] = `
+<Card>
+  <CardBody>
+    <Title
+      headingLevel="h3"
+      size="lg"
+    >
+      Cluster Administrative Users
+    </Title>
+    <p>
+      Grant permission to manage this cluster to users defined in your identity provider.
+       
+      <a
+        href="https://docs.openshift.com/dedicated/4/administering_a_cluster/dedicated-admin-role.html"
+        rel="noopener noreferrer"
+      >
+        Learn more.
+      </a>
+    </p>
+    <Component
+      actions={
+        Array [
+          Object {
+            "onClick": [Function],
+            "title": "Delete",
+          },
+        ]
+      }
+      aria-label="Users"
+      cells={
+        Array [
+          Object {
+            "title": <React.Fragment>
+              User ID
+              <Popover
+                appendTo={[Function]}
+                aria-label="User IDs"
+                bodyContent={
+                  <p>
+                    User IDs are matched by the cluster's identity providers.
+                  </p>
+                }
+                boundary="window"
+                className=""
+                closeBtnAriaLabel="Close"
+                distance={25}
+                enableFlip={true}
+                flipBehavior={
+                  Array [
+                    "top",
+                    "right",
+                    "bottom",
+                    "left",
+                    "top",
+                    "right",
+                    "bottom",
+                  ]
+                }
+                footerContent={null}
+                headerContent={null}
+                hideOnOutsideClick={true}
+                isVisible={null}
+                maxWidth="calc(2rem + 18.75rem)"
+                onHidden={[Function]}
+                onHide={[Function]}
+                onMount={[Function]}
+                onShow={[Function]}
+                onShown={[Function]}
+                position="top"
+                shouldClose={[Function]}
+                tippyProps={Object {}}
+                zIndex={9999}
+              >
+                <Unknown
+                  isInline={true}
+                  variant="plain"
+                >
+                  <HelpIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                    title={null}
+                  />
+                </Unknown>
+              </Popover>
+            </React.Fragment>,
+          },
+          Object {
+            "title": <React.Fragment>
+              Group
+              <Popover
+                appendTo={[Function]}
+                aria-label="Groups"
+                bodyContent={
+                  <p>
+                    Groups are mapped to role bindings on the cluster.
+                     
+                    For more information check the
+                     
+                    <a
+                      href="https://docs.openshift.com/container-platform/4.2/authentication/understanding-authentication.html"
+                    >
+                      OpenShift 4 documentation
+                    </a>
+                    .
+                  </p>
+                }
+                boundary="window"
+                className=""
+                closeBtnAriaLabel="Close"
+                distance={25}
+                enableFlip={true}
+                flipBehavior={
+                  Array [
+                    "top",
+                    "right",
+                    "bottom",
+                    "left",
+                    "top",
+                    "right",
+                    "bottom",
+                  ]
+                }
+                footerContent={null}
+                headerContent={null}
+                hideOnOutsideClick={true}
+                isVisible={null}
+                maxWidth="calc(2rem + 18.75rem)"
+                onHidden={[Function]}
+                onHide={[Function]}
+                onMount={[Function]}
+                onShow={[Function]}
+                onShown={[Function]}
+                position="top"
+                shouldClose={[Function]}
+                tippyProps={Object {}}
+                zIndex={9999}
+              >
+                <Unknown
+                  isInline={true}
+                  variant="plain"
+                >
+                  <HelpIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                    title={null}
+                  />
+                </Unknown>
+              </Popover>
+            </React.Fragment>,
+          },
+        ]
+      }
+      rows={
+        Array [
+          Object {
+            "cells": Array [
+              "user_name",
+              "dedicated-admins",
+            ],
+            "userID": "user_name",
+          },
+        ]
+      }
+      variant="compact"
+    >
+      <TableHeader />
+      <TableBody />
+    </Component>
+    <h3>
+      Add user:
+    </h3>
+    <UserInputForm
+      clusterID="fake id"
+      pending={false}
+      saveUser={[MockFunction]}
+    />
+  </CardBody>
+</Card>
+`;

@@ -158,7 +158,7 @@ function ClusterListTable(props) {
       aria-label="Cluster List"
       cells={columns}
       rows={clusters.map(cluster => clusterRow(cluster))}
-      actionResolver={rowData => actionResolver(rowData.cluster, true, false, openModal)}
+      actionResolver={rowData => actionResolver(rowData.cluster, true, openModal)}
       onSort={onSortToggle}
       sortBy={sortBy}
     >

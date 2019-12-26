@@ -199,8 +199,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
             }
           }
           disabled={false}
-          hasIDP={false}
-          idpID=""
           organization={
             Object {
               "created_at": "2019-01-02T18:28:14.851121Z",
@@ -213,7 +211,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
             }
           }
           showConsoleButton={false}
-          showIDPButton={true}
         />
         <RefreshBtn
           autoRefresh={true}

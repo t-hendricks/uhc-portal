@@ -7,7 +7,7 @@ import {
 } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 
-import { checkUserID } from '../../../../../common/validators';
+import { checkUserID } from '../../../../../../common/validators';
 
 class UserInputForm extends React.Component {
   constructor(props) {

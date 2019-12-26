@@ -1,4 +1,4 @@
-import helpers from '../../../../../common/helpers';
+import helpers from '../../../../../../common/helpers';
 import UsersConstants from './UsersConstants';
 
 const initialState = {

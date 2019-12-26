@@ -38,7 +38,7 @@ function ClusterDetailsTop(props) {
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
   const openIDPModal = () => {
-    openModal('create-identity-provider', { clusterName });
+    openModal('create-identity-provider');
   };
 
   const IdentityProvidersHint = () => (
@@ -81,9 +81,6 @@ function ClusterDetailsTop(props) {
       cluster={cluster}
       organization={organization.details}
       showConsoleButton={false}
-      showIDPButton
-      hasIDP={hasIdentityProviders}
-      idpID={get(clusterIdentityProviders, 'clusterIDPList[0].id', '')}
     />
   );
 

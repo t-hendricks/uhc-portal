@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import Modal from '../../../../common/Modal/Modal';
 import ErrorBox from '../../../../common/ErrorBox';
 
-import { noop } from '../../../../../common/helpers';
-
 class DeleteIDPDialog extends React.Component {
   componentDidUpdate() {
     const { deletedIDPResponse } = this.props;
@@ -15,11 +13,13 @@ class DeleteIDPDialog extends React.Component {
   }
 
   closeDialog(parentShouldRefresh) {
-    const { clearDeleteIDPResponse, close, onClose } = this.props;
+    const { clearDeleteIDPResponse, close, refreshParent } = this.props;
 
     clearDeleteIDPResponse(); // clear the response for the next time the dialog is shown.
     close(); // Close the dialog.
-    onClose(parentShouldRefresh); // call the onClose event handler from the parent.
+    if (parentShouldRefresh) {
+      refreshParent(); // call the event handler from the parent.
+    }
   }
 
   render() {
@@ -33,6 +33,8 @@ class DeleteIDPDialog extends React.Component {
     const {
       clusterID,
       idpID,
+      idpName,
+      idpType,
     } = modalData;
 
     const errorContainer = deletedIDPResponse.error && (
@@ -54,6 +56,23 @@ class DeleteIDPDialog extends React.Component {
       >
         {errorContainer}
         <p>
+          Your&apos;e about to remove the
+          {' '}
+          <b>
+            {idpType}
+          </b>
+          {' '}
+          identity provider
+          {' '}
+          <b>
+            &quot;
+            {idpName}
+            &quot;
+          </b>
+          {' '}
+          from this cluster.
+        </p>
+        <p>
           You may lose access to this cluster if you remove this identity provider.
           At least one identity provider is required to access the cluster.
         </p>
@@ -69,11 +88,7 @@ DeleteIDPDialog.propTypes = {
   close: PropTypes.func.isRequired,
   deleteIDP: PropTypes.func.isRequired,
   deletedIDPResponse: PropTypes.object,
-  onClose: PropTypes.func,
-};
-
-DeleteIDPDialog.defaultProps = {
-  onClose: noop,
+  refreshParent: PropTypes.func,
 };
 
 export default DeleteIDPDialog;

@@ -10,13 +10,10 @@ import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
  * PF table renders automatically.
  * @param {*} cluster             The cluster object corresponding to the current row
  * @param {*} showConsoleButton   true if 'Launch Console' button should be displayed
- * @param {*} showIDPButton       true 'Remove Identity Providers' button should be displayed
  * @param {*} openModal           Action to open modal
- * @param {*} hasIDP              true if exists an identity provider for current cluster
- * @param {*} idpID               Identity provider id if such exists
  */
 function actionResolver(
-  cluster, showConsoleButton, showIDPButton, openModal, hasIDP, idpID,
+  cluster, showConsoleButton, openModal,
 ) {
   const baseProps = {
     component: 'button',
@@ -142,21 +139,6 @@ function actionResolver(
       : { ...baseDeleteProps, onClick: () => openModal('delete-cluster', deleteModalData) };
   };
 
-  const shouldShowIDPButton = showIDPButton && hasIDP && idpID;
-
-  const getDeleteIDPProps = () => {
-    const removeIDPModalData = {
-      clusterID: cluster.id,
-      idpID,
-    };
-    return {
-      ...baseProps,
-      key: getKey('deleteidp'),
-      title: 'Remove Identity Provider',
-      onClick: () => openModal('delete-idp', removeIDPModalData),
-    };
-  };
-
   const adminConsoleItemProps = getAdminConosleProps();
   const editClusterItemProps = getEditClusterProps();
   const editDisplayNameItemProps = getEditDisplayNameProps();
@@ -164,7 +146,6 @@ function actionResolver(
   const deleteClusterItemProps = getDeleteItemProps();
   const archiveClusterItemProps = getArchiveClusterProps();
   const unarchiveClusterItemProps = getUnarchiveClusterProps();
-  const deleteIDPItemProps = getDeleteIDPProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed;
@@ -183,15 +164,14 @@ function actionResolver(
     showDelete && deleteClusterItemProps,
     showArchive && archiveClusterItemProps,
     showUnarchive && unarchiveClusterItemProps,
-    shouldShowIDPButton && deleteIDPItemProps,
   ].filter(Boolean);
 }
 
 function dropDownItems({
-  cluster, showConsoleButton, showIDPButton, openModal, hasIDP, idpID,
+  cluster, showConsoleButton, openModal,
 }) {
   const actions = actionResolver(
-    cluster, showConsoleButton, showIDPButton, openModal, hasIDP, idpID,
+    cluster, showConsoleButton, openModal,
   );
   const menuItems = actions.map(
     action => (<DropdownItem {...action}>{action.title}</DropdownItem>),

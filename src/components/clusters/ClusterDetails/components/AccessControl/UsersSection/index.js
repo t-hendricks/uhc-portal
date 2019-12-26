@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import usersActions from './UsersActions';
-import Users from './Users';
+import UsersSection from './UsersSection';
 
 const mapStateToProps = (state) => {
   const { groupUsers, addUserResponse, deleteUserResponse } = state.clusterUsers;
@@ -18,4 +18,4 @@ const mapDispatchToProps = {
   clearUsersResponses: usersActions.clearUsersResponses,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersSection);

@@ -1,5 +1,5 @@
 import UsersConstants from './UsersConstants';
-import { clusterService } from '../../../../../services';
+import { clusterService } from '../../../../../../services';
 
 const getUsers = (clusterID, groupID) => dispatch => dispatch({
   type: UsersConstants.GET_USERS,

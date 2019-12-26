@@ -1,19 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Button } from '@patternfly/react-core';
 
 import { initialState } from '../UsersReducer';
 import { stateWithUsers } from './Users.fixtures';
-import Users from '../Users';
+import UsersSection from '../UsersSection';
 
 describe('<Users />', () => {
   it('should render without users', () => {
     const getUsers = jest.fn();
-    const wrapper = shallow(<Users
+    const wrapper = shallow(<UsersSection
       clusterID="fake id"
       getUsers={getUsers}
       deleteUser={jest.fn()}
       addUser={jest.fn()}
+      clearUsersResponses={jest.fn()}
       clusterGroupUsers={initialState.groupUsers}
       addUserResponse={initialState.addUserResponse}
       deleteUserResponse={initialState.deleteUserResponse}
@@ -31,11 +31,12 @@ describe('<Users />', () => {
       deleteUser = jest.fn();
       getUsers = jest.fn();
 
-      wrapper = shallow(<Users
+      wrapper = shallow(<UsersSection
         clusterID="fake id"
         getUsers={deleteUser}
         deleteUser={deleteUser}
         addUser={jest.fn()}
+        clearUsersResponses={jest.fn()}
         clusterGroupUsers={stateWithUsers}
         addUserResponse={initialState.addUserResponse}
         deleteUserResponse={initialState.deleteUserResponse}
@@ -48,11 +49,6 @@ describe('<Users />', () => {
 
     it('should not call getUsers when it has users', () => {
       expect(getUsers).not.toBeCalled();
-    });
-
-    it('should call delete user when a user is deleted', () => {
-      wrapper.find(Button).at(2).simulate('click');
-      expect(deleteUser).toHaveBeenCalledWith('fake id', 'dedicated-admins', 'user_name');
     });
   });
 });

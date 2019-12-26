@@ -16,7 +16,7 @@ const mappingMethodsformValues = {
 
 const IDPtypes = [
   {
-    name: 'Github',
+    name: 'GitHub',
     value: IDPformValues.GITHUB,
   },
   {
@@ -32,6 +32,13 @@ const IDPtypes = [
     value: IDPformValues.LDAP,
   },
 ];
+
+const IDPTypeNames = {
+  [IDPformValues.GITHUB]: 'GitHub',
+  [IDPformValues.GOOGLE]: 'Google',
+  [IDPformValues.OPENID]: 'OpenID',
+  [IDPformValues.LDAP]: 'LDAP',
+};
 
 const mappingMethods = [
   {
@@ -127,6 +134,7 @@ const getCreateIDPRequestData = (formData) => {
 export {
   getCreateIDPRequestData,
   IDPtypes,
+  IDPTypeNames,
   mappingMethods,
   IDPformValues,
   mappingMethodsformValues,
