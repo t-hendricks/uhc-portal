@@ -131,26 +131,26 @@ exports[`<LoadBalancerComboBox /> when the load balancer list is available rende
     >
       <FormSelectOption
         key="0"
-        label={0}
-        value={0}
+        label="0"
+        value="0"
       >
         <option
           className=""
           disabled={false}
-          value={0}
+          value="0"
         >
           0
         </option>
       </FormSelectOption>
       <FormSelectOption
         key="4"
-        label={4}
-        value={4}
+        label="4"
+        value="4"
       >
         <option
           className=""
           disabled={false}
-          value={4}
+          value="4"
         >
           4
         </option>

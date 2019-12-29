@@ -73,7 +73,7 @@ class LoadBalancersComboBox extends React.Component {
           isDisabled={disabled}
           {...input}
         >
-          {filteredValues.values.map(value => loadBalancerOption(value))}
+          {filteredValues.values.map(value => loadBalancerOption(value.toString()))}
         </FormSelect>
       );
     }
