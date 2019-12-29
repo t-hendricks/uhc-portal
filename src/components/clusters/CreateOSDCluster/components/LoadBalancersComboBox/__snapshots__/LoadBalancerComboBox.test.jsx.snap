@@ -41,6 +41,13 @@ exports[`<LoadBalancerComboBox /> when load balancer list needs to be fetched re
       "values": Array [],
     }
   }
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
+  quota={Object {}}
 >
   <div
     className="spinner-fit-container"
@@ -87,6 +94,17 @@ exports[`<LoadBalancerComboBox /> when the load balancer list is available rende
       ],
     }
   }
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
+  quota={
+    Object {
+      "loadBalancerQuota": 4,
+    }
+  }
 >
   <FormSelect
     aria-label="Load Balancers"
@@ -113,41 +131,28 @@ exports[`<LoadBalancerComboBox /> when the load balancer list is available rende
     >
       <FormSelectOption
         key="0"
-        label="0"
-        value="0"
+        label={0}
+        value={0}
       >
         <option
           className=""
           disabled={false}
-          value="0"
+          value={0}
         >
           0
         </option>
       </FormSelectOption>
       <FormSelectOption
         key="4"
-        label="4"
-        value="4"
+        label={4}
+        value={4}
       >
         <option
           className=""
           disabled={false}
-          value="4"
+          value={4}
         >
           4
-        </option>
-      </FormSelectOption>
-      <FormSelectOption
-        key="8"
-        label="8"
-        value="8"
-      >
-        <option
-          className=""
-          disabled={false}
-          value="8"
-        >
-          8
         </option>
       </FormSelectOption>
     </select>
@@ -184,6 +189,13 @@ exports[`<LoadBalancerComboBox /> when the request is pending renders correctly 
       "values": Array [],
     }
   }
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
+  quota={Object {}}
 >
   <div
     className="spinner-fit-container"
@@ -238,6 +250,13 @@ exports[`<LoadBalancerComboBox /> when there was an error renders correctly 1`] 
       "values": Array [],
     }
   }
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
+  quota={Object {}}
 >
   <ErrorBox
     message="Error loading load balancers list"

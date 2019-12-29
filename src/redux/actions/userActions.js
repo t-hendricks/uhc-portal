@@ -50,6 +50,19 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
           // Accumulate all available quota per resource name
           response.data.addOnsQuota[item.resource_name] += item.allowed - item.reserved;
           break;
+        case 'pv.storage.aws':
+          // Create a map of storage quota.
+          if (!response.data.persistentStorageQuota) {
+            response.data.persistentStorageQuota = 0;
+          }
+          response.data.persistentStorageQuota += (item.allowed - item.reserved);
+          break;
+        case 'network.loadbalancer.aws':
+          if (!response.data.loadBalancerQuota) {
+            response.data.loadBalancerQuota = 0;
+          }
+          response.data.loadBalancerQuota += (item.allowed - item.reserved);
+          break;
         default:
           break;
       }

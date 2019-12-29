@@ -9,12 +9,19 @@ import {
   FormSelectOption,
 } from '@patternfly/react-core';
 
+import get from 'lodash/get';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../../common/ErrorBox';
 
 class LoadBalancersComboBox extends React.Component {
   componentDidMount() {
-    const { getLoadBalancers, loadBalancerValues } = this.props;
+    const {
+      getLoadBalancers, loadBalancerValues,
+      organization, getOrganizationAndQuota,
+    } = this.props;
+    if (!organization.fulfilled && !organization.pending) {
+      getOrganizationAndQuota();
+    }
     if (!loadBalancerValues.fulfilled) {
       // Don't let the user submit if we couldn't get load balancers yet.
       this.setInvalidValue();
@@ -40,6 +47,14 @@ class LoadBalancersComboBox extends React.Component {
     input.onChange('');
   }
 
+  filterLoadBalancerValuesByQuota() {
+    const { loadBalancerValues, quota } = this.props;
+    const loadBalancerQuota = get(quota, 'loadBalancerQuota', 0);
+    const result = { ...loadBalancerValues };
+    result.values = result.values.filter(el => el <= loadBalancerQuota);
+    return result;
+  }
+
   render() {
     const {
       input, loadBalancerValues, disabled,
@@ -50,6 +65,7 @@ class LoadBalancersComboBox extends React.Component {
       <FormSelectOption key={value} value={value} label={value} />
     );
     if (loadBalancerValues.fulfilled) {
+      const filteredValues = this.filterLoadBalancerValuesByQuota();
       return (
         <FormSelect
           className="quota-combo-box"
@@ -57,7 +73,7 @@ class LoadBalancersComboBox extends React.Component {
           isDisabled={disabled}
           {...input}
         >
-          {loadBalancerValues.values.map(value => loadBalancerOption(value.toString()))}
+          {filteredValues.values.map(value => loadBalancerOption(value))}
         </FormSelect>
       );
     }
@@ -78,6 +94,9 @@ LoadBalancersComboBox.propTypes = {
   loadBalancerValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
+  quota: PropTypes.object.isRequired,
+  organization: PropTypes.object.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
 };
 
 export default LoadBalancersComboBox;
