@@ -1,5 +1,4 @@
 import get from 'lodash/get';
-import { getFormValues } from 'redux-form';
 
 const minValueSelector = isMultiAz => (isMultiAz ? {
   value: 9,
@@ -9,28 +8,16 @@ const minValueSelector = isMultiAz => (isMultiAz ? {
   validationMsg: 'At least 4 nodes are required',
 });
 
-
-const shouldShowLoadBalancerAlert = (state) => {
-  const { data } = state.modal.activeModal;
-  const modalQuota = get(data, 'load_balancer_quota', 0);
-  const values = getFormValues('EditCluster')(state);
-  const formQuota = get(values, 'load_balancers', 0);
-  if (formQuota && modalQuota) {
-    return modalQuota > parseInt(formQuota, 10);
-  }
-  return false;
+// compare previously set load balancers to the new value of required load balancers
+const shouldShowLoadBalancerAlert = (state, newRequiredLB) => {
+  const currentlyRequired = get(state.modal.activeModal.data, 'load_balancer_quota', 0);
+  return newRequiredLB < currentlyRequired;
 };
 
-
-const shouldShowStorageQuotaAlert = (state) => {
-  const { data } = state.modal.activeModal;
-  const modalQuota = get(data, 'storage_quota.value', 0);
-  const values = getFormValues('EditCluster')(state);
-  const formQuota = get(values, 'persistent_storage', 0);
-  if (formQuota && modalQuota) {
-    return modalQuota > parseInt(formQuota, 10);
-  }
-  return false;
+// compare previously set storage to the new value of required storage
+const shouldShowStorageQuotaAlert = (state, newRequiredStorage) => {
+  const currentlyRequired = get(state.modal.activeModal.data, 'storage_quota', 0);
+  return newRequiredStorage < currentlyRequired;
 };
 
 export { minValueSelector, shouldShowStorageQuotaAlert, shouldShowLoadBalancerAlert };
