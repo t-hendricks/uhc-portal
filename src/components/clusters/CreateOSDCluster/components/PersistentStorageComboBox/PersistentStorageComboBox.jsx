@@ -5,9 +5,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Select,
-  SelectOption,
-  SelectVariant,
+  FormSelect,
+  FormSelectOption,
 } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
@@ -15,17 +14,15 @@ import ErrorBox from '../../../../common/ErrorBox';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
 
 class PersistentStorageComboBox extends React.Component {
-  state = {
-    isExpanded: false,
-  };
-
   componentDidMount() {
     const { getPersistentStorage, persistentStorageValues } = this.props;
     if (!persistentStorageValues.fulfilled) {
       // Don't let the user submit if we couldn't get persistent storage yet.
       this.setInvalidValue();
     }
-    if (!persistentStorageValues.pending && !persistentStorageValues.fulfilled) {
+    if (!persistentStorageValues.pending
+      && !persistentStorageValues.fulfilled
+      && !persistentStorageValues.error) {
       // fetch persistent storage from server only if needed.
       getPersistentStorage();
     }
@@ -39,18 +36,6 @@ class PersistentStorageComboBox extends React.Component {
     }
   }
 
-  onSelect = (event, selection) => {
-    const { input } = this.props;
-    this.setState({ isExpanded: false });
-    input.onChange(selection);
-  };
-
-  onToggle = (isExpanded) => {
-    this.setState({
-      isExpanded,
-    });
-  };
-
   setInvalidValue() {
     // Tell redux form the current value of this field is empty.
     // This will cause it to not pass validation if it is required.
@@ -62,40 +47,34 @@ class PersistentStorageComboBox extends React.Component {
     const {
       input, persistentStorageValues, disabled,
     } = this.props;
-    const {
-      isExpanded,
-    } = this.state;
+
     // Set up options for storage values
     const storageOption = (value) => {
       // value is a tuple of {value, unit}
       const valueWithUnit = humanizeValueWithUnitGiB(value.value);
+      const strValue = value.value.toString();
       // Values passed in the select are *always* in bytes, but we display them
       // in a humanize form.
 
       return (
-        <SelectOption
-          key={value.value.toString()}
-          value={value.value.toString()}
-        >
-          {`${valueWithUnit.value} ${valueWithUnit.unit}`}
-        </SelectOption>
+        <FormSelectOption
+          key={strValue}
+          value={strValue}
+          label={`${valueWithUnit.value} ${valueWithUnit.unit}`}
+        />
       );
     };
 
     if (persistentStorageValues.fulfilled) {
       return (
-        <Select
+        <FormSelect
           className="quota-combo-box"
-          variant={SelectVariant.single}
           aria-label="Persistent Storage"
-          onToggle={this.onToggle}
-          onSelect={this.onSelect}
-          selections={input.value}
-          isExpanded={isExpanded}
-          disabled={disabled}
+          isDisabled={disabled}
+          {...input}
         >
           {persistentStorageValues.values.map(value => storageOption(value))}
-        </Select>
+        </FormSelect>
       );
     }
 

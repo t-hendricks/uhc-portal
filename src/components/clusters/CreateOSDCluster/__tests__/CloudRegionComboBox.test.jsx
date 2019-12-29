@@ -71,10 +71,6 @@ describe('<CloudRegionComboBox />', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('calls getCloudProviders on mount', () => {
-      expect(getCloudProviders).toBeCalled();
-    });
-
     it('calls onChange to mark as invalid', () => {
       expect(onChange).toBeCalledWith('');
     });

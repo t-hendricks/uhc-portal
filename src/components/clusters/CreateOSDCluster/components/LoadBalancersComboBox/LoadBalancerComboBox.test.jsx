@@ -67,10 +67,6 @@ describe('<LoadBalancerComboBox />', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('calls getLoadBalancers on mount', () => {
-      expect(getLoadBalancers).toBeCalled();
-    });
-
     it('calls onChange to mark as invalid', () => {
       expect(onChange).toBeCalledWith('');
     });
