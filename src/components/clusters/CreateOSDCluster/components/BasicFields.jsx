@@ -14,7 +14,7 @@ import { constants } from '../CreateOSDClusterHelper';
 import PopoverHint from '../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators, { required } from '../../../../common/validators';
-import minValueSelector from '../../common/EditClusterDialog/EditClusterSelectors';
+import { minValueSelector } from '../../common/EditClusterDialog/EditClusterSelectors';
 import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
 
 class BasicFields extends React.Component {
