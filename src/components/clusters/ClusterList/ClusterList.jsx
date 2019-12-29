@@ -146,42 +146,33 @@ class ClusterList extends Component {
 
     if (error && !size(clusters)) {
       return (
-        <PageSection>
-          <EmptyState>
-            <ErrorBox
-              message="Error retrieving clusters"
-              response={{
-                errorMessage,
-                operationID,
-              }}
-            />
-          </EmptyState>
-        </PageSection>);
-    }
-
-    const hasNoFilters = isEmpty(viewOptions.filter)
-    && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
-
-    if ((!size(clusters) && pending && (hasNoFilters || !valid))
-    || (!organization.fulfilled && !organization.error)) {
-      return (
         <React.Fragment>
           {pageHeader}
           <PageSection>
-            <Card>
-              <div className="cluster-list">
-                <div className="cluster-loading-container">
-                  <Spinner centered />
-                </div>
-              </div>
-            </Card>
+            <EmptyState>
+              <ErrorBox
+                message="Error retrieving clusters"
+                response={{
+                  errorMessage,
+                  operationID,
+                }}
+              />
+            </EmptyState>
           </PageSection>
         </React.Fragment>
       );
     }
 
-    if (!size(clusters) && !pending && isEmpty(viewOptions.filter)
-        && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter)) {
+    const hasNoFilters = isEmpty(viewOptions.filter)
+    && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
+
+    /* isPendingNoData - we're waiting for the cluster list response,
+      and we have no valid data to show. In this case we probably want to show a "Skeleton".
+    */
+    const isPendingNoData = (!size(clusters) && pending && (hasNoFilters || !valid))
+    || (!organization.fulfilled && !organization.error);
+
+    if (!size(clusters) && !isPendingNoData && hasNoFilters) {
       return (
         <PageSection>
           <GlobalErrorBox />
@@ -199,14 +190,17 @@ class ClusterList extends Component {
               <GlobalErrorBox />
               <TableToolbar id="cluster-list-toolbar">
                 <div className="toolbar-item">
-                  <ClusterListFilter view={viewConstants.CLUSTERS_VIEW} />
+                  <ClusterListFilter
+                    isDisabled={isPendingNoData}
+                    view={viewConstants.CLUSTERS_VIEW}
+                  />
                 </div>
-                <ClusterListFilterDropdown className="toolbar-item" history={history} />
+                <ClusterListFilterDropdown isDisabled={isPendingNoData} className="toolbar-item" history={history} />
                 <Link to="/create">
                   <Button className="toolbar-item">Create Cluster</Button>
                 </Link>
                 <ClusterListExtraActions className="toolbar-item" />
-                { pending && (
+                { (pending && !isPendingNoData) && (
                   <Spinner className="cluster-list-spinner" />
                 ) }
                 { error && (
@@ -219,9 +213,11 @@ class ClusterList extends Component {
                   totalCount={viewOptions.totalCount}
                   totalPages={viewOptions.totalPages}
                   variant="top"
+                  isDisabled={isPendingNoData}
                 />
                 <RefreshBtn
                   autoRefresh
+                  isDisabled={isPendingNoData}
                   refreshFunc={this.refresh}
                   classOptions="cluster-list-top"
                 />
@@ -232,6 +228,7 @@ class ClusterList extends Component {
                 clusters={clusters || []}
                 viewOptions={viewOptions}
                 setSorting={setSorting}
+                isPending={isPendingNoData}
               />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
@@ -240,6 +237,7 @@ class ClusterList extends Component {
                 totalCount={viewOptions.totalCount}
                 totalPages={viewOptions.totalPages}
                 variant="bottom"
+                isDisabled={isPendingNoData}
               />
               <EditDisplayNameDialog onClose={invalidateClusters} />
               <EditConsoleURLDialog onClose={invalidateClusters} />

@@ -27,6 +27,7 @@ class ClusterListFilterDropdown extends React.Component {
       setFilter,
       history,
       className,
+      isDisabled,
     } = this.props;
     const filterOptions = [
       {
@@ -106,7 +107,7 @@ class ClusterListFilterDropdown extends React.Component {
     return (
       <Dropdown
         toggle={(
-          <DropdownToggle onToggle={this.onToggle}>
+          <DropdownToggle onToggle={this.onToggle} isDisabled={isDisabled}>
             <FilterIcon />
             {' '}
             Filter
@@ -128,6 +129,7 @@ ClusterListFilterDropdown.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   className: PropTypes.string,
+  isDisabled: PropTypes.bool,
 };
 
 export default ClusterListFilterDropdown;

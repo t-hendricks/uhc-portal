@@ -39,6 +39,7 @@ class ClusterListFilter extends React.Component {
 
   render() {
     const { currentValue } = this.state;
+    const { isDisabled } = this.props;
     return (
       <TextInput
         type="text"
@@ -47,6 +48,7 @@ class ClusterListFilter extends React.Component {
         value={currentValue}
         placeholder="Filter by name or ID..."
         onChange={value => this.updateCurrentValue(value)}
+        isDisabled={isDisabled}
       />
     );
   }
@@ -55,6 +57,7 @@ class ClusterListFilter extends React.Component {
 ClusterListFilter.propTypes = {
   currentFilter: PropTypes.string.isRequired,
   setFilter: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 export default ClusterListFilter;

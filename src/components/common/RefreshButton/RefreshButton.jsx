@@ -26,21 +26,21 @@ class RefreshBtn extends React.Component {
   }
 
   refreshTimer() {
-    const { autoRefresh, refreshFunc } = this.props;
+    const { autoRefresh, refreshFunc, isDisabled } = this.props;
     // autoRefresh check allows refresh to be turned off or on during the lifetime of the component
     // visibilityState checks allows avoiding refreshes when the tab is not visible
     // "online" state check allows to avoid refreshes when the network is offline.
-    if (autoRefresh && document.visibilityState === 'visible' && navigator.onLine) {
+    if (autoRefresh && document.visibilityState === 'visible' && navigator.onLine && !isDisabled) {
       refreshFunc();
     }
   }
 
   render() {
-    const { refreshFunc, classOptions } = this.props;
+    const { refreshFunc, classOptions, isDisabled } = this.props;
 
     return (
       <Tooltip position={TooltipPosition.bottom} content="Refresh">
-        <Button variant="plain" aria-label="Refresh" className={classOptions} onClick={refreshFunc}>
+        <Button variant="plain" aria-label="Refresh" className={classOptions} onClick={refreshFunc} isDisabled={isDisabled}>
           <RedoIcon />
         </Button>
       </Tooltip>
@@ -52,6 +52,7 @@ RefreshBtn.propTypes = {
   classOptions: PropTypes.string,
   refreshFunc: PropTypes.func.isRequired,
   autoRefresh: PropTypes.bool,
+  isDisabled: PropTypes.bool,
 };
 
 RefreshBtn.defaultProps = {
