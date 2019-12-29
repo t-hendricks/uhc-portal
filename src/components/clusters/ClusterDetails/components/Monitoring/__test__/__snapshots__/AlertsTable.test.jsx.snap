@@ -2,6 +2,7 @@
 
 exports[`<ClusterHealthCard /> should render 1`] = `
 <Component
+  aria-label="alerts"
   cells={
     Array [
       Object {
@@ -12,7 +13,6 @@ exports[`<ClusterHealthCard /> should render 1`] = `
       },
     ]
   }
-  header="alerts"
   rows={Array []}
   variant="compact"
 >

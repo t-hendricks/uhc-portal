@@ -2,6 +2,7 @@
 
 exports[`<ClusterOperators /> should render 1`] = `
 <Component
+  aria-label="operators"
   borders={false}
   cells={
     Array [
