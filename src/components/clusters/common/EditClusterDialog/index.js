@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { reduxForm, getFormValues } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import get from 'lodash/get';
 
 import { clearClusterResponse, editCluster } from '../../../../redux/actions/clustersActions';
@@ -15,17 +15,14 @@ const reduxFormEditCluster = reduxForm(reduxFormConfig)(EditClusterDialog);
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.activeModal.data;
-  const values = getFormValues('EditCluster')(state);
-
   return ({
     isOpen: shouldShowModal(state, 'edit-cluster'),
     editClusterResponse: state.clusters.editedCluster,
     min: minValueSelector(modalData.multi_az),
     consoleURL: get(modalData, 'console.url', null),
     isMultiAz: modalData.multi_az,
-    showLoadBalancerAlert: values && shouldShowLoadBalancerAlert(state, values.load_balancers),
-    showPersistentStorageAlert: values
-      && shouldShowStorageQuotaAlert(state, values.persistent_storage),
+    showLoadBalancerAlert: shouldShowLoadBalancerAlert(state),
+    showPersistentStorageAlert: shouldShowStorageQuotaAlert(state),
     initialFormValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,

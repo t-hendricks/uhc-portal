@@ -165,8 +165,8 @@ EditClusterDialog.propTypes = {
     id: PropTypes.string,
     nodesCompute: PropTypes.number,
   }).isRequired,
-  showLoadBalancerAlert: PropTypes.bool.isRequired,
-  showPersistentStorageAlert: PropTypes.bool.isRequired,
+  showLoadBalancerAlert: PropTypes.func.isRequired,
+  showPersistentStorageAlert: PropTypes.func.isRequired,
 };
 
 EditClusterDialog.defaultProps = {
