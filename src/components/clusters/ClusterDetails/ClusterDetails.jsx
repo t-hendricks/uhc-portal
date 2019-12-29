@@ -244,6 +244,9 @@ class ClusterDetails extends Component {
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
 
+    const consoleURL = get(cluster, 'console.url');
+    const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
+
     return (
       <PageSection id="clusterdetails-content">
         <ClusterDetailsTop
@@ -258,7 +261,7 @@ class ClusterDetails extends Component {
         >
           <TabsRow
             displayLogs={hasLogs}
-            displayAccessControlTab={cluster.managed && cluster.canEdit}
+            displayAccessControlTab={displayAccessControlTab}
             displayMonitoringTab={!isArchived}
             displayAddOnsTab={displayAddOnsTab}
             overviewTabRef={this.overviewTabRef}
@@ -279,10 +282,11 @@ class ClusterDetails extends Component {
             <Monitoring cluster={cluster} />
           </TabContent>
         )}
-
-        <TabContent eventKey={2} id="accessControlTabContent" ref={this.accessControlTabRef} aria-label="Access Control" hidden>
-          <AccessControl clusterID={cluster.id} />
-        </TabContent>
+        { displayAccessControlTab && (
+          <TabContent eventKey={2} id="accessControlTabContent" ref={this.accessControlTabRef} aria-label="Access Control" hidden>
+            <AccessControl clusterID={cluster.id} clusterConsoleURL={consoleURL} />
+          </TabContent>
+        )}
         {displayAddOnsTab && (
         <TabContent eventKey={3} id="addOnsTabContent" ref={this.addOnsTabRef} aria-label="Add-ons" hidden>
           <AddOns clusterID={cluster.id} />
@@ -308,6 +312,7 @@ class ClusterDetails extends Component {
         <IdentityProvidersModal
           clusterID={cluster.id}
           clusterName={getClusterName(cluster)}
+          clusterConsoleURL={consoleURL}
           refreshParent={this.refreshIDP}
         />
         <DeleteIDPDialog refreshParent={this.refreshIDP} />

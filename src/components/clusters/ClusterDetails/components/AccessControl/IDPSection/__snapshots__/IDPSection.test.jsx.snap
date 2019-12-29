@@ -84,8 +84,24 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
       aria-label="Identity Providers"
       cells={
         Array [
-          "Name",
-          "Type",
+          Object {
+            "title": "Name",
+            "transforms": Array [
+              [Function],
+            ],
+          },
+          Object {
+            "title": "Type",
+            "transforms": Array [
+              [Function],
+            ],
+          },
+          Object {
+            "title": "Auth Callback URL",
+            "transforms": Array [
+              [Function],
+            ],
+          },
         ]
       }
       rows={
@@ -94,6 +110,14 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
             "cells": Array [
               "hello",
               "GitHub",
+              Object {
+                "title": <ClipboardCopyLinkButton
+                  className="idp-table-copy"
+                  text="https://oauth-openshift.com/oauth2callback/hello"
+                >
+                  Copy URL to clipboard
+                </ClipboardCopyLinkButton>,
+              },
             ],
             "idpID": "id",
           },
@@ -101,6 +125,14 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
             "cells": Array [
               "hi",
               "Google",
+              Object {
+                "title": <ClipboardCopyLinkButton
+                  className="idp-table-copy"
+                  text="https://oauth-openshift.com/oauth2callback/hi"
+                >
+                  Copy URL to clipboard
+                </ClipboardCopyLinkButton>,
+              },
             ],
             "idpID": "id",
           },

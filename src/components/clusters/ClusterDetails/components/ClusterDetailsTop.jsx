@@ -30,9 +30,12 @@ function ClusterDetailsTop(props) {
   } = props;
 
   const clusterName = getClusterName(cluster);
+  const consoleURL = cluster.console ? cluster.console.url : false;
+
   const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
   const showIDPMessage = (cluster.managed
                           && cluster.state === clusterStates.READY
+                          && consoleURL
                           && !hasIdentityProviders);
 
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
@@ -56,7 +59,6 @@ function ClusterDetailsTop(props) {
     </Alert>
   );
 
-  const consoleURL = cluster.console ? cluster.console.url : false;
 
   let launchConsole;
   if (consoleURL && (cluster.state !== clusterStates.UNINSTALLING)) {

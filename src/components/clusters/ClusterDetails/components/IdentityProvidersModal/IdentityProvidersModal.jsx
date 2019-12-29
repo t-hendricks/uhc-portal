@@ -45,6 +45,7 @@ class IdentityProvidersModal extends React.Component {
   render() {
     const {
       isOpen, handleSubmit, createIDPResponse, clusterName, selectedIDP, selectedMappingMethod,
+      clusterConsoleURL,
     } = this.props;
 
     const isPending = createIDPResponse.pending;
@@ -63,6 +64,7 @@ class IdentityProvidersModal extends React.Component {
         selectedIDP={selectedIDP}
         createIDPResponse={createIDPResponse}
         selectedMappingMethod={selectedMappingMethod}
+        clusterConsoleURL={clusterConsoleURL}
       />
     </Modal>
     );
@@ -71,6 +73,7 @@ class IdentityProvidersModal extends React.Component {
 
 IdentityProvidersModal.propTypes = {
   clusterName: PropTypes.string,
+  clusterConsoleURL: PropTypes.string,
   isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   resetResponse: PropTypes.func.isRequired,
