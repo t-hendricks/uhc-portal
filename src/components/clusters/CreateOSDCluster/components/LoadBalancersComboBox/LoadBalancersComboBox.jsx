@@ -5,26 +5,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Select,
-  SelectOption,
-  SelectVariant,
+  FormSelect,
+  FormSelectOption,
 } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../../common/ErrorBox';
 
 class LoadBalancersComboBox extends React.Component {
-  state = {
-    isExpanded: false,
-  };
-
   componentDidMount() {
     const { getLoadBalancers, loadBalancerValues } = this.props;
     if (!loadBalancerValues.fulfilled) {
       // Don't let the user submit if we couldn't get load balancers yet.
       this.setInvalidValue();
     }
-    if (!loadBalancerValues.pending && !loadBalancerValues.fulfilled) {
+    if (!loadBalancerValues.pending && !loadBalancerValues.fulfilled && !loadBalancerValues.error) {
       // fetch load balancers from server only if needed.
       getLoadBalancers();
     }
@@ -38,18 +33,6 @@ class LoadBalancersComboBox extends React.Component {
     }
   }
 
-  onSelect = (event, selection) => {
-    const { input } = this.props;
-    this.setState({ isExpanded: false });
-    input.onChange(selection);
-  };
-
-  onToggle = (isExpanded) => {
-    this.setState({
-      isExpanded,
-    });
-  };
-
   setInvalidValue() {
     // Tell redux form the current value of this field is empty.
     // This will cause it to not pass validation if it is required.
@@ -61,33 +44,21 @@ class LoadBalancersComboBox extends React.Component {
     const {
       input, loadBalancerValues, disabled,
     } = this.props;
-    const {
-      isExpanded,
-    } = this.state;
 
     // Set up options for load balancers
     const loadBalancerOption = value => (
-      <SelectOption
-        key={value.toString()}
-        value={value.toString()}
-      >
-        {value}
-      </SelectOption>
+      <FormSelectOption key={value} value={value} label={value} />
     );
     if (loadBalancerValues.fulfilled) {
       return (
-        <Select
+        <FormSelect
           className="quota-combo-box"
-          variant={SelectVariant.single}
           aria-label="Load Balancers"
-          onToggle={this.onToggle}
-          onSelect={this.onSelect}
-          selections={input.value}
-          isExpanded={isExpanded}
-          disabled={disabled}
+          isDisabled={disabled}
+          {...input}
         >
-          {loadBalancerValues.values.map(value => loadBalancerOption(value))}
-        </Select>
+          {loadBalancerValues.values.map(value => loadBalancerOption(value.toString()))}
+        </FormSelect>
       );
     }
 

@@ -5,9 +5,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  Select,
-  SelectOption,
-  SelectVariant,
+  FormSelect,
+  FormSelectOption,
 } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
@@ -15,37 +14,13 @@ import ErrorBox from '../../../common/ErrorBox';
 import { cloudProviderActions } from '../../../../redux/actions/cloudProviderActions';
 
 class CloudRegionComboBox extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isExpanded: false,
-    };
-
-    this.onToggle = (isExpanded) => {
-      this.setState({
-        isExpanded,
-      });
-    };
-
-    this.onSelect = (event, selection) => {
-      const {
-        input,
-      } = this.props;
-      this.setState({
-        isExpanded: false,
-      });
-      input.onChange(selection);
-    };
-  }
-
   componentDidMount() {
     const { getCloudProviders, cloudProviders } = this.props;
     if (!cloudProviders.fulfilled) {
       // Don't let the user submit if we couldn't get cloud provider regions yet.
       this.setInvalidValue();
     }
-    if (!cloudProviders.pending && !cloudProviders.fulfilled) {
+    if (!cloudProviders.pending && !cloudProviders.fulfilled && !cloudProviders.error) {
       // fetch cloud providers from server only if needed.
       getCloudProviders();
     }
@@ -72,33 +47,25 @@ class CloudRegionComboBox extends React.Component {
     const {
       input, cloudProviderID, cloudProviders, disabled,
     } = this.props;
-    const {
-      isExpanded,
-    } = this.state;
     const regionOption = region => (
-      <SelectOption
+      <FormSelectOption
         key={region.id}
         value={region.id}
-      >
-        {`${region.id}, ${region.display_name}`}
-      </SelectOption>
+        label={`${region.id}, ${region.display_name}`}
+      />
     );
 
     if (cloudProviders.fulfilled) {
       const regions = Object.values(cloudProviders.providers[cloudProviderID].regions);
       return (
-        <Select
+        <FormSelect
           className="cloud-region-combo-box"
-          variant={SelectVariant.single}
           aria-label="Region"
-          onToggle={this.onToggle}
-          onSelect={this.onSelect}
-          selections={input.value}
-          isExpanded={isExpanded}
-          disabled={disabled}
+          isDisabled={disabled}
+          {...input}
         >
           {regions.map(region => regionOption(region))}
-        </Select>
+        </FormSelect>
       );
     }
 

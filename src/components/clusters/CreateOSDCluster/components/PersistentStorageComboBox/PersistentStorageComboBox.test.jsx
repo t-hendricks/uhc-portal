@@ -67,10 +67,6 @@ describe('<PersistentStorageComboBox />', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('calls getPersistentStorage on mount', () => {
-      expect(getPersistentStorage).toBeCalled();
-    });
-
     it('calls onChange to mark as invalid', () => {
       expect(onChange).toBeCalledWith('');
     });
