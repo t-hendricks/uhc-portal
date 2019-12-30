@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card,
-  Title,
-} from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
+import { Card, Title } from '@patternfly/react-core';
+import { CodeIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
+
 import links from '../../../../../common/installLinks';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
@@ -175,7 +173,7 @@ function InstructionsPreRelease({ token }) {
               <a href={links.INSTALL_PRE_RELEASE_BUG_LIST_43} target="_blank">
               test blocker bug list
                 {' '}
-                <span className="fa fa-external-link" aria-hidden="true" />
+                <ExternalLinkAltIcon color="#0066cc" size="sm" />
               </a>
             .
             </p>

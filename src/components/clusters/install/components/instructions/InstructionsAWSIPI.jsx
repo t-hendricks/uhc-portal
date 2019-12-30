@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card,
-  Popover,
-  Title,
-} from '@patternfly/react-core';
+import { Card, Popover, Title } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+
 import links from '../../../../../common/installLinks';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
@@ -29,7 +27,7 @@ function InstructionsAWSIPI({ token }) {
               <a href={links.INSTALL_AWSIPI_DOCS_LANDING} target="_blank">
                   official documentation
                 {' '}
-                <span className="fa fa-external-link" aria-hidden="true" />
+                <ExternalLinkAltIcon color="#0066cc" size="sm" />
               </a>
                 .
             </p>
@@ -42,7 +40,7 @@ function InstructionsAWSIPI({ token }) {
                 <a href={links.INSTALL_AWSIPI_CONFIGURE_ACCOUNT} target="_blank">
                     Configure an AWS account
                   {' '}
-                  <span className="fa fa-external-link" aria-hidden="true" />
+                  <ExternalLinkAltIcon color="#0066cc" size="sm" />
                 </a>
                 {' '}
                   to host your cluster
@@ -86,21 +84,21 @@ function InstructionsAWSIPI({ token }) {
                 <a href={links.INSTALL_AWSIPI_INSTALLATION_CONFIG} target="_blank">
                     Installation configuration parameters for AWS
                   {' '}
-                  <span className="fa fa-external-link" aria-hidden="true" />
+                  <ExternalLinkAltIcon color="#0066cc" size="sm" />
                 </a>
               </li>
               <li>
                 <a href={links.INSTALL_AWSIPI_SAMPLE_YAML} target="_blank">
                     Sample customized install-config.yaml file for AWS
                   {' '}
-                  <span className="fa fa-external-link" aria-hidden="true" />
+                  <ExternalLinkAltIcon color="#0066cc" size="sm" />
                 </a>
               </li>
               <li>
                 <a href={links.INSTALL_AWSIPI_CUSTOMIZING_NETWORK} target="_blank">
                     Customizing your network configuration
                   {' '}
-                  <span className="fa fa-external-link" aria-hidden="true" />
+                  <ExternalLinkAltIcon color="#0066cc" size="sm" />
                 </a>
               </li>
             </ul>
@@ -131,7 +129,7 @@ function InstructionsAWSIPI({ token }) {
                   <a href={links.INSTALL_AWSIPI_LIKELY_FAILURE_MODES} target="_blank">
                       likely failure modes
                     {' '}
-                    <span className="fa fa-external-link" aria-hidden="true" />
+                    <ExternalLinkAltIcon color="#0066cc" size="sm" />
                   </a>
                   {' '}
                     as well as
@@ -139,7 +137,7 @@ function InstructionsAWSIPI({ token }) {
                   <a href={links.INSTALL_AWSIPI_GENERIC_TROUBLESHOOTING} target="_blank">
                       how to troubleshoot
                     {' '}
-                    <span className="fa fa-external-link" aria-hidden="true" />
+                    <ExternalLinkAltIcon color="#0066cc" size="sm" />
                   </a>
                   {' '}
                     the failure.
@@ -185,7 +183,7 @@ function InstructionsAWSIPI({ token }) {
               <a href={links.INSTALL_AWSIPI_DOCS_ENTRY} target="_blank">
                   Learn more
                 {' '}
-                <span className="fa fa-external-link" aria-hidden="true" />
+                <ExternalLinkAltIcon color="#0066cc" size="sm" />
               </a>
               {' '}
                 about the latest release of OpenShift Container Platform 4.

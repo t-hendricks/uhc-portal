@@ -1,7 +1,7 @@
 import React from 'react';
-import {
-  Alert,
-} from '@patternfly/react-core';
+import { Alert } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+
 import links from '../../../../../../common/installLinks';
 
 const TelemetryAlert = () => {
@@ -13,7 +13,7 @@ const TelemetryAlert = () => {
       <a href={links.TELEMETRY_INFORMATION} target="_blank">
         Learn more
         {' '}
-        <span className="fa fa-external-link" aria-hidden="true" />
+        <ExternalLinkAltIcon color="#0066cc" size="sm" />
       </a>
       {' '}
       about the data we collect.

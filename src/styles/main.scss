@@ -1,32 +1,6 @@
 /**
   Third Party / Dependency imports here
 */
-$font-path: '~patternfly/dist/fonts/';
-$img-path: '~patternfly/dist/img/';
-$icon-font-path: '~patternfly/dist/fonts/';
-
-// Set global base font size to 14px per current OpenShift design
-// https://github.com/openshift/console/blob/ef1212655ba60571aaeec666843cd9f1ef139189/frontend/public/style/_vars.scss#L16
-// Patternfly 3 defaults to 12px, which is too small in many cases.
-$font-size-base: 14px;
-
-// Must include patternfly variables before bootstrap variables
-@import 'patternfly/dist/sass/patternfly/variables.scss';
-
-// Bootstrap Core variables and mixins
-@import 'bootstrap-sass/assets/stylesheets/bootstrap/variables.scss';
-@import 'bootstrap-sass/assets/stylesheets/bootstrap/mixins';
-
-// Patternfly Core variables and mixins
-@import 'patternfly/dist/sass/patternfly/bootstrap-mixin-overrides';
-@import 'patternfly/dist/sass/patternfly/mixins';
-
-@import '~patternfly/dist/css/patternfly.css';
-@import '~patternfly/dist/css/patternfly-additions.css';
-
-@import '~patternfly-react/dist/css/patternfly-react.css';
-
-@import '~patternfly-react-extensions/dist/css/patternfly-react-extensions.css';
 
 //PF4 Styles
 $pf-global--enable-reset: false;

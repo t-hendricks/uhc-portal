@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+
 import PullSecretSection from './PullSecretSection';
 import DownloadButton from './DownloadButton';
 import CLISection from './CLISection';
@@ -43,7 +45,7 @@ function DownloadsAndPullSecretSection({
               <a href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} target="_blank">
                 latest installer documentation
                 {' '}
-                <span className="fa fa-external-link" aria-hidden="true" />
+                <ExternalLinkAltIcon color="#0066cc" size="sm" />
               </a>
               .
             </p>
