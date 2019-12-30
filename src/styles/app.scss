@@ -478,17 +478,13 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   bottom: 11px;
 }
 
-.infra-crc-laptop {
-  font-size: var(--pf-global--FontSize--4xl);
-  vertical-align: middle;
-  margin-right: 8px;
+.infra-card.infra-card-cloud-provider h5.infra-crc-title {
+  margin-bottom: var(--pf-global--spacer--xs);
 }
 
 .infra-crc-icon-text {
   display: block;
-  font-size: var(--pf-global--FontSize--sm);
-  margin-top: 16px;
-  margin-bottom: 10px;
+  font-size: var(--pf-global--FontSize--xs);
 }
 
 .flex-container {
@@ -533,9 +529,16 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-.infra-card, a.infra-card {
+.ocp-infra-gallery {
+  --pf-l-gallery--GridTemplateColumns: repeat(auto-fill, minmax(380px, 1fr));
+}
+
+.ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card {
   flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
-  margin: 20px;
+  margin: 20px;  
+}
+
+.infra-card, a.infra-card {
   padding: 20px;
   display: flex;
   flex-direction: column;
