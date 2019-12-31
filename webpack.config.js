@@ -36,8 +36,8 @@ module.exports = (env, argv) => {
 
   let bundleAnalyzer = null;
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
-  if (devMode) {
-    bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: false });
+  if (process.env.BUNDLE_ANALYZER) {
+    bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: true });
   }
   const publicPath = `/${appDeployment}/${insights.appname}/`;
   return {
@@ -84,7 +84,7 @@ module.exports = (env, argv) => {
       new CopyWebpackPlugin([
         { from: 'public', to: outDir, toType: 'dir' },
       ]),
-      process.env.BUNDLE_ANALYZER && bundleAnalyzer,
+      bundleAnalyzer,
     ].filter(Boolean),
 
     module: {
@@ -113,7 +113,9 @@ module.exports = (env, argv) => {
             {
               loader: 'sass-loader',
               options: {
-                includePaths: ['./node_modules/', './src'],
+                sassOptions: {
+                  includePaths: ['./node_modules/', './src'],
+                },
               },
             },
           ],
