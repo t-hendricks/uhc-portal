@@ -20,7 +20,8 @@ function EnvOverrideMessage({ env }) {
       <b>{env}</b>
       {' '}
       environment API.
-    </Alert>);
+    </Alert>
+  );
 }
 
 EnvOverrideMessage.propTypes = {

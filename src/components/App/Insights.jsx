@@ -73,6 +73,7 @@ Insights.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
+    listen: PropTypes.func.isRequired,
   }).isRequired,
 };
 

@@ -146,7 +146,7 @@ class ClusterList extends Component {
 
     if (error && !size(clusters)) {
       return (
-        <React.Fragment>
+        <>
           {pageHeader}
           <PageSection>
             <EmptyState>
@@ -159,7 +159,7 @@ class ClusterList extends Component {
               />
             </EmptyState>
           </PageSection>
-        </React.Fragment>
+        </>
       );
     }
 
@@ -182,7 +182,7 @@ class ClusterList extends Component {
     }
 
     return (
-      <React.Fragment>
+      <>
         {pageHeader}
         <PageSection>
           <Card>
@@ -253,7 +253,7 @@ class ClusterList extends Component {
             </div>
           </Card>
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -45,7 +45,7 @@ function ClusterListTable(props) {
   };
 
   const onSortToggle = (_event, _index, direction) => {
-    const sorting = Object.assign({}, viewOptions.sorting);
+    const sorting = { ...viewOptions.sorting };
     sorting.isAscending = direction === SortByDirection.asc;
     sorting.sortField = 'name'; // TODO support more fields
     setSorting(sorting);
@@ -99,8 +99,7 @@ function ClusterListTable(props) {
                   {' '}
                   for further assistance.
                 </>
-                )
-              }
+                )}
               aria-label="Status: Error"
             >
               <Button
@@ -126,8 +125,7 @@ function ClusterListTable(props) {
     const clusterType = (
       <Tooltip
         content={cluster.managed
-          ? 'OpenShift Dedicated (OSD) cluster managed by Red Hat' : 'Self-managed OpenShift Container Platform (OCP) cluster'
-                }
+          ? 'OpenShift Dedicated (OSD) cluster managed by Red Hat' : 'Self-managed OpenShift Container Platform (OCP) cluster'}
       >
         <span>
           {cluster.managed ? 'OSD' : 'OCP'}

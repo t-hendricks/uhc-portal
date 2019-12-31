@@ -8,14 +8,11 @@ const authHeader = token => ({
 
 const serviceConfig = (passedConfig = {}, token) => {
   const BASE_URL = config.configData.apiGateway ? config.configData.apiGateway : '';
-  return Object.assign(
-    {},
-    passedConfig,
-    {
-      headers: token ? authHeader(token) : {},
-      url: `${BASE_URL}${passedConfig.url}`,
-    },
-  );
+  return {
+    ...passedConfig,
+    headers: token ? authHeader(token) : {},
+    url: `${BASE_URL}${passedConfig.url}`,
+  };
 };
 
 const apiRequest = params => insights.chrome.auth.getUser().then(

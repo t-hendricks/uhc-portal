@@ -41,13 +41,13 @@ class ClusterLocationLabel extends React.Component {
     const { regionID, cloudProviderID, cloudProviders } = this.props;
     if (cloudProviderID === 'aws' && awsRegions[regionID]) {
       return (
-        <React.Fragment>
+        <>
           AWS
           {' '}
           (
           {awsRegions[regionID]}
           )
-        </React.Fragment>
+        </>
       );
     }
     if (cloudProviders.fulfilled
@@ -55,26 +55,26 @@ class ClusterLocationLabel extends React.Component {
         && cloudProviders.providers[cloudProviderID].regions
         && cloudProviders.providers[cloudProviderID].regions[regionID]) {
       return (
-        <React.Fragment>
+        <>
           {cloudProviders.providers[cloudProviderID].display_name}
           {` (${cloudProviders.providers[cloudProviderID].regions[regionID].display_name})`}
-        </React.Fragment>
+        </>
       );
     }
 
     if (cloudProviderID === 'N/A' && regionID === 'N/A') {
       return (
-        <React.Fragment>
+        <>
           N/A
-        </React.Fragment>
+        </>
       );
     }
 
     return (
-      <React.Fragment>
+      <>
         {cloudProviderID.toUpperCase()}
         {` (${regionID})`}
-      </React.Fragment>
+      </>
     );
   }
 }

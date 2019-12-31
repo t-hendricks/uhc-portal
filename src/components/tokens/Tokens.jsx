@@ -90,7 +90,7 @@ class Tokens extends React.Component {
 
     if (offlineAccessToken === undefined) {
       return (
-        <React.Fragment>
+        <>
           {title}
           <PageSection>
             <Card className="ins-c-card__skeleton">
@@ -105,7 +105,7 @@ class Tokens extends React.Component {
               </CardFooter>
             </Card>
           </PageSection>
-        </React.Fragment>
+        </>
       );
     }
 
@@ -129,7 +129,7 @@ class Tokens extends React.Component {
 
     /* eslint-disable react/jsx-one-expression-per-line */
     return (
-      <React.Fragment>
+      <>
         {title}
         <PageSection>
           <Card>
@@ -150,7 +150,7 @@ class Tokens extends React.Component {
             </CardBody>
           </Card>
         </PageSection>
-      </React.Fragment>
+      </>
     );
     /* eslint-enable react/jsx-one-expression-per-line */
   }

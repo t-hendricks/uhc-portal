@@ -39,7 +39,7 @@ class ArchiveClusterDialog extends Component {
         onPrimaryClick={() => submit(subscriptionID, name)}
         onSecondaryClick={cancelEdit}
       >
-        <React.Fragment>
+        <>
           {error}
           <Form onSubmit={() => submit(subscriptionID, name)}>
             <p>
@@ -53,7 +53,7 @@ class ArchiveClusterDialog extends Component {
               &nbsp;for deleting a cluster may be found in the knowledge base.
             </p>
           </Form>
-        </React.Fragment>
+        </>
       </Modal>
     );
   }

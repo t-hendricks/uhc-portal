@@ -24,7 +24,7 @@ class LDAPFormRequired extends React.Component {
     const { hasBindDN } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <Field
           component={ReduxVerticalFormGroup}
           name="bind_dn"
@@ -96,7 +96,7 @@ class LDAPFormRequired extends React.Component {
           disabled={isPending}
           helpText="The list of attributes whose values should be used as the preferred username."
         />
-      </React.Fragment>
+      </>
     );
   }
 }

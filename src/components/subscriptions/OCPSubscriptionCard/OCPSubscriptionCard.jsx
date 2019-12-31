@@ -36,13 +36,14 @@ class OCPSubscriptionCard extends Component {
     let content;
     if (subscriptions.fulfilled) {
       const inputStats = countBy(subscriptions.items, 'entitlement_status');
-      const stats = Object.assign({
+      const stats = {
         [entitlementStatuses.OK]: 0,
         [entitlementStatuses.NOT_SET]: 0,
         [entitlementStatuses.OVERCOMMITTED]: 0,
         [entitlementStatuses.INCONSISTENT_SERVICES]: 0,
         [entitlementStatuses.UNKNOWN]: 0,
-      }, inputStats);
+        ...inputStats,
+      };
       content = <OCPSubscriptionSummary stats={stats} />;
     } else {
       subscriptions.type = 'ocp';

@@ -7,7 +7,7 @@ import { required } from '../../../../../../../common/validators';
 
 function IDPBasicFields({ isPending }) {
   return (
-    <React.Fragment>
+    <>
       <Field
         component={ReduxVerticalFormGroup}
         name="client_id"
@@ -28,7 +28,7 @@ function IDPBasicFields({ isPending }) {
         isRequired
         disabled={isPending}
       />
-    </React.Fragment>
+    </>
   );
 }
 

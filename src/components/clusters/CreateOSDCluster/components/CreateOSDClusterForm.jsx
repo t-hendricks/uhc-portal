@@ -54,7 +54,7 @@ class CreateOSDClusterForm extends React.Component {
     const isBYOCForm = hasBYOCQuota && (!hasStandardQuota || byocSelected);
 
     return (
-      <React.Fragment>
+      <>
         {/* Billing Model */}
         <GridItem span={12}>
           <h3 className="osd-page-header">Billing Model</h3>
@@ -77,8 +77,8 @@ class CreateOSDClusterForm extends React.Component {
               <h3 className="osd-page-header">AWS account details</h3>
             </GridItem>
             <AWSAccountDetailsFields pending={pending} />
-          </>)
-        }
+          </>
+        )}
 
         {/* Basic field - Cluster Details */}
         <GridItem span={12}>
@@ -125,7 +125,7 @@ class CreateOSDClusterForm extends React.Component {
         </GridItem>
         <GridItem span={8} />
         { mode === 'advanced' && <AdvancedSettingsForm pending={pending} /> }
-      </React.Fragment>
+      </>
     );
   }
 }

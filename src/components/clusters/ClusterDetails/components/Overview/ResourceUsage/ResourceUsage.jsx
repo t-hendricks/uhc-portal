@@ -28,9 +28,9 @@ function ResourceUsage({ cluster }) {
   const getValue = ({ value, unit }) => parseValueWithUnit(value, unit);
 
   return (
-    <React.Fragment>
+    <>
       { metricsAvailable ? (
-        <React.Fragment>
+        <>
           <ClusterUtilizationChart
             title="vCPU"
             total={cluster.metrics.cpu.total.value}
@@ -47,14 +47,15 @@ function ResourceUsage({ cluster }) {
             humanize
             donutId="memory_donut"
           />
-        </React.Fragment>)
+        </>
+      )
         : (
           <p>
             { isArchived ? metricsStatusMessages.archived
               : metricsStatusMessages[cluster.state.state] || metricsStatusMessages.default}
           </p>
         ) }
-    </React.Fragment>
+    </>
   );
 }
 

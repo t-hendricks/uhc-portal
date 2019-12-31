@@ -11,7 +11,7 @@ function AWSAccountDetailsFields(props) {
   const { pending } = props;
 
   return (
-    <React.Fragment>
+    <>
       <GridItem span={4}>
         <Field
           component={ReduxVerticalFormGroup}
@@ -55,7 +55,7 @@ function AWSAccountDetailsFields(props) {
           extendedHelpText="AWS secret access key"
         />
       </GridItem>
-    </React.Fragment>
+    </>
   );
 }
 

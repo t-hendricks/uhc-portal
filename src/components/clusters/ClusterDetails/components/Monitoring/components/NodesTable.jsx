@@ -23,18 +23,19 @@ function NodesTable({ nodes = [], clusterConsole }) {
   const nodeStatus = (isUp) => {
     if (isUp) {
       return (
-        <React.Fragment>
+        <>
           <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />
           <span>Ready</span>
-        </React.Fragment>
+        </>
       );
     }
     return (
-      <React.Fragment>
+      <>
         <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />
         <span>Not Ready</span>
         {' '}
-      </React.Fragment>);
+      </>
+    );
   };
 
   const rows = nodes.map((node) => {

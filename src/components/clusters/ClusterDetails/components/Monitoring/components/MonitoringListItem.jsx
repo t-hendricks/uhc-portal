@@ -23,10 +23,10 @@ function MonitoringListItem({
     // no metrics
     if (!hasData) {
       return (
-              <>
-                <ExclamationTriangleIcon className="status-icon" color={global_warning_color_100.value} size="md" />
-                <span>Metrics not available</span>
-              </>
+        <>
+          <ExclamationTriangleIcon className="status-icon" color={global_warning_color_100.value} size="md" />
+          <span>Metrics not available</span>
+        </>
       );
     }
 
@@ -40,7 +40,8 @@ function MonitoringListItem({
             {' '}
             discovered issues
           </span>
-        </>);
+        </>
+      );
     }
 
     // warnings summary
@@ -53,7 +54,8 @@ function MonitoringListItem({
             {' '}
             {numOfWarnings === 1 ? 'warning' : 'warnings' }
           </span>
-        </>);
+        </>
+      );
     }
 
     // no issues
@@ -65,7 +67,8 @@ function MonitoringListItem({
           {' '}
           discovered issues
         </span>
-      </>);
+      </>
+    );
   };
 
   return (
@@ -95,7 +98,8 @@ function MonitoringListItem({
       >
         {children}
       </DataListContent>
-    </DataListItem>);
+    </DataListItem>
+  );
 }
 
 MonitoringListItem.propTypes = {

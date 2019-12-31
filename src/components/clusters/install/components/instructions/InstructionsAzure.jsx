@@ -9,7 +9,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 
 function InstructionsAzure({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
         Install on Azure with Installer-Provisioned Infrastructure
       </Title>
@@ -34,7 +34,7 @@ function InstructionsAzure({ token }) {
         installerURL={links.INSTALL_AZURE_INSTALLER_LATEST}
         cliURL={links.INSTALL_AZURE_CLI_LATEST}
       />
-    </React.Fragment>
+    </>
   );
 }
 

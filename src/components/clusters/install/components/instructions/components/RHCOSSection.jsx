@@ -6,7 +6,7 @@ import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import links from '../../../../../../common/installLinks';
 
 const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_LATEST }) => (
-  <React.Fragment>
+  <>
     {learnMoreURL && (
       <p>
         Download RHCOS to create machines for your cluster to use during installation.
@@ -31,7 +31,7 @@ const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_
         </Button>
       </a>
     </p>
-  </React.Fragment>
+  </>
 );
 RHCOSSection.propTypes = {
   learnMoreURL: PropTypes.string,

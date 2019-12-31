@@ -221,13 +221,13 @@ class ClusterDetails extends Component {
     if (clusterDetails.error && (!cluster || get(cluster, 'id') !== requestedClusterID)) {
       if (clusterDetails.errorCode === 404) {
         setGlobalError((
-          <React.Fragment>
+          <>
             Cluster
             {' '}
             <b>{requestedClusterID}</b>
             {' '}
             was not found, it might have been deleted or you don&apos;t have permission to see it.
-          </React.Fragment>
+          </>
         ), 'clusterDetails', clusterDetails.errorMessage);
         history.push('/');
       }
@@ -339,6 +339,7 @@ ClusterDetails.propTypes = {
   clusterDetails: PropTypes.shape({
     cluster: PropTypes.object,
     error: PropTypes.bool,
+    errorCode: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     errorMessage: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node,

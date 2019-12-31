@@ -37,12 +37,12 @@ const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <React.Fragment>
+        <>
           <NotificationsPortal store={store} />
           <BrowserRouter basename={basename}>
             <App />
           </BrowserRouter>
-        </React.Fragment>
+        </>
       </Provider>
     </AppContainer>,
     document.getElementById('root'),

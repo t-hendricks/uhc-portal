@@ -137,12 +137,13 @@ class ArchivedClusterList extends Component {
               }}
             />
           </EmptyState>
-        </PageSection>);
+        </PageSection>
+      );
     }
 
     if ((!size(clusters) && pending && isEmpty(viewOptions.filter)) || !valid) {
       return (
-        <React.Fragment>
+        <>
           {pageHeader}
           <PageSection>
             <Card>
@@ -153,12 +154,12 @@ class ArchivedClusterList extends Component {
               </div>
             </Card>
           </PageSection>
-        </React.Fragment>
+        </>
       );
     }
 
     return (
-      <React.Fragment>
+      <>
         {pageHeader}
         <PageSection>
           <Card>
@@ -212,7 +213,7 @@ class ArchivedClusterList extends Component {
             </div>
           </Card>
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

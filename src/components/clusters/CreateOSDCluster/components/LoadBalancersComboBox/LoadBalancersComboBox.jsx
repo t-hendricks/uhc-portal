@@ -81,10 +81,10 @@ class LoadBalancersComboBox extends React.Component {
     return loadBalancerValues.error ? (
       <ErrorBox message="Error loading load balancers list" response={loadBalancerValues} />
     ) : (
-      <React.Fragment>
+      <>
         <div className="spinner-fit-container"><Spinner /></div>
         <div className="spinner-loading-text">Loading load balancers list...</div>
-      </React.Fragment>
+      </>
     );
   }
 }

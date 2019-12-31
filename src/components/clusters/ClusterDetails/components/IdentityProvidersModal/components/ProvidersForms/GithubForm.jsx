@@ -24,7 +24,7 @@ class GithubForm extends React.Component {
     const { hostnameRequired } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <Field
           component={ReduxVerticalFormGroup}
           name="hostname"
@@ -50,7 +50,7 @@ class GithubForm extends React.Component {
           onChange={(e, value) => this.toggleHostnameRequired(e, value)}
         />
 
-      </React.Fragment>
+      </>
 
     );
   }

@@ -4,7 +4,7 @@ import { Button } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 
 const GetStarted = ({ docURL }) => (
-  <React.Fragment>
+  <>
     <p>
       Follow the
       {' '}
@@ -23,7 +23,7 @@ const GetStarted = ({ docURL }) => (
     <p>
       Relevant downloads are provided below.
     </p>
-  </React.Fragment>
+  </>
 );
 GetStarted.propTypes = {
   docURL: PropTypes.string.isRequired,

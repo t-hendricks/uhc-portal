@@ -84,7 +84,7 @@ class EditConsoleURLDialog extends Component {
         onSecondaryClick={cancelEdit}
         isPrimaryDisabled={!!validationMessage}
       >
-        <React.Fragment>
+        <>
           {hasError}
           {!consoleURL && (
             <p>
@@ -110,7 +110,7 @@ class EditConsoleURLDialog extends Component {
               />
             </FormGroup>
           </Form>
-        </React.Fragment>
+        </>
       </Modal>
     );
   }

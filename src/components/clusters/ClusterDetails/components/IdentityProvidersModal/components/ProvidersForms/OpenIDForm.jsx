@@ -6,7 +6,7 @@ import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents
 
 function OpenIDForm({ isPending }) {
   return (
-    <React.Fragment>
+    <>
       <Field
         component={ReduxVerticalFormGroup}
         name="openid_ca"
@@ -27,7 +27,7 @@ function OpenIDForm({ isPending }) {
         placeholder="comma separated, example: scope1, scope2"
         disabled={isPending}
       />
-    </React.Fragment>
+    </>
   );
 }
 

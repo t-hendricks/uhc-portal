@@ -7,9 +7,10 @@ import * as Fixtures from './ClusterActionsDropdown.fixtures';
 
 function DropDownItemsRenderHelper(props) {
   return (
-    <React.Fragment>
+    <>
       {dropDownItems(props).map(item => item)}
-    </React.Fragment>);
+    </>
+  );
 }
 
 describe('Cluster Actions Dropdown Items', () => {

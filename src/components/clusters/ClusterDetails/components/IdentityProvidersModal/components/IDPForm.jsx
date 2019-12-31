@@ -102,8 +102,8 @@ function IDPForm(props) {
             // make google required form optional when mapping method is lookup
             isRequired={selectedIDP === IDPformValues.GOOGLE
             && !(selectedMappingMethod === mappingMethodsformValues.LOOKUP)}
-          />)
-      }
+          />
+        )}
           <Expandable toggleText="Show Advanced Options">
             {SelectedProviderAdvancedOptions
           && (

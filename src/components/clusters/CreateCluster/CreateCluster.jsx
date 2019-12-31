@@ -46,7 +46,7 @@ class CreateCluster extends React.Component {
     );
 
     const osdCardBody = (
-      <React.Fragment>
+      <>
         <CardHeader className="create-cluster-header">
           <img src={openShiftDedicatedLogo} alt="OpenShift Dedicated" className="create-cluster-logo" />
         </CardHeader>
@@ -54,7 +54,7 @@ class CreateCluster extends React.Component {
           Create a Red Hat-managed cluster (OSD),
           provisioned on Amazon Web Services.
         </CardBody>
-      </React.Fragment>
+      </>
     );
 
     const osdCard = hasQuota ? (
@@ -82,7 +82,7 @@ class CreateCluster extends React.Component {
 
     const quotaRequestComplete = organization.fulfilled || organization.error;
     return quotaRequestComplete ? (
-      <React.Fragment>
+      <>
         {title}
         <PageSection>
           <Card>
@@ -94,14 +94,14 @@ class CreateCluster extends React.Component {
             </div>
           </Card>
         </PageSection>
-      </React.Fragment>
+      </>
     ) : (
-      <React.Fragment>
+      <>
         {title}
         <PageSection>
           <Spinner centered />
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

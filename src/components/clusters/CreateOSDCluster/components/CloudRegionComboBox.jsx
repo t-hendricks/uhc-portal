@@ -72,10 +72,10 @@ class CloudRegionComboBox extends React.Component {
     return cloudProviders.error ? (
       <ErrorBox message="Error loading region list" response={cloudProviders} />
     ) : (
-      <React.Fragment>
+      <>
         <div className="spinner-fit-container"><Spinner /></div>
         <div className="spinner-loading-text">Loading region list...</div>
-      </React.Fragment>
+      </>
     );
   }
 }

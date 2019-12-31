@@ -9,7 +9,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 
 function InstructionsOSP({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
         Install on Red Hat OpenStack Platform with Installer-Provisioned Infrastructure
       </Title>
@@ -33,7 +33,7 @@ function InstructionsOSP({ token }) {
         installerURL={links.INSTALL_OSP_INSTALLER_LATEST}
         cliURL={links.INSTALL_OSP_CLI_LATEST}
       />
-    </React.Fragment>
+    </>
   );
 }
 

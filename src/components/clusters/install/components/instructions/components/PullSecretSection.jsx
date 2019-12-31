@@ -24,7 +24,7 @@ class PullSecretSection extends React.Component {
     );
 
     return (
-      <React.Fragment>
+      <>
         <p>
         Download or copy your pull secret. The install program will prompt you for your pull
         secret during installation.
@@ -56,7 +56,7 @@ class PullSecretSection extends React.Component {
             </span>
           </CopyToClipboard>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -25,7 +25,7 @@ function DetailsRight({ cluster }) {
   const showVCPU = !showSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   return (
-    <React.Fragment>
+    <>
       <dl className="cluster-details-item left">
         <dt>
           Status
@@ -42,7 +42,7 @@ function DetailsRight({ cluster }) {
           </dd>
         )}
         {showVCPU && (
-          <React.Fragment>
+          <>
             <dt>
               Total vCPU
             </dt>
@@ -51,8 +51,8 @@ function DetailsRight({ cluster }) {
               {' '}
               vCPU
             </dd>
-          </React.Fragment>)
-        }
+          </>
+        )}
         <dt>
           Total Memory
         </dt>
@@ -62,36 +62,36 @@ function DetailsRight({ cluster }) {
           {memoryTotalWithUnit.unit}
         </dd>
         { cluster.managed && (
-        <React.Fragment>
-          <dt>
+          <>
+            <dt>
             Load Balancers
-          </dt>
-          <dd>
-            {cluster.load_balancer_quota}
-          </dd>
-          <dt>
+            </dt>
+            <dd>
+              {cluster.load_balancer_quota}
+            </dd>
+            <dt>
             Persistent Storage
-          </dt>
-          <dd>
-            {humanizedPersistentStorage.value}
-            {' '}
-            {humanizedPersistentStorage.unit}
-          </dd>
-        </React.Fragment>)
-        }
+            </dt>
+            <dd>
+              {humanizedPersistentStorage.value}
+              {' '}
+              {humanizedPersistentStorage.unit}
+            </dd>
+          </>
+        )}
         {showSockets && (
-          <React.Fragment>
+          <>
             <dt>
               Total Sockets
             </dt>
             <dd>
               {cluster.metrics.sockets.total.value}
             </dd>
-          </React.Fragment>)
-        }
+          </>
+        )}
 
         {showDesiredNodes && (
-          <React.Fragment>
+          <>
             <dt>
               Desired Nodes
             </dt>
@@ -126,8 +126,8 @@ function DetailsRight({ cluster }) {
                 </dd>
               </dl>
             </dd>
-          </React.Fragment>)
-        }
+          </>
+        )}
 
         <dt>
           {showDesiredNodes ? 'Actual Nodes' : 'Nodes'}
@@ -164,18 +164,18 @@ function DetailsRight({ cluster }) {
           </dl>
         </dd>
         { !cluster.managed && (
-          <React.Fragment>
+          <>
             <dt>
               Support Level
             </dt>
             <dd>
               {get(cluster, 'subscription.support_level', 'None (Evaluation)')}
             </dd>
-          </React.Fragment>
+          </>
         )}
         <ClusterNetwork cluster={cluster} />
       </dl>
-    </React.Fragment>
+    </>
   );
 }
 

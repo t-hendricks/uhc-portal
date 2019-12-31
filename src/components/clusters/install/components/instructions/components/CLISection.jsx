@@ -5,7 +5,7 @@ import {
 } from '@patternfly/react-core';
 
 const CLISection = ({ toolsURL }) => (
-  <React.Fragment>
+  <>
     <p>
       Download the OpenShift command-line tools and add them to your
       {' '}
@@ -36,7 +36,7 @@ const CLISection = ({ toolsURL }) => (
       {' '}
       CLI tools you downloaded.
     </p>
-  </React.Fragment>
+  </>
 );
 CLISection.propTypes = {
   toolsURL: PropTypes.string.isRequired,

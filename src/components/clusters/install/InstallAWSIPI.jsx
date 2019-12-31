@@ -34,12 +34,12 @@ class InstallAWSIPI extends Component {
     );
 
     return (
-      <React.Fragment>
+      <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection className="ocp-instructions">
           <InstructionsAWSIPI token={token} />
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -101,10 +101,10 @@ class PersistentStorageComboBox extends React.Component {
     return persistentStorageValues.error ? (
       <ErrorBox message="Error loading persistent storage list" response={persistentStorageValues} />
     ) : (
-      <React.Fragment>
+      <>
         <div className="spinner-fit-container"><Spinner /></div>
         <div className="spinner-loading-text">Loading persistent storage list...</div>
-      </React.Fragment>
+      </>
     );
   }
 }

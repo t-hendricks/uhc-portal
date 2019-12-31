@@ -102,10 +102,11 @@ class RegisterCluster extends React.Component {
         title="Error Registering Cluster"
         errorResponse={registerClusterResponse}
         resetResponse={resetResponse}
-      />);
+      />
+    );
 
     return (
-      <React.Fragment>
+      <>
         <PageHeader>
           <PageHeaderTitle title="Cluster registration" />
         </PageHeader>
@@ -222,7 +223,7 @@ class RegisterCluster extends React.Component {
             </CardFooter>
           </Card>
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

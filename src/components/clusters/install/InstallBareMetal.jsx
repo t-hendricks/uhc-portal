@@ -31,12 +31,12 @@ class InstallBareMetal extends Component {
       />
     );
     return (
-      <React.Fragment>
+      <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection className="ocp-instructions">
           <InstructionsBareMetal token={token} />
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

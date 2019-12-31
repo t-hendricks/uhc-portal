@@ -163,17 +163,17 @@ class CreateOSDCluster extends React.Component {
 
     if (anyRequestPending) {
       return (
-        <React.Fragment>
+        <>
           {title}
           <PageSection>
             <Spinner centered />
           </PageSection>
-        </React.Fragment>
+        </>
       );
     }
 
     return (
-      <React.Fragment>
+      <>
         {title}
         <PageSection>
           <Card>
@@ -214,7 +214,7 @@ class CreateOSDCluster extends React.Component {
             </div>
           </Card>
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -59,6 +59,8 @@ Modal.propTypes = {
   isPrimaryDisabled: PropTypes.bool,
   children: PropTypes.node,
   showSecondery: PropTypes.bool,
+  isPending: PropTypes.bool,
+  primaryVariant: PropTypes.string,
 };
 
 export default Modal;
