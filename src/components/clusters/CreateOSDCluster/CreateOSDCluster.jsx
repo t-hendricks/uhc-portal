@@ -15,10 +15,14 @@ import {
   Split,
   SplitItem,
   PageSection,
+  EmptyState,
+  Stack,
+  StackItem,
 } from '@patternfly/react-core';
 
 import PageTitle from '../../common/PageTitle';
 import ErrorModal from '../../common/ErrorModal';
+import ErrorBox from '../../common/ErrorBox';
 import { constants } from './CreateOSDClusterHelper';
 import CreateOSDClusterForm from './components/CreateOSDClusterForm';
 
@@ -125,9 +129,30 @@ class CreateOSDCluster extends React.Component {
       />
     );
 
-    const requests = [machineTypes, organization,
-      cloudProviders, loadBalancerValues, persistentStorageValues];
-    const anyRequestPending = requests.some(request => request.pending);
+    const requests = [
+      {
+        data: machineTypes,
+        name: 'Machine Types',
+      },
+      {
+        data: organization,
+        name: 'Organization & Quota',
+      },
+      {
+        data: cloudProviders,
+        name: 'Providers & Regions',
+      },
+      {
+        data: loadBalancerValues,
+        name: 'Load Balancers',
+      },
+      {
+        data: persistentStorageValues,
+        name: 'Storage options',
+      },
+    ];
+    const anyRequestPending = requests.some(request => request.data.pending);
+    const anyErrors = requests.some(request => request.data.error);
 
     const title = (
       <PageTitle
@@ -169,6 +194,34 @@ class CreateOSDCluster extends React.Component {
             <Spinner centered />
           </PageSection>
         </React.Fragment>
+      );
+    }
+
+    if (!hasBYOCQuota && !hasStandardQuota && organization.fulfilled) {
+      return (
+        <Redirect to="/create" />
+      );
+    }
+
+    if (anyErrors) {
+      return (
+        <>
+          {title}
+          <PageSection>
+            <EmptyState variant="full">
+              <Stack gutter="md">
+                { requests.map(request => request.data.error && (
+                  <StackItem key={request.name}>
+                    <ErrorBox
+                      message={`Error while loading required form data (${request.name})`}
+                      response={request.data}
+                    />
+                  </StackItem>
+                ))}
+              </Stack>
+            </EmptyState>
+          </PageSection>
+        </>
       );
     }
 
