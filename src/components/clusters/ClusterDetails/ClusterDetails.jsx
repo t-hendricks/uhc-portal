@@ -38,7 +38,7 @@ import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
 
 import ErrorBox from '../../common/ErrorBox';
-import { isValid } from '../../../common/helpers';
+import { isValid, scrollToTop } from '../../../common/helpers';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
@@ -59,6 +59,7 @@ class ClusterDetails extends Component {
 
   componentDidMount() {
     document.title = 'Red Hat OpenShift Cluster Manager';
+    scrollToTop();
 
     const {
       cloudProviders,

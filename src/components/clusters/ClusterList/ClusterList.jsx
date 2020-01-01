@@ -51,7 +51,7 @@ import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDial
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
-import helpers from '../../../common/helpers';
+import helpers, { scrollToTop } from '../../../common/helpers';
 import { viewConstants } from '../../../redux/constants';
 
 const getQueryParam = (param) => {
@@ -78,6 +78,8 @@ class ClusterList extends Component {
     const {
       getCloudProviders, cloudProviders, organization, getOrganizationAndQuota, setListFlag,
     } = this.props;
+
+    scrollToTop();
 
     const entitelmentStatusFilter = getQueryParam('entitlement_status') || '';
     const planIDFilter = getQueryParam('plan_id') || '';
