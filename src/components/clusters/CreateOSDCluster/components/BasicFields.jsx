@@ -96,7 +96,6 @@ class BasicFields extends React.Component {
               component={CloudRegionComboBox}
               name="region"
               cloudProviderID="aws"
-              validate={required}
               disabled={pending}
               isRequired
             />
@@ -178,7 +177,6 @@ class BasicFields extends React.Component {
             <Field
               name="persistent_storage"
               component={PersistentStorageComboBox}
-              validate={required}
               disabled={pending}
             />
           </FormGroup>
@@ -195,7 +193,6 @@ class BasicFields extends React.Component {
             <Field
               name="load_balancers"
               component={LoadBalancersComboBox}
-              validate={required}
               disabled={pending}
             />
           </FormGroup>

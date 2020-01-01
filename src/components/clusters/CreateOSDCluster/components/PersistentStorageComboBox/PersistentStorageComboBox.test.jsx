@@ -42,10 +42,6 @@ describe('<PersistentStorageComboBox />', () => {
     it('calls getPersistentStorage', () => {
       expect(getPersistentStorage).toBeCalled();
     });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
-    });
   });
 
   describe('when there was an error', () => {
@@ -74,10 +70,6 @@ describe('<PersistentStorageComboBox />', () => {
 
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
-    });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
     });
   });
 
@@ -108,10 +100,6 @@ describe('<PersistentStorageComboBox />', () => {
 
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
-    });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
     });
 
     it('does not call getPersistentStorage again if request returns an error', () => {
@@ -153,10 +141,6 @@ describe('<PersistentStorageComboBox />', () => {
 
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
-    });
-
-    it('does not call getPersistentStorage', () => {
-      expect(getPersistentStorage).not.toBeCalled();
     });
   });
 });

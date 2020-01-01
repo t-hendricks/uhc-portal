@@ -17,19 +17,7 @@ exports[`<LoadBalancerComboBox /> when load balancer list needs to be fetched re
   }
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
   loadBalancerValues={
@@ -165,19 +153,7 @@ exports[`<LoadBalancerComboBox /> when the request is pending renders correctly 
   getLoadBalancers={[MockFunction]}
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
   loadBalancerValues={
@@ -226,19 +202,7 @@ exports[`<LoadBalancerComboBox /> when there was an error renders correctly 1`] 
   getLoadBalancers={[MockFunction]}
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
   loadBalancerValues={

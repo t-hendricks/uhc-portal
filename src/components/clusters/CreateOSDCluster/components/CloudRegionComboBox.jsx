@@ -16,29 +16,11 @@ import { cloudProviderActions } from '../../../../redux/actions/cloudProviderAct
 class CloudRegionComboBox extends React.Component {
   componentDidMount() {
     const { getCloudProviders, cloudProviders } = this.props;
-    if (!cloudProviders.fulfilled) {
-      // Don't let the user submit if we couldn't get cloud provider regions yet.
-      this.setInvalidValue();
-    }
+
     if (!cloudProviders.pending && !cloudProviders.fulfilled && !cloudProviders.error) {
       // fetch cloud providers from server only if needed.
       getCloudProviders();
     }
-  }
-
-  componentDidUpdate() {
-    const { cloudProviders } = this.props;
-    if (cloudProviders.error || cloudProviders.pending) {
-      // Don't let the user submit if we couldn't get cloud provider regions.
-      this.setInvalidValue();
-    }
-  }
-
-  setInvalidValue() {
-    // Tell redux form the current value of this field is empty.
-    // This will cause it to not pass validation if it is required.
-    const { input } = this.props;
-    input.onChange('');
   }
 
   render() {
