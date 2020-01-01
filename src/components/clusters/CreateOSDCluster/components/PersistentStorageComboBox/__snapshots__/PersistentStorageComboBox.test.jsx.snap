@@ -17,19 +17,7 @@ exports[`<PersistentStorageComboBox /> when persistent storage list needs to be 
   }
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
   organization={
@@ -78,19 +66,7 @@ exports[`<PersistentStorageComboBox /> when the request is pending renders corre
   getPersistentStorage={[MockFunction]}
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
   organization={
@@ -235,19 +211,7 @@ exports[`<PersistentStorageComboBox /> when there was an error renders correctly
   getPersistentStorage={[MockFunction]}
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
   organization={

@@ -27,19 +27,7 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
   }
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
 >
@@ -168,19 +156,7 @@ exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1
   getCloudProviders={[MockFunction]}
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
 >
@@ -223,19 +199,7 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
   getCloudProviders={[MockFunction]}
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
 >

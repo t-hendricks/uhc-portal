@@ -22,29 +22,11 @@ class LoadBalancersComboBox extends React.Component {
     if (!organization.fulfilled && !organization.pending) {
       getOrganizationAndQuota();
     }
-    if (!loadBalancerValues.fulfilled) {
-      // Don't let the user submit if we couldn't get load balancers yet.
-      this.setInvalidValue();
-    }
+
     if (!loadBalancerValues.pending && !loadBalancerValues.fulfilled && !loadBalancerValues.error) {
       // fetch load balancers from server only if needed.
       getLoadBalancers();
     }
-  }
-
-  componentDidUpdate() {
-    const { loadBalancerValues } = this.props;
-    if (loadBalancerValues.error || loadBalancerValues.pending) {
-      // Don't let the user submit if we couldn't get load balancers.
-      this.setInvalidValue();
-    }
-  }
-
-  setInvalidValue() {
-    // Tell redux form the current value of this field is empty.
-    // This will cause it to not pass validation if it is required.
-    const { input } = this.props;
-    input.onChange('');
   }
 
   filterLoadBalancerValuesByQuota() {

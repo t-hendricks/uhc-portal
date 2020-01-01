@@ -24,31 +24,13 @@ class PersistentStorageComboBox extends React.Component {
     if (!organization.fulfilled && !organization.pending) {
       getOrganizationAndQuota();
     }
-    if (!persistentStorageValues.fulfilled) {
-      // Don't let the user submit if we couldn't get persistent storage yet.
-      this.setInvalidValue();
-    }
+
     if (!persistentStorageValues.pending
       && !persistentStorageValues.fulfilled
       && !persistentStorageValues.error) {
       // fetch persistent storage from server only if needed.
       getPersistentStorage();
     }
-  }
-
-  componentDidUpdate() {
-    const { persistentStorageValues } = this.props;
-    if (persistentStorageValues.error || persistentStorageValues.pending) {
-      // Don't let the user submit if we couldn't get persistent storage.
-      this.setInvalidValue();
-    }
-  }
-
-  setInvalidValue() {
-    // Tell redux form the current value of this field is empty.
-    // This will cause it to not pass validation if it is required.
-    const { input } = this.props;
-    input.onChange('');
   }
 
   filterPersistentStorageValuesByQuota() {
