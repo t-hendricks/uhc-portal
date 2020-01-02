@@ -14,15 +14,15 @@ const tabs = {
 class TabsRow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      activeTabKey: 0,
-    };
-
     this.handleTabClick = (event, tabIndex) => {
       this.setState({
         activeTabKey: tabIndex,
       });
     };
+  }
+
+  state = {
+    activeTabKey: 0,
   }
 
   componentDidUpdate() {

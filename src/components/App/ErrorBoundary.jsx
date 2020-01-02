@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { Alert, EmptyState } from '@patternfly/react-core';
 
 class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { error: null, componentStack: null };
-  }
+  state = { error: null, componentStack: null }
 
   componentDidCatch(error, info) {
     this.setState({ error: error.toString(), componentStack: info.componentStack });

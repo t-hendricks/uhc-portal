@@ -59,11 +59,8 @@ const snippetBox = lines => (
 );
 
 class Tokens extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      offlineAccessToken: undefined,
-    };
+  state = {
+    offlineAccessToken: undefined,
   }
 
   componentDidMount() {

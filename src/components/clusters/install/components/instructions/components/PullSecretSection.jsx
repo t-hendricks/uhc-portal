@@ -6,10 +6,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Download from '@axetroy/react-download';
 
 class PullSecretSection extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { copied: false };
-  }
+  state = { copied: false }
 
   render() {
     const { token } = this.props;

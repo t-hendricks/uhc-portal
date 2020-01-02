@@ -9,12 +9,9 @@ import { checkClusterDisplayName } from '../../../../common/validators';
 
 
 class EditDisplayNameDialog extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      validFor: null,
-      currentValue: '',
-    };
+  state = {
+    validFor: null,
+    currentValue: '',
   }
 
   componentWillReceiveProps(nextProps) {
