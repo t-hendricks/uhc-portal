@@ -43,8 +43,14 @@ const mockAlerts = {
       name: 'KubeDeploymentReplicasMismatch',
       severity: 'warning',
     },
+    {
+      name: 'Watchdog',
+      severity: 'none',
+    },
   ],
 };
+
+const mockWatchdog = [{ name: 'Watchdog', severity: 'none' }];
 
 const resourceUsageWithIssues = {
   memory: {
@@ -485,6 +491,7 @@ const mockLastCheckIn = {
 
 export {
   mockAlerts,
+  mockWatchdog,
   mockNodes,
   resourceUsageWithIssues,
   resourceUsageWithoutIssues,

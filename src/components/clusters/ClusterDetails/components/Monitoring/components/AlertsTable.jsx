@@ -75,7 +75,7 @@ function AlertsTable({ alerts = [], clusterConsole }) {
         cells:
         [{ title: alertName }, { title: severityIcon }],
       });
-  });
+  }).filter(Boolean);
 
   return (
     <Table variant={TableVariant.compact} borders={false} cells={columns} rows={rows} aria-label="alerts">
@@ -86,8 +86,13 @@ function AlertsTable({ alerts = [], clusterConsole }) {
 }
 
 AlertsTable.propTypes = {
-  alerts: PropTypes.array,
-  clusterConsole: PropTypes.object,
+  alerts: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    severity: PropTypes.string,
+  })),
+  clusterConsole: PropTypes.shape({
+    url: PropTypes.string,
+  }),
 };
 
 export default AlertsTable;
