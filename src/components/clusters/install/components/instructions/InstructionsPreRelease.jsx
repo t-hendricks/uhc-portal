@@ -170,7 +170,7 @@ function InstructionsPreRelease({ token }) {
             <p>
             Find out more about test blockers for the OCP 4.3 dev previews by viewing the
               {' '}
-              <a href={links.INSTALL_PRE_RELEASE_BUG_LIST_43} target="_blank">
+              <a href={links.INSTALL_PRE_RELEASE_BUG_LIST_43} rel="noreferrer noopener" target="_blank">
               test blocker bug list
                 {' '}
                 <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -207,7 +207,7 @@ function InstructionsPreRelease({ token }) {
             . Do not use the formal Red Hat support service ticket process.
             You can read more about support handling in the following
             {' '}
-            <a href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS} target="_blank">
+            <a href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS} rel="noreferrer noopener" target="_blank">
               knowledge article
             </a>
             .

@@ -45,7 +45,7 @@ const ClusterUpdateLink = ({ cluster }) => {
           An update is available for this cluster.
           Navigate to the Cluster settings page in the cluster&apos;s web console to update.
           {' '}
-          <a href={links.UPDATING_CLUSTER} target="_blank">
+          <a href={links.UPDATING_CLUSTER} target="_blank" rel="noreferrer noopener">
             Learn more
           </a>
         </div>

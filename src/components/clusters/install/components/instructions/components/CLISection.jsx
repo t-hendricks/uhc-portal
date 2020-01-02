@@ -13,7 +13,7 @@ const CLISection = ({ toolsURL }) => (
       .
     </p>
     <div>
-      <a href={toolsURL} target="_blank">
+      <a href={toolsURL} rel="noreferrer noopener" target="_blank">
         <Button
           variant="secondary"
           className="install--download-cli"

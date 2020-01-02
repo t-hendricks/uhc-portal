@@ -8,7 +8,7 @@ const GetStarted = ({ docURL }) => (
     <p>
       Follow the
       {' '}
-      <a href={docURL} target="_blank">
+      <a href={docURL} rel="noreferrer noopener" target="_blank">
         official documentation
         {' '}
         <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -16,7 +16,7 @@ const GetStarted = ({ docURL }) => (
       {' '}
       for detailed installation instructions.
     </p>
-    <Button component="a" href={docURL} target="_blank" variant="secondary">
+    <Button component="a" href={docURL} rel="noreferrer noopener" target="_blank" variant="secondary">
       Get started
     </Button>
     <p />

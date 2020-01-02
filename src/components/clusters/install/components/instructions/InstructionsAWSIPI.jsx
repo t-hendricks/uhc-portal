@@ -24,7 +24,7 @@ function InstructionsAWSIPI({ token }) {
                 (AWS) using infrastructure that the installation program provisions and the cluster
                 maintains. The basic steps are outlined below. For detailed instructions, see the
               {' '}
-              <a href={links.INSTALL_AWSIPI_DOCS_LANDING} target="_blank">
+              <a href={links.INSTALL_AWSIPI_DOCS_LANDING} rel="noreferrer noopener" target="_blank">
                   official documentation
                 {' '}
                 <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -37,7 +37,7 @@ function InstructionsAWSIPI({ token }) {
             </h3>
             <ul aria-labelledby="prerequisites-title">
               <li>
-                <a href={links.INSTALL_AWSIPI_CONFIGURE_ACCOUNT} target="_blank">
+                <a href={links.INSTALL_AWSIPI_CONFIGURE_ACCOUNT} rel="noreferrer noopener" target="_blank">
                     Configure an AWS account
                   {' '}
                   <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -81,21 +81,21 @@ function InstructionsAWSIPI({ token }) {
 
             <ul>
               <li>
-                <a href={links.INSTALL_AWSIPI_INSTALLATION_CONFIG} target="_blank">
+                <a href={links.INSTALL_AWSIPI_INSTALLATION_CONFIG} rel="noreferrer noopener" target="_blank">
                     Installation configuration parameters for AWS
                   {' '}
                   <ExternalLinkAltIcon color="#0066cc" size="sm" />
                 </a>
               </li>
               <li>
-                <a href={links.INSTALL_AWSIPI_SAMPLE_YAML} target="_blank">
+                <a href={links.INSTALL_AWSIPI_SAMPLE_YAML} rel="noreferrer noopener" target="_blank">
                     Sample customized install-config.yaml file for AWS
                   {' '}
                   <ExternalLinkAltIcon color="#0066cc" size="sm" />
                 </a>
               </li>
               <li>
-                <a href={links.INSTALL_AWSIPI_CUSTOMIZING_NETWORK} target="_blank">
+                <a href={links.INSTALL_AWSIPI_CUSTOMIZING_NETWORK} rel="noreferrer noopener" target="_blank">
                     Customizing your network configuration
                   {' '}
                   <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -126,7 +126,7 @@ function InstructionsAWSIPI({ token }) {
                     Unfortunately, there will always be some cases where OpenShift fails to install
                     properly. In these events, it is helpful to understand the
                   {' '}
-                  <a href={links.INSTALL_AWSIPI_LIKELY_FAILURE_MODES} target="_blank">
+                  <a href={links.INSTALL_AWSIPI_LIKELY_FAILURE_MODES} rel="noreferrer noopener" target="_blank">
                       likely failure modes
                     {' '}
                     <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -134,7 +134,7 @@ function InstructionsAWSIPI({ token }) {
                   {' '}
                     as well as
                   {' '}
-                  <a href={links.INSTALL_AWSIPI_GENERIC_TROUBLESHOOTING} target="_blank">
+                  <a href={links.INSTALL_AWSIPI_GENERIC_TROUBLESHOOTING} rel="noreferrer noopener" target="_blank">
                       how to troubleshoot
                     {' '}
                     <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -180,7 +180,7 @@ function InstructionsAWSIPI({ token }) {
           <div className="pf-c-content">
             <h3>Next Steps</h3>
             <p>
-              <a href={links.INSTALL_AWSIPI_DOCS_ENTRY} target="_blank">
+              <a href={links.INSTALL_AWSIPI_DOCS_ENTRY} rel="noreferrer noopener" target="_blank">
                   Learn more
                 {' '}
                 <ExternalLinkAltIcon color="#0066cc" size="sm" />

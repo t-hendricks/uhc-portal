@@ -73,7 +73,7 @@ function IDPForm(props) {
         Add an identity provider by selecting a type from the dropdown below.
           </p>
           <p>
-            <a target="_blank" href={providerDocumentationLink[selectedIDP]}>Learn more about identity providers in the OpenShift documentation.</a>
+            <a target="_blank" rel="noreferrer noopener" href={providerDocumentationLink[selectedIDP]}>Learn more about identity providers in the OpenShift documentation.</a>
           </p>
           <h3>Step 1: Select identity providers type</h3>
           <Field
