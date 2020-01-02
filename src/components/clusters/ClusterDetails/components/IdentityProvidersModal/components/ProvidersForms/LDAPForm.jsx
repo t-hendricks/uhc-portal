@@ -27,7 +27,7 @@ class LDAPForm extends React.Component {
     const { isInsecure, caDisabledHelpText } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <Field
           component={ReduxVerticalFormGroup}
           name="ldap_ca"
@@ -46,7 +46,7 @@ class LDAPForm extends React.Component {
           disabled={isPending}
           onChange={this.toggleCADisabled}
         />
-      </React.Fragment>
+      </>
     );
   }
 }

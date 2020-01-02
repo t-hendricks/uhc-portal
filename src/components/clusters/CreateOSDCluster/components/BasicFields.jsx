@@ -68,7 +68,7 @@ class BasicFields extends React.Component {
 
         {/* Base DNS domain */}
         {showDNSBaseDomain && (
-          <React.Fragment>
+          <>
             <GridItem span={4}>
               <Field
                 component={ReduxVerticalFormGroup}
@@ -81,7 +81,7 @@ class BasicFields extends React.Component {
               />
             </GridItem>
             <GridItem span={8} />
-          </React.Fragment>
+          </>
         )}
 
         {/* Region */}

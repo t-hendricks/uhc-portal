@@ -1,12 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Alert } from '@patternfly/react-core';
 import { getTimeDelta } from '../../../../common/helpers';
 import { entitlementStatuses } from '../../../../common/subscriptionTypes';
 
-function SubscriptionCompliancy(props) {
-  const { cluster } = props;
-
+function SubscriptionCompliancy({ cluster }) {
   const subscription = get(cluster, 'subscription');
 
   const ocpSubscriptionType = get(subscription, 'plan.id') === 'OCP';
@@ -29,7 +28,8 @@ function SubscriptionCompliancy(props) {
       <p>
         Last checked:&nbsp;
         {new Date(lastReconcileDate).toLocaleString()}
-      </p>)
+      </p>
+    )
     : '';
 
   switch (subscription.entitlement_status) {
@@ -81,5 +81,11 @@ function SubscriptionCompliancy(props) {
       return null;
   }
 }
+
+SubscriptionCompliancy.propTypes = {
+  cluster: PropTypes.shape({
+    creation_timestamp: PropTypes.string,
+  }),
+};
 
 export default SubscriptionCompliancy;

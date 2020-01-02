@@ -123,10 +123,10 @@ function ClusterDetailsTop(props) {
         <SplitItem>
           <span id="cl-details-btns">
             { !isArchived ? (
-              <React.Fragment>
+              <>
                 {launchConsole}
                 {actions}
-              </React.Fragment>
+              </>
             ) : (
               <Button
                 variant="secondary"
@@ -148,13 +148,14 @@ function ClusterDetailsTop(props) {
         <SplitItem isFilled>
           {!clusterIdentityProviders.pending && cluster.canEdit && <IdentityProvidersHint />}
         </SplitItem>
-      </Split>)
-      }
+      </Split>
+      )}
       {cluster.expiration_timestamp
       && (
       <ExpirationAlert
         expirationTimestamp={cluster.expiration_timestamp}
-      />)}
+      />
+      )}
       {children}
     </div>
   );

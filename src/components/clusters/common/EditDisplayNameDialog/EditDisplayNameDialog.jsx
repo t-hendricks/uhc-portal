@@ -78,7 +78,7 @@ class EditDisplayNameDialog extends Component {
         onSecondaryClick={cancelEdit}
         isPrimaryDisabled={!!validationMessage}
       >
-        <React.Fragment>
+        <>
           {hasError}
           <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
             <FormGroup
@@ -97,7 +97,7 @@ class EditDisplayNameDialog extends Component {
               />
             </FormGroup>
           </Form>
-        </React.Fragment>
+        </>
       </Modal>
     );
   }

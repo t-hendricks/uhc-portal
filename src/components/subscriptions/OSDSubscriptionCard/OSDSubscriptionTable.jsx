@@ -51,6 +51,7 @@ function OSDSubscriptionTable({ rows, children }) {
 
 OSDSubscriptionTable.propTypes = {
   rows: PropTypes.array.isRequired,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
 };
 
 export default OSDSubscriptionTable;

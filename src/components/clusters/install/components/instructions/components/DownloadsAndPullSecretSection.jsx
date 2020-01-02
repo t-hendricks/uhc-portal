@@ -64,7 +64,7 @@ function DownloadsAndPullSecretSection({
           <p />
 
           {(rhcosLearnMoreURL || rhcosDownloadURL) && (
-            <React.Fragment>
+            <>
               <h3 className="pf-c-title pf-m-md downloads-subtitle">
                 Red Hat Enterprise Linux CoreOS (RHCOS)
               </h3>
@@ -73,7 +73,7 @@ function DownloadsAndPullSecretSection({
                 learnMoreURL={rhcosLearnMoreURL}
                 token={token}
               />
-            </React.Fragment>
+            </>
           )}
 
           <Title headingLevel="h3" size="md" className="downloads-subtitle">Command-Line Interface</Title>

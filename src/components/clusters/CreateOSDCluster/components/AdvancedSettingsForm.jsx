@@ -13,7 +13,7 @@ function AdvancedNetworkFields(props) {
     pending,
   } = props;
   return (
-    <React.Fragment>
+    <>
       <GridItem span={4}>
         <Field
           component={ReduxVerticalFormGroup}
@@ -52,7 +52,7 @@ function AdvancedNetworkFields(props) {
           extendedHelpText={constants.podCIDRHint}
         />
       </GridItem>
-    </React.Fragment>
+    </>
   );
 }
 

@@ -10,7 +10,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 
 function InstructionsPreRelease({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
           Experimental Developer Preview Builds
       </Title>
@@ -214,7 +214,7 @@ function InstructionsPreRelease({ token }) {
           </p>
         </div>
       </Card>
-    </React.Fragment>
+    </>
   );
 }
 

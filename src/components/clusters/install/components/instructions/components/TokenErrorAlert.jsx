@@ -7,7 +7,7 @@ const TokenErrorAlert = ({ token }) => {
   const code = token.internalErrorCode || '';
   const errorMessage = token.errorMessage || '';
   const message = code === 'ACCT-MGMT-22' ? errorMessage : (
-    <React.Fragment>
+    <>
       {errorMessage}
       <br />
       <br />
@@ -20,7 +20,7 @@ const TokenErrorAlert = ({ token }) => {
         <ExternalLinkAltIcon color="#0066cc" size="sm" />
       </a>
       .
-    </React.Fragment>
+    </>
   );
 
   return (

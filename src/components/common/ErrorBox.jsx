@@ -23,6 +23,7 @@ ErrorBox.propTypes = {
       PropTypes.node,
       PropTypes.element,
     ]).isRequired,
+    errorDetails: PropTypes.array,
     operationID: PropTypes.string,
   }),
 };

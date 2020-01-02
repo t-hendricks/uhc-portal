@@ -29,12 +29,12 @@ class App extends React.PureComponent {
     const { children } = this.props;
 
     return (
-      <React.Fragment>
+      <>
         {config.override && <EnvOverrideMessage env={config.override} />}
         <ErrorBoundary>
           {children || <Router />}
         </ErrorBoundary>
-      </React.Fragment>
+      </>
     );
   }
 }

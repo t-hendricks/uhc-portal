@@ -4,7 +4,7 @@ import { Popover } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 
 const PopoverHint = ({ hint }) => (
-  <React.Fragment>
+  <>
     { ' ' }
     <Popover
       bodyContent={hint}
@@ -12,7 +12,7 @@ const PopoverHint = ({ hint }) => (
     >
       <OutlinedQuestionCircleIcon />
     </Popover>
-  </React.Fragment>
+  </>
 );
 PopoverHint.propTypes = {
   hint: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]).isRequired,

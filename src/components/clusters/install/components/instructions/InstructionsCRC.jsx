@@ -10,7 +10,7 @@ import TokenErrorAlert from './components/TokenErrorAlert';
 
 function InstructionsCRC({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
         Install on Laptop: Red Hat CodeReady Containers
       </Title>
@@ -107,7 +107,7 @@ function InstructionsCRC({ token }) {
           </div>
         </div>
       </Card>
-    </React.Fragment>
+    </>
   );
 }
 

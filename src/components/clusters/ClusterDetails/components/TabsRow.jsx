@@ -87,7 +87,8 @@ class TabsRow extends React.Component {
     return (
       <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
         {tabsToDisplay.map(tab => tab)}
-      </Tabs>);
+      </Tabs>
+    );
   }
 }
 

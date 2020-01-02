@@ -27,7 +27,8 @@ function NumberWithUnit({ valueWithUnit, unitOverride, isBytes }) {
       >
         { unit }
       </span>
-    </span>);
+    </span>
+  );
 }
 
 NumberWithUnit.propTypes = {

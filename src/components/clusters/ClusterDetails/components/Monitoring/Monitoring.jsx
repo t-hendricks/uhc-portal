@@ -30,14 +30,14 @@ class Monitoring extends React.Component {
 
     if (healthStatus === monitoringStatuses.DISCONNECTED) {
       return (
-        <React.Fragment>
+        <>
           <ClusterHealthCard
             lastCheckIn={lastCheckIn}
             status={healthStatus}
             discoveredIssues={discoveredIssues}
           />
           <MonitoringEmptyState lastCheckInText={lastCheckInText} />
-        </React.Fragment>
+        </>
       );
     }
 
@@ -67,7 +67,7 @@ class Monitoring extends React.Component {
     }
 
     return (
-      <React.Fragment>
+      <>
         <ClusterHealthCard
           lastCheckIn={lastCheckIn}
           status={healthStatus}
@@ -87,7 +87,7 @@ class Monitoring extends React.Component {
             />
           </CardBody>
         </Card>
-      </React.Fragment>
+      </>
     );
   }
 }

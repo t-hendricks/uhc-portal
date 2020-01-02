@@ -30,7 +30,7 @@ class GithubFormRequired extends React.Component {
       const { teamsDisabled, orgsDisabled } = this.state;
 
       return (
-        <React.Fragment>
+        <>
           <IDPBasicFields />
           <Field
             component={ReduxVerticalFormGroup}
@@ -56,7 +56,7 @@ class GithubFormRequired extends React.Component {
             onChange={(e, value) => this.toggleDisable(e, value, 'orgsDisabled')}
             validate={teamsDisabled ? noop : [github, checkGithubTeams]}
           />
-        </React.Fragment>
+        </>
       );
     }
 }

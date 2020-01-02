@@ -55,7 +55,12 @@ class OSDSubscriptionCard extends Component {
         quotaItem.allowed,
         { title: this.getCapacityIcon(quotaItem.reserved, quotaItem.allowed) },
       ]);
-      content = <><h4 className="content-header">Quota</h4><OSDSubscriptionTable rows={rows} /></>;
+      content = (
+        <>
+          <h4 className="content-header">Quota</h4>
+          <OSDSubscriptionTable rows={rows} />
+        </>
+      );
     } else {
       quotaSummary.type = 'osd';
       quotaSummary.empty = true;

@@ -9,7 +9,7 @@ import TokenErrorAlert from './components/TokenErrorAlert';
 
 function InstructionsAWSUPI({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
           Install on AWS with an User-Provisioned Infrastructure
       </Title>
@@ -33,7 +33,7 @@ function InstructionsAWSUPI({ token }) {
         installerURL={links.INSTALL_AWSUPI_INSTALLER_LATEST}
         cliURL={links.INSTALL_AWSUPI_CLI_LATEST}
       />
-    </React.Fragment>
+    </>
   );
 }
 

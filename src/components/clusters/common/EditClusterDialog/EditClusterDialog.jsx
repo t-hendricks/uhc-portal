@@ -74,7 +74,7 @@ class EditClusterDialog extends Component {
     ) : null;
 
     const usageLink = consoleURL
-      ? <a href={`${consoleURL}/k8s/ns/default/resourcequotas`} target="_blank">Check your usage</a> : 'Check your usage';
+      ? <a href={`${consoleURL}/k8s/ns/default/resourcequotas`} target="_blank" rel="noopener noreferrer">Check your usage</a> : 'Check your usage';
 
     const scalingAlert = (
       <Alert
@@ -104,7 +104,7 @@ before proceeding to be sure you are not
         isPrimaryDisabled={pending}
         isPending={pending}
       >
-        <React.Fragment>
+        <>
           {error}
           <Form onSubmit={handleSubmit}>
             <Field
@@ -141,7 +141,7 @@ before proceeding to be sure you are not
             </FormGroup>
             {showPersistentStorageAlert && scalingAlert}
           </Form>
-        </React.Fragment>
+        </>
       </Modal>
     );
   }
@@ -164,6 +164,8 @@ EditClusterDialog.propTypes = {
   initialFormValues: PropTypes.shape({
     id: PropTypes.string,
     nodesCompute: PropTypes.number,
+    persistent_storage: PropTypes.string,
+    load_balancers: PropTypes.string,
   }).isRequired,
   showLoadBalancerAlert: PropTypes.bool,
   showPersistentStorageAlert: PropTypes.bool,

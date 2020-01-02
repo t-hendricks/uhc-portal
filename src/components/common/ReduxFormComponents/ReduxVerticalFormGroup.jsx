@@ -63,6 +63,7 @@ ReduxVerticalFormGroup.propTypes = {
   label: PropTypes.string.isRequired,
   helpText: PropTypes.string,
   extendedHelpText: PropTypes.string,
+  disabled: PropTypes.bool,
   // props passed by redux-form
   // collection of redux-form callbacks to be destructured into an html input element
   input: PropTypes.object.isRequired,

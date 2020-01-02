@@ -62,6 +62,12 @@ DropDownSelect.propTypes = {
     onChange: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
+  label: PropTypes.string.isRequired,
+  helpText: PropTypes.string.isRequired,
+  meta: PropTypes.shape({
+    error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    touched: PropTypes.bool,
+  }).isRequired,
 };
 
 export default DropDownSelect;

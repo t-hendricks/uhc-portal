@@ -51,11 +51,11 @@ function ClusterOperatorsTable({ operators = [], clusterConsole }) {
         statusStr = 'Unknown';
     }
     return (
-      <React.Fragment>
+      <>
         {icon}
         <span>{statusStr}</span>
         {' '}
-      </React.Fragment>
+      </>
     );
   };
 

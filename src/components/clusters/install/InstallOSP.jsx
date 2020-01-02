@@ -28,15 +28,16 @@ class InstallOSP extends Component {
         { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Red Hat OpenStack Platform' },
       ]}
-      />);
+      />
+    );
 
     return (
-      <React.Fragment>
+      <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection className="ocp-instructions">
           <InstructionsOSP token={token} />
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

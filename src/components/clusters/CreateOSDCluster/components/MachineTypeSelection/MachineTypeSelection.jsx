@@ -151,22 +151,22 @@ class MachineTypeSelection extends React.Component {
 
     if (machineTypes.fulfilled && organization.fulfilled) {
       return (
-        <React.Fragment>
+        <>
           {(touched && error) && (<span className="error">{error}</span>)}
           <div className="flat-radio-buttons-flex-container">
             {machineTypes.types.map(type => machineTypeRadio(type))}
           </div>
-        </React.Fragment>
+        </>
       );
     }
 
     return machineTypes.error ? (
       <ErrorBox message="Error loading node types" response={machineTypes} />
     ) : (
-      <React.Fragment>
+      <>
         <div className="spinner-fit-container"><Spinner /></div>
         <div className="spinner-loading-text">Loading node types...</div>
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -179,6 +179,11 @@ MachineTypeSelection.propTypes = {
   isBYOC: PropTypes.bool.isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
+  meta: PropTypes.shape({
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    touched: PropTypes.bool,
+  }).isRequired,
   // Plus extraprops passed by redux Field
 };
 

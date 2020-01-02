@@ -61,8 +61,7 @@ class MonitoringList extends React.Component {
               <div className="metrics-chart">
                 <ResourceUsage cluster={{ ...cluster, state: clusterState }} />
               </div>
-            ) : EmptyState
-          }
+            ) : EmptyState}
         </MonitoringListItem>
       </DataList>
     );

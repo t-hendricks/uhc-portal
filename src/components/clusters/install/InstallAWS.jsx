@@ -26,12 +26,12 @@ class InstallAWS extends Component {
     );
 
     return (
-      <React.Fragment>
+      <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection>
           <InstructionsAWS />
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -10,7 +10,7 @@ import TokenErrorAlert from './components/TokenErrorAlert';
 
 function InstructionsAWSIPI({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
           Install on AWS with an Installer-Provisioned Infrastructure
       </Title>
@@ -191,7 +191,7 @@ function InstructionsAWSIPI({ token }) {
           </div>
         </div>
       </Card>
-    </React.Fragment>
+    </>
   );
 }
 

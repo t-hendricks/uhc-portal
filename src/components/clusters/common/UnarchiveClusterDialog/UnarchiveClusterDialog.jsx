@@ -39,7 +39,7 @@ class UnarchiveClusterDialog extends Component {
         onPrimaryClick={() => submit(subscriptionID, name)}
         onSecondaryClick={cancelEdit}
       >
-        <React.Fragment>
+        <>
           {error}
           <Form onSubmit={() => submit(subscriptionID, name)}>
             <p>
@@ -47,7 +47,7 @@ class UnarchiveClusterDialog extends Component {
               You may need to manage subscriptions if the cluster is active.
             </p>
           </Form>
-        </React.Fragment>
+        </>
       </Modal>
     );
   }

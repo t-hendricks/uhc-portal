@@ -10,7 +10,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 
 function InstructionsIBM({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
           Install on IBM Z with User-Provisioned Infrastructure
       </Title>
@@ -36,7 +36,7 @@ function InstructionsIBM({ token }) {
         cliURL={links.INSTALL_IBMZ_CLI_LATEST}
         showPreReleasePageLink={false}
       />
-    </React.Fragment>
+    </>
   );
 }
 

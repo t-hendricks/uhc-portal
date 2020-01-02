@@ -16,7 +16,7 @@ const validate = (_, allValues) => {
 
 function OpenIDFormRequired({ isPending }) {
   return (
-    <React.Fragment>
+    <>
       <IDPBasicFields />
       <Field
         component={ReduxVerticalFormGroup}
@@ -54,7 +54,7 @@ function OpenIDFormRequired({ isPending }) {
         disabled={isPending}
         validate={validate}
       />
-    </React.Fragment>
+    </>
   );
 }
 

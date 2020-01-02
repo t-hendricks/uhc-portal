@@ -34,44 +34,46 @@ const viewOptionsReducer = (state = initialState, action) => {
 
     const totalPages = Math.ceil(totalCount / state[viewType].pageSize);
 
-    updateState[viewType] = Object.assign({}, state[viewType], {
+    updateState[viewType] = {
+      ...state[viewType],
       totalCount,
       totalPages,
       currentPage: Math.min(state[viewType].currentPage, totalPages || 1),
-    });
+    };
   };
 
   switch (action.type) {
     case viewPaginationConstants.VIEW_FIRST_PAGE:
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
-        currentPage: 1,
-      });
-      return Object.assign({}, state, updateState);
+      updateState[action.viewType] = { ...state[action.viewType], currentPage: 1 };
+      return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_LAST_PAGE:
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
+      updateState[action.viewType] = {
+        ...state[action.viewType],
         currentPage: state[action.viewType].totalPages,
-      });
-      return Object.assign({}, state, updateState);
+      };
+      return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_PREVIOUS_PAGE:
       if (state[action.viewType].currentPage < 2) {
         return state;
       }
 
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
+      updateState[action.viewType] = {
+        ...state[action.viewType],
         currentPage: state[action.viewType].currentPage - 1,
-      });
-      return Object.assign({}, state, updateState);
+      };
+      return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_NEXT_PAGE:
       if (state[action.viewType].currentPage >= state[action.viewType].totalPages) {
         return state;
       }
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
+      updateState[action.viewType] = {
+        ...state[action.viewType],
         currentPage: state[action.viewType].currentPage + 1,
-      });
-      return Object.assign({}, state, updateState);
+      };
+      return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_PAGE_NUMBER:
       if (
@@ -82,43 +84,39 @@ const viewOptionsReducer = (state = initialState, action) => {
         return state;
       }
 
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
-        currentPage: action.pageNumber,
-      });
-      return Object.assign({}, state, updateState);
+      updateState[action.viewType] = { ...state[action.viewType], currentPage: action.pageNumber };
+      return { ...state, ...updateState };
 
     case viewPaginationConstants.SET_PER_PAGE:
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
-        pageSize: action.pageSize,
-      });
-      return Object.assign({}, state, updateState);
+      updateState[action.viewType] = { ...state[action.viewType], pageSize: action.pageSize };
+      return { ...state, ...updateState };
 
     case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
       updatePageCounts(viewConstants.CLUSTERS_VIEW, action.payload.data.total);
       updatePageCounts(viewConstants.ARCHIVED_CLUSTERS_VIEW, action.payload.data.total);
-      return Object.assign({}, state, updateState);
+      return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_SET_LIST_FILTER:
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
+      updateState[action.viewType] = {
+        ...state[action.viewType],
         filter: action.filter,
         currentPage: 1,
-      });
-      return Object.assign({}, state, updateState);
+      };
+      return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_CHANGE_SORT:
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
-        sorting: action.sorting,
-      });
-      return Object.assign({}, state, updateState);
+      updateState[action.viewType] = { ...state[action.viewType], sorting: action.sorting };
+      return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_SET_LIST_FLAGS:
-      updateState[action.viewType] = Object.assign({}, state[action.viewType], {
+      updateState[action.viewType] = {
+        ...state[action.viewType],
         flags: {
           ...state[action.viewType].flags,
           [action.key]: action.value,
         },
-      });
-      return Object.assign({}, state, updateState);
+      };
+      return { ...state, ...updateState };
 
     default:
       return state;

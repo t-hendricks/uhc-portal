@@ -9,7 +9,7 @@ import PullSecretSection from './components/PullSecretSection';
 
 function InstructionsPullSecret({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
           Pull Secret
       </Title>
@@ -23,7 +23,7 @@ function InstructionsPullSecret({ token }) {
           </div>
         </div>
       </Card>
-    </React.Fragment>
+    </>
   );
 }
 

@@ -28,7 +28,8 @@ function BillingModelFields({
           onChange={toggleBYOCFields}
         />
       </FormGroup>
-    </GridItem>);
+    </GridItem>
+  );
 }
 
 BillingModelFields.propTypes = {

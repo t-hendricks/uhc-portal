@@ -9,7 +9,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 
 function InstructionsGCP({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
         Install on GCP with Installer-Provisioned Infrastructure
       </Title>
@@ -32,7 +32,7 @@ function InstructionsGCP({ token }) {
         installerURL={links.INSTALL_GCP_INSTALLER_LATEST}
         cliURL={links.INSTALL_GCP_CLI_LATEST}
       />
-    </React.Fragment>
+    </>
   );
 }
 

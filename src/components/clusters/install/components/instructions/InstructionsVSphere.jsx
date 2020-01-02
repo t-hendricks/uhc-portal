@@ -9,7 +9,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 
 function InstructionsVSphere({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
         Install on vSphere with User-Provisioned Infrastructure
       </Title>
@@ -33,7 +33,7 @@ function InstructionsVSphere({ token }) {
         rhcosLearnMoreURL={links.INSTALL_VSPHERE_RHCOS_LEARN_MORE}
         toolsURL={links.INSTALL_VSPHERE_CLI_LATEST}
       />
-    </React.Fragment>
+    </>
   );
 }
 

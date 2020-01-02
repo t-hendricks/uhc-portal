@@ -25,6 +25,7 @@ const Footer = () => (
         <li><a target="_blank" href="https://www.redhat.com/en/about/all-policies-guidelines">All policies and guidelines</a></li>
       </ul>
     </nav>
-  </footer>);
+  </footer>
+);
 
 export default Footer;
