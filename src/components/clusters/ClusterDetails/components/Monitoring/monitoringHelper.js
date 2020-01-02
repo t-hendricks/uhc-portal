@@ -40,8 +40,8 @@ const baseURLProps = {
 // Assure that the base console url is well formatted with trailing '/' and ready
 // for concatenations.
 const consoleURLSetup = (clusterConsole) => {
-  let consoleURL = clusterConsole.url;
-  if (clusterConsole && consoleURL) {
+  if (clusterConsole && clusterConsole.url) {
+    let consoleURL = clusterConsole.url;
     if (consoleURL.charAt(consoleURL.length - 1) !== '/') {
       consoleURL += '/';
     }

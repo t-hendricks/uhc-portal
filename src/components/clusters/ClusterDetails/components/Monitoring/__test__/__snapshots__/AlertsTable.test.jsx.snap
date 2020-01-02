@@ -1,6 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ClusterHealthCard /> should render 1`] = `
+exports[`<AlertsTable /> should render empty state when there are no alerts 1`] = `
+<EmptyState>
+  <EmptyStateIcon
+    icon={[Function]}
+  />
+  <Title
+    headingLevel="h5"
+    size="lg"
+  >
+    No alerts firing
+  </Title>
+</EmptyState>
+`;
+
+exports[`<AlertsTable /> should render table when there are alerts 1`] = `
 <Component
   aria-label="alerts"
   borders={false}
@@ -14,7 +28,275 @@ exports[`<ClusterHealthCard /> should render 1`] = `
       },
     ]
   }
-  rows={Array []}
+  rows={
+    Array [
+      Object {
+        "cells": Array [
+          Object {
+            "title": "KubeDeploymentReplicasMismatch",
+          },
+          Object {
+            "title": <React.Fragment>
+              <ExclamationTriangleIcon
+                className="status-icon"
+                color="#f0ab00"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Critical
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "title": "KubeDeploymentReplicasMismatch",
+          },
+          Object {
+            "title": <React.Fragment>
+              <ExclamationCircleIcon
+                className="status-icon"
+                color="#c9190b"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Warning
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "title": "SomeAlert",
+          },
+          Object {
+            "title": <React.Fragment>
+              <ExclamationCircleIcon
+                className="status-icon"
+                color="#c9190b"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Warning
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "title": "SomeOtherAlert",
+          },
+          Object {
+            "title": <React.Fragment>
+              <ExclamationTriangleIcon
+                className="status-icon"
+                color="#f0ab00"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Critical
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "title": "KubeDeploymentReplicasMismatch",
+          },
+          Object {
+            "title": <React.Fragment>
+              <ExclamationTriangleIcon
+                className="status-icon"
+                color="#f0ab00"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Critical
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+    ]
+  }
+  variant="compact"
+>
+  <TableHeader />
+  <TableBody />
+</Component>
+`;
+
+exports[`<AlertsTable /> should render table with links there are alerts and a console URL 1`] = `
+<Component
+  aria-label="alerts"
+  borders={false}
+  cells={
+    Array [
+      Object {
+        "title": "Name",
+      },
+      Object {
+        "title": "Severity",
+      },
+    ]
+  }
+  rows={
+    Array [
+      Object {
+        "cells": Array [
+          Object {
+            "title": <a
+              href="http://example.com/monitoring/alerts?orderBy=asc&sortBy=Severity&alert-name=KubeDeploymentReplicasMismatch"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              KubeDeploymentReplicasMismatch
+            </a>,
+          },
+          Object {
+            "title": <React.Fragment>
+              <ExclamationTriangleIcon
+                className="status-icon"
+                color="#f0ab00"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Critical
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "title": <a
+              href="http://example.com/monitoring/alerts?orderBy=asc&sortBy=Severity&alert-name=KubeDeploymentReplicasMismatch"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              KubeDeploymentReplicasMismatch
+            </a>,
+          },
+          Object {
+            "title": <React.Fragment>
+              <ExclamationCircleIcon
+                className="status-icon"
+                color="#c9190b"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Warning
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "title": <a
+              href="http://example.com/monitoring/alerts?orderBy=asc&sortBy=Severity&alert-name=SomeAlert"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              SomeAlert
+            </a>,
+          },
+          Object {
+            "title": <React.Fragment>
+              <ExclamationCircleIcon
+                className="status-icon"
+                color="#c9190b"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Warning
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "title": <a
+              href="http://example.com/monitoring/alerts?orderBy=asc&sortBy=Severity&alert-name=SomeOtherAlert"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              SomeOtherAlert
+            </a>,
+          },
+          Object {
+            "title": <React.Fragment>
+              <ExclamationTriangleIcon
+                className="status-icon"
+                color="#f0ab00"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Critical
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "title": <a
+              href="http://example.com/monitoring/alerts?orderBy=asc&sortBy=Severity&alert-name=KubeDeploymentReplicasMismatch"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              KubeDeploymentReplicasMismatch
+            </a>,
+          },
+          Object {
+            "title": <React.Fragment>
+              <ExclamationTriangleIcon
+                className="status-icon"
+                color="#f0ab00"
+                noVerticalAlign={false}
+                size="md"
+                title={null}
+              />
+              <span>
+                Critical
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+    ]
+  }
   variant="compact"
 >
   <TableHeader />
