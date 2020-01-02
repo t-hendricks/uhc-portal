@@ -11,7 +11,7 @@ const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_
       <p>
         Download RHCOS to create machines for your cluster to use during installation.
         {' '}
-        <a href={learnMoreURL} target="_blank">
+        <a href={learnMoreURL} rel="noreferrer noopener" target="_blank">
           Learn more
           {' '}
           <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -20,7 +20,7 @@ const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_
       </p>
     )}
     <p>
-      <a href={downloadURL} target="_blank">
+      <a href={downloadURL} rel="noreferrer noopener" target="_blank">
         <Button
           variant="secondary"
           className="install--download-installer"

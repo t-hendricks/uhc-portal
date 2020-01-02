@@ -132,7 +132,7 @@ function overrideErrorMessage(payload) {
         <span>
           Your account has been placed on
           {' '}
-          <a href="https://access.redhat.com/articles/1340183" target="_blank">Export Hold</a>
+          <a href="https://access.redhat.com/articles/1340183" target="_blank" rel="noreferrer noopener">Export Hold</a>
           {' '}
           based on export control screening.
           <br />

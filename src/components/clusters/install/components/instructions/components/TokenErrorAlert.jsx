@@ -14,7 +14,7 @@ const TokenErrorAlert = ({ token }) => {
       Try again by refreshing the page.
       If the problem persists, report the issue to
       {' '}
-      <a href="mailto:ocm-feedback@redhat.com" target="_blank">
+      <a href="mailto:ocm-feedback@redhat.com" rel="noreferrer noopener" target="_blank">
         ocm-feedback@redhat.com
         {' '}
         <ExternalLinkAltIcon color="#0066cc" size="sm" />

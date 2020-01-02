@@ -42,7 +42,7 @@ function DownloadsAndPullSecretSection({
             <p>
               For pre-release documentation, refer to the
               {' '}
-              <a href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} target="_blank">
+              <a href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} rel="noreferrer noopener" target="_blank">
                 latest installer documentation
                 {' '}
                 <ExternalLinkAltIcon color="#0066cc" size="sm" />

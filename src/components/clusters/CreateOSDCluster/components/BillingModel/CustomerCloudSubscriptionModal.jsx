@@ -34,14 +34,14 @@ function CustomerCloudSubscriptionModal({ closeModal }) {
                   Your AWS account has the necessary limits to support the desired
                   cluster size.
               {' '}
-              <a href={billingModelConstants.resourceRequirementsLink} target="_blank"> See resource requirements.</a>
+              <a href={billingModelConstants.resourceRequirementsLink} rel="noreferrer noopener" target="_blank"> See resource requirements.</a>
               {' '}
             </li>
             <li>An IAM user called “osdCcsAdmin” exists with the AdministratorAccess policy.</li>
             <li>
                   An Organization Service Control Policy (SCP) is set up according to the
               {' '}
-              <a href={billingModelConstants.scpDocumentationLink} target="_blank">
+              <a href={billingModelConstants.scpDocumentationLink} rel="noreferrer noopener" target="_blank">
                 {' '}
                 documentation.
               </a>
@@ -51,7 +51,7 @@ function CustomerCloudSubscriptionModal({ closeModal }) {
         <TextContent>
             Refer to the
           {' '}
-          <a href={billingModelConstants.scpDocumentationLink} target="_blank">documentation</a>
+          <a href={billingModelConstants.scpDocumentationLink} rel="noreferrer noopener" target="_blank">documentation</a>
           {' '}
             for more detail around the requirements for Customer Cloud
             Subscription.
