@@ -24,7 +24,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
           <div>
             <Checkbox
               className="pf-c-dropdown__menu-item"
-              id="NotSet"
+              id="NotSubscribed"
               isChecked={false}
               isDisabled={false}
               isValid={true}
@@ -63,11 +63,11 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
           <div>
             <Checkbox
               className="pf-c-dropdown__menu-item"
-              id="NotReconciled"
+              id="SixtyDayEvaluation"
               isChecked={false}
               isDisabled={false}
               isValid={true}
-              label="Unknown"
+              label="60-day Evaluation"
               onChange={[Function]}
             />
           </div>

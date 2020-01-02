@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import moment from 'moment';
 import { Alert } from '@patternfly/react-core';
-import { getTimeDelta } from '../../../../common/helpers';
 import { entitlementStatuses } from '../../../../common/subscriptionTypes';
+import getSubscriptionManagementURL from '../../../../common/getSubscriptionManagementURL';
+import getClusterEvaluationExpiresInDays from '../../../../common/getClusterEvaluationExpiresInDays';
 
 function SubscriptionCompliancy({ cluster }) {
   const subscription = get(cluster, 'subscription');
@@ -14,14 +16,12 @@ function SubscriptionCompliancy({ cluster }) {
   }
 
   const candlepinConsumerUUID = get(subscription, 'consumer_uuid');
-  const customerPortalURL = candlepinConsumerUUID
-    ? `https://access.redhat.com/management/systems/${candlepinConsumerUUID}/subscriptions`
-    : 'https://access.redhat.com/management/systems';
+  const customerPortalURL = getSubscriptionManagementURL(subscription);
   const salesURL = 'https://www.redhat.com/en/contact';
   const lastReconcileDate = get(subscription, 'last_reconcile_date');
 
-  const clusterCreationDelta = getTimeDelta(new Date(cluster.creation_timestamp));
-  const clusterCreationCloseTo30Days = clusterCreationDelta >= 24 * 29;
+  const clusterCreationCloseTo30Days = moment().diff(cluster.creation_timestamp, 'days') >= 29;
+  const evaluationExpiresStr = getClusterEvaluationExpiresInDays(cluster);
 
   const lastChecked = lastReconcileDate
     ? (
@@ -33,7 +33,7 @@ function SubscriptionCompliancy({ cluster }) {
     : '';
 
   switch (subscription.entitlement_status) {
-    case entitlementStatuses.NOT_SET:
+    case entitlementStatuses.NOT_SUBSCRIBED:
       return (
         <Alert id="subs-hint" isInline variant={clusterCreationCloseTo30Days ? 'danger' : 'warning'} title="This cluster is not attached to a subscription">
           {lastChecked}
@@ -75,6 +75,19 @@ function SubscriptionCompliancy({ cluster }) {
             <a href={customerPortalURL} rel="noreferrer noopener" target="_blank">Red Hat Customer Portal</a>
             &nbsp;to make sure all subscriptions attached are of the same service level
             (e.g. either Standard, Premium).
+          </p>
+        </Alert>
+      );
+    case entitlementStatuses.SIXTY_DAY_EVALUATION:
+      return (
+        <Alert id="subs-hint" isInline variant="warning" title={`Your evaluation expires in ${evaluationExpiresStr}`}>
+          {lastChecked}
+          <p>
+            {`Your 60-day OpenShift evaluation expires in ${evaluationExpiresStr}. `}
+            <a href={customerPortalURL} target="_blank" rel="noreferrer noopener">Attach a subscription</a>
+            {' to your cluster for non-evaluation use. '}
+            <a href={salesURL} target="_blank" rel="noreferrer noopener">Contact sales</a>
+            {' if you are not an active OpenShift customer.'}
           </p>
         </Alert>
       );

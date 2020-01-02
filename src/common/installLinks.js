@@ -7,6 +7,7 @@ const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
 const links = {
 
   TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
+  SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
   UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating-cluster.html`,
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,

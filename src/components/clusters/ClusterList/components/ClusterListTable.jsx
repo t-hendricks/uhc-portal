@@ -27,7 +27,7 @@ import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel/ClusterLocationLabel';
 import clusterStates, { getClusterStateAndDescription } from '../../common/clusterStates';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
-import SubscriptionStatusIndicator from '../../common/SubscriptionStatusIndicator';
+import SubscriptionStatusIndicator from './SubscriptionStatusIndicator';
 import getClusterName from '../../../../common/getClusterName';
 import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 

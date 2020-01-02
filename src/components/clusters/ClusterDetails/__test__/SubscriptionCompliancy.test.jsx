@@ -16,7 +16,7 @@ describe('<SubscriptionCompliancy />', () => {
 
   it('should render', () => {
     const c = clusterDetails.cluster;
-    c.subscription.entitlement_status = 'NotSet';
+    c.subscription.entitlement_status = 'NotSubscribed';
     wrapper.setProps({ cluster: c }, () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -24,7 +24,7 @@ describe('<SubscriptionCompliancy />', () => {
 
   it('should warn when subscription is not attached', () => {
     const c = clusterDetails.cluster;
-    c.subscription.entitlement_status = 'NotSet';
+    c.subscription.entitlement_status = 'NotSubscribed';
     wrapper.setProps({ cluster: c }, () => {
       expect(wrapper.find(Alert).length).toEqual(1);
     });

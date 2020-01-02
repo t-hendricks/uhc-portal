@@ -11,6 +11,17 @@ describe('<SubscriptionStatusIndicator />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('should render when subscription is SixtyDayEvaluation', () => {
+    const cluster = {
+      managed: false,
+      subscription: {
+        entitlement_status: 'SixtyDayEvaluation',
+      },
+    };
+    const wrapper = shallow(<SubscriptionStatusIndicator cluster={cluster} />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('should render when subscription is Ok', () => {
     const cluster = {
       managed: false,
@@ -22,11 +33,11 @@ describe('<SubscriptionStatusIndicator />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render when subscription is NotSet', () => {
+  it('should render when subscription is NotSubscribed', () => {
     const cluster = {
       managed: false,
       subscription: {
-        entitlement_status: 'NotSet',
+        entitlement_status: 'NotSubscribed',
       },
     };
     const wrapper = shallow(<SubscriptionStatusIndicator cluster={cluster} />);

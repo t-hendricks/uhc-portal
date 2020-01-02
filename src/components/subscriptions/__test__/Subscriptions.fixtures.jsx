@@ -34,10 +34,6 @@ const subscriptions = {
       id: 'subscription-3',
     },
     {
-      entitlement_status: 'NotSet',
-      id: 'subscription-4',
-    },
-    {
       entitlement_status: 'InconsistentServices',
       id: 'subscription-1',
     },
@@ -46,18 +42,22 @@ const subscriptions = {
       id: 'subscription-2',
     },
     {
-      entitlement_status: 'NotReconciled',
-      id: 'subscription-5',
+      entitlement_status: 'NotSubscribed',
+      id: 'subscription-6',
+    },
+    {
+      entitlement_status: 'SixtyDayEvaluation',
+      id: 'subscription-7',
     },
   ],
 };
 
 const stats = {
-  NotReconciled: 1,
   InconsistentServices: 1,
-  NotSet: 1,
   Ok: 1,
   Overcommitted: 1,
+  NotSubscribed: 1,
+  SixtyDayEvaluation: 1,
 };
 
 const quotaSummary = {

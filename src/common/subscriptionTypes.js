@@ -1,9 +1,9 @@
 const entitlementStatuses = {
   OK: 'Ok',
-  NOT_SET: 'NotSet',
+  NOT_SUBSCRIBED: 'NotSubscribed',
   OVERCOMMITTED: 'Overcommitted',
   INCONSISTENT_SERVICES: 'InconsistentServices',
-  UNKNOWN: 'NotReconciled',
+  SIXTY_DAY_EVALUATION: 'SixtyDayEvaluation',
 };
 
 const subscriptionStatuses = {
