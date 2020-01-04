@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, FormGroup, Alert } from '@patternfly/react-core';
+import {
+  Form, FormGroup, Alert,
+} from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
 
@@ -13,6 +15,21 @@ import LoadBalancersComboBox from '../../CreateOSDCluster/components/LoadBalance
 
 
 class EditClusterDialog extends Component {
+  componentDidMount() {
+    const {
+      persistentStorageValues,
+      loadBalancerValues,
+      getLoadBalancers,
+      getPersistentStorage,
+    } = this.props;
+    if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
+      getPersistentStorage();
+    }
+    if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
+      getLoadBalancers();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const {
       editClusterResponse,
@@ -60,9 +77,9 @@ class EditClusterDialog extends Component {
       consoleURL,
       showLoadBalancerAlert,
       showPersistentStorageAlert,
+      persistentStorageValues,
+      loadBalancerValues,
     } = this.props;
-
-    const { pending } = editClusterResponse;
 
     const cancelEdit = () => {
       resetResponse();
@@ -92,6 +109,9 @@ before proceeding to be sure you are not
         </div>
       </Alert>
     );
+
+    const pending = loadBalancerValues.pending || persistentStorageValues.pending
+     || editClusterResponse.pending;
 
     return isOpen && (
       <Modal
@@ -169,6 +189,10 @@ EditClusterDialog.propTypes = {
   }).isRequired,
   showLoadBalancerAlert: PropTypes.bool,
   showPersistentStorageAlert: PropTypes.bool,
+  getLoadBalancers: PropTypes.func.isRequired,
+  getPersistentStorage: PropTypes.func.isRequired,
+  persistentStorageValues: PropTypes.object.isRequired,
+  loadBalancerValues: PropTypes.object.isRequired,
 };
 
 EditClusterDialog.defaultProps = {
