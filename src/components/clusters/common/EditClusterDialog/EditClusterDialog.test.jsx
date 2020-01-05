@@ -17,6 +17,12 @@ describe('<EditDisplayNameDialog />', () => {
     handleSubmit = jest.fn();
     change = jest.fn();
     resetResponse = jest.fn();
+    const fulfilledRequest = {
+      pending: false,
+      error: false,
+      fulfilled: true,
+    };
+
     wrapper = shallow(<EditDisplayNameDialog
       isOpen
       closeModal={closeModal}
@@ -24,7 +30,13 @@ describe('<EditDisplayNameDialog />', () => {
       handleSubmit={handleSubmit}
       change={change}
       resetResponse={resetResponse}
-      initialFormValues={{ id: 'test-id', nodesCompute: 4 }}
+      getPersistentStorage={jest.fn()}
+      getCloudProviders={jest.fn()}
+      loadBalancerValues={fulfilledRequest}
+      persistentStorageValues={fulfilledRequest}
+      initialFormValues={{
+        id: 'test-id', nodesCompute: 4, load_balancers: '4', persistent_storage: '107374182400',
+      }}
       min={{ value: 4, validationMsg: 'error' }}
     />);
   });

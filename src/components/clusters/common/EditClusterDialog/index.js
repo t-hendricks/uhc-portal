@@ -6,6 +6,8 @@ import { clearClusterResponse, editCluster } from '../../../../redux/actions/clu
 import EditClusterDialog from './EditClusterDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
+import getLoadBalancerValues from '../../../../redux/actions/loadBalancerActions';
+import getPersistentStorageValues from '../../../../redux/actions/persistentStorageActions';
 import { minValueSelector, shouldShowStorageQuotaAlert, shouldShowLoadBalancerAlert } from './EditClusterSelectors';
 
 const reduxFormConfig = {
@@ -23,6 +25,8 @@ const mapStateToProps = (state) => {
     isMultiAz: modalData.multi_az,
     showLoadBalancerAlert: shouldShowLoadBalancerAlert(state),
     showPersistentStorageAlert: shouldShowStorageQuotaAlert(state),
+    loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
+    persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
     initialFormValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,
@@ -52,6 +56,8 @@ const mapDispatchToProps = dispatch => ({
   },
   resetResponse: () => dispatch(clearClusterResponse()),
   closeModal: () => dispatch(closeModal()),
+  getPersistentStorage: getPersistentStorageValues,
+  getLoadBalancers: getLoadBalancerValues,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormEditCluster);
