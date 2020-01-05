@@ -8,9 +8,6 @@ import { dropDownItems } from './ClusterActionsDropdownItems';
 class ClusterActionsDropdown extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isOpen: false,
-    };
     this.onToggle = (isOpen) => {
       this.setState({
         isOpen,
@@ -21,6 +18,10 @@ class ClusterActionsDropdown extends React.Component {
         isOpen: !state.isOpen,
       }));
     };
+  }
+
+  state = {
+    isOpen: false,
   }
 
   render() {

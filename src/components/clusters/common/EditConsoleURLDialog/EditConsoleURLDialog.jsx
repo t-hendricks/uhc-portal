@@ -9,13 +9,10 @@ import { checkClusterConsoleURL } from '../../../../common/validators';
 
 
 class EditConsoleURLDialog extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      beenSet: false,
-      validFor: null,
-      currentValue: '',
-    };
+  state = {
+    beenSet: false,
+    validFor: null,
+    currentValue: '',
   }
 
   componentWillReceiveProps(nextProps) {

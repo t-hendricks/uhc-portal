@@ -12,13 +12,14 @@ import { checkUserID } from '../../../../../../common/validators';
 class UserInputForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentValue: '',
-      isSelectOpen: false,
-    };
     this.updateCurrentValue = this.updateCurrentValue.bind(this);
     this.onSelectToggle = this.onSelectToggle.bind(this);
     this.save = this.save.bind(this);
+  }
+
+  state = {
+    currentValue: '',
+    isSelectOpen: false,
   }
 
   onSelectToggle() {
