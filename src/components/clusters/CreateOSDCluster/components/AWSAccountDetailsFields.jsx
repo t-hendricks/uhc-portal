@@ -20,6 +20,7 @@ function AWSAccountDetailsFields(props) {
           type="text"
           validate={required}
           disabled={pending}
+          isRequired
           extendedHelpText="AWS accound ID"
         />
       </GridItem>
@@ -40,6 +41,7 @@ function AWSAccountDetailsFields(props) {
           type="text"
           validate={required}
           disabled={pending}
+          isRequired
           extendedHelpText="AWS access key ID"
         />
       </GridItem>
@@ -52,6 +54,7 @@ function AWSAccountDetailsFields(props) {
           type="text"
           validate={required}
           disabled={pending}
+          isRequired
           extendedHelpText="AWS secret access key"
         />
       </GridItem>
