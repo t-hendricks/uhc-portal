@@ -8940,6 +8940,11 @@ react-content-loader@^3.4.1:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-content-loader/-/react-content-loader-3.4.2.tgz#187fbec2aa389635e4613faa046713f196173f40"
   integrity sha512-UsL3uyPUBZbaPXr52E+MMIOjs7qr6QpcCiF9Xt7we0ACEMAFYp6rWNxVwJbk4/1Peqe9Deajs0PRW5ymvyF5SA==
 
+react-content-loader@^4.3.4:
+  version "4.3.4"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-content-loader/-/react-content-loader-4.3.4.tgz#5060df47c5ed0a16c31a35169c4e6f69e96b39a8"
+  integrity sha512-wwpF6dWaqeaiIwA/NofTuuO7PQaXRxGkukcdrNK/oIKEkfU3BPkNFrCb6sk9Q5l9n5uN80RF60ZO53wzxSy2HQ==
+
 react-copy-to-clipboard@^5.0.1:
   version "5.0.1"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.1.tgz#8eae107bb400be73132ed3b6a7b4fb156090208e"
