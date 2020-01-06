@@ -961,3 +961,15 @@ button:focus {
 .add-idp-button {
   margin-top: var(--pf-global--spacer--lg);
 }
+
+.network-configuration-radios.pf-c-radio {
+  align-items: start;
+  margin-bottom: var(--pf-global--spacer--form-element);
+
+  input.pf-c-radio__input {
+    margin-top: 4px;
+  }
+  label > .radio-helptext {
+    font-size: var(--pf-global--FontSize--sm);
+  }
+}
