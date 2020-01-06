@@ -3,7 +3,7 @@ import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
-
+import getClusterName from '../../../../common/getClusterName';
 /**
  * This function is used by PF tables to determine which dropdown items are displayed
  * on each row of the table. It returns a list of objects, containing props for DropdownItem
@@ -26,6 +26,7 @@ function actionResolver(
   const isUninstallingProps = isClusterUninstalling
     ? { isDisabled: true, tooltip: uninstallingMessage } : {};
   const getKey = item => `${cluster.id}.menu.${item}`;
+  const clusterName = getClusterName(cluster);
 
   const getAdminConosleProps = () => {
     const consoleURL = cluster.console ? cluster.console.url : false;
@@ -87,7 +88,7 @@ function actionResolver(
     };
     const archiveModalData = {
       subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-      name: cluster.name ? cluster.name : '',
+      name: clusterName,
     };
     return { ...baseArchiveProps, onClick: () => openModal('archive-cluster', archiveModalData) };
   };
@@ -100,7 +101,7 @@ function actionResolver(
     };
     const unarchiveModalData = {
       subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-      name: cluster.name ? cluster.name : '',
+      name: clusterName,
     };
     return { ...baseArchiveProps, onClick: () => openModal('unarchive-cluster', unarchiveModalData) };
   };
