@@ -42,11 +42,12 @@ class LoadBalancersComboBox extends React.Component {
       const remainingQuota = get(quota, 'loadBalancerQuota', 0);
       const filteredValues = filterLoadBalancerValuesByQuota(currentValue,
         loadBalancerValues, remainingQuota);
+      const isDisabled = disabled || (filteredValues.values.length <= 1);
       return (
         <FormSelect
           className="quota-combo-box"
           aria-label="Load Balancers"
-          isDisabled={disabled}
+          isDisabled={isDisabled}
           {...input}
         >
           {filteredValues.values.map(value => loadBalancerOption(value.toString()))}
