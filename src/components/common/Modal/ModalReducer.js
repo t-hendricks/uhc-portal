@@ -1,4 +1,4 @@
-import helpers from '../../../common/helpers';
+import { setStateProp } from '../../../redux/reduxHelpers';
 import { modalConstants } from './ModalConstants';
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
 function modalReducer(state = initialState, action) {
   switch (action.type) {
     case modalConstants.OPEN_MODAL:
-      return helpers.setStateProp(
+      return setStateProp(
         'activeModal',
         {
           modalName: action.payload.name,
@@ -21,7 +21,7 @@ function modalReducer(state = initialState, action) {
       );
 
     case modalConstants.CLOSE_MODAL:
-      return helpers.setStateProp(
+      return setStateProp(
         'activeModal',
         {
           modalName: null,

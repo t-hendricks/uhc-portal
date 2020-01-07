@@ -8,7 +8,7 @@ import { FilterIcon } from '@patternfly/react-icons';
 import get from 'lodash/get';
 
 import { entitlementStatuses } from '../../../../../common/subscriptionTypes';
-import helpers from '../../../../../common/helpers';
+import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 
 
 class ClusterListFilterDropdown extends React.Component {
@@ -56,7 +56,7 @@ class ClusterListFilterDropdown extends React.Component {
 
     const setFilterAndQueryParams = (filter) => {
       history.push({
-        search: helpers.buildFilterURLParams(filter),
+        search: buildFilterURLParams(filter),
       });
       setFilter(filter);
     };

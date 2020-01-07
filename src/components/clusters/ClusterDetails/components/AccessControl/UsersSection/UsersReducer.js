@@ -1,4 +1,5 @@
-import helpers from '../../../../../../common/helpers';
+import helpers, { setStateProp } from '../../../../../../redux/reduxHelpers';
+import { getErrorState } from '../../../../../../common/errors';
 import UsersConstants from './UsersConstants';
 
 const initialState = {
@@ -31,9 +32,9 @@ function UsersReducer(state = initialState, action) {
       return initialState;
     // GET_USERS
     case helpers.REJECTED_ACTION(UsersConstants.GET_USERS):
-      return helpers.setStateProp(
+      return setStateProp(
         'groupUsers',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -41,7 +42,7 @@ function UsersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(UsersConstants.GET_USERS):
-      return helpers.setStateProp(
+      return setStateProp(
         'groupUsers',
         {
           fulfilled: false,
@@ -55,7 +56,7 @@ function UsersReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(UsersConstants.GET_USERS):
-      return helpers.setStateProp(
+      return setStateProp(
         'groupUsers',
         {
           clusterID: action.payload.clusterID,
@@ -71,9 +72,9 @@ function UsersReducer(state = initialState, action) {
 
     // ADD_USER
     case helpers.REJECTED_ACTION(UsersConstants.ADD_USER):
-      return helpers.setStateProp(
+      return setStateProp(
         'addUserResponse',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -81,7 +82,7 @@ function UsersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(UsersConstants.ADD_USER):
-      return helpers.setStateProp(
+      return setStateProp(
         'addUserResponse',
         {
           pending: true,
@@ -93,7 +94,7 @@ function UsersReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(UsersConstants.ADD_USER):
-      return helpers.setStateProp(
+      return setStateProp(
         'addUserResponse',
         {
           pending: false,
@@ -107,9 +108,9 @@ function UsersReducer(state = initialState, action) {
 
     // DELETE_USER
     case helpers.REJECTED_ACTION(UsersConstants.DELETE_USER):
-      return helpers.setStateProp(
+      return setStateProp(
         'deleteUserResponse',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -117,7 +118,7 @@ function UsersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(UsersConstants.DELETE_USER):
-      return helpers.setStateProp(
+      return setStateProp(
         'deleteUserResponse',
         {
           fulfilled: false,
@@ -130,7 +131,7 @@ function UsersReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(UsersConstants.DELETE_USER):
-      return helpers.setStateProp(
+      return setStateProp(
         'deleteUserResponse',
         {
           pending: false,

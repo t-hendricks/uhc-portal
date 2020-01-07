@@ -1,8 +1,8 @@
 import reducer, { initialState } from '../LogWindowReducer';
 import { GET_LOGS, CLEAR_LOGS } from '../LogWindowConstants';
-import helpers from '../../../../../../common/helpers';
+import helpers from '../../../../../../redux/reduxHelpers';
 
-describe('Modal Redcuer', () => {
+describe('log tab Redcuer', () => {
   const mockPayload = {
     data: {
       kind: 'Log',

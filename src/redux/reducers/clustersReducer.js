@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import helpers from '../../common/helpers';
+import helpers, { setStateProp } from '../reduxHelpers';
+import { getErrorState } from '../../common/errors';
+
 import { clustersConstants } from '../constants';
 
 const baseState = {
@@ -57,7 +59,7 @@ function clustersReducer(state = initialState, action) {
   switch (action.type) {
     // GET_CLUSTERS
     case helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS):
-      return helpers.setStateProp(
+      return setStateProp(
         'clusters',
         {
           valid: false,
@@ -69,10 +71,10 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTERS):
-      return helpers.setStateProp(
+      return setStateProp(
         'clusters',
         {
-          ...helpers.getErrorState(action),
+          ...getErrorState(action),
           valid: true,
           clusters: state.clusters.clusters,
         },
@@ -83,7 +85,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(clustersConstants.GET_CLUSTERS):
-      return helpers.setStateProp(
+      return setStateProp(
         'clusters',
         {
           pending: true,
@@ -97,7 +99,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
-      return helpers.setStateProp(
+      return setStateProp(
         'clusters',
         {
           clusters: action.payload.data.items,
@@ -113,10 +115,10 @@ function clustersReducer(state = initialState, action) {
 
     // GET_CLUSTER_DETAILS
     case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
-      return helpers.setStateProp(
+      return setStateProp(
         'details',
         {
-          ...helpers.getErrorState(action),
+          ...getErrorState(action),
           cluster: state.details.cluster, // preserve previous cluster even on error
         },
         {
@@ -126,7 +128,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
-      return helpers.setStateProp(
+      return setStateProp(
         'details',
         {
           pending: true,
@@ -139,7 +141,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
-      return helpers.setStateProp(
+      return setStateProp(
         'details',
         {
           cluster: action.payload.data,
@@ -154,9 +156,9 @@ function clustersReducer(state = initialState, action) {
 
     // CREATE_CLUSTER
     case helpers.REJECTED_ACTION(clustersConstants.CREATE_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'createdCluster',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -164,7 +166,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(clustersConstants.CREATE_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'createdCluster',
         {
           pending: true,
@@ -177,7 +179,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(clustersConstants.CREATE_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'createdCluster',
         {
           cluster: action.payload.data,
@@ -192,9 +194,9 @@ function clustersReducer(state = initialState, action) {
 
     // EDIT_CLUSTER
     case helpers.REJECTED_ACTION(clustersConstants.EDIT_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'editedCluster',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -202,7 +204,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(clustersConstants.EDIT_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'editedCluster',
         {
           pending: true,
@@ -214,7 +216,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'editedCluster',
         {
           cluster: action.payload.data,
@@ -228,7 +230,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE:
-      return helpers.setStateProp(
+      return setStateProp(
         'editedCluster',
         initialState.editedCluster,
         {
@@ -240,7 +242,7 @@ function clustersReducer(state = initialState, action) {
 
     // Archive cluster
     case helpers.FULFILLED_ACTION(clustersConstants.ARCHIVE_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'archivedCluster',
         {
           cluster: action.payload.data,
@@ -254,9 +256,9 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.REJECTED_ACTION(clustersConstants.ARCHIVE_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'archivedCluster',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -264,7 +266,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(clustersConstants.ARCHIVE_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'archivedCluster',
         {
           pending: true,
@@ -276,7 +278,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE:
-      return helpers.setStateProp(
+      return setStateProp(
         'archivedCluster',
         {
           ...initialState.archivedCluster,
@@ -289,7 +291,7 @@ function clustersReducer(state = initialState, action) {
 
     // UnArchive cluster
     case helpers.FULFILLED_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'unarchivedCluster',
         {
           cluster: action.payload.data,
@@ -303,9 +305,9 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.REJECTED_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'unarchivedCluster',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -313,7 +315,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
-      return helpers.setStateProp(
+      return setStateProp(
         'unarchivedCluster',
         {
           pending: true,
@@ -325,7 +327,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE:
-      return helpers.setStateProp(
+      return setStateProp(
         'unarchivedCluster',
         {
           ...initialState.unarchivedCluster,
@@ -337,7 +339,7 @@ function clustersReducer(state = initialState, action) {
       );
 
     case clustersConstants.RESET_CREATED_CLUSTER_RESPONSE:
-      return helpers.setStateProp(
+      return setStateProp(
         'createdCluster',
         initialState.createdCluster,
         {

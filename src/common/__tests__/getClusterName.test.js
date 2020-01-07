@@ -1,4 +1,4 @@
-import getClusterName from './getClusterName';
+import getClusterName from '../getClusterName';
 
 describe('getClusterName', () => {
   it('gets display_name from subscription when present', () => {

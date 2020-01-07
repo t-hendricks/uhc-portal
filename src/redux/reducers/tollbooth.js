@@ -1,5 +1,5 @@
 import { ACTION_TYPE as tollboothActionType } from '../actions/tollbooth';
-import helpers from '../../common/helpers';
+import { getErrorState } from '../../common/errors';
 
 const initialState = { token: {} };
 
@@ -10,7 +10,7 @@ const tollboothReducer = (state = initialState, action) => {
     case `${tollboothActionType}_REJECTED`:
       return {
         ...state,
-        token: helpers.getErrorState(action),
+        token: getErrorState(action),
       };
     default:
       return state;

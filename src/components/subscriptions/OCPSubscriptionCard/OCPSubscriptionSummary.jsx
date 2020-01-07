@@ -9,7 +9,7 @@ import {
 } from '@patternfly/react-icons';
 
 import { entitlementStatuses } from '../../../common/subscriptionTypes';
-import { buildUrlParams } from '../../../common/helpers';
+import { buildUrlParams } from '../../../common/queryHelpers';
 import OCPSubscriptionCategory from './OCPSubscriptionCategory';
 
 
