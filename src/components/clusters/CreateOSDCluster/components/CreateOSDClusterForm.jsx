@@ -92,22 +92,9 @@ class CreateOSDClusterForm extends React.Component {
         />
 
         {/* Networking section */}
-        <GridItem span={12}>
-          <h3>Networking</h3>
-          <p>
-            You can enable internal/external access to your cluster and choose between two
-            networking options: “Basic” or “Advanced”.
-          </p>
-          <ul>
-            <li>
-              “Basic” networking creates a new VPC for your cluster using default values.
-            </li>
-            <li>
-              “Advanced” networking allows clusters to use a new VPC with customizable addresses.
-            </li>
-          </ul>
-        </GridItem>
+        <GridItem span={12} />
         <GridItem span={4}>
+          <h3>Networking</h3>
           <FormGroup
             label="Network configuration"
             isRequired
@@ -115,10 +102,29 @@ class CreateOSDClusterForm extends React.Component {
           >
             <Field
               component={RadioButtons}
+              className="network-configuration-radios"
               name="network-configuration-toggle"
               disabled={pending}
               onChange={toggleNetwork}
-              options={[{ value: 'basic', label: 'Basic' }, { value: 'advanced', label: 'Advanced' }]}
+              options={[{
+                value: 'basic',
+                ariaLabel: 'Advanced',
+                label: (
+                  <>
+                    Basic
+                    <div className="radio-helptext">Creates a new VPC for your cluster using default values</div>
+                  </>),
+              },
+              {
+                value: 'advanced',
+                ariaLabel: 'Advanced',
+                label: (
+                  <>
+                    Advanced
+                    <div className="radio-helptext">Allow clusters to use a new VPC with customizable addresses</div>
+                  </>
+                ),
+              }]}
               defaultValue="basic"
             />
           </FormGroup>
