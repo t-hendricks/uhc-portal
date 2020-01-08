@@ -14,11 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import './common/arrayIncludePollyfill';
-import 'core-js/es6/promise';
-import 'core-js/modules/es6.string.starts-with';
-import 'core-js/modules/es6.string.ends-with';
-import 'core-js/modules/es6.number.is-nan';
-import 'core-js/modules/es7.object.values';
+import 'core-js/modules/es.object.values';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -41,12 +37,12 @@ const render = () => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <React.Fragment>
+        <>
           <NotificationsPortal store={store} />
           <BrowserRouter basename={basename}>
             <App />
           </BrowserRouter>
-        </React.Fragment>
+        </>
       </Provider>
     </AppContainer>,
     document.getElementById('root'),

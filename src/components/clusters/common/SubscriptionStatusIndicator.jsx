@@ -14,11 +14,11 @@ function SubscriptionStatusIndicator({ cluster }) {
   switch (entitlementStatus) {
     case entitlementStatuses.OK:
       return (
-        <React.Fragment>
+        <>
           <CheckCircleIcon color={global_success_color_100.value} />
           {' '}
           Subscribed
-        </React.Fragment>
+        </>
       );
     case entitlementStatuses.NOT_SET:
       return (
@@ -59,11 +59,11 @@ function SubscriptionStatusIndicator({ cluster }) {
     default:
       if (managed) {
         return (
-          <React.Fragment>
+          <>
             <CheckCircleIcon color={global_success_color_100.value} />
             {' '}
             Subscribed
-          </React.Fragment>
+          </>
         );
       }
       return (

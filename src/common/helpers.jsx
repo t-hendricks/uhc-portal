@@ -132,7 +132,7 @@ function overrideErrorMessage(payload) {
         <span>
           Your account has been placed on
           {' '}
-          <a href="https://access.redhat.com/articles/1340183" target="_blank">Export Hold</a>
+          <a href="https://access.redhat.com/articles/1340183" target="_blank" rel="noreferrer noopener">Export Hold</a>
           {' '}
           based on export control screening.
           <br />
@@ -183,6 +183,47 @@ const getErrorState = action => ({
   errorDetails: get(action.payload, 'response.data.details'),
   operationID: get(action.payload, 'response.data.operation_id'),
 });
+
+function parseErrorDetails(errorDetails) {
+  const customErrors = [];
+
+  if (!errorDetails || !errorDetails.length) {
+    return customErrors;
+  }
+
+  errorDetails.forEach((details) => {
+    switch (details.kind) {
+      case 'ExcessResources': {
+        // Resource map: singular and plural
+        const resourceMap = {
+          'cluster.aws': ['cluster', 'clusters'],
+          'compute.node.aws': ['node', 'nodes'],
+          'pv.storage.aws': ['GiB of storage', 'GiB of storage'],
+          'network.loadbalancer.aws': ['load balancers', 'load balancers'],
+        };
+
+        // Add extra error details
+        customErrors.push((
+          <ul>
+            { details.items.map(excessResource => (
+              <li>
+                { `${excessResource.count} additional
+                 ${resourceMap[excessResource.resource_type][excessResource.count === 1 ? 0 : 1]} of type
+                 ${excessResource.availability_zone_type} availability zone, instance size
+                 ${excessResource.resource_name}, and Red Hat provided infrastructure.`}
+              </li>
+            ))}
+          </ul>
+        ));
+        break;
+      }
+      default:
+        break;
+    }
+  });
+
+  return customErrors;
+}
 
 // returns the time delta in hours between two date objects
 function getTimeDelta(t1, t2 = new Date()) {
@@ -257,6 +298,7 @@ const helpers = {
   createViewQueryObject,
   getErrorMessage,
   getErrorState,
+  parseErrorDetails,
   getTimeDelta,
   isValid,
   omitEmptyFields,

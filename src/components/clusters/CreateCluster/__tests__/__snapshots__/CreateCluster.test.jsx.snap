@@ -69,7 +69,7 @@ exports[`<CreateCluster /> User with no quota should render 1`] = `
   <PageSection>
     <Card>
       <div
-        className="pf-c-content ocm-page"
+        className="pf-c-content ocm-page ocp-osd-selection"
       >
         <div
           className="flex-container"
@@ -147,7 +147,7 @@ exports[`<CreateCluster /> renders correctly 1`] = `
   <PageSection>
     <Card>
       <div
-        className="pf-c-content ocm-page"
+        className="pf-c-content ocm-page ocp-osd-selection"
       >
         <div
           className="flex-container"

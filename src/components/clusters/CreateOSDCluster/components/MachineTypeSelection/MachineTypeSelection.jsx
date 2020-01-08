@@ -93,20 +93,24 @@ class MachineTypeSelection extends React.Component {
   }
 
   hasQuota(machineType) {
-    const { isMultiAz, organization, quota } = this.props;
+    const {
+      isMultiAz, organization, quota, isBYOC,
+    } = this.props;
     if (!organization.fulfilled) {
       return false;
     }
-    const available = quota.nodeQuota.rhInfra[isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
+    const infra = isBYOC ? 'byoc' : 'rhInfra';
+    const available = quota.nodeQuota[infra][isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
     return available > 0;
   }
 
   render() {
-    // getMachineTypes is unused here, but it's needed so it won't
+    // getMachineTypes and isBYOC is unused here, but it's needed so it won't
     // go into extraProps and then get to the DOM, generating a React warning.
     const {
       machineTypes,
       getMachineTypes,
+      isBYOC,
       isMultiAz,
       quota,
       organization,
@@ -147,22 +151,22 @@ class MachineTypeSelection extends React.Component {
 
     if (machineTypes.fulfilled && organization.fulfilled) {
       return (
-        <React.Fragment>
+        <>
           {(touched && error) && (<span className="error">{error}</span>)}
-          <div className="machine-types-flex-container">
+          <div className="flat-radio-buttons-flex-container">
             {machineTypes.types.map(type => machineTypeRadio(type))}
           </div>
-        </React.Fragment>
+        </>
       );
     }
 
     return machineTypes.error ? (
       <ErrorBox message="Error loading node types" response={machineTypes} />
     ) : (
-      <React.Fragment>
+      <>
         <div className="spinner-fit-container"><Spinner /></div>
         <div className="spinner-loading-text">Loading node types...</div>
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -172,8 +176,14 @@ MachineTypeSelection.propTypes = {
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
+  isBYOC: PropTypes.bool.isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
+  meta: PropTypes.shape({
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    touched: PropTypes.bool,
+  }).isRequired,
   // Plus extraprops passed by redux Field
 };
 

@@ -14,11 +14,12 @@ import helpers from '../../../../../common/helpers';
 class ClusterListFilterDropdown extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isOpen: false };
     this.onToggle = (isOpen) => {
       this.setState({ isOpen });
     };
   }
+
+  state = { isOpen: false }
 
   render() {
     const { isOpen } = this.state;
@@ -27,6 +28,7 @@ class ClusterListFilterDropdown extends React.Component {
       setFilter,
       history,
       className,
+      isDisabled,
     } = this.props;
     const filterOptions = [
       {
@@ -106,7 +108,7 @@ class ClusterListFilterDropdown extends React.Component {
     return (
       <Dropdown
         toggle={(
-          <DropdownToggle onToggle={this.onToggle}>
+          <DropdownToggle onToggle={this.onToggle} isDisabled={isDisabled}>
             <FilterIcon />
             {' '}
             Filter
@@ -128,6 +130,7 @@ ClusterListFilterDropdown.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   className: PropTypes.string,
+  isDisabled: PropTypes.bool,
 };
 
 export default ClusterListFilterDropdown;

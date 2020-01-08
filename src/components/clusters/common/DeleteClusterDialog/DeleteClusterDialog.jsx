@@ -88,12 +88,12 @@ class DeleteClusterDialog extends React.Component {
         isPending={isPending}
         primaryVariant="danger"
       >
-        <React.Fragment>
+        <>
           {errorContainer}
           <p>
           This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
           </p>
-        </React.Fragment>
+        </>
         <Form onSubmit={submitForm}>
           <p>
           Confirm deletion by typing

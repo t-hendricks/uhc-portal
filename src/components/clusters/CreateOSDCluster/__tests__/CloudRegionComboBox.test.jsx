@@ -36,10 +36,6 @@ describe('<CloudRegionComboBox />', () => {
     it('calls getCloudProviders', () => {
       expect(getCloudProviders).toBeCalled();
     });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
-    });
   });
 
   describe('when there was an error', () => {
@@ -69,14 +65,6 @@ describe('<CloudRegionComboBox />', () => {
 
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
-    });
-
-    it('calls getCloudProviders on mount', () => {
-      expect(getCloudProviders).toBeCalled();
-    });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
     });
   });
 
@@ -110,10 +98,6 @@ describe('<CloudRegionComboBox />', () => {
 
     it('does not call getCloudProviders', () => {
       expect(getCloudProviders).not.toBeCalled();
-    });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
     });
 
     it('does not call getCloudProviders if request returns an error', () => {
@@ -163,10 +147,6 @@ describe('<CloudRegionComboBox />', () => {
 
     it('does not call getCloudProviders', () => {
       expect(getCloudProviders).not.toBeCalled();
-    });
-
-    it('does not call onChange', () => {
-      expect(onChange).not.toBeCalled();
     });
   });
 });

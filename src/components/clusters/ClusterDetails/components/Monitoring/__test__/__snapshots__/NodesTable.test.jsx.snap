@@ -2,6 +2,7 @@
 
 exports[`<ClusterHealthCard /> should render 1`] = `
 <Component
+  aria-label="nodes"
   borders={false}
   cells={
     Array [

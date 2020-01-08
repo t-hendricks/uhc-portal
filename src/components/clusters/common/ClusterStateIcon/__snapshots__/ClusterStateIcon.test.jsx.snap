@@ -21,7 +21,7 @@ exports[`<ClusterStateIcon /> renders correctly for installing status 1`] = `
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for patching status 1`] = `
-<HourglassHalfIcon
+<UnknownIcon
   className="clusterstate"
   color="currentColor"
   noVerticalAlign={false}
@@ -31,7 +31,7 @@ exports[`<ClusterStateIcon /> renders correctly for patching status 1`] = `
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for pending status 1`] = `
-<HourglassHalfIcon
+<InProgressIcon
   className="clusterstate"
   color="currentColor"
   noVerticalAlign={false}
@@ -51,9 +51,9 @@ exports[`<ClusterStateIcon /> renders correctly for ready status 1`] = `
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for uninstalling status 1`] = `
-<BanIcon
+<InProgressIcon
   className="clusterstate"
-  color="#c9190b"
+  color="currentColor"
   noVerticalAlign={false}
   size="sm"
   title={null}
@@ -71,9 +71,9 @@ exports[`<ClusterStateIcon /> renders correctly for unknown status 1`] = `
 `;
 
 exports[`<ClusterStateIcon /> renders correctly for warning status 1`] = `
-<ExclamationTriangleIcon
+<UnknownIcon
   className="clusterstate"
-  color="#f0ab00"
+  color="currentColor"
   noVerticalAlign={false}
   size="sm"
   title={null}

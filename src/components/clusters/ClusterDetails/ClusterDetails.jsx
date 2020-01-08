@@ -27,7 +27,7 @@ import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
 import Monitoring from './components/Monitoring';
-import Users from './components/Users';
+import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
@@ -38,7 +38,7 @@ import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
 
 import ErrorBox from '../../common/ErrorBox';
-import { isValid } from '../../../common/helpers';
+import { isValid, scrollToTop } from '../../../common/helpers';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
@@ -52,13 +52,14 @@ class ClusterDetails extends Component {
 
     this.overviewTabRef = React.createRef();
     this.monitoringTabRef = React.createRef();
-    this.usersTabRef = React.createRef();
+    this.accessControlTabRef = React.createRef();
     this.logsTabRef = React.createRef();
     this.addOnsTabRef = React.createRef();
   }
 
   componentDidMount() {
     document.title = 'Red Hat OpenShift Cluster Manager';
+    scrollToTop();
 
     const {
       cloudProviders,
@@ -197,7 +198,7 @@ class ClusterDetails extends Component {
     // the redux state will have the data for the previous cluster. We want to ensure we only
     // show data for the requested cluster, so different data should be marked as pending.
 
-    const isPending = ((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error) || clusterIdentityProviders.pending;
+    const isPending = ((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error);
 
     const errorState = () => (
       <EmptyState>
@@ -221,13 +222,13 @@ class ClusterDetails extends Component {
     if (clusterDetails.error && (!cluster || get(cluster, 'id') !== requestedClusterID)) {
       if (clusterDetails.errorCode === 404) {
         setGlobalError((
-          <React.Fragment>
+          <>
             Cluster
             {' '}
             <b>{requestedClusterID}</b>
             {' '}
             was not found, it might have been deleted or you don&apos;t have permission to see it.
-          </React.Fragment>
+          </>
         ), 'clusterDetails', clusterDetails.errorMessage);
         history.push('/');
       }
@@ -257,12 +258,12 @@ class ClusterDetails extends Component {
         >
           <TabsRow
             displayLogs={hasLogs}
-            displayUsersTab={cluster.managed && cluster.canEdit}
+            displayAccessControlTab={cluster.managed && cluster.canEdit}
             displayMonitoringTab={!isArchived}
             displayAddOnsTab={displayAddOnsTab}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
-            usersTabRef={this.usersTabRef}
+            accessControlTabRef={this.accessControlTabRef}
             logsTabRef={this.logsTabRef}
             addOnsTabRef={this.addOnsTabRef}
           />
@@ -279,8 +280,8 @@ class ClusterDetails extends Component {
           </TabContent>
         )}
 
-        <TabContent eventKey={2} id="usersTabContent" ref={this.usersTabRef} aria-label="Users" hidden>
-          <Users clusterID={cluster.id} />
+        <TabContent eventKey={2} id="accessControlTabContent" ref={this.accessControlTabRef} aria-label="Access Control" hidden>
+          <AccessControl clusterID={cluster.id} />
         </TabContent>
         {displayAddOnsTab && (
         <TabContent eventKey={3} id="addOnsTabContent" ref={this.addOnsTabRef} aria-label="Add-ons" hidden>
@@ -304,13 +305,12 @@ class ClusterDetails extends Component {
           }
         }}
         />
-        <IdentityProvidersModal clusterID={cluster.id} onClose={() => this.refreshIDP()} />
-        <DeleteIDPDialog onClose={() => {
-          this.refreshIDP();
-          onDialogClose();
-        }
-          }
+        <IdentityProvidersModal
+          clusterID={cluster.id}
+          clusterName={getClusterName(cluster)}
+          refreshParent={this.refreshIDP}
         />
+        <DeleteIDPDialog refreshParent={this.refreshIDP} />
       </PageSection>
     );
   }
@@ -340,6 +340,7 @@ ClusterDetails.propTypes = {
   clusterDetails: PropTypes.shape({
     cluster: PropTypes.object,
     error: PropTypes.bool,
+    errorCode: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     errorMessage: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.node,

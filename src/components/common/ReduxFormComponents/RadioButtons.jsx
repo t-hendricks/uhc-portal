@@ -29,6 +29,7 @@ class RadioButtons extends React.Component {
   render() {
     const {
       options,
+      className,
       input,
     } = this.props;
 
@@ -39,14 +40,16 @@ class RadioButtons extends React.Component {
     return (
       options.map(option => (
         <Radio
+          className={className}
           isChecked={currentValue === option.value}
           key={`${input.name}-${option.value}`}
           value={option.value}
           name={input.name}
           id={`${input.name}-${option.value}`}
-          aria-label={option.label}
+          aria-label={option.ariaLabel || option.label}
           label={option.label}
           onChange={this.changeHandler}
+          isDisabled={option.disabled}
         />
       ))
     );
@@ -55,10 +58,19 @@ class RadioButtons extends React.Component {
 
 RadioButtons.propTypes = {
   defaultValue: PropTypes.string.isRequired,
-  input: PropTypes.object.isRequired,
+  input: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+  }).isRequired,
+  className: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape(
-      { label: PropTypes.string.isRequired, value: PropTypes.string.isRequired },
+      {
+        label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+        ariaLabel: PropTypes.string,
+        value: PropTypes.string.isRequired,
+        disabled: PropTypes.bool,
+      },
     ),
   ).isRequired,
 };

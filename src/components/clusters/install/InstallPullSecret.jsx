@@ -23,12 +23,12 @@ class InstallPullSecret extends Component {
   render() {
     const { token } = this.props;
     return (
-      <React.Fragment>
+      <>
         <PageTitle title="Install OpenShift Container Platform 4" />
         <PageSection className="ocp-instructions">
           <InstructionsPullSecret token={token} />
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -13,9 +13,13 @@ import {
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 
-import { operatorsStatuses } from '../monitoringHelper';
+import {
+  operatorsStatuses,
+  monitoringItemLinkProps,
+  monitoringItemTypes,
+} from '../monitoringHelper';
 
-function ClusterOperatorsTable({ operators = [] }) {
+function ClusterOperatorsTable({ operators = [], clusterConsole }) {
   const columns = [
     { title: 'Name' },
     { title: 'Status' },
@@ -47,22 +51,33 @@ function ClusterOperatorsTable({ operators = [] }) {
         statusStr = 'Unknown';
     }
     return (
-      <React.Fragment>
+      <>
         {icon}
         <span>{statusStr}</span>
         {' '}
-      </React.Fragment>
+      </>
     );
   };
 
-  const rows = operators.map(operator => ([
-    { title: operator.name },
-    { title: operatorStatus(operator.condition) },
-    { title: operator.version },
-  ]));
+  const rows = operators.map((operator) => {
+    const operatorLinkProps = monitoringItemLinkProps(
+      clusterConsole, monitoringItemTypes.OPERATOR, operator.name,
+    );
+    const operatorName = operatorLinkProps !== null
+      ? (<a {...operatorLinkProps}>{operator.name}</a>) : operator.name;
+    return (
+      {
+        cells: [
+          { title: operatorName },
+          { title: operatorStatus(operator.condition) },
+          { title: operator.version },
+        ],
+      }
+    );
+  });
 
   return (
-    <Table variant={TableVariant.compact} borders={false} cells={columns} rows={rows}>
+    <Table variant={TableVariant.compact} borders={false} cells={columns} rows={rows} aria-label="operators">
       <TableHeader />
       <TableBody />
     </Table>
@@ -71,6 +86,7 @@ function ClusterOperatorsTable({ operators = [] }) {
 
 ClusterOperatorsTable.propTypes = {
   operators: PropTypes.array,
+  clusterConsole: PropTypes.object,
 };
 
 export default ClusterOperatorsTable;

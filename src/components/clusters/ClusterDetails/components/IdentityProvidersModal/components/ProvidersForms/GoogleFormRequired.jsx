@@ -8,7 +8,7 @@ import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents
 
 function GoogleForm({ isPending, isRequired }) {
   return (
-    <React.Fragment>
+    <>
       <IDPBasicFields />
       <Field
         component={ReduxVerticalFormGroup}
@@ -17,9 +17,10 @@ function GoogleForm({ isPending, isRequired }) {
         type="text"
         placeholder="Hosted Domain"
         disabled={isPending}
+        isRequired={isRequired}
         validate={isRequired ? required : null}
       />
-    </React.Fragment>
+    </>
   );
 }
 

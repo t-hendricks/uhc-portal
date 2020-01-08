@@ -16,7 +16,7 @@ class LDAPForm extends React.Component {
 
   toggleCADisabled = (e, value) => {
     if (value) {
-      this.setState({ isInsecure: true, caDisabledHelpText: 'Cannot be used if insecure is set' });
+      this.setState({ isInsecure: true, caDisabledHelpText: 'Cannot be used if insecure is set.' });
     } else {
       this.setState(this.getInitialState());
     }
@@ -27,18 +27,17 @@ class LDAPForm extends React.Component {
     const { isInsecure, caDisabledHelpText } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         <Field
           component={ReduxVerticalFormGroup}
           name="ldap_ca"
           label="CA"
           type="text"
-          placeholder="CA"
-          helpText={`PEM encoded certificate bundle to use to validate server certificates for the configured URL ${caDisabledHelpText}.`}
+          helpText={`PEM encoded certificate bundle to use to validate server certificates for the configured URL. ${caDisabledHelpText}`}
           disabled={isInsecure || isPending}
           className="ca-textarea"
-          componentClass="textarea"
-          spellcheck="false"
+          isTextArea
+          spellCheck="false"
         />
         <Field
           component={ReduxCheckbox}
@@ -47,7 +46,7 @@ class LDAPForm extends React.Component {
           disabled={isPending}
           onChange={this.toggleCADisabled}
         />
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -16,7 +16,7 @@ const validate = (_, allValues) => {
 
 function OpenIDFormRequired({ isPending }) {
   return (
-    <React.Fragment>
+    <>
       <IDPBasicFields />
       <Field
         component={ReduxVerticalFormGroup}
@@ -26,6 +26,8 @@ function OpenIDFormRequired({ isPending }) {
         placeholder="Issuer URL"
         disabled={isPending}
         validate={checkOpenIDIssuer}
+        isRequired
+        helpText="The URL that the OpenID Provider asserts as the Issuer Identifier. It must use the https scheme with no URL query parameters or fragment."
       />
       <h4>Claims Mappings</h4>
       <Field
@@ -52,7 +54,7 @@ function OpenIDFormRequired({ isPending }) {
         disabled={isPending}
         validate={validate}
       />
-    </React.Fragment>
+    </>
   );
 }
 

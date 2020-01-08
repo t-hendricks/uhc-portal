@@ -18,7 +18,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Checkbox, FormGroup,
-} from 'patternfly-react';
+} from '@patternfly/react-core';
 
 // To be used inside redux-form Field component.
 function ReduxCheckbox(props) {
@@ -30,10 +30,14 @@ function ReduxCheckbox(props) {
   } = props;
 
   return (
-    <FormGroup controlId={input.name} validationState={touched && error ? 'error' : null}>
-      <Checkbox {...input} {...extraProps}>
-        {label}
-      </Checkbox>
+    <FormGroup fieldId={input.name} validated={touched && error ? 'error' : null}>
+      <Checkbox
+        isChecked={!!input.value}
+        id={input.name}
+        {...input}
+        {...extraProps}
+        label={label}
+      />
     </FormGroup>
   );
 }

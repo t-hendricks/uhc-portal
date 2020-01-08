@@ -45,6 +45,7 @@ describe('CreateOSDCluster', () => {
       machineTypes={fulfilledRequest}
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
+      hasStandardQuota
     />);
   });
 

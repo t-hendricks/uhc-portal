@@ -12,6 +12,7 @@ exports[`<SubscriptionCompliancy /> should render 1`] = `
     this cluster in the 
     <a
       href="https://access.redhat.com/management/systems"
+      rel="noreferrer noopener"
       target="_blank"
     >
       Red Hat Customer Portal
@@ -19,6 +20,7 @@ exports[`<SubscriptionCompliancy /> should render 1`] = `
      and attach subscription(s) that covers the current size of this cluster. You may need to 
     <a
       href="https://www.redhat.com/en/contact"
+      rel="noreferrer noopener"
       target="_blank"
     >
       contact sales

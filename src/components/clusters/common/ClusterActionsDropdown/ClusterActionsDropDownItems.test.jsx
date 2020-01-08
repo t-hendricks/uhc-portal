@@ -1,14 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { DropdownItem } from '@patternfly/react-core';
 
-import dropDownItems from './ClusterActionsDropdownItems';
+import { dropDownItems } from './ClusterActionsDropdownItems';
 import * as Fixtures from './ClusterActionsDropdown.fixtures';
 
 function DropDownItemsRenderHelper(props) {
   return (
-    <React.Fragment>
+    <>
       {dropDownItems(props).map(item => item)}
-    </React.Fragment>);
+    </>
+  );
 }
 
 describe('Cluster Actions Dropdown Items', () => {
@@ -23,25 +25,25 @@ describe('Cluster Actions Dropdown Items', () => {
     });
 
     it('should open edit display name modal', () => {
-      wrapper.find('DropdownItem').at(1).simulate('click');
+      wrapper.find(DropdownItem).at(1).simulate('click');
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-display-name', Fixtures.cluster);
     });
 
     it('should open edit cluster modal', () => {
-      wrapper.find('DropdownItem').at(2).simulate('click');
+      wrapper.find(DropdownItem).at(2).simulate('click');
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-cluster', Fixtures.cluster);
     });
 
     it('should open delete modal', () => {
-      wrapper.find('DropdownItem').at(3).simulate('click');
+      wrapper.find(DropdownItem).at(3).simulate('click');
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('delete-cluster', Fixtures.deleteModalData);
     });
 
     it('menu buttons should be enabled', () => {
-      const launchConsoleDisabled = wrapper.find('DropdownItem').at(0).props().isDisabled;
-      const editDisplayNameDisabled = wrapper.find('DropdownItem').at(1).props().isDisabled;
-      const editDisabled = wrapper.find('DropdownItem').at(2).props().isDisabled;
-      const deleteDisabled = wrapper.find('DropdownItem').at(3).props().isDisabled;
+      const launchConsoleDisabled = wrapper.find(DropdownItem).at(0).props().isDisabled;
+      const editDisplayNameDisabled = wrapper.find(DropdownItem).at(1).props().isDisabled;
+      const editDisabled = wrapper.find(DropdownItem).at(2).props().isDisabled;
+      const deleteDisabled = wrapper.find(DropdownItem).at(3).props().isDisabled;
       expect(launchConsoleDisabled).toBeFalsy();
       expect(editDisplayNameDisabled).toBeFalsy();
       expect(editDisabled).toBeFalsy();
@@ -57,10 +59,10 @@ describe('Cluster Actions Dropdown Items', () => {
     });
 
     it('menu buttons should be disabled', () => {
-      const launchConsoleDisabled = wrapper.find('DropdownItem').at(0).props().isDisabled;
-      const editDisplayNameDisabled = wrapper.find('DropdownItem').at(1).props().isDisabled;
-      const editDisabled = wrapper.find('DropdownItem').at(2).props().isDisabled;
-      const deleteDisabled = wrapper.find('DropdownItem').at(3).props().isDisabled;
+      const launchConsoleDisabled = wrapper.find(DropdownItem).at(0).props().isDisabled;
+      const editDisplayNameDisabled = wrapper.find(DropdownItem).at(1).props().isDisabled;
+      const editDisabled = wrapper.find(DropdownItem).at(2).props().isDisabled;
+      const deleteDisabled = wrapper.find(DropdownItem).at(3).props().isDisabled;
       expect(launchConsoleDisabled).toEqual(true);
       expect(editDisplayNameDisabled).toEqual(true);
       expect(editDisabled).toEqual(true);
@@ -76,10 +78,10 @@ describe('Cluster Actions Dropdown Items', () => {
     });
 
     it('disable launch console & edit cluster, enable edit display name and delete cluster', () => {
-      const launchConsoleDisabled = wrapper.find('DropdownItem').at(0).props().isDisabled;
-      const editDisplayNameDisabled = wrapper.find('DropdownItem').at(1).props().isDisabled;
-      const editDisabled = wrapper.find('DropdownItem').at(2).props().isDisabled;
-      const deleteDisabled = wrapper.find('DropdownItem').at(3).props().isDisabled;
+      const launchConsoleDisabled = wrapper.find(DropdownItem).at(0).props().isDisabled;
+      const editDisplayNameDisabled = wrapper.find(DropdownItem).at(1).props().isDisabled;
+      const editDisabled = wrapper.find(DropdownItem).at(2).props().isDisabled;
+      const deleteDisabled = wrapper.find(DropdownItem).at(3).props().isDisabled;
       expect(launchConsoleDisabled).toEqual(true);
       expect(editDisplayNameDisabled).toBeFalsy();
       expect(editDisabled).toEqual(true);

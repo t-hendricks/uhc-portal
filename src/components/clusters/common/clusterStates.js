@@ -1,58 +1,40 @@
-import { getTimeDelta } from '../../../common/helpers';
+import get from 'lodash/get';
+import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 
 const clusterStates = {
   PENDING: 'pending',
   INSTALLING: 'installing',
-  ERROR: 'error',
+  UPDATING: 'updating',
   READY: 'ready',
   UNINSTALLING: 'uninstalling',
-  PATCHING: 'patching',
-  UNKNOWN: 'unknown',
-  WARNING: 'warning',
-  STALE: 'stale',
-  LONG_STALE: 'long stale',
-  DISCONNECTED: 'Disconnected',
+  DISCONNECTED: 'disconnected',
+  ERROR: 'error',
 };
 
 function getClusterStateAndDescription(cluster) {
-  if ((cluster.state === clusterStates.INSTALLING
-      || cluster.state === clusterStates.PENDING)
-      && getTimeDelta(new Date(cluster.creation_timestamp)) > 2) {
-    return {
-      state: clusterStates.WARNING,
-      description: 'Installation is taking longer than expected',
-      style: undefined,
-    };
-  }
-  if (cluster.state === clusterStates.READY) {
-    const { cpu, memory, storage } = cluster.metrics;
-    const cpuLastActive = getTimeDelta(new Date(cpu.updated_timestamp));
-    const memoryLastActive = getTimeDelta(new Date(memory.updated_timestamp));
-    const storageLastActive = getTimeDelta(new Date(storage.updated_timestamp));
-    const creationDelta = getTimeDelta(new Date(cluster.creation_timestamp));
-    const lastActive = Math.min(cpuLastActive, memoryLastActive, storageLastActive, creationDelta);
+  let state;
 
-    if (!cluster.managed) {
-      if (lastActive > 24 * 7) {
-        return {
-          state: clusterStates.LONG_STALE,
-          description: 'No metrics sent during the last week',
-          style: undefined,
-        };
-      }
-      if (lastActive > 24) {
-        return {
-          state: clusterStates.STALE,
-          description: 'No metrics sent during the last 24 hours',
-          style: undefined,
-        };
-      }
+  if ((cluster.state === clusterStates.INSTALLING
+      || cluster.state === clusterStates.PENDING)) {
+    state = clusterStates.INSTALLING;
+  } else if (get(cluster, 'metrics.upgrade.state') === 'running') {
+    state = clusterStates.UPDATING;
+  } else if (cluster.state === clusterStates.READY) {
+    if (!cluster.managed
+      && cluster.subscription.status === subscriptionStatuses.DISCONNECTED) {
+      state = clusterStates.DISCONNECTED;
+    } else {
+      state = clusterStates.READY;
     }
+  } else if (cluster.state === clusterStates.UNINSTALLING) {
+    state = clusterStates.UNINSTALLING;
+  } else if (cluster.state === clusterStates.ERROR) {
+    state = clusterStates.ERROR;
   }
 
   return {
-    state: cluster.state,
-    description: cluster.state,
+    state,
+    description: state,
     style: { textTransform: 'capitalize' },
   };
 }

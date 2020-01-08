@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, FormGroup } from '@patternfly/react-core';
-
-import { ControlLabel } from 'patternfly-react';
+import {
+  Form, FormGroup, Alert,
+} from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
 
@@ -15,6 +15,21 @@ import LoadBalancersComboBox from '../../CreateOSDCluster/components/LoadBalance
 
 
 class EditClusterDialog extends Component {
+  componentDidMount() {
+    const {
+      persistentStorageValues,
+      loadBalancerValues,
+      getLoadBalancers,
+      getPersistentStorage,
+    } = this.props;
+    if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
+      getPersistentStorage();
+    }
+    if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
+      getLoadBalancers();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const {
       editClusterResponse,
@@ -30,7 +45,7 @@ class EditClusterDialog extends Component {
       if (prevProps.initialFormValues.id !== initialFormValues.id) {
         change('id', initialFormValues.id);
         change('nodes_compute', initialFormValues.nodesCompute);
-        change('persistent_storage', initialFormValues.persistent_storage.value);
+        change('persistent_storage', initialFormValues.persistent_storage);
         change('load_balancers', initialFormValues.load_balancers);
       }
     }
@@ -59,9 +74,12 @@ class EditClusterDialog extends Component {
       resetResponse,
       min,
       isMultiAz,
+      consoleURL,
+      showLoadBalancerAlert,
+      showPersistentStorageAlert,
+      persistentStorageValues,
+      loadBalancerValues,
     } = this.props;
-
-    const { pending } = editClusterResponse;
 
     const cancelEdit = () => {
       resetResponse();
@@ -71,6 +89,29 @@ class EditClusterDialog extends Component {
     const error = editClusterResponse.error ? (
       <ErrorBox message="Error editing cluster" response={editClusterResponse} />
     ) : null;
+
+    const usageLink = consoleURL
+      ? <a href={`${consoleURL}/k8s/ns/default/resourcequotas`} target="_blank" rel="noopener noreferrer">Check your usage</a> : 'Check your usage';
+
+    const scalingAlert = (
+      <Alert
+        variant="warning"
+        isInline
+        title="Scaling below the current limit can cause problems in your environment"
+      >
+        <div>
+          <p>
+            {usageLink}
+            {' '}
+before proceeding to be sure you are not
+            scaling below what is currently being used.
+          </p>
+        </div>
+      </Alert>
+    );
+
+    const pending = loadBalancerValues.pending || persistentStorageValues.pending
+     || editClusterResponse.pending;
 
     return isOpen && (
       <Modal
@@ -83,13 +124,13 @@ class EditClusterDialog extends Component {
         isPrimaryDisabled={pending}
         isPending={pending}
       >
-        <React.Fragment>
+        <>
           {error}
           <Form onSubmit={handleSubmit}>
             <Field
               component={ReduxVerticalFormGroup}
-              name="nodes_compute"
               label="Compute nodes"
+              name="nodes_compute"
               inputMode="numeric"
               validate={isMultiAz ? [this.validateNodes, validators.nodesMultiAz]
                 : this.validateNodes}
@@ -97,10 +138,8 @@ class EditClusterDialog extends Component {
             />
             <FormGroup
               fieldId="load_balancers"
+              label="Load balancers"
             >
-              <ControlLabel>
-                Load Balancers
-              </ControlLabel>
               <Field
                 label="Load Balancers"
                 name="load_balancers"
@@ -108,12 +147,11 @@ class EditClusterDialog extends Component {
                 disabled={pending}
               />
             </FormGroup>
+            {showLoadBalancerAlert && scalingAlert}
             <FormGroup
               fieldId="persistent_storage"
+              label="Persistent storage"
             >
-              <ControlLabel>
-                Persistent Storage
-              </ControlLabel>
               <Field
                 label="Persistent Storage"
                 name="persistent_storage"
@@ -121,8 +159,9 @@ class EditClusterDialog extends Component {
                 disabled={pending}
               />
             </FormGroup>
+            {showPersistentStorageAlert && scalingAlert}
           </Form>
-        </React.Fragment>
+        </>
       </Modal>
     );
   }
@@ -141,10 +180,19 @@ EditClusterDialog.propTypes = {
     validationMsg: PropTypes.string,
   }).isRequired,
   isMultiAz: PropTypes.bool,
+  consoleURL: PropTypes.string,
   initialFormValues: PropTypes.shape({
     id: PropTypes.string,
     nodesCompute: PropTypes.number,
+    persistent_storage: PropTypes.string,
+    load_balancers: PropTypes.string,
   }).isRequired,
+  showLoadBalancerAlert: PropTypes.bool,
+  showPersistentStorageAlert: PropTypes.bool,
+  getLoadBalancers: PropTypes.func.isRequired,
+  getPersistentStorage: PropTypes.func.isRequired,
+  persistentStorageValues: PropTypes.object.isRequired,
+  loadBalancerValues: PropTypes.object.isRequired,
 };
 
 EditClusterDialog.defaultProps = {

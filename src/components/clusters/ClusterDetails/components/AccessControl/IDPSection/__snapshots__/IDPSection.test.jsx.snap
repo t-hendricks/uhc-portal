@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<IDPSection /> should render (IDPs pending) 1`] = `
+<Card>
+  <CardHeader>
+    <Skeleton
+      isDark={false}
+      size="md"
+    />
+  </CardHeader>
+  <CardBody>
+    <Skeleton
+      isDark={false}
+      size="lg"
+    />
+  </CardBody>
+  <CardFooter>
+    <Skeleton
+      isDark={false}
+      size="md"
+    />
+  </CardFooter>
+</Card>
+`;
+
+exports[`<IDPSection /> should render (no IDPs) 1`] = `
+<Card>
+  <CardBody>
+    <Title
+      headingLevel="h3"
+      size="lg"
+    >
+      Identity Providers
+    </Title>
+    <p>
+      Configure identity providers to allow users to log into the cluster.
+       
+      <a
+        href="https://docs.openshift.com/container-platform/4.2/authentication/understanding-identity-provider.html"
+        rel="noopener noreferrer"
+      >
+        Learn more.
+      </a>
+    </p>
+    <Component
+      actions={Array []}
+      aria-label="Identity Providers"
+      cells={
+        Array [
+          "Name",
+          "Type",
+        ]
+      }
+      rows={
+        Array [
+          Object {
+            "cells": Array [
+              Object {
+                "props": Object {
+                  "colSpan": 2,
+                },
+                "title": <Bullseye>
+                  <EmptyState
+                    variant="small"
+                  >
+                    <Title
+                      headingLevel="h2"
+                      size="lg"
+                    >
+                      No Identity Providers Exist
+                    </Title>
+                    <EmptyStateBody>
+                      Identity providers determine how users log into the cluster.
+                       
+                      <a
+                        href="https://docs.openshift.com/container-platform/4.2/authentication/understanding-identity-provider.html"
+                        rel="noopener noreferrer"
+                      >
+                        Learn more.
+                      </a>
+                    </EmptyStateBody>
+                  </EmptyState>
+                </Bullseye>,
+              },
+            ],
+            "heightAuto": true,
+          },
+        ]
+      }
+      variant="compact"
+    >
+      <TableHeader />
+      <TableBody />
+    </Component>
+    <Component
+      className="add-idp-button"
+      onClick={[Function]}
+      variant="secondary"
+    >
+      Add identity provider
+    </Component>
+  </CardBody>
+</Card>
+`;
+
+exports[`<IDPSection /> should render (with IDPs) 1`] = `
+<Card>
+  <CardBody>
+    <Title
+      headingLevel="h3"
+      size="lg"
+    >
+      Identity Providers
+    </Title>
+    <p>
+      Configure identity providers to allow users to log into the cluster.
+       
+      <a
+        href="https://docs.openshift.com/container-platform/4.2/authentication/understanding-identity-provider.html"
+        rel="noopener noreferrer"
+      >
+        Learn more.
+      </a>
+    </p>
+    <Component
+      actions={
+        Array [
+          Object {
+            "onClick": [Function],
+            "title": "Delete",
+          },
+        ]
+      }
+      aria-label="Identity Providers"
+      cells={
+        Array [
+          "Name",
+          "Type",
+        ]
+      }
+      rows={
+        Array [
+          Object {
+            "cells": Array [
+              "hello",
+              "GitHub",
+            ],
+            "idpID": "id",
+          },
+          Object {
+            "cells": Array [
+              "hi",
+              "Google",
+            ],
+            "idpID": "id",
+          },
+        ]
+      }
+      variant="compact"
+    >
+      <TableHeader />
+      <TableBody />
+    </Component>
+    <Component
+      className="add-idp-button"
+      onClick={[Function]}
+      variant="secondary"
+    >
+      Add identity provider
+    </Component>
+  </CardBody>
+</Card>
+`;

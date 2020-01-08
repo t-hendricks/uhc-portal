@@ -31,12 +31,12 @@ class InstallCRC extends Component {
       />
     );
     return (
-      <React.Fragment>
+      <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection className="ocp-instructions">
           <InstructionsCRC token={token} />
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

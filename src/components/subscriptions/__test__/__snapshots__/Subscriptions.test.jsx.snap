@@ -282,6 +282,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard Empty should render empty OSD quo
       <p>
         <a
           href="https://www.openshift.com/products/dedicated/contact/"
+          rel="noreferrer noopener"
           target="_blank"
         >
           Contact sales

@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import {
   Dropdown, DropdownToggle, KebabToggle, DropdownPosition,
 } from '@patternfly/react-core';
-import dropdownItems from './ClusterActionsDropdownItems';
+import { dropDownItems } from './ClusterActionsDropdownItems';
 
 class ClusterActionsDropdown extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isOpen: false,
-    };
     this.onToggle = (isOpen) => {
       this.setState({
         isOpen,
@@ -23,14 +20,15 @@ class ClusterActionsDropdown extends React.Component {
     };
   }
 
+  state = {
+    isOpen: false,
+  }
+
   render() {
     const {
       cluster,
       showConsoleButton,
-      showIDPButton,
       openModal,
-      hasIDP,
-      idpID,
       isKebab,
       disabled,
     } = this.props;
@@ -41,10 +39,9 @@ class ClusterActionsDropdown extends React.Component {
       ? <KebabToggle isDisabled={disabled} onToggle={this.onToggle} />
       : <DropdownToggle isDisabled={disabled} onToggle={this.onToggle}>Actions</DropdownToggle>;
 
-    const menuItems = dropdownItems({
-      cluster, showConsoleButton, showIDPButton, openModal, hasIDP, idpID,
+    const menuItems = dropDownItems({
+      cluster, showConsoleButton, openModal,
     });
-
     return (
       <Dropdown
         position={DropdownPosition.right}
@@ -60,10 +57,7 @@ class ClusterActionsDropdown extends React.Component {
 
 ClusterActionsDropdown.propTypes = {
   cluster: PropTypes.object.isRequired,
-  hasIDP: PropTypes.bool,
-  idpID: PropTypes.string,
   showConsoleButton: PropTypes.bool.isRequired,
-  showIDPButton: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   isKebab: PropTypes.bool,
   disabled: PropTypes.bool,

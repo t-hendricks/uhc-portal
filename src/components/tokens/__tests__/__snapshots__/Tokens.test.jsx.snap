@@ -13,16 +13,19 @@ exports[`<Tokens /> Renders loading screen 1`] = `
     >
       <CardHeader>
         <Skeleton
+          isDark={false}
           size="md"
         />
       </CardHeader>
       <CardBody>
         <Skeleton
+          isDark={false}
           size="lg"
         />
       </CardBody>
       <CardFooter>
         <Skeleton
+          isDark={false}
           size="sm"
         />
       </CardFooter>

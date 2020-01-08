@@ -4,12 +4,17 @@
       "href": "/api/clusters_mgmt/v1/clusters/fakeclusterid",
       "name": "fake-managed-cluster-2",
       "external_id": "b0c2d108-0603-41c3-9a8f-fake",
-      "display_name": "fake-managed-cluster",
+      "display_name": "fake-managed-cluster-2",
       "creation_timestamp": "2019-02-11T09:28:16.000143Z",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "subscription": {
+        "kind": "SubscriptionLink",
+        "id": "1Uk0VXX16bIDuBwpkBBkY9VCb3i",
+        "href": "/api/accounts_mgmt/v1/subscriptions/1Uk0VXX16bIDuBwpkBBkY9VCb3i"
       },
       "region": {
         "kind": "CloudRegionLink",

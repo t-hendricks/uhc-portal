@@ -28,15 +28,16 @@ class InstallGCP extends Component {
         { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Google Cloud Platform' },
       ]}
-      />);
+      />
+    );
 
     return (
-      <React.Fragment>
+      <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection className="ocp-instructions">
           <InstructionsGCP token={token} />
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

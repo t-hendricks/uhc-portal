@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
+import get from 'lodash/get';
+
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
@@ -8,37 +10,46 @@ import getLoadBalancerValues from '../../../redux/actions/loadBalancerActions';
 import getPersistentStorageValues from '../../../redux/actions/persistentStorageActions';
 import CreateOSDCluster from './CreateOSDCluster';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
-import { openModal } from '../../common/Modal/ModalActions';
+import { openModal, closeModal } from '../../common/Modal/ModalActions';
 
 const reduxFormConfig = {
   form: 'CreateCluster',
 };
 const reduxFormCreateCluster = reduxForm(reduxFormConfig)(CreateOSDCluster);
 
-const mapStateToProps = state => ({
-  createClusterResponse: state.clusters.createdCluster,
-  machineTypes: state.machineTypes,
-  organization: state.userProfile.organization,
-  cloudProviders: state.cloudProviders.cloudProviders,
-  loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
-  persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
-  isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
-  initialValues: {
-    name: '',
-    nodes_compute: '4',
-    dns_base_domain: '',
-    aws_access_key_id: '',
-    aws_secret_access_key: '',
-    region: 'us-east-1',
-    multi_az: false,
-    persistent_storage: '107374182400', // The default storage to 100 GiB (in bytes).
-    load_balancers: '0',
-  },
-});
+const mapStateToProps = (state) => {
+  const { organization } = state.userProfile;
+
+  return ({
+    createClusterResponse: state.clusters.createdCluster,
+    machineTypes: state.machineTypes,
+    organization,
+    cloudProviders: state.cloudProviders.cloudProviders,
+    loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
+    persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
+    isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
+    isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
+    hasBYOCQuota: get(organization, 'quotaList.nodeQuota.byoc.available', 0) > 0,
+    hasStandardQuota: get(organization, 'quotaList.nodeQuota.rhInfra.available', 0) > 0,
+    initialValues: {
+      byoc: 'false',
+      name: '',
+      nodes_compute: '4',
+      dns_base_domain: '',
+      aws_access_key_id: '',
+      aws_secret_access_key: '',
+      region: 'us-east-1',
+      multi_az: false,
+      persistent_storage: '107374182400',
+      load_balancers: '0',
+    },
+  });
+};
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: (formData) => {
     const clusterRequest = {
+      byoc: formData.byoc === 'true',
       name: formData.name,
       region: {
         id: formData.region,
@@ -67,11 +78,19 @@ const mapDispatchToProps = dispatch => ({
       },
     };
 
+    if (formData.byoc === 'true') {
+      clusterRequest.aws = {
+        access_key_id: formData.access_key_id,
+        account_id: formData.account_id,
+        secret_access_key: formData.secret_access_key,
+      };
+    }
     dispatch(createCluster(clusterRequest));
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
   openModal: (modalName) => { dispatch(openModal(modalName)); },
+  closeModal: () => { dispatch(closeModal()); },
   getOrganizationAndQuota,
   getMachineTypes,
   getCloudProviders,

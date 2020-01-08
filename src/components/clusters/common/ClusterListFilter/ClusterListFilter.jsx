@@ -5,15 +5,16 @@ import PropTypes from 'prop-types';
 class ClusterListFilter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // The current input value is in the local state, while the currently
-      // set filter is in the redux state.
-      // This is done to allow some delay between the user's input and
-      // the actual filtering, to give them time to finish typing.
-      currentValue: '',
-    };
     this.updateFilter = this.updateFilter.bind(this);
     this.inputTimeoutID = null;
+  }
+
+  state = {
+    // The current input value is in the local state, while the currently
+    // set filter is in the redux state.
+    // This is done to allow some delay between the user's input and
+    // the actual filtering, to give them time to finish typing.
+    currentValue: '',
   }
 
   componentDidMount() {
@@ -39,6 +40,7 @@ class ClusterListFilter extends React.Component {
 
   render() {
     const { currentValue } = this.state;
+    const { isDisabled } = this.props;
     return (
       <TextInput
         type="text"
@@ -47,6 +49,7 @@ class ClusterListFilter extends React.Component {
         value={currentValue}
         placeholder="Filter by name or ID..."
         onChange={value => this.updateCurrentValue(value)}
+        isDisabled={isDisabled}
       />
     );
   }
@@ -55,6 +58,7 @@ class ClusterListFilter extends React.Component {
 ClusterListFilter.propTypes = {
   currentFilter: PropTypes.string.isRequired,
   setFilter: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 export default ClusterListFilter;

@@ -15,20 +15,35 @@ import {
   Split,
   SplitItem,
   PageSection,
+  EmptyState,
+  Stack,
+  StackItem,
 } from '@patternfly/react-core';
 
 import PageTitle from '../../common/PageTitle';
 import ErrorModal from '../../common/ErrorModal';
-import constants from './CreateOSDClusterHelper';
+import ErrorBox from '../../common/ErrorBox';
+import { constants } from './CreateOSDClusterHelper';
 import CreateOSDClusterForm from './components/CreateOSDClusterForm';
 
+
 class CreateOSDCluster extends React.Component {
+  state = {
+    hasShownBYOCModal: false,
+  }
+
   componentDidMount() {
     const {
-      machineTypes, organization, cloudProviders,
-      persistentStorageValues, loadBalancerValues,
-      getMachineTypes, getOrganizationAndQuota, getCloudProviders,
-      getLoadBalancers, getPersistentStorage,
+      machineTypes,
+      organization,
+      cloudProviders,
+      persistentStorageValues,
+      loadBalancerValues,
+      getMachineTypes,
+      getOrganizationAndQuota,
+      getCloudProviders,
+      getLoadBalancers,
+      getPersistentStorage,
     } = this.props;
 
     this.reset();
@@ -49,10 +64,23 @@ class CreateOSDCluster extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    const { createClusterResponse, openModal, isErrorModalOpen } = this.props;
+  componentDidUpdate(prevProps) {
+    const { hasShownBYOCModal } = this.state;
+
+    const {
+      createClusterResponse, isErrorModalOpen, hasStandardQuota, hasBYOCQuota, openModal, change,
+    } = this.props;
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
+    }
+    // if user has only BYOC quota
+    if (!prevProps.isBYOCModalOpen && !hasStandardQuota && hasBYOCQuota && !hasShownBYOCModal) {
+      // open BYOC modal
+      openModal('customer-cloud-subscription');
+      // set byoc field value to true
+      change('byoc', 'true');
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ hasShownBYOCModal: true });
     }
   }
 
@@ -80,6 +108,11 @@ class CreateOSDCluster extends React.Component {
       persistentStorageValues,
       isErrorModalOpen,
       resetResponse,
+      hasBYOCQuota,
+      hasStandardQuota,
+      isBYOCModalOpen,
+      openModal,
+      closeModal,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -96,9 +129,30 @@ class CreateOSDCluster extends React.Component {
       />
     );
 
-    const requests = [machineTypes, organization,
-      cloudProviders, loadBalancerValues, persistentStorageValues];
-    const anyRequestPending = requests.some(request => request.pending);
+    const requests = [
+      {
+        data: machineTypes,
+        name: 'Machine Types',
+      },
+      {
+        data: organization,
+        name: 'Organization & Quota',
+      },
+      {
+        data: cloudProviders,
+        name: 'Providers & Regions',
+      },
+      {
+        data: loadBalancerValues,
+        name: 'Load Balancers',
+      },
+      {
+        data: persistentStorageValues,
+        name: 'Storage options',
+      },
+    ];
+    const anyRequestPending = requests.some(request => request.data.pending);
+    const anyErrors = requests.some(request => request.data.error);
 
     const title = (
       <PageTitle
@@ -134,17 +188,45 @@ class CreateOSDCluster extends React.Component {
 
     if (anyRequestPending) {
       return (
-        <React.Fragment>
+        <>
           {title}
           <PageSection>
             <Spinner centered />
           </PageSection>
-        </React.Fragment>
+        </>
+      );
+    }
+
+    if (!hasBYOCQuota && !hasStandardQuota && organization.fulfilled) {
+      return (
+        <Redirect to="/create" />
+      );
+    }
+
+    if (anyErrors) {
+      return (
+        <>
+          {title}
+          <PageSection>
+            <EmptyState variant="full">
+              <Stack gutter="md">
+                { requests.map(request => request.data.error && (
+                  <StackItem key={request.name}>
+                    <ErrorBox
+                      message={`Error while loading required form data (${request.name})`}
+                      response={request.data}
+                    />
+                  </StackItem>
+                ))}
+              </Stack>
+            </EmptyState>
+          </PageSection>
+        </>
       );
     }
 
     return (
-      <React.Fragment>
+      <>
         {title}
         <PageSection>
           <Card>
@@ -155,6 +237,11 @@ class CreateOSDCluster extends React.Component {
                   <CreateOSDClusterForm
                     pending={createClusterResponse.pending}
                     change={change}
+                    hasBYOCQuota={hasBYOCQuota}
+                    hasStandardQuota={hasStandardQuota}
+                    isBYOCModalOpen={isBYOCModalOpen}
+                    openModal={openModal}
+                    closeModal={closeModal}
                   />
                   <GridItem>
                     <Split gutter="sm" className="create-osd-form-button-split">
@@ -180,13 +267,18 @@ class CreateOSDCluster extends React.Component {
             </div>
           </Card>
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }
+
 CreateOSDCluster.propTypes = {
   isErrorModalOpen: PropTypes.bool,
-  openModal: PropTypes.func,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  hasBYOCQuota: PropTypes.bool,
+  hasStandardQuota: PropTypes.bool.isRequired,
+  isBYOCModalOpen: PropTypes.bool.isRequired,
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,

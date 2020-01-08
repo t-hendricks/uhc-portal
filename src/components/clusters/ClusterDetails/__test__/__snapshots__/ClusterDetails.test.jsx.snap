@@ -170,15 +170,20 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
     refreshFunc={[Function]}
   >
     <TabsRow
+      accessControlTabRef={
+        Object {
+          "current": null,
+        }
+      }
       addOnsTabRef={
         Object {
           "current": null,
         }
       }
+      displayAccessControlTab={true}
       displayAddOnsTab={false}
       displayLogs={false}
       displayMonitoringTab={true}
-      displayUsersTab={true}
       logsTabRef={
         Object {
           "current": null,
@@ -190,11 +195,6 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
         }
       }
       overviewTabRef={
-        Object {
-          "current": null,
-        }
-      }
-      usersTabRef={
         Object {
           "current": null,
         }
@@ -675,12 +675,12 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
     />
   </ForwardRef>
   <ForwardRef
-    aria-label="Users"
+    aria-label="Access Control"
     eventKey={2}
     hidden={true}
-    id="usersTabContent"
+    id="accessControlTabContent"
   >
-    <Connect(Users)
+    <AccessControl
       clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
     />
   </ForwardRef>
@@ -704,10 +704,11 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   />
   <Connect(ReduxForm)
     clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
-    onClose={[Function]}
+    clusterName="test-liza"
+    refreshParent={[Function]}
   />
   <Connect(DeleteIDPDialog)
-    onClose={[Function]}
+    refreshParent={[Function]}
   />
 </PageSection>
 `;

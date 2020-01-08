@@ -5,16 +5,17 @@ import {
   FormGroup,
   GridItem,
 } from '@patternfly/react-core';
-import PopoverHint from '../../../common/PopoverHint';
-import ReduxVerticalFormGroupPF4 from '../../../common/ReduxFormComponents/ReduxVerticalFormGroupPF4';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import MachineTypeSelection from './MachineTypeSelection';
-import validators, { required } from '../../../../common/validators';
-import minValueSelector from '../../common/EditClusterDialog/EditClusterSelectors';
-import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
-import constants from '../CreateOSDClusterHelper';
 import PersistentStorageComboBox from './PersistentStorageComboBox';
 import LoadBalancersComboBox from './LoadBalancersComboBox';
+import { constants } from '../CreateOSDClusterHelper';
+
+import PopoverHint from '../../../common/PopoverHint';
+import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import validators, { required } from '../../../../common/validators';
+import { minValueSelector } from '../../common/EditClusterDialog/EditClusterSelectors';
+import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
 
 class BasicFields extends React.Component {
   state = {
@@ -43,21 +44,17 @@ class BasicFields extends React.Component {
 
   render() {
     const {
-      pending, showDNSBaseDomain,
+      pending, showDNSBaseDomain, isBYOC,
     } = this.props;
     const { isMultiAz } = this.state;
     const min = minValueSelector(isMultiAz);
 
     return (
-      <React.Fragment>
-        <GridItem span={12}>
-          <h3 className="osd-page-header">Cluster Details</h3>
-        </GridItem>
-
+      <>
         {/* cluster name */}
         <GridItem span={4}>
           <Field
-            component={ReduxVerticalFormGroupPF4}
+            component={ReduxVerticalFormGroup}
             name="name"
             label="Cluster name"
             type="text"
@@ -71,10 +68,10 @@ class BasicFields extends React.Component {
 
         {/* Base DNS domain */}
         {showDNSBaseDomain && (
-          <React.Fragment>
+          <>
             <GridItem span={4}>
               <Field
-                component={ReduxVerticalFormGroupPF4}
+                component={ReduxVerticalFormGroup}
                 name="dns_base_domain"
                 label="Base DNS domain"
                 type="text"
@@ -84,7 +81,7 @@ class BasicFields extends React.Component {
               />
             </GridItem>
             <GridItem span={8} />
-          </React.Fragment>
+          </>
         )}
 
         {/* Region */}
@@ -99,7 +96,6 @@ class BasicFields extends React.Component {
               component={CloudRegionComboBox}
               name="region"
               cloudProviderID="aws"
-              validate={required}
               disabled={pending}
               isRequired
             />
@@ -149,6 +145,7 @@ class BasicFields extends React.Component {
               validate={required}
               disabled={pending}
               isMultiAz={isMultiAz}
+              isBYOC={isBYOC}
             />
           </FormGroup>
         </GridItem>
@@ -156,7 +153,7 @@ class BasicFields extends React.Component {
         {/* Compute nodes */}
         <GridItem span={4}>
           <Field
-            component={ReduxVerticalFormGroupPF4}
+            component={ReduxVerticalFormGroup}
             name="nodes_compute"
             label="Compute node count"
             inputMode="numeric"
@@ -180,7 +177,6 @@ class BasicFields extends React.Component {
             <Field
               name="persistent_storage"
               component={PersistentStorageComboBox}
-              validate={required}
               disabled={pending}
             />
           </FormGroup>
@@ -197,13 +193,11 @@ class BasicFields extends React.Component {
             <Field
               name="load_balancers"
               component={LoadBalancersComboBox}
-              validate={required}
               disabled={pending}
             />
           </FormGroup>
         </GridItem>
-
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -212,6 +206,7 @@ BasicFields.propTypes = {
   change: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   showDNSBaseDomain: PropTypes.bool,
+  isBYOC: PropTypes.bool.isRequired,
 };
 
 export default BasicFields;

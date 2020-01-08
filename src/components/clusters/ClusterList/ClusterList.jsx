@@ -51,7 +51,7 @@ import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDial
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
-import helpers from '../../../common/helpers';
+import helpers, { scrollToTop } from '../../../common/helpers';
 import { viewConstants } from '../../../redux/constants';
 
 const getQueryParam = (param) => {
@@ -78,6 +78,8 @@ class ClusterList extends Component {
     const {
       getCloudProviders, cloudProviders, organization, getOrganizationAndQuota, setListFlag,
     } = this.props;
+
+    scrollToTop();
 
     const entitelmentStatusFilter = getQueryParam('entitlement_status') || '';
     const planIDFilter = getQueryParam('plan_id') || '';
@@ -146,42 +148,33 @@ class ClusterList extends Component {
 
     if (error && !size(clusters)) {
       return (
-        <PageSection>
-          <EmptyState>
-            <ErrorBox
-              message="Error retrieving clusters"
-              response={{
-                errorMessage,
-                operationID,
-              }}
-            />
-          </EmptyState>
-        </PageSection>);
+        <>
+          {pageHeader}
+          <PageSection>
+            <EmptyState>
+              <ErrorBox
+                message="Error retrieving clusters"
+                response={{
+                  errorMessage,
+                  operationID,
+                }}
+              />
+            </EmptyState>
+          </PageSection>
+        </>
+      );
     }
 
     const hasNoFilters = isEmpty(viewOptions.filter)
     && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
 
-    if ((!size(clusters) && pending && (hasNoFilters || !valid))
-    || (!organization.fulfilled && !organization.error)) {
-      return (
-        <React.Fragment>
-          {pageHeader}
-          <PageSection>
-            <Card>
-              <div className="cluster-list">
-                <div className="cluster-loading-container">
-                  <Spinner centered />
-                </div>
-              </div>
-            </Card>
-          </PageSection>
-        </React.Fragment>
-      );
-    }
+    /* isPendingNoData - we're waiting for the cluster list response,
+      and we have no valid data to show. In this case we probably want to show a "Skeleton".
+    */
+    const isPendingNoData = (!size(clusters) && pending && (hasNoFilters || !valid))
+    || (!organization.fulfilled && !organization.error);
 
-    if (!size(clusters) && !pending && isEmpty(viewOptions.filter)
-        && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter)) {
+    if (!size(clusters) && !isPendingNoData && hasNoFilters) {
       return (
         <PageSection>
           <GlobalErrorBox />
@@ -191,7 +184,7 @@ class ClusterList extends Component {
     }
 
     return (
-      <React.Fragment>
+      <>
         {pageHeader}
         <PageSection>
           <Card>
@@ -199,14 +192,17 @@ class ClusterList extends Component {
               <GlobalErrorBox />
               <TableToolbar id="cluster-list-toolbar">
                 <div className="toolbar-item">
-                  <ClusterListFilter view={viewConstants.CLUSTERS_VIEW} />
+                  <ClusterListFilter
+                    isDisabled={isPendingNoData}
+                    view={viewConstants.CLUSTERS_VIEW}
+                  />
                 </div>
-                <ClusterListFilterDropdown className="toolbar-item" history={history} />
+                <ClusterListFilterDropdown isDisabled={isPendingNoData} className="toolbar-item" history={history} />
                 <Link to="/create">
                   <Button className="toolbar-item">Create Cluster</Button>
                 </Link>
                 <ClusterListExtraActions className="toolbar-item" />
-                { pending && (
+                { (pending && !isPendingNoData) && (
                   <Spinner className="cluster-list-spinner" />
                 ) }
                 { error && (
@@ -219,21 +215,22 @@ class ClusterList extends Component {
                   totalCount={viewOptions.totalCount}
                   totalPages={viewOptions.totalPages}
                   variant="top"
+                  isDisabled={isPendingNoData}
                 />
                 <RefreshBtn
                   autoRefresh
+                  isDisabled={isPendingNoData}
                   refreshFunc={this.refresh}
                   classOptions="cluster-list-top"
                 />
               </TableToolbar>
               <ClusterListFilterChipGroup history={history} />
               <ClusterListTable
+                openModal={openModal}
                 clusters={clusters || []}
                 viewOptions={viewOptions}
                 setSorting={setSorting}
-                openDeleteClusterDialog={(modalData) => {
-                  openModal('delete-cluster', modalData);
-                }}
+                isPending={isPendingNoData}
               />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
@@ -242,6 +239,7 @@ class ClusterList extends Component {
                 totalCount={viewOptions.totalCount}
                 totalPages={viewOptions.totalPages}
                 variant="bottom"
+                isDisabled={isPendingNoData}
               />
               <EditDisplayNameDialog onClose={invalidateClusters} />
               <EditConsoleURLDialog onClose={invalidateClusters} />
@@ -257,7 +255,7 @@ class ClusterList extends Component {
             </div>
           </Card>
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

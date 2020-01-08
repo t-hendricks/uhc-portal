@@ -9,13 +9,10 @@ import { checkClusterConsoleURL } from '../../../../common/validators';
 
 
 class EditConsoleURLDialog extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      beenSet: false,
-      validFor: null,
-      currentValue: '',
-    };
+  state = {
+    beenSet: false,
+    validFor: null,
+    currentValue: '',
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,7 +81,7 @@ class EditConsoleURLDialog extends Component {
         onSecondaryClick={cancelEdit}
         isPrimaryDisabled={!!validationMessage}
       >
-        <React.Fragment>
+        <>
           {hasError}
           {!consoleURL && (
             <p>
@@ -110,7 +107,7 @@ class EditConsoleURLDialog extends Component {
               />
             </FormGroup>
           </Form>
-        </React.Fragment>
+        </>
       </Modal>
     );
   }

@@ -30,13 +30,14 @@ class GithubFormRequired extends React.Component {
       const { teamsDisabled, orgsDisabled } = this.state;
 
       return (
-        <React.Fragment>
+        <>
           <IDPBasicFields />
           <Field
             component={ReduxVerticalFormGroup}
             name="organizations"
             label="Organizations"
             type="text"
+            isRequired={!orgsDisabled}
             placeholder="comma separated, example: org1,org2,org3"
             disabled={orgsDisabled || isPending}
             helpText={orgsDisabled ? 'Cannot be used in combination with the teams field' : ''}
@@ -48,13 +49,14 @@ class GithubFormRequired extends React.Component {
             name="teams"
             label="Teams"
             type="text"
+            isRequired={!teamsDisabled}
             placeholder="comma separated, example: org1/team1,org2/team2"
             disabled={teamsDisabled || isPending}
             helpText={teamsDisabled ? 'Cannot be used in combination with the organizations field' : ''}
             onChange={(e, value) => this.toggleDisable(e, value, 'orgsDisabled')}
             validate={teamsDisabled ? noop : [github, checkGithubTeams]}
           />
-        </React.Fragment>
+        </>
       );
     }
 }

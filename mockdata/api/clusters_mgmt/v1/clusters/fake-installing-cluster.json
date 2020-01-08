@@ -11,6 +11,11 @@
     "id": "aws",
     "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
   },
+  "subscription": {
+    "kind": "SubscriptionLink",
+    "id": "1SocPJ0uqEPS1DbacFnRQbnzfKm",
+    "href": "/api/accounts_mgmt/v1/subscriptions/1MmOwBoTq1uDmcpBk0NBqJ3dXej"
+  },
   "region": {
     "kind": "CloudRegionLink",
     "id": "us-east-1",

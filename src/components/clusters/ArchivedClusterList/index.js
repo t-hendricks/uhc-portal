@@ -20,14 +20,12 @@ const mapDispatchToProps = {
 };
 
 
-const mapStateToProps = state => Object.assign(
-  {},
-  state.clusters.clusters,
-  {
-    viewOptions: state.viewOptions[viewConstants.ARCHIVED_CLUSTERS_VIEW],
-    cloudProviders: state.cloudProviders.cloudProviders,
-  },
-);
+const mapStateToProps = state => ({
+
+  ...state.clusters.clusters,
+  viewOptions: state.viewOptions[viewConstants.ARCHIVED_CLUSTERS_VIEW],
+  cloudProviders: state.cloudProviders.cloudProviders,
+});
 
 export default connect(
   mapStateToProps,

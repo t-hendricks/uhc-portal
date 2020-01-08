@@ -28,15 +28,16 @@ class InstallIBM extends Component {
         { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'IBM Z' },
       ]}
-      />);
+      />
+    );
 
     return (
-      <React.Fragment>
+      <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection className="ocp-instructions">
           <InstructionsIBM token={token} />
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

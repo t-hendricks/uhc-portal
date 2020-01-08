@@ -30,15 +30,16 @@ class InstallPreRelease extends Component {
         { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Pre-Release Builds' },
       ]}
-      />);
+      />
+    );
 
     return (
-      <React.Fragment>
+      <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection className="ocp-instructions">
           <InstructionsPreRelease token={token} />
         </PageSection>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -11,6 +11,11 @@ const baseState = {
   values: [],
 };
 
+const organizationState = {
+  fulfilled: true,
+  pending: false,
+};
+
 describe('<LoadBalancerComboBox />', () => {
   describe('when load balancer list needs to be fetched', () => {
     let getLoadBalancers;
@@ -24,6 +29,8 @@ describe('<LoadBalancerComboBox />', () => {
           loadBalancerValues={baseState}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
+          quota={{}}
+          organization={organizationState}
         />,
       );
     });
@@ -34,10 +41,6 @@ describe('<LoadBalancerComboBox />', () => {
 
     it('calls getLoadBalancers', () => {
       expect(getLoadBalancers).toBeCalled();
-    });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
     });
   });
 
@@ -59,20 +62,14 @@ describe('<LoadBalancerComboBox />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
+          quota={{}}
+          organization={organizationState}
         />,
       );
     });
 
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
-    });
-
-    it('calls getLoadBalancers on mount', () => {
-      expect(getLoadBalancers).toBeCalled();
-    });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
     });
   });
 
@@ -95,6 +92,8 @@ describe('<LoadBalancerComboBox />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
+          quota={{}}
+          organization={organizationState}
         />,
       );
     });
@@ -103,13 +102,9 @@ describe('<LoadBalancerComboBox />', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
-    });
-
     it('does not call getLoadBalancers again if request returns an error', () => {
       wrapper.setProps({
-        machineTypes: { ...state, error: true, pending: false },
+        loadBalancerValues: { ...state, error: true, pending: false },
       }, () => {
         expect(getLoadBalancers).not.toBeCalled();
       });
@@ -127,6 +122,10 @@ describe('<LoadBalancerComboBox />', () => {
         values: [0, 4, 8],
       };
 
+      const quota = {
+        loadBalancerQuota: 4,
+      };
+
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
@@ -134,16 +133,14 @@ describe('<LoadBalancerComboBox />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
+          quota={quota}
+          organization={organizationState}
         />,
       );
     });
 
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
-    });
-
-    it('does not call getLoadBalancers', () => {
-      expect(getLoadBalancers).not.toBeCalled();
     });
   });
 });

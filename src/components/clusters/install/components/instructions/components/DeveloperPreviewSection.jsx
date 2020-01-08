@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { CodeIcon } from '@patternfly/react-icons';
 
 const DeveloperPreviewSection = ({ isDevPreview = false }) => (
-  <React.Fragment>
+  <>
     <span className="pf-c-label pf-m-compact dev-preview-label">
       <CodeIcon />
       {' '}
@@ -16,7 +16,7 @@ const DeveloperPreviewSection = ({ isDevPreview = false }) => (
       { ' ' }
       pre-release builds
     </Link>
-  </React.Fragment>
+  </>
 );
 
 DeveloperPreviewSection.propTypes = {

@@ -15,7 +15,7 @@ import DetailsLeft from './DetailsLeft';
 function Overview({ cluster, cloudProviders }) {
   const clusterState = getClusterStateAndDescription(cluster);
   return (
-    <React.Fragment>
+    <>
       <SubscriptionCompliancy cluster={cluster} />
       <Card id="metrics-charts">
         <CardHeader>
@@ -42,7 +42,8 @@ function Overview({ cluster, cloudProviders }) {
           </Grid>
         </CardBody>
       </Card>
-    </React.Fragment>);
+    </>
+  );
 }
 
 Overview.propTypes = {

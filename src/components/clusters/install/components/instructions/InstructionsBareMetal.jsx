@@ -9,7 +9,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 
 function InstructionsBareMetal({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
         Install on Bare Metal with User-Provisioned Infrastructure
       </Title>
@@ -33,7 +33,7 @@ function InstructionsBareMetal({ token }) {
         rhcosLearnMoreURL={links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE}
         cliURL={links.INSTALL_BAREMETAL_CLI_LATEST}
       />
-    </React.Fragment>
+    </>
   );
 }
 

@@ -38,7 +38,8 @@ function ClusterUtilizationChart(props) {
           />
         </ChartDonutThreshold>
       </div>
-    </div>);
+    </div>
+  );
 }
 
 ClusterUtilizationChart.propTypes = {

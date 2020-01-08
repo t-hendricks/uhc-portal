@@ -6,7 +6,7 @@ import { Tabs, Tab } from '@patternfly/react-core';
 const tabs = {
   overview: 0,
   monitoring: 1,
-  users: 2,
+  accessControl: 2,
   addons: 3,
   logs: 4,
 };
@@ -14,10 +14,6 @@ const tabs = {
 class TabsRow extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      activeTabKey: 0,
-    };
-
     this.handleTabClick = (event, tabIndex) => {
       this.setState({
         activeTabKey: tabIndex,
@@ -25,17 +21,21 @@ class TabsRow extends React.Component {
     };
   }
 
+  state = {
+    activeTabKey: 0,
+  }
+
   componentDidUpdate() {
     const { activeTabKey } = this.state;
     const {
       overviewTabRef,
       displayMonitoringTab,
-      displayUsersTab,
+      displayAccessControlTab,
       displayAddOnsTab,
       displayLogs,
     } = this.props;
     if ((activeTabKey === tabs.monitoring && !displayMonitoringTab)
-        || (activeTabKey === tabs.users && !displayUsersTab)
+        || (activeTabKey === tabs.accessControl && !displayAccessControlTab)
         || (activeTabKey === tabs.addons && !displayAddOnsTab)
         || (activeTabKey === tabs.logs && !displayLogs)) {
       this.handleTabClick(undefined, tabs.overview);
@@ -46,12 +46,12 @@ class TabsRow extends React.Component {
   render() {
     const {
       displayMonitoringTab,
-      displayUsersTab,
+      displayAccessControlTab,
       displayAddOnsTab,
       displayLogs,
       overviewTabRef,
       monitoringTabRef,
-      usersTabRef,
+      accessControlTabRef,
       addOnsTabRef,
       logsTabRef,
     } = this.props;
@@ -65,8 +65,8 @@ class TabsRow extends React.Component {
       <Tab key={tabs.monitoring} eventKey={tabs.monitoring} title="Monitoring" tabContentId="monitoringTabContent" tabContentRef={monitoringTabRef} />
     );
 
-    const usersTab = displayUsersTab && (
-    <Tab key={tabs.users} eventKey={tabs.users} title="Users" tabContentId="usersTabContent" tabContentRef={usersTabRef} />);
+    const accessControlTab = displayAccessControlTab && (
+    <Tab key={tabs.accessControl} eventKey={tabs.accessControl} title="Access Control" tabContentId="accessControlTabContent" tabContentRef={accessControlTabRef} />);
 
     const addOnsTab = displayAddOnsTab && (
     <Tab key={tabs.addons} eventKey={tabs.addons} title="Add-ons" tabContentId="addOnsTabContent" tabContentRef={addOnsTabRef} />
@@ -79,7 +79,7 @@ class TabsRow extends React.Component {
     const tabsToDisplay = [
       overviewTab,
       monitoringTab,
-      usersTab,
+      accessControlTab,
       addOnsTab,
       logsTab,
     ].filter(Boolean);
@@ -87,25 +87,26 @@ class TabsRow extends React.Component {
     return (
       <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
         {tabsToDisplay.map(tab => tab)}
-      </Tabs>);
+      </Tabs>
+    );
   }
 }
 
 TabsRow.propTypes = {
   displayMonitoringTab: PropTypes.bool,
-  displayUsersTab: PropTypes.bool,
+  displayAccessControlTab: PropTypes.bool,
   displayAddOnsTab: PropTypes.bool,
   displayLogs: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
-  usersTabRef: PropTypes.object.isRequired,
+  accessControlTabRef: PropTypes.object.isRequired,
   addOnsTabRef: PropTypes.object.isRequired,
   logsTabRef: PropTypes.object.isRequired,
 };
 
 TabsRow.defaultProps = {
   displayMonitoringTab: true,
-  displayUsersTab: false,
+  displayAccessControlTab: false,
   displayAddOnsTab: false,
   displayLogs: false,
 };

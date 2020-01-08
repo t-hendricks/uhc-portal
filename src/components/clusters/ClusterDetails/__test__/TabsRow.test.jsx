@@ -12,7 +12,7 @@ describe('<TabsRow />', () => {
     const mockRef = { current: null };
     props = {
       overviewTabRef: mockRef,
-      usersTabRef: mockRef,
+      accessControlTabRef: mockRef,
       logsTabRef: mockRef,
       monitoringTabRef: mockRef,
       addOnsTabRef: mockRef,
@@ -27,8 +27,10 @@ describe('<TabsRow />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should display users tab, monitoring tab, logs tab, and add-ons tab', () => {
-    wrapper.setProps({ displayLogs: true, displayUsersTab: true, displayAddOnsTab: true }, () => {
+  it('should display access control tab, monitoring tab, logs tab, and add-ons tab', () => {
+    wrapper.setProps({
+      displayLogs: true, displayAccessControlTab: true, displayAddOnsTab: true,
+    }, () => {
       expect(wrapper.find(Tab).length).toEqual(5);
     });
   });
@@ -36,7 +38,7 @@ describe('<TabsRow />', () => {
   it('should hide monitoring and add-ons tabs if needed (eg. when we archive a cluster)', () => {
     wrapper.setProps({
       displayLogs: true,
-      displayUsersTab: true,
+      displayAccessControlTab: true,
       displayMonitoringTab: false,
       displayAddOnsTab: false,
     }, () => {

@@ -5,107 +5,88 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Select,
-  SelectOption,
-  SelectVariant,
+  FormSelect,
+  FormSelectOption,
 } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
+import get from 'lodash/get';
 import ErrorBox from '../../../../common/ErrorBox';
-import { humanizeValueWithUnitGiB } from '../../../../../common/units';
+import { humanizeValueWithUnitGiB, parseValueWithUnit } from '../../../../../common/units';
+
+const baseClusterQuota = 107374182400; // The base cluster storage quota is 100 GiB (in bytes).
 
 class PersistentStorageComboBox extends React.Component {
-  state = {
-    isExpanded: false,
-  };
-
   componentDidMount() {
-    const { getPersistentStorage, persistentStorageValues } = this.props;
-    if (!persistentStorageValues.fulfilled) {
-      // Don't let the user submit if we couldn't get persistent storage yet.
-      this.setInvalidValue();
+    const {
+      getPersistentStorage, persistentStorageValues, organization, getOrganizationAndQuota,
+    } = this.props;
+    if (!organization.fulfilled && !organization.pending) {
+      getOrganizationAndQuota();
     }
-    if (!persistentStorageValues.pending && !persistentStorageValues.fulfilled) {
+
+    if (!persistentStorageValues.pending
+      && !persistentStorageValues.fulfilled
+      && !persistentStorageValues.error) {
       // fetch persistent storage from server only if needed.
       getPersistentStorage();
     }
   }
 
-  componentDidUpdate() {
-    const { persistentStorageValues } = this.props;
-    if (persistentStorageValues.error || persistentStorageValues.pending) {
-      // Don't let the user submit if we couldn't get persistent storage.
-      this.setInvalidValue();
-    }
-  }
-
-  onSelect = (event, selection) => {
-    const { input } = this.props;
-    this.setState({ isExpanded: false });
-    input.onChange(selection);
-  };
-
-  onToggle = (isExpanded) => {
-    this.setState({
-      isExpanded,
-    });
-  };
-
-  setInvalidValue() {
-    // Tell redux form the current value of this field is empty.
-    // This will cause it to not pass validation if it is required.
-    const { input } = this.props;
-    input.onChange('');
+  filterPersistentStorageValuesByQuota() {
+    const { persistentStorageValues, quota } = this.props;
+    // Get quota for persistent storage.
+    // this quota is "on top" of the base cluster quota of 100 GiB.
+    const persistentStorageQuota = get(quota, 'persistentStorageQuota', 0);
+    const quotaInBytes = parseValueWithUnit(persistentStorageQuota, 'GiB');
+    const result = { ...persistentStorageValues };
+    result.values = result.values.filter(el => el.value <= quotaInBytes + baseClusterQuota);
+    return result;
   }
 
   render() {
     const {
       input, persistentStorageValues, disabled,
     } = this.props;
-    const {
-      isExpanded,
-    } = this.state;
+
     // Set up options for storage values
     const storageOption = (value) => {
       // value is a tuple of {value, unit}
       const valueWithUnit = humanizeValueWithUnitGiB(value.value);
+      const strValue = value.value.toString();
       // Values passed in the select are *always* in bytes, but we display them
       // in a humanize form.
 
       return (
-        <SelectOption
-          key={value.value.toString()}
-          value={value.value.toString()}
-        >
-          {`${valueWithUnit.value} ${valueWithUnit.unit}`}
-        </SelectOption>
+        <FormSelectOption
+          key={strValue}
+          value={strValue}
+          label={`${valueWithUnit.value} ${valueWithUnit.unit}`}
+        />
       );
     };
 
     if (persistentStorageValues.fulfilled) {
+      const filteredStorageValues = this.filterPersistentStorageValuesByQuota();
       return (
-        <Select
+        <FormSelect
           className="quota-combo-box"
-          variant={SelectVariant.single}
           aria-label="Persistent Storage"
-          onToggle={this.onToggle}
-          onSelect={this.onSelect}
-          selections={input.value}
-          isExpanded={isExpanded}
-          disabled={disabled}
+          isDisabled={disabled}
+          {...input}
         >
-          {persistentStorageValues.values.map(value => storageOption(value))}
-        </Select>
+          {filteredStorageValues.values.map(value => storageOption(value))}
+        </FormSelect>
       );
     }
 
     return persistentStorageValues.error ? (
       <ErrorBox message="Error loading persistent storage list" response={persistentStorageValues} />
     ) : (
-      <React.Fragment>
+      <>
         <div className="spinner-fit-container"><Spinner /></div>
         <div className="spinner-loading-text">Loading persistent storage list...</div>
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -115,6 +96,9 @@ PersistentStorageComboBox.propTypes = {
   persistentStorageValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
+  quota: PropTypes.object.isRequired,
+  organization: PropTypes.object.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
 };
 
 export default PersistentStorageComboBox;

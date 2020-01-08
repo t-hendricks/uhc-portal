@@ -30,7 +30,7 @@ function ArchivedClusterListTable(props) {
   };
 
   const onSortToggle = (_event, _index, direction) => {
-    const sorting = Object.assign({}, viewOptions.sorting);
+    const sorting = { ...viewOptions.sorting };
     sorting.isAscending = direction === SortByDirection.asc;
     sorting.sortField = 'name'; // TODO support more fields
     setSorting(sorting);

@@ -19,10 +19,12 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
       byoc: {
         singleAz: {},
         multiAz: {},
+        available: 0,
       },
       rhInfra: {
         singleAz: {},
         multiAz: {},
+        available: 0,
       },
     };
 
@@ -34,6 +36,7 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
           const category = item.byoc ? 'byoc' : 'rhInfra';
           const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
           response.data.nodeQuota[category][zoneType][item.resource_name] = available;
+          response.data.nodeQuota[category].available += available;
           break;
         }
         case 'addon':
@@ -46,6 +49,19 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
           }
           // Accumulate all available quota per resource name
           response.data.addOnsQuota[item.resource_name] += item.allowed - item.reserved;
+          break;
+        case 'pv.storage.aws':
+          // Create a map of storage quota.
+          if (!response.data.persistentStorageQuota) {
+            response.data.persistentStorageQuota = 0;
+          }
+          response.data.persistentStorageQuota += (item.allowed - item.reserved);
+          break;
+        case 'network.loadbalancer.aws':
+          if (!response.data.loadBalancerQuota) {
+            response.data.loadBalancerQuota = 0;
+          }
+          response.data.loadBalancerQuota += (item.allowed - item.reserved);
           break;
         default:
           break;

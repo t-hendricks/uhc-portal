@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+
 import PullSecretSection from './PullSecretSection';
 import DownloadButton from './DownloadButton';
 import CLISection from './CLISection';
@@ -40,10 +42,10 @@ function DownloadsAndPullSecretSection({
             <p>
               For pre-release documentation, refer to the
               {' '}
-              <a href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} target="_blank">
+              <a href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} rel="noreferrer noopener" target="_blank">
                 latest installer documentation
                 {' '}
-                <span className="fa fa-external-link" aria-hidden="true" />
+                <ExternalLinkAltIcon color="#0066cc" size="sm" />
               </a>
               .
             </p>
@@ -62,7 +64,7 @@ function DownloadsAndPullSecretSection({
           <p />
 
           {(rhcosLearnMoreURL || rhcosDownloadURL) && (
-            <React.Fragment>
+            <>
               <h3 className="pf-c-title pf-m-md downloads-subtitle">
                 Red Hat Enterprise Linux CoreOS (RHCOS)
               </h3>
@@ -71,7 +73,7 @@ function DownloadsAndPullSecretSection({
                 learnMoreURL={rhcosLearnMoreURL}
                 token={token}
               />
-            </React.Fragment>
+            </>
           )}
 
           <Title headingLevel="h3" size="md" className="downloads-subtitle">Command-Line Interface</Title>

@@ -6,9 +6,6 @@ import PropTypes from 'prop-types';
 class ClusterListExtraActions extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isOpen: false,
-    };
     this.onToggle = (isOpen) => {
       this.setState({
         isOpen,
@@ -19,6 +16,10 @@ class ClusterListExtraActions extends React.Component {
         isOpen: !state.isOpen,
       }));
     };
+  }
+
+  state = {
+    isOpen: false,
   }
 
   render() {

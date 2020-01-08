@@ -22,7 +22,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
   }
 
   return (
-    <React.Fragment>
+    <>
       <dl className="cluster-details-item left">
         <dt>Cluster ID</dt>
         <dd>
@@ -52,12 +52,12 @@ function DetailsLeft({ cluster, cloudProviders }) {
         </dd>
         { cluster.managed
           && (
-          <React.Fragment>
-            <dt>Availability</dt>
-            <dd>
-              {cluster.multi_az ? 'Multizone' : 'Single zone'}
-            </dd>
-          </React.Fragment>
+            <>
+              <dt>Availability</dt>
+              <dd>
+                {cluster.multi_az ? 'Multizone' : 'Single zone'}
+              </dd>
+            </>
           )}
         <dt>Version</dt>
         <dd>
@@ -84,8 +84,18 @@ function DetailsLeft({ cluster, cloudProviders }) {
         <dd>
           {get(cluster, 'subscription.creator.name') || get(cluster, 'subscription.creator.username', 'N/A')}
         </dd>
+        {cluster.managed && (
+          <>
+            <dt>
+              Billing Model
+            </dt>
+            <dd>
+              {cluster.byoc ? 'Customer Cloud Subscription' : 'Standard'}
+            </dd>
+          </>
+        )}
       </dl>
-    </React.Fragment>
+    </>
   );
 }
 

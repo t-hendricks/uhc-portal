@@ -4,76 +4,15 @@ exports[`<IdentityProvidersModal /> doesn't render when closed 1`] = `""`;
 
 exports[`<IdentityProvidersModal /> renders correctly 1`] = `
 <Modal
-  animation={true}
-  autoFocus={true}
-  backdrop={true}
-  bsClass="modal"
-  bsSize="large"
-  className="right-side-modal-pf"
-  dialogComponentClass={[Function]}
-  enforceFocus={true}
-  keyboard={true}
-  manager={
-    ModalManager {
-      "add": [Function],
-      "containers": Array [],
-      "data": Array [],
-      "handleContainerOverflow": true,
-      "hideSiblingNodes": true,
-      "isTopModal": [Function],
-      "modals": Array [],
-      "remove": [Function],
-    }
-  }
-  onHide={[Function]}
-  renderBackdrop={[Function]}
-  restoreFocus={true}
-  show={true}
+  isLarge={true}
+  onClose={[Function]}
+  onPrimaryClick={[MockFunction]}
+  onSecondaryClick={[Function]}
+  title="Create Identity Provider ()"
 >
-  <ModalHeader
-    bsClass="modal-header"
-    closeButton={false}
-    closeLabel="Close"
-  >
-    <ModalHeader
-      onClose={[Function]}
-      title="Create Identity Provider ()"
-    />
-  </ModalHeader>
-  <ModalBody
-    bsClass="modal-body"
-    componentClass="div"
-  >
-    <IDPForm
-      createIDPResponse={Object {}}
-      selectedIDP="GithubIdentityProvider"
-    />
-  </ModalBody>
-  <ModalFooter
-    bsClass="modal-footer"
-    componentClass="div"
-  >
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="primary"
-      disabled={false}
-      onClick={[MockFunction]}
-      type="submit"
-    >
-      Create
-    </Button>
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="default"
-      disabled={false}
-      onClick={[Function]}
-    >
-      Cancel
-    </Button>
-  </ModalFooter>
+  <IDPForm
+    createIDPResponse={Object {}}
+    selectedIDP="GithubIdentityProvider"
+  />
 </Modal>
 `;

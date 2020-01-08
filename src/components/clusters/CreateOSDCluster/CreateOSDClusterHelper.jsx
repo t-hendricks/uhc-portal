@@ -22,4 +22,15 @@ const constants = {
     pools large enough to fit your anticipated workload.`,
 };
 
-export default constants;
+const billingModelConstants = {
+  standard: 'Standard',
+  customerCloudSubscription: 'Customer Cloud Subscription',
+  standardText: 'Deploy in cloud provider accounts owned by Red Hat.',
+  customerCloudSubscriptionText: 'Leverage your existing cloud provider discounts and settings.',
+  noQuotaTooltip: 'You do not have quota for this option. Contact sales to purchase additional quota.',
+  resourceRequirementsLink: 'https://www.openshift.com/dedicated/byoc',
+  scpDocumentationLink: 'https://www.openshift.com/dedicated/byoc',
+  awsCredentialsWarning: 'The access credentials you provide here may only be used once. They may not be used to create another OpenShift Dedicated cluster.',
+};
+
+export { constants, billingModelConstants };

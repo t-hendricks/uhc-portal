@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card,
-  Title,
-} from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
+import { Card, Title } from '@patternfly/react-core';
+import { CodeIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
+
 import links from '../../../../../common/installLinks';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
@@ -12,7 +10,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 
 function InstructionsPreRelease({ token }) {
   return (
-    <React.Fragment>
+    <>
       <Title headingLevel="h3" size="2xl">
           Experimental Developer Preview Builds
       </Title>
@@ -172,10 +170,10 @@ function InstructionsPreRelease({ token }) {
             <p>
             Find out more about test blockers for the OCP 4.3 dev previews by viewing the
               {' '}
-              <a href={links.INSTALL_PRE_RELEASE_BUG_LIST_43} target="_blank">
+              <a href={links.INSTALL_PRE_RELEASE_BUG_LIST_43} rel="noreferrer noopener" target="_blank">
               test blocker bug list
                 {' '}
-                <span className="fa fa-external-link" aria-hidden="true" />
+                <ExternalLinkAltIcon color="#0066cc" size="sm" />
               </a>
             .
             </p>
@@ -209,14 +207,14 @@ function InstructionsPreRelease({ token }) {
             . Do not use the formal Red Hat support service ticket process.
             You can read more about support handling in the following
             {' '}
-            <a href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS} target="_blank">
+            <a href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS} rel="noreferrer noopener" target="_blank">
               knowledge article
             </a>
             .
           </p>
         </div>
       </Card>
-    </React.Fragment>
+    </>
   );
 }
 

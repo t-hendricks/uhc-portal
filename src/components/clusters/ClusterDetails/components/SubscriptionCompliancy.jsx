@@ -1,12 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Alert } from '@patternfly/react-core';
 import { getTimeDelta } from '../../../../common/helpers';
 import { entitlementStatuses } from '../../../../common/subscriptionTypes';
 
-function SubscriptionCompliancy(props) {
-  const { cluster } = props;
-
+function SubscriptionCompliancy({ cluster }) {
   const subscription = get(cluster, 'subscription');
 
   const ocpSubscriptionType = get(subscription, 'plan.id') === 'OCP';
@@ -29,7 +28,8 @@ function SubscriptionCompliancy(props) {
       <p>
         Last checked:&nbsp;
         {new Date(lastReconcileDate).toLocaleString()}
-      </p>)
+      </p>
+    )
     : '';
 
   switch (subscription.entitlement_status) {
@@ -40,13 +40,13 @@ function SubscriptionCompliancy(props) {
           <p>
             Find&nbsp;
             { !candlepinConsumerUUID ? 'this cluster in the ' : '' }
-            <a href={customerPortalURL} target="_blank">
+            <a href={customerPortalURL} rel="noreferrer noopener" target="_blank">
               { candlepinConsumerUUID ? 'this cluster in the ' : '' }
               Red Hat Customer Portal
             </a>
             &nbsp;and attach subscription(s) that covers the current size of
             this cluster. You may need to&nbsp;
-            <a href={salesURL} target="_blank">contact sales</a>
+            <a href={salesURL} rel="noreferrer noopener" target="_blank">contact sales</a>
             &nbsp;in case you don&apos;t own enough subscriptions to cover it.
           </p>
         </Alert>
@@ -57,10 +57,11 @@ function SubscriptionCompliancy(props) {
           {lastChecked}
           <p>
             Check the&nbsp;
-            <a href={customerPortalURL} target="_blank">Red Hat Customer Portal</a>
+            <a href={customerPortalURL} rel="noreferrer noopener" target="_blank">Red Hat Customer Portal</a>
             &nbsp;to make sure this cluster has subscription(s) attached that covers
             the current size of this cluster. You may need to&nbsp;
-            <a href={salesURL} target="_blank">contact sales</a>
+            <a href={customerPortalURL} rel="noreferrer noopener" target="_blank">Red Hat Customer Portal</a>
+            <a href={salesURL} rel="noreferrer noopener" target="_blank">contact sales</a>
             &nbsp;in case you don&apos;t own enough subscriptions to cover it.
           </p>
         </Alert>
@@ -71,7 +72,7 @@ function SubscriptionCompliancy(props) {
           {lastChecked}
           <p>
             Go to the&nbsp;
-            <a href={customerPortalURL} target="_blank">Red Hat Customer Portal</a>
+            <a href={customerPortalURL} rel="noreferrer noopener" target="_blank">Red Hat Customer Portal</a>
             &nbsp;to make sure all subscriptions attached are of the same service level
             (e.g. either Standard, Premium).
           </p>
@@ -81,5 +82,11 @@ function SubscriptionCompliancy(props) {
       return null;
   }
 }
+
+SubscriptionCompliancy.propTypes = {
+  cluster: PropTypes.shape({
+    creation_timestamp: PropTypes.string,
+  }),
+};
 
 export default SubscriptionCompliancy;
