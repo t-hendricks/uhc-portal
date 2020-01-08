@@ -86,7 +86,7 @@ class CreateCluster extends React.Component {
         {title}
         <PageSection>
           <Card>
-            <div className="pf-c-content ocm-page">
+            <div className="pf-c-content ocm-page ocp-osd-selection">
               <div className="flex-container">
                 {ocpCard}
                 {osdCard}
