@@ -31,7 +31,7 @@ function InstructionsVSphere({ token }) {
         token={token}
         installerURL={links.INSTALL_VSPHERE_INSTALLER_LATEST}
         rhcosLearnMoreURL={links.INSTALL_VSPHERE_RHCOS_LEARN_MORE}
-        toolsURL={links.INSTALL_VSPHERE_CLI_LATEST}
+        cliURL={links.INSTALL_VSPHERE_CLI_LATEST}
       />
     </>
   );
