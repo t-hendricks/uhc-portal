@@ -25,6 +25,7 @@
     "core-js": "^3.6.1",
     "filesize": "^3.6.1",
     "history": "^4.10.1",
+    "immer": "^5.1.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "prop-types": "^15.6.1",

@@ -3,7 +3,7 @@ import LogWindow from './LogWindow';
 import { clearLogs } from './LogWindowActions';
 
 const mapStateToProps = state => ({
-  lines: state.logs.logs.lines,
+  lines: state.logs.lines,
 });
 
 const mapDispatchToProps = { clearLogs };

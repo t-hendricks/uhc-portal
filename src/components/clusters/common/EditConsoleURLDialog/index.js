@@ -7,7 +7,7 @@ import { closeModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 
 const mapStateToProps = (state) => {
-  const cluster = state.modal.activeModal.data;
+  const cluster = state.modal.data;
   return ({
     isOpen: shouldShowModal(state, 'edit-console-url'),
     editClusterResponse: state.clusters.editedCluster,
