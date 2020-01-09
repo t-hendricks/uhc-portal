@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from '@patternfly/react-core';
-import helpers from '../../common/helpers';
+import { formatErrorDetails } from '../../common/errors';
 
 function ErrorBox({ message, response }) {
-  const errorDetails = helpers.parseErrorDetails(response.errorDetails);
+  const errorDetails = formatErrorDetails(response.errorDetails);
   return (
     <Alert variant="danger" isInline title={message} className="error-box">
       <span>{response.errorMessage}</span>

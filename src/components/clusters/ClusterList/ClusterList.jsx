@@ -52,6 +52,7 @@ import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDial
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
 import helpers, { scrollToTop } from '../../../common/helpers';
+import { viewPropsChanged, createViewQueryObject } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
 
 const getQueryParam = (param) => {
@@ -109,7 +110,7 @@ class ClusterList extends Component {
       viewOptions, valid, pending,
     } = this.props;
     if ((!valid && !pending)
-        || helpers.viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+        || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
     }
   }
@@ -121,7 +122,7 @@ class ClusterList extends Component {
 
   refresh() {
     const { fetchClusters, viewOptions } = this.props;
-    fetchClusters(helpers.createViewQueryObject(viewOptions));
+    fetchClusters(createViewQueryObject(viewOptions));
   }
 
   render() {

@@ -1,7 +1,7 @@
 import validators, {
   required, checkIdentityProviderName, checkClusterUUID,
   checkClusterConsoleURL, checkUserID, checkOpenIDIssuer, checkGithubTeams,
-} from './validators';
+} from '../validators';
 
 test('Field is required', () => {
   expect(required()).toBe('Field is required');

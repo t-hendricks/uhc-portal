@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import round from './math';
+import round from '../math';
 
 describe('Rounding to certain places', () => {
   it('Rounds correctly floating point numbers', () => {

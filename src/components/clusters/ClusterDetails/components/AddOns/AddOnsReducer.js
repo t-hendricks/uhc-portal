@@ -1,4 +1,5 @@
-import helpers from '../../../../../common/helpers';
+import helpers, { setStateProp } from '../../../../../redux/reduxHelpers';
+import { getErrorState } from '../../../../../common/errors';
 import AddOnsConstants from './AddOnsConstants';
 
 const request = {
@@ -34,9 +35,9 @@ function AddOnsReducer(state = initialState, action) {
 
     // GET_ADDONS
     case helpers.REJECTED_ACTION(AddOnsConstants.GET_ADDONS):
-      return helpers.setStateProp(
+      return setStateProp(
         'addOns',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -44,7 +45,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(AddOnsConstants.GET_ADDONS):
-      return helpers.setStateProp(
+      return setStateProp(
         'addOns',
         {
           fulfilled: false,
@@ -58,7 +59,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(AddOnsConstants.GET_ADDONS):
-      return helpers.setStateProp(
+      return setStateProp(
         'addOns',
         {
           pending: false,
@@ -74,9 +75,9 @@ function AddOnsReducer(state = initialState, action) {
 
     // GET_CLUSTER_ADDONS
     case helpers.REJECTED_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
-      return helpers.setStateProp(
+      return setStateProp(
         'clusterAddOns',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -84,7 +85,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
-      return helpers.setStateProp(
+      return setStateProp(
         'clusterAddOns',
         {
           fulfilled: false,
@@ -98,7 +99,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
-      return helpers.setStateProp(
+      return setStateProp(
         'clusterAddOns',
         {
           pending: false,
@@ -114,9 +115,9 @@ function AddOnsReducer(state = initialState, action) {
 
     // ADD_CLUSTER_ADDON
     case helpers.REJECTED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
-      return helpers.setStateProp(
+      return setStateProp(
         'addClusterAddOnResponse',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -124,7 +125,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
-      return helpers.setStateProp(
+      return setStateProp(
         'addClusterAddOnResponse',
         {
           pending: true,
@@ -136,7 +137,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
-      return helpers.setStateProp(
+      return setStateProp(
         'addClusterAddOnResponse',
         {
           pending: false,
@@ -150,9 +151,9 @@ function AddOnsReducer(state = initialState, action) {
 
     // DELETE_CLUSTER_ADDON
     case helpers.REJECTED_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
-      return helpers.setStateProp(
+      return setStateProp(
         'deleteClusterAddOnResponse',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -160,7 +161,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
-      return helpers.setStateProp(
+      return setStateProp(
         'deleteClusterAddOnResponse',
         {
           fulfilled: false,
@@ -173,7 +174,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
-      return helpers.setStateProp(
+      return setStateProp(
         'deleteClusterAddOnResponse',
         {
           pending: false,

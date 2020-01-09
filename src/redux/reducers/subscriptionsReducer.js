@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import helpers from '../../common/helpers';
+import helpers, { setStateProp } from '../reduxHelpers';
+import { getErrorState } from '../../common/errors';
+
 import { subscriptionsConstants } from '../constants';
 
 const baseState = {
@@ -46,7 +48,7 @@ function subscriptionsReducer(state = initialState, action) {
   switch (action.type) {
     // GET_ACCOUNT
     case helpers.INVALIDATE_ACTION(subscriptionsConstants.GET_ACCOUNT):
-      return helpers.setStateProp(
+      return setStateProp(
         'account',
         {
           valid: false,
@@ -58,10 +60,10 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     case helpers.REJECTED_ACTION(subscriptionsConstants.GET_ACCOUNT):
-      return helpers.setStateProp(
+      return setStateProp(
         'account',
         {
-          ...helpers.getErrorState(action),
+          ...getErrorState(action),
           valid: true,
         },
         {
@@ -71,7 +73,7 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(subscriptionsConstants.GET_ACCOUNT):
-      return helpers.setStateProp(
+      return setStateProp(
         'account',
         {
           pending: true,
@@ -83,7 +85,7 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(subscriptionsConstants.GET_ACCOUNT):
-      return helpers.setStateProp(
+      return setStateProp(
         'account',
         {
           data: action.payload.data,
@@ -99,7 +101,7 @@ function subscriptionsReducer(state = initialState, action) {
 
     // GET_SUBSCRIPTIONS
     case helpers.INVALIDATE_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
-      return helpers.setStateProp(
+      return setStateProp(
         'subscriptions',
         {
           valid: false,
@@ -111,10 +113,10 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     case helpers.REJECTED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
-      return helpers.setStateProp(
+      return setStateProp(
         'subscriptions',
         {
-          ...helpers.getErrorState(action),
+          ...getErrorState(action),
           valid: true,
           items: state.subscriptions.items,
         },
@@ -125,7 +127,7 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
-      return helpers.setStateProp(
+      return setStateProp(
         'subscriptions',
         {
           pending: true,
@@ -138,7 +140,7 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
-      return helpers.setStateProp(
+      return setStateProp(
         'subscriptions',
         {
           items: action.payload.data.items,
@@ -154,7 +156,7 @@ function subscriptionsReducer(state = initialState, action) {
 
     // GET_QUOTA_SUMMARY
     case helpers.INVALIDATE_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-      return helpers.setStateProp(
+      return setStateProp(
         'quotaSummary',
         {
           valid: false,
@@ -166,10 +168,10 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     case helpers.REJECTED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-      return helpers.setStateProp(
+      return setStateProp(
         'quotaSummary',
         {
-          ...helpers.getErrorState(action),
+          ...getErrorState(action),
           valid: true,
           items: state.quotaSummary.items,
         },
@@ -180,7 +182,7 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-      return helpers.setStateProp(
+      return setStateProp(
         'quotaSummary',
         {
           pending: true,
@@ -193,7 +195,7 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-      return helpers.setStateProp(
+      return setStateProp(
         'quotaSummary',
         {
           items: action.payload.data.items,

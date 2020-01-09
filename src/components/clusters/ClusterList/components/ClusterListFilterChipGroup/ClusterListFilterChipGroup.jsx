@@ -7,6 +7,7 @@ import {
 } from '@patternfly/react-core';
 
 import helpers from '../../../../../common/helpers';
+import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 
 function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
   if (helpers.nestedIsEmpty(currentFilters)) {
@@ -15,7 +16,7 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
 
   const setFilterAndQueryParams = (filter) => {
     history.push({
-      search: helpers.buildFilterURLParams(filter),
+      search: buildFilterURLParams(filter),
     });
     setFilter(filter);
   };

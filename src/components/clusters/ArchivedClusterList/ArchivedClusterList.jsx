@@ -43,7 +43,7 @@ import ErrorBox from '../../common/ErrorBox';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
-import helpers from '../../../common/helpers';
+import { viewPropsChanged, createViewQueryObject } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
 
 
@@ -75,7 +75,7 @@ class ArchivedClusterList extends Component {
       viewOptions, valid, pending,
     } = this.props;
     if ((!valid && !pending)
-      || helpers.viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+      || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
     }
   }
@@ -88,7 +88,7 @@ class ArchivedClusterList extends Component {
 
   refresh() {
     const { fetchClusters, viewOptions } = this.props;
-    fetchClusters(helpers.createViewQueryObject(viewOptions));
+    fetchClusters(createViewQueryObject(viewOptions));
   }
 
   render() {

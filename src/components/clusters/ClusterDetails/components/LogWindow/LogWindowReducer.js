@@ -13,7 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import helpers from '../../../../../common/helpers';
+import helpers, { setStateProp } from '../../../../../redux/reduxHelpers';
+import { getErrorState } from '../../../../../common/errors';
 import { logWindowConstants } from './LogWindowConstants';
 
 const initialState = {
@@ -29,9 +30,9 @@ const initialState = {
 function LogsReducer(state = initialState, action) {
   switch (action.type) {
     case helpers.REJECTED_ACTION(logWindowConstants.GET_LOGS):
-      return helpers.setStateProp(
+      return setStateProp(
         'logs',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -39,7 +40,7 @@ function LogsReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(logWindowConstants.GET_LOGS):
-      return helpers.setStateProp(
+      return setStateProp(
         'logs',
         {
           pending: true,
@@ -52,7 +53,7 @@ function LogsReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(logWindowConstants.GET_LOGS):
-      return helpers.setStateProp(
+      return setStateProp(
         'logs',
         {
           lines: action.payload.data.content,
@@ -66,7 +67,7 @@ function LogsReducer(state = initialState, action) {
       );
 
     case logWindowConstants.CLEAR_LOGS:
-      return helpers.setStateProp(
+      return setStateProp(
         'logs',
         {},
         {

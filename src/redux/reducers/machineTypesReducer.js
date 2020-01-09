@@ -13,7 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import helpers from '../../common/helpers';
+import helpers from '../reduxHelpers';
+import { getErrorState } from '../../common/errors';
+
 import { machineTypesConstants } from '../constants';
 
 const initialState = {
@@ -30,7 +32,7 @@ function machineTypesReducer(state = initialState, action) {
       return {
         ...initialState,
         ...state,
-        ...helpers.getErrorState(action),
+        ...getErrorState(action),
       };
 
     case helpers.PENDING_ACTION(machineTypesConstants.GET_MACHINE_TYPES):

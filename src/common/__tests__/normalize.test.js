@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 
-import { normalizeCluster } from './normalize';
+import { normalizeCluster } from '../normalize';
 
 // Before https://gitlab.cee.redhat.com/service/uhc-clusters-service/merge_requests/800
 // Some data is fake.

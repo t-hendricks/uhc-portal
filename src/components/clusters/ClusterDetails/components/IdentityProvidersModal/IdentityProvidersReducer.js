@@ -13,7 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import helpers from '../../../../../common/helpers';
+import helpers, { setStateProp } from '../../../../../redux/reduxHelpers';
+import { getErrorState } from '../../../../../common/errors';
 import { identityProvidersConstants } from './IdentityProvidersConstants';
 
 const initialState = {
@@ -45,9 +46,9 @@ function IdentityProvidersReducer(state = initialState, action) {
       return initialState;
     // GET_CLUSTER_IDENTITY_PROVIDERS
     case helpers.REJECTED_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
-      return helpers.setStateProp(
+      return setStateProp(
         'clusterIdentityProviders',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -55,7 +56,7 @@ function IdentityProvidersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
-      return helpers.setStateProp(
+      return setStateProp(
         'clusterIdentityProviders',
         {
           pending: true,
@@ -67,7 +68,7 @@ function IdentityProvidersReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
-      return helpers.setStateProp(
+      return setStateProp(
         'clusterIdentityProviders',
         {
           clusterIDPList: action.payload.data.items || [],
@@ -82,9 +83,9 @@ function IdentityProvidersReducer(state = initialState, action) {
 
     // CREATE_CLUSTER_IDENTITY_PROVIDER
     case helpers.REJECTED_ACTION(identityProvidersConstants.CREATE_CLUSTER_IDENTITY_PROVIDER):
-      return helpers.setStateProp(
+      return setStateProp(
         'createdClusterIDP',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -92,7 +93,7 @@ function IdentityProvidersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(identityProvidersConstants.CREATE_CLUSTER_IDENTITY_PROVIDER):
-      return helpers.setStateProp(
+      return setStateProp(
         'createdClusterIDP',
         {
           pending: true,
@@ -104,7 +105,7 @@ function IdentityProvidersReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(identityProvidersConstants.CREATE_CLUSTER_IDENTITY_PROVIDER):
-      return helpers.setStateProp(
+      return setStateProp(
         'createdClusterIDP',
         {
           clusterIdentityProviders: action.payload.data,
@@ -119,7 +120,7 @@ function IdentityProvidersReducer(state = initialState, action) {
 
     // RESET_CREATED_CLUSTER_IDP_RESPONSE
     case identityProvidersConstants.RESET_CREATED_CLUSTER_IDP_RESPONSE:
-      return helpers.setStateProp(
+      return setStateProp(
         'createdClusterIDP',
         initialState.createdClusterIDP,
         {
@@ -131,7 +132,7 @@ function IdentityProvidersReducer(state = initialState, action) {
 
     // DELETE_IDP
     case helpers.PENDING_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
-      return helpers.setStateProp(
+      return setStateProp(
         'deletedIDP',
         {
           pending: true,
@@ -143,9 +144,9 @@ function IdentityProvidersReducer(state = initialState, action) {
       );
 
     case helpers.REJECTED_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
-      return helpers.setStateProp(
+      return setStateProp(
         'deletedIDP',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -154,7 +155,7 @@ function IdentityProvidersReducer(state = initialState, action) {
 
 
     case helpers.FULFILLED_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
-      return helpers.setStateProp(
+      return setStateProp(
         'deletedIDP',
         {
           pending: false,
@@ -167,7 +168,7 @@ function IdentityProvidersReducer(state = initialState, action) {
       );
 
     case identityProvidersConstants.RESET_DELETED_IDP_RESPONSE:
-      return helpers.setStateProp(
+      return setStateProp(
         'deletedIDP',
         initialState.deletedIDP,
         {

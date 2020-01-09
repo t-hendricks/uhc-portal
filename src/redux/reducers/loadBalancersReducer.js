@@ -1,4 +1,6 @@
-import helpers from '../../common/helpers';
+import helpers, { setStateProp } from '../reduxHelpers';
+import { getErrorState } from '../../common/errors';
+
 import { loadBalancerConstants } from '../constants';
 
 const initialState = {
@@ -14,9 +16,9 @@ const initialState = {
 function loadBalancersReducer(state = initialState, action) {
   switch (action.type) {
     case helpers.REJECTED_ACTION(loadBalancerConstants.GET_LOAD_BALANCER_VALUES):
-      return helpers.setStateProp(
+      return setStateProp(
         'loadBalancerValues',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,
@@ -24,7 +26,7 @@ function loadBalancersReducer(state = initialState, action) {
       );
 
     case helpers.PENDING_ACTION(loadBalancerConstants.GET_LOAD_BALANCER_VALUES):
-      return helpers.setStateProp(
+      return setStateProp(
         'loadBalancerValues',
         {
           pending: true,
@@ -36,7 +38,7 @@ function loadBalancersReducer(state = initialState, action) {
       );
 
     case helpers.FULFILLED_ACTION(loadBalancerConstants.GET_LOAD_BALANCER_VALUES):
-      return helpers.setStateProp(
+      return setStateProp(
         'loadBalancerValues',
         {
           values: action.payload,
