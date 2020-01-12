@@ -31,8 +31,8 @@ const mapStateToProps = (state) => {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,
       load_balancers: modalData.load_balancer_quota
-        ? modalData.load_balancer_quota.toString() : null,
-      persistent_storage: modalData.storage_quota ? modalData.storage_quota.value.toString() : null,
+        ? modalData.load_balancer_quota : 0,
+      persistent_storage: modalData.storage_quota ? modalData.storage_quota.value : 107374182400,
     },
   });
 };

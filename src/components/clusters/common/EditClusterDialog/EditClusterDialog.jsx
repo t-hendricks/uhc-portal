@@ -45,8 +45,8 @@ class EditClusterDialog extends Component {
       if (prevProps.initialFormValues.id !== initialFormValues.id) {
         change('id', initialFormValues.id);
         change('nodes_compute', initialFormValues.nodesCompute);
-        change('persistent_storage', initialFormValues.persistent_storage);
-        change('load_balancers', initialFormValues.load_balancers);
+        change('persistent_storage', initialFormValues.persistent_storage.toString());
+        change('load_balancers', initialFormValues.load_balancers.toString());
       }
     }
 
@@ -79,6 +79,7 @@ class EditClusterDialog extends Component {
       showPersistentStorageAlert,
       persistentStorageValues,
       loadBalancerValues,
+      initialFormValues,
     } = this.props;
 
     const cancelEdit = () => {
@@ -145,6 +146,7 @@ before proceeding to be sure you are not
                 name="load_balancers"
                 component={LoadBalancersComboBox}
                 disabled={pending}
+                currentValue={initialFormValues.load_balancers}
               />
             </FormGroup>
             {showLoadBalancerAlert && scalingAlert}
@@ -157,6 +159,7 @@ before proceeding to be sure you are not
                 name="persistent_storage"
                 component={PersistentStorageComboBox}
                 disabled={pending}
+                currentValue={initialFormValues.persistent_storage}
               />
             </FormGroup>
             {showPersistentStorageAlert && scalingAlert}

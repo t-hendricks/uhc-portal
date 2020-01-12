@@ -12,6 +12,7 @@ import {
 import get from 'lodash/get';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../../common/ErrorBox';
+import filterLoadBalancerValuesByQuota from './helpers';
 
 class LoadBalancersComboBox extends React.Component {
   componentDidMount() {
@@ -29,25 +30,18 @@ class LoadBalancersComboBox extends React.Component {
     }
   }
 
-  filterLoadBalancerValuesByQuota() {
-    const { loadBalancerValues, quota } = this.props;
-    const loadBalancerQuota = get(quota, 'loadBalancerQuota', 0);
-    const result = { ...loadBalancerValues };
-    result.values = result.values.filter(el => el <= loadBalancerQuota);
-    return result;
-  }
-
   render() {
     const {
-      input, loadBalancerValues, disabled,
+      input, loadBalancerValues, disabled, currentValue, quota,
     } = this.props;
-
     // Set up options for load balancers
     const loadBalancerOption = value => (
       <FormSelectOption key={value} value={value} label={value} />
     );
     if (loadBalancerValues.fulfilled) {
-      const filteredValues = this.filterLoadBalancerValuesByQuota();
+      const remainingQuota = get(quota, 'loadBalancerQuota', 0);
+      const filteredValues = filterLoadBalancerValuesByQuota(currentValue,
+        loadBalancerValues, remainingQuota);
       return (
         <FormSelect
           className="quota-combo-box"
@@ -79,6 +73,7 @@ LoadBalancersComboBox.propTypes = {
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
+  currentValue: PropTypes.number,
 };
 
 export default LoadBalancersComboBox;
