@@ -21,7 +21,7 @@ function AWSAccountDetailsFields(props) {
           validate={required}
           disabled={pending}
           isRequired
-          extendedHelpText="AWS accound ID"
+          extendedHelpText="AWS account ID"
         />
       </GridItem>
       <GridItem span={8} />

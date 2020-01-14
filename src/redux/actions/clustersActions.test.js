@@ -1,7 +1,7 @@
 import { clustersActions } from './clustersActions';
 import { clusterService } from '../../services';
 import { clustersConstants } from '../constants';
-import helpers from '../../common/helpers';
+import helpers from '../reduxHelpers';
 
 jest.mock('../../services/accountsService.js');
 jest.mock('../../services/authorizationsService.js');

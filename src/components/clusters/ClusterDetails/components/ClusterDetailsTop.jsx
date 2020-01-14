@@ -88,6 +88,7 @@ function ClusterDetailsTop(props) {
       || organization.pending
       || clusterIdentityProviders.pending;
 
+
   return (
     <div id="cl-details-top" className="top-row">
       <Split>
@@ -132,7 +133,7 @@ function ClusterDetailsTop(props) {
                 variant="secondary"
                 onClick={() => openModal('unarchive-cluster', {
                   subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-                  name: cluster.name ? cluster.name : '',
+                  name: clusterName,
                 })}
                 isDisabled={!cluster.canEdit}
               >

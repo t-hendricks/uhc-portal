@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 import { userConstants } from '../constants';
-import helpers from '../../common/helpers';
+import helpers, { setStateProp } from '../reduxHelpers';
+import { getErrorState } from '../../common/errors';
 
 const initialState = {
   keycloakProfile: {},
@@ -17,7 +18,7 @@ const initialState = {
 function userProfile(state = initialState, action) {
   switch (action.type) {
     case userConstants.USER_INFO_RESPONSE:
-      return helpers.setStateProp(
+      return setStateProp(
         'keycloakProfile',
         action.payload,
         {
@@ -28,7 +29,7 @@ function userProfile(state = initialState, action) {
 
     // GET_ORGANIZATION
     case helpers.PENDING_ACTION(userConstants.GET_ORGANIZATION):
-      return helpers.setStateProp(
+      return setStateProp(
         'organization',
         {
           pending: true,
@@ -39,7 +40,7 @@ function userProfile(state = initialState, action) {
         },
       );
     case helpers.FULFILLED_ACTION(userConstants.GET_ORGANIZATION):
-      return helpers.setStateProp(
+      return setStateProp(
         'organization',
         {
           pending: false,
@@ -54,9 +55,9 @@ function userProfile(state = initialState, action) {
         },
       );
     case helpers.REJECTED_ACTION(userConstants.GET_ORGANIZATION):
-      return helpers.setStateProp(
+      return setStateProp(
         'organization',
-        helpers.getErrorState(action),
+        getErrorState(action),
         {
           state,
           initialState,

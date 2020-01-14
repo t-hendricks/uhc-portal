@@ -1,6 +1,6 @@
 import {
   humanizeValueWithUnit, parseValueWithUnit, roundValueWithUnit, humanizeValueWithUnitGiB,
-} from './units';
+} from '../units';
 
 test('Parse value with unit works', () => {
   expect(parseValueWithUnit(5, 'KB')).toBe(5000);

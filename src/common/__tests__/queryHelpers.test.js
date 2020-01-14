@@ -1,35 +1,6 @@
-import helpers, { buildUrlParams } from './helpers';
-
-test('Error message is properly extracted from the Error API object', () => {
-  const err = {
-    response: {
-      data: {
-        kind: 'Error',
-        id: 1,
-        href: 'http://example.com',
-        code: 'CLUSTERS-MGMT-1',
-        reason: 'human readable reason',
-      },
-    },
-  };
-  expect(helpers.getErrorMessage(err)).toBe('CLUSTERS-MGMT-1:\nhuman readable reason');
-});
-
-test('Error message is properly extracted from unexpected object', () => {
-  const err = {
-    response: {
-      data: {
-        unexpected: 'object',
-      },
-    },
-  };
-  expect(helpers.getErrorMessage(err)).toBe('{"unexpected":"object"}');
-});
-
-test('Fail gracefully when getting JS Error objects', () => {
-  const err = new Error('Hello');
-  expect(helpers.getErrorMessage(err)).toBe('Error: Hello');
-});
+import {
+  buildUrlParams, buildFilterURLParams, sqlString, createViewQueryObject,
+} from '../queryHelpers';
 
 test('Test buildUrlParams', () => {
   const params = { key1: 'a ', key2: 'a?' };
@@ -38,22 +9,22 @@ test('Test buildUrlParams', () => {
 
 test('buildFilterURLParams()', () => {
   const params = { key1: ['a', 'b'], key2: [], key3: ['c'] };
-  expect(helpers.buildFilterURLParams(params)).toBe('key1=a,b&key3=c');
-  expect(helpers.buildFilterURLParams({})).toBe('');
+  expect(buildFilterURLParams(params)).toBe('key1=a,b&key3=c');
+  expect(buildFilterURLParams({})).toBe('');
 });
 
 describe('sqlString', () => {
   it('handles empty string', () => {
-    expect(helpers.sqlString('')).toBe("''");
+    expect(sqlString('')).toBe("''");
   });
 
   it('doubles single quotes', () => {
-    expect(helpers.sqlString("1 quote ' 3 quote'''s 2 quotes ''"))
+    expect(sqlString("1 quote ' 3 quote'''s 2 quotes ''"))
       .toBe("'1 quote '' 3 quote''''''s 2 quotes '''''");
   });
 
   it('does not touch other quotes', () => {
-    expect(helpers.sqlString('double quote " backtick `'))
+    expect(sqlString('double quote " backtick `'))
       .toBe("'double quote \" backtick `'");
   });
 
@@ -62,8 +33,8 @@ describe('sqlString', () => {
     // not special in SQL syntax.
     // LIKE optionally lets you specify any char as an escape char but again that's
     // later interpretation of a string, it's regular char in SQL string literal.
-    expect(helpers.sqlString('path/%._/100\\%')).toBe("'path/%._/100\\%'");
-    expect(helpers.sqlString('\\')).toBe("'\\'");
+    expect(sqlString('path/%._/100\\%')).toBe("'path/%._/100\\%'");
+    expect(sqlString('\\')).toBe("'\\'");
   });
 });
 
@@ -84,7 +55,7 @@ describe('createViewQueryObject()', () => {
   };
 
   it('properly creates the query object when no filter is defined', () => {
-    expect(helpers.createViewQueryObject(baseViewOptions)).toEqual(baseResult);
+    expect(createViewQueryObject(baseViewOptions)).toEqual(baseResult);
   });
   it('sorts correctly (with display_name column name translation)', () => {
     const viewOptions = {
@@ -94,13 +65,13 @@ describe('createViewQueryObject()', () => {
       },
     };
 
-    expect(helpers.createViewQueryObject(viewOptions)).toEqual({
+    expect(createViewQueryObject(viewOptions)).toEqual({
       ...baseResult,
       order: 'display_name desc',
     });
 
     viewOptions.sorting.isAscending = true;
-    expect(helpers.createViewQueryObject(viewOptions)).toEqual({
+    expect(createViewQueryObject(viewOptions)).toEqual({
       ...baseResult,
       order: 'display_name asc',
     });
@@ -115,13 +86,13 @@ describe('createViewQueryObject()', () => {
       },
     };
 
-    expect(helpers.createViewQueryObject(viewOptions)).toEqual({
+    expect(createViewQueryObject(viewOptions)).toEqual({
       ...baseResult,
       order: 'custom desc',
     });
 
     viewOptions.sorting.isAscending = true;
-    expect(helpers.createViewQueryObject(viewOptions)).toEqual({
+    expect(createViewQueryObject(viewOptions)).toEqual({
       ...baseResult,
       order: 'custom asc',
     });
@@ -134,7 +105,7 @@ describe('createViewQueryObject()', () => {
         showArchived: true,
       },
     };
-    expect(helpers.createViewQueryObject(viewOptions)).toEqual({ ...baseResult, filter: "(cluster_id!='') AND (status='Archived')" });
+    expect(createViewQueryObject(viewOptions)).toEqual({ ...baseResult, filter: "(cluster_id!='') AND (status='Archived')" });
   });
 
   it('correctly formats filter when a filter is set', () => {
@@ -148,7 +119,7 @@ describe('createViewQueryObject()', () => {
       ...baseResult,
       filter: `(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%')`,
     };
-    expect(helpers.createViewQueryObject(viewOptions)).toEqual(expected);
+    expect(createViewQueryObject(viewOptions)).toEqual(expected);
   });
 
   it('correctly formats filter when entitlement_status filter flags are set', () => {
@@ -166,21 +137,6 @@ describe('createViewQueryObject()', () => {
       filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (entitlement_status IN ('a','b','c')) AND (type IN ('osd'))",
     };
 
-    expect(helpers.createViewQueryObject(viewOptions)).toEqual(expected);
-  });
-});
-
-describe('nestedIsEmpty()', () => {
-  it('returns true for an empty object', () => {
-    expect(helpers.nestedIsEmpty({})).toBeTruthy();
-  });
-  it('returns false for an object with empty children', () => {
-    expect(helpers.nestedIsEmpty({ a: [], b: [] })).toBeTruthy();
-  });
-  it('returns false for a non-empty object', () => {
-    expect(helpers.nestedIsEmpty({ foo: 'bar' })).toBeFalsy();
-  });
-  it('returns false for an object with at least one non-empty child', () => {
-    expect(helpers.nestedIsEmpty({ a: ['b'], c: [] })).toBeFalsy();
+    expect(createViewQueryObject(viewOptions)).toEqual(expected);
   });
 });

@@ -1,4 +1,4 @@
-import helpers from '../../common/helpers';
+import helpers from '../reduxHelpers';
 import {
   clustersConstants,
   viewConstants,

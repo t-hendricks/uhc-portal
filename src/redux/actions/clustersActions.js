@@ -18,7 +18,7 @@ import isUuid from 'uuid-validate';
 
 import { clustersConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
-import helpers from '../../common/helpers';
+import helpers from '../reduxHelpers';
 import { normalizeCluster } from '../../common/normalize';
 
 const invalidateClusters = () => dispatch => dispatch({

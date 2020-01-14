@@ -178,6 +178,7 @@ class BasicFields extends React.Component {
               name="persistent_storage"
               component={PersistentStorageComboBox}
               disabled={pending}
+              currentValue={null}
             />
           </FormGroup>
         </GridItem>
@@ -194,6 +195,7 @@ class BasicFields extends React.Component {
               name="load_balancers"
               component={LoadBalancersComboBox}
               disabled={pending}
+              currentValue={null}
             />
           </FormGroup>
         </GridItem>

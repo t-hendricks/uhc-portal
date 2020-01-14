@@ -12,9 +12,8 @@ import {
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import get from 'lodash/get';
 import ErrorBox from '../../../../common/ErrorBox';
-import { humanizeValueWithUnitGiB, parseValueWithUnit } from '../../../../../common/units';
-
-const baseClusterQuota = 107374182400; // The base cluster storage quota is 100 GiB (in bytes).
+import { humanizeValueWithUnitGiB } from '../../../../../common/units';
+import filterPersistentStorageValuesByQuota from './helpers';
 
 class PersistentStorageComboBox extends React.Component {
   componentDidMount() {
@@ -33,20 +32,9 @@ class PersistentStorageComboBox extends React.Component {
     }
   }
 
-  filterPersistentStorageValuesByQuota() {
-    const { persistentStorageValues, quota } = this.props;
-    // Get quota for persistent storage.
-    // this quota is "on top" of the base cluster quota of 100 GiB.
-    const persistentStorageQuota = get(quota, 'persistentStorageQuota', 0);
-    const quotaInBytes = parseValueWithUnit(persistentStorageQuota, 'GiB');
-    const result = { ...persistentStorageValues };
-    result.values = result.values.filter(el => el.value <= quotaInBytes + baseClusterQuota);
-    return result;
-  }
-
   render() {
     const {
-      input, persistentStorageValues, disabled,
+      input, persistentStorageValues, disabled, currentValue, quota,
     } = this.props;
 
     // Set up options for storage values
@@ -67,12 +55,16 @@ class PersistentStorageComboBox extends React.Component {
     };
 
     if (persistentStorageValues.fulfilled) {
-      const filteredStorageValues = this.filterPersistentStorageValuesByQuota();
+      const remainingQuota = get(quota, 'persistentStorageQuota', 0);
+      const filteredStorageValues = filterPersistentStorageValuesByQuota(currentValue,
+        persistentStorageValues, remainingQuota);
+      const isDisabled = disabled || (filteredStorageValues.values.length <= 1);
+
       return (
         <FormSelect
           className="quota-combo-box"
           aria-label="Persistent Storage"
-          isDisabled={disabled}
+          isDisabled={isDisabled}
           {...input}
         >
           {filteredStorageValues.values.map(value => storageOption(value))}
@@ -99,6 +91,7 @@ PersistentStorageComboBox.propTypes = {
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
+  currentValue: PropTypes.number,
 };
 
 export default PersistentStorageComboBox;
