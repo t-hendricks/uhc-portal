@@ -58,12 +58,13 @@ class PersistentStorageComboBox extends React.Component {
       const remainingQuota = get(quota, 'persistentStorageQuota', 0);
       const filteredStorageValues = filterPersistentStorageValuesByQuota(currentValue,
         persistentStorageValues, remainingQuota);
+      const isDisabled = disabled || (filteredStorageValues.values.length <= 1);
 
       return (
         <FormSelect
           className="quota-combo-box"
           aria-label="Persistent Storage"
-          isDisabled={disabled}
+          isDisabled={isDisabled}
           {...input}
         >
           {filteredStorageValues.values.map(value => storageOption(value))}
