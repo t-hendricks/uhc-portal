@@ -45,7 +45,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
                 title={null}
               />
               <span>
-                Critical
+                Warning
               </span>
             </React.Fragment>,
           },
@@ -66,7 +66,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
                 title={null}
               />
               <span>
-                Warning
+                Critical
               </span>
             </React.Fragment>,
           },
@@ -87,7 +87,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
                 title={null}
               />
               <span>
-                Warning
+                Critical
               </span>
             </React.Fragment>,
           },
@@ -108,7 +108,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
                 title={null}
               />
               <span>
-                Critical
+                Warning
               </span>
             </React.Fragment>,
           },
@@ -129,7 +129,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
                 title={null}
               />
               <span>
-                Critical
+                Warning
               </span>
             </React.Fragment>,
           },
@@ -181,7 +181,7 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
                 title={null}
               />
               <span>
-                Critical
+                Warning
               </span>
             </React.Fragment>,
           },
@@ -208,7 +208,7 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
                 title={null}
               />
               <span>
-                Warning
+                Critical
               </span>
             </React.Fragment>,
           },
@@ -235,7 +235,7 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
                 title={null}
               />
               <span>
-                Warning
+                Critical
               </span>
             </React.Fragment>,
           },
@@ -262,7 +262,7 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
                 title={null}
               />
               <span>
-                Critical
+                Warning
               </span>
             </React.Fragment>,
           },
@@ -289,7 +289,7 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
                 title={null}
               />
               <span>
-                Critical
+                Warning
               </span>
             </React.Fragment>,
           },
