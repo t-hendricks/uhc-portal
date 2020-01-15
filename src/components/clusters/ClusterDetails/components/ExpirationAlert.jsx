@@ -11,6 +11,29 @@ function ExpirationAlert({ expirationTimestamp }) {
   const expirationTimeString = expirationTime.local().format('dddd, MMMM Do YYYY, h:mm a');
   let variant;
 
+  if (diff < 0) {
+    return (
+      <Alert
+        id="expiration-alert"
+        variant="warning"
+        isInline
+        title={`This cluster should have been deleted ${timeUntilExpiryString}.`}
+      >
+        <>
+          Please contact OCM support at
+          {' '}
+          <a
+            href="mailto: ocm-feedback@redhat.com"
+          >
+            ocm-feedback@redhat.com
+          </a>
+          {' '}
+           to let us know about this issue.
+        </>
+      </Alert>
+    );
+  }
+
   if (diff >= 48) {
     variant = 'info';
   }
@@ -26,8 +49,13 @@ function ExpirationAlert({ expirationTimestamp }) {
       id="expiration-alert"
       variant={variant}
       isInline
-      title={`This cluster will be deleted ${timeUntilExpiryString}, on ${expirationTimeString}.`}
-    />
+      title={`This cluster will be deleted ${timeUntilExpiryString}.`}
+    >
+      This cluster is scheduled for deletion on
+      {' '}
+      {expirationTimeString}
+.
+    </Alert>
   );
 }
 
