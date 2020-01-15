@@ -43,56 +43,6 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
       </a>
     </p>
     <Component
-      actions={Array []}
-      aria-label="Identity Providers"
-      cells={
-        Array [
-          "Name",
-          "Type",
-        ]
-      }
-      rows={
-        Array [
-          Object {
-            "cells": Array [
-              Object {
-                "props": Object {
-                  "colSpan": 2,
-                },
-                "title": <Bullseye>
-                  <EmptyState
-                    variant="small"
-                  >
-                    <Title
-                      headingLevel="h2"
-                      size="lg"
-                    >
-                      No Identity Providers Exist
-                    </Title>
-                    <EmptyStateBody>
-                      Identity providers determine how users log into the cluster.
-                       
-                      <a
-                        href="https://docs.openshift.com/container-platform/4.2/authentication/understanding-identity-provider.html"
-                        rel="noopener noreferrer"
-                      >
-                        Learn more.
-                      </a>
-                    </EmptyStateBody>
-                  </EmptyState>
-                </Bullseye>,
-              },
-            ],
-            "heightAuto": true,
-          },
-        ]
-      }
-      variant="compact"
-    >
-      <TableHeader />
-      <TableBody />
-    </Component>
-    <Component
       className="add-idp-button"
       onClick={[Function]}
       variant="secondary"
