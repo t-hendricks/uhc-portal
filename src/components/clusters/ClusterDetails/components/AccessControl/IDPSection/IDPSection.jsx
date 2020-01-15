@@ -10,18 +10,23 @@ import {
   TableHeader,
   TableBody,
   TableVariant,
+  cellWidth,
 } from '@patternfly/react-table';
 import {
   Skeleton,
 } from '@redhat-cloud-services/frontend-components';
+import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
 import links from '../../../../../../common/installLinks';
-import { IDPTypeNames } from '../../IdentityProvidersModal/IdentityProvidersHelper';
+import { IDPTypeNames, getOauthCallbackURL, IDPNeedsOAuthURL } from '../../IdentityProvidersModal/IdentityProvidersHelper';
 
-function IDPSection({ clusterID, identityProviders, openModal }) {
+function IDPSection({
+  clusterID, clusterConsoleURL, identityProviders, openModal,
+}) {
   const columns = [
-    'Name',
-    'Type',
+    { title: 'Name', transforms: [cellWidth(30)] },
+    { title: 'Type', transforms: [cellWidth(30)] },
+    { title: 'Auth Callback URL', transforms: [cellWidth(30)] },
   ];
 
   const actions = [
@@ -41,6 +46,13 @@ function IDPSection({ clusterID, identityProviders, openModal }) {
     cells: [
       idp.name,
       get(IDPTypeNames, idp.type, idp.type),
+      {
+        title: IDPNeedsOAuthURL(idp.type) ? (
+          <ClipboardCopyLinkButton className="idp-table-copy" text={getOauthCallbackURL(clusterConsoleURL, idp.name)}>
+            Copy URL to clipboard
+          </ClipboardCopyLinkButton>
+        ) : 'N/A',
+      },
     ],
     idpID: idp.id,
   });
@@ -98,6 +110,7 @@ function IDPSection({ clusterID, identityProviders, openModal }) {
 
 IDPSection.propTypes = {
   clusterID: PropTypes.string.isRequired,
+  clusterConsoleURL: PropTypes.string.isRequired,
   identityProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
 };

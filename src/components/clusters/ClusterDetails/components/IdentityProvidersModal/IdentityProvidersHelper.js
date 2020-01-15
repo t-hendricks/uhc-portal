@@ -59,6 +59,32 @@ const mappingMethods = [
   },
 ];
 
+/**
+ * getOauthCallbackURL returns the OAuth callback URL for a given cluster console URL and IDP Name.
+ * @param {String} consoleURL a cluster's console URL.
+ * @param {String} IDPName an IDP name.
+ * @returns {String} The OAuth callback URL for this IDP.
+ */
+const getOauthCallbackURL = (consoleURL, IDPName) => {
+  if (!IDPName || !consoleURL) {
+    return '';
+  }
+  const URLWithSlash = consoleURL.endsWith('/') ? consoleURL : `${consoleURL}/`;
+  const URLParts = URLWithSlash.split('.');
+  URLParts[0] = 'https://oauth-openshift';
+
+  const oauthURLBase = URLParts.join('.');
+  return `${oauthURLBase}oauth2callback/${IDPName}`;
+};
+
+/**
+ * Does this IDP needs an OAuth callback URL? Currernly only LDAP doesn't, but the helper function
+ * is here to make us future proof. If we introduce another IDP that doesn't need the callback URL,
+ * this function will need to be modified to account for it.
+ * @param {String} IDPType the identity provider type
+ */
+const IDPNeedsOAuthURL = IDPType => IDPType !== IDPformValues.LDAP;
+
 const LDAPDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-ldap-identity-provider';
 const GithubDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-github-identity-provider';
 const OpenIDDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-oidc-identity-provider';
@@ -133,6 +159,8 @@ const getCreateIDPRequestData = (formData) => {
 
 export {
   getCreateIDPRequestData,
+  getOauthCallbackURL,
+  IDPNeedsOAuthURL,
   IDPtypes,
   IDPTypeNames,
   mappingMethods,

@@ -681,6 +681,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
     id="accessControlTabContent"
   >
     <AccessControl
+      clusterConsoleURL="https://console-openshift-console.apps.test-liza.sdev.devshift.net"
       clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
     />
   </ForwardRef>
@@ -703,6 +704,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
     onClose={[Function]}
   />
   <Connect(ReduxForm)
+    clusterConsoleURL="https://console-openshift-console.apps.test-liza.sdev.devshift.net"
     clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
     clusterName="test-liza"
     refreshParent={[Function]}
