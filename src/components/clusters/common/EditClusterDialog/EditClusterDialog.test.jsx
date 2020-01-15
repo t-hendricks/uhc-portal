@@ -32,8 +32,10 @@ describe('<EditDisplayNameDialog />', () => {
       resetResponse={resetResponse}
       getPersistentStorage={jest.fn()}
       getCloudProviders={jest.fn()}
+      getOrganizationAndQuota={jest.fn()}
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
+      organization={fulfilledRequest}
       initialFormValues={{
         id: 'test-id', nodesCompute: 4, load_balancers: '4', persistent_storage: '107374182400',
       }}

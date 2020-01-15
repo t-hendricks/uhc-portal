@@ -21,12 +21,17 @@ class EditClusterDialog extends Component {
       loadBalancerValues,
       getLoadBalancers,
       getPersistentStorage,
+      organization,
+      getOrganizationAndQuota,
     } = this.props;
     if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
       getPersistentStorage();
     }
     if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
       getLoadBalancers();
+    }
+    if (!organization.fulfilled && !organization.pending) {
+      getOrganizationAndQuota();
     }
   }
 
@@ -37,6 +42,7 @@ class EditClusterDialog extends Component {
       closeModal,
       onClose,
       initialFormValues,
+      getOrganizationAndQuota,
       change,
     } = this.props;
 
@@ -57,6 +63,7 @@ class EditClusterDialog extends Component {
       resetResponse();
       onClose();
       closeModal();
+      getOrganizationAndQuota();
     }
   }
 
@@ -80,6 +87,7 @@ class EditClusterDialog extends Component {
       persistentStorageValues,
       loadBalancerValues,
       initialFormValues,
+      organization,
     } = this.props;
 
     const cancelEdit = () => {
@@ -112,7 +120,7 @@ before proceeding to be sure you are not
     );
 
     const pending = loadBalancerValues.pending || persistentStorageValues.pending
-     || editClusterResponse.pending;
+     || editClusterResponse.pending || organization.pending;
 
     return isOpen && (
       <Modal
@@ -196,6 +204,8 @@ EditClusterDialog.propTypes = {
   getPersistentStorage: PropTypes.func.isRequired,
   persistentStorageValues: PropTypes.object.isRequired,
   loadBalancerValues: PropTypes.object.isRequired,
+  organization: PropTypes.object.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
 };
 
 EditClusterDialog.defaultProps = {
