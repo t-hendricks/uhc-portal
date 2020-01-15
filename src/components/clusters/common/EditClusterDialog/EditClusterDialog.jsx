@@ -187,8 +187,8 @@ EditClusterDialog.propTypes = {
   initialFormValues: PropTypes.shape({
     id: PropTypes.string,
     nodesCompute: PropTypes.number,
-    persistent_storage: PropTypes.string,
-    load_balancers: PropTypes.string,
+    persistent_storage: PropTypes.number,
+    load_balancers: PropTypes.number,
   }).isRequired,
   showLoadBalancerAlert: PropTypes.bool,
   showPersistentStorageAlert: PropTypes.bool,
