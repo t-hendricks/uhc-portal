@@ -29,8 +29,19 @@ const mapStateToProps = (state) => {
     persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
-    hasBYOCQuota: get(organization, 'quotaList.nodeQuota.byoc.available', 0) > 0,
-    hasStandardQuota: get(organization, 'quotaList.nodeQuota.rhInfra.available', 0) > 0,
+    quota: {
+      byoc: {
+        hasQuota: get(organization, 'quotaList.nodeQuota.byoc.available', 0) > 0,
+        multiAz: get(organization, 'quotaList.nodeQuota.byoc.multiAz.hasQuota', false),
+        singleAz: get(organization, 'quotaList.nodeQuota.byoc.singleAz.hasQuota', false),
+      },
+      rhInfra: {
+        hasQuota: get(organization, 'quotaList.nodeQuota.rhInfra.available', 0) > 0,
+        multiAz: get(organization, 'quotaList.nodeQuota.rhInfra.multiAz.hasQuota', false),
+        singleAz: get(organization, 'quotaList.nodeQuota.rhInfra.singleAz.hasQuota', false),
+
+      },
+    },
     initialValues: {
       byoc: 'false',
       name: '',

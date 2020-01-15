@@ -44,7 +44,7 @@ class BasicFields extends React.Component {
 
   render() {
     const {
-      pending, showDNSBaseDomain, isBYOC,
+      pending, showDNSBaseDomain, isBYOC, hasSingleAzQuota, hasMultiAzQuota,
     } = this.props;
     const { isMultiAz } = this.state;
     const min = minValueSelector(isMultiAz);
@@ -116,8 +116,11 @@ class BasicFields extends React.Component {
               name="multi_az"
               disabled={pending}
               onChange={this.handleMultiAZChange}
-              options={[{ value: 'false', label: 'Single Zone' }, { value: 'true', label: 'Multizone' }]}
-              defaultValue="false"
+              options={[
+                { value: 'false', label: 'Single Zone', disabled: !hasSingleAzQuota },
+                { value: 'true', label: 'Multizone', disabled: !hasMultiAzQuota },
+              ]}
+              defaultValue={hasSingleAzQuota ? 'false' : 'true'}
             />
           </FormGroup>
         </GridItem>
@@ -209,6 +212,8 @@ BasicFields.propTypes = {
   pending: PropTypes.bool,
   showDNSBaseDomain: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
+  hasMultiAzQuota: PropTypes.bool.isRequired,
+  hasSingleAzQuota: PropTypes.bool.isRequired,
 };
 
 export default BasicFields;

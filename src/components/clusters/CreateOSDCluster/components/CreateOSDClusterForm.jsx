@@ -41,9 +41,10 @@ class CreateOSDClusterForm extends React.Component {
       change,
       openModal,
       isBYOCModalOpen,
-      hasBYOCQuota,
-      hasStandardQuota,
+      quota,
     } = this.props;
+    const hasBYOCQuota = quota.byoc.hasQuota;
+    const hasStandardQuota = quota.rhInfra.hasQuota;
 
     const { mode, byocSelected } = this.state;
 
@@ -52,6 +53,7 @@ class CreateOSDClusterForm extends React.Component {
     };
 
     const isBYOCForm = hasBYOCQuota && (!hasStandardQuota || byocSelected);
+    const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
 
     return (
       <>
@@ -89,6 +91,8 @@ class CreateOSDClusterForm extends React.Component {
           showDNSBaseDomain={false}
           change={change}
           isBYOC={isBYOCForm}
+          hasSingleAzQuota={quota[infraType].singleAz}
+          hasMultiAzQuota={quota[infraType].multiAz}
         />
 
         {/* Networking section */}
@@ -144,11 +148,21 @@ CreateOSDClusterForm.defaultProps = {
 CreateOSDClusterForm.propTypes = {
   pending: PropTypes.bool,
   isBYOCModalOpen: PropTypes.bool,
-  hasBYOCQuota: PropTypes.bool.isRequired,
-  hasStandardQuota: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
+  quota: PropTypes.shape({
+    byoc: PropTypes.shape({
+      hasQuota: PropTypes.bool.isRequired,
+      multiAz: PropTypes.bool.isRequired,
+      singleAz: PropTypes.bool.isRequired,
+    }).isRequired,
+    rhInfra: PropTypes.shape({
+      hasQuota: PropTypes.bool.isRequired,
+      multiAz: PropTypes.bool.isRequired,
+      singleAz: PropTypes.bool.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default CreateOSDClusterForm;
