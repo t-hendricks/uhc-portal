@@ -147,7 +147,7 @@ class ArchivedClusterList extends Component {
           {pageHeader}
           <PageSection>
             <Card>
-              <div className="cluster-list pf-c-content ocm-page">
+              <div className="cluster-list">
                 <div className="cluster-loading-container">
                   <Spinner centered />
                 </div>
@@ -163,7 +163,7 @@ class ArchivedClusterList extends Component {
         {pageHeader}
         <PageSection>
           <Card>
-            <div className="cluster-list pf-c-content ocm-page">
+            <div className="cluster-list">
               <GlobalErrorBox />
               <Split id="cluster-list-top">
                 <SplitItem>
