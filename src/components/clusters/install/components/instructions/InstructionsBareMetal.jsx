@@ -6,6 +6,7 @@ import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
+import EvaluationAlert from './components/EvaluationAlert';
 
 function InstructionsBareMetal({ token }) {
   return (
@@ -16,7 +17,7 @@ function InstructionsBareMetal({ token }) {
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
           {token.error && <TokenErrorAlert token={token} />}
-          <TelemetryAlert />
+          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
               With OpenShift Container Platform you can install a cluster on bare metal using
@@ -25,6 +26,7 @@ function InstructionsBareMetal({ token }) {
 
             <GetStarted docURL={links.INSTALL_BAREMETAL_GETTING_STARTED} />
           </div>
+          <TelemetryAlert />
         </div>
       </Card>
       <DownloadsAndPullSecretSection

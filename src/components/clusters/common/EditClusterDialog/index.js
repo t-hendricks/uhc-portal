@@ -9,6 +9,7 @@ import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import getLoadBalancerValues from '../../../../redux/actions/loadBalancerActions';
 import getPersistentStorageValues from '../../../../redux/actions/persistentStorageActions';
 import { minValueSelector, shouldShowStorageQuotaAlert, shouldShowLoadBalancerAlert } from './EditClusterSelectors';
+import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 
 const reduxFormConfig = {
   form: 'EditCluster',
@@ -27,6 +28,7 @@ const mapStateToProps = (state) => {
     showPersistentStorageAlert: shouldShowStorageQuotaAlert(state),
     loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
     persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
+    organization: state.userProfile.organization,
     initialFormValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,
@@ -56,6 +58,7 @@ const mapDispatchToProps = dispatch => ({
   },
   resetResponse: () => dispatch(clearClusterResponse()),
   closeModal: () => dispatch(closeModal()),
+  getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getPersistentStorage: getPersistentStorageValues,
   getLoadBalancers: getLoadBalancerValues,
 });

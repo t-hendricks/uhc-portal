@@ -18,6 +18,7 @@ describe('<IDPSection />', () => {
       clusterID="fake id"
       identityProviders={baseIDPs}
       openModal={openModal}
+      clusterConsoleURL="http://example.com/"
     />);
     expect(wrapper).toMatchSnapshot();
     wrapper.find(Button).simulate('click');
@@ -35,6 +36,7 @@ describe('<IDPSection />', () => {
       clusterID="fake id"
       identityProviders={IDPs}
       openModal={jest.fn()}
+      clusterConsoleURL="http://example.com/"
     />);
     expect(wrapper).toMatchSnapshot();
   });
@@ -62,6 +64,7 @@ describe('<IDPSection />', () => {
       clusterID="fake id"
       identityProviders={IDPs}
       openModal={openModal}
+      clusterConsoleURL="http://example.com/"
     />);
     expect(wrapper).toMatchSnapshot();
     wrapper.find(Button).simulate('click');

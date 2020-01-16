@@ -38,10 +38,10 @@ class OCPSubscriptionCard extends Component {
       const inputStats = countBy(subscriptions.items, 'entitlement_status');
       const stats = {
         [entitlementStatuses.OK]: 0,
-        [entitlementStatuses.NOT_SET]: 0,
+        [entitlementStatuses.NOT_SUBSCRIBED]: 0,
         [entitlementStatuses.OVERCOMMITTED]: 0,
         [entitlementStatuses.INCONSISTENT_SERVICES]: 0,
-        [entitlementStatuses.UNKNOWN]: 0,
+        [entitlementStatuses.SIXTY_DAY_EVALUATION]: 0,
         ...inputStats,
       };
       content = <OCPSubscriptionSummary stats={stats} />;

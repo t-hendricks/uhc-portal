@@ -11,6 +11,7 @@ exports[`<IdentityProvidersModal /> renders correctly 1`] = `
   title="Create Identity Provider ()"
 >
   <IDPForm
+    clusterConsoleURL=""
     createIDPResponse={Object {}}
     selectedIDP="GithubIdentityProvider"
   />

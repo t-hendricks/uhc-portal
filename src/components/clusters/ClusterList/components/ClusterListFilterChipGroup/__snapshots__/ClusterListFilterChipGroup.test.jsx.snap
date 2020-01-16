@@ -16,7 +16,7 @@ exports[`<ClusterListFilterChipGroup /> should render 1`] = `
         key="chipgroup-entitlement_status"
       >
         <Component
-          key="NotSet"
+          key="NotSubscribed"
           onClick={[Function]}
         >
           Not Subscribed

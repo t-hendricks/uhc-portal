@@ -63,7 +63,7 @@ DropDownSelect.propTypes = {
     name: PropTypes.string.isRequired,
   }).isRequired,
   label: PropTypes.string.isRequired,
-  helpText: PropTypes.string.isRequired,
+  helpText: PropTypes.string,
   meta: PropTypes.shape({
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     touched: PropTypes.bool,

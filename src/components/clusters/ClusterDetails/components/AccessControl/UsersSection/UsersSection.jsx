@@ -4,8 +4,7 @@ import get from 'lodash/get';
 
 import { HelpIcon } from '@patternfly/react-icons';
 import {
-  Bullseye, EmptyState, EmptyStateBody, EmptyStateVariant,
-  Title, Button, CardHeader, CardFooter,
+  EmptyState, Title, Button, CardHeader, CardFooter,
   Popover, PopoverPosition, Card, CardBody,
 } from '@patternfly/react-core';
 import {
@@ -82,7 +81,7 @@ class UsersSection extends React.Component {
                 <p>
                   User IDs are matched by the cluster&apos;s identity providers.
                 </p>
-)}
+              )}
             >
               <Button variant="plain" isInline>
                 <HelpIcon size="sm" />
@@ -107,7 +106,7 @@ class UsersSection extends React.Component {
                   <a href={links.UNDERSTANDING_AUTHENTICATION}>OpenShift 4 documentation</a>
                   .
                 </p>
-)}
+              )}
             >
               <Button variant="plain" isInline>
                 <HelpIcon size="sm" />
@@ -143,36 +142,10 @@ class UsersSection extends React.Component {
 
     const learnMoreLink = <a rel="noopener noreferrer" href={links.DEDICATED_ADMIN_ROLE}>Learn more.</a>;
 
-    const hasUsers = get(clusterGroupUsers.users, 'items.length', false);
-
-    const tableEmptyState = [
-      {
-        heightAuto: true,
-        cells: [
-          {
-            props: { colSpan: 2 },
-            title: (
-              <Bullseye>
-                <EmptyState variant={EmptyStateVariant.small}>
-                  <Title headingLevel="h2" size="lg">
-                    No users exist for this cluster
-                  </Title>
-                  <EmptyStateBody>
-                    You can add users to grant them administrator access to the cluster.
-                    Users will be authenticated via your selected identity provider.
-                    {' '}
-                    {learnMoreLink}
-                  </EmptyStateBody>
-                </EmptyState>
-              </Bullseye>
-            ),
-          },
-        ],
-      },
-    ];
+    const hasUsers = !!get(clusterGroupUsers.users, 'items.length', false);
 
     const userList = hasUsers ? clusterGroupUsers.users.items : [];
-    const rows = hasUsers ? userList.map(userRow) : tableEmptyState;
+    const rows = hasUsers && userList.map(userRow);
     const showSkeleton = !hasUsers && clusterGroupUsers.pending;
     const skeletonRow = {
       cells: [
@@ -219,11 +192,13 @@ class UsersSection extends React.Component {
           { deleteUserResponse.error && (
             <ErrorBox message="Error deleting user" response={deleteUserResponse} />
           )}
-          <Table aria-label="Users" actions={hasUsers ? actions : []} variant={TableVariant.compact} cells={columns} rows={rows}>
-            <TableHeader />
-            <TableBody />
-          </Table>
-          <h3>Add user:</h3>
+          { hasUsers && (
+            <Table aria-label="Users" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows}>
+              <TableHeader />
+              <TableBody />
+            </Table>
+          )}
+          <Title headingLevel="h3" size="md" className="pf-u-mt-md pf-u-mb-sm">Add user:</Title>
           <UserInputForm
             clusterID={clusterID}
             saveUser={addUser}

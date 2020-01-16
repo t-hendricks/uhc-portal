@@ -78,7 +78,7 @@ describe('<Subscriptions />', () => {
       expect(wrapper).toMatchSnapshot();
     });
     it('should have all categories', () => {
-      expect(wrapper.find('OCPSubscriptionCategory').length).toEqual(3);
+      expect(wrapper.find('OCPSubscriptionCategory').length).toEqual(2);
     });
   });
 

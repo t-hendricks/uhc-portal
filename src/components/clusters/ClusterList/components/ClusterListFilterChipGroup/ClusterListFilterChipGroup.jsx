@@ -8,6 +8,7 @@ import {
 
 import helpers from '../../../../../common/helpers';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
+import { entitlementStatuses } from '../../../../../common/subscriptionTypes';
 
 function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
   if (helpers.nestedIsEmpty(currentFilters)) {
@@ -26,11 +27,11 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
       key: 'entitlement_status',
       label: 'Subscription status',
       optionLabels: {
-        Ok: 'Subscribed',
-        NotSet: 'Not Subscribed',
-        Overcommitted: 'Insufficient',
-        InconsistentServices: 'Invalid',
-        NotReconciled: 'Unknown',
+        [entitlementStatuses.OK]: 'Subscribed',
+        [entitlementStatuses.OVERCOMMITTED]: 'Insufficient',
+        [entitlementStatuses.INCONSISTENT_SERVICES]: 'Invalid',
+        [entitlementStatuses.NOT_SUBSCRIBED]: 'Not Subscribed',
+        [entitlementStatuses.SIXTY_DAY_EVALUATION]: '60-day Evaluation',
       },
     },
     {

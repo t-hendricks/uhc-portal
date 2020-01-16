@@ -7,6 +7,7 @@ import links from '../../../../../common/installLinks';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
+import EvaluationAlert from './components/EvaluationAlert';
 
 function InstructionsAWSIPI({ token }) {
   return (
@@ -17,7 +18,7 @@ function InstructionsAWSIPI({ token }) {
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
           {token.error && <TokenErrorAlert token={token} />}
-          <TelemetryAlert />
+          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
                 With OpenShift Container Platform you can install a cluster on Amazon Web Services
@@ -47,6 +48,7 @@ function InstructionsAWSIPI({ token }) {
               </li>
             </ul>
           </div>
+          <TelemetryAlert />
         </div>
       </Card>
       <DownloadsAndPullSecretSection

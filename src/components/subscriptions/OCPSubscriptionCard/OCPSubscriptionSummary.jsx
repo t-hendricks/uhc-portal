@@ -5,7 +5,6 @@ import forOwn from 'lodash/forOwn';
 import {
   ExclamationTriangleIcon,
   CheckCircleIcon,
-  UnknownIcon,
 } from '@patternfly/react-icons';
 
 import { entitlementStatuses } from '../../../common/subscriptionTypes';
@@ -25,7 +24,7 @@ function OCPSubscriptionSummary({ stats }) {
       };
 
       switch (entitlementStatus) {
-        case entitlementStatuses.NOT_SET:
+        case entitlementStatuses.NOT_SUBSCRIBED:
           item.text = 'Not subscribed';
           item.hint = 'Clusters do not have subscriptions attached.';
           break;
@@ -36,6 +35,10 @@ function OCPSubscriptionSummary({ stats }) {
         case entitlementStatuses.INCONSISTENT_SERVICES:
           item.text = 'Invalid';
           item.hint = 'Clusters are attached to subscriptions with different support levels.';
+          break;
+        case entitlementStatuses.SIXTY_DAY_EVALUATION:
+          item.text = '60-day Evaluation';
+          item.hint = 'Self-supported evaluation clusters.';
           break;
         default:
       }
@@ -55,12 +58,10 @@ function OCPSubscriptionSummary({ stats }) {
     entitlementStatuses.OK,
   ];
   const warnCategory = [
-    entitlementStatuses.NOT_SET,
+    entitlementStatuses.NOT_SUBSCRIBED,
     entitlementStatuses.OVERCOMMITTED,
     entitlementStatuses.INCONSISTENT_SERVICES,
-  ];
-  const unknownCategory = [
-    entitlementStatuses.UNKNOWN,
+    entitlementStatuses.SIXTY_DAY_EVALUATION,
   ];
   return (
     <>
@@ -76,13 +77,6 @@ function OCPSubscriptionSummary({ stats }) {
         labelIcon={<ExclamationTriangleIcon className="status-icon warn-icon" />}
         labelClass="warn-label"
         items={items.filter(item => warnCategory.includes(item.status))}
-      />
-      <OCPSubscriptionCategory
-        labelText="Unknown"
-        labelIcon={<UnknownIcon className="status-icon unknown-icon" />}
-        labelClass="unknown-label"
-        labelHint="Subscription status for new clusters may not be available for a few minutes after being created."
-        items={items.filter(item => unknownCategory.includes(item.status))}
       />
     </>
   );
