@@ -23,6 +23,8 @@ const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 // Maximum node count
 const MAX_NODE_COUNT = 180;
 
+const AWS_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
+
 // Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');
 
@@ -290,6 +292,16 @@ const checkDisconnectedNodeCount = (value) => {
   return nodes(Number(value), { value: 0 }, 250);
 };
 
+const validateARN = (value) => {
+  if (!value) {
+    return 'Field is required';
+  }
+  if (!AWS_ARN_REGEX.test(value)) {
+    return 'ARN value should be in the format arn::aws:iam::123456789012:user/name.';
+  }
+  return undefined;
+};
+
 const validators = {
   required,
   checkIdentityProviderName,
@@ -327,6 +339,7 @@ export {
   checkDisconnectedSockets,
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
+  validateARN,
 };
 
 export default validators;

@@ -163,6 +163,33 @@ const deleteClusterAddOn = (clusterID, addOnID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`,
 });
 
+const getRoles = () => apiRequest({
+  method: 'get',
+  url: '/api/clusters_mgmt/v1/aws_infrastructure_access_roles/?search=state=\'valid\'',
+});
+
+const getGrants = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/aws_infrastructure_access_role_grants`,
+});
+
+const addGrant = (clusterID, roleId, arn) => apiRequest({
+  method: 'post',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/aws_infrastructure_access_role_grants/`,
+  data: {
+    role: {
+      id: roleId,
+    },
+    user_arn: arn,
+  },
+});
+
+const deleteGrant = (clusterID, grantId) => apiRequest({
+  method: 'delete',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/aws_infrastructure_access_role_grants/${grantId}`,
+});
+
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -192,6 +219,10 @@ const clusterService = {
   deleteClusterAddOn,
   getStorageQuotaValues,
   getLoadBalancerQuotaValues,
+  getRoles,
+  getGrants,
+  addGrant,
+  deleteGrant,
 };
 
 export default clusterService;

@@ -291,7 +291,11 @@ class ClusterDetails extends Component {
         )}
         { displayAccessControlTab && (
           <TabContent eventKey={2} id="accessControlTabContent" ref={this.accessControlTabRef} aria-label="Access Control" hidden>
-            <AccessControl clusterID={cluster.id} clusterConsoleURL={consoleURL} />
+            <AccessControl
+              clusterID={cluster.id}
+              clusterConsoleURL={consoleURL}
+              cloudProvider={cluster.cloud_provider.id}
+            />
           </TabContent>
         )}
         {displayAddOnsTab && (

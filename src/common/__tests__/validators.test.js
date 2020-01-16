@@ -11,6 +11,7 @@ import validators, {
   checkDisconnectedvCPU,
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
+  validateARN,
 } from '../validators';
 
 test('Field is required', () => {
@@ -235,4 +236,12 @@ test('Field is valid number of compute nodes for disconnected cluster', () => {
   expect(checkDisconnectedNodeCount(250)).toBe(undefined);
   expect(checkDisconnectedNodeCount(251)).toBe('Maximum number allowed is 250.');
   expect(checkDisconnectedNodeCount(Number.MAX_SAFE_INTEGER)).toBe('Maximum number allowed is 250.');
+});
+
+test('Field is a valid ARN', () => {
+  expect(validateARN('arn:aws:iam::012345678901:user/richard')).toBe(undefined);
+  expect(validateARN('arn:aws:iam::012345678901:group/sda')).toBe(undefined);
+  expect(validateARN('arn:aws:iam::0123456789:user/richard')).toBe('ARN value should be in the format arn::aws:iam::123456789012:user/name.');
+  expect(validateARN('arn:aws:iam:0123456789:user/richard')).toBe('ARN value should be in the format arn::aws:iam::123456789012:user/name.');
+  expect(validateARN('0123456789:user/richard')).toBe('ARN value should be in the format arn::aws:iam::123456789012:user/name.');
 });

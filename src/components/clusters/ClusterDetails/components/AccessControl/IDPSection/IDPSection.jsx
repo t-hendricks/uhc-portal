@@ -99,7 +99,7 @@ function IDPSection({
               <TableBody />
             </Table>
           )}
-          <Button onClick={() => openModal('create-identity-provider')} variant="secondary" className="add-idp-button">
+          <Button onClick={() => openModal('create-identity-provider')} variant="secondary" className="access-control-add">
             Add identity provider
           </Button>
         </CardBody>
