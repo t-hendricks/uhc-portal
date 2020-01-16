@@ -22,7 +22,7 @@ const TelemetryAlert = () => {
 
   return (
     <Alert
-      variant="warning"
+      variant="info"
       isInline
       title={title}
       className="telemetry-alert"

@@ -7,7 +7,7 @@ describe('<ClusterListFilterChipGroup />', () => {
   it('should render', () => {
     const wrapper = shallow(<ClusterListFilterChipGroup
       setFilter={jest.fn()}
-      currentFilters={{ entitlement_status: ['NotSet'] }}
+      currentFilters={{ entitlement_status: ['NotSubscribed'] }}
       history={{ push: jest.fn() }}
     />);
     expect(wrapper).toMatchSnapshot();

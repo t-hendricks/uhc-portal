@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Popover, PopoverPosition, Button } from '@patternfly/react-core';
-import { CheckCircleIcon, ExclamationTriangleIcon, UnknownIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon, ExclamationTriangleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
-import { entitlementStatuses } from '../../../common/subscriptionTypes';
+import { entitlementStatuses } from '../../../../common/subscriptionTypes';
+import getClusterEvaluationExpiresInDays from '../../../../common/getClusterEvaluationExpiresInDays';
 
 function SubscriptionStatusIndicator({ cluster }) {
   const managed = get(cluster, 'managed');
   const entitlementStatus = get(cluster, 'subscription.entitlement_status');
+  const evaluationExpiresStr = getClusterEvaluationExpiresInDays(cluster);
 
   switch (entitlementStatus) {
     case entitlementStatuses.OK:
@@ -19,18 +21,6 @@ function SubscriptionStatusIndicator({ cluster }) {
           {' '}
           Subscribed
         </>
-      );
-    case entitlementStatuses.NOT_SET:
-      return (
-        <Popover
-          position={PopoverPosition.top}
-          bodyContent="This cluster does not have a subscription attached."
-          aria-label="Not Subscribed"
-        >
-          <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
-            Not Subscribed
-          </Button>
-        </Popover>
       );
     case entitlementStatuses.OVERCOMMITTED:
       return (
@@ -56,6 +46,18 @@ function SubscriptionStatusIndicator({ cluster }) {
           </Button>
         </Popover>
       );
+    case entitlementStatuses.SIXTY_DAY_EVALUATION:
+      return (
+        <Popover
+          position={PopoverPosition.top}
+          bodyContent={`${evaluationExpiresStr} remaining in the evaluation period.`}
+          aria-label="Six Day Evaluation"
+        >
+          <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
+            60-day Evaluation
+          </Button>
+        </Popover>
+      );
     default:
       if (managed) {
         return (
@@ -69,11 +71,11 @@ function SubscriptionStatusIndicator({ cluster }) {
       return (
         <Popover
           position={PopoverPosition.top}
-          bodyContent="Subscription information for this cluster is not available yet. It may take up to 12 hours for this information to become available."
-          aria-label="Unknown"
+          bodyContent="This cluster does not have a subscription attached."
+          aria-label="Not Subscribed"
         >
-          <Button variant="link" isInline icon={<UnknownIcon color="black" />}>
-            Unknown
+          <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
+            Not Subscribed
           </Button>
         </Popover>
       );
@@ -86,6 +88,7 @@ SubscriptionStatusIndicator.propTypes = {
     subscription: PropTypes.shape({
       entitlement_status: PropTypes.string,
     }),
+    creation_timestamp: PropTypes.string,
   }),
 };
 

@@ -36,10 +36,10 @@ class ClusterListFilterDropdown extends React.Component {
         label: 'Subscription Status',
         options: [
           [entitlementStatuses.OK, 'Subscribed'],
-          [entitlementStatuses.NOT_SET, 'Not Subscribed'],
+          [entitlementStatuses.NOT_SUBSCRIBED, 'Not Subscribed'],
           [entitlementStatuses.OVERCOMMITTED, 'Insufficient'],
           [entitlementStatuses.INCONSISTENT_SERVICES, 'Invalid'],
-          [entitlementStatuses.UNKNOWN, 'Unknown'],
+          [entitlementStatuses.SIXTY_DAY_EVALUATION, '60-day Evaluation'],
         ],
         selected: {},
       },

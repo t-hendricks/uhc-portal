@@ -78,10 +78,10 @@ exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
       stats={
         Object {
           "InconsistentServices": 1,
-          "NotReconciled": 1,
-          "NotSet": 1,
+          "NotSubscribed": 1,
           "Ok": 1,
           "Overcommitted": 1,
+          "SixtyDayEvaluation": 1,
         }
       }
     />
@@ -187,22 +187,6 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
           "text": "Invalid",
         },
         Object {
-          "hint": "Clusters do not have subscriptions attached.",
-          "link": <Link
-            replace={false}
-            to={
-              Object {
-                "pathname": "/",
-                "search": "entitlement_status=NotSet&plan_id=OCP",
-              }
-            }
-          >
-            1 Cluster
-          </Link>,
-          "status": "NotSet",
-          "text": "Not subscribed",
-        },
-        Object {
           "hint": "Clusters are consuming more resources than they are entitled to.",
           "link": <Link
             replace={false}
@@ -218,6 +202,38 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
           "status": "Overcommitted",
           "text": "Insufficient",
         },
+        Object {
+          "hint": "Clusters do not have subscriptions attached.",
+          "link": <Link
+            replace={false}
+            to={
+              Object {
+                "pathname": "/",
+                "search": "entitlement_status=NotSubscribed&plan_id=OCP",
+              }
+            }
+          >
+            1 Cluster
+          </Link>,
+          "status": "NotSubscribed",
+          "text": "Not subscribed",
+        },
+        Object {
+          "hint": "Self-supported evaluation clusters.",
+          "link": <Link
+            replace={false}
+            to={
+              Object {
+                "pathname": "/",
+                "search": "entitlement_status=SixtyDayEvaluation&plan_id=OCP",
+              }
+            }
+          >
+            1 Cluster
+          </Link>,
+          "status": "SixtyDayEvaluation",
+          "text": "60-day Evaluation",
+        },
       ]
     }
     labelClass="warn-label"
@@ -231,40 +247,6 @@ exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
       />
     }
     labelText="Subscription issues"
-  />
-  <OCPSubscriptionCategory
-    items={
-      Array [
-        Object {
-          "hint": null,
-          "link": <Link
-            replace={false}
-            to={
-              Object {
-                "pathname": "/",
-                "search": "entitlement_status=NotReconciled&plan_id=OCP",
-              }
-            }
-          >
-            1 Cluster
-          </Link>,
-          "status": "NotReconciled",
-          "text": null,
-        },
-      ]
-    }
-    labelClass="unknown-label"
-    labelHint="Subscription status for new clusters may not be available for a few minutes after being created."
-    labelIcon={
-      <UnknownIcon
-        className="status-icon unknown-icon"
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-        title={null}
-      />
-    }
-    labelText="Unknown"
   />
 </Fragment>
 `;
