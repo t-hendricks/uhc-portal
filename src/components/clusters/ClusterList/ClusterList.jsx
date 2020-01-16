@@ -36,7 +36,7 @@ import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup';
 
 import ClusterListEmptyState from './components/ClusterListEmptyState';
-import ClusterListTable from './components/ClusterListTable/ClusterListTable';
+import ClusterListTable from './components/ClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
