@@ -1,6 +1,16 @@
 import validators, {
-  required, checkIdentityProviderName, checkClusterUUID,
-  checkClusterConsoleURL, checkUserID, checkOpenIDIssuer, checkGithubTeams,
+  required,
+  checkIdentityProviderName,
+  checkClusterUUID,
+  checkClusterConsoleURL,
+  checkUserID,
+  checkOpenIDIssuer,
+  checkGithubTeams,
+  checkDisconnectedConsoleURL,
+  checkDisconnectedSockets,
+  checkDisconnectedvCPU,
+  checkDisconnectedMemCapacity,
+  checkDisconnectedNodeCount,
 } from '../validators';
 
 test('Field is required', () => {
@@ -155,4 +165,72 @@ test('Field is a valid list of github teams', () => {
   expect(checkGithubTeams('team')).toBe("Each team must be of format 'org/team'.");
   expect(checkGithubTeams('team2,')).toBe("Each team must be of format 'org/team'.");
   expect(checkGithubTeams('team2,/')).toBe("Each team must be of format 'org/team'.");
+});
+
+test('Field is a valid disconnected console URL', () => {
+  expect(checkDisconnectedConsoleURL()).toBe(undefined);
+  expect(checkDisconnectedConsoleURL('')).toBe(undefined);
+  expect(checkDisconnectedConsoleURL('http://www.example.com')).toBe(undefined);
+  expect(checkDisconnectedConsoleURL('https://console-openshift-console.apps.example.com/')).toBe(undefined);
+  expect(checkDisconnectedConsoleURL('www.example.hey/hey')).toBe('The URL should include the scheme prefix (http://, https://)');
+  expect(checkDisconnectedConsoleURL('ftp://hello.com')).toBe('The URL should include the scheme prefix (http://, https://)');
+  expect(checkDisconnectedConsoleURL('http://example.com\noa')).toBe('Invalid URL');
+  expect(checkDisconnectedConsoleURL('http://www.example:55815.com')).toBe('Invalid URL');
+  expect(checkDisconnectedConsoleURL('https://www-whatever.apps.example.co.uk/')).toBe(undefined);
+  expect(checkDisconnectedConsoleURL('http://www.example.com:foo')).toBe('Invalid URL');
+  expect(checkDisconnectedConsoleURL('http://www.example.com....')).toBe('Invalid URL');
+  expect(checkDisconnectedConsoleURL('http://blog.example.com')).toBe(undefined);
+  expect(checkDisconnectedConsoleURL('http://255.255.255.255')).toBe(undefined);
+  expect(checkDisconnectedConsoleURL('http://www.site.com:8008')).toBe(undefined);
+  expect(checkDisconnectedConsoleURL('http://www.example.com/product')).toBe(undefined);
+  expect(checkDisconnectedConsoleURL('example.com/')).toBe('The URL should include the scheme prefix (http://, https://)');
+  expect(checkDisconnectedConsoleURL('www.example.com')).toBe('The URL should include the scheme prefix (http://, https://)');
+  expect(checkDisconnectedConsoleURL('http://www.example.com#up')).toBe('The URL must not include a query string (?) or fragment (#)');
+  expect(checkDisconnectedConsoleURL('http://www.example.com/products?id=1&page=2')).toBe('The URL must not include a query string (?) or fragment (#)');
+  expect(checkDisconnectedConsoleURL('255.255.255.255')).toBe('The URL should include the scheme prefix (http://, https://)');
+  expect(checkDisconnectedConsoleURL('http://invalid.com/perl.cgi?key=')).toBe('The URL must not include a query string (?) or fragment (#)');
+});
+
+test('Field contains a valid number of vCPUs', () => {
+  expect(checkDisconnectedvCPU()).toBe(undefined);
+  expect(checkDisconnectedvCPU('8.8')).toBe('Input must be an integer.');
+  expect(checkDisconnectedvCPU('-10')).toBe('Input must be a positive number.');
+  expect(checkDisconnectedvCPU('asdf')).toBe('Input must be a number.');
+  expect(checkDisconnectedvCPU('0')).toBe('Input must be a positive number.');
+  expect(checkDisconnectedvCPU('18000')).toBe('Input cannot be more than 16000.');
+  expect(checkDisconnectedvCPU('16000')).toBe(undefined);
+  expect(checkDisconnectedvCPU(Number.MAX_SAFE_INTEGER)).toBe('Input cannot be more than 16000.');
+});
+
+test('Field contains a valid number of sockets', () => {
+  expect(checkDisconnectedSockets()).toBe(undefined);
+  expect(checkDisconnectedSockets('8.8')).toBe('Input must be an integer.');
+  expect(checkDisconnectedSockets('-10')).toBe('Input must be a positive number.');
+  expect(checkDisconnectedSockets('asdf')).toBe('Input must be a number.');
+  expect(checkDisconnectedSockets('0')).toBe('Input must be a positive number.');
+  expect(checkDisconnectedSockets('3000')).toBe('Input cannot be more than 2000.');
+  expect(checkDisconnectedSockets('1999')).toBe(undefined);
+  expect(checkDisconnectedSockets(Number.MAX_SAFE_INTEGER)).toBe('Input cannot be more than 2000.');
+});
+
+test('Field contains a valid number of memory', () => {
+  expect(checkDisconnectedMemCapacity()).toBe(undefined);
+  expect(checkDisconnectedMemCapacity('8.8')).toBe(undefined);
+  expect(checkDisconnectedMemCapacity('-10')).toBe('Input must be a positive number.');
+  expect(checkDisconnectedMemCapacity('asdf')).toBe('Input must be a number.');
+  expect(checkDisconnectedMemCapacity('0')).toBe('Input must be a positive number.');
+  expect(checkDisconnectedMemCapacity('512000')).toBe('Input cannot be more than 256000.');
+  expect(checkDisconnectedMemCapacity('128000')).toBe(undefined);
+  expect(checkDisconnectedMemCapacity(Number.MAX_SAFE_INTEGER)).toBe('Input cannot be more than 256000.');
+});
+
+test('Field is valid number of compute nodes for disconnected cluster', () => {
+  expect(checkDisconnectedNodeCount()).toBe('Input must be a number.');
+  expect(checkDisconnectedNodeCount('')).toBe(undefined);
+  expect(checkDisconnectedNodeCount('asdf')).toBe('Input must be a number.');
+  expect(checkDisconnectedNodeCount(0)).toBe(undefined);
+  expect(checkDisconnectedNodeCount(-1)).toBe('The minimum number of nodes is 0.');
+  expect(checkDisconnectedNodeCount(250)).toBe(undefined);
+  expect(checkDisconnectedNodeCount(251)).toBe('Maximum number allowed is 250.');
+  expect(checkDisconnectedNodeCount(Number.MAX_SAFE_INTEGER)).toBe('Maximum number allowed is 250.');
 });
