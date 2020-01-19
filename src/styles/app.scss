@@ -865,6 +865,11 @@ span.dev-preview-label svg {
   min-height: 70%;
 }
 
+// selects the input box in PF Pagination component
+.pf-c-pagination__nav-page-select > input:nth-child(1) {
+  width: 100px;
+}
+
 div.pf-c-alert.archived-cluster-toast {
   position: absolute;
   z-index: 1;
