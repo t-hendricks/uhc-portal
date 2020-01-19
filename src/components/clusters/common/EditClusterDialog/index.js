@@ -29,6 +29,7 @@ const mapStateToProps = (state) => {
     loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
     persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
     organization: state.userProfile.organization,
+    isByoc: modalData.byoc,
     initialFormValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,

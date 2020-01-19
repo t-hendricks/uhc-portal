@@ -88,6 +88,7 @@ class EditClusterDialog extends Component {
       loadBalancerValues,
       initialFormValues,
       organization,
+      isByoc,
     } = this.props;
 
     const cancelEdit = () => {
@@ -145,32 +146,36 @@ before proceeding to be sure you are not
                 : this.validateNodes}
               min={min.value}
             />
-            <FormGroup
-              fieldId="load_balancers"
-              label="Load balancers"
-            >
-              <Field
-                label="Load Balancers"
-                name="load_balancers"
-                component={LoadBalancersComboBox}
-                disabled={pending}
-                currentValue={initialFormValues.load_balancers}
-              />
-            </FormGroup>
-            {showLoadBalancerAlert && scalingAlert}
-            <FormGroup
-              fieldId="persistent_storage"
-              label="Persistent storage"
-            >
-              <Field
-                label="Persistent Storage"
-                name="persistent_storage"
-                component={PersistentStorageComboBox}
-                disabled={pending}
-                currentValue={initialFormValues.persistent_storage}
-              />
-            </FormGroup>
-            {showPersistentStorageAlert && scalingAlert}
+            { !isByoc && (
+              <>
+                <FormGroup
+                  fieldId="load_balancers"
+                  label="Load balancers"
+                >
+                  <Field
+                    label="Load Balancers"
+                    name="load_balancers"
+                    component={LoadBalancersComboBox}
+                    disabled={pending}
+                    currentValue={initialFormValues.load_balancers}
+                  />
+                </FormGroup>
+                {showLoadBalancerAlert && scalingAlert}
+                <FormGroup
+                  fieldId="persistent_storage"
+                  label="Persistent storage"
+                >
+                  <Field
+                    label="Persistent Storage"
+                    name="persistent_storage"
+                    component={PersistentStorageComboBox}
+                    disabled={pending}
+                    currentValue={initialFormValues.persistent_storage}
+                  />
+                </FormGroup>
+                {showPersistentStorageAlert && scalingAlert}
+              </>
+            )}
           </Form>
         </>
       </Modal>
@@ -206,6 +211,7 @@ EditClusterDialog.propTypes = {
   loadBalancerValues: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
+  isByoc: PropTypes.bool.isRequired,
 };
 
 EditClusterDialog.defaultProps = {
