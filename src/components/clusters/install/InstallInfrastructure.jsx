@@ -3,7 +3,7 @@ import {
   PageSection,
 } from '@patternfly/react-core';
 
-import Breadcrumbs from './components/Breadcrumbs';
+import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 import InstructionsInfrastructure from './components/instructions/InstructionsInfrastructure';
 

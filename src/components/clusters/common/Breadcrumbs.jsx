@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import {
   Breadcrumb, BreadcrumbItem,
 } from '@patternfly/react-core';
-import getBaseName from '../../../../common/getBaseName';
+import getBaseName from '../../../common/getBaseName';
 
 function Breadcrumbs({ path }) {
   return (
@@ -13,7 +13,7 @@ function Breadcrumbs({ path }) {
         if (i < path.length - 1) {
           return (
             <LinkContainer key={item.label} to={item.path || ''}>
-              <BreadcrumbItem to={`${getBaseName()}${item.path}` || '#'}>
+              <BreadcrumbItem to={`${getBaseName()}${item.path || ''}` || '#'}>
                 {item.label}
               </BreadcrumbItem>
             </LinkContainer>

@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import { LinkContainer } from 'react-router-bootstrap';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
-  Breadcrumb, BreadcrumbItem, Button, Alert, Split, SplitItem, Title,
+  Button, Alert, Split, SplitItem, Title,
 } from '@patternfly/react-core';
 
 import clusterStates from '../../common/clusterStates';
@@ -15,6 +14,7 @@ import ErrorTriangle from '../../common/ErrorTriangle';
 import getClusterName from '../../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import ExpirationAlert from './ExpirationAlert';
+import Breadcrumbs from '../../common/Breadcrumbs';
 
 function ClusterDetailsTop(props) {
   const {
@@ -86,6 +86,17 @@ function ClusterDetailsTop(props) {
     />
   );
 
+  const breadcrumbs = (
+    <Breadcrumbs path={
+        [
+          { label: 'Clusters' },
+          isArchived && { label: 'Archived Clusters', path: '/archived' },
+          { label: clusterName },
+        ].filter(Boolean)
+      }
+    />
+  );
+
   const isRefreshing = pending
       || organization.pending
       || clusterIdentityProviders.pending;
@@ -95,23 +106,7 @@ function ClusterDetailsTop(props) {
     <div id="cl-details-top" className="top-row">
       <Split>
         <SplitItem>
-          <Breadcrumb>
-            <LinkContainer to="">
-              <BreadcrumbItem to="#">
-                Clusters
-              </BreadcrumbItem>
-            </LinkContainer>
-            {isArchived && (
-              <LinkContainer to="/archived">
-                <BreadcrumbItem to="/archived">
-                  Archived clusters
-                </BreadcrumbItem>
-              </LinkContainer>
-            )}
-            <BreadcrumbItem isActive>
-              {clusterName}
-            </BreadcrumbItem>
-          </Breadcrumb>
+          {breadcrumbs}
         </SplitItem>
       </Split>
       <Split id="cl-details-top-row">

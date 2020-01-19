@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { PageSection } from '@patternfly/react-core';
 
 import { tollboothActions } from '../../../redux/actions';
-import Breadcrumbs from './components/Breadcrumbs';
+import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 import InstructionsBareMetal from './components/instructions/InstructionsBareMetal';
 import { scrollToTop } from '../../../common/helpers';
