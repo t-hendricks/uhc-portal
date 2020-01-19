@@ -7,8 +7,7 @@ import {
 
 import Modal from '../../../common/Modal/Modal';
 
-import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import validators from '../../../../common/validators';
+import NodeCountInput from '../NodeCountInput';
 import ErrorBox from '../../../common/ErrorBox';
 import PersistentStorageComboBox from '../../CreateOSDCluster/components/PersistentStorageComboBox';
 import LoadBalancersComboBox from '../../CreateOSDCluster/components/LoadBalancersComboBox';
@@ -74,11 +73,6 @@ class EditClusterDialog extends Component {
     }
   }
 
-  validateNodes = (nodes) => {
-    const { min } = this.props;
-    return validators.nodes(nodes, min);
-  }
-
   render() {
     const {
       isOpen,
@@ -86,7 +80,6 @@ class EditClusterDialog extends Component {
       handleSubmit,
       editClusterResponse,
       resetResponse,
-      min,
       isMultiAz,
       consoleURL,
       showLoadBalancerAlert,
@@ -96,6 +89,7 @@ class EditClusterDialog extends Component {
       initialFormValues,
       organization,
       isByoc,
+      machineType,
     } = this.props;
 
     const cancelEdit = () => {
@@ -145,13 +139,13 @@ class EditClusterDialog extends Component {
           {error}
           <Form onSubmit={handleSubmit}>
             <Field
-              component={ReduxVerticalFormGroup}
-              label="Compute nodes"
+              component={NodeCountInput}
               name="nodes_compute"
-              inputMode="numeric"
-              validate={isMultiAz ? [this.validateNodes, validators.nodesMultiAz]
-                : this.validateNodes}
-              min={min.value}
+              label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+              isMultiAz={isMultiAz}
+              isBYOC={isByoc}
+              machineType={machineType}
+              isDisabled={pending}
             />
             { !isByoc && (
               <>
@@ -219,6 +213,7 @@ EditClusterDialog.propTypes = {
   organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   isByoc: PropTypes.bool,
+  machineType: PropTypes.string,
 };
 
 EditClusterDialog.defaultProps = {

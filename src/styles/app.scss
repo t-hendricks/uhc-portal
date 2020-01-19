@@ -866,6 +866,10 @@ span.dev-preview-label svg {
 
 .edit-cluster-modal {
   min-height: 70%;
+  select.quota-combo-box {
+    width: 48%;
+    display: block;
+  }
 }
 
 // selects the input box in PF Pagination component
@@ -994,4 +998,14 @@ pre.idp-oauth-url {
   max-width: 800px;
   overflow-x: auto;
   font-size: var(--pf-global--FontSize--sm);
+}
+
+.compute-nodes-select {
+  div {
+    width: 100%;
+  }
+  select {
+    width: 48%;
+    margin-right: var(--pf-global--spacer--xs);
+  }
 }

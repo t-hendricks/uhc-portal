@@ -18,12 +18,8 @@ import filterPersistentStorageValuesByQuota from './helpers';
 class PersistentStorageComboBox extends React.Component {
   componentDidMount() {
     const {
-      getPersistentStorage, persistentStorageValues, organization, getOrganizationAndQuota,
+      getPersistentStorage, persistentStorageValues,
     } = this.props;
-    if (!organization.fulfilled && !organization.pending) {
-      getOrganizationAndQuota();
-    }
-
     if (!persistentStorageValues.pending
       && !persistentStorageValues.fulfilled
       && !persistentStorageValues.error) {
@@ -89,8 +85,6 @@ PersistentStorageComboBox.propTypes = {
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
   quota: PropTypes.object.isRequired,
-  organization: PropTypes.object.isRequired,
-  getOrganizationAndQuota: PropTypes.func.isRequired,
   currentValue: PropTypes.number,
 };
 

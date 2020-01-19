@@ -47,7 +47,8 @@ class CreateOSDCluster extends React.Component {
     } = this.props;
 
     this.reset();
-    if (!organization.fulfilled && !organization.pending) {
+    if (!organization.pending) {
+      // quota can change after a cluster is provisioned/scaled, always refresh it on mount
       getOrganizationAndQuota();
     }
     if (!machineTypes.fulfilled && !machineTypes.pending) {
@@ -68,7 +69,7 @@ class CreateOSDCluster extends React.Component {
     const { hasShownBYOCModal } = this.state;
 
     const {
-      createClusterResponse, isErrorModalOpen, quota, openModal, change,
+      createClusterResponse, isErrorModalOpen, quota, openModal, change, getOrganizationAndQuota,
     } = this.props;
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
@@ -85,6 +86,10 @@ class CreateOSDCluster extends React.Component {
       change('byoc', 'true');
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ hasShownBYOCModal: true });
+    }
+
+    if (createClusterResponse.fulfilled && !prevProps.createClusterResponse.fulfilled) {
+      getOrganizationAndQuota(); // re-fetch quota on successful cluster creation
     }
   }
 
@@ -189,7 +194,7 @@ class CreateOSDCluster extends React.Component {
       </div>
     );
 
-    if (anyRequestPending) {
+    if (anyRequestPending || (!organization.fulfilled && !organization.error)) {
       return (
         <>
           {title}
@@ -281,13 +286,9 @@ CreateOSDCluster.propTypes = {
   quota: PropTypes.shape({
     byoc: PropTypes.shape({
       hasQuota: PropTypes.bool.isRequired,
-      multiAz: PropTypes.bool.isRequired,
-      singleAz: PropTypes.bool.isRequired,
     }).isRequired,
     rhInfra: PropTypes.shape({
       hasQuota: PropTypes.bool.isRequired,
-      multiAz: PropTypes.bool.isRequired,
-      singleAz: PropTypes.bool.isRequired,
     }).isRequired,
   }).isRequired,
   isBYOCModalOpen: PropTypes.bool.isRequired,

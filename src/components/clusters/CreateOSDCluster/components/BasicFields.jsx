@@ -9,17 +9,18 @@ import CloudRegionComboBox from './CloudRegionComboBox';
 import MachineTypeSelection from './MachineTypeSelection';
 import PersistentStorageComboBox from './PersistentStorageComboBox';
 import LoadBalancersComboBox from './LoadBalancersComboBox';
+import NodeCountInput from '../../common/NodeCountInput';
 import { constants } from '../CreateOSDClusterHelper';
 
 import PopoverHint from '../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators, { required } from '../../../../common/validators';
-import { minValueSelector } from '../../common/EditClusterDialog/EditClusterSelectors';
 import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
 
 class BasicFields extends React.Component {
   state = {
     isMultiAz: false,
+    machineType: undefined,
   };
 
   handleMultiAZChange = (_, value) => {
@@ -29,25 +30,18 @@ class BasicFields extends React.Component {
     change('nodes_compute', isMultiAz ? '9' : '4');
   };
 
-  validateNodes = (nodeCount) => {
-    const { isMultiAz } = this.state;
-    const min = minValueSelector(isMultiAz);
-    return validators.nodes(nodeCount, min);
+  handleMachineTypesChange = (_, value) => {
+    this.setState({ machineType: value });
   };
-
-  // HACK: two validation functions that are the same. This allows to "replace" the validation
-  // func on the compute nodes field, re-triggering validation when the multiAZ checkbox changes.
-
-  validateNodesSingleAz = nodeCount => this.validateNodes(nodeCount);
-
-  validateNodesMultiAz = nodeCount => this.validateNodes(nodeCount);
 
   render() {
     const {
-      pending, showDNSBaseDomain, isBYOC, hasSingleAzQuota, hasMultiAzQuota, cloudProviderID,
+      pending, showDNSBaseDomain, isBYOC, quota, cloudProviderID,
     } = this.props;
-    const { isMultiAz } = this.state;
-    const min = minValueSelector(isMultiAz);
+    const { isMultiAz, machineType } = this.state;
+
+    const hasSingleAzQuota = quota.singleAz > 0;
+    const hasMultiAzQuota = quota.multiAz > 0;
 
     return (
       <>
@@ -149,6 +143,7 @@ class BasicFields extends React.Component {
               disabled={pending}
               isMultiAz={isMultiAz}
               isBYOC={isBYOC}
+              onChange={this.handleMachineTypesChange}
             />
           </FormGroup>
         </GridItem>
@@ -156,15 +151,13 @@ class BasicFields extends React.Component {
         {/* Compute nodes */}
         <GridItem span={4}>
           <Field
-            component={ReduxVerticalFormGroup}
+            component={NodeCountInput}
             name="nodes_compute"
-            label="Compute node count"
-            inputMode="numeric"
-            min={min.value}
-            validate={isMultiAz ? [this.validateNodesMultiAz, validators.nodesMultiAz]
-              : this.validateNodesSingleAz}
-            disabled={pending}
-            isRequired
+            label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+            isMultiAz={isMultiAz}
+            isBYOC={isBYOC}
+            machineType={machineType}
+            isDisabled={pending}
             extendedHelpText={constants.computeNodeCountHint}
           />
         </GridItem>
@@ -172,7 +165,7 @@ class BasicFields extends React.Component {
         {/* Persistent Storage & Load Balancers */}
         { !isBYOC && (
           <>
-            <GridItem span={4}>
+            <GridItem span={2}>
               <FormGroup
                 label="Persistent storage"
                 fieldId="persistent_storage"
@@ -186,9 +179,9 @@ class BasicFields extends React.Component {
                 />
               </FormGroup>
             </GridItem>
-            <GridItem span={8} />
+            <GridItem span={9} />
 
-            <GridItem span={4}>
+            <GridItem span={2}>
               <FormGroup
                 label="Load balancers"
                 fieldId="load_balancers"
@@ -215,9 +208,11 @@ BasicFields.propTypes = {
   pending: PropTypes.bool,
   showDNSBaseDomain: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
-  hasMultiAzQuota: PropTypes.bool.isRequired,
-  hasSingleAzQuota: PropTypes.bool.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
+  quota: PropTypes.shape({
+    singleAz: PropTypes.number.isRequired,
+    multiAz: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default BasicFields;

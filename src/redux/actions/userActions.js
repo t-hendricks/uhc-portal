@@ -15,24 +15,34 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
       This is done here to ensure the calculation is done every time we get the quota,
       and that we won't have to replicate it across different components
       which might need to query this data. */
-    response.data.nodeQuota = {
+    response.data.clusterQuota = {
       byoc: {
         singleAz: {
-          hasQuota: false,
+          available: 0,
         },
         multiAz: {
-          hasQuota: false,
+          available: 0,
         },
         available: 0,
       },
       rhInfra: {
         singleAz: {
-          hasQuota: false,
+          available: 0,
         },
         multiAz: {
-          hasQuota: false,
+          available: 0,
         },
         available: 0,
+      },
+    };
+    response.data.nodeQuota = {
+      byoc: {
+        singleAz: {},
+        multiAz: {},
+      },
+      rhInfra: {
+        singleAz: {},
+        multiAz: {},
       },
     };
 
@@ -40,14 +50,22 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
     items.forEach((item) => {
       switch (item.resource_type) {
         case 'cluster.aws': {
+          // cluster quota: "how many clusters am I allowed to provision?"
           const available = item.allowed - item.reserved;
           const category = item.byoc ? 'byoc' : 'rhInfra';
           const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
-          const { hasQuota } = response.data.nodeQuota[category][zoneType];
 
+          response.data.clusterQuota[category][zoneType][item.resource_name] = available;
+          response.data.clusterQuota[category][zoneType].available += available;
+          response.data.clusterQuota[category].available += available;
+          break;
+        }
+        case 'compute.node.aws': {
+          // node quota: "how many extra nodes can I add on top of the base cluster?"
+          const available = item.allowed - item.reserved;
+          const category = item.byoc ? 'byoc' : 'rhInfra';
+          const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
           response.data.nodeQuota[category][zoneType][item.resource_name] = available;
-          response.data.nodeQuota[category][zoneType].hasQuota = hasQuota || available > 0;
-          response.data.nodeQuota[category].available += available;
           break;
         }
         case 'addon':

@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
     persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
     organization: state.userProfile.organization,
     isByoc: modalData.byoc,
+    machineType: get(modalData, 'nodes.compute_machine_type.id', ''),
     initialFormValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,
