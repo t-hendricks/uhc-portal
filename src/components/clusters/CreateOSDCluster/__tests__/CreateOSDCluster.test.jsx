@@ -45,7 +45,18 @@ describe('CreateOSDCluster', () => {
       machineTypes={fulfilledRequest}
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
-      hasStandardQuota
+      quota={{
+        byoc: {
+          multiAz: false,
+          singleAz: false,
+          hasQuota: false,
+        },
+        rhInfra: {
+          hasQuota: true,
+          singleAz: true,
+          multiAz: true,
+        },
+      }}
     />);
   });
 
@@ -97,6 +108,18 @@ describe('CreateOSDCluster', () => {
         machineTypes={initialRequestStatus}
         persistentStorageValues={initialRequestStatus}
         loadBalancerValues={initialRequestStatus}
+        quota={{
+          byoc: {
+            multiAz: false,
+            singleAz: false,
+            hasQuota: false,
+          },
+          rhInfra: {
+            hasQuota: false,
+            singleAz: false,
+            multiAz: true,
+          },
+        }}
       />);
       expect(getOrganizationAndQuota).toBeCalled();
       expect(getMachineTypes).toBeCalled();

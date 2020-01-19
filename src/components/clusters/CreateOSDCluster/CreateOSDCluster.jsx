@@ -68,11 +68,15 @@ class CreateOSDCluster extends React.Component {
     const { hasShownBYOCModal } = this.state;
 
     const {
-      createClusterResponse, isErrorModalOpen, hasStandardQuota, hasBYOCQuota, openModal, change,
+      createClusterResponse, isErrorModalOpen, quota, openModal, change,
     } = this.props;
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
     }
+
+    const hasBYOCQuota = quota.byoc.hasQuota;
+    const hasStandardQuota = quota.rhInfra.hasQuota;
+
     // if user has only BYOC quota
     if (!prevProps.isBYOCModalOpen && !hasStandardQuota && hasBYOCQuota && !hasShownBYOCModal) {
       // open BYOC modal
@@ -108,11 +112,10 @@ class CreateOSDCluster extends React.Component {
       persistentStorageValues,
       isErrorModalOpen,
       resetResponse,
-      hasBYOCQuota,
-      hasStandardQuota,
       isBYOCModalOpen,
       openModal,
       closeModal,
+      quota,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -197,7 +200,7 @@ class CreateOSDCluster extends React.Component {
       );
     }
 
-    if (!hasBYOCQuota && !hasStandardQuota && organization.fulfilled) {
+    if (!quota.byoc.hasQuota && !quota.rhInfra.hasQuota && organization.fulfilled) {
       return (
         <Redirect to="/create" />
       );
@@ -237,11 +240,10 @@ class CreateOSDCluster extends React.Component {
                   <CreateOSDClusterForm
                     pending={createClusterResponse.pending}
                     change={change}
-                    hasBYOCQuota={hasBYOCQuota}
-                    hasStandardQuota={hasStandardQuota}
                     isBYOCModalOpen={isBYOCModalOpen}
                     openModal={openModal}
                     closeModal={closeModal}
+                    quota={quota}
                   />
                   <GridItem>
                     <Split gutter="sm" className="create-osd-form-button-split">
@@ -276,8 +278,18 @@ CreateOSDCluster.propTypes = {
   isErrorModalOpen: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  hasBYOCQuota: PropTypes.bool,
-  hasStandardQuota: PropTypes.bool.isRequired,
+  quota: PropTypes.shape({
+    byoc: PropTypes.shape({
+      hasQuota: PropTypes.bool.isRequired,
+      multiAz: PropTypes.bool.isRequired,
+      singleAz: PropTypes.bool.isRequired,
+    }).isRequired,
+    rhInfra: PropTypes.shape({
+      hasQuota: PropTypes.bool.isRequired,
+      multiAz: PropTypes.bool.isRequired,
+      singleAz: PropTypes.bool.isRequired,
+    }).isRequired,
+  }).isRequired,
   isBYOCModalOpen: PropTypes.bool.isRequired,
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,

@@ -17,13 +17,21 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
       which might need to query this data. */
     response.data.nodeQuota = {
       byoc: {
-        singleAz: {},
-        multiAz: {},
+        singleAz: {
+          hasQuota: false,
+        },
+        multiAz: {
+          hasQuota: false,
+        },
         available: 0,
       },
       rhInfra: {
-        singleAz: {},
-        multiAz: {},
+        singleAz: {
+          hasQuota: false,
+        },
+        multiAz: {
+          hasQuota: false,
+        },
         available: 0,
       },
     };
@@ -35,7 +43,10 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
           const available = item.allowed - item.reserved;
           const category = item.byoc ? 'byoc' : 'rhInfra';
           const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
+          const { hasQuota } = response.data.nodeQuota[category][zoneType];
+
           response.data.nodeQuota[category][zoneType][item.resource_name] = available;
+          response.data.nodeQuota[category][zoneType].hasQuota = hasQuota || available > 0;
           response.data.nodeQuota[category].available += available;
           break;
         }
