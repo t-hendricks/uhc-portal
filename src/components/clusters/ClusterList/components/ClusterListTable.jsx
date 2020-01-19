@@ -33,7 +33,7 @@ import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActio
 
 function ClusterListTable(props) {
   const {
-    viewOptions, setSorting, clusters, openModal, isPending,
+    viewOptions, setSorting, clusters, openModal, isPending, setClusterDetails,
   } = props;
   if (!isPending && (!clusters || clusters.length === 0)) {
     return <p className="notfound">No Results Match the Filter Criteria.</p>;
@@ -73,7 +73,7 @@ function ClusterListTable(props) {
 
     const clusterName = (
       <Tooltip content={`cluster name: ${cluster.name}`} position={TooltipPosition.right}>
-        <Link to={`/details/${cluster.id}`}>{name.trim() !== '' ? name : cluster.name}</Link>
+        <Link to={`/details/${cluster.id}`} onClick={() => setClusterDetails(cluster)}>{name.trim() !== '' ? name : cluster.name}</Link>
       </Tooltip>
     );
 
@@ -196,6 +196,7 @@ ClusterListTable.propTypes = {
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
   isPending: PropTypes.bool,
+  setClusterDetails: PropTypes.func.isRequired,
 };
 
 export default ClusterListTable;

@@ -139,6 +139,7 @@ class ClusterList extends Component {
       organization,
       operationID,
       history,
+      setClusterDetails,
     } = this.props;
 
     const pageHeader = (
@@ -232,6 +233,7 @@ class ClusterList extends Component {
                 viewOptions={viewOptions}
                 setSorting={setSorting}
                 isPending={isPendingNoData}
+                setClusterDetails={setClusterDetails}
               />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
@@ -264,6 +266,7 @@ class ClusterList extends Component {
 ClusterList.propTypes = {
   invalidateClusters: PropTypes.func.isRequired,
   fetchClusters: PropTypes.func.isRequired,
+  setClusterDetails: PropTypes.func.isRequired,
   valid: PropTypes.bool.isRequired,
   clusters: PropTypes.array.isRequired,
   error: PropTypes.bool.isRequired,

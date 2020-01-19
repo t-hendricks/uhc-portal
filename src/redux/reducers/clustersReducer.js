@@ -113,6 +113,22 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
+    case clustersConstants.SET_CLUSTER_DETAILS:
+      return setStateProp(
+        'details',
+        {
+          cluster: action.payload,
+          fulfilled: true,
+          pending: false,
+          error: false,
+          incomplete: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
     // GET_CLUSTER_DETAILS
     case helpers.REJECTED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
       return setStateProp(
@@ -147,6 +163,7 @@ function clustersReducer(state = initialState, action) {
           cluster: action.payload.data,
           pending: false,
           fulfilled: true,
+          incomplete: false,
         },
         {
           state,
