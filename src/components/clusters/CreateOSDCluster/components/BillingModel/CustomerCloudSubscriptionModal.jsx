@@ -19,16 +19,17 @@ function CustomerCloudSubscriptionModal({ closeModal }) {
     >
       <>
         <TextContent>
-            This billing option will transfer the resources associated with
-            this cluster to your AWS account, allowing you to take advantage of the
-            discounts you have already negotiated with AWS.
+        With this subscription option, the cluster will be provisioned in an AWS account
+        owned by you or your company. This allows you to pay AWS directly for public cloud costs,
+        leveraging your existing relationship.
         </TextContent>
         <Title headingLevel="h3" size="lg">Important</Title>
         <TextContent>
-            In order for the account transfer to succeed, you must ensure the following:
+            In order for the cluster provisioning to succeed, you must ensure the following:
         </TextContent>
         <TextContent>
           <ul>
+            <li>Your AWS account has no services deployed in it. </li>
             <li>Your AWS account has an Enterprise Support Plan attached.</li>
             <li>
                   Your AWS account has the necessary limits to support the desired
