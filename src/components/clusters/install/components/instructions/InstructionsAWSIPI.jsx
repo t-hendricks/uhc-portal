@@ -13,7 +13,7 @@ function InstructionsAWSIPI({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-          Install on AWS with an Installer-Provisioned Infrastructure
+          Install on AWS with an installer-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
@@ -159,7 +159,7 @@ function InstructionsAWSIPI({ token }) {
         <div className="pf-l-grid pf-m-gutter ocm-page">
           <div className="pf-c-content">
 
-            <h3>Access Your Cluster</h3>
+            <h3>Access your cluster</h3>
             <p>
                 You can log into your cluster as a default system user by exporting the cluster
                 kubeconfig file:

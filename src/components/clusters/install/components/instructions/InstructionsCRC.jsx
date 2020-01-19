@@ -93,7 +93,7 @@ function InstructionsCRC({ token }) {
               </ListItem>
             </List>
 
-            <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull Secret</h3>
+            <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull secret</h3>
             <PullSecretSection token={token} />
 
             <p />

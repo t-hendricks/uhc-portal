@@ -12,7 +12,7 @@ function InstructionsOSP({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on Red Hat OpenStack Platform with Installer-Provisioned Infrastructure
+        Install on Red Hat OpenStack Platform with installer-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">

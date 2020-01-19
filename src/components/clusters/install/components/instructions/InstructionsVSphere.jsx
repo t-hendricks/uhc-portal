@@ -12,7 +12,7 @@ function InstructionsVSphere({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on vSphere with User-Provisioned Infrastructure
+        Install on vSphere with user-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">

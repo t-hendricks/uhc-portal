@@ -12,7 +12,7 @@ function InstructionsGCP({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on GCP with Installer-Provisioned Infrastructure
+        Install on GCP with installer-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">

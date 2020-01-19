@@ -121,7 +121,7 @@ class ArchivedClusterList extends Component {
     const pageHeader = (
       <PageHeader>
         {breadCrumbs}
-        <PageHeaderTitle title="Archived Clusters" />
+        <PageHeaderTitle title="Archived clusters" />
       </PageHeader>
     );
 
