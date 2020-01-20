@@ -498,11 +498,14 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 #billing-model.flat-radio-buttons-flex-container {
-  div, button {
-  min-width: 460px;
-  }
-  button {
+  button, div.ocm-flat-radio-button-disabled {
     height: 85px;
+    min-width: 460px;
+    margin-left: 0;
+    margin-right: 2em;
+    div { 
+      min-width: 444px;
+    }
   }
 }
 
