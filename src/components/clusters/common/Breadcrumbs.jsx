@@ -10,18 +10,22 @@ function Breadcrumbs({ path }) {
   return (
     <Breadcrumb>
       {path.map((item, i) => {
+        const itemLabel = item.label;
+
         if (i < path.length - 1) {
+          const itemPath = item.path;
+
           return (
-            <LinkContainer key={item.label} to={item.path || ''}>
-              <BreadcrumbItem to={`${getBaseName()}${item.path || ''}` || '#'}>
-                {item.label}
+            <LinkContainer key={itemLabel} to={itemPath || ''}>
+              <BreadcrumbItem to={`${getBaseName()}${itemPath || ''}` || '#'}>
+                {itemLabel}
               </BreadcrumbItem>
             </LinkContainer>
           );
         }
         return (
-          <BreadcrumbItem key={item.label} isActive>
-            {item.label}
+          <BreadcrumbItem key={itemLabel} isActive>
+            {itemLabel}
           </BreadcrumbItem>
         );
       })}
