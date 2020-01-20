@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { PageSection } from '@patternfly/react-core';
 import PageTitle from '../../common/PageTitle';
-import Breadcrumbs from './components/Breadcrumbs';
+import Breadcrumbs from '../common/Breadcrumbs';
 
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsVSphere from './components/instructions/InstructionsVSphere';
