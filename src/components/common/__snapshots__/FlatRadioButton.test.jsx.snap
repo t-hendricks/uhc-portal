@@ -107,7 +107,9 @@ exports[`<FlatRadioButton /> should render with tooltip 1`] = `
   trigger="mouseenter focus"
   zIndex={9999}
 >
-  <div>
+  <div
+    className="ocm-flat-radio-button-disabled"
+  >
     <Component
       className="ocm-flat-radio-button"
       isDisabled={false}

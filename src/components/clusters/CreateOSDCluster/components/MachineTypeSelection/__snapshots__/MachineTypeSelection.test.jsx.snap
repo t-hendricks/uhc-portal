@@ -431,7 +431,9 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
           trigger="mouseenter focus"
           zIndex={9999}
         >
-          <div>
+          <div
+            className="ocm-flat-radio-button-disabled"
+          >
             <Component
               className="ocm-flat-radio-button"
               id="machineTypeRadio.r5.4xlarge"
