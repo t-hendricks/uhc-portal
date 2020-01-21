@@ -28,7 +28,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
               isChecked={false}
               isDisabled={false}
               isValid={true}
-              label="Not Subscribed"
+              label="Not subscribed"
               onChange={[Function]}
             />
           </div>
@@ -67,7 +67,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
               isChecked={false}
               isDisabled={false}
               isValid={true}
-              label="60-day Evaluation"
+              label="60-day evaluation"
               onChange={[Function]}
             />
           </div>

@@ -5,7 +5,7 @@ import { Popover, PopoverPosition, Button } from '@patternfly/react-core';
 import { CheckCircleIcon, ExclamationTriangleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
-import { entitlementStatuses } from '../../../../common/subscriptionTypes';
+import { entitlementStatuses, entitlementStatusDisplayNames } from '../../../../common/subscriptionTypes';
 import getClusterEvaluationExpiresInDays from '../../../../common/getClusterEvaluationExpiresInDays';
 
 function SubscriptionStatusIndicator({ cluster }) {
@@ -19,7 +19,7 @@ function SubscriptionStatusIndicator({ cluster }) {
         <>
           <CheckCircleIcon color={global_success_color_100.value} />
           {' '}
-          Subscribed
+          {entitlementStatusDisplayNames.OK}
         </>
       );
     case entitlementStatuses.OVERCOMMITTED:
@@ -30,7 +30,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           aria-label="Insufficient"
         >
           <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
-            Insufficient
+            {entitlementStatusDisplayNames.OVERCOMMITTED}
           </Button>
         </Popover>
       );
@@ -42,7 +42,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           aria-label="Invalid"
         >
           <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
-            Invalid
+            {entitlementStatusDisplayNames.INCONSISTENT_SERVICES}
           </Button>
         </Popover>
       );
@@ -51,10 +51,10 @@ function SubscriptionStatusIndicator({ cluster }) {
         <Popover
           position={PopoverPosition.top}
           bodyContent={`${evaluationExpiresStr} remaining in the evaluation period.`}
-          aria-label="Six Day Evaluation"
+          aria-label="Sixty Day Evaluation"
         >
           <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
-            60-day evaluation
+            {entitlementStatusDisplayNames.SIXTY_DAY_EVALUATION}
           </Button>
         </Popover>
       );
@@ -64,7 +64,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           <>
             <CheckCircleIcon color={global_success_color_100.value} />
             {' '}
-            Subscribed
+            {entitlementStatusDisplayNames.OK}
           </>
         );
       }
@@ -75,7 +75,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           aria-label="Not Subscribed"
         >
           <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
-            Not subscribed
+            {entitlementStatusDisplayNames.NOT_SUBSCRIBED}
           </Button>
         </Popover>
       );
