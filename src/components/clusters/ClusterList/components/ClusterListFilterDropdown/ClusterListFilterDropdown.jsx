@@ -7,7 +7,7 @@ import {
 import { FilterIcon } from '@patternfly/react-icons';
 import get from 'lodash/get';
 
-import { entitlementStatuses } from '../../../../../common/subscriptionTypes';
+import { entitlementStatuses, entitlementStatusDisplayNames } from '../../../../../common/subscriptionTypes';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 
 
@@ -34,13 +34,9 @@ class ClusterListFilterDropdown extends React.Component {
       {
         key: 'entitlement_status',
         label: 'Subscription Status',
-        options: [
-          [entitlementStatuses.OK, 'Subscribed'],
-          [entitlementStatuses.NOT_SUBSCRIBED, 'Not Subscribed'],
-          [entitlementStatuses.OVERCOMMITTED, 'Insufficient'],
-          [entitlementStatuses.INCONSISTENT_SERVICES, 'Invalid'],
-          [entitlementStatuses.SIXTY_DAY_EVALUATION, '60-day Evaluation'],
-        ],
+        options: Object.entries(entitlementStatuses).map(
+          ([key, value]) => [value, entitlementStatusDisplayNames[key]],
+        ),
         selected: {},
       },
       {

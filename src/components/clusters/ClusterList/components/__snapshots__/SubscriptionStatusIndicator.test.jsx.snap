@@ -228,7 +228,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Over
 exports[`<SubscriptionStatusIndicator /> should render when subscription is SixtyDayEvaluation 1`] = `
 <Popover
   appendTo={[Function]}
-  aria-label="Six Day Evaluation"
+  aria-label="Sixty Day Evaluation"
   bodyContent="unknown days remaining in the evaluation period."
   boundary="window"
   className=""
