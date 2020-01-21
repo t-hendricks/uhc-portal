@@ -120,6 +120,9 @@ const checkClusterDisplayName = (value) => {
 };
 
 const checkUserID = (value) => {
+  if (value.trim() !== value) {
+    return 'User ID cannot contain leading and trailing spaces';
+  }
   if (value.includes('/')) {
     return 'User ID cannot contain \'/\'.';
   }
