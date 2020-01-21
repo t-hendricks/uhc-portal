@@ -4,8 +4,11 @@ import get from 'lodash/get';
 import moment from 'moment';
 import { Alert } from '@patternfly/react-core';
 import { entitlementStatuses } from '../../../../common/subscriptionTypes';
-import getSubscriptionManagementURL from '../../../../common/getSubscriptionManagementURL';
 import getClusterEvaluationExpiresInDays from '../../../../common/getClusterEvaluationExpiresInDays';
+import {
+  getSubscriptionManagementURL,
+  getSubscriptionLastReconciledDate,
+} from '../clusterDetailsHelper';
 
 function SubscriptionCompliancy({ cluster }) {
   const subscription = get(cluster, 'subscription');
@@ -18,7 +21,7 @@ function SubscriptionCompliancy({ cluster }) {
   const candlepinConsumerUUID = get(subscription, 'consumer_uuid');
   const customerPortalURL = getSubscriptionManagementURL(subscription);
   const salesURL = 'https://www.redhat.com/en/contact';
-  const lastReconcileDate = get(subscription, 'last_reconcile_date');
+  const lastReconcileDate = getSubscriptionLastReconciledDate(subscription);
 
   const clusterCreationCloseTo30Days = moment().diff(cluster.creation_timestamp, 'days') >= 29;
   const evaluationExpiresStr = getClusterEvaluationExpiresInDays(cluster);
@@ -27,7 +30,7 @@ function SubscriptionCompliancy({ cluster }) {
     ? (
       <p>
         Last checked:&nbsp;
-        {new Date(lastReconcileDate).toLocaleString()}
+        {lastReconcileDate}
       </p>
     )
     : '';
@@ -53,7 +56,7 @@ function SubscriptionCompliancy({ cluster }) {
       );
     case entitlementStatuses.OVERCOMMITTED:
       return (
-        <Alert id="subs-hint" isInline variant="danger" title="This cluster is overcommitting resources">
+        <Alert id="subs-hint" isInline variant="warning" title="This cluster is overcommitting resources">
           {lastChecked}
           <p>
             Check the&nbsp;
