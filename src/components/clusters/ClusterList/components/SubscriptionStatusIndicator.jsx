@@ -54,7 +54,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           aria-label="Six Day Evaluation"
         >
           <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
-            60-day Evaluation
+            60-day evaluation
           </Button>
         </Popover>
       );
@@ -75,7 +75,7 @@ function SubscriptionStatusIndicator({ cluster }) {
           aria-label="Not Subscribed"
         >
           <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
-            Not Subscribed
+            Not subscribed
           </Button>
         </Popover>
       );
