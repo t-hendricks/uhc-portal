@@ -13,7 +13,7 @@ function InstructionsIBM({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-          Install on IBM Z with User-Provisioned Infrastructure
+          Install on IBM Z with user-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">

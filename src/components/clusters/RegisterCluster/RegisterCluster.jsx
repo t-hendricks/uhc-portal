@@ -144,7 +144,7 @@ class RegisterCluster extends React.Component {
                       type="text"
                     />
                     <FormGroup
-                      label="Operating System"
+                      label="Operating system"
                       isRequired
                       fieldId="operating_system"
                     >
@@ -158,7 +158,7 @@ class RegisterCluster extends React.Component {
                       />
                     </FormGroup>
                     <FormGroup
-                      label="System Type"
+                      label="System type"
                       isRequired
                       fieldId="system_type"
                     >

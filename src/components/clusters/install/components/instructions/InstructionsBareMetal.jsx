@@ -12,7 +12,7 @@ function InstructionsBareMetal({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on Bare Metal with User-Provisioned Infrastructure
+        Install on Bare Metal with user-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">

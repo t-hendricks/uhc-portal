@@ -22,7 +22,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
               <Field
                 component={[Function]}
                 disabled={false}
-                extendedHelpText="The Cluster ID may be found on the About page of the cluster web console"
+                extendedHelpText="The cluster ID may be found on the About page of the cluster web console"
                 isRequired={true}
                 label="Cluster ID"
                 name="cluster_id"
@@ -48,7 +48,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
               <FormGroup
                 fieldId="operating_system"
                 isRequired={true}
-                label="Operating System"
+                label="Operating system"
               >
                 <Field
                   component={[Function]}
@@ -72,7 +72,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
               <FormGroup
                 fieldId="system_type"
                 isRequired={true}
-                label="System Type"
+                label="System type"
               >
                 <Field
                   component={[Function]}

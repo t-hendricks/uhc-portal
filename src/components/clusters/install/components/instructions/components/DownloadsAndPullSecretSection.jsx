@@ -29,7 +29,7 @@ function DownloadsAndPullSecretSection({
           </h3>
           {children}
           <Title headingLevel="h3" size="md" className="downloads-subtitle">
-            OpenShift Installer
+            OpenShift installer
           </Title>
           <p>
           Download and extract the install program for your operating system and place the file
@@ -58,7 +58,7 @@ function DownloadsAndPullSecretSection({
           </p>
           {showPreReleasePageLink && <DeveloperPreviewSection />}
 
-          <Title headingLevel="h3" size="md" className="downloads-subtitle">Pull Secret</Title>
+          <Title headingLevel="h3" size="md" className="downloads-subtitle">Pull secret</Title>
           <PullSecretSection token={token} />
 
           <p />
@@ -76,7 +76,7 @@ function DownloadsAndPullSecretSection({
             </>
           )}
 
-          <Title headingLevel="h3" size="md" className="downloads-subtitle">Command-Line Interface</Title>
+          <Title headingLevel="h3" size="md" className="downloads-subtitle">Command-line interface</Title>
           <CLISection toolsURL={cliURL} />
 
         </div>

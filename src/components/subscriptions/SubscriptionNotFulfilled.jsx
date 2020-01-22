@@ -54,7 +54,7 @@ function SubscriptionNotFulfilled({ data, refresh }) {
       emptyTitle: 'You do not have any clusters',
       errorTitle: 'Unable to retrieve subscription status',
       text: <p>Create a cluster to get started.</p>,
-      emptyButton: <Link to="/install"><Button>Create Cluster</Button></Link>,
+      emptyButton: <Link to="/install"><Button>Create cluster</Button></Link>,
     },
     osd: {
       emptyTitle: 'You do not have any quota',

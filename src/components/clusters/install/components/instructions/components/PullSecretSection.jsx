@@ -47,7 +47,7 @@ class PullSecretSection extends React.Component {
               >
                 <PasteIcon color="#0066cc" size="sm" />
               &nbsp;
-              Copy Pull Secret
+              Copy pull secret
               </Button>
               { !isDisabled && copied && ' Copied!' }
             </span>
