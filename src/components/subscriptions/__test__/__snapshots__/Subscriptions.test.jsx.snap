@@ -339,7 +339,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
             "cluster.aws",
             "c5.4xlarge",
             Object {
-              "title": "multi-zone",
+              "title": "multizone",
             },
             "BYOC",
             10,
@@ -357,7 +357,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
             "cluster.aws",
             "m5.xlarge",
             Object {
-              "title": "multi-zone",
+              "title": "multizone",
             },
             "BYOC",
             15,
@@ -375,7 +375,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
             "compute.node.aws",
             "c5.4xlarge",
             Object {
-              "title": "multi-zone",
+              "title": "multizone",
             },
             "BYOC",
             0,

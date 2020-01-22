@@ -34,6 +34,9 @@ class Subscriptions extends Component {
   }
 
   componentWillUnmount() {
+    const { invalidateClusters } = this.props;
+    invalidateClusters();
+
     if (this.cleanupOcmListener) {
       this.cleanupOcmListener();
     }
@@ -73,6 +76,7 @@ class Subscriptions extends Component {
 Subscriptions.propTypes = {
   fetchAccount: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
+  invalidateClusters: PropTypes.func.isRequired,
 };
 
 export default Subscriptions;
