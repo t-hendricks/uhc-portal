@@ -37,6 +37,7 @@ class ArchiveClusterDialog extends Component {
         onClose={cancelEdit}
         primaryText="Archive cluster"
         onPrimaryClick={() => submit(subscriptionID, name)}
+        isPending={archiveClusterResponse.pending}
         onSecondaryClick={cancelEdit}
       >
         <>
