@@ -13,7 +13,7 @@ function BillingModelFields({
   hasBYOCquota, hasStandardQuota, openModal, toggleBYOCFields, byocSelected = false,
 }) {
   return (
-    <GridItem span={9}>
+    <GridItem span={12}>
       <FormGroup
         isRequired
         fieldId="billing_model"

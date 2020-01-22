@@ -51,7 +51,7 @@ function FlatRadioButton({
   }
   return (
     <Tooltip content={tooltip}>
-      <div>
+      <div className="ocm-flat-radio-button-disabled">
         {/* we have to have a div here since disabled buttons
         don't react to pointer events, and thus can't have tooltips */}
         {button}

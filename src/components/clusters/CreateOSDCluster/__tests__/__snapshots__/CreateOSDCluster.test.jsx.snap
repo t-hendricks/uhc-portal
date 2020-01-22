@@ -104,9 +104,22 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             gutter="sm"
           >
             <CreateOSDClusterForm
-              hasStandardQuota={true}
               isBYOCModalOpen={false}
               pending={false}
+              quota={
+                Object {
+                  "byoc": Object {
+                    "hasQuota": false,
+                    "multiAz": false,
+                    "singleAz": false,
+                  },
+                  "rhInfra": Object {
+                    "hasQuota": true,
+                    "multiAz": true,
+                    "singleAz": true,
+                  },
+                }
+              }
             />
             <GridItem>
               <Split

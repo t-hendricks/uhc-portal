@@ -498,11 +498,14 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 #billing-model.flat-radio-buttons-flex-container {
-  div, button {
-  min-width: 460px;
-  }
-  button {
+  button, div.ocm-flat-radio-button-disabled {
     height: 85px;
+    min-width: 460px;
+    margin-left: 0;
+    margin-right: 2em;
+    div { 
+      min-width: 444px;
+    }
   }
 }
 
@@ -863,6 +866,11 @@ span.dev-preview-label svg {
 
 .edit-cluster-modal {
   min-height: 70%;
+}
+
+// selects the input box in PF Pagination component
+.pf-c-pagination__nav-page-select > input:nth-child(1) {
+  width: 100px;
 }
 
 div.pf-c-alert.archived-cluster-toast {

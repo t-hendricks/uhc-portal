@@ -48,7 +48,7 @@ exports[`<SubscriptionStatusIndicator /> should not crash when the cluster has n
     isInline={true}
     variant="link"
   >
-    Not Subscribed
+    Not subscribed
   </Component>
 </Popover>
 `;
@@ -154,7 +154,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is NotS
     isInline={true}
     variant="link"
   >
-    Not Subscribed
+    Not subscribed
   </Component>
 </Popover>
 `;
@@ -228,7 +228,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Over
 exports[`<SubscriptionStatusIndicator /> should render when subscription is SixtyDayEvaluation 1`] = `
 <Popover
   appendTo={[Function]}
-  aria-label="Six Day Evaluation"
+  aria-label="Sixty Day Evaluation"
   bodyContent="unknown days remaining in the evaluation period."
   boundary="window"
   className=""
@@ -273,7 +273,7 @@ exports[`<SubscriptionStatusIndicator /> should render when subscription is Sixt
     isInline={true}
     variant="link"
   >
-    60-day Evaluation
+    60-day evaluation
   </Component>
 </Popover>
 `;

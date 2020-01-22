@@ -29,8 +29,19 @@ const mapStateToProps = (state) => {
     persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
-    hasBYOCQuota: get(organization, 'quotaList.nodeQuota.byoc.available', 0) > 0,
-    hasStandardQuota: get(organization, 'quotaList.nodeQuota.rhInfra.available', 0) > 0,
+    quota: {
+      byoc: {
+        hasQuota: get(organization, 'quotaList.nodeQuota.byoc.available', 0) > 0,
+        multiAz: get(organization, 'quotaList.nodeQuota.byoc.multiAz.hasQuota', false),
+        singleAz: get(organization, 'quotaList.nodeQuota.byoc.singleAz.hasQuota', false),
+      },
+      rhInfra: {
+        hasQuota: get(organization, 'quotaList.nodeQuota.rhInfra.available', 0) > 0,
+        multiAz: get(organization, 'quotaList.nodeQuota.rhInfra.multiAz.hasQuota', false),
+        singleAz: get(organization, 'quotaList.nodeQuota.rhInfra.singleAz.hasQuota', false),
+
+      },
+    },
     initialValues: {
       byoc: 'false',
       name: '',
@@ -67,15 +78,6 @@ const mapDispatchToProps = dispatch => ({
         pod_cidr: formData.network_pod_cidr,
       },
       managed: true,
-      // default to zero load balancers
-      load_balancer_quota: parseInt(formData.load_balancers, 10),
-      // values in the passed are always in bytes.
-      // see comment in PersistentStorageComboBox.js#82.
-      // Default to 100 GiB in bytes
-      storage_quota: {
-        unit: 'B',
-        value: parseFloat(formData.persistent_storage),
-      },
     };
 
     if (formData.byoc === 'true') {
@@ -83,6 +85,17 @@ const mapDispatchToProps = dispatch => ({
         access_key_id: formData.access_key_id,
         account_id: formData.account_id,
         secret_access_key: formData.secret_access_key,
+      };
+    } else {
+      // Don't pass LB and storage to byoc cluster.
+      // default to zero load balancers
+      clusterRequest.load_balancer_quota = parseInt(formData.load_balancers, 10);
+      // values in the passed are always in bytes.
+      // see comment in PersistentStorageComboBox.js#82.
+      // Default to 100 GiB in bytes
+      clusterRequest.storage_quota = {
+        unit: 'B',
+        value: parseFloat(formData.persistent_storage),
       };
     }
     dispatch(createCluster(clusterRequest));

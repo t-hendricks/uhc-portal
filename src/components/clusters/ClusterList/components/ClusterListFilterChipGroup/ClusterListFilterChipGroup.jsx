@@ -8,7 +8,7 @@ import {
 
 import helpers from '../../../../../common/helpers';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
-import { entitlementStatuses } from '../../../../../common/subscriptionTypes';
+import { entitlementStatuses, entitlementStatusDisplayNames } from '../../../../../common/subscriptionTypes';
 
 function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
   if (helpers.nestedIsEmpty(currentFilters)) {
@@ -26,13 +26,14 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
     {
       key: 'entitlement_status',
       label: 'Subscription status',
-      optionLabels: {
-        [entitlementStatuses.OK]: 'Subscribed',
-        [entitlementStatuses.OVERCOMMITTED]: 'Insufficient',
-        [entitlementStatuses.INCONSISTENT_SERVICES]: 'Invalid',
-        [entitlementStatuses.NOT_SUBSCRIBED]: 'Not Subscribed',
-        [entitlementStatuses.SIXTY_DAY_EVALUATION]: '60-day Evaluation',
-      },
+      optionLabels: Object.entries(entitlementStatuses).map(
+        // create an array of arrays mapping API types to human readable names
+        // (like in ClusterListFilterDropdown)
+        ([key, value]) => [value, entitlementStatusDisplayNames[key]],
+      ).reduce((result, [key, value]) => ({
+        ...result, // reduce to turn the array into an object, for easy lookups
+        [key]: value,
+      }), {}),
     },
     {
       key: 'plan_id',

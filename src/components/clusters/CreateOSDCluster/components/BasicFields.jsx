@@ -44,7 +44,7 @@ class BasicFields extends React.Component {
 
   render() {
     const {
-      pending, showDNSBaseDomain, isBYOC,
+      pending, showDNSBaseDomain, isBYOC, hasSingleAzQuota, hasMultiAzQuota,
     } = this.props;
     const { isMultiAz } = this.state;
     const min = minValueSelector(isMultiAz);
@@ -116,8 +116,11 @@ class BasicFields extends React.Component {
               name="multi_az"
               disabled={pending}
               onChange={this.handleMultiAZChange}
-              options={[{ value: 'false', label: 'Single Zone' }, { value: 'true', label: 'Multizone' }]}
-              defaultValue="false"
+              options={[
+                { value: 'false', label: 'Single Zone', disabled: !hasSingleAzQuota },
+                { value: 'true', label: 'Multizone', disabled: !hasMultiAzQuota },
+              ]}
+              defaultValue={hasSingleAzQuota ? 'false' : 'true'}
             />
           </FormGroup>
         </GridItem>
@@ -166,39 +169,42 @@ class BasicFields extends React.Component {
           />
         </GridItem>
         <GridItem span={8} />
+        {/* Persistent Storage & Load Balancers */}
+        { !isBYOC && (
+          <>
+            <GridItem span={4}>
+              <FormGroup
+                label="Persistent storage"
+                fieldId="persistent_storage"
+              >
+                <PopoverHint hint={constants.persistentStorageHint} />
+                <Field
+                  name="persistent_storage"
+                  component={PersistentStorageComboBox}
+                  disabled={pending}
+                  currentValue={null}
+                />
+              </FormGroup>
+            </GridItem>
+            <GridItem span={8} />
 
-        {/* Persistent Storage */}
-        <GridItem span={4}>
-          <FormGroup
-            label="Persistent storage"
-            fieldId="persistent_storage"
-          >
-            <PopoverHint hint={constants.persistentStorageHint} />
-            <Field
-              name="persistent_storage"
-              component={PersistentStorageComboBox}
-              disabled={pending}
-              currentValue={null}
-            />
-          </FormGroup>
-        </GridItem>
-        <GridItem span={8} />
+            <GridItem span={4}>
+              <FormGroup
+                label="Load balancers"
+                fieldId="load_balancers"
+              >
+                <PopoverHint hint={constants.loadBalancersHint} />
+                <Field
+                  name="load_balancers"
+                  component={LoadBalancersComboBox}
+                  disabled={pending}
+                  currentValue={null}
+                />
+              </FormGroup>
+            </GridItem>
+          </>
+        )}
 
-        {/* Load Balancers */}
-        <GridItem span={4}>
-          <FormGroup
-            label="Load balancers"
-            fieldId="load_balancers"
-          >
-            <PopoverHint hint={constants.loadBalancersHint} />
-            <Field
-              name="load_balancers"
-              component={LoadBalancersComboBox}
-              disabled={pending}
-              currentValue={null}
-            />
-          </FormGroup>
-        </GridItem>
       </>
     );
   }
@@ -209,6 +215,8 @@ BasicFields.propTypes = {
   pending: PropTypes.bool,
   showDNSBaseDomain: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
+  hasMultiAzQuota: PropTypes.bool.isRequired,
+  hasSingleAzQuota: PropTypes.bool.isRequired,
 };
 
 export default BasicFields;

@@ -250,6 +250,11 @@ const fetchClusterDetails = clusterID => dispatch => dispatch({
   payload: fetchSingleClusterAndPermissions(clusterID),
 });
 
+const setClusterDetails = cluster => dispatch => dispatch({
+  type: clustersConstants.SET_CLUSTER_DETAILS,
+  payload: cluster,
+});
+
 const resetCreatedClusterResponse = () => dispatch => dispatch({
   type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
 });
@@ -261,6 +266,7 @@ const clustersActions = {
   editCluster,
   fetchClusters,
   fetchClusterDetails,
+  setClusterDetails,
   invalidateClusters,
   resetCreatedClusterResponse,
   editClusterDisplayName,
@@ -276,6 +282,7 @@ export {
   editCluster,
   fetchClusters,
   fetchClusterDetails,
+  setClusterDetails,
   invalidateClusters,
   resetCreatedClusterResponse,
   editClusterDisplayName,

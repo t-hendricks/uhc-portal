@@ -19,7 +19,7 @@ exports[`<ClusterListFilterChipGroup /> should render 1`] = `
           key="NotSubscribed"
           onClick={[Function]}
         >
-          Not Subscribed
+          Not subscribed
         </Component>
       </ChipGroupToolbarItem>
     </ChipGroup>

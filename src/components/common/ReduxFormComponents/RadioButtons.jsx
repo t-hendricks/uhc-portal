@@ -17,6 +17,18 @@ class RadioButtons extends React.Component {
     input.onChange(defaultValue);
   }
 
+  componentDidUpdate() {
+    const { options, defaultValue, input } = this.props;
+    const { currentValue } = this.state;
+    // if an option got disabled during the lifetime of the component, we should revert to default
+    if (options.some(option => currentValue === option.value
+                               && option.disabled && option.value !== defaultValue)) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ currentValue: defaultValue });
+      input.onChange(defaultValue);
+    }
+  }
+
   changeHandler = (value, event) => {
     const {
       input,
