@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 
 import { monitoringStatuses } from './monitoringHelper';
-import hasCpuAndMemory from '../../clusterDetailsHelper';
+import { hasCpuAndMemory } from '../../clusterDetailsHelper';
 import clusterStates from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
