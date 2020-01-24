@@ -12,7 +12,7 @@ function InstructionsAzure({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on Azure with Installer-Provisioned Infrastructure
+        Install on Azure with installer-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">

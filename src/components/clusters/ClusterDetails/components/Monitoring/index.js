@@ -3,7 +3,7 @@ import get from 'lodash/get';
 
 import Monitoring from './Monitoring';
 import { clearMonitoringState } from './MonitoringActions';
-import hasCpuAndMemory from '../../clusterDetailsHelper';
+import { hasCpuAndMemory } from '../../clusterDetailsHelper';
 import {
   issuesSelector,
   lastCheckInSelector,

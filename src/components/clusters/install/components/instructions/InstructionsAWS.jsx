@@ -18,7 +18,7 @@ const InstructionsAWS = () => (
           <CardBadge isRecommened />
           <CardBody>
             <SyncAltIcon color={global_primary_color_100.value} size="xl" alt="Installer-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
-            <Title headingLevel="h3" size="lg">Installer-Provisioned Infrastructure</Title>
+            <Title headingLevel="h3" size="lg">Installer-provisioned infrastructure</Title>
             {' '}
             Deploy an OpenShift cluster on infrastructure that the installation program
             provisions and the cluster maintains.
@@ -28,7 +28,7 @@ const InstructionsAWS = () => (
           <CardBadge isHidden />
           <CardBody>
             <UserIcon color={global_primary_color_100.value} size="xl" alt="User-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
-            <Title headingLevel="h3" size="lg">User-Provisioned Infrastructure</Title>
+            <Title headingLevel="h3" size="lg">User-provisioned infrastructure</Title>
             Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
           </CardBody>
         </Link>

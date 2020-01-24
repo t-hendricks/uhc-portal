@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import getSubscriptionManagementURL from '../../../../../common/getSubscriptionManagementURL';
-import getClusterEvaluationExpiresDate from '../../../../../common/getClusterEvaluationExpiresDate';
+import {
+  getSubscriptionManagementURL,
+  getClusterEvaluationExpiresDate,
+} from '../../clusterDetailsHelper';
 
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../common/units';

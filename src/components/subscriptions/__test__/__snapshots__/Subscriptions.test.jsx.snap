@@ -19,7 +19,7 @@ exports[`<Subscriptions /> OCPSubscriptionCard Empty should render empty OCP sub
       to="/install"
     >
       <Component>
-        Create Cluster
+        Create cluster
       </Component>
     </Link>
   </EmptyState>

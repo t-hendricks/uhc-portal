@@ -7,7 +7,7 @@ import { metricsStatusMessages, maxMetricsTimeDelta } from './ResourceUsage.cons
 import { parseValueWithUnit } from '../../../../../../common/units';
 import { getTimeDelta } from '../../../../../../common/helpers';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
-import hasCpuAndMemory from '../../../clusterDetailsHelper';
+import { hasCpuAndMemory } from '../../../clusterDetailsHelper';
 
 function ResourceUsage({ cluster }) {
   const metricsLatsUpdate = new Date(get(cluster, 'metrics.cpu.updated_timestamp', 0));

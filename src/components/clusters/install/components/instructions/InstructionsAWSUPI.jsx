@@ -12,7 +12,7 @@ function InstructionsAWSUPI({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-          Install on AWS with an User-Provisioned Infrastructure
+          Install on AWS with user-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">

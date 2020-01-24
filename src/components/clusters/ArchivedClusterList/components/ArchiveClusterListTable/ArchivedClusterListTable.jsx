@@ -21,7 +21,7 @@ function ArchivedClusterListTable(props) {
   const { viewOptions, setSorting } = props;
   const { clusters, openModal } = props;
   if (!clusters || clusters.length === 0) {
-    return <p className="notfound">No Results Match the Filter Criteria.</p>;
+    return <p className="notfound">No results match the filter criteria.</p>;
   }
 
   const sortBy = {

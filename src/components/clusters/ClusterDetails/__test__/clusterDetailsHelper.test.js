@@ -1,4 +1,4 @@
-import hasCpuAndMemory from '../clusterDetailsHelper';
+import { hasCpuAndMemory } from '../clusterDetailsHelper';
 import { clusterDetails } from './ClusterDetails.fixtures';
 
 describe('hasCpuAndMemory', () => {

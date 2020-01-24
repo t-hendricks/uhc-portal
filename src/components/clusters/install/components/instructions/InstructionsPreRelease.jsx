@@ -110,7 +110,7 @@ function InstructionsPreRelease({ token }) {
               Ability to change the arguments to the Linux Kernel via MachineConfigs.
               </li>
               <li>
-              Openshift now uses FIPS 140-2 Level 1 validated cryptography when running on RHEL
+              OpenShift now uses FIPS 140-2 Level 1 validated cryptography when running on RHEL
               CoreOS or RHEL in FIPS mode
               </li>
               <li>

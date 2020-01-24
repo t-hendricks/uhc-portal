@@ -37,6 +37,7 @@ class UnarchiveClusterDialog extends Component {
         onClose={cancelEdit}
         primaryText="Unarchive cluster"
         onPrimaryClick={() => submit(subscriptionID, name)}
+        isPending={unarchiveClusterResponse.pending}
         onSecondaryClick={cancelEdit}
       >
         <>
