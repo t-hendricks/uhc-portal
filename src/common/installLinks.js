@@ -13,7 +13,7 @@ const links = {
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
   DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/dedicated-admin-role.html`,
 
-  DOWNLOAD_RHCOS_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.2/latest/',
+  DOWNLOAD_RHCOS_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/',
 
   INSTALL_AWSIPI_INSTALLER_LATEST: MIRROR_CLIENTS_LATEST,
   INSTALL_AWSIPI_CLI_LATEST: MIRROR_CLIENTS_LATEST,
