@@ -13,6 +13,7 @@ test('Field is a valid identity provider name', () => {
   expect(checkIdentityProviderName('foo bar')).toBe('Name must not contain whitespaces.');
   expect(checkIdentityProviderName(' ')).toBe('Name must not contain whitespaces.');
   expect(checkIdentityProviderName('foobar ')).toBe('Name must not contain whitespaces.');
+  expect(checkIdentityProviderName('foobar$$')).toBe('Name should contain only alphanumeric and dashes');
   expect(checkIdentityProviderName('foo')).toBe(undefined);
 });
 
