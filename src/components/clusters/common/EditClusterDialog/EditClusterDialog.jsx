@@ -211,7 +211,7 @@ EditClusterDialog.propTypes = {
   loadBalancerValues: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
-  isByoc: PropTypes.bool.isRequired,
+  isByoc: PropTypes.bool,
 };
 
 EditClusterDialog.defaultProps = {
