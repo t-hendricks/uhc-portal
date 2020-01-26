@@ -42,13 +42,12 @@ import (
 )
 
 var (
-	jwksPublicKey  *rsa.PublicKey
 	jwksPrivateKey *rsa.PrivateKey
 )
 
 func init() {
 	var err error
-	jwksPublicKey, err = jwt.ParseRSAPublicKeyFromPEM([]byte(jwksPublicKeyPEM))
+	_, err = jwt.ParseRSAPublicKeyFromPEM([]byte(jwksPublicKeyPEM))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Can't parse JWKS public key: %v\n", err)
 		os.Exit(1)
