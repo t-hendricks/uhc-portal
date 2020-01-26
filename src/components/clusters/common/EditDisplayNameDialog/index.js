@@ -8,7 +8,7 @@ import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import getClusterName from '../../../../common/getClusterName';
 
 const mapStateToProps = (state) => {
-  const modalData = state.modal.activeModal.data;
+  const modalData = state.modal.data;
   return ({
     isOpen: shouldShowModal(state, 'edit-display-name'),
     editClusterResponse: state.clusters.editedCluster,

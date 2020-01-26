@@ -1,40 +1,27 @@
-import { setStateProp } from '../../../redux/reduxHelpers';
-import { modalConstants } from './ModalConstants';
+
+import produce from 'immer';
+
+import { OPEN_MODAL, CLOSE_MODAL } from './ModalConstants';
 
 const initialState = {
-  activeModal: { modalName: null, data: {} },
+  modalName: null,
+  data: {},
 };
 
 function modalReducer(state = initialState, action) {
-  switch (action.type) {
-    case modalConstants.OPEN_MODAL:
-      return setStateProp(
-        'activeModal',
-        {
-          modalName: action.payload.name,
-          data: action.payload.data || {},
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    // eslint-disable-next-line default-case
+    switch (action.type) {
+      case OPEN_MODAL:
+        draft.modalName = action.payload.name;
+        draft.data = action.payload.data || {};
+        break;
 
-    case modalConstants.CLOSE_MODAL:
-      return setStateProp(
-        'activeModal',
-        {
-          modalName: null,
-          data: {},
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-    default:
-      return state;
-  }
+      case CLOSE_MODAL:
+        return initialState;
+    }
+  });
 }
 
 modalReducer.initialState = initialState;

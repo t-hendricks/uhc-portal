@@ -23,7 +23,8 @@
     "react/jsx-no-target-blank": [2],
     "react/jsx-props-no-spreading": [0],
     "react/state-in-constructor": [2, "never"],
-    "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }]
+    "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft" , "response"] }]
   },
   "overrides": [{
     "files": [

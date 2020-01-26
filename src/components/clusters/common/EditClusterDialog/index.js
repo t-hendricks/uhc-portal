@@ -17,7 +17,7 @@ const reduxFormConfig = {
 const reduxFormEditCluster = reduxForm(reduxFormConfig)(EditClusterDialog);
 
 const mapStateToProps = (state) => {
-  const modalData = state.modal.activeModal.data;
+  const modalData = state.modal.data;
   return ({
     isOpen: shouldShowModal(state, 'edit-cluster'),
     editClusterResponse: state.clusters.editedCluster,
