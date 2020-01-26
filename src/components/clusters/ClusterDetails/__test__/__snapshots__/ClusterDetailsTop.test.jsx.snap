@@ -50,7 +50,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           <Component
             variant="primary"
           >
-            Launch Console
+            Open Console
           </Component>
         </a>
         <Connect(ClusterActionsDropdown)

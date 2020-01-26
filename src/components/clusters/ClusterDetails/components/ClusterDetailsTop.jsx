@@ -64,13 +64,13 @@ function ClusterDetailsTop(props) {
   if (consoleURL && (cluster.state !== clusterStates.UNINSTALLING)) {
     launchConsole = (
       <a href={consoleURL} target="_blank" rel="noopener noreferrer" className="pull-left">
-        <Button variant="primary">Launch Console</Button>
+        <Button variant="primary">Open Console</Button>
       </a>
     );
   } else if (cluster.managed) {
     launchConsole = (
       <Button variant="primary" isDisabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
-      Launch Console
+      Open Console
       </Button>
     );
   } else if (cluster.canEdit) {

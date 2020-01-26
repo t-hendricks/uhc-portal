@@ -7,14 +7,14 @@ exports[`<ClusterActionsDropdown /> admin console url does not exist should rend
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Launch Console"
+        title="Open Console"
         tooltip={
           <span>
             Admin console is not yet available for this cluster
           </span>
         }
       >
-        Launch Console
+        Open Console
       </DropdownItem>,
       <DropdownItem
         component="button"
@@ -52,14 +52,14 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Launch Console"
+        title="Open Console"
         tooltip={
           <span>
             Admin console is not yet available for this cluster
           </span>
         }
       >
-        Launch Console
+        Open Console
       </DropdownItem>,
       <DropdownItem
         component="button"
@@ -110,9 +110,9 @@ exports[`<ClusterActionsDropdown /> cluster with state ready and console url sho
         href="www.testuhc.com"
         rel="noopener noreferrer"
         target="_blank"
-        title="Launch Console"
+        title="Open Console"
       >
-        Launch Console
+        Open Console
       </DropdownItem>,
       <DropdownItem
         component="button"
@@ -157,14 +157,14 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Launch Console"
+        title="Open Console"
         tooltip={
           <span>
             The cluster is being uninstalled
           </span>
         }
       >
-        Launch Console
+        Open Console
       </DropdownItem>,
       <DropdownItem
         component="button"
@@ -225,9 +225,9 @@ exports[`<ClusterActionsDropdown /> read only cluster should render correctly 1`
         href="www.testuhc.com"
         rel="noopener noreferrer"
         target="_blank"
-        title="Launch Console"
+        title="Open Console"
       >
-        Launch Console
+        Open Console
       </DropdownItem>,
     ]
   }
@@ -251,14 +251,14 @@ exports[`<ClusterActionsDropdown /> self managed cluster should render (self man
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Launch Console"
+        title="Open Console"
         tooltip={
           <span>
             Admin console is not yet available for this cluster
           </span>
         }
       >
-        Launch Console
+        Open Console
       </DropdownItem>,
       <DropdownItem
         component="button"

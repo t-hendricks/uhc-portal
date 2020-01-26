@@ -9,7 +9,7 @@ import getClusterName from '../../../../common/getClusterName';
  * on each row of the table. It returns a list of objects, containing props for DropdownItem
  * PF table renders automatically.
  * @param {*} cluster             The cluster object corresponding to the current row
- * @param {*} showConsoleButton   true if 'Launch Console' button should be displayed
+ * @param {*} showConsoleButton   true if 'Open Console' button should be displayed
  * @param {*} openModal           Action to open modal
  */
 function actionResolver(
@@ -31,7 +31,7 @@ function actionResolver(
   const getAdminConosleProps = () => {
     const consoleURL = cluster.console ? cluster.console.url : false;
     const adminConsoleEnabled = {
-      title: 'Launch Console',
+      title: 'Open Console',
       href: consoleURL,
       target: '_blank',
       rel: 'noopener noreferrer',
@@ -39,7 +39,7 @@ function actionResolver(
     };
     const adminConsoleDisabled = {
       ...baseProps,
-      title: 'Launch Console',
+      title: 'Open Console',
       isDisabled: true,
       tooltip: isClusterUninstalling ? uninstallingMessage : consoleDisabledMessage,
       key: getKey('adminconsole'),
