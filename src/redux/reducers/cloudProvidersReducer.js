@@ -1,21 +1,20 @@
-import helpers, { setStateProp } from '../reduxHelpers';
+import {
+  setStateProp, REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+} from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
 import { cloudProviderConstants } from '../constants';
 
 const initialState = {
   cloudProviders: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseRequestState,
     providers: {},
   },
 };
 
 function cloudProvidersReducer(state = initialState, action) {
   switch (action.type) {
-    case helpers.REJECTED_ACTION(cloudProviderConstants.GET_CLOUD_PROVIDERS):
+    case REJECTED_ACTION(cloudProviderConstants.GET_CLOUD_PROVIDERS):
       return setStateProp(
         'cloudProviders',
         getErrorState(action),
@@ -25,7 +24,7 @@ function cloudProvidersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(cloudProviderConstants.GET_CLOUD_PROVIDERS):
+    case PENDING_ACTION(cloudProviderConstants.GET_CLOUD_PROVIDERS):
       return setStateProp(
         'cloudProviders',
         {
@@ -37,7 +36,7 @@ function cloudProvidersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(cloudProviderConstants.GET_CLOUD_PROVIDERS):
+    case FULFILLED_ACTION(cloudProviderConstants.GET_CLOUD_PROVIDERS):
       return setStateProp(
         'cloudProviders',
         {

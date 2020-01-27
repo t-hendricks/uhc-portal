@@ -40,8 +40,20 @@ const actionTypes = {
   REJECTED_ACTION,
 };
 
-export default actionTypes;
+const baseRequestState = {
+  error: false,
+  errorMessage: '',
+  errorDetails: null,
+  pending: false,
+  fulfilled: false,
+};
+
 export {
+  INVALIDATE_ACTION,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
   actionTypes,
   setStateProp,
+  baseRequestState,
 };

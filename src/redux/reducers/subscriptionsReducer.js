@@ -13,32 +13,27 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import helpers, { setStateProp } from '../reduxHelpers';
+import {
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, INVALIDATE_ACTION,
+  setStateProp, baseRequestState,
+} from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
 import { subscriptionsConstants } from '../constants';
 
-const baseState = {
-  error: false,
-  errorMessage: '',
-  errorDetails: null,
-  pending: false,
-  fulfilled: false,
-};
-
 const initialState = {
   account: {
-    ...baseState,
+    ...baseRequestState,
     valid: false,
     data: {},
   },
   subscriptions: {
-    ...baseState,
+    ...baseRequestState,
     valid: false,
     items: [],
   },
   quotaSummary: {
-    ...baseState,
+    ...baseRequestState,
     valid: false,
     items: [],
   },
@@ -47,7 +42,7 @@ const initialState = {
 function subscriptionsReducer(state = initialState, action) {
   switch (action.type) {
     // GET_ACCOUNT
-    case helpers.INVALIDATE_ACTION(subscriptionsConstants.GET_ACCOUNT):
+    case INVALIDATE_ACTION(subscriptionsConstants.GET_ACCOUNT):
       return setStateProp(
         'account',
         {
@@ -59,7 +54,7 @@ function subscriptionsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.REJECTED_ACTION(subscriptionsConstants.GET_ACCOUNT):
+    case REJECTED_ACTION(subscriptionsConstants.GET_ACCOUNT):
       return setStateProp(
         'account',
         {
@@ -72,7 +67,7 @@ function subscriptionsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(subscriptionsConstants.GET_ACCOUNT):
+    case PENDING_ACTION(subscriptionsConstants.GET_ACCOUNT):
       return setStateProp(
         'account',
         {
@@ -84,7 +79,7 @@ function subscriptionsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(subscriptionsConstants.GET_ACCOUNT):
+    case FULFILLED_ACTION(subscriptionsConstants.GET_ACCOUNT):
       return setStateProp(
         'account',
         {
@@ -100,7 +95,7 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     // GET_SUBSCRIPTIONS
-    case helpers.INVALIDATE_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
+    case INVALIDATE_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
       return setStateProp(
         'subscriptions',
         {
@@ -112,7 +107,7 @@ function subscriptionsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.REJECTED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
+    case REJECTED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
       return setStateProp(
         'subscriptions',
         {
@@ -126,7 +121,7 @@ function subscriptionsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
+    case PENDING_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
       return setStateProp(
         'subscriptions',
         {
@@ -139,7 +134,7 @@ function subscriptionsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
+    case FULFILLED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
       return setStateProp(
         'subscriptions',
         {
@@ -155,7 +150,7 @@ function subscriptionsReducer(state = initialState, action) {
       );
 
     // GET_QUOTA_SUMMARY
-    case helpers.INVALIDATE_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
+    case INVALIDATE_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
       return setStateProp(
         'quotaSummary',
         {
@@ -167,7 +162,7 @@ function subscriptionsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.REJECTED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
+    case REJECTED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
       return setStateProp(
         'quotaSummary',
         {
@@ -181,7 +176,7 @@ function subscriptionsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
+    case PENDING_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
       return setStateProp(
         'quotaSummary',
         {
@@ -194,7 +189,7 @@ function subscriptionsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
+    case FULFILLED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
       return setStateProp(
         'quotaSummary',
         {

@@ -1,4 +1,4 @@
-import helpers from '../reduxHelpers';
+import { FULFILLED_ACTION } from '../reduxHelpers';
 import {
   clustersConstants,
   viewConstants,
@@ -91,7 +91,7 @@ const viewOptionsReducer = (state = initialState, action) => {
       updateState[action.viewType] = { ...state[action.viewType], pageSize: action.pageSize };
       return { ...state, ...updateState };
 
-    case helpers.FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
+    case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
       updatePageCounts(viewConstants.CLUSTERS_VIEW, action.payload.data.total);
       updatePageCounts(viewConstants.ARCHIVED_CLUSTERS_VIEW, action.payload.data.total);
       return { ...state, ...updateState };

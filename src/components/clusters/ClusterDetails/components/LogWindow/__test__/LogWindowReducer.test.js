@@ -1,6 +1,6 @@
 import reducer, { initialState } from '../LogWindowReducer';
 import { GET_LOGS, CLEAR_LOGS } from '../LogWindowConstants';
-import helpers from '../../../../../../redux/reduxHelpers';
+import { FULFILLED_ACTION } from '../../../../../../redux/reduxHelpers';
 
 describe('log tab Redcuer', () => {
   const mockPayload = {
@@ -22,7 +22,7 @@ describe('log tab Redcuer', () => {
   });
 
   it('should handle get logs action', () => {
-    const action = { type: helpers.FULFILLED_ACTION(GET_LOGS), payload: mockPayload };
+    const action = { type: FULFILLED_ACTION(GET_LOGS), payload: mockPayload };
     const result = reducer(initialState, action);
 
     expect(result).toHaveProperty('lines', mockPayload.data.content);
