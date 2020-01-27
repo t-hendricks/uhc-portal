@@ -121,7 +121,7 @@ class IDPForm extends React.Component {
             && !(selectedMappingMethod === mappingMethodsformValues.LOOKUP)}
           />
         )}
-            <Expandable toggleText="Show Advanced Options">
+            <Expandable toggleTextCollapsed="Show Advanced Options" toggleTextExpanded="Hide Advanced Options">
               {SelectedProviderAdvancedOptions
           && (
             <SelectedProviderAdvancedOptions isPending={isPending} />
