@@ -33,3 +33,11 @@ test('filterLoadBalancerValuesByQuota works with currentValue and with positive 
     { values: [0, 4, 8, 12] },
   );
 });
+test('filterLoadBalancerValuesByQuota returns empty list when provided with bad input', () => {
+  const remainingQuota = 4;
+  const loadBalancerValues = { values: null };
+  const currentValue = 8;
+  expect(filterLoadBalancerValuesByQuota(currentValue, loadBalancerValues, remainingQuota)).toEqual(
+    { values: [] },
+  );
+});
