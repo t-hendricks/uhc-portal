@@ -42,8 +42,10 @@ class EditClusterDialog extends Component {
       closeModal,
       onClose,
       initialFormValues,
+      organization,
       getOrganizationAndQuota,
       change,
+      isOpen,
     } = this.props;
 
     if (initialFormValues.id) {
@@ -54,6 +56,11 @@ class EditClusterDialog extends Component {
         change('persistent_storage', initialFormValues.persistent_storage.toString());
         change('load_balancers', initialFormValues.load_balancers.toString());
       }
+    }
+
+    // Fetch quota on opening the scale modal.
+    if (!prevProps.isOpen && isOpen && !organization.pending) {
+      getOrganizationAndQuota();
     }
 
     // Only finalize when all responses are out of their pending state
