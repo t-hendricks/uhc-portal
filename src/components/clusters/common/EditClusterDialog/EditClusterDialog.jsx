@@ -120,7 +120,7 @@ class EditClusterDialog extends Component {
           <p>
             {usageLink}
             {' '}
-before proceeding to be sure you are not
+            before proceeding to be sure you are not
             scaling below what is currently being used.
           </p>
         </div>

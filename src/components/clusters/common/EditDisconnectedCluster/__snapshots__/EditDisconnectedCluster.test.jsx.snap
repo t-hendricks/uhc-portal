@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EditDisconnectedClusterDialog /> renders correctly 1`] = `
+<Modal
+  onClose={[Function]}
+  onSecondaryClick={[Function]}
+  primaryText="Save"
+  title="Edit Cluster Registration"
+>
+  <Form>
+    <Field
+      component={[Function]}
+      inputMode="numeric"
+      label="Memory capacity (GiB)"
+      name="memoryCapacity"
+      step="any"
+      validate={[Function]}
+    />
+    <Field
+      component={[Function]}
+      inputMode="numeric"
+      label="Number of compute nodes"
+      name="computeNodes"
+      validate={[Function]}
+    />
+  </Form>
+</Modal>
+`;
+
+exports[`<EditDisconnectedClusterDialog /> renders correctly when an error occurs 1`] = `
+<Modal
+  onClose={[Function]}
+  onSecondaryClick={[Function]}
+  primaryText="Save"
+  title="Edit Cluster Registration"
+>
+  <ErrorBox
+    message="Error editing cluster"
+    response={
+      Object {
+        "erorMessage": "this is an error",
+        "error": true,
+      }
+    }
+  />
+  <Form>
+    <Field
+      component={[Function]}
+      inputMode="numeric"
+      label="Memory capacity (GiB)"
+      name="memoryCapacity"
+      step="any"
+      validate={[Function]}
+    />
+    <Field
+      component={[Function]}
+      inputMode="numeric"
+      label="Number of compute nodes"
+      name="computeNodes"
+      validate={[Function]}
+    />
+  </Form>
+</Modal>
+`;

@@ -43,6 +43,7 @@ import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import EditDisconnectedClusterDialog from '../common/EditDisconnectedCluster';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -316,6 +317,7 @@ class ClusterDetails extends Component {
           refreshParent={this.refreshIDP}
         />
         <DeleteIDPDialog refreshParent={this.refreshIDP} />
+        <EditDisconnectedClusterDialog onClose={onDialogClose} />
       </PageSection>
     );
   }
