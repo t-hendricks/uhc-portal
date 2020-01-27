@@ -37,10 +37,17 @@ function LogsReducer(state = initialState, action) {
         break;
 
       case helpers.FULFILLED_ACTION(GET_LOGS):
-        return { ...initialState, lines: action.payload.data.content, fulfilled: true };
+        return {
+          ...initialState,
+          lines: action.payload.data.content,
+          fulfilled: true,
+        };
 
       case helpers.REJECTED_ACTION(GET_LOGS):
-        return { ...initialState, ...getErrorState(action) };
+        return {
+          ...initialState,
+          ...getErrorState(action),
+        };
 
       case CLEAR_LOGS:
         return initialState;
