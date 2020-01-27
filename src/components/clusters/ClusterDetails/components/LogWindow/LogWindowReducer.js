@@ -15,15 +15,14 @@ limitations under the License.
 */
 import produce from 'immer';
 
-import helpers from '../../../../../redux/reduxHelpers';
+import {
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+} from '../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../common/errors';
 import { GET_LOGS, CLEAR_LOGS } from './LogWindowConstants';
 
 const initialState = {
-  error: false,
-  errorMessage: '',
-  pending: false,
-  fulfilled: false,
+  ...baseRequestState,
   lines: '',
 };
 
@@ -32,18 +31,18 @@ function LogsReducer(state = initialState, action) {
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
-      case helpers.PENDING_ACTION(GET_LOGS):
+      case PENDING_ACTION(GET_LOGS):
         draft.pending = true;
         break;
 
-      case helpers.FULFILLED_ACTION(GET_LOGS):
+      case FULFILLED_ACTION(GET_LOGS):
         return {
           ...initialState,
           lines: action.payload.data.content,
           fulfilled: true,
         };
 
-      case helpers.REJECTED_ACTION(GET_LOGS):
+      case REJECTED_ACTION(GET_LOGS):
         return {
           ...initialState,
           ...getErrorState(action),

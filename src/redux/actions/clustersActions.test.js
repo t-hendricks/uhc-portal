@@ -1,7 +1,7 @@
 import { clustersActions } from './clustersActions';
 import { clusterService } from '../../services';
 import { clustersConstants } from '../constants';
-import helpers from '../reduxHelpers';
+import { INVALIDATE_ACTION } from '../reduxHelpers';
 
 jest.mock('../../services/accountsService.js');
 jest.mock('../../services/authorizationsService.js');
@@ -17,7 +17,7 @@ describe('clustersActions', () => {
     it('dispatches successfully', () => {
       clustersActions.invalidateClusters()(mockDispatch);
       expect(mockDispatch).toBeCalledWith({
-        type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
+        type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
       });
     });
   });

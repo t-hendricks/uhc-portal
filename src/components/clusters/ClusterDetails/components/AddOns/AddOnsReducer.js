@@ -1,30 +1,26 @@
-import helpers, { setStateProp } from '../../../../../redux/reduxHelpers';
+import {
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION,
+  setStateProp, baseRequestState,
+} from '../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../common/errors';
 import AddOnsConstants from './AddOnsConstants';
 
-const request = {
-  error: false,
-  errorMessage: '',
-  pending: false,
-  fulfilled: false,
-};
-
 const initialState = {
   addOns: {
-    ...request,
+    ...baseRequestState,
     items: [],
     resourceNames: [],
   },
   clusterAddOns: {
-    ...request,
+    ...baseRequestState,
     clusterID: undefined,
     items: [],
   },
   addClusterAddOnResponse: {
-    ...request,
+    ...baseRequestState,
   },
   deleteClusterAddOnResponse: {
-    ...request,
+    ...baseRequestState,
   },
 };
 
@@ -34,7 +30,7 @@ function AddOnsReducer(state = initialState, action) {
       return initialState;
 
     // GET_ADDONS
-    case helpers.REJECTED_ACTION(AddOnsConstants.GET_ADDONS):
+    case REJECTED_ACTION(AddOnsConstants.GET_ADDONS):
       return setStateProp(
         'addOns',
         getErrorState(action),
@@ -44,7 +40,7 @@ function AddOnsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(AddOnsConstants.GET_ADDONS):
+    case PENDING_ACTION(AddOnsConstants.GET_ADDONS):
       return setStateProp(
         'addOns',
         {
@@ -58,7 +54,7 @@ function AddOnsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(AddOnsConstants.GET_ADDONS):
+    case FULFILLED_ACTION(AddOnsConstants.GET_ADDONS):
       return setStateProp(
         'addOns',
         {
@@ -74,7 +70,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     // GET_CLUSTER_ADDONS
-    case helpers.REJECTED_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
+    case REJECTED_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
       return setStateProp(
         'clusterAddOns',
         getErrorState(action),
@@ -84,7 +80,7 @@ function AddOnsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
+    case PENDING_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
       return setStateProp(
         'clusterAddOns',
         {
@@ -98,7 +94,7 @@ function AddOnsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
+    case FULFILLED_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
       return setStateProp(
         'clusterAddOns',
         {
@@ -114,7 +110,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     // ADD_CLUSTER_ADDON
-    case helpers.REJECTED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
+    case REJECTED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
       return setStateProp(
         'addClusterAddOnResponse',
         getErrorState(action),
@@ -124,7 +120,7 @@ function AddOnsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
+    case PENDING_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
       return setStateProp(
         'addClusterAddOnResponse',
         {
@@ -136,7 +132,7 @@ function AddOnsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
+    case FULFILLED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
       return setStateProp(
         'addClusterAddOnResponse',
         {
@@ -150,7 +146,7 @@ function AddOnsReducer(state = initialState, action) {
       );
 
     // DELETE_CLUSTER_ADDON
-    case helpers.REJECTED_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
+    case REJECTED_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
       return setStateProp(
         'deleteClusterAddOnResponse',
         getErrorState(action),
@@ -160,7 +156,7 @@ function AddOnsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
+    case PENDING_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
       return setStateProp(
         'deleteClusterAddOnResponse',
         {
@@ -173,7 +169,7 @@ function AddOnsReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
+    case FULFILLED_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
       return setStateProp(
         'deleteClusterAddOnResponse',
         {

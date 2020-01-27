@@ -1,6 +1,8 @@
 import get from 'lodash/get';
 import { userConstants } from '../constants';
-import helpers, { setStateProp } from '../reduxHelpers';
+import {
+  setStateProp, REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+} from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
 const initialState = {
@@ -8,10 +10,7 @@ const initialState = {
   organization: {
     details: null,
     quotaList: {},
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseRequestState,
   },
 };
 
@@ -28,7 +27,7 @@ function userProfile(state = initialState, action) {
       );
 
     // GET_ORGANIZATION
-    case helpers.PENDING_ACTION(userConstants.GET_ORGANIZATION):
+    case PENDING_ACTION(userConstants.GET_ORGANIZATION):
       return setStateProp(
         'organization',
         {
@@ -39,7 +38,7 @@ function userProfile(state = initialState, action) {
           initialState,
         },
       );
-    case helpers.FULFILLED_ACTION(userConstants.GET_ORGANIZATION):
+    case FULFILLED_ACTION(userConstants.GET_ORGANIZATION):
       return setStateProp(
         'organization',
         {
@@ -54,7 +53,7 @@ function userProfile(state = initialState, action) {
           initialState,
         },
       );
-    case helpers.REJECTED_ACTION(userConstants.GET_ORGANIZATION):
+    case REJECTED_ACTION(userConstants.GET_ORGANIZATION):
       return setStateProp(
         'organization',
         getErrorState(action),

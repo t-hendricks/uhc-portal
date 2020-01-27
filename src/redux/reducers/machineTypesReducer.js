@@ -13,36 +13,35 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import helpers from '../reduxHelpers';
+import {
+  REJECTED_ACTION, FULFILLED_ACTION, PENDING_ACTION, baseRequestState,
+} from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
 import { machineTypesConstants } from '../constants';
 
 const initialState = {
-  error: false,
-  errorMessage: '',
-  pending: false,
-  fulfilled: false,
+  ...baseRequestState,
   types: [],
 };
 
 function machineTypesReducer(state = initialState, action) {
   switch (action.type) {
-    case helpers.REJECTED_ACTION(machineTypesConstants.GET_MACHINE_TYPES):
+    case REJECTED_ACTION(machineTypesConstants.GET_MACHINE_TYPES):
       return {
         ...initialState,
         ...state,
         ...getErrorState(action),
       };
 
-    case helpers.PENDING_ACTION(machineTypesConstants.GET_MACHINE_TYPES):
+    case PENDING_ACTION(machineTypesConstants.GET_MACHINE_TYPES):
       return {
         ...initialState,
         ...state,
         pending: true,
       };
 
-    case helpers.FULFILLED_ACTION(machineTypesConstants.GET_MACHINE_TYPES):
+    case FULFILLED_ACTION(machineTypesConstants.GET_MACHINE_TYPES):
       return {
         ...initialState,
         ...state,
