@@ -144,6 +144,7 @@ class BasicFields extends React.Component {
               isMultiAz={isMultiAz}
               isBYOC={isBYOC}
               onChange={this.handleMachineTypesChange}
+              cloudProviderID={cloudProviderID}
             />
           </FormGroup>
         </GridItem>

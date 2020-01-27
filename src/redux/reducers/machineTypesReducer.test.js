@@ -53,7 +53,7 @@ describe('clusterMachineTypesReducer', () => {
       const result = machineTypesReducer(initialState, action);
 
       expect(result).toEqual({
-        types: action.payload.data.items,
+        types: action.payload,
         errorMessage: '',
         errorDetails: null,
         fulfilled: true,

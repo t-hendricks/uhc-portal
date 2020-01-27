@@ -9,7 +9,6 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import FlatRadioButton from '../../../../common/FlatRadioButton';
 import ErrorBox from '../../../../common/ErrorBox';
 import { humanizeValueWithUnit } from '../../../../../common/units';
-import sortMachineTypes from './sortMachineTypes';
 
 const machineTypeIcon = (machineType) => {
   const machineTypeFamily = machineType.charAt(0);
@@ -21,7 +20,7 @@ const machineTypeIcon = (machineType) => {
     case 'm':
       return <ContainerNodeIcon size="lg" />;
     default:
-      return null;
+      return <ContainerNodeIcon size="lg" />;
   }
 };
 
@@ -72,13 +71,14 @@ class MachineTypeSelection extends React.Component {
   }
 
   setDefaultValue() {
-    // Find the first machineType we have quota for, and set it as default
-    const { machineTypes, input } = this.props;
-    machineTypes.types.sort(sortMachineTypes);
-    const defaultType = machineTypes.types.find(type => this.hasQuota(type.id));
-    if (defaultType) {
-      this.setState({ currentValue: defaultType.id });
-      input.onChange(defaultType.id);
+    // Find the first sortedMachineTypes we have quota for, and set it as default
+    const { sortedMachineTypes, input } = this.props;
+    if (sortedMachineTypes.length > 0) {
+      const defaultType = sortedMachineTypes.find(type => this.hasQuota(type.id));
+      if (defaultType) {
+        this.setState({ currentValue: defaultType.id });
+        input.onChange(defaultType.id);
+      }
     }
   }
 
@@ -106,6 +106,7 @@ class MachineTypeSelection extends React.Component {
     // go into extraProps and then get to the DOM, generating a React warning.
     const {
       machineTypes,
+      sortedMachineTypes,
       getMachineTypes,
       isBYOC,
       isMultiAz,
@@ -113,6 +114,7 @@ class MachineTypeSelection extends React.Component {
       organization,
       input,
       meta: { error, touched },
+      cloudProviderID,
       ...extraProps
     } = this.props;
     const { currentValue } = this.state;
@@ -144,13 +146,15 @@ class MachineTypeSelection extends React.Component {
         />
       );
     };
-
     if (machineTypes.fulfilled && organization.fulfilled) {
+      if (sortedMachineTypes.length === 0) {
+        return <div>No supported machine types</div>;
+      }
       return (
         <>
           {(touched && error) && (<span className="error">{error}</span>)}
           <div className="flat-radio-buttons-flex-container">
-            {machineTypes.types.map(type => machineTypeRadio(type))}
+            {sortedMachineTypes.map(type => machineTypeRadio(type))}
           </div>
         </>
       );
@@ -171,8 +175,10 @@ MachineTypeSelection.propTypes = {
   input: PropTypes.shape({ onChange: PropTypes.func.isRequired }).isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
+  sortedMachineTypes: PropTypes.array.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   isBYOC: PropTypes.bool.isRequired,
+  cloudProviderID: PropTypes.string.isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   meta: PropTypes.shape({

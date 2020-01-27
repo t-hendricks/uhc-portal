@@ -1,6 +1,6 @@
 import sortMachineTypes from './sortMachineTypes';
 
-const machineTypes = [
+const awsMachineTypes = [
   {
     id: 'c5.2xlarge',
     memory: {
@@ -83,10 +83,10 @@ const machineTypes = [
   },
 ];
 
-describe('categorySort', () => {
-  it('sorts correctly', () => {
-    machineTypes.sort(sortMachineTypes);
-    expect(machineTypes.map(e => e.id)).toEqual([
+describe('sort machine type', () => {
+  it('sorts correctly for aws', () => {
+    const sorted = sortMachineTypes('aws', { aws: awsMachineTypes });
+    expect(sorted.map(e => e.id)).toEqual([
       'm5.xlarge',
       'm5.2xlarge',
       'm5.4xlarge',

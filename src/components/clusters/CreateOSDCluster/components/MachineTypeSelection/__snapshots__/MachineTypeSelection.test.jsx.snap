@@ -38,7 +38,7 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
       "error": false,
       "errorMessage": "",
       "fulfilled": false,
-      "machineTypes": Array [],
+      "machineTypes": Object {},
       "pending": false,
     }
   }
@@ -101,48 +101,8 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
       "error": false,
       "errorMessage": "",
       "fulfilled": true,
-      "machineTypes": Array [],
+      "machineTypes": Object {},
       "pending": false,
-      "types": Array [
-        Object {
-          "cloud_provider": Object {
-            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-            "id": "aws",
-            "kind": "CloudProviderLink",
-          },
-          "cpu": Object {
-            "unit": "vCPU",
-            "value": 4,
-          },
-          "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
-          "id": "r5.xlarge",
-          "kind": "MachineType",
-          "memory": Object {
-            "unit": "B",
-            "value": 34359738368,
-          },
-          "name": "Memory optimized - R5.XLarge",
-        },
-        Object {
-          "cloud_provider": Object {
-            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-            "id": "aws",
-            "kind": "CloudProviderLink",
-          },
-          "cpu": Object {
-            "unit": "vCPU",
-            "value": 16,
-          },
-          "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
-          "id": "r5.4xlarge",
-          "kind": "MachineType",
-          "memory": Object {
-            "unit": "B",
-            "value": 137438953472,
-          },
-          "name": "Memory optimized - R5.4XLarge",
-        },
-      ],
     }
   }
   meta={Object {}}
@@ -165,6 +125,48 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
         },
       },
     }
+  }
+  sortedMachineTypes={
+    Array [
+      Object {
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+        "id": "r5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "Memory optimized - R5.XLarge",
+      },
+      Object {
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+        "id": "r5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 137438953472,
+        },
+        "name": "Memory optimized - R5.4XLarge",
+      },
+    ]
   }
 >
   <div
@@ -709,7 +711,7 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
       "error": true,
       "errorMessage": "This is an error message",
       "fulfilled": false,
-      "machineTypes": Array [],
+      "machineTypes": Object {},
       "pending": false,
     }
   }
@@ -729,7 +731,7 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
         "error": true,
         "errorMessage": "This is an error message",
         "fulfilled": false,
-        "machineTypes": Array [],
+        "machineTypes": Object {},
         "pending": false,
       }
     }
