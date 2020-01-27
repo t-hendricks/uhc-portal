@@ -44,7 +44,7 @@ class BasicFields extends React.Component {
 
   render() {
     const {
-      pending, showDNSBaseDomain, isBYOC, hasSingleAzQuota, hasMultiAzQuota,
+      pending, showDNSBaseDomain, isBYOC, hasSingleAzQuota, hasMultiAzQuota, cloudProviderID,
     } = this.props;
     const { isMultiAz } = this.state;
     const min = minValueSelector(isMultiAz);
@@ -95,7 +95,7 @@ class BasicFields extends React.Component {
             <Field
               component={CloudRegionComboBox}
               name="region"
-              cloudProviderID="aws"
+              cloudProviderID={cloudProviderID}
               disabled={pending}
               isRequired
             />
@@ -217,6 +217,7 @@ BasicFields.propTypes = {
   isBYOC: PropTypes.bool.isRequired,
   hasMultiAzQuota: PropTypes.bool.isRequired,
   hasSingleAzQuota: PropTypes.bool.isRequired,
+  cloudProviderID: PropTypes.string.isRequired,
 };
 
 export default BasicFields;

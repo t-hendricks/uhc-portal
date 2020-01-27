@@ -93,6 +93,7 @@ class CreateOSDClusterForm extends React.Component {
           isBYOC={isBYOCForm}
           hasSingleAzQuota={quota[infraType].singleAz}
           hasMultiAzQuota={quota[infraType].multiAz}
+          cloudProviderID="aws"
         />
 
         {/* Networking section */}
