@@ -25,3 +25,9 @@ test('filterPersistentStorageValuesByQuota works with currentValue and with posi
   const currentValue = 600 * 2 ** 30; // 600 GiB
   expect(filterPersistentStorageValuesByQuota(currentValue, persistentStorageValues, remainingQuota)).toEqual({ values: [{ unit: 'B', value: 100 * 2 ** 30 }, { unit: 'B', value: 600 * 2 ** 30 }, { unit: 'B', value: 1100 * 2 ** 30 }] });
 });
+
+test('filterPersistentStorageValuesByQuota returns only base value when backend provides invalid values', () => {
+  const remainingQuota = 0;
+  const persistentStorageValues = { values: null };
+  expect(filterPersistentStorageValuesByQuota(null, persistentStorageValues, remainingQuota)).toEqual({ values: [{ unit: 'B', value: 100 * 2 ** 30 }] });
+});
