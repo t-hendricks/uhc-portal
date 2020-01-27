@@ -9,6 +9,9 @@ const filterPersistentStorageValuesByQuota = (currentValue,
   // this quota is "on top" of the base cluster quota of 100 GiB.
   const quotaInBytes = parseValueWithUnit(remainingQuota, 'GiB');
   const result = { ...persistentStorageValues };
+  if (!result.values) {
+    return { values: [{ value: baseClusterQuota, unit: 'B' }] };
+  }
   if (currentValue) {
     result.values = result.values.filter(el => el.value <= quotaInBytes + currentValue);
   } else {
