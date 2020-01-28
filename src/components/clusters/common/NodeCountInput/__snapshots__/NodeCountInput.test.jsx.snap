@@ -15,7 +15,7 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
       isValid={true}
       name="compute-nodes"
       onBlur={[Function]}
-      onChange={[Function]}
+      onChange={[MockFunction]}
       onFocus={[Function]}
       validated="default"
       value=""
@@ -51,7 +51,7 @@ exports[`<NodeCountInput> Multi AZ renders with some quota 1`] = `
       isValid={true}
       name="compute-nodes"
       onBlur={[Function]}
-      onChange={[Function]}
+      onChange={[MockFunction]}
       onFocus={[Function]}
       validated="default"
       value=""
@@ -60,6 +60,11 @@ exports[`<NodeCountInput> Multi AZ renders with some quota 1`] = `
         key="9"
         label="3"
         value={9}
+      />
+      <FormSelectOption
+        key="12"
+        label="4"
+        value={12}
       />
     </FormSelect>
     <span>
@@ -87,7 +92,7 @@ exports[`<NodeCountInput> Single AZ renders with no quota 1`] = `
       isValid={true}
       name="compute-nodes"
       onBlur={[Function]}
-      onChange={[Function]}
+      onChange={[MockFunction]}
       onFocus={[Function]}
       validated="default"
       value=""
@@ -117,7 +122,7 @@ exports[`<NodeCountInput> Single AZ renders with some quota 1`] = `
       isValid={true}
       name="compute-nodes"
       onBlur={[Function]}
-      onChange={[Function]}
+      onChange={[MockFunction]}
       onFocus={[Function]}
       validated="default"
       value=""
@@ -156,6 +161,107 @@ exports[`<NodeCountInput> Single AZ renders with some quota 1`] = `
         key="10"
         label="10"
         value={10}
+      />
+      <FormSelectOption
+        key="11"
+        label="11"
+        value={11}
+      />
+      <FormSelectOption
+        key="12"
+        label="12"
+        value={12}
+      />
+      <FormSelectOption
+        key="13"
+        label="13"
+        value={13}
+      />
+      <FormSelectOption
+        key="14"
+        label="14"
+        value={14}
+      />
+    </FormSelect>
+  </div>
+</FormGroup>
+`;
+
+exports[`<NodeCountInput> scaling dialog behavior multiAz renders with no quota above current value 1`] = `
+<FormGroup
+  className="compute-nodes-select"
+  fieldId="compute-nodes"
+  label="compute nodes"
+>
+  <div>
+    <FormSelect
+      aria-label="Compute nodes"
+      className=""
+      isDisabled={false}
+      isRequired={false}
+      isValid={true}
+      name="compute-nodes"
+      onBlur={[Function]}
+      onChange={[MockFunction]}
+      onFocus={[Function]}
+      validated="default"
+      value=""
+    >
+      <FormSelectOption
+        key="9"
+        label="3"
+        value={9}
+      />
+      <FormSelectOption
+        key="12"
+        label="4"
+        value={12}
+      />
+    </FormSelect>
+    <span>
+      × 3 zones =
+       
+       
+      compute nodes
+    </span>
+  </div>
+</FormGroup>
+`;
+
+exports[`<NodeCountInput> scaling dialog behavior singleAZ renders with no quota above current value 1`] = `
+<FormGroup
+  className="compute-nodes-select"
+  fieldId="compute-nodes"
+  label="compute nodes"
+>
+  <div>
+    <FormSelect
+      aria-label="Compute nodes"
+      className=""
+      isDisabled={false}
+      isRequired={false}
+      isValid={true}
+      name="compute-nodes"
+      onBlur={[Function]}
+      onChange={[MockFunction]}
+      onFocus={[Function]}
+      validated="default"
+      value=""
+    >
+      <FormSelectOption
+        key="4"
+        label="4"
+        value={4}
+      />
+      <FormSelectOption
+        key="5"
+        label="5"
+        value={5}
+      />
+      <FormSelectOption
+        key="6"
+        label="6"
+        value={6}
       />
     </FormSelect>
   </div>

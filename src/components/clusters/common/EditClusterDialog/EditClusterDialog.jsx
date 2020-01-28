@@ -146,6 +146,8 @@ class EditClusterDialog extends Component {
               isBYOC={isByoc}
               machineType={machineType}
               isDisabled={pending}
+              isEditingCluster
+              currentNodeCount={initialFormValues.nodesCompute || 0}
             />
             { !isByoc && (
               <>
