@@ -15,6 +15,7 @@ exports[`<Users /> should render without users 1`] = `
       <a
         href="https://docs.openshift.com/dedicated/4/administering_a_cluster/dedicated-admin-role.html"
         rel="noopener noreferrer"
+        target="_blank"
       >
         Learn more.
       </a>
@@ -50,6 +51,7 @@ exports[`<Users /> with users should render 1`] = `
       <a
         href="https://docs.openshift.com/dedicated/4/administering_a_cluster/dedicated-admin-role.html"
         rel="noopener noreferrer"
+        target="_blank"
       >
         Learn more.
       </a>

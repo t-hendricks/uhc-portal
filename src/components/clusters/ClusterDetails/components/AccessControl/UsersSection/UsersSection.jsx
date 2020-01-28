@@ -140,7 +140,7 @@ class UsersSection extends React.Component {
       );
     }
 
-    const learnMoreLink = <a rel="noopener noreferrer" href={links.DEDICATED_ADMIN_ROLE}>Learn more.</a>;
+    const learnMoreLink = <a rel="noopener noreferrer" href={links.DEDICATED_ADMIN_ROLE} target="_blank">Learn more.</a>;
 
     const hasUsers = !!get(clusterGroupUsers.users, 'items.length', false);
 
