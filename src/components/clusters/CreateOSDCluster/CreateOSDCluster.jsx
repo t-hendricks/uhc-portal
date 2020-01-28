@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
-  Breadcrumb,
-  BreadcrumbItem,
   Button,
   Card,
   Form,
@@ -23,6 +20,7 @@ import {
 import PageTitle from '../../common/PageTitle';
 import ErrorModal from '../../common/ErrorModal';
 import ErrorBox from '../../common/ErrorBox';
+import Breadcrumbs from '../common/Breadcrumbs';
 import { constants } from './CreateOSDClusterHelper';
 import CreateOSDClusterForm from './components/CreateOSDClusterForm';
 
@@ -161,21 +159,12 @@ class CreateOSDCluster extends React.Component {
       <PageTitle
         title="Create an OpenShift Dedicated Cluster"
         breadcrumbs={(
-          <Breadcrumb className="breadcrumbs-in-card">
-            <LinkContainer to="">
-              <BreadcrumbItem to="#">
-                Clusters
-              </BreadcrumbItem>
-            </LinkContainer>
-            <LinkContainer to="/create">
-              <BreadcrumbItem to="#">
-                Create
-              </BreadcrumbItem>
-            </LinkContainer>
-            <BreadcrumbItem isActive>
-              OpenShift Dedicated
-            </BreadcrumbItem>
-          </Breadcrumb>
+          <Breadcrumbs path={[
+            { label: 'Clusters' },
+            { label: 'Create', path: '/create' },
+            { label: 'OpenShift Dedicated' },
+          ]}
+          />
         )}
       />
     );
