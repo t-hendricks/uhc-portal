@@ -23,8 +23,8 @@ const addClusterAddOn = (clusterID, addOnID) => dispatch => dispatch({
   payload: clusterService.addClusterAddOn(clusterID, addOnID),
 });
 
-const clearAddOnsResponses = () => ({
-  type: AddOnsConstants.CLEAR_ADDON_RESPONSES,
+const clearClusterAddOnsResponses = () => ({
+  type: AddOnsConstants.CLEAR_CLUSTER_ADDON_RESPONSES,
 });
 
 
@@ -32,7 +32,13 @@ const addOnsActions = {
   getAddOns,
   getClusterAddOns,
   addClusterAddOn,
-  clearAddOnsResponses,
+  clearClusterAddOnsResponses,
 };
 
-export default addOnsActions;
+export {
+  addOnsActions,
+  getAddOns,
+  getClusterAddOns,
+  addClusterAddOn,
+  clearClusterAddOnsResponses,
+};

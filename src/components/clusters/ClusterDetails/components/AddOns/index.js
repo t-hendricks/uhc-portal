@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import AddOns from './AddOns';
-import addOnsActions from './AddOnsActions';
+import { getClusterAddOns, addClusterAddOn, clearClusterAddOnsResponses } from './AddOnsActions';
+import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
 
 const mapStateToProps = state => ({
   addOns: state.addOns.addOns,
@@ -12,9 +13,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getClusterAddOns: addOnsActions.getClusterAddOns,
-  addClusterAddOn: addOnsActions.addClusterAddOn,
-  clearAddOnsResponses: addOnsActions.clearAddOnsResponses,
+  getOrganizationAndQuota,
+  getClusterAddOns,
+  addClusterAddOn,
+  clearClusterAddOnsResponses,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddOns);

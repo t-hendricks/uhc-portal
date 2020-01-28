@@ -32,6 +32,7 @@ function userProfile(state = initialState, action) {
         'organization',
         {
           pending: true,
+          quotaList: state.organization.quotaList,
         },
         {
           state,

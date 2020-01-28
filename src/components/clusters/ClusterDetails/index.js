@@ -13,13 +13,13 @@ import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalE
 import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 import { getAlerts, getNodes, getClusterOperators } from './components/Monitoring/MonitoringActions';
-import addOnsActions from './components/AddOns/AddOnsActions';
+import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
   const { cloudProviders } = state.cloudProviders;
   const { logs } = state;
-  const { addOns } = state.addOns;
+  const { addOns, clusterAddOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
 
@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
     clusterDetails: details,
     logs,
     addOns,
+    clusterAddOns,
     clusterIdentityProviders,
     organization,
   });
@@ -49,7 +50,8 @@ const mapDispatchToProps = {
   getAlerts,
   getNodes,
   getClusterOperators,
-  getAddOns: addOnsActions.getAddOns,
+  getAddOns,
+  getClusterAddOns,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

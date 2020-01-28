@@ -26,8 +26,11 @@ const initialState = {
 
 function AddOnsReducer(state = initialState, action) {
   switch (action.type) {
-    case AddOnsConstants.CLEAR_ADDON_RESPONSES:
-      return initialState;
+    case AddOnsConstants.CLEAR_CLUSTER_ADDON_RESPONSES:
+      return {
+        ...initialState,
+        addOns: state.addOns,
+      };
 
     // GET_ADDONS
     case REJECTED_ACTION(AddOnsConstants.GET_ADDONS):
@@ -44,7 +47,6 @@ function AddOnsReducer(state = initialState, action) {
       return setStateProp(
         'addOns',
         {
-          fulfilled: false,
           pending: true,
           items: state.addOns.items,
         },
@@ -58,7 +60,6 @@ function AddOnsReducer(state = initialState, action) {
       return setStateProp(
         'addOns',
         {
-          pending: false,
           fulfilled: true,
           items: action.payload.addOns.data.items,
           resourceNames: action.payload.resourceNames,
@@ -84,7 +85,6 @@ function AddOnsReducer(state = initialState, action) {
       return setStateProp(
         'clusterAddOns',
         {
-          fulfilled: false,
           pending: true,
           items: state.clusterAddOns.items,
         },
@@ -98,7 +98,6 @@ function AddOnsReducer(state = initialState, action) {
       return setStateProp(
         'clusterAddOns',
         {
-          pending: false,
           fulfilled: true,
           clusterID: action.payload.clusterID,
           items: action.payload.clusterAddOns.data.items,
@@ -136,7 +135,6 @@ function AddOnsReducer(state = initialState, action) {
       return setStateProp(
         'addClusterAddOnResponse',
         {
-          pending: false,
           fulfilled: true,
         },
         {
@@ -160,7 +158,6 @@ function AddOnsReducer(state = initialState, action) {
       return setStateProp(
         'deleteClusterAddOnResponse',
         {
-          fulfilled: false,
           pending: true,
         },
         {
@@ -173,7 +170,6 @@ function AddOnsReducer(state = initialState, action) {
       return setStateProp(
         'deleteClusterAddOnResponse',
         {
-          pending: false,
           fulfilled: true,
         },
         {
