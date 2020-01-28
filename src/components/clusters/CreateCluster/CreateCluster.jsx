@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
 import {
-  Breadcrumb,
-  BreadcrumbItem,
   Card,
   CardHeader,
   CardBody,
@@ -14,6 +11,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import openShiftDedicatedLogo from '../../../styles/images/Logo-Red_Hat-OpenShift_Dedicated-A-Standard-RGB.svg';
 import openShiftContainerPlatformLogo from '../../../styles/images/Logo-Red_Hat-OpenShift-Container_Platform-A-Standard-RGB.svg';
 import PageTitle from '../../common/PageTitle';
+import Breadcrumbs from '../common/Breadcrumbs';
 
 
 class CreateCluster extends React.Component {
@@ -31,16 +29,11 @@ class CreateCluster extends React.Component {
       <PageTitle
         title="Create a Cluster to Get Started"
         breadcrumbs={(
-          <Breadcrumb className="breadcrumbs-in-card">
-            <LinkContainer to="">
-              <BreadcrumbItem to="#">
-                Clusters
-              </BreadcrumbItem>
-            </LinkContainer>
-            <BreadcrumbItem isActive>
-              Create
-            </BreadcrumbItem>
-          </Breadcrumb>
+          <Breadcrumbs path={[
+            { label: 'Clusters' },
+            { label: 'Create' },
+          ]}
+          />
         )}
       />
     );

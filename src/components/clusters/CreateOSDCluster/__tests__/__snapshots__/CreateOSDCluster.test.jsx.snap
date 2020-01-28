@@ -4,41 +4,22 @@ exports[`CreateOSDCluster ManagedClusterForm should fetch cloud providers, machi
 <Fragment>
   <PageTitle
     breadcrumbs={
-      <Unknown
-        className="breadcrumbs-in-card"
-      >
-        <LinkContainer
-          activeClassName="active"
-          exact={false}
-          replace={false}
-          strict={false}
-          to=""
-        >
-          <BreadcrumbItem
-            to="#"
-          >
-            Clusters
-          </BreadcrumbItem>
-        </LinkContainer>
-        <LinkContainer
-          activeClassName="active"
-          exact={false}
-          replace={false}
-          strict={false}
-          to="/create"
-        >
-          <BreadcrumbItem
-            to="#"
-          >
-            Create
-          </BreadcrumbItem>
-        </LinkContainer>
-        <BreadcrumbItem
-          isActive={true}
-        >
-          OpenShift Dedicated
-        </BreadcrumbItem>
-      </Unknown>
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "OpenShift Dedicated",
+            },
+          ]
+        }
+      />
     }
     title="Create an OpenShift Dedicated Cluster"
   />
@@ -54,41 +35,22 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
-      <Unknown
-        className="breadcrumbs-in-card"
-      >
-        <LinkContainer
-          activeClassName="active"
-          exact={false}
-          replace={false}
-          strict={false}
-          to=""
-        >
-          <BreadcrumbItem
-            to="#"
-          >
-            Clusters
-          </BreadcrumbItem>
-        </LinkContainer>
-        <LinkContainer
-          activeClassName="active"
-          exact={false}
-          replace={false}
-          strict={false}
-          to="/create"
-        >
-          <BreadcrumbItem
-            to="#"
-          >
-            Create
-          </BreadcrumbItem>
-        </LinkContainer>
-        <BreadcrumbItem
-          isActive={true}
-        >
-          OpenShift Dedicated
-        </BreadcrumbItem>
-      </Unknown>
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "OpenShift Dedicated",
+            },
+          ]
+        }
+      />
     }
     title="Create an OpenShift Dedicated Cluster"
   />

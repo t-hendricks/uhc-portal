@@ -18,6 +18,7 @@ import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-com
 
 import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ErrorModal from '../../common/ErrorModal';
+import Breadcrumbs from '../common/Breadcrumbs';
 import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
 import {
   required,
@@ -89,6 +90,11 @@ class RegisterCluster extends React.Component {
     return (
       <>
         <PageHeader>
+          <Breadcrumbs path={[
+            { label: 'Clusters' },
+            { label: 'Cluster registration' },
+          ]}
+          />
           <PageHeaderTitle title="Cluster registration" />
         </PageHeader>
         <PageSection>
