@@ -38,6 +38,7 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
       <a
         href="https://docs.openshift.com/container-platform/latest/authentication/understanding-identity-provider.html"
         rel="noopener noreferrer"
+        target="_blank"
       >
         Learn more.
       </a>
@@ -68,6 +69,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
       <a
         href="https://docs.openshift.com/container-platform/latest/authentication/understanding-identity-provider.html"
         rel="noopener noreferrer"
+        target="_blank"
       >
         Learn more.
       </a>

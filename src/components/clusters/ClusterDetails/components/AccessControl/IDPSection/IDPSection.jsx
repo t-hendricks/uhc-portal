@@ -57,7 +57,7 @@ function IDPSection({
     idpID: idp.id,
   });
 
-  const learnMoreLink = <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER}>Learn more.</a>;
+  const learnMoreLink = <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">Learn more.</a>;
 
   const pending = !identityProviders.fulfilled && !identityProviders.error;
 
