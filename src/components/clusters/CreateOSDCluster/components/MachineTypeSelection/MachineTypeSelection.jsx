@@ -32,12 +32,9 @@ class MachineTypeSelection extends React.Component {
 
   componentDidMount() {
     const {
-      getMachineTypes, machineTypes, organization, getOrganizationAndQuota,
+      getMachineTypes, machineTypes,
     } = this.props;
-    if (!organization.fulfilled && !organization.pending) {
-      // we need to know the quota so we can know which types to enable.
-      getOrganizationAndQuota();
-    }
+
     if (!machineTypes.fulfilled) {
       // Don't let the user submit if we couldn't get machine types yet.
       this.setInvalidValue();
@@ -100,7 +97,7 @@ class MachineTypeSelection extends React.Component {
       return false;
     }
     const infra = isBYOC ? 'byoc' : 'rhInfra';
-    const available = quota.nodeQuota[infra][isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
+    const available = quota.clusterQuota[infra][isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
     return available > 0;
   }
 
@@ -116,7 +113,6 @@ class MachineTypeSelection extends React.Component {
       organization,
       input,
       meta: { error, touched },
-      getOrganizationAndQuota,
       ...extraProps
     } = this.props;
     const { currentValue } = this.state;
@@ -179,7 +175,6 @@ MachineTypeSelection.propTypes = {
   isBYOC: PropTypes.bool.isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
-  getOrganizationAndQuota: PropTypes.func.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     touched: PropTypes.bool,

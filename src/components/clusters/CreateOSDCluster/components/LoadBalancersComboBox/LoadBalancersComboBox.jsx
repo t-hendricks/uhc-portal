@@ -18,12 +18,7 @@ class LoadBalancersComboBox extends React.Component {
   componentDidMount() {
     const {
       getLoadBalancers, loadBalancerValues,
-      organization, getOrganizationAndQuota,
     } = this.props;
-    if (!organization.fulfilled && !organization.pending) {
-      getOrganizationAndQuota();
-    }
-
     if (!loadBalancerValues.pending && !loadBalancerValues.fulfilled && !loadBalancerValues.error) {
       // fetch load balancers from server only if needed.
       getLoadBalancers();
@@ -72,8 +67,6 @@ LoadBalancersComboBox.propTypes = {
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
   quota: PropTypes.object.isRequired,
-  organization: PropTypes.object.isRequired,
-  getOrganizationAndQuota: PropTypes.func.isRequired,
   currentValue: PropTypes.number,
 };
 

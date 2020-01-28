@@ -188,7 +188,7 @@ describe('<MachineTypeSelection />', () => {
       };
 
       const quota = {
-        nodeQuota: {
+        clusterQuota: {
           rhInfra: {
             multiAz: {
               'r5.xlarge': 5,
