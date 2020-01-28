@@ -23,9 +23,9 @@ import { ConnectedRouter } from 'connected-react-router';
 import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetails from '../clusters/ClusterDetails';
-import CreateCluster from '../clusters/CreateCluster';
+import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
-import CreateOSDCluster from '../clusters/CreateOSDCluster';
+import CreateOSDPage from '../clusters/CreateOSDPage';
 import InstallInfrastructure from '../clusters/install/InstallInfrastructure';
 import InstallAWS from '../clusters/install/InstallAWS';
 import InstallAWSUPI from '../clusters/install/InstallAWSUPI';
@@ -68,8 +68,8 @@ function Router(props) {
           <Route path="/install/pull-secret" component={InstallPullSecret} />
           <Route path="/install" component={InstallInfrastructure} />
           <Route path="/details/:id" component={ClusterDetails} />
-          <Route path="/create/osd" component={CreateOSDCluster} />
-          <Route path="/create" component={CreateCluster} />
+          <Route path="/create/osd" component={CreateOSDPage} />
+          <Route path="/create" component={CreateClusterPage} />
           <Route path="/register" component={RegisterCluster} />
           <Route path="/subscriptions" component={Subscriptions} />
           <Route path="/archived" component={ArchivedClusterList} />
