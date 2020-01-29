@@ -46,9 +46,9 @@ class NodeCountInput extends React.Component {
     const increment = isMultiAz ? 3 : 1; // MultiAz requires nodes to be a multiple of 3
     // no extra node quota = only base cluster size is available
     const optionsAvailable = (available > 0 || isEditingCluster);
-    const maxValue = isEditingCluster ? Math.max(available, currentNodeCount - minimum) : available;
+    const maxValue = isEditingCluster ? available + currentNodeCount : available + minimum;
     const options = optionsAvailable
-      ? range(minimum, maxValue + minimum + 1, increment)
+      ? range(minimum, maxValue + 1, increment)
       : [minimum];
 
     // Set up options for load balancers
