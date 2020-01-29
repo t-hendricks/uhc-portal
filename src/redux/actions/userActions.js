@@ -64,8 +64,7 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
           // node quota: "how many extra nodes can I add on top of the base cluster?"
           const available = item.allowed - item.reserved;
           const category = item.byoc ? 'byoc' : 'rhInfra';
-          const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
-          response.data.nodeQuota[category][zoneType][item.resource_name] = available;
+          response.data.nodeQuota[category][item.resource_name] = available;
           break;
         }
         case 'addon':

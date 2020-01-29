@@ -28,12 +28,7 @@ describe('<NodeCountInput>', () => {
         machineType="fake"
         quota={{
           rhInfra: {
-            singleAz: {
-              fake: 10,
-            },
-            multiAz: {
-              fake: 5,
-            },
+            fake: 10,
           },
         }}
       />);
@@ -50,12 +45,7 @@ describe('<NodeCountInput>', () => {
         machineType="fake"
         quota={{
           rhInfra: {
-            singleAz: {
-              fake: 10,
-            },
-            multiAz: {
-              fake: 5,
-            },
+            fake: 10,
           },
         }}
       />);
@@ -86,12 +76,7 @@ describe('<NodeCountInput>', () => {
         isMultiAz
         quota={{
           rhInfra: {
-            singleAz: {
-              fake: 10,
-            },
-            multiAz: {
-              fake: 3,
-            },
+            fake: 3,
           },
         }}
       />);
@@ -110,12 +95,7 @@ describe('<NodeCountInput>', () => {
       isMultiAz
       quota={{
         rhInfra: {
-          singleAz: {
-            fake: 4,
-          },
-          multiAz: {
-            fake: 3,
-          },
+          fake: 3,
         },
       }}
     />);
