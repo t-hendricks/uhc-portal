@@ -37,6 +37,9 @@ const checkIdentityProviderName = (value) => {
   if (/\s/.test(value)) {
     return 'Name must not contain whitespaces.';
   }
+  if (/[^A-Za-z0-9_-]/.test(value)) {
+    return 'Name should contain only alphanumeric and dashes';
+  }
   return undefined;
 };
 
