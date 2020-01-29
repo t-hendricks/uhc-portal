@@ -30,11 +30,10 @@ class NodeCountInput extends React.Component {
 
   getAvailableQuota() {
     const {
-      quota, isMultiAz, isByoc, machineType,
+      quota, isByoc, machineType,
     } = this.props;
     const infraType = isByoc ? 'byoc' : 'rhInfra';
-    const zoneType = isMultiAz ? 'multiAz' : 'singleAz';
-    return get(quota, `${infraType}.${zoneType}['${machineType}']`, 0);
+    return get(quota, `${infraType}['${machineType}']`, 0);
   }
 
   render() {
