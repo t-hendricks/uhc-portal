@@ -168,7 +168,7 @@ function actionResolver(
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && isArchived;
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
-  const showEditDisconnected = get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED;
+  const showEditDisconnected = cluster.canEdit && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED);
 
   return [
     showConsoleButton && adminConsoleItemProps,

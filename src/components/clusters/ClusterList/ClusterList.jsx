@@ -48,6 +48,7 @@ import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
+import EditDisconnectedCluster from '../common/EditDisconnectedCluster';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
@@ -247,6 +248,7 @@ class ClusterList extends Component {
               <EditDisplayNameDialog onClose={invalidateClusters} />
               <EditConsoleURLDialog onClose={invalidateClusters} />
               <EditClusterDialog onClose={invalidateClusters} />
+              <EditDisconnectedCluster onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
               <UnarchiveClusterDialog onClose={invalidateClusters} />
               <DeleteClusterDialog onClose={(shouldRefresh) => {

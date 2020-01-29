@@ -124,9 +124,11 @@ class EditClusterDialog extends Component {
     const pending = loadBalancerValues.pending || persistentStorageValues.pending
      || editClusterResponse.pending || organization.pending;
 
+    const className = isByoc ? 'edit-cluster-modal' : 'edit-cluster-modal edit-cluster-modal-rhinfra';
+
     return isOpen && (
       <Modal
-        className="edit-cluster-modal"
+        className={className}
         title="Scale Cluster"
         onClose={cancelEdit}
         primaryText="Apply"
@@ -146,6 +148,8 @@ class EditClusterDialog extends Component {
               isBYOC={isByoc}
               machineType={machineType}
               isDisabled={pending}
+              isEditingCluster
+              currentNodeCount={initialFormValues.nodesCompute || 0}
             />
             { !isByoc && (
               <>

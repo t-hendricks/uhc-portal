@@ -865,7 +865,9 @@ span.dev-preview-label svg {
 }
 
 .edit-cluster-modal {
-  min-height: 70%;
+  &.edit-cluster-modal-rhinfra {
+    min-height: 70%;
+  }
   select.quota-combo-box {
     width: 48%;
     display: block;

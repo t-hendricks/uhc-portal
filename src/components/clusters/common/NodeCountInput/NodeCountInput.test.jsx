@@ -9,6 +9,7 @@ const baseProps = {
   quota: { },
   input: {
     name: 'compute-nodes',
+    onChange: jest.fn(),
   },
 };
 
@@ -27,17 +28,37 @@ describe('<NodeCountInput>', () => {
         machineType="fake"
         quota={{
           rhInfra: {
-            singleAz: {
-              fake: 10,
-            },
-            multiAz: {
-              fake: 5,
-            },
+            fake: 10,
           },
         }}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
+    });
+
+    it('correctly handle machineType swithcing & default value', () => {
+      const onChange = jest.fn();
+      const inputProps = { ...baseProps.input, onChange };
+      const wrapper = shallow(<NodeCountInput
+        {...baseProps}
+        input={inputProps}
+        machineType="fake"
+        quota={{
+          rhInfra: {
+            fake: 10,
+          },
+        }}
+      />);
+      // now let's set a higher value and make sure it works...
+      wrapper.setProps({ input: { ...inputProps, value: 10 } }, () => {
+        // props set, check the value
+        expect(wrapper.find('FormSelect').props().value).toEqual(10); // new value
+        // Now switch to a new machine type
+        wrapper.setProps({ machineType: 'fake2' }, () => {
+          // we have no quota for fake2 - value should reset to default
+          expect(onChange).toBeCalledWith(4);
+        });
+      });
     });
   });
   describe('Multi AZ', () => {
@@ -55,17 +76,61 @@ describe('<NodeCountInput>', () => {
         isMultiAz
         quota={{
           rhInfra: {
-            singleAz: {
-              fake: 10,
-            },
-            multiAz: {
-              fake: 9,
-            },
+            fake: 3,
           },
         }}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
+    });
+  });
+
+  it('correctly handle machineType swithcing & default value', () => {
+    const onChange = jest.fn();
+    const inputProps = { ...baseProps.input, onChange };
+    const wrapper = shallow(<NodeCountInput
+      {...baseProps}
+      input={{ ...baseProps.input, onChange }}
+      machineType="fake"
+      isMultiAz
+      quota={{
+        rhInfra: {
+          fake: 3,
+        },
+      }}
+    />);
+    // now let's set a higher value and make sure it works...
+    wrapper.setProps({ input: { ...inputProps, value: 15 } }, () => {
+      // props set, check the value
+      expect(wrapper.find('FormSelect').props().value).toEqual(15); // new value
+      // Now switch to a new machine type
+      wrapper.setProps({ machineType: 'fake2' }, () => {
+        // we have no quota for fake2 - value should reset to default
+        expect(onChange).toBeCalledWith(9);
+      });
+    });
+  });
+
+  describe('scaling dialog behavior', () => {
+    describe('singleAZ', () => {
+      it('renders with no quota above current value', () => {
+        const wrapper = shallow(
+          <NodeCountInput {...baseProps} isEditingCluster currentNodeCount={6} />,
+        );
+        expect(wrapper).toMatchSnapshot();
+        const formSelectProps = wrapper.find('FormSelect').props();
+        expect(formSelectProps.isDisabled).toBeFalsy();
+      });
+    });
+    describe('multiAz', () => {
+      it('renders with no quota above current value', () => {
+        const wrapper = shallow(
+          <NodeCountInput {...baseProps} isMultiAz isEditingCluster currentNodeCount={12} />,
+        );
+        expect(wrapper).toMatchSnapshot();
+        const formSelectProps = wrapper.find('FormSelect').props();
+        expect(formSelectProps.isDisabled).toBeFalsy();
+      });
     });
   });
 });
