@@ -18,11 +18,11 @@ import isUuid from 'uuid-validate';
 
 import { clustersConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
-import helpers from '../reduxHelpers';
+import { INVALIDATE_ACTION } from '../reduxHelpers';
 import { normalizeCluster } from '../../common/normalize';
 
 const invalidateClusters = () => dispatch => dispatch({
-  type: helpers.INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
+  type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
 });
 
 const createCluster = params => dispatch => dispatch({

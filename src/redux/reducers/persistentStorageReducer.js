@@ -1,21 +1,20 @@
-import helpers, { setStateProp } from '../reduxHelpers';
+import {
+  setStateProp, REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+} from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
 import { persistentStorageConstants } from '../constants';
 
 const initialState = {
   persistentStorageValues: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseRequestState,
     values: [],
   },
 };
 
 function persistentStorageReducer(state = initialState, action) {
   switch (action.type) {
-    case helpers.REJECTED_ACTION(persistentStorageConstants.GET_PERSISTENT_STORAGE_VALUES):
+    case REJECTED_ACTION(persistentStorageConstants.GET_PERSISTENT_STORAGE_VALUES):
       return setStateProp(
         'persistentStorageValues',
         getErrorState(action),
@@ -25,7 +24,7 @@ function persistentStorageReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(persistentStorageConstants.GET_PERSISTENT_STORAGE_VALUES):
+    case PENDING_ACTION(persistentStorageConstants.GET_PERSISTENT_STORAGE_VALUES):
       return setStateProp(
         'persistentStorageValues',
         {
@@ -37,7 +36,7 @@ function persistentStorageReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(persistentStorageConstants.GET_PERSISTENT_STORAGE_VALUES):
+    case FULFILLED_ACTION(persistentStorageConstants.GET_PERSISTENT_STORAGE_VALUES):
       return setStateProp(
         'persistentStorageValues',
         {

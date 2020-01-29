@@ -1,28 +1,22 @@
-import helpers, { setStateProp } from '../../../../../../redux/reduxHelpers';
+import {
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION,
+  setStateProp, baseRequestState,
+} from '../../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../../common/errors';
 import UsersConstants from './UsersConstants';
 
 const initialState = {
   groupUsers: {
     // later on this will need to change to support many arbitrary groups
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseRequestState,
     clusterID: undefined,
     users: [],
   },
   deleteUserResponse: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseRequestState,
   },
   addUserResponse: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseRequestState,
   },
 };
 
@@ -31,7 +25,7 @@ function UsersReducer(state = initialState, action) {
     case UsersConstants.CLEAR_USER_RESPONSES:
       return initialState;
     // GET_USERS
-    case helpers.REJECTED_ACTION(UsersConstants.GET_USERS):
+    case REJECTED_ACTION(UsersConstants.GET_USERS):
       return setStateProp(
         'groupUsers',
         getErrorState(action),
@@ -41,7 +35,7 @@ function UsersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(UsersConstants.GET_USERS):
+    case PENDING_ACTION(UsersConstants.GET_USERS):
       return setStateProp(
         'groupUsers',
         {
@@ -55,7 +49,7 @@ function UsersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(UsersConstants.GET_USERS):
+    case FULFILLED_ACTION(UsersConstants.GET_USERS):
       return setStateProp(
         'groupUsers',
         {
@@ -71,7 +65,7 @@ function UsersReducer(state = initialState, action) {
       );
 
     // ADD_USER
-    case helpers.REJECTED_ACTION(UsersConstants.ADD_USER):
+    case REJECTED_ACTION(UsersConstants.ADD_USER):
       return setStateProp(
         'addUserResponse',
         getErrorState(action),
@@ -81,7 +75,7 @@ function UsersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(UsersConstants.ADD_USER):
+    case PENDING_ACTION(UsersConstants.ADD_USER):
       return setStateProp(
         'addUserResponse',
         {
@@ -93,7 +87,7 @@ function UsersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(UsersConstants.ADD_USER):
+    case FULFILLED_ACTION(UsersConstants.ADD_USER):
       return setStateProp(
         'addUserResponse',
         {
@@ -107,7 +101,7 @@ function UsersReducer(state = initialState, action) {
       );
 
     // DELETE_USER
-    case helpers.REJECTED_ACTION(UsersConstants.DELETE_USER):
+    case REJECTED_ACTION(UsersConstants.DELETE_USER):
       return setStateProp(
         'deleteUserResponse',
         getErrorState(action),
@@ -117,7 +111,7 @@ function UsersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(UsersConstants.DELETE_USER):
+    case PENDING_ACTION(UsersConstants.DELETE_USER):
       return setStateProp(
         'deleteUserResponse',
         {
@@ -130,7 +124,7 @@ function UsersReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(UsersConstants.DELETE_USER):
+    case FULFILLED_ACTION(UsersConstants.DELETE_USER):
       return setStateProp(
         'deleteUserResponse',
         {

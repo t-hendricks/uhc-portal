@@ -17,7 +17,7 @@ const reduxFormConfig = {
 const reduxFormEditCluster = reduxForm(reduxFormConfig)(EditClusterDialog);
 
 const mapStateToProps = (state) => {
-  const modalData = state.modal.activeModal.data;
+  const modalData = state.modal.data;
   return ({
     isOpen: shouldShowModal(state, 'edit-cluster'),
     editClusterResponse: state.clusters.editedCluster,
@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
     persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
     organization: state.userProfile.organization,
     isByoc: modalData.byoc,
+    machineType: get(modalData, 'nodes.compute_machine_type.id', ''),
     initialFormValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,

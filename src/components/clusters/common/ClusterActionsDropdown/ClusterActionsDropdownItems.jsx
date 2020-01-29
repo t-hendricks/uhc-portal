@@ -9,7 +9,7 @@ import getClusterName from '../../../../common/getClusterName';
  * on each row of the table. It returns a list of objects, containing props for DropdownItem
  * PF table renders automatically.
  * @param {*} cluster             The cluster object corresponding to the current row
- * @param {*} showConsoleButton   true if 'Launch Console' button should be displayed
+ * @param {*} showConsoleButton   true if 'Open Console' button should be displayed
  * @param {*} openModal           Action to open modal
  */
 function actionResolver(
@@ -31,7 +31,7 @@ function actionResolver(
   const getAdminConosleProps = () => {
     const consoleURL = cluster.console ? cluster.console.url : false;
     const adminConsoleEnabled = {
-      title: 'Launch Console',
+      title: 'Open Console',
       href: consoleURL,
       target: '_blank',
       rel: 'noopener noreferrer',
@@ -39,13 +39,14 @@ function actionResolver(
     };
     const adminConsoleDisabled = {
       ...baseProps,
-      title: 'Launch Console',
+      title: 'Open Console',
       isDisabled: true,
       tooltip: isClusterUninstalling ? uninstallingMessage : consoleDisabledMessage,
       key: getKey('adminconsole'),
     };
     return consoleURL && !isClusterUninstalling ? adminConsoleEnabled : adminConsoleDisabled;
   };
+
   const getEditClusterProps = () => {
     const editClusterBaseProps = {
       ...baseProps,
@@ -63,6 +64,16 @@ function actionResolver(
     };
     return isClusterReady ? managedEditProps : disabledManagedEditProps;
   };
+
+  const getEditDisconnectedClusterProps = () => (
+    {
+      ...baseProps,
+      title: 'Edit Cluster Registration',
+      key: getKey('editdisconnected'),
+      onClick: () => openModal('edit-disconnected-cluster', cluster),
+    }
+  );
+
   const getEditDisplayNameProps = () => {
     const editDisplayNameBaseProps = {
       ...baseProps,
@@ -147,6 +158,7 @@ function actionResolver(
   const deleteClusterItemProps = getDeleteItemProps();
   const archiveClusterItemProps = getArchiveClusterProps();
   const unarchiveClusterItemProps = getUnarchiveClusterProps();
+  const editDisconnectedItemProps = getEditDisconnectedClusterProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed;
@@ -156,6 +168,7 @@ function actionResolver(
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && isArchived;
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
+  const showEditDisconnected = get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED;
 
   return [
     showConsoleButton && adminConsoleItemProps,
@@ -165,6 +178,7 @@ function actionResolver(
     showDelete && deleteClusterItemProps,
     showArchive && archiveClusterItemProps,
     showUnarchive && unarchiveClusterItemProps,
+    showEditDisconnected && editDisconnectedItemProps,
   ].filter(Boolean);
 }
 

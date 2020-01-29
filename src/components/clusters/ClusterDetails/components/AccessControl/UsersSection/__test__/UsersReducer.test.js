@@ -1,6 +1,6 @@
 import reducer, { initialState } from '../UsersReducer';
 import UsersConstants from '../UsersConstants';
-import helpers from '../../../../../../../redux/reduxHelpers';
+import { FULFILLED_ACTION } from '../../../../../../../redux/reduxHelpers';
 import { mockGetUsersPayload } from './Users.fixtures';
 
 describe('ClusterDetails UsersReducer', () => {
@@ -15,7 +15,7 @@ describe('ClusterDetails UsersReducer', () => {
 
   it('should handle get users action', () => {
     const action = {
-      type: helpers.FULFILLED_ACTION(UsersConstants.GET_USERS),
+      type: FULFILLED_ACTION(UsersConstants.GET_USERS),
       payload: mockGetUsersPayload,
     };
     const result = reducer(initialState, action);

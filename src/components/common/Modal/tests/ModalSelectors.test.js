@@ -3,7 +3,7 @@ import shouldShowModal from '../ModalSelectors';
 
 describe('Modal Selector', () => {
   it('should return true if modal name matches', () => {
-    const activeModalState = { modal: { activeModal: { modalName: 'test-modal' } } };
+    const activeModalState = { modal: { modalName: 'test-modal' } };
     const result = shouldShowModal(activeModalState, 'test-modal');
 
     expect(result).toBeTruthy();

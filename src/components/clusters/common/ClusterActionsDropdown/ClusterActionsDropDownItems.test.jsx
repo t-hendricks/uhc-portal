@@ -77,7 +77,7 @@ describe('Cluster Actions Dropdown Items', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('disable launch console & edit cluster, enable edit display name and delete cluster', () => {
+    it('disable open console & edit cluster, enable edit display name and delete cluster', () => {
       const launchConsoleDisabled = wrapper.find(DropdownItem).at(0).props().isDisabled;
       const editDisplayNameDisabled = wrapper.find(DropdownItem).at(1).props().isDisabled;
       const editDisabled = wrapper.find(DropdownItem).at(2).props().isDisabled;

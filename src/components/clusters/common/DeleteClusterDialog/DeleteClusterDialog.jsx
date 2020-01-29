@@ -131,7 +131,7 @@ DeleteClusterDialog.defaultProps = {
 
 const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'delete-cluster'),
-  modalData: state.modal.activeModal.data,
+  modalData: state.modal.data,
   deleteClusterResponse: state.deleteCluster.deletedCluster,
 });
 

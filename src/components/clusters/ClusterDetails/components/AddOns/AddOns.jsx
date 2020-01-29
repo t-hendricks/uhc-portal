@@ -39,17 +39,20 @@ class AddOns extends React.Component {
       getClusterAddOns,
       clusterAddOns,
       addClusterAddOnResponse,
+      getOrganizationAndQuota,
     } = this.props;
     if ((addClusterAddOnResponse.fulfilled && prevProps.addClusterAddOnResponse.pending)
         && !clusterAddOns.pending) {
-      // fetch cluster add-ons again if we just added a cluster add-on.
+      // Fetch cluster add-ons again if we just added a cluster add-on
       getClusterAddOns(clusterID);
+      // Refresh quota after installing add-ons
+      getOrganizationAndQuota();
     }
   }
 
   componentWillUnmount() {
-    const { clearAddOnsResponses } = this.props;
-    clearAddOnsResponses();
+    const { clearClusterAddOnsResponses } = this.props;
+    clearClusterAddOnsResponses();
   }
 
   // An add-on is only visible if it has an entry in the quota summary
@@ -185,10 +188,11 @@ AddOns.propTypes = {
   clusterAddOns: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   quota: PropTypes.object.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
   getClusterAddOns: PropTypes.func.isRequired,
   addClusterAddOn: PropTypes.func.isRequired,
   addClusterAddOnResponse: PropTypes.object.isRequired,
-  clearAddOnsResponses: PropTypes.func.isRequired,
+  clearClusterAddOnsResponses: PropTypes.func.isRequired,
 };
 
 export default AddOns;

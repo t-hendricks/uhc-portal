@@ -18,37 +18,19 @@ import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-com
 
 import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ErrorModal from '../../common/ErrorModal';
+import Breadcrumbs from '../common/Breadcrumbs';
 import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
-import validators, {
-  required, checkClusterConsoleURL, checkClusterDisplayName, checkClusterUUID,
+import {
+  required,
+  checkClusterDisplayName,
+  checkClusterUUID,
+  checkDisconnectedConsoleURL,
+  checkDisconnectedvCPU,
+  checkDisconnectedSockets,
+  checkDisconnectedMemCapacity,
+  checkDisconnectedNodeCount,
 } from '../../../common/validators';
 import constants from './RegisterClusterHelper';
-
-const validateNodeCount = (value) => {
-  if (value === '') {
-    return undefined;
-  }
-  if (Number.isNaN(Number(value))) {
-    return 'Input must be a number.';
-  }
-  return validators.nodes(Number(value), { value: 0 }, 250);
-};
-
-const validateSockets = value => (
-  validators.validateNumericInput(value, { max: 2000 })
-);
-
-const validateMemCapacity = value => (
-  validators.validateNumericInput(value, { allowDecimal: true, max: 256000 })
-);
-
-const validatevCPU = value => (
-  validators.validateNumericInput(value, { max: 16000 })
-);
-
-const validateConsoleURL = value => (
-  checkClusterConsoleURL(value, false)
-);
 
 class RegisterCluster extends React.Component {
   state = {
@@ -108,6 +90,11 @@ class RegisterCluster extends React.Component {
     return (
       <>
         <PageHeader>
+          <Breadcrumbs path={[
+            { label: 'Clusters' },
+            { label: 'Cluster registration' },
+          ]}
+          />
           <PageHeaderTitle title="Cluster registration" />
         </PageHeader>
         <PageSection>
@@ -139,7 +126,7 @@ class RegisterCluster extends React.Component {
                       component={ReduxVerticalFormGroup}
                       name="web_console_url"
                       label="Web console URL"
-                      validate={validateConsoleURL}
+                      validate={checkDisconnectedConsoleURL}
                       disabled={registerClusterResponse.pending}
                       type="text"
                     />
@@ -179,7 +166,7 @@ class RegisterCluster extends React.Component {
                       label="Number of sockets or LAPRs"
                       inputMode="numeric"
                       disabled={registerClusterResponse.pending}
-                      validate={[required, validateSockets]}
+                      validate={[required, checkDisconnectedSockets]}
                       isRequired
                     />
                     )}
@@ -190,7 +177,7 @@ class RegisterCluster extends React.Component {
                       label="Number of vCPUs"
                       inputMode="numeric"
                       disabled={registerClusterResponse.pending}
-                      validate={validatevCPU}
+                      validate={checkDisconnectedvCPU}
                       isRequired
                     />
                     )}
@@ -199,7 +186,7 @@ class RegisterCluster extends React.Component {
                       name="memory_gib"
                       label="Memory capacity (GiB)"
                       inputMode="numeric"
-                      validate={validateMemCapacity}
+                      validate={checkDisconnectedMemCapacity}
                       step="any"
                       disabled={registerClusterResponse.pending}
                     />
@@ -208,7 +195,7 @@ class RegisterCluster extends React.Component {
                       name="nodes_compute"
                       label="Number of compute nodes"
                       inputMode="numeric"
-                      validate={validateNodeCount}
+                      validate={checkDisconnectedNodeCount}
                       disabled={registerClusterResponse.pending}
                     />
                   </Form>

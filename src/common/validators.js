@@ -261,6 +261,26 @@ const validateNumericInput = (
   return undefined;
 };
 
+const checkDisconnectedConsoleURL = value => checkClusterConsoleURL(value, false);
+
+const checkDisconnectedvCPU = value => validateNumericInput(value, { max: 16000 });
+
+const checkDisconnectedSockets = value => validateNumericInput(value, { max: 2000 });
+
+const checkDisconnectedMemCapacity = value => (
+  validateNumericInput(value, { allowDecimal: true, max: 256000 })
+);
+
+const checkDisconnectedNodeCount = (value) => {
+  if (value === '') {
+    return undefined;
+  }
+  if (Number.isNaN(Number(value))) {
+    return 'Input must be a number.';
+  }
+  return nodes(Number(value), { value: 0 }, 250);
+};
+
 const validators = {
   required,
   checkIdentityProviderName,
@@ -276,6 +296,11 @@ const validators = {
   validateNumericInput,
   checkOpenIDIssuer,
   checkGithubTeams,
+  checkDisconnectedConsoleURL,
+  checkDisconnectedvCPU,
+  checkDisconnectedSockets,
+  checkDisconnectedMemCapacity,
+  checkDisconnectedNodeCount,
 };
 
 export {
@@ -288,6 +313,11 @@ export {
   checkClusterConsoleURL,
   checkOpenIDIssuer,
   checkGithubTeams,
+  checkDisconnectedConsoleURL,
+  checkDisconnectedvCPU,
+  checkDisconnectedSockets,
+  checkDisconnectedMemCapacity,
+  checkDisconnectedNodeCount,
 };
 
 export default validators;

@@ -712,6 +712,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   <Connect(DeleteIDPDialog)
     refreshParent={[Function]}
   />
+  <Connect(ReduxForm)
+    onClose={[Function]}
+  />
 </PageSection>
 `;
 

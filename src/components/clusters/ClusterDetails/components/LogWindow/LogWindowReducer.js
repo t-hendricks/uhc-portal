@@ -13,73 +13,45 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import helpers, { setStateProp } from '../../../../../redux/reduxHelpers';
+import produce from 'immer';
+
+import {
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+} from '../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../common/errors';
-import { logWindowConstants } from './LogWindowConstants';
+import { GET_LOGS, CLEAR_LOGS } from './LogWindowConstants';
 
 const initialState = {
-  logs: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
-    lines: '',
-  },
+  ...baseRequestState,
+  lines: '',
 };
 
 function LogsReducer(state = initialState, action) {
-  switch (action.type) {
-    case helpers.REJECTED_ACTION(logWindowConstants.GET_LOGS):
-      return setStateProp(
-        'logs',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    // eslint-disable-next-line default-case
+    switch (action.type) {
+      case PENDING_ACTION(GET_LOGS):
+        draft.pending = true;
+        break;
 
-    case helpers.PENDING_ACTION(logWindowConstants.GET_LOGS):
-      return setStateProp(
-        'logs',
-        {
-          pending: true,
-          lines: state.logs.lines,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case helpers.FULFILLED_ACTION(logWindowConstants.GET_LOGS):
-      return setStateProp(
-        'logs',
-        {
+      case FULFILLED_ACTION(GET_LOGS):
+        return {
+          ...initialState,
           lines: action.payload.data.content,
-          pending: false,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
 
-    case logWindowConstants.CLEAR_LOGS:
-      return setStateProp(
-        'logs',
-        {},
-        {
-          state,
-          initialState,
-          reset: true,
-        },
-      );
+      case REJECTED_ACTION(GET_LOGS):
+        return {
+          ...initialState,
+          ...getErrorState(action),
+        };
 
-    default:
-      return state;
-  }
+      case CLEAR_LOGS:
+        return initialState;
+    }
+  });
 }
 
 LogsReducer.initialState = initialState;

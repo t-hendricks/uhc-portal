@@ -55,6 +55,7 @@ describe('clusterMachineTypesReducer', () => {
       expect(result).toEqual({
         types: action.payload.data.items,
         errorMessage: '',
+        errorDetails: null,
         fulfilled: true,
         pending: false,
         error: false,

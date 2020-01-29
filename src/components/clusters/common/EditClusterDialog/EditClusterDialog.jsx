@@ -7,8 +7,7 @@ import {
 
 import Modal from '../../../common/Modal/Modal';
 
-import ReduxVerticalFormGroup from '../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import validators from '../../../../common/validators';
+import NodeCountInput from '../NodeCountInput';
 import ErrorBox from '../../../common/ErrorBox';
 import PersistentStorageComboBox from '../../CreateOSDCluster/components/PersistentStorageComboBox';
 import LoadBalancersComboBox from '../../CreateOSDCluster/components/LoadBalancersComboBox';
@@ -42,8 +41,10 @@ class EditClusterDialog extends Component {
       closeModal,
       onClose,
       initialFormValues,
+      organization,
       getOrganizationAndQuota,
       change,
+      isOpen,
     } = this.props;
 
     if (initialFormValues.id) {
@@ -54,6 +55,11 @@ class EditClusterDialog extends Component {
         change('persistent_storage', initialFormValues.persistent_storage.toString());
         change('load_balancers', initialFormValues.load_balancers.toString());
       }
+    }
+
+    // Fetch quota on opening the scale modal.
+    if (!prevProps.isOpen && isOpen && !organization.pending) {
+      getOrganizationAndQuota();
     }
 
     // Only finalize when all responses are out of their pending state
@@ -67,11 +73,6 @@ class EditClusterDialog extends Component {
     }
   }
 
-  validateNodes = (nodes) => {
-    const { min } = this.props;
-    return validators.nodes(nodes, min);
-  }
-
   render() {
     const {
       isOpen,
@@ -79,7 +80,6 @@ class EditClusterDialog extends Component {
       handleSubmit,
       editClusterResponse,
       resetResponse,
-      min,
       isMultiAz,
       consoleURL,
       showLoadBalancerAlert,
@@ -89,6 +89,7 @@ class EditClusterDialog extends Component {
       initialFormValues,
       organization,
       isByoc,
+      machineType,
     } = this.props;
 
     const cancelEdit = () => {
@@ -113,7 +114,7 @@ class EditClusterDialog extends Component {
           <p>
             {usageLink}
             {' '}
-before proceeding to be sure you are not
+            before proceeding to be sure you are not
             scaling below what is currently being used.
           </p>
         </div>
@@ -138,13 +139,13 @@ before proceeding to be sure you are not
           {error}
           <Form onSubmit={handleSubmit}>
             <Field
-              component={ReduxVerticalFormGroup}
-              label="Compute nodes"
+              component={NodeCountInput}
               name="nodes_compute"
-              inputMode="numeric"
-              validate={isMultiAz ? [this.validateNodes, validators.nodesMultiAz]
-                : this.validateNodes}
-              min={min.value}
+              label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+              isMultiAz={isMultiAz}
+              isBYOC={isByoc}
+              machineType={machineType}
+              isDisabled={pending}
             />
             { !isByoc && (
               <>
@@ -211,7 +212,8 @@ EditClusterDialog.propTypes = {
   loadBalancerValues: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
-  isByoc: PropTypes.bool.isRequired,
+  isByoc: PropTypes.bool,
+  machineType: PropTypes.string,
 };
 
 EditClusterDialog.defaultProps = {

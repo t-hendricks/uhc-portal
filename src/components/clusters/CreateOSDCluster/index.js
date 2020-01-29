@@ -19,6 +19,8 @@ const reduxFormCreateCluster = reduxForm(reduxFormConfig)(CreateOSDCluster);
 
 const mapStateToProps = (state) => {
   const { organization } = state.userProfile;
+  const byocQuota = get(organization, 'quotaList.clusterQuota.byoc', {});
+  const rhInfraQuota = get(organization, 'quotaList.clusterQuota.rhInfra', {});
 
   return ({
     createClusterResponse: state.clusters.createdCluster,
@@ -31,15 +33,14 @@ const mapStateToProps = (state) => {
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
     quota: {
       byoc: {
-        hasQuota: get(organization, 'quotaList.nodeQuota.byoc.available', 0) > 0,
-        multiAz: get(organization, 'quotaList.nodeQuota.byoc.multiAz.hasQuota', false),
-        singleAz: get(organization, 'quotaList.nodeQuota.byoc.singleAz.hasQuota', false),
+        hasQuota: get(byocQuota, 'available', 0) > 0,
+        multiAz: get(byocQuota, 'multiAz.available', 0),
+        singleAz: get(byocQuota, 'singleAz.available', 0),
       },
       rhInfra: {
-        hasQuota: get(organization, 'quotaList.nodeQuota.rhInfra.available', 0) > 0,
-        multiAz: get(organization, 'quotaList.nodeQuota.rhInfra.multiAz.hasQuota', false),
-        singleAz: get(organization, 'quotaList.nodeQuota.rhInfra.singleAz.hasQuota', false),
-
+        hasQuota: get(rhInfraQuota, 'available', 0) > 0,
+        multiAz: get(rhInfraQuota, 'multiAz.available', 0),
+        singleAz: get(rhInfraQuota, 'singleAz.available', 0),
       },
     },
     initialValues: {
@@ -104,7 +105,7 @@ const mapDispatchToProps = dispatch => ({
   resetForm: () => dispatch(reset('CreateCluster')),
   openModal: (modalName) => { dispatch(openModal(modalName)); },
   closeModal: () => { dispatch(closeModal()); },
-  getOrganizationAndQuota,
+  getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes,
   getCloudProviders,
   getPersistentStorage: getPersistentStorageValues,

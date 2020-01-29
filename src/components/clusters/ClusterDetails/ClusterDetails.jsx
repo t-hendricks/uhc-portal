@@ -43,6 +43,7 @@ import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import EditDisconnectedClusterDialog from '../common/EditDisconnectedCluster';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -131,6 +132,7 @@ class ClusterDetails extends Component {
       getAlerts,
       getNodes,
       getClusterOperators,
+      getClusterAddOns,
     } = this.props;
     const clusterID = match.params.id;
 
@@ -143,6 +145,7 @@ class ClusterDetails extends Component {
       getAlerts(clusterID);
       getNodes(clusterID);
       getClusterOperators(clusterID);
+      getClusterAddOns(clusterID);
     }
   }
 
@@ -160,7 +163,11 @@ class ClusterDetails extends Component {
 
   // Determine if the org has quota for existing add-ons
   hasAddOns() {
-    const { addOns, organization } = this.props;
+    const { addOns, clusterAddOns, organization } = this.props;
+    // If cluster already has add-ons installed we can show the tab regardless of quota
+    if (get(clusterAddOns, 'items.length', 0)) {
+      return true;
+    }
     if (!has(organization.quotaList, 'addOnsQuota') || !get(addOns, 'resourceNames.length', 0)) {
       return false;
     }
@@ -316,6 +323,7 @@ class ClusterDetails extends Component {
           refreshParent={this.refreshIDP}
         />
         <DeleteIDPDialog refreshParent={this.refreshIDP} />
+        <EditDisconnectedClusterDialog onClose={onDialogClose} />
       </PageSection>
     );
   }
@@ -332,6 +340,7 @@ ClusterDetails.propTypes = {
   getNodes: PropTypes.func.isRequired,
   getClusterOperators: PropTypes.func.isRequired,
   getAddOns: PropTypes.func.isRequired,
+  getClusterAddOns: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
@@ -340,6 +349,7 @@ ClusterDetails.propTypes = {
   getClusterIdentityProviders: PropTypes.func.isRequired,
   logs: PropTypes.object,
   addOns: PropTypes.object,
+  clusterAddOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({

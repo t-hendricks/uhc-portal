@@ -19,6 +19,7 @@ const getAlerts = jest.fn();
 const getNodes = jest.fn();
 const getClusterOperators = jest.fn();
 const getAddOns = jest.fn();
+const getClusterAddOns = jest.fn();
 
 const subscriptionInfo = {
   id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
@@ -390,4 +391,5 @@ export {
   getNodes,
   getClusterOperators,
   getAddOns,
+  getClusterAddOns,
 };

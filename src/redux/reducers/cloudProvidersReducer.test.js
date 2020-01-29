@@ -60,6 +60,7 @@ describe('cloudProvidersReducer', () => {
         cloudProviders: {
           providers: action.payload,
           errorMessage: '',
+          errorDetails: null,
           fulfilled: true,
           pending: false,
           error: false,

@@ -8,7 +8,7 @@ import DeleteIDPDialog from './DeleteIDPDialog';
 
 const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'delete-idp'),
-  modalData: state.modal.activeModal.data,
+  modalData: state.modal.data,
   deletedIDPResponse: state.identityProviders.deletedIDP,
 });
 

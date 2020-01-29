@@ -20,11 +20,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import { Spinner, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 
 import {
-  Breadcrumb, BreadcrumbItem,
   Card,
   EmptyState,
   Split,
@@ -37,7 +35,7 @@ import ArchivedClusterListTable from './components/ArchiveClusterListTable/Archi
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
-
+import Breadcrumbs from '../common/Breadcrumbs';
 
 import ErrorBox from '../../common/ErrorBox';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
@@ -106,16 +104,11 @@ class ArchivedClusterList extends Component {
     } = this.props;
 
     const breadCrumbs = (
-      <Breadcrumb className="breadcrumbs-in-card">
-        <LinkContainer to="">
-          <BreadcrumbItem to="#">
-            Clusters
-          </BreadcrumbItem>
-        </LinkContainer>
-        <BreadcrumbItem isActive>
-          Archived clusters
-        </BreadcrumbItem>
-      </Breadcrumb>
+      <Breadcrumbs path={[
+        { label: 'Clusters' },
+        { label: 'Archived clusters' },
+      ]}
+      />
     );
 
     const pageHeader = (

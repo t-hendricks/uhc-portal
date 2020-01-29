@@ -9,7 +9,7 @@ import { closeModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 
 const mapStateToProps = (state) => {
-  const modalData = state.modal.activeModal.data;
+  const modalData = state.modal.data;
   return ({
     isOpen: shouldShowModal(state, 'unarchive-cluster'),
     unarchiveClusterResponse: state.clusters.unarchivedCluster,

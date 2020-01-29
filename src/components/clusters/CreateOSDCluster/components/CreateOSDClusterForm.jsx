@@ -91,8 +91,8 @@ class CreateOSDClusterForm extends React.Component {
           showDNSBaseDomain={false}
           change={change}
           isBYOC={isBYOCForm}
-          hasSingleAzQuota={quota[infraType].singleAz}
-          hasMultiAzQuota={quota[infraType].multiAz}
+          cloudProviderID="aws"
+          quota={quota[infraType]}
         />
 
         {/* Networking section */}
@@ -154,13 +154,9 @@ CreateOSDClusterForm.propTypes = {
   quota: PropTypes.shape({
     byoc: PropTypes.shape({
       hasQuota: PropTypes.bool.isRequired,
-      multiAz: PropTypes.bool.isRequired,
-      singleAz: PropTypes.bool.isRequired,
     }).isRequired,
     rhInfra: PropTypes.shape({
       hasQuota: PropTypes.bool.isRequired,
-      multiAz: PropTypes.bool.isRequired,
-      singleAz: PropTypes.bool.isRequired,
     }).isRequired,
   }).isRequired,
 };

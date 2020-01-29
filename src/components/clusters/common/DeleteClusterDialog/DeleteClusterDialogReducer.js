@@ -13,23 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import helpers, { setStateProp } from '../../../../redux/reduxHelpers';
+import {
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION,
+  setStateProp, baseRequestState,
+} from '../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../common/errors';
 import { deleteClusterDialogConstants } from './DeleteClusterDialogConstants';
 
 const initialState = {
   deletedCluster: {
-    error: false,
-    errorMessage: '',
-    pending: false,
-    fulfilled: false,
+    ...baseRequestState,
     cluster: null,
   },
 };
 
 function deleteClusterDialogReducer(state = initialState, action) {
   switch (action.type) {
-    case helpers.REJECTED_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
+    case REJECTED_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
       return setStateProp(
         'deletedCluster',
         getErrorState(action),
@@ -39,7 +39,7 @@ function deleteClusterDialogReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
+    case PENDING_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
       return setStateProp(
         'deletedCluster',
         {
@@ -52,7 +52,7 @@ function deleteClusterDialogReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
+    case FULFILLED_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
       return setStateProp(
         'deletedCluster',
         {

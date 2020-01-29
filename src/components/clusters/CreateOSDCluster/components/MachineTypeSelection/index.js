@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import MachineTypeSelection from './MachineTypeSelection';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
-import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
 
 const mapStateToProps = state => ({
   machineTypes: state.machineTypes,
@@ -10,7 +9,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getOrganizationAndQuota,
   getMachineTypes,
 };
 

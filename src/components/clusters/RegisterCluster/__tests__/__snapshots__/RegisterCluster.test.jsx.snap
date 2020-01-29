@@ -3,6 +3,18 @@
 exports[`<RegisterCluster /> renders correctly 1`] = `
 <Fragment>
   <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Clusters",
+          },
+          Object {
+            "label": "Cluster registration",
+          },
+        ]
+      }
+    />
     <PageHeaderTitle
       title="Cluster registration"
     />

@@ -13,35 +13,31 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import helpers, { setStateProp } from '../../../../../redux/reduxHelpers';
+import {
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION,
+  setStateProp, baseRequestState,
+} from '../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../common/errors';
 import { monitoringConstants } from './MonitoringConstants';
 
-const request = {
-  error: false,
-  errorMessage: '',
-  pending: false,
-  fulfilled: false,
-};
-
 const initialState = {
   alerts: {
-    ...request,
+    ...baseRequestState,
     data: [],
   },
   nodes: {
-    ...request,
+    ...baseRequestState,
     data: [],
   },
   operators: {
-    ...request,
+    ...baseRequestState,
     data: [],
   },
 };
 
 function MonitoringReducer(state = initialState, action) {
   switch (action.type) {
-    case helpers.REJECTED_ACTION(monitoringConstants.GET_ALERTS):
+    case REJECTED_ACTION(monitoringConstants.GET_ALERTS):
       return setStateProp(
         'alerts',
         getErrorState(action),
@@ -51,7 +47,7 @@ function MonitoringReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(monitoringConstants.GET_ALERTS):
+    case PENDING_ACTION(monitoringConstants.GET_ALERTS):
       return setStateProp(
         'alerts',
         {
@@ -64,7 +60,7 @@ function MonitoringReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(monitoringConstants.GET_ALERTS):
+    case FULFILLED_ACTION(monitoringConstants.GET_ALERTS):
       return setStateProp(
         'alerts',
         {
@@ -79,7 +75,7 @@ function MonitoringReducer(state = initialState, action) {
       );
 
 
-    case helpers.REJECTED_ACTION(monitoringConstants.GET_NODES):
+    case REJECTED_ACTION(monitoringConstants.GET_NODES):
       return setStateProp(
         'nodes',
         getErrorState(action),
@@ -89,7 +85,7 @@ function MonitoringReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(monitoringConstants.GET_NODES):
+    case PENDING_ACTION(monitoringConstants.GET_NODES):
       return setStateProp(
         'nodes',
         {
@@ -102,7 +98,7 @@ function MonitoringReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(monitoringConstants.GET_NODES):
+    case FULFILLED_ACTION(monitoringConstants.GET_NODES):
       return setStateProp(
         'nodes',
         {
@@ -117,7 +113,7 @@ function MonitoringReducer(state = initialState, action) {
       );
 
 
-    case helpers.REJECTED_ACTION(monitoringConstants.GET_OPERATORS):
+    case REJECTED_ACTION(monitoringConstants.GET_OPERATORS):
       return setStateProp(
         'operators',
         getErrorState(action),
@@ -127,7 +123,7 @@ function MonitoringReducer(state = initialState, action) {
         },
       );
 
-    case helpers.PENDING_ACTION(monitoringConstants.GET_OPERATORS):
+    case PENDING_ACTION(monitoringConstants.GET_OPERATORS):
       return setStateProp(
         'operators',
         {
@@ -140,7 +136,7 @@ function MonitoringReducer(state = initialState, action) {
         },
       );
 
-    case helpers.FULFILLED_ACTION(monitoringConstants.GET_OPERATORS):
+    case FULFILLED_ACTION(monitoringConstants.GET_OPERATORS):
       return setStateProp(
         'operators',
         {
