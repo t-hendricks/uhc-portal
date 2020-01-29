@@ -155,7 +155,7 @@ class BasicFields extends React.Component {
             name="nodes_compute"
             label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
             isMultiAz={isMultiAz}
-            isBYOC={isBYOC}
+            isByoc={isBYOC}
             machineType={machineType}
             isDisabled={pending}
             extendedHelpText={constants.computeNodeCountHint}
