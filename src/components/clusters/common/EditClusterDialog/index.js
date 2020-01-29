@@ -42,20 +42,23 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (formData) => {
+  onSubmit: (formData, isByoc) => {
     // Update cluster nodes
     const clusterRequest = {
       nodes: {
         compute: parseInt(formData.nodes_compute, 10),
       },
-      load_balancer_quota: formData.load_balancers ? parseInt(formData.load_balancers, 10) : null,
+    };
+    if (!isByoc) {
+      clusterRequest.load_balancer_quota = formData.load_balancers
+        ? parseInt(formData.load_balancers, 10) : null;
       // values in the passed are always in bytes.
       // see comment in PersistentStorageComboBox.js#82.
-      storage_quota: formData.persistent_storage ? {
+      clusterRequest.storage_quota = formData.persistent_storage ? {
         unit: 'B',
         value: parseFloat(formData.persistent_storage),
-      } : null,
-    };
+      } : null;
+    }
     dispatch(editCluster(formData.id, clusterRequest));
   },
   resetResponse: () => dispatch(clearClusterResponse()),
@@ -65,4 +68,16 @@ const mapDispatchToProps = dispatch => ({
   getLoadBalancers: getLoadBalancerValues,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxFormEditCluster);
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  const onSubmit = (formData) => {
+    dispatchProps.onSubmit(formData, stateProps.isByoc);
+  };
+  return ({
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    onSubmit,
+  });
+};
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(reduxFormEditCluster);
