@@ -107,7 +107,7 @@ function formatErrorDetails(errorDetails) {
                 { `${excessResource.count} additional
                  ${resourceMap[excessResource.resource_type][excessResource.count === 1 ? 0 : 1]} of type
                  ${excessResource.availability_zone_type} availability zone, instance size
-                 ${excessResource.resource_name}, and Red Hat provided infrastructure.`}
+                 ${excessResource.resource_name}.`}
               </li>
             ))}
           </ul>
