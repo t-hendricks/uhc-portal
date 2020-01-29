@@ -145,7 +145,7 @@ class EditClusterDialog extends Component {
               name="nodes_compute"
               label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
               isMultiAz={isMultiAz}
-              isBYOC={isByoc}
+              isByoc={isByoc}
               machineType={machineType}
               isDisabled={pending}
               isEditingCluster
