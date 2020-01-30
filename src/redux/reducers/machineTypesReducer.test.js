@@ -48,7 +48,7 @@ describe('clusterMachineTypesReducer', () => {
   });
 
   describe('when action is fulfilled', () => {
-    it('provides the types recieved', () => {
+    it('provides the types received', () => {
       const action = { payload, type: `${type}_FULFILLED` };
       const result = machineTypesReducer(initialState, action);
 
