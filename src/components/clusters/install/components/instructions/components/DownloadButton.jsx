@@ -12,7 +12,6 @@ const DownloadButton = ({ token, installerURL }) => (
     variant="secondary"
     className="install--download-installer"
     disabled={!!token.error}
-    tabIndex="-1"
   >
     Download installer
   </Button>
