@@ -1,0 +1,214 @@
+{
+  "operators": [
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "version-may-be-blank",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": ""
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "reason-may-be-blank",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "authentication",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "cloud-credential",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "cluster-autoscaler",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "console",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "dns",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "image-registry",
+      "condition": "failing",
+      "reason": "HavingABadDay",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "ingress",
+      "condition": "degraded",
+      "reason": "NoIngressControllersDegraded",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "insights",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "kube-apiserver",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "kube-controller-manager",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "kube-scheduler",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "machine-api",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "machine-config",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "marketplace",
+      "condition": "available",
+      "reason": "OperatorAvailable",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "monitoring",
+      "condition": "available",
+      "reason": "RollOutDone",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "network",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "node-tuning",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "openshift-apiserver",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "openshift-controller-manager",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "openshift-samples",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "operator-lifecycle-manager",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "operator-lifecycle-manager-catalog",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "operator-lifecycle-manager-packageserver",
+      "condition": "available",
+      "reason": "",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "service-ca",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "service-catalog-apiserver",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "service-catalog-controller-manager",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "storage",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.2.13"
+    },
+    {
+      "time": "2020-01-30T14:43:56Z",
+      "name": "version",
+      "condition": "available",
+      "reason": "",
+      "version": ""
+    }
+  ]
+}
