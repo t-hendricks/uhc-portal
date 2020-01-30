@@ -85,7 +85,7 @@ const awsMachineTypes = [
 
 describe('sort machine type', () => {
   it('sorts correctly for aws', () => {
-    const sorted = sortMachineTypes('aws', { aws: awsMachineTypes });
+    const sorted = sortMachineTypes({machineTypes: {types: { aws: awsMachineTypes }}}, 'aws');
     expect(sorted.map(e => e.id)).toEqual([
       'm5.xlarge',
       'm5.2xlarge',
