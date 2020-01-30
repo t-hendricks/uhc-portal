@@ -171,8 +171,8 @@ const state = {
     types: {
       aws: awsMachineTypes,
       gcp: gcpMachineTypes,
-    }
-  }
+    },
+  },
 };
 
 describe('sort machine type', () => {
@@ -192,14 +192,14 @@ describe('sort machine type', () => {
   it('sorts correctly for gcp', () => {
     const sorted = sortMachineTypes(state, 'gcp');
     expect(sorted.map(e => e.id)).toEqual([
-      "n1-standard-1",
-      "n1-standard-2",
-      "n1-standard-8",
-      "m1-ultramem-40",
-      "m1-ultramem-80",
-      "c2-standard-4",
-      "c2-standard-8",
-      "c2-standard-16"
+      'n1-standard-1',
+      'n1-standard-2',
+      'n1-standard-8',
+      'm1-ultramem-40',
+      'm1-ultramem-80',
+      'c2-standard-4',
+      'c2-standard-8',
+      'c2-standard-16',
     ]);
   });
 });
