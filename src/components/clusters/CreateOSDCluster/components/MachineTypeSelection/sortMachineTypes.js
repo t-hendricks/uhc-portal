@@ -47,8 +47,8 @@ const sortFuncs = {
   aws: sortAwsMachineTypes,
 };
 
-function sortMachineTypes(cloudProviderID, machineTypes) {
-  const types = get(machineTypes, cloudProviderID, []);
+function sortMachineTypes(state, cloudProviderID) {
+  const types = get(state.machineTypes.types, cloudProviderID, []);
   types.sort(sortFuncs[cloudProviderID]);
   return types;
 }

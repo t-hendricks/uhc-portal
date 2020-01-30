@@ -4,7 +4,7 @@ import { getMachineTypes } from '../../../../../redux/actions/machineTypesAction
 import sortMachineTypes from './sortMachineTypes';
 
 const mapStateToProps = (state, ownProps) => ({
-  sortedMachineTypes: sortMachineTypes(ownProps.cloudProviderID, state.machineTypes.types),
+  sortedMachineTypes: sortMachineTypes(state, ownProps.cloudProviderID),
   machineTypes: state.machineTypes,
   organization: state.userProfile.organization,
   quota: state.userProfile.organization.quotaList,
