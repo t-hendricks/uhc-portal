@@ -25,7 +25,6 @@ const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_
           variant="secondary"
           className="install--download-installer"
           disabled={!!token.error}
-          tabIndex="-1"
         >
           Download RHCOS
         </Button>
