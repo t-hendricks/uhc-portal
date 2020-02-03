@@ -93,6 +93,14 @@ const quotaSummary = {
       allowed: 4,
       reserved: 0,
     },
+    {
+      resource_name: 'dbaOperatorAddon',
+      resource_type: 'addon',
+      availability_zone_type: '',
+      byoc: false,
+      allowed: 5,
+      reserved: 0,
+    },
   ],
 };
 
