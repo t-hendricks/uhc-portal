@@ -7,8 +7,8 @@ import {
 } from '@patternfly/react-core';
 
 import MachineTypeSelection from './MachineTypeSelection';
-import PersistentStorageComboBox from './PersistentStorageComboBox';
-import LoadBalancersComboBox from './LoadBalancersComboBox';
+import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
+import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
 import NodeCountInput from '../../../../common/NodeCountInput';
 import { constants } from '../../CreateOSDFormConstants';
 
@@ -67,7 +67,7 @@ function ScaleSection({
               <PopoverHint hint={constants.persistentStorageHint} />
               <Field
                 name="persistent_storage"
-                component={PersistentStorageComboBox}
+                component={PersistentStorageDropdown}
                 disabled={pending}
                 currentValue={null}
               />
@@ -83,7 +83,7 @@ function ScaleSection({
               <PopoverHint hint={constants.loadBalancersHint} />
               <Field
                 name="load_balancers"
-                component={LoadBalancersComboBox}
+                component={LoadBalancersDropdown}
                 disabled={pending}
                 currentValue={null}
               />

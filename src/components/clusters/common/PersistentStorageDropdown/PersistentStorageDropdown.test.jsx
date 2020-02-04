@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import LoadBalancerComboBox from './LoadBalancersComboBox';
+import PersistentStorageDropdown from './PersistentStorageDropdown';
 
 const baseState = {
   error: false,
@@ -16,19 +16,19 @@ const organizationState = {
   pending: false,
 };
 
-describe('<LoadBalancerComboBox />', () => {
-  describe('when load balancer list needs to be fetched', () => {
-    let getLoadBalancers;
+describe('<PersistentStorageDropdown />', () => {
+  describe('when persistent storage list needs to be fetched', () => {
+    let getPersistentStorage;
     let onChange;
     let wrapper;
     beforeAll(() => {
-      getLoadBalancers = jest.fn();
+      getPersistentStorage = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
-        <LoadBalancerComboBox
-          loadBalancerValues={baseState}
+        <PersistentStorageDropdown
+          persistentStorageValues={baseState}
           input={{ onChange }}
-          getLoadBalancers={getLoadBalancers}
+          getPersistentStorage={getPersistentStorage}
           quota={{}}
           organization={organizationState}
         />,
@@ -39,13 +39,13 @@ describe('<LoadBalancerComboBox />', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('calls getLoadBalancers', () => {
-      expect(getLoadBalancers).toBeCalled();
+    it('calls getPersistentStorage', () => {
+      expect(getPersistentStorage).toBeCalled();
     });
   });
 
   describe('when there was an error', () => {
-    let getLoadBalancers;
+    let getPersistentStorage;
     let onChange;
     let wrapper;
     beforeAll(() => {
@@ -55,13 +55,13 @@ describe('<LoadBalancerComboBox />', () => {
         errorMessage: 'This is an error message',
       };
 
-      getLoadBalancers = jest.fn();
+      getPersistentStorage = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
-        <LoadBalancerComboBox
-          loadBalancerValues={state}
+        <PersistentStorageDropdown
+          persistentStorageValues={state}
           input={{ onChange }}
-          getLoadBalancers={getLoadBalancers}
+          getPersistentStorage={getPersistentStorage}
           quota={{}}
           organization={organizationState}
         />,
@@ -74,7 +74,7 @@ describe('<LoadBalancerComboBox />', () => {
   });
 
   describe('when the request is pending', () => {
-    let getLoadBalancers;
+    let getPersistentStorage;
     let onChange;
     let wrapper;
     const state = {
@@ -85,13 +85,13 @@ describe('<LoadBalancerComboBox />', () => {
       values: [],
     };
     beforeAll(() => {
-      getLoadBalancers = jest.fn();
+      getPersistentStorage = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
-        <LoadBalancerComboBox
-          loadBalancerValues={state}
+        <PersistentStorageDropdown
+          persistentStorageValues={state}
           input={{ onChange }}
-          getLoadBalancers={getLoadBalancers}
+          getPersistentStorage={getPersistentStorage}
           quota={{}}
           organization={organizationState}
         />,
@@ -102,37 +102,37 @@ describe('<LoadBalancerComboBox />', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('does not call getLoadBalancers again if request returns an error', () => {
+    it('does not call getPersistentStorage again if request returns an error', () => {
       wrapper.setProps({
-        loadBalancerValues: { ...state, error: true, pending: false },
+        persistentStorageValues: { ...state, error: true, pending: false },
       }, () => {
-        expect(getLoadBalancers).not.toBeCalled();
+        expect(getPersistentStorage).not.toBeCalled();
       });
     });
   });
 
-  describe('when the load balancer list is available', () => {
-    let getLoadBalancers;
+  describe('when the storage list is available', () => {
+    let getPersistentStorage;
     let onChange;
     let wrapper;
     beforeAll(() => {
       const state = {
         ...baseState,
         fulfilled: true,
-        values: [0, 4, 8],
+        values: [{ unit: 'B', value: 107374182400 }, { unit: 'B', value: 644245094400 }, { unit: 'B', value: 1181116006400 }],
       };
 
       const quota = {
-        loadBalancerQuota: 4,
+        persistentStorageQuota: 600,
       };
 
-      getLoadBalancers = jest.fn();
+      getPersistentStorage = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
-        <LoadBalancerComboBox
-          loadBalancerValues={state}
+        <PersistentStorageDropdown
+          persistentStorageValues={state}
           input={{ onChange }}
-          getLoadBalancers={getLoadBalancers}
+          getPersistentStorage={getPersistentStorage}
           quota={quota}
           organization={organizationState}
         />,

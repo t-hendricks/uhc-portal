@@ -2,9 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import ErrorBox from '../../../common/ErrorBox';
 
-import EditDisplayNameDialog from './EditClusterDialog';
+import ScaleClusterDialog from './ScaleClusterDialog';
 
-describe('<EditDisplayNameDialog />', () => {
+describe('<ScaleClusterDialog />', () => {
   let wrapper;
   let closeModal;
   let onClose;
@@ -23,7 +23,7 @@ describe('<EditDisplayNameDialog />', () => {
       fulfilled: true,
     };
 
-    wrapper = shallow(<EditDisplayNameDialog
+    wrapper = shallow(<ScaleClusterDialog
       isOpen
       closeModal={closeModal}
       onClose={onClose}

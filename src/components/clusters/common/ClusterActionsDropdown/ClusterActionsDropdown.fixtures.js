@@ -13,7 +13,6 @@ const cluster = {
 const props = {
   showConsoleButton: true,
   openModal: jest.fn(),
-  openEditClusterDialog: jest.fn(),
 };
 
 const managedReadyProps = {

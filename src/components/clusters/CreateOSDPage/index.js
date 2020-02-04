@@ -92,7 +92,7 @@ const mapDispatchToProps = dispatch => ({
       // default to zero load balancers
       clusterRequest.load_balancer_quota = parseInt(formData.load_balancers, 10);
       // values in the passed are always in bytes.
-      // see comment in PersistentStorageComboBox.js#82.
+      // see comment in PersistentStorageDropdown.js#82.
       // Default to 100 GiB in bytes
       clusterRequest.storage_quota = {
         unit: 'B',

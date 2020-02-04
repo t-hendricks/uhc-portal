@@ -47,18 +47,18 @@ function actionResolver(
     return consoleURL && !isClusterUninstalling ? adminConsoleEnabled : adminConsoleDisabled;
   };
 
-  const getEditClusterProps = () => {
-    const editClusterBaseProps = {
+  const getScaleClusterProps = () => {
+    const scaleClusterBaseProps = {
       ...baseProps,
       title: 'Scale Cluster',
-      key: getKey('editcluster'),
+      key: getKey('scalecluster'),
     };
     const managedEditProps = {
-      ...editClusterBaseProps,
+      ...scaleClusterBaseProps,
       onClick: () => openModal('edit-cluster', cluster),
     };
     const disabledManagedEditProps = {
-      ...editClusterBaseProps,
+      ...scaleClusterBaseProps,
       isDisabled: true,
       tooltip: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
     };
@@ -152,7 +152,7 @@ function actionResolver(
   };
 
   const adminConsoleItemProps = getAdminConosleProps();
-  const editClusterItemProps = getEditClusterProps();
+  const scaleClusterItemProps = getScaleClusterProps();
   const editDisplayNameItemProps = getEditDisplayNameProps();
   const editConsoleURLItemProps = getEditConsoleURLProps();
   const deleteClusterItemProps = getDeleteItemProps();
@@ -174,7 +174,7 @@ function actionResolver(
     showConsoleButton && adminConsoleItemProps,
     cluster.canEdit && editDisplayNameItemProps,
     showEditURL && editConsoleURLItemProps,
-    showScale && editClusterItemProps,
+    showScale && scaleClusterItemProps,
     showDelete && deleteClusterItemProps,
     showArchive && archiveClusterItemProps,
     showUnarchive && unarchiveClusterItemProps,

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<PersistentStorageComboBox /> when persistent storage list needs to be fetched renders correctly 1`] = `
-<PersistentStorageComboBox
+exports[`<PersistentStorageDropdown /> when persistent storage list needs to be fetched renders correctly 1`] = `
+<PersistentStorageDropdown
   getPersistentStorage={
     [MockFunction] {
       "calls": Array [
@@ -58,11 +58,11 @@ exports[`<PersistentStorageComboBox /> when persistent storage list needs to be 
   >
     Loading persistent storage list...
   </div>
-</PersistentStorageComboBox>
+</PersistentStorageDropdown>
 `;
 
-exports[`<PersistentStorageComboBox /> when the request is pending renders correctly 1`] = `
-<PersistentStorageComboBox
+exports[`<PersistentStorageDropdown /> when the request is pending renders correctly 1`] = `
+<PersistentStorageDropdown
   getPersistentStorage={[MockFunction]}
   input={
     Object {
@@ -107,11 +107,11 @@ exports[`<PersistentStorageComboBox /> when the request is pending renders corre
   >
     Loading persistent storage list...
   </div>
-</PersistentStorageComboBox>
+</PersistentStorageDropdown>
 `;
 
-exports[`<PersistentStorageComboBox /> when the storage list is available renders correctly 1`] = `
-<PersistentStorageComboBox
+exports[`<PersistentStorageDropdown /> when the storage list is available renders correctly 1`] = `
+<PersistentStorageDropdown
   getPersistentStorage={[MockFunction]}
   input={
     Object {
@@ -154,7 +154,7 @@ exports[`<PersistentStorageComboBox /> when the storage list is available render
 >
   <FormSelect
     aria-label="Persistent Storage"
-    className="quota-combo-box"
+    className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
     isValid={true}
@@ -167,7 +167,7 @@ exports[`<PersistentStorageComboBox /> when the storage list is available render
     <select
       aria-invalid={false}
       aria-label="Persistent Storage"
-      className="pf-c-form-control quota-combo-box"
+      className="pf-c-form-control quota-dropdown"
       disabled={false}
       onBlur={[Function]}
       onChange={[Function]}
@@ -203,11 +203,11 @@ exports[`<PersistentStorageComboBox /> when the storage list is available render
       </FormSelectOption>
     </select>
   </FormSelect>
-</PersistentStorageComboBox>
+</PersistentStorageDropdown>
 `;
 
-exports[`<PersistentStorageComboBox /> when there was an error renders correctly 1`] = `
-<PersistentStorageComboBox
+exports[`<PersistentStorageDropdown /> when there was an error renders correctly 1`] = `
+<PersistentStorageDropdown
   getPersistentStorage={[MockFunction]}
   input={
     Object {
@@ -347,5 +347,5 @@ exports[`<PersistentStorageComboBox /> when there was an error renders correctly
       </ComponentWithOuia>
     </Component>
   </ErrorBox>
-</PersistentStorageComboBox>
+</PersistentStorageDropdown>
 `;

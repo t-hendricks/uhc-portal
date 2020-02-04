@@ -3,18 +3,18 @@ import { reduxForm } from 'redux-form';
 import get from 'lodash/get';
 
 import { clearClusterResponse, editCluster } from '../../../../redux/actions/clustersActions';
-import EditClusterDialog from './EditClusterDialog';
+import ScaleClusterDialog from './ScaleClusterDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import getLoadBalancerValues from '../../../../redux/actions/loadBalancerActions';
 import getPersistentStorageValues from '../../../../redux/actions/persistentStorageActions';
-import { minValueSelector, shouldShowStorageQuotaAlert, shouldShowLoadBalancerAlert } from './EditClusterSelectors';
+import { minValueSelector, shouldShowStorageQuotaAlert, shouldShowLoadBalancerAlert } from './SclaeClusterSelectors';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 
 const reduxFormConfig = {
-  form: 'EditCluster',
+  form: 'ScaleCluster',
 };
-const reduxFormEditCluster = reduxForm(reduxFormConfig)(EditClusterDialog);
+const reduxFormEditCluster = reduxForm(reduxFormConfig)(ScaleClusterDialog);
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
@@ -53,7 +53,7 @@ const mapDispatchToProps = dispatch => ({
       clusterRequest.load_balancer_quota = formData.load_balancers
         ? parseInt(formData.load_balancers, 10) : null;
       // values in the passed are always in bytes.
-      // see comment in PersistentStorageComboBox.js#82.
+      // see comment in PersistentStorageDropdown.js#82.
       clusterRequest.storage_quota = formData.persistent_storage ? {
         unit: 'B',
         value: parseFloat(formData.persistent_storage),

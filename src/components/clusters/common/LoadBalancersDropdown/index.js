@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import getLoadBalancers from '../../../../../../../redux/actions/loadBalancerActions';
-import LoadBalancersComboBox from './LoadBalancersComboBox';
+import getLoadBalancers from '../../../../redux/actions/loadBalancerActions';
+import LoadBalancersDropdown from './LoadBalancersDropdown';
 
 const mapStateToProps = state => ({
   loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
@@ -9,4 +9,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { getLoadBalancers };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoadBalancersComboBox);
+export default connect(mapStateToProps, mapDispatchToProps)(LoadBalancersDropdown);
