@@ -338,7 +338,9 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
           Array [
             "cluster.aws",
             "c5.4xlarge",
-            "multi-zone",
+            Object {
+              "title": "multi-zone",
+            },
             "BYOC",
             10,
             15,
@@ -354,7 +356,9 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
           Array [
             "cluster.aws",
             "m5.xlarge",
-            "multi-zone",
+            Object {
+              "title": "multi-zone",
+            },
             "BYOC",
             15,
             15,
@@ -370,10 +374,30 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
           Array [
             "compute.node.aws",
             "c5.4xlarge",
-            "multi-zone",
+            Object {
+              "title": "multi-zone",
+            },
             "BYOC",
             0,
             4,
+            Object {
+              "title": <OutlinedCircleIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+                title={null}
+              />,
+            },
+          ],
+          Array [
+            "addon",
+            "dbaOperatorAddon",
+            Object {
+              "title": "N/A",
+            },
+            "Standard",
+            0,
+            5,
             Object {
               "title": <OutlinedCircleIcon
                 color="currentColor"
