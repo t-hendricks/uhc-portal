@@ -36,10 +36,11 @@ describe('<ScaleClusterDialog />', () => {
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
       organization={fulfilledRequest}
-      initialFormValues={{
+      initialValues={{
         id: 'test-id', nodesCompute: 4, load_balancers: '4', persistent_storage: '107374182400',
       }}
       min={{ value: 4, validationMsg: 'error' }}
+      prestine={false}
     />);
   });
   it('renders correctly', () => {

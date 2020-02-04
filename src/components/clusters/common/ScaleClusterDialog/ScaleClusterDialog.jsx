@@ -40,22 +40,10 @@ class ScaleClusterDialog extends Component {
       resetResponse,
       closeModal,
       onClose,
-      initialFormValues,
       organization,
       getOrganizationAndQuota,
-      change,
       isOpen,
     } = this.props;
-
-    if (initialFormValues.id) {
-      // update initial values when a cluster is attached to the form
-      if (prevProps.initialFormValues.id !== initialFormValues.id) {
-        change('id', initialFormValues.id);
-        change('nodes_compute', initialFormValues.nodesCompute);
-        change('persistent_storage', initialFormValues.persistent_storage.toString());
-        change('load_balancers', initialFormValues.load_balancers.toString());
-      }
-    }
 
     // Fetch quota on opening the scale modal.
     if (!prevProps.isOpen && isOpen && !organization.pending) {
@@ -86,10 +74,11 @@ class ScaleClusterDialog extends Component {
       showPersistentStorageAlert,
       persistentStorageValues,
       loadBalancerValues,
-      initialFormValues,
+      initialValues,
       organization,
       isByoc,
       machineType,
+      pristine,
     } = this.props;
 
     const cancelEdit = () => {
@@ -134,7 +123,7 @@ class ScaleClusterDialog extends Component {
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={cancelEdit}
-        isPrimaryDisabled={pending}
+        isPrimaryDisabled={pending || pristine}
         isPending={pending}
       >
         <>
@@ -149,7 +138,7 @@ class ScaleClusterDialog extends Component {
               machineType={machineType}
               isDisabled={pending}
               isEditingCluster
-              currentNodeCount={initialFormValues.nodesCompute || 0}
+              currentNodeCount={initialValues.nodesCompute || 0}
             />
             { !isByoc && (
               <>
@@ -162,7 +151,7 @@ class ScaleClusterDialog extends Component {
                     name="load_balancers"
                     component={LoadBalancersDropdown}
                     disabled={pending}
-                    currentValue={initialFormValues.load_balancers}
+                    currentValue={initialValues.load_balancers}
                   />
                 </FormGroup>
                 {showLoadBalancerAlert && scalingAlert}
@@ -175,7 +164,7 @@ class ScaleClusterDialog extends Component {
                     name="persistent_storage"
                     component={PersistentStorageDropdown}
                     disabled={pending}
-                    currentValue={initialFormValues.persistent_storage}
+                    currentValue={initialValues.persistent_storage}
                   />
                 </FormGroup>
                 {showPersistentStorageAlert && scalingAlert}
@@ -189,7 +178,6 @@ class ScaleClusterDialog extends Component {
 }
 
 ScaleClusterDialog.propTypes = {
-  change: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
@@ -202,7 +190,7 @@ ScaleClusterDialog.propTypes = {
   }).isRequired,
   isMultiAz: PropTypes.bool,
   consoleURL: PropTypes.string,
-  initialFormValues: PropTypes.shape({
+  initialValues: PropTypes.shape({
     id: PropTypes.string,
     nodesCompute: PropTypes.number,
     persistent_storage: PropTypes.number,
@@ -218,6 +206,7 @@ ScaleClusterDialog.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   isByoc: PropTypes.bool,
   machineType: PropTypes.string,
+  pristine: PropTypes.bool, // from redux-form
 };
 
 ScaleClusterDialog.defaultProps = {

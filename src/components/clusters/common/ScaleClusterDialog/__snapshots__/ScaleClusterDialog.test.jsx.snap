@@ -4,7 +4,6 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
 <Modal
   className="edit-cluster-modal edit-cluster-modal-rhinfra"
   isPending={false}
-  isPrimaryDisabled={false}
   onClose={[Function]}
   onPrimaryClick={[MockFunction]}
   onSecondaryClick={[Function]}
@@ -54,7 +53,6 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
 <Modal
   className="edit-cluster-modal edit-cluster-modal-rhinfra"
   isPending={false}
-  isPrimaryDisabled={false}
   onClose={[Function]}
   onPrimaryClick={[MockFunction]}
   onSecondaryClick={[Function]}

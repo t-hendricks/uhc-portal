@@ -13,6 +13,7 @@ import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 
 const reduxFormConfig = {
   form: 'ScaleCluster',
+  enableReinitialize: true,
 };
 const reduxFormEditCluster = reduxForm(reduxFormConfig)(ScaleClusterDialog);
 
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => {
     organization: state.userProfile.organization,
     isByoc: modalData.byoc,
     machineType: get(modalData, 'nodes.compute_machine_type.id', ''),
-    initialFormValues: {
+    initialValues: {
       id: modalData.id,
       nodesCompute: modalData.nodes ? modalData.nodes.compute : null,
       load_balancers: modalData.load_balancer_quota
