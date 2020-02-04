@@ -9,8 +9,8 @@ import Modal from '../../../common/Modal/Modal';
 
 import NodeCountInput from '../NodeCountInput';
 import ErrorBox from '../../../common/ErrorBox';
-import PersistentStorageComboBox from '../../CreateOSDCluster/components/PersistentStorageComboBox';
-import LoadBalancersComboBox from '../../CreateOSDCluster/components/LoadBalancersComboBox';
+import PersistentStorageComboBox from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/PersistentStorageComboBox';
+import LoadBalancersComboBox from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/LoadBalancersComboBox';
 
 
 class EditClusterDialog extends Component {

@@ -1,0 +1,113 @@
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Field } from 'redux-form';
+import {
+  FormGroup,
+  GridItem,
+} from '@patternfly/react-core';
+import CloudRegionComboBox from './CloudRegionComboBox';
+import { constants } from '../../CreateOSDFormConstants';
+
+import PopoverHint from '../../../../../common/PopoverHint';
+import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import validators from '../../../../../../common/validators';
+import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
+
+function BasicFieldsSection({
+  pending, showDNSBaseDomain, quota, cloudProviderID, handleMultiAZChange,
+}) {
+  const hasSingleAzQuota = quota.singleAz > 0;
+  const hasMultiAzQuota = quota.multiAz > 0;
+
+  return (
+    <>
+      {/* cluster name */}
+      <GridItem span={4}>
+        <Field
+          component={ReduxVerticalFormGroup}
+          name="name"
+          label="Cluster name"
+          type="text"
+          validate={validators.checkClusterName}
+          disabled={pending}
+          isRequired
+          extendedHelpText={constants.clusterNameHint}
+        />
+      </GridItem>
+      <GridItem span={8} />
+
+      {/* Base DNS domain */}
+      {showDNSBaseDomain && (
+        <>
+          <GridItem span={4}>
+            <Field
+              component={ReduxVerticalFormGroup}
+              name="dns_base_domain"
+              label="Base DNS domain"
+              type="text"
+              validate={validators.checkBaseDNSDomain}
+              disabled={pending}
+              normalize={value => value.toLowerCase()}
+            />
+          </GridItem>
+          <GridItem span={8} />
+        </>
+      )}
+
+      {/* Region */}
+      <GridItem span={4}>
+        <FormGroup
+          label="Region"
+          isRequired
+          fieldId="region"
+        >
+          <PopoverHint hint={constants.regionHint} />
+          <Field
+            component={CloudRegionComboBox}
+            name="region"
+            cloudProviderID={cloudProviderID}
+            disabled={pending}
+            isRequired
+          />
+        </FormGroup>
+      </GridItem>
+      <GridItem span={8} />
+
+      {/* Availability */}
+      <GridItem span={4}>
+        <FormGroup
+          label="Availability"
+          isRequired
+          fieldId="availability-toggle"
+        >
+          <PopoverHint hint={constants.availabilityHint} />
+          <Field
+            component={RadioButtons}
+            name="multi_az"
+            disabled={pending}
+            onChange={handleMultiAZChange}
+            options={[
+              { value: 'false', label: 'Single Zone', disabled: !hasSingleAzQuota },
+              { value: 'true', label: 'Multizone', disabled: !hasMultiAzQuota },
+            ]}
+            defaultValue={hasSingleAzQuota ? 'false' : 'true'}
+          />
+        </FormGroup>
+      </GridItem>
+      <GridItem span={8} />
+    </>
+  );
+}
+
+BasicFieldsSection.propTypes = {
+  pending: PropTypes.bool,
+  showDNSBaseDomain: PropTypes.bool,
+  handleMultiAZChange: PropTypes.func.isRequired,
+  cloudProviderID: PropTypes.string.isRequired,
+  quota: PropTypes.shape({
+    singleAz: PropTypes.number.isRequired,
+    multiAz: PropTypes.number.isRequired,
+  }).isRequired,
+};
+
+export default BasicFieldsSection;
