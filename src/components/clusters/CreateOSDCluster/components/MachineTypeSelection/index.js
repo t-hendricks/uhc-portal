@@ -1,8 +1,10 @@
 import { connect } from 'react-redux';
 import MachineTypeSelection from './MachineTypeSelection';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
+import sortMachineTypes from './sortMachineTypes';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
+  sortedMachineTypes: sortMachineTypes(state, ownProps.cloudProviderID),
   machineTypes: state.machineTypes,
   organization: state.userProfile.organization,
   quota: state.userProfile.organization.quotaList,

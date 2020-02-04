@@ -8,7 +8,7 @@ const baseState = {
   errorMessage: '',
   pending: false,
   fulfilled: false,
-  machineTypes: [],
+  machineTypes: {},
 };
 
 const organizationState = {
@@ -130,7 +130,11 @@ describe('<MachineTypeSelection />', () => {
 
     it('does not call getMachineTypes again if request returns an error', () => {
       wrapper.setProps({
-        machineTypes: { ...state, error: true, pending: false },
+        machineTypes: {
+          ...state,
+          error: true,
+          pending: false,
+        },
       }, () => {
         expect(getMachineTypes).not.toBeCalled();
       });
@@ -145,47 +149,48 @@ describe('<MachineTypeSelection />', () => {
       const state = {
         ...baseState,
         fulfilled: true,
-        types: [
-          {
-            kind: 'MachineType',
-            name: 'Memory optimized - R5.4XLarge',
-            id: 'r5.4xlarge',
-            href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
-            memory: {
-              value: 137438953472,
-              unit: 'B',
-            },
-            cpu: {
-              value: 16,
-              unit: 'vCPU',
-            },
-            cloud_provider: {
-              kind: 'CloudProviderLink',
-              id: 'aws',
-              href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-            },
-          },
-          {
-            kind: 'MachineType',
-            name: 'Memory optimized - R5.XLarge',
-            id: 'r5.xlarge',
-            href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
-            memory: {
-              value: 34359738368,
-              unit: 'B',
-            },
-            cpu: {
-              value: 4,
-              unit: 'vCPU',
-            },
-            cloud_provider: {
-              kind: 'CloudProviderLink',
-              id: 'aws',
-              href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-            },
-          },
-        ],
       };
+
+      const sortedMachineTypes = [
+        {
+          kind: 'MachineType',
+          name: 'Memory optimized - R5.XLarge',
+          id: 'r5.xlarge',
+          href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
+          memory: {
+            value: 34359738368,
+            unit: 'B',
+          },
+          cpu: {
+            value: 4,
+            unit: 'vCPU',
+          },
+          cloud_provider: {
+            kind: 'CloudProviderLink',
+            id: 'aws',
+            href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+          },
+        },
+        {
+          kind: 'MachineType',
+          name: 'Memory optimized - R5.4XLarge',
+          id: 'r5.4xlarge',
+          href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
+          memory: {
+            value: 137438953472,
+            unit: 'B',
+          },
+          cpu: {
+            value: 16,
+            unit: 'vCPU',
+          },
+          cloud_provider: {
+            kind: 'CloudProviderLink',
+            id: 'aws',
+            href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+          },
+        },
+      ];
 
       const quota = {
         clusterQuota: {
@@ -205,6 +210,7 @@ describe('<MachineTypeSelection />', () => {
       wrapper = mount(
         <MachineTypeSelection
           machineTypes={state}
+          sortedMachineTypes={sortedMachineTypes}
           input={{ onChange }}
           meta={{}}
           getMachineTypes={getMachineTypes}

@@ -22,7 +22,7 @@ import { machineTypesConstants } from '../constants';
 
 const initialState = {
   ...baseRequestState,
-  types: [],
+  types: {},
 };
 
 function machineTypesReducer(state = initialState, action) {
@@ -45,7 +45,7 @@ function machineTypesReducer(state = initialState, action) {
       return {
         ...initialState,
         ...state,
-        types: action.payload.data.items,
+        types: action.payload,
         pending: false,
         fulfilled: true,
       };
