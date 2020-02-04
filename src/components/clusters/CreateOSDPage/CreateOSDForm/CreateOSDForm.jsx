@@ -125,6 +125,7 @@ class CreateOSDForm extends React.Component {
           isMultiAz={isMultiAz}
           machineType={machineType}
           handleMachineTypesChange={this.handleMachineTypesChange}
+          cloudProviderID="aws"
         />
 
         {/* Networking section */}

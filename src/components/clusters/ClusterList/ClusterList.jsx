@@ -42,7 +42,7 @@ import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
 import ErrorBox from '../../common/ErrorBox';
 
-import EditClusterDialog from '../common/EditClusterDialog';
+import ScaleClusterDialog from '../common/ScaleClusterDialog';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
@@ -247,7 +247,7 @@ class ClusterList extends Component {
               />
               <EditDisplayNameDialog onClose={invalidateClusters} />
               <EditConsoleURLDialog onClose={invalidateClusters} />
-              <EditClusterDialog onClose={invalidateClusters} />
+              <ScaleClusterDialog onClose={invalidateClusters} />
               <EditDisconnectedCluster onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
               <UnarchiveClusterDialog onClose={invalidateClusters} />

@@ -60,7 +60,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.editcluster"
+    key="undefined.menu.scalecluster"
     title="Scale Cluster"
     tooltip={
       <span>
@@ -102,7 +102,7 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
   </DropdownItem>
   <DropdownItem
     component="button"
-    key="1.menu.editcluster"
+    key="1.menu.scalecluster"
     onClick={[Function]}
     title="Scale Cluster"
   >
@@ -150,7 +150,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.editcluster"
+    key="undefined.menu.scalecluster"
     title="Scale Cluster"
     tooltip={
       <span>

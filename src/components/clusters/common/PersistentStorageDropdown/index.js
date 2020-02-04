@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import getPersistentStorage from '../../../../../../../redux/actions/persistentStorageActions';
-import PersistentStorageComboBox from './PersistentStorageComboBox';
+import getPersistentStorage from '../../../../redux/actions/persistentStorageActions';
+import PersistentStorageDropdown from './PersistentStorageDropdown';
 
 const mapStateToProps = state => ({
   persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
@@ -9,4 +9,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { getPersistentStorage };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersistentStorageComboBox);
+export default connect(mapStateToProps, mapDispatchToProps)(PersistentStorageDropdown);

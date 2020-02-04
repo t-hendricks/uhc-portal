@@ -1,4 +1,4 @@
-// LoadBalancersComboBox shows a selection of load balancer
+// LoadBalancersDropdown shows a selection of load balancer
 // options for setting on the installed a cluster.
 // it is meant to be used in a redux-form <Field> and expects an onChange callback.
 
@@ -11,10 +11,10 @@ import {
 
 import get from 'lodash/get';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-import ErrorBox from '../../../../../../common/ErrorBox';
+import ErrorBox from '../../../common/ErrorBox';
 import filterLoadBalancerValuesByQuota from './helpers';
 
-class LoadBalancersComboBox extends React.Component {
+class LoadBalancersDropdown extends React.Component {
   componentDidMount() {
     const {
       getLoadBalancers, loadBalancerValues,
@@ -40,7 +40,7 @@ class LoadBalancersComboBox extends React.Component {
       const isDisabled = disabled || (filteredValues.values.length <= 1);
       return (
         <FormSelect
-          className="quota-combo-box"
+          className="quota-dropdown"
           aria-label="Load Balancers"
           isDisabled={isDisabled}
           {...input}
@@ -61,7 +61,7 @@ class LoadBalancersComboBox extends React.Component {
   }
 }
 
-LoadBalancersComboBox.propTypes = {
+LoadBalancersDropdown.propTypes = {
   getLoadBalancers: PropTypes.func.isRequired,
   loadBalancerValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
@@ -70,4 +70,4 @@ LoadBalancersComboBox.propTypes = {
   currentValue: PropTypes.number,
 };
 
-export default LoadBalancersComboBox;
+export default LoadBalancersDropdown;

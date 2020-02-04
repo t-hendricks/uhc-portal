@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<LoadBalancerComboBox /> when load balancer list needs to be fetched renders correctly 1`] = `
-<LoadBalancersComboBox
+exports[`<LoadBalancersDropdown /> when load balancer list needs to be fetched renders correctly 1`] = `
+<LoadBalancersDropdown
   getLoadBalancers={
     [MockFunction] {
       "calls": Array [
@@ -58,11 +58,11 @@ exports[`<LoadBalancerComboBox /> when load balancer list needs to be fetched re
   >
     Loading load balancers list...
   </div>
-</LoadBalancersComboBox>
+</LoadBalancersDropdown>
 `;
 
-exports[`<LoadBalancerComboBox /> when the load balancer list is available renders correctly 1`] = `
-<LoadBalancersComboBox
+exports[`<LoadBalancersDropdown /> when the load balancer list is available renders correctly 1`] = `
+<LoadBalancersDropdown
   getLoadBalancers={[MockFunction]}
   input={
     Object {
@@ -96,7 +96,7 @@ exports[`<LoadBalancerComboBox /> when the load balancer list is available rende
 >
   <FormSelect
     aria-label="Load Balancers"
-    className="quota-combo-box"
+    className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
     isValid={true}
@@ -109,7 +109,7 @@ exports[`<LoadBalancerComboBox /> when the load balancer list is available rende
     <select
       aria-invalid={false}
       aria-label="Load Balancers"
-      className="pf-c-form-control quota-combo-box"
+      className="pf-c-form-control quota-dropdown"
       disabled={false}
       onBlur={[Function]}
       onChange={[Function]}
@@ -145,11 +145,11 @@ exports[`<LoadBalancerComboBox /> when the load balancer list is available rende
       </FormSelectOption>
     </select>
   </FormSelect>
-</LoadBalancersComboBox>
+</LoadBalancersDropdown>
 `;
 
-exports[`<LoadBalancerComboBox /> when the request is pending renders correctly 1`] = `
-<LoadBalancersComboBox
+exports[`<LoadBalancersDropdown /> when the request is pending renders correctly 1`] = `
+<LoadBalancersDropdown
   getLoadBalancers={[MockFunction]}
   input={
     Object {
@@ -194,11 +194,11 @@ exports[`<LoadBalancerComboBox /> when the request is pending renders correctly 
   >
     Loading load balancers list...
   </div>
-</LoadBalancersComboBox>
+</LoadBalancersDropdown>
 `;
 
-exports[`<LoadBalancerComboBox /> when there was an error renders correctly 1`] = `
-<LoadBalancersComboBox
+exports[`<LoadBalancersDropdown /> when there was an error renders correctly 1`] = `
+<LoadBalancersDropdown
   getLoadBalancers={[MockFunction]}
   input={
     Object {
@@ -338,5 +338,5 @@ exports[`<LoadBalancerComboBox /> when there was an error renders correctly 1`] 
       </ComponentWithOuia>
     </Component>
   </ErrorBox>
-</LoadBalancersComboBox>
+</LoadBalancersDropdown>
 `;

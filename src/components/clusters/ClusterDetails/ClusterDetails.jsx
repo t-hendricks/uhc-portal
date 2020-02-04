@@ -32,7 +32,7 @@ import AddOns from './components/AddOns';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 
-import EditClusterDialog from '../common/EditClusterDialog';
+import ScaleClusterDialog from '../common/ScaleClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
@@ -304,7 +304,7 @@ class ClusterDetails extends Component {
           <LogWindow clusterID={cluster.id} />
         </TabContent>
         )}
-        <EditClusterDialog onClose={onDialogClose} />
+        <ScaleClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
         <ArchiveClusterDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />

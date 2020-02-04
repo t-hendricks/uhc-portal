@@ -1,4 +1,4 @@
-// PersistentStorageComboBox shows a selection of storage options
+// PersistentStorageDropdown shows a selection of storage options
 // for setting on the installed a cluster.
 // it is meant to be used in a redux-form <Field> and expects an onChange callback.
 
@@ -11,11 +11,11 @@ import {
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import get from 'lodash/get';
-import ErrorBox from '../../../../../../common/ErrorBox';
-import { humanizeValueWithUnitGiB } from '../../../../../../../common/units';
+import ErrorBox from '../../../common/ErrorBox';
+import { humanizeValueWithUnitGiB } from '../../../../common/units';
 import filterPersistentStorageValuesByQuota from './helpers';
 
-class PersistentStorageComboBox extends React.Component {
+class PersistentStorageDropdown extends React.Component {
   componentDidMount() {
     const {
       getPersistentStorage, persistentStorageValues,
@@ -58,7 +58,7 @@ class PersistentStorageComboBox extends React.Component {
 
       return (
         <FormSelect
-          className="quota-combo-box"
+          className="quota-dropdown"
           aria-label="Persistent Storage"
           isDisabled={isDisabled}
           {...input}
@@ -79,7 +79,7 @@ class PersistentStorageComboBox extends React.Component {
   }
 }
 
-PersistentStorageComboBox.propTypes = {
+PersistentStorageDropdown.propTypes = {
   getPersistentStorage: PropTypes.func.isRequired,
   persistentStorageValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
@@ -88,4 +88,4 @@ PersistentStorageComboBox.propTypes = {
   currentValue: PropTypes.number,
 };
 
-export default PersistentStorageComboBox;
+export default PersistentStorageDropdown;

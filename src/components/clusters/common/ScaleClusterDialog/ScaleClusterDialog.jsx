@@ -9,11 +9,11 @@ import Modal from '../../../common/Modal/Modal';
 
 import NodeCountInput from '../NodeCountInput';
 import ErrorBox from '../../../common/ErrorBox';
-import PersistentStorageComboBox from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/PersistentStorageComboBox';
-import LoadBalancersComboBox from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/LoadBalancersComboBox';
+import PersistentStorageDropdown from '../PersistentStorageDropdown';
+import LoadBalancersDropdown from '../LoadBalancersDropdown';
 
 
-class EditClusterDialog extends Component {
+class ScaleClusterDialog extends Component {
   componentDidMount() {
     const {
       persistentStorageValues,
@@ -160,7 +160,7 @@ class EditClusterDialog extends Component {
                   <Field
                     label="Load Balancers"
                     name="load_balancers"
-                    component={LoadBalancersComboBox}
+                    component={LoadBalancersDropdown}
                     disabled={pending}
                     currentValue={initialFormValues.load_balancers}
                   />
@@ -173,7 +173,7 @@ class EditClusterDialog extends Component {
                   <Field
                     label="Persistent Storage"
                     name="persistent_storage"
-                    component={PersistentStorageComboBox}
+                    component={PersistentStorageDropdown}
                     disabled={pending}
                     currentValue={initialFormValues.persistent_storage}
                   />
@@ -188,7 +188,7 @@ class EditClusterDialog extends Component {
   }
 }
 
-EditClusterDialog.propTypes = {
+ScaleClusterDialog.propTypes = {
   change: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
@@ -220,9 +220,9 @@ EditClusterDialog.propTypes = {
   machineType: PropTypes.string,
 };
 
-EditClusterDialog.defaultProps = {
+ScaleClusterDialog.defaultProps = {
   isOpen: false,
   editClusterResponse: {},
 };
 
-export default EditClusterDialog;
+export default ScaleClusterDialog;
