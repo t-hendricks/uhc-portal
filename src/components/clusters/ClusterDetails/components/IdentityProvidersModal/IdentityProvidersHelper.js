@@ -85,10 +85,10 @@ const getOauthCallbackURL = (consoleURL, IDPName) => {
  */
 const IDPNeedsOAuthURL = IDPType => IDPType !== IDPformValues.LDAP;
 
-const LDAPDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-ldap-identity-provider';
-const GithubDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-github-identity-provider';
-const OpenIDDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-oidc-identity-provider';
-const GoogleDocLink = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.1/html/authentication/configuring-identity-providers#configuring-google-identity-provider';
+const LDAPDocLink = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers/configuring-ldap-identity-provider.html';
+const GithubDocLink = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers/configuring-github-identity-provider.html';
+const GoogleDocLink = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers/configuring-google-identity-provider.html';
+const OpenIDDocLink = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers/configuring-oidc-identity-provider.html';
 
 const getCreateIDPRequestData = (formData) => {
   const githubData = {
