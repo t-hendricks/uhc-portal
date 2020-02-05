@@ -58,7 +58,7 @@ const mapStateToProps = (state) => {
   });
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (formData) => {
     const clusterRequest = {
       byoc: formData.byoc === 'true',
@@ -72,8 +72,9 @@ const mapDispatchToProps = dispatch => ({
           id: formData.machine_type,
         },
       },
-      multi_az: formData.multi_az === 'true',
       managed: true,
+      cloudProviderID: ownProps.cloudProviderID,
+      multi_az: formData.multi_az === 'true',
     };
     if (formData.network_configuration_toggle === 'advanced') {
       clusterRequest.network = {
@@ -83,6 +84,7 @@ const mapDispatchToProps = dispatch => ({
         host_prefix: parseInt(formData.network_host_prefix, 10),
       };
     }
+
     if (formData.byoc === 'true') {
       clusterRequest.aws = {
         access_key_id: formData.access_key_id,

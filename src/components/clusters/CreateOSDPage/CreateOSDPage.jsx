@@ -117,6 +117,7 @@ class CreateOSDPage extends React.Component {
       openModal,
       closeModal,
       quota,
+      cloudProviderID,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -162,7 +163,8 @@ class CreateOSDPage extends React.Component {
           <Breadcrumbs path={[
             { label: 'Clusters' },
             { label: 'Create', path: '/create' },
-            { label: 'OpenShift Dedicated' },
+            { label: 'OpenShift Dedicated', path: '/create/osd' },
+            { label: cloudProviderID === 'aws'? 'Amazon Web Services': 'Google Cloud Platform' },
           ]}
           />
         )}
@@ -238,6 +240,7 @@ class CreateOSDPage extends React.Component {
                     openModal={openModal}
                     closeModal={closeModal}
                     quota={quota}
+                    cloudProviderID={cloudProviderID}
                   />
                   {/* Form footer */}
                   <GridItem>
@@ -297,6 +300,7 @@ CreateOSDPage.propTypes = {
   getMachineTypes: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
+  cloudProviderID: PropTypes.string.isRequired,
 };
 
 export default CreateOSDPage;

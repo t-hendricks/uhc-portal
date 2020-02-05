@@ -60,6 +60,7 @@ class CreateOSDForm extends React.Component {
       openModal,
       isBYOCModalOpen,
       quota,
+      cloudProviderID,
     } = this.props;
 
     const {
@@ -111,7 +112,7 @@ class CreateOSDForm extends React.Component {
           showDNSBaseDomain={false}
           change={change}
           isBYOC={isBYOCForm}
-          cloudProviderID="aws"
+          cloudProviderID={cloudProviderID}
           quota={quota[infraType]}
           handleMultiAZChange={this.handleMultiAZChange}
         />
@@ -131,7 +132,7 @@ class CreateOSDForm extends React.Component {
           isMultiAz={isMultiAz}
           machineType={machineType}
           handleMachineTypesChange={this.handleMachineTypesChange}
-          cloudProviderID="aws"
+          cloudProviderID={cloudProviderID}
         />
 
         {/* Networking section */}
@@ -164,6 +165,7 @@ CreateOSDForm.propTypes = {
       hasQuota: PropTypes.bool.isRequired,
     }).isRequired,
   }).isRequired,
+  cloudProviderID: PropTypes.string.isRequired,
 };
 
 export default CreateOSDForm;
