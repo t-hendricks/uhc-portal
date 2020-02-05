@@ -3,8 +3,6 @@
 exports[`<MonitoringListItem /> should render 1`] = `
 <DataListItem
   aria-labelledby=""
-  className=""
-  id=""
   isExpanded={false}
 >
   <DataListItemRow>

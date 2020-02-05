@@ -855,7 +855,7 @@ span.dev-preview-label svg {
   padding: 0;
 }
 
-.quota-combo-box ul {
+.quota-dropdown ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -868,7 +868,7 @@ span.dev-preview-label svg {
   &.edit-cluster-modal-rhinfra {
     min-height: 70%;
   }
-  select.quota-combo-box {
+  select.quota-dropdown {
     width: 48%;
     display: block;
   }
@@ -995,13 +995,6 @@ button:focus {
   padding-left: 0;
 }
 
-pre.idp-oauth-url {
-  min-height: 36px;
-  max-width: 800px;
-  overflow-x: auto;
-  font-size: var(--pf-global--FontSize--sm);
-}
-
 .compute-nodes-select {
   div {
     width: 100%;
@@ -1010,4 +1003,8 @@ pre.idp-oauth-url {
     width: 48%;
     margin-right: var(--pf-global--spacer--xs);
   }
+}
+
+.idp-oauth-url-label {
+  padding-bottom: var(--pf-global--spacer--sm);
 }

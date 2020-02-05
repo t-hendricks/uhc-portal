@@ -48,12 +48,12 @@ describe('clusterMachineTypesReducer', () => {
   });
 
   describe('when action is fulfilled', () => {
-    it('provides the types recieved', () => {
+    it('provides the types received', () => {
       const action = { payload, type: `${type}_FULFILLED` };
       const result = machineTypesReducer(initialState, action);
 
       expect(result).toEqual({
-        types: action.payload.data.items,
+        types: action.payload,
         errorMessage: '',
         errorDetails: null,
         fulfilled: true,

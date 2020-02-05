@@ -8,7 +8,7 @@
   "display_name": "fake-managed-cluster",
   "creation_timestamp": "2019-02-11T09:28:16.000143Z",
   "activity_timestamp": "2019-12-22T10:18:09Z",
-  "openshift_version": "4.0",
+  "openshift_version": "4.2.13",
   "cloud_provider": {
     "kind": "CloudProviderLink",
     "id": "aws",

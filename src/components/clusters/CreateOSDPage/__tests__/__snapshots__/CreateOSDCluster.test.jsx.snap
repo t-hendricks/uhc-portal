@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateOSDCluster ManagedClusterForm should fetch cloud providers, machine types, load balancers, persistent storage and quota when first mounted 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "OpenShift Dedicated",
+            },
+          ]
+        }
+      />
+    }
+    title="Create an OpenShift Dedicated Cluster"
+  />
+  <PageSection>
+    <Spinner
+      centered={true}
+    />
+  </PageSection>
+</Fragment>
+`;
+
+exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "OpenShift Dedicated",
+            },
+          ]
+        }
+      />
+    }
+    title="Create an OpenShift Dedicated Cluster"
+  />
+  <PageSection>
+    <Card>
+      <div
+        className="pf-c-content ocm-page"
+      >
+        <Form
+          onSubmit={[MockFunction]}
+        >
+          <Grid
+            gutter="sm"
+          >
+            <CreateOSDForm
+              isBYOCModalOpen={false}
+              pending={false}
+              quota={
+                Object {
+                  "byoc": Object {
+                    "hasQuota": false,
+                    "multiAz": false,
+                    "singleAz": false,
+                  },
+                  "rhInfra": Object {
+                    "hasQuota": true,
+                    "multiAz": true,
+                    "singleAz": true,
+                  },
+                }
+              }
+            />
+            <GridItem>
+              <Split
+                className="create-osd-form-button-split"
+                gutter="sm"
+              >
+                <SplitItem>
+                  <Component
+                    isDisabled={false}
+                    onClick={[MockFunction]}
+                    type="submit"
+                    variant="primary"
+                  >
+                    Create cluster
+                  </Component>
+                </SplitItem>
+                <SplitItem>
+                  <Link
+                    replace={false}
+                    to="/"
+                  >
+                    <Component
+                      isDisabled={false}
+                      variant="secondary"
+                    >
+                      Cancel
+                    </Component>
+                  </Link>
+                </SplitItem>
+                <SplitItem />
+              </Split>
+            </GridItem>
+          </Grid>
+        </Form>
+      </div>
+    </Card>
+  </PageSection>
+</Fragment>
+`;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Field } from 'redux-form';
 import {
-  Form, Grid, GridItem, Expandable, Title,
+  Form, Grid, GridItem, Expandable, Title, ClipboardCopy,
 } from '@patternfly/react-core';
 import ErrorBox from '../../../../../common/ErrorBox';
 
@@ -108,8 +108,10 @@ class IDPForm extends React.Component {
             />
             { IDPNeedsOAuthURL(selectedIDP) && (
               <div>
-                <span className="pf-c-form__label pf-c-form__label-text">OAuth callback URL</span>
-                <pre className="idp-oauth-url">{getOauthCallbackURL(clusterConsoleURL, IDPName)}</pre>
+                <span className="pf-c-form__label pf-c-form__label-text idp-oauth-url-label">OAuth callback URL</span>
+                <ClipboardCopy isReadOnly>
+                  {getOauthCallbackURL(clusterConsoleURL, IDPName)}
+                </ClipboardCopy>
               </div>
             )}
             {SelectedProivderRequiredFields

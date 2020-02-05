@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-} from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
 
 const CLISection = ({ toolsURL }) => (
   <>
@@ -13,14 +11,16 @@ const CLISection = ({ toolsURL }) => (
       .
     </p>
     <div>
-      <a href={toolsURL} rel="noreferrer noopener" target="_blank">
-        <Button
-          variant="secondary"
-          className="install--download-cli"
-        >
-          Download command-line tools
-        </Button>
-      </a>
+      <Button
+        component="a"
+        href={toolsURL}
+        rel="noreferrer noopener"
+        target="_blank"
+        variant="secondary"
+        className="install--download-cli"
+      >
+        Download command-line tools
+      </Button>
     </div>
     <p />
     <p>

@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ScaleClusterDialog /> renders correctly 1`] = `
+<Modal
+  className="edit-cluster-modal edit-cluster-modal-rhinfra"
+  isPending={false}
+  onClose={[Function]}
+  onPrimaryClick={[MockFunction]}
+  onSecondaryClick={[Function]}
+  primaryText="Apply"
+  title="Scale Cluster"
+>
+  <Form
+    onSubmit={[MockFunction]}
+  >
+    <Field
+      component={[Function]}
+      currentNodeCount={4}
+      isDisabled={false}
+      isEditingCluster={true}
+      label="Compute node count"
+      name="nodes_compute"
+    />
+    <FormGroup
+      fieldId="load_balancers"
+      label="Load balancers"
+    >
+      <Field
+        component={[Function]}
+        currentValue="4"
+        disabled={false}
+        label="Load Balancers"
+        name="load_balancers"
+      />
+    </FormGroup>
+    <FormGroup
+      fieldId="persistent_storage"
+      label="Persistent storage"
+    >
+      <Field
+        component={[Function]}
+        currentValue="107374182400"
+        disabled={false}
+        label="Persistent Storage"
+        name="persistent_storage"
+      />
+    </FormGroup>
+  </Form>
+</Modal>
+`;
+
+exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
+<Modal
+  className="edit-cluster-modal edit-cluster-modal-rhinfra"
+  isPending={false}
+  onClose={[Function]}
+  onPrimaryClick={[MockFunction]}
+  onSecondaryClick={[Function]}
+  primaryText="Apply"
+  title="Scale Cluster"
+>
+  <ErrorBox
+    message="Error editing cluster"
+    response={
+      Object {
+        "erorMessage": "this is an error",
+        "error": true,
+      }
+    }
+  />
+  <Form
+    onSubmit={[MockFunction]}
+  >
+    <Field
+      component={[Function]}
+      currentNodeCount={4}
+      isDisabled={false}
+      isEditingCluster={true}
+      label="Compute node count"
+      name="nodes_compute"
+    />
+    <FormGroup
+      fieldId="load_balancers"
+      label="Load balancers"
+    >
+      <Field
+        component={[Function]}
+        currentValue="4"
+        disabled={false}
+        label="Load Balancers"
+        name="load_balancers"
+      />
+    </FormGroup>
+    <FormGroup
+      fieldId="persistent_storage"
+      label="Persistent storage"
+    >
+      <Field
+        component={[Function]}
+        currentValue="107374182400"
+        disabled={false}
+        label="Persistent Storage"
+        name="persistent_storage"
+      />
+    </FormGroup>
+  </Form>
+</Modal>
+`;

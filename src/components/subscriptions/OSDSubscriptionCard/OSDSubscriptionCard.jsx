@@ -41,6 +41,12 @@ class OSDSubscriptionCard extends Component {
     return icon;
   }
 
+  getZoneType = (zoneType) => {
+    if (zoneType === 'multi') { return 'multizone'; }
+    if (zoneType === 'single') { return 'single zone'; }
+    return 'N/A';
+  }
+
   render() {
     const { quotaSummary } = this.props;
 
@@ -49,7 +55,7 @@ class OSDSubscriptionCard extends Component {
       const rows = quotaSummary.items.map(quotaItem => [
         quotaItem.resource_type,
         quotaItem.resource_name,
-        `${quotaItem.availability_zone_type}-zone`,
+        { title: this.getZoneType(quotaItem.availability_zone_type) },
         quotaItem.byoc ? 'BYOC' : 'Standard',
         quotaItem.reserved,
         quotaItem.allowed,
