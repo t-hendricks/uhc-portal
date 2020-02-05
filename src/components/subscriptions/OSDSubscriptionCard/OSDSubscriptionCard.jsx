@@ -41,7 +41,11 @@ class OSDSubscriptionCard extends Component {
     return icon;
   }
 
-  getZoneType = zoneType => (zoneType ? `${zoneType}-zone` : 'N/A');
+  getZoneType = (zoneType) => {
+    if (zoneType === 'multi') { return 'multizone'; }
+    if (zoneType === 'single') { return 'single zone'; }
+    return 'N/A';
+  }
 
   render() {
     const { quotaSummary } = this.props;
