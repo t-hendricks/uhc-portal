@@ -117,26 +117,26 @@ test('Field is a valid console URL', () => {
 });
 
 test('Field is a valid issuer', () => {
-  expect(checkOpenIDIssuer()).toBe('Issuer is required.');
+  expect(checkOpenIDIssuer()).toBe('Issuer URL is required.');
   expect(checkOpenIDIssuer('http://www.example.com')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
   expect(checkOpenIDIssuer('https://example.com/')).toBe(undefined);
+  expect(checkOpenIDIssuer('...example....')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://???')).toBe('Invalid URL');
   expect(checkOpenIDIssuer('www.example.hey/hey')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
   expect(checkOpenIDIssuer('ftp://hello.com')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
-  expect(checkOpenIDIssuer('https://example.com\noa')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
-  expect(checkOpenIDIssuer('https://www.example:55815.com')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://www.example:55815.com')).toBe('Invalid URL');
   expect(checkOpenIDIssuer('https://www-whatever.apps.example.co.uk/')).toBe(undefined);
-  expect(checkOpenIDIssuer('https://www.example.com:foo')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
-  expect(checkOpenIDIssuer('https://www.example.com....')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://www.example.com:foo')).toBe('Invalid URL');
   expect(checkOpenIDIssuer('https://blog.example.com')).toBe(undefined);
   expect(checkOpenIDIssuer('https://255.255.255.255')).toBe(undefined);
   expect(checkOpenIDIssuer('https://www.site.com:8008')).toBe(undefined);
   expect(checkOpenIDIssuer('https://www.example.com/product')).toBe(undefined);
   expect(checkOpenIDIssuer('example.com/')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
   expect(checkOpenIDIssuer('www.example.com')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
-  expect(checkOpenIDIssuer('https://www.example.com#up')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
-  expect(checkOpenIDIssuer('https://www.example.com/products?id=1&page=2')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://www.example.com#up')).toBe('The URL must not include a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://www.example.com/products?id=1&page=2')).toBe('The URL must not include a query string (?) or fragment (#)');
   expect(checkOpenIDIssuer('255.255.255.255')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
-  expect(checkOpenIDIssuer('https://invalid.com/perl.cgi?key=')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
+  expect(checkOpenIDIssuer('https://invalid.com/perl.cgi?key=')).toBe('The URL must not include a query string (?) or fragment (#)');
   expect(checkOpenIDIssuer('https://login.openidprovider.com/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/v2.0/')).toBe(undefined);
 });
 

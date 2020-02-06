@@ -14,9 +14,6 @@ const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0
 // Regular expression for a valid URL for a console in a self managed cluster.
 const CONSOLE_URL_REGEXP = /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
 
-// Regular expression for a valid URL for issuer in github identity provider.
-const ISSUER_URL_REGEXP = /^https:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?(\/[a-z0-9._/-]*)?$/i;
-
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 50;
 
@@ -46,10 +43,19 @@ const checkIdentityProviderName = (value) => {
 // Function to validate that the issuer field uses https scheme:
 const checkOpenIDIssuer = (value) => {
   if (!value) {
-    return 'Issuer is required.';
+    return 'Issuer URL is required.';
   }
-  if (!ISSUER_URL_REGEXP.test(value)) {
+  if (!value.startsWith('https://')) {
     return 'Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)';
+  }
+  let url;
+  try {
+    url = new URL(value);
+  } catch (error) {
+    return 'Invalid URL';
+  }
+  if (url.hash !== '' || url.search !== '') {
+    return 'The URL must not include a query string (?) or fragment (#)';
   }
   return undefined;
 };
