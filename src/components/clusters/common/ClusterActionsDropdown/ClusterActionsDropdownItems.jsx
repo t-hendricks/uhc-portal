@@ -31,6 +31,7 @@ function actionResolver(
   const getAdminConosleProps = () => {
     const consoleURL = cluster.console ? cluster.console.url : false;
     const adminConsoleEnabled = {
+      component: 'a',
       title: 'Open Console',
       href: consoleURL,
       target: '_blank',
