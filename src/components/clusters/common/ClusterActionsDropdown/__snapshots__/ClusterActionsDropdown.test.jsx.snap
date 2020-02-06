@@ -107,6 +107,7 @@ exports[`<ClusterActionsDropdown /> cluster with state ready and console url sho
   dropdownItems={
     Array [
       <DropdownItem
+        component="a"
         href="www.testuhc.com"
         rel="noopener noreferrer"
         target="_blank"
@@ -222,6 +223,7 @@ exports[`<ClusterActionsDropdown /> read only cluster should render correctly 1`
   dropdownItems={
     Array [
       <DropdownItem
+        component="a"
         href="www.testuhc.com"
         rel="noopener noreferrer"
         target="_blank"

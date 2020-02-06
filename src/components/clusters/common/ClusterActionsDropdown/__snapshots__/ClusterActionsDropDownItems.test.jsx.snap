@@ -84,6 +84,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
 exports[`Cluster Actions Dropdown Items cluster with state ready and console url should render 1`] = `
 <Fragment>
   <DropdownItem
+    component="a"
     href="www.testuhc.com"
     key="1.menu.adminconsole"
     rel="noopener noreferrer"
@@ -179,6 +180,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
 exports[`Cluster Actions Dropdown Items read only cluster should render correctly 1`] = `
 <Fragment>
   <DropdownItem
+    component="a"
     href="www.testuhc.com"
     key="1.menu.adminconsole"
     rel="noopener noreferrer"
