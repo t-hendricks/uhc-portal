@@ -44,7 +44,6 @@ function NetworkingSection({ pending, toggleNetwork, mode }) {
           defaultValue="basic"
         />
       </FormGroup>
-      <GridItem span={8} />
       { mode === 'advanced'
         && (
           <>
