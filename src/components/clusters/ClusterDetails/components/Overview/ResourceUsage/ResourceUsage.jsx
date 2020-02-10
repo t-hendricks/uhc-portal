@@ -3,22 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ClusterUtilizationChart from './ClusterUtilizationChart';
-import { metricsStatusMessages, maxMetricsTimeDelta } from './ResourceUsage.consts';
-import { parseValueWithUnit } from '../../../../../../common/units';
-import { getTimeDelta } from '../../../../../../common/helpers';
+import { metricsStatusMessages } from './ResourceUsage.consts';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
-import { hasCpuAndMemory } from '../../../clusterDetailsHelper';
+import { parseValueWithUnit } from '../../../../../../common/units';
+import { hasResourceUsageMetrics } from '../../Monitoring/monitoringHelper';
 
 function ResourceUsage({ cluster }) {
-  const metricsLatsUpdate = new Date(get(cluster, 'metrics.cpu.updated_timestamp', 0));
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-  const isDisconnected = get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED;
-
-  const metricsAvailable = !isArchived
-   && !isDisconnected
-   && hasCpuAndMemory(get(cluster, 'metrics.cpu', null), get(cluster, 'metrics.memory', null))
-   && (OCM_SHOW_OLD_METRICS
-   || (getTimeDelta(metricsLatsUpdate) < maxMetricsTimeDelta));
+  const metricsAvailable = hasResourceUsageMetrics(cluster);
 
   // Why parse memory but not cpu?
   // In theory both are `ValueWithUnit` but openapi only documents units for the case of bytes,
