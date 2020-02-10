@@ -36,7 +36,7 @@ function ClusterListTable(props) {
     viewOptions, setSorting, clusters, openModal, isPending, setClusterDetails,
   } = props;
   if (!isPending && (!clusters || clusters.length === 0)) {
-    return <p className="notfound">No Results Match the Filter Criteria.</p>;
+    return <p className="notfound">No results match the filter criteria.</p>;
   }
 
   const sortBy = {
