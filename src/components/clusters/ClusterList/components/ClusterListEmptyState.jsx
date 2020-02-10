@@ -30,7 +30,7 @@ function ClusterListEmptyState() {
       </Link>
       <EmptyStateSecondaryActions>
         <Link to="/register">
-          <Button variant="link">Register disconnected cluster</Button>
+          <Button variant="link">Register cluster</Button>
         </Link>
         <Link to="/archived">
           <Button variant="link">View archived clusters</Button>
