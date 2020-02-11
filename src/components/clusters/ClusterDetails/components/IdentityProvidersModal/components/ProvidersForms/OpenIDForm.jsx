@@ -3,21 +3,17 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import CAUpload from '../CAUpload';
 
 function OpenIDForm({ isPending }) {
   return (
     <>
       <Field
-        component={ReduxVerticalFormGroup}
+        component={CAUpload}
         name="openid_ca"
-        label="CA"
-        type="text"
-        placeholder="CA"
+        label="CA File"
         helpText="PEM encoded certificate bundle to use to validate server certificates for the configured URL"
-        disabled={isPending}
-        className="ca-textarea"
-        isTextArea
-        spellCheck="false"
+        isDisabled={isPending}
       />
       <Field
         component={ReduxVerticalFormGroup}
