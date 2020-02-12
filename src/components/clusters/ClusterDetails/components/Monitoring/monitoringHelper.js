@@ -1,3 +1,9 @@
+import get from 'lodash/get';
+import moment from 'moment';
+import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import { hasCpuAndMemory } from '../../clusterDetailsHelper';
+import { maxMetricsTimeDelta } from '../Overview/ResourceUsage/ResourceUsage.consts';
+
 const monitoringStatuses = {
   HEALTHY: 'HEALTHY',
   HAS_ISSUES: 'HAS_ISSUES',
@@ -35,6 +41,21 @@ const monitoringItemTypes = {
 const baseURLProps = {
   rel: 'noopener noreferrer',
   target: '_blank',
+};
+
+const hasResourceUsageMetrics = (cluster) => {
+  const metricsLastUpdate = moment.utc(get(cluster, 'metrics.cpu.updated_timestamp', 0));
+  const now = moment.utc();
+  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+  const isDisconnected = get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED;
+
+  const metricsAvailable = !isArchived
+   && !isDisconnected
+   && hasCpuAndMemory(get(cluster, 'metrics.cpu', null), get(cluster, 'metrics.memory', null))
+   && (OCM_SHOW_OLD_METRICS
+   || (now.diff(metricsLastUpdate, 'hours') < maxMetricsTimeDelta));
+
+  return metricsAvailable;
 };
 
 // Assure that the base console url is well formatted with trailing '/' and ready
@@ -79,4 +100,5 @@ export {
   thresholds,
   monitoringItemLinkProps,
   monitoringItemTypes,
+  hasResourceUsageMetrics,
 };

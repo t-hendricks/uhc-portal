@@ -1250,12 +1250,23 @@
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-tokens/-/react-tokens-2.7.25.tgz#69b517f635721bedcefa6b4535688a11586be115"
   integrity sha512-04hRDWt07pyjLUO1VN9QbrPpQMJzjd+nQYp8vgoe6+mYBzw+D4banJeudZ1oTFii9hWV+mLEu6aiwPtTigPM1Q==
 
-"@redhat-cloud-services/frontend-components-notifications@^0.0.7":
-  version "0.0.7"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components-notifications/-/frontend-components-notifications-0.0.7.tgz#7306af9215e5b0455bdc7e6acdf078db64ef9676"
-  integrity sha512-HoRwrAKTRy41MdCy7EFL/Q5561ib+G0FF+NW+ZH/IOP3/oBtstVU+FhaSCDjTkDWYAzL7wuw2j7hDdaOWxVY8g==
+"@redhat-cloud-services/frontend-components-notifications@^1.0.0":
+  version "1.0.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components-notifications/-/frontend-components-notifications-1.0.0.tgz#d9d1008c4ce3391b3433c90d73406da95e0f0d8e"
+  integrity sha512-fGYT9H9ZK1cTpSBemKpiQ6AM1uDOnikGf2DXupRgITIGQQfEPu1ME9nLWK+VjrISEP+2MZI72BFm7O1WwwR7xg==
   dependencies:
-    "@redhat-cloud-services/frontend-components-utilities" "~0.0.7"
+    "@redhat-cloud-services/frontend-components-utilities" "*"
+
+"@redhat-cloud-services/frontend-components-utilities@*":
+  version "1.0.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-1.0.0.tgz#00f49b6c3ece84f41a24d114d6e468ed3094b069"
+  integrity sha512-PozOqamGNRknrABByq0OHRljnMfVFMIJA1uHfKhsovILh+gIG+AzOUNypUbGJlUDJQPPEPg7zDJo3+O+yPw0uA==
+  dependencies:
+    "@sentry/browser" "^5.4.0"
+    awesome-debounce-promise "^2.1.0"
+    axios "^0.19.0"
+    commander "^2.20.0"
+    react-content-loader "^3.4.1"
 
 "@redhat-cloud-services/frontend-components-utilities@>=0.0.7", "@redhat-cloud-services/frontend-components-utilities@^0.0.15":
   version "0.0.15"
@@ -1268,15 +1279,6 @@
     commander "^2.20.0"
     react-content-loader "^3.4.1"
 
-"@redhat-cloud-services/frontend-components-utilities@~0.0.7":
-  version "0.0.8"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-0.0.8.tgz#7432860e6c9bfec2bb2718fd72b80faeed84b68c"
-  integrity sha512-GgNA+ycDRkW2YqvrwwSUP2t/hOz5FZYM1U7xZZJuh0FoxF/z/f1BRoRkXYa2/zfZ1k1PbitHRFjO8W4p3Y1FMg==
-  dependencies:
-    "@sentry/browser" "^5.4.0"
-    axios "^0.19.0"
-    react-content-loader "^3.4.1"
-
 "@redhat-cloud-services/frontend-components@^0.0.43":
   version "0.0.43"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components/-/frontend-components-0.0.43.tgz#c52974184e0f7259837c2ffefabdd1301efd4cea"
@@ -1285,55 +1287,55 @@
     "@redhat-cloud-services/frontend-components-utilities" ">=0.0.7"
 
 "@sentry/browser@^5.4.0":
-  version "5.5.0"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/browser/-/browser-5.5.0.tgz#ec99ea6897d23affc46d58e6ada32016b27721b5"
-  integrity sha512-QZw4EXK47Qp9Q+vNpL5H4P4tYyfAN8qpWWeLIM0RDiNLlOugTVUdkfkeNTEJZ9VlqJ5RLx/2G/PITG4R6pwh/A==
+  version "5.12.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/browser/-/browser-5.12.1.tgz#dc1f268595269fb7277f55eb625c7e92d76dc01b"
+  integrity sha512-Zl7VdppUxctyaoqMSEhnDJp2rrupx8n8N2n3PSooH74yhB2Z91nt84mouczprBsw3JU1iggGyUw9seRFzDI1hw==
   dependencies:
-    "@sentry/core" "5.5.0"
-    "@sentry/types" "5.5.0"
-    "@sentry/utils" "5.5.0"
+    "@sentry/core" "5.12.0"
+    "@sentry/types" "5.12.0"
+    "@sentry/utils" "5.12.0"
     tslib "^1.9.3"
 
-"@sentry/core@5.5.0":
-  version "5.5.0"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/core/-/core-5.5.0.tgz#574fdc9228c8b4a909c0140eb0d8b098175c0f47"
-  integrity sha512-xOcBud0t5mfhFdyd2tQQti4uuWSrLiJihpXzxeRpdCfk2ic+xmpeQs3G4UqnluvQDc48ug/Igt7LXfSBRBx4eg==
+"@sentry/core@5.12.0":
+  version "5.12.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/core/-/core-5.12.0.tgz#d6380c4ef7beee5f418ac1d0e5be86a2de2af449"
+  integrity sha512-wY4rsoX71QsGpcs9tF+OxKgDPKzIFMRvFiSRcJoPMfhFsTilQ/CBMn/c3bDtWQd9Bnr/ReQIL6NbnIjUsPHA4Q==
   dependencies:
-    "@sentry/hub" "5.5.0"
-    "@sentry/minimal" "5.5.0"
-    "@sentry/types" "5.5.0"
-    "@sentry/utils" "5.5.0"
+    "@sentry/hub" "5.12.0"
+    "@sentry/minimal" "5.12.0"
+    "@sentry/types" "5.12.0"
+    "@sentry/utils" "5.12.0"
     tslib "^1.9.3"
 
-"@sentry/hub@5.5.0":
-  version "5.5.0"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/hub/-/hub-5.5.0.tgz#6b8eecf769fa693260d45e771f4bca15bdbc6f4b"
-  integrity sha512-+jKh5U1nv8ufoquGciWoZPOmKuEjFPH5m0VifCs6t3NcEbAq2qnfF26KUGqhUNznlUN/PkbWB4qMfKn14uNE2Q==
+"@sentry/hub@5.12.0":
+  version "5.12.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/hub/-/hub-5.12.0.tgz#5e8c8f249f5bdbeb8cc4ec02c2ccc53a67f2cc02"
+  integrity sha512-3k7yE8BEVJsKx8mR4LcI4IN0O8pngmq44OcJ/fRUUBAPqsT38jsJdP2CaWhdlM1jiNUzUDB1ktBv6/lY+VgcoQ==
   dependencies:
-    "@sentry/types" "5.5.0"
-    "@sentry/utils" "5.5.0"
+    "@sentry/types" "5.12.0"
+    "@sentry/utils" "5.12.0"
     tslib "^1.9.3"
 
-"@sentry/minimal@5.5.0":
-  version "5.5.0"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/minimal/-/minimal-5.5.0.tgz#ea7939b8efe307d25775b23227a3f85dfb46b274"
-  integrity sha512-o6O30+/pNrO7fTgwKxgZynHB7cMScJlw9HXgnNXgLXS6LBiqjYCQfVnWAgV//SyyG0uUlcjH3P6PnV6TsJOmVQ==
+"@sentry/minimal@5.12.0":
+  version "5.12.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/minimal/-/minimal-5.12.0.tgz#2611e2aa520c1edb7999e6de51bd65ec66341757"
+  integrity sha512-fk73meyz4k4jCg9yzbma+WkggsfEIQWI2e2TWfYsRGcrV3RnlSrXyM4D91/A8Bjx10SNezHPUFHjasjlHXOkyA==
   dependencies:
-    "@sentry/hub" "5.5.0"
-    "@sentry/types" "5.5.0"
+    "@sentry/hub" "5.12.0"
+    "@sentry/types" "5.12.0"
     tslib "^1.9.3"
 
-"@sentry/types@5.5.0":
-  version "5.5.0"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/types/-/types-5.5.0.tgz#0e7d8e8359c7af685258d92b23831072bb79f46a"
-  integrity sha512-3otF/miVDth91o+iign00x0o31McUPeyIFbMjLbgeTRRW9rXpu2jGrcRrvHfofECtoqCf5Y734hwvvlBvFZeIw==
+"@sentry/types@5.12.0":
+  version "5.12.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/types/-/types-5.12.0.tgz#5367e53c74261beea01502e3f7b6f3d822682a31"
+  integrity sha512-aZbBouBLrKB8wXlztriIagZNmsB+wegk1Jkl6eprqRW/w24Sl/47tiwH8c5S4jYTxdAiJk+SAR10AAuYmIN3zg==
 
-"@sentry/utils@5.5.0":
-  version "5.5.0"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/utils/-/utils-5.5.0.tgz#5c516be0568f4d462ad550c723b78e3ad7776c4e"
-  integrity sha512-gO8Bs/QcKDn7ncc2f2fIOTPx2AiZKrGj4us1Yxu6mBU8JZqMQRl9XjDMFAUECJQvquBAta+TFJyYj71ZedeQUQ==
+"@sentry/utils@5.12.0":
+  version "5.12.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@sentry/utils/-/utils-5.12.0.tgz#62967f934a3ee6d21472eac0219084e37225933e"
+  integrity sha512-fYUadGLbfTCbs4OG5hKCOtv2jrNE4/8LHNABy9DwNJ/t5DVtGqWAZBnxsC+FG6a3nVqCpxjFI9AHlYsJ2wsf7Q==
   dependencies:
-    "@sentry/types" "5.5.0"
+    "@sentry/types" "5.12.0"
     tslib "^1.9.3"
 
 "@types/babel__core@^7.1.0":
@@ -3343,9 +3345,9 @@ commander@^2.18.0:
   integrity sha512-6tvAOO+D6OENvRAh524Dh9jcfKTYDQAqvqezbCW82xj5X0pSrcpxtvRKHLG0yBY6SD7PSDrJaj+0AiOcKVd1Xg==
 
 commander@^2.20.0:
-  version "2.20.0"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/commander/-/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
-  integrity sha512-7j2y+40w61zy6YC2iRNpUe/NwhNyoXrYpHMrSunaMG64nRnaf96zO/KMQR4OyN/UnE5KLyEBnKHd4aG3rskjpQ==
+  version "2.20.3"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
 commondir@^1.0.1:
   version "1.0.1"

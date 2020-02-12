@@ -36,7 +36,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
       <Component
         variant="link"
       >
-        Register disconnected cluster
+        Register cluster
       </Component>
     </Link>
     <Link

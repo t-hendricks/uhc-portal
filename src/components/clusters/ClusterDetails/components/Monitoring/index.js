@@ -11,7 +11,12 @@ import {
   clusterHealthSelector,
   hasDataSelector,
 } from './MonitoringSelectors';
-import { alertsSeverity, operatorsStatuses, thresholds } from './monitoringHelper';
+import {
+  alertsSeverity,
+  operatorsStatuses,
+  thresholds,
+  hasResourceUsageMetrics,
+} from './monitoringHelper';
 
 const mapDispatchToProps = {
   clearMonitoringState,
@@ -28,7 +33,7 @@ const mapStateToProps = (state) => {
   const hasAlerts = hasDataSelector(alerts);
   const hasNodes = hasDataSelector(nodes);
   const hasClusterOperators = hasDataSelector(operators);
-  const hasResourceUsageData = hasCpuAndMemory(cpu, memory);
+  const hasResourceUsageData = hasCpuAndMemory(cpu, memory) && hasResourceUsageMetrics(cluster);
 
   // Calculate the number of issues
   const alertsIssues = hasAlerts ? issuesSelector(alerts.data, 'severity', alertsSeverity.CRITICAL) : null;

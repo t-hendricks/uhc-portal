@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { required } from '../../../../../../../common/validators';
 import { noop } from '../../../../../../../common/helpers';
+import CAUpload from '../CAUpload';
 
 class GithubForm extends React.Component {
   state = {
@@ -37,16 +38,12 @@ class GithubForm extends React.Component {
           helpText="Optional domain to use with a hosted instance of GitHub Enterprise."
         />
         <Field
-          component={ReduxVerticalFormGroup}
+          component={CAUpload}
           name="github_ca"
-          label="CA"
+          label="CA File"
           type="text"
-          placeholder="CA"
-          helpText="PEM encoded certificate bundle to use to validate server certificates for the configured URL."
+          helpText="PEM encoded certificate bundle to use to validate server certificates for the configured GitHub Enterprise URL."
           disabled={isPending}
-          className="ca-textarea"
-          isTextArea
-          spellCheck="false"
           onChange={(e, value) => this.toggleHostnameRequired(e, value)}
         />
 
