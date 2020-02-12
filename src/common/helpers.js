@@ -2,12 +2,6 @@ import isEmpty from 'lodash/isEmpty';
 
 const noop = Function.prototype;
 
-// returns the time delta in hours between two date objects
-function getTimeDelta(t1, t2 = new Date()) {
-  const timeDiff = Math.abs(t2.getTime() - t1.getTime());
-  return Math.ceil(timeDiff / (1000 * 3600));
-}
-
 const isValid = id => id !== null && id !== undefined && id !== false && id !== '';
 
 const toCleanArray = str => (str ? str.split(',').map(item => item.trim()).filter(item => item) : undefined);
@@ -46,7 +40,6 @@ const nestedIsEmpty = obj => (isEmpty(obj) || Object.keys(obj).map(
 
 const helpers = {
   noop,
-  getTimeDelta,
   isValid,
   omitEmptyFields,
   toCleanArray,
@@ -56,7 +49,6 @@ const helpers = {
 
 export {
   noop,
-  getTimeDelta,
   isValid,
   omitEmptyFields,
   toCleanArray,
