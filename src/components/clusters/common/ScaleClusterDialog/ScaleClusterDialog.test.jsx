@@ -37,7 +37,7 @@ describe('<ScaleClusterDialog />', () => {
       persistentStorageValues={fulfilledRequest}
       organization={fulfilledRequest}
       initialValues={{
-        id: 'test-id', nodesCompute: 4, load_balancers: '4', persistent_storage: '107374182400',
+        id: 'test-id', nodes_compute: 4, load_balancers: '4', persistent_storage: '107374182400',
       }}
       min={{ value: 4, validationMsg: 'error' }}
       prestine={false}
