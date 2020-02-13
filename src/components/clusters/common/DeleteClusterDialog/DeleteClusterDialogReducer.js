@@ -13,71 +13,41 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION,
-  setStateProp, baseRequestState,
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../common/errors';
 import { deleteClusterDialogConstants } from './DeleteClusterDialogConstants';
 
 const initialState = {
-  deletedCluster: {
-    ...baseRequestState,
-    cluster: null,
-  },
+  ...baseRequestState,
+  cluster: null,
 };
 
 function deleteClusterDialogReducer(state = initialState, action) {
-  switch (action.type) {
-    case REJECTED_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
-      return setStateProp(
-        'deletedCluster',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
-      return setStateProp(
-        'deletedCluster',
-        {
-          pending: true,
-          cluster: null,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
-      return setStateProp(
-        'deletedCluster',
-        {
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    // eslint-disable-next-line default-case
+    switch (action.type) {
+      case REJECTED_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
+        return {
+          ...initialState,
+          ...getErrorState(action),
+        };
+      case PENDING_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
+        draft.pending = true;
+        break;
+      case FULFILLED_ACTION(deleteClusterDialogConstants.DELETE_CLUSTER):
+        return {
+          ...initialState,
           cluster: action.payload.data,
-          pending: false,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case deleteClusterDialogConstants.CLEAR_DELETE_CLUSTER_RESPONSE:
-      return setStateProp(
-        'deletedCluster',
-        initialState.deletedCluster,
-        {
-          state,
-          initialState,
-        },
-      );
-    default:
-      return state;
-  }
+        };
+      case deleteClusterDialogConstants.CLEAR_DELETE_CLUSTER_RESPONSE:
+        return initialState;
+    }
+  });
 }
 
 deleteClusterDialogReducer.initialState = initialState;
