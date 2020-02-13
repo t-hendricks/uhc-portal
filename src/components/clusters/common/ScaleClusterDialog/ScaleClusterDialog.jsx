@@ -138,7 +138,7 @@ class ScaleClusterDialog extends Component {
               machineType={machineType}
               isDisabled={pending}
               isEditingCluster
-              currentNodeCount={initialValues.nodesCompute || 0}
+              currentNodeCount={initialValues.nodes_compute || 0}
             />
             { !isByoc && (
               <>
@@ -192,7 +192,7 @@ ScaleClusterDialog.propTypes = {
   consoleURL: PropTypes.string,
   initialValues: PropTypes.shape({
     id: PropTypes.string,
-    nodesCompute: PropTypes.number,
+    nodes_compute: PropTypes.number,
     persistent_storage: PropTypes.number,
     load_balancers: PropTypes.number,
   }).isRequired,
