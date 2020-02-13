@@ -133,11 +133,13 @@ class ClusterDetails extends Component {
       getNodes,
       getClusterOperators,
       getClusterAddOns,
+      getOrganizationAndQuota,
     } = this.props;
     const clusterID = match.params.id;
 
     if (isValid(clusterID)) {
       fetchDetails(clusterID);
+      getOrganizationAndQuota();
     }
     if (isValid(clusterID) && !isUuid(clusterID)) {
       getLogs(clusterID);
