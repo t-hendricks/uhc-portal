@@ -43,7 +43,7 @@ class GithubForm extends React.Component {
           label="CA File"
           type="text"
           helpText="PEM encoded certificate bundle to use to validate server certificates for the configured GitHub Enterprise URL."
-          disabled={isPending}
+          isDisabled={isPending}
           onChange={(e, value) => this.toggleHostnameRequired(e, value)}
         />
 
