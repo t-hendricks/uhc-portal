@@ -14,12 +14,12 @@ function NetworkingSection({ pending, toggleNetwork, mode }) {
       <FormGroup
         label="Network configuration"
         isRequired
-        fieldId="network-configuration-toggle"
+        fieldId="network_configuration_toggle"
       >
         <Field
           component={RadioButtons}
           className="network-configuration-radios"
-          name="network-configuration-toggle"
+          name="network_configuration_toggle"
           disabled={pending}
           onChange={toggleNetwork}
           options={[{
