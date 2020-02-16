@@ -34,6 +34,7 @@ import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallAzure from '../clusters/install/InstallAzure';
 import InstallGCP from '../clusters/install/InstallGCP';
 import InstallOSP from '../clusters/install/InstallOSP';
+import InstallRHV from '../clusters/install/InstallRHV';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallPullSecret from '../clusters/install/InstallPullSecret';
@@ -59,6 +60,7 @@ function Router(props) {
           <Route path="/install/aws" component={InstallAWS} />
           <Route path="/install/gcp/installer-provisioned" component={InstallGCP} />
           <Route path="/install/openstack/installer-provisioned" component={InstallOSP} />
+          <Route path="/install/rhv/installer-provisioned" component={InstallRHV} />
           <Route path="/install/azure/installer-provisioned" component={InstallAzure} />
           <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
           <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />

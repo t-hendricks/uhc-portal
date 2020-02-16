@@ -64,6 +64,10 @@ const links = {
   INSTALL_IBMZ_RHCOS_LEARN_MORE: `${DOCS_BASE_4_2}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
   DOWNLOAD_RHCOS_LATEST_IBMZ: 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/4.2/latest/',
 
+  INSTALL_RHV_GETTING_STARTED: 'https://github.com/openshift/installer/blob/master/docs/user/ovirt/install_ipi.md',
+  INSTALL_RHV_INSTALLER_LATEST: MIRROR_CLIENTS_LATEST_44_PRE,
+  INSTALL_RHV_CLI_LATEST: MIRROR_CLIENTS_LATEST_44_PRE,
+
   INSTALL_PRE_RELEASE_BUG_LIST_44: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.4.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
   INSTALL_PRE_RELEASE_INSTALLER_LATEST_44: MIRROR_CLIENTS_LATEST_44_PRE,
