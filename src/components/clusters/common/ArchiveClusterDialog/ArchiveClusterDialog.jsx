@@ -50,7 +50,9 @@ class ArchiveClusterDialog extends Component {
             <p>
               This action will not delete the cluster, only remove it from OpenShift Cluster
               Manager.&nbsp;
-              <a href="https://access.redhat.com/articles/4397891">Instructions</a>
+              <a href="https://access.redhat.com/articles/4397891" target="_blank" rel="noreferrer noopener">
+                Instructions
+              </a>
               &nbsp;for deleting a cluster may be found in the knowledge base.
             </p>
           </Form>
