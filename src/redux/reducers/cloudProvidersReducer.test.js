@@ -2,10 +2,7 @@ import { cloudProvidersReducer } from './cloudProvidersReducer';
 import { GET_CLOUD_PROVIDERS } from '../constants/cloudProviderConstants';
 
 describe('cloudProvidersReducer', () => {
-  const initialState = {
-    cloudProviders: {
-    },
-  };
+  const initialState = {};
   const type = GET_CLOUD_PROVIDERS;
   const payload = {
     data: { this: 'is', some: 'data' },
@@ -28,7 +25,7 @@ describe('cloudProvidersReducer', () => {
       const action = { type: `${type}_PENDING` };
       const result = cloudProvidersReducer(initialState, action);
 
-      expect(result).toHaveProperty('cloudProviders.pending', true);
+      expect(result).toHaveProperty('pending', true);
     });
   });
 
@@ -41,13 +38,11 @@ describe('cloudProvidersReducer', () => {
       };
       const result = cloudProvidersReducer(initialState, action);
 
-      expect(result).toEqual({
-        cloudProviders: expect.objectContaining({
-          error: expect.anything(),
-          errorMessage: 'some error',
-          pending: false,
-        }),
-      });
+      expect(result).toEqual(expect.objectContaining({
+        error: expect.anything(),
+        errorMessage: 'some error',
+        pending: false,
+      }));
     });
   });
 
@@ -57,14 +52,12 @@ describe('cloudProvidersReducer', () => {
       const result = cloudProvidersReducer(initialState, action);
 
       expect(result).toEqual({
-        cloudProviders: {
-          providers: action.payload,
-          errorMessage: '',
-          errorDetails: null,
-          fulfilled: true,
-          pending: false,
-          error: false,
-        },
+        providers: action.payload,
+        errorMessage: '',
+        errorDetails: null,
+        fulfilled: true,
+        pending: false,
+        error: false,
       });
     });
 
@@ -73,11 +66,7 @@ describe('cloudProvidersReducer', () => {
       const state = { cloudProviders: { error: new Error("I'm an error") } };
       const result = cloudProvidersReducer(state, action);
 
-      expect(result).toEqual({
-        cloudProviders: expect.objectContaining({
-          error: false,
-        }),
-      });
+      expect(result).toEqual(expect.objectContaining({ error: false }));
     });
   });
 });

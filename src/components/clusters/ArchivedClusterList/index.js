@@ -24,7 +24,7 @@ const mapStateToProps = state => ({
 
   ...state.clusters.clusters,
   viewOptions: state.viewOptions[viewConstants.ARCHIVED_CLUSTERS_VIEW],
-  cloudProviders: state.cloudProviders.cloudProviders,
+  cloudProviders: state.cloudProviders,
 });
 
 export default connect(

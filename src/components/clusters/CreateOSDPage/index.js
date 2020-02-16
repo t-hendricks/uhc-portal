@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
     organization,
-    cloudProviders: state.cloudProviders.cloudProviders,
+    cloudProviders: state.cloudProviders,
     loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
     persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
