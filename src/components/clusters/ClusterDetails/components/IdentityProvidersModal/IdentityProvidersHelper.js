@@ -85,10 +85,37 @@ const getOauthCallbackURL = (consoleURL, IDPName) => {
  */
 const IDPNeedsOAuthURL = IDPType => IDPType !== IDPformValues.LDAP;
 
-const LDAPDocLink = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers/configuring-ldap-identity-provider.html';
-const GithubDocLink = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers/configuring-github-identity-provider.html';
-const GoogleDocLink = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers/configuring-google-identity-provider.html';
-const OpenIDDocLink = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers/configuring-oidc-identity-provider.html';
+/**
+ * Generate a usable IDP name, based on the IDP Type and already-configured IDPs.
+ * It'll default to the IDP type name, and add numbers if there's already one configured
+ * until it finds an unused name. If you have GitHub, GitHub-1 and GitHub-3,
+ * the function should pick GitHub-2.
+ *
+ * @param {String} IDPType An IDP Type name as defined in IDPTypeNames
+ * @param {Array<Object>} IDPList An array of IDP objects returned from the server
+ */
+const generateIDPName = (IDPType, IDPList) => {
+  const idpNameList = IDPList.map(idp => idp.name);
+  let idpNumber = 0;
+
+  const baseName = IDPTypeNames[IDPType];
+  if (!idpNameList.includes(baseName)) {
+    return baseName;
+  }
+
+  let idpName = `${baseName}-${idpNumber + 1}`;
+  while (idpNameList.includes(idpName)) {
+    idpNumber += 1;
+    idpName = `${baseName}-${idpNumber + 1}`;
+  }
+  return idpName;
+};
+
+const IDPDocBase = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers';
+const LDAPDocLink = `${IDPDocBase}/configuring-ldap-identity-provider.html`;
+const GithubDocLink = `${IDPDocBase}/configuring-github-identity-provider.html`;
+const GoogleDocLink = `${IDPDocBase}/configuring-google-identity-provider.html`;
+const OpenIDDocLink = `${IDPDocBase}/configuring-oidc-identity-provider.html`;
 
 const getCreateIDPRequestData = (formData) => {
   const githubData = {
@@ -170,4 +197,5 @@ export {
   GithubDocLink,
   OpenIDDocLink,
   GoogleDocLink,
+  generateIDPName,
 };

@@ -45,6 +45,7 @@ class IdentityProvidersModal extends React.Component {
   render() {
     const {
       isOpen, handleSubmit, createIDPResponse, clusterName, selectedIDP, selectedMappingMethod,
+      change, IDPList,
       clusterConsoleURL,
     } = this.props;
 
@@ -65,6 +66,8 @@ class IdentityProvidersModal extends React.Component {
         createIDPResponse={createIDPResponse}
         selectedMappingMethod={selectedMappingMethod}
         clusterConsoleURL={clusterConsoleURL}
+        change={change}
+        IDPList={IDPList}
       />
     </Modal>
     );
@@ -84,6 +87,8 @@ IdentityProvidersModal.propTypes = {
   selectedIDP: PropTypes.string,
   selectedMappingMethod: PropTypes.string,
   refreshParent: PropTypes.func,
+  change: PropTypes.func.isRequired,
+  IDPList: PropTypes.array.isRequired,
 };
 
 IdentityProvidersModal.defaultProps = {
