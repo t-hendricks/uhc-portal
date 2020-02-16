@@ -15,6 +15,7 @@ import getClusterName from '../../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import ExpirationAlert from './ExpirationAlert';
 import Breadcrumbs from '../../common/Breadcrumbs';
+import SubscriptionCompliancy from './SubscriptionCompliancy';
 
 function ClusterDetailsTop(props) {
   const {
@@ -154,6 +155,7 @@ function ClusterDetailsTop(props) {
         expirationTimestamp={cluster.expiration_timestamp}
       />
       )}
+      <SubscriptionCompliancy cluster={cluster} />
       {children}
     </div>
   );
