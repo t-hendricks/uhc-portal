@@ -44,6 +44,8 @@ class CAUpload extends React.Component {
       isDisabled,
     } = this.props;
     const { errorMessage, fileName } = this.state;
+    const baseButtonClass = 'pf-c-button pf-m-tertiary co-btn-file';
+    const buttonClass = isDisabled ? `${baseButtonClass} pf-m-disabled` : baseButtonClass;
 
 
     return (
@@ -67,7 +69,7 @@ class CAUpload extends React.Component {
             name={input.name}
             isReadOnly
           />
-          <span className="pf-c-button pf-m-tertiary co-btn-file">
+          <span className={buttonClass}>
             <input
               type="file"
               onChange={this.fileUpload}

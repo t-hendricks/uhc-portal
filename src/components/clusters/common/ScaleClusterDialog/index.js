@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
     machineType: get(modalData, 'nodes.compute_machine_type.id', ''),
     initialValues: {
       id: modalData.id,
-      nodesCompute: modalData.nodes ? modalData.nodes.compute : null,
+      nodes_compute: modalData.nodes ? modalData.nodes.compute : null,
       load_balancers: modalData.load_balancer_quota
         ? modalData.load_balancer_quota : 0,
       persistent_storage: modalData.storage_quota ? modalData.storage_quota.value : 107374182400,

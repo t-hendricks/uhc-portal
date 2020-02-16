@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
-import { ReduxCheckbox, ReduxVerticalFormGroup } from '../../../../../../common/ReduxFormComponents';
+import { ReduxCheckbox } from '../../../../../../common/ReduxFormComponents';
+import CAUpload from '../CAUpload';
 
 class LDAPForm extends React.Component {
   state = this.getInitialState();
@@ -29,15 +30,11 @@ class LDAPForm extends React.Component {
     return (
       <>
         <Field
-          component={ReduxVerticalFormGroup}
+          component={CAUpload}
           name="ldap_ca"
-          label="CA"
-          type="text"
+          label="CA File"
           helpText={`PEM encoded certificate bundle to use to validate server certificates for the configured URL. ${caDisabledHelpText}`}
-          disabled={isInsecure || isPending}
-          className="ca-textarea"
-          isTextArea
-          spellCheck="false"
+          isDisabled={isInsecure || isPending}
         />
         <Field
           component={ReduxCheckbox}

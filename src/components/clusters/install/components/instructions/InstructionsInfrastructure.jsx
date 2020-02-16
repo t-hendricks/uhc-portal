@@ -10,6 +10,7 @@ import GCPLogo from '../../../../../styles/images/google-cloud-logo.svg';
 import vSphereLogo from '../../../../../styles/images/vmware_vsphere.png';
 import CRCLogo from '../../../../../styles/images/laptop.svg';
 import OSPLogo from '../../../../../styles/images/Logo-Red_Hat-OpenStack_Platform-A-Standard-RGB.svg';
+import RHVLogo from '../../../../../styles/images/Logo-Red_Hat-Virtualization-A-Standard-RGB.png';
 import IBMZLogo from '../../../../../styles/images/ibmz-logo.svg';
 import CardBadge from '../CardBadge';
 
@@ -57,6 +58,24 @@ const InstructionsInfrastructure = () => (
           </Link>
         </GalleryItem>
         <GalleryItem>
+          <Link to="/install/openstack/installer-provisioned" className="infra-card infra-card-cloud-provider">
+            <CardBadge isHidden />
+            <CardBody>
+              <img src={OSPLogo} alt="OpenStack" className="infra-logo-osp" />
+              <Title headingLevel="h5" size="lg">Run on Red Hat OpenStack</Title>
+            </CardBody>
+          </Link>
+        </GalleryItem>
+        <GalleryItem>
+          <Link to="/install/rhv/installer-provisioned" className="infra-card infra-card-cloud-provider">
+            <CardBadge isDevPreview />
+            <CardBody>
+              <img src={RHVLogo} alt="Red Hat Virtualization" className="infra-logo-rhv" />
+              <Title headingLevel="h5" size="lg">Run on Red Hat Virtualization</Title>
+            </CardBody>
+          </Link>
+        </GalleryItem>
+        <GalleryItem>
           <Link to="/install/metal/user-provisioned" className="infra-card infra-card-cloud-provider">
             <CardBadge isHidden />
             <CardBody>
@@ -71,15 +90,6 @@ const InstructionsInfrastructure = () => (
             <CardBody>
               <img src={IBMZLogo} alt="IBM" className="infra-logo-ibm" />
               <Title headingLevel="h5" size="lg">Run on IBM Z</Title>
-            </CardBody>
-          </Link>
-        </GalleryItem>
-        <GalleryItem>
-          <Link to="/install/openstack/installer-provisioned" className="infra-card infra-card-cloud-provider">
-            <CardBadge isHidden />
-            <CardBody>
-              <img src={OSPLogo} alt="OpenStack" className="infra-logo-osp" />
-              <Title headingLevel="h5" size="lg">Run on Red Hat OpenStack</Title>
             </CardBody>
           </Link>
         </GalleryItem>
