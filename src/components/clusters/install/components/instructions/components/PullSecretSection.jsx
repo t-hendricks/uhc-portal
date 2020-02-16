@@ -42,7 +42,7 @@ class PullSecretSection extends React.Component {
                 id="copyPullSecret"
                 className="install--copy-pull-secret"
                 type="button"
-                tabIndex="0"
+                tabIndex={0}
                 isDisabled={isDisabled}
               >
                 <PasteIcon color="#0066cc" size="sm" />

@@ -1,6 +1,6 @@
 const MIRROR_CLIENTS_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/';
-const MIRROR_CLIENTS_LATEST_43_PRE = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest-4.3/';
+const MIRROR_CLIENTS_LATEST_44_PRE = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest-4.4/';
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const DOCS_BASE_4_2 = ' https://docs.openshift.com/container-platform/4.2';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
@@ -64,11 +64,11 @@ const links = {
   INSTALL_IBMZ_RHCOS_LEARN_MORE: `${DOCS_BASE_4_2}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
   DOWNLOAD_RHCOS_LATEST_IBMZ: 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/4.2/latest/',
 
-  INSTALL_PRE_RELEASE_BUG_LIST_43: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-3-blocker&query_format=advanced&target_release=4.3.0',
+  INSTALL_PRE_RELEASE_BUG_LIST_44: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.4.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
-  INSTALL_PRE_RELEASE_INSTALLER_LATEST_43: MIRROR_CLIENTS_LATEST_43_PRE,
-  INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_43: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/pre-release/latest',
-  INSTALL_PRE_RELEASE_CLI_LATEST_43: MIRROR_CLIENTS_LATEST_43_PRE,
+  INSTALL_PRE_RELEASE_INSTALLER_LATEST_44: MIRROR_CLIENTS_LATEST_44_PRE,
+  INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_44: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/pre-release/latest',
+  INSTALL_PRE_RELEASE_CLI_LATEST_44: MIRROR_CLIENTS_LATEST_44_PRE,
   INSTALL_PRE_RELEASE_FEEDBACK_MAILTO: 'mailto:***REMOVED***?subject=[dev preview build]',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/articles/4307871',
 };
