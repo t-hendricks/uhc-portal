@@ -13,7 +13,7 @@ function InstructionsRHV({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on Red Hat Virtualization Platform with installer-provisioned infrastructure
+        Install on Red Hat Virtualization with installer-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
