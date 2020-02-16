@@ -202,7 +202,7 @@ class ClusterList extends Component {
                 </div>
                 <ClusterListFilterDropdown isDisabled={isPendingNoData} className="toolbar-item" history={history} />
                 <Link to="/create">
-                  <Button className="toolbar-item">Create Cluster</Button>
+                  <Button className="toolbar-item">Create cluster</Button>
                 </Link>
                 <ClusterListExtraActions className="toolbar-item" />
                 { (pending && !isPendingNoData) && (

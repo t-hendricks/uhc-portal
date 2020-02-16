@@ -90,7 +90,7 @@ function ClusterDetailsTop(props) {
     <Breadcrumbs path={
         [
           { label: 'Clusters' },
-          isArchived && { label: 'Archived Clusters', path: '/archived' },
+          isArchived && { label: 'Archived clusters', path: '/archived' },
           { label: clusterName },
         ].filter(Boolean)
       }
