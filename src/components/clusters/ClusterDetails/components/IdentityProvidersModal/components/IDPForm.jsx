@@ -31,12 +31,42 @@ import {
   GoogleDocLink,
   getOauthCallbackURL,
   IDPNeedsOAuthURL,
+  generateIDPName,
 } from '../IdentityProvidersHelper';
 
 class IDPForm extends React.Component {
   state = {
     IDPName: '',
   };
+
+  componentDidMount() {
+    const { selectedIDP, change, IDPList } = this.props;
+    const generatedName = generateIDPName(selectedIDP, IDPList);
+    change('name', generatedName);
+    this.setState({ IDPName: generatedName });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { selectedIDP, change, IDPList } = this.props;
+    const { IDPName } = this.state;
+    if (selectedIDP !== prevProps.selectedIDP) {
+      const generatedName = generateIDPName(selectedIDP, IDPList);
+      if (generatedName !== IDPName) {
+        change('name', generatedName);
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({ IDPName: generatedName });
+      }
+    }
+  }
+
+  checkDuplicateName = (IDPName) => {
+    const { IDPList } = this.props;
+    const idpNameList = IDPList.map(idp => idp.name);
+    if (idpNameList.includes(IDPName)) {
+      return `The name "${IDPName}" is already taken. Identity provider names must not be duplicate.`;
+    }
+    return undefined;
+  }
 
   render() {
     const {
@@ -100,7 +130,7 @@ class IDPForm extends React.Component {
               label="Name"
               type="text"
               placeholder="name"
-              validate={checkIdentityProviderName}
+              validate={[checkIdentityProviderName, this.checkDuplicateName]}
               isRequired
               disabled={isPending}
               onChange={(_, value) => this.setState({ IDPName: value })}
@@ -148,6 +178,8 @@ IDPForm.propTypes = {
   createIDPResponse: PropTypes.object,
   selectedIDP: PropTypes.string,
   selectedMappingMethod: PropTypes.string,
+  change: PropTypes.func.isRequired,
+  IDPList: PropTypes.array.isRequired,
 };
 
 IDPForm.defaultProps = {

@@ -6,7 +6,7 @@ import { createClusterIdentityProvider, resetCreatedClusterIDPResponse, getClust
 import { closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
-import { getCreateIDPRequestData } from './IdentityProvidersHelper';
+import { getCreateIDPRequestData, generateIDPName, IDPformValues } from './IdentityProvidersHelper';
 
 const reduxFormConfig = {
   form: 'CreateIdentityProvider',
@@ -15,18 +15,22 @@ const reduxFormCreateClusterIDP = reduxForm(reduxFormConfig)(IdentityProvidersMo
 
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateIdentityProvider');
+  const IDPList = state.identityProviders.clusterIdentityProviders.clusterIDPList || [];
+  const defaultIDP = IDPformValues.GITHUB;
 
   return ({
     isOpen: shouldShowModal(state, 'create-identity-provider'),
     createIDPResponse: state.identityProviders.createdClusterIDP,
     initialValues: {
-      type: 'GithubIdentityProvider',
+      type: defaultIDP,
+      name: generateIDPName(defaultIDP, IDPList),
       client_id: '',
       client_secret: '',
       mappingMethod: 'claim',
     },
-    selectedIDP: valueSelector(state, 'type') || 'GithubIdentityProvider',
+    selectedIDP: valueSelector(state, 'type') || defaultIDP,
     selectedMappingMethod: valueSelector(state, 'mappingMethod'),
+    IDPList,
   });
 };
 
