@@ -15,7 +15,7 @@ function GoogleForm({ isPending, isRequired }) {
         name="hosted_domain"
         label="Hosted Domain"
         type="text"
-        placeholder="Hosted Domain"
+        helpText="Restrict users to a Google Apps domain"
         disabled={isPending}
         isRequired={isRequired}
         validate={isRequired ? required : null}

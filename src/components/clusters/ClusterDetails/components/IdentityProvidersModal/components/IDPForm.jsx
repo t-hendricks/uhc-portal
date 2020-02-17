@@ -144,6 +144,13 @@ class IDPForm extends React.Component {
                 </ClipboardCopy>
               </div>
             )}
+            <Field
+              component={ReduxFormDropdown}
+              options={mappingMethods}
+              name="mappingMethod"
+              label="Mapping Method"
+              helpText="Specifies how new identities are mapped to users when they log in. Claim is recommended in most cases."
+            />
             {SelectedProivderRequiredFields
         && (
           <SelectedProivderRequiredFields
@@ -153,19 +160,12 @@ class IDPForm extends React.Component {
             && !(selectedMappingMethod === mappingMethodsformValues.LOOKUP)}
           />
         )}
-            <Expandable toggleTextCollapsed="Show Advanced Options" toggleTextExpanded="Hide Advanced Options">
-              {SelectedProviderAdvancedOptions
+            {SelectedProviderAdvancedOptions
           && (
-            <SelectedProviderAdvancedOptions isPending={isPending} />
-          )}
-              <Field
-                component={ReduxFormDropdown}
-                options={mappingMethods}
-                name="mappingMethod"
-                label="Mapping Method"
-                helpText="Specifies how new identities are mapped to users when the log in. Claim is recommended in most cases."
-              />
+            <Expandable toggleTextCollapsed="Show Advanced Options" toggleTextExpanded="Hide Advanced Options">
+              <SelectedProviderAdvancedOptions isPending={isPending} />
             </Expandable>
+          )}
           </Form>
         </GridItem>
       </Grid>
