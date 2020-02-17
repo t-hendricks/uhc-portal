@@ -6,16 +6,16 @@ import {
   PageSection, Title,
 } from '@patternfly/react-core';
 
-import Breadcrumbs from '../common/Breadcrumbs';
-import PageTitle from '../../common/PageTitle';
 import { Link } from 'react-router-dom';
 import CardBadge from '../common/CardBadge/CardBadge';
+import Breadcrumbs from '../common/Breadcrumbs';
+import PageTitle from '../../common/PageTitle';
 import AWSLogo from '../../../styles/images/AWS.png';
 import GCPLogo from '../../../styles/images/google-cloud-logo.svg';
 
 class CloudProviderSelection extends Component {
   componentDidMount() {
-    document.title = 'Create an OpenShift Cluster | Red Hat OpenShift Cluster Manager | Infrastructure Provider';
+    document.title = 'Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager | Choose your cloud provider';
   }
 
   render() {
@@ -35,7 +35,7 @@ class CloudProviderSelection extends Component {
           <Card>
             <div className="pf-c-content ocm-page">
               <Title headingLevel="h3" size="2xl">
-                Select an infrastructure provider
+                Choose your cloud provider
               </Title>
               <Gallery gutter="md" className="ocp-infra-gallery">
                 <GalleryItem>

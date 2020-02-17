@@ -83,8 +83,8 @@ function Router(props) {
           <Route path="/install/pull-secret" component={InstallPullSecret} />
           <Route path="/install" component={InstallInfrastructure} />
           <Route path="/details/:id" component={ClusterDetails} />
-          <Route path="/create/osd/aws" render={ () => <CreateOSDPage cloudProviderID='aws'/>} />
-          <Route path="/create/osd/gcp" render={ () => <CreateOSDPage cloudProviderID='gcp'/>}  />
+          <Route path="/create/osd/aws" render={() => <CreateOSDPage cloudProviderID="aws" />} />
+          <Route path="/create/osd/gcp" render={() => <CreateOSDPage cloudProviderID="gcp" />} />
           <Route path="/create/osd" component={CloudProviderSelection} />
           <Route path="/create" component={CreateClusterPage} />
           <Route path="/register" component={RegisterCluster} />

@@ -164,7 +164,7 @@ class CreateOSDPage extends React.Component {
             { label: 'Clusters' },
             { label: 'Create', path: '/create' },
             { label: 'OpenShift Dedicated', path: '/create/osd' },
-            { label: cloudProviderID === 'aws'? 'Amazon Web Services': 'Google Cloud Platform' },
+            { label: cloudProviderID === 'aws' ? 'Amazon Web Services' : 'Google Cloud Platform' },
           ]}
           />
         )}
