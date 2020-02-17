@@ -75,7 +75,7 @@ class CreateOSDForm extends React.Component {
 
     const isBYOCForm = hasBYOCQuota && (!hasStandardQuota || byocSelected);
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
-    const isAws = cloudProviderID === 'aws'
+    const isAws = cloudProviderID === 'aws';
 
     return (
       <>
@@ -96,7 +96,9 @@ class CreateOSDForm extends React.Component {
         )}
 
         {/* BYOC modal */}
-        {isAws && isBYOCModalOpen && <CustomerCloudSubscriptionModal closeModal={this.closeBYOCModal} />}
+        {isAws && isBYOCModalOpen && (
+          <CustomerCloudSubscriptionModal closeModal={this.closeBYOCModal} />
+        )}
 
         {/* AWS account details */}
         { isAws && isBYOCForm && (
@@ -145,7 +147,7 @@ class CreateOSDForm extends React.Component {
           <>
             <GridItem span={12} />
             <GridItem span={4}>
-            <h3>Networking</h3>
+              <h3>Networking</h3>
             </GridItem>
             <NetworkingSection mode={mode} toggleNetwork={this.toggleNetwork} />
           </>
