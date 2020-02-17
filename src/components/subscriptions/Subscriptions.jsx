@@ -49,7 +49,6 @@ class Subscriptions extends Component {
 
   render() {
     const { account } = this.props;
-
     let content;
     if (account.fulfilled && account.data.organization && account.data.organization.id) {
       const organizationID = account.data.organization.id;
@@ -65,8 +64,12 @@ class Subscriptions extends Component {
         </>
       );
     } else {
-      account.type = 'account';
-      content = <SubscriptionNotFulfilled data={account} refresh={this.refresh} />;
+      const data = {
+        error: account.error,
+        pending: account.pending,
+        type: 'account',
+      };
+      content = <SubscriptionNotFulfilled data={data} refresh={this.refresh} />;
     }
 
     return content;

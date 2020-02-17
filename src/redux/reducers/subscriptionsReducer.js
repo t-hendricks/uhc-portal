@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, INVALIDATE_ACTION,
-  setStateProp, baseRequestState,
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, INVALIDATE_ACTION, baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
@@ -40,173 +40,88 @@ const initialState = {
 };
 
 function subscriptionsReducer(state = initialState, action) {
-  switch (action.type) {
-    // GET_ACCOUNT
-    case INVALIDATE_ACTION(subscriptionsConstants.GET_ACCOUNT):
-      return setStateProp(
-        'account',
-        {
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    // eslint-disable-next-line default-case
+    switch (action.type) {
+      // GET_ACCOUNT
+      case INVALIDATE_ACTION(subscriptionsConstants.GET_ACCOUNT):
+        draft.account = {
+          ...initialState.account,
           valid: false,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case REJECTED_ACTION(subscriptionsConstants.GET_ACCOUNT):
-      return setStateProp(
-        'account',
-        {
+        };
+        break;
+      case REJECTED_ACTION(subscriptionsConstants.GET_ACCOUNT):
+        draft.account = {
+          ...initialState.account,
           ...getErrorState(action),
           valid: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(subscriptionsConstants.GET_ACCOUNT):
-      return setStateProp(
-        'account',
-        {
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(subscriptionsConstants.GET_ACCOUNT):
-      return setStateProp(
-        'account',
-        {
-          data: action.payload.data,
-          pending: false,
+        };
+        break;
+      case PENDING_ACTION(subscriptionsConstants.GET_ACCOUNT):
+        draft.account.pending = true;
+        break;
+      case FULFILLED_ACTION(subscriptionsConstants.GET_ACCOUNT):
+        draft.account = {
+          ...initialState.account,
           fulfilled: true,
           valid: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    // GET_SUBSCRIPTIONS
-    case INVALIDATE_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
-      return setStateProp(
-        'subscriptions',
-        {
+          data: action.payload.data,
+        };
+        break;
+      // GET_SUBSCRIPTIONS
+      case INVALIDATE_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
+        draft.subscriptions = {
+          ...initialState.subscriptions,
           valid: false,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case REJECTED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
-      return setStateProp(
-        'subscriptions',
-        {
+        };
+        break;
+      case REJECTED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
+        draft.subscriptions = {
+          ...initialState.subscriptions,
           ...getErrorState(action),
           valid: true,
           items: state.subscriptions.items,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
-      return setStateProp(
-        'subscriptions',
-        {
-          pending: true,
-          items: state.subscriptions.items,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
-      return setStateProp(
-        'subscriptions',
-        {
-          items: action.payload.data.items,
-          pending: false,
+        };
+        break;
+      case PENDING_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
+        draft.subscriptions.pending = true;
+        break;
+      case FULFILLED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
+        draft.subscriptions = {
+          ...initialState.subscriptions,
           fulfilled: action.payload.data.items && action.payload.data.items.length > 0,
           valid: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    // GET_QUOTA_SUMMARY
-    case INVALIDATE_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-      return setStateProp(
-        'quotaSummary',
-        {
+          items: action.payload.data.items,
+        };
+        break;
+      // GET_QUOTA_SUMMARY
+      case INVALIDATE_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
+        draft.quotaSummary = {
+          ...initialState.quotaSummary,
           valid: false,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case REJECTED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-      return setStateProp(
-        'quotaSummary',
-        {
+        };
+        break;
+      case REJECTED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
+        draft.quotaSummary = {
+          ...initialState.quotaSummary,
           ...getErrorState(action),
           valid: true,
           items: state.quotaSummary.items,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-      return setStateProp(
-        'quotaSummary',
-        {
-          pending: true,
-          items: state.quotaSummary.items,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-      return setStateProp(
-        'quotaSummary',
-        {
-          items: action.payload.data.items,
-          pending: false,
+        };
+        break;
+      case PENDING_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
+        draft.quotaSummary.pending = true;
+        break;
+      case FULFILLED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
+        draft.quotaSummary = {
+          ...initialState.quotaSummary,
           fulfilled: action.payload.data.items && action.payload.data.items.length > 0,
           valid: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    default:
-      return state;
-  }
+          items: action.payload.data.items,
+        };
+    }
+  });
 }
 
 subscriptionsReducer.initialState = initialState;

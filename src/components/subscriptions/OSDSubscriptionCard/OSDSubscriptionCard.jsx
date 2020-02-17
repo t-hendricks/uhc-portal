@@ -49,7 +49,6 @@ class OSDSubscriptionCard extends Component {
 
   render() {
     const { quotaSummary } = this.props;
-
     let content;
     if (quotaSummary.fulfilled) {
       const rows = quotaSummary.items.map(quotaItem => [
@@ -68,9 +67,13 @@ class OSDSubscriptionCard extends Component {
         </>
       );
     } else {
-      quotaSummary.type = 'osd';
-      quotaSummary.empty = true;
-      content = <SubscriptionNotFulfilled data={quotaSummary} refresh={this.refresh} />;
+      const data = {
+        error: quotaSummary.error,
+        pending: quotaSummary.pending,
+        type: 'osd',
+        empty: true,
+      };
+      content = <SubscriptionNotFulfilled data={data} refresh={this.refresh} />;
     }
 
     return (
