@@ -75,26 +75,31 @@ class CreateOSDForm extends React.Component {
 
     const isBYOCForm = hasBYOCQuota && (!hasStandardQuota || byocSelected);
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
+    const isAws = cloudProviderID === 'aws'
 
     return (
       <>
         {/* Billing Model */}
-        <GridItem span={12}>
-          <h3 className="osd-page-header">Billing Model</h3>
-        </GridItem>
-        <BillingModelSection
-          openModal={openModal}
-          toggleBYOCFields={this.toggleBYOCFields}
-          hasBYOCquota={hasBYOCQuota}
-          hasStandardQuota={hasStandardQuota}
-          byocSelected={isBYOCForm}
-        />
+        {isAws && (
+          <>
+            <GridItem span={12}>
+              <h3 className="osd-page-header">Billing Model</h3>
+            </GridItem>
+            <BillingModelSection
+              openModal={openModal}
+              toggleBYOCFields={this.toggleBYOCFields}
+              hasBYOCquota={hasBYOCQuota}
+              hasStandardQuota={hasStandardQuota}
+              byocSelected={isBYOCForm}
+            />
+          </>
+        )}
 
         {/* BYOC modal */}
-        {isBYOCModalOpen && <CustomerCloudSubscriptionModal closeModal={this.closeBYOCModal} />}
+        {isAws && isBYOCModalOpen && <CustomerCloudSubscriptionModal closeModal={this.closeBYOCModal} />}
 
         {/* AWS account details */}
-        { isBYOCForm && (
+        { isAws && isBYOCForm && (
           <>
             <GridItem span={12}>
               <h3 className="osd-page-header">AWS account details</h3>
@@ -136,11 +141,15 @@ class CreateOSDForm extends React.Component {
         />
 
         {/* Networking section */}
-        <GridItem span={12} />
-        <GridItem span={4}>
-          <h3>Networking</h3>
-        </GridItem>
-        <NetworkingSection mode={mode} toggleNetwork={this.toggleNetwork} />
+        { isAws && (
+          <>
+            <GridItem span={12} />
+            <GridItem span={4}>
+            <h3>Networking</h3>
+            </GridItem>
+            <NetworkingSection mode={mode} toggleNetwork={this.toggleNetwork} />
+          </>
+        )}
       </>
     );
   }
