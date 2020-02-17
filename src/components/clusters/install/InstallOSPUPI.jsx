@@ -7,7 +7,7 @@ import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsOSPUPI from './components/instructions/InstructionsOSPUPI';
+import InstructionsOSPUPI from '../common/CardBadge/instructions/InstructionsOSPUPI';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallOSPUPI extends Component {

@@ -7,7 +7,7 @@ import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../common/Breadcrumbs';
 
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsVSphere from './components/instructions/InstructionsVSphere';
+import InstructionsVSphere from '../common/CardBadge/instructions/InstructionsVSphere';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallVSphere extends Component {

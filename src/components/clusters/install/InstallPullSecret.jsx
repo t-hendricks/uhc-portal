@@ -6,7 +6,7 @@ import { PageSection } from '@patternfly/react-core';
 import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsPullSecret from './components/instructions/InstructionsPullSecret';
+import InstructionsPullSecret from '../common/CardBadge/instructions/InstructionsPullSecret';
 
 import { scrollToTop } from '../../../common/helpers';
 

@@ -7,7 +7,7 @@ import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsCRC from './components/instructions/InstructionsCRC';
+import InstructionsCRC from '../common/CardBadge/instructions/InstructionsCRC';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallCRC extends Component {

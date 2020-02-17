@@ -4,7 +4,7 @@ import { PageSection } from '@patternfly/react-core';
 import PageTitle from '../../common/PageTitle';
 
 import Breadcrumbs from '../common/Breadcrumbs';
-import InstructionsAWS from './components/instructions/InstructionsAWS';
+import InstructionsAWS from '../common/CardBadge/instructions/InstructionsAWS';
 
 import { scrollToTop } from '../../../common/helpers';
 

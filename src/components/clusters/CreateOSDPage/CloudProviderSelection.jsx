@@ -9,7 +9,7 @@ import {
 import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 import { Link } from 'react-router-dom';
-import CardBadge from '../install/components/CardBadge';
+import CardBadge from '../common/CardBadge/CardBadge';
 import AWSLogo from '../../../styles/images/AWS.png';
 import GCPLogo from '../../../styles/images/google-cloud-logo.svg';
 

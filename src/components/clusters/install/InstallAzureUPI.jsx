@@ -8,7 +8,7 @@ import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../common/Breadcrumbs';
 
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsAzureUPI from './components/instructions/InstructionsAzureUPI';
+import InstructionsAzureUPI from '../common/CardBadge/instructions/InstructionsAzureUPI';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallAzureUPI extends Component {
