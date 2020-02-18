@@ -4,11 +4,13 @@ import {
   FormSelect,
   FormSelectOption,
   FormGroup,
+  Tooltip,
 } from '@patternfly/react-core';
 import get from 'lodash/get';
 import range from 'lodash/range';
 
 import PopoverHint from '../../../common/PopoverHint';
+import { noQuotaTooltip } from '../../../../common/helpers';
 
 class NodeCountInput extends React.Component {
   componentDidUpdate() {
@@ -50,6 +52,8 @@ class NodeCountInput extends React.Component {
     const options = optionsAvailable
       ? range(minimum, maxValue + 1, increment)
       : [minimum];
+    const notEnoughQuota = options.length <= 1;
+    const disabled = isDisabled || notEnoughQuota;
 
     // Set up options for load balancers
     const option = value => (
@@ -62,6 +66,17 @@ class NodeCountInput extends React.Component {
         label={isMultiAz ? (value / 3).toString() : value.toString()}
       />
     );
+
+    const formSelect = (
+      <FormSelect
+        aria-label="Compute nodes"
+        isDisabled={disabled}
+        {...input}
+      >
+        {options.map(value => option(value))}
+      </FormSelect>
+    );
+
     return (
       <FormGroup
         fieldId={input.name}
@@ -72,24 +87,26 @@ class NodeCountInput extends React.Component {
         { extendedHelpText && (
         <PopoverHint hint={extendedHelpText} />
         )}
-        <div>
-          <FormSelect
-            aria-label="Compute nodes"
-            isDisabled={isDisabled || options.length <= 1}
-            {...input}
+        {notEnoughQuota && (
+          <Tooltip
+            content={noQuotaTooltip}
+            position="right"
           >
-            {options.map(value => option(value))}
-          </FormSelect>
-          { isMultiAz && (
-          <span>
-          × 3 zones =
-            {' '}
-            {input.value}
-            {' '}
-          compute nodes
-          </span>
-          )}
-        </div>
+            <div>
+              {formSelect}
+            </div>
+          </Tooltip>
+        )}
+        {!notEnoughQuota && (formSelect)}
+        { isMultiAz && (
+        <span>
+        × 3 zones =
+          {' '}
+          {input.value}
+          {' '}
+        compute nodes
+        </span>
+        )}
       </FormGroup>
     );
   }
