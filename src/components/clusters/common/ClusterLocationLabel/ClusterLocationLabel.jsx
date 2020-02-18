@@ -87,7 +87,7 @@ ClusterLocationLabel.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  cloudProviders: state.cloudProviders.cloudProviders,
+  cloudProviders: state.cloudProviders,
 });
 
 const mapDispatchToProps = {

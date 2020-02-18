@@ -25,7 +25,7 @@ const mapStateToProps = state => ({
 
   ...state.clusters.clusters,
   viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
-  cloudProviders: state.cloudProviders.cloudProviders,
+  cloudProviders: state.cloudProviders,
   organization: state.userProfile.organization,
 });
 
