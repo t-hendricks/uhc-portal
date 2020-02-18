@@ -44,6 +44,12 @@ class CreateOSDForm extends React.Component {
   };
 
   toggleNetwork = (_, value) => {
+    const { change } = this.props;
+    if (value === 'basic') {
+      change('network_machine_cidr', '');
+      change('network_service_cidr', '');
+      change('network_pod_cidr', '');
+    }
     this.setState({ mode: value });
   };
 

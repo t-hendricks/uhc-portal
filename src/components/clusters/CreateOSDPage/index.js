@@ -73,14 +73,15 @@ const mapDispatchToProps = dispatch => ({
         },
       },
       multi_az: formData.multi_az === 'true',
-      network: {
+      managed: true,
+    };
+    if (formData.network_configuration_toggle === 'advanced') {
+      clusterRequest.network = {
         machine_cidr: formData.network_machine_cidr,
         service_cidr: formData.network_service_cidr,
         pod_cidr: formData.network_pod_cidr,
-      },
-      managed: true,
-    };
-
+      };
+    }
     if (formData.byoc === 'true') {
       clusterRequest.aws = {
         access_key_id: formData.access_key_id,
