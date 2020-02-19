@@ -49,12 +49,15 @@ exports[`<AddOns /> should render 1`] = `
         Red Hat OpenShift Service Mesh
       </Title>
       <CardActions>
-        <OutlinedCheckCircleIcon
-          color="#92d400"
+        <InProgressIcon
+          color="currentColor"
           noVerticalAlign={false}
           size="md"
           title={null}
         />
+        <span>
+          Installing
+        </span>
       </CardActions>
     </CardHead>
     <CardBody

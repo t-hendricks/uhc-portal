@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import has from 'lodash/has';
 
-import { IntegrationIcon, OutlinedCheckCircleIcon } from '@patternfly/react-icons';
+import {
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  IntegrationIcon,
+  InProgressIcon,
+  UnknownIcon,
+} from '@patternfly/react-icons';
 import {
   Card,
   CardHead,
@@ -16,11 +22,12 @@ import {
   EmptyStateIcon,
 } from '@patternfly/react-core';
 // eslint-disable-next-line camelcase
-import { global_success_color_100 } from '@patternfly/react-tokens';
+import { global_success_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import clusterStates from '../../../common/clusterStates';
 import ErrorBox from '../../../../common/ErrorBox';
+import AddOnsConstants from './AddOnsConstants';
 
 class AddOns extends React.Component {
   componentDidMount() {
@@ -54,6 +61,52 @@ class AddOns extends React.Component {
   componentWillUnmount() {
     const { clearClusterAddOnsResponses } = this.props;
     clearClusterAddOnsResponses();
+  }
+
+  getInstallState(addOn) {
+    const { clusterAddOns } = this.props;
+
+    const installedAddOn = clusterAddOns.items.find(item => item.addon.id === addOn.id);
+    if (!installedAddOn) {
+      return '';
+    }
+
+    let icon = '';
+    let state = '';
+
+    switch (installedAddOn.state) {
+      case AddOnsConstants.INSTALLATION_STATE.PENDING:
+      case AddOnsConstants.INSTALLATION_STATE.INSTALLING:
+      case undefined:
+        // undefined state implies that the user just started
+        // the installation and there is no state available yet
+        icon = <InProgressIcon size="md" />;
+        state = 'Installing';
+        break;
+      case AddOnsConstants.INSTALLATION_STATE.DELETING:
+        icon = <InProgressIcon size="md" />;
+        state = 'Deleting';
+        break;
+      case AddOnsConstants.INSTALLATION_STATE.FAILED:
+        icon = <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />;
+        state = 'Install failed';
+        break;
+      case AddOnsConstants.INSTALLATION_STATE.READY:
+        icon = <CheckCircleIcon color={global_success_color_100.value} size="md" />;
+        state = 'Installed';
+        break;
+      default:
+        icon = <UnknownIcon size="md" />;
+        state = 'Unknown';
+        break;
+    }
+
+    return (
+      <>
+        { icon }
+        <span>{ state }</span>
+      </>
+    );
   }
 
   // An add-on is only visible if it has an entry in the quota summary
@@ -156,9 +209,7 @@ class AddOns extends React.Component {
             <CardHead>
               <Title headingLevel="h2" size="2xl">{addOn.name}</Title>
               <CardActions>
-                { (this.isInstalled(addOn) && (
-                <OutlinedCheckCircleIcon color={global_success_color_100.value} size="md" />
-                )) || (
+                { (this.isInstalled(addOn) && this.getInstallState(addOn)) || (
                 <Button
                   variant="secondary"
                   aria-label="Install"
