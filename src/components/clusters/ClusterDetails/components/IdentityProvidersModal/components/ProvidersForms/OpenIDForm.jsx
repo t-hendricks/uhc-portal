@@ -20,7 +20,7 @@ function OpenIDForm({ isPending }) {
         name="openid_extra_scopes"
         label="Additional Scopes"
         type="text"
-        placeholder="comma separated, example: scope1, scope2"
+        placeholder="e.g. scope1, scope2"
         disabled={isPending}
       />
     </>

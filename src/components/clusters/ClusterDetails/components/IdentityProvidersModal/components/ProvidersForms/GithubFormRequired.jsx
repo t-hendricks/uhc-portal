@@ -38,7 +38,7 @@ class GithubFormRequired extends React.Component {
             label="Organizations"
             type="text"
             isRequired={!orgsDisabled}
-            placeholder="comma separated, example: org1,org2,org3"
+            placeholder="e.g. org1,org2,org3"
             disabled={orgsDisabled || isPending}
             helpText={orgsDisabled ? 'Cannot be used in combination with the teams field' : ''}
             onChange={(e, value) => this.toggleDisable(e, value, 'teamsDisabled')}
@@ -50,7 +50,7 @@ class GithubFormRequired extends React.Component {
             label="Teams"
             type="text"
             isRequired={!teamsDisabled}
-            placeholder="comma separated, example: org1/team1,org2/team2"
+            placeholder="e.g. org1/team1,org2/team2"
             disabled={teamsDisabled || isPending}
             helpText={teamsDisabled ? 'Cannot be used in combination with the organizations field' : ''}
             onChange={(e, value) => this.toggleDisable(e, value, 'orgsDisabled')}
