@@ -45,6 +45,7 @@ describe('CreateOSDCluster', () => {
       machineTypes={fulfilledRequest}
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
+      cloudProviderID="aws"
       quota={{
         byoc: {
           multiAz: false,
@@ -108,6 +109,7 @@ describe('CreateOSDCluster', () => {
         machineTypes={initialRequestStatus}
         persistentStorageValues={initialRequestStatus}
         loadBalancerValues={initialRequestStatus}
+        cloudProviderID="aws"
         quota={{
           byoc: {
             multiAz: false,

@@ -16,6 +16,10 @@ exports[`CreateOSDCluster ManagedClusterForm should fetch cloud providers, machi
             },
             Object {
               "label": "OpenShift Dedicated",
+              "path": "/create/osd",
+            },
+            Object {
+              "label": "Amazon Web Services",
             },
           ]
         }
@@ -47,6 +51,10 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             },
             Object {
               "label": "OpenShift Dedicated",
+              "path": "/create/osd",
+            },
+            Object {
+              "label": "Amazon Web Services",
             },
           ]
         }
@@ -66,6 +74,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             gutter="sm"
           >
             <CreateOSDForm
+              cloudProviderID="aws"
               isBYOCModalOpen={false}
               pending={false}
               quota={
