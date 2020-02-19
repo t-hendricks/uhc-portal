@@ -17,7 +17,7 @@ import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
-  const { cloudProviders } = state.cloudProviders;
+  const { cloudProviders } = state;
   const { logs } = state;
   const { addOns, clusterAddOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
