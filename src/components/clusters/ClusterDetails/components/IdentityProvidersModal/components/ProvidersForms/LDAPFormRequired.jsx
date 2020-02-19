@@ -30,7 +30,6 @@ class LDAPFormRequired extends React.Component {
           name="bind_dn"
           label="Bind DN"
           type="text"
-          placeholder="Bind DN"
           disabled={isPending}
           onChange={this.toggleBindPasswordDisabled}
           helpText="DN to bind with during the search phase."
@@ -40,7 +39,6 @@ class LDAPFormRequired extends React.Component {
           name="bind_password"
           label="Bind Password"
           type="password"
-          placeholder="Bind Password"
           helpText={!hasBindDN ? 'Cannot be used if Bind DN is not set' : 'Password to bind with during the search phase.'}
           disabled={!hasBindDN || isPending}
           validate={hasBindDN ? required : undefined}
@@ -51,7 +49,6 @@ class LDAPFormRequired extends React.Component {
           name="ldap_url"
           label="LDAP url"
           type="text"
-          placeholder="url"
           disabled={isPending}
           validate={required}
           isRequired
@@ -63,7 +60,7 @@ class LDAPFormRequired extends React.Component {
           name="ldap_id"
           label="ID"
           type="text"
-          placeholder="comma separated, example: 'id1, id-2"
+          placeholder="e.g. id1, id2"
           disabled={isPending}
           validate={required}
           isRequired
@@ -74,7 +71,7 @@ class LDAPFormRequired extends React.Component {
           name="ldap_email"
           label="Email"
           type="text"
-          placeholder="comma separated"
+          placeholder="e.g. email,email2"
           disabled={isPending}
           helpText="The list of attributes whose values should be used as the email address."
         />
@@ -83,7 +80,7 @@ class LDAPFormRequired extends React.Component {
           name="ldap_name"
           label="Name"
           type="text"
-          placeholder="comma separated, example: 'name1, name2"
+          placeholder="e.g. name1, name2"
           disabled={isPending}
           helpText="The list of attributes whose values should be used as the display name."
         />
@@ -92,7 +89,7 @@ class LDAPFormRequired extends React.Component {
           name="ldap_preferred_username"
           label="Preferred Username"
           type="text"
-          placeholder="comma separated, example: 'name1, name2, name3"
+          placeholder="e.g. name1, name2, name3"
           disabled={isPending}
           helpText="The list of attributes whose values should be used as the preferred username."
         />

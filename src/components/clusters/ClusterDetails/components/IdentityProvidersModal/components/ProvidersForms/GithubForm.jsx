@@ -31,7 +31,6 @@ class GithubForm extends React.Component {
           name="hostname"
           label="Hostname"
           type="text"
-          placeholder="hostname"
           disabled={isPending}
           validate={hostnameRequired ? required : noop}
           isRequired={hostnameRequired}

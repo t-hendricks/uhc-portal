@@ -129,7 +129,6 @@ class IDPForm extends React.Component {
               name="name"
               label="Name"
               type="text"
-              placeholder="name"
               validate={[checkIdentityProviderName, this.checkDuplicateName]}
               isRequired
               disabled={isPending}

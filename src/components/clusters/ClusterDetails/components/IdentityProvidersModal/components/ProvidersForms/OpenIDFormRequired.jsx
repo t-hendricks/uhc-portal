@@ -23,7 +23,6 @@ function OpenIDFormRequired({ isPending }) {
         name="issuer"
         label="Issuer URL"
         type="text"
-        placeholder="Issuer URL"
         disabled={isPending}
         validate={checkOpenIDIssuer}
         isRequired

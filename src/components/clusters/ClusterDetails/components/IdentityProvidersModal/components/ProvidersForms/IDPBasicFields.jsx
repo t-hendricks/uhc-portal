@@ -13,7 +13,6 @@ function IDPBasicFields({ isPending }) {
         name="client_id"
         label="Client ID"
         type="text"
-        placeholder="Client ID"
         validate={required}
         isRequired
         disabled={isPending}
@@ -23,7 +22,6 @@ function IDPBasicFields({ isPending }) {
         name="client_secret"
         label="Client Secret"
         type="password"
-        placeholder="Client Secret"
         validate={required}
         isRequired
         disabled={isPending}
