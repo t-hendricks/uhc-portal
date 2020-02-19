@@ -53,6 +53,14 @@ class RegisterCluster extends React.Component {
   }
 
   toggleSystemType = (_, value) => {
+    const { change, untouch } = this.props;
+    if (value === 'physical') {
+      change('socket_num', '');
+      untouch('socket_num');
+    } else {
+      change('cpu', '');
+      untouch('vcpu_num');
+    }
     this.setState({ systemType: value });
   }
 
@@ -173,7 +181,7 @@ class RegisterCluster extends React.Component {
                     {systemType === 'virtual' && (
                     <Field
                       component={ReduxVerticalFormGroup}
-                      name="cpu"
+                      name="vcpu_num"
                       label="Number of vCPUs"
                       inputMode="numeric"
                       disabled={registerClusterResponse.pending}
@@ -222,6 +230,8 @@ RegisterCluster.propTypes = {
   resetResponse: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
   resetForm: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
+  untouch: PropTypes.func.isRequired,
 };
 
 export default RegisterCluster;
