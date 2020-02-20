@@ -7,7 +7,6 @@ import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
-import EvaluationAlert from './components/EvaluationAlert';
 
 function InstructionsRHV({ token }) {
   return (
@@ -23,13 +22,29 @@ function InstructionsRHV({ token }) {
             Developer Preview
           </div>
           {token.error && <TokenErrorAlert token={token} />}
-          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
               With OpenShift Container Platform
               you can install a cluster on Red Hat Virtualization using infrastructure that
               the installation program provisions and the cluster maintains.
             </p>
+            <p>
+            Because these are developer preview builds:
+            </p>
+            <ul className="dev-preview-warnings">
+              <li>
+              Production use is not permitted.
+              </li>
+              <li>
+              Installation and use is not eligible for Red Hat production support.
+              </li>
+              <li>
+              Clusters installed at pre-release versions cannot be upgraded.
+              As we approach a GA milestone with these nightly builds, we will
+              allow upgrades from a nightly to a nightly; however, we will not
+              support an upgrade from a nightly to the final GA build of OCP.
+              </li>
+            </ul>
 
             <GetStarted docURL={links.INSTALL_RHV_GETTING_STARTED} />
           </div>
