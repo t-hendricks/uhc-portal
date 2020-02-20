@@ -6,27 +6,23 @@ exports[`<ClusterHealthCard /> should render 1`] = `
 >
   <CardHeader>
     <Split>
+      <SplitItem>
+        <ExclamationTriangleIcon
+          color="#f0ab00"
+          noVerticalAlign={false}
+          size="md"
+          title={null}
+        />
+      </SplitItem>
       <SplitItem
         isFilled={true}
       >
-        <Split>
-          <SplitItem>
-            <ExclamationTriangleIcon
-              color="#f0ab00"
-              noVerticalAlign={false}
-              size="md"
-              title={null}
-            />
-          </SplitItem>
-          <SplitItem>
-            <Title
-              headingLevel="h2"
-              size="3xl"
-            >
-              Cluster has no metrics
-            </Title>
-          </SplitItem>
-        </Split>
+        <Title
+          headingLevel="h2"
+          size="3xl"
+        >
+          Cluster has no metrics
+        </Title>
       </SplitItem>
       <SplitItem />
     </Split>
