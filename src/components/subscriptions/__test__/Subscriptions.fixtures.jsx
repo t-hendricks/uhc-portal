@@ -59,6 +59,9 @@ const quotaSummary = {
       reserved: 0,
     },
   ],
+  addOnsQuota: {
+    dbaOperatorAddon: 5,
+  },
 };
 
 const rows = [];

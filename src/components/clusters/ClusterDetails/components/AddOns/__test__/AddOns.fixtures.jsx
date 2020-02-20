@@ -83,6 +83,7 @@ export const mockClusterAddOns = {
       addon: {
         id: 'service-mesh',
       },
+      state: 'ready',
     },
   ],
 };
