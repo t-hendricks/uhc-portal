@@ -1,5 +1,7 @@
 
 import produce from 'immer';
+import sortBy from 'lodash/sortBy';
+
 import {
   REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../../../../../../redux/reduxHelpers';
@@ -67,7 +69,7 @@ function NetworkSelfServiceReducer(state = initialState, action) {
         draft.grants = {
           ...initialState.grants,
           fulfilled: true,
-          data: action.payload.data.items,
+          data: sortBy(action.payload.data.items, ['user_arn', 'role.id']),
         };
         break;
 
