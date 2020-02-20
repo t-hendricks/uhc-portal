@@ -44,7 +44,7 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
       </a>
     </p>
     <Component
-      className="add-idp-button"
+      className="access-control-add"
       onClick={[Function]}
       variant="secondary"
     >
@@ -146,7 +146,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
       <TableBody />
     </Component>
     <Component
-      className="add-idp-button"
+      className="access-control-add"
       onClick={[Function]}
       variant="secondary"
     >

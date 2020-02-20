@@ -413,7 +413,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-right: 10px;
 }
 
-#monitoring .status-icon{
+#monitoring .status-icon, #networkSelfService .status-icon {
   margin-right: 5px;
 }
 
@@ -975,7 +975,7 @@ button:focus {
   }
 }
 
-.add-idp-button {
+.access-control-add {
   margin-top: var(--pf-global--spacer--lg);
 }
 

@@ -11,6 +11,7 @@ import { cloudProvidersReducer } from './cloudProvidersReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 import { LogsReducer } from '../../components/clusters/ClusterDetails/components/LogWindow/LogWindowReducer';
 import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersModal/IdentityProvidersReducer';
+import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetails/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
 import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/AccessControl/UsersSection/UsersReducer';
 import addOnsReducer from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsReducer';
@@ -40,6 +41,7 @@ const reducers = {
   persistentStorageValues: persistentStorageReducer,
   loadBalancerValues: loadBalancersReducer,
   notifications,
+  networkSelfService: NetworkSelfServiceReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

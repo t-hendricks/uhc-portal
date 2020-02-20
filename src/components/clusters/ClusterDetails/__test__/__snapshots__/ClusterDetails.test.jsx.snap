@@ -681,6 +681,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
     id="accessControlTabContent"
   >
     <AccessControl
+      cloudProvider="aws"
       clusterConsoleURL="https://console-openshift-console.apps.test-liza.sdev.devshift.net"
       clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
     />
