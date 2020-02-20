@@ -58,7 +58,7 @@ class RegisterCluster extends React.Component {
       change('socket_num', '');
       untouch('socket_num');
     } else {
-      change('cpu', '');
+      change('vcpu_num', '');
       untouch('vcpu_num');
     }
     this.setState({ systemType: value });
