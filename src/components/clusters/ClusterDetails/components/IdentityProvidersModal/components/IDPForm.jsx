@@ -104,9 +104,9 @@ class IDPForm extends React.Component {
     const SelectedProviderAdvancedOptions = providersAdvancedOptions[selectedIDP];
 
     return (
-      <Grid>
-        <GridItem span={8}>
-          <Form>
+      <Form>
+        <Grid gutter="sm">
+          <GridItem span={8}>
             {createIDPError}
             <p>
         Identity providers determine how users log into the cluster.
@@ -115,7 +115,11 @@ class IDPForm extends React.Component {
             <p>
               <a target="_blank" rel="noreferrer noopener" href={providerDocumentationLink[selectedIDP]}>Learn more about identity providers in the OpenShift documentation.</a>
             </p>
+          </GridItem>
+          <GridItem span={8}>
             <Title headingLevel="h3" size="xl">Step 1: Select identity providers type</Title>
+          </GridItem>
+          <GridItem span={8}>
             <Field
               component={ReduxFormDropdown}
               options={IDPtypes}
@@ -123,7 +127,11 @@ class IDPForm extends React.Component {
               label="Identity Provider"
               disabled={isPending}
             />
+          </GridItem>
+          <GridItem span={8}>
             <Title headingLevel="h3" size="xl">Step 2: Enter Provider type information</Title>
+          </GridItem>
+          <GridItem span={8}>
             <Field
               component={ReduxVerticalFormGroup}
               name="name"
@@ -135,14 +143,19 @@ class IDPForm extends React.Component {
               onChange={(_, value) => this.setState({ IDPName: value })}
               helpText="Unique name for the identity provider. This cannot be changed later."
             />
-            { IDPNeedsOAuthURL(selectedIDP) && (
-              <div>
-                <span className="pf-c-form__label pf-c-form__label-text idp-oauth-url-label">OAuth callback URL</span>
-                <ClipboardCopy isReadOnly>
-                  {getOauthCallbackURL(clusterConsoleURL, IDPName)}
-                </ClipboardCopy>
-              </div>
-            )}
+          </GridItem>
+          { IDPNeedsOAuthURL(selectedIDP) && (
+          <GridItem span={8}>
+            <div>
+              <span className="pf-c-form__label pf-c-form__label-text idp-oauth-url-label">OAuth callback URL</span>
+              <ClipboardCopy isReadOnly>
+                {getOauthCallbackURL(clusterConsoleURL, IDPName)}
+              </ClipboardCopy>
+            </div>
+          </GridItem>
+
+          )}
+          <GridItem span={8}>
             <Field
               component={ReduxFormDropdown}
               options={mappingMethods}
@@ -150,7 +163,8 @@ class IDPForm extends React.Component {
               label="Mapping Method"
               helpText="Specifies how new identities are mapped to users when they log in. Claim is recommended in most cases."
             />
-            {SelectedProivderRequiredFields
+          </GridItem>
+          {SelectedProivderRequiredFields
         && (
           <SelectedProivderRequiredFields
             isPending={isPending}
@@ -159,15 +173,16 @@ class IDPForm extends React.Component {
             && !(selectedMappingMethod === mappingMethodsformValues.LOOKUP)}
           />
         )}
-            {SelectedProviderAdvancedOptions
+          {SelectedProviderAdvancedOptions
           && (
-            <Expandable toggleTextCollapsed="Show Advanced Options" toggleTextExpanded="Hide Advanced Options">
-              <SelectedProviderAdvancedOptions isPending={isPending} />
-            </Expandable>
+            <GridItem span={8}>
+              <Expandable toggleTextCollapsed="Show Advanced Options" toggleTextExpanded="Hide Advanced Options">
+                <SelectedProviderAdvancedOptions isPending={isPending} />
+              </Expandable>
+            </GridItem>
           )}
-          </Form>
-        </GridItem>
-      </Grid>
+        </Grid>
+      </Form>
     );
   }
 }

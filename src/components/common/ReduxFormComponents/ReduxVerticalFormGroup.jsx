@@ -60,7 +60,7 @@ ReduxVerticalFormGroup.defaultProps = {
   isRequired: false,
 };
 ReduxVerticalFormGroup.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   helpText: PropTypes.string,
   extendedHelpText: PropTypes.string,
   disabled: PropTypes.bool,
