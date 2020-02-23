@@ -3,7 +3,7 @@
 exports[`<DetailsRight /> Self Managed cluster should not render desired nodes when they don't exist 1`] = `
 <Fragment>
   <dl
-    className="cluster-details-item left"
+    className="cluster-details-item"
   >
     <dt>
       Status
@@ -33,7 +33,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
     </dt>
     <dd>
       <dl
-        className="cluster-details-item-list left"
+        className="cluster-details-item-list"
       >
         <dt>
           Master:
@@ -44,7 +44,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
         </dd>
       </dl>
       <dl
-        className="cluster-details-item-list left"
+        className="cluster-details-item-list"
       >
         <dt>
           Compute:
@@ -202,7 +202,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
 exports[`<DetailsRight /> Self Managed cluster should render status correctly for archived cluster 1`] = `
 <Fragment>
   <dl
-    className="cluster-details-item left"
+    className="cluster-details-item"
   >
     <dt>
       Status
@@ -231,7 +231,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
     </dt>
     <dd>
       <dl
-        className="cluster-details-item-list left"
+        className="cluster-details-item-list"
       >
         <dt>
           Master:
@@ -242,7 +242,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         </dd>
       </dl>
       <dl
-        className="cluster-details-item-list left"
+        className="cluster-details-item-list"
       >
         <dt>
           Compute:
@@ -387,7 +387,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
 exports[`<DetailsRight /> should render 1`] = `
 <Fragment>
   <dl
-    className="cluster-details-item left"
+    className="cluster-details-item"
   >
     <dt>
       Status
@@ -431,7 +431,7 @@ exports[`<DetailsRight /> should render 1`] = `
     </dt>
     <dd>
       <dl
-        className="cluster-details-item-list left"
+        className="cluster-details-item-list"
       >
         <dt>
           Master:
@@ -442,7 +442,7 @@ exports[`<DetailsRight /> should render 1`] = `
         </dd>
       </dl>
       <dl
-        className="cluster-details-item-list left"
+        className="cluster-details-item-list"
       >
         <dt>
           Compute:
@@ -458,7 +458,7 @@ exports[`<DetailsRight /> should render 1`] = `
     </dt>
     <dd>
       <dl
-        className="cluster-details-item-list left"
+        className="cluster-details-item-list"
       >
         <dt>
           Master:
@@ -469,7 +469,7 @@ exports[`<DetailsRight /> should render 1`] = `
         </dd>
       </dl>
       <dl
-        className="cluster-details-item-list left"
+        className="cluster-details-item-list"
       >
         <dt>
           Compute:

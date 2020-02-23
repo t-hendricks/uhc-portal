@@ -23,7 +23,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
 
   return (
     <>
-      <dl className="cluster-details-item left">
+      <dl className="cluster-details-item">
         <dt>Cluster ID</dt>
         <dd>
           {get(cluster, 'external_id', 'N/A')}
@@ -61,7 +61,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
           )}
         <dt>Version</dt>
         <dd>
-          <dl className="cluster-details-item-list left">
+          <dl className="cluster-details-item-list">
             <dt>
               OpenShift:
               {' '}
