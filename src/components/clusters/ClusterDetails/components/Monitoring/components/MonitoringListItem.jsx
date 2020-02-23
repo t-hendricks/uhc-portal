@@ -38,7 +38,9 @@ function MonitoringListItem({
           <span>
             {numOfIssues}
             {' '}
-            discovered issues
+            discovered
+            {' '}
+            {numOfIssues === 1 ? 'issue' : 'issues'}
           </span>
         </>
       );
