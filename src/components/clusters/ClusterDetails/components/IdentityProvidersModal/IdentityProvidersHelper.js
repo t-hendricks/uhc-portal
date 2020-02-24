@@ -121,8 +121,8 @@ const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
     client_id: formData.client_id,
     client_secret: formData.client_secret,
-    organizations: multiInputToCleanArray(formData, 'organizations'),
-    teams: multiInputToCleanArray(formData, 'teams'),
+    organizations: formData.github_auth_mode === 'organizations' ? multiInputToCleanArray(formData, 'organizations') : undefined,
+    teams: formData.github_auth_mode === 'teams' ? multiInputToCleanArray(formData, 'teams') : undefined,
     hostname: formData.hostname,
     ca: formData.github_ca,
   });

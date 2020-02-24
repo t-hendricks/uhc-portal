@@ -15,7 +15,6 @@ import {
   LDAPForm,
   OpenIDForm,
   GoogleFormRequired,
-  GithubFormRequired,
   LDAPFormRequired,
   OpenIDFormRequired,
 } from './ProvidersForms';
@@ -81,7 +80,6 @@ class IDPForm extends React.Component {
     );
 
     const providersAdvancedOptions = {
-      GithubIdentityProvider: GithubForm,
       OpenIDIdentityProvider: OpenIDForm,
       LDAPIdentityProvider: LDAPForm,
     };
@@ -89,7 +87,7 @@ class IDPForm extends React.Component {
     const providersRequiredFields = {
       LDAPIdentityProvider: LDAPFormRequired,
       OpenIDIdentityProvider: OpenIDFormRequired,
-      GithubIdentityProvider: GithubFormRequired,
+      GithubIdentityProvider: GithubForm,
       GoogleIdentityProvider: GoogleFormRequired,
     };
 
