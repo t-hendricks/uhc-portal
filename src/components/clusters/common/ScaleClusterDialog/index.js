@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
     showLoadBalancerAlert: shouldShowLoadBalancerAlert(state),
     showPersistentStorageAlert: shouldShowStorageQuotaAlert(state),
     loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
-    persistentStorageValues: state.persistentStorageValues.persistentStorageValues,
+    persistentStorageValues: state.persistentStorageValues,
     organization: state.userProfile.organization,
     isByoc: modalData.byoc,
     machineType: get(modalData, 'nodes.compute_machine_type.id', ''),
