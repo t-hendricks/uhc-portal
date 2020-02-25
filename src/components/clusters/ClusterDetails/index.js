@@ -14,6 +14,7 @@ import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 import { getAlerts, getNodes, getClusterOperators } from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
+import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
@@ -52,6 +53,7 @@ const mapDispatchToProps = {
   getClusterOperators,
   getAddOns,
   getClusterAddOns,
+  getGrants,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
