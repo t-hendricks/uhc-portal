@@ -9,6 +9,8 @@ import {
   PopoverPosition,
   Card,
   CardBody,
+  CardHeader,
+  CardFooter,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -28,6 +30,7 @@ import {
 
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
+import { Skeleton } from '@redhat-cloud-services/frontend-components';
 
 import GrantModal from './GrantModal';
 import ErrorBox from '../../../../../common/ErrorBox';
@@ -116,7 +119,7 @@ class NetworkSelfServiceSection extends React.Component {
                 <p>
                   Amazon Resource Names (ARNs) uniquely identify AWS resources.
                 </p>
-)}
+              )}
             >
               <Button variant="plain" isInline>
                 <HelpIcon size="sm" />
@@ -174,7 +177,19 @@ class NetworkSelfServiceSection extends React.Component {
 
     const rows = hasGrants && grants.data.map(grantRow);
 
-    return (
+    return grants.pending ? (
+      <Card>
+        <CardHeader>
+          <Skeleton size="md" />
+        </CardHeader>
+        <CardBody>
+          <Skeleton size="lg" />
+        </CardBody>
+        <CardFooter>
+          <Skeleton size="md" />
+        </CardFooter>
+      </Card>
+    ) : (
       <>
         <Card id="networkSelfService">
           <CardBody>

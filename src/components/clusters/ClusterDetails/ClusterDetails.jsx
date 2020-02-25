@@ -134,6 +134,7 @@ class ClusterDetails extends Component {
       getClusterOperators,
       getClusterAddOns,
       getOrganizationAndQuota,
+      getGrants,
     } = this.props;
     const clusterID = match.params.id;
 
@@ -148,6 +149,7 @@ class ClusterDetails extends Component {
       getNodes(clusterID);
       getClusterOperators(clusterID);
       getClusterAddOns(clusterID);
+      getGrants(clusterID);
     }
   }
 
@@ -373,6 +375,7 @@ ClusterDetails.propTypes = {
   resetIdentityProvidersState: PropTypes.func.isRequired,
   setGlobalError: PropTypes.func.isRequired,
   clearGlobalError: PropTypes.func.isRequired,
+  getGrants: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {
