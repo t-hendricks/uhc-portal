@@ -674,8 +674,9 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 .infra-card.create-cluster-card.card-disabled {
   background: var(--pf-global--disabled-color--300);
-  color: var(--pf-black-600) !important;
+  color: var(--pf-global--disabled-color--100) !important;
   box-shadow: none;
+  border: none;
   .create-cluster-favorite-btn-container {
     background: var(--pf-global--disabled-color--200);
   }
@@ -688,6 +689,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .infra-card .create-cluster-header.pf-c-card__header {
   margin-top: 55px;
   padding-top: 0;
+}
+
+.card-disabled {
+  color: var(--pf-global--disabled-color--100);
 }
 
 // Temporary hacks to make PF4 components look okay in a PF3 form
