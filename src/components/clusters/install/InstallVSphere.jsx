@@ -26,7 +26,7 @@ class InstallVSphere extends Component {
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
         { label: 'OpenShift Container Platform', path: '/install' },
-        { label: 'VMWare vSphere' },
+        { label: 'VMware vSphere' },
       ]}
       />
     );
