@@ -253,7 +253,7 @@ class ClusterDetails extends Component {
 
     const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-    const displayAddOnsTab = cluster.managed && this.hasAddOns();
+    const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
