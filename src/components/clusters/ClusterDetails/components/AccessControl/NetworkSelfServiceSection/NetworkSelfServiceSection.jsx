@@ -154,13 +154,14 @@ class NetworkSelfServiceSection extends React.Component {
         {
           title: (
             <>
-              <ClipboardCopyLinkButton text={grant.console_url}>
+              <ClipboardCopyLinkButton text={grant.console_url} isDisabled={!grant.console_url}>
                 Copy URL to clipboard
               </ClipboardCopyLinkButton>
             </>),
         },
       ],
       grantId: grant.id,
+      state: grant.state,
     });
 
     if (grants.error) {
@@ -205,7 +206,7 @@ class NetworkSelfServiceSection extends React.Component {
               <ExternalLinkAltIcon color="#0066cc" size="sm" />
             </p>
             { hasGrants && (
-            <Table aria-label="Grants" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows}>
+            <Table aria-label="Grants" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows} areActionsDisabled={rowData => rowData.state === 'deleting'}>
               <TableHeader />
               <TableBody />
             </Table>
