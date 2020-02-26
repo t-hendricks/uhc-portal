@@ -111,7 +111,7 @@ class GrantModal extends Component {
               <PopoverHint hint={(
                 <div>
                   <p>Need help configuring ARNs?</p>
-                  <a href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">Check the AWS documention.</a>
+                  <a href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html" target="_blank" rel="noreferrer noopener">Check the AWS documention.</a>
                 </div>
               )}
               />
