@@ -30,7 +30,9 @@ class ClipboardCopyLinkButton extends React.Component {
   }
 
   render() {
-    const { text, className, children } = this.props;
+    const {
+      text, className, children, isDisabled,
+    } = this.props;
     const { copied } = this.state;
     return (
       <Tooltip
@@ -40,16 +42,21 @@ class ClipboardCopyLinkButton extends React.Component {
         content={<div>{copied ? 'Successfuly copied to clipboard!' : 'Copy to clipboard'}</div>}
       >
         <CopyToClipboard text={text} onCopy={this.onCopy}>
-          <Button className={className} variant="link">{children}</Button>
+          <Button className={className} variant="link" isDisabled={isDisabled}>{children}</Button>
         </CopyToClipboard>
       </Tooltip>
     );
   }
 }
 
+ClipboardCopyLinkButton.defaultProps = {
+  isDisabled: false,
+};
+
 ClipboardCopyLinkButton.propTypes = {
   text: PropTypes.string.isRequired,
   className: PropTypes.string,
+  isDisabled: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
 };
 
