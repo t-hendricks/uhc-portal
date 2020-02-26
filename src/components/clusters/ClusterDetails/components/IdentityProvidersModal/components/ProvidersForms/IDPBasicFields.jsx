@@ -1,33 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+import { GridItem } from '@patternfly/react-core';
 
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { required } from '../../../../../../../common/validators';
 
+
 function IDPBasicFields({ isPending }) {
   return (
     <>
-      <Field
-        component={ReduxVerticalFormGroup}
-        name="client_id"
-        label="Client ID"
-        type="text"
-        placeholder="Client ID"
-        validate={required}
-        isRequired
-        disabled={isPending}
-      />
-      <Field
-        component={ReduxVerticalFormGroup}
-        name="client_secret"
-        label="Client Secret"
-        type="password"
-        placeholder="Client Secret"
-        validate={required}
-        isRequired
-        disabled={isPending}
-      />
+      <GridItem span={8}>
+        <Field
+          component={ReduxVerticalFormGroup}
+          name="client_id"
+          label="Client ID"
+          type="text"
+          validate={required}
+          isRequired
+          disabled={isPending}
+        />
+      </GridItem>
+      <GridItem span={8}>
+        <Field
+          component={ReduxVerticalFormGroup}
+          name="client_secret"
+          label="Client Secret"
+          type="password"
+          validate={required}
+          isRequired
+          disabled={isPending}
+        />
+      </GridItem>
     </>
   );
 }

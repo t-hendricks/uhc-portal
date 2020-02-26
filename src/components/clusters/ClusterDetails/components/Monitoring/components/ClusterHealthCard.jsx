@@ -56,7 +56,9 @@ function ClusterHealthCard({
         <Title headingLevel="h2" size="3xl">
           {discoveredIssues}
           {' '}
-          Issues detected
+          {discoveredIssues === 1 ? 'issue' : 'issues'}
+          {' '}
+          detected
         </Title>
       );
       break;
@@ -69,15 +71,11 @@ function ClusterHealthCard({
     <Card id="cluster-health">
       <CardHeader>
         <Split>
+          <SplitItem>
+            {icon}
+          </SplitItem>
           <SplitItem isFilled>
-            <Split>
-              <SplitItem>
-                {icon}
-              </SplitItem>
-              <SplitItem>
-                {title}
-              </SplitItem>
-            </Split>
+            {title}
           </SplitItem>
           <SplitItem>
             {status === monitoringStatuses.UNKNOWN && <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />}

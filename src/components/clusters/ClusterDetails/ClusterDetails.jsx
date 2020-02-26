@@ -134,6 +134,7 @@ class ClusterDetails extends Component {
       getClusterOperators,
       getClusterAddOns,
       getOrganizationAndQuota,
+      getGrants,
     } = this.props;
     const clusterID = match.params.id;
 
@@ -148,6 +149,7 @@ class ClusterDetails extends Component {
       getNodes(clusterID);
       getClusterOperators(clusterID);
       getClusterAddOns(clusterID);
+      getGrants(clusterID);
     }
   }
 
@@ -251,7 +253,7 @@ class ClusterDetails extends Component {
 
     const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-    const displayAddOnsTab = cluster.managed && this.hasAddOns();
+    const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
@@ -293,7 +295,11 @@ class ClusterDetails extends Component {
         )}
         { displayAccessControlTab && (
           <TabContent eventKey={2} id="accessControlTabContent" ref={this.accessControlTabRef} aria-label="Access Control" hidden>
-            <AccessControl clusterID={cluster.id} clusterConsoleURL={consoleURL} />
+            <AccessControl
+              clusterID={cluster.id}
+              clusterConsoleURL={consoleURL}
+              cloudProvider={cluster.cloud_provider.id}
+            />
           </TabContent>
         )}
         {displayAddOnsTab && (
@@ -369,6 +375,7 @@ ClusterDetails.propTypes = {
   resetIdentityProvidersState: PropTypes.func.isRequired,
   setGlobalError: PropTypes.func.isRequired,
   clearGlobalError: PropTypes.func.isRequired,
+  getGrants: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

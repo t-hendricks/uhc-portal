@@ -53,7 +53,7 @@ const InstructionsInfrastructure = () => (
             <CardBadge isHidden />
             <CardBody>
               <img src={vSphereLogo} alt="vSphere" className="infra-logo-vsphere" />
-              <Title headingLevel="h5" size="lg">Run on VMWare vSphere</Title>
+              <Title headingLevel="h5" size="lg">Run on VMware vSphere</Title>
             </CardBody>
           </Link>
         </GalleryItem>

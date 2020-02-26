@@ -1,4 +1,4 @@
-import { toCleanArray } from '../../../../../common/helpers';
+import { strToCleanArray, multiInputToCleanArray } from '../../../../../common/helpers';
 
 const IDPformValues = {
   GITHUB: 'GithubIdentityProvider',
@@ -118,47 +118,47 @@ const GoogleDocLink = `${IDPDocBase}/configuring-google-identity-provider.html`;
 const OpenIDDocLink = `${IDPDocBase}/configuring-oidc-identity-provider.html`;
 
 const getCreateIDPRequestData = (formData) => {
-  const githubData = {
+  const githubData = () => ({
     client_id: formData.client_id,
     client_secret: formData.client_secret,
-    organizations: toCleanArray(formData.organizations),
-    teams: toCleanArray(formData.teams),
+    organizations: multiInputToCleanArray(formData, 'organizations'),
+    teams: multiInputToCleanArray(formData, 'teams'),
     hostname: formData.hostname,
     ca: formData.github_ca,
-  };
+  });
 
-  const googleData = {
+  const googleData = () => ({
     client_id: formData.client_id,
     client_secret: formData.client_secret,
     hosted_domain: formData.hosted_domain,
-  };
+  });
 
-  const ldapData = {
+  const ldapData = () => ({
     attributes: {
-      id: toCleanArray(formData.ldap_id),
-      email: toCleanArray(formData.ldap_email),
-      name: toCleanArray(formData.ldap_name),
-      preferred_username: toCleanArray(formData.ldap_preferred_username),
+      id: multiInputToCleanArray(formData, 'ldap_id'),
+      email: multiInputToCleanArray(formData, 'ldap_email'),
+      name: multiInputToCleanArray(formData, 'ldap_name'),
+      preferred_username: multiInputToCleanArray(formData, 'ldap_preferred_username'),
     },
     bind_dn: formData.bind_dn,
     bind_password: formData.bind_password,
     insecure: formData.ldap_insecure,
     url: formData.ldap_url,
     ca: formData.ldap_ca,
-  };
+  });
 
-  const openIdData = {
+  const openIdData = () => ({
     ca: formData.openid_ca,
     claims: {
-      email: toCleanArray(formData.openid_email),
-      name: toCleanArray(formData.openid_name),
-      preferred_username: toCleanArray(formData.openid_preferred_username),
+      email: strToCleanArray(formData.openid_email),
+      name: strToCleanArray(formData.openid_name),
+      preferred_username: strToCleanArray(formData.openid_preferred_username),
     },
     client_id: formData.client_id,
     client_secret: formData.client_secret,
-    extra_scopes: toCleanArray(formData.openid_extra_scopes),
+    extra_scopes: strToCleanArray(formData.openid_extra_scopes),
     issuer: formData.issuer,
-  };
+  });
 
   const IDPs = {
     GithubIdentityProvider: { name: 'github', data: githubData },
@@ -173,7 +173,7 @@ const getCreateIDPRequestData = (formData) => {
     mapping_method: formData.mappingMethod || 'claim',
   };
 
-  const selectedIDPData = IDPs[formData.type].data;
+  const selectedIDPData = IDPs[formData.type].data();
   const selectedIDPName = IDPs[formData.type].name;
 
   const requestData = {

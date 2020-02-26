@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
-
 import { noop } from '../../../../../../../common/helpers';
 import { github, checkGithubTeams } from '../../../../../../../common/validators';
 
 import IDPBasicFields from './IDPBasicFields';
-import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
 
 class GithubFormRequired extends React.Component {
     state = {
@@ -28,33 +26,30 @@ class GithubFormRequired extends React.Component {
     render() {
       const { isPending } = this.props;
       const { teamsDisabled, orgsDisabled } = this.state;
-
       return (
         <>
           <IDPBasicFields />
-          <Field
-            component={ReduxVerticalFormGroup}
-            name="organizations"
+          <ReduxFieldArray
+            fieldName="organizations"
             label="Organizations"
             type="text"
             isRequired={!orgsDisabled}
-            placeholder="comma separated, example: org1,org2,org3"
+            placeholderText="e.g. org"
             disabled={orgsDisabled || isPending}
             helpText={orgsDisabled ? 'Cannot be used in combination with the teams field' : ''}
-            onChange={(e, value) => this.toggleDisable(e, value, 'teamsDisabled')}
-            validate={orgsDisabled ? noop : github}
+            onFormChange={(e, value) => this.toggleDisable(e, value, 'teamsDisabled')}
+            validateField={orgsDisabled ? noop : github}
           />
-          <Field
-            component={ReduxVerticalFormGroup}
-            name="teams"
+          <ReduxFieldArray
+            fieldName="teams"
             label="Teams"
             type="text"
             isRequired={!teamsDisabled}
-            placeholder="comma separated, example: org1/team1,org2/team2"
+            placeholderText="e.g. org/team"
             disabled={teamsDisabled || isPending}
             helpText={teamsDisabled ? 'Cannot be used in combination with the organizations field' : ''}
-            onChange={(e, value) => this.toggleDisable(e, value, 'orgsDisabled')}
-            validate={teamsDisabled ? noop : [github, checkGithubTeams]}
+            onFormChange={(e, value) => this.toggleDisable(e, value, 'orgsDisabled')}
+            validateField={teamsDisabled ? noop : [github, checkGithubTeams]}
           />
         </>
       );
