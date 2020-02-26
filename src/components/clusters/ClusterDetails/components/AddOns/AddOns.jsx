@@ -17,6 +17,7 @@ import {
 } from '@patternfly/react-core';
 // eslint-disable-next-line camelcase
 import { global_success_color_100 } from '@patternfly/react-tokens';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import clusterStates from '../../../common/clusterStates';
 import ErrorBox from '../../../../common/ErrorBox';
@@ -107,6 +108,16 @@ class AddOns extends React.Component {
       addClusterAddOn,
       addClusterAddOnResponse,
     } = this.props;
+
+    if (clusterAddOns.pending || addClusterAddOnResponse.pending) {
+      return (
+        <EmptyState>
+          <EmptyStateBody>
+            <Spinner centered />
+          </EmptyStateBody>
+        </EmptyState>
+      );
+    }
 
     // Add-ons can only be installed when the cluster is ready
     const isClusterReady = cluster.state === clusterStates.READY;
