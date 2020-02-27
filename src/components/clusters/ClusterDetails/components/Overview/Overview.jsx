@@ -10,6 +10,7 @@ import { getClusterStateAndDescription } from '../../../common/clusterStates';
 import ResourceUsage from './ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
+import SubscriptionSettings from './SubscriptionSettings';
 
 function Overview({ cluster, cloudProviders }) {
   const clusterState = getClusterStateAndDescription(cluster);
@@ -40,6 +41,7 @@ function Overview({ cluster, cloudProviders }) {
           </Grid>
         </CardBody>
       </Card>
+      <SubscriptionSettings />
     </>
   );
 }

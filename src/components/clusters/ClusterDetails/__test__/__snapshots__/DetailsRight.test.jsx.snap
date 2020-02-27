@@ -55,12 +55,6 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
         </dd>
       </dl>
     </dd>
-    <dt>
-      Support Level
-    </dt>
-    <dd>
-      None (Evaluation)
-    </dd>
     <ClusterNetwork
       cluster={
         Object {
@@ -252,12 +246,6 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
           4
         </dd>
       </dl>
-    </dd>
-    <dt>
-      Support Level
-    </dt>
-    <dd>
-      None (Evaluation)
     </dd>
     <ClusterNetwork
       cluster={

@@ -4,6 +4,14 @@ import { Alert } from '@patternfly/react-core';
 
 import SubscriptionCompliancy from '../components/SubscriptionCompliancy';
 import { clusterDetails, organization } from './ClusterDetails.fixtures';
+import {
+  subscriptionSettings,
+  subscriptionSupportLevels,
+} from '../../../../common/subscriptionTypes';
+
+
+const { SUPPORT_LEVEL } = subscriptionSettings;
+const { EVAL, STANDARD, NONE } = subscriptionSupportLevels;
 
 describe('<SubscriptionCompliancy />', () => {
   let wrapper;
@@ -14,35 +22,37 @@ describe('<SubscriptionCompliancy />', () => {
     );
   });
 
-  it('should render', () => {
+  it('should warn during evaluation period', () => {
     const c = clusterDetails.cluster;
-    c.subscription.entitlement_status = 'NotSubscribed';
+    c.subscription[SUPPORT_LEVEL] = EVAL;
     wrapper.setProps({ cluster: c }, () => {
       expect(wrapper).toMatchSnapshot();
-    });
-  });
-
-  it('should warn when subscription is not attached', () => {
-    const c = clusterDetails.cluster;
-    c.subscription.entitlement_status = 'NotSubscribed';
-    wrapper.setProps({ cluster: c }, () => {
       expect(wrapper.find(Alert).length).toEqual(1);
     });
   });
 
-  it('should warn when cluster is overcommitting resources', () => {
+  it('should warn when evaluation is expired', () => {
     const c = clusterDetails.cluster;
-    c.subscription.entitlement_status = 'Overcommitted';
+    c.subscription[SUPPORT_LEVEL] = NONE;
     wrapper.setProps({ cluster: c }, () => {
+      expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);
     });
   });
 
-  it('should warn when subscriptions attached are inconsistent', () => {
+  it('should not render when it has a valid support', () => {
     const c = clusterDetails.cluster;
-    c.subscription.entitlement_status = 'InconsistentServices';
+    c.subscription[SUPPORT_LEVEL] = STANDARD;
     wrapper.setProps({ cluster: c }, () => {
-      expect(wrapper.find(Alert).length).toEqual(1);
+      expect(wrapper).toMatchObject({});
+    });
+  });
+
+  it('should not render when it is not OCP', () => {
+    const c = clusterDetails.cluster;
+    c.subscription.plan.id = 'OSD';
+    wrapper.setProps({ cluster: c }, () => {
+      expect(wrapper).toMatchObject({});
     });
   });
 });

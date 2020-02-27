@@ -648,5 +648,6 @@ exports[`<Overview /> should render 1`] = `
       </Grid>
     </CardBody>
   </Card>
+  <Connect(SubscriptionSettings) />
 </Fragment>
 `;

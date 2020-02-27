@@ -8,7 +8,6 @@ import {
 
 import helpers from '../../../../../common/helpers';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
-import { entitlementStatuses, entitlementStatusDisplayNames } from '../../../../../common/subscriptionTypes';
 
 function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
   if (helpers.nestedIsEmpty(currentFilters)) {
@@ -23,18 +22,6 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
   };
 
   const groups = [
-    {
-      key: 'entitlement_status',
-      label: 'Subscription status',
-      optionLabels: Object.entries(entitlementStatuses).map(
-        // create an array of arrays mapping API types to human readable names
-        // (like in ClusterListFilterDropdown)
-        ([key, value]) => [value, entitlementStatusDisplayNames[key]],
-      ).reduce((result, [key, value]) => ({
-        ...result, // reduce to turn the array into an object, for easy lookups
-        [key]: value,
-      }), {}),
-    },
     {
       key: 'plan_id',
       label: 'Cluster Type',

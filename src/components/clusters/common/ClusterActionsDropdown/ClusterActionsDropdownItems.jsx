@@ -152,6 +152,16 @@ function actionResolver(
       : { ...baseDeleteProps, onClick: () => openModal('delete-cluster', deleteModalData) };
   };
 
+  const getEditSubscriptionSettingsProps = () => {
+    const editSubscriptionSettingsProps = {
+      ...baseProps,
+      title: 'Edit Subscription Settings',
+      key: getKey('editsubscriptionsettings'),
+      onClick: () => openModal('edit-subscription-settings', cluster.subscription),
+    };
+    return editSubscriptionSettingsProps;
+  };
+
   const adminConsoleItemProps = getAdminConosleProps();
   const scaleClusterItemProps = getScaleClusterProps();
   const editDisplayNameItemProps = getEditDisplayNameProps();
@@ -160,6 +170,7 @@ function actionResolver(
   const archiveClusterItemProps = getArchiveClusterProps();
   const unarchiveClusterItemProps = getUnarchiveClusterProps();
   const editDisconnectedItemProps = getEditDisconnectedClusterProps();
+  const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed;
@@ -170,6 +181,7 @@ function actionResolver(
     && isArchived;
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
   const showEditDisconnected = cluster.canEdit && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED);
+  const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && cluster.subscription;
 
   return [
     showConsoleButton && adminConsoleItemProps,
@@ -180,6 +192,7 @@ function actionResolver(
     showArchive && archiveClusterItemProps,
     showUnarchive && unarchiveClusterItemProps,
     showEditDisconnected && editDisconnectedItemProps,
+    showEditSubscriptionSettings && editSubscriptionSettingsProps,
   ].filter(Boolean);
 }
 
