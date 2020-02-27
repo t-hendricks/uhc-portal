@@ -27,7 +27,7 @@ import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel/ClusterLocationLabel';
 import clusterStates, { getClusterStateAndDescription } from '../../common/clusterStates';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
-import SubscriptionStatusIndicator from './SubscriptionStatusIndicator';
+import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 import getClusterName from '../../../../common/getClusterName';
 import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 
@@ -145,7 +145,7 @@ function ClusterListTable(props) {
         { title: clusterName },
         { title: clusterStatus(clusterState.state) },
         { title: clusterType },
-        { title: <SubscriptionStatusIndicator cluster={cluster} /> },
+        { title: <ClusterCreatedIndicator cluster={cluster} /> },
         { title: clusterVersion },
         {
           title: <ClusterLocationLabel
@@ -165,7 +165,7 @@ function ClusterListTable(props) {
     { title: 'Name', transforms: [sortable, cellWidth(30)] },
     { title: 'Status', transforms: [cellWidth(15)] },
     { title: 'Type', transforms: [cellWidth(10)] },
-    { title: 'Subscription Status', columnTransforms: [hiddenOnMdOrSmaller] },
+    { title: 'Created', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
     '',

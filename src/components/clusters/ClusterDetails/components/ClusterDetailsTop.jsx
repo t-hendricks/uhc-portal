@@ -155,7 +155,7 @@ function ClusterDetailsTop(props) {
         expirationTimestamp={cluster.expiration_timestamp}
       />
       )}
-      <SubscriptionCompliancy cluster={cluster} />
+      <SubscriptionCompliancy cluster={cluster} openModal={openModal} />
       {children}
     </div>
   );

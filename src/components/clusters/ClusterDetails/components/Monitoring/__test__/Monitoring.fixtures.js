@@ -200,7 +200,6 @@ const mockOSDCluserDetails = {
     managed: true,
     status: 'Active',
     last_reconcile_date: '0001-01-01T00:00:00Z',
-    entitlement_status: 'Ok',
   },
   region: {
     kind: 'CloudRegionLink',
@@ -377,7 +376,6 @@ const mockOCPClusterDetails = {
     managed: false,
     status: 'Disconnected',
     last_reconcile_date: '0001-01-01T00:00:00Z',
-    entitlement_status: 'Ok',
   },
   nodes: {
     total: 0,

@@ -1,31 +1,71 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SubscriptionCompliancy /> should render 1`] = `
+exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
 <Component
-  id="subs-hint"
+  className="subscription-settings compliancy-alert"
   isInline={true}
-  title="This cluster is not attached to a subscription"
-  variant="danger"
+  title="Your OpenShift evaluation expires in 0 days"
+  variant="warning"
 >
   <p>
-    Find 
-    this cluster in the 
-    <a
-      href="https://access.redhat.com/management/systems"
-      rel="noreferrer noopener"
-      target="_blank"
+    Your 60-day OpenShift evaluation expires in 0 days. 
+    <Component
+      isDisabled={false}
+      isInline={true}
+      onClick={[Function]}
+      variant="link"
     >
-      Red Hat Customer Portal
-    </a>
-     and attach subscription(s) that covers the current size of this cluster. You may need to 
+      Edit subscription settings
+    </Component>
+     for non-evaluation use. 
     <a
       href="https://www.redhat.com/en/contact"
       rel="noreferrer noopener"
       target="_blank"
     >
-      contact sales
+      Contact sales
     </a>
-     in case you don't own enough subscriptions to cover it.
+     if you are not an active OpenShift customer.
+  </p>
+</Component>
+`;
+
+exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] = `
+<Component
+  className="subscription-settings compliancy-alert"
+  isInline={true}
+  title="Your 60-day OpenShift evaluation has expired"
+  variant="danger"
+>
+  <p>
+    Your cluster is not supported and you may stop receving updates.
+     
+    <Component
+      isDisabled={false}
+      isInline={true}
+      onClick={[Function]}
+      variant="link"
+    >
+      Edit subscription settings
+    </Component>
+     for non-evaluation use. 
+    <a
+      href="https://www.redhat.com/en/contact"
+      rel="noreferrer noopener"
+      target="_blank"
+    >
+      Contact sales
+    </a>
+     if you are not an active OpenShift customer. 
+    <Component
+      isDisabled={false}
+      isInline={true}
+      onClick={[Function]}
+      variant="link"
+    >
+      Archive this cluster
+    </Component>
+     if it no longer exits. 
   </p>
 </Component>
 `;

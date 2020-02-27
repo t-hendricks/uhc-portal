@@ -927,39 +927,13 @@ div.pf-c-alert.archived-cluster-toast {
 }
 #subscriptions-content {
   .pf-c-card {
-    margin-top: var(--pf-global--spacer--lg);
-  }
-  .status-group {
-    padding-left: var(--pf-global--spacer--lg);
-    margin-top: var(--pf-global--spacer--sm);
-    height: auto;
-  }
-  .status-group-header {
-    margin-top: var(--pf-global--spacer--md);
+    margin-bottom: var(--pf-global--spacer--lg);
   }
   .osd-table-container {
     overflow-x: auto;
   }
   table {
     margin-top: var(--pf-global--spacer--md);
-  }
-  .status-label {
-    font-size: var(--pf-global--FontSize--lg);
-    font-weight: var(--pf-global--FontWeight--bold);
-  }
-  .status-icon {
-    font-size: var(--pf-global--icon--FontSize--md);
-    margin-left: calc(-1 * var(--pf-global--spacer--lg));
-    margin-right: calc(var(--pf-global--spacer--lg) - var(--pf-global--FontSize--lg))
-  }
-  .ok-label {
-    color: var(--pf-global--success-color--200);
-  }
-  .ok-icon {
-    fill: var(--pf-global--success-color--100);
-  }
-  .warn-label {
-    color: var(--pf-global--warning-color--200);
   }
   .warn-icon {
     fill: var(--pf-global--warning-color--100);
@@ -979,6 +953,47 @@ div.pf-c-alert.archived-cluster-toast {
   }
   .quota-table-used, .quota-table-max {
     word-break: normal;
+  }
+  .ocp-list {
+    list-style: inside;
+    padding-left: 40px;
+    margin: 16px 0 16px 0;
+  }
+}
+
+.subscription-settings {
+  &.form {
+    margin-top: var(--pf-c-modal-box--c-title--body--MarginTop);
+    counter-reset: settings;
+  }
+  &.radio-group {
+    padding-left: 25px;
+
+    .pf-c-form__label-text {
+      font-weight: var(--pf-global--FontWeight--normal);
+      font-size: var(--pf-global--FontSize--md)
+    }
+    .pf-c-form__label-text::before {
+      counter-increment: settings;
+      content: counter(settings) ".";
+      position: absolute;
+      margin-left: -20px;
+    }
+  }
+  &.expired-eval-option {
+    color: var(--pf-global--danger-color--100);
+    font-weight: var(--pf-global--FontWeight--bold);
+  }
+  &.compliancy-alert {
+    margin-top: 20px;
+  }
+  &.warning-title-icon{
+    margin-left: 10px;
+    fill: var(--pf-global--warning-color--100);
+  }
+  &.danger-title-icon{
+    margin-left: 10px;
+    fill: var(--pf-global--danger-color--100);
   }
 }
 

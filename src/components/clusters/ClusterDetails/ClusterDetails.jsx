@@ -35,6 +35,7 @@ import DeleteIDPDialog from './components/DeleteIDPDialog';
 import ScaleClusterDialog from '../common/ScaleClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
+import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
 
 import ErrorBox from '../../common/ErrorBox';
@@ -314,9 +315,10 @@ class ClusterDetails extends Component {
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
-        <ArchiveClusterDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
         <EditConsoleURLDialog onClose={onDialogClose} />
+        <EditSubscriptionSettingsDialog onClose={onDialogClose} />
+        <ArchiveClusterDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {
           if (shouldRefresh) {
             invalidateClusters();

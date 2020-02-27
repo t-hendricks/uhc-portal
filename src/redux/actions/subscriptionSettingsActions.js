@@ -13,31 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { subscriptionsConstants } from '../constants';
+import { subscriptionSettingsConstants } from '../constants';
 import { accountsService } from '../../services';
 
 
-function fetchAccount() {
+function editSubscriptionSettings(subscriptionID, data) {
   return dispatch => dispatch({
-    type: subscriptionsConstants.GET_ACCOUNT,
-    payload: accountsService.getCurrentAccount(),
+    type: subscriptionSettingsConstants.EDIT_SUBSCRIPTION_SETTINGS,
+    payload: accountsService.editSubscription(subscriptionID, data),
   });
 }
 
-function fetchQuotaSummary(organizationID, params) {
+function clearEditSubscriptionSettingsResponse() {
   return dispatch => dispatch({
-    type: subscriptionsConstants.GET_QUOTA_SUMMARY,
-    payload: accountsService.getRequest(['quota_summary', organizationID], params),
+    type: subscriptionSettingsConstants.CLEAR_EDIT_SUBSCRIPTION_SETTINGS_RESPONSE,
   });
 }
 
-const subscriptionsActions = {
-  fetchAccount,
-  fetchQuotaSummary,
+const subscriptionSettingsActions = {
+  editSubscriptionSettings,
+  clearEditSubscriptionSettingsResponse,
 };
 
 export {
-  subscriptionsActions,
-  fetchAccount,
-  fetchQuotaSummary,
+  subscriptionSettingsActions,
+  editSubscriptionSettings,
+  clearEditSubscriptionSettingsResponse,
 };

@@ -47,6 +47,7 @@ import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
+import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
 import EditDisconnectedCluster from '../common/EditDisconnectedCluster';
 
@@ -83,12 +84,10 @@ class ClusterList extends Component {
 
     scrollToTop();
 
-    const entitelmentStatusFilter = getQueryParam('entitlement_status') || '';
     const planIDFilter = getQueryParam('plan_id') || '';
 
-    if (!isEmpty(entitelmentStatusFilter) || !isEmpty(planIDFilter)) {
+    if (!isEmpty(planIDFilter)) {
       setListFlag('subscriptionFilter', {
-        entitlement_status: entitelmentStatusFilter.split(',').filter(Boolean),
         plan_id: planIDFilter.split(',').filter(value => (value === 'OCP' || value === 'OSD')),
       });
     } else {
@@ -247,6 +246,7 @@ class ClusterList extends Component {
               />
               <EditDisplayNameDialog onClose={invalidateClusters} />
               <EditConsoleURLDialog onClose={invalidateClusters} />
+              <EditSubscriptionSettingsDialog onClose={invalidateClusters} />
               <ScaleClusterDialog onClose={invalidateClusters} />
               <EditDisconnectedCluster onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />

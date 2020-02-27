@@ -20,6 +20,7 @@ import machineTypesReducer from './machineTypesReducer';
 import { subscriptionsReducer } from './subscriptionsReducer';
 import { loadBalancersReducer } from './loadBalancersReducer';
 import { persistentStorageReducer } from './persistentStorageReducer';
+import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -42,6 +43,7 @@ const reducers = {
   loadBalancerValues: loadBalancersReducer,
   notifications,
   networkSelfService: NetworkSelfServiceReducer,
+  subscriptionSettings: subscriptionSettingsReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SubscriptionSettings /> should render for OCP 1`] = `
+<Card>
+  <CardHeader>
+    <Title
+      headingLevel="h2"
+      size="3xl"
+    >
+      Subscription Settings
+    </Title>
+  </CardHeader>
+  <CardBody>
+    <Grid>
+      <GridItem
+        sm={6}
+      >
+        <dl
+          className="cluster-details-item left"
+        >
+          <dt>
+            SLA
+          </dt>
+          <dd>
+            Premium
+          </dd>
+          <dt>
+            Production status
+          </dt>
+          <dd>
+            Production
+          </dd>
+          <dt>
+            Service level
+          </dt>
+          <dd>
+            L1-L3
+          </dd>
+          <dd>
+            <Component
+              isInline={true}
+              onClick={[Function]}
+              variant="link"
+            >
+              Edit subscription settings
+            </Component>
+          </dd>
+        </dl>
+      </GridItem>
+      <GridItem
+        sm={6}
+      >
+        <dl
+          className="cluster-details-item right"
+        >
+          <dt>
+            Subscription units
+          </dt>
+          <dd>
+            Cores/vCPU
+          </dd>
+          <dt>
+            Subscription obligation
+          </dt>
+          <dd>
+            16 cores
+          </dd>
+        </dl>
+      </GridItem>
+    </Grid>
+  </CardBody>
+</Card>
+`;
