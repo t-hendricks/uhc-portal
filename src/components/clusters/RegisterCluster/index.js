@@ -48,7 +48,7 @@ const mapDispatchToProps = dispatch => ({
       cpuMetric = {
         cpu: {
           total: {
-            value: parseInt(formData.cpu, 10),
+            value: parseInt(formData.vcpu_num, 10),
           },
         },
       };
