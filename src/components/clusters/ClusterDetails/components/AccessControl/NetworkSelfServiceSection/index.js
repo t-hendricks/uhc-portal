@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
+
 // import usersActions from './UsersActions';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';
 import {
@@ -28,6 +30,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(addGrant(ownProps.clusterID, role, arn));
   },
   deleteGrant: grantId => dispatch(deleteGrant(ownProps.clusterID, grantId)),
+  addNotification: data => dispatch(addNotification(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NetworkSelfServiceSection);

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {
   EmptyState,
   Title,
@@ -45,13 +44,40 @@ class NetworkSelfServiceSection extends React.Component {
 
   componentDidUpdate(prevProps) {
     const {
-      deleteGrantResponse, addGrantResponse, getGrants,
+      deleteGrantResponse, addGrantResponse, getGrants, grants, addNotification,
     } = this.props;
     // fetch grants again after deleting or adding a grant
     if (((deleteGrantResponse.fulfilled && prevProps.deleteGrantResponse.pending)
       || (addGrantResponse.fulfilled && prevProps.addGrantResponse.pending))
       && !getGrants.pending) {
       getGrants();
+    }
+    if (grants.fulfilled && prevProps.grants.pending && grants.data.length !== 0) {
+      const prevGrants = prevProps.grants.data;
+      const prevGrantsStates = prevGrants.reduce(
+        // eslint-disable-next-line no-param-reassign
+        (states, grant) => { states[grant.id] = grant.state; return states; }, {},
+      );
+      grants.data.forEach((grant) => {
+        if (prevGrantsStates[grant.id] && grant.state !== prevGrantsStates[grant.id]) {
+          if (grant.state === 'failed') {
+            addNotification({
+              variant: 'danger',
+              title: `Role creation failed for ${grant.user_arn}`,
+              description: grant.state_description,
+              dismissDelay: 8000,
+              dismissable: false,
+            });
+          } else if (grant.state === 'ready') {
+            addNotification({
+              variant: 'success',
+              title: `${grant.roleName} role successfully created for ${grant.user_arn}`,
+              dismissDelay: 8000,
+              dismissable: false,
+            });
+          }
+        }
+      });
     }
   }
 
@@ -70,7 +96,7 @@ class NetworkSelfServiceSection extends React.Component {
     } = this.props;
 
 
-    const grantStatus = (status) => {
+    const grantStatus = (status, description) => {
       let icon;
       let statusStr;
       switch (status) {
@@ -98,9 +124,30 @@ class NetworkSelfServiceSection extends React.Component {
           icon = <UnknownIcon className="status-icon" size="md" />;
           statusStr = 'Unknown';
       }
+      if (status === 'failed') {
+        return (
+          <span>
+            <Popover
+              position={PopoverPosition.top}
+              bodyContent={description}
+              aria-label="grant-failed"
+            >
+              <Button
+                className="self-service-failed"
+                variant="link"
+                isInline
+                icon={icon}
+              >
+                {statusStr}
+              </Button>
+            </Popover>
+          </span>
+        );
+      }
       return (
         <>
           {icon}
+          {' '}
           <span>{statusStr}</span>
           {' '}
         </>
@@ -151,7 +198,7 @@ class NetworkSelfServiceSection extends React.Component {
       cells: [
         grant.user_arn,
         grant.roleName,
-        { title: grantStatus(grant.state) },
+        { title: grantStatus(grant.state, grant.state_description) },
         {
           title: (
             <>
@@ -243,6 +290,7 @@ NetworkSelfServiceSection.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   openAddGrantModal: PropTypes.func.isRequired,
+  addNotification: PropTypes.func.isRequired,
 };
 
 export default NetworkSelfServiceSection;

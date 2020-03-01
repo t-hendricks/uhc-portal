@@ -14,7 +14,6 @@ const getGrants = clusterID => dispatch => dispatch({
   payload: clusterService.getGrants(clusterID),
 });
 
-
 const addGrant = (clusterID, roleId, arn) => dispatch => dispatch({
   type: ADD_GRANT,
   payload: clusterService.addGrant(clusterID, roleId, arn),

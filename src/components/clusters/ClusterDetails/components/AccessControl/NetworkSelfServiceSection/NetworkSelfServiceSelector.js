@@ -11,6 +11,7 @@ const grantsSelector = (state) => {
     id: grant.id,
     user_arn: grant.user_arn,
     state: grant.state,
+    state_description: grant.state_description,
     console_url: grant.console_url,
     roleName: getDisplayName(grant.role.id),
   }));
