@@ -719,6 +719,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   <Connect(ReduxForm)
     onClose={[Function]}
   />
+  <Connect(AddGrantModal)
+    clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
+  />
 </PageSection>
 `;
 
