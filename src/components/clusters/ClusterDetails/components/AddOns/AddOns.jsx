@@ -119,20 +119,21 @@ class AddOns extends React.Component {
             <CardHead>
               <Title headingLevel="h2" size="2xl">{addOn.name}</Title>
               <CardActions>
-                { (isInstalled(addOn, clusterAddOns) && getInstallState(addOn, clusterAddOns)) || (
-                <Button
-                  variant="secondary"
-                  aria-label="Install"
-                  isDisabled={
-                    addClusterAddOnResponse.pending
-                      || !isClusterReady
-                      || !cluster.canEdit
-                      || !hasQuota(addOn, organization, quota)
-                  }
-                  onClick={() => addClusterAddOn(clusterID, addOn.id)}
-                >
-                  Install
-                </Button>
+                { (isInstalled(addOn, clusterAddOns)
+                   && getInstallState(addOn, clusterAddOns, cluster)) || (
+                   <Button
+                     variant="secondary"
+                     aria-label="Install"
+                     isDisabled={
+                       addClusterAddOnResponse.pending
+                         || !isClusterReady
+                         || !cluster.canEdit
+                         || !hasQuota(addOn, organization, quota)
+                     }
+                     onClick={() => addClusterAddOn(clusterID, addOn.id)}
+                   >
+                     Install
+                   </Button>
                 )}
               </CardActions>
             </CardHead>
