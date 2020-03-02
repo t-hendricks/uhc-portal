@@ -25,6 +25,13 @@ describe('<SubscriptionCompliancy />', () => {
   it('should warn during evaluation period', () => {
     const c = clusterDetails.cluster;
     c.subscription[SUPPORT_LEVEL] = EVAL;
+    c.canEdit = true;
+    wrapper.setProps({ cluster: c }, () => {
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.find(Alert).length).toEqual(1);
+    });
+    // show diff text for non-edit users
+    c.canEdit = false;
     wrapper.setProps({ cluster: c }, () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);
@@ -34,6 +41,13 @@ describe('<SubscriptionCompliancy />', () => {
   it('should warn when evaluation is expired', () => {
     const c = clusterDetails.cluster;
     c.subscription[SUPPORT_LEVEL] = NONE;
+    c.canEdit = true;
+    wrapper.setProps({ cluster: c }, () => {
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.find(Alert).length).toEqual(1);
+    });
+    // show diff text for non-edit users
+    c.canEdit = false;
     wrapper.setProps({ cluster: c }, () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);

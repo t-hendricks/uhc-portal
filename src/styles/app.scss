@@ -967,6 +967,7 @@ div.pf-c-alert.archived-cluster-toast {
     counter-reset: settings;
   }
   &.radio-group {
+    position: relative;
     padding-left: 25px;
 
     .pf-c-form__label-text {

@@ -10,7 +10,6 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
   <p>
     Your 60-day OpenShift evaluation expires in 0 days. 
     <Component
-      isDisabled={false}
       isInline={true}
       onClick={[Function]}
       variant="link"
@@ -30,6 +29,20 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
 </Component>
 `;
 
+exports[`<SubscriptionCompliancy /> should warn during evaluation period 2`] = `
+<Component
+  className="subscription-settings compliancy-alert"
+  isInline={true}
+  title="Your OpenShift evaluation expires in 0 days"
+  variant="warning"
+>
+  <p>
+    Your 60-day OpenShift evaluation expires in 0 days. 
+    The cluster owner or an organization administrator can edit subscription settings for non-evaluation use.
+  </p>
+</Component>
+`;
+
 exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] = `
 <Component
   className="subscription-settings compliancy-alert"
@@ -41,7 +54,6 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] =
     Your cluster is not supported and you may stop receving updates.
      
     <Component
-      isDisabled={false}
       isInline={true}
       onClick={[Function]}
       variant="link"
@@ -56,9 +68,9 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] =
     >
       Contact sales
     </a>
-     if you are not an active OpenShift customer. 
+     if you are not an active OpenShift customer.
+     
     <Component
-      isDisabled={false}
       isInline={true}
       onClick={[Function]}
       variant="link"
@@ -66,6 +78,21 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] =
       Archive this cluster
     </Component>
      if it no longer exits. 
+  </p>
+</Component>
+`;
+
+exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 2`] = `
+<Component
+  className="subscription-settings compliancy-alert"
+  isInline={true}
+  title="Your 60-day OpenShift evaluation has expired"
+  variant="danger"
+>
+  <p>
+    Your cluster is not supported and you may stop receving updates.
+     
+    The cluster owner or an organization administrator can edit subscription settings for non-evaluation use.
   </p>
 </Component>
 `;
