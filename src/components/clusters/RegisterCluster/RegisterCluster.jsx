@@ -171,7 +171,7 @@ class RegisterCluster extends React.Component {
                     <Field
                       component={ReduxVerticalFormGroup}
                       name="socket_num"
-                      label="Number of sockets or LAPRs"
+                      label="Number of sockets or LPARs"
                       inputMode="numeric"
                       disabled={registerClusterResponse.pending}
                       validate={[required, checkDisconnectedSockets]}

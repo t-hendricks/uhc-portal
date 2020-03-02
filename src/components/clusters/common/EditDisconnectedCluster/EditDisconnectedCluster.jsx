@@ -75,7 +75,7 @@ class EditDisconnectedClusterDialog extends Component {
           {systemType === 'physical' && (
           <Field
             component={ReduxVerticalFormGroup}
-            label="Number of sockets or LAPRs"
+            label="Number of sockets or LPARs"
             name="sockets"
             inputMode="numeric"
             disabled={editClusterResponse.pending}
