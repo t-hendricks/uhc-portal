@@ -60,6 +60,7 @@ exports[`<Users /> with users should render 1`] = `
       actions={
         Array [
           Object {
+            "className": "hand-pointer",
             "onClick": [Function],
             "title": "Delete",
           },

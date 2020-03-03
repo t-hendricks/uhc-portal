@@ -39,6 +39,7 @@ function IDPSection({
         idpName: rowData.name.title,
         idpType: rowData.type.title,
       }),
+      className: 'hand-pointer',
     },
   ];
 
