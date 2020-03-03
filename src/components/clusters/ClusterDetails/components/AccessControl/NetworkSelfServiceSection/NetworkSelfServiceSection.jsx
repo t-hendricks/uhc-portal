@@ -155,7 +155,7 @@ class NetworkSelfServiceSection extends React.Component {
         {
           title: (
             <>
-              <ClipboardCopyLinkButton text={grant.console_url} isDisabled={!grant.console_url}>
+              <ClipboardCopyLinkButton className="access-control-tables-copy" text={grant.console_url} isDisabled={!grant.console_url}>
                 Copy URL to clipboard
               </ClipboardCopyLinkButton>
             </>),
@@ -179,7 +179,7 @@ class NetworkSelfServiceSection extends React.Component {
 
     const rows = hasGrants && grants.data.map(grantRow);
 
-    return grants.pending ? (
+    return grants.pending && !hasGrants ? (
       <Card>
         <CardHeader>
           <Skeleton size="md" />
