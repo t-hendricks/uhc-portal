@@ -26,6 +26,7 @@ import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
+import Insights from './components/Insights';
 import Monitoring from './components/Monitoring';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
@@ -54,6 +55,7 @@ class ClusterDetails extends Component {
     this.refreshIDP = this.refreshIDP.bind(this);
 
     this.overviewTabRef = React.createRef();
+    this.insightsTabRef = React.createRef();
     this.monitoringTabRef = React.createRef();
     this.accessControlTabRef = React.createRef();
     this.logsTabRef = React.createRef();
@@ -298,12 +300,14 @@ class ClusterDetails extends Component {
             displayLogs={hasLogs}
             displayAccessControlTab={displayAccessControlTab}
             displayMonitoringTab={!isArchived}
+            displayInsightsTab={!isArchived}
             displayAddOnsTab={displayAddOnsTab}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
             logsTabRef={this.logsTabRef}
             addOnsTabRef={this.addOnsTabRef}
+            insightsTabRef={this.insightsTabRef}
           />
         </ClusterDetailsTop>
         <TabContent eventKey={0} id="overviewTabContent" ref={this.overviewTabRef} aria-label="Overview">
@@ -337,6 +341,11 @@ class ClusterDetails extends Component {
         <TabContent eventKey={4} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
           <LogWindow clusterID={cluster.id} />
         </TabContent>
+        )}
+        {!isArchived && (
+          <TabContent eventKey={5} id="insightsTabContent" ref={this.insightsTabRef} aria-label="Insights" hidden>
+            <Insights cluster={cluster} />
+          </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
