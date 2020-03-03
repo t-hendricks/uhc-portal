@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
 import { CodeIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
 
-import links from '../../../../common/installLinks';
+import links, { channels } from '../../../../common/installLinks';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
@@ -175,12 +175,11 @@ function InstructionsPreRelease({ token }) {
         </div>
       </Card>
       <DownloadsAndPullSecretSection
-        installerURL={links.INSTALL_PRE_RELEASE_INSTALLER_LATEST_44}
         rhcosDownloadURL={links.INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_44}
-        cliURL={links.INSTALL_PRE_RELEASE_CLI_LATEST_44}
         token={token}
         showPreReleaseDocs
         showPreReleasePageLink={false}
+        channel={channels.PRE_RELEASE}
       >
         <p>
         As these are nightly builds, you will see multiple versions available at any one time

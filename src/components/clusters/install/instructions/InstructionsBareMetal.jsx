@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import links from '../../../../common/installLinks';
+import links, { channels } from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
@@ -35,10 +35,9 @@ function InstructionsBareMetal({ token }) {
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_BAREMETAL_INSTALLER_LATEST}
         rhcosLearnMoreURL={links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE}
-        cliURL={links.INSTALL_BAREMETAL_CLI_LATEST}
         cloudProviderID={cloudProviderID}
+        channel={channels.STABLE}
       />
     </>
   );

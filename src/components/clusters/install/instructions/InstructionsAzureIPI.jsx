@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import links from '../../../../common/installLinks';
+import links, { channels } from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
@@ -37,9 +37,8 @@ function InstructionsAzureIPI({ token }) {
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_AZUREIPI_INSTALLER_LATEST}
-        cliURL={links.INSTALL_AZUREIPI_CLI_LATEST}
         cloudProviderID={cloudProviderID}
+        channel={channels.STABLE}
       />
     </>
   );

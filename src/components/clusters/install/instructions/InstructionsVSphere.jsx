@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import links from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import EvaluationAlert from './components/EvaluationAlert';
+import links, { channels } from '../../../../common/installLinks';
 
 function InstructionsVSphere({ token }) {
   const cloudProviderID = window.location.pathname;
@@ -35,10 +35,9 @@ function InstructionsVSphere({ token }) {
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_VSPHERE_INSTALLER_LATEST}
         rhcosLearnMoreURL={links.INSTALL_VSPHERE_RHCOS_LEARN_MORE}
-        cliURL={links.INSTALL_VSPHERE_CLI_LATEST}
         cloudProviderID={cloudProviderID}
+        channel={channels.STABLE}
       />
     </>
   );

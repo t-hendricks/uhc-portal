@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import links from '../../../../common/installLinks';
+import links, { channels } from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
@@ -35,10 +35,9 @@ function InstructionsGCPUPI({ token }) {
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_GCPUPI_INSTALLER_LATEST}
-        cliURL={links.INSTALL_GCPUPI_CLI_LATEST}
         rhcosLearnMoreURL={links.INSTALL_GCPUPI_RHCOS_LEARN_MORE}
         cloudProviderID={cloudProviderID}
+        channel={channels.STABLE}
       />
     </>
   );
