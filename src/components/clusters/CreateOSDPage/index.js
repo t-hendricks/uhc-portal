@@ -27,8 +27,8 @@ const mapStateToProps = (state) => {
     machineTypes: state.machineTypes,
     organization,
     cloudProviders: state.cloudProviders,
-    loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
     persistentStorageValues: state.persistentStorageValues,
+    loadBalancerValues: state.loadBalancerValues,
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
     quota: {

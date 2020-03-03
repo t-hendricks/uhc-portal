@@ -3,7 +3,7 @@ import getLoadBalancers from '../../../../redux/actions/loadBalancerActions';
 import LoadBalancersDropdown from './LoadBalancersDropdown';
 
 const mapStateToProps = state => ({
-  loadBalancerValues: state.loadBalancerValues.loadBalancerValues,
+  loadBalancerValues: state.loadBalancerValues,
   quota: state.userProfile.organization.quotaList,
 });
 
