@@ -13,7 +13,7 @@ const minValueSelector = isMultiAz => (isMultiAz ? {
 const shouldShowLoadBalancerAlert = (state) => {
   const { data } = state.modal;
   const modalQuota = get(data, 'load_balancer_quota', 0);
-  const values = getFormValues('EditCluster')(state);
+  const values = getFormValues('ScaleCluster')(state);
   const formQuota = get(values, 'load_balancers', 0);
   if (formQuota && modalQuota) {
     return modalQuota > parseInt(formQuota, 10);
@@ -25,7 +25,7 @@ const shouldShowLoadBalancerAlert = (state) => {
 const shouldShowStorageQuotaAlert = (state) => {
   const { data } = state.modal;
   const modalQuota = get(data, 'storage_quota.value', 0);
-  const values = getFormValues('EditCluster')(state);
+  const values = getFormValues('ScaleCluster')(state);
   const formQuota = get(values, 'persistent_storage', 0);
   if (formQuota && modalQuota) {
     return modalQuota > parseInt(formQuota, 10);
