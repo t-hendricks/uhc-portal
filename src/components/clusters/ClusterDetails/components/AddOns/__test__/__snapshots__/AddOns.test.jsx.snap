@@ -58,6 +58,17 @@ exports[`<AddOns /> should render 1`] = `
         <span>
           Installed
         </span>
+        <a
+          href="https://console-openshift-console.apps.test-liza.sdev.devshift.net/k8s/ns/undefined/operators.coreos.com~v1alpha1~ClusterServiceVersion/service-mesh.vundefined"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Component
+            variant="secondary"
+          >
+            View in console
+          </Component>
+        </a>
       </CardActions>
     </CardHead>
     <CardBody

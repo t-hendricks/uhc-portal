@@ -3,6 +3,7 @@ import React from 'react';
 import get from 'lodash/get';
 import has from 'lodash/has';
 
+import { Button } from '@patternfly/react-core';
 import {
   CheckCircleIcon,
   ExclamationCircleIcon,
@@ -15,7 +16,16 @@ import { global_success_color_100, global_danger_color_100 } from '@patternfly/r
 
 import AddOnsConstants from './AddOnsConstants';
 
-const getInstallState = (addOn, clusterAddOns) => {
+const getAddOnConsoleButton = (cluster, addOn, installedAddOn) => {
+  const addOnURL = `${cluster.console.url}/k8s/ns/${addOn.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${addOn.id}.v${installedAddOn.operator_version}`;
+  return (
+    <a href={addOnURL} target="_blank" rel="noopener noreferrer">
+      <Button variant="secondary">View in console</Button>
+    </a>
+  );
+};
+
+const getInstallState = (addOn, clusterAddOns, cluster) => {
   const installedAddOn = clusterAddOns.items.find(item => item.addon.id === addOn.id);
   if (!installedAddOn) {
     return '';
@@ -23,6 +33,7 @@ const getInstallState = (addOn, clusterAddOns) => {
 
   let icon = '';
   let state = '';
+  let action = '';
 
   switch (installedAddOn.state) {
     case AddOnsConstants.INSTALLATION_STATE.PENDING:
@@ -40,10 +51,12 @@ const getInstallState = (addOn, clusterAddOns) => {
     case AddOnsConstants.INSTALLATION_STATE.FAILED:
       icon = <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />;
       state = 'Install failed';
+      action = <a href="mailto:ocm-feedback@redhat.com" rel="noreferrer noopener" target="_blank">Contact support</a>;
       break;
     case AddOnsConstants.INSTALLATION_STATE.READY:
       icon = <CheckCircleIcon color={global_success_color_100.value} size="md" />;
       state = 'Installed';
+      action = getAddOnConsoleButton(cluster, addOn, installedAddOn);
       break;
     default:
       icon = <UnknownIcon size="md" />;
@@ -55,6 +68,7 @@ const getInstallState = (addOn, clusterAddOns) => {
     <>
       { icon }
       <span>{ state }</span>
+      { action }
     </>
   );
 };
