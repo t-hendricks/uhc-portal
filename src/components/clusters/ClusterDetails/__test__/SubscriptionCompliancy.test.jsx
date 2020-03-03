@@ -23,49 +23,47 @@ describe('<SubscriptionCompliancy />', () => {
   });
 
   it('should warn during evaluation period', () => {
-    const c = clusterDetails.cluster;
-    c.subscription[SUPPORT_LEVEL] = EVAL;
-    c.canEdit = true;
-    wrapper.setProps({ cluster: c }, () => {
+    const cluster = { ...clusterDetails.cluster, canEdit: true };
+    cluster.subscription[SUPPORT_LEVEL] = EVAL;
+    wrapper.setProps({ cluster }, () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);
     });
     // show diff text for non-edit users
-    c.canEdit = false;
-    wrapper.setProps({ cluster: c }, () => {
+    cluster.canEdit = false;
+    wrapper.setProps({ cluster }, () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);
     });
   });
 
   it('should warn when evaluation is expired', () => {
-    const c = clusterDetails.cluster;
-    c.subscription[SUPPORT_LEVEL] = NONE;
-    c.canEdit = true;
-    wrapper.setProps({ cluster: c }, () => {
+    const cluster = { ...clusterDetails.cluster, canEdit: true };
+    cluster.subscription[SUPPORT_LEVEL] = NONE;
+    wrapper.setProps({ cluster }, () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);
     });
     // show diff text for non-edit users
-    c.canEdit = false;
-    wrapper.setProps({ cluster: c }, () => {
+    cluster.canEdit = false;
+    wrapper.setProps({ cluster }, () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);
     });
   });
 
   it('should not render when it has a valid support', () => {
-    const c = clusterDetails.cluster;
-    c.subscription[SUPPORT_LEVEL] = STANDARD;
-    wrapper.setProps({ cluster: c }, () => {
+    const cluster = { ...clusterDetails.cluster };
+    cluster.subscription[SUPPORT_LEVEL] = STANDARD;
+    wrapper.setProps({ cluster }, () => {
       expect(wrapper).toMatchObject({});
     });
   });
 
   it('should not render when it is not OCP', () => {
-    const c = clusterDetails.cluster;
-    c.subscription.plan.id = 'OSD';
-    wrapper.setProps({ cluster: c }, () => {
+    const cluster = { ...clusterDetails.cluster };
+    cluster.subscription.plan.id = 'OSD';
+    wrapper.setProps({ cluster }, () => {
       expect(wrapper).toMatchObject({});
     });
   });
