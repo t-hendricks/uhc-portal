@@ -40,9 +40,12 @@ function ScaleSection({
           />
         </FormGroup>
       </GridItem>
+      <GridItem span={3}>
+        {' '}
+      </GridItem>
 
       {/* Compute nodes */}
-      <GridItem span={4}>
+      <GridItem span={2}>
         <Field
           component={NodeCountInput}
           name="nodes_compute"
@@ -54,7 +57,7 @@ function ScaleSection({
           extendedHelpText={constants.computeNodeCountHint}
         />
       </GridItem>
-      <GridItem span={8} />
+      <GridItem span={9} />
 
       {/* Persistent Storage & Load Balancers */}
       { !isBYOC && (
@@ -89,6 +92,7 @@ function ScaleSection({
               />
             </FormGroup>
           </GridItem>
+          <GridItem span={9} />
         </>
       )}
     </>

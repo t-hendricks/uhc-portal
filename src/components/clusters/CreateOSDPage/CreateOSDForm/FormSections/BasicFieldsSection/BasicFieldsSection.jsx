@@ -7,7 +7,7 @@ import {
 } from '@patternfly/react-core';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import { constants } from '../../CreateOSDFormConstants';
-
+import { noQuotaTooltip } from '../../../../../../common/helpers';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../../../common/validators';
@@ -83,12 +83,23 @@ function BasicFieldsSection({
           <PopoverHint hint={constants.availabilityHint} />
           <Field
             component={RadioButtons}
+            className={!hasSingleAzQuota || !hasMultiAzQuota ? 'radio-az-disabled' : null}
             name="multi_az"
             disabled={pending}
             onChange={handleMultiAZChange}
             options={[
-              { value: 'false', label: 'Single Zone', disabled: !hasSingleAzQuota },
-              { value: 'true', label: 'Multizone', disabled: !hasMultiAzQuota },
+              {
+                value: 'false',
+                label: 'Single Zone',
+                disabled: !hasSingleAzQuota,
+                tooltipText: noQuotaTooltip,
+              },
+              {
+                value: 'true',
+                label: 'Multizone',
+                disabled: !hasMultiAzQuota,
+                tooltipText: noQuotaTooltip,
+              },
             ]}
             defaultValue={hasSingleAzQuota ? 'false' : 'true'}
           />

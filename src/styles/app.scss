@@ -143,6 +143,10 @@ limitations under the License.
   }
 }
 
+.radio-tooltip {
+  left: -70px
+}
+
 .vertical-align{
   position: relative;
   top: 50%;
@@ -425,6 +429,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 #monitoring .summary {
   max-width: 185px;
+}
+
+.pf-c-radio.radio-az-disabled {
+  width: 120px;
 }
 
 .developer-preview {
@@ -1039,7 +1047,7 @@ button:focus {
     width: 100%;
   }
   select {
-    width: 48%;
+    width: 100%;
     margin-right: var(--pf-global--spacer--xs);
   }
 }

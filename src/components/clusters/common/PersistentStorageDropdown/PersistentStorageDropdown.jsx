@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import {
   FormSelect,
   FormSelectOption,
+  Tooltip,
 } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
@@ -14,6 +15,7 @@ import get from 'lodash/get';
 import ErrorBox from '../../../common/ErrorBox';
 import { humanizeValueWithUnitGiB } from '../../../../common/units';
 import filterPersistentStorageValuesByQuota from './helpers';
+import { noQuotaTooltip } from '../../../../common/helpers';
 
 class PersistentStorageDropdown extends React.Component {
   componentDidMount() {
@@ -54,9 +56,9 @@ class PersistentStorageDropdown extends React.Component {
       const remainingQuota = get(quota, 'persistentStorageQuota', 0);
       const filteredStorageValues = filterPersistentStorageValuesByQuota(currentValue,
         persistentStorageValues, remainingQuota);
-      const isDisabled = disabled || (filteredStorageValues.values.length <= 1);
-
-      return (
+      const notEnoughQuota = filteredStorageValues.values.length <= 1;
+      const isDisabled = disabled || notEnoughQuota;
+      const formSelect = (
         <FormSelect
           className="quota-dropdown"
           aria-label="Persistent Storage"
@@ -66,6 +68,20 @@ class PersistentStorageDropdown extends React.Component {
           {filteredStorageValues.values.map(value => storageOption(value))}
         </FormSelect>
       );
+
+      if (notEnoughQuota) {
+        return (
+          <Tooltip
+            content={noQuotaTooltip}
+            position="right"
+          >
+            <div>
+              {formSelect}
+            </div>
+          </Tooltip>
+        );
+      }
+      return formSelect;
     }
 
     return persistentStorageValues.error ? (
