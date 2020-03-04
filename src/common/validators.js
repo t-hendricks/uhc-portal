@@ -297,7 +297,7 @@ const validateARN = (value) => {
     return 'Field is required';
   }
   if (!AWS_ARN_REGEX.test(value)) {
-    return 'ARN value should be in the format arn::aws:iam::123456789012:user/name.';
+    return 'ARN value should be in the format arn:aws:iam::123456789012:user/name.';
   }
   return undefined;
 };
