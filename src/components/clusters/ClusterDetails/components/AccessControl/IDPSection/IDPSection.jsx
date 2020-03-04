@@ -48,7 +48,7 @@ function IDPSection({
       get(IDPTypeNames, idp.type, idp.type),
       {
         title: IDPNeedsOAuthURL(idp.type) ? (
-          <ClipboardCopyLinkButton className="idp-table-copy" text={getOauthCallbackURL(clusterConsoleURL, idp.name)}>
+          <ClipboardCopyLinkButton className="access-control-tables-copy" text={getOauthCallbackURL(clusterConsoleURL, idp.name)}>
             Copy URL to clipboard
           </ClipboardCopyLinkButton>
         ) : 'N/A',
