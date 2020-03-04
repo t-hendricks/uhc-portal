@@ -12,14 +12,14 @@ exports[`<ClusterListFilterChipGroup /> should render 1`] = `
       withToolbar={true}
     >
       <ChipGroupToolbarItem
-        categoryName="Subscription status"
-        key="chipgroup-entitlement_status"
+        categoryName="Cluster Type"
+        key="chipgroup-plan_id"
       >
         <Component
-          key="NotSubscribed"
+          key="OSD"
           onClick={[Function]}
         >
-          Not subscribed
+          OSD
         </Component>
       </ChipGroupToolbarItem>
     </ChipGroup>

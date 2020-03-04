@@ -6,33 +6,65 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
   fieldId="compute-nodes"
   label="compute nodes"
 >
-  <div>
-    <FormSelect
-      aria-label="Compute nodes"
-      className=""
-      isDisabled={true}
-      isRequired={false}
-      isValid={true}
-      name="compute-nodes"
-      onBlur={[Function]}
-      onChange={[MockFunction]}
-      onFocus={[Function]}
-      validated="default"
-      value=""
-    >
-      <FormSelectOption
-        key="9"
-        label="3"
-        value={9}
-      />
-    </FormSelect>
-    <span>
-      × 3 zones =
-       
-       
-      compute nodes
-    </span>
-  </div>
+  <Tooltip
+    appendTo={[Function]}
+    aria="describedby"
+    boundary="window"
+    className=""
+    content="You do not have quota for this option. Contact sales to purchase additional quota."
+    distance={15}
+    enableFlip={true}
+    entryDelay={500}
+    exitDelay={500}
+    flipBehavior={
+      Array [
+        "top",
+        "right",
+        "bottom",
+        "left",
+        "top",
+        "right",
+        "bottom",
+      ]
+    }
+    id=""
+    isAppLauncher={false}
+    isContentLeftAligned={false}
+    isVisible={false}
+    maxWidth="18.75rem"
+    position="right"
+    tippyProps={Object {}}
+    trigger="mouseenter focus"
+    zIndex={9999}
+  >
+    <div>
+      <FormSelect
+        aria-label="Compute nodes"
+        className=""
+        isDisabled={true}
+        isRequired={false}
+        isValid={true}
+        name="compute-nodes"
+        onBlur={[Function]}
+        onChange={[MockFunction]}
+        onFocus={[Function]}
+        validated="default"
+        value=""
+      >
+        <FormSelectOption
+          key="9"
+          label="3"
+          value={9}
+        />
+      </FormSelect>
+    </div>
+  </Tooltip>
+  <span>
+    × 3 zones =
+     
+     
+    compute nodes
+  </span>
 </FormGroup>
 `;
 
@@ -42,38 +74,36 @@ exports[`<NodeCountInput> Multi AZ renders with some quota 1`] = `
   fieldId="compute-nodes"
   label="compute nodes"
 >
-  <div>
-    <FormSelect
-      aria-label="Compute nodes"
-      className=""
-      isDisabled={false}
-      isRequired={false}
-      isValid={true}
-      name="compute-nodes"
-      onBlur={[Function]}
-      onChange={[MockFunction]}
-      onFocus={[Function]}
-      validated="default"
-      value=""
-    >
-      <FormSelectOption
-        key="9"
-        label="3"
-        value={9}
-      />
-      <FormSelectOption
-        key="12"
-        label="4"
-        value={12}
-      />
-    </FormSelect>
-    <span>
-      × 3 zones =
-       
-       
-      compute nodes
-    </span>
-  </div>
+  <FormSelect
+    aria-label="Compute nodes"
+    className=""
+    isDisabled={false}
+    isRequired={false}
+    isValid={true}
+    name="compute-nodes"
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      key="9"
+      label="3"
+      value={9}
+    />
+    <FormSelectOption
+      key="12"
+      label="4"
+      value={12}
+    />
+  </FormSelect>
+  <span>
+    × 3 zones =
+     
+     
+    compute nodes
+  </span>
 </FormGroup>
 `;
 
@@ -83,27 +113,59 @@ exports[`<NodeCountInput> Single AZ renders with no quota 1`] = `
   fieldId="compute-nodes"
   label="compute nodes"
 >
-  <div>
-    <FormSelect
-      aria-label="Compute nodes"
-      className=""
-      isDisabled={true}
-      isRequired={false}
-      isValid={true}
-      name="compute-nodes"
-      onBlur={[Function]}
-      onChange={[MockFunction]}
-      onFocus={[Function]}
-      validated="default"
-      value=""
-    >
-      <FormSelectOption
-        key="4"
-        label="4"
-        value={4}
-      />
-    </FormSelect>
-  </div>
+  <Tooltip
+    appendTo={[Function]}
+    aria="describedby"
+    boundary="window"
+    className=""
+    content="You do not have quota for this option. Contact sales to purchase additional quota."
+    distance={15}
+    enableFlip={true}
+    entryDelay={500}
+    exitDelay={500}
+    flipBehavior={
+      Array [
+        "top",
+        "right",
+        "bottom",
+        "left",
+        "top",
+        "right",
+        "bottom",
+      ]
+    }
+    id=""
+    isAppLauncher={false}
+    isContentLeftAligned={false}
+    isVisible={false}
+    maxWidth="18.75rem"
+    position="right"
+    tippyProps={Object {}}
+    trigger="mouseenter focus"
+    zIndex={9999}
+  >
+    <div>
+      <FormSelect
+        aria-label="Compute nodes"
+        className=""
+        isDisabled={true}
+        isRequired={false}
+        isValid={true}
+        name="compute-nodes"
+        onBlur={[Function]}
+        onChange={[MockFunction]}
+        onFocus={[Function]}
+        validated="default"
+        value=""
+      >
+        <FormSelectOption
+          key="4"
+          label="4"
+          value={4}
+        />
+      </FormSelect>
+    </div>
+  </Tooltip>
 </FormGroup>
 `;
 
@@ -113,77 +175,75 @@ exports[`<NodeCountInput> Single AZ renders with some quota 1`] = `
   fieldId="compute-nodes"
   label="compute nodes"
 >
-  <div>
-    <FormSelect
-      aria-label="Compute nodes"
-      className=""
-      isDisabled={false}
-      isRequired={false}
-      isValid={true}
-      name="compute-nodes"
-      onBlur={[Function]}
-      onChange={[MockFunction]}
-      onFocus={[Function]}
-      validated="default"
-      value=""
-    >
-      <FormSelectOption
-        key="4"
-        label="4"
-        value={4}
-      />
-      <FormSelectOption
-        key="5"
-        label="5"
-        value={5}
-      />
-      <FormSelectOption
-        key="6"
-        label="6"
-        value={6}
-      />
-      <FormSelectOption
-        key="7"
-        label="7"
-        value={7}
-      />
-      <FormSelectOption
-        key="8"
-        label="8"
-        value={8}
-      />
-      <FormSelectOption
-        key="9"
-        label="9"
-        value={9}
-      />
-      <FormSelectOption
-        key="10"
-        label="10"
-        value={10}
-      />
-      <FormSelectOption
-        key="11"
-        label="11"
-        value={11}
-      />
-      <FormSelectOption
-        key="12"
-        label="12"
-        value={12}
-      />
-      <FormSelectOption
-        key="13"
-        label="13"
-        value={13}
-      />
-      <FormSelectOption
-        key="14"
-        label="14"
-        value={14}
-      />
-    </FormSelect>
-  </div>
+  <FormSelect
+    aria-label="Compute nodes"
+    className=""
+    isDisabled={false}
+    isRequired={false}
+    isValid={true}
+    name="compute-nodes"
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      key="4"
+      label="4"
+      value={4}
+    />
+    <FormSelectOption
+      key="5"
+      label="5"
+      value={5}
+    />
+    <FormSelectOption
+      key="6"
+      label="6"
+      value={6}
+    />
+    <FormSelectOption
+      key="7"
+      label="7"
+      value={7}
+    />
+    <FormSelectOption
+      key="8"
+      label="8"
+      value={8}
+    />
+    <FormSelectOption
+      key="9"
+      label="9"
+      value={9}
+    />
+    <FormSelectOption
+      key="10"
+      label="10"
+      value={10}
+    />
+    <FormSelectOption
+      key="11"
+      label="11"
+      value={11}
+    />
+    <FormSelectOption
+      key="12"
+      label="12"
+      value={12}
+    />
+    <FormSelectOption
+      key="13"
+      label="13"
+      value={13}
+    />
+    <FormSelectOption
+      key="14"
+      label="14"
+      value={14}
+    />
+  </FormSelect>
 </FormGroup>
 `;
 
@@ -193,38 +253,36 @@ exports[`<NodeCountInput> scaling dialog behavior multiAz renders with no quota 
   fieldId="compute-nodes"
   label="compute nodes"
 >
-  <div>
-    <FormSelect
-      aria-label="Compute nodes"
-      className=""
-      isDisabled={false}
-      isRequired={false}
-      isValid={true}
-      name="compute-nodes"
-      onBlur={[Function]}
-      onChange={[MockFunction]}
-      onFocus={[Function]}
-      validated="default"
-      value=""
-    >
-      <FormSelectOption
-        key="9"
-        label="3"
-        value={9}
-      />
-      <FormSelectOption
-        key="12"
-        label="4"
-        value={12}
-      />
-    </FormSelect>
-    <span>
-      × 3 zones =
-       
-       
-      compute nodes
-    </span>
-  </div>
+  <FormSelect
+    aria-label="Compute nodes"
+    className=""
+    isDisabled={false}
+    isRequired={false}
+    isValid={true}
+    name="compute-nodes"
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      key="9"
+      label="3"
+      value={9}
+    />
+    <FormSelectOption
+      key="12"
+      label="4"
+      value={12}
+    />
+  </FormSelect>
+  <span>
+    × 3 zones =
+     
+     
+    compute nodes
+  </span>
 </FormGroup>
 `;
 
@@ -234,36 +292,34 @@ exports[`<NodeCountInput> scaling dialog behavior singleAZ renders with no quota
   fieldId="compute-nodes"
   label="compute nodes"
 >
-  <div>
-    <FormSelect
-      aria-label="Compute nodes"
-      className=""
-      isDisabled={false}
-      isRequired={false}
-      isValid={true}
-      name="compute-nodes"
-      onBlur={[Function]}
-      onChange={[MockFunction]}
-      onFocus={[Function]}
-      validated="default"
-      value=""
-    >
-      <FormSelectOption
-        key="4"
-        label="4"
-        value={4}
-      />
-      <FormSelectOption
-        key="5"
-        label="5"
-        value={5}
-      />
-      <FormSelectOption
-        key="6"
-        label="6"
-        value={6}
-      />
-    </FormSelect>
-  </div>
+  <FormSelect
+    aria-label="Compute nodes"
+    className=""
+    isDisabled={false}
+    isRequired={false}
+    isValid={true}
+    name="compute-nodes"
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      key="4"
+      label="4"
+      value={4}
+    />
+    <FormSelectOption
+      key="5"
+      label="5"
+      value={5}
+    />
+    <FormSelectOption
+      key="6"
+      label="6"
+      value={6}
+    />
+  </FormSelect>
 </FormGroup>
 `;

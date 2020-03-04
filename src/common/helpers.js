@@ -40,6 +40,8 @@ const scrollToTop = () => {
   }
 };
 
+const noQuotaTooltip = 'You do not have quota for this option. Contact sales to purchase additional quota.';
+
 /**
  * Returns true if an object is empty or if all its direct children are empty.
  *
@@ -72,6 +74,7 @@ export {
   multiInputToCleanArray,
   scrollToTop,
   getRandomID,
+  noQuotaTooltip,
 };
 
 export default helpers;

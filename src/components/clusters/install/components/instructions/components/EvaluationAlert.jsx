@@ -10,7 +10,7 @@ function EvaluationAlert() {
   const description = (
     <>
       Evaluation subscriptions do not include support from Red Hat.
-      For non-evaluation use, you should attach a subscription that includes support.
+      You can edit your subscription settings after the cluster is created to receive support.
       {' '}
       <a href={links.SUBSCRIPTION_EVAL_INFORMATION} target="_blank" rel="noreferrer noopener">
         Learn more

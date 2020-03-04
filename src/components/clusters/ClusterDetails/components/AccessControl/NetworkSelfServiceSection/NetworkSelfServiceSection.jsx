@@ -32,7 +32,6 @@ import {
 import { global_success_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 import { Skeleton } from '@redhat-cloud-services/frontend-components';
 
-import GrantModal from './GrantModal';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
@@ -58,15 +57,9 @@ class NetworkSelfServiceSection extends React.Component {
   render() {
     const {
       grants,
-      roles,
-      submit,
-      addGrantResponse,
       deleteGrant,
       deleteGrantResponse,
-      isModalOpen,
-      closeModal,
       openAddGrantModal,
-      clearAddGrantResponse,
     } = this.props;
 
 
@@ -155,7 +148,7 @@ class NetworkSelfServiceSection extends React.Component {
         {
           title: (
             <>
-              <ClipboardCopyLinkButton text={grant.console_url} isDisabled={!grant.console_url}>
+              <ClipboardCopyLinkButton className="access-control-tables-copy" text={grant.console_url} isDisabled={!grant.console_url}>
                 Copy URL to clipboard
               </ClipboardCopyLinkButton>
             </>),
@@ -179,7 +172,7 @@ class NetworkSelfServiceSection extends React.Component {
 
     const rows = hasGrants && grants.data.map(grantRow);
 
-    return grants.pending ? (
+    return grants.pending && !hasGrants ? (
       <Card>
         <CardHeader>
           <Skeleton size="md" />
@@ -217,14 +210,6 @@ class NetworkSelfServiceSection extends React.Component {
             </Button>
           </CardBody>
         </Card>
-        <GrantModal
-          isOpen={isModalOpen}
-          closeModal={closeModal}
-          clearAddGrantResponse={clearAddGrantResponse}
-          submit={submit}
-          addGrantResponse={addGrantResponse}
-          roles={roles.data}
-        />
       </>
     );
   }
@@ -234,14 +219,9 @@ NetworkSelfServiceSection.propTypes = {
   getRoles: PropTypes.func.isRequired,
   getGrants: PropTypes.func.isRequired,
   grants: PropTypes.object.isRequired,
-  roles: PropTypes.object.isRequired,
-  submit: PropTypes.func.isRequired,
   addGrantResponse: PropTypes.object,
-  clearAddGrantResponse: PropTypes.func.isRequired,
   deleteGrant: PropTypes.func.isRequired,
   deleteGrantResponse: PropTypes.object,
-  isModalOpen: PropTypes.bool.isRequired,
-  closeModal: PropTypes.func.isRequired,
   openAddGrantModal: PropTypes.func.isRequired,
 };
 

@@ -111,7 +111,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
                 disabled={false}
                 inputMode="numeric"
                 isRequired={true}
-                label="Number of sockets or LAPRs"
+                label="Number of sockets or LPARs"
                 name="socket_num"
                 validate={
                   Array [

@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import {
-  getSubscriptionManagementURL,
-  getClusterEvaluationExpiresDate,
-} from '../../clusterDetailsHelper';
 
 import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../common/units';
@@ -26,8 +22,6 @@ function DetailsRight({ cluster }) {
 
   const showVCPU = !showSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-  const evaluationExpiresDate = getClusterEvaluationExpiresDate(cluster);
-  const manageSubscriptionURL = getSubscriptionManagementURL(get(cluster, 'subscription'));
   return (
     <>
       <dl className="cluster-details-item left">
@@ -167,28 +161,6 @@ function DetailsRight({ cluster }) {
             </dd>
           </dl>
         </dd>
-        { !cluster.managed && (
-          <>
-            <dt>
-              Support Level
-            </dt>
-            <dd>
-              {get(cluster, 'subscription.support_level', 'None (Evaluation)')}
-            </dd>
-          </>
-        )}
-        { evaluationExpiresDate && (
-          <>
-            <dt>
-              Subscription Status
-            </dt>
-            <dd>
-              {`Evaluation expires ${evaluationExpiresDate}`}
-              <br />
-              <a href={manageSubscriptionURL} target="_blank" rel="noreferrer noopener">Manage Subscription</a>
-            </dd>
-          </>
-        )}
         <ClusterNetwork cluster={cluster} />
       </dl>
     </>

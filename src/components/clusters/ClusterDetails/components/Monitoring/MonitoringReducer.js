@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION,
-  setStateProp, baseRequestState,
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../common/errors';
 import { monitoringConstants } from './MonitoringConstants';
@@ -36,126 +36,75 @@ const initialState = {
 };
 
 function MonitoringReducer(state = initialState, action) {
-  switch (action.type) {
-    case REJECTED_ACTION(monitoringConstants.GET_ALERTS):
-      return setStateProp(
-        'alerts',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    // eslint-disable-next-line default-case
+    switch (action.type) {
+      // GET_ALERTS
+      case REJECTED_ACTION(monitoringConstants.GET_ALERTS):
+        draft.alerts = {
+          ...initialState.alerts,
+          ...getErrorState(action),
+        };
+        break;
 
-    case PENDING_ACTION(monitoringConstants.GET_ALERTS):
-      return setStateProp(
-        'alerts',
-        {
-          data: state.alerts.data,
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+      case PENDING_ACTION(monitoringConstants.GET_ALERTS):
+        draft.alerts.pending = true;
+        break;
 
-    case FULFILLED_ACTION(monitoringConstants.GET_ALERTS):
-      return setStateProp(
-        'alerts',
-        {
+      case FULFILLED_ACTION(monitoringConstants.GET_ALERTS):
+        draft.alerts = {
+          ...initialState.alerts,
+          fulfilled: true,
           data: action.payload.data.alerts,
-          pending: false,
+        };
+        break;
+
+      // GET_NODES
+      case REJECTED_ACTION(monitoringConstants.GET_NODES):
+        draft.nodes = {
+          ...initialState.nodes,
+          ...getErrorState(action),
+        };
+        break;
+
+      case PENDING_ACTION(monitoringConstants.GET_NODES):
+        draft.nodes.pending = true;
+        break;
+
+      case FULFILLED_ACTION(monitoringConstants.GET_NODES):
+        draft.nodes = {
+          ...initialState.nodes,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-
-    case REJECTED_ACTION(monitoringConstants.GET_NODES):
-      return setStateProp(
-        'nodes',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(monitoringConstants.GET_NODES):
-      return setStateProp(
-        'nodes',
-        {
-          data: state.nodes.data,
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(monitoringConstants.GET_NODES):
-      return setStateProp(
-        'nodes',
-        {
           data: action.payload.data.nodes,
-          pending: false,
+        };
+        break;
+
+      // GET_OPERATORS
+      case REJECTED_ACTION(monitoringConstants.GET_OPERATORS):
+        draft.operators = {
+          ...initialState.operators,
+          ...getErrorState(action),
+        };
+        break;
+
+      case PENDING_ACTION(monitoringConstants.GET_OPERATORS):
+        draft.operators.pending = true;
+        break;
+
+      case FULFILLED_ACTION(monitoringConstants.GET_OPERATORS):
+        draft.operators = {
+          ...initialState.operators,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-
-    case REJECTED_ACTION(monitoringConstants.GET_OPERATORS):
-      return setStateProp(
-        'operators',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(monitoringConstants.GET_OPERATORS):
-      return setStateProp(
-        'operators',
-        {
-          data: state.operators.data,
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(monitoringConstants.GET_OPERATORS):
-      return setStateProp(
-        'operators',
-        {
           data: action.payload.data.operators,
-          pending: false,
-          fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
+        break;
 
-
-    case monitoringConstants.CLEAR_MONITORING_STATE:
-      return initialState;
-    default:
-      return state;
-  }
+      // CLEAR_MONITORING_STATE
+      case monitoringConstants.CLEAR_MONITORING_STATE:
+        return initialState;
+    }
+  });
 }
 
 MonitoringReducer.initialState = initialState;

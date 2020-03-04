@@ -1,59 +1,40 @@
+import produce from 'immer';
+
 import {
-  setStateProp, REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
 import { loadBalancerConstants } from '../constants';
 
 const initialState = {
-  loadBalancerValues: {
-    ...baseRequestState,
-    values: [],
-  },
+  ...baseRequestState,
+  values: [],
 };
 
 function loadBalancersReducer(state = initialState, action) {
-  switch (action.type) {
-    case REJECTED_ACTION(loadBalancerConstants.GET_LOAD_BALANCER_VALUES):
-      return setStateProp(
-        'loadBalancerValues',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    // eslint-disable-next-line default-case
+    switch (action.type) {
+      case REJECTED_ACTION(loadBalancerConstants.GET_LOAD_BALANCER_VALUES):
+        return {
+          ...initialState,
+          ...getErrorState(action),
+        };
 
-    case PENDING_ACTION(loadBalancerConstants.GET_LOAD_BALANCER_VALUES):
-      return setStateProp(
-        'loadBalancerValues',
-        {
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+      case PENDING_ACTION(loadBalancerConstants.GET_LOAD_BALANCER_VALUES):
+        draft.pending = true;
+        break;
 
-    case FULFILLED_ACTION(loadBalancerConstants.GET_LOAD_BALANCER_VALUES):
-      return setStateProp(
-        'loadBalancerValues',
-        {
-          values: action.payload,
-          pending: false,
+      case FULFILLED_ACTION(loadBalancerConstants.GET_LOAD_BALANCER_VALUES):
+        return {
+          ...initialState,
           fulfilled: true,
-          error: false, // Unset error on successful request
-          errorMessage: '',
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-    default:
-      return state;
-  }
+          values: action.payload,
+        };
+    }
+  });
 }
 
 loadBalancersReducer.initialState = initialState;

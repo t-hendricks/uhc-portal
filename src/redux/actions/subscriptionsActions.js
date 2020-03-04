@@ -24,13 +24,6 @@ function fetchAccount() {
   });
 }
 
-function fetchSubscriptions(params) {
-  return dispatch => dispatch({
-    type: subscriptionsConstants.GET_SUBSCRIPTIONS,
-    payload: accountsService.getRequest(['subscriptions'], params),
-  });
-}
-
 function fetchQuotaSummary(organizationID, params) {
   return dispatch => dispatch({
     type: subscriptionsConstants.GET_QUOTA_SUMMARY,
@@ -40,13 +33,11 @@ function fetchQuotaSummary(organizationID, params) {
 
 const subscriptionsActions = {
   fetchAccount,
-  fetchSubscriptions,
   fetchQuotaSummary,
 };
 
 export {
   subscriptionsActions,
   fetchAccount,
-  fetchSubscriptions,
   fetchQuotaSummary,
 };

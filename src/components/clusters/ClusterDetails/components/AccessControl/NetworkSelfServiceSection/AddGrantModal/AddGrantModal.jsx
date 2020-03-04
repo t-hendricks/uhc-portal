@@ -5,10 +5,10 @@ import {
   Form, TextInput, FormGroup, Radio,
 } from '@patternfly/react-core';
 
-import Modal from '../../../../../common/Modal/Modal';
-import ErrorBox from '../../../../../common/ErrorBox';
-import PopoverHint from '../../../../../common/PopoverHint';
-import { validateARN } from '../../../../../../common/validators';
+import Modal from '../../../../../../common/Modal/Modal';
+import ErrorBox from '../../../../../../common/ErrorBox';
+import PopoverHint from '../../../../../../common/PopoverHint';
+import { validateARN } from '../../../../../../../common/validators';
 
 const initialState = {
   selectedRole: '',
@@ -16,13 +16,12 @@ const initialState = {
   arnTouched: false,
 };
 
-class GrantModal extends Component {
+class AddGrantModal extends Component {
  state = initialState;
 
  componentDidUpdate() {
    const { selectedRole } = this.state;
    const { roles } = this.props;
-
    // set default role
    if (!selectedRole && !!roles.length) {
      // eslint-disable-next-line react/no-did-update-set-state
@@ -134,18 +133,18 @@ class GrantModal extends Component {
   }
 }
 
-GrantModal.propTypes = {
-  isOpen: PropTypes.bool,
+AddGrantModal.propTypes = {
   roles: PropTypes.array.isRequired,
   closeModal: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
   clearAddGrantResponse: PropTypes.func.isRequired,
   addGrantResponse: PropTypes.object,
+  isOpen: PropTypes.bool,
 };
 
-GrantModal.defaultProps = {
-  isOpen: false,
+AddGrantModal.defaultProps = {
   addGrantResponse: {},
+  isOpen: false,
 };
 
-export default GrantModal;
+export default AddGrantModal;

@@ -35,6 +35,7 @@ import DeleteIDPDialog from './components/DeleteIDPDialog';
 import ScaleClusterDialog from '../common/ScaleClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
+import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
 
 import ErrorBox from '../../common/ErrorBox';
@@ -44,6 +45,7 @@ import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 import EditDisconnectedClusterDialog from '../common/EditDisconnectedCluster';
+import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -314,9 +316,10 @@ class ClusterDetails extends Component {
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
-        <ArchiveClusterDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
         <EditConsoleURLDialog onClose={onDialogClose} />
+        <EditSubscriptionSettingsDialog onClose={onDialogClose} />
+        <ArchiveClusterDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {
           if (shouldRefresh) {
             invalidateClusters();
@@ -332,6 +335,7 @@ class ClusterDetails extends Component {
         />
         <DeleteIDPDialog refreshParent={this.refreshIDP} />
         <EditDisconnectedClusterDialog onClose={onDialogClose} />
+        <AddGrantModal clusterID={cluster.id} />
       </PageSection>
     );
   }

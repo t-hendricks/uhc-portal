@@ -7,7 +7,6 @@ import {
 import { FilterIcon } from '@patternfly/react-icons';
 import get from 'lodash/get';
 
-import { entitlementStatuses, entitlementStatusDisplayNames } from '../../../../../common/subscriptionTypes';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 
 
@@ -31,14 +30,6 @@ class ClusterListFilterDropdown extends React.Component {
       isDisabled,
     } = this.props;
     const filterOptions = [
-      {
-        key: 'entitlement_status',
-        label: 'Subscription Status',
-        options: Object.entries(entitlementStatuses).map(
-          ([key, value]) => [value, entitlementStatusDisplayNames[key]],
-        ),
-        selected: {},
-      },
       {
         key: 'plan_id',
         label: 'Cluster Type',

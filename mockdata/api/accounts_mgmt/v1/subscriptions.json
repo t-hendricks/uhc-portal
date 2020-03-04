@@ -30,7 +30,6 @@
       "managed": false,
       "status": "Disconnected",
       "last_reconcile_date": "2019-12-22T09:45:57.158566Z",
-      "entitlement_status": "NotSubscribed",
       "consumer_uuid": "290a2d7b-fb92-4ccf-a3c3-1e6001c60524"
     },
     {
@@ -59,7 +58,6 @@
       "managed": false,
       "status": "Disconnected",
       "last_reconcile_date": "2019-12-22T10:42:33.500505Z",
-      "entitlement_status": "NotSubscribed",
       "consumer_uuid": "ae614bdc-b273-4fb5-8d65-a6b1eea19c1d"
     },
     {
@@ -88,8 +86,7 @@
       },
       "managed": true,
       "status": "Active",
-      "last_reconcile_date": "0001-01-01T00:00:00Z",
-      "entitlement_status": "Ok"
+      "last_reconcile_date": "0001-01-01T00:00:00Z"
     },
     {
       "id": "1Uk0VXX16bIDuBwpkBBkY9VCb3i",
@@ -117,7 +114,6 @@
       "managed": false,
       "status": "Active",
       "last_reconcile_date": "2019-12-22T09:03:17.049388Z",
-      "entitlement_status": "NotSubscribed",
       "consumer_uuid": "ffca7424-941a-4780-9ca5-f209b0ac2346"
     },
     {
@@ -150,8 +146,7 @@
       },
       "managed":false,
       "status":"Stale",
-      "last_reconcile_date":"2019-06-24T18:30:15.127924Z",
-      "entitlement_status": "InconsistentServices"
+      "last_reconcile_date":"2019-06-24T18:30:15.127924Z"
     }
   ]
 }

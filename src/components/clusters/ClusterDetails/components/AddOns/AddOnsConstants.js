@@ -8,6 +8,13 @@ const AddOnsConstants = {
   GET_CLUSTER_ADDONS,
   ADD_CLUSTER_ADDON,
   CLEAR_CLUSTER_ADDON_RESPONSES,
+  INSTALLATION_STATE: {
+    PENDING: 'pending',
+    INSTALLING: 'installing',
+    DELETING: 'deleting',
+    FAILED: 'failed',
+    READY: 'ready',
+  },
 };
 
 export default AddOnsConstants;

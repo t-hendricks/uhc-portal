@@ -1,254 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Subscriptions /> OCPSubscriptionCard Empty should render empty OCP subscriptions 1`] = `
-<PageSection>
-  <EmptyState>
-    <Title
-      headingLevel="h4"
-      size="2xl"
-    >
-      You do not have any clusters
-    </Title>
-    <EmptyStateBody>
-      <p>
-        Create a cluster to get started.
-      </p>
-    </EmptyStateBody>
-    <Link
-      replace={false}
-      to="/install"
-    >
-      <Component>
-        Create cluster
-      </Component>
-    </Link>
-  </EmptyState>
-</PageSection>
-`;
-
-exports[`<Subscriptions /> OCPSubscriptionCard Error should render error OCP subscriptions 1`] = `
-<PageSection>
-  <EmptyState>
-    <Title
-      headingLevel="h4"
-      size="2xl"
-    >
-      Unable to retrieve subscription status
-    </Title>
-    <EmptyStateBody>
-      <p>
-        An error has occured! Try again or contact support by including this error message:
-      </p>
-      <q />
-      <p>
-        Operation ID: N/A
-      </p>
-    </EmptyStateBody>
-    <Component
-      onClick={[MockFunction]}
-    >
-      Try again
-    </Component>
-  </EmptyState>
-</PageSection>
-`;
-
-exports[`<Subscriptions /> OCPSubscriptionCard Loading should render loading OCP subscriptions 1`] = `
-<PageSection>
-  <Spinner
-    centered={true}
-  />
-</PageSection>
-`;
-
 exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
 <Card>
   <CardHeader
     className="section-header"
   >
-    OpenShift Container Platform
+    OpenShift Container Platform now uses Subscription Watch to manage subscriptions.
   </CardHeader>
   <CardBody
     className="section-text"
   >
-    The summary of subscription status for all self-managed clusters. Follow the individual links to see the specific clusters in each of the corresponding status.
-  </CardBody>
-  <CardBody>
-    <OCPSubscriptionSummary
-      stats={
-        Object {
-          "InconsistentServices": 1,
-          "NotSubscribed": 1,
-          "Ok": 1,
-          "Overcommitted": 1,
-          "SixtyDayEvaluation": 1,
-        }
-      }
-    />
-  </CardBody>
-</Card>
-`;
-
-exports[`<Subscriptions /> OCPSubscriptionCategory should render non-empty category 1`] = `
-<Fragment>
-  <Stack
-    className="status-group status-group-header"
-  >
-    <StackItem
-      className="status-label "
+    It is now easier than ever before to understand your company's current status regarding subscription utilization.
+    <ul
+      className="ocp-list"
     >
-      full
-    </StackItem>
-  </Stack>
-  <Stack
-    className="status-group"
+      <li>
+        No more entitling individual clusters.
+      </li>
+      <li>
+        Improved visibility of OpenShift Container Platform usage for self governance.
+      </li>
+      <li>
+        Historical trending.
+      </li>
+      <li>
+        Forthcoming subscription alerting capabilities.
+      </li>
+    </ul>
+  </CardBody>
+  <CardBody
+    className="section-text"
   >
-    <StackItem>
-      <Link
-        replace={false}
-        to="/"
-      >
-        Link1
-      </Link>
-    </StackItem>
-  </Stack>
-  <Stack
-    className="status-group"
-  >
-    <StackItem>
-      <Link
-        replace={false}
-        to="/"
-      >
-        Link2
-      </Link>
-    </StackItem>
-  </Stack>
-</Fragment>
-`;
-
-exports[`<Subscriptions /> OCPSubscriptionSummary should render 1`] = `
-<Fragment>
-  <h4
-    className="content-header"
-  >
-    Subscription Status
-  </h4>
-  <OCPSubscriptionCategory
-    items={
-      Array [
-        Object {
-          "hint": null,
-          "link": <Link
-            replace={false}
-            to={
-              Object {
-                "pathname": "/",
-                "search": "entitlement_status=Ok&plan_id=OCP",
-              }
-            }
-          >
-            1 Cluster
-          </Link>,
-          "status": "Ok",
-          "text": null,
-        },
-      ]
-    }
-    labelClass="ok-label"
-    labelIcon={
-      <CheckCircleIcon
-        className="status-icon ok-icon"
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-        title={null}
-      />
-    }
-    labelText="Properly entitled"
-  />
-  <OCPSubscriptionCategory
-    items={
-      Array [
-        Object {
-          "hint": "Clusters are attached to subscriptions with different support levels.",
-          "link": <Link
-            replace={false}
-            to={
-              Object {
-                "pathname": "/",
-                "search": "entitlement_status=InconsistentServices&plan_id=OCP",
-              }
-            }
-          >
-            1 Cluster
-          </Link>,
-          "status": "InconsistentServices",
-          "text": "Invalid",
-        },
-        Object {
-          "hint": "Clusters are consuming more resources than they are entitled to.",
-          "link": <Link
-            replace={false}
-            to={
-              Object {
-                "pathname": "/",
-                "search": "entitlement_status=Overcommitted&plan_id=OCP",
-              }
-            }
-          >
-            1 Cluster
-          </Link>,
-          "status": "Overcommitted",
-          "text": "Insufficient",
-        },
-        Object {
-          "hint": "Clusters do not have subscriptions attached.",
-          "link": <Link
-            replace={false}
-            to={
-              Object {
-                "pathname": "/",
-                "search": "entitlement_status=NotSubscribed&plan_id=OCP",
-              }
-            }
-          >
-            1 Cluster
-          </Link>,
-          "status": "NotSubscribed",
-          "text": "Not subscribed",
-        },
-        Object {
-          "hint": "Self-supported evaluation clusters.",
-          "link": <Link
-            replace={false}
-            to={
-              Object {
-                "pathname": "/",
-                "search": "entitlement_status=SixtyDayEvaluation&plan_id=OCP",
-              }
-            }
-          >
-            1 Cluster
-          </Link>,
-          "status": "SixtyDayEvaluation",
-          "text": "60-day Evaluation",
-        },
-      ]
-    }
-    labelClass="warn-label"
-    labelIcon={
-      <ExclamationTriangleIcon
-        className="status-icon warn-icon"
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-        title={null}
-      />
-    }
-    labelText="Subscription issues"
-  />
-</Fragment>
+    <Component
+      component="a"
+      href="https://cloud.redhat.com/beta/subscriptions/openshift-sw"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      Open Subscription Watch
+    </Component>
+  </CardBody>
+  <CardBody />
+</Card>
 `;
 
 exports[`<Subscriptions /> OSDSubscriptionCard Empty should render empty OSD quota summary 1`] = `
@@ -462,7 +255,7 @@ exports[`<Subscriptions /> Subscriptions should render 1`] = `
   <PageSection
     id="subscriptions-content"
   >
-    <Connect(OCPSubscriptionCard)
+    <OCPSubscriptionCard
       organizationID="org-1"
     />
     <Connect(OSDSubscriptionCard)

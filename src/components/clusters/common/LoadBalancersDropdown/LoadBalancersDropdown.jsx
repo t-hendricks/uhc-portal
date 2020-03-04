@@ -7,12 +7,14 @@ import PropTypes from 'prop-types';
 import {
   FormSelect,
   FormSelectOption,
+  Tooltip,
 } from '@patternfly/react-core';
 
 import get from 'lodash/get';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../common/ErrorBox';
 import filterLoadBalancerValuesByQuota from './helpers';
+import { noQuotaTooltip } from '../../../../common/helpers';
 
 class LoadBalancersDropdown extends React.Component {
   componentDidMount() {
@@ -37,8 +39,9 @@ class LoadBalancersDropdown extends React.Component {
       const remainingQuota = get(quota, 'loadBalancerQuota', 0);
       const filteredValues = filterLoadBalancerValuesByQuota(currentValue,
         loadBalancerValues, remainingQuota);
-      const isDisabled = disabled || (filteredValues.values.length <= 1);
-      return (
+      const notEnoughQuota = filteredValues.values.length <= 1;
+      const isDisabled = disabled || notEnoughQuota;
+      const formSelect = (
         <FormSelect
           className="quota-dropdown"
           aria-label="Load Balancers"
@@ -48,6 +51,19 @@ class LoadBalancersDropdown extends React.Component {
           {filteredValues.values.map(value => loadBalancerOption(value.toString()))}
         </FormSelect>
       );
+      if (notEnoughQuota) {
+        return (
+          <Tooltip
+            content={noQuotaTooltip}
+            position="right"
+          >
+            <div>
+              {formSelect}
+            </div>
+          </Tooltip>
+        );
+      }
+      return formSelect;
     }
 
     return loadBalancerValues.error ? (

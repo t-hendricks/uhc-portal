@@ -4,6 +4,14 @@ import { Alert } from '@patternfly/react-core';
 
 import SubscriptionCompliancy from '../components/SubscriptionCompliancy';
 import { clusterDetails, organization } from './ClusterDetails.fixtures';
+import {
+  subscriptionSettings,
+  subscriptionSupportLevels,
+} from '../../../../common/subscriptionTypes';
+
+
+const { SUPPORT_LEVEL } = subscriptionSettings;
+const { EVAL, STANDARD, NONE } = subscriptionSupportLevels;
 
 describe('<SubscriptionCompliancy />', () => {
   let wrapper;
@@ -14,35 +22,49 @@ describe('<SubscriptionCompliancy />', () => {
     );
   });
 
-  it('should render', () => {
-    const c = clusterDetails.cluster;
-    c.subscription.entitlement_status = 'NotSubscribed';
-    wrapper.setProps({ cluster: c }, () => {
+  it('should warn during evaluation period', () => {
+    const cluster = { ...clusterDetails.cluster, canEdit: true };
+    cluster.subscription[SUPPORT_LEVEL] = EVAL;
+    wrapper.setProps({ cluster }, () => {
       expect(wrapper).toMatchSnapshot();
+      expect(wrapper.find(Alert).length).toEqual(1);
     });
-  });
-
-  it('should warn when subscription is not attached', () => {
-    const c = clusterDetails.cluster;
-    c.subscription.entitlement_status = 'NotSubscribed';
-    wrapper.setProps({ cluster: c }, () => {
+    // show diff text for non-edit users
+    cluster.canEdit = false;
+    wrapper.setProps({ cluster }, () => {
+      expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);
     });
   });
 
-  it('should warn when cluster is overcommitting resources', () => {
-    const c = clusterDetails.cluster;
-    c.subscription.entitlement_status = 'Overcommitted';
-    wrapper.setProps({ cluster: c }, () => {
+  it('should warn when evaluation is expired', () => {
+    const cluster = { ...clusterDetails.cluster, canEdit: true };
+    cluster.subscription[SUPPORT_LEVEL] = NONE;
+    wrapper.setProps({ cluster }, () => {
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.find(Alert).length).toEqual(1);
+    });
+    // show diff text for non-edit users
+    cluster.canEdit = false;
+    wrapper.setProps({ cluster }, () => {
+      expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);
     });
   });
 
-  it('should warn when subscriptions attached are inconsistent', () => {
-    const c = clusterDetails.cluster;
-    c.subscription.entitlement_status = 'InconsistentServices';
-    wrapper.setProps({ cluster: c }, () => {
-      expect(wrapper.find(Alert).length).toEqual(1);
+  it('should not render when it has a valid support', () => {
+    const cluster = { ...clusterDetails.cluster };
+    cluster.subscription[SUPPORT_LEVEL] = STANDARD;
+    wrapper.setProps({ cluster }, () => {
+      expect(wrapper).toMatchObject({});
+    });
+  });
+
+  it('should not render when it is not OCP', () => {
+    const cluster = { ...clusterDetails.cluster };
+    cluster.subscription.plan.id = 'OSD';
+    wrapper.setProps({ cluster }, () => {
+      expect(wrapper).toMatchObject({});
     });
   });
 });

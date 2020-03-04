@@ -114,7 +114,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
               "GitHub",
               Object {
                 "title": <ClipboardCopyLinkButton
-                  className="idp-table-copy"
+                  className="access-control-tables-copy"
                   isDisabled={false}
                   text="https://oauth-openshift.com/oauth2callback/hello"
                 >
@@ -130,7 +130,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
               "Google",
               Object {
                 "title": <ClipboardCopyLinkButton
-                  className="idp-table-copy"
+                  className="access-control-tables-copy"
                   isDisabled={false}
                   text="https://oauth-openshift.com/oauth2callback/hi"
                 >
