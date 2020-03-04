@@ -5,14 +5,10 @@ import { modalActions } from '../../../../../common/Modal/ModalActions';
 import SubscriptionSettings from './SubscriptionSettings';
 
 
-function mapStateToProps(state) {
-  const canEdit = get(state, 'clusters.details.cluster.canEdit', false);
-  const subscription = get(state, 'clusters.details.cluster.subscription', {});
-  return {
-    canEdit,
-    subscription,
-  };
-}
+const mapStateToProps = state => ({
+  canEdit: get(state, 'clusters.details.cluster.canEdit', false),
+  subscription: get(state, 'clusters.details.cluster.subscription', {}),
+});
 
 const mapDispatchToProps = {
   openModal: modalActions.openModal,

@@ -54,6 +54,22 @@ function SubscriptionCompliancy({ cluster, openModal }) {
     openModal('archive-cluster', data);
   };
 
+  const textForUsersCanEdit = (
+    <>
+      <Button variant="link" isInline onClick={handleEditSettings}>Edit subscription settings</Button>
+      {' for non-evaluation use. '}
+      <a href={salesURL} target="_blank" rel="noreferrer noopener">Contact sales</a>
+      {' if you are not an active OpenShift customer.'}
+    </>
+  );
+
+  const textForUsersCanNotEdit = (
+    <>
+    The cluster owner or an organization administrator can
+    edit subscription settings for non-evaluation use.
+    </>
+  );
+
   if (supportLevel === subscriptionSupportLevels.NONE) {
     return (
       <Alert className="subscription-settings compliancy-alert" isInline variant="danger" title="Your 60-day OpenShift evaluation has expired">
@@ -61,12 +77,14 @@ function SubscriptionCompliancy({ cluster, openModal }) {
         <p>
           Your cluster is not supported and you may stop receving updates.
           {' '}
-          <Button variant="link" isInline isDisabled={!cluster.canEdit} onClick={handleEditSettings}>Edit subscription settings</Button>
-          {' for non-evaluation use. '}
-          <a href={salesURL} target="_blank" rel="noreferrer noopener">Contact sales</a>
-          {' if you are not an active OpenShift customer. '}
-          <Button variant="link" isInline isDisabled={!cluster.canEdit} onClick={handleArchiveCluster}>Archive this cluster</Button>
-          {' if it no longer exits. '}
+          {cluster.canEdit ? (
+            <>
+              { textForUsersCanEdit }
+              {' '}
+              <Button variant="link" isInline onClick={handleArchiveCluster}>Archive this cluster</Button>
+              {' if it no longer exits. '}
+            </>
+          ) : textForUsersCanNotEdit}
         </p>
       </Alert>
     );
@@ -76,10 +94,7 @@ function SubscriptionCompliancy({ cluster, openModal }) {
       {lastChecked}
       <p>
         {`Your 60-day OpenShift evaluation expires in ${evaluationExpiresStr}. `}
-        <Button variant="link" isInline isDisabled={!cluster.canEdit} onClick={handleEditSettings}>Edit subscription settings</Button>
-        {' for non-evaluation use. '}
-        <a href={salesURL} target="_blank" rel="noreferrer noopener">Contact sales</a>
-        {' if you are not an active OpenShift customer.'}
+        {cluster.canEdit ? textForUsersCanEdit : textForUsersCanNotEdit}
       </p>
     </Alert>
   );
