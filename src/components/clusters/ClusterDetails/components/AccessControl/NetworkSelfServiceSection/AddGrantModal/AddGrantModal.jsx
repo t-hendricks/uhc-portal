@@ -120,7 +120,7 @@ class AddGrantModal extends Component {
                 id="aws-iam-arn-input"
                 type="text"
                 isValid={arnTouched ? !validationMessage : true}
-                placeholder="arn::aws:iam::123456789012:user/name"
+                placeholder="arn:aws:iam::123456789012:user/name"
                 onChange={this.setArnValue}
                 aria-label="AWS IAM ARN"
               />
