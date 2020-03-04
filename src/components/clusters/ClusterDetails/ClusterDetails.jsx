@@ -45,6 +45,7 @@ import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 import EditDisconnectedClusterDialog from '../common/EditDisconnectedCluster';
+import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -334,6 +335,7 @@ class ClusterDetails extends Component {
         />
         <DeleteIDPDialog refreshParent={this.refreshIDP} />
         <EditDisconnectedClusterDialog onClose={onDialogClose} />
+        <AddGrantModal clusterID={cluster.id} />
       </PageSection>
     );
   }
