@@ -150,7 +150,6 @@ if [ "$1" == "beta" ]; then
     push_build "qa-stable"
     rm --recursive --force build
     yarn build --mode=production --beta=true --staging=true
-    push_build "prod-beta"
     push_build "qa-beta"
 
 elif [ "$1" == "stable" ]; then
@@ -163,6 +162,10 @@ elif [ "$1" == "stable" ]; then
     rm --recursive --force build
     yarn build --mode=production
     push_build "prod-stable"
+    rm --recursive --force build
+    yarn build --mode=production --beta=true
+    push_build "prod-beta"
+
 else
     echo "no mode specified, doing nothing"
 fi
