@@ -118,8 +118,13 @@ limitations under the License.
 
 .cluster-details-item {
   padding: 30px;
+  dt {
+    font-weight: bold;
+    font-size: 14px;
+  }
   dd {
     margin-bottom: 30px;
+    font-size: 16px;
   }
 }
 

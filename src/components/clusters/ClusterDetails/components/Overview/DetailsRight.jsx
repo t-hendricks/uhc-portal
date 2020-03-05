@@ -24,7 +24,7 @@ function DetailsRight({ cluster }) {
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   return (
     <>
-      <dl className="cluster-details-item left">
+      <dl className="cluster-details-item">
         <dt>
           Status
         </dt>
@@ -94,7 +94,7 @@ function DetailsRight({ cluster }) {
               Desired Nodes
             </dt>
             <dd>
-              <dl className="cluster-details-item-list left">
+              <dl className="cluster-details-item-list">
                 <dt>
                   Master:
                   {' '}
@@ -104,7 +104,7 @@ function DetailsRight({ cluster }) {
                 </dd>
               </dl>
               {showInfraNodes && (
-                <dl className="cluster-details-item-list left">
+                <dl className="cluster-details-item-list">
                   <dt>
                     Infra:
                     {' '}
@@ -114,7 +114,7 @@ function DetailsRight({ cluster }) {
                   </dd>
                 </dl>
               )}
-              <dl className="cluster-details-item-list left">
+              <dl className="cluster-details-item-list">
                 <dt>
                   Compute:
                   {' '}
@@ -131,7 +131,7 @@ function DetailsRight({ cluster }) {
           {showDesiredNodes ? 'Actual Nodes' : 'Nodes'}
         </dt>
         <dd>
-          <dl className="cluster-details-item-list left">
+          <dl className="cluster-details-item-list">
             <dt>
               Master:
               {' '}
@@ -141,7 +141,7 @@ function DetailsRight({ cluster }) {
             </dd>
           </dl>
           {showInfraNodes && (
-            <dl className="cluster-details-item-list left">
+            <dl className="cluster-details-item-list">
               <dt>
                 Infra:
                 {' '}
@@ -151,7 +151,7 @@ function DetailsRight({ cluster }) {
               </dd>
             </dl>
           )}
-          <dl className="cluster-details-item-list left">
+          <dl className="cluster-details-item-list">
             <dt>
               Compute:
               {' '}

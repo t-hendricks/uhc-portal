@@ -9,21 +9,21 @@ function ClusterNetwork({ cluster }) {
         <dd>
           { cluster.network.machine_cidr
          && (
-         <dl className="cluster-details-item-list left">
+         <dl className="cluster-details-item-list">
            <dt>Machine CIDR: </dt>
            <dd>{cluster.network.machine_cidr}</dd>
          </dl>
          )}
           { cluster.network.service_cidr
           && (
-          <dl className="cluster-details-item-list left">
+          <dl className="cluster-details-item-list">
             <dt>Service CIDR: </dt>
             <dd>{cluster.network.service_cidr}</dd>
           </dl>
           )}
           { cluster.network.pod_cidr
           && (
-          <dl className="cluster-details-item-list left">
+          <dl className="cluster-details-item-list">
             <dt>Pod CIDR: </dt>
             <dd>{cluster.network.pod_cidr}</dd>
           </dl>
