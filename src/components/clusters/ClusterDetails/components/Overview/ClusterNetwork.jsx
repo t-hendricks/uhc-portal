@@ -28,6 +28,13 @@ function ClusterNetwork({ cluster }) {
             <dd>{cluster.network.pod_cidr}</dd>
           </dl>
           )}
+          { cluster.network.host_prefix
+          && (
+          <dl className="cluster-details-item-list left">
+            <dt>Host Prefix: </dt>
+            <dd>{cluster.network.host_prefix}</dd>
+          </dl>
+          )}
         </dd>
       </>
     )

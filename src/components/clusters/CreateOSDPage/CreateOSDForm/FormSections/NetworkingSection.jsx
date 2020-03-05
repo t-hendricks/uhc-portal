@@ -9,6 +9,20 @@ import validators from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 function NetworkingSection({ pending, toggleNetwork, mode }) {
+  const formatHostPrefix = (value) => {
+    if (value && value.charAt(0) !== '/') {
+      return `/${value}`;
+    }
+    return value;
+  };
+
+  const normalizeHostPrefix = (value) => {
+    if (value && value.charAt(0) === '/') {
+      return value.substring(1);
+    }
+    return value;
+  };
+
   return (
     <>
       <FormGroup
@@ -51,12 +65,12 @@ function NetworkingSection({ pending, toggleNetwork, mode }) {
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_machine_cidr"
-                label="Node CIDR"
+                label="Machine CIDR"
                 placeholder="10.0.0.0/16"
                 type="text"
-                validate={validators.cidr}
+                validate={[validators.cidr, validators.machineCidr]}
                 disabled={pending}
-                extendedHelpText={constants.nodeCIDRHint}
+                extendedHelpText={constants.machineCIDRHint}
               />
             </GridItem>
             <GridItem span={8} />
@@ -67,7 +81,7 @@ function NetworkingSection({ pending, toggleNetwork, mode }) {
                 label="Service CIDR"
                 placeholder="172.30.0.0/16"
                 type="text"
-                validate={validators.cidr}
+                validate={[validators.cidr, validators.serviceCidr]}
                 disabled={pending}
                 extendedHelpText={constants.serviceCIDRHint}
               />
@@ -80,9 +94,24 @@ function NetworkingSection({ pending, toggleNetwork, mode }) {
                 label="Pod CIDR"
                 placeholder="10.128.0.0/14"
                 type="text"
-                validate={validators.cidr}
+                validate={[validators.cidr, validators.podCidr]}
                 disabled={pending}
                 extendedHelpText={constants.podCIDRHint}
+              />
+            </GridItem>
+            <GridItem span={8} />
+            <GridItem span={4}>
+              <Field
+                component={ReduxVerticalFormGroup}
+                name="network_host_prefix"
+                label="Host Prefix"
+                placeholder="/23"
+                type="text"
+                format={formatHostPrefix}
+                normalize={normalizeHostPrefix}
+                validate={validators.hostPrefix}
+                disabled={pending}
+                extendedHelpText={constants.hostPrefixHint}
               />
             </GridItem>
           </>
