@@ -1078,3 +1078,12 @@ button:focus {
     z-index: 2;
   }
 }
+
+.idp-helptext-heading {
+  margin-top: var(--pf-global--spacer--lg);
+}
+
+.idp-github-auth-mode-selection-question {
+  margin-top: var(--pf-global--spacer--xs);
+  margin-bottom: var(--pf-global--spacer--md);
+}
