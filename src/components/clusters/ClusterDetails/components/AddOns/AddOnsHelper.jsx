@@ -51,7 +51,11 @@ const getInstallState = (addOn, clusterAddOns, cluster) => {
     case AddOnsConstants.INSTALLATION_STATE.FAILED:
       icon = <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />;
       state = 'Install failed';
-      action = <a href="mailto:ocm-feedback@redhat.com" rel="noreferrer noopener" target="_blank">Contact support</a>;
+      action = (
+        <a href="https://access.redhat.com/support/cases/#/case/new" rel="noreferrer noopener" target="_blank">
+          <Button variant="secondary">Contact support</Button>
+        </a>
+      );
       break;
     case AddOnsConstants.INSTALLATION_STATE.READY:
       icon = <CheckCircleIcon color={global_success_color_100.value} size="md" />;
