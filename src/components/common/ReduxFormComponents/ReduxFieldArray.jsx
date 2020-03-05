@@ -21,6 +21,9 @@ class RenderFields extends React.Component {
     const { fields } = this.props;
     if (fields.length === 0) {
       this.addNewField();
+    } else {
+      // fields on mount = default values, populate internal state to account for them
+      this.setState({ areFieldsFilled: fields.map(field => !!field) });
     }
   }
 
