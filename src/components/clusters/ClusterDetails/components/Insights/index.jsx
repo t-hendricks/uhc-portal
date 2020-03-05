@@ -1,0 +1,179 @@
+import React from 'react';
+
+import {
+  Card, CardBody, Title, Popover, Button,
+  Grid, GridItem, Stack, StackItem,
+} from '@patternfly/react-core';
+import { RuleTable, severity } from '@redhat-cloud-services/rule-components';
+import {
+  descriptionFilter,
+  totalRiskFilter,
+} from '@redhat-cloud-services/rule-components/dist/cjs/RuleFilters';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
+import '@redhat-cloud-services/frontend-components/components/Battery.css';
+import './RulesTable.css';
+
+const severityMapping = Object.keys(severity);
+
+class Insights extends React.Component {
+  state = {
+    meta: {
+      count: 4,
+    },
+    data: [
+      {
+        description: 'Some rule description',
+        created_at: 1583245000000,
+        total_risk: 3,
+      },
+      {
+        description: 'Some rule description2',
+        created_at: 1583245000000,
+        total_risk: 4,
+      },
+      {
+        description: 'Some rule description3',
+        created_at: 1583245000000,
+        total_risk: 1,
+      },
+    ],
+    shownData: [
+      {
+        description: 'Some rule description',
+        created_at: 1583245000000,
+        total_risk: 3,
+      },
+      {
+        description: 'Some rule description2',
+        created_at: 1583245000000,
+        total_risk: 4,
+      },
+      {
+        description: 'Some rule description3',
+        created_at: 1583245000000,
+        total_risk: 1,
+      },
+    ],
+    filters: {},
+  }
+
+  addFilter = (filterValue) => {
+    this.setState((state) => {
+      let filters = { ...state.filters }
+      if(!filters.totalRiskFilter) {
+        filters.totalRiskFilter = []
+      }
+      if (!filters.totalRiskFilter.includes(filterValue)) {
+        filters.totalRiskFilter.push(filterValue)
+      }
+      return { filters }
+    })
+  }
+
+  render() {
+    const { meta, data, shownData, filters } = this.state;
+    return (
+      <>
+        <Card>
+          <CardBody>
+            <Grid>
+              <GridItem span={8}>
+                <Title headingLevel="h2" size="3xl">{`Remote health detected ${meta.count} issues`}</Title>
+                <p>Last checked: 4 minutes ago</p>
+                <Popover
+                  position="right"
+                  headerContent="What is Remote health?"
+                  bodyContent={(
+                    <div>
+                      It helps you identify, prioritize, and resolve risks to security,
+                      perfomance, aviability and stability before they become urgent issues
+                    </div>
+                  )}
+                  aria-label="What is Remote health?"
+                >
+                  <Button style={{ margin: '0' }} variant="link">What is Remote health?</Button>
+                </Popover>
+              </GridItem>
+              <GridItem span={4}>
+                <Stack>
+                  {
+                    Object.entries(data.reduce(
+                      (acc, cur) => {
+                        const accTemp = { ...acc };
+                        if (!accTemp[cur.total_risk]) {
+                          accTemp[cur.total_risk] = 0;
+                        }
+                        accTemp[cur.total_risk] += 1;
+                        return accTemp;
+                      },
+                      {},
+                    )).map(([risk, count]) => (
+                      <StackItem>
+                        <Battery label={severity[severityMapping[risk - 1]]} severity={risk} labelHidden />
+                        <Button variant="link" onClick={() => this.addFilter(severityMapping[risk - 1])}>{`${count} ${severity[severityMapping[risk - 1]]}`}</Button>
+                      </StackItem>
+                    ))
+                  }
+                </Stack>
+              </GridItem>
+            </Grid>
+          </CardBody>
+        </Card>
+        <Card>
+          <CardBody>
+            <RuleTable
+              rules={{ meta, data: shownData }}
+              fetchData={({
+                filterValues,
+              }) => {
+                this.setState((state) => {
+                  const rules = state.data.filter((v) => {
+                    let isFilter = true;
+                    Object.entries(filterValues).forEach(([key, filter]) => {
+                      console.log(filter, key);
+                      console.log(severityMapping[v.total_risk - 1]);
+                      if (key === 'totalRiskFilter') {
+                        isFilter = filter.includes(severityMapping[v.total_risk - 1]);
+                      }
+                      if (key === 'descriptionFilter') {
+                        isFilter = v.description.indexOf(filter) > -1 && isFilter;
+                      }
+                      console.log(isFilter);
+                    });
+                    return isFilter;
+                  });
+                  return { shownData: rules, filters: filterValues };
+                });
+              }}
+              filters={{
+                descriptionFilter,
+                totalRiskFilter,
+              }}
+              filterValues={filters}
+              columns={[
+                { title: 'Description', selector: 'description' },
+                {
+                  title: 'Added',
+                  // eslint-disable-next-line react/prop-types
+                  selector: ({ created_at: created }) => <DateFormat date={new Date(created)} />,
+                },
+                {
+                  title: 'Total risk',
+                  selector:
+                    // eslint-disable-next-line react/prop-types
+                    ({ total_risk: riskNumber }) => (
+                      <Battery label={severity[severityMapping[riskNumber - 1]]} severity={riskNumber} />
+                    ),
+                },
+              ]}
+              detail={() => <div>This is detail that is shown when user colapses/expands</div>}
+            />
+          </CardBody>
+        </Card>
+      </>
+    );
+  }
+}
+
+export default Insights;

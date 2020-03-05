@@ -1,0 +1,8 @@
+.pf-l-stack__item {
+    line-height: 2;
+    display: flex;
+}
+
+.pf-l-stack__item i {
+	margin-right: 10px;
+}
