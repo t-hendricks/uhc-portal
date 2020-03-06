@@ -13,6 +13,7 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/component
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import '@redhat-cloud-services/frontend-components/components/Battery.css';
 import './RulesTable.css';
+import OCMReportDetails from './OCMReportDetails';
 
 const severityMapping = Object.keys(severity);
 
@@ -23,53 +24,85 @@ class Insights extends React.Component {
     },
     data: [
       {
-        description: 'Some rule description',
+        description: "rule 1 description",
+        details: `
+Some *rule* description
+
+> quoute
+
+test
+multiline
+
+[link text](https://g.co)
+
+# header
+
+
+\`\`\`some code\`\`\`
+        `,
         created_at: 1583245000000,
         total_risk: 3,
+        risk_of_change: 1,
       },
       {
         description: 'Some rule description2',
         created_at: 1583245000000,
         total_risk: 4,
+        risk_of_change: 2,
       },
       {
         description: 'Some rule description3',
         created_at: 1583245000000,
         total_risk: 1,
+        risk_of_change: 3,
       },
     ],
     shownData: [
       {
-        description: 'Some rule description',
+        description: `
+Some *rule* description
+
+> quoute
+
+test
+multiline
+
+[link text](https://g.co)
+
+# header
+        `,
         created_at: 1583245000000,
         total_risk: 3,
+        risk_of_change: 4,
       },
       {
         description: 'Some rule description2',
         created_at: 1583245000000,
         total_risk: 4,
+        risk_of_change: 1,
       },
       {
         description: 'Some rule description3',
         created_at: 1583245000000,
         total_risk: 1,
+        risk_of_change: 2,
       },
     ],
     filters: {},
-  }
+  };
 
   addFilter = (filterValue) => {
     this.setState((state) => {
-      let filters = { ...state.filters }
-      if(!filters.totalRiskFilter) {
-        filters.totalRiskFilter = []
+      let filters = { ...state.filters };
+      if (!filters.totalRiskFilter) {
+        filters.totalRiskFilter = [];
       }
       if (!filters.totalRiskFilter.includes(filterValue)) {
-        filters.totalRiskFilter.push(filterValue)
+        filters.totalRiskFilter.push(filterValue);
       }
-      return { filters }
-    })
-  }
+      return { filters };
+    });
+  };
 
   render() {
     const { meta, data, shownData, filters } = this.state;
@@ -79,7 +112,8 @@ class Insights extends React.Component {
           <CardBody>
             <Grid>
               <GridItem span={8}>
-                <Title headingLevel="h2" size="3xl">{`Remote health detected ${meta.count} issues`}</Title>
+                <Title headingLevel="h2"
+                       size="3xl">{`Remote health detected ${meta.count} issues`}</Title>
                 <p>Last checked: 4 minutes ago</p>
                 <Popover
                   position="right"
@@ -108,12 +142,15 @@ class Insights extends React.Component {
                         return accTemp;
                       },
                       {},
-                    )).map(([risk, count]) => (
-                      <StackItem>
-                        <Battery label={severity[severityMapping[risk - 1]]} severity={risk} labelHidden />
-                        <Button variant="link" onClick={() => this.addFilter(severityMapping[risk - 1])}>{`${count} ${severity[severityMapping[risk - 1]]}`}</Button>
-                      </StackItem>
                     ))
+                      .map(([risk, count]) => (
+                        <StackItem>
+                          <Battery label={severity[severityMapping[risk - 1]]} severity={risk}
+                                   labelHidden/>
+                          <Button variant="link"
+                                  onClick={() => this.addFilter(severityMapping[risk - 1])}>{`${count} ${severity[severityMapping[risk - 1]]}`}</Button>
+                        </StackItem>
+                      ))
                   }
                 </Stack>
               </GridItem>
@@ -123,27 +160,34 @@ class Insights extends React.Component {
         <Card>
           <CardBody>
             <RuleTable
-              rules={{ meta, data: shownData }}
+              rules={{
+                meta,
+                data: shownData
+              }}
               fetchData={({
                 filterValues,
               }) => {
                 this.setState((state) => {
                   const rules = state.data.filter((v) => {
                     let isFilter = true;
-                    Object.entries(filterValues).forEach(([key, filter]) => {
-                      console.log(filter, key);
-                      console.log(severityMapping[v.total_risk - 1]);
-                      if (key === 'totalRiskFilter') {
-                        isFilter = filter.includes(severityMapping[v.total_risk - 1]);
-                      }
-                      if (key === 'descriptionFilter') {
-                        isFilter = v.description.indexOf(filter) > -1 && isFilter;
-                      }
-                      console.log(isFilter);
-                    });
+                    Object.entries(filterValues)
+                      .forEach(([key, filter]) => {
+                        console.log(filter, key);
+                        console.log(severityMapping[v.total_risk - 1]);
+                        if (key === 'totalRiskFilter') {
+                          isFilter = filter.includes(severityMapping[v.total_risk - 1]);
+                        }
+                        if (key === 'descriptionFilter') {
+                          isFilter = v.description.indexOf(filter) > -1 && isFilter;
+                        }
+                        console.log(isFilter);
+                      });
                     return isFilter;
                   });
-                  return { shownData: rules, filters: filterValues };
+                  return {
+                    shownData: rules,
+                    filters: filterValues
+                  };
                 });
               }}
               filters={{
@@ -152,22 +196,33 @@ class Insights extends React.Component {
               }}
               filterValues={filters}
               columns={[
-                { title: 'Description', selector: 'description' },
+                {
+                  title: 'Description',
+                  selector: 'description'
+                },
                 {
                   title: 'Added',
                   // eslint-disable-next-line react/prop-types
-                  selector: ({ created_at: created }) => <DateFormat date={new Date(created)} />,
+                  selector: ({ created_at: created }) => <DateFormat date={new Date(created)}/>,
                 },
                 {
                   title: 'Total risk',
                   selector:
-                    // eslint-disable-next-line react/prop-types
+                  // eslint-disable-next-line react/prop-types
                     ({ total_risk: riskNumber }) => (
-                      <Battery label={severity[severityMapping[riskNumber - 1]]} severity={riskNumber} />
+                      <Battery label={severity[severityMapping[riskNumber - 1]]}
+                               severity={riskNumber}/>
                     ),
                 },
               ]}
-              detail={() => <div>This is detail that is shown when user colapses/expands</div>}
+              detail={ruleData => (
+                <OCMReportDetails
+                  details={ruleData.details}
+                  totalRisk={ruleData.total_risk}
+                  riskOfChange={ruleData.risk_of_change}
+                  createdAt={ruleData.created_at}
+                />
+              )}
             />
           </CardBody>
         </Card>
