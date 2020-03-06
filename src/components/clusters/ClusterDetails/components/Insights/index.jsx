@@ -59,7 +59,8 @@ multiline
     ],
     shownData: [
       {
-        description: `
+        description: "rule 1 description",
+        details: `
 Some *rule* description
 
 > quoute
