@@ -11,22 +11,24 @@ exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
     className="section-text"
   >
     To get started, cluster owners or organization administrators should:
-    <ol
+    <List
       className="ocp-list"
+      component="ol"
+      type="1"
     >
-      <li>
+      <ListItem>
         View a cluster in OpenShift Cluster Manager.
-      </li>
-      <li>
+      </ListItem>
+      <ListItem>
         Choose “Edit Subscription Settings” from either the actions menu in the upper right, or in the Subscriptions settings section of the Overview.
-      </li>
-      <li>
+      </ListItem>
+      <ListItem>
         Select the options that apply to your cluster in the dialog and save.
-      </li>
-      <li>
+      </ListItem>
+      <ListItem>
         Subscription Watch should handle the rest. There’s no more attaching subscriptions to clusters.
-      </li>
-    </ol>
+      </ListItem>
+    </List>
   </CardBody>
   <CardBody
     className="section-text"

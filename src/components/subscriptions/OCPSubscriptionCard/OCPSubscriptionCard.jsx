@@ -4,6 +4,10 @@ import {
   CardHeader,
   CardBody,
   Button,
+  List,
+  ListItem,
+  ListComponent,
+  OrderType,
 } from '@patternfly/react-core';
 
 
@@ -16,18 +20,18 @@ function OCPSubscriptionCard() {
       </CardHeader>
       <CardBody className="section-text">
         To get started, cluster owners or organization administrators should:
-        <ol className="ocp-list">
-          <li>View a cluster in OpenShift Cluster Manager.</li>
-          <li>
+        <List component={ListComponent.ol} type={OrderType.number} className="ocp-list">
+          <ListItem>View a cluster in OpenShift Cluster Manager.</ListItem>
+          <ListItem>
             Choose “Edit Subscription Settings” from either the actions menu in the upper right,
             or in the Subscriptions settings section of the Overview.
-          </li>
-          <li>Select the options that apply to your cluster in the dialog and save.</li>
-          <li>
+          </ListItem>
+          <ListItem>Select the options that apply to your cluster in the dialog and save.</ListItem>
+          <ListItem>
             Subscription Watch should handle the rest.
             There’s no more attaching subscriptions to clusters.
-          </li>
-        </ol>
+          </ListItem>
+        </List>
       </CardBody>
       <CardBody className="section-text">
         <Button component="a" href="https://cloud.redhat.com/beta/subscriptions/openshift-sw" rel="noopener noreferrer" target="_blank">

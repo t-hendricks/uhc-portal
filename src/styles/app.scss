@@ -977,12 +977,9 @@ div.pf-c-alert.archived-cluster-toast {
     word-break: normal;
   }
   .ocp-list {
-    list-style: inside;
-    list-style-type: decimal;
-    margin: 5px 0 16px 0;
-    li {
-      padding: 3px 0 3px 0;
-    }
+    padding-left: 50px;
+    margin: 16px 0 16px 0;
+    li { padding-left: 10px; }
   }
 }
 
