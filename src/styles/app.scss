@@ -978,8 +978,11 @@ div.pf-c-alert.archived-cluster-toast {
   }
   .ocp-list {
     list-style: inside;
-    padding-left: 40px;
-    margin: 16px 0 16px 0;
+    list-style-type: decimal;
+    margin: 5px 0 16px 0;
+    li {
+      padding: 3px 0 3px 0;
+    }
   }
 }
 

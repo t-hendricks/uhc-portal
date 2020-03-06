@@ -15,14 +15,19 @@ function OCPSubscriptionCard() {
         manage subscriptions.
       </CardHeader>
       <CardBody className="section-text">
-        It is now easier than ever before to understand your company&apos;s
-        current status regarding subscription utilization.
-        <ul className="ocp-list">
-          <li>No more entitling individual clusters.</li>
-          <li>Improved visibility of OpenShift Container Platform usage for self governance.</li>
-          <li>Historical trending.</li>
-          <li>Forthcoming subscription alerting capabilities.</li>
-        </ul>
+        To get started, cluster owners or organization administrators should:
+        <ol className="ocp-list">
+          <li>View a cluster in OpenShift Cluster Manager.</li>
+          <li>
+            Choose “Edit Subscription Settings” from either the actions menu in the upper right,
+            or in the Subscriptions settings section of the Overview.
+          </li>
+          <li>Select the options that apply to your cluster in the dialog and save.</li>
+          <li>
+            Subscription Watch should handle the rest.
+            There’s no more attaching subscriptions to clusters.
+          </li>
+        </ol>
       </CardBody>
       <CardBody className="section-text">
         <Button component="a" href="https://cloud.redhat.com/beta/subscriptions/openshift-sw" rel="noopener noreferrer" target="_blank">
