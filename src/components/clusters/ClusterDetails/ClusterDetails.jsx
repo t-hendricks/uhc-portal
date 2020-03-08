@@ -163,6 +163,7 @@ class ClusterDetails extends Component {
       if (get(clusterDetails, 'cluster.managed')) {
         getClusterAddOns(clusterID);
         getLogs(clusterID);
+        this.refreshIDP();
       }
     }
   }
