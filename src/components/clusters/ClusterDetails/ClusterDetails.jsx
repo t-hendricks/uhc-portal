@@ -69,6 +69,9 @@ class ClusterDetails extends Component {
       getCloudProviders,
       clusterIdentityProviders,
       getClusterIdentityProviders,
+      getClusterAddOns,
+      clusterAddOns,
+      getLogs,
       match,
       organization,
       getOrganizationAndQuota,
@@ -86,12 +89,17 @@ class ClusterDetails extends Component {
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
     }
-    if (isValid(clusterID)
-      && !isUuid(clusterID)
-      && !clusterIdentityProviders.pending
-      && !clusterIdentityProviders.error
-      && !clusterIdentityProviders.fulfilled) {
-      getClusterIdentityProviders(clusterID); // TODO: get IDP only for managed cluster
+    if (isValid(clusterID) && !isUuid(clusterID)) {
+      // TODO: get IDP, Add-On Installations, and Logs only for managed clusters
+      if (!clusterIdentityProviders.pending
+          && !clusterIdentityProviders.error
+          && !clusterIdentityProviders.fulfilled) {
+        getClusterIdentityProviders(clusterID);
+      }
+      if (!clusterAddOns.pending && !clusterAddOns.error && !clusterAddOns.fulfilled) {
+        getClusterAddOns(clusterID);
+      }
+      getLogs(clusterID);
     }
     if (!organization.pending && !organization.error && !organization.fulfilled) {
       getOrganizationAndQuota();
@@ -128,6 +136,7 @@ class ClusterDetails extends Component {
   refresh() {
     const {
       match,
+      clusterDetails,
       fetchDetails,
       getLogs,
       getUsers,
@@ -145,13 +154,16 @@ class ClusterDetails extends Component {
       getOrganizationAndQuota();
     }
     if (isValid(clusterID) && !isUuid(clusterID)) {
-      getLogs(clusterID);
       getUsers(clusterID, 'dedicated-admins');
       getAlerts(clusterID);
       getNodes(clusterID);
       getClusterOperators(clusterID);
-      getClusterAddOns(clusterID);
       getGrants(clusterID);
+
+      if (get(clusterDetails, 'cluster.managed')) {
+        getClusterAddOns(clusterID);
+        getLogs(clusterID);
+      }
     }
   }
 
@@ -373,6 +385,7 @@ ClusterDetails.propTypes = {
       PropTypes.node,
       PropTypes.element,
     ]),
+    fulfilled: PropTypes.bool,
     history: PropTypes.object,
     pending: PropTypes.bool.isRequired,
   }),
@@ -383,10 +396,12 @@ ClusterDetails.propTypes = {
 };
 
 ClusterDetails.defaultProps = {
+  clusterAddOns: {},
   clusterDetails: {
     cluster: null,
     error: false,
     errorMessage: '',
+    fulfilled: false,
   },
   logs: '',
   addOns: '',
