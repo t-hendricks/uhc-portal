@@ -319,8 +319,6 @@ const nodesMultiAz = (value) => {
   return undefined;
 };
 
-const github = value => (value ? undefined : 'Either "Teams" or "Organizations" are required');
-
 /**
  * General function used to validate numeric user input according to some flags.
  * Returns an informative error message when taking an illegal input.
@@ -391,6 +389,26 @@ const validateARN = (value) => {
   return undefined;
 };
 
+/**
+ * for ReduxFieldArray, validate there is at least one filled value.
+ * Note that since ReduxFieldArray stores the input's key/id with each value,
+ * and the value itself under a key with the name of the input
+ * - this function is not like other validators, it's a function that returns a function,
+ * so you can specify the field name.
+ *
+ * @param {*} values array of value objects, from redux-form
+ */
+const atLeastOneRequired = fieldName => (values) => {
+  if (!values) {
+    return 'At least one is required.';
+  }
+  const nonEmptyValues = values.filter(value => value[fieldName]);
+  if (!nonEmptyValues || nonEmptyValues.length === 0) {
+    return 'At least one is required.';
+  }
+  return undefined;
+};
+
 const validators = {
   required,
   checkIdentityProviderName,
@@ -406,7 +424,6 @@ const validators = {
   hostPrefix,
   nodes,
   nodesMultiAz,
-  github,
   validateNumericInput,
   checkOpenIDIssuer,
   checkGithubTeams,
@@ -419,7 +436,7 @@ const validators = {
 
 export {
   required,
-  github,
+  atLeastOneRequired,
   checkClusterUUID,
   checkIdentityProviderName,
   checkClusterDisplayName,

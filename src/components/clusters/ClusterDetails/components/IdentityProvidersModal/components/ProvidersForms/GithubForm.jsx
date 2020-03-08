@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Divider, Title, GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import { noop } from '../../../../../../../common/helpers';
-import { github, checkGithubTeams, required } from '../../../../../../../common/validators';
+import { atLeastOneRequired, checkGithubTeams, required } from '../../../../../../../common/validators';
 
 import IDPBasicFields from './IDPBasicFields';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -94,7 +94,7 @@ class GithubFormRequired extends React.Component {
               placeholderText="e.g. org"
               disabled={isPending}
               helpText="Only users that are members of at least one of the listed organizations will be allowed to log in."
-              validateField={github}
+              validate={atLeastOneRequired('organizations')}
             />
           ) : (
             <ReduxFieldArray
@@ -105,8 +105,9 @@ class GithubFormRequired extends React.Component {
               placeholderText="e.g. org/team"
               disabled={isPending}
               helpText="Only users that are members of at least one of the listed teams will be allowed to log in.. The format is <org>/<team>."
-              validateField={[github, checkGithubTeams]}
+              validateField={checkGithubTeams}
               key="teams"
+              validate={atLeastOneRequired('teams')}
             />
           )}
         </>
