@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const RuleFeedback = ruleID => (
+const RuleFeedback = ruleId => (
   <div>
     <div>Is this rule helpful?</div>
-    {/*<Button>Like</Button>*/}
-    {/*<Button>Disike</Button>*/}
+    {/* TODO: add like/dislike buttons here */}
   </div>
 );
 
 RuleFeedback.propTypes = {
-  ruleID: PropTypes.number,
+  ruleId: PropTypes.number,
 };
 
 export default RuleFeedback;

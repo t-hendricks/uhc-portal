@@ -15,27 +15,26 @@ import RuleFeedback from './RuleFeedback';
 import './OCMReportDetails.css';
 import ReactMarkdown from 'react-markdown';
 
-
 const totalRiskMeta = [
   {
     label: 'low',
     description: 'low severity desc for total risk',
-    iconComponent: Battery,
+    IconComponent: Battery,
   },
   {
     label: 'moderate',
     description: 'moderate severity desc for total risk',
-    iconComponent: Battery,
+    IconComponent: Battery,
   },
   {
     label: 'important',
     description: 'important severity desc for total risk',
-    iconComponent: Battery,
+    IconComponent: Battery,
   },
   {
     label: 'critical',
     description: 'critical severity desc for total risk',
-    iconComponent: Battery,
+    IconComponent: Battery,
   },
 ];
 
@@ -43,103 +42,46 @@ const riskOfChangeMeta = [
   {
     label: 'low',
     description: 'low severity desc for risk of change',
-    iconComponent: Battery,
+    IconComponent: Battery,
   },
   {
     label: 'moderate',
     description: 'moderate severity desc for risk of change',
-    iconComponent: Battery,
+    IconComponent: Battery,
   },
   {
     label: 'important',
     description: 'important severity desc for risk of change',
-    iconComponent: Battery,
+    IconComponent: Battery,
   },
   {
     label: 'critical',
     description: 'critical severity desc for risk of change',
-    iconComponent: Battery,
+    IconComponent: Battery,
   },
 ];
 
-const OCMReportDetails = ({
-  details,
-  ruleID,
-  totalRisk,
-  riskOfChange,
-}) => {
-  const LinkInDetails = ({ children, href }) => (
-    <a href={href}>
-      {children}
-      <ExternalLinkAltIcon className="OCMReportDetailsExternalLinkIcon"/>
-    </a>
-  );
+const LinkInDetails = ({ children, href }) => (
+  <a href={href}>
+    {children}
+    <ExternalLinkAltIcon className="OCMReportDetailsExternalLinkIcon"/>
+  </a>
+);
 
-  return (
-    <Grid gutter="md" className="OCMReportDetails">
-
-      <GridItem span={7}>
-        <Stack gutter="md">
-          <StackItem>
-            <div>
-              <ReactMarkdown
-                source={details}
-                renderers={{
-                  link: LinkInDetails,
-                }}
-              />
-            </div>
-          </StackItem>
-          <StackItem>
-            <RuleFeedback ruleID={ruleID}/>
-          </StackItem>
-        </Stack>
-      </GridItem>
-
-      <GridItem span={3}>
-        <Stack gutter="md">
-          <StackItem>
-            <Stack>
-              <StackItem>
-                <Title className="riskTitle" size="md">Total risk</Title>
-              </StackItem>
-              <StackItem>
-                <RiskDescription riskValue={totalRisk} riskMeta={totalRiskMeta}/>
-              </StackItem>
-            </Stack>
-          </StackItem>
-          <StackItem>
-            <Stack>
-              <StackItem>
-                <Title className="riskTitle" size="md">Risk of change</Title>
-              </StackItem>
-              <StackItem>
-                <RiskDescription riskValue={riskOfChange} riskMeta={riskOfChangeMeta}/>
-              </StackItem>
-            </Stack>
-          </StackItem>
-        </Stack>
-      </GridItem>
-
-    </Grid>
-  );
-};
-
-OCMReportDetails.propTypes = {
-  details: PropTypes.string,
-  ruleID: PropTypes.number,
-  totalRisk: PropTypes.number,
-  riskOfChange: PropTypes.number,
+LinkInDetails.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.node]),
+  href: PropTypes.string,
 };
 
 const RiskDescription = ({ riskValue, riskMeta }) => {
   // riskValue ranges from 1 to ∞
   const risk = riskMeta[riskValue - 1];
+  const IconComponent = risk.IconComponent;
 
   return (
     <div>
       <div>
-        <risk.iconComponent label={risk.label} severity={riskValue}/>
+        <IconComponent label={risk.label} severity={riskValue}/>
       </div>
       <Text component={TextVariants.small}>
         {risk.description}
@@ -152,5 +94,67 @@ RiskDescription.propTypes = {
   riskValue: PropTypes.number,
   riskMeta: PropTypes.array,
 };
+
+const OCMReportDetails = ({
+  details,
+  ruleId,
+  totalRisk,
+  riskOfChange,
+}) => (
+  <Grid gutter="md" className="OCMReportDetails">
+
+    <GridItem span={7}>
+      <Stack gutter="md">
+        <StackItem>
+          <div>
+            <ReactMarkdown
+              source={details}
+              renderers={{
+                link: LinkInDetails,
+              }}
+            />
+          </div>
+        </StackItem>
+        <StackItem>
+          <RuleFeedback ruleId={ruleId}/>
+        </StackItem>
+      </Stack>
+    </GridItem>
+
+    <GridItem span={3}>
+      <Stack gutter="md">
+        <StackItem>
+          <Stack>
+            <StackItem>
+              <Title className="riskTitle" size="md">Total risk</Title>
+            </StackItem>
+            <StackItem>
+              <RiskDescription riskValue={totalRisk} riskMeta={totalRiskMeta}/>
+            </StackItem>
+          </Stack>
+        </StackItem>
+        <StackItem>
+          <Stack>
+            <StackItem>
+              <Title className="riskTitle" size="md">Risk of change</Title>
+            </StackItem>
+            <StackItem>
+              <RiskDescription riskValue={riskOfChange} riskMeta={riskOfChangeMeta}/>
+            </StackItem>
+          </Stack>
+        </StackItem>
+      </Stack>
+    </GridItem>
+
+  </Grid>
+);
+
+OCMReportDetails.propTypes = {
+  details: PropTypes.string,
+  ruleId: PropTypes.number,
+  totalRisk: PropTypes.number,
+  riskOfChange: PropTypes.number,
+};
+
 
 export default OCMReportDetails;

@@ -24,7 +24,8 @@ class Insights extends React.Component {
     },
     data: [
       {
-        description: "rule 1 description",
+        ruleId: 1,
+        description: 'rule 1 description',
         details: `
 Some *rule* description
 
@@ -45,13 +46,45 @@ multiline
         risk_of_change: 1,
       },
       {
+        ruleId: 2,
         description: 'Some rule description2',
+        details: `
+Some *rule* description
+
+> quoute
+
+test
+multiline
+
+[link text](https://g.co)
+
+# header
+
+
+\`\`\`some code\`\`\`
+        `,
         created_at: 1583245000000,
         total_risk: 4,
         risk_of_change: 2,
       },
       {
+        ruleId: 3,
         description: 'Some rule description3',
+        details: `
+Some *rule* description
+
+> quoute
+
+test
+multiline
+
+[link text](https://g.co)
+
+# header
+
+
+\`\`\`some code\`\`\`
+        `,
         created_at: 1583245000000,
         total_risk: 1,
         risk_of_change: 3,
@@ -59,7 +92,8 @@ multiline
     ],
     shownData: [
       {
-        description: "rule 1 description",
+        ruleId: 1,
+        description: 'rule 1 description',
         details: `
 Some *rule* description
 
@@ -77,13 +111,45 @@ multiline
         risk_of_change: 4,
       },
       {
+        ruleId: 2,
         description: 'Some rule description2',
+        details: `
+Some *rule* description
+
+> quoute
+
+test
+multiline
+
+[link text](https://g.co)
+
+# header
+
+
+\`\`\`some code\`\`\`
+        `,
         created_at: 1583245000000,
         total_risk: 4,
         risk_of_change: 1,
       },
       {
+        ruleId: 3,
         description: 'Some rule description3',
+        details: `
+Some *rule* description
+
+> quoute
+
+test
+multiline
+
+[link text](https://g.co)
+
+# header
+
+
+\`\`\`some code\`\`\`
+        `,
         created_at: 1583245000000,
         total_risk: 1,
         risk_of_change: 2,
@@ -94,7 +160,7 @@ multiline
 
   addFilter = (filterValue) => {
     this.setState((state) => {
-      let filters = { ...state.filters };
+      const filters = { ...state.filters };
       if (!filters.totalRiskFilter) {
         filters.totalRiskFilter = [];
       }
@@ -107,14 +173,19 @@ multiline
 
   render() {
     const { meta, data, shownData, filters } = this.state;
+
     return (
       <>
         <Card>
           <CardBody>
             <Grid>
               <GridItem span={8}>
-                <Title headingLevel="h2"
-                       size="3xl">{`Remote health detected ${meta.count} issues`}</Title>
+                <Title
+                  headingLevel="h2"
+                  size="3xl"
+                >
+                  {`Remote health detected ${meta.count} issues`}
+                </Title>
                 <p>Last checked: 4 minutes ago</p>
                 <Popover
                   position="right"
@@ -146,10 +217,17 @@ multiline
                     ))
                       .map(([risk, count]) => (
                         <StackItem>
-                          <Battery label={severity[severityMapping[risk - 1]]} severity={risk}
-                                   labelHidden/>
-                          <Button variant="link"
-                                  onClick={() => this.addFilter(severityMapping[risk - 1])}>{`${count} ${severity[severityMapping[risk - 1]]}`}</Button>
+                          <Battery
+                            label={severity[severityMapping[risk - 1]]}
+                            severity={risk}
+                            labelHidden
+                          />
+                          <Button
+                            variant="link"
+                            onClick={() => this.addFilter(severityMapping[risk - 1])}
+                          >
+                            {`${count} ${severity[severityMapping[risk - 1]]}`}
+                          </Button>
                         </StackItem>
                       ))
                   }
@@ -211,17 +289,19 @@ multiline
                   selector:
                   // eslint-disable-next-line react/prop-types
                     ({ total_risk: riskNumber }) => (
-                      <Battery label={severity[severityMapping[riskNumber - 1]]}
-                               severity={riskNumber}/>
+                      <Battery
+                        label={severity[severityMapping[riskNumber - 1]]}
+                        severity={riskNumber}
+                      />
                     ),
                 },
               ]}
               detail={ruleData => (
                 <OCMReportDetails
                   details={ruleData.details}
+                  ruleId={ruleData.ruleId}
                   totalRisk={ruleData.total_risk}
                   riskOfChange={ruleData.risk_of_change}
-                  createdAt={ruleData.created_at}
                 />
               )}
             />
