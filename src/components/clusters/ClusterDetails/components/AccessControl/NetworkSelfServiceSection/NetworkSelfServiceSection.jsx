@@ -183,7 +183,7 @@ class NetworkSelfServiceSection extends React.Component {
       {
         title: 'Delete',
         onClick: (_, rowId, rowData) => deleteGrant(rowData.grantId),
-        component: 'a',
+        className: 'hand-pointer',
       },
     ];
 

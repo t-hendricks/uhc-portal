@@ -1031,6 +1031,10 @@ button:focus {
   }
 }
 
+.hand-pointer {
+  cursor: pointer;
+}
+
 .access-control-add {
   margin-top: var(--pf-global--spacer--lg);
 }

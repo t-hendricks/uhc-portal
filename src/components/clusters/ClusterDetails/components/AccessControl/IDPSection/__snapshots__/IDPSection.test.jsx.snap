@@ -78,6 +78,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
       actions={
         Array [
           Object {
+            "className": "hand-pointer",
             "onClick": [Function],
             "title": "Delete",
           },
