@@ -71,7 +71,7 @@ test('Field is valid CIDR range', () => {
 test('Field is valid Machine CIDR', () => {
   expect(validators.machineCidr()).toBe(undefined);
   expect(validators.machineCidr('192.168.0.0/0')).toBe(undefined);
-  expect(validators.machineCidr('192.168.0.0/25')).toBe('The subnet length can\'t be higher than \'/24\', which provides up to 11 nodes for single-zone clusters or 5 nodes for each zone in a multi-zone clusters.');
+  expect(validators.machineCidr('192.168.0.0/25')).toBe('The subnet length can\'t be higher than \'/23\', which provides up to 23 nodes for single-zone clusters or 10 nodes for each zone in a multi-zone clusters.');
 });
 
 test('Field is valid Service CIDR', () => {
