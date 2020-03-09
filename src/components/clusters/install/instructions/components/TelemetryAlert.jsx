@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../common/installLinks';
 
 const TelemetryAlert = () => {
   const title = (

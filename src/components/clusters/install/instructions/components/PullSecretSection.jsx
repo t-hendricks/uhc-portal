@@ -5,7 +5,7 @@ import { PasteIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Download from '@axetroy/react-download';
 
-import { trackPendo } from '../../../../../../common/helpers';
+import { trackPendo } from '../../../../../common/helpers';
 
 class PullSecretSection extends React.Component {
   state = { copied: false }

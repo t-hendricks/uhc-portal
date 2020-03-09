@@ -75,22 +75,46 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
           >
             <CreateOSDForm
               cloudProviderID="aws"
-              isBYOCModalOpen={false}
-              pending={false}
-              quota={
+              clustersQuota={
                 Object {
-                  "byoc": Object {
-                    "hasQuota": false,
-                    "multiAz": false,
-                    "singleAz": false,
+                  "aws": Object {
+                    "byoc": Object {
+                      "multiAz": Object {
+                        "available": 5,
+                      },
+                      "singleAz": Object {
+                        "available": 5,
+                      },
+                      "totalAvailable": 10,
+                    },
+                    "rhInfra": Object {
+                      "multiAz": Object {
+                        "available": 5,
+                      },
+                      "singleAz": Object {
+                        "available": 5,
+                      },
+                      "totalAvailable": 10,
+                    },
                   },
-                  "rhInfra": Object {
-                    "hasQuota": true,
-                    "multiAz": true,
-                    "singleAz": true,
+                  "gcp": Object {
+                    "rhInfra": Object {
+                      "multiAz": Object {
+                        "available": 5,
+                      },
+                      "singleAz": Object {
+                        "available": 5,
+                      },
+                      "totalAvailable": 10,
+                    },
                   },
+                  "hasAwsQuota": true,
+                  "hasGcpQuota": true,
+                  "hasOsdQuota": true,
                 }
               }
+              isBYOCModalOpen={false}
+              pending={false}
             />
             <GridItem>
               <Split

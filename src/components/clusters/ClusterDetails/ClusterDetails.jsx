@@ -324,7 +324,7 @@ class ClusterDetails extends Component {
             <AccessControl
               clusterID={cluster.id}
               clusterConsoleURL={consoleURL}
-              cloudProvider={cluster.cloud_provider.id}
+              cloudProvider={get(cluster, 'cloud_provider.id')}
             />
           </TabContent>
         )}

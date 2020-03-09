@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Card, List, ListItem, Title,
 } from '@patternfly/react-core';
-import links from '../../../../../common/installLinks';
+import links from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import PullSecretSection from './components/PullSecretSection';
 import TokenErrorAlert from './components/TokenErrorAlert';

@@ -8,7 +8,7 @@ import DownloadButton from './DownloadButton';
 import CLISection from './CLISection';
 import RHCOSSection from './RHCOSSection';
 import DeveloperPreviewSection from './DeveloperPreviewSection';
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../common/installLinks';
 
 function DownloadsAndPullSecretSection({
   installerURL,

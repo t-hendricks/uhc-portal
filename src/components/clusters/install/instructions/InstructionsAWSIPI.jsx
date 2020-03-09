@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Popover, Title } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+
 import GetStarted from './components/GetStarted';
-import links from '../../../../../common/installLinks';
+import links from '../../../../common/installLinks';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';

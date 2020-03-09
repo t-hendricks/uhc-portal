@@ -77,6 +77,7 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
 
 exports[`<MachineTypeSelection /> when the machine types list is available renders correctly 1`] = `
 <MachineTypeSelection
+  cloudProviderID="aws"
   getMachineTypes={[MockFunction]}
   input={
     Object {
@@ -175,6 +176,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
     className="flat-radio-buttons-flex-container"
   >
     <FlatRadioButton
+      extraClass=""
       icon={
         <MemoryIcon
           color="currentColor"
@@ -328,6 +330,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
       </Component>
     </FlatRadioButton>
     <FlatRadioButton
+      extraClass=""
       icon={
         <MemoryIcon
           color="currentColor"

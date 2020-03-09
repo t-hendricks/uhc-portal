@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import links from '../../../../../common/installLinks';
+import links from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import EvaluationAlert from './components/EvaluationAlert';
 
-function InstructionsBareMetal({ token }) {
+function InstructionsGCPUPI({ token }) {
   const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on Bare Metal with user-provisioned infrastructure
+        Install on GCP with an user-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
@@ -21,12 +21,12 @@ function InstructionsBareMetal({ token }) {
           <EvaluationAlert />
           <div className="pf-c-content">
             <p>
-              With OpenShift Container Platform you can install a cluster on bare metal using
+              With OpenShift Container Platform
+              you can install a cluster on Google Cloud Platform (GCP) using
               infrastructure that you provide.
             </p>
-
             <GetStarted
-              docURL={links.INSTALL_BAREMETAL_GETTING_STARTED}
+              docURL={links.INSTALL_GCPUPI_GETTING_STARTED}
               cloudProviderID={cloudProviderID}
             />
           </div>
@@ -35,17 +35,17 @@ function InstructionsBareMetal({ token }) {
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_BAREMETAL_INSTALLER_LATEST}
-        rhcosLearnMoreURL={links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE}
-        cliURL={links.INSTALL_BAREMETAL_CLI_LATEST}
+        installerURL={links.INSTALL_GCPUPI_INSTALLER_LATEST}
+        cliURL={links.INSTALL_GCPUPI_CLI_LATEST}
+        rhcosLearnMoreURL={links.INSTALL_GCPUPI_RHCOS_LEARN_MORE}
         cloudProviderID={cloudProviderID}
       />
     </>
   );
 }
 
-InstructionsBareMetal.propTypes = {
+InstructionsGCPUPI.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default InstructionsBareMetal;
+export default InstructionsGCPUPI;

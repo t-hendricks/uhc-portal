@@ -7,7 +7,7 @@ import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsRHV from '../common/CardBadge/instructions/InstructionsRHV';
+import InstructionsRHV from './instructions/InstructionsRHV';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallRHV extends Component {

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
+import get from 'lodash/get';
 import { Link } from 'react-router-dom';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import {
@@ -43,7 +44,7 @@ class CreateOSDPage extends React.Component {
     } = this.props;
 
     this.reset();
-    if (!organization.pending) {
+    if (!organization.fulfilled && !organization.pending) {
       // quota can change after a cluster is provisioned/scaled, always refresh it on mount
       getOrganizationAndQuota();
     }
@@ -65,17 +66,23 @@ class CreateOSDPage extends React.Component {
     const { hasShownBYOCModal } = this.state;
 
     const {
-      createClusterResponse, isErrorModalOpen, quota, openModal, change, getOrganizationAndQuota,
+      createClusterResponse,
+      isErrorModalOpen,
+      clustersQuota,
+      openModal,
+      change,
+      getOrganizationAndQuota,
+      cloudProviderID,
     } = this.props;
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
     }
 
-    const hasBYOCQuota = quota.byoc.hasQuota;
-    const hasStandardQuota = quota.rhInfra.hasQuota;
+    const hasAwsBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
+    const hasAwsRhInfradQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
 
     // if user has only BYOC quota
-    if (!prevProps.isBYOCModalOpen && !hasStandardQuota && hasBYOCQuota && !hasShownBYOCModal) {
+    if (cloudProviderID === 'aws' && !prevProps.isBYOCModalOpen && !hasAwsRhInfradQuota && hasAwsBYOCQuota && !hasShownBYOCModal) {
       // open BYOC modal
       openModal('customer-cloud-subscription');
       // set byoc field value to true
@@ -94,9 +101,7 @@ class CreateOSDPage extends React.Component {
   }
 
   reset() {
-    const {
-      resetResponse, resetForm,
-    } = this.props;
+    const { resetResponse, resetForm } = this.props;
     resetResponse();
     resetForm();
   }
@@ -116,7 +121,7 @@ class CreateOSDPage extends React.Component {
       isBYOCModalOpen,
       openModal,
       closeModal,
-      quota,
+      clustersQuota,
       cloudProviderID,
     } = this.props;
 
@@ -126,7 +131,7 @@ class CreateOSDPage extends React.Component {
       );
     }
 
-    if (!quota.byoc.hasQuota && !quota.rhInfra.hasQuota && organization.fulfilled) {
+    if (!organization.pending && organization.fulfilled && !clustersQuota.hasOsdQuota) {
       return (
         <Redirect to="/create" />
       );
@@ -239,7 +244,7 @@ class CreateOSDPage extends React.Component {
                     isBYOCModalOpen={isBYOCModalOpen}
                     openModal={openModal}
                     closeModal={closeModal}
-                    quota={quota}
+                    clustersQuota={clustersQuota}
                     cloudProviderID={cloudProviderID}
                   />
                   {/* Form footer */}
@@ -276,14 +281,28 @@ CreateOSDPage.propTypes = {
   isErrorModalOpen: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  quota: PropTypes.shape({
-    byoc: PropTypes.shape({
-      hasQuota: PropTypes.bool.isRequired,
-    }).isRequired,
-    rhInfra: PropTypes.shape({
-      hasQuota: PropTypes.bool.isRequired,
-    }).isRequired,
-  }).isRequired,
+  clustersQuota: PropTypes.shape({
+    hasOsdQuota: PropTypes.bool.isRequired,
+    aws: PropTypes.shape({
+      byoc: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+      rhInfra: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+    }),
+    gcp: PropTypes.shape({
+      rhInfra: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+    }),
+  }),
   isBYOCModalOpen: PropTypes.bool.isRequired,
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,

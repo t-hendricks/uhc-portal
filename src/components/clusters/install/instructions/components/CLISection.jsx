@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from '@patternfly/react-core';
 
 
-import { trackPendo } from '../../../../../../common/helpers';
+import { trackPendo } from '../../../../../common/helpers';
 
 const CLISection = ({ toolsURL, cloudProviderID }) => (
   <>

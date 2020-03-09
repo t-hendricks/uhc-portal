@@ -4,17 +4,17 @@ import { Card, CardBody, Title } from '@patternfly/react-core';
 import { UserIcon, SyncAltIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_primary_color_100 } from '@patternfly/react-tokens';
-import CardBadge from '../CardBadge';
+import CardBadge from '../../common/CardBadge';
 
 
-const InstructionsAWS = () => (
+const InstructionsOSP = () => (
   <Card>
     <div className="pf-c-content ocm-page">
       <Title headingLevel="h3" size="2xl">
-        AWS: Select an installation type
+        OpenStack: Select an installation type
       </Title>
       <div className="flex-container">
-        <Link to="/install/aws/installer-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/openstack/installer-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isRecommened />
           <CardBody>
             <SyncAltIcon color={global_primary_color_100.value} size="xl" alt="Installer-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
@@ -24,8 +24,8 @@ const InstructionsAWS = () => (
             provisions and the cluster maintains.
           </CardBody>
         </Link>
-        <Link to="/install/aws/user-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
-          <CardBadge isHidden />
+        <Link to="/install/openstack/user-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
+          <CardBadge isDevPreview />
           <CardBody>
             <UserIcon color={global_primary_color_100.value} size="xl" alt="User-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
             <Title headingLevel="h3" size="lg">User-provisioned infrastructure</Title>
@@ -37,4 +37,4 @@ const InstructionsAWS = () => (
   </Card>
 );
 
-export default InstructionsAWS;
+export default InstructionsOSP;

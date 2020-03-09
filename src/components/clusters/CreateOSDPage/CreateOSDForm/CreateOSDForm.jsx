@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { GridItem } from '@patternfly/react-core';
+import get from 'lodash/get';
 
 import CustomerCloudSubscriptionModal from './FormSections/BillingModelSection/CustomerCloudSubscriptionModal';
 import BillingModelSection from './FormSections/BillingModelSection/BillingModelSection';
@@ -59,7 +60,7 @@ class CreateOSDForm extends React.Component {
       change,
       openModal,
       isBYOCModalOpen,
-      quota,
+      clustersQuota,
       cloudProviderID,
     } = this.props;
 
@@ -70,12 +71,13 @@ class CreateOSDForm extends React.Component {
       mode,
     } = this.state;
 
-    const hasBYOCQuota = quota.byoc.hasQuota;
-    const hasStandardQuota = quota.rhInfra.hasQuota;
-
-    const isBYOCForm = hasBYOCQuota && (!hasStandardQuota || byocSelected);
-    const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
     const isAws = cloudProviderID === 'aws';
+
+    const hasBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
+    const hasAwsRhInfraQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
+
+    const isBYOCForm = isAws && hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
+    const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
 
     return (
       <>
@@ -89,7 +91,7 @@ class CreateOSDForm extends React.Component {
               openModal={openModal}
               toggleBYOCFields={this.toggleBYOCFields}
               hasBYOCquota={hasBYOCQuota}
-              hasStandardQuota={hasStandardQuota}
+              hasStandardQuota={hasAwsRhInfraQuota}
               byocSelected={isBYOCForm}
             />
           </>
@@ -120,7 +122,7 @@ class CreateOSDForm extends React.Component {
           change={change}
           isBYOC={isBYOCForm}
           cloudProviderID={cloudProviderID}
-          quota={quota[infraType]}
+          quota={clustersQuota[cloudProviderID][infraType]}
           handleMultiAZChange={this.handleMultiAZChange}
         />
 
@@ -168,14 +170,28 @@ CreateOSDForm.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
-  quota: PropTypes.shape({
-    byoc: PropTypes.shape({
-      hasQuota: PropTypes.bool.isRequired,
-    }).isRequired,
-    rhInfra: PropTypes.shape({
-      hasQuota: PropTypes.bool.isRequired,
-    }).isRequired,
-  }).isRequired,
+  clustersQuota: PropTypes.shape({
+    hasOsdQuota: PropTypes.bool.isRequired,
+    aws: PropTypes.shape({
+      byoc: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+      rhInfra: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+    }),
+    gcp: PropTypes.shape({
+      rhInfra: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+    }),
+  }),
   cloudProviderID: PropTypes.string.isRequired,
 };
 

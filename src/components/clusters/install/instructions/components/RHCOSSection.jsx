@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../common/installLinks';
 
 const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_LATEST }) => (
   <>

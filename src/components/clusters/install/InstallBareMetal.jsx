@@ -7,7 +7,7 @@ import { PageSection } from '@patternfly/react-core';
 import { tollboothActions } from '../../../redux/actions';
 import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
-import InstructionsBareMetal from '../common/CardBadge/instructions/InstructionsBareMetal';
+import InstructionsBareMetal from './instructions/InstructionsBareMetal';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallBareMetal extends Component {

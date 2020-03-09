@@ -4,7 +4,7 @@ import { PageSection } from '@patternfly/react-core';
 
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../common/Breadcrumbs';
-import InstructionsAzure from '../common/CardBadge/instructions/InstructionsAzure';
+import InstructionsAzure from './instructions/InstructionsAzure';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallAzure extends Component {

@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import {
   Card, CardBody, Title, GalleryItem, Gallery,
 } from '@patternfly/react-core';
-import bareMetalIcon from '../../../../../styles/images/server.svg';
-import AWSLogo from '../../../../../styles/images/AWS.png';
-import AzureLogo from '../../../../../styles/images/Microsoft_Azure_Logo.svg';
-import GCPLogo from '../../../../../styles/images/google-cloud-logo.svg';
-import vSphereLogo from '../../../../../styles/images/vmware_vsphere.png';
-import CRCLogo from '../../../../../styles/images/laptop.svg';
-import OSPLogo from '../../../../../styles/images/Logo-Red_Hat-OpenStack_Platform-A-Standard-RGB.svg';
-import RHVLogo from '../../../../../styles/images/Logo-Red_Hat-Virtualization-A-Standard-RGB.png';
-import IBMZLogo from '../../../../../styles/images/ibmz-logo.svg';
-import CardBadge from '../CardBadge';
+import bareMetalIcon from '../../../../styles/images/server.svg';
+import AWSLogo from '../../../../styles/images/AWS.png';
+import AzureLogo from '../../../../styles/images/Microsoft_Azure_Logo.svg';
+import GCPLogo from '../../../../styles/images/google-cloud-logo.svg';
+import vSphereLogo from '../../../../styles/images/vmware_vsphere.png';
+import CRCLogo from '../../../../styles/images/laptop.svg';
+import OSPLogo from '../../../../styles/images/Logo-Red_Hat-OpenStack_Platform-A-Standard-RGB.svg';
+import RHVLogo from '../../../../styles/images/Logo-Red_Hat-Virtualization-A-Standard-RGB.png';
+import IBMZLogo from '../../../../styles/images/ibmz-logo.svg';
+import CardBadge from '../../common/CardBadge';
 
 const InstructionsInfrastructure = () => (
   <Card>

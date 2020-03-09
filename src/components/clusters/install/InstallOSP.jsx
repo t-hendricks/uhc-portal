@@ -4,7 +4,7 @@ import { PageSection } from '@patternfly/react-core';
 
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../common/Breadcrumbs';
-import InstructionsOSP from '../common/CardBadge/instructions/InstructionsOSP';
+import InstructionsOSP from './instructions/InstructionsOSP';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallOSP extends Component {

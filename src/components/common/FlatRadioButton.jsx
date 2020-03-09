@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import {
   Button, Split, SplitItem, Title, Tooltip,
 } from '@patternfly/react-core';
@@ -15,10 +16,12 @@ function FlatRadioButton({
   titleText,
   secondaryText,
   icon,
+  extraClass,
   ...extraProps
 }) {
-  const extraClass = isSelected ? ' selected' : '';
-  const className = `${BASE_CLASS_NAME}${extraClass}`;
+  const isSelectedClass = isSelected ? 'selected' : '';
+
+  const className = cx(BASE_CLASS_NAME, isSelectedClass, extraClass);
 
   const onClick = () => {
     onChange(value);
@@ -68,6 +71,7 @@ FlatRadioButton.propTypes = {
   secondaryText: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   titleText: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
   value: PropTypes.string.isRequired,
+  extraClass: PropTypes.string,
   tooltip: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
 };
 

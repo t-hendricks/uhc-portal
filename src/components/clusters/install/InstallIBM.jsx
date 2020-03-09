@@ -7,7 +7,7 @@ import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsIBM from '../common/CardBadge/instructions/InstructionsIBM';
+import InstructionsIBM from './instructions/InstructionsIBM';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallIBM extends Component {

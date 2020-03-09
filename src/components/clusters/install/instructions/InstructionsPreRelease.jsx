@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
 import { CodeIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
 
-import links from '../../../../../common/installLinks';
+import links from '../../../../common/installLinks';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';

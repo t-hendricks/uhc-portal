@@ -1,58 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
-import links from '../../../../../common/installLinks';
+import links from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
-import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
+import EvaluationAlert from './components/EvaluationAlert';
 
-function InstructionsAzureUPI({ token }) {
+function InstructionsVSphere({ token }) {
   const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on Microsoft Azure with user-provisioned infrastructure
+        Install on vSphere with user-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
-          <div className="developer-preview">
-            <CodeIcon />
-            {' '}
-            Developer Preview
-          </div>
           {token.error && <TokenErrorAlert token={token} />}
+          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
-              With OpenShift Container Platform
-              you can install a cluster on Microsoft Azure using
+              With OpenShift Container Platform you can install a cluster on vSphere using
               infrastructure that you provide.
             </p>
-            <DeveloperPreviewStatements />
 
             <GetStarted
-              docURL={links.INSTALL_AZUREUPI_GETTING_STARTED}
+              docURL={links.INSTALL_VSPHERE_GETTING_STARTED}
               cloudProviderID={cloudProviderID}
             />
-
           </div>
           <TelemetryAlert />
         </div>
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_AZUREUPI_INSTALLER_LATEST}
-        cliURL={links.INSTALL_AZUREUPI_CLI_LATEST}
+        installerURL={links.INSTALL_VSPHERE_INSTALLER_LATEST}
+        rhcosLearnMoreURL={links.INSTALL_VSPHERE_RHCOS_LEARN_MORE}
+        cliURL={links.INSTALL_VSPHERE_CLI_LATEST}
         cloudProviderID={cloudProviderID}
       />
     </>
   );
 }
 
-InstructionsAzureUPI.propTypes = {
+InstructionsVSphere.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default InstructionsAzureUPI;
+export default InstructionsVSphere;

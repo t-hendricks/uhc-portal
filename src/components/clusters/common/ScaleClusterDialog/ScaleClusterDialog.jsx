@@ -79,6 +79,7 @@ class ScaleClusterDialog extends Component {
       isByoc,
       machineType,
       pristine,
+      cloudProviderID,
     } = this.props;
 
     const cancelEdit = () => {
@@ -139,6 +140,7 @@ class ScaleClusterDialog extends Component {
               isDisabled={pending}
               isEditingCluster
               currentNodeCount={initialValues.nodes_compute || 0}
+              cloudProviderID={cloudProviderID}
             />
             { !isByoc && (
               <>
@@ -152,6 +154,7 @@ class ScaleClusterDialog extends Component {
                     component={LoadBalancersDropdown}
                     disabled={pending}
                     currentValue={initialValues.load_balancers}
+                    cloudProviderID={cloudProviderID}
                   />
                 </FormGroup>
                 {showLoadBalancerAlert && scalingAlert}
@@ -165,6 +168,7 @@ class ScaleClusterDialog extends Component {
                     component={PersistentStorageDropdown}
                     disabled={pending}
                     currentValue={initialValues.persistent_storage}
+                    cloudProviderID={cloudProviderID}
                   />
                 </FormGroup>
                 {showPersistentStorageAlert && scalingAlert}
@@ -206,6 +210,7 @@ ScaleClusterDialog.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   isByoc: PropTypes.bool,
   machineType: PropTypes.string,
+  cloudProviderID: PropTypes.string.isRequired,
   pristine: PropTypes.bool, // from redux-form
 };
 

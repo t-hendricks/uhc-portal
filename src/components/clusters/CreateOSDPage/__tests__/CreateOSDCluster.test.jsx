@@ -46,16 +46,28 @@ describe('CreateOSDCluster', () => {
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
       cloudProviderID="aws"
-      quota={{
-        byoc: {
-          multiAz: false,
-          singleAz: false,
-          hasQuota: false,
+      clustersQuota={{
+        hasOsdQuota: true,
+        hasAwsQuota: true,
+        hasGcpQuota: true,
+        aws: {
+          byoc: {
+            singleAz: { available: 5 },
+            multiAz: { available: 5 },
+            totalAvailable: 10,
+          },
+          rhInfra: {
+            singleAz: { available: 5 },
+            multiAz: { available: 5 },
+            totalAvailable: 10,
+          },
         },
-        rhInfra: {
-          hasQuota: true,
-          singleAz: true,
-          multiAz: true,
+        gcp: {
+          rhInfra: {
+            singleAz: { available: 5 },
+            multiAz: { available: 5 },
+            totalAvailable: 10,
+          },
         },
       }}
     />);
@@ -110,16 +122,25 @@ describe('CreateOSDCluster', () => {
         persistentStorageValues={initialRequestStatus}
         loadBalancerValues={initialRequestStatus}
         cloudProviderID="aws"
-        quota={{
-          byoc: {
-            multiAz: false,
-            singleAz: false,
-            hasQuota: false,
+        clustersQuota={{
+          aws: {
+            byoc: {
+              multiAz: false,
+              singleAz: false,
+              hasQuota: false,
+            },
+            rhInfra: {
+              hasQuota: true,
+              singleAz: true,
+              multiAz: true,
+            },
           },
-          rhInfra: {
-            hasQuota: false,
-            singleAz: false,
-            multiAz: true,
+          gcp: {
+            rhInfra: {
+              hasQuota: true,
+              singleAz: true,
+              multiAz: true,
+            },
           },
         }}
       />);
