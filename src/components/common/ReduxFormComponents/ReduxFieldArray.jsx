@@ -69,6 +69,7 @@ class RenderFields extends React.Component {
       disabled,
       validateField,
       placeholderText,
+      meta: { error },
     } = this.props;
 
     const labelGridItem = (index) => {
@@ -88,6 +89,9 @@ class RenderFields extends React.Component {
                 ? <p className="pf-c-form__helper-text" id="field-array-help-text">{helpText}</p>
                 : null
             }
+            { error && (
+              <p className="pf-c-form__helper-text pf-m-error">{error}</p>
+            )}
           </GridItem>
         );
       }
@@ -175,6 +179,9 @@ RenderFields.propTypes = {
    * upon a change inside the fieldArray.
    */
   onFormChange: PropTypes.func,
+  meta: PropTypes.shape({
+    error: PropTypes.string,
+  }),
 };
 
 function ReduxFieldArray(props) {
