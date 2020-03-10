@@ -13,7 +13,7 @@ import {
 
 function SubscriptionNotFulfilled({ data, refresh }) {
   const getEmptyState = (title, text, button) => (
-    <PageSection>
+    <PageSection className="subscriptions-empty-state">
       <EmptyState>
         <Title headingLevel="h4" size="2xl">
           { title }
@@ -61,7 +61,13 @@ function SubscriptionNotFulfilled({ data, refresh }) {
       errorTitle: 'Unable to retrieve quota information',
       text: (
         <p>
-          <a href="https://www.openshift.com/products/dedicated/contact/" rel="noreferrer noopener" target="_blank">Contact sales</a>
+          <a
+            href="https://www.openshift.com/products/dedicated/contact/"
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            Contact sales
+          </a>
           {' '}
           to get started with OpenShift Dedicated.
         </p>
