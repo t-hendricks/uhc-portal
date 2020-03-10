@@ -18,6 +18,8 @@ function BasicFieldsSection({
 }) {
   const hasSingleAzQuota = quota.singleAz > 0;
   const hasMultiAzQuota = quota.multiAz > 0;
+  const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
+  const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
 
   return (
     <>
@@ -92,13 +94,13 @@ function BasicFieldsSection({
                 value: 'false',
                 label: 'Single Zone',
                 disabled: !hasSingleAzQuota,
-                tooltipText: noQuotaTooltip,
+                tooltipText: singleAzTooltip,
               },
               {
                 value: 'true',
                 label: 'Multizone',
                 disabled: !hasMultiAzQuota,
-                tooltipText: noQuotaTooltip,
+                tooltipText: multiAzTooltip,
               },
             ]}
             defaultValue={hasSingleAzQuota ? 'false' : 'true'}
