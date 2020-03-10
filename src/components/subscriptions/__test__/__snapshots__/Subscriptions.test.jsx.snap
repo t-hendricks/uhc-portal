@@ -47,7 +47,9 @@ exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
 `;
 
 exports[`<Subscriptions /> OSDSubscriptionCard Empty should render empty OSD quota summary 1`] = `
-<PageSection>
+<PageSection
+  className="subscriptions-empty-state"
+>
   <EmptyState>
     <Title
       headingLevel="h4"
@@ -73,7 +75,9 @@ exports[`<Subscriptions /> OSDSubscriptionCard Empty should render empty OSD quo
 `;
 
 exports[`<Subscriptions /> OSDSubscriptionCard Error should render error OSD quota summary 1`] = `
-<PageSection>
+<PageSection
+  className="subscriptions-empty-state"
+>
   <EmptyState>
     <Title
       headingLevel="h4"
