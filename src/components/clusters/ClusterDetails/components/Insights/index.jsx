@@ -13,7 +13,7 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/component
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import '@redhat-cloud-services/frontend-components/components/Battery.css';
 import './RulesTable.css';
-import OCMReportDetails from './OCMReportDetails';
+import { OCMReportDetails } from '@redhat-cloud-services/frontend-components/components/OCMReportDetails';
 
 const severityMapping = Object.keys(severity);
 
