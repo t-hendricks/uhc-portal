@@ -89,9 +89,6 @@ class RenderFields extends React.Component {
                 ? <p className="pf-c-form__helper-text" id="field-array-help-text">{helpText}</p>
                 : null
             }
-            { error && (
-              <p className="pf-c-form__helper-text pf-m-error">{error}</p>
-            )}
           </GridItem>
         );
       }
@@ -136,6 +133,15 @@ class RenderFields extends React.Component {
       return null;
     };
 
+    const fieldArrayErrorGridItem = (index, errorMessage) => {
+      if (errorMessage && index === 0) {
+        return (
+          <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">{error}</GridItem>
+        );
+      }
+      return null;
+    };
+
     const minusButtonGridItem = index => (
       <GridItem className="field-grid-item" span={1}>
         <Button
@@ -155,6 +161,7 @@ class RenderFields extends React.Component {
             {labelGridItem(index)}
             {fieldGridItem(item, index)}
             {minusButtonGridItem(index)}
+            {fieldArrayErrorGridItem(error, index)}
             {addMoreButtonGridItem(index)}
           </React.Fragment>
         ))
