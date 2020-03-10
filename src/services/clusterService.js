@@ -139,7 +139,7 @@ const archiveCluster = id => apiRequest({
 const unarchiveCluster = id => apiRequest({
   method: 'patch',
   url: `/api/accounts_mgmt/v1/subscriptions/${id}`,
-  data: '{"status":"Active"}',
+  data: '{"status":"Disconnected"}',
 });
 
 const getAddOns = () => apiRequest({
