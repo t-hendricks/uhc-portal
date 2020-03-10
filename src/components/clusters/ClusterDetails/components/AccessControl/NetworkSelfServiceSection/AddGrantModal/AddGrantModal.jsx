@@ -72,6 +72,7 @@ class AddGrantModal extends Component {
 
     const generateRadio = role => (
       <Radio
+        className="radio-button"
         key={role.id}
         isChecked={selectedRole === role.id}
         name={role.id}
@@ -81,7 +82,7 @@ class AddGrantModal extends Component {
             {role.displayName}
             <div className="radio-helptext">{role.description}</div>
           </>
-      )}
+        )}
         id={role.id}
         value={role.id}
       />
@@ -125,6 +126,7 @@ class AddGrantModal extends Component {
                 aria-label="AWS IAM ARN"
               />
             </FormGroup>
+            <h3 id="grant-role-select">Role</h3>
             {roles.map(role => generateRadio(role))}
           </Form>
         </>

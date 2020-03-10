@@ -32,7 +32,7 @@ function NetworkingSection({ pending, toggleNetwork, mode }) {
       >
         <Field
           component={RadioButtons}
-          className="network-configuration-radios"
+          className="radio-button"
           name="network_configuration_toggle"
           disabled={pending}
           onChange={toggleNetwork}
