@@ -4,7 +4,7 @@ import {
   Card, CardBody, Title, Popover, Button,
   Grid, GridItem, Stack, StackItem,
 } from '@patternfly/react-core';
-import { RuleTable, severity } from '@redhat-cloud-services/rule-components';
+import { RuleTable, severity, ReportDetails } from '@redhat-cloud-services/rule-components';
 import {
   descriptionFilter,
   totalRiskFilter,
@@ -13,7 +13,6 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/component
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import '@redhat-cloud-services/frontend-components/components/Battery.css';
 import './RulesTable.css';
-import { OCMReportDetails } from '@redhat-cloud-services/frontend-components/components/OCMReportDetails';
 
 const severityMapping = Object.keys(severity);
 
@@ -172,7 +171,9 @@ multiline
   };
 
   render() {
-    const { meta, data, shownData, filters } = this.state;
+    const {
+      meta, data, shownData, filters,
+    } = this.state;
 
     return (
       <>
@@ -193,7 +194,7 @@ multiline
                   bodyContent={(
                     <div>
                       It helps you identify, prioritize, and resolve risks to security,
-                      perfomance, aviability and stability before they become urgent issues
+                      performance, availability and stability before they become urgent issues
                     </div>
                   )}
                   aria-label="What is Remote health?"
@@ -297,7 +298,7 @@ multiline
                 },
               ]}
               detail={ruleData => (
-                <OCMReportDetails
+                <ReportDetails
                   details={ruleData.details}
                   ruleId={ruleData.ruleId}
                   totalRisk={ruleData.total_risk}
