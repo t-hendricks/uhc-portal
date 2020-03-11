@@ -121,6 +121,7 @@ class UsersSection extends React.Component {
       {
         title: 'Delete',
         onClick: (_, rowID, rowData) => { this.setState({ deletedRowIndex: rowID }); deleteUser(clusterID, 'dedicated-admins', rowData.userID); },
+        className: 'hand-pointer',
       },
     ];
 

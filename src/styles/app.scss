@@ -118,9 +118,18 @@ limitations under the License.
 
 .cluster-details-item {
   padding: 30px;
+  dt {
+    font-weight: bold;
+    font-size: 14px;
+  }
   dd {
     margin-bottom: 30px;
+    font-size: 16px;
   }
+}
+
+.self-service-failed {
+  font-size: 14px;
 }
 
 .cluster-details-item-list {
@@ -968,9 +977,12 @@ div.pf-c-alert.archived-cluster-toast {
     word-break: normal;
   }
   .ocp-list {
-    list-style: inside;
-    padding-left: 40px;
+    padding-left: 50px;
     margin: 16px 0 16px 0;
+    li { padding-left: 10px; }
+  }
+  .subscriptions-empty-state {
+    background-color: white;
   }
 }
 
@@ -1020,6 +1032,10 @@ button:focus {
     --pf-c-content--a--Color: var(--pf-c-content--a--hover--Color);
     --pf-c-content--a--TextDecoration: var(--pf-c-content--a--hover--TextDecoration);
   }
+}
+
+.hand-pointer {
+  cursor: pointer;
 }
 
 .access-control-add {
@@ -1077,4 +1093,13 @@ button:focus {
     top: 0;
     z-index: 2;
   }
+}
+
+.idp-helptext-heading {
+  margin-top: var(--pf-global--spacer--lg);
+}
+
+.idp-github-auth-mode-selection-question {
+  margin-top: var(--pf-global--spacer--xs);
+  margin-bottom: var(--pf-global--spacer--md);
 }

@@ -10,6 +10,14 @@ const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}
 
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
+const MACHINE_CIDR_MAX = 23;
+const SERVICE_CIDR_MAX = 24;
+const POD_CIDR_MAX = 18;
+
+// Regular expression used to check whether input is a valid IPv4 subnet prefix length
+const HOST_PREFIX_REGEXP = /^\/?(3[0-2]|[1-2][0-9]|[0-9])$/;
+const HOST_PREFIX_MIN = 23;
+const HOST_PREFIX_MAX = 26;
 
 // Regular expression for a valid URL for a console in a self managed cluster.
 const CONSOLE_URL_REGEXP = /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
@@ -200,6 +208,87 @@ const cidr = (value) => {
   return undefined;
 };
 
+const getCIDRSubnet = (value) => {
+  if (!value) {
+    return undefined;
+  }
+
+  return parseInt(value.split('/').pop(), 10);
+};
+
+const machineCidr = (value) => {
+  if (!value) {
+    return undefined;
+  }
+
+  const prefixLength = getCIDRSubnet(value);
+
+  if (prefixLength > MACHINE_CIDR_MAX) {
+    const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX);
+    const singleAZ = maxComputeNodes - 9;
+    const multiAZ = Math.floor(maxComputeNodes / 3);
+    return `The subnet length can't be higher than '/${MACHINE_CIDR_MAX}', which provides up to ${singleAZ} nodes for single-zone clusters or ${multiAZ} nodes for each zone in a multi-zone clusters.`;
+  }
+
+  return undefined;
+};
+
+const serviceCidr = (value) => {
+  if (!value) {
+    return undefined;
+  }
+
+  const prefixLength = getCIDRSubnet(value);
+
+  if (prefixLength > SERVICE_CIDR_MAX) {
+    const maxServices = 2 ** (32 - SERVICE_CIDR_MAX) - 2;
+    return `The subnet length can't be higher than '/${SERVICE_CIDR_MAX}', which provides up to ${maxServices} services.`;
+  }
+
+  return undefined;
+};
+
+const podCidr = (value, formData) => {
+  if (!value) {
+    return undefined;
+  }
+
+  const prefixLength = getCIDRSubnet(value);
+
+  if (prefixLength > POD_CIDR_MAX) {
+    const hostPrefix = getCIDRSubnet(formData.network_host_prefix) || 23;
+    const maxPodIPs = 2 ** (32 - hostPrefix);
+    const maxPodNodes = Math.floor(2 ** (32 - POD_CIDR_MAX) / maxPodIPs);
+    return `The subnet length can't be higher than '/${POD_CIDR_MAX}', which provides up to ${maxPodNodes} nodes.`;
+  }
+
+  return undefined;
+};
+
+// Function to validate IP address masks
+const hostPrefix = (value) => {
+  if (!value) {
+    return undefined;
+  }
+
+  if (!HOST_PREFIX_REGEXP.test(value)) {
+    return `The value '${value}' isn't a valid subnet mask. It must follow the RFC-4632 format: '/16'.`;
+  }
+
+  const prefixLength = getCIDRSubnet(value);
+
+  if (prefixLength < HOST_PREFIX_MIN) {
+    const maxPodIPs = 2 ** (32 - HOST_PREFIX_MIN) - 2;
+    return `The subnet length can't be lower than '/${HOST_PREFIX_MIN}', which provides up to ${maxPodIPs} Pod IP addresses.`;
+  }
+  if (prefixLength > HOST_PREFIX_MAX) {
+    const maxPodIPs = 2 ** (32 - HOST_PREFIX_MAX) - 2;
+    return `The subnet length can't be higher than '/${HOST_PREFIX_MAX}', which provides up to ${maxPodIPs} Pod IP addresses.`;
+  }
+
+  return undefined;
+};
+
 /**
  * Function to validate number of nodes.
  *
@@ -229,8 +318,6 @@ const nodesMultiAz = (value) => {
   }
   return undefined;
 };
-
-const github = value => (value ? undefined : 'Either "Teams" or "Organizations" are required');
 
 /**
  * General function used to validate numeric user input according to some flags.
@@ -297,7 +384,27 @@ const validateARN = (value) => {
     return 'Field is required';
   }
   if (!AWS_ARN_REGEX.test(value)) {
-    return 'ARN value should be in the format arn::aws:iam::123456789012:user/name.';
+    return 'ARN value should be in the format arn:aws:iam::123456789012:user/name.';
+  }
+  return undefined;
+};
+
+/**
+ * for ReduxFieldArray, validate there is at least one filled value.
+ * Note that since ReduxFieldArray stores the input's key/id with each value,
+ * and the value itself under a key with the name of the input
+ * - this function is not like other validators, it's a function that returns a function,
+ * so you can specify the field name.
+ *
+ * @param {*} values array of value objects, from redux-form
+ */
+const atLeastOneRequired = fieldName => (values) => {
+  if (!values) {
+    return 'At least one is required.';
+  }
+  const nonEmptyValues = values.filter(value => value[fieldName]);
+  if (!nonEmptyValues || nonEmptyValues.length === 0) {
+    return 'At least one is required.';
   }
   return undefined;
 };
@@ -311,9 +418,12 @@ const validators = {
   checkUserID,
   checkBaseDNSDomain,
   cidr,
+  machineCidr,
+  serviceCidr,
+  podCidr,
+  hostPrefix,
   nodes,
   nodesMultiAz,
-  github,
   validateNumericInput,
   checkOpenIDIssuer,
   checkGithubTeams,
@@ -326,7 +436,7 @@ const validators = {
 
 export {
   required,
-  github,
+  atLeastOneRequired,
   checkClusterUUID,
   checkIdentityProviderName,
   checkClusterDisplayName,

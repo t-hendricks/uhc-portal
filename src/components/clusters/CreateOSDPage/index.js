@@ -80,6 +80,7 @@ const mapDispatchToProps = dispatch => ({
         machine_cidr: formData.network_machine_cidr,
         service_cidr: formData.network_service_cidr,
         pod_cidr: formData.network_pod_cidr,
+        host_prefix: parseInt(formData.network_host_prefix, 10),
       };
     }
     if (formData.byoc === 'true') {

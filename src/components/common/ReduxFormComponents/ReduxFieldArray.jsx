@@ -21,6 +21,9 @@ class RenderFields extends React.Component {
     const { fields } = this.props;
     if (fields.length === 0) {
       this.addNewField();
+    } else {
+      // fields on mount = default values, populate internal state to account for them
+      this.setState({ areFieldsFilled: fields.map(field => !!field) });
     }
   }
 
@@ -66,6 +69,7 @@ class RenderFields extends React.Component {
       disabled,
       validateField,
       placeholderText,
+      meta: { error },
     } = this.props;
 
     const labelGridItem = (index) => {
@@ -129,6 +133,15 @@ class RenderFields extends React.Component {
       return null;
     };
 
+    const fieldArrayErrorGridItem = (index, errorMessage) => {
+      if (errorMessage && index === 0) {
+        return (
+          <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">{error}</GridItem>
+        );
+      }
+      return null;
+    };
+
     const minusButtonGridItem = index => (
       <GridItem className="field-grid-item" span={1}>
         <Button
@@ -148,6 +161,7 @@ class RenderFields extends React.Component {
             {labelGridItem(index)}
             {fieldGridItem(item, index)}
             {minusButtonGridItem(index)}
+            {fieldArrayErrorGridItem(error, index)}
             {addMoreButtonGridItem(index)}
           </React.Fragment>
         ))
@@ -172,6 +186,9 @@ RenderFields.propTypes = {
    * upon a change inside the fieldArray.
    */
   onFormChange: PropTypes.func,
+  meta: PropTypes.shape({
+    error: PropTypes.string,
+  }),
 };
 
 function ReduxFieldArray(props) {

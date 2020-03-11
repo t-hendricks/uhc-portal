@@ -1,6 +1,6 @@
+import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION,
-  setStateProp, baseRequestState,
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../common/errors';
 import AddOnsConstants from './AddOnsConstants';
@@ -25,161 +25,90 @@ const initialState = {
 };
 
 function AddOnsReducer(state = initialState, action) {
-  switch (action.type) {
-    case AddOnsConstants.CLEAR_CLUSTER_ADDON_RESPONSES:
-      return {
-        ...initialState,
-        addOns: state.addOns,
-      };
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    // eslint-disable-next-line default-case
+    switch (action.type) {
+      case AddOnsConstants.CLEAR_CLUSTER_ADDON_RESPONSES:
+        return {
+          ...initialState,
+          addOns: state.addOns,
+        };
 
-    // GET_ADDONS
-    case REJECTED_ACTION(AddOnsConstants.GET_ADDONS):
-      return setStateProp(
-        'addOns',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
+      // GET_ADDONS
+      case REJECTED_ACTION(AddOnsConstants.GET_ADDONS):
+        draft.addOns = {
+          ...initialState.addOns,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(AddOnsConstants.GET_ADDONS):
+        draft.addOns.pending = true;
+        break;
 
-    case PENDING_ACTION(AddOnsConstants.GET_ADDONS):
-      return setStateProp(
-        'addOns',
-        {
-          pending: true,
-          items: state.addOns.items,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(AddOnsConstants.GET_ADDONS):
-      return setStateProp(
-        'addOns',
-        {
+      case FULFILLED_ACTION(AddOnsConstants.GET_ADDONS):
+        draft.addOns = {
+          ...initialState.addOns,
           fulfilled: true,
           items: action.payload.addOns.data.items,
           resourceNames: action.payload.resourceNames,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
+        break;
 
-    // GET_CLUSTER_ADDONS
-    case REJECTED_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
-      return setStateProp(
-        'clusterAddOns',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
-      return setStateProp(
-        'clusterAddOns',
-        {
-          pending: true,
-          items: state.clusterAddOns.items,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
-      return setStateProp(
-        'clusterAddOns',
-        {
+      // GET_CLUSTER_ADDONS
+      case REJECTED_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
+        draft.clusterAddOns = {
+          ...initialState.clusterAddOns,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
+        draft.clusterAddOns.pending = true;
+        break;
+      case FULFILLED_ACTION(AddOnsConstants.GET_CLUSTER_ADDONS):
+        draft.clusterAddOns = {
+          ...initialState.clusterAddOns,
           fulfilled: true,
           clusterID: action.payload.clusterID,
           items: action.payload.clusterAddOns.data.items,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
+        break;
 
-    // ADD_CLUSTER_ADDON
-    case REJECTED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
-      return setStateProp(
-        'addClusterAddOnResponse',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
-      return setStateProp(
-        'addClusterAddOnResponse',
-        {
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
-      return setStateProp(
-        'addClusterAddOnResponse',
-        {
+      // ADD_CLUSTER_ADDON
+      case REJECTED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
+        draft.addClusterAddOnResponse = {
+          ...initialState.addClusterAddOnResponse,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
+        draft.addClusterAddOnResponse.pending = true;
+        break;
+      case FULFILLED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
+        draft.addClusterAddOnResponse = {
+          ...initialState.addClusterAddOnResponse,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
+        break;
 
-    // DELETE_CLUSTER_ADDON
-    case REJECTED_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
-      return setStateProp(
-        'deleteClusterAddOnResponse',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
-      return setStateProp(
-        'deleteClusterAddOnResponse',
-        {
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
-      return setStateProp(
-        'deleteClusterAddOnResponse',
-        {
+      // DELETE_CLUSTER_ADDON
+      case REJECTED_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
+        draft.deleteClusterAddOnResponse = {
+          ...initialState.deleteClusterAddOnResponse,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
+        draft.deleteClusterAddOnResponse.pending = true;
+        break;
+      case FULFILLED_ACTION(AddOnsConstants.DELETE_CLUSTER_ADDON):
+        draft.deleteClusterAddOnResponse = {
+          ...initialState,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-    default:
-      return state;
-  }
+        };
+        break;
+    }
+  });
 }
 
 AddOnsReducer.initialState = initialState;

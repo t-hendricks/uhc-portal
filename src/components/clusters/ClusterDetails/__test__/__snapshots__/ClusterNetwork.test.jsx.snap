@@ -7,7 +7,7 @@ exports[`<ClusterNetwork /> should render 1`] = `
   </dt>
   <dd>
     <dl
-      className="cluster-details-item-list left"
+      className="cluster-details-item-list"
     >
       <dt>
         Machine CIDR: 
@@ -17,7 +17,7 @@ exports[`<ClusterNetwork /> should render 1`] = `
       </dd>
     </dl>
     <dl
-      className="cluster-details-item-list left"
+      className="cluster-details-item-list"
     >
       <dt>
         Service CIDR: 
@@ -27,7 +27,7 @@ exports[`<ClusterNetwork /> should render 1`] = `
       </dd>
     </dl>
     <dl
-      className="cluster-details-item-list left"
+      className="cluster-details-item-list"
     >
       <dt>
         Pod CIDR: 

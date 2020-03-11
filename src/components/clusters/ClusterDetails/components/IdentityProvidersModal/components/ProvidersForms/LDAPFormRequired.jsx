@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { GridItem } from '@patternfly/react-core';
+import { GridItem, Divider, Title } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -29,6 +29,18 @@ class LDAPFormRequired extends React.Component {
         <GridItem span={8}>
           <Field
             component={ReduxVerticalFormGroup}
+            name="ldap_url"
+            label="LDAP url"
+            type="text"
+            disabled={isPending}
+            validate={required}
+            isRequired
+            helpText="An RFC 2255 URL which specifies the LDAP search parameters to use."
+          />
+        </GridItem>
+        <GridItem span={8}>
+          <Field
+            component={ReduxVerticalFormGroup}
             name="bind_dn"
             label="Bind DN"
             type="text"
@@ -50,19 +62,13 @@ class LDAPFormRequired extends React.Component {
           />
         </GridItem>
         <GridItem span={8}>
-          <Field
-            component={ReduxVerticalFormGroup}
-            name="ldap_url"
-            label="LDAP url"
-            type="text"
-            disabled={isPending}
-            validate={required}
-            isRequired
-            helpText="An RFC 2255 URL which specifies the LDAP search parameters to use."
-          />
-        </GridItem>
-        <GridItem span={8}>
-          <h4>Attributes</h4>
+          <Divider />
+          <Title headingLevel="h3" size="xl" className="idp-helptext-heading">
+            Attributes
+          </Title>
+          <p>
+            Attributes map LDAP attributes to identities.
+          </p>
         </GridItem>
         <ReduxFieldArray
           fieldName="ldap_id"
@@ -72,15 +78,15 @@ class LDAPFormRequired extends React.Component {
           disabled={isPending}
           isRequired
           validateField={required}
-          helpText="The list of attributes whose values should be used as the ID."
+          helpText="The list of attributes whose values should be used as the user ID."
         />
         <ReduxFieldArray
-          fieldName="ldap_email"
-          label="Email"
+          fieldName="ldap_preferred_username"
+          label="Preferred Username"
           type="text"
-          placeholderText="e.g. email"
+          placeholderText="e.g. preferred_username"
           disabled={isPending}
-          helpText="The list of attributes whose values should be used as the email address."
+          helpText="The list of attributes whose values should be used as the preferred username."
         />
         <ReduxFieldArray
           fieldName="ldap_name"
@@ -91,12 +97,12 @@ class LDAPFormRequired extends React.Component {
           helpText="The list of attributes whose values should be used as the display name."
         />
         <ReduxFieldArray
-          fieldName="ldap_preferred_username"
-          label="Preferred Username"
+          fieldName="ldap_email"
+          label="Email"
           type="text"
-          placeholderText="e.g. preferred_username"
+          placeholderText="e.g. email"
           disabled={isPending}
-          helpText="The list of attributes whose values should be used as the preferred username."
+          helpText="The list of attributes whose values should be used as the email address."
         />
       </>
     );

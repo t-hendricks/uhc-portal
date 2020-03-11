@@ -68,6 +68,42 @@ test('Field is valid CIDR range', () => {
   expect(validators.cidr('192.168.0.0/16')).toBe(undefined);
 });
 
+test('Field is valid Machine CIDR', () => {
+  expect(validators.machineCidr()).toBe(undefined);
+  expect(validators.machineCidr('192.168.0.0/0')).toBe(undefined);
+  expect(validators.machineCidr('192.168.0.0/25')).toBe('The subnet length can\'t be higher than \'/23\', which provides up to 23 nodes for single-zone clusters or 10 nodes for each zone in a multi-zone clusters.');
+});
+
+test('Field is valid Service CIDR', () => {
+  expect(validators.serviceCidr()).toBe(undefined);
+  expect(validators.serviceCidr('192.168.0.0/0')).toBe(undefined);
+  expect(validators.serviceCidr('192.168.0.0/25')).toBe('The subnet length can\'t be higher than \'/24\', which provides up to 254 services.');
+});
+
+test('Field is valid Pod CIDR', () => {
+  expect(validators.podCidr()).toBe(undefined);
+  expect(validators.podCidr('192.168.0.0/18', { network_host_prefix: '/23' })).toBe(undefined);
+  expect(validators.podCidr('192.168.0.0/19', { network_host_prefix: '/23' })).toBe('The subnet length can\'t be higher than \'/18\', which provides up to 32 nodes.');
+  expect(validators.podCidr('192.168.0.0/19', { network_host_prefix: '/26' })).toBe('The subnet length can\'t be higher than \'/18\', which provides up to 256 nodes.');
+});
+
+test('Field is valid subnet mask', () => {
+  expect(validators.hostPrefix()).toBe(undefined);
+  expect(validators.hostPrefix('/22')).toBe('The subnet length can\'t be lower than \'/23\', which provides up to 510 Pod IP addresses.');
+  expect(validators.hostPrefix('/23')).toBe(undefined);
+  expect(validators.hostPrefix('/26')).toBe(undefined);
+  expect(validators.hostPrefix('/27')).toBe('The subnet length can\'t be higher than \'/26\', which provides up to 62 Pod IP addresses.');
+  expect(validators.hostPrefix('/33')).toBe('The value \'/33\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
+  expect(validators.hostPrefix('32')).toBe('The subnet length can\'t be higher than \'/26\', which provides up to 62 Pod IP addresses.');
+  expect(validators.hostPrefix('/foo')).toBe('The value \'/foo\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
+  expect(validators.hostPrefix('foo')).toBe('The value \'foo\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
+  expect(validators.hostPrefix('/')).toBe('The value \'/\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
+  expect(validators.hostPrefix('/0')).toBe('The subnet length can\'t be lower than \'/23\', which provides up to 510 Pod IP addresses.');
+  expect(validators.hostPrefix('0')).toBe('The subnet length can\'t be lower than \'/23\', which provides up to 510 Pod IP addresses.');
+  expect(validators.hostPrefix('/-1')).toBe('The value \'/-1\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
+  expect(validators.hostPrefix('-1')).toBe('The value \'-1\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
+});
+
 test('Field is valid node count', () => {
   expect(validators.nodes(3, { value: 4, validationMsg: 'At least 4 nodes are required.' })).toBe('At least 4 nodes are required.');
   expect(validators.nodes(4, { value: 4, validationMsg: 'At least 4 nodes are required.' })).toBe(undefined);
@@ -241,7 +277,7 @@ test('Field is valid number of compute nodes for disconnected cluster', () => {
 test('Field is a valid ARN', () => {
   expect(validateARN('arn:aws:iam::012345678901:user/richard')).toBe(undefined);
   expect(validateARN('arn:aws:iam::012345678901:group/sda')).toBe(undefined);
-  expect(validateARN('arn:aws:iam::0123456789:user/richard')).toBe('ARN value should be in the format arn::aws:iam::123456789012:user/name.');
-  expect(validateARN('arn:aws:iam:0123456789:user/richard')).toBe('ARN value should be in the format arn::aws:iam::123456789012:user/name.');
-  expect(validateARN('0123456789:user/richard')).toBe('ARN value should be in the format arn::aws:iam::123456789012:user/name.');
+  expect(validateARN('arn:aws:iam::0123456789:user/richard')).toBe('ARN value should be in the format arn:aws:iam::123456789012:user/name.');
+  expect(validateARN('arn:aws:iam:0123456789:user/richard')).toBe('ARN value should be in the format arn:aws:iam::123456789012:user/name.');
+  expect(validateARN('0123456789:user/richard')).toBe('ARN value should be in the format arn:aws:iam::123456789012:user/name.');
 });
