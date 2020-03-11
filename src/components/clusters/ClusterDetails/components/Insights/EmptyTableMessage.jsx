@@ -6,13 +6,35 @@ import {
   EmptyStateIcon, EmptyStateSecondaryActions,
   EmptyStateVariant,
   Title,
+  Popover,
 } from '@patternfly/react-core';
 import { OkIcon, SearchIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 import './EmptyTableMessage.css';
 import { Link } from 'react-router-dom';
 
-const EmptyTableMessage = ({ icon, header, body, iconClassName }) => (
+export const RemoteHealthPopover = () => (
+  <Popover
+    position="right"
+    headerContent="What is Remote health?"
+    bodyContent={(
+      <div>
+        It helps you identify, prioritize, and resolve risks to security,
+        perfomance, aviability and stability before they become urgent issues
+      </div>
+    )}
+    aria-label="What is Remote health?"
+  >
+    <Button style={{ padding: '0' }} variant="link">What is Remote health?</Button>
+  </Popover>
+);
+
+const EmptyTableMessage = ({
+  icon,
+  header,
+  body,
+  iconClassName,
+}) => (
   <EmptyState variant={EmptyStateVariant.full}>
     <EmptyStateIcon className={iconClassName} icon={icon} />
 
@@ -33,7 +55,7 @@ const EmptyTableMessage = ({ icon, header, body, iconClassName }) => (
     </Button>
 
     <EmptyStateSecondaryActions>
-      <Button variant="link">What is Insights?</Button>
+      <RemoteHealthPopover />
     </EmptyStateSecondaryActions>
   </EmptyState>
 );

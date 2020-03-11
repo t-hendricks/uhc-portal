@@ -18,6 +18,7 @@ import clusterUsersReducer from '../../components/clusters/ClusterDetails/compon
 import addOnsReducer from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsReducer';
 import globalErrorReducer from './globalErrorReducer';
 import machineTypesReducer from './machineTypesReducer';
+import { insightsReducer } from './insightsReducer';
 import { subscriptionsReducer } from './subscriptionsReducer';
 import { loadBalancersReducer } from './loadBalancersReducer';
 import { persistentStorageReducer } from './persistentStorageReducer';
@@ -46,6 +47,7 @@ const reducers = {
   notifications,
   networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,
+  insights: insightsReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

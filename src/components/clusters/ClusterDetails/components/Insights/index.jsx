@@ -1,7 +1,7 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import {
-  Card, CardBody, Title, Popover, Button,
+  Card, CardBody, Title, Button,
   Grid, GridItem, Stack, StackItem,
 } from '@patternfly/react-core';
 import { RuleTable, severity, ReportDetails } from '@redhat-cloud-services/rule-components';
@@ -13,214 +13,141 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/component
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import '@redhat-cloud-services/frontend-components/components/Battery.css';
 import './RulesTable.css';
+import { RemoteHealthPopover, NoIssuesMessage } from './EmptyTableMessage';
 
 const severityMapping = Object.keys(severity);
+const dataSortMapping = {
+  Description: (a, b) => a.description.localeCompare(b.description),
+  Added: (a, b) => a.created_at - b.created_at,
+  'Total risk': (a, b) => a.total_risk - b.total_risk,
+};
 
-class Insights extends React.Component {
+const groupRulesByRisk = data => data.reduce(
+  (acc, cur) => {
+    const accTemp = { ...acc };
+    const { total_risk: totalRisk } = cur;
+    if (!accTemp[totalRisk]) {
+      accTemp[totalRisk] = 0;
+    }
+    accTemp[totalRisk] += 1;
+    return accTemp;
+  },
+  {},
+);
+
+const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
+  .reduce((acc, [key, filter]) => {
+    let newAcc = true;
+    switch (key) {
+      case 'totalRiskFilter':
+        if (filter.length > 0) {
+          newAcc = filter.includes(severityMapping[v.total_risk - 1]);
+        }
+        break;
+      case 'descriptionFilter':
+        newAcc = v.description.indexOf(filter) > -1;
+        break;
+      default:
+        break;
+    }
+    return newAcc && acc;
+  },
+  true);
+
+class InsightsTable extends React.Component {
   state = {
-    meta: {
-      count: 4,
-    },
-    data: [
-      {
-        ruleId: 1,
-        description: 'rule 1 description',
-        details: `
-Some *rule* description
-
-> quoute
-
-test
-multiline
-
-[link text](https://g.co)
-
-# header
-
-
-\`\`\`some code\`\`\`
-        `,
-        created_at: 1583245000000,
-        total_risk: 3,
-        risk_of_change: 1,
-      },
-      {
-        ruleId: 2,
-        description: 'Some rule description2',
-        details: `
-Some *rule* description
-
-> quoute
-
-test
-multiline
-
-[link text](https://g.co)
-
-# header
-
-
-\`\`\`some code\`\`\`
-        `,
-        created_at: 1583245000000,
-        total_risk: 4,
-        risk_of_change: 2,
-      },
-      {
-        ruleId: 3,
-        description: 'Some rule description3',
-        details: `
-Some *rule* description
-
-> quoute
-
-test
-multiline
-
-[link text](https://g.co)
-
-# header
-
-
-\`\`\`some code\`\`\`
-        `,
-        created_at: 1583245000000,
-        total_risk: 1,
-        risk_of_change: 3,
-      },
-    ],
-    shownData: [
-      {
-        ruleId: 1,
-        description: 'rule 1 description',
-        details: `
-Some *rule* description
-
-> quoute
-
-test
-multiline
-
-[link text](https://g.co)
-
-# header
-        `,
-        created_at: 1583245000000,
-        total_risk: 3,
-        risk_of_change: 4,
-      },
-      {
-        ruleId: 2,
-        description: 'Some rule description2',
-        details: `
-Some *rule* description
-
-> quoute
-
-test
-multiline
-
-[link text](https://g.co)
-
-# header
-
-
-\`\`\`some code\`\`\`
-        `,
-        created_at: 1583245000000,
-        total_risk: 4,
-        risk_of_change: 1,
-      },
-      {
-        ruleId: 3,
-        description: 'Some rule description3',
-        details: `
-Some *rule* description
-
-> quoute
-
-test
-multiline
-
-[link text](https://g.co)
-
-# header
-
-
-\`\`\`some code\`\`\`
-        `,
-        created_at: 1583245000000,
-        total_risk: 1,
-        risk_of_change: 2,
-      },
-    ],
+    shownData: [],
     filters: {},
-  };
+    sortBy: {
+      column: { title: 'Description' },
+      direction: 'asc',
+    },
+    meta: { ...this.props.insights.meta, perPage: 10, page: 1 },
+  }
+
+  componentDidMount() {
+    if (this.props.insights) {
+      this.fetchData({ filterValues: this.state.filters });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { insights } = this.props;
+    if (insights && prevProps.insights !== insights) {
+      this.fetchData({ filterValues: this.state.filters });
+    }
+  }
 
   addFilter = (filterValue) => {
-    this.setState((state) => {
-      const filters = { ...state.filters };
-      if (!filters.totalRiskFilter) {
-        filters.totalRiskFilter = [];
-      }
-      if (!filters.totalRiskFilter.includes(filterValue)) {
-        filters.totalRiskFilter.push(filterValue);
-      }
-      return { filters };
+    this.setState(
+      (state) => {
+        const filters = { ...state.filters };
+        if (!filters.totalRiskFilter) {
+          filters.totalRiskFilter = [];
+        }
+        if (!filters.totalRiskFilter.includes(filterValue)) {
+          filters.totalRiskFilter.push(filterValue);
+        }
+        return { filters };
+      },
+      () => this.fetchData({ filterValues: this.state.filters }),
+    );
+  }
+
+  fetchData = ({
+    filterValues = this.state.filterValues,
+    sortBy = this.state.sortBy,
+    meta = this.state.meta,
+  }) => {
+    const { insights } = this.props;
+
+    // Filter and sort data
+    let rules = insights.data
+      .filter(v => isValueFiltered(filterValues, v))
+      .sort((a, b) => (sortBy && sortBy.column
+        ? dataSortMapping[sortBy.column.title](a, b)
+        : 0));
+
+    // Total count of showed items
+    const rulesLength = rules.length;
+
+    // Pagination
+    rules = rules.slice((meta.page - 1) * meta.perPage, meta.page * meta.perPage);
+
+    this.setState({
+      shownData: rules,
+      filters: filterValues,
+      sortBy,
+      meta: { ...meta, itemCount: rulesLength },
     });
-  };
+  }
 
   render() {
+    const { insights } = this.props;
     const {
-      meta, data, shownData, filters,
+      shownData,
+      filters,
+      meta,
     } = this.state;
-
     return (
       <>
         <Card>
           <CardBody>
             <Grid>
-              <GridItem span={8}>
-                <Title
-                  headingLevel="h2"
-                  size="3xl"
-                >
-                  {`Remote health detected ${meta.count} issues`}
-                </Title>
+              <GridItem span={9} className="health-description">
+                <Title headingLevel="h2" size="3xl">{`Remote health detected ${insights.meta.count} issues`}</Title>
                 <p>Last checked: 4 minutes ago</p>
-                <Popover
-                  position="right"
-                  headerContent="What is Remote health?"
-                  bodyContent={(
-                    <div>
-                      It helps you identify, prioritize, and resolve risks to security,
-                      performance, availability and stability before they become urgent issues
-                    </div>
-                  )}
-                  aria-label="What is Remote health?"
-                >
-                  <Button style={{ margin: '0' }} variant="link">What is Remote health?</Button>
-                </Popover>
+                <RemoteHealthPopover />
               </GridItem>
-              <GridItem span={4}>
+              <GridItem span={3}>
                 <Stack>
                   {
-                    Object.entries(data.reduce(
-                      (acc, cur) => {
-                        const accTemp = { ...acc };
-                        if (!accTemp[cur.total_risk]) {
-                          accTemp[cur.total_risk] = 0;
-                        }
-                        accTemp[cur.total_risk] += 1;
-                        return accTemp;
-                      },
-                      {},
-                    ))
+                    Object.entries(groupRulesByRisk(insights.data))
                       .map(([risk, count]) => (
-                        <StackItem>
+                        <StackItem className="battery">
                           <Battery
                             label={severity[severityMapping[risk - 1]]}
-                            severity={risk}
+                            severity={parseInt(risk, 10)}
                             labelHidden
                           />
                           <Button
@@ -238,38 +165,10 @@ multiline
           </CardBody>
         </Card>
         <Card>
-          <CardBody>
+          <CardBody className="no-padding">
             <RuleTable
-              rules={{
-                meta,
-                data: shownData
-              }}
-              fetchData={({
-                filterValues,
-              }) => {
-                this.setState((state) => {
-                  const rules = state.data.filter((v) => {
-                    let isFilter = true;
-                    Object.entries(filterValues)
-                      .forEach(([key, filter]) => {
-                        console.log(filter, key);
-                        console.log(severityMapping[v.total_risk - 1]);
-                        if (key === 'totalRiskFilter') {
-                          isFilter = filter.includes(severityMapping[v.total_risk - 1]);
-                        }
-                        if (key === 'descriptionFilter') {
-                          isFilter = v.description.indexOf(filter) > -1 && isFilter;
-                        }
-                        console.log(isFilter);
-                      });
-                    return isFilter;
-                  });
-                  return {
-                    shownData: rules,
-                    filters: filterValues
-                  };
-                });
-              }}
+              rules={{ meta, data: shownData }}
+              fetchData={this.fetchData}
               filters={{
                 descriptionFilter,
                 totalRiskFilter,
@@ -290,10 +189,12 @@ multiline
                   selector:
                   // eslint-disable-next-line react/prop-types
                     ({ total_risk: riskNumber }) => (
-                      <Battery
-                        label={severity[severityMapping[riskNumber - 1]]}
-                        severity={riskNumber}
-                      />
+                      <div className="battery">
+                        <Battery
+                          label={severity[severityMapping[riskNumber - 1]]}
+                          severity={riskNumber}
+                        />
+                      </div>
                     ),
                 },
               ]}
@@ -312,5 +213,24 @@ multiline
     );
   }
 }
+
+InsightsTable.propTypes = {
+  insights: PropTypes.object.isRequired,
+};
+
+const Insights = ({ insights }) => {
+  if (!insights || insights.meta.count === 0) {
+    return <NoIssuesMessage />;
+  }
+  return <InsightsTable insights={insights} />;
+};
+
+Insights.propTypes = {
+  insights: PropTypes.object,
+};
+
+Insights.defaultProps = {
+  insights: { meta: { count: 0 }, data: [] },
+};
 
 export default Insights;

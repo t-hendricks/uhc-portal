@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "count": 18
+  },
+  "data": [
+    {
+      "description": "Some rule description",
+      "created_at": 1583245000000,
+      "total_risk": 3
+    },
+    {
+      "description": "Some rule description2",
+      "created_at": 1583245000000,
+      "total_risk": 4
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 1
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 2
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 2
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 3
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 1
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 2
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 3
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 1
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 3
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 2
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 1
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 1
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 3
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 2
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 1
+    },
+    {
+      "description": "Some rule description3",
+      "created_at": 1583245000000,
+      "total_risk": 2
+    }
+  ]
+}

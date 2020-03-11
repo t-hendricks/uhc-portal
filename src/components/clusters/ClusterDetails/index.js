@@ -5,6 +5,9 @@ import {
   fetchClusterDetails,
   invalidateClusters,
 } from '../../../redux/actions/clustersActions';
+import {
+  fetchClusterInsights,
+} from '../../../redux/actions/insightsActions';
 import { getLogs } from './components/LogWindow/LogWindowActions';
 import { getClusterIdentityProviders, resetIdentityProvidersState } from './components/IdentityProvidersModal/IdentityProvidersActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
@@ -26,6 +29,7 @@ const mapStateToProps = (state) => {
   const { addOns, clusterAddOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
+  const { insights } = state.insights;
 
   return ({
     cloudProviders,
@@ -37,11 +41,13 @@ const mapStateToProps = (state) => {
     organization,
     displayClusterLogs: errorCode !== 403 && errorCode !== 404,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
+    insights,
   });
 };
 
 const mapDispatchToProps = {
   fetchDetails: clusterID => fetchClusterDetails(clusterID),
+  fetchInsights: clusterID => fetchClusterInsights(clusterID),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
   invalidateClusters,

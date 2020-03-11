@@ -53,6 +53,7 @@ class ClusterDetails extends Component {
     super(props);
     this.refresh = this.refresh.bind(this);
     this.refreshIDP = this.refreshIDP.bind(this);
+    this.fetchData = this.fetchData.bind(this);
 
     this.overviewTabRef = React.createRef();
     this.insightsTabRef = React.createRef();
@@ -139,7 +140,6 @@ class ClusterDetails extends Component {
     const {
       match,
       clusterDetails,
-      fetchDetails,
       getLogs,
       getUsers,
       getAlerts,
@@ -154,7 +154,7 @@ class ClusterDetails extends Component {
     const clusterID = match.params.id;
 
     if (isValid(clusterID)) {
-      fetchDetails(clusterID);
+      this.fetchData(clusterID);
       getOrganizationAndQuota();
 
       const externalClusterID = get(clusterDetails, 'cluster.external_id');
@@ -190,6 +190,15 @@ class ClusterDetails extends Component {
     }
   }
 
+  fetchData(clusterId) {
+    const {
+      fetchDetails,
+      fetchInsights,
+    } = this.props;
+    fetchDetails(clusterId);
+    fetchInsights(clusterId);
+  }
+
   // Determine if the org has quota for existing add-ons
   hasAddOns() {
     const { addOns, clusterAddOns, organization } = this.props;
@@ -208,7 +217,6 @@ class ClusterDetails extends Component {
     const {
       clusterDetails,
       cloudProviders,
-      fetchDetails,
       invalidateClusters,
       openModal,
       history,
@@ -218,6 +226,7 @@ class ClusterDetails extends Component {
       organization,
       setGlobalError,
       displayClusterLogs,
+      insights,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -274,7 +283,7 @@ class ClusterDetails extends Component {
 
     const onDialogClose = () => {
       invalidateClusters();
-      fetchDetails(cluster.id);
+      this.fetchData(cluster.id);
     };
 
     const hasLogs = !!logs.lines;
@@ -344,7 +353,7 @@ class ClusterDetails extends Component {
         )}
         {!isArchived && (
           <TabContent eventKey={5} id="insightsTabContent" ref={this.insightsTabRef} aria-label="Insights" hidden>
-            <Insights cluster={cluster} />
+            <Insights cluster={cluster} insights={insights[match.params.id]} />
           </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
@@ -377,7 +386,9 @@ class ClusterDetails extends Component {
 ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  insights: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
+  fetchInsights: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getLogs: PropTypes.func.isRequired,
