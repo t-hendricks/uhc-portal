@@ -9,8 +9,8 @@ exports[`<AddOns /> should render 1`] = `
   >
     <CardHead>
       <Title
+        className="card-title"
         headingLevel="h2"
-        size="2xl"
       >
         Red Hat Managed Integration
       </Title>
@@ -43,8 +43,8 @@ exports[`<AddOns /> should render 1`] = `
   >
     <CardHead>
       <Title
+        className="card-title"
         headingLevel="h2"
-        size="2xl"
       >
         Red Hat OpenShift Service Mesh
       </Title>
@@ -89,8 +89,8 @@ exports[`<AddOns /> should render 1`] = `
   >
     <CardHead>
       <Title
+        className="card-title"
         headingLevel="h2"
-        size="2xl"
       >
         DBA Operator
       </Title>
@@ -123,8 +123,8 @@ exports[`<AddOns /> should render 1`] = `
   >
     <CardHead>
       <Title
+        className="card-title"
         headingLevel="h2"
-        size="2xl"
       >
         Integreatly Operator
       </Title>
@@ -157,8 +157,8 @@ exports[`<AddOns /> should render 1`] = `
   >
     <CardHead>
       <Title
+        className="card-title"
         headingLevel="h2"
-        size="2xl"
       >
         Prow Operator
       </Title>

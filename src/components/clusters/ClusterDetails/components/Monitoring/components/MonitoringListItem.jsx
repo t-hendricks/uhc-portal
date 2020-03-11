@@ -85,7 +85,7 @@ function MonitoringListItem({
         <DataListItemCells
           dataListCells={[
             <DataListCell key={`title-${id}`}>
-              <Title headingLevel="h4" size="2xl">{title}</Title>
+              <Title headingLevel="h4" className="monitoring-item-title">{title}</Title>
             </DataListCell>,
             <DataListCell key={`summary-${id}`} className="summary">
               {getSummary()}

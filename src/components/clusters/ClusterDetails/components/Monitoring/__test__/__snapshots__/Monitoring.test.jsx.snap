@@ -11,8 +11,8 @@ exports[`<Monitoring /> should render 1`] = `
   >
     <CardHeader>
       <Title
+        className="card-title"
         headingLevel="h2"
-        size="3xl"
       >
         Status
       </Title>

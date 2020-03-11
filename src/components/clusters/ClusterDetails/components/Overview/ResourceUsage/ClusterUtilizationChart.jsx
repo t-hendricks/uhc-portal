@@ -22,7 +22,7 @@ function ClusterUtilizationChart(props) {
 
   return (
     <div>
-      <Title className="metrics-chart" headingLevel="h4" size="xl">{title}</Title>
+      <Title className="metrics-chart chart-title" headingLevel="h4" size="xl">{title}</Title>
       <div className="metrics-chart">
         <ChartDonutThreshold
           ariaDesc={title}

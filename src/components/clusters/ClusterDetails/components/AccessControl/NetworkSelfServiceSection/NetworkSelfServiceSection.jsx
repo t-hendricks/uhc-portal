@@ -238,7 +238,7 @@ class NetworkSelfServiceSection extends React.Component {
             { deleteGrantResponse.error && (
             <ErrorBox message="Error deleting grant" response={deleteGrantResponse} />
             )}
-            <Title size="lg" headingLevel="h3">AWS infrastructure access</Title>
+            <Title className="card-title" headingLevel="h3">AWS infrastructure access</Title>
             <p>
             Grant permission to view or manage the AWS infrastructure of the cluster to
             IAM users defined in your AWS account.

@@ -4,8 +4,8 @@ exports[`<SubscriptionSettings /> should render for OCP 1`] = `
 <Card>
   <CardHeader>
     <Title
+      className="card-title"
       headingLevel="h2"
-      size="3xl"
     >
       Subscription Settings
     </Title>

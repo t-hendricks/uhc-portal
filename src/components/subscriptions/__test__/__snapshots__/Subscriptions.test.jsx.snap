@@ -255,6 +255,7 @@ exports[`<Subscriptions /> Subscriptions should render 1`] = `
 <Fragment>
   <PageHeader>
     <PageHeaderTitle
+      className="page-title"
       title="Subscriptions"
     />
   </PageHeader>

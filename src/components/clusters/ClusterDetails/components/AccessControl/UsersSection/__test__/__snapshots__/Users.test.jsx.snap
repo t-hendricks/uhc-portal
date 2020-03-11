@@ -4,8 +4,8 @@ exports[`<Users /> should render without users 1`] = `
 <Card>
   <CardBody>
     <Title
+      className="card-title"
       headingLevel="h3"
-      size="lg"
     >
       Cluster Administrative Users
     </Title>
@@ -21,9 +21,8 @@ exports[`<Users /> should render without users 1`] = `
       </a>
     </p>
     <Title
-      className="pf-u-mt-md pf-u-mb-sm"
+      className="pf-u-mt-md pf-u-mb-sm card-title"
       headingLevel="h3"
-      size="md"
     >
       Add user:
     </Title>
@@ -40,8 +39,8 @@ exports[`<Users /> with users should render 1`] = `
 <Card>
   <CardBody>
     <Title
+      className="card-title"
       headingLevel="h3"
-      size="lg"
     >
       Cluster Administrative Users
     </Title>
@@ -209,9 +208,8 @@ exports[`<Users /> with users should render 1`] = `
       <TableBody />
     </Component>
     <Title
-      className="pf-u-mt-md pf-u-mb-sm"
+      className="pf-u-mt-md pf-u-mb-sm card-title"
       headingLevel="h3"
-      size="md"
     >
       Add user:
     </Title>

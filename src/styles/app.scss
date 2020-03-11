@@ -117,7 +117,7 @@ limitations under the License.
 }
 
 .cluster-details-item {
-  padding: 30px;
+  padding: 20px 0;
   dt {
     font-weight: bold;
     font-size: 14px;
@@ -156,10 +156,24 @@ limitations under the License.
   left: -70px
 }
 
-.vertical-align{
+.cl-details-page-title{
+  font-size: var(--pf-global--FontSize--2xl);
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.page-title {
+  font-size: var(--pf-global--FontSize--2xl);
+}
+
+.card-title {
+  font-size: var(--pf-global--FontSize--lg);
+}
+
+.monitoring-item-title {
+  font-size: var(--pf-global--FontSize--md);
+  margin-left: -30px;
 }
 
 #cl-details-btns > * {
@@ -236,6 +250,10 @@ limitations under the License.
     @media (max-width: 767px) {
       flex-direction: column;
     }
+  &.chart-title {
+    font-size: var(--pf-global--FontSize--md);
+    font-weight: 700;
+  }
 }
 
 #deleteClusterHint {
@@ -424,7 +442,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 #cluster-health svg{
   margin-right: 10px;
-  margin-top: 5px;
+  margin-top: 2px;
 }
 
 #monitoring .status-icon, #networkSelfService .status-icon {
@@ -961,7 +979,7 @@ div.pf-c-alert.archived-cluster-toast {
     fill: var(--pf-global--warning-color--100);
   }
   .section-header {
-    font-size: var(--pf-global--FontSize--xl);
+    font-size: var(--pf-global--FontSize--lg);
     padding-bottom: 0;
   }
   .section-text {
@@ -969,7 +987,8 @@ div.pf-c-alert.archived-cluster-toast {
     padding-bottom: 0;
   }
   .content-header {
-    font-size: var(--pf-global--FontSize--lg);
+    font-size: var(--pf-global--FontSize--md);
+    font-weight: 700;
     margin-top: var(--pf-global--spacer--lg);
     margin-bottom: 0;
   }
