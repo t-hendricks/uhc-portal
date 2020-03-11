@@ -50,7 +50,8 @@ function SubscriptionSettings({ subscription, openModal, canEdit = false }) {
   // the rest
   const usageStr = get(subscription, subscriptionSettings.USAGE, 'Not set');
   const serviceLevelStr = get(subscription, subscriptionSettings.SERVICE_LEVEL, 'Not set');
-  const systemUnitsStr = get(subscription, subscriptionSettings.SYSTEM_UNITS, 'Not set');
+  const systemUnitsStr = get(subscription, subscriptionSettings.SYSTEM_UNITS,
+    subscriptionSystemUnits.CORES_VCPU);
   const productBundleStr = get(subscription, subscriptionSettings.PRODUCT_BUNDLE, 'Not set');
   const cpuTotal = get(subscription, subscriptionSettings.CPU_TOTAL, 0);
   const cpuTotalStr = `${cpuTotal} core${cpuTotal === 1 ? '' : 's'}`;
