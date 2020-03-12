@@ -1,3 +1,7 @@
 .SuccessColor {
-    color: var(--pf-global--success-color--200)
+    color: var(--pf-global--success-color--200);
+}
+
+.EmptyTableMessage {
+    padding-top: 64px;
 }

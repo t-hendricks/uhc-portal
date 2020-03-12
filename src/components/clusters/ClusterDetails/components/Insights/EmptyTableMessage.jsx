@@ -8,7 +8,7 @@ import {
   Title,
   Popover,
 } from '@patternfly/react-core';
-import { OkIcon, SearchIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon, SearchIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 import './EmptyTableMessage.css';
 import { Link } from 'react-router-dom';
@@ -35,8 +35,8 @@ const EmptyTableMessage = ({
   body,
   iconClassName,
 }) => (
-  <EmptyState variant={EmptyStateVariant.full}>
-    <EmptyStateIcon className={iconClassName} icon={icon} />
+  <EmptyState className="EmptyTableMessage" variant={EmptyStateVariant.full}>
+    <EmptyStateIcon className={iconClassName} icon={icon}/>
 
     <Title headingLevel="h5" size="lg">
       {header}
@@ -54,8 +54,8 @@ const EmptyTableMessage = ({
       Return to list of clusters
     </Button>
 
-    <EmptyStateSecondaryActions>
-      <RemoteHealthPopover />
+    <EmptyStateSecondaryActions className="EmptyTableMessageWhatIsRemoteHealth">
+      <RemoteHealthPopover/>
     </EmptyStateSecondaryActions>
   </EmptyState>
 );
@@ -95,7 +95,13 @@ export const NoIssuesMessage = ({ lastChecked }) => {
       className="NoIssuesMessage"
     >
       <EmptyTableMessage
-        icon={OkIcon}
+        // icon={({ className }) => (
+        //   <i
+        //     className={`fa fa-check-circle ${className}`}
+        //     aria-hidden="true"
+        //   />
+        // )}
+        icon={CheckCircleIcon}
         iconClassName="SuccessColor"
         header="No issues detected!"
         body={body}
