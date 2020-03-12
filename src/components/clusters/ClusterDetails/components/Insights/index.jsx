@@ -37,22 +37,22 @@ const groupRulesByRisk = data => data.reduce(
 
 const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
   .reduce((acc, [key, filter]) => {
-    let newAcc = true;
-    switch (key) {
-      case 'totalRiskFilter':
-        if (filter.length > 0) {
-          newAcc = filter.includes(severityMapping[v.total_risk - 1]);
-        }
-        break;
-      case 'descriptionFilter':
-        newAcc = v.description.indexOf(filter) > -1;
-        break;
-      default:
-        break;
-    }
-    return newAcc && acc;
-  },
-  true);
+      let newAcc = true;
+      switch (key) {
+        case 'totalRiskFilter':
+          if (filter.length > 0) {
+            newAcc = filter.includes(severityMapping[v.total_risk - 1]);
+          }
+          break;
+        case 'descriptionFilter':
+          newAcc = v.description.indexOf(filter) > -1;
+          break;
+        default:
+          break;
+      }
+      return newAcc && acc;
+    },
+    true);
 
 class InsightsTable extends React.Component {
   state = {
@@ -62,8 +62,12 @@ class InsightsTable extends React.Component {
       column: { title: 'Description' },
       direction: 'asc',
     },
-    meta: { ...this.props.insights.meta, perPage: 10, page: 1 },
-  }
+    meta: {
+      ...this.props.insights.meta,
+      perPage: 10,
+      page: 1
+    },
+  };
 
   componentDidMount() {
     if (this.props.insights) {
@@ -92,7 +96,7 @@ class InsightsTable extends React.Component {
       },
       () => this.fetchData({ filterValues: this.state.filters }),
     );
-  }
+  };
 
   fetchData = ({
     filterValues = this.state.filterValues,
@@ -118,9 +122,12 @@ class InsightsTable extends React.Component {
       shownData: rules,
       filters: filterValues,
       sortBy,
-      meta: { ...meta, itemCount: rulesLength },
+      meta: {
+        ...meta,
+        itemCount: rulesLength
+      },
     });
-  }
+  };
 
   render() {
     const { insights } = this.props;
@@ -135,9 +142,10 @@ class InsightsTable extends React.Component {
           <CardBody>
             <Grid>
               <GridItem span={9} className="health-description">
-                <Title headingLevel="h2" size="3xl">{`Remote health detected ${insights.meta.count} issues`}</Title>
+                <Title headingLevel="h2"
+                       size="3xl">{`Remote health detected ${insights.meta.count} issues`}</Title>
                 <p>Last checked: 4 minutes ago</p>
-                <RemoteHealthPopover />
+                <RemoteHealthPopover/>
               </GridItem>
               <GridItem span={3}>
                 <Stack>
@@ -167,7 +175,10 @@ class InsightsTable extends React.Component {
         <Card>
           <CardBody className="no-padding">
             <RuleTable
-              rules={{ meta, data: shownData }}
+              rules={{
+                meta,
+                data: shownData
+              }}
               fetchData={this.fetchData}
               filters={{
                 descriptionFilter,
@@ -200,6 +211,7 @@ class InsightsTable extends React.Component {
               ]}
               detail={ruleData => (
                 <ReportDetails
+                  createdAt={ruleData.created_at}
                   details={ruleData.details}
                   ruleId={ruleData.ruleId}
                   totalRisk={ruleData.total_risk}
@@ -220,9 +232,9 @@ InsightsTable.propTypes = {
 
 const Insights = ({ insights }) => {
   if (!insights || insights.meta.count === 0) {
-    return <NoIssuesMessage />;
+    return <NoIssuesMessage/>;
   }
-  return <InsightsTable insights={insights} />;
+  return <InsightsTable insights={insights}/>;
 };
 
 Insights.propTypes = {
@@ -230,7 +242,10 @@ Insights.propTypes = {
 };
 
 Insights.defaultProps = {
-  insights: { meta: { count: 0 }, data: [] },
+  insights: {
+    meta: { count: 0 },
+    data: []
+  },
 };
 
 export default Insights;

@@ -6,92 +6,110 @@
     {
       "description": "Some rule description",
       "created_at": 1583245000000,
-      "total_risk": 3
+      "total_risk": 3,
+      "risk_of_change": 1
     },
     {
       "description": "Some rule description2",
       "created_at": 1583245000000,
-      "total_risk": 4
+      "total_risk": 4,
+      "risk_of_change": 2
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 1
+      "total_risk": 1,
+      "risk_of_change": 3
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 2
+      "total_risk": 2,
+      "risk_of_change": 1
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 2
+      "total_risk": 2,
+      "risk_of_change": 2
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 3
+      "total_risk": 3,
+      "risk_of_change": 3
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 1
+      "total_risk": 1,
+      "risk_of_change": 1
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 2
+      "total_risk": 2,
+      "risk_of_change": 2
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 3
+      "total_risk": 3,
+      "risk_of_change": 3
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 1
+      "total_risk": 1,
+      "risk_of_change": 1
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 3
+      "total_risk": 3,
+      "risk_of_change": 2
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 2
+      "total_risk": 2,
+      "risk_of_change": 3
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 1
+      "total_risk": 1,
+      "risk_of_change": 1
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 1
+      "total_risk": 1,
+      "risk_of_change": 2
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 3
+      "total_risk": 3,
+      "risk_of_change": 3
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 2
+      "total_risk": 2,
+      "risk_of_change": 1
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 1
+      "total_risk": 1,
+      "risk_of_change": 2
     },
     {
       "description": "Some rule description3",
       "created_at": 1583245000000,
-      "total_risk": 2
+      "total_risk": 2,
+      "risk_of_change": 3
     }
   ]
 }
