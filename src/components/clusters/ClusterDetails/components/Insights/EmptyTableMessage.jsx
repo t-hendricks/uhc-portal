@@ -91,16 +91,8 @@ export const NoIssuesMessage = ({ lastChecked }) => {
   );
 
   return (
-    <div
-      className="NoIssuesMessage"
-    >
+    <div className="NoIssuesMessage">
       <EmptyTableMessage
-        // icon={({ className }) => (
-        //   <i
-        //     className={`fa fa-check-circle ${className}`}
-        //     aria-hidden="true"
-        //   />
-        // )}
         icon={CheckCircleIcon}
         iconClassName="SuccessColor"
         header="No issues detected!"
