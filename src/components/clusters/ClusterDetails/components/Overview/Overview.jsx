@@ -31,7 +31,7 @@ function Overview({
     <>
       <Card id="metrics-charts">
         <CardHeader>
-          <Title headingLevel="h2" size="md" className="card-title">Resource Usage</Title>
+          <Title headingLevel="h2" size="lg" className="card-title">Resource Usage</Title>
         </CardHeader>
         <CardBody>
           <ResourceUsage
@@ -51,7 +51,7 @@ function Overview({
       </Card>
       <Card>
         <CardHeader>
-          <Title headingLevel="h2" size="md" className="card-title">Details</Title>
+          <Title headingLevel="h2" size="lg" className="card-title">Details</Title>
         </CardHeader>
         <CardBody>
           <Grid>

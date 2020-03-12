@@ -25,6 +25,7 @@ import {
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import { getClusterHistory } from './components/ClusterLogs/clusterLogActions';
+import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { viewConstants } from '../../../redux/constants';
 import { fetchClusterInsights, voteOnRuleInsights } from './components/Insights/InsightsActions';
 import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
@@ -33,8 +34,8 @@ import helpers from '../../../common/helpers';
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
   const { cloudProviders } = state;
-  const { logs } = state;
   const { errorCode } = state.clusterLogs.requestState;
+  const { logs, clusterRouters } = state;
   const { addOns, clusterAddOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
@@ -55,6 +56,7 @@ const mapStateToProps = (state) => {
     clusterIdentityProviders,
     organization,
     displayClusterLogs: !hideClusterLogs,
+    clusterRouters,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
     canAllowClusterAdmin: canAllowAdminSelector(state),
@@ -82,6 +84,7 @@ const mapDispatchToProps = {
   getAddOns,
   getClusterAddOns,
   getGrants,
+  getClusterRouters,
   getClusterHistory: (
     externalClusterID, queryObj,
   ) => getClusterHistory(externalClusterID, queryObj),

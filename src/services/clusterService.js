@@ -189,6 +189,33 @@ const deleteGrant = (clusterID, grantId) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/aws_infrastructure_access_role_grants/${grantId}`,
 });
 
+const getIngresses = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/ingresses`,
+});
+
+const editIngresses = (clusterID, data) => apiRequest({
+  method: 'patch',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/ingresses`,
+  data,
+});
+
+const editIngress = (clusterID, routerID, data) => apiRequest({
+  method: 'patch',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/ingresses/${routerID}`,
+  data,
+});
+
+const addAdditionalIngress = (clusterID, data) => apiRequest({
+  method: 'post',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/ingresses`,
+  data,
+});
+
+const deleteAdditionalIngress = (clusterID, routerID) => apiRequest({
+  method: 'delete',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/ingresses/${routerID}`,
+});
 
 const clusterService = {
   getClusters,
@@ -223,6 +250,11 @@ const clusterService = {
   getGrants,
   addGrant,
   deleteGrant,
+  getIngresses,
+  editIngresses,
+  editIngress,
+  addAdditionalIngress,
+  deleteAdditionalIngress,
 };
 
 export default clusterService;
