@@ -881,6 +881,9 @@ span.dev-preview-label svg {
 
 .field-grid-item {
   margin-top: -16px;
+  &.minus-button {
+    width: min-content;
+  }
 }
 
 .pf-c-content h3.osd-page-header {

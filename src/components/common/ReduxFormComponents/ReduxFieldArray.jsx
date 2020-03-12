@@ -6,6 +6,7 @@ import last from 'lodash/last';
 import {
   Button,
   GridItem,
+  Tooltip,
 } from '@patternfly/react-core';
 import {
   PlusCircleIcon,
@@ -142,16 +143,30 @@ class RenderFields extends React.Component {
       return null;
     };
 
-    const minusButtonGridItem = index => (
-      <GridItem className="field-grid-item" span={1}>
-        <Button
-          onClick={() => this.removeField(index)}
-          isDisabled={index === 0}
-          icon={<MinusCircleIcon />}
-          variant="link"
-        />
-      </GridItem>
-    );
+    const minusButtonGridItem = (index) => {
+      const isDisabled = index === 0 && fields.length === 1;
+      const minusButton = (
+        <GridItem className="field-grid-item minus-button" span={1}>
+          <Button
+            onClick={() => this.removeField(index)}
+            isDisabled={isDisabled}
+            icon={<MinusCircleIcon />}
+            variant="link"
+          />
+        </GridItem>
+      );
+      if (isDisabled) {
+        return (
+          <Tooltip
+            content="You cannot delete the only item"
+            position="right"
+            distance={0}
+          >
+            {minusButton}
+          </Tooltip>
+        );
+      } return minusButton;
+    };
 
     return (
       <>
@@ -161,7 +176,7 @@ class RenderFields extends React.Component {
             {labelGridItem(index)}
             {fieldGridItem(item, index)}
             {minusButtonGridItem(index)}
-            {fieldArrayErrorGridItem(error, index)}
+            {fieldArrayErrorGridItem(index, error)}
             {addMoreButtonGridItem(index)}
           </React.Fragment>
         ))
