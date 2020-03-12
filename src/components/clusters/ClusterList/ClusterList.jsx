@@ -144,7 +144,7 @@ class ClusterList extends Component {
 
     const pageHeader = (
       <PageHeader>
-        <PageHeaderTitle title="Clusters" />
+        <PageHeaderTitle title="Clusters" className="page-title" />
       </PageHeader>
     );
 

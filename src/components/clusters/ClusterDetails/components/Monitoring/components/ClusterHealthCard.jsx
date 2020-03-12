@@ -32,28 +32,28 @@ function ClusterHealthCard({
   switch (status) {
     case monitoringStatuses.DISCONNECTED:
       icon = <DisconnectedIcon size="md" />;
-      title = <Title headingLevel="h2" size="3xl">Disconnected cluster</Title>;
+      title = <Title headingLevel="h2" className="card-title">Disconnected cluster</Title>;
       break;
     case monitoringStatuses.UPGRADING:
       icon = <InProgressIcon size="md" />;
-      title = <Title headingLevel="h2" size="3xl">Cluster is updating</Title>;
+      title = <Title headingLevel="h2" className="card-title">Cluster is updating</Title>;
       break;
     case monitoringStatuses.INSTALLING:
       icon = <InProgressIcon size="md" />;
-      title = <Title headingLevel="h2" size="3xl">Installation in progress</Title>;
+      title = <Title headingLevel="h2" className="card-title">Installation in progress</Title>;
       break;
     case monitoringStatuses.NO_METRICS:
       icon = <ExclamationTriangleIcon size="md" color={global_warning_color_100.value} />;
-      title = <Title headingLevel="h2" size="3xl">Cluster has no metrics</Title>;
+      title = <Title headingLevel="h2" className="card-title">Cluster has no metrics</Title>;
       break;
     case monitoringStatuses.HEALTHY:
       icon = <CheckCircleIcon color={global_success_color_100.value} size="md" />;
-      title = <Title headingLevel="h2" size="3xl">No Issues Detected</Title>;
+      title = <Title headingLevel="h2" className="card-title">No Issues Detected</Title>;
       break;
     case monitoringStatuses.HAS_ISSUES:
       icon = <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />;
       title = (
-        <Title headingLevel="h2" size="3xl">
+        <Title headingLevel="h2" className="card-title">
           {discoveredIssues}
           {' '}
           {discoveredIssues === 1 ? 'issue' : 'issues'}
@@ -64,7 +64,7 @@ function ClusterHealthCard({
       break;
     default:
       icon = <UnknownIcon size="md" />;
-      title = <Title headingLevel="h2" size="3xl">Cluster health is unknown</Title>;
+      title = <Title headingLevel="h2" className="card-title">Cluster health is unknown</Title>;
   }
 
   return (

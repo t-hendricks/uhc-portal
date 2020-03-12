@@ -80,7 +80,7 @@ function IDPSection({
     ) : (
       <Card>
         <CardBody>
-          <Title size="lg" headingLevel="h3">
+          <Title size="lg" className="card-title">
             Identity Providers
           </Title>
           <p>
