@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card, CardBody, Title, Button,
-  Grid, GridItem, Stack, StackItem,
-} from '@patternfly/react-core';
+import { Card, CardBody } from '@patternfly/react-core';
 import { RuleTable, severity, ReportDetails } from '@redhat-cloud-services/rule-components';
 import {
   descriptionFilter,
@@ -12,8 +9,9 @@ import {
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import '@redhat-cloud-services/frontend-components/components/Battery.css';
-import './RulesTable.css';
-import { RemoteHealthPopover, NoIssuesMessage } from './EmptyTableMessage';
+import './index.css';
+import AnalysisSummary from './AnalysisSummary';
+import { NoIssuesMessage } from './EmptyTableMessage';
 
 const severityMapping = Object.keys(severity);
 const dataSortMapping = {
@@ -22,21 +20,9 @@ const dataSortMapping = {
   'Total risk': (a, b) => a.total_risk - b.total_risk,
 };
 
-const groupRulesByRisk = data => data.reduce(
-  (acc, cur) => {
-    const accTemp = { ...acc };
-    const { total_risk: totalRisk } = cur;
-    if (!accTemp[totalRisk]) {
-      accTemp[totalRisk] = 0;
-    }
-    accTemp[totalRisk] += 1;
-    return accTemp;
-  },
-  {},
-);
-
 const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
-  .reduce((acc, [key, filter]) => {
+  .reduce(
+    (acc, [key, filter]) => {
       let newAcc = true;
       switch (key) {
         case 'totalRiskFilter':
@@ -52,7 +38,8 @@ const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
       }
       return newAcc && acc;
     },
-    true);
+    true,
+  );
 
 class InsightsTable extends React.Component {
   state = {
@@ -124,7 +111,7 @@ class InsightsTable extends React.Component {
       sortBy,
       meta: {
         ...meta,
-        itemCount: rulesLength
+        itemCount: rulesLength,
       },
     });
   };
@@ -138,46 +125,13 @@ class InsightsTable extends React.Component {
     } = this.state;
     return (
       <>
-        <Card>
-          <CardBody>
-            <Grid>
-              <GridItem span={9} className="health-description">
-                <Title headingLevel="h2"
-                       size="3xl">{`Remote health detected ${insights.meta.count} issues`}</Title>
-                <p>Last checked: 4 minutes ago</p>
-                <RemoteHealthPopover/>
-              </GridItem>
-              <GridItem span={3}>
-                <Stack>
-                  {
-                    Object.entries(groupRulesByRisk(insights.data))
-                      .map(([risk, count]) => (
-                        <StackItem className="battery">
-                          <Battery
-                            label={severity[severityMapping[risk - 1]]}
-                            severity={parseInt(risk, 10)}
-                            labelHidden
-                          />
-                          <Button
-                            variant="link"
-                            onClick={() => this.addFilter(severityMapping[risk - 1])}
-                          >
-                            {`${count} ${severity[severityMapping[risk - 1]]}`}
-                          </Button>
-                        </StackItem>
-                      ))
-                  }
-                </Stack>
-              </GridItem>
-            </Grid>
-          </CardBody>
-        </Card>
+        <AnalysisSummary insights={insights} batteryClicked={this.addFilter} />
         <Card>
           <CardBody className="no-padding">
             <RuleTable
               rules={{
                 meta,
-                data: shownData
+                data: shownData,
               }}
               fetchData={this.fetchData}
               filters={{
@@ -188,12 +142,12 @@ class InsightsTable extends React.Component {
               columns={[
                 {
                   title: 'Description',
-                  selector: 'description'
+                  selector: 'description',
                 },
                 {
                   title: 'Added',
                   // eslint-disable-next-line react/prop-types
-                  selector: ({ created_at: created }) => <DateFormat date={new Date(created)}/>,
+                  selector: ({ created_at: created }) => <DateFormat date={new Date(created)} />,
                 },
                 {
                   title: 'Total risk',
@@ -232,9 +186,9 @@ InsightsTable.propTypes = {
 
 const Insights = ({ insights }) => {
   if (!insights || insights.meta.count === 0) {
-    return <NoIssuesMessage/>;
+    return <NoIssuesMessage />;
   }
-  return <InsightsTable insights={insights}/>;
+  return <InsightsTable insights={insights} />;
 };
 
 Insights.propTypes = {
@@ -244,7 +198,7 @@ Insights.propTypes = {
 Insights.defaultProps = {
   insights: {
     meta: { count: 0 },
-    data: []
+    data: [],
   },
 };
 
