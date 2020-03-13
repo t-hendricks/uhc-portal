@@ -4,7 +4,11 @@ import {
   Button,
 } from '@patternfly/react-core';
 
-const DownloadButton = ({ token, installerURL }) => (
+
+import { trackPendo } from '../../../../../../common/helpers';
+
+const DownloadButton = ({ token, installerURL, cloudProviderID }) => (
+
   <Button
     component="a"
     href={installerURL}
@@ -12,13 +16,15 @@ const DownloadButton = ({ token, installerURL }) => (
     variant="secondary"
     className="install--download-installer"
     disabled={!!token.error}
+    onClick={() => trackPendo('Download-Installer', cloudProviderID)}
   >
     Download installer
   </Button>
 );
 DownloadButton.propTypes = {
   token: PropTypes.object.isRequired,
-  installerURL: PropTypes.string.isRequired,
+  installerURL: PropTypes.string,
+  cloudProviderID: PropTypes.string,
 };
 
 export default DownloadButton;

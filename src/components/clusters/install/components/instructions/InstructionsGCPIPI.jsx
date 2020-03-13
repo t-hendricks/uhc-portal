@@ -9,6 +9,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 import EvaluationAlert from './components/EvaluationAlert';
 
 function InstructionsGCPIPI({ token }) {
+  const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -24,7 +25,10 @@ function InstructionsGCPIPI({ token }) {
               you can install a cluster on GCP using infrastructure that the
               installation program provisions and the cluster maintains.
             </p>
-            <GetStarted docURL={links.INSTALL_GCPIPI_GETTING_STARTED} />
+            <GetStarted
+              docURL={links.INSTALL_GCPIPI_GETTING_STARTED}
+              cloudProviderID={cloudProviderID}
+            />
           </div>
           <TelemetryAlert />
         </div>
@@ -33,6 +37,7 @@ function InstructionsGCPIPI({ token }) {
         token={token}
         installerURL={links.INSTALL_GCPIPI_INSTALLER_LATEST}
         cliURL={links.INSTALL_GCPIPI_CLI_LATEST}
+        cloudProviderID={cloudProviderID}
       />
     </>
   );

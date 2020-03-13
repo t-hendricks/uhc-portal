@@ -5,17 +5,18 @@ import { PasteIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Download from '@axetroy/react-download';
 
+import { trackPendo } from '../../../../../../common/helpers';
+
 class PullSecretSection extends React.Component {
   state = { copied: false }
 
   render() {
-    const { token } = this.props;
+    const { token, cloudProviderID } = this.props;
     const { copied } = this.state;
     const isDisabled = (!token || !!token.error);
     const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
-
     const downloadButton = (
-      <Button variant="secondary" isDisabled={isDisabled}>
+      <Button variant="secondary" isDisabled={isDisabled} onClick={() => trackPendo('Download-PullSecret', cloudProviderID)}>
       Download pull secret
       </Button>
     );
@@ -60,6 +61,7 @@ class PullSecretSection extends React.Component {
 
 PullSecretSection.propTypes = {
   token: PropTypes.object.isRequired,
+  cloudProviderID: PropTypes.string,
 };
 
 export default PullSecretSection;

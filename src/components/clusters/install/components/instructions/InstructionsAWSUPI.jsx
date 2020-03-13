@@ -9,6 +9,8 @@ import TokenErrorAlert from './components/TokenErrorAlert';
 import EvaluationAlert from './components/EvaluationAlert';
 
 function InstructionsAWSUPI({ token }) {
+  const cloudProviderID = window.location.pathname;
+
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -24,7 +26,10 @@ function InstructionsAWSUPI({ token }) {
               (AWS) using infrastructure that you provide.
             </p>
 
-            <GetStarted docURL={links.INSTALL_AWSUPI_GETTING_STARTED} />
+            <GetStarted
+              docURL={links.INSTALL_AWSUPI_GETTING_STARTED}
+              cloudProviderID={cloudProviderID}
+            />
 
           </div>
           <TelemetryAlert />
@@ -34,6 +39,7 @@ function InstructionsAWSUPI({ token }) {
         token={token}
         installerURL={links.INSTALL_AWSUPI_INSTALLER_LATEST}
         cliURL={links.INSTALL_AWSUPI_CLI_LATEST}
+        cloudProviderID={cloudProviderID}
       />
     </>
   );

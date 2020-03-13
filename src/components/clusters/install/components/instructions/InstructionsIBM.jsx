@@ -10,6 +10,7 @@ import EvaluationAlert from './components/EvaluationAlert';
 
 
 function InstructionsIBM({ token }) {
+  const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -25,7 +26,10 @@ function InstructionsIBM({ token }) {
               infrastructure that you provide.
             </p>
 
-            <GetStarted docURL={links.INSTALL_IBMZ_GETTING_STARTED} />
+            <GetStarted
+              docURL={links.INSTALL_IBMZ_GETTING_STARTED}
+              cloudProviderID={cloudProviderID}
+            />
           </div>
           <TelemetryAlert />
         </div>
@@ -37,6 +41,7 @@ function InstructionsIBM({ token }) {
         rhcosLearnMoreURL={links.INSTALL_IBMZ_RHCOS_LEARN_MORE}
         cliURL={links.INSTALL_IBMZ_CLI_LATEST}
         showPreReleasePageLink={false}
+        cloudProviderID={cloudProviderID}
       />
     </>
   );
