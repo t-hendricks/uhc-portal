@@ -35,7 +35,7 @@ const EmptyTableMessage = ({
   body,
   iconClassName,
 }) => (
-  <EmptyState className="EmptyTableMessage" variant={EmptyStateVariant.full}>
+  <EmptyState className="empty-table-message" variant={EmptyStateVariant.full}>
     <EmptyStateIcon className={iconClassName} icon={icon}/>
 
     <Title headingLevel="h5" size="lg">

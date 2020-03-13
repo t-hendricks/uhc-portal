@@ -12,8 +12,8 @@ import '@redhat-cloud-services/frontend-components/components/Battery.css';
 import './index.css';
 import AnalysisSummary from './AnalysisSummary';
 import { NoIssuesMessage } from './EmptyTableMessage';
+import { severityMapping } from './helpers';
 
-const severityMapping = Object.keys(severity);
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
   Added: (a, b) => a.created_at - b.created_at,

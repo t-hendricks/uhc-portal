@@ -10,12 +10,13 @@ import {
   Title
 } from '@patternfly/react-core';
 import { ExclamationTriangleIcon } from '@patternfly/react-icons';
-import { RemoteHealthPopover } from './EmptyTableMessage';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import { severity } from '@redhat-cloud-services/rule-components';
 import PropTypes from 'prop-types';
+import { RemoteHealthPopover } from './EmptyTableMessage';
 import './AnalysisSummary.css';
 import './index.css';
+import { severityMapping } from './helpers';
 
 const groupRulesByRisk = data => data.reduce(
   (acc, cur) => {
@@ -30,8 +31,6 @@ const groupRulesByRisk = data => data.reduce(
   {},
 );
 
-const severityMapping = Object.keys(severity);
-
 const AnalysisSummary = ({ insights, batteryClicked }) => (
   <Card>
     <CardBody>
@@ -40,7 +39,7 @@ const AnalysisSummary = ({ insights, batteryClicked }) => (
           <Split>
             <SplitItem>
               <ExclamationTriangleIcon
-                className="title_icon"
+                className="title-icon"
                 width={18}
                 height={18}
               />
