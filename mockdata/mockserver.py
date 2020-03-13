@@ -15,6 +15,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     print('Accessing ' + path)
     return path
 
+  def do_GET(self):
+    if self.path == '/api/clusters_mgmt/v1/insights/1GRoczjlSc54Rk7So1R8Vx3fW9y':
+        self.path = '/simplehttpwebpage_content.html'
+        self.send_response(401, '')
+        self.end_headers()
+        return
+    return http.server.SimpleHTTPRequestHandler.do_GET(self)
+
   def end_headers(self):
     """ override end_headers to append headers to every request """
     # Allow CORS.
@@ -26,7 +34,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     self.send_header("Pragma", "no-cache")
     self.send_header("Expires", "0")
     return super().end_headers()
-
 
   def do_OPTIONS(self):
       self.send_response(200, "ok")

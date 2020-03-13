@@ -289,6 +289,7 @@ class ClusterDetails extends Component {
     const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
+    const displayInsightsTab = !isArchived && insights[match.params.id] && insights[match.params.id].status !== 401;
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
@@ -309,7 +310,7 @@ class ClusterDetails extends Component {
             displayLogs={hasLogs}
             displayAccessControlTab={displayAccessControlTab}
             displayMonitoringTab={!isArchived}
-            displayInsightsTab={!isArchived}
+            displayInsightsTab={displayInsightsTab}
             displayAddOnsTab={displayAddOnsTab}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
@@ -351,7 +352,7 @@ class ClusterDetails extends Component {
           <LogWindow clusterID={cluster.id} />
         </TabContent>
         )}
-        {!isArchived && (
+        {displayInsightsTab && (
           <TabContent eventKey={5} id="insightsTabContent" ref={this.insightsTabRef} aria-label="Insights" hidden>
             <Insights cluster={cluster} insights={insights[match.params.id]} />
           </TabContent>

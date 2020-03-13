@@ -15,6 +15,7 @@ limitations under the License.
 */
 import {
   FULFILLED_ACTION,
+  REJECTED_ACTION,
   setStateProp,
 } from '../reduxHelpers';
 
@@ -33,6 +34,18 @@ function insightsReducer(state = initialState, action) {
         {
           ...state.insights,
           [action.payload.clusterID]: action.payload.insights,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+    case REJECTED_ACTION(insightsConstants.GET_CLUSTER_INSIGHTS):
+      return setStateProp(
+        'insights',
+        {
+          ...state.insights,
+          [action.payload.clusterID]: { status: action.payload.status },
         },
         {
           state,

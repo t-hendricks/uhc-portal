@@ -17,14 +17,15 @@ import { insightsConstants } from '../constants';
 import { insightsService } from '../../services';
 
 const fetchSingleClusterInsights = async (clusterID) => {
-  const clusterResponse = await insightsService.getClusterInsights(clusterID);
-  if (!clusterResponse || !clusterResponse.data) {
-    // create a fake 404 error so 404 handling in components will work as if it was a regular 404.
+  try {
+    const clusterResponse = await insightsService.getClusterInsights(clusterID);
+    return { insights: clusterResponse.data, clusterID };
+  } catch (e) {
     const error = Error('Insights for cluster not found');
-    error.response = { status: 404 };
-    return Promise.reject(error);
+    error.status = e.response.status;
+    error.clusterID = clusterID;
+    throw error;
   }
-  return { insights: clusterResponse.data, clusterID };
 };
 
 export const fetchClusterInsights = clusterID => dispatch => dispatch({

@@ -9,9 +9,9 @@ import {
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import '@redhat-cloud-services/frontend-components/components/Battery.css';
-import './index.css';
 import AnalysisSummary from './AnalysisSummary';
-import { NoIssuesMessage } from './EmptyTableMessage';
+import { RemoteHealthPopover, NoIssuesMessage, NoRulesMessage } from './EmptyTableMessage';
+import './index.css';
 import { severityMapping } from './helpers';
 
 const dataSortMapping = {
@@ -185,6 +185,9 @@ InsightsTable.propTypes = {
 };
 
 const Insights = ({ insights }) => {
+  if (insights && insights.status === 404) {
+    return <NoRulesMessage/>;
+  }
   if (!insights || insights.meta.count === 0) {
     return <NoIssuesMessage />;
   }
