@@ -10,7 +10,6 @@ import {
   Tooltip,
 } from '@patternfly/react-core';
 
-import get from 'lodash/get';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../common/ErrorBox';
 import filterLoadBalancerValuesByQuota from './helpers';
@@ -36,9 +35,8 @@ class LoadBalancersDropdown extends React.Component {
       <FormSelectOption key={value} value={value} label={value} />
     );
     if (loadBalancerValues.fulfilled) {
-      const remainingQuota = get(quota, 'loadBalancerQuota', 0);
       const filteredValues = filterLoadBalancerValuesByQuota(currentValue,
-        loadBalancerValues, remainingQuota);
+        loadBalancerValues, quota);
       const notEnoughQuota = filteredValues.values.length <= 1;
       const isDisabled = disabled || notEnoughQuota;
       const formSelect = (
@@ -82,7 +80,7 @@ LoadBalancersDropdown.propTypes = {
   loadBalancerValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
-  quota: PropTypes.object.isRequired,
+  quota: PropTypes.number.isRequired,
   currentValue: PropTypes.number,
 };
 

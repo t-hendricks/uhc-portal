@@ -114,13 +114,15 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
   }
   quota={
     Object {
-      "clusterQuota": Object {
-        "rhInfra": Object {
-          "multiAz": Object {
-            "r5.xlarge": 5,
-          },
-          "singleAz": Object {
-            "r5.xlarge": 0,
+      "clustersQuota": Object {
+        "aws": Object {
+          "rhInfra": Object {
+            "multiAz": Object {
+              "r5.xlarge": 5,
+            },
+            "singleAz": Object {
+              "r5.xlarge": 0,
+            },
           },
         },
       },

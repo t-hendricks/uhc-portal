@@ -10,92 +10,165 @@ const userInfoResponse = payload => ({
 
 const fetchQuota = organizationID => accountsService.getOrganizationQuota(organizationID).then(
   (response) => {
-    /* construct an easy to query structure to figure out how many of each node type
+    /* construct an easy to query structure to figure out how many of each resource types
       we have available.
       This is done here to ensure the calculation is done every time we get the quota,
       and that we won't have to replicate it across different components
       which might need to query this data. */
-    response.data.clusterQuota = {
-      byoc: {
-        singleAz: {
-          available: 0,
+    const allQuotas = {
+
+      // Cluster quota
+      clustersQuota: {
+        // AWS
+        aws: {
+          byoc: {
+            singleAz: { available: 0 },
+            multiAz: { available: 0 },
+            available: 0,
+          },
+          rhInfra: {
+            singleAz: { available: 0 },
+            multiAz: { available: 0 },
+            available: 0,
+          },
+          available: false,
         },
-        multiAz: {
-          available: 0,
+
+        // GCP
+        gcp: {
+          rhInfra: {
+            singleAz: { available: 0 },
+            multiAz: { available: 0 },
+            available: 0,
+          },
+          available: false,
         },
-        available: 0,
       },
-      rhInfra: {
-        singleAz: {
-          available: 0,
+
+      // Node quota
+      nodesQuota: {
+        // AWS
+        aws: {
+          byoc: {
+            singleAz: {},
+            multiAz: {},
+          },
+          rhInfra: {
+            singleAz: {},
+            multiAz: {},
+          },
         },
-        multiAz: {
-          available: 0,
+
+        // GCP
+        gcp: {
+          rhInfra: {
+            singleAz: {},
+            multiAz: {},
+          },
         },
-        available: 0,
       },
-    };
-    response.data.nodeQuota = {
-      byoc: {
-        singleAz: {},
-        multiAz: {},
+
+      // Storage
+      storageQuota: {
+        aws: { available: 0 },
+        gcp: { available: 0 },
       },
-      rhInfra: {
-        singleAz: {},
-        multiAz: {},
+
+      // Load balancers
+      loadBalancerQuota: {
+        aws: { available: 0 },
+        gcp: { available: 0 },
       },
+
+      // Add ons
+      addOnsQuota: {},
     };
 
     const items = get(response.data, 'items', []);
+
     items.forEach((item) => {
       switch (item.resource_type) {
+        // AWS
         case 'cluster.aws': {
-          // cluster quota: "how many clusters am I allowed to provision?"
+          // aws cluster quota: "how many clusters am I allowed to provision?"
           const available = item.allowed - item.reserved;
           const category = item.byoc ? 'byoc' : 'rhInfra';
           const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
 
-          response.data.clusterQuota[category][zoneType][item.resource_name] = available;
-          response.data.clusterQuota[category][zoneType].available += available;
-          response.data.clusterQuota[category].available += available;
+          allQuotas.clustersQuota.aws[category][zoneType][item.resource_name] = available;
+          allQuotas.clustersQuota.aws[category][zoneType].available += available;
+          allQuotas.clustersQuota.aws[category].available += available;
           break;
         }
+
         case 'compute.node.aws': {
-          // node quota: "how many extra nodes can I add on top of the base cluster?"
+          // aws - node quota: "how many extra nodes can I add on top of the base cluster?"
           const available = item.allowed - item.reserved;
           const category = item.byoc ? 'byoc' : 'rhInfra';
-          response.data.nodeQuota[category][item.resource_name] = available;
+          allQuotas.nodesQuota.aws[category][item.resource_name] = available;
           break;
         }
-        case 'addon':
-          // Create a map of add-on resource names to track available quota
-          if (!response.data.addOnsQuota) {
-            response.data.addOnsQuota = {};
-          }
-          if (!response.data.addOnsQuota[item.resource_name]) {
-            response.data.addOnsQuota[item.resource_name] = 0;
-          }
-          // Accumulate all available quota per resource name
-          response.data.addOnsQuota[item.resource_name] += item.allowed - item.reserved;
-          break;
+
         case 'pv.storage.aws':
           // Create a map of storage quota.
-          if (!response.data.persistentStorageQuota) {
-            response.data.persistentStorageQuota = 0;
-          }
-          response.data.persistentStorageQuota += (item.allowed - item.reserved);
+          allQuotas.storageQuota.aws.available += (item.allowed - item.reserved);
           break;
+
         case 'network.loadbalancer.aws':
-          if (!response.data.loadBalancerQuota) {
-            response.data.loadBalancerQuota = 0;
-          }
-          response.data.loadBalancerQuota += (item.allowed - item.reserved);
+          allQuotas.loadBalancerQuota.aws.available += (item.allowed - item.reserved);
           break;
+
+        // GCP
+        case 'cluster.gcp': {
+          // gcp cluster quota: "how many clusters am I allowed to provision?"
+          const available = item.allowed - item.reserved;
+          const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
+
+          allQuotas.clustersQuota.gcp.rhInfra[zoneType][item.resource_name] = available;
+          allQuotas.clustersQuota.gcp.rhInfra[zoneType].available += available;
+          allQuotas.clustersQuota.gcp.rhInfra.available += available;
+          break;
+        }
+
+        case 'compute.node.gcp': {
+          // gcp - node quota: "how many extra nodes can I add on top of the base cluster?"
+          const available = item.allowed - item.reserved;
+          allQuotas.nodesQuota.gcp[item.resource_name] = available;
+          break;
+        }
+
+        // Load balencers GCP
+        case 'network-gcp.loadbalancer.gcp':
+          allQuotas.loadBalancerQuota.gcp.available += (item.allowed - item.reserved);
+          break;
+
+          // Storage GCP
+        case 'pv.storage.gcp':
+          allQuotas.loadBalancerQuota.gcp.available += (item.allowed - item.reserved);
+          break;
+
+        // ADDONS
+        case 'addon':
+          if (!allQuotas.addOnsQuota[item.resource_name]) {
+            allQuotas.addOnsQuota[item.resource_name] = 0;
+          }
+          // Accumulate all available quota per resource name
+          allQuotas.addOnsQuota[item.resource_name] += item.allowed - item.reserved;
+          break;
+
         default:
           break;
       }
     });
-    return response;
+
+    // check if any quota available for aws clusters
+    allQuotas.clustersQuota.aws.available = !!(allQuotas.clustersQuota.aws.byoc.available
+     || allQuotas.clustersQuota.aws.rhInfra.available);
+
+    // check if any quota available for gcp clusters
+    allQuotas.clustersQuota.gcp.available = !!allQuotas.clustersQuota.gcp.rhInfra.available;
+
+    return allQuotas;
   },
 );
 
