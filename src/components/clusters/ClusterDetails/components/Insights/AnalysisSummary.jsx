@@ -9,7 +9,7 @@ import {
   StackItem, Text,
   Title
 } from '@patternfly/react-core';
-import { ExclamationTriangleIcon } from '@patternfly/react-icons';
+import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import { severity } from '@redhat-cloud-services/rule-components';
 import PropTypes from 'prop-types';
@@ -24,18 +24,27 @@ const groupRulesByRisk = data => data.reduce(
   {},
 );
 
-const AnalysisSummary = ({ insights, batteryClicked }) => (
-  <Card>
+const AnalysisSummary = ({ insights, batteryClicked }) => {
+  const groupedRules = groupRulesByRisk(insights.data);
+  return <Card>
     <CardBody>
       <Grid>
         <GridItem span={9}>
           <Split>
             <SplitItem>
-              <ExclamationTriangleIcon
-                className="title-icon"
-                width={18}
-                height={18}
-              />
+              {
+                Object.keys(groupedRules).reduce((a, b) => Math.max(a, b)) < 4
+                ? <ExclamationTriangleIcon
+                    className="title-icon"
+                    width={18}
+                    height={18}
+                  />
+                : <ExclamationCircleIcon
+                  className="title-icon danger"
+                  width={18}
+                  height={18}
+                />
+              }
             </SplitItem>
             <SplitItem className="description">
               <Stack>
@@ -58,7 +67,7 @@ const AnalysisSummary = ({ insights, batteryClicked }) => (
         <GridItem span={3}>
           <Stack>
             {
-              Object.entries(groupRulesByRisk(insights.data))
+              Object.entries(groupedRules)
                 .map(([risk, count]) => (
                   <StackItem className="battery">
                     <Battery
@@ -80,7 +89,7 @@ const AnalysisSummary = ({ insights, batteryClicked }) => (
       </Grid>
     </CardBody>
   </Card>
-);
+};
 
 AnalysisSummary.propTypes = {
   insights: PropTypes.object.isRequired,

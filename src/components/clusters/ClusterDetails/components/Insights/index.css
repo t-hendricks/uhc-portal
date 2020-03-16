@@ -24,8 +24,13 @@
 }
 
 .title-icon {
-    margin: 10px 0;
     color: var(--pf-global--warning-color--100);
+    vertical-align: bottom !important;
+    margin-bottom: 1px;
+}
+
+.title-icon.danger {
+	color: var(--pf-global--danger-color--100);
 }
 
 .description {
