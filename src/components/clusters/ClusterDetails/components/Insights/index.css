@@ -14,3 +14,25 @@
 .pf-c-card__body.no-padding {
 	padding: 0;
 }
+
+.success-color {
+    color: var(--pf-global--success-color--200);
+}
+
+.empty-table-message {
+    padding-top: 64px;
+}
+
+.title-icon {
+    margin: 10px 0;
+    color: var(--pf-global--warning-color--100);
+}
+
+.description {
+    margin-left: 20px;
+}
+
+.description .pf-l-stack > :not(:last-child) {
+    /* gutter="sm" doesn't work for some reason */
+    margin-bottom: 5px;
+}

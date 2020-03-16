@@ -8,8 +8,6 @@ import * as machineTypesConstants from './machineTypesConstants';
 import * as subscriptionsConstants from './subscriptionsConstants';
 import * as persistentStorageConstants from './persistentStorageConstants';
 import * as loadBalancerConstants from './loadBalancerConstants';
-import * as subscriptionSettingsConstants from './subscriptionSettingsConstants';
-import * as insightsConstants from './insightsConstants';
 
 export {
   clustersConstants,
@@ -22,6 +20,4 @@ export {
   subscriptionsConstants,
   persistentStorageConstants,
   loadBalancerConstants,
-  subscriptionSettingsConstants,
-  insightsConstants,
 };

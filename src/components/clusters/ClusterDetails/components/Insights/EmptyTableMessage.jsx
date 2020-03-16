@@ -10,7 +10,6 @@ import {
 } from '@patternfly/react-core';
 import { CheckCircleIcon, SearchIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
-import './EmptyTableMessage.css';
 import { Link } from 'react-router-dom';
 
 export const RemoteHealthPopover = () => (
@@ -54,7 +53,7 @@ const EmptyTableMessage = ({
       Return to list of clusters
     </Button>
 
-    <EmptyStateSecondaryActions className="EmptyTableMessageWhatIsRemoteHealth">
+    <EmptyStateSecondaryActions>
       <RemoteHealthPopover/>
     </EmptyStateSecondaryActions>
   </EmptyState>
@@ -94,7 +93,7 @@ export const NoIssuesMessage = ({ lastChecked }) => {
     <div className="NoIssuesMessage">
       <EmptyTableMessage
         icon={CheckCircleIcon}
-        iconClassName="SuccessColor"
+        iconClassName="success-color"
         header="No issues detected!"
         body={body}
       />

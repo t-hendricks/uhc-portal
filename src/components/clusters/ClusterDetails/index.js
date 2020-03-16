@@ -5,9 +5,6 @@ import {
   fetchClusterDetails,
   invalidateClusters,
 } from '../../../redux/actions/clustersActions';
-import {
-  fetchClusterInsights,
-} from '../../../redux/actions/insightsActions';
 import { getLogs } from './components/LogWindow/LogWindowActions';
 import { getClusterIdentityProviders, resetIdentityProvidersState } from './components/IdentityProvidersModal/IdentityProvidersActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
@@ -20,6 +17,7 @@ import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import { getClusterHistory } from './components/ClusterLogs/clusterLogActions';
 import { viewConstants } from '../../../redux/constants';
+import { fetchClusterInsights } from './components/Insights/InsightsActions';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;

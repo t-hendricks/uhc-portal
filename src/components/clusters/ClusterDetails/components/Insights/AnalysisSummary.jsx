@@ -14,20 +14,13 @@ import { Battery } from '@redhat-cloud-services/frontend-components/components/B
 import { severity } from '@redhat-cloud-services/rule-components';
 import PropTypes from 'prop-types';
 import { RemoteHealthPopover } from './EmptyTableMessage';
-import './AnalysisSummary.css';
-import './index.css';
 import { severityMapping } from './helpers';
 
 const groupRulesByRisk = data => data.reduce(
-  (acc, cur) => {
-    const accTemp = { ...acc };
-    const { total_risk: totalRisk } = cur;
-    if (!accTemp[totalRisk]) {
-      accTemp[totalRisk] = 0;
-    }
-    accTemp[totalRisk] += 1;
-    return accTemp;
-  },
+  (acc, { total_risk: totalRisk }) => ({
+    ...acc,
+    [totalRisk]: acc[totalRisk] ? acc[totalRisk] + 1 : 1
+  }),
   {},
 );
 

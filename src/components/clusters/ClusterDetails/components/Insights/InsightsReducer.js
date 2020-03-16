@@ -13,48 +13,32 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import produce from 'immer';
+
 import {
   FULFILLED_ACTION,
   REJECTED_ACTION,
-  setStateProp,
-} from '../reduxHelpers';
+} from '../../../../../redux/reduxHelpers';
 
-import { insightsConstants } from '../constants';
+import { GET_CLUSTER_INSIGHTS } from './InsightsConstants';
 
 const initialState = {
   insights: {},
 };
 
 function insightsReducer(state = initialState, action) {
-  switch (action.type) {
-    // GET_CLUSTER_INSIGHTS
-    case FULFILLED_ACTION(insightsConstants.GET_CLUSTER_INSIGHTS):
-      return setStateProp(
-        'insights',
-        {
-          ...state.insights,
-          [action.payload.clusterID]: action.payload.insights,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-    case REJECTED_ACTION(insightsConstants.GET_CLUSTER_INSIGHTS):
-      return setStateProp(
-        'insights',
-        {
-          ...state.insights,
-          [action.payload.clusterID]: { status: action.payload.status },
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-    default:
-      return state;
-  }
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    switch (action.type) {
+      // GET_CLUSTER_INSIGHTS
+      case FULFILLED_ACTION(GET_CLUSTER_INSIGHTS):
+        draft.insights[action.payload.clusterID] = action.payload.insights;
+        break;
+      case REJECTED_ACTION(GET_CLUSTER_INSIGHTS):
+        draft.insights[action.payload.clusterID] = { status: action.payload.status };
+        break;
+    }
+  });
 }
 
 insightsReducer.initialState = initialState;

@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { insightsConstants } from '../constants';
-import { insightsService } from '../../services';
+import { GET_CLUSTER_INSIGHTS } from './InsightsConstants';
+import { insightsService } from '../../../../../services';
 
 const fetchSingleClusterInsights = async (clusterID) => {
   try {
@@ -29,14 +29,6 @@ const fetchSingleClusterInsights = async (clusterID) => {
 };
 
 export const fetchClusterInsights = clusterID => dispatch => dispatch({
-  type: insightsConstants.GET_CLUSTER_INSIGHTS,
+  type: GET_CLUSTER_INSIGHTS,
   payload: fetchSingleClusterInsights(clusterID),
-});
-
-export const setClusterInsights = (insights, clusterID) => dispatch => dispatch({
-  type: insightsConstants.SET_CLUSTER_INSIGHTS,
-  payload: {
-    insights,
-    clusterID,
-  },
 });
