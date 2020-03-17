@@ -227,6 +227,7 @@ class ClusterDetails extends Component {
       setGlobalError,
       displayClusterLogs,
       insights,
+      voteOnRule,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -289,7 +290,9 @@ class ClusterDetails extends Component {
     const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
-    const displayInsightsTab = !isArchived && insights[match.params.id] && insights[match.params.id].status !== 401;
+    const displayInsightsTab = !isArchived
+      && insights[match.params.id]
+      && insights[match.params.id].status !== 401;
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
@@ -320,7 +323,12 @@ class ClusterDetails extends Component {
             insightsTabRef={this.insightsTabRef}
           />
         </ClusterDetailsTop>
-        <TabContent eventKey={0} id="overviewTabContent" ref={this.overviewTabRef} aria-label="Overview">
+        <TabContent
+          eventKey={0}
+          id="overviewTabContent"
+          ref={this.overviewTabRef}
+          aria-label="Overview"
+        >
           <Overview
             cluster={cluster}
             cloudProviders={cloudProviders}
@@ -329,12 +337,24 @@ class ClusterDetails extends Component {
           />
         </TabContent>
         {!isArchived && (
-          <TabContent eventKey={1} id="monitoringTabContent" ref={this.monitoringTabRef} aria-label="Monitoring" hidden>
+          <TabContent
+            eventKey={1}
+            id="monitoringTabContent"
+            ref={this.monitoringTabRef}
+            aria-label="Monitoring"
+            hidden
+          >
             <Monitoring cluster={cluster} />
           </TabContent>
         )}
-        { displayAccessControlTab && (
-          <TabContent eventKey={2} id="accessControlTabContent" ref={this.accessControlTabRef} aria-label="Access Control" hidden>
+        {displayAccessControlTab && (
+          <TabContent
+            eventKey={2}
+            id="accessControlTabContent"
+            ref={this.accessControlTabRef}
+            aria-label="Access Control"
+            hidden
+          >
             <AccessControl
               clusterID={cluster.id}
               clusterConsoleURL={consoleURL}
@@ -343,18 +363,42 @@ class ClusterDetails extends Component {
           </TabContent>
         )}
         {displayAddOnsTab && (
-        <TabContent eventKey={3} id="addOnsTabContent" ref={this.addOnsTabRef} aria-label="Add-ons" hidden>
-          <AddOns clusterID={cluster.id} />
-        </TabContent>
+          <TabContent
+            eventKey={3}
+            id="addOnsTabContent"
+            ref={this.addOnsTabRef}
+            aria-label="Add-ons"
+            hidden
+          >
+            <AddOns clusterID={cluster.id} />
+          </TabContent>
         )}
         {hasLogs && (
-        <TabContent eventKey={4} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
-          <LogWindow clusterID={cluster.id} />
-        </TabContent>
+          <TabContent
+            eventKey={4}
+            id="logsTabContent"
+            ref={this.logsTabRef}
+            aria-label="Logs"
+            hidden
+          >
+            <LogWindow clusterID={cluster.id} />
+          </TabContent>
         )}
         {displayInsightsTab && (
-          <TabContent eventKey={5} id="insightsTabContent" ref={this.insightsTabRef} aria-label="Insights" hidden>
-            <Insights cluster={cluster} insights={insights[match.params.id]} />
+          <TabContent
+            eventKey={5}
+            id="insightsTabContent"
+            ref={this.insightsTabRef}
+            aria-label="Insights"
+            hidden
+          >
+            <Insights
+              cluster={cluster}
+              insights={insights[match.params.id]}
+              voteOnRule={(ruleId, vote) => {
+                voteOnRule(cluster.id, ruleId, vote);
+              }}
+            />
           </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
@@ -429,6 +473,7 @@ ClusterDetails.propTypes = {
   getGrants: PropTypes.func.isRequired,
   clusterLogsViewOptions: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
+  voteOnRule: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

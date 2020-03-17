@@ -6,13 +6,20 @@ import {
   invalidateClusters,
 } from '../../../redux/actions/clustersActions';
 import { getLogs } from './components/LogWindow/LogWindowActions';
-import { getClusterIdentityProviders, resetIdentityProvidersState } from './components/IdentityProvidersModal/IdentityProvidersActions';
+import {
+  getClusterIdentityProviders,
+  resetIdentityProvidersState
+} from './components/IdentityProvidersModal/IdentityProvidersActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalErrorActions';
 import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
-import { getAlerts, getNodes, getClusterOperators } from './components/Monitoring/MonitoringActions';
+import {
+  getAlerts,
+  getNodes,
+  getClusterOperators
+} from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import { getClusterHistory } from './components/ClusterLogs/clusterLogActions';
@@ -46,6 +53,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchDetails: clusterId => fetchClusterDetails(clusterId),
   fetchInsights: clusterId => fetchClusterInsights(clusterId),
+  voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
   invalidateClusters,

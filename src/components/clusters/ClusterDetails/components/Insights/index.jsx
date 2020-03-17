@@ -4,18 +4,19 @@ import { NoIssuesMessage, NoRulesMessage } from './EmptyTableMessage';
 import InsightsTable from './InsightsTable';
 import './index.css';
 
-const Insights = ({ insights }) => {
+const Insights = ({ insights, voteOnRule }) => {
   if (insights && insights.status === 404) {
-    return <NoRulesMessage/>;
+    return <NoRulesMessage />;
   }
   if (!insights || insights.meta.count === 0) {
     return <NoIssuesMessage />;
   }
-  return <InsightsTable insights={insights} />;
+  return <InsightsTable insights={insights} voteOnRule={voteOnRule} />;
 };
 
 Insights.propTypes = {
   insights: PropTypes.object,
+  voteOnRule: PropTypes.func.isRequired,
 };
 
 Insights.defaultProps = {

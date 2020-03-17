@@ -11,7 +11,6 @@ import {
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import AnalysisSummary from './AnalysisSummary';
-import { RemoteHealthPopover } from './EmptyTableMessage';
 import './index.css';
 import { severityMapping } from './helpers';
 
@@ -118,7 +117,7 @@ class InsightsTable extends React.Component {
   };
 
   render() {
-    const { insights } = this.props;
+    const { insights, voteOnRule } = this.props;
     const {
       shownData,
       filters,
@@ -171,9 +170,7 @@ class InsightsTable extends React.Component {
                   ruleId={details.rule_id}
                   totalRisk={details.total_risk}
                   riskOfChange={details.risk_of_change}
-                  onFeedbackChanged={(ruleId, vote) => {
-                    alert(`ruleId is ${ruleId}, vote is ${vote}`);
-                  }}
+                  onFeedbackChanged={voteOnRule}
                 />
               )}
             />
@@ -186,6 +183,7 @@ class InsightsTable extends React.Component {
 
 InsightsTable.propTypes = {
   insights: PropTypes.object.isRequired,
+  voteOnRule: PropTypes.func.isRequired,
 };
 
 export default InsightsTable;
