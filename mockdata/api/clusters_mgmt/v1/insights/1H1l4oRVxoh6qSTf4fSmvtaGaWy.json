@@ -6,13 +6,13 @@
     {
       "rule_id": "ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report",
       "description": "Some rule description",
-      "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
+      "details": "When fs.pipe-user-pages-soft is enabled, updating stonith fails in metadata query.\\n[Knowledgebase article](https://g.co)",
       "created_at": 1583245000000,
       "total_risk": 3,
       "risk_of_change": 1
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module1",
       "description": "Some rule description2",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -20,7 +20,7 @@
       "risk_of_change": 2
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module2",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -28,7 +28,7 @@
       "risk_of_change": 3
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module3",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -36,7 +36,7 @@
       "risk_of_change": 1
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module4",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -44,7 +44,7 @@
       "risk_of_change": 2
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module5",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -52,7 +52,7 @@
       "risk_of_change": 3
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module6",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -60,7 +60,7 @@
       "risk_of_change": 1
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module7",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -68,7 +68,7 @@
       "risk_of_change": 2
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module8",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -76,7 +76,7 @@
       "risk_of_change": 3
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module9",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -84,7 +84,7 @@
       "risk_of_change": 1
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module10",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -92,7 +92,7 @@
       "risk_of_change": 2
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module11",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -100,7 +100,7 @@
       "risk_of_change": 3
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module12",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -108,7 +108,7 @@
       "risk_of_change": 1
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module13",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -116,7 +116,7 @@
       "risk_of_change": 2
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module14",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -124,7 +124,7 @@
       "risk_of_change": 3
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module15",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -132,7 +132,7 @@
       "risk_of_change": 1
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module16",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
@@ -140,7 +140,7 @@
       "risk_of_change": 2
     },
     {
-      "rule_id": "some.python.module",
+      "rule_id": "some.python.module17",
       "description": "Some rule description3",
       "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
       "created_at": 1583245000000,
