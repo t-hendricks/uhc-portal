@@ -168,6 +168,7 @@ class InsightsTable extends React.Component {
                 <ReportDetails
                   createdAt={details.created_at}
                   details={details.details}
+                  ruleId={details.rule_id}
                   totalRisk={details.total_risk}
                   riskOfChange={details.risk_of_change}
                   onFeedbackChanged={(ruleId, vote) => {
