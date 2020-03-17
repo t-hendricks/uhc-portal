@@ -94,57 +94,156 @@ exports[`<LoadBalancersDropdown /> when the load balancer list is available rend
     }
   }
 >
-  <FormSelect
-    aria-label="Load Balancers"
-    className="quota-dropdown"
-    isDisabled={false}
-    isRequired={false}
-    isValid={true}
-    onBlur={[Function]}
-    onChange={[MockFunction]}
-    onFocus={[Function]}
-    validated="default"
-    value=""
+  <Tooltip
+    appendTo={[Function]}
+    aria="describedby"
+    boundary="window"
+    className=""
+    content="You do not have quota for this option. Contact sales to purchase additional quota."
+    distance={15}
+    enableFlip={true}
+    entryDelay={500}
+    exitDelay={500}
+    flipBehavior={
+      Array [
+        "top",
+        "right",
+        "bottom",
+        "left",
+        "top",
+        "right",
+        "bottom",
+      ]
+    }
+    id=""
+    isAppLauncher={false}
+    isContentLeftAligned={false}
+    isVisible={false}
+    maxWidth="18.75rem"
+    position="right"
+    tippyProps={Object {}}
+    trigger="mouseenter focus"
+    zIndex={9999}
   >
-    <select
-      aria-invalid={false}
-      aria-label="Load Balancers"
-      className="pf-c-form-control quota-dropdown"
-      disabled={false}
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      required={false}
-      value=""
+    <PopoverBase
+      appendTo={[Function]}
+      aria="describedby"
+      arrow={true}
+      boundary="window"
+      content={
+        <div
+          className=""
+          id=""
+          role="tooltip"
+        >
+          <TooltipContent
+            isLeftAligned={false}
+          >
+            You do not have quota for this option. Contact sales to purchase additional quota.
+          </TooltipContent>
+        </div>
+      }
+      delay={
+        Array [
+          500,
+          500,
+        ]
+      }
+      distance={15}
+      flip={true}
+      flipBehavior={
+        Array [
+          "top",
+          "right",
+          "bottom",
+          "left",
+          "top",
+          "right",
+          "bottom",
+        ]
+      }
+      isVisible={false}
+      lazy={true}
+      maxWidth="18.75rem"
+      onCreate={[Function]}
+      placement="right"
+      popperOptions={
+        Object {
+          "modifiers": Object {
+            "hide": Object {
+              "enabled": true,
+            },
+            "preventOverflow": Object {
+              "enabled": true,
+            },
+          },
+        }
+      }
+      theme="pf-tooltip"
+      trigger="mouseenter focus"
+      zIndex={9999}
     >
-      <FormSelectOption
-        key="0"
-        label="0"
-        value="0"
-      >
-        <option
-          className=""
-          disabled={false}
-          value="0"
+      <div>
+        <FormSelect
+          aria-label="Load Balancers"
+          className="quota-dropdown"
+          isDisabled={true}
+          isRequired={false}
+          isValid={true}
+          onBlur={[Function]}
+          onChange={[MockFunction]}
+          onFocus={[Function]}
+          validated="default"
+          value=""
         >
-          0
-        </option>
-      </FormSelectOption>
-      <FormSelectOption
-        key="4"
-        label="4"
-        value="4"
+          <select
+            aria-invalid={false}
+            aria-label="Load Balancers"
+            className="pf-c-form-control quota-dropdown"
+            disabled={true}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            required={false}
+            value=""
+          />
+        </FormSelect>
+      </div>
+      <Portal
+        containerInfo={
+          <div>
+            <div
+              class=""
+              id=""
+              role="tooltip"
+            >
+              <div
+                class="pf-c-tooltip__content"
+              >
+                You do not have quota for this option. Contact sales to purchase additional quota.
+              </div>
+            </div>
+          </div>
+        }
       >
-        <option
+        <div
           className=""
-          disabled={false}
-          value="4"
+          id=""
+          role="tooltip"
         >
-          4
-        </option>
-      </FormSelectOption>
-    </select>
-  </FormSelect>
+          <TooltipContent
+            isLeftAligned={false}
+          >
+            <div
+              className="pf-c-tooltip__content"
+            >
+              You do not have quota for this option. Contact sales to purchase additional quota.
+            </div>
+          </TooltipContent>
+        </div>
+      </Portal>
+    </PopoverBase>
+  </Tooltip>
 </LoadBalancersDropdown>
 `;
 

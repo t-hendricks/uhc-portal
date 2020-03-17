@@ -38,7 +38,7 @@ function userProfile(state = initialState, action) {
           ...initialState.organization,
           fulfilled: true,
           details: action.payload.organization.data,
-          quotaList: get(action.payload, 'quota.data', {}),
+          quotaList: get(action.payload, 'quota', {}),
         };
         break;
     }

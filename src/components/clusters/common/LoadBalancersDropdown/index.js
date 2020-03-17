@@ -1,10 +1,12 @@
+import get from 'lodash/get';
 import { connect } from 'react-redux';
+
 import getLoadBalancers from '../../../../redux/actions/loadBalancerActions';
 import LoadBalancersDropdown from './LoadBalancersDropdown';
 
 const mapStateToProps = state => ({
   loadBalancerValues: state.loadBalancerValues,
-  quota: state.userProfile.organization.quotaList,
+  quota: get(state, 'userProfile.organization.quotaList.loadBalancerQuota.aws.available', 0),
 });
 
 const mapDispatchToProps = { getLoadBalancers };
