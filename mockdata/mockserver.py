@@ -42,6 +42,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
   def do_POST(self):
     return self.do_GET()
 
+  def do_PUT(self):
+      return self.do_GET()
+
 def main():
     server_address = ('localhost', 8010)
     httpd = http.server.ThreadingHTTPServer(server_address, Handler)
