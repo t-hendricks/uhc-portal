@@ -17,7 +17,7 @@ import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import { getClusterHistory } from './components/ClusterLogs/clusterLogActions';
 import { viewConstants } from '../../../redux/constants';
-import { fetchClusterInsights } from './components/Insights/InsightsActions';
+import { fetchClusterInsights, voteOnRuleInsights } from './components/Insights/InsightsActions';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
@@ -44,8 +44,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchDetails: clusterID => fetchClusterDetails(clusterID),
-  fetchInsights: clusterID => fetchClusterInsights(clusterID),
+  fetchDetails: clusterId => fetchClusterDetails(clusterId),
+  fetchInsights: clusterId => fetchClusterInsights(clusterId),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
   invalidateClusters,
