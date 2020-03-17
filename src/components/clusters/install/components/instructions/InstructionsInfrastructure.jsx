@@ -31,7 +31,7 @@ const InstructionsInfrastructure = () => (
           </Link>
         </GalleryItem>
         <GalleryItem>
-          <Link to="/install/azure/installer-provisioned" className="infra-card infra-card-cloud-provider">
+          <Link to="/install/azure" className="infra-card infra-card-cloud-provider">
             <CardBadge isHidden />
             <CardBody>
               <img src={AzureLogo} alt="Azure" className="infra-logo" />
@@ -40,7 +40,7 @@ const InstructionsInfrastructure = () => (
           </Link>
         </GalleryItem>
         <GalleryItem>
-          <Link to="/install/gcp/installer-provisioned" className="infra-card infra-card-cloud-provider">
+          <Link to="/install/gcp" className="infra-card infra-card-cloud-provider">
             <CardBadge isHidden />
             <CardBody>
               <img src={GCPLogo} alt="GCP" className="infra-logo-google-cloud" />
@@ -58,7 +58,7 @@ const InstructionsInfrastructure = () => (
           </Link>
         </GalleryItem>
         <GalleryItem>
-          <Link to="/install/openstack/installer-provisioned" className="infra-card infra-card-cloud-provider">
+          <Link to="/install/openstack" className="infra-card infra-card-cloud-provider">
             <CardBadge isHidden />
             <CardBody>
               <img src={OSPLogo} alt="OpenStack" className="infra-logo-osp" />

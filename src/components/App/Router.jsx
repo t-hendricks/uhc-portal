@@ -32,8 +32,14 @@ import InstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import InstallAWSIPI from '../clusters/install/InstallAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallAzure from '../clusters/install/InstallAzure';
+import InstallAzureIPI from '../clusters/install/InstallAzureIPI';
+import InstallAzureUPI from '../clusters/install/InstallAzureUPI';
 import InstallGCP from '../clusters/install/InstallGCP';
+import InstallGCPIPI from '../clusters/install/InstallGCPIPI';
+import InstallGCPUPI from '../clusters/install/InstallGCPUPI';
 import InstallOSP from '../clusters/install/InstallOSP';
+import InstallOSPIPI from '../clusters/install/InstallOSPIPI';
+import InstallOSPUPI from '../clusters/install/InstallOSPUPI';
 import InstallRHV from '../clusters/install/InstallRHV';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
@@ -58,10 +64,16 @@ function Router(props) {
           <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
           <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
           <Route path="/install/aws" component={InstallAWS} />
-          <Route path="/install/gcp/installer-provisioned" component={InstallGCP} />
-          <Route path="/install/openstack/installer-provisioned" component={InstallOSP} />
+          <Route path="/install/gcp/installer-provisioned" component={InstallGCPIPI} />
+          <Route path="/install/gcp/user-provisioned" component={InstallGCPUPI} />
+          <Route path="/install/gcp" component={InstallGCP} />
+          <Route path="/install/openstack/installer-provisioned" component={InstallOSPIPI} />
+          <Route path="/install/openstack/user-provisioned" component={InstallOSPUPI} />
+          <Route path="/install/openstack" component={InstallOSP} />
           <Route path="/install/rhv/installer-provisioned" component={InstallRHV} />
-          <Route path="/install/azure/installer-provisioned" component={InstallAzure} />
+          <Route path="/install/azure/installer-provisioned" component={InstallAzureIPI} />
+          <Route path="/install/azure/user-provisioned" component={InstallAzureUPI} />
+          <Route path="/install/azure" component={InstallAzure} />
           <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
           <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
           <Route path="/install/crc/installer-provisioned" component={InstallCRC} />
