@@ -16,24 +16,21 @@ limitations under the License.
 import { GET_CLUSTER_INSIGHTS, VOTE_ON_RULE_INSIGHTS } from './InsightsConstants';
 import { insightsService } from '../../../../../services';
 
-const fetchSingleClusterInsights = async (clusterId) => {
+const fetchSingleClusterInsights = async (clusterId, orgId) => {
   try {
-    const clusterResponse = await insightsService.getClusterInsights(clusterId);
-    return {
-      insights: clusterResponse.data,
-      clusterID: clusterId
-    };
+    const clusterResponse = await insightsService.getClusterInsights(clusterId, orgId);
+    return { insights: clusterResponse.data.report, clusterId };
   } catch (e) {
     const error = Error('Insights for cluster not found');
     error.status = e.response.status;
-    error.clusterID = clusterId;
+    error.clusterId = clusterId;
     throw error;
   }
 };
 
 export const fetchClusterInsights = clusterID => dispatch => dispatch({
   type: GET_CLUSTER_INSIGHTS,
-  payload: fetchSingleClusterInsights(clusterID),
+  payload: insights.chrome.auth.getUser().then( user => fetchSingleClusterInsights(clusterID, user.identity.internal.org_id) ),
 });
 
 // clusterId is id of the cluster

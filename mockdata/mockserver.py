@@ -16,7 +16,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     return path
 
   def do_GET(self):
-    if self.path == '/api/clusters_mgmt/v1/insights/1GRoczjlSc54Rk7So1R8Vx3fW9y':
+    if self.path == '/report/656485/8b00e902-f675-4903-9118-91a8f9f5110a':
         self.path = '/simplehttpwebpage_content.html'
         self.send_response(401, '')
         self.end_headers()

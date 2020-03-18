@@ -125,7 +125,10 @@ class ClusterDetails extends Component {
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
     }
 
-    if (clusterID !== oldClusterID && isValid(clusterID)) {
+    if (
+      (clusterID !== oldClusterID && isValid(clusterID)) ||
+      (get(prevProps.clusterDetails, 'cluster.external_id') !== get(clusterDetails, 'cluster.external_id'))
+    ) {
       this.refresh();
     }
   }
@@ -154,7 +157,7 @@ class ClusterDetails extends Component {
     const clusterID = match.params.id;
 
     if (isValid(clusterID)) {
-      this.fetchData(clusterID);
+      this.fetchData(clusterID, get(clusterDetails, 'cluster.external_id'));
       getOrganizationAndQuota();
 
       const externalClusterID = get(clusterDetails, 'cluster.external_id');
@@ -190,13 +193,15 @@ class ClusterDetails extends Component {
     }
   }
 
-  fetchData(clusterId) {
+  fetchData(id, external_id) {
     const {
       fetchDetails,
       fetchInsights,
     } = this.props;
-    fetchDetails(clusterId);
-    fetchInsights(clusterId);
+    fetchDetails(id);
+    if (external_id) {
+      fetchInsights(external_id);
+    }
   }
 
   // Determine if the org has quota for existing add-ons
@@ -284,15 +289,15 @@ class ClusterDetails extends Component {
 
     const onDialogClose = () => {
       invalidateClusters();
-      this.fetchData(cluster.id);
+      this.fetchData(cluster.id, cluster.external_id);
     };
 
     const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
     const displayInsightsTab = !isArchived
-      && insights[match.params.id]
-      && insights[match.params.id].status !== 401;
+      && insights[get(cluster, 'external_id')]
+      && insights[get(cluster, 'external_id')].status !== 401;
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
@@ -394,9 +399,9 @@ class ClusterDetails extends Component {
           >
             <Insights
               cluster={cluster}
-              insights={insights[match.params.id]}
+              insights={insights[cluster.external_id]}
               voteOnRule={(ruleId, vote) => {
-                voteOnRule(cluster.id, ruleId, vote);
+                voteOnRule(cluster.external_id, ruleId, vote);
               }}
             />
           </TabContent>

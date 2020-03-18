@@ -1,26 +1,25 @@
 import apiRequest from './apiRequest';
-
-const apiPrefix = '/api/clusters_mgmt/v1/insights';
-
-const getClusterInsights = clusterID => apiRequest({
-  method: 'get',
-  url: `${apiPrefix}/${clusterID}`,
-});
+import config from '../config';
 
 const putLikeOnRuleInsights = (clusterID, ruleID) => apiRequest({
   method: 'put',
-  url: `${apiPrefix}/clusters/${clusterID}/rules/${ruleID}/like`,
-});
+  url: `/clusters/${clusterID}/rules/${ruleID}/like`,
+}, config.configData.insightsGateway);
 
 const putDislikeOnRuleInsights = (clusterID, ruleID) => apiRequest({
   method: 'put',
-  url: `${apiPrefix}/clusters/${clusterID}/rules/${ruleID}/dislike`,
-});
+  url: `/clusters/${clusterID}/rules/${ruleID}/dislike`,
+}, config.configData.insightsGateway);
 
 const resetVoteOnRuleInsights = (clusterID, ruleID) => apiRequest({
   method: 'put',
-  url: `${apiPrefix}/clusters/${clusterID}/rules/${ruleID}/reset_vote`,
-});
+  url: `/clusters/${clusterID}/rules/${ruleID}/reset_vote`,
+}, config.configData.insightsGateway);
+
+const getClusterInsights = (clusterId, orgId) => apiRequest({
+  method: 'get',
+  url: `/report/${orgId}/${clusterId}`,
+}, config.configData.insightsGateway);
 
 
 const insigthsService = {

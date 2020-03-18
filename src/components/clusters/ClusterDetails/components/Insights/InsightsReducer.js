@@ -32,10 +32,10 @@ function insightsReducer(state = initialState, action) {
     switch (action.type) {
       // GET_CLUSTER_INSIGHTS
       case FULFILLED_ACTION(GET_CLUSTER_INSIGHTS):
-        draft.insights[action.payload.clusterID] = action.payload.insights;
+        draft.insights[action.payload.clusterId] = action.payload.insights;
         break;
       case REJECTED_ACTION(GET_CLUSTER_INSIGHTS):
-        draft.insights[action.payload.clusterID] = { status: action.payload.status };
+        draft.insights[action.payload.clusterId] = { status: action.payload.status };
         break;
     }
   });

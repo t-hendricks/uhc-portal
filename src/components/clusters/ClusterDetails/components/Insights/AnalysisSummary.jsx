@@ -9,6 +9,7 @@ import {
   StackItem, Text,
   Title
 } from '@patternfly/react-core';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import { severity } from '@redhat-cloud-services/rule-components';
@@ -54,7 +55,7 @@ const AnalysisSummary = ({ insights, batteryClicked }) => {
                   </Title>
                 </StackItem>
                 <StackItem>
-                  <Text>Last checked: 4 minutes ago</Text>
+                  <Text>Last checked: <DateFormat date={new Date(insights.meta.last_checked_at)} /></Text>
                 </StackItem>
                 <StackItem>
                   <RemoteHealthPopover />
