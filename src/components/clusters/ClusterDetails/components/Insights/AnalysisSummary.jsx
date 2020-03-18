@@ -50,7 +50,7 @@ const AnalysisSummary = ({ insights, batteryClicked }) => {
               <Stack>
                 <StackItem>
                   <Title headingLevel="h2" size="xl">
-                    {`Remote health detected ${insights.meta.count} issues`}
+                    {`Remote health detected ${insights.meta.count} issue${insights.meta.count > 1 ? 's' : ''}`}
                   </Title>
                 </StackItem>
                 <StackItem>

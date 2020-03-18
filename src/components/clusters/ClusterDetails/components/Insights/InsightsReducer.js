@@ -43,6 +43,4 @@ function insightsReducer(state = initialState, action) {
 
 insightsReducer.initialState = initialState;
 
-export { initialState, insightsReducer };
-
 export default insightsReducer;

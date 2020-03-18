@@ -6,7 +6,7 @@
     {
       "rule_id": "ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report",
       "description": "Some rule description",
-      "details": "When fs.pipe-user-pages-soft is enabled, updating stonith fails in metadata query.\\n[Knowledgebase article](https://g.co)",
+      "details": "When fs.pipe-user-pages-soft is enabled, updating stonith fails in metadata query.\n[Knowledgebase article](https://g.co)",
       "created_at": 1583245000000,
       "total_risk": 3,
       "risk_of_change": 1
