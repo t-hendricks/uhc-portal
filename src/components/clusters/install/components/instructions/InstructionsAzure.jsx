@@ -1,47 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Card, Title } from '@patternfly/react-core';
-import links from '../../../../../common/installLinks';
-import GetStarted from './components/GetStarted';
-import TelemetryAlert from './components/TelemetryAlert';
-import TokenErrorAlert from './components/TokenErrorAlert';
-import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
-import EvaluationAlert from './components/EvaluationAlert';
+import { Link } from 'react-router-dom';
+import { Card, CardBody, Title } from '@patternfly/react-core';
+import { UserIcon, SyncAltIcon } from '@patternfly/react-icons';
+// eslint-disable-next-line camelcase
+import { global_primary_color_100 } from '@patternfly/react-tokens';
+import CardBadge from '../CardBadge';
 
-function InstructionsAzure({ token }) {
-  return (
-    <>
+
+const InstructionsAzure = () => (
+  <Card>
+    <div className="pf-c-content ocm-page">
       <Title headingLevel="h3" size="2xl">
-        Install on Azure with installer-provisioned infrastructure
+        Azure: Select an installation type
       </Title>
-      <Card>
-        <div className="pf-l-grid pf-m-gutter ocm-page">
-          {token.error && <TokenErrorAlert token={token} />}
-          <EvaluationAlert />
-          <div className="pf-c-content">
-            <p>
-              With OpenShift Container Platform
-              you can install a cluster on Microsoft Azure using infrastructure that the
-              installation program provisions and the cluster maintains.
-            </p>
-
-            <GetStarted docURL={links.INSTALL_AZURE_GETTING_STARTED} />
-
-          </div>
-          <TelemetryAlert />
-        </div>
-      </Card>
-      <DownloadsAndPullSecretSection
-        token={token}
-        installerURL={links.INSTALL_AZURE_INSTALLER_LATEST}
-        cliURL={links.INSTALL_AZURE_CLI_LATEST}
-      />
-    </>
-  );
-}
-
-InstructionsAzure.propTypes = {
-  token: PropTypes.object.isRequired,
-};
+      <div className="flex-container">
+        <Link to="/install/azure/installer-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
+          <CardBadge isRecommened />
+          <CardBody>
+            <SyncAltIcon color={global_primary_color_100.value} size="xl" alt="Installer-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
+            <Title headingLevel="h3" size="lg">Installer-provisioned infrastructure</Title>
+            {' '}
+            Deploy an OpenShift cluster on infrastructure that the installation program
+            provisions and the cluster maintains.
+          </CardBody>
+        </Link>
+        <Link to="/install/azure/user-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
+          <CardBadge isDevPreview />
+          <CardBody>
+            <UserIcon color={global_primary_color_100.value} size="xl" alt="User-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
+            <Title headingLevel="h3" size="lg">User-provisioned infrastructure</Title>
+            Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
+          </CardBody>
+        </Link>
+      </div>
+    </div>
+  </Card>
+);
 
 export default InstructionsAzure;

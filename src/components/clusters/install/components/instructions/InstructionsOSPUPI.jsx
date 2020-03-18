@@ -7,13 +7,14 @@ import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
+import EvaluationAlert from './components/EvaluationAlert';
 import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
 
-function InstructionsRHV({ token }) {
+function InstructionsOSPUPI({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on Red Hat Virtualization with installer-provisioned infrastructure
+        Install on Red Hat OpenStack Platform with user-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
@@ -23,31 +24,33 @@ function InstructionsRHV({ token }) {
             Developer Preview
           </div>
           {token.error && <TokenErrorAlert token={token} />}
+          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
               With OpenShift Container Platform
-              you can install a cluster on Red Hat Virtualization using infrastructure that
-              the installation program provisions and the cluster maintains.
+              you can install a cluster on Red Hat OpenStack Platform using infrastructure that
+              you provide.
             </p>
             <DeveloperPreviewStatements />
 
-            <GetStarted docURL={links.INSTALL_RHV_GETTING_STARTED} />
+            <GetStarted docURL={links.INSTALL_OSPUPI_GETTING_STARTED} />
           </div>
           <TelemetryAlert />
         </div>
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_RHV_INSTALLER_LATEST}
-        cliURL={links.INSTALL_RHV_CLI_LATEST}
-        showPreReleasePageLink={false}
+        installerURL={links.INSTALL_OSPUPI_INSTALLER_LATEST}
+        cliURL={links.INSTALL_OSPUPI_CLI_LATEST}
+        rhcosLearnMoreURL={links.INSTALL_OSPUPI_RHCOS_LEARN_MORE}
+        rhcosDownloadURL={links.INSTALL_OSPUPI_DOWNLOAD_RHCOS_LATEST}
       />
     </>
   );
 }
 
-InstructionsRHV.propTypes = {
+InstructionsOSPUPI.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default InstructionsRHV;
+export default InstructionsOSPUPI;
