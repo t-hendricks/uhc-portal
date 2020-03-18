@@ -26,9 +26,8 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
   >
     <SplitItem>
       <Title
-        className="vertical-align"
+        className="cl-details-page-title"
         headingLevel="h1"
-        size="4xl"
       >
         test-liza
       </Title>

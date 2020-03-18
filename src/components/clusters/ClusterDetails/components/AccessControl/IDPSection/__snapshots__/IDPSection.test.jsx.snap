@@ -27,7 +27,7 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
 <Card>
   <CardBody>
     <Title
-      headingLevel="h3"
+      className="card-title"
       size="lg"
     >
       Identity Providers
@@ -58,7 +58,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
 <Card>
   <CardBody>
     <Title
-      headingLevel="h3"
+      className="card-title"
       size="lg"
     >
       Identity Providers

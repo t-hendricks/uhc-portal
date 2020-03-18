@@ -7,13 +7,13 @@ import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsRHV from './components/instructions/InstructionsRHV';
+import InstructionsOSPUPI from './components/instructions/InstructionsOSPUPI';
 import { scrollToTop } from '../../../common/helpers';
 
-class InstallRHV extends Component {
+class InstallOSPUPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Red Hat Virtualization';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | OpenStack User-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -26,7 +26,8 @@ class InstallRHV extends Component {
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
         { label: 'OpenShift Container Platform', path: '/install' },
-        { label: 'Red Hat Virtualization' },
+        { label: 'Red Hat OpenStack Platform', path: '/install/openstack' },
+        { label: 'User-provisioned infrastructure' },
       ]}
       />
     );
@@ -35,18 +36,18 @@ class InstallRHV extends Component {
       <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection className="ocp-instructions">
-          <InstructionsRHV token={token} />
+          <InstructionsOSPUPI token={token} />
         </PageSection>
       </>
     );
   }
 }
 
-InstallRHV.propTypes = {
+InstallOSPUPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallRHV);
+export default connect(mapStateToProps)(InstallOSPUPI);

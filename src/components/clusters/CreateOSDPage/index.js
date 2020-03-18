@@ -19,8 +19,8 @@ const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
 
 const mapStateToProps = (state) => {
   const { organization } = state.userProfile;
-  const byocQuota = get(organization, 'quotaList.clusterQuota.byoc', {});
-  const rhInfraQuota = get(organization, 'quotaList.clusterQuota.rhInfra', {});
+  const byocQuota = get(organization, 'quotaList.clustersQuota.aws.byoc', {});
+  const rhInfraQuota = get(organization, 'quotaList.clustersQuota.aws.rhInfra', {});
 
   return ({
     createClusterResponse: state.clusters.createdCluster,

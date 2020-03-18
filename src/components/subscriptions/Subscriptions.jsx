@@ -56,7 +56,7 @@ class Subscriptions extends Component {
       content = (
         <>
           <PageHeader>
-            <PageHeaderTitle title="Subscriptions" />
+            <PageHeaderTitle title="Subscriptions" className="page-title" />
           </PageHeader>
           <PageSection id="subscriptions-content">
             <OCPSubscriptionCard organizationID={organizationID} />

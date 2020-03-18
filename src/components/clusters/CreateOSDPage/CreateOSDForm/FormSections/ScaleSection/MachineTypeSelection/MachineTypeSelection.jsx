@@ -51,7 +51,7 @@ class MachineTypeSelection extends React.Component {
   componentDidUpdate() {
     const { machineTypes } = this.props;
     const { currentValue } = this.state;
-    if (machineTypes.error || machineTypes.pending || !this.hasQuota(currentValue)) {
+    if (machineTypes.error || machineTypes.pending || !this.hasQuotaForType(currentValue)) {
       // Don't let the user submit if we couldn't get machine types.
       this.setInvalidValue();
     }
@@ -63,7 +63,7 @@ class MachineTypeSelection extends React.Component {
 
     // if some external param changed, like MultiAz, and we no longer have quota
     // for the selected instance type, we need to unselect it, and mark ourselves as invalid.
-    if (currentValue && !this.hasQuota(currentValue)) {
+    if (currentValue && !this.hasQuotaForType(currentValue)) {
       // this setState is guarded so the linter error can be ignored.
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ currentValue: '' });
@@ -74,7 +74,7 @@ class MachineTypeSelection extends React.Component {
     // Find the first sortedMachineTypes we have quota for, and set it as default
     const { sortedMachineTypes, input } = this.props;
     if (sortedMachineTypes.length > 0) {
-      const defaultType = sortedMachineTypes.find(type => this.hasQuota(type.id));
+      const defaultType = sortedMachineTypes.find(type => this.hasQuotaForType(type.id));
       if (defaultType) {
         this.setState({ currentValue: defaultType.id });
         input.onChange(defaultType.id);
@@ -89,7 +89,7 @@ class MachineTypeSelection extends React.Component {
     input.onChange('');
   }
 
-  hasQuota(machineType) {
+  hasQuotaForType(machineType) {
     const {
       isMultiAz, organization, quota, isBYOC,
     } = this.props;
@@ -97,7 +97,7 @@ class MachineTypeSelection extends React.Component {
       return false;
     }
     const infra = isBYOC ? 'byoc' : 'rhInfra';
-    const available = quota.clusterQuota[infra][isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
+    const available = quota.clustersQuota.aws[infra][isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
     return available > 0;
   }
 
@@ -129,7 +129,7 @@ class MachineTypeSelection extends React.Component {
         machineType.memory.unit);
       const labelTitle = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
 
-      const hasQuota = this.hasQuota(machineType.id);
+      const hasQuota = this.hasQuotaForType(machineType.id);
       return (
         <FlatRadioButton
           {...extraProps}

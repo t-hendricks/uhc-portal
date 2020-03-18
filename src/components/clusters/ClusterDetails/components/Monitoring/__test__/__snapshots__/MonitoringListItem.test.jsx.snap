@@ -17,8 +17,8 @@ exports[`<MonitoringListItem /> should render 1`] = `
         Array [
           <DataListCell>
             <Title
+              className="monitoring-item-title"
               headingLevel="h4"
-              size="2xl"
             >
               
             </Title>

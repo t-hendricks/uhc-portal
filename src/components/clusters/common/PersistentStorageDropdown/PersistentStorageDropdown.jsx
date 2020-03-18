@@ -11,7 +11,6 @@ import {
 } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-import get from 'lodash/get';
 import ErrorBox from '../../../common/ErrorBox';
 import { humanizeValueWithUnitGiB } from '../../../../common/units';
 import filterPersistentStorageValuesByQuota from './helpers';
@@ -53,9 +52,8 @@ class PersistentStorageDropdown extends React.Component {
     };
 
     if (persistentStorageValues.fulfilled) {
-      const remainingQuota = get(quota, 'persistentStorageQuota', 0);
       const filteredStorageValues = filterPersistentStorageValuesByQuota(currentValue,
-        persistentStorageValues, remainingQuota);
+        persistentStorageValues, quota);
       const notEnoughQuota = filteredStorageValues.values.length <= 1;
       const isDisabled = disabled || notEnoughQuota;
       const formSelect = (
@@ -100,7 +98,7 @@ PersistentStorageDropdown.propTypes = {
   persistentStorageValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
-  quota: PropTypes.object.isRequired,
+  quota: PropTypes.number.isRequired,
   currentValue: PropTypes.number,
 };
 

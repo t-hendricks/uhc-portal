@@ -193,13 +193,15 @@ describe('<MachineTypeSelection />', () => {
       ];
 
       const quota = {
-        clusterQuota: {
-          rhInfra: {
-            multiAz: {
-              'r5.xlarge': 5,
-            },
-            singleAz: {
-              'r5.xlarge': 0,
+        clustersQuota: {
+          aws: {
+            rhInfra: {
+              multiAz: {
+                'r5.xlarge': 5,
+              },
+              singleAz: {
+                'r5.xlarge': 0,
+              },
             },
           },
         },

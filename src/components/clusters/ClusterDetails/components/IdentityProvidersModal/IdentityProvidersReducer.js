@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION,
-  setStateProp, baseRequestState,
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../common/errors';
 import { identityProvidersConstants } from './IdentityProvidersConstants';
@@ -35,145 +35,78 @@ const initialState = {
 };
 
 function IdentityProvidersReducer(state = initialState, action) {
-  switch (action.type) {
-    case identityProvidersConstants.RESET_IDENTITY_PROVIDERS_STATE:
-      return initialState;
-    // GET_CLUSTER_IDENTITY_PROVIDERS
-    case REJECTED_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
-      return setStateProp(
-        'clusterIdentityProviders',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
-      return setStateProp(
-        'clusterIdentityProviders',
-        {
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
-      return setStateProp(
-        'clusterIdentityProviders',
-        {
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    // eslint-disable-next-line default-case
+    switch (action.type) {
+      case identityProvidersConstants.RESET_IDENTITY_PROVIDERS_STATE:
+        return initialState;
+      // GET_CLUSTER_IDENTITY_PROVIDERS
+      case REJECTED_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
+        draft.clusterIdentityProviders = {
+          ...initialState.clusterIdentityProviders,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
+        draft.clusterIdentityProviders.pending = true;
+        break;
+      case FULFILLED_ACTION(identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS):
+        draft.clusterIdentityProviders = {
+          ...initialState.clusterIdentityProviders,
           clusterIDPList: action.payload.data.items || [],
-          pending: false,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
+        break;
 
-    // CREATE_CLUSTER_IDENTITY_PROVIDER
-    case REJECTED_ACTION(identityProvidersConstants.CREATE_CLUSTER_IDENTITY_PROVIDER):
-      return setStateProp(
-        'createdClusterIDP',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(identityProvidersConstants.CREATE_CLUSTER_IDENTITY_PROVIDER):
-      return setStateProp(
-        'createdClusterIDP',
-        {
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(identityProvidersConstants.CREATE_CLUSTER_IDENTITY_PROVIDER):
-      return setStateProp(
-        'createdClusterIDP',
-        {
+      // CREATE_CLUSTER_IDENTITY_PROVIDER
+      case REJECTED_ACTION(identityProvidersConstants.CREATE_CLUSTER_IDENTITY_PROVIDER):
+        draft.createdClusterIDP = {
+          ...initialState.createdClusterIDP,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(identityProvidersConstants.CREATE_CLUSTER_IDENTITY_PROVIDER):
+        draft.createdClusterIDP.pending = true;
+        break;
+      case FULFILLED_ACTION(identityProvidersConstants.CREATE_CLUSTER_IDENTITY_PROVIDER):
+        draft.createdClusterIDP = {
+          ...initialState.createdClusterIDP,
+          fulfilled: true,
           clusterIdentityProviders: action.payload.data,
-          pending: false,
+        };
+        break;
+      // RESET_CREATED_CLUSTER_IDP_RESPONSE
+      case identityProvidersConstants.RESET_CREATED_CLUSTER_IDP_RESPONSE:
+        draft.createdClusterIDP = {
+          ...initialState.createdClusterIDP,
+        };
+        break;
+
+        // DELETE_IDP
+      case PENDING_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
+        draft.deletedIDP.pending = true;
+        break;
+      case REJECTED_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
+        draft.deletedIDP = {
+          ...initialState.deletedIDP,
+          ...getErrorState(action),
+        };
+        break;
+      case FULFILLED_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
+        draft.deletedIDP = {
+          ...initialState.deletedIDP,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    // RESET_CREATED_CLUSTER_IDP_RESPONSE
-    case identityProvidersConstants.RESET_CREATED_CLUSTER_IDP_RESPONSE:
-      return setStateProp(
-        'createdClusterIDP',
-        initialState.createdClusterIDP,
-        {
-          state,
-          initialState,
-        },
-      );
-
-
-    // DELETE_IDP
-    case PENDING_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
-      return setStateProp(
-        'deletedIDP',
-        {
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case REJECTED_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
-      return setStateProp(
-        'deletedIDP',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-
-    case FULFILLED_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
-      return setStateProp(
-        'deletedIDP',
-        {
-          pending: false,
-          fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case identityProvidersConstants.RESET_DELETED_IDP_RESPONSE:
-      return setStateProp(
-        'deletedIDP',
-        initialState.deletedIDP,
-        {
-          state,
-          initialState,
-        },
-      );
-
-    default:
-      return state;
-  }
+        };
+        break;
+      // RESET_DELETED_CLUSTER_IDP_RESPONSE
+      case identityProvidersConstants.RESET_DELETED_IDP_RESPONSE:
+        draft.deletedIDP = {
+          ...initialState.deletedIDP,
+        };
+        break;
+    }
+  });
 }
 
 IdentityProvidersReducer.initialState = initialState;

@@ -7,8 +7,8 @@ exports[`<Overview /> should render 1`] = `
   >
     <CardHeader>
       <Title
+        className="card-title"
         headingLevel="h2"
-        size="3xl"
       >
         Resource Usage
       </Title>
@@ -163,8 +163,8 @@ exports[`<Overview /> should render 1`] = `
   <Card>
     <CardHeader>
       <Title
+        className="card-title"
         headingLevel="h2"
-        size="3xl"
       >
         Details
       </Title>
