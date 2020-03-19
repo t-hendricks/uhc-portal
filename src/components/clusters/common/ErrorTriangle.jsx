@@ -6,12 +6,17 @@ import { global_warning_color_100 } from '@patternfly/react-tokens';
 import { Tooltip } from '@patternfly/react-core';
 
 
-const ErrorTriangle = ({ errorMessage }) => (
-  <Tooltip content={`An error occured when fetching clusters: ${errorMessage}`}>
-    <ExclamationTriangleIcon size="lg" className="cluster-error-triangle" color={global_warning_color_100.value} />
+const ErrorTriangle = ({ item = 'clusters', errorMessage }) => (
+  <Tooltip content={`An error occurred when fetching ${item}: ${errorMessage}`}>
+    <ExclamationTriangleIcon
+      size="lg"
+      className="cluster-error-triangle"
+      color={global_warning_color_100.value}
+    />
   </Tooltip>
 );
 ErrorTriangle.propTypes = {
+  item: PropTypes.string,
   errorMessage: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,

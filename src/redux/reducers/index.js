@@ -3,6 +3,7 @@ import { reducer as formReducer } from 'redux-form';
 import { notifications } from '@redhat-cloud-services/frontend-components-notifications';
 
 import { clustersReducer } from './clustersReducer';
+import { clusterLogReducer } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogReducer';
 import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
 import { viewOptionsReducer } from './viewOptionsReducer';
 import userReducer from './userReducer';
@@ -41,6 +42,7 @@ const reducers = {
   subscriptions: subscriptionsReducer,
   persistentStorageValues: persistentStorageReducer,
   loadBalancerValues: loadBalancersReducer,
+  clusterLogs: clusterLogReducer,
   notifications,
   networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,

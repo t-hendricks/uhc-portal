@@ -45,6 +45,10 @@ const onListFlagsSet = (key, value, viewType) => dispatch => dispatch({
   type: viewPaginationConstants.VIEW_SET_LIST_FLAGS,
 });
 
+const onClearFiltersAndFlags = viewType => dispatch => dispatch({
+  viewType,
+  type: viewPaginationConstants.VIEW_CLEAR_FILTERS_AND_FLAGS,
+});
 
 const onListSortBy = (sorting, viewType) => dispatch => dispatch({
   sorting,
@@ -62,9 +66,10 @@ const viewActions = {
   onListFilterSet,
   onListFlagsSet,
   onListSortBy,
+  onClearFiltersAndFlags,
 };
 
 export {
   viewActions, onFirstPage, onLastPage, onPreviousPage, onNextPage, onPageInput, onPerPageSelect,
-  onListFilterSet, onListFlagsSet, onListSortBy,
+  onListFilterSet, onListFlagsSet, onListSortBy, onClearFiltersAndFlags,
 };

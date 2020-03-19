@@ -15,6 +15,8 @@ import { modalActions } from '../../common/Modal/ModalActions';
 import { getAlerts, getNodes, getClusterOperators } from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
+import { getClusterHistory } from './components/ClusterLogs/clusterLogActions';
+import { viewConstants } from '../../../redux/constants';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
@@ -32,6 +34,7 @@ const mapStateToProps = (state) => {
     clusterAddOns,
     clusterIdentityProviders,
     organization,
+    clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
   });
 };
 
@@ -54,6 +57,9 @@ const mapDispatchToProps = {
   getAddOns,
   getClusterAddOns,
   getGrants,
+  getClusterHistory: (
+    externalClusterID, queryObj,
+  ) => getClusterHistory(externalClusterID, queryObj),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

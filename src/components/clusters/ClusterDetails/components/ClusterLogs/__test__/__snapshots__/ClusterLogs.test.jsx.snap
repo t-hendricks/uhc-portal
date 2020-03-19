@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterLogs /> should render 1`] = `
+<Fragment>
+  <Connect(ClusterLogsToolbar)
+    externalClusterID="9f50940b-fba8-4c59-9c6c-d64284b2026d"
+    history={
+      Object {
+        "push": [MockFunction],
+      }
+    }
+    isPendingNoData={false}
+    view="CLUSTER_LOGS_VIEW"
+  />
+  <LogTable
+    setSorting={[MockFunction]}
+  />
+  <Connect(ViewPaginationRow)
+    isDisabled={false}
+    variant="bottom"
+    viewType="CLUSTER_LOGS_VIEW"
+  />
+</Fragment>
+`;

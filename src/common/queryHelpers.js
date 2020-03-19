@@ -76,7 +76,54 @@ const createViewQueryObject = (viewOptions, queryObj) => {
   return queryObject;
 };
 
-const buildUrlParams = params => Object.keys(params).map(key => `${key}=${encodeURIComponent(params[key])}`).join('&');
+const createServiceLogQueryObject = (viewOptions, externalClusterID, queryObj) => {
+  const queryObject = {
+    ...queryObj,
+  };
+
+  if (viewOptions) {
+    queryObject.page = viewOptions.currentPage;
+    queryObject.page_size = viewOptions.pageSize;
+
+    if (viewOptions.sorting.sortField !== null) {
+      const direction = viewOptions.sorting.isAscending ? 'asc' : 'desc';
+      queryObject.order = `${viewOptions.sorting.sortField} ${direction}`;
+    }
+
+    const clauses = []; // will be joined with AND
+
+    // base filter: search by cluster_uuid
+    clauses.push(`cluster_uuid = '${externalClusterID}'`);
+
+    // If we got a search string from the user, format it as an ILIKE query.
+    if (viewOptions.filter) {
+      const { description } = viewOptions.filter;
+      if (description !== '') {
+        const likePattern = `%${description}%`;
+        clauses.push(`(description ILIKE ${sqlString(likePattern)} OR summary ILIKE ${sqlString(likePattern)})`);
+      }
+    }
+
+    if (viewOptions.flags) {
+      const { severityTypes = [] } = viewOptions.flags.conditionalFilterFlags;
+      if (severityTypes.length > 0) {
+        const quotedItems = severityTypes.map(sqlString);
+        clauses.push(`severity IN (${quotedItems.join(',')})`);
+      }
+    }
+
+    queryObject.filter = clauses.map(c => `(${c})`)
+      .join(' AND ')
+      .trim();
+  }
+
+  return queryObject;
+};
+
+
+const buildUrlParams = params => Object.keys(params)
+  .map(key => `${key}=${encodeURIComponent(params[key])}`)
+  .join('&');
 
 /**
  * Create URL params for the cluster list filter.
@@ -92,10 +139,23 @@ const buildFilterURLParams = params => Object.keys(params).map(
   key => (!isEmpty(params[key]) && `${key}=${params[key].join(',')}`),
 ).filter(Boolean).join('&');
 
+const getQueryParam = (param) => {
+  let ret;
+  window.location.search.substring(1).split('&').forEach((queryString) => {
+    const [key, val] = queryString.split('=');
+    if (key === param) {
+      ret = val;
+    }
+  });
+  return ret;
+};
+
 export {
   buildFilterURLParams,
   buildUrlParams,
   createViewQueryObject,
+  createServiceLogQueryObject,
   viewPropsChanged,
   sqlString,
+  getQueryParam,
 };

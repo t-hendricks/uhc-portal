@@ -527,6 +527,11 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           },
         }
       }
+      history={
+        Object {
+          "push": [MockFunction],
+        }
+      }
     />
   </ForwardRef>
   <ForwardRef

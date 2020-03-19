@@ -1,11 +1,8 @@
-import { FULFILLED_ACTION } from '../reduxHelpers';
-import {
-  clustersConstants,
-  viewConstants,
-  viewPaginationConstants,
-} from '../constants';
+import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
+import { clustersConstants, viewConstants, viewPaginationConstants } from '../constants';
+import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
 
-const INITAL_VIEW_STATE = {
+const INITIAL_VIEW_STATE = {
   currentPage: 1,
   pageSize: 50,
   totalCount: 0,
@@ -20,11 +17,30 @@ const INITAL_VIEW_STATE = {
   },
 };
 
-const initialState = {
+const INITIAL_OSL_VIEW_STATE = {
+  currentPage: 1,
+  pageSize: 20,
+  totalCount: 0,
+  totalPages: 0,
+  filter: {
+    description: '',
+  },
+  sorting: {
+    sortField: 'timestamp',
+    isAscending: false,
+  },
+  flags: {
+    conditionalFilterFlags: {
+      severityTypes: [],
+    },
+  },
 };
 
-initialState[viewConstants.CLUSTERS_VIEW] = Object.assign(INITAL_VIEW_STATE);
-initialState[viewConstants.ARCHIVED_CLUSTERS_VIEW] = Object.assign(INITAL_VIEW_STATE);
+const initialState = {};
+
+initialState[viewConstants.CLUSTERS_VIEW] = Object.assign(INITIAL_VIEW_STATE);
+initialState[viewConstants.ARCHIVED_CLUSTERS_VIEW] = Object.assign(INITIAL_VIEW_STATE);
+initialState[viewConstants.CLUSTER_LOGS_VIEW] = Object.assign(INITIAL_OSL_VIEW_STATE);
 
 const viewOptionsReducer = (state = initialState, action) => {
   const updateState = {};
@@ -96,6 +112,14 @@ const viewOptionsReducer = (state = initialState, action) => {
       updatePageCounts(viewConstants.ARCHIVED_CLUSTERS_VIEW, action.payload.data.total);
       return { ...state, ...updateState };
 
+    case FULFILLED_ACTION(GET_CLUSTER_LOGS):
+      updatePageCounts(viewConstants.CLUSTER_LOGS_VIEW, action.payload.logs.data.total);
+      return { ...state, ...updateState };
+
+    case REJECTED_ACTION(GET_CLUSTER_LOGS):
+      updatePageCounts(viewConstants.CLUSTER_LOGS_VIEW, 0);
+      return { ...state, ...updateState };
+
     case viewPaginationConstants.VIEW_SET_LIST_FILTER:
       updateState[action.viewType] = {
         ...state[action.viewType],
@@ -115,6 +139,14 @@ const viewOptionsReducer = (state = initialState, action) => {
           ...state[action.viewType].flags,
           [action.key]: action.value,
         },
+      };
+      return { ...state, ...updateState };
+
+    case viewPaginationConstants.VIEW_CLEAR_FILTERS_AND_FLAGS:
+      updateState[action.viewType] = {
+        ...state[action.viewType],
+        flags: INITIAL_OSL_VIEW_STATE.flags,
+        filter: INITIAL_OSL_VIEW_STATE.filter,
       };
       return { ...state, ...updateState };
 
