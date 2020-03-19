@@ -8,7 +8,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     super().__init__(*args, directory=directory, **kwargs)
 
   def translate_path(self, path):
-    return super().translate_path(path) + '.json'
+    path = super().translate_path(path) + '.json'
+    print('Accessing ' + path)
+    return path
 
   def end_headers(self):
     """ override end_headers to append headers to every request """
