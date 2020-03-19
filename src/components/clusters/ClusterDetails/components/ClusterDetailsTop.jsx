@@ -112,7 +112,7 @@ function ClusterDetailsTop(props) {
       </Split>
       <Split id="cl-details-top-row">
         <SplitItem>
-          <Title headingLevel="h1" className="cl-details-page-title">{clusterName}</Title>
+          <Title size="lg" headingLevel="h1" className="cl-details-page-title">{clusterName}</Title>
         </SplitItem>
         <SplitItem>
           { isRefreshing && <Spinner className="cluster-details-spinner" /> }

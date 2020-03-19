@@ -28,6 +28,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
       <Title
         className="cl-details-page-title"
         headingLevel="h1"
+        size="lg"
       >
         test-liza
       </Title>

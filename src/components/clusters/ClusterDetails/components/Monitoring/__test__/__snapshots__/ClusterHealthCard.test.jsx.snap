@@ -20,6 +20,7 @@ exports[`<ClusterHealthCard /> should render 1`] = `
         <Title
           className="card-title"
           headingLevel="h2"
+          size="lg"
         >
           Cluster has no metrics
         </Title>

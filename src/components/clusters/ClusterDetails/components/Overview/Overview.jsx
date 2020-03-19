@@ -18,7 +18,7 @@ function Overview({ cluster, cloudProviders }) {
     <>
       <Card id="metrics-charts">
         <CardHeader>
-          <Title headingLevel="h2" className="card-title">Resource Usage</Title>
+          <Title headingLevel="h2" size="md" className="card-title">Resource Usage</Title>
         </CardHeader>
         <CardBody>
           <ResourceUsage cluster={{ ...cluster, state: clusterState }} />
@@ -26,7 +26,7 @@ function Overview({ cluster, cloudProviders }) {
       </Card>
       <Card>
         <CardHeader>
-          <Title headingLevel="h2" className="card-title">Details</Title>
+          <Title headingLevel="h2" size="md" className="card-title">Details</Title>
         </CardHeader>
         <CardBody>
           <Grid>
