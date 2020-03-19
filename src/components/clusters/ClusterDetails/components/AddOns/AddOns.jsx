@@ -117,7 +117,7 @@ class AddOns extends React.Component {
         { availableAddOnsList.map(addOn => (
           <Card key={addOn.id}>
             <CardHead>
-              <Title headingLevel="h2" className="card-title">{addOn.name}</Title>
+              <Title headingLevel="h2" size="lg" className="card-title">{addOn.name}</Title>
               <CardActions>
                 { (isInstalled(addOn, clusterAddOns)
                    && getInstallState(addOn, clusterAddOns, cluster)) || (

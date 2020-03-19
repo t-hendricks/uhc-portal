@@ -75,7 +75,7 @@ class Monitoring extends React.Component {
         />
         <Card id="monitoring">
           <CardHeader>
-            <Title headingLevel="h2" className="card-title">Status</Title>
+            <Title headingLevel="h2" className="card-title" size="md">Status</Title>
           </CardHeader>
           <CardBody>
             <MonitoringList
