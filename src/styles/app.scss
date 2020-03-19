@@ -1125,3 +1125,28 @@ button:focus {
   margin-top: var(--pf-global--spacer--xs);
   margin-bottom: var(--pf-global--spacer--md);
 }
+
+.cluster-log {
+  .markdown {
+    a[target="_blank"]::after {
+      font-family: "Font Awesome 5 Free", serif;
+      font-weight: 900;
+      content: ' \f35d'
+    }
+  }
+}
+
+#cluster-logs-toolbar {
+  .ins-c-conditional-filter__value-selector {
+    padding-left: 0.4rem;
+  }
+  .pf-l-split__item.pf-m-fill {
+    display: inline-flex;
+    .ins-c-search-icon {
+      height: var(--pf-c-form-control--Height);
+      position: relative;
+      left: -2.3125rem;
+      top: -0.125rem;
+    }
+  }
+}

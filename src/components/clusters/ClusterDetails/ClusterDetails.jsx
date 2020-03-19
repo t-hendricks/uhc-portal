@@ -146,24 +146,32 @@ class ClusterDetails extends Component {
       getClusterAddOns,
       getOrganizationAndQuota,
       getGrants,
+      clusterLogsViewOptions,
+      getClusterHistory,
     } = this.props;
     const clusterID = match.params.id;
 
     if (isValid(clusterID)) {
       fetchDetails(clusterID);
       getOrganizationAndQuota();
-    }
-    if (isValid(clusterID) && !isUuid(clusterID)) {
-      getUsers(clusterID, 'dedicated-admins');
-      getAlerts(clusterID);
-      getNodes(clusterID);
-      getClusterOperators(clusterID);
-      getGrants(clusterID);
 
-      if (get(clusterDetails, 'cluster.managed')) {
-        getClusterAddOns(clusterID);
-        getLogs(clusterID);
-        this.refreshIDP();
+      const externalClusterID = get(clusterDetails, 'cluster.external_id');
+      if (externalClusterID) {
+        getClusterHistory(externalClusterID, clusterLogsViewOptions);
+      }
+
+      if (!isUuid(clusterID)) {
+        getUsers(clusterID, 'dedicated-admins');
+        getAlerts(clusterID);
+        getNodes(clusterID);
+        getClusterOperators(clusterID);
+        getGrants(clusterID);
+
+        if (get(clusterDetails, 'cluster.managed')) {
+          getClusterAddOns(clusterID);
+          getLogs(clusterID);
+          this.refreshIDP();
+        }
       }
     }
   }
@@ -301,6 +309,7 @@ class ClusterDetails extends Component {
           <Overview
             cluster={cluster}
             cloudProviders={cloudProviders}
+            history={history}
           />
         </TabContent>
         {!isArchived && (
@@ -394,6 +403,8 @@ ClusterDetails.propTypes = {
   setGlobalError: PropTypes.func.isRequired,
   clearGlobalError: PropTypes.func.isRequired,
   getGrants: PropTypes.func.isRequired,
+  clusterLogsViewOptions: PropTypes.object.isRequired,
+  getClusterHistory: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

@@ -54,19 +54,9 @@ import EditDisconnectedCluster from '../common/EditDisconnectedCluster';
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
 import helpers, { scrollToTop } from '../../../common/helpers';
-import { viewPropsChanged, createViewQueryObject } from '../../../common/queryHelpers';
+import { viewPropsChanged, createViewQueryObject, getQueryParam } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
 
-const getQueryParam = (param) => {
-  let ret;
-  window.location.search.substring(1).split('&').forEach((queryString) => {
-    const [key, val] = queryString.split('=');
-    if (key === param) {
-      ret = val;
-    }
-  });
-  return ret;
-};
 
 class ClusterList extends Component {
   constructor(props) {
