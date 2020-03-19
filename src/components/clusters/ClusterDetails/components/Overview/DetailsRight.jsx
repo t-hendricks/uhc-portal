@@ -19,7 +19,6 @@ function DetailsRight({ cluster }) {
 
   const humanizedPersistentStorage = cluster.managed
              && humanizeValueWithUnitGiB(cluster.storage_quota.value);
-
   const showVCPU = !showSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   return (
@@ -59,7 +58,7 @@ function DetailsRight({ cluster }) {
           {' '}
           {memoryTotalWithUnit.unit}
         </dd>
-        { cluster.managed && (
+        { cluster.managed && !cluster.byoc && (
           <>
             <dt>
             Load Balancers
