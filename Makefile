@@ -67,10 +67,29 @@ node_modules:
 app: node_modules
 	yarn build --mode=production
 
+.PHONY: setup
+setup: binaries node_modules insights-proxy-setup
+
+# Marking git clones .PHONY so we can git pull even if they already exist.
+
+.PHONY: run/insights-proxy
+run/insights-proxy:
+	[ -e $@ ] || git clone https://github.com/RedHatInsights/insights-proxy --depth=1 $@
+	(cd $@; git pull)
+
+# Patching /etc/hosts is needed (once) for using insights-proxy with local browser;
+# NOT needed for selenium tests where we arrange it in the container running the browser.
+.PHONY: insights-proxy-setup
+insights-proxy-setup: run/insights-proxy
+	sudo bash -x run/insights-proxy/scripts/patch-etc-hosts.sh
+	which podman && RUNNER=podman bash run/insights-proxy/scripts/update.sh
+	which docker && RUNNER=docker bash run/insights-proxy/scripts/update.sh
+
 .PHONY: clean
 clean:
 	rm -rf \
 		$(binaries) \
 		build \
 		node_modules \
+		run/insights-proxy \
 		$(NULL)

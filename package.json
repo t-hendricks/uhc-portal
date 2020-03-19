@@ -117,6 +117,7 @@
     "build": "webpack --progress",
     "start": "webpack-dev-server --progress --hot",
     "startmock": "OCM_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
+    "insights-proxy": "env SPANDX_CONFIG=./profiles/local-frontend.js bash run/insights-proxy/scripts/run.sh",
     "lint": "eslint src --ext js,jsx",
     "test": "jest --env=jsdom"
   },
