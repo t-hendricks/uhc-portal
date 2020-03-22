@@ -7,7 +7,6 @@ import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
-import EvaluationAlert from './components/EvaluationAlert';
 import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
 
 function InstructionsOSPUPI({ token }) {
@@ -24,7 +23,6 @@ function InstructionsOSPUPI({ token }) {
             Developer Preview
           </div>
           {token.error && <TokenErrorAlert token={token} />}
-          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
               With OpenShift Container Platform
