@@ -215,6 +215,7 @@ class ClusterDetails extends Component {
       clusterIdentityProviders,
       organization,
       setGlobalError,
+      displayClusterLogs,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -310,6 +311,7 @@ class ClusterDetails extends Component {
             cluster={cluster}
             cloudProviders={cloudProviders}
             history={history}
+            displayClusterLogs={displayClusterLogs}
           />
         </TabContent>
         {!isArchived && (
@@ -378,6 +380,7 @@ ClusterDetails.propTypes = {
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  displayClusterLogs: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,

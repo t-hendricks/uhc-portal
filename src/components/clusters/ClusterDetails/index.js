@@ -22,6 +22,7 @@ const mapStateToProps = (state) => {
   const { details } = state.clusters;
   const { cloudProviders } = state;
   const { logs } = state;
+  const { errorCode } = state.clusterLogs.requestState;
   const { addOns, clusterAddOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
@@ -34,6 +35,7 @@ const mapStateToProps = (state) => {
     clusterAddOns,
     clusterIdentityProviders,
     organization,
+    displayClusterLogs: errorCode !== 403 && errorCode !== 404,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
   });
 };

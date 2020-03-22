@@ -14,7 +14,9 @@ import SubscriptionSettings from './SubscriptionSettings';
 import ClusterLogs from '../ClusterLogs';
 import getClusterName from '../../../../../common/getClusterName';
 
-function Overview({ cluster, cloudProviders, history }) {
+function Overview({
+  cluster, cloudProviders, history, displayClusterLogs,
+}) {
   const clusterState = getClusterStateAndDescription(cluster);
   const externalClusterID = getClusterName(cluster);
 
@@ -51,6 +53,7 @@ function Overview({ cluster, cloudProviders, history }) {
         </CardBody>
       </Card>
       <SubscriptionSettings />
+      {displayClusterLogs && (
       <Card>
         <CardHeader>
           <Title headingLevel="h2" size="3xl">Cluster History</Title>
@@ -59,6 +62,7 @@ function Overview({ cluster, cloudProviders, history }) {
           <ClusterLogs externalClusterID={externalClusterID} history={history} />
         </CardBody>
       </Card>
+      )}
     </>
   );
 }
@@ -67,6 +71,7 @@ Overview.propTypes = {
   cluster: PropTypes.object,
   cloudProviders: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  displayClusterLogs: PropTypes.bool.isRequired,
 };
 
 export default Overview;
