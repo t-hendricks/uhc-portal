@@ -79,7 +79,13 @@ class InsightsTable extends React.Component {
         if (!filters.totalRiskFilter.includes(filterValue)) {
           filters.totalRiskFilter.push(filterValue);
         }
-        return { filters };
+        return {
+          filters,
+          meta: {
+            ...state.meta,
+            page: 1,
+          },
+        };
       },
       () => this.fetchData({ filterValues: this.state.filters }),
     );

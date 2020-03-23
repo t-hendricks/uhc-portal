@@ -3,23 +3,23 @@ import config from '../config';
 
 const putLikeOnRuleInsights = (clusterID, ruleID) => apiRequest({
   method: 'put',
-  url: `/clusters/${clusterID}/rules/${ruleID}/like`,
-}, config.configData.insightsGateway);
+  url: `/api/aggregator/v1/clusters/${clusterID}/rules/${ruleID}/like`,
+});
 
 const putDislikeOnRuleInsights = (clusterID, ruleID) => apiRequest({
   method: 'put',
-  url: `/clusters/${clusterID}/rules/${ruleID}/dislike`,
-}, config.configData.insightsGateway);
+  url: `/api/aggregator/v1/clusters/${clusterID}/rules/${ruleID}/dislike`,
+});
 
 const resetVoteOnRuleInsights = (clusterID, ruleID) => apiRequest({
   method: 'put',
-  url: `/clusters/${clusterID}/rules/${ruleID}/reset_vote`,
-}, config.configData.insightsGateway);
+  url: `/api/aggregator/v1/clusters/${clusterID}/rules/${ruleID}/reset_vote`,
+});
 
 const getClusterInsights = (clusterId, orgId) => apiRequest({
   method: 'get',
-  url: `/report/${orgId}/${clusterId}`,
-}, config.configData.insightsGateway);
+  url: `/api/aggregator/v1/report/${orgId}/${clusterId}`,
+});
 
 
 const insigthsService = {

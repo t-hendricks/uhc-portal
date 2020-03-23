@@ -6,19 +6,18 @@ const authHeader = token => ({
   Authorization: `Bearer ${token}`,
 });
 
-const serviceConfig = (passedConfig = {}, token, customHost) => {
-  const BASE_URL = customHost || (config.configData.apiGateway ? config.configData.apiGateway : '');
+const serviceConfig = (passedConfig = {}, token) => {
+  const BASE_URL = config.configData.apiGateway ? config.configData.apiGateway : '';
   return {
     ...passedConfig,
     headers: token ? authHeader(token) : {},
     url: `${BASE_URL}${passedConfig.url}`,
-    crossdomain: true,
   };
 };
 
-const apiRequest = (params, customHost) => insights.chrome.auth.getUser().then(
+const apiRequest = (params) => insights.chrome.auth.getUser().then(
   () => insights.chrome.auth.getToken().then(
-    token => axios(serviceConfig(params, token, customHost)),
+    token => axios(serviceConfig(params, token)),
   ),
 );
 

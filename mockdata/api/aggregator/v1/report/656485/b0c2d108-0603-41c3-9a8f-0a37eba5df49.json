@@ -11,7 +11,7 @@
         "details": "When fs.pipe-user-pages-soft is enabled, updating stonith fails in metadata query.\n[Knowledgebase article](https://g.co)",
         "created_at": 1583245000000,
         "total_risk": 3,
-        "risk_of_change": 1
+        "risk_of_change": 0
       },
       {
         "rule_id": "some.python.module1",
@@ -91,7 +91,7 @@
         "details": "-Some *rule* description\n[link text](https://g.co)\n# header\n```some code```",
         "created_at": 1583245000000,
         "total_risk": 3,
-        "risk_of_change": 2
+        "risk_of_change": 0
       },
       {
         "rule_id": "some.python.module11",

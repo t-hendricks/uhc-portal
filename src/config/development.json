@@ -1,4 +1,3 @@
 {
-  "apiGateway": "https://qa.foo.redhat.com:1337",
-  "insightsGateway": "https://localhost:8080/api/v1"
+  "apiGateway": "https://qa.foo.redhat.com:1337"
 }
