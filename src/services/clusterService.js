@@ -34,6 +34,17 @@ const fetchClusterByExternalId = clusterExternalID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters?&search=external_id='${clusterExternalID}'`,
 });
 
+const fetchClustersUsingParams = params => apiRequest({
+  method: 'get',
+  url: '/api/clusters_mgmt/v1/clusters',
+  params: {
+    page: params.page,
+    size: params.page_size,
+    orderBy: params.order,
+    search: params.filter,
+  },
+});
+
 const editCluster = (id, data) => apiRequest({
   method: 'patch',
   url: `/api/clusters_mgmt/v1/clusters/${id}`,
@@ -142,6 +153,11 @@ const unarchiveCluster = id => apiRequest({
   data: '{"status":"Disconnected"}',
 });
 
+const getDashboard = id => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/dashboards/${id}`,
+});
+
 const getAddOns = () => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/addons',
@@ -222,6 +238,7 @@ const clusterService = {
   postNewCluster,
   postDisconnectedCluster,
   getClusterDetails,
+  fetchClustersUsingParams,
   fetchClusterByExternalId,
   editCluster,
   getCloudProviders,
@@ -241,6 +258,7 @@ const clusterService = {
   archiveCluster,
   unarchiveCluster,
   getAddOns,
+  getDashboard,
   getClusterAddOns,
   addClusterAddOn,
   deleteClusterAddOn,
