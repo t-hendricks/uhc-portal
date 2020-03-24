@@ -8,7 +8,8 @@ import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import EvaluationAlert from './components/EvaluationAlert';
 
-function InstructionsVSphere({ token, cloudProviderID }) {
+function InstructionsVSphere({ token }) {
+  const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -45,7 +46,6 @@ function InstructionsVSphere({ token, cloudProviderID }) {
 
 InstructionsVSphere.propTypes = {
   token: PropTypes.object.isRequired,
-  cloudProviderID: PropTypes.string,
 };
 
 export default InstructionsVSphere;
