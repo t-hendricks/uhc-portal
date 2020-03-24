@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Popover, Title } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
-
+import GetStarted from './components/GetStarted';
 import links from '../../../../../common/installLinks';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
@@ -10,6 +10,7 @@ import TokenErrorAlert from './components/TokenErrorAlert';
 import EvaluationAlert from './components/EvaluationAlert';
 
 function InstructionsAWSIPI({ token }) {
+  const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -23,15 +24,14 @@ function InstructionsAWSIPI({ token }) {
             <p>
                 With OpenShift Container Platform you can install a cluster on Amazon Web Services
                 (AWS) using infrastructure that the installation program provisions and the cluster
-                maintains. The basic steps are outlined below. For detailed instructions, see the
-              {' '}
-              <a href={links.INSTALL_AWSIPI_DOCS_LANDING} rel="noreferrer noopener" target="_blank">
-                  official documentation
-                {' '}
-                <ExternalLinkAltIcon color="#0066cc" size="sm" />
-              </a>
-                .
+                maintains. The basic steps are outlined below.
             </p>
+
+            <GetStarted
+              docURL={links.INSTALL_AWSIPI_DOCS_LANDING}
+              cloudProviderID={cloudProviderID}
+            />
+
 
             <h3 id="prerequisites-title">
                 Pre-requisites:
@@ -55,6 +55,7 @@ function InstructionsAWSIPI({ token }) {
         installerURL={links.INSTALL_AWSIPI_INSTALLER_LATEST}
         cliURL={links.INSTALL_AWSIPI_CLI_LATEST}
         token={token}
+        cloudProviderID={cloudProviderID}
       />
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">

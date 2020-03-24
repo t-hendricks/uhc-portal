@@ -9,6 +9,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 import EvaluationAlert from './components/EvaluationAlert';
 
 function InstructionsBareMetal({ token }) {
+  const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -24,7 +25,10 @@ function InstructionsBareMetal({ token }) {
               infrastructure that you provide.
             </p>
 
-            <GetStarted docURL={links.INSTALL_BAREMETAL_GETTING_STARTED} />
+            <GetStarted
+              docURL={links.INSTALL_BAREMETAL_GETTING_STARTED}
+              cloudProviderID={cloudProviderID}
+            />
           </div>
           <TelemetryAlert />
         </div>
@@ -34,6 +38,7 @@ function InstructionsBareMetal({ token }) {
         installerURL={links.INSTALL_BAREMETAL_INSTALLER_LATEST}
         rhcosLearnMoreURL={links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE}
         cliURL={links.INSTALL_BAREMETAL_CLI_LATEST}
+        cloudProviderID={cloudProviderID}
       />
     </>
   );

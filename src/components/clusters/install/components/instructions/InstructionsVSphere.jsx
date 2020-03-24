@@ -8,7 +8,7 @@ import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import EvaluationAlert from './components/EvaluationAlert';
 
-function InstructionsVSphere({ token }) {
+function InstructionsVSphere({ token, cloudProviderID }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -24,7 +24,10 @@ function InstructionsVSphere({ token }) {
               infrastructure that you provide.
             </p>
 
-            <GetStarted docURL={links.INSTALL_VSPHERE_GETTING_STARTED} />
+            <GetStarted
+              docURL={links.INSTALL_VSPHERE_GETTING_STARTED}
+              cloudProviderID={cloudProviderID}
+            />
           </div>
           <TelemetryAlert />
         </div>
@@ -34,6 +37,7 @@ function InstructionsVSphere({ token }) {
         installerURL={links.INSTALL_VSPHERE_INSTALLER_LATEST}
         rhcosLearnMoreURL={links.INSTALL_VSPHERE_RHCOS_LEARN_MORE}
         cliURL={links.INSTALL_VSPHERE_CLI_LATEST}
+        cloudProviderID={cloudProviderID}
       />
     </>
   );
@@ -41,6 +45,7 @@ function InstructionsVSphere({ token }) {
 
 InstructionsVSphere.propTypes = {
   token: PropTypes.object.isRequired,
+  cloudProviderID: PropTypes.string,
 };
 
 export default InstructionsVSphere;

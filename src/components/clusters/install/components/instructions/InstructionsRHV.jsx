@@ -10,6 +10,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
 
 function InstructionsRHV({ token }) {
+  const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -41,6 +42,7 @@ function InstructionsRHV({ token }) {
         installerURL={links.INSTALL_RHV_INSTALLER_LATEST}
         cliURL={links.INSTALL_RHV_CLI_LATEST}
         showPreReleasePageLink={false}
+        cloudProviderID={cloudProviderID}
       />
     </>
   );

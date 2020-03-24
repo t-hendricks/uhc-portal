@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@patternfly/react-core';
 
-const CLISection = ({ toolsURL }) => (
+
+import { trackPendo } from '../../../../../../common/helpers';
+
+const CLISection = ({ toolsURL, cloudProviderID }) => (
   <>
     <p>
       Download the OpenShift command-line tools and add them to your
@@ -18,6 +21,7 @@ const CLISection = ({ toolsURL }) => (
         target="_blank"
         variant="secondary"
         className="install--download-cli"
+        onClick={() => trackPendo('Download-CommandLineTools', cloudProviderID)}
       >
         Download command-line tools
       </Button>
@@ -39,6 +43,7 @@ const CLISection = ({ toolsURL }) => (
 );
 CLISection.propTypes = {
   toolsURL: PropTypes.string.isRequired,
+  cloudProviderID: PropTypes.string,
 };
 
 export default CLISection;

@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { Button } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 
-const GetStarted = ({ docURL }) => (
+import { trackPendo } from '../../../../../../common/helpers';
+
+const GetStarted = ({ docURL, cloudProviderID }) => (
   <>
     <p>
       Follow the
       {' '}
-      <a href={docURL} rel="noreferrer noopener" target="_blank">
+      <a href={docURL} rel="noreferrer noopener" target="_blank" onClick={() => trackPendo('Download-OfficialDocumentation', cloudProviderID)}>
         official documentation
         {' '}
         <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -16,7 +18,14 @@ const GetStarted = ({ docURL }) => (
       {' '}
       for detailed installation instructions.
     </p>
-    <Button component="a" href={docURL} rel="noreferrer noopener" target="_blank" variant="secondary">
+    <Button
+      component="a"
+      href={docURL}
+      rel="noreferrer noopener"
+      target="_blank"
+      variant="secondary"
+      onClick={() => trackPendo('Download-OfficialDocumentation', cloudProviderID)}
+    >
       Get started
     </Button>
     <p />
@@ -27,6 +36,7 @@ const GetStarted = ({ docURL }) => (
 );
 GetStarted.propTypes = {
   docURL: PropTypes.string.isRequired,
+  cloudProviderID: PropTypes.string,
 };
 
 export default GetStarted;

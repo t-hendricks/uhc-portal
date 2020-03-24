@@ -66,6 +66,15 @@ const helpers = {
   nestedIsEmpty,
 };
 
+
+const trackPendo = (event, cloudProviderID) => {
+  if (window.pendo && window.pendo.isReady()) {
+    window.pendo.track(event, {
+      type: cloudProviderID,
+    });
+  }
+};
+
 export {
   noop,
   isValid,
@@ -75,6 +84,7 @@ export {
   scrollToTop,
   getRandomID,
   noQuotaTooltip,
+  trackPendo,
 };
 
 export default helpers;

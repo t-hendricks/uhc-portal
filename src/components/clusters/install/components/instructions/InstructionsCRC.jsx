@@ -9,6 +9,7 @@ import PullSecretSection from './components/PullSecretSection';
 import TokenErrorAlert from './components/TokenErrorAlert';
 
 function InstructionsCRC({ token }) {
+  const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -94,7 +95,7 @@ function InstructionsCRC({ token }) {
             </List>
 
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull secret</h3>
-            <PullSecretSection token={token} />
+            <PullSecretSection token={token} cloudProviderID={cloudProviderID} />
 
             <p />
 

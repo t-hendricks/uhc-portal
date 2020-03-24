@@ -19,6 +19,7 @@ function DownloadsAndPullSecretSection({
   showPreReleaseDocs = false,
   showPreReleasePageLink = true,
   children,
+  cloudProviderID,
 }) {
   return (
     <Card>
@@ -54,12 +55,13 @@ function DownloadsAndPullSecretSection({
             <DownloadButton
               installerURL={installerURL}
               token={token}
+              cloudProviderID={cloudProviderID}
             />
           </p>
           {showPreReleasePageLink && <DeveloperPreviewSection />}
 
           <Title headingLevel="h3" size="md" className="downloads-subtitle">Pull secret</Title>
-          <PullSecretSection token={token} />
+          <PullSecretSection token={token} cloudProviderID={cloudProviderID} />
 
           <p />
 
@@ -77,7 +79,7 @@ function DownloadsAndPullSecretSection({
           )}
 
           <Title headingLevel="h3" size="md" className="downloads-subtitle">Command-line interface</Title>
-          <CLISection toolsURL={cliURL} />
+          <CLISection toolsURL={cliURL} cloudProviderID={cloudProviderID} />
 
         </div>
       </div>
@@ -94,6 +96,7 @@ DownloadsAndPullSecretSection.propTypes = {
   showPreReleaseDocs: PropTypes.bool,
   token: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
+  cloudProviderID: PropTypes.string,
 };
 
 export default DownloadsAndPullSecretSection;

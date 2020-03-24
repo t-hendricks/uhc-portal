@@ -10,6 +10,7 @@ import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSe
 import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
 
 function InstructionsOSPUPI({ token }) {
+  const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -31,7 +32,10 @@ function InstructionsOSPUPI({ token }) {
             </p>
             <DeveloperPreviewStatements />
 
-            <GetStarted docURL={links.INSTALL_OSPUPI_GETTING_STARTED} />
+            <GetStarted
+              docURL={links.INSTALL_OSPUPI_GETTING_STARTED}
+              cloudProviderID={cloudProviderID}
+            />
           </div>
           <TelemetryAlert />
         </div>
@@ -42,6 +46,7 @@ function InstructionsOSPUPI({ token }) {
         cliURL={links.INSTALL_OSPUPI_CLI_LATEST}
         rhcosLearnMoreURL={links.INSTALL_OSPUPI_RHCOS_LEARN_MORE}
         rhcosDownloadURL={links.INSTALL_OSPUPI_DOWNLOAD_RHCOS_LATEST}
+        cloudProviderID={cloudProviderID}
       />
     </>
   );
