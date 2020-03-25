@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
   const { addOns, clusterAddOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
-  const { insights } = state.insights;
+  const { insightsData } = state.insightsData;
 
   return ({
     cloudProviders,
@@ -46,13 +46,13 @@ const mapStateToProps = (state) => {
     organization,
     displayClusterLogs: errorCode !== 403 && errorCode !== 404,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
-    insights,
+    insightsData,
   });
 };
 
 const mapDispatchToProps = {
   fetchDetails: clusterId => fetchClusterDetails(clusterId),
-  fetchInsights: clusterId => fetchClusterInsights(clusterId),
+  fetchInsightsData: clusterId => fetchClusterInsights(clusterId),
   voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,

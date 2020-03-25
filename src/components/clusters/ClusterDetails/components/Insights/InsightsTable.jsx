@@ -50,21 +50,21 @@ class InsightsTable extends React.Component {
       direction: 'asc',
     },
     meta: {
-      ...this.props.insights.meta,
+      ...this.props.insightsData.meta,
       perPage: 10,
       page: 1
     },
   };
 
   componentDidMount() {
-    if (this.props.insights) {
+    if (this.props.insightsData) {
       this.fetchData({ filterValues: this.state.filters });
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { insights } = this.props;
-    if (insights && prevProps.insights !== insights) {
+    const { insightsData } = this.props;
+    if (insightsData && prevProps.insightsData !== insightsData) {
       this.fetchData({ filterValues: this.state.filters });
     }
   }
@@ -96,10 +96,10 @@ class InsightsTable extends React.Component {
     sortBy = this.state.sortBy,
     meta = this.state.meta,
   }) => {
-    const { insights } = this.props;
+    const { insightsData } = this.props;
 
     // Filter and sort data
-    let rules = insights.data
+    let rules = insightsData.data
       .filter(v => isValueFiltered(filterValues, v))
       .sort((a, b) => (sortBy && sortBy.column
         ? dataSortMapping[sortBy.column.title](a, b)
@@ -123,7 +123,7 @@ class InsightsTable extends React.Component {
   };
 
   render() {
-    const { insights, voteOnRule } = this.props;
+    const { insightsData, voteOnRule } = this.props;
     const {
       shownData,
       filters,
@@ -131,7 +131,7 @@ class InsightsTable extends React.Component {
     } = this.state;
     return (
       <>
-        <AnalysisSummary insights={insights} batteryClicked={this.addFilter} />
+        <AnalysisSummary insightsData={insightsData} batteryClicked={this.addFilter} />
         <Card>
           <CardBody className="no-padding">
             <RuleTable
@@ -188,7 +188,7 @@ class InsightsTable extends React.Component {
 }
 
 InsightsTable.propTypes = {
-  insights: PropTypes.object.isRequired,
+  insightsData: PropTypes.object.isRequired,
   voteOnRule: PropTypes.func.isRequired,
 };
 

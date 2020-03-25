@@ -196,11 +196,11 @@ class ClusterDetails extends Component {
   fetchDetailsAndInsightsData(id, externalId) {
     const {
       fetchDetails,
-      fetchInsights,
+      fetchInsightsData,
     } = this.props;
     fetchDetails(id);
     if (externalId) {
-      fetchInsights(externalId);
+      fetchInsightsData(externalId);
     }
   }
 
@@ -231,7 +231,7 @@ class ClusterDetails extends Component {
       organization,
       setGlobalError,
       displayClusterLogs,
-      insights,
+      insightsData,
       voteOnRule,
     } = this.props;
 
@@ -296,8 +296,8 @@ class ClusterDetails extends Component {
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
     const displayInsightsTab = !isArchived
-      && insights[get(cluster, 'external_id')]
-      && insights[get(cluster, 'external_id')].status !== 401;
+      && insightsData[get(cluster, 'external_id')]
+      && insightsData[get(cluster, 'external_id')].status !== 401;
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
@@ -399,7 +399,7 @@ class ClusterDetails extends Component {
           >
             <Insights
               cluster={cluster}
-              insights={insights[cluster.external_id]}
+              insightsData={insightsData[cluster.external_id]}
               voteOnRule={(ruleId, vote) => {
                 voteOnRule(cluster.external_id, ruleId, vote);
               }}
@@ -436,9 +436,9 @@ class ClusterDetails extends Component {
 ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  insights: PropTypes.object.isRequired,
+  insightsData: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
-  fetchInsights: PropTypes.func.isRequired,
+  fetchInsightsData: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getLogs: PropTypes.func.isRequired,

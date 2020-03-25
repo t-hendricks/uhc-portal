@@ -25,8 +25,8 @@ const groupRulesByRisk = data => data.reduce(
   {},
 );
 
-const AnalysisSummary = ({ insights, batteryClicked }) => {
-  const groupedRules = groupRulesByRisk(insights.data);
+const AnalysisSummary = ({ insightsData, batteryClicked }) => {
+  const groupedRules = groupRulesByRisk(insightsData.data);
   return <Card>
     <CardBody>
       <Grid>
@@ -51,11 +51,11 @@ const AnalysisSummary = ({ insights, batteryClicked }) => {
               <Stack>
                 <StackItem>
                   <Title headingLevel="h2" size="xl">
-                    {`Remote health detected ${insights.meta.count} issue${insights.meta.count > 1 ? 's' : ''}`}
+                    {`Remote health detected ${insightsData.meta.count} issue${insightsData.meta.count > 1 ? 's' : ''}`}
                   </Title>
                 </StackItem>
                 <StackItem>
-                  <Text>Last checked: <DateFormat date={new Date(insights.meta.last_checked_at)} /></Text>
+                  <Text>Last checked: <DateFormat date={new Date(insightsData.meta.last_checked_at)} /></Text>
                 </StackItem>
                 <StackItem>
                   <RemoteHealthPopover />
@@ -93,7 +93,7 @@ const AnalysisSummary = ({ insights, batteryClicked }) => {
 };
 
 AnalysisSummary.propTypes = {
-  insights: PropTypes.object.isRequired,
+  insightsData: PropTypes.object.isRequired,
   batteryClicked: PropTypes.func.isRequired,
 };
 
