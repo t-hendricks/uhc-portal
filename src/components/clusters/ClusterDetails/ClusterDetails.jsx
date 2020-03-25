@@ -53,7 +53,7 @@ class ClusterDetails extends Component {
     super(props);
     this.refresh = this.refresh.bind(this);
     this.refreshIDP = this.refreshIDP.bind(this);
-    this.fetchData = this.fetchData.bind(this);
+    this.fetchDetailsAndInsightsData = this.fetchDetailsAndInsightsData.bind(this);
 
     this.overviewTabRef = React.createRef();
     this.insightsTabRef = React.createRef();
@@ -157,7 +157,7 @@ class ClusterDetails extends Component {
     const clusterID = match.params.id;
 
     if (isValid(clusterID)) {
-      this.fetchData(clusterID, get(clusterDetails, 'cluster.external_id'));
+      this.fetchDetailsAndInsightsData(clusterID, get(clusterDetails, 'cluster.external_id'));
       getOrganizationAndQuota();
 
       const externalClusterID = get(clusterDetails, 'cluster.external_id');
@@ -193,14 +193,14 @@ class ClusterDetails extends Component {
     }
   }
 
-  fetchData(id, external_id) {
+  fetchDetailsAndInsightsData(id, externalId) {
     const {
       fetchDetails,
       fetchInsights,
     } = this.props;
     fetchDetails(id);
-    if (external_id) {
-      fetchInsights(external_id);
+    if (externalId) {
+      fetchInsights(externalId);
     }
   }
 
@@ -289,7 +289,7 @@ class ClusterDetails extends Component {
 
     const onDialogClose = () => {
       invalidateClusters();
-      this.fetchData(cluster.id, cluster.external_id);
+      this.fetchDetailsAndInsightsData(cluster.id);
     };
 
     const hasLogs = !!logs.lines;
