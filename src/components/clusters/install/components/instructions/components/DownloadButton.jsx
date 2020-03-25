@@ -16,7 +16,7 @@ const DownloadButton = ({ token, installerURL, cloudProviderID }) => (
     variant="secondary"
     className="install--download-installer"
     disabled={!!token.error}
-    onClick={() => trackPendo('Download-Installer', cloudProviderID)}
+    onClick={() => trackPendo('install--download-installer', cloudProviderID)}
   >
     Download installer
   </Button>
