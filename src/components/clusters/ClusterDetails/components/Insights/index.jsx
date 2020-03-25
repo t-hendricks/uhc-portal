@@ -4,23 +4,23 @@ import { NoIssuesMessage, NoRulesMessage } from './EmptyTableMessage';
 import InsightsTable from './InsightsTable';
 import './index.css';
 
-const Insights = ({ insights, voteOnRule }) => {
-  if (insights && insights.status === 404) {
+const Insights = ({ insightsData, voteOnRule }) => {
+  if (insightsData && insightsData.status === 404) {
     return <NoRulesMessage />;
   }
-  if (!insights || insights.meta.count === 0) {
+  if (!insightsData || insightsData.meta.count === 0) {
     return <NoIssuesMessage />;
   }
-  return <InsightsTable insights={insights} voteOnRule={voteOnRule} />;
+  return <InsightsTable insightsData={insightsData} voteOnRule={voteOnRule} />;
 };
 
 Insights.propTypes = {
-  insights: PropTypes.object,
+  insightsData: PropTypes.object,
   voteOnRule: PropTypes.func.isRequired,
 };
 
 Insights.defaultProps = {
-  insights: {
+  insightsData: {
     meta: { count: 0 },
     data: [],
   },

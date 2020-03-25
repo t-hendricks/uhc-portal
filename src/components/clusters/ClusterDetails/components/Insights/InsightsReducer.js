@@ -23,7 +23,7 @@ import {
 import { GET_CLUSTER_INSIGHTS } from './InsightsConstants';
 
 const initialState = {
-  insights: {},
+  insightsData: {},
 };
 
 function insightsReducer(state = initialState, action) {
@@ -32,10 +32,10 @@ function insightsReducer(state = initialState, action) {
     switch (action.type) {
       // GET_CLUSTER_INSIGHTS
       case FULFILLED_ACTION(GET_CLUSTER_INSIGHTS):
-        draft.insights[action.payload.clusterId] = action.payload.insights;
+        draft.insightsData[action.payload.clusterId] = action.payload.insightsData;
         break;
       case REJECTED_ACTION(GET_CLUSTER_INSIGHTS):
-        draft.insights[action.payload.clusterId] = { status: action.payload.status };
+        draft.insightsData[action.payload.clusterId] = { status: action.payload.status };
         break;
     }
   });

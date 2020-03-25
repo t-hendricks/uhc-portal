@@ -53,7 +53,7 @@ class ClusterDetails extends Component {
     super(props);
     this.refresh = this.refresh.bind(this);
     this.refreshIDP = this.refreshIDP.bind(this);
-    this.fetchData = this.fetchData.bind(this);
+    this.fetchDetailsAndInsightsData = this.fetchDetailsAndInsightsData.bind(this);
 
     this.overviewTabRef = React.createRef();
     this.insightsTabRef = React.createRef();
@@ -157,7 +157,7 @@ class ClusterDetails extends Component {
     const clusterID = match.params.id;
 
     if (isValid(clusterID)) {
-      this.fetchData(clusterID, get(clusterDetails, 'cluster.external_id'));
+      this.fetchDetailsAndInsightsData(clusterID, get(clusterDetails, 'cluster.external_id'));
       getOrganizationAndQuota();
 
       const externalClusterID = get(clusterDetails, 'cluster.external_id');
@@ -193,14 +193,14 @@ class ClusterDetails extends Component {
     }
   }
 
-  fetchData(id, external_id) {
+  fetchDetailsAndInsightsData(id, externalId) {
     const {
       fetchDetails,
-      fetchInsights,
+      fetchInsightsData,
     } = this.props;
     fetchDetails(id);
-    if (external_id) {
-      fetchInsights(external_id);
+    if (externalId) {
+      fetchInsightsData(externalId);
     }
   }
 
@@ -231,7 +231,7 @@ class ClusterDetails extends Component {
       organization,
       setGlobalError,
       displayClusterLogs,
-      insights,
+      insightsData,
       voteOnRule,
     } = this.props;
 
@@ -289,15 +289,15 @@ class ClusterDetails extends Component {
 
     const onDialogClose = () => {
       invalidateClusters();
-      this.fetchData(cluster.id, cluster.external_id);
+      this.fetchDetailsAndInsightsData(cluster.id);
     };
 
     const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
     const displayInsightsTab = !isArchived
-      && insights[get(cluster, 'external_id')]
-      && insights[get(cluster, 'external_id')].status !== 401;
+      && insightsData[get(cluster, 'external_id')]
+      && insightsData[get(cluster, 'external_id')].status !== 401;
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
@@ -399,7 +399,7 @@ class ClusterDetails extends Component {
           >
             <Insights
               cluster={cluster}
-              insights={insights[cluster.external_id]}
+              insightsData={insightsData[cluster.external_id]}
               voteOnRule={(ruleId, vote) => {
                 voteOnRule(cluster.external_id, ruleId, vote);
               }}
@@ -436,9 +436,9 @@ class ClusterDetails extends Component {
 ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  insights: PropTypes.object.isRequired,
+  insightsData: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
-  fetchInsights: PropTypes.func.isRequired,
+  fetchInsightsData: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getLogs: PropTypes.func.isRequired,

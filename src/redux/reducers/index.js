@@ -47,7 +47,7 @@ const reducers = {
   notifications,
   networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,
-  insights: insightsReducer,
+  insightsData: insightsReducer,
 };
 
 const reduxReducers = combineReducers(reducers);
