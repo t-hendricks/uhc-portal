@@ -56,7 +56,7 @@ class DeleteIDPDialog extends React.Component {
       >
         {errorContainer}
         <p>
-          Your&apos;e about to remove the
+          You&apos;re about to remove the
           {' '}
           <b>
             {idpType}
