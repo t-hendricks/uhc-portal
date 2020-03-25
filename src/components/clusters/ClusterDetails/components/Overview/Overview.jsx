@@ -12,13 +12,11 @@ import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
 import SubscriptionSettings from './SubscriptionSettings';
 import ClusterLogs from '../ClusterLogs';
-import getClusterName from '../../../../../common/getClusterName';
 
 function Overview({
   cluster, cloudProviders, history, displayClusterLogs,
 }) {
   const clusterState = getClusterStateAndDescription(cluster);
-  const externalClusterID = getClusterName(cluster);
 
   return (
     <>
@@ -59,7 +57,7 @@ function Overview({
           <Title headingLevel="h2" size="3xl">Cluster History</Title>
         </CardHeader>
         <CardBody>
-          <ClusterLogs externalClusterID={externalClusterID} history={history} />
+          <ClusterLogs externalClusterID={cluster.external_id} history={history} />
         </CardBody>
       </Card>
       )}

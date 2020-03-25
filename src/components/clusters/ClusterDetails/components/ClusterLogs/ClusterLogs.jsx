@@ -22,10 +22,6 @@ class ClusterLogs extends React.Component {
       setListFlag('conditionalFilterFlags', {
         severityTypes: severityTypesFilter.split(',').filter(type => SEVERITY_TYPES.includes(type)),
       });
-    } else {
-      // only call refresh if we're not setting the filter flag. When the flag is set, refresh
-      // will be called via componentDidUpdate() after the redux state transition
-      this.refresh();
     }
   }
 
