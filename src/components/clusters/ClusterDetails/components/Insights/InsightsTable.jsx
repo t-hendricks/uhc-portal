@@ -93,17 +93,18 @@ class InsightsTable extends React.Component {
 
   fetchData = ({
     filterValues = this.state.filterValues,
-    sortBy = this.state.sortBy,
+    sortBy,
     meta = this.state.meta,
   }) => {
     const { insightsData } = this.props;
+    sortBy = sortBy && sortBy.column ? sortBy : this.state.sortBy;
 
     // Filter and sort data
-    let rules = insightsData.data
-      .filter(v => isValueFiltered(filterValues, v))
+    let rules = [...insightsData.data]
       .sort((a, b) => (sortBy && sortBy.column
         ? dataSortMapping[sortBy.column.title](a, b)
-        : 0));
+        : 0))
+      .filter(v => isValueFiltered(filterValues, v));
 
     // Total count of showed items
     const rulesLength = rules.length;

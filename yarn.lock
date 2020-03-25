@@ -1081,9 +1081,9 @@
   integrity sha512-ZsANYyp/AVRaSWAFBnKuoyvVoA1tMT7hh1jHpua0sQYjN4ocuN89MNcNdAJhdawt1Bh+p9OEtDgl4vfKQbJ9RQ==
 
 "@patternfly/patternfly@^2.56.3":
-  version "2.70.1"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/patternfly/-/patternfly-2.70.1.tgz#ef5f9b7912313b873d128002152106c1a5f86b42"
-  integrity sha512-vimiUQRX0SdaxFKOWaFQ9Gcva/cnEWl4R9SNx1837TRBonLTyTKmzuDRuaDF09ximiRQyWB08/WLESJLLrEF+A==
+  version "2.70.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/patternfly/-/patternfly-2.70.2.tgz#b218fa90d726b2b94e502462eb2889556b1362d2"
+  integrity sha512-CnUfkBbI1FGnhby8AK9mAlhQIX2r0nCARHXE88Lqwu/rFS9Jh5uGEkpt2Qob0s3b3sqxP4DJsBJZq1Em90NDjQ==
 
 "@patternfly/react-charts@^5.2.21":
   version "5.3.12"
@@ -1114,9 +1114,9 @@
     tippy.js "5.1.2"
 
 "@patternfly/react-icons@^3.14.39", "@patternfly/react-icons@^3.15.11", "@patternfly/react-icons@^3.15.4":
-  version "3.15.12"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-icons/-/react-icons-3.15.12.tgz#7c80672d5bff4a7ea2d24abdd9e8477d79667e45"
-  integrity sha512-UX2mkfYp7NunBTBrsd4RamPh4pTTqhIxjvx23n19xLs9doXEMjZr1+xMuswrg+68EpCDA5gngeFWKRnb8vYXKg==
+  version "3.15.13"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-icons/-/react-icons-3.15.13.tgz#845f9f98684b718810b115fcc32983ae94cc5201"
+  integrity sha512-uEzKC9NwpZamCW00mZIxZ5AslFPXVZ+4ThBUOTYSliZUS1DwOKe0549qrAP1vCpz9vCeTR4jyOXBe/kS9IoXpg==
   dependencies:
     "@fortawesome/free-brands-svg-icons" "^5.8.1"
 
@@ -1341,9 +1341,9 @@
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*":
-  version "13.9.3"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@types/node/-/node-13.9.3.tgz#6356df2647de9eac569f9a52eda3480fa9e70b4d"
-  integrity sha512-01s+ac4qerwd6RHD+mVbOEsraDHSgUaefQlEdBbUolnQFjKwCr7luvAlEwW1RFojh67u0z4OUTjPn9LEl4zIkA==
+  version "12.12.31"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@types/node/-/node-12.12.31.tgz#d6b4f9645fee17f11319b508fb1001797425da51"
+  integrity sha512-T+wnJno8uh27G9c+1T+a1/WYCHzLeDqtsGJkoEdSp2X8RTh3oOCZQcUnjAx90CS8cmmADX51O0FI/tu9s0yssg==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -2387,9 +2387,9 @@ camelcase@^5.0.0, camelcase@^5.3.1:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30001035:
-  version "1.0.30001036"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001036.tgz#930ea5272010d8bf190d859159d757c0b398caf0"
-  integrity sha512-jU8CIFIj2oR7r4W+5AKcsvWNVIb6Q6OZE3UsrXrZBHFtreT4YgTeOJtTucp+zSedEpTi3L5wASSP0LYIE3if6w==
+  version "1.0.30001037"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001037.tgz#cf666560b14f8dfa18abc235db1ef2699273af6e"
+  integrity sha512-qQP40FzWQ1i9RTjxppOUnpM8OwTBFL5DQbjoR9Az32EtM7YUZOw9orFO6rj1C+xWAGzz+X3bUe09Jf5Ep+zpuA==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -3491,9 +3491,9 @@ ejs@^2.6.1:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.380:
-  version "1.3.382"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.382.tgz#cad02da655c33f7a3d6ca7525bd35c17e90f3a8f"
-  integrity sha512-gJfxOcgnBlXhfnUUObsq3n3ReU8CT6S8je97HndYRkKsNZMJJ38zO/pI5aqO7L3Myfq+E3pqPyKK/ynyLEQfBA==
+  version "1.3.384"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.384.tgz#ca1d5710a4c53168431f1cbef39c8a971b646bf8"
+  integrity sha512-9jGNF78o450ymPf63n7/j1HrRAD4xGTsDkKY2X6jtCAWaYgph2A9xQjwfwRpj+AovkARMO+JfZuVCFTdandD6w==
 
 elliptic@^6.0.0:
   version "6.5.2"
@@ -4195,9 +4195,9 @@ fb-watchman@^2.0.0:
     bser "2.1.1"
 
 figgy-pudding@^3.5.1:
-  version "3.5.1"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
-  integrity sha512-vNKxJHTEKNThjfrdJwHc7brvM6eVevuO5nTj6ez8ZQ1qbXTvGthucRF7S4vf2cr71QVnT70V34v0S1DyQsti0w==
+  version "3.5.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/figgy-pudding/-/figgy-pudding-3.5.2.tgz#b4eee8148abb01dcf1d1ac34367d59e12fa61d6e"
+  integrity sha512-0btnI/H8f2pavGMN8w40mlSKOfTK2SVJmBfBeVIj3kNw0swwgzyRq0d5TJVOwodFmtvpPeWPN/MCcfuWF0Ezbw==
 
 figures@^3.0.0:
   version "3.2.0"
@@ -4876,13 +4876,13 @@ html-to-react@^1.3.4:
     ramda "^0.26"
 
 html-tokenize@^2.0.0:
-  version "2.0.0"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/html-tokenize/-/html-tokenize-2.0.0.tgz#8b3a9a5deb475cae6a6f9671600d2c20ab298251"
-  integrity sha1-izqaXetHXK5qb5ZxYA0sIKspglE=
+  version "2.0.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/html-tokenize/-/html-tokenize-2.0.1.tgz#c3b2ea6e2837d4f8c06693393e9d2a12c960be5f"
+  integrity sha512-QY6S+hZ0f5m1WT8WffYN+Hg+xm/w5I8XeUcAq/ZYP5wVC8xbKi4Whhru3FtrAebD5EhBW8rmFzkDI6eCAuFe2w==
   dependencies:
     buffer-from "~0.1.1"
     inherits "~2.0.1"
-    minimist "~0.0.8"
+    minimist "~1.2.5"
     readable-stream "~1.0.27-1"
     through2 "~0.4.1"
 
@@ -6476,15 +6476,10 @@ minimatch@^3.0.4, minimatch@~3.0.2:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5:
+minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5, minimist@~1.2.5:
   version "1.2.5"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
-
-minimist@~0.0.8:
-  version "0.0.10"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
-  integrity sha1-3j+YVD2/lggr5IrRoMfNqDYwHc8=
 
 minipass@^2.6.0, minipass@^2.8.6, minipass@^2.9.0:
   version "2.9.0"

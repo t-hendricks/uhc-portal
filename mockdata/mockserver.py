@@ -16,7 +16,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     return path
 
   def do_GET(self):
-    if self.path == '/report/656485/8b00e902-f675-4903-9118-91a8f9f5110a':
+    if self.path == '/api/aggregator/v1/report/656485/8b00e902-f675-4903-9118-91a8f9f5110a':
         self.path = '/simplehttpwebpage_content.html'
         self.send_response(401, '')
         self.end_headers()

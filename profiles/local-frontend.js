@@ -2,7 +2,6 @@
 
 const APP_ID = 'openshift';
 const API_PORT = 8010;
-const AGGREGATOR_PORT = 8080;
 const routes = {};
 
 routes[`/beta/${APP_ID}`] = { host: 'http://localhost:8001' };
