@@ -119,7 +119,11 @@
     "startmock": "OCM_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
     "insights-proxy": "env SPANDX_CONFIG=./profiles/local-frontend.js bash run/insights-proxy/scripts/run.sh",
     "lint": "eslint src --ext js,jsx",
-    "test": "jest --env=jsdom"
+    "test": "jest --env=jsdom",
+    "selenium-chrome": "podman run --rm --name=browser --add-host=qa.foo.redhat.com:127.0.0.1 --net=host -p 4444:4444 -p 5900:5900 -v /dev/shm:/dev/shm selenium/standalone-chrome-debug",
+    "selenium-firefox": "podman run --rm --name=browser --add-host qa.foo.redhat.com:127.0.0.1 --net=host -p 4444:4444 -p 5900:5900 -v /dev/shm:/dev/shm selenium/standalone-firefox-debug",
+    "selenium-test-chrome": "podman run --name selenium-test --rm -ti --net=host ocm-selenium-tests bundle exec cucumber ../cucushift/ocm/login.feature",
+    "selenium-viewer": "vinagre --file=run/selenium.vnc"
   },
   "insights": {
     "appname": "openshift"

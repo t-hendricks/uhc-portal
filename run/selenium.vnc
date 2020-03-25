@@ -1,0 +1,6 @@
+# Vinagre config format not fully documented but hints here:
+# https://bugzilla.gnome.org/show_bug.cgi?id=625879
+[Connection]
+Host=localhost
+Port=5900
+Password=secret

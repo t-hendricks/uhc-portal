@@ -3,4 +3,6 @@
 /build/
 /node_modules/
 /run/insights-proxy/
+/run/cucushift/
+/run/verification-tests/
 /vendor/
