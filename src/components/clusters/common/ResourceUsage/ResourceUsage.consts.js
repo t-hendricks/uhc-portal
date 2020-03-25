@@ -1,4 +1,4 @@
-import clusterStates from '../../../../common/clusterStates';
+import clusterStates from '../clusterStates';
 
 const metricsStatusMessages = {
   [clusterStates.INSTALLING]: 'This cluster is installing so some data might not be available. This may take a few minutes.',

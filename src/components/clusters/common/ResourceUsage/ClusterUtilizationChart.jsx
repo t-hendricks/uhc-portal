@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ChartDonutUtilization, ChartDonutThreshold } from '@patternfly/react-charts';
 import { Title } from '@patternfly/react-core';
 
-import { humanizeValueWithUnit, roundValueWithUnit } from '../../../../../../common/units';
+import { humanizeValueWithUnit, roundValueWithUnit } from '../../../../common/units';
 
 function ClusterUtilizationChart(props) {
   const {

@@ -1,17 +1,13 @@
-import get from 'lodash/get';
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import ClusterUtilizationChart from './ClusterUtilizationChart';
-import { metricsStatusMessages } from './ResourceUsage.consts';
-import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
-import { parseValueWithUnit } from '../../../../../../common/units';
-import { hasResourceUsageMetrics } from '../../Monitoring/monitoringHelper';
+import { parseValueWithUnit } from '../../../../common/units';
 
-function ResourceUsage({ cluster }) {
-  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-  const metricsAvailable = hasResourceUsageMetrics(cluster);
 
+function ResourceUsage({
+  cpu, memory, metricsStatusMessage, metricsAvailable,
+}) {
   // Why parse memory but not cpu?
   // In theory both are `ValueWithUnit` but openapi only documents units for the case of bytes,
   // and we only implemented parseValueWithUnit() for "B", "KB", "KiB" etc.
@@ -25,16 +21,16 @@ function ResourceUsage({ cluster }) {
         <>
           <ClusterUtilizationChart
             title="vCPU"
-            total={cluster.metrics.cpu.total.value}
-            used={cluster.metrics.cpu.used.value}
+            total={cpu.total.value}
+            used={cpu.used.value}
             unit="Cores"
             humanize={false}
             donutId="cpu_donut"
           />
           <ClusterUtilizationChart
             title="Memory"
-            total={getValue(cluster.metrics.memory.total)}
-            used={getValue(cluster.metrics.memory.used)}
+            total={getValue(memory.total)}
+            used={getValue(memory.used)}
             unit="B"
             humanize
             donutId="memory_donut"
@@ -43,8 +39,7 @@ function ResourceUsage({ cluster }) {
       )
         : (
           <p>
-            { isArchived ? metricsStatusMessages.archived
-              : metricsStatusMessages[cluster.state.state] || metricsStatusMessages.default}
+            { metricsStatusMessage }
           </p>
         ) }
     </>
@@ -52,7 +47,10 @@ function ResourceUsage({ cluster }) {
 }
 
 ResourceUsage.propTypes = {
-  cluster: PropTypes.object,
+  cpu: PropTypes.object.isRequired,
+  memory: PropTypes.object.isRequired,
+  metricsStatusMessage: PropTypes.string.isRequired,
+  metricsAvailable: PropTypes.bool.isRequired,
 };
 
 export default ResourceUsage;

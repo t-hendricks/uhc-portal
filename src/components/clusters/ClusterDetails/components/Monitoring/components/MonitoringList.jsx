@@ -2,14 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DataList } from '@patternfly/react-core';
 
+import get from 'lodash/get';
+
 import MonitoringListItem from './MonitoringListItem';
 import AlertsTable from './AlertsTable';
 import NodesTable from './NodesTable';
 import ClusterOperators from './ClusterOperators';
-import ResourceUsage from '../../Overview/ResourceUsage/ResourceUsage';
+import ResourceUsage from '../../../../common/ResourceUsage/ResourceUsage';
 import MonitoringEmptyState from './MonitoringEmptyState';
-
-import { getClusterStateAndDescription } from '../../../../common/clusterStates';
+import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
+import { hasResourceUsageMetrics } from '../monitoringHelper';
+import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 
 class MonitoringList extends React.Component {
     state = {
@@ -31,8 +34,10 @@ class MonitoringList extends React.Component {
     } = this.props;
     const { expanded } = this.state;
 
-    const clusterState = getClusterStateAndDescription(cluster);
-
+    const metricsAvailable = hasResourceUsageMetrics(cluster);
+    const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+    const metricsStatusMessage = isArchived ? metricsStatusMessages.archived
+      : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
 
     const EmptyState = (
       <MonitoringEmptyState hideLastCheckIn hideIcon title="No data available for this metric">
@@ -86,7 +91,18 @@ class MonitoringList extends React.Component {
           {resourceUsage.hasData
             ? (
               <div className="metrics-chart">
-                <ResourceUsage cluster={{ ...cluster, state: clusterState }} />
+                <ResourceUsage
+                  cpu={{
+                    used: cluster.metrics.cpu.used,
+                    total: cluster.metrics.cpu.total,
+                  }}
+                  memory={{
+                    used: cluster.metrics.memory.used,
+                    total: cluster.metrics.memory.total,
+                  }}
+                  metricsAvailable={metricsAvailable}
+                  metricsStatusMessage={metricsStatusMessage}
+                />
               </div>
             ) : EmptyState}
         </MonitoringListItem>

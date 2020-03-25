@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import moment from 'moment';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { hasCpuAndMemory } from '../../clusterDetailsHelper';
-import { maxMetricsTimeDelta } from '../Overview/ResourceUsage/ResourceUsage.consts';
+import { maxMetricsTimeDelta } from '../../../common/ResourceUsage/ResourceUsage.consts';
 
 const monitoringStatuses = {
   HEALTHY: 'HEALTHY',
