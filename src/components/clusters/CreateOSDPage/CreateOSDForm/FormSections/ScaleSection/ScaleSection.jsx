@@ -55,6 +55,7 @@ function ScaleSection({
           machineType={machineType}
           isDisabled={pending}
           extendedHelpText={constants.computeNodeCountHint}
+          cloudProviderID={cloudProviderID}
         />
       </GridItem>
       <GridItem span={9} />
@@ -73,6 +74,7 @@ function ScaleSection({
                 component={PersistentStorageDropdown}
                 disabled={pending}
                 currentValue={null}
+                cloudProviderID={cloudProviderID}
               />
             </FormGroup>
           </GridItem>
@@ -89,6 +91,7 @@ function ScaleSection({
                 component={LoadBalancersDropdown}
                 disabled={pending}
                 currentValue={null}
+                cloudProviderID={cloudProviderID}
               />
             </FormGroup>
           </GridItem>

@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
-import get from 'lodash/get';
 
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../redux/actions/machineTypesActions';
@@ -11,38 +10,42 @@ import getPersistentStorageValues from '../../../redux/actions/persistentStorage
 import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
+import {
+  hasOSDQuotaSelector,
+  hasAwsQuotaSelector,
+  hasGcpQuotaSelector,
+  awsQuotaSelector,
+  gcpQuotaSelector,
+} from '../CreateClusterPage/quotaSelector';
 
 const reduxFormConfig = {
   form: 'CreateCluster',
 };
 const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const { organization } = state.userProfile;
-  const byocQuota = get(organization, 'quotaList.clustersQuota.aws.byoc', {});
-  const rhInfraQuota = get(organization, 'quotaList.clustersQuota.aws.rhInfra', {});
 
   return ({
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
     organization,
+
+    isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
+    isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
+
     cloudProviders: state.cloudProviders,
     persistentStorageValues: state.persistentStorageValues,
     loadBalancerValues: state.loadBalancerValues,
-    isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
-    isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
-    quota: {
-      byoc: {
-        hasQuota: get(byocQuota, 'available', 0) > 0,
-        multiAz: get(byocQuota, 'multiAz.available', 0),
-        singleAz: get(byocQuota, 'singleAz.available', 0),
-      },
-      rhInfra: {
-        hasQuota: get(rhInfraQuota, 'available', 0) > 0,
-        multiAz: get(rhInfraQuota, 'multiAz.available', 0),
-        singleAz: get(rhInfraQuota, 'singleAz.available', 0),
-      },
+
+    clustersQuota: {
+      hasOsdQuota: hasOSDQuotaSelector(state),
+      hasAwsQuota: hasAwsQuotaSelector(state),
+      hasGcpQuota: hasGcpQuotaSelector(state),
+      aws: awsQuotaSelector(state),
+      gcp: gcpQuotaSelector(state),
     },
+
     initialValues: {
       byoc: 'false',
       name: '',
@@ -50,7 +53,7 @@ const mapStateToProps = (state) => {
       dns_base_domain: '',
       aws_access_key_id: '',
       aws_secret_access_key: '',
-      region: 'us-east-1',
+      region: ownProps.cloudProviderID === 'aws' ? 'us-east-1' : 'asia-east1',
       multi_az: false,
       persistent_storage: '107374182400',
       load_balancers: '0',
@@ -58,7 +61,7 @@ const mapStateToProps = (state) => {
   });
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (formData) => {
     const clusterRequest = {
       byoc: formData.byoc === 'true',
@@ -72,8 +75,11 @@ const mapDispatchToProps = dispatch => ({
           id: formData.machine_type,
         },
       },
-      multi_az: formData.multi_az === 'true',
       managed: true,
+      cloud_provider: {
+        id: ownProps.cloudProviderID,
+      },
+      multi_az: formData.multi_az === 'true',
     };
     if (formData.network_configuration_toggle === 'advanced') {
       clusterRequest.network = {
@@ -83,6 +89,7 @@ const mapDispatchToProps = dispatch => ({
         host_prefix: parseInt(formData.network_host_prefix, 10),
       };
     }
+
     if (formData.byoc === 'true') {
       clusterRequest.aws = {
         access_key_id: formData.access_key_id,

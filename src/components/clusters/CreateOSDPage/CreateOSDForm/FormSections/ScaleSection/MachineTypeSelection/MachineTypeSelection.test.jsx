@@ -219,6 +219,7 @@ describe('<MachineTypeSelection />', () => {
           quota={quota}
           organization={organizationState}
           isMultiAz
+          cloudProviderID="aws"
         />,
       );
     });

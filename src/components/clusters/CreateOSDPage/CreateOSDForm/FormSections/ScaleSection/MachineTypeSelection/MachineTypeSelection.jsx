@@ -91,13 +91,13 @@ class MachineTypeSelection extends React.Component {
 
   hasQuotaForType(machineType) {
     const {
-      isMultiAz, organization, quota, isBYOC,
+      isMultiAz, organization, quota, isBYOC, cloudProviderID,
     } = this.props;
     if (!organization.fulfilled) {
       return false;
     }
     const infra = isBYOC ? 'byoc' : 'rhInfra';
-    const available = quota.clustersQuota.aws[infra][isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
+    const available = quota.clustersQuota[cloudProviderID][infra][isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
     return available > 0;
   }
 
@@ -143,6 +143,7 @@ class MachineTypeSelection extends React.Component {
           secondaryText={machineType.name}
           icon={machineTypeIcon(machineType.id)}
           onChange={changeHandler}
+          extraClass={cloudProviderID === 'gcp' ? 'gcp-machine-type' : ''}
         />
       );
     };

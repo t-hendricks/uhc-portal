@@ -1,39 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
-import links from '../../../../../common/installLinks';
+import links from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
-import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
+import EvaluationAlert from './components/EvaluationAlert';
 
-function InstructionsOSPUPI({ token }) {
+function InstructionsOSPIPI({ token }) {
   const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on Red Hat OpenStack Platform with user-provisioned infrastructure
+        Install on Red Hat OpenStack Platform with installer-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
-          <div className="developer-preview">
-            <CodeIcon />
-            {' '}
-            Developer Preview
-          </div>
           {token.error && <TokenErrorAlert token={token} />}
+          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
               With OpenShift Container Platform
               you can install a cluster on Red Hat OpenStack Platform using infrastructure that
-              you provide.
+              the installation program provisions and the cluster maintains.
             </p>
-            <DeveloperPreviewStatements />
 
             <GetStarted
-              docURL={links.INSTALL_OSPUPI_GETTING_STARTED}
+              docURL={links.INSTALL_OSPIPI_GETTING_STARTED}
               cloudProviderID={cloudProviderID}
             />
           </div>
@@ -42,18 +36,16 @@ function InstructionsOSPUPI({ token }) {
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_OSPUPI_INSTALLER_LATEST}
-        cliURL={links.INSTALL_OSPUPI_CLI_LATEST}
-        rhcosLearnMoreURL={links.INSTALL_OSPUPI_RHCOS_LEARN_MORE}
-        rhcosDownloadURL={links.INSTALL_OSPUPI_DOWNLOAD_RHCOS_LATEST}
+        installerURL={links.INSTALL_OSPIPI_INSTALLER_LATEST}
+        cliURL={links.INSTALL_OSPIPI_CLI_LATEST}
         cloudProviderID={cloudProviderID}
       />
     </>
   );
 }
 
-InstructionsOSPUPI.propTypes = {
+InstructionsOSPIPI.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default InstructionsOSPUPI;
+export default InstructionsOSPIPI;

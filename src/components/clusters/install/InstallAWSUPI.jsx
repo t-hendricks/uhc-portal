@@ -8,7 +8,7 @@ import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../common/Breadcrumbs';
 
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsAWSUPI from './components/instructions/InstructionsAWSUPI';
+import InstructionsAWSUPI from './instructions/InstructionsAWSUPI';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallAWSUPI extends Component {

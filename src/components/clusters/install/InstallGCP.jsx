@@ -4,7 +4,7 @@ import { PageSection } from '@patternfly/react-core';
 import PageTitle from '../../common/PageTitle';
 
 import Breadcrumbs from '../common/Breadcrumbs';
-import InstructionsGCP from './components/instructions/InstructionsGCP';
+import InstructionsGCP from './instructions/InstructionsGCP';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallGCP extends Component {

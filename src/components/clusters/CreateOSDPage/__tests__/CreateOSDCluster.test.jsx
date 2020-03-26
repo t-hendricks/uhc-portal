@@ -45,16 +45,29 @@ describe('CreateOSDCluster', () => {
       machineTypes={fulfilledRequest}
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
-      quota={{
-        byoc: {
-          multiAz: false,
-          singleAz: false,
-          hasQuota: false,
+      cloudProviderID="aws"
+      clustersQuota={{
+        hasOsdQuota: true,
+        hasAwsQuota: true,
+        hasGcpQuota: true,
+        aws: {
+          byoc: {
+            singleAz: { available: 5 },
+            multiAz: { available: 5 },
+            totalAvailable: 10,
+          },
+          rhInfra: {
+            singleAz: { available: 5 },
+            multiAz: { available: 5 },
+            totalAvailable: 10,
+          },
         },
-        rhInfra: {
-          hasQuota: true,
-          singleAz: true,
-          multiAz: true,
+        gcp: {
+          rhInfra: {
+            singleAz: { available: 5 },
+            multiAz: { available: 5 },
+            totalAvailable: 10,
+          },
         },
       }}
     />);
@@ -108,16 +121,26 @@ describe('CreateOSDCluster', () => {
         machineTypes={initialRequestStatus}
         persistentStorageValues={initialRequestStatus}
         loadBalancerValues={initialRequestStatus}
-        quota={{
-          byoc: {
-            multiAz: false,
-            singleAz: false,
-            hasQuota: false,
+        cloudProviderID="aws"
+        clustersQuota={{
+          aws: {
+            byoc: {
+              multiAz: false,
+              singleAz: false,
+              hasQuota: false,
+            },
+            rhInfra: {
+              hasQuota: true,
+              singleAz: true,
+              multiAz: true,
+            },
           },
-          rhInfra: {
-            hasQuota: false,
-            singleAz: false,
-            multiAz: true,
+          gcp: {
+            rhInfra: {
+              hasQuota: true,
+              singleAz: true,
+              multiAz: true,
+            },
           },
         }}
       />);

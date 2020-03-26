@@ -5,7 +5,7 @@ import {
 } from '@patternfly/react-core';
 
 
-import { trackPendo } from '../../../../../../common/helpers';
+import { trackPendo } from '../../../../../common/helpers';
 
 const DownloadButton = ({ token, installerURL, cloudProviderID }) => (
 

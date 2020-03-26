@@ -19,6 +19,7 @@ const reduxFormEditCluster = reduxForm(reduxFormConfig)(ScaleClusterDialog);
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
+
   return ({
     isOpen: shouldShowModal(state, 'edit-cluster'),
     editClusterResponse: state.clusters.editedCluster,
@@ -31,6 +32,7 @@ const mapStateToProps = (state) => {
     loadBalancerValues: state.loadBalancerValues,
     organization: state.userProfile.organization,
     isByoc: modalData.byoc,
+    cloudProviderID: get(modalData, 'cloud_provider.id', ''),
     machineType: get(modalData, 'nodes.compute_machine_type.id', ''),
     initialValues: {
       id: modalData.id,

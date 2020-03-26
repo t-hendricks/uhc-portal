@@ -4,17 +4,17 @@ import { Card, CardBody, Title } from '@patternfly/react-core';
 import { UserIcon, SyncAltIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_primary_color_100 } from '@patternfly/react-tokens';
-import CardBadge from '../CardBadge';
+import CardBadge from '../../common/CardBadge';
 
 
-const InstructionsGCP = () => (
+const InstructionsAzure = () => (
   <Card>
     <div className="pf-c-content ocm-page">
       <Title headingLevel="h3" size="2xl">
-        GCP: Select an installation type
+        Azure: Select an installation type
       </Title>
       <div className="flex-container">
-        <Link to="/install/gcp/installer-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/azure/installer-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isRecommened />
           <CardBody>
             <SyncAltIcon color={global_primary_color_100.value} size="xl" alt="Installer-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
@@ -24,8 +24,8 @@ const InstructionsGCP = () => (
             provisions and the cluster maintains.
           </CardBody>
         </Link>
-        <Link to="/install/gcp/user-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
-          <CardBadge isHidden />
+        <Link to="/install/azure/user-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
+          <CardBadge isDevPreview />
           <CardBody>
             <UserIcon color={global_primary_color_100.value} size="xl" alt="User-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
             <Title headingLevel="h3" size="lg">User-provisioned infrastructure</Title>
@@ -37,4 +37,4 @@ const InstructionsGCP = () => (
   </Card>
 );
 
-export default InstructionsGCP;
+export default InstructionsAzure;

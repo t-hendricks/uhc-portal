@@ -5,7 +5,7 @@ import {
 
 import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
-import InstructionsInfrastructure from './components/instructions/InstructionsInfrastructure';
+import InstructionsInfrastructure from './instructions/InstructionsInfrastructure';
 
 
 class InstallInfrastructure extends Component {

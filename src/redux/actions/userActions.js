@@ -16,7 +16,6 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
       and that we won't have to replicate it across different components
       which might need to query this data. */
     const allQuotas = {
-
       // Cluster quota
       clustersQuota: {
         // AWS
@@ -24,14 +23,14 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
           byoc: {
             singleAz: { available: 0 },
             multiAz: { available: 0 },
-            available: 0,
+            totalAvailable: 0,
           },
           rhInfra: {
             singleAz: { available: 0 },
             multiAz: { available: 0 },
-            available: 0,
+            totalAvailable: 0,
           },
-          available: false,
+          isAvailable: false,
         },
 
         // GCP
@@ -39,9 +38,9 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
           rhInfra: {
             singleAz: { available: 0 },
             multiAz: { available: 0 },
-            available: 0,
+            totalAvailable: 0,
           },
-          available: false,
+          isAvailable: false,
         },
       },
 
@@ -71,13 +70,15 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
       // Storage
       storageQuota: {
         aws: { available: 0 },
-        gcp: { available: 0 },
+        // *** TEMPORARY UNTILL RESOLVED ON AMS SIDE ***
+        gcp: { available: 600 },
       },
 
       // Load balancers
       loadBalancerQuota: {
         aws: { available: 0 },
-        gcp: { available: 0 },
+        // *** TEMPORARY UNTILL RESOLVED ON AMS SIDE ***
+        gcp: { available: 4 },
       },
 
       // Add ons
@@ -97,7 +98,7 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
 
           allQuotas.clustersQuota.aws[category][zoneType][item.resource_name] = available;
           allQuotas.clustersQuota.aws[category][zoneType].available += available;
-          allQuotas.clustersQuota.aws[category].available += available;
+          allQuotas.clustersQuota.aws[category].totalAvailable += available;
           break;
         }
 
@@ -126,26 +127,9 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
 
           allQuotas.clustersQuota.gcp.rhInfra[zoneType][item.resource_name] = available;
           allQuotas.clustersQuota.gcp.rhInfra[zoneType].available += available;
-          allQuotas.clustersQuota.gcp.rhInfra.available += available;
+          allQuotas.clustersQuota.gcp.rhInfra.totalAvailable += available;
           break;
         }
-
-        case 'compute.node.gcp': {
-          // gcp - node quota: "how many extra nodes can I add on top of the base cluster?"
-          const available = item.allowed - item.reserved;
-          allQuotas.nodesQuota.gcp[item.resource_name] = available;
-          break;
-        }
-
-        // Load balencers GCP
-        case 'network-gcp.loadbalancer.gcp':
-          allQuotas.loadBalancerQuota.gcp.available += (item.allowed - item.reserved);
-          break;
-
-          // Storage GCP
-        case 'pv.storage.gcp':
-          allQuotas.loadBalancerQuota.gcp.available += (item.allowed - item.reserved);
-          break;
 
         // ADDONS
         case 'addon':
@@ -162,11 +146,11 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
     });
 
     // check if any quota available for aws clusters
-    allQuotas.clustersQuota.aws.available = !!(allQuotas.clustersQuota.aws.byoc.available
-     || allQuotas.clustersQuota.aws.rhInfra.available);
+    allQuotas.clustersQuota.aws.isAvailable = !!(allQuotas.clustersQuota.aws.byoc.totalAvailable
+     || allQuotas.clustersQuota.aws.rhInfra.totalAvailable);
 
     // check if any quota available for gcp clusters
-    allQuotas.clustersQuota.gcp.available = !!allQuotas.clustersQuota.gcp.rhInfra.available;
+    allQuotas.clustersQuota.gcp.isAvailable = !!allQuotas.clustersQuota.gcp.rhInfra.totalAvailable;
 
     return allQuotas;
   },

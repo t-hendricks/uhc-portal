@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import links from '../../../../../common/installLinks';
+import links from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
+import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
-import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import EvaluationAlert from './components/EvaluationAlert';
 
-function InstructionsAzureIPI({ token }) {
+function InstructionsAWSUPI({ token }) {
   const cloudProviderID = window.location.pathname;
+
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on Azure with installer-provisioned infrastructure
+          Install on AWS with user-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
@@ -21,13 +22,12 @@ function InstructionsAzureIPI({ token }) {
           <EvaluationAlert />
           <div className="pf-c-content">
             <p>
-              With OpenShift Container Platform
-              you can install a cluster on Microsoft Azure using infrastructure that the
-              installation program provisions and the cluster maintains.
+              With OpenShift Container Platform you can install a cluster on Amazon Web Services
+              (AWS) using infrastructure that you provide.
             </p>
 
             <GetStarted
-              docURL={links.INSTALL_AZUREIPI_GETTING_STARTED}
+              docURL={links.INSTALL_AWSUPI_GETTING_STARTED}
               cloudProviderID={cloudProviderID}
             />
 
@@ -37,16 +37,16 @@ function InstructionsAzureIPI({ token }) {
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_AZUREIPI_INSTALLER_LATEST}
-        cliURL={links.INSTALL_AZUREIPI_CLI_LATEST}
+        installerURL={links.INSTALL_AWSUPI_INSTALLER_LATEST}
+        cliURL={links.INSTALL_AWSUPI_CLI_LATEST}
         cloudProviderID={cloudProviderID}
       />
     </>
   );
 }
 
-InstructionsAzureIPI.propTypes = {
+InstructionsAWSUPI.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default InstructionsAzureIPI;
+export default InstructionsAWSUPI;

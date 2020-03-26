@@ -577,6 +577,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 20px;  
 }
 
+#cloud-provider-selection > a {
+  flex: 1;
+  margin: 20px;
+}
+
 .infra-card, a.infra-card {
   padding: 20px;
   display: flex;
@@ -799,6 +804,9 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
     border-width: var(--pf-global--BorderWidth--lg);
   }
 
+  &.gcp-machine-type {
+    width: 340px;
+  }
 
   &:disabled {
     // disabled styles

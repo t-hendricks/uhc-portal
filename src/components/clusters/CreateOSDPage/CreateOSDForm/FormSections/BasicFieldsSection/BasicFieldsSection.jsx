@@ -16,8 +16,8 @@ import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons
 function BasicFieldsSection({
   pending, showDNSBaseDomain, quota, cloudProviderID, handleMultiAZChange,
 }) {
-  const hasSingleAzQuota = quota.singleAz > 0;
-  const hasMultiAzQuota = quota.multiAz > 0;
+  const hasSingleAzQuota = quota.singleAz.available > 0;
+  const hasMultiAzQuota = quota.multiAz.available > 0;
   const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
   const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
 
@@ -118,8 +118,9 @@ BasicFieldsSection.propTypes = {
   handleMultiAZChange: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   quota: PropTypes.shape({
-    singleAz: PropTypes.number.isRequired,
-    multiAz: PropTypes.number.isRequired,
+    singleAz: PropTypes.shape({ available: PropTypes.number.isRequired }),
+    multiAz: PropTypes.shape({ available: PropTypes.number.isRequired }),
+    totalAvailable: PropTypes.number.isRequired,
   }).isRequired,
 };
 

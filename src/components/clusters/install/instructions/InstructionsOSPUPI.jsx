@@ -1,33 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import links from '../../../../../common/installLinks';
+import { CodeIcon } from '@patternfly/react-icons';
+import links from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
-import EvaluationAlert from './components/EvaluationAlert';
+import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
 
-
-function InstructionsIBM({ token }) {
+function InstructionsOSPUPI({ token }) {
   const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-          Install on IBM Z with user-provisioned infrastructure
+        Install on Red Hat OpenStack Platform with user-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
+          <div className="developer-preview">
+            <CodeIcon />
+            {' '}
+            Developer Preview
+          </div>
           {token.error && <TokenErrorAlert token={token} />}
-          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
-              With OpenShift Container Platform you can install a cluster on IBM Z
-              infrastructure that you provide.
+              With OpenShift Container Platform
+              you can install a cluster on Red Hat OpenStack Platform using infrastructure that
+              you provide.
             </p>
+            <DeveloperPreviewStatements />
 
             <GetStarted
-              docURL={links.INSTALL_IBMZ_GETTING_STARTED}
+              docURL={links.INSTALL_OSPUPI_GETTING_STARTED}
               cloudProviderID={cloudProviderID}
             />
           </div>
@@ -36,19 +42,18 @@ function InstructionsIBM({ token }) {
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_IBMZ_INSTALLER_LATEST}
-        rhcosDownloadURL={links.DOWNLOAD_RHCOS_LATEST_IBMZ}
-        rhcosLearnMoreURL={links.INSTALL_IBMZ_RHCOS_LEARN_MORE}
-        cliURL={links.INSTALL_IBMZ_CLI_LATEST}
-        showPreReleasePageLink={false}
+        installerURL={links.INSTALL_OSPUPI_INSTALLER_LATEST}
+        cliURL={links.INSTALL_OSPUPI_CLI_LATEST}
+        rhcosLearnMoreURL={links.INSTALL_OSPUPI_RHCOS_LEARN_MORE}
+        rhcosDownloadURL={links.INSTALL_OSPUPI_DOWNLOAD_RHCOS_LATEST}
         cloudProviderID={cloudProviderID}
       />
     </>
   );
 }
 
-InstructionsIBM.propTypes = {
+InstructionsOSPUPI.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default InstructionsIBM;
+export default InstructionsOSPUPI;
