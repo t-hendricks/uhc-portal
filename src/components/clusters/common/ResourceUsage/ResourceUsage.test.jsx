@@ -1,0 +1,60 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import ResourceUsage from './ResourceUsage';
+import { metricsStatusMessages } from './ResourceUsage.consts';
+
+
+const cpu = {
+  used: {
+    value: 3.995410922987096,
+  },
+  total: {
+    value: 16,
+  },
+};
+
+const memory = {
+  used: {
+    value: 16546058240,
+    unit: 'B',
+  },
+  total: {
+    value: 82293346304,
+    unit: 'B',
+  },
+};
+
+describe('<ResourceUsage />', () => {
+  it('should render', () => {
+    const wrapper = shallow(<ResourceUsage
+      cpu={cpu}
+      memory={memory}
+      metricsAvailable
+      metricsStatusMessage={metricsStatusMessages.default}
+    />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should render status message when metrics are not available', () => {
+    const wrapper = shallow(<ResourceUsage
+      cpu={cpu}
+      memory={memory}
+      metricsAvailable={false}
+      metricsStatusMessage={metricsStatusMessages.default}
+    />);
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find('p').length).toEqual(1);
+  });
+
+  it('should render correct status message when archived', () => {
+    const wrapper = shallow(<ResourceUsage
+      cpu={cpu}
+      memory={memory}
+      metricsAvailable={false}
+      metricsStatusMessage={metricsStatusMessages.archived}
+    />);
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find('p').length).toEqual(1);
+  });
+});

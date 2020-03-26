@@ -5,18 +5,27 @@ import {
   Grid, GridItem, Card, CardHeader, CardBody, Title,
 } from '@patternfly/react-core';
 
+import get from 'lodash/get';
 import { getClusterStateAndDescription } from '../../../common/clusterStates';
 
-import ResourceUsage from './ResourceUsage/ResourceUsage';
+
+import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
 import SubscriptionSettings from './SubscriptionSettings';
 import ClusterLogs from '../ClusterLogs';
+import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
+import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
+import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
 function Overview({
   cluster, cloudProviders, history, displayClusterLogs,
 }) {
   const clusterState = getClusterStateAndDescription(cluster);
+  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+  const metricsAvailable = hasResourceUsageMetrics(cluster);
+  const metricsStatusMessage = isArchived ? metricsStatusMessages.archived
+    : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
 
   return (
     <>
@@ -26,9 +35,15 @@ function Overview({
         </CardHeader>
         <CardBody>
           <ResourceUsage
-            cluster={{
-              ...cluster,
-              state: clusterState,
+            metricsAvailable={metricsAvailable}
+            metricsStatusMessage={metricsStatusMessage}
+            cpu={{
+              used: cluster.metrics.cpu.used,
+              total: cluster.metrics.cpu.total,
+            }}
+            memory={{
+              used: cluster.metrics.memory.used,
+              total: cluster.metrics.memory.total,
             }}
           />
         </CardBody>
