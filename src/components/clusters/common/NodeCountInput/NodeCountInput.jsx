@@ -12,6 +12,8 @@ import range from 'lodash/range';
 import PopoverHint from '../../../common/PopoverHint';
 import { noQuotaTooltip } from '../../../../common/helpers';
 
+const MAX_NODES = 180;
+
 class NodeCountInput extends React.Component {
   componentDidUpdate() {
     const { input, isEditingCluster } = this.props;
@@ -48,7 +50,10 @@ class NodeCountInput extends React.Component {
     const increment = isMultiAz ? 3 : 1; // MultiAz requires nodes to be a multiple of 3
     // no extra node quota = only base cluster size is available
     const optionsAvailable = (available > 0 || isEditingCluster);
-    const maxValue = isEditingCluster ? available + currentNodeCount : available + minimum;
+    let maxValue = isEditingCluster ? available + currentNodeCount : available + minimum;
+    if (maxValue > MAX_NODES) {
+      maxValue = MAX_NODES;
+    }
 
     const getOptions = () => {
       // *** TEMPORARY UNTILL RESOLVED ON AMS SIDE ***

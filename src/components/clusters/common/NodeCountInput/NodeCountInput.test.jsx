@@ -36,6 +36,20 @@ describe('<NodeCountInput>', () => {
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
     });
 
+    it('renders with extremely high quota (should only allow up to MAX_NODES)', () => {
+      const wrapper = shallow(<NodeCountInput
+        {...baseProps}
+        machineType="fake"
+        quota={{
+          rhInfra: {
+            fake: 10000,
+          },
+        }}
+      />);
+      expect(wrapper).toMatchSnapshot();
+      expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
+    });
+
     it('correctly handle machineType swithcing & default value', () => {
       const onChange = jest.fn();
       const inputProps = { ...baseProps.input, onChange };
