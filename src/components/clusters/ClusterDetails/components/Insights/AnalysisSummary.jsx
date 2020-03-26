@@ -7,7 +7,7 @@ import {
   SplitItem,
   Stack,
   StackItem, Text,
-  Title
+  Title,
 } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
@@ -20,54 +20,62 @@ import { severityMapping } from './helpers';
 const groupRulesByRisk = data => data.reduce(
   (acc, { total_risk: totalRisk }) => ({
     ...acc,
-    [totalRisk]: acc[totalRisk] ? acc[totalRisk] + 1 : 1
+    [totalRisk]: acc[totalRisk] ? acc[totalRisk] + 1 : 1,
   }),
   {},
 );
 
 const AnalysisSummary = ({ insightsData, batteryClicked }) => {
   const groupedRules = groupRulesByRisk(insightsData.data);
-  return <Card>
-    <CardBody>
-      <Grid>
-        <GridItem span={9}>
-          <Split>
-            <SplitItem>
-              {
+  return (
+    <Card>
+      <CardBody>
+        <Grid>
+          <GridItem span={9}>
+            <Split>
+              <SplitItem>
+                {
                 Object.keys(groupedRules).reduce((a, b) => Math.max(a, b)) < 4
-                ? <ExclamationTriangleIcon
-                    className="title-icon"
-                    width={18}
-                    height={18}
-                  />
-                : <ExclamationCircleIcon
-                  className="title-icon danger"
-                  width={18}
-                  height={18}
-                />
+                  ? (
+                    <ExclamationTriangleIcon
+                      className="title-icon"
+                      width={18}
+                      height={18}
+                    />
+                  )
+                  : (
+                    <ExclamationCircleIcon
+                      className="title-icon danger"
+                      width={18}
+                      height={18}
+                    />
+                  )
               }
-            </SplitItem>
-            <SplitItem className="description">
-              <Stack>
-                <StackItem>
-                  <Title headingLevel="h2" size="xl">
-                    {`Remote health detected ${insightsData.meta.count} issue${insightsData.meta.count > 1 ? 's' : ''}`}
-                  </Title>
-                </StackItem>
-                <StackItem>
-                  <Text>Last checked: <DateFormat date={new Date(insightsData.meta.last_checked_at)} /></Text>
-                </StackItem>
-                <StackItem>
-                  <RemoteHealthPopover />
-                </StackItem>
-              </Stack>
-            </SplitItem>
-          </Split>
-        </GridItem>
+              </SplitItem>
+              <SplitItem className="description">
+                <Stack>
+                  <StackItem>
+                    <Title headingLevel="h2" size="xl">
+                      {`Remote health detected ${insightsData.meta.count} issue${insightsData.meta.count > 1 ? 's' : ''}`}
+                    </Title>
+                  </StackItem>
+                  <StackItem>
+                    <Text>
+                      Last checked:
+                      <DateFormat date={new Date(insightsData.meta.last_checked_at)} />
+                    </Text>
+                  </StackItem>
+                  <StackItem>
+                    <RemoteHealthPopover />
+                  </StackItem>
+                </Stack>
+              </SplitItem>
+            </Split>
+          </GridItem>
 
-        <GridItem span={3}>
-          <Stack>
-            {
+          <GridItem span={3}>
+            <Stack>
+              {
               Object.entries(groupedRules)
                 .map(([risk, count]) => (
                   <StackItem className="battery">
@@ -85,11 +93,12 @@ const AnalysisSummary = ({ insightsData, batteryClicked }) => {
                   </StackItem>
                 ))
             }
-          </Stack>
-        </GridItem>
-      </Grid>
-    </CardBody>
-  </Card>
+            </Stack>
+          </GridItem>
+        </Grid>
+      </CardBody>
+    </Card>
+  );
 };
 
 AnalysisSummary.propTypes = {

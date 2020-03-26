@@ -35,7 +35,7 @@ const EmptyTableMessage = ({
   iconClassName,
 }) => (
   <EmptyState className="empty-table-message" variant={EmptyStateVariant.full}>
-    <EmptyStateIcon className={iconClassName} icon={icon}/>
+    <EmptyStateIcon className={iconClassName} icon={icon} />
 
     <Title headingLevel="h5" size="lg">
       {header}
@@ -54,7 +54,7 @@ const EmptyTableMessage = ({
     </Button>
 
     <EmptyStateSecondaryActions>
-      <RemoteHealthPopover/>
+      <RemoteHealthPopover />
     </EmptyStateSecondaryActions>
   </EmptyState>
 );

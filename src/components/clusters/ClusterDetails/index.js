@@ -8,7 +8,7 @@ import {
 import { getLogs } from './components/LogWindow/LogWindowActions';
 import {
   getClusterIdentityProviders,
-  resetIdentityProvidersState
+  resetIdentityProvidersState,
 } from './components/IdentityProvidersModal/IdentityProvidersActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
@@ -18,7 +18,7 @@ import { modalActions } from '../../common/Modal/ModalActions';
 import {
   getAlerts,
   getNodes,
-  getClusterOperators
+  getClusterOperators,
 } from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';

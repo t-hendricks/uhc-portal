@@ -116,6 +116,7 @@ class ClusterDetails extends Component {
     const {
       match,
       clusterDetails,
+      fetchInsightsData,
     } = this.props;
     const clusterID = match.params.id;
     const oldClusterID = prevProps.match.params.id;
@@ -125,11 +126,15 @@ class ClusterDetails extends Component {
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
     }
 
-    if (
-      (clusterID !== oldClusterID && isValid(clusterID)) ||
-      (get(prevProps.clusterDetails, 'cluster.external_id') !== get(clusterDetails, 'cluster.external_id'))
-    ) {
+    if (clusterID !== oldClusterID && isValid(clusterID)) {
       this.refresh();
+    }
+
+    if (
+      get(clusterDetails, 'cluster.external_id')
+      && get(prevProps.clusterDetails, 'cluster.external_id') !== get(clusterDetails, 'cluster.external_id')
+    ) {
+      fetchInsightsData(get(clusterDetails, 'cluster.external_id'));
     }
   }
 

@@ -37,6 +37,8 @@ function insightsReducer(state = initialState, action) {
       case REJECTED_ACTION(GET_CLUSTER_INSIGHTS):
         draft.insightsData[action.payload.clusterId] = { status: action.payload.status };
         break;
+      default:
+        break;
     }
   });
 }

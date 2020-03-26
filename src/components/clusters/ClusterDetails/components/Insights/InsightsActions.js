@@ -30,7 +30,9 @@ const fetchSingleClusterInsights = async (clusterId, orgId) => {
 
 export const fetchClusterInsights = clusterID => dispatch => dispatch({
   type: GET_CLUSTER_INSIGHTS,
-  payload: insights.chrome.auth.getUser().then( user => fetchSingleClusterInsights(clusterID, user.identity.internal.org_id) ),
+  payload: insights.chrome.auth.getUser().then(
+    user => fetchSingleClusterInsights(clusterID, user.identity.internal.org_id),
+  ),
 });
 
 // clusterId is id of the cluster

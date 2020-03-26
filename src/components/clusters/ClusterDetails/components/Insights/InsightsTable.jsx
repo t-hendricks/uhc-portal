@@ -1,3 +1,4 @@
+/* eslint react/destructuring-assignment: 0 */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardBody } from '@patternfly/react-core';
@@ -52,7 +53,7 @@ class InsightsTable extends React.Component {
     meta: {
       ...this.props.insightsData.meta,
       perPage: 10,
-      page: 1
+      page: 1,
     },
   };
 
@@ -93,33 +94,35 @@ class InsightsTable extends React.Component {
 
   fetchData = ({
     filterValues = this.state.filterValues,
-    sortBy,
+    sortBy: sortByParam,
     meta = this.state.meta,
   }) => {
-    const { insightsData } = this.props;
-    sortBy = sortBy && sortBy.column ? sortBy : this.state.sortBy;
+    this.setState((state) => {
+      const { insightsData } = this.props;
+      const sortBy = sortByParam && sortByParam.column ? sortByParam : state.sortBy;
 
-    // Filter and sort data
-    let rules = [...insightsData.data]
-      .sort((a, b) => (sortBy && sortBy.column
-        ? dataSortMapping[sortBy.column.title](a, b)
-        : 0))
-      .filter(v => isValueFiltered(filterValues, v));
+      // Filter and sort data
+      let rules = [...insightsData.data]
+        .sort((a, b) => (sortBy && sortBy.column
+          ? dataSortMapping[sortBy.column.title](a, b)
+          : 0))
+        .filter(v => isValueFiltered(filterValues, v));
 
-    // Total count of showed items
-    const rulesLength = rules.length;
+      // Total count of showed items
+      const rulesLength = rules.length;
 
-    // Pagination
-    rules = rules.slice((meta.page - 1) * meta.perPage, meta.page * meta.perPage);
+      // Pagination
+      rules = rules.slice((meta.page - 1) * meta.perPage, meta.page * meta.perPage);
 
-    this.setState({
-      shownData: rules,
-      filters: filterValues,
-      sortBy,
-      meta: {
-        ...meta,
-        itemCount: rulesLength,
-      },
+      return {
+        shownData: rules,
+        filters: filterValues,
+        sortBy,
+        meta: {
+          ...meta,
+          itemCount: rulesLength,
+        },
+      };
     });
   };
 
