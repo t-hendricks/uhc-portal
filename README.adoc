@@ -55,6 +55,8 @@ To test the application in your development environment, you need 3 things:
 2. insights "chrome" proxy
 3. webpack dev server
 
+The following explains these parts in detail; see `README-tldr.md` file for quick commands that do all that.
+
 === A real backend
 
 
@@ -128,35 +130,30 @@ To run it, run `mockdata/mockserver.py`.
 
 Then follow below in another terminal, run `yarn startmock` instead of `yarn start`, and you'll get a working UI showing mock data running with the chromed environment.
 
-=== Chromed environment
-Start by cloning https://github.com/RedHatInsights/insights-proxy[insights-proxy] and following its setup instructions.
+=== Insights "chrome" proxy
 
-....
-$ git clone https://github.com/RedHatInsights/insights-proxy.git
-$ cd insights-proxy
-$ sudo bash scripts/patch-etc-hosts.sh
-$ bash scripts/update.sh
-....
+As all apps under cloud.redhat.com, our app uses https://github.com/RedHatInsights/insights-chrome[insights-chrome].
+(The term "chrome" refers to it being responsible for header & menu around the main content, no relation to Google Chrome.)
 
-This is a one-time setup process. After this process is done, make sure to export the
-location of your proxy's git clone to the PROXY_PATH environment variable, for example
+It's not a regular build dependency but is injected by CDN using https://en.wikipedia.org/wiki/Edge_Side_Includes[Edge Side Includes] tags.  To mimic this, as well as resulting URL structure, in development we have to use https://github.com/RedHatInsights/insights-proxy[insights-proxy].
 
-....
-$ export PROXY_PATH=~/Projects/insights-proxy
-....
+`make insight-proxy-setup` will autimatically clone/pull insights-proxy under `run/insights-proxy` subdirectory and perform its setup instructions (`patch-etc-hosts.sh`, `update.sh`).
+.  Note that this includes using `sudo` to patch you /etc/hosts.
 
-It's a good idea to add this line to your '~/.bashrc file' so you don't have to type it each time.
+This is a one-time setup process but safe to repeat if you want to update the proxy.
 
-Make sure to start the backend proxy server before starting the insights proxy.
+Make sure to start the backend proxy server (or mockserver) before starting the insights proxy!
 ....
 $ ./backend
 ....
 
 Now you can use
 ....
-$ SPANDX_CONFIG="./profiles/local-frontend.js" bash $PROXY_PATH/scripts/run.sh
+$ yarn insights-proxy
 ....
-to run the insights proxy and pass API requests to the mock server described above.
+which runs an `insightsproxy` container with our `profiles/local-frontend.js` config, passing API requests to the mock server described above.
+
+You may set `RUNNER=podman` or `RUNNER=docker` env var to choose with which tool the container will be updated/run.
 
 === Webpack dev server
 

@@ -3,20 +3,19 @@
 ## How to get my development environment running?
 
 ### First time setup?
-For detailed instructions, including how to build and configure the backend proxy and the Insights Chrome, see `README.adoc`.
+Run `make setup`.  Note this will use `sudo` to add lines to your `/etc/hosts`.
 
 ### Development environment proxied to a real backend
 
-To start the "chromed environment" using the backend proxy, assuming you completed the setup instructions in the README file:
+To start the "chromed environment" using the backend proxy, assuming you completed `make setup` or manual setup per the README.adoc file:
 
 1. Run `yarn build && yarn start`
 2. Run `./backend` (this will be your backend. Provide additional parameters like `--config=my_config_file.yml` if needed)
-3. Run `SPANDX_CONFIG="$(pwd)/profiles/local-frontend.js" bash $PROXY_PATH/scripts/run.sh`
+3. Run `yarn insights-proxy`
 
 UI will run at https://qa.foo.redhat.com:1337/
 
-Authentication is QA SSO which should accept any user, and the password is always redhat
-
+Authentication is QA SSO which should accept any user, and the password is always `redhat`.
 
 ### Development environment using the mock data server
 
