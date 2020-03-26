@@ -151,7 +151,9 @@ Now you can use
 ....
 $ yarn insights-proxy
 ....
-which runs an `insightsproxy` container with our `profiles/local-frontend.js` config, passing API requests to the mock server described above.  You may set `RUNNER=podman` or `RUNNER=docker` env var to choose how the container will be run.
+which runs an `insightsproxy` container with our `profiles/local-frontend.js` config, passing API requests to the mock server described above.
+
+You may set `RUNNER=podman` or `RUNNER=docker` env var to choose with which tool the container will be updated/run.
 
 === Webpack dev server
 

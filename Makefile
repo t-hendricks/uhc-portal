@@ -82,8 +82,7 @@ run/insights-proxy:
 .PHONY: insights-proxy-setup
 insights-proxy-setup: run/insights-proxy
 	sudo bash -x run/insights-proxy/scripts/patch-etc-hosts.sh
-	which podman && RUNNER=podman bash run/insights-proxy/scripts/update.sh
-	which docker && RUNNER=docker bash run/insights-proxy/scripts/update.sh
+	bash run/insights-proxy/scripts/update.sh
 
 .PHONY: clean
 clean:
