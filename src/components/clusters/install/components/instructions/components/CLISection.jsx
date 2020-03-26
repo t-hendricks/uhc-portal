@@ -21,7 +21,7 @@ const CLISection = ({ toolsURL, cloudProviderID }) => (
         target="_blank"
         variant="secondary"
         className="install--download-cli"
-        onClick={() => trackPendo('Download-CommandLineTools', cloudProviderID)}
+        onClick={() => trackPendo('OCP-Download-CLITools', cloudProviderID)}
       >
         Download command-line tools
       </Button>

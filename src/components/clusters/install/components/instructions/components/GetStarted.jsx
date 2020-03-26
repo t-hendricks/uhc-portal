@@ -10,7 +10,7 @@ const GetStarted = ({ docURL, cloudProviderID }) => (
     <p>
       Follow the
       {' '}
-      <a href={docURL} rel="noreferrer noopener" target="_blank" onClick={() => trackPendo('Download-OfficialDocumentation', cloudProviderID)}>
+      <a href={docURL} rel="noreferrer noopener" target="_blank" onClick={() => trackPendo('OCP-Download-OfficialDocumentation', cloudProviderID)}>
         official documentation
         {' '}
         <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -24,7 +24,7 @@ const GetStarted = ({ docURL, cloudProviderID }) => (
       rel="noreferrer noopener"
       target="_blank"
       variant="secondary"
-      onClick={() => trackPendo('Download-OfficialDocumentation', cloudProviderID)}
+      onClick={() => trackPendo('OCP-Download-OfficialDocumentation', cloudProviderID)}
     >
       Get started
     </Button>

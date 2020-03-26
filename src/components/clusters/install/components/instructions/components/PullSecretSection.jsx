@@ -16,7 +16,7 @@ class PullSecretSection extends React.Component {
     const isDisabled = (!token || !!token.error);
     const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
     const downloadButton = (
-      <Button variant="secondary" isDisabled={isDisabled} onClick={() => trackPendo('Download-PullSecret', cloudProviderID)}>
+      <Button variant="secondary" isDisabled={isDisabled} onClick={() => trackPendo('OCP-Download-PullSecret', cloudProviderID)}>
       Download pull secret
       </Button>
     );
