@@ -1,3 +1,4 @@
 {
-  "apiGateway": "https://api.stage.openshift.com"
+  "apiGateway": "https://api.stage.openshift.com",
+  "insightsGateway": "https://qaprodauth.cloud.redhat.com/api/insights-results-aggregator/v1"
 }
