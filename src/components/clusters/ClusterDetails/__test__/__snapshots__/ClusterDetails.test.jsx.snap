@@ -182,8 +182,14 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       }
       displayAccessControlTab={true}
       displayAddOnsTab={false}
+      displayInsightsTab={false}
       displayLogs={false}
       displayMonitoringTab={true}
+      insightsTabRef={
+        Object {
+          "current": null,
+        }
+      }
       logsTabRef={
         Object {
           "current": null,

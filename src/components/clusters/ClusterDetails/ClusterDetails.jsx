@@ -441,7 +441,6 @@ class ClusterDetails extends Component {
 ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  insightsData: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
   fetchInsightsData: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
@@ -459,6 +458,7 @@ ClusterDetails.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
+  insightsData: PropTypes.object,
   logs: PropTypes.object,
   addOns: PropTypes.object,
   clusterAddOns: PropTypes.object,
@@ -488,6 +488,7 @@ ClusterDetails.propTypes = {
 
 ClusterDetails.defaultProps = {
   clusterAddOns: {},
+  insightsData: {},
   clusterDetails: {
     cluster: null,
     error: false,
