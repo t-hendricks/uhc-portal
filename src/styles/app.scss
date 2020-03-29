@@ -1072,7 +1072,7 @@ button:focus {
   margin-top: var(--pf-global--spacer--lg);
 }
 
-.network-configuration-radios.pf-c-radio {
+.radio-button.pf-c-radio {
   align-items: start;
   margin-bottom: var(--pf-global--spacer--form-element);
 
@@ -1082,6 +1082,12 @@ button:focus {
   label > .radio-helptext {
     font-size: var(--pf-global--FontSize--sm);
   }
+}
+
+h3#grant-role-select  {
+  margin-bottom: -20px;
+  font-weight: var(--pf-c-form__label-text--FontWeight);
+  font-size: var(--pf-c-form__label--FontSize);
 }
 
 .access-control-tables-copy {
