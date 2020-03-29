@@ -74,6 +74,13 @@ const mapFlagsGroup = (group, currentFlags, setFlags, history) => {
   );
 };
 
+const clearFilters = (history, clearFiltersAndFlags) => {
+  history.push({
+    search: '',
+  });
+  clearFiltersAndFlags();
+};
+
 const groupFlags = [
   {
     key: 'severityTypes',
@@ -121,7 +128,7 @@ function ClusterLogsFilterChipGroup({
         </ChipGroup>
       </SplitItem>
       <SplitItem>
-        <Button variant="link" onClick={() => clearFiltersAndFlags()}>Clear filters</Button>
+        <Button variant="link" onClick={() => clearFilters(history, clearFiltersAndFlags)}>Clear filters</Button>
       </SplitItem>
     </Split>
   );
