@@ -84,7 +84,7 @@ class ClusterDetails extends Component {
 
     const clusterID = match.params.id;
 
-    this.refresh();
+    this.refresh(false);
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
@@ -123,7 +123,7 @@ class ClusterDetails extends Component {
     }
 
     if (clusterID !== oldClusterID && isValid(clusterID)) {
-      this.refresh();
+      this.refresh(false);
     }
   }
 
@@ -133,7 +133,7 @@ class ClusterDetails extends Component {
     closeModal();
   }
 
-  refresh() {
+  refresh(automatic = true) {
     const {
       match,
       clusterDetails,
@@ -154,10 +154,11 @@ class ClusterDetails extends Component {
     if (isValid(clusterID)) {
       fetchDetails(clusterID);
       getOrganizationAndQuota();
-
-      const externalClusterID = get(clusterDetails, 'cluster.external_id');
-      if (externalClusterID) {
-        getClusterHistory(externalClusterID, clusterLogsViewOptions);
+      if (automatic) {
+        const externalClusterID = get(clusterDetails, 'cluster.external_id');
+        if (externalClusterID) {
+          getClusterHistory(externalClusterID, clusterLogsViewOptions);
+        }
       }
 
       if (!isUuid(clusterID)) {

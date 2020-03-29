@@ -1,6 +1,6 @@
 import apiRequest from './apiRequest';
 
-const getClusterHistory = (externalClusterID, params) => apiRequest({
+const getClusterHistory = params => apiRequest({
   method: 'get',
   params: {
     size: params.page_size,
