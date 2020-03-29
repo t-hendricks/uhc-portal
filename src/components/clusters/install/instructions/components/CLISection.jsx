@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@patternfly/react-core';
+import DownloadAndOSSelection from './DownloadAndOSSelection';
 
-
-import { trackPendo } from '../../../../../common/helpers';
-
-const CLISection = ({ toolsURL, cloudProviderID }) => (
+const CLISection = ({ token, cloudProviderID, channel }) => (
   <>
     <p>
       Download the OpenShift command-line tools and add them to your
@@ -14,17 +11,12 @@ const CLISection = ({ toolsURL, cloudProviderID }) => (
       .
     </p>
     <div>
-      <Button
-        component="a"
-        href={toolsURL}
-        rel="noreferrer noopener"
-        target="_blank"
-        variant="secondary"
-        className="install--download-cli"
-        onClick={() => trackPendo('OCP-Download-CLITools', cloudProviderID)}
-      >
-        Download command-line tools
-      </Button>
+      <DownloadAndOSSelection
+        token={token}
+        cloudProviderID={cloudProviderID}
+        channel={channel}
+        cliTools
+      />
     </div>
     <p />
     <p>
@@ -42,8 +34,9 @@ const CLISection = ({ toolsURL, cloudProviderID }) => (
   </>
 );
 CLISection.propTypes = {
-  toolsURL: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string,
+  token: PropTypes.object.isRequired,
+  channel: PropTypes.string.isRequired,
 };
 
 export default CLISection;

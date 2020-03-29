@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import links from '../../../../common/installLinks';
+import links, { channels } from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import EvaluationAlert from './components/EvaluationAlert';
-
 
 function InstructionsIBM({ token }) {
   const cloudProviderID = window.location.pathname;
@@ -36,12 +35,11 @@ function InstructionsIBM({ token }) {
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
-        installerURL={links.INSTALL_IBMZ_INSTALLER_LATEST}
         rhcosDownloadURL={links.DOWNLOAD_RHCOS_LATEST_IBMZ}
         rhcosLearnMoreURL={links.INSTALL_IBMZ_RHCOS_LEARN_MORE}
-        cliURL={links.INSTALL_IBMZ_CLI_LATEST}
         showPreReleasePageLink={false}
         cloudProviderID={cloudProviderID}
+        channel={channels.IBMZ}
       />
     </>
   );

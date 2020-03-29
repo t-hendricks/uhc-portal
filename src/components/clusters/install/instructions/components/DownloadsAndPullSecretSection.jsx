@@ -4,15 +4,13 @@ import { Card, Title } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 
 import PullSecretSection from './PullSecretSection';
-import DownloadButton from './DownloadButton';
+import DownloadAndOSSelection from './DownloadAndOSSelection';
 import CLISection from './CLISection';
 import RHCOSSection from './RHCOSSection';
 import DeveloperPreviewSection from './DeveloperPreviewSection';
 import links from '../../../../../common/installLinks';
 
 function DownloadsAndPullSecretSection({
-  installerURL,
-  cliURL,
   rhcosLearnMoreURL,
   token,
   rhcosDownloadURL,
@@ -20,6 +18,7 @@ function DownloadsAndPullSecretSection({
   showPreReleasePageLink = true,
   children,
   cloudProviderID,
+  channel,
 }) {
   return (
     <Card>
@@ -51,13 +50,7 @@ function DownloadsAndPullSecretSection({
               .
             </p>
           )}
-          <p>
-            <DownloadButton
-              installerURL={installerURL}
-              token={token}
-              cloudProviderID={cloudProviderID}
-            />
-          </p>
+          <DownloadAndOSSelection token={token} channel={channel} />
           {showPreReleasePageLink && <DeveloperPreviewSection />}
 
           <Title headingLevel="h3" size="md" className="downloads-subtitle">Pull secret</Title>
@@ -79,7 +72,7 @@ function DownloadsAndPullSecretSection({
           )}
 
           <Title headingLevel="h3" size="md" className="downloads-subtitle">Command-line interface</Title>
-          <CLISection toolsURL={cliURL} cloudProviderID={cloudProviderID} />
+          <CLISection token={token} cloudProviderID={cloudProviderID} channel={channel} />
 
         </div>
       </div>
@@ -88,8 +81,6 @@ function DownloadsAndPullSecretSection({
 }
 
 DownloadsAndPullSecretSection.propTypes = {
-  installerURL: PropTypes.string.isRequired,
-  cliURL: PropTypes.string.isRequired,
   rhcosLearnMoreURL: PropTypes.string,
   rhcosDownloadURL: PropTypes.string,
   showPreReleasePageLink: PropTypes.bool,
@@ -97,6 +88,7 @@ DownloadsAndPullSecretSection.propTypes = {
   token: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   cloudProviderID: PropTypes.string,
+  channel: PropTypes.string.isRequired,
 };
 
 export default DownloadsAndPullSecretSection;

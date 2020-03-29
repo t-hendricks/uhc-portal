@@ -4,27 +4,39 @@ import {
   Button,
 } from '@patternfly/react-core';
 
-
 import { trackPendo } from '../../../../../common/helpers';
 
-const DownloadButton = ({ token, installerURL, cloudProviderID }) => (
-
+const DownloadButton = ({
+  token,
+  url,
+  disabled = false,
+  cliTools = false,
+  cloudProviderID = null,
+}) => (
   <Button
     component="a"
-    href={installerURL}
-    target="_blank"
+    href={url}
     variant="secondary"
     className="install--download-installer"
-    disabled={!!token.error}
-    onClick={() => trackPendo('OCP-Download-Installer', cloudProviderID)}
+    onClick={() => {
+      if (cliTools) {
+        trackPendo('OCP-Download-CLITools', cloudProviderID);
+      } else {
+        trackPendo('OCP-Download-Installer', cloudProviderID);
+      }
+    }}
+    disabled={!!token.error || disabled}
+    download
   >
-    Download installer
+    {cliTools ? 'Download command-line tools' : 'Download installer'}
   </Button>
 );
 DownloadButton.propTypes = {
   token: PropTypes.object.isRequired,
-  installerURL: PropTypes.string,
   cloudProviderID: PropTypes.string,
+  url: PropTypes.string,
+  disabled: PropTypes.bool,
+  cliTools: PropTypes.bool,
 };
 
 export default DownloadButton;

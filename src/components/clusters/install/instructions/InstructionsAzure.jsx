@@ -6,7 +6,6 @@ import { UserIcon, SyncAltIcon } from '@patternfly/react-icons';
 import { global_primary_color_100 } from '@patternfly/react-tokens';
 import CardBadge from '../../common/CardBadge';
 
-
 const InstructionsAzure = () => (
   <Card>
     <div className="pf-c-content ocm-page">
