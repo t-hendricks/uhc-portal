@@ -12,7 +12,6 @@ const serviceConfig = (passedConfig = {}, token, customHost) => {
     ...passedConfig,
     headers: token ? authHeader(token) : {},
     url: `${BASE_URL}${passedConfig.url}`,
-    crossdomain: true,
   };
 };
 

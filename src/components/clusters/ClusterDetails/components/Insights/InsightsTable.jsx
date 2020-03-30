@@ -156,13 +156,11 @@ class InsightsTable extends React.Component {
                 },
                 {
                   title: 'Added',
-                  // eslint-disable-next-line react/prop-types
                   selector: ({ created_at: created }) => <DateFormat date={new Date(created)} />,
                 },
                 {
                   title: 'Total risk',
                   selector:
-                  // eslint-disable-next-line react/prop-types
                     ({ total_risk: riskNumber }) => (
                       <div className="battery">
                         <Battery
