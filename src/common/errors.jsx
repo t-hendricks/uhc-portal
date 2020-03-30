@@ -10,6 +10,7 @@ function overrideErrorMessage(payload) {
 
   // override error by its kind
   const errorKind = get(payload, 'details[0].kind', '');
+
   switch (errorKind) {
     case 'ExcessResources':
       message = `You are not authorized to create the cluster because your request exceeds available quota.
@@ -94,22 +95,37 @@ function formatErrorDetails(errorDetails) {
         // Resource map: singular and plural
         const resourceMap = {
           'cluster.aws': ['cluster', 'clusters'],
+          'cluster.gcp': ['cluster', 'clusters'],
           'compute.node.aws': ['node', 'nodes'],
+          'compute.node.gcp': ['node', 'nodes'],
           'pv.storage.aws': ['GiB of storage', 'GiB of storage'],
+          'pv.storage.gcp': ['GiB of storage', 'GiB of storage'],
           'network.loadbalancer.aws': ['load balancers', 'load balancers'],
+        };
+
+        const getName = (type, count) => {
+          if (resourceMap[type]) {
+            return (resourceMap[type][count === 1 ? 0 : 1]);
+          }
+          return type;
         };
 
         // Add extra error details
         customErrors.push((
           <ul>
-            { details.items.map(excessResource => (
-              <li>
-                { `${excessResource.count} additional
-                 ${resourceMap[excessResource.resource_type][excessResource.count === 1 ? 0 : 1]} of type
+            { details.items.map((excessResource) => {
+              if (resourceMap[excessResource.resource_type]) {
+                return (
+                  <li>
+                    { `${excessResource.count} additional
+                 ${getName(excessResource.resource_type, excessResource.count)} of type
                  ${excessResource.availability_zone_type} availability zone, instance size
                  ${excessResource.resource_name}.`}
-              </li>
-            ))}
+                  </li>
+                );
+              }
+              return 'An error occurred';
+            })}
           </ul>
         ));
         break;
