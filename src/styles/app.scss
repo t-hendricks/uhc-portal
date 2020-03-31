@@ -806,6 +806,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
   &.gcp-machine-type {
     width: 340px;
+    max-width: 340px;
   }
 
   &:disabled {
