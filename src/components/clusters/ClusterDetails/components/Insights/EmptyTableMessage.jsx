@@ -62,7 +62,7 @@ const EmptyTableMessage = ({
 EmptyTableMessage.propTypes = {
   icon: PropTypes.elementType,
   header: PropTypes.string,
-  body: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
+  body: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   iconClassName: PropTypes.string,
 };
 

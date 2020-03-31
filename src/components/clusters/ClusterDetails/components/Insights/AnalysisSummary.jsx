@@ -54,18 +54,18 @@ const AnalysisSummary = ({ insightsData, batteryClicked }) => {
               </SplitItem>
               <SplitItem className="description">
                 <Stack>
-                  <StackItem>
+                  <StackItem key="remote-health-description">
                     <Title headingLevel="h2" size="xl">
                       {`Remote health detected ${insightsData.meta.count} issue${insightsData.meta.count > 1 ? 's' : ''}`}
                     </Title>
                   </StackItem>
-                  <StackItem>
+                  <StackItem key="remote-health-last-checked">
                     <Text>
                       Last checked:
                       <DateFormat date={new Date(insightsData.meta.last_checked_at)} />
                     </Text>
                   </StackItem>
-                  <StackItem>
+                  <StackItem key="remote-health-popover">
                     <RemoteHealthPopover />
                   </StackItem>
                 </Stack>
@@ -78,7 +78,7 @@ const AnalysisSummary = ({ insightsData, batteryClicked }) => {
               {
               Object.entries(groupedRules)
                 .map(([risk, count]) => (
-                  <StackItem className="battery">
+                  <StackItem key={risk} className="battery">
                     <Battery
                       label={severity[severityMapping[risk - 1]]}
                       severity={parseInt(risk, 10)}
