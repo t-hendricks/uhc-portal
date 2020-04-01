@@ -3,6 +3,7 @@ const history = {
   push: jest.fn(),
 };
 const fetchDetails = jest.fn();
+const fetchInsightsData = jest.fn();
 const getCloudProviders = jest.fn();
 const invalidateClusters = jest.fn();
 const getOrganizationAndQuota = jest.fn();
@@ -373,6 +374,7 @@ export {
   match,
   history,
   fetchDetails,
+  fetchInsightsData,
   getCloudProviders,
   getClusterIdentityProviders,
   resetIdentityProvidersState,

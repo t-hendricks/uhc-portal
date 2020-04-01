@@ -6,17 +6,25 @@ import {
   invalidateClusters,
 } from '../../../redux/actions/clustersActions';
 import { getLogs } from './components/LogWindow/LogWindowActions';
-import { getClusterIdentityProviders, resetIdentityProvidersState } from './components/IdentityProvidersModal/IdentityProvidersActions';
+import {
+  getClusterIdentityProviders,
+  resetIdentityProvidersState,
+} from './components/IdentityProvidersModal/IdentityProvidersActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalErrorActions';
 import { userActions } from '../../../redux/actions/userActions';
 import { modalActions } from '../../common/Modal/ModalActions';
-import { getAlerts, getNodes, getClusterOperators } from './components/Monitoring/MonitoringActions';
+import {
+  getAlerts,
+  getNodes,
+  getClusterOperators,
+} from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import { getClusterHistory } from './components/ClusterLogs/clusterLogActions';
 import { viewConstants } from '../../../redux/constants';
+import { fetchClusterInsights, voteOnRuleInsights } from './components/Insights/InsightsActions';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
@@ -26,6 +34,7 @@ const mapStateToProps = (state) => {
   const { addOns, clusterAddOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
+  const { insightsData } = state.insightsData;
 
   return ({
     cloudProviders,
@@ -37,11 +46,14 @@ const mapStateToProps = (state) => {
     organization,
     displayClusterLogs: errorCode !== 403 && errorCode !== 404,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
+    insightsData,
   });
 };
 
 const mapDispatchToProps = {
-  fetchDetails: clusterID => fetchClusterDetails(clusterID),
+  fetchDetails: clusterId => fetchClusterDetails(clusterId),
+  fetchInsightsData: clusterId => fetchClusterInsights(clusterId),
+  voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
   invalidateClusters,

@@ -1178,6 +1178,11 @@
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/patternfly/-/patternfly-2.56.3.tgz#ca70eec632863f4ab62dada040f0979998a1355b"
   integrity sha512-merUreEz4ul84s+OXwJ27AtMtcBdzExDX+Xn/T84OD6OAgG8iU1x1dnWdFBeEFKOlTpKxwjXxS/Zc8tSxpfRBw==
 
+"@patternfly/patternfly@2.68.3":
+  version "2.68.3"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/patternfly/-/patternfly-2.68.3.tgz#fd2b8b92618cd9adde714d46f33ae050d7a3d4f0"
+  integrity sha512-ZsANYyp/AVRaSWAFBnKuoyvVoA1tMT7hh1jHpua0sQYjN4ocuN89MNcNdAJhdawt1Bh+p9OEtDgl4vfKQbJ9RQ==
+
 "@patternfly/react-charts@^5.2.21":
   version "5.2.21"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-charts/-/react-charts-5.2.21.tgz#4ca0ce16616ef3ff333426055683e5caae099cdb"
@@ -1205,10 +1210,31 @@
     focus-trap-react "^4.0.1"
     tippy.js "5.1.2"
 
+"@patternfly/react-core@^3.146.0":
+  version "3.146.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-core/-/react-core-3.146.0.tgz#81f06d6f0e0c122e93e303aa469befed47a767ee"
+  integrity sha512-uzzTmOMnvbmpFOjUFqQn2PHPVKvpgbqePrNutPHCHbYcTXXF16t4YABk9S5POpeEqs9ETIRrkLnNa8e9mKYGog==
+  dependencies:
+    "@patternfly/react-icons" "^3.15.11"
+    "@patternfly/react-styles" "^3.7.8"
+    "@patternfly/react-tokens" "^2.8.8"
+    emotion "^9.2.9"
+    exenv "^1.2.2"
+    focus-trap-react "^4.0.1"
+    react-dropzone "9.0.0"
+    tippy.js "5.1.2"
+
 "@patternfly/react-icons@^3.14.39":
   version "3.14.39"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-icons/-/react-icons-3.14.39.tgz#38e43781ff2c4550814208c68a68681b807270aa"
   integrity sha512-/1hhKEFRtvBYNa8BFRurqHdlUYYzdovmllwtEWcxye5lffDC1Ghco1NGQzjm0FtzkxX1hPFvw04HRR2jBBG8xQ==
+  dependencies:
+    "@fortawesome/free-brands-svg-icons" "^5.8.1"
+
+"@patternfly/react-icons@^3.15.11", "@patternfly/react-icons@^3.15.4":
+  version "3.15.13"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-icons/-/react-icons-3.15.13.tgz#845f9f98684b718810b115fcc32983ae94cc5201"
+  integrity sha512-uEzKC9NwpZamCW00mZIxZ5AslFPXVZ+4ThBUOTYSliZUS1DwOKe0549qrAP1vCpz9vCeTR4jyOXBe/kS9IoXpg==
   dependencies:
     "@fortawesome/free-brands-svg-icons" "^5.8.1"
 
@@ -1231,6 +1257,17 @@
     resolve-from "^4.0.0"
     typescript "3.4.5"
 
+"@patternfly/react-styles@^3.7.8":
+  version "3.7.8"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-styles/-/react-styles-3.7.8.tgz#6cfac5a7e7c8c49520f0f9276734036ceece9b85"
+  integrity sha512-9LxcVVQdYEN7SJz3nwvrK4W9rci2c74DDyCbMJb2rC3VAOKKHb7We9iDn+2vxHV43Oskc2vfRoKjPEdVJcXYAA==
+  dependencies:
+    camel-case "^3.0.0"
+    css "^2.2.3"
+    cssstyle "^0.3.1"
+    emotion "^9.2.9"
+    emotion-server "^9.2.9"
+
 "@patternfly/react-table@^2.25.6":
   version "2.25.6"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-table/-/react-table-2.25.6.tgz#f64aeb38cb7cf588d06ab787e87e8cf03ee6043f"
@@ -1245,10 +1282,29 @@
     exenv "^1.2.2"
     lodash "^4.17.15"
 
+"@patternfly/react-table@^2.27.11":
+  version "2.28.10"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-table/-/react-table-2.28.10.tgz#829a99cf3a44a60586ab06a3930c44b411f1f8d6"
+  integrity sha512-OPonTCMVsumEOUNc6u6WuxVWsqsTODnhmFMJcL9IO3QWN19CGYqEY9EQX0yfPuGRVhkAD4zutm5XsEpxg/mYbQ==
+  dependencies:
+    "@patternfly/patternfly" "2.68.3"
+    "@patternfly/react-core" "^3.146.0"
+    "@patternfly/react-icons" "^3.15.11"
+    "@patternfly/react-styles" "^3.7.8"
+    "@patternfly/react-tokens" "^2.8.8"
+    classnames "^2.2.5"
+    exenv "^1.2.2"
+    lodash "^4.17.15"
+
 "@patternfly/react-tokens@^2.7.25":
   version "2.7.25"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-tokens/-/react-tokens-2.7.25.tgz#69b517f635721bedcefa6b4535688a11586be115"
   integrity sha512-04hRDWt07pyjLUO1VN9QbrPpQMJzjd+nQYp8vgoe6+mYBzw+D4banJeudZ1oTFii9hWV+mLEu6aiwPtTigPM1Q==
+
+"@patternfly/react-tokens@^2.8.8":
+  version "2.8.8"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-tokens/-/react-tokens-2.8.8.tgz#25edde60501708b8fe821f69ab1f284ac1b81814"
+  integrity sha512-W3Kx2zlbfFtcjL9mYpjWNU9RfNrFpfXI6zC8qQTuaDwhV3IHCWt5HCkcf9oIW2aCtEjC0EkI67Wbz0BcmdYGJA==
 
 "@redhat-cloud-services/frontend-components-notifications@^1.0.0":
   version "1.0.0"
@@ -1279,12 +1335,32 @@
     commander "^2.20.0"
     react-content-loader "^3.4.1"
 
+"@redhat-cloud-services/frontend-components@>=1.0.8":
+  version "1.0.11"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components/-/frontend-components-1.0.11.tgz#ec543a868b1ca534daf41a28dfc472dbefd6b894"
+  integrity sha512-ookssblnGOQN1tAzsMlU+Y/0MOUqN2g4eKDkoiQ97jpgjtPI5iACvfJUunZ8o5hkxOwvvPp01h0vAURB6B2k8g==
+  dependencies:
+    "@redhat-cloud-services/frontend-components-utilities" "*"
+
 "@redhat-cloud-services/frontend-components@^0.0.43":
   version "0.0.43"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components/-/frontend-components-0.0.43.tgz#c52974184e0f7259837c2ffefabdd1301efd4cea"
   integrity sha512-Mw3gVrjJJucS9rBmuTuSYZp7fUg80ZJcNrfwxy57sLEBAHL4zNPZ6Yui+ldZne15HbYOnkw8NUYkMu5NkyDA5Q==
   dependencies:
     "@redhat-cloud-services/frontend-components-utilities" ">=0.0.7"
+
+"@redhat-cloud-services/rule-components@0.0.11":
+  version "0.0.11"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/rule-components/-/rule-components-0.0.11.tgz#f13566c5012512b0caee8c581d7d7c947506f7ca"
+  integrity sha512-k6Quqt9ZAHZrtxgqjaAwcIYIOFHVcGM9I/Rg9NapKZ3k3hT3ho/aLyLoHAl0Qz4wvgPE3B4jb8FUuQOF/SC4nQ==
+  dependencies:
+    "@patternfly/react-core" "^3.134.2"
+    "@patternfly/react-icons" "^3.15.4"
+    "@patternfly/react-table" "^2.27.11"
+    "@redhat-cloud-services/frontend-components" ">=1.0.8"
+    prop-types "^15.7.2"
+    react "^16.12.0"
+    react-dom "^16.12.0"
 
 "@sentry/browser@^5.4.0":
   version "5.12.1"
@@ -2052,6 +2128,13 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
+
+attr-accept@^1.1.3:
+  version "1.1.3"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/attr-accept/-/attr-accept-1.1.3.tgz#48230c79f93790ef2775fcec4f0db0f5db41ca52"
+  integrity sha512-iT40nudw8zmCweivz6j58g+RT33I4KbaIvRUhjNmDwO2WmsQUxFEZZYZ5w3vXe5x5MX9D7mfvA/XaLOZYFR9EQ==
+  dependencies:
+    core-js "^2.5.0"
 
 awesome-debounce-promise@^2.1.0:
   version "2.1.0"
@@ -5148,6 +5231,13 @@ file-loader@^5.0.2:
   dependencies:
     loader-utils "^1.2.3"
     schema-utils "^2.5.0"
+
+file-selector@^0.1.8:
+  version "0.1.12"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/file-selector/-/file-selector-0.1.12.tgz#fe726547be219a787a9dcc640575a04a032b1fd0"
+  integrity sha512-Kx7RTzxyQipHuiqyZGf+Nz4vY9R1XGxuQl/hLoJwq+J4avk/9wxxgZyHKtbyIPJmbD4A66DWGYfyykWNpcYutQ==
+  dependencies:
+    tslib "^1.9.0"
 
 filesize@^3.6.1:
   version "3.6.1"
@@ -8829,6 +8919,14 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
+prop-types-extra@^1.1.0:
+  version "1.1.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/prop-types-extra/-/prop-types-extra-1.1.1.tgz#58c3b74cbfbb95d304625975aa2f0848329a010b"
+  integrity sha512-59+AHNnHYCdiC+vMwY52WmvP5dM3QLeoumYuEyceQDi9aEhtwN9zIQ2ZNo25sMyXnbh32h+P1ezDsUpUH3JAew==
+  dependencies:
+    react-is "^16.3.2"
+    warning "^4.0.0"
+
 prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
@@ -8837,7 +8935,7 @@ prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1,
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-prop-types@^15.7.2:
+prop-types@^15.7.0, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9065,6 +9163,16 @@ react-copy-to-clipboard@^5.0.1:
     copy-to-clipboard "^3"
     prop-types "^15.5.8"
 
+react-dom@^16.12.0:
+  version "16.13.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
+  integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.19.1"
+
 react-dom@^16.3.2:
   version "16.5.2"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-dom/-/react-dom-16.5.2.tgz#b69ee47aa20bab5327b2b9d7c1fe2a30f2cfa9d7"
@@ -9074,6 +9182,16 @@ react-dom@^16.3.2:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     schedule "^0.5.0"
+
+react-dropzone@9.0.0:
+  version "9.0.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-dropzone/-/react-dropzone-9.0.0.tgz#4f5223cdcb4d3bd8a66e3298c4041eb0c75c4634"
+  integrity sha512-wZ2o9B2qkdE3RumWhfyZT9swgJYJPeU5qHEcMU8weYpmLex1eeWX0CC32/Y0VutB+BBi2D+iePV/YZIiB4kZGw==
+  dependencies:
+    attr-accept "^1.1.3"
+    file-selector "^0.1.8"
+    prop-types "^15.6.2"
+    prop-types-extra "^1.1.0"
 
 react-fast-compare@^2.0.0:
   version "2.0.4"
@@ -9097,6 +9215,11 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.9.0:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
+react-is@^16.3.2, react-is@^16.8.6:
+  version "16.13.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
+  integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
 react-is@^16.5.2:
   version "16.5.2"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-is/-/react-is-16.5.2.tgz#e2a7b7c3f5d48062eb769fcb123505eb928722e3"
@@ -9111,11 +9234,6 @@ react-is@^16.8.4:
   version "16.9.0"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
-
-react-is@^16.8.6:
-  version "16.13.0"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-is/-/react-is-16.13.0.tgz#0f37c3613c34fe6b37cd7f763a0d6293ab15c527"
-  integrity sha512-GFMtL0vHkiBv9HluwNZTggSn/sCyEt9n02aM0dSAjGGyqyNlAyftYm4phPxdvCigG15JreC5biwxCgTAJZ7yAA==
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
@@ -9194,6 +9312,15 @@ react-test-renderer@^16.0.0-0:
     prop-types "^15.6.2"
     react-is "^16.5.2"
     schedule "^0.5.0"
+
+react@^16.12.0:
+  version "16.13.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
+  integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
 
 react@^16.5.2:
   version "16.5.2"
@@ -9780,6 +9907,14 @@ schedule@^0.5.0:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/schedule/-/schedule-0.5.0.tgz#c128fffa0b402488b08b55ae74bb9df55cc29cc8"
   integrity sha512-HUcJicG5Ou8xfR//c2rPT0lPIRR09vVvN81T9fqfVgBmhERUbDEQoYKjpBxbueJnCPpSu2ujXzOnRQt6x9o/jw==
   dependencies:
+    object-assign "^4.1.1"
+
+scheduler@^0.19.1:
+  version "0.19.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
+  integrity sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
+  dependencies:
+    loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
 schema-utils@^1.0.0:
@@ -11494,6 +11629,13 @@ warning@^3.0.0:
   version "3.0.0"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
   integrity sha1-MuU3fLVy3kqwR1O9+IIcAe1gW3w=
+  dependencies:
+    loose-envify "^1.0.0"
+
+warning@^4.0.0:
+  version "4.0.3"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
+  integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
   dependencies:
     loose-envify "^1.0.0"
 
