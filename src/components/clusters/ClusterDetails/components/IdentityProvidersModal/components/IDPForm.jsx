@@ -17,6 +17,7 @@ import {
   GoogleFormRequired,
   LDAPFormRequired,
   OpenIDFormRequired,
+  GitlabForm,
 } from './ProvidersForms';
 
 import {
@@ -28,6 +29,7 @@ import {
   GithubDocLink,
   OpenIDDocLink,
   GoogleDocLink,
+  GitlabDocLink,
   getOauthCallbackURL,
   IDPNeedsOAuthURL,
   generateIDPName,
@@ -89,6 +91,7 @@ class IDPForm extends React.Component {
       OpenIDIdentityProvider: OpenIDFormRequired,
       GithubIdentityProvider: GithubForm,
       GoogleIdentityProvider: GoogleFormRequired,
+      GitlabIdentityProvider: GitlabForm,
     };
 
     const providerDocumentationLink = {
@@ -96,6 +99,7 @@ class IDPForm extends React.Component {
       OpenIDIdentityProvider: OpenIDDocLink,
       GithubIdentityProvider: GithubDocLink,
       GoogleIdentityProvider: GoogleDocLink,
+      GitlabIdentityProvider: GitlabDocLink,
     };
 
     const SelectedProivderRequiredFields = providersRequiredFields[selectedIDP];

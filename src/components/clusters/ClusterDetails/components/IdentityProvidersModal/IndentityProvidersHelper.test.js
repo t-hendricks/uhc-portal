@@ -6,6 +6,7 @@ describe('generateIDPName()', () => {
     expect(generateIDPName('GoogleIdentityProvider', [])).toEqual('Google');
     expect(generateIDPName('OpenIDIdentityProvider', [])).toEqual('OpenID');
     expect(generateIDPName('LDAPIdentityProvider', [])).toEqual('LDAP');
+    expect(generateIDPName('GitlabIdentityProvider', [])).toEqual('GitLab');
   });
 
   it('Returns IDP type name if the list only has IDPs with different names', () => {

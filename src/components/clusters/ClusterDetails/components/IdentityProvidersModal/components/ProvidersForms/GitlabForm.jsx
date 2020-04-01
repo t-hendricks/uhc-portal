@@ -1,0 +1,54 @@
+import React from 'react';
+import { Field } from 'redux-form';
+import { GridItem } from '@patternfly/react-core';
+import PropTypes from 'prop-types';
+
+import IDPBasicFields from './IDPBasicFields';
+import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { required } from '../../../../../../../common/validators';
+
+import CAUpload from '../CAUpload';
+
+function GitlabFormRequired({ isPending }) {
+  return (
+
+    <>
+      <IDPBasicFields />
+
+      <GridItem span={8}>
+        <Field
+          component={ReduxVerticalFormGroup}
+          name="gitlab_url"
+          label="URL"
+          type="text"
+          validate={required}
+          isRequired
+          disabled={isPending}
+          helpText="The URL of your GitLab provider.This would be https://gitlab.com/ if you do not have hosted GitLab."
+        />
+      </GridItem>
+
+      <GridItem span={8}>
+        <Field
+          component={CAUpload}
+          name="gitlab_ca"
+          label="CA File"
+          type="text"
+          disabled={isPending}
+          helpText="PEM encoded certificate bundle to use to validate server certificates for the configured Gitlab URL."
+        />
+      </GridItem>
+    </>
+  );
+}
+
+
+GitlabFormRequired.propTypes = {
+  isPending: PropTypes.bool,
+};
+
+GitlabFormRequired.defaultProps = {
+  isPending: false,
+};
+
+export default GitlabFormRequired;
