@@ -66,7 +66,7 @@ function Overview({
         </CardBody>
       </Card>
       <SubscriptionSettings />
-      {displayClusterLogs && (
+      {displayClusterLogs && cluster.managed && (
       <Card>
         <CardHeader>
           <Title headingLevel="h2" size="3xl">Cluster History</Title>
