@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import { PageSection } from '@patternfly/react-core';
-import PageTitle from '../../common/PageTitle';
 
+import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../common/Breadcrumbs';
-import InstructionsOSP from './components/instructions/InstructionsOSP';
+import InstructionsOSP from './instructions/InstructionsOSP';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallOSP extends Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Modal as PfModal, Button } from '@patternfly/react-core';
+import { Button, Modal as PfModal } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import { noop } from '../../../common/helpers';
@@ -9,6 +9,7 @@ import { noop } from '../../../common/helpers';
 function Modal({
   title = '',
   onClose = noop,
+  showPrimary = true,
   primaryText = 'Confirm',
   showSecondery = true,
   secondaryText = 'Cancel',
@@ -23,17 +24,25 @@ function Modal({
 }) {
   return (
     <PfModal
-        // For a medium size modal use isSmall=false and isLarge=true.
-        // For a full screen modal use isSmall=false.
+      // For a medium size modal use isSmall=false and isLarge=true.
+      // For a full screen modal use isSmall=false.
       className={isPending ? 'pending-modal' : null}
       isSmall={isSmall}
       title={title}
       isOpen
       onClose={onClose}
       actions={isPending ? [] : [
-        <Button key="confirm" variant={primaryVariant} onClick={onPrimaryClick} type="submit" isDisabled={isPrimaryDisabled}>
-          {primaryText}
-        </Button>,
+        showPrimary && (
+          <Button
+            key="confirm"
+            variant={primaryVariant}
+            onClick={onPrimaryClick}
+            type="submit"
+            isDisabled={isPrimaryDisabled}
+          >
+            {primaryText}
+          </Button>
+        ),
         showSecondery && (
           <Button key="cancel" variant="secondary" onClick={onSecondaryClick}>
             {secondaryText}
@@ -58,6 +67,7 @@ Modal.propTypes = {
   onSecondaryClick: PropTypes.func,
   isPrimaryDisabled: PropTypes.bool,
   children: PropTypes.node,
+  showPrimary: PropTypes.bool,
   showSecondery: PropTypes.bool,
   isPending: PropTypes.bool,
   primaryVariant: PropTypes.string,

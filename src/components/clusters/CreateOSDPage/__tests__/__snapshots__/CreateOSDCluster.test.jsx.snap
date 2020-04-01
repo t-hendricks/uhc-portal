@@ -16,6 +16,10 @@ exports[`CreateOSDCluster ManagedClusterForm should fetch cloud providers, machi
             },
             Object {
               "label": "OpenShift Dedicated",
+              "path": "/create/osd",
+            },
+            Object {
+              "label": "Amazon Web Services",
             },
           ]
         }
@@ -47,6 +51,10 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             },
             Object {
               "label": "OpenShift Dedicated",
+              "path": "/create/osd",
+            },
+            Object {
+              "label": "Amazon Web Services",
             },
           ]
         }
@@ -66,22 +74,47 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             gutter="sm"
           >
             <CreateOSDForm
-              isBYOCModalOpen={false}
-              pending={false}
-              quota={
+              cloudProviderID="aws"
+              clustersQuota={
                 Object {
-                  "byoc": Object {
-                    "hasQuota": false,
-                    "multiAz": false,
-                    "singleAz": false,
+                  "aws": Object {
+                    "byoc": Object {
+                      "multiAz": Object {
+                        "available": 5,
+                      },
+                      "singleAz": Object {
+                        "available": 5,
+                      },
+                      "totalAvailable": 10,
+                    },
+                    "rhInfra": Object {
+                      "multiAz": Object {
+                        "available": 5,
+                      },
+                      "singleAz": Object {
+                        "available": 5,
+                      },
+                      "totalAvailable": 10,
+                    },
                   },
-                  "rhInfra": Object {
-                    "hasQuota": true,
-                    "multiAz": true,
-                    "singleAz": true,
+                  "gcp": Object {
+                    "rhInfra": Object {
+                      "multiAz": Object {
+                        "available": 5,
+                      },
+                      "singleAz": Object {
+                        "available": 5,
+                      },
+                      "totalAvailable": 10,
+                    },
                   },
+                  "hasAwsQuota": true,
+                  "hasGcpQuota": true,
+                  "hasOsdQuota": true,
                 }
               }
+              isBYOCModalOpen={false}
+              pending={false}
             />
             <GridItem>
               <Split

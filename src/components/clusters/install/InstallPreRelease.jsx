@@ -6,9 +6,8 @@ import { PageSection } from '@patternfly/react-core';
 import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
-
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsPreRelease from './components/instructions/InstructionsPreRelease';
+import InstructionsPreRelease from './instructions/InstructionsPreRelease';
 import { scrollToTop } from '../../../common/helpers';
 
 

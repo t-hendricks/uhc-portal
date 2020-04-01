@@ -31,7 +31,7 @@ class PersistentStorageDropdown extends React.Component {
 
   render() {
     const {
-      input, persistentStorageValues, disabled, currentValue, quota,
+      input, persistentStorageValues, disabled, currentValue, storageQuota,
     } = this.props;
 
     // Set up options for storage values
@@ -53,9 +53,10 @@ class PersistentStorageDropdown extends React.Component {
 
     if (persistentStorageValues.fulfilled) {
       const filteredStorageValues = filterPersistentStorageValuesByQuota(currentValue,
-        persistentStorageValues, quota);
+        persistentStorageValues, storageQuota);
       const notEnoughQuota = filteredStorageValues.values.length <= 1;
       const isDisabled = disabled || notEnoughQuota;
+
       const formSelect = (
         <FormSelect
           className="quota-dropdown"
@@ -98,7 +99,7 @@ PersistentStorageDropdown.propTypes = {
   persistentStorageValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
-  quota: PropTypes.number.isRequired,
+  storageQuota: PropTypes.number.isRequired,
   currentValue: PropTypes.number,
 };
 

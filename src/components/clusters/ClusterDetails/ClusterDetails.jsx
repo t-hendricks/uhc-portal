@@ -84,7 +84,7 @@ class ClusterDetails extends Component {
 
     const clusterID = match.params.id;
 
-    this.refresh();
+    this.refresh(false);
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
@@ -123,7 +123,7 @@ class ClusterDetails extends Component {
     }
 
     if (clusterID !== oldClusterID && isValid(clusterID)) {
-      this.refresh();
+      this.refresh(false);
     }
   }
 
@@ -133,7 +133,7 @@ class ClusterDetails extends Component {
     closeModal();
   }
 
-  refresh() {
+  refresh(automatic = true) {
     const {
       match,
       clusterDetails,
@@ -146,24 +146,33 @@ class ClusterDetails extends Component {
       getClusterAddOns,
       getOrganizationAndQuota,
       getGrants,
+      clusterLogsViewOptions,
+      getClusterHistory,
     } = this.props;
     const clusterID = match.params.id;
 
     if (isValid(clusterID)) {
       fetchDetails(clusterID);
       getOrganizationAndQuota();
-    }
-    if (isValid(clusterID) && !isUuid(clusterID)) {
-      getUsers(clusterID, 'dedicated-admins');
-      getAlerts(clusterID);
-      getNodes(clusterID);
-      getClusterOperators(clusterID);
-      getGrants(clusterID);
+      if (automatic) {
+        const externalClusterID = get(clusterDetails, 'cluster.external_id');
+        if (externalClusterID) {
+          getClusterHistory(externalClusterID, clusterLogsViewOptions);
+        }
+      }
 
-      if (get(clusterDetails, 'cluster.managed')) {
-        getClusterAddOns(clusterID);
-        getLogs(clusterID);
-        this.refreshIDP();
+      if (!isUuid(clusterID)) {
+        getUsers(clusterID, 'dedicated-admins');
+        getAlerts(clusterID);
+        getNodes(clusterID);
+        getClusterOperators(clusterID);
+        getGrants(clusterID);
+
+        if (get(clusterDetails, 'cluster.managed')) {
+          getClusterAddOns(clusterID);
+          getLogs(clusterID);
+          this.refreshIDP();
+        }
       }
     }
   }
@@ -207,6 +216,7 @@ class ClusterDetails extends Component {
       clusterIdentityProviders,
       organization,
       setGlobalError,
+      displayClusterLogs,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -301,6 +311,8 @@ class ClusterDetails extends Component {
           <Overview
             cluster={cluster}
             cloudProviders={cloudProviders}
+            history={history}
+            displayClusterLogs={displayClusterLogs}
           />
         </TabContent>
         {!isArchived && (
@@ -313,7 +325,7 @@ class ClusterDetails extends Component {
             <AccessControl
               clusterID={cluster.id}
               clusterConsoleURL={consoleURL}
-              cloudProvider={cluster.cloud_provider.id}
+              cloudProvider={get(cluster, 'cloud_provider.id')}
             />
           </TabContent>
         )}
@@ -369,6 +381,7 @@ ClusterDetails.propTypes = {
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  displayClusterLogs: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
@@ -394,6 +407,8 @@ ClusterDetails.propTypes = {
   setGlobalError: PropTypes.func.isRequired,
   clearGlobalError: PropTypes.func.isRequired,
   getGrants: PropTypes.func.isRequired,
+  clusterLogsViewOptions: PropTypes.object.isRequired,
+  getClusterHistory: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

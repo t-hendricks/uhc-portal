@@ -7,7 +7,7 @@ import Breadcrumbs from '../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsGCPIPI from './components/instructions/InstructionsGCPIPI';
+import InstructionsGCPIPI from './instructions/InstructionsGCPIPI';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallGCPIPI extends Component {

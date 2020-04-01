@@ -8,7 +8,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     super().__init__(*args, directory=directory, **kwargs)
 
   def translate_path(self, path):
-    return super().translate_path(path) + '.json'
+    # http.server deliberately preserves trailing '/' (https://bugs.python.org/issue17324).
+    # But our APIs generally treat 'foos/?...' same as 'foos?...',
+    # and we prefer 'foos.json' files to ugly 'foos/.json', so strip it.
+    path = super().translate_path(path).rstrip('/') + '.json'
+    print('Accessing ' + path)
+    return path
 
   def end_headers(self):
     """ override end_headers to append headers to every request """

@@ -181,7 +181,7 @@ class UsersSection extends React.Component {
     ) : (
       <Card>
         <CardBody>
-          <Title className="card-title" headingLevel="h3">Cluster Administrative Users</Title>
+          <Title className="card-title" headingLevel="h3" size="lg">Cluster Administrative Users</Title>
           <p>
             Grant permission to manage this cluster to users defined in your identity provider.
             {' '}
@@ -199,7 +199,7 @@ class UsersSection extends React.Component {
               <TableBody />
             </Table>
           )}
-          <Title headingLevel="h3" className="pf-u-mt-md pf-u-mb-sm card-title">Add user:</Title>
+          <Title headingLevel="h3" size="lg" className="pf-u-mt-md pf-u-mb-sm card-title">Add user:</Title>
           <UserInputForm
             clusterID={clusterID}
             saveUser={addUser}

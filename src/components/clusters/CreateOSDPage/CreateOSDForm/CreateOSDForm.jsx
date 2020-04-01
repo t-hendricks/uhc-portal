@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { GridItem } from '@patternfly/react-core';
+import get from 'lodash/get';
 
 import CustomerCloudSubscriptionModal from './FormSections/BillingModelSection/CustomerCloudSubscriptionModal';
 import BillingModelSection from './FormSections/BillingModelSection/BillingModelSection';
@@ -59,7 +60,8 @@ class CreateOSDForm extends React.Component {
       change,
       openModal,
       isBYOCModalOpen,
-      quota,
+      clustersQuota,
+      cloudProviderID,
     } = this.props;
 
     const {
@@ -69,31 +71,39 @@ class CreateOSDForm extends React.Component {
       mode,
     } = this.state;
 
-    const hasBYOCQuota = quota.byoc.hasQuota;
-    const hasStandardQuota = quota.rhInfra.hasQuota;
+    const isAws = cloudProviderID === 'aws';
 
-    const isBYOCForm = hasBYOCQuota && (!hasStandardQuota || byocSelected);
+    const hasBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
+    const hasAwsRhInfraQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
+
+    const isBYOCForm = isAws && hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
 
     return (
       <>
         {/* Billing Model */}
-        <GridItem span={12}>
-          <h3 className="osd-page-header">Billing Model</h3>
-        </GridItem>
-        <BillingModelSection
-          openModal={openModal}
-          toggleBYOCFields={this.toggleBYOCFields}
-          hasBYOCquota={hasBYOCQuota}
-          hasStandardQuota={hasStandardQuota}
-          byocSelected={isBYOCForm}
-        />
+        {isAws && (
+          <>
+            <GridItem span={12}>
+              <h3 className="osd-page-header">Billing Model</h3>
+            </GridItem>
+            <BillingModelSection
+              openModal={openModal}
+              toggleBYOCFields={this.toggleBYOCFields}
+              hasBYOCquota={hasBYOCQuota}
+              hasStandardQuota={hasAwsRhInfraQuota}
+              byocSelected={isBYOCForm}
+            />
+          </>
+        )}
 
         {/* BYOC modal */}
-        {isBYOCModalOpen && <CustomerCloudSubscriptionModal closeModal={this.closeBYOCModal} />}
+        {isAws && isBYOCModalOpen && (
+          <CustomerCloudSubscriptionModal closeModal={this.closeBYOCModal} />
+        )}
 
         {/* AWS account details */}
-        { isBYOCForm && (
+        { isAws && isBYOCForm && (
           <>
             <GridItem span={12}>
               <h3 className="osd-page-header">AWS account details</h3>
@@ -111,8 +121,8 @@ class CreateOSDForm extends React.Component {
           showDNSBaseDomain={false}
           change={change}
           isBYOC={isBYOCForm}
-          cloudProviderID="aws"
-          quota={quota[infraType]}
+          cloudProviderID={cloudProviderID}
+          quota={clustersQuota[cloudProviderID][infraType]}
           handleMultiAZChange={this.handleMultiAZChange}
         />
 
@@ -131,15 +141,19 @@ class CreateOSDForm extends React.Component {
           isMultiAz={isMultiAz}
           machineType={machineType}
           handleMachineTypesChange={this.handleMachineTypesChange}
-          cloudProviderID="aws"
+          cloudProviderID={cloudProviderID}
         />
 
         {/* Networking section */}
-        <GridItem span={12} />
-        <GridItem span={4}>
-          <h3>Networking</h3>
-        </GridItem>
-        <NetworkingSection mode={mode} toggleNetwork={this.toggleNetwork} />
+        { isAws && (
+          <>
+            <GridItem span={12} />
+            <GridItem span={4}>
+              <h3>Networking</h3>
+            </GridItem>
+            <NetworkingSection mode={mode} toggleNetwork={this.toggleNetwork} />
+          </>
+        )}
       </>
     );
   }
@@ -156,14 +170,29 @@ CreateOSDForm.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
-  quota: PropTypes.shape({
-    byoc: PropTypes.shape({
-      hasQuota: PropTypes.bool.isRequired,
-    }).isRequired,
-    rhInfra: PropTypes.shape({
-      hasQuota: PropTypes.bool.isRequired,
-    }).isRequired,
-  }).isRequired,
+  clustersQuota: PropTypes.shape({
+    hasOsdQuota: PropTypes.bool.isRequired,
+    aws: PropTypes.shape({
+      byoc: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+      rhInfra: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+    }),
+    gcp: PropTypes.shape({
+      rhInfra: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+    }),
+  }),
+  cloudProviderID: PropTypes.string.isRequired,
 };
 
 export default CreateOSDForm;

@@ -63,7 +63,7 @@ function SubscriptionSettings({ subscription, openModal, canEdit = false }) {
   return (
     <Card>
       <CardHeader>
-        <Title headingLevel="h2" className="card-title">
+        <Title headingLevel="h2" size="lg" className="card-title">
           Subscription Settings
           {titleIcon}
         </Title>

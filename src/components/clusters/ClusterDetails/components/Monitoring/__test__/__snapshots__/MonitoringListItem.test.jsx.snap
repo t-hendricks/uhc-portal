@@ -19,6 +19,7 @@ exports[`<MonitoringListItem /> should render 1`] = `
             <Title
               className="monitoring-item-title"
               headingLevel="h4"
+              size="lg"
             >
               
             </Title>

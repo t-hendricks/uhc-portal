@@ -12,6 +12,8 @@ import range from 'lodash/range';
 import PopoverHint from '../../../common/PopoverHint';
 import { noQuotaTooltip } from '../../../../common/helpers';
 
+const MAX_NODES = 180;
+
 class NodeCountInput extends React.Component {
   componentDidUpdate() {
     const { input, isEditingCluster } = this.props;
@@ -31,9 +33,8 @@ class NodeCountInput extends React.Component {
   }
 
   getAvailableQuota() {
-    const {
-      quota, isByoc, machineType,
-    } = this.props;
+    const { quota, isByoc, machineType } = this.props;
+
     const infraType = isByoc ? 'byoc' : 'rhInfra';
     return get(quota, `${infraType}['${machineType}']`, 0);
   }
@@ -41,17 +42,29 @@ class NodeCountInput extends React.Component {
   render() {
     const {
       input, isMultiAz, isDisabled, isEditingCluster, currentNodeCount,
-      label, helpText, extendedHelpText,
+      label, helpText, extendedHelpText, cloudProviderID,
     } = this.props;
+
     const available = this.getAvailableQuota();
     const minimum = this.getMinimumValue();
     const increment = isMultiAz ? 3 : 1; // MultiAz requires nodes to be a multiple of 3
     // no extra node quota = only base cluster size is available
     const optionsAvailable = (available > 0 || isEditingCluster);
-    const maxValue = isEditingCluster ? available + currentNodeCount : available + minimum;
-    const options = optionsAvailable
-      ? range(minimum, maxValue + 1, increment)
-      : [minimum];
+    let maxValue = isEditingCluster ? available + currentNodeCount : available + minimum;
+    if (maxValue > MAX_NODES) {
+      maxValue = MAX_NODES;
+    }
+
+    const getOptions = () => {
+      // *** TEMPORARY UNTILL RESOLVED ON AMS SIDE ***
+      if (cloudProviderID === 'gcp') {
+        return [4, 5];
+      }
+      return optionsAvailable ? range(minimum, maxValue + 1, increment)
+        : [minimum];
+    };
+
+    const options = getOptions();
     const notEnoughQuota = options.length <= 1;
     const disabled = isDisabled || notEnoughQuota;
 
@@ -131,6 +144,7 @@ NodeCountInput.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func.isRequired,
   }),
+  cloudProviderID: PropTypes.string.isRequired,
 };
 
 export default NodeCountInput;
