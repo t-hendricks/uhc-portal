@@ -42,7 +42,7 @@ class NodeCountInput extends React.Component {
   render() {
     const {
       input, isMultiAz, isDisabled, isEditingCluster, currentNodeCount,
-      label, helpText, extendedHelpText, cloudProviderID,
+      label, helpText, extendedHelpText,
     } = this.props;
 
     const available = this.getAvailableQuota();
@@ -55,16 +55,8 @@ class NodeCountInput extends React.Component {
       maxValue = MAX_NODES;
     }
 
-    const getOptions = () => {
-      // *** TEMPORARY UNTILL RESOLVED ON AMS SIDE ***
-      if (cloudProviderID === 'gcp') {
-        return [4, 5];
-      }
-      return optionsAvailable ? range(minimum, maxValue + 1, increment)
-        : [minimum];
-    };
+    const options = optionsAvailable ? range(minimum, maxValue + 1, increment) : [minimum];
 
-    const options = getOptions();
     const notEnoughQuota = options.length <= 1;
     const disabled = isDisabled || notEnoughQuota;
 

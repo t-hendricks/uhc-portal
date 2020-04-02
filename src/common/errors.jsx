@@ -101,6 +101,7 @@ function formatErrorDetails(errorDetails) {
           'pv.storage.aws': ['GiB of storage', 'GiB of storage'],
           'pv.storage.gcp': ['GiB of storage', 'GiB of storage'],
           'network.loadbalancer.aws': ['load balancers', 'load balancers'],
+          'network-gcp.loadbalancer.gcp': ['load balancers', 'load balancers'],
         };
 
         const getName = (type, count) => {
