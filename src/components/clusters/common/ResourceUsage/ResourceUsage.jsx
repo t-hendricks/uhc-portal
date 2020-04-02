@@ -6,7 +6,7 @@ import { parseValueWithUnit } from '../../../../common/units';
 
 
 function ResourceUsage({
-  cpu, memory, metricsStatusMessage, metricsAvailable,
+  cpu, memory, metricsStatusMessage, metricsAvailable, type,
 }) {
   // Why parse memory but not cpu?
   // In theory both are `ValueWithUnit` but openapi only documents units for the case of bytes,
@@ -26,6 +26,7 @@ function ResourceUsage({
             unit="Cores"
             humanize={false}
             donutId="cpu_donut"
+            type={type}
           />
           <ClusterUtilizationChart
             title="Memory"
@@ -34,6 +35,7 @@ function ResourceUsage({
             unit="B"
             humanize
             donutId="memory_donut"
+            type={type}
           />
         </>
       )
@@ -51,6 +53,7 @@ ResourceUsage.propTypes = {
   memory: PropTypes.object.isRequired,
   metricsStatusMessage: PropTypes.string.isRequired,
   metricsAvailable: PropTypes.bool.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default ResourceUsage;

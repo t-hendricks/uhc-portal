@@ -42,6 +42,7 @@ exports[`<Overview /> should render 1`] = `
         }
         metricsAvailable={false}
         metricsStatusMessage="The cluster currently does not have any metrics data. Try again later."
+        type="threshold"
       />
     </CardBody>
   </Card>

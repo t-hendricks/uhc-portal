@@ -102,6 +102,7 @@ class MonitoringList extends React.Component {
                   }}
                   metricsAvailable={metricsAvailable}
                   metricsStatusMessage={metricsStatusMessage}
+                  type="threshold"
                 />
               </div>
             ) : EmptyState}
