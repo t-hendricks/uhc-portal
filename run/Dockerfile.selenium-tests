@@ -1,0 +1,38 @@
+FROM fedora:31
+
+MAINTAINER ***REMOVED***
+
+# TODO: how to use prebuilt rubygem-nokogiri?  Compiling it is heavy and brittle.
+#   That's what tools/hack_bundle.rb tries to achieve, but still compiles it.
+#   Fedora's rubygem-bundler is patched (as opposed to upstream `gem install bundler`)
+#   but no luck, both compile it.  See also https://github.com/rubygems/bundler/issues/1964
+RUN dnf install -y ruby ruby-devel rubygem-bundler rubygem-nokogiri gcc-c++ make redhat-rpm-config git dnf-plugins-core
+RUN dnf builddep -y rubygem-nokogiri
+
+RUN useradd user
+USER user
+# Full directory copied later, to improve build caching.
+# (1st step of https://medium.com/magnetis-backstage/how-to-cache-bundle-install-with-docker-7bed453a5800)
+COPY verification-tests/Gemfile* /verification-tests/
+
+WORKDIR verification-tests
+
+USER root
+# install_os_deps.sh works but installs too much (firefox + X + ansible).
+# findutils needed for xargs.
+#RUN dnf install -y findutils
+#RUN bash -x tools/install_os_deps.sh
+
+# Bundler needs to run as non-root, but defaults to installing globally with sudo.
+# TODO: does --path prevent it from seeing the rubygem-nokogiri rpm?
+USER user
+ENV BUNDLE_PATH=/verification-tests/vendor/bundle
+#RUN tools/hack_bundle.rb
+RUN bundle install
+
+# Copy full tests last for minimal re-building.
+COPY verification-tests /verification-tests
+COPY cucushift /cucushift
+
+COPY config.yaml /verification-tests/private/config/config.yaml
+ENV BUSHSLICER_DEFAULT_ENVIRONMENT=ocm_local_dev

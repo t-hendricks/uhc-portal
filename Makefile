@@ -14,7 +14,6 @@
 # limitations under the License.
 #
 
-
 # Binaries to build:
 binaries:=$(shell ls cmd)
 
@@ -84,11 +83,37 @@ insights-proxy-setup: run/insights-proxy
 	sudo bash -x run/insights-proxy/scripts/patch-etc-hosts.sh
 	bash run/insights-proxy/scripts/update.sh
 
+.PHONY: run/verification-tests
+run/verification-tests:
+	[ -e $@ ] || git clone https://github.com/xueli181114/verification-tests $@
+	(cd $@; git pull https://github.com/xueli181114/verification-tests master:master)
+	# Include https://github.com/openshift/verification-tests/pull/807
+	(cd $@; git checkout -B patched origin/master)
+	(cd $@; git pull https://github.com/openshift/verification-tests pull/807/head --no-edit)
+
+# For now use run/config.yaml instead of credentials from cucushift-internal.
+# https://issues.redhat.com/browse/SDA-2019
+# `|` is an "order dependency" ignoring timestamp, which is misleading on symlink.
+run/verification-tests/private/config/config.yaml: | run/verification-tests
+	mkdir -p run/verification-tests/private/config
+	ln -s ../../../config.yaml run/verification-tests/private/config/config.yaml
+
+run/cucushift:
+	# Private repo, https://github.com/orgs/openshift/teams/team-red-hat needed to clone.
+	[ -e $@ ] || git clone ssh://git@github.com/xueli181114/cucushift.git --depth=1 $@
+	(cd $@; git pull)
+
+.PHONY: selenium-tests-image
+selenium-tests-image: run/verification-tests run/verification-tests/private/config/config.yaml run/cucushift
+	podman build -f run/Dockerfile.selenium-tests -t ocm-selenium-tests
+
 .PHONY: clean
 clean:
 	rm -rf \
 		$(binaries) \
 		build \
 		node_modules \
+		run/cucushift \
 		run/insights-proxy \
+		run/verification-tests \
 		$(NULL)

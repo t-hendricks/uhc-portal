@@ -15,7 +15,7 @@ To start the "chromed environment" using the backend proxy, assuming you complet
 
 UI will run at https://qa.foo.redhat.com:1337/
 
-Authentication is QA SSO which should accept any user, and the password is always `redhat`.
+Authentication is QA SSO which accepts various user names (e.g. `foo`, `user`, `redhat`), and the password is always `redhat`.
 
 ### Development environment using the mock data server
 
