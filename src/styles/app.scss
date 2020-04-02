@@ -804,15 +804,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
     border-width: var(--pf-global--BorderWidth--lg);
   }
 
-  &.gcp-machine-type {
-    width: 340px;
-    max-width: 340px;
-  }
-
   &:disabled {
     // disabled styles
     .pf-l-split, .ocm-flat-button-icon svg, h4.pf-c-title {
-      color: var(---pf-global--Color--200);
+      color: var(--pf-global--disabled-color--100);
     }
     &.pf-m-tertiary::after {
       border-width: 0;
