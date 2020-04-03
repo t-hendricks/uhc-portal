@@ -205,7 +205,7 @@ class ClusterDetails extends Component {
       fetchInsightsData,
     } = this.props;
     fetchDetails(id);
-    if (externalId) {
+    if (externalId && APP_BETA) {
       fetchInsightsData(externalId);
     }
   }
@@ -302,8 +302,12 @@ class ClusterDetails extends Component {
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
     const displayInsightsTab = !isArchived
+      && APP_BETA
       && insightsData[get(cluster, 'external_id')]
-      && insightsData[get(cluster, 'external_id')].status !== 401;
+      && (
+        !insightsData[get(cluster, 'external_id')].status
+        || insightsData[get(cluster, 'external_id')].status === 404
+      );
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;

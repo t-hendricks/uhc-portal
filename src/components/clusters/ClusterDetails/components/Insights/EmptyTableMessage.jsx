@@ -23,6 +23,8 @@ export const RemoteHealthPopover = () => (
       </div>
     )}
     aria-label="What is Remote health?"
+    boundary="viewport"
+    enableFlip
   >
     <Button style={{ padding: '0' }} variant="link">What is Remote health?</Button>
   </Popover>

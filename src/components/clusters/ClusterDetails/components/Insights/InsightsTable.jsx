@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardBody } from '@patternfly/react-core';
+import { cellWidth } from '@patternfly/react-table';
 import {
   RuleTable,
   severity,
@@ -17,8 +18,13 @@ import { severityMapping } from './helpers';
 
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
-  Added: (a, b) => a.created_at - b.created_at,
+  Added: (a, b) => new Date(a.created_at) - new Date(b.created_at),
   'Total risk': (a, b) => a.total_risk - b.total_risk,
+};
+
+const sortMultiplier = {
+  asc: 1,
+  desc: -1,
 };
 
 const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
@@ -32,7 +38,8 @@ const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
           }
           break;
         case 'descriptionFilter':
-          newAcc = v.description.indexOf(filter) > -1;
+          // Make all strings in lower case to avoid case sensitivity
+          newAcc = v.description.toLowerCase().indexOf(filter.toLowerCase()) > -1;
           break;
         default:
           break;
@@ -104,7 +111,7 @@ class InsightsTable extends React.Component {
       // Filter and sort data
       let rules = [...insightsData.data]
         .sort((a, b) => (sortBy && sortBy.column
-          ? dataSortMapping[sortBy.column.title](a, b)
+          ? sortMultiplier[sortBy.direction] * dataSortMapping[sortBy.column.title](a, b)
           : 0))
         .filter(v => isValueFiltered(filterValues, v));
 
@@ -132,6 +139,7 @@ class InsightsTable extends React.Component {
       shownData,
       filters,
       meta,
+      sortBy,
     } = this.state;
     return (
       <>
@@ -140,7 +148,10 @@ class InsightsTable extends React.Component {
           <CardBody className="no-padding">
             <RuleTable
               rules={{
-                meta,
+                meta: {
+                  ...meta,
+                  isCompact: false,
+                },
                 data: shownData,
               }}
               fetchData={this.fetchData}
@@ -149,10 +160,12 @@ class InsightsTable extends React.Component {
                 totalRiskFilter,
               }}
               filterValues={filters}
+              sortBy={sortBy}
               columns={[
                 {
                   title: 'Description',
                   selector: 'description',
+                  transforms: [cellWidth(60)],
                 },
                 {
                   title: 'Added',
@@ -177,7 +190,7 @@ class InsightsTable extends React.Component {
                   details={details.details}
                   ruleId={details.rule_id}
                   totalRisk={details.total_risk}
-                  riskOfChange={details.risk_of_change + 1}
+                  riskOfChange={details.risk_of_change}
                   onFeedbackChanged={voteOnRule}
                 />
               )}
