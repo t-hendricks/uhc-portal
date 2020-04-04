@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ResourceUsage /> should render 1`] = `
+<div>
+  <div
+    style={
+      Object {
+        "height": "205px",
+        "width": "410px",
+      }
+    }
+  >
+    <ChartDonut
+      constrainToVisibleArea={true}
+      data={
+        Array [
+          Object {
+            "x": "15.41 GiB",
+            "y": 20.11,
+          },
+          Object {
+            "x": "61.23 GiB",
+            "y": 79.89,
+          },
+        ]
+      }
+      height={205}
+      id="memory_donut"
+      labels={[Function]}
+      legendData={
+        Array [
+          Object {
+            "name": "Used: 15.41 GiB",
+          },
+          Object {
+            "name": "Available: 61.23 GiB",
+          },
+        ]
+      }
+      legendOrientation="vertical"
+      padding={
+        Object {
+          "bottom": 20,
+          "left": 20,
+          "right": 195,
+          "top": 20,
+        }
+      }
+      title={76.64}
+      width={410}
+    />
+  </div>
+</div>
+`;
