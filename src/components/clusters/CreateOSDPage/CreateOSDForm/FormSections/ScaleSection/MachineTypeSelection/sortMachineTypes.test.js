@@ -3,6 +3,7 @@ import sortMachineTypes from './sortMachineTypes';
 const awsMachineTypes = [
   {
     id: 'c5.2xlarge',
+    category: 'compute_optimized',
     memory: {
       value: 16 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -13,6 +14,7 @@ const awsMachineTypes = [
   },
   {
     id: 'c5.4xlarge',
+    category: 'compute_optimized',
     memory: {
       value: 32 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -23,6 +25,7 @@ const awsMachineTypes = [
   },
   {
     id: 'm5.2xlarge',
+    category: 'general_purpose',
     memory: {
       value: 32 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -33,6 +36,7 @@ const awsMachineTypes = [
   },
   {
     id: 'm5.4xlarge',
+    category: 'general_purpose',
     memory: {
       value: 64 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -43,6 +47,7 @@ const awsMachineTypes = [
   },
   {
     id: 'm5.xlarge',
+    category: 'general_purpose',
     memory: {
       value: 16 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -53,6 +58,7 @@ const awsMachineTypes = [
   },
   {
     id: 'r5.2xlarge',
+    category: 'memory_optimized',
     memory: {
       value: 64 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -63,6 +69,7 @@ const awsMachineTypes = [
   },
   {
     id: 'r5.4xlarge',
+    category: 'memory_optimized',
     memory: {
       value: 128 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -73,6 +80,7 @@ const awsMachineTypes = [
   },
   {
     id: 'r5.xlarge',
+    category: 'memory_optimized',
     memory: {
       value: 32 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -86,6 +94,7 @@ const awsMachineTypes = [
 const gcpMachineTypes = [
   {
     id: 'm1-ultramem-40',
+    category: 'memory_optimized',
     memory: {
       value: 961 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -96,6 +105,7 @@ const gcpMachineTypes = [
   },
   {
     id: 'm1-ultramem-80',
+    category: 'memory_optimized',
     memory: {
       value: 1922 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -106,6 +116,7 @@ const gcpMachineTypes = [
   },
   {
     id: 'c2-standard-8',
+    category: 'compute_optimized',
     memory: {
       value: 32 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -116,6 +127,7 @@ const gcpMachineTypes = [
   },
   {
     id: 'c2-standard-16',
+    category: 'compute_optimized',
     memory: {
       value: 64 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -126,6 +138,7 @@ const gcpMachineTypes = [
   },
   {
     id: 'c2-standard-4',
+    category: 'compute_optimized',
     memory: {
       value: 16 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -136,6 +149,7 @@ const gcpMachineTypes = [
   },
   {
     id: 'n1-standard-2',
+    category: 'general_purpose',
     memory: {
       value: 7.5 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -146,6 +160,7 @@ const gcpMachineTypes = [
   },
   {
     id: 'n1-standard-8',
+    category: 'general_purpose',
     memory: {
       value: 30 * 1024 * 1024 * 1024,
       unit: 'B',
@@ -156,6 +171,7 @@ const gcpMachineTypes = [
   },
   {
     id: 'n1-standard-1',
+    category: 'general_purpose',
     memory: {
       value: 3.75 * 1024 * 1024 * 1024,
       unit: 'B',
