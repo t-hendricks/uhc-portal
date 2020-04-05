@@ -9,6 +9,7 @@ import {
   StackItem, Text,
   Title,
 } from '@patternfly/react-core';
+import get from 'lodash/get';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
@@ -27,6 +28,9 @@ const groupRulesByRisk = data => data.reduce(
 
 const AnalysisSummary = ({ insightsData, batteryClicked }) => {
   const groupedRules = groupRulesByRisk(insightsData.data);
+  const issueCount = get(insightsData, 'meta.count', 0);
+  const lastChecked = get(insightsData, 'meta.last_checked_at', 0);
+
   return (
     <Card>
       <CardBody>
@@ -56,13 +60,13 @@ const AnalysisSummary = ({ insightsData, batteryClicked }) => {
                 <Stack>
                   <StackItem key="remote-health-description">
                     <Title headingLevel="h2" size="xl">
-                      {`Remote health detected ${insightsData.meta.count} issue${insightsData.meta.count > 1 ? 's' : ''}`}
+                      {`Remote health detected ${issueCount} issue${issueCount > 1 ? 's' : ''}`}
                     </Title>
                   </StackItem>
                   <StackItem key="remote-health-last-checked">
                     <Text>
                       {'Last checked: '}
-                      <DateFormat date={new Date(insightsData.meta.last_checked_at)} />
+                      <DateFormat date={new Date(lastChecked)} />
                     </Text>
                   </StackItem>
                   <StackItem key="remote-health-popover">

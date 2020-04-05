@@ -13,13 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import get from 'lodash/get';
 import { GET_CLUSTER_INSIGHTS, VOTE_ON_RULE_INSIGHTS } from './InsightsConstants';
 import { insightsService } from '../../../../../services';
 
 const fetchSingleClusterInsights = async (clusterId, orgId) => {
   try {
-    const clusterResponse = await insightsService.getClusterInsights(clusterId, orgId);
-    return { insightsData: clusterResponse.data.report, clusterId };
+    const insightsResponse = await insightsService.getClusterInsights(clusterId, orgId);
+    return { insightsData: get(insightsResponse, 'data.report', {}), clusterId };
   } catch (e) {
     const error = Error('Insights for cluster not found');
     error.status = e.response.status;
