@@ -15,6 +15,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     print('Accessing ' + path)
     return path
 
+  def do_GET(self):
+    if self.path == '/api/aggregator/v1/report/656485/8b00e902-f675-4903-9118-91a8f9f5110a':
+        self.send_response(401, '')
+        self.end_headers()
+        return
+    return http.server.SimpleHTTPRequestHandler.do_GET(self)
+
   def end_headers(self):
     """ override end_headers to append headers to every request """
     # Allow CORS.
@@ -27,13 +34,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     self.send_header("Expires", "0")
     return super().end_headers()
 
-
   def do_OPTIONS(self):
       self.send_response(200, "ok")
       self.end_headers()
 
   def do_POST(self):
     return self.do_GET()
+
+  def do_PUT(self):
+      return self.do_GET()
 
 def main():
     server_address = ('localhost', 8010)

@@ -1,0 +1,43 @@
+.battery {
+    line-height: 2;
+    display: flex;
+}
+
+.battery i {
+	margin-right: 5px;
+}
+
+.battery button {
+	padding-left: 0;
+}
+
+.pf-c-card__body.no-padding {
+	padding: 0;
+}
+
+.success-color {
+    color: var(--pf-global--success-color--200);
+}
+
+.empty-table-message {
+    padding-top: 64px;
+}
+
+.title-icon {
+    color: var(--pf-global--warning-color--100);
+    vertical-align: bottom !important;
+    margin-bottom: 1px;
+}
+
+.title-icon.danger {
+	color: var(--pf-global--danger-color--100);
+}
+
+.description {
+    margin-left: 20px;
+}
+
+.description .pf-l-stack > :not(:last-child) {
+    /* gutter="sm" doesn't work for some reason */
+    margin-bottom: 5px;
+}

@@ -26,6 +26,7 @@ import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
+import Insights from './components/Insights';
 import Monitoring from './components/Monitoring';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
@@ -52,8 +53,10 @@ class ClusterDetails extends Component {
     super(props);
     this.refresh = this.refresh.bind(this);
     this.refreshIDP = this.refreshIDP.bind(this);
+    this.fetchDetailsAndInsightsData = this.fetchDetailsAndInsightsData.bind(this);
 
     this.overviewTabRef = React.createRef();
+    this.insightsTabRef = React.createRef();
     this.monitoringTabRef = React.createRef();
     this.accessControlTabRef = React.createRef();
     this.logsTabRef = React.createRef();
@@ -113,6 +116,7 @@ class ClusterDetails extends Component {
     const {
       match,
       clusterDetails,
+      fetchInsightsData,
     } = this.props;
     const clusterID = match.params.id;
     const oldClusterID = prevProps.match.params.id;
@@ -124,6 +128,13 @@ class ClusterDetails extends Component {
 
     if (clusterID !== oldClusterID && isValid(clusterID)) {
       this.refresh(false);
+    }
+
+    if (
+      get(clusterDetails, 'cluster.external_id')
+      && get(prevProps.clusterDetails, 'cluster.external_id') !== get(clusterDetails, 'cluster.external_id')
+    ) {
+      fetchInsightsData(get(clusterDetails, 'cluster.external_id'));
     }
   }
 
@@ -137,7 +148,6 @@ class ClusterDetails extends Component {
     const {
       match,
       clusterDetails,
-      fetchDetails,
       getLogs,
       getUsers,
       getAlerts,
@@ -152,7 +162,7 @@ class ClusterDetails extends Component {
     const clusterID = match.params.id;
 
     if (isValid(clusterID)) {
-      fetchDetails(clusterID);
+      this.fetchDetailsAndInsightsData(clusterID, get(clusterDetails, 'cluster.external_id'));
       getOrganizationAndQuota();
       if (automatic) {
         const externalClusterID = get(clusterDetails, 'cluster.external_id');
@@ -189,6 +199,17 @@ class ClusterDetails extends Component {
     }
   }
 
+  fetchDetailsAndInsightsData(id, externalId) {
+    const {
+      fetchDetails,
+      fetchInsightsData,
+    } = this.props;
+    fetchDetails(id);
+    if (externalId && APP_BETA) {
+      fetchInsightsData(externalId);
+    }
+  }
+
   // Determine if the org has quota for existing add-ons
   hasAddOns() {
     const { addOns, clusterAddOns, organization } = this.props;
@@ -207,7 +228,6 @@ class ClusterDetails extends Component {
     const {
       clusterDetails,
       cloudProviders,
-      fetchDetails,
       invalidateClusters,
       openModal,
       history,
@@ -217,6 +237,8 @@ class ClusterDetails extends Component {
       organization,
       setGlobalError,
       displayClusterLogs,
+      insightsData,
+      voteOnRule,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -273,12 +295,20 @@ class ClusterDetails extends Component {
 
     const onDialogClose = () => {
       invalidateClusters();
-      fetchDetails(cluster.id);
+      this.fetchDetailsAndInsightsData(cluster.id);
     };
+    const externalID = get(cluster, 'external_id');
 
     const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
+    const displayInsightsTab = !isArchived
+      && APP_BETA
+      && insightsData[externalID]
+      && (
+        !insightsData[externalID].status
+        || insightsData[externalID].status === 404
+      );
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
@@ -299,15 +329,22 @@ class ClusterDetails extends Component {
             displayLogs={hasLogs}
             displayAccessControlTab={displayAccessControlTab}
             displayMonitoringTab={!isArchived}
+            displayInsightsTab={displayInsightsTab}
             displayAddOnsTab={displayAddOnsTab}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
             logsTabRef={this.logsTabRef}
             addOnsTabRef={this.addOnsTabRef}
+            insightsTabRef={this.insightsTabRef}
           />
         </ClusterDetailsTop>
-        <TabContent eventKey={0} id="overviewTabContent" ref={this.overviewTabRef} aria-label="Overview">
+        <TabContent
+          eventKey={0}
+          id="overviewTabContent"
+          ref={this.overviewTabRef}
+          aria-label="Overview"
+        >
           <Overview
             cluster={cluster}
             cloudProviders={cloudProviders}
@@ -316,12 +353,24 @@ class ClusterDetails extends Component {
           />
         </TabContent>
         {!isArchived && (
-          <TabContent eventKey={1} id="monitoringTabContent" ref={this.monitoringTabRef} aria-label="Monitoring" hidden>
+          <TabContent
+            eventKey={1}
+            id="monitoringTabContent"
+            ref={this.monitoringTabRef}
+            aria-label="Monitoring"
+            hidden
+          >
             <Monitoring cluster={cluster} />
           </TabContent>
         )}
-        { displayAccessControlTab && (
-          <TabContent eventKey={2} id="accessControlTabContent" ref={this.accessControlTabRef} aria-label="Access Control" hidden>
+        {displayAccessControlTab && (
+          <TabContent
+            eventKey={2}
+            id="accessControlTabContent"
+            ref={this.accessControlTabRef}
+            aria-label="Access Control"
+            hidden
+          >
             <AccessControl
               clusterID={cluster.id}
               clusterConsoleURL={consoleURL}
@@ -330,14 +379,43 @@ class ClusterDetails extends Component {
           </TabContent>
         )}
         {displayAddOnsTab && (
-        <TabContent eventKey={3} id="addOnsTabContent" ref={this.addOnsTabRef} aria-label="Add-ons" hidden>
-          <AddOns clusterID={cluster.id} />
-        </TabContent>
+          <TabContent
+            eventKey={3}
+            id="addOnsTabContent"
+            ref={this.addOnsTabRef}
+            aria-label="Add-ons"
+            hidden
+          >
+            <AddOns clusterID={cluster.id} />
+          </TabContent>
         )}
         {hasLogs && (
-        <TabContent eventKey={4} id="logsTabContent" ref={this.logsTabRef} aria-label="Logs" hidden>
-          <LogWindow clusterID={cluster.id} />
-        </TabContent>
+          <TabContent
+            eventKey={4}
+            id="logsTabContent"
+            ref={this.logsTabRef}
+            aria-label="Logs"
+            hidden
+          >
+            <LogWindow clusterID={cluster.id} />
+          </TabContent>
+        )}
+        {displayInsightsTab && (
+          <TabContent
+            eventKey={5}
+            id="insightsTabContent"
+            ref={this.insightsTabRef}
+            aria-label="Insights"
+            hidden
+          >
+            <Insights
+              cluster={cluster}
+              insightsData={insightsData[cluster.external_id]}
+              voteOnRule={(ruleId, vote) => {
+                voteOnRule(cluster.external_id, ruleId, vote);
+              }}
+            />
+          </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
@@ -370,6 +448,7 @@ ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
+  fetchInsightsData: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getLogs: PropTypes.func.isRequired,
@@ -385,6 +464,7 @@ ClusterDetails.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
+  insightsData: PropTypes.object,
   logs: PropTypes.object,
   addOns: PropTypes.object,
   clusterAddOns: PropTypes.object,
@@ -409,10 +489,12 @@ ClusterDetails.propTypes = {
   getGrants: PropTypes.func.isRequired,
   clusterLogsViewOptions: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
+  voteOnRule: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {
   clusterAddOns: {},
+  insightsData: {},
   clusterDetails: {
     cluster: null,
     error: false,
