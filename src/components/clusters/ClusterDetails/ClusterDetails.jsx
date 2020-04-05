@@ -297,16 +297,17 @@ class ClusterDetails extends Component {
       invalidateClusters();
       this.fetchDetailsAndInsightsData(cluster.id);
     };
+    const externalID = get(cluster, 'external_id');
 
     const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
     const displayInsightsTab = !isArchived
       && APP_BETA
-      && insightsData[get(cluster, 'external_id')]
+      && insightsData[externalID]
       && (
-        !insightsData[get(cluster, 'external_id')].status
-        || insightsData[get(cluster, 'external_id')].status === 404
+        !insightsData[externalID].status
+        || insightsData[externalID].status === 404
       );
 
     const consoleURL = get(cluster, 'console.url');
