@@ -82,7 +82,7 @@ class TabsRow extends React.Component {
     );
 
     const insightsTab = displayInsightsTab && (
-    <Tab key={tabs.insights} eventKey={tabs.insights} title="Remote Health" tabContentId="insightsTabContent" tabContentRef={insightsTabRef} />
+    <Tab key={tabs.insights} eventKey={tabs.insights} title="Insights" tabContentId="insightsTabContent" tabContentRef={insightsTabRef} />
     );
 
     const tabsToDisplay = [

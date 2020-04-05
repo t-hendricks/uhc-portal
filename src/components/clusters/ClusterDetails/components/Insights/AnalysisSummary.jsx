@@ -61,7 +61,7 @@ const AnalysisSummary = ({ insightsData, batteryClicked }) => {
                   </StackItem>
                   <StackItem key="remote-health-last-checked">
                     <Text>
-                      Last checked:
+                      {'Last checked: '}
                       <DateFormat date={new Date(insightsData.meta.last_checked_at)} />
                     </Text>
                   </StackItem>
