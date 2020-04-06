@@ -155,6 +155,7 @@ describe('<MachineTypeSelection />', () => {
         {
           kind: 'MachineType',
           name: 'Memory optimized - R5.XLarge',
+          category: 'memory_optimized',
           id: 'r5.xlarge',
           href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
           memory: {
@@ -174,6 +175,7 @@ describe('<MachineTypeSelection />', () => {
         {
           kind: 'MachineType',
           name: 'Memory optimized - R5.4XLarge',
+          category: 'memory_optimized',
           id: 'r5.4xlarge',
           href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
           memory: {
