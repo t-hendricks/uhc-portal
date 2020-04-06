@@ -53,7 +53,7 @@ const mapStateToProps = (state, ownProps) => {
       dns_base_domain: '',
       aws_access_key_id: '',
       aws_secret_access_key: '',
-      region: ownProps.cloudProviderID === 'aws' ? 'us-east-1' : 'asia-east1',
+      region: ownProps.cloudProviderID === 'aws' ? 'us-east-1' : 'us-east1',
       multi_az: false,
       persistent_storage: '107374182400',
       load_balancers: '0',
