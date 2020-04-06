@@ -70,15 +70,13 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
       // Storage
       storageQuota: {
         aws: { available: 0 },
-        // *** TEMPORARY UNTILL RESOLVED ON AMS SIDE ***
-        gcp: { available: 600 },
+        gcp: { available: 0 },
       },
 
       // Load balancers
       loadBalancerQuota: {
         aws: { available: 0 },
-        // *** TEMPORARY UNTILL RESOLVED ON AMS SIDE ***
-        gcp: { available: 4 },
+        gcp: { available: 0 },
       },
 
       // Add ons
@@ -87,49 +85,48 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
 
     const items = get(response.data, 'items', []);
 
+    const processNodeQuota = (item, provider) => {
+      const available = item.allowed - item.reserved;
+      const category = item.byoc ? 'byoc' : 'rhInfra';
+      allQuotas.nodesQuota[provider][category][item.resource_name] = available;
+    };
+
+    const processClusterQuota = (item, provider) => {
+      const available = item.allowed - item.reserved;
+      const category = item.byoc ? 'byoc' : 'rhInfra';
+      const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
+
+      allQuotas.clustersQuota[provider][category][zoneType][item.resource_name] = available;
+      allQuotas.clustersQuota[provider][category][zoneType].available += available;
+      allQuotas.clustersQuota[provider][category].totalAvailable += available;
+    };
+
     items.forEach((item) => {
+      const provider = item.resource_type && item.resource_type.split('.').pop();
       switch (item.resource_type) {
         // AWS
-        case 'cluster.aws': {
-          // aws cluster quota: "how many clusters am I allowed to provision?"
-          const available = item.allowed - item.reserved;
-          const category = item.byoc ? 'byoc' : 'rhInfra';
-          const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
-
-          allQuotas.clustersQuota.aws[category][zoneType][item.resource_name] = available;
-          allQuotas.clustersQuota.aws[category][zoneType].available += available;
-          allQuotas.clustersQuota.aws[category].totalAvailable += available;
+        case 'cluster.gcp':
+        case 'cluster.aws':
+          // cluster quota: "how many clusters am I allowed to provision?"
+          processClusterQuota(item, provider);
           break;
-        }
 
-        case 'compute.node.aws': {
-          // aws - node quota: "how many extra nodes can I add on top of the base cluster?"
-          const available = item.allowed - item.reserved;
-          const category = item.byoc ? 'byoc' : 'rhInfra';
-          allQuotas.nodesQuota.aws[category][item.resource_name] = available;
+        case 'compute.node.gcp':
+        case 'compute.node.aws':
+          // node quota: "how many extra nodes can I add on top of the base cluster?"
+          processNodeQuota(item, provider);
           break;
-        }
 
         case 'pv.storage.aws':
+        case 'pv.storage.gcp':
           // Create a map of storage quota.
-          allQuotas.storageQuota.aws.available += (item.allowed - item.reserved);
+          allQuotas.storageQuota[provider].available += (item.allowed - item.reserved);
           break;
 
         case 'network.loadbalancer.aws':
-          allQuotas.loadBalancerQuota.aws.available += (item.allowed - item.reserved);
+        case 'network-gcp.loadbalancer.gcp':
+          allQuotas.loadBalancerQuota[provider].available += (item.allowed - item.reserved);
           break;
-
-        // GCP
-        case 'cluster.gcp': {
-          // gcp cluster quota: "how many clusters am I allowed to provision?"
-          const available = item.allowed - item.reserved;
-          const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
-
-          allQuotas.clustersQuota.gcp.rhInfra[zoneType][item.resource_name] = available;
-          allQuotas.clustersQuota.gcp.rhInfra[zoneType].available += available;
-          allQuotas.clustersQuota.gcp.rhInfra.totalAvailable += available;
-          break;
-        }
 
         // ADDONS
         case 'addon':

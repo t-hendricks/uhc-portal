@@ -130,6 +130,20 @@ class MachineTypeSelection extends React.Component {
       const labelTitle = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
 
       const hasQuota = this.hasQuotaForType(machineType.id);
+      let { name } = machineType;
+      if (cloudProviderID === 'gcp') {
+        const nameParts = name.split(' - '); // Assuming the formatting on the backend side is "type - category". If the backend changes the formatting, this assumption will break
+        name = (
+          <>
+            <div>
+              {nameParts[0]}
+            </div>
+            <div>
+              {nameParts[1]}
+            </div>
+          </>
+        );
+      }
       return (
         <FlatRadioButton
           {...extraProps}
@@ -140,10 +154,9 @@ class MachineTypeSelection extends React.Component {
           tooltip={!hasQuota && 'You do not have quota for this node type. Contact sales to purchase additional quota.'}
           isSelected={hasQuota && currentValue === machineType.id}
           titleText={labelTitle}
-          secondaryText={machineType.name}
+          secondaryText={name}
           icon={machineTypeIcon(machineType.id)}
           onChange={changeHandler}
-          extraClass={cloudProviderID === 'gcp' ? 'gcp-machine-type' : ''}
         />
       );
     };

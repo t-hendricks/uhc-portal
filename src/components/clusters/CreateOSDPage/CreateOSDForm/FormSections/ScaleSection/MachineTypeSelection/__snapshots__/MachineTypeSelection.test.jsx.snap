@@ -176,7 +176,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
     className="flat-radio-buttons-flex-container"
   >
     <FlatRadioButton
-      extraClass=""
       icon={
         <MemoryIcon
           color="currentColor"
@@ -330,7 +329,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
       </Component>
     </FlatRadioButton>
     <FlatRadioButton
-      extraClass=""
       icon={
         <MemoryIcon
           color="currentColor"

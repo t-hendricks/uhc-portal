@@ -45,6 +45,7 @@ function Overview({
               used: cluster.metrics.memory.used,
               total: cluster.metrics.memory.total,
             }}
+            type="threshold"
           />
         </CardBody>
       </Card>
@@ -69,7 +70,7 @@ function Overview({
       {displayClusterLogs && cluster.managed && (
       <Card>
         <CardHeader>
-          <Title headingLevel="h2" size="3xl">Cluster History</Title>
+          <Title headingLevel="h2" size="md" className="card-title">Cluster History</Title>
         </CardHeader>
         <CardBody>
           <ClusterLogs externalClusterID={cluster.external_id} history={history} />

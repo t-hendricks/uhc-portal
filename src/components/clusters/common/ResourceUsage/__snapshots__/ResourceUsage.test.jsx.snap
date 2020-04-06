@@ -1,6 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ResourceUsage /> should render 1`] = `
+exports[`<ResourceUsage /> should render correct status message when archived 1`] = `
+<Fragment>
+  <p>
+    The cluster has been archived and does not have any metrics data.
+  </p>
+</Fragment>
+`;
+
+exports[`<ResourceUsage /> should render no type 1`] = `
 <Fragment>
   <ClusterUtilizationChart
     donutId="cpu_donut"
@@ -21,18 +29,56 @@ exports[`<ResourceUsage /> should render 1`] = `
 </Fragment>
 `;
 
-exports[`<ResourceUsage /> should render correct status message when archived 1`] = `
-<Fragment>
-  <p>
-    The cluster has been archived and does not have any metrics data.
-  </p>
-</Fragment>
-`;
-
 exports[`<ResourceUsage /> should render status message when metrics are not available 1`] = `
 <Fragment>
   <p>
     The cluster currently does not have any metrics data. Try again later.
   </p>
+</Fragment>
+`;
+
+exports[`<ResourceUsage /> should render type legend 1`] = `
+<Fragment>
+  <ClusterUtilizationChart
+    donutId="cpu_donut"
+    humanize={false}
+    title="vCPU"
+    total={16}
+    type="legend"
+    unit="Cores"
+    used={3.995410922987096}
+  />
+  <ClusterUtilizationChart
+    donutId="memory_donut"
+    humanize={true}
+    title="Memory"
+    total={82293346304}
+    type="legend"
+    unit="B"
+    used={16546058240}
+  />
+</Fragment>
+`;
+
+exports[`<ResourceUsage /> should render type threshold 1`] = `
+<Fragment>
+  <ClusterUtilizationChart
+    donutId="cpu_donut"
+    humanize={false}
+    title="vCPU"
+    total={16}
+    type="threshold"
+    unit="Cores"
+    used={3.995410922987096}
+  />
+  <ClusterUtilizationChart
+    donutId="memory_donut"
+    humanize={true}
+    title="Memory"
+    total={82293346304}
+    type="threshold"
+    unit="B"
+    used={16546058240}
+  />
 </Fragment>
 `;
