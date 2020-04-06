@@ -4,6 +4,7 @@ import { DropdownItem } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
+
 /**
  * This function is used by PF tables to determine which dropdown items are displayed
  * on each row of the table. It returns a list of objects, containing props for DropdownItem
@@ -13,7 +14,7 @@ import getClusterName from '../../../../common/getClusterName';
  * @param {*} openModal           Action to open modal
  */
 function actionResolver(
-  cluster, showConsoleButton, openModal,
+  cluster, showConsoleButton, openModal, canAllowClusterAdmin,
 ) {
   const baseProps = {
     component: 'button',
@@ -162,6 +163,15 @@ function actionResolver(
     return editSubscriptionSettingsProps;
   };
 
+  const getToggleClusterAdminAccessDialogProps = () => (
+    {
+      ...baseProps,
+      title: !cluster.cluster_admin_enabled ? 'Allow cluster-admin access' : 'Remove cluster-admin access',
+      key: getKey('allowclusteradmin'),
+      onClick: () => openModal('allow-cluster-admin', cluster),
+    }
+  );
+
   const adminConsoleItemProps = getAdminConosleProps();
   const scaleClusterItemProps = getScaleClusterProps();
   const editDisplayNameItemProps = getEditDisplayNameProps();
@@ -171,6 +181,7 @@ function actionResolver(
   const unarchiveClusterItemProps = getUnarchiveClusterProps();
   const editDisconnectedItemProps = getEditDisconnectedClusterProps();
   const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
+  const ToggleClusterAdminAccessDialogProps = getToggleClusterAdminAccessDialogProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed;
@@ -182,6 +193,7 @@ function actionResolver(
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
   const showEditDisconnected = cluster.canEdit && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED);
   const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && cluster.subscription;
+  const showToggleClusterAdmin = cluster.managed && canAllowClusterAdmin;
 
   return [
     showConsoleButton && adminConsoleItemProps,
@@ -193,14 +205,15 @@ function actionResolver(
     showUnarchive && unarchiveClusterItemProps,
     showEditDisconnected && editDisconnectedItemProps,
     showEditSubscriptionSettings && editSubscriptionSettingsProps,
+    showToggleClusterAdmin && ToggleClusterAdminAccessDialogProps,
   ].filter(Boolean);
 }
 
 function dropDownItems({
-  cluster, showConsoleButton, openModal,
+  cluster, showConsoleButton, openModal, canAllowClusterAdmin,
 }) {
   const actions = actionResolver(
-    cluster, showConsoleButton, openModal,
+    cluster, showConsoleButton, openModal, canAllowClusterAdmin,
   );
   const menuItems = actions.map(
     action => (<DropdownItem {...action}>{action.title}</DropdownItem>),

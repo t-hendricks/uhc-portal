@@ -27,6 +27,7 @@ const getSubscription = subscriptionID => apiRequest({
   params: {
     fetchAccounts: true,
     fetchCpuAndSocket: true,
+    fetchCapabilities: true,
   },
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}`,
 });
