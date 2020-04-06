@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // This component shows to the user the OpenID refresh token, so that she can
-// copy it and use it with command line utitilites like `curl` or UHC.
+// copy it and use it with command line utitilites like `curl` or OCM.
 
 import React from 'react';
 import { Skeleton, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
@@ -25,7 +25,7 @@ import {
 
 
 /**
- * Splits the given text into lines of 72 characters each, so that they look
+ * Splits the given text into lines of 80 characters each, so that they look
  * nice when rendered in a shell code snippet. Note that each line will have
  * a backslash at the end, for line continuation.
  */
@@ -81,7 +81,7 @@ class Tokens extends React.Component {
 
     const title = (
       <PageHeader>
-        <PageHeaderTitle title="API Token" />
+        <PageHeaderTitle title="OpenShift Cluster Manager API Token" />
       </PageHeader>
     );
 
@@ -108,21 +108,13 @@ class Tokens extends React.Component {
 
     // Prepare the snippet of code that shows how to use the offline access token:
     const offlineAccessTokenSnippet = [
-      'OFFLINE_ACCESS_TOKEN="\\',
+      'ocm login --token="\\',
       splitToken(offlineAccessToken),
       '"',
-      'curl \\',
-      '--silent \\',
-      '--data-urlencode "grant_type=refresh_token" \\',
-      '--data-urlencode "client_id=cloud-services" \\',
-      `--data-urlencode "refresh_token=${'${'}OFFLINE_ACCESS_TOKEN${'}'}" \\`,
-      'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token | \\',
-      'jq -r .access_token',
     ];
 
-    // Links to curl and jq:
-    const curlLink = <a href="https://curl.haxx.se">curl</a>;
-    const jqLink = <a href="https://stedolan.github.io/jq">jq</a>;
+    // Link to latest ocm release:
+    const ocmLink = <a href="https://github.com/openshift-online/ocm-cli/releases/latest">ocm</a>;
 
     /* eslint-disable react/jsx-one-expression-per-line */
     return (
@@ -131,19 +123,26 @@ class Tokens extends React.Component {
         <PageSection>
           <Card>
             <CardHeader>
-              <h2>Offline Access Token</h2>
+              <h2>OpenShift Cluster Manager API Token</h2>
             </CardHeader>
             <CardBody>
               <p>
-                This is a long lived token that you can use to obtain access tokens:
+                Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you
+                to use OpenShift without needing to install, operate or upgrade your own OpenShift
+                (Kubernetes) cluster.
+              </p>
+              <p>
+                Download and install the {ocmLink} command-line utility and use the API token to
+                authenticate against your Red Hat OpenShift Cluster Manager account.
               </p>
               {tokenBox(offlineAccessToken)}
               <p>
-                Copy it, and then use it to request an access token. For example, to
-                obtain an access token using the {curlLink} and {jqLink} command
-                line tools, use the following commands:
+                Copy it, and then use it to authenticate with the {ocmLink} command-line utility:
               </p>
               {snippetBox(offlineAccessTokenSnippet)}
+              <p>
+                Run <code>ocm login --help</code> to get more information.
+              </p>
             </CardBody>
           </Card>
         </PageSection>
@@ -154,3 +153,8 @@ class Tokens extends React.Component {
 }
 
 export default Tokens;
+export {
+  snippetBox,
+  splitToken,
+  tokenBox,
+};
