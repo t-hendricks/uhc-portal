@@ -45,6 +45,7 @@ function Overview({
               used: cluster.metrics.memory.used,
               total: cluster.metrics.memory.total,
             }}
+            type="threshold"
           />
         </CardBody>
       </Card>

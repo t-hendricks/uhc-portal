@@ -26,12 +26,34 @@ const memory = {
 };
 
 describe('<ResourceUsage />', () => {
-  it('should render', () => {
+  it('should render no type', () => {
     const wrapper = shallow(<ResourceUsage
       cpu={cpu}
       memory={memory}
       metricsAvailable
       metricsStatusMessage={metricsStatusMessages.default}
+    />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should render type threshold', () => {
+    const wrapper = shallow(<ResourceUsage
+      cpu={cpu}
+      memory={memory}
+      metricsAvailable
+      metricsStatusMessage={metricsStatusMessages.default}
+      type="threshold"
+    />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should render type legend', () => {
+    const wrapper = shallow(<ResourceUsage
+      cpu={cpu}
+      memory={memory}
+      metricsAvailable
+      metricsStatusMessage={metricsStatusMessages.default}
+      type="legend"
     />);
     expect(wrapper).toMatchSnapshot();
   });
@@ -42,6 +64,7 @@ describe('<ResourceUsage />', () => {
       memory={memory}
       metricsAvailable={false}
       metricsStatusMessage={metricsStatusMessages.default}
+      type="threshold"
     />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('p').length).toEqual(1);
@@ -53,6 +76,7 @@ describe('<ResourceUsage />', () => {
       memory={memory}
       metricsAvailable={false}
       metricsStatusMessage={metricsStatusMessages.archived}
+      type="threshold"
     />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('p').length).toEqual(1);
