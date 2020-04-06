@@ -58,16 +58,18 @@ class MonitoringList extends React.Component {
           {alerts.hasData
             ? <AlertsTable alerts={alerts.data} clusterConsole={cluster.console} /> : EmptyState}
         </MonitoringListItem>
-        <MonitoringListItem
-          title="Nodes"
-          numOfIssues={nodes.numOfIssues}
-          toggle={this.toggle}
-          expanded={expanded}
-          hasData={nodes.hasData}
-        >
-          {nodes.hasData
-            ? <NodesTable nodes={nodes.data} clusterConsole={cluster.console} /> : EmptyState }
-        </MonitoringListItem>
+        {nodes.hasData && (
+          // hide nodes if not available, this metric is missing in OpenShift >= 4.3.8
+          <MonitoringListItem
+            title="Nodes"
+            numOfIssues={nodes.numOfIssues}
+            toggle={this.toggle}
+            expanded={expanded}
+            hasData={nodes.hasData}
+          >
+            <NodesTable nodes={nodes.data} clusterConsole={cluster.console} />
+          </MonitoringListItem>
+        )}
         <MonitoringListItem
           title="Cluster operators"
           numOfIssues={operators.numOfIssues}
