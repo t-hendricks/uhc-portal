@@ -21,21 +21,6 @@ exports[`<MonitoringList /> should render 1`] = `
   </MonitoringListItem>
   <MonitoringListItem
     expanded={Array []}
-    title="Nodes"
-    toggle={[Function]}
-  >
-    <MonitoringEmptyState
-      hideIcon={true}
-      hideLastCheckIn={true}
-      title="No data available for this metric"
-    >
-      <p>
-        Please check back later
-      </p>
-    </MonitoringEmptyState>
-  </MonitoringListItem>
-  <MonitoringListItem
-    expanded={Array []}
     title="Cluster operators"
     toggle={[Function]}
   >
