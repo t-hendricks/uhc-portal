@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const CLEAR_DISPLAY_NAME_RESPONSE = 'CLEAR_DISPLAY_NAME_RESPONSE';
+const CLEAR_DISPLAY_NAME_RESPONSE = 'CLEAR_DISPLAY_NAME_RESPONSE'; // TODO: refactor this const
 const CREATE_CLUSTER = 'CREATE_CLUSTER';
 const EDIT_CLUSTER = 'EDIT_CLUSTER';
 const ARCHIVE_CLUSTER = 'ARCHIVE_CLUSTER';

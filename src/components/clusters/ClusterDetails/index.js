@@ -25,6 +25,7 @@ import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/
 import { getClusterHistory } from './components/ClusterLogs/clusterLogActions';
 import { viewConstants } from '../../../redux/constants';
 import { fetchClusterInsights, voteOnRuleInsights } from './components/Insights/InsightsActions';
+import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
@@ -47,6 +48,7 @@ const mapStateToProps = (state) => {
     displayClusterLogs: errorCode !== 403 && errorCode !== 404,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
+    canAllowClusterAdmin: canAllowAdminSelector(state),
   });
 };
 
