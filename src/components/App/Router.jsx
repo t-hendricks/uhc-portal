@@ -44,6 +44,7 @@ import InstallRHV from '../clusters/install/InstallRHV';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallPullSecret from '../clusters/install/InstallPullSecret';
+import InstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
 import InstallCRC from '../clusters/install/InstallCRC';
 import InstallIBM from '../clusters/install/InstallIBM';
 import Tokens from '../tokens/Tokens';
@@ -81,6 +82,7 @@ function Router(props) {
           <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
           <Route path="/install/pre-release" component={InstallPreRelease} />
           <Route path="/install/pull-secret" component={InstallPullSecret} />
+          <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
           <Route path="/install" component={InstallInfrastructure} />
           <Route path="/details/:id" component={ClusterDetails} />
           <Route path="/create/osd/aws" render={() => <CreateOSDPage cloudProviderID="aws" />} />
