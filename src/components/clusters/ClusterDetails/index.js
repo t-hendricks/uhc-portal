@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 
+import size from 'lodash/size';
+import isEmpty from 'lodash/isEmpty';
 import ClusterDetails from './ClusterDetails';
 import {
   fetchClusterDetails,
@@ -26,6 +28,7 @@ import { getClusterHistory } from './components/ClusterLogs/clusterLogActions';
 import { viewConstants } from '../../../redux/constants';
 import { fetchClusterInsights, voteOnRuleInsights } from './components/Insights/InsightsActions';
 import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
+import helpers from '../../../common/helpers';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
@@ -36,6 +39,12 @@ const mapStateToProps = (state) => {
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
   const { insightsData } = state.insightsData;
+  const { filter, flags } = state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW];
+  const hasNoFilters = isEmpty(filter.description)
+  && helpers.nestedIsEmpty(flags.conditionalFilterFlags.severityTypesFilter);
+  const logsFulfilled = state.clusterLogs.requestState.fulfilled;
+  const hideClusterLogs = (hasNoFilters && !size(state.clusterLogs.logs) && logsFulfilled)
+  || errorCode === 403 || errorCode === 404;
 
   return ({
     cloudProviders,
@@ -45,7 +54,7 @@ const mapStateToProps = (state) => {
     clusterAddOns,
     clusterIdentityProviders,
     organization,
-    displayClusterLogs: errorCode !== 403 && errorCode !== 404,
+    displayClusterLogs: !hideClusterLogs,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
     canAllowClusterAdmin: canAllowAdminSelector(state),
