@@ -45,13 +45,13 @@ class ToggleClusterAdminAccessDialog extends React.Component {
       )
       : (
         <>
-        Users will no longer be able to access the cluster-admin privileges.
-        Any role being previously created will be deleted.
+        Users will no longer be able to access the cluster with cluster-admin privileges.
+        Previously created cluster-admin roles will be deleted.
         </>
       );
     return isOpen && (
     <Modal
-      title={!modalData.cluster_admin_enabled ? 'Allow cluster-admin access' : 'Remove cluster-admin access'}
+      title={!modalData.cluster_admin_enabled ? 'Allow cluster-admin access?' : 'Remove cluster-admin access?'}
       onClose={closeModal}
       primaryText={!modalData.cluster_admin_enabled ? 'Allow access' : 'Remove access'}
       secondaryText="cancel"

@@ -5,11 +5,13 @@ import { initialState } from '../UsersReducer';
 import { stateWithUsers } from './Users.fixtures';
 import UsersSection from '../UsersSection';
 
+import { clusterDetails } from '../../../../__test__/ClusterDetails.fixtures';
+
 describe('<Users />', () => {
   it('should render without users', () => {
     const getUsers = jest.fn();
     const wrapper = shallow(<UsersSection
-      clusterID="fake id"
+      cluster={clusterDetails.cluster}
       getUsers={getUsers}
       deleteUser={jest.fn()}
       addUser={jest.fn()}
@@ -19,7 +21,7 @@ describe('<Users />', () => {
       deleteUserResponse={initialState.deleteUserResponse}
     />);
     expect(wrapper).toMatchSnapshot();
-    expect(getUsers).toHaveBeenCalledWith('fake id', 'dedicated-admins');
+    expect(getUsers).toHaveBeenCalledWith(clusterDetails.cluster.id, ['dedicated-admins']);
   });
 
   describe('with users', () => {
@@ -32,7 +34,7 @@ describe('<Users />', () => {
       getUsers = jest.fn();
 
       wrapper = shallow(<UsersSection
-        clusterID="fake id"
+        cluster={clusterDetails.cluster}
         getUsers={deleteUser}
         deleteUser={deleteUser}
         addUser={jest.fn()}

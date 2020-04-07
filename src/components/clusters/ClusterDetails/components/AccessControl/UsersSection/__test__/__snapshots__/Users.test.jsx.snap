@@ -21,17 +21,26 @@ exports[`<Users /> should render without users 1`] = `
         Learn more.
       </a>
     </p>
-    <Title
-      className="pf-u-mt-md pf-u-mb-sm card-title"
-      headingLevel="h3"
-      size="lg"
+    <Component
+      className="access-control-add"
+      onClick={[Function]}
+      variant="secondary"
     >
-      Add user:
-    </Title>
-    <UserInputForm
-      clusterID="fake id"
-      pending={false}
-      saveUser={[MockFunction]}
+      Add user
+    </Component>
+    <AddUserDialog
+      addUserResponse={
+        Object {
+          "error": false,
+          "errorDetails": null,
+          "errorMessage": "",
+          "fulfilled": false,
+          "pending": false,
+        }
+      }
+      clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
+      isOpen={false}
+      submit={[MockFunction]}
     />
   </CardBody>
 </Card>
@@ -59,168 +68,25 @@ exports[`<Users /> with users should render 1`] = `
       </a>
     </p>
     <Component
-      actions={
-        Array [
-          Object {
-            "className": "hand-pointer",
-            "onClick": [Function],
-            "title": "Delete",
-          },
-        ]
-      }
-      aria-label="Users"
-      cells={
-        Array [
-          Object {
-            "title": <React.Fragment>
-              User ID
-              <Popover
-                appendTo={[Function]}
-                aria-label="User IDs"
-                bodyContent={
-                  <p>
-                    User IDs are matched by the cluster's identity providers.
-                  </p>
-                }
-                boundary="window"
-                className=""
-                closeBtnAriaLabel="Close"
-                distance={25}
-                enableFlip={true}
-                flipBehavior={
-                  Array [
-                    "top",
-                    "right",
-                    "bottom",
-                    "left",
-                    "top",
-                    "right",
-                    "bottom",
-                  ]
-                }
-                footerContent={null}
-                headerContent={null}
-                hideOnOutsideClick={true}
-                isVisible={null}
-                maxWidth="calc(2rem + 18.75rem)"
-                onHidden={[Function]}
-                onHide={[Function]}
-                onMount={[Function]}
-                onShow={[Function]}
-                onShown={[Function]}
-                position="top"
-                shouldClose={[Function]}
-                tippyProps={Object {}}
-                zIndex={9999}
-              >
-                <Unknown
-                  isInline={true}
-                  variant="plain"
-                >
-                  <HelpIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="sm"
-                    title={null}
-                  />
-                </Unknown>
-              </Popover>
-            </React.Fragment>,
-          },
-          Object {
-            "title": <React.Fragment>
-              Group
-              <Popover
-                appendTo={[Function]}
-                aria-label="Groups"
-                bodyContent={
-                  <p>
-                    Groups are mapped to role bindings on the cluster.
-                     
-                    For more information check the
-                     
-                    <a
-                      href="https://docs.openshift.com/container-platform/latest/authentication/understanding-authentication.html"
-                    >
-                      OpenShift 4 documentation
-                    </a>
-                    .
-                  </p>
-                }
-                boundary="window"
-                className=""
-                closeBtnAriaLabel="Close"
-                distance={25}
-                enableFlip={true}
-                flipBehavior={
-                  Array [
-                    "top",
-                    "right",
-                    "bottom",
-                    "left",
-                    "top",
-                    "right",
-                    "bottom",
-                  ]
-                }
-                footerContent={null}
-                headerContent={null}
-                hideOnOutsideClick={true}
-                isVisible={null}
-                maxWidth="calc(2rem + 18.75rem)"
-                onHidden={[Function]}
-                onHide={[Function]}
-                onMount={[Function]}
-                onShow={[Function]}
-                onShown={[Function]}
-                position="top"
-                shouldClose={[Function]}
-                tippyProps={Object {}}
-                zIndex={9999}
-              >
-                <Unknown
-                  isInline={true}
-                  variant="plain"
-                >
-                  <HelpIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="sm"
-                    title={null}
-                  />
-                </Unknown>
-              </Popover>
-            </React.Fragment>,
-          },
-        ]
-      }
-      rows={
-        Array [
-          Object {
-            "cells": Array [
-              "user_name",
-              "dedicated-admins",
-            ],
-            "userID": "user_name",
-          },
-        ]
-      }
-      variant="compact"
+      className="access-control-add"
+      onClick={[Function]}
+      variant="secondary"
     >
-      <TableHeader />
-      <TableBody />
+      Add user
     </Component>
-    <Title
-      className="pf-u-mt-md pf-u-mb-sm card-title"
-      headingLevel="h3"
-      size="lg"
-    >
-      Add user:
-    </Title>
-    <UserInputForm
-      clusterID="fake id"
-      pending={false}
-      saveUser={[MockFunction]}
+    <AddUserDialog
+      addUserResponse={
+        Object {
+          "error": false,
+          "errorDetails": null,
+          "errorMessage": "",
+          "fulfilled": false,
+          "pending": false,
+        }
+      }
+      clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
+      isOpen={false}
+      submit={[MockFunction]}
     />
   </CardBody>
 </Card>

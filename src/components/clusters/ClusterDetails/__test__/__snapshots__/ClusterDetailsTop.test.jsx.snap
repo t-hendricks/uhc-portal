@@ -66,6 +66,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
                 "id": "aws",
                 "kind": "CloudProviderLink",
               },
+              "cluster_admin_enabled": false,
               "console": Object {
                 "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
               },
@@ -233,6 +234,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           "id": "aws",
           "kind": "CloudProviderLink",
         },
+        "cluster_admin_enabled": false,
         "console": Object {
           "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
         },
