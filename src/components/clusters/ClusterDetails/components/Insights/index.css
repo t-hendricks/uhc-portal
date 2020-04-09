@@ -41,3 +41,7 @@
     /* gutter="sm" doesn't work for some reason */
     margin-bottom: 5px;
 }
+
+.insights-loading-container {
+    padding: 15px;
+}
