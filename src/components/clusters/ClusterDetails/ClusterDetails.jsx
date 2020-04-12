@@ -313,7 +313,7 @@ class ClusterDetails extends Component {
       );
 
     const consoleURL = get(cluster, 'console.url');
-    const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
+    const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
 
     return (
       <PageSection id="clusterdetails-content">
