@@ -8,7 +8,12 @@ import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import validators from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
-function NetworkingSection({ pending, toggleNetwork, mode }) {
+function NetworkingSection({
+  pending,
+  toggleNetwork,
+  mode,
+  isMultiAz,
+}) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
       return `/${value}`;
@@ -22,6 +27,8 @@ function NetworkingSection({ pending, toggleNetwork, mode }) {
     }
     return value;
   };
+
+  const validateMachineCidr = value => validators.machineCidr(value, isMultiAz);
 
   return (
     <>
@@ -68,7 +75,7 @@ function NetworkingSection({ pending, toggleNetwork, mode }) {
                 label="Machine CIDR"
                 placeholder="10.0.0.0/16"
                 type="text"
-                validate={[validators.cidr, validators.machineCidr]}
+                validate={[validators.cidr, validateMachineCidr]}
                 disabled={pending}
                 extendedHelpText={constants.machineCIDRHint}
               />
@@ -124,6 +131,7 @@ NetworkingSection.propTypes = {
   pending: PropTypes.bool,
   mode: PropTypes.string,
   toggleNetwork: PropTypes.func,
+  isMultiAz: PropTypes.bool,
 };
 
 export default NetworkingSection;
