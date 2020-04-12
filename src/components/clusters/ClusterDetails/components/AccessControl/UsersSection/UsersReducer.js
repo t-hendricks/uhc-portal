@@ -1,6 +1,6 @@
+import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION,
-  setStateProp, baseRequestState,
+  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../../common/errors';
 import UsersConstants from './UsersConstants';
@@ -11,6 +11,7 @@ const initialState = {
     ...baseRequestState,
     clusterID: undefined,
     users: [],
+    errors: [],
   },
   deleteUserResponse: {
     ...baseRequestState,
@@ -21,124 +22,86 @@ const initialState = {
 };
 
 function UsersReducer(state = initialState, action) {
-  switch (action.type) {
-    case UsersConstants.CLEAR_USER_RESPONSES:
-      return initialState;
-    // GET_USERS
-    case REJECTED_ACTION(UsersConstants.GET_USERS):
-      return setStateProp(
-        'groupUsers',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    // eslint-disable-next-line default-case
+    switch (action.type) {
+      // GET USERS
+      case PENDING_ACTION(UsersConstants.GET_USERS):
+        draft.groupUsers.pending = true;
+        break;
 
-    case PENDING_ACTION(UsersConstants.GET_USERS):
-      return setStateProp(
-        'groupUsers',
-        {
-          fulfilled: false,
-          pending: true,
-          users: state.groupUsers.users, // this is needed to preserve previous user list on refresh
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(UsersConstants.GET_USERS):
-      return setStateProp(
-        'groupUsers',
-        {
+      case FULFILLED_ACTION(UsersConstants.GET_USERS):
+        draft.groupUsers = {
           clusterID: action.payload.clusterID,
           pending: false,
           fulfilled: true,
-          users: action.payload.users.data,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+          users: action.payload.users,
+        };
 
-    // ADD_USER
-    case REJECTED_ACTION(UsersConstants.ADD_USER):
-      return setStateProp(
-        'addUserResponse',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
+        // handle REJECTED_ACTION(UsersConstants.GET_USERS) if any here
+        if (action.payload.errors) {
+          const errors = [];
+          action.payload.errors.forEach((error) => {
+            if (error) {
+              errors.push(
+                { userGroup: error.userGroup, ...getErrorState({ payload: error.errorData }) },
+              );
+            }
+          });
+          draft.groupUsers.errors = errors;
+        }
+        break;
 
-    case PENDING_ACTION(UsersConstants.ADD_USER):
-      return setStateProp(
-        'addUserResponse',
-        {
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+      // ADD USER
+      case PENDING_ACTION(UsersConstants.ADD_USER):
+        draft.addUserResponse.pending = true;
+        break;
 
-    case FULFILLED_ACTION(UsersConstants.ADD_USER):
-      return setStateProp(
-        'addUserResponse',
-        {
+      case FULFILLED_ACTION(UsersConstants.ADD_USER):
+        draft.addUserResponse = {
           pending: false,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
+        break;
 
-    // DELETE_USER
-    case REJECTED_ACTION(UsersConstants.DELETE_USER):
-      return setStateProp(
-        'deleteUserResponse',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
+      case REJECTED_ACTION(UsersConstants.ADD_USER):
+        draft.addUserResponse = {
+          ...initialState,
+          ...getErrorState(action),
+        };
+        break;
 
-    case PENDING_ACTION(UsersConstants.DELETE_USER):
-      return setStateProp(
-        'deleteUserResponse',
-        {
-          fulfilled: false,
-          pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
 
-    case FULFILLED_ACTION(UsersConstants.DELETE_USER):
-      return setStateProp(
-        'deleteUserResponse',
-        {
+      // DELETE USER
+      case PENDING_ACTION(UsersConstants.DELETE_USER):
+        draft.deleteUserResponse.pending = true;
+        break;
+
+      case FULFILLED_ACTION(UsersConstants.DELETE_USER):
+        draft.deleteUserResponse = {
           pending: false,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-    default:
-      return state;
-  }
+        };
+        break;
+
+      case REJECTED_ACTION(UsersConstants.DELETE_USER):
+        draft.deleteUserResponse = {
+          ...initialState,
+          ...getErrorState(action),
+        };
+        break;
+
+      case UsersConstants.CLEAR_ADD_USER_RESPONSES:
+        draft.addUserResponse = {
+          ...baseRequestState,
+        };
+        break;
+
+      case UsersConstants.CLEAR_USER_RESPONSES:
+        return initialState;
+    }
+  });
 }
 
 UsersReducer.initialState = initialState;

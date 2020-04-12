@@ -5,7 +5,6 @@ import { formatErrorDetails } from '../../common/errors';
 
 function ErrorBox({ message, response }) {
   const errorDetails = formatErrorDetails(response.errorDetails);
-
   return (
     <Alert variant="danger" isInline title={message} className="error-box">
       <span>{response.errorMessage}</span>
