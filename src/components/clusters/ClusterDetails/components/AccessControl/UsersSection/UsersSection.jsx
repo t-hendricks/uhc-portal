@@ -141,8 +141,9 @@ class UsersSection extends React.Component {
     ];
 
     const userRow = (user) => {
-      // extract the user group from the url
-      const userGroup = user.href.match(/(?<=groups\/)([\w-]*)/g)[0];
+      // parse the url to get the user group
+      const userHrefPathSections = user.href.match(/[^/?]*[^/?]/g);
+      const userGroup = userHrefPathSections[6];
 
       return ({
         cells: [
