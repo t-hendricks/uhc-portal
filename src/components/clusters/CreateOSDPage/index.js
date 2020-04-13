@@ -88,6 +88,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         pod_cidr: formData.network_pod_cidr,
         host_prefix: parseInt(formData.network_host_prefix, 10),
       };
+      clusterRequest.api = {
+        listening: formData.cluster_privacy,
+      };
     }
 
     if (formData.byoc === 'true') {
