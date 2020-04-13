@@ -75,7 +75,7 @@ function Router(props) {
           <Route path="/install/rhv/installer-provisioned" component={InstallRHV} />
           <Route path="/install/azure/installer-provisioned" component={InstallAzureIPI} />
           <Route path="/install/azure/user-provisioned" component={InstallAzureUPI} />
-          <Route path="/install/azure" component={InstallAzure} />
+          <Route path="/install/azure" exact component={InstallAzure} />
           <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
           <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
           <Route path="/install/crc/installer-provisioned" component={InstallCRC} />
