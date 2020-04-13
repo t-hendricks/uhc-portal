@@ -140,13 +140,18 @@ class UsersSection extends React.Component {
       },
     ];
 
-    const userRow = user => ({
-      cells: [
-        user.id,
-        'dedicated-admins',
-      ],
-      userID: user.id,
-    });
+    const userRow = (user) => {
+      // extract the user group from the url
+      const userGroup = user.href.match(/(?<=groups\/)([\w-]*)/g)[0];
+
+      return ({
+        cells: [
+          user.id,
+          userGroup,
+        ],
+        userID: user.id,
+      });
+    };
 
     const getErrorBox = error => (
       <EmptyState>
