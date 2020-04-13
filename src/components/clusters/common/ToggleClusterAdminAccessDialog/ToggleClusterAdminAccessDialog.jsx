@@ -38,8 +38,10 @@ class ToggleClusterAdminAccessDialog extends React.Component {
 
     const hasClusterAdmins = () => {
       const anyClusterAdmin = clusterGroupUsers.find((user) => {
-        // extract the user group from the url
-        const userGroup = user.href.match(/(?<=groups\/)([\w-]*)/g)[0];
+        // parse the url to get the user group
+        const userHrefPathSections = user.href.match(/[^/?]*[^/?]/g);
+        const userGroup = userHrefPathSections[6];
+
         return userGroup === 'cluster-admins';
       });
       return !!anyClusterAdmin;
