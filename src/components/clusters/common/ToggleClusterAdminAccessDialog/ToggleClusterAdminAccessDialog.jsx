@@ -18,7 +18,12 @@ class ToggleClusterAdminAccessDialog extends React.Component {
 
   render() {
     const {
-      toggleClusterAdminAccess, toggleClusterAdminResponse, isOpen, closeModal, modalData,
+      toggleClusterAdminAccess,
+      toggleClusterAdminResponse,
+      isOpen,
+      closeModal,
+      modalData,
+      clusterGroupUsers,
     } = this.props;
 
     const errorContainer = toggleClusterAdminResponse.error && (
@@ -31,38 +36,65 @@ class ToggleClusterAdminAccessDialog extends React.Component {
       toggleClusterAdminAccess(modalData.id, !!(modalData.cluster_admin_enabled));
     };
 
-    const modalText = !modalData.cluster_admin_enabled
-      ? (
-        <>
-        Users with this level of access privilege can cause irreperable damage to the cluster.
-          Per the
-          {' '}
-          <a href="https://www.openshift.com/legal/terms/" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-          {' '}
-          Red Hat
-          is not responsible for problems caused by cluster-admin users.
-        </>
-      )
-      : (
-        <>
-        Users will no longer be able to access the cluster with cluster-admin privileges.
-        Previously created cluster-admin roles will be deleted.
-        </>
-      );
+    const hasClusterAdmins = () => {
+      const anyClusterAdmin = clusterGroupUsers.find((user) => {
+        // extract the user group from the url
+        const userGroup = user.href.match(/(?<=groups\/)([\w-]*)/g)[0];
+        return userGroup === 'cluster-admins';
+      });
+      return !!anyClusterAdmin;
+    };
+
+    const getModalTitleAndText = () => {
+      if (modalData.cluster_admin_enabled) {
+        if (hasClusterAdmins()) {
+          return {
+            title: 'Cannot disable cluster-admin access.',
+            text:
+  <>
+            You cannot disable cluster-admin access because that role has been assigned to users.
+            Delete all cluster-admin users and try again.
+  </>,
+          };
+        }
+        return {
+          title: 'Remove cluster-admin access?',
+          text:
+  <>
+                  You will not be able to assign cluster-admin role,
+                  and no one from your organization will have cluster-admin access.
+  </>,
+        };
+      }
+      return {
+        title: 'Allow cluster-admin access?',
+        text:
+  <>
+        Users with this level of access privilege can cause irreparable damage to the cluster.
+        Per the
+    <a href="https://www.redhat.com/en/about/agreements" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+        Red Hat
+        is not responsible for problems caused by cluster-admin users.
+  </>,
+      };
+    };
+
+    const modalStrings = getModalTitleAndText();
+
     return isOpen && (
     <Modal
-      title={!modalData.cluster_admin_enabled ? 'Allow cluster-admin access?' : 'Remove cluster-admin access?'}
+      title={modalStrings.title}
       onClose={closeModal}
       primaryText={!modalData.cluster_admin_enabled ? 'Allow access' : 'Remove access'}
       secondaryText="cancel"
       onPrimaryClick={() => submit()}
       onSecondaryClick={closeModal}
-      isPrimaryDisabled={isPending}
+      isPrimaryDisabled={isPending || (modalData.cluster_admin_enabled && hasClusterAdmins())}
       isPending={isPending}
     >
       <>
         {errorContainer}
-        {modalText}
+        {modalStrings.text}
       </>
     </Modal>
     );
@@ -76,6 +108,7 @@ ToggleClusterAdminAccessDialog.propTypes = {
   toggleClusterAdminResponse: PropTypes.object,
   clearToggleClusterAdminResponse: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  clusterGroupUsers: PropTypes.array.isRequired,
 };
 
 

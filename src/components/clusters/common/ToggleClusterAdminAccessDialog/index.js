@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import get from 'lodash/get';
 import ToggleClusterAdminAccessDialog from './ToggleClusterAdminAccessDialog';
 import toggleClusterAdminAccess from './ClusterAdminActions';
 import { clearClusterResponse } from '../../../../redux/actions/clustersActions';
@@ -10,6 +11,7 @@ const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'allow-cluster-admin'),
   modalData: state.modal.data,
   toggleClusterAdminResponse: state.clusters.editedCluster,
+  clusterGroupUsers: get(state, 'clusterUsers.groupUsers.users', []),
 });
 
 const mapDispatchToProps = {
