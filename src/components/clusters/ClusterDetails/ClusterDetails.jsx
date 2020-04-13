@@ -38,6 +38,7 @@ import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
+import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 
 import ErrorBox from '../../common/ErrorBox';
 import { isValid, scrollToTop } from '../../../common/helpers';
@@ -172,7 +173,7 @@ class ClusterDetails extends Component {
       }
 
       if (!isUuid(clusterID)) {
-        getUsers(clusterID, 'dedicated-admins');
+        getUsers(clusterID);
         getAlerts(clusterID);
         getNodes(clusterID);
         getClusterOperators(clusterID);
@@ -239,6 +240,7 @@ class ClusterDetails extends Component {
       displayClusterLogs,
       insightsData,
       voteOnRule,
+      canAllowClusterAdmin,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -311,7 +313,7 @@ class ClusterDetails extends Component {
       );
 
     const consoleURL = get(cluster, 'console.url');
-    const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
+    const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
 
     return (
       <PageSection id="clusterdetails-content">
@@ -324,6 +326,7 @@ class ClusterDetails extends Component {
           organization={organization}
           error={clusterDetails.error}
           errorMessage={clusterDetails.errorMessage}
+          canAllowClusterAdmin={canAllowClusterAdmin}
         >
           <TabsRow
             displayLogs={hasLogs}
@@ -372,7 +375,7 @@ class ClusterDetails extends Component {
             hidden
           >
             <AccessControl
-              clusterID={cluster.id}
+              cluster={cluster}
               clusterConsoleURL={consoleURL}
               cloudProvider={get(cluster, 'cloud_provider.id')}
             />
@@ -423,6 +426,7 @@ class ClusterDetails extends Component {
         <EditConsoleURLDialog onClose={onDialogClose} />
         <EditSubscriptionSettingsDialog onClose={onDialogClose} />
         <ArchiveClusterDialog onClose={onDialogClose} />
+        <ToggleClusterAdminAccessDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {
           if (shouldRefresh) {
             invalidateClusters();
@@ -490,6 +494,7 @@ ClusterDetails.propTypes = {
   clusterLogsViewOptions: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
   voteOnRule: PropTypes.func.isRequired,
+  canAllowClusterAdmin: PropTypes.bool.isRequired,
 };
 
 ClusterDetails.defaultProps = {

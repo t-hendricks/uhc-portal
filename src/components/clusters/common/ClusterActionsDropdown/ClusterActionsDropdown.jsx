@@ -31,16 +31,16 @@ class ClusterActionsDropdown extends React.Component {
       openModal,
       isKebab,
       disabled,
+      canAllowClusterAdmin,
     } = this.props;
     const { isOpen } = this.state;
-
 
     const toggleComponent = isKebab
       ? <KebabToggle isDisabled={disabled} onToggle={this.onToggle} />
       : <DropdownToggle isDisabled={disabled} onToggle={this.onToggle}>Actions</DropdownToggle>;
 
     const menuItems = dropDownItems({
-      cluster, showConsoleButton, openModal,
+      cluster, showConsoleButton, openModal, canAllowClusterAdmin,
     });
     return (
       <Dropdown
@@ -61,6 +61,7 @@ ClusterActionsDropdown.propTypes = {
   openModal: PropTypes.func.isRequired,
   isKebab: PropTypes.bool,
   disabled: PropTypes.bool,
+  canAllowClusterAdmin: PropTypes.bool.isRequired,
 };
 
 export default ClusterActionsDropdown;

@@ -132,6 +132,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
   sortedMachineTypes={
     Array [
       Object {
+        "category": "memory_optimized",
         "cloud_provider": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
           "id": "aws",
@@ -151,6 +152,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
         "name": "Memory optimized - R5.XLarge",
       },
       Object {
+        "category": "memory_optimized",
         "cloud_provider": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
           "id": "aws",

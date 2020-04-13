@@ -27,7 +27,7 @@ class ClusterLogsToolbar extends React.PureComponent {
 
     return (
       <>
-        <TableToolbar id="cluster-logs-toolbar">
+        <TableToolbar>
           <div className="toolbar-item">
             <ClusterLogsConditionalFilter
               view={viewConstants.CLUSTER_LOGS_VIEW}

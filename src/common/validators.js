@@ -10,7 +10,8 @@ const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}
 
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
-const MACHINE_CIDR_MAX = 23;
+const MACHINE_CIDR_MAX_SINGLE_AZ = 23;
+const MACHINE_CIDR_MAX_MULTI_AZ = 24;
 const SERVICE_CIDR_MAX = 24;
 const POD_CIDR_MAX = 18;
 
@@ -216,18 +217,23 @@ const getCIDRSubnet = (value) => {
   return parseInt(value.split('/').pop(), 10);
 };
 
-const machineCidr = (value) => {
+const machineCidr = (value, isMultiAz) => {
   if (!value) {
     return undefined;
   }
 
   const prefixLength = getCIDRSubnet(value);
 
-  if (prefixLength > MACHINE_CIDR_MAX) {
-    const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX);
+  if (isMultiAz && prefixLength > MACHINE_CIDR_MAX_MULTI_AZ) {
+    const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX_MULTI_AZ);
+    const multiAZ = (maxComputeNodes - 9) * 3;
+    return `The subnet length can't be higher than '/${MACHINE_CIDR_MAX_MULTI_AZ}', which provides up to ${multiAZ} nodes.`;
+  }
+
+  if (!isMultiAz && prefixLength > MACHINE_CIDR_MAX_SINGLE_AZ) {
+    const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX_SINGLE_AZ);
     const singleAZ = maxComputeNodes - 9;
-    const multiAZ = Math.floor(maxComputeNodes / 3);
-    return `The subnet length can't be higher than '/${MACHINE_CIDR_MAX}', which provides up to ${singleAZ} nodes for single-zone clusters or ${multiAZ} nodes for each zone in a multi-zone clusters.`;
+    return `The subnet length can't be higher than '/${MACHINE_CIDR_MAX_SINGLE_AZ}', which provides up to ${singleAZ} nodes.`;
   }
 
   return undefined;

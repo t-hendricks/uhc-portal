@@ -677,6 +677,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 24px;
 }
 
+.buttom-alert {
+ margin-top: 24px;
+}
+
 .ocp-instructions .pf-c-card {
   margin-top: var(--pf-global--spacer--lg);
 }
@@ -1146,21 +1150,6 @@ h3#grant-role-select  {
       font-family: "Font Awesome 5 Free", serif;
       font-weight: 900;
       content: ' \f35d'
-    }
-  }
-}
-
-#cluster-logs-toolbar {
-  .ins-c-conditional-filter__value-selector {
-    padding-left: 0.4rem;
-  }
-  .pf-l-split__item.pf-m-fill {
-    display: inline-flex;
-    .ins-c-search-icon {
-      height: var(--pf-c-form-control--Height);
-      position: relative;
-      left: -2.3125rem;
-      top: -0.125rem;
     }
   }
 }

@@ -151,7 +151,11 @@ class CreateOSDForm extends React.Component {
             <GridItem span={4}>
               <h3>Networking</h3>
             </GridItem>
-            <NetworkingSection mode={mode} toggleNetwork={this.toggleNetwork} />
+            <NetworkingSection
+              mode={mode}
+              isMultiAz={isMultiAz}
+              toggleNetwork={this.toggleNetwork}
+            />
           </>
         )}
       </>

@@ -28,6 +28,7 @@ function ClusterDetailsTop(props) {
     error,
     errorMessage,
     children,
+    canAllowClusterAdmin,
   } = props;
 
   const clusterName = getClusterName(cluster);
@@ -84,6 +85,7 @@ function ClusterDetailsTop(props) {
       cluster={cluster}
       organization={organization.details}
       showConsoleButton={false}
+      canAllowClusterAdmin={canAllowClusterAdmin}
     />
   );
 
@@ -175,6 +177,7 @@ ClusterDetailsTop.propTypes = {
     PropTypes.element,
   ]),
   children: PropTypes.any,
+  canAllowClusterAdmin: PropTypes.bool.isRequired,
 };
 
 export default ClusterDetailsTop;

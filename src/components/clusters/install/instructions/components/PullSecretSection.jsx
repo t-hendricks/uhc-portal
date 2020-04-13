@@ -11,7 +11,7 @@ class PullSecretSection extends React.Component {
   state = { copied: false }
 
   render() {
-    const { token, cloudProviderID } = this.props;
+    const { token, cloudProviderID, text } = this.props;
     const { copied } = this.state;
     const isDisabled = (!token || !!token.error);
     const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
@@ -24,8 +24,7 @@ class PullSecretSection extends React.Component {
     return (
       <>
         <p>
-        Download or copy your pull secret. The install program will prompt you for your pull
-        secret during installation.
+          { text || 'Download or copy your pull secret. The install program will prompt you for your pull secret during installation.'}
         </p>
         <div>
           {isDisabled ? downloadButton : (
@@ -62,6 +61,7 @@ class PullSecretSection extends React.Component {
 PullSecretSection.propTypes = {
   token: PropTypes.object.isRequired,
   cloudProviderID: PropTypes.string,
+  text: PropTypes.string,
 };
 
 export default PullSecretSection;

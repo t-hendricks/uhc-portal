@@ -19,7 +19,7 @@ import { Skeleton } from '@redhat-cloud-services/frontend-components';
 import links from '../../../../../../common/installLinks';
 import ErrorBox from '../../../../../common/ErrorBox';
 
-import UserInputForm from './UserInputForm';
+import AddUserDialog from './AddUserDialog';
 
 class UsersSection extends React.Component {
   state = {
@@ -27,16 +27,16 @@ class UsersSection extends React.Component {
   };
 
   componentDidMount() {
-    const { clusterGroupUsers, clusterID, getUsers } = this.props;
-    if (clusterGroupUsers.clusterID !== clusterID
+    const { clusterGroupUsers, cluster } = this.props;
+    if (clusterGroupUsers.clusterID !== cluster.id
       || (!clusterGroupUsers.pending)) {
-      getUsers(clusterID, 'dedicated-admins');
+      this.getUsers();
     }
   }
 
   componentDidUpdate(prevProps) {
     const {
-      deleteUserResponse, addUserResponse, getUsers, clusterID, clusterGroupUsers,
+      deleteUserResponse, addUserResponse, clusterGroupUsers,
     } = this.props;
     const { deletedRowIndex } = this.state;
 
@@ -44,7 +44,7 @@ class UsersSection extends React.Component {
       || (addUserResponse.fulfilled && prevProps.addUserResponse.pending))
       && !clusterGroupUsers.pending) {
       // fetch users again if we just added/deleted a user.
-      getUsers(clusterID, 'dedicated-admins');
+      this.getUsers();
     }
     if (prevProps.clusterGroupUsers.pending
       && clusterGroupUsers.fulfilled && deletedRowIndex !== null) {
@@ -58,14 +58,29 @@ class UsersSection extends React.Component {
     clearUsersResponses();
   }
 
+  getUsers = () => {
+    const { cluster, getUsers } = this.props;
+    if (!cluster.cluster_admin_enabled) {
+      getUsers(cluster.id, ['dedicated-admins']);
+    } else {
+      getUsers(cluster.id);
+    }
+  }
+
+
   render() {
     const {
       clusterGroupUsers,
       addUserResponse,
       deleteUserResponse,
-      clusterID,
+      cluster,
       deleteUser,
       addUser,
+      isAddUserModalOpen,
+      openModal,
+      closeModal,
+      clearAddUserResponses,
+      canAddClusterAdmin,
     } = this.props;
     const { deletedRowIndex } = this.state;
 
@@ -120,32 +135,44 @@ class UsersSection extends React.Component {
     const actions = [
       {
         title: 'Delete',
-        onClick: (_, rowID, rowData) => { this.setState({ deletedRowIndex: rowID }); deleteUser(clusterID, 'dedicated-admins', rowData.userID); },
+        onClick: (_, rowID, rowData) => { this.setState({ deletedRowIndex: rowID }); deleteUser(cluster.id, rowData['column-1'].title, rowData.userID); },
         className: 'hand-pointer',
       },
     ];
 
-    const userRow = user => ({
-      cells: [
-        user.id,
-        'dedicated-admins',
-      ],
-      userID: user.id,
-    });
+    const userRow = (user) => {
+      // extract the user group from the url
+      const userGroup = user.href.match(/(?<=groups\/)([\w-]*)/g)[0];
 
-    if (clusterGroupUsers.error) {
+      return ({
+        cells: [
+          user.id,
+          userGroup,
+        ],
+        userID: user.id,
+      });
+    };
+
+    const getErrorBox = error => (
+      <EmptyState>
+        <ErrorBox message="Error getting cluster users" response={error} />
+      </EmptyState>
+    );
+
+    const hasUsers = !!get(clusterGroupUsers.users, 'length', false);
+
+
+    if (get(clusterGroupUsers, 'errors.length', false) && !hasUsers) {
       return (
-        <EmptyState>
-          <ErrorBox message="Error getting cluster users" response={clusterGroupUsers} />
-        </EmptyState>
+        <>
+          {clusterGroupUsers.errors.map(error => getErrorBox(error))}
+        </>
       );
     }
 
     const learnMoreLink = <a rel="noopener noreferrer" href={links.DEDICATED_ADMIN_ROLE} target="_blank">Learn more.</a>;
 
-    const hasUsers = !!get(clusterGroupUsers.users, 'items.length', false);
-
-    const userList = hasUsers ? clusterGroupUsers.users.items : [];
+    const userList = hasUsers ? clusterGroupUsers.users : [];
     const rows = hasUsers && userList.map(userRow);
     const showSkeleton = !hasUsers && clusterGroupUsers.pending;
     const skeletonRow = {
@@ -180,6 +207,7 @@ class UsersSection extends React.Component {
       </Card>
     ) : (
       <Card>
+        {clusterGroupUsers.errors && clusterGroupUsers.errors.map(error => getErrorBox(error))}
         <CardBody>
           <Title className="card-title" headingLevel="h3" size="lg">Cluster Administrative Users</Title>
           <p>
@@ -199,11 +227,17 @@ class UsersSection extends React.Component {
               <TableBody />
             </Table>
           )}
-          <Title headingLevel="h3" size="lg" className="pf-u-mt-md pf-u-mb-sm card-title">Add user:</Title>
-          <UserInputForm
-            clusterID={clusterID}
-            saveUser={addUser}
-            pending={addUserResponse.pending}
+          <Button onClick={() => openModal('add-user')} variant="secondary" className="access-control-add">
+              Add user
+          </Button>
+          <AddUserDialog
+            isOpen={isAddUserModalOpen}
+            closeModal={closeModal}
+            clearAddUserResponses={clearAddUserResponses}
+            addUserResponse={addUserResponse}
+            submit={addUser}
+            clusterID={cluster.id}
+            canAddClusterAdmin={canAddClusterAdmin}
           />
         </CardBody>
       </Card>
@@ -212,14 +246,19 @@ class UsersSection extends React.Component {
 }
 
 UsersSection.propTypes = {
-  clusterID: PropTypes.string.isRequired,
+  cluster: PropTypes.object.isRequired,
+  isAddUserModalOpen: PropTypes.bool.isRequired,
+  addUser: PropTypes.func.isRequired,
   addUserResponse: PropTypes.object,
-  deleteUserResponse: PropTypes.object,
-  clusterGroupUsers: PropTypes.object.isRequired,
   getUsers: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired,
-  addUser: PropTypes.func.isRequired,
+  deleteUserResponse: PropTypes.object,
+  clusterGroupUsers: PropTypes.object.isRequired,
+  openModal: PropTypes.func.isRequired,
+  canAddClusterAdmin: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
   clearUsersResponses: PropTypes.func.isRequired,
+  clearAddUserResponses: PropTypes.func.isRequired,
 };
 
 export default UsersSection;

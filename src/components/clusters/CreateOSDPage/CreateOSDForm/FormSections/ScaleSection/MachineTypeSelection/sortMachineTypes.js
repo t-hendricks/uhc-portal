@@ -2,13 +2,7 @@
 import get from 'lodash/get';
 import { parseValueWithUnit } from '../../../../../../../common/units';
 
-const AWS_GENERAL_PURPOSE_CATEGORY = 'm';
-const AWS_MEMORY_CATEGORY = 'r';
-const AWS_COMPUTE_CATEGORY = 'c';
-const GCP_GENERAL_PURPOSE_CATEGORY = 'n';
-const GCP_MEMORY_CATEGORY = 'm';
-const GCP_COMPUTE_CATEGORY = 'c';
-
+const categories = ['general_purpose', 'memory_optimized', 'compute_optimized'];
 
 function sortByMemory(a, b) {
   // sort by memory, ascending order
@@ -17,10 +11,8 @@ function sortByMemory(a, b) {
   return memoryBytesA - memoryBytesB;
 }
 
-function sortMachineTypesByCategories(a, b, categories) {
-  const categoryA = a.id.toLowerCase().charAt(0);
-  const categoryB = b.id.toLowerCase().charAt(0);
-  if (categoryA === categoryB) {
+function sortMachineTypesByCategories(a, b) {
+  if (a.category === b.category) {
     // the categories are equal. Within the category, we need to sort by size.
     const memorySortResult = sortByMemory(a, b);
     if (memorySortResult === 0) {
@@ -29,22 +21,16 @@ function sortMachineTypesByCategories(a, b, categories) {
     }
     return memorySortResult;
   }
-  return categories.indexOf(categoryA) - categories.indexOf(categoryB);
+  return categories.indexOf(a.category) - categories.indexOf(b.category);
 }
 
-function sortGcpMachineTypes(a, b) {
-  return sortMachineTypesByCategories(a, b, [GCP_GENERAL_PURPOSE_CATEGORY,
-    GCP_MEMORY_CATEGORY, GCP_COMPUTE_CATEGORY]);
-}
-
-function sortAwsMachineTypes(a, b) {
-  return sortMachineTypesByCategories(a, b, [AWS_GENERAL_PURPOSE_CATEGORY,
-    AWS_MEMORY_CATEGORY, AWS_COMPUTE_CATEGORY]);
-}
-
+/**
+ * mapping of sort function to cloud provider.
+ * If we ever add new cloud providers that require custom sorting, they can be added here.
+ */
 const sortFuncs = {
-  gcp: sortGcpMachineTypes,
-  aws: sortAwsMachineTypes,
+  gcp: sortMachineTypesByCategories,
+  aws: sortMachineTypesByCategories,
 };
 
 function sortMachineTypes(state, cloudProviderID) {
