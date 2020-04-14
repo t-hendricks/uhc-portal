@@ -43,5 +43,5 @@
 }
 
 .insights-loading-container {
-    padding: 15px;
+    padding: var(--pf-global--arrow--width);
 }
