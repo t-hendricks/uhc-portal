@@ -302,18 +302,13 @@ class ClusterDetails extends Component {
       invalidateClusters();
       this.fetchDetailsAndInsightsData(cluster.id);
     };
-    const externalID = get(cluster, 'external_id');
 
     const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
-    const displayInsightsTab = !isArchived
-      && APP_BETA
-      && insightsData[externalID]
-      && (
-        !insightsData[externalID].status
-        || insightsData[externalID].status === 404
-      );
+    const displayInsightsTab = !isArchived && APP_BETA && (
+      !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
+    );
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
