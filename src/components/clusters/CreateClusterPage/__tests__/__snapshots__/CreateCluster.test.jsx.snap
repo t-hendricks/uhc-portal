@@ -116,7 +116,7 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
                 />
               </CardHeader>
               <CardBody>
-                Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services.
+                Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services or Google Cloud Platform.
               </CardBody>
             </Card>
           </Tooltip>
@@ -216,7 +216,7 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
                 />
               </CardHeader>
               <CardBody>
-                Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services.
+                Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services or Google Cloud Platform.
               </CardBody>
             </Card>
           </Tooltip>

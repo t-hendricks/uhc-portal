@@ -48,7 +48,7 @@ class CreateCluster extends React.Component {
         </CardHeader>
         <CardBody>
           Create a Red Hat-managed cluster (OSD),
-          provisioned on Amazon Web Services.
+          provisioned on Amazon Web Services or Google Cloud Platform.
         </CardBody>
       </>
     );
