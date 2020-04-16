@@ -36,6 +36,7 @@ class EditClusterRoutersCard extends React.Component {
       additionalRouterEnabled,
       getClusterRouters,
       clusterID,
+      reset,
     } = this.props;
     return (
       <>
@@ -133,7 +134,12 @@ class EditClusterRoutersCard extends React.Component {
                     >
                       Change settings
                     </Button>
-                    <Button variant="secondary">Cancel</Button>
+                    <Button
+                      variant="secondary"
+                      onClick={() => reset()}
+                    >
+                      Cancel
+                    </Button>
                   </ActionGroup>
                 </GridItem>
               </Grid>
@@ -156,6 +162,7 @@ EditClusterRoutersCard.propTypes = {
   clusterDNSName: PropTypes.string.isRequired,
   valid: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
+  reset: PropTypes.func.isRequired,
   initialValues: PropTypes.shape({
     private_api: PropTypes.bool,
     private_default_router: PropTypes.bool,
