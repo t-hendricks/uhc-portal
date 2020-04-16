@@ -147,7 +147,6 @@ class CreateOSDForm extends React.Component {
         {/* Networking section */}
         {<NetworkingSection
           mode={mode}
-          isMultiAz={isMultiAz}
           toggleNetwork={this.toggleNetwork}
         />}
       </>

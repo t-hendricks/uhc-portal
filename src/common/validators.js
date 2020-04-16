@@ -238,11 +238,12 @@ const getCIDRSubnet = (value) => {
   return parseInt(value.split('/').pop(), 10);
 };
 
-const machineCidr = (value, isMultiAz) => {
+const machineCidr = (value, formData) => {
   if (!value) {
     return undefined;
   }
 
+  const isMultiAz = formData.multi_az === 'true';
   const prefixLength = getCIDRSubnet(value);
 
   if (isMultiAz && prefixLength > MACHINE_CIDR_MAX_MULTI_AZ) {
