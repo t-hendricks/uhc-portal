@@ -30,7 +30,7 @@ const sendNetworkConfigRequests = (newData, currentData, clusterID) => {
   if (currentData.APIPrivate !== newData.private_api) {
     const clusterRequest = {
       api: {
-        listening: newData.private_api,
+        listening: newData.private_api ? 'internal' : 'external',
       },
     };
     promises.push(clusterService.editCluster(clusterID, clusterRequest));
