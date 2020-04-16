@@ -145,13 +145,11 @@ class CreateOSDForm extends React.Component {
         />
 
         {/* Networking section */}
-        { isAws && (
-          <NetworkingSection
-            mode={mode}
-            isMultiAz={isMultiAz}
-            toggleNetwork={this.toggleNetwork}
-          />
-        )}
+        {<NetworkingSection
+          mode={mode}
+          isMultiAz={isMultiAz}
+          toggleNetwork={this.toggleNetwork}
+        />}
       </>
     );
   }
