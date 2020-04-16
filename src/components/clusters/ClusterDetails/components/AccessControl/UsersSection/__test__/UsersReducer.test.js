@@ -20,6 +20,6 @@ describe('ClusterDetails UsersReducer', () => {
     };
     const result = reducer(initialState, action);
 
-    expect(result).toHaveProperty('groupUsers.users', mockGetUsersPayload.users.data);
+    expect(result).toHaveProperty('groupUsers.users', mockGetUsersPayload.users);
   });
 });

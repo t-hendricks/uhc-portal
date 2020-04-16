@@ -60,7 +60,7 @@ const AnalysisSummary = ({ insightsData, batteryClicked }) => {
                 <Stack>
                   <StackItem key="remote-health-description">
                     <Title headingLevel="h2" size="xl">
-                      {`Remote health detected ${issueCount} issue${issueCount > 1 ? 's' : ''}`}
+                      {`${issueCount} issue${issueCount > 1 ? 's' : ''} detected`}
                     </Title>
                   </StackItem>
                   <StackItem key="remote-health-last-checked">

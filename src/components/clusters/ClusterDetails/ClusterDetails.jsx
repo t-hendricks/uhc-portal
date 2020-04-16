@@ -173,7 +173,7 @@ class ClusterDetails extends Component {
       }
 
       if (!isUuid(clusterID)) {
-        getUsers(clusterID, 'dedicated-admins');
+        getUsers(clusterID);
         getAlerts(clusterID);
         getNodes(clusterID);
         getClusterOperators(clusterID);
@@ -308,7 +308,7 @@ class ClusterDetails extends Component {
     );
 
     const consoleURL = get(cluster, 'console.url');
-    const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL;
+    const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
 
     return (
       <PageSection id="clusterdetails-content">
@@ -370,7 +370,7 @@ class ClusterDetails extends Component {
             hidden
           >
             <AccessControl
-              clusterID={cluster.id}
+              cluster={cluster}
               clusterConsoleURL={consoleURL}
               cloudProvider={get(cluster, 'cloud_provider.id')}
             />

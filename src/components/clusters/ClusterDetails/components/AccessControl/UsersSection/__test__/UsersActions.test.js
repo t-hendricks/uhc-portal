@@ -12,7 +12,7 @@ describe('ClusterDetails UserActions', () => {
 
   describe('getUsers', () => {
     it('dispatches successfully', () => {
-      UsersActions.getUsers('fake id', 'fake group id')(mockDispatch);
+      UsersActions.getUsers('fake id')(mockDispatch);
       expect(mockDispatch).toBeCalledWith({
         payload: expect.anything(),
         type: UsersConstants.GET_USERS,
@@ -20,7 +20,7 @@ describe('ClusterDetails UserActions', () => {
     });
 
     it('calls clusterService.getClusterGroupUsers', () => {
-      UsersActions.getUsers('fake id', 'dedicated-admins')(mockDispatch);
+      UsersActions.getUsers('fake id')(mockDispatch);
       expect(clusterService.getClusterGroupUsers).toBeCalledWith('fake id', 'dedicated-admins');
     });
   });

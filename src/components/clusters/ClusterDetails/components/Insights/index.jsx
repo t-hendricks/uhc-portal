@@ -19,9 +19,8 @@ const Insights = ({ insightsData, voteOnRule }) => {
   if (insightsData.status === 404) {
     return <NoRulesMessage />;
   }
-
-  if (get(insightsData, 'meta.count', 0) === 0) {
-    return <NoIssuesMessage />;
+  if (!insightsData || get(insightsData, 'meta.count', 0) === 0) {
+    return <NoIssuesMessage lastChecked={get(insightsData, 'meta.last_checked_at')} />;
   }
 
   return <InsightsTable insightsData={insightsData} voteOnRule={voteOnRule} />;

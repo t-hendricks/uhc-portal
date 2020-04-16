@@ -57,6 +57,7 @@ const clusterDetails = {
     name: 'test-liza',
     external_id: '9f50940b-fba8-4c59-9c6c-d64284b2026d',
     display_name: 'test-liza',
+    cluster_admin_enabled: false,
     creation_timestamp: '2019-03-26T15:18:39.06783Z',
     cloud_provider: {
       kind: 'CloudProviderLink',

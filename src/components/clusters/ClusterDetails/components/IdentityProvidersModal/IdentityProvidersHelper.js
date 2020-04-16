@@ -5,6 +5,7 @@ const IDPformValues = {
   GOOGLE: 'GoogleIdentityProvider',
   OPENID: 'OpenIDIdentityProvider',
   LDAP: 'LDAPIdentityProvider',
+  GITLAB: 'GitlabIdentityProvider',
 };
 
 const mappingMethodsformValues = {
@@ -31,6 +32,10 @@ const IDPtypes = [
     name: 'LDAP',
     value: IDPformValues.LDAP,
   },
+  {
+    name: 'Gitlab',
+    value: IDPformValues.GITLAB,
+  },
 ];
 
 const IDPTypeNames = {
@@ -38,6 +43,7 @@ const IDPTypeNames = {
   [IDPformValues.GOOGLE]: 'Google',
   [IDPformValues.OPENID]: 'OpenID',
   [IDPformValues.LDAP]: 'LDAP',
+  [IDPformValues.GITLAB]: 'GitLab',
 };
 
 const mappingMethods = [
@@ -116,6 +122,7 @@ const LDAPDocLink = `${IDPDocBase}/configuring-ldap-identity-provider.html`;
 const GithubDocLink = `${IDPDocBase}/configuring-github-identity-provider.html`;
 const GoogleDocLink = `${IDPDocBase}/configuring-google-identity-provider.html`;
 const OpenIDDocLink = `${IDPDocBase}/configuring-oidc-identity-provider.html`;
+const GitlabDocLink = `${IDPDocBase}/configuring-gitlab-identity-provider.html`;
 
 const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
@@ -147,6 +154,13 @@ const getCreateIDPRequestData = (formData) => {
     ca: formData.ldap_ca,
   });
 
+  const gitlabData = () => ({
+    client_id: formData.client_id,
+    client_secret: formData.client_secret,
+    url: formData.gitlab_url,
+    ca: formData.gitlab_ca,
+  });
+
   const openIdData = () => ({
     ca: formData.openid_ca,
     claims: {
@@ -165,6 +179,7 @@ const getCreateIDPRequestData = (formData) => {
     GoogleIdentityProvider: { name: 'google', data: googleData },
     OpenIDIdentityProvider: { name: 'open_id', data: openIdData },
     LDAPIdentityProvider: { name: 'ldap', data: ldapData },
+    GitlabIdentityProvider: { name: 'gitlab', data: gitlabData },
   };
 
   const basicData = {
@@ -197,5 +212,6 @@ export {
   GithubDocLink,
   OpenIDDocLink,
   GoogleDocLink,
+  GitlabDocLink,
   generateIDPName,
 };
