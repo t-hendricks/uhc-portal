@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Checkbox, FormGroup,
+  Checkbox, FormGroup, Switch,
 } from '@patternfly/react-core';
 
 // To be used inside redux-form Field component.
@@ -26,12 +26,14 @@ function ReduxCheckbox(props) {
     label,
     meta: { error, touched },
     input,
+    isSwitch = false,
     ...extraProps // any extra props not specified above
   } = props;
 
+  const InputComponent = isSwitch ? Switch : Checkbox;
   return (
     <FormGroup fieldId={input.name} validated={touched && error ? 'error' : null}>
-      <Checkbox
+      <InputComponent
         isChecked={!!input.value}
         id={input.name}
         {...input}
@@ -46,6 +48,7 @@ ReduxCheckbox.propTypes = {
   // props passed by redux-form
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
+  isSwitch: PropTypes.bool,
   // plus other props to be passed to the field...
 };
 

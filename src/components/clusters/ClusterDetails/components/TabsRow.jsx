@@ -10,6 +10,7 @@ const tabs = {
   addons: 3,
   logs: 4,
   insights: 5,
+  networking: 6,
 };
 
 class TabsRow extends React.Component {
@@ -35,12 +36,14 @@ class TabsRow extends React.Component {
       displayAddOnsTab,
       displayLogs,
       displayInsightsTab,
+      displayNetworkingTab,
     } = this.props;
     if ((activeTabKey === tabs.monitoring && !displayMonitoringTab)
         || (activeTabKey === tabs.accessControl && !displayAccessControlTab)
         || (activeTabKey === tabs.addons && !displayAddOnsTab)
         || (activeTabKey === tabs.insights && !displayInsightsTab)
-        || (activeTabKey === tabs.logs && !displayLogs)) {
+        || (activeTabKey === tabs.logs && !displayLogs)
+        || (activeTabKey === tabs.networking && !displayNetworkingTab)) {
       this.handleTabClick(undefined, tabs.overview);
       overviewTabRef.current.hidden = false;
     }
@@ -53,12 +56,14 @@ class TabsRow extends React.Component {
       displayAddOnsTab,
       displayLogs,
       displayInsightsTab,
+      displayNetworkingTab,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
       addOnsTabRef,
       logsTabRef,
       insightsTabRef,
+      networkingTabRef,
     } = this.props;
     const { activeTabKey } = this.state;
 
@@ -85,6 +90,10 @@ class TabsRow extends React.Component {
     <Tab key={tabs.insights} eventKey={tabs.insights} title="Insights" tabContentId="insightsTabContent" tabContentRef={insightsTabRef} />
     );
 
+    const networkingTab = displayNetworkingTab && (
+    <Tab key={tabs.networking} eventKey={tabs.networking} title="Networking" tabContentId="networkingTabContent" tabContentRef={networkingTabRef} />
+    );
+
     const tabsToDisplay = [
       overviewTab,
       monitoringTab,
@@ -92,6 +101,7 @@ class TabsRow extends React.Component {
       addOnsTab,
       logsTab,
       insightsTab,
+      networkingTab,
     ].filter(Boolean);
 
     return (
@@ -108,12 +118,14 @@ TabsRow.propTypes = {
   displayAddOnsTab: PropTypes.bool,
   displayLogs: PropTypes.bool,
   displayInsightsTab: PropTypes.bool,
+  displayNetworkingTab: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
   addOnsTabRef: PropTypes.object.isRequired,
   logsTabRef: PropTypes.object.isRequired,
   insightsTabRef: PropTypes.object.isRequired,
+  networkingTabRef: PropTypes.object.isRequired,
 };
 
 TabsRow.defaultProps = {
@@ -122,6 +134,7 @@ TabsRow.defaultProps = {
   displayAccessControlTab: false,
   displayAddOnsTab: false,
   displayLogs: false,
+  displayNetworkingTab: false,
 };
 
 export default TabsRow;

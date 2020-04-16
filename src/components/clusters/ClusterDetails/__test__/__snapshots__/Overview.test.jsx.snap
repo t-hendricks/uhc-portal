@@ -9,7 +9,7 @@ exports[`<Overview /> should render 1`] = `
       <Title
         className="card-title"
         headingLevel="h2"
-        size="md"
+        size="lg"
       >
         Resource Usage
       </Title>
@@ -51,7 +51,7 @@ exports[`<Overview /> should render 1`] = `
       <Title
         className="card-title"
         headingLevel="h2"
-        size="md"
+        size="lg"
       >
         Details
       </Title>

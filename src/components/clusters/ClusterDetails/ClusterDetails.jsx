@@ -28,6 +28,7 @@ import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
 import Insights from './components/Insights';
 import Monitoring from './components/Monitoring';
+import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
@@ -62,6 +63,7 @@ class ClusterDetails extends Component {
     this.accessControlTabRef = React.createRef();
     this.logsTabRef = React.createRef();
     this.addOnsTabRef = React.createRef();
+    this.networkingTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -159,9 +161,9 @@ class ClusterDetails extends Component {
       getGrants,
       clusterLogsViewOptions,
       getClusterHistory,
+      getClusterRouters,
     } = this.props;
     const clusterID = match.params.id;
-
     if (isValid(clusterID)) {
       this.fetchDetailsAndInsightsData(clusterID, get(clusterDetails, 'cluster.external_id'));
       getOrganizationAndQuota();
@@ -178,7 +180,7 @@ class ClusterDetails extends Component {
         getNodes(clusterID);
         getClusterOperators(clusterID);
         getGrants(clusterID);
-
+        getClusterRouters(clusterID);
         if (get(clusterDetails, 'cluster.managed')) {
           getClusterAddOns(clusterID);
           getLogs(clusterID);
@@ -234,6 +236,7 @@ class ClusterDetails extends Component {
       history,
       match,
       logs,
+      clusterRouters,
       clusterIdentityProviders,
       organization,
       setGlobalError,
@@ -314,6 +317,8 @@ class ClusterDetails extends Component {
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
+    const displayNetworkingTab = cluster.canEdit
+          && cluster.managed && get(cluster, 'api.url') && clusterRouters.getRouters.routers.length > 0;
 
     return (
       <PageSection id="clusterdetails-content">
@@ -334,12 +339,14 @@ class ClusterDetails extends Component {
             displayMonitoringTab={!isArchived}
             displayInsightsTab={displayInsightsTab}
             displayAddOnsTab={displayAddOnsTab}
+            displayNetworkingTab={displayNetworkingTab}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
             logsTabRef={this.logsTabRef}
             addOnsTabRef={this.addOnsTabRef}
             insightsTabRef={this.insightsTabRef}
+            networkingTabRef={this.networkingTabRef}
           />
         </ClusterDetailsTop>
         <TabContent
@@ -420,6 +427,11 @@ class ClusterDetails extends Component {
             />
           </TabContent>
         )}
+        {displayNetworkingTab && (
+          <TabContent eventKey={6} id="networkingTabContent" ref={this.networkingTabRef} aria-label="Networking" hidden>
+            <Networking clusterID={cluster.id} />
+          </TabContent>
+        )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
@@ -471,6 +483,7 @@ ClusterDetails.propTypes = {
   insightsData: PropTypes.object,
   logs: PropTypes.object,
   addOns: PropTypes.object,
+  clusterRouters: PropTypes.object,
   clusterAddOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
@@ -495,6 +508,7 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   voteOnRule: PropTypes.func.isRequired,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
+  getClusterRouters: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

@@ -152,6 +152,22 @@ limitations under the License.
   }
 }
 
+.networking-tab {
+  margin-bottom: 15px;
+  dt {
+    font-weight: bold;
+    font-size: 14px;
+  }
+  dd {
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+}
+
+#networking-tab-last {
+  margin-bottom: 0px;
+}
+
 .radio-tooltip {
   left: -70px
 }

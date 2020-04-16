@@ -14,6 +14,24 @@ const multiInputToCleanArray = (formData, fieldName) => {
 };
 
 /**
+ * Parses comma separated key<delimiter>value pairs into an object.
+ * @param {*} str Comma separated string of kay:val pairs
+ * @param {*} delimiter delimiter to split each pair by
+ */
+const strToCleanObject = (str, delimiter) => {
+  if (!str) {
+    return {};
+  }
+  const pairArray = strToCleanArray(str);
+  const pairs = {};
+  pairArray.forEach((pairStr) => {
+    const [key, val] = pairStr.split(delimiter);
+    pairs[key] = val;
+  });
+  return pairs;
+};
+
+/**
  * Generates a random 4B string that can be used as a key.
  */
 const getRandomID = () => {
@@ -85,6 +103,7 @@ export {
   getRandomID,
   noQuotaTooltip,
   trackPendo,
+  strToCleanObject,
 };
 
 export default helpers;

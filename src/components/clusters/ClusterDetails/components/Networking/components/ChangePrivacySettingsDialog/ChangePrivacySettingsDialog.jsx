@@ -1,0 +1,91 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  Form, Alert, Stack, StackItem,
+} from '@patternfly/react-core';
+
+import Modal from '../../../../../../common/Modal/Modal';
+import ErrorBox from '../../../../../../common/ErrorBox';
+
+
+class ChangePrivacySettingsDialog extends React.Component {
+  componentDidUpdate(prevProps) {
+    const { editClusterRoutersResponse, getClusterRouters } = this.props;
+    if (prevProps.editClusterRoutersResponse.pending
+      && editClusterRoutersResponse.fulfilled) {
+      getClusterRouters();
+      this.onClose();
+    }
+  }
+
+  onClose = () => {
+    const { closeModal, resetResponse } = this.props;
+    resetResponse();
+    closeModal();
+  }
+
+  render() {
+    const {
+      isOpen,
+      shouldShowAlert,
+      onConfirm,
+      editClusterRoutersResponse,
+    } = this.props;
+    const text = "Changing the cluster's privacy settings may cause you to lose access to the cluster. Changes may be required in AWS to maintain access.";
+    const noRouteSelectorsWarning = 'All routers will be exposed publicly because there is not label match on the additional application router. This is a potential security risk.';
+    const editRoutersError = editClusterRoutersResponse.error ? (
+      <ErrorBox message="Error editing cluster routers" response={editClusterRoutersResponse} />
+    ) : null;
+
+    return isOpen && (
+      <Modal
+        onClose={this.onClose}
+        primaryText="Change settings"
+        secondaryText="Cancel"
+        title="Change cluster privacy settings?"
+        width="35%"
+        isSmall={false}
+        onPrimaryClick={() => onConfirm()}
+        onSecondaryClick={this.onClose}
+        isPending={editClusterRoutersResponse.pending}
+      >
+        {editRoutersError}
+        <Form>
+          <Stack gutter="md">
+            <StackItem>
+              {text}
+            </StackItem>
+            {
+              shouldShowAlert && (
+                <StackItem>
+                  <Alert
+                    id="noRouteSelectors"
+                    variant="warning"
+                    isInline
+                    title={noRouteSelectorsWarning}
+                  />
+                </StackItem>
+              )
+            }
+          </Stack>
+        </Form>
+      </Modal>
+    );
+  }
+}
+
+ChangePrivacySettingsDialog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  shouldShowAlert: PropTypes.bool,
+  resetResponse: PropTypes.func.isRequired,
+  editClusterRoutersResponse: PropTypes.shape({
+    error: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+    pending: PropTypes.bool,
+  }).isRequired,
+  getClusterRouters: PropTypes.func.isRequired,
+};
+
+export default ChangePrivacySettingsDialog;

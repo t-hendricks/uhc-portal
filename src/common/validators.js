@@ -117,6 +117,27 @@ const checkGithubTeams = (value) => {
   return undefined;
 };
 
+const checkRouteSelectors = (value) => {
+  if (!value) {
+    return undefined;
+  }
+  const selectors = value.split(',');
+
+  for (let i = 0; i < selectors.length; i += 1) {
+    const selector = selectors[i];
+    const labelValue = selector.split('=');
+
+    if (labelValue.length !== 2) {
+      return "Each route selector must be of format 'key=value'.";
+    }
+
+    if (!labelValue[0] || !labelValue[1]) {
+      return "Each route selector must be of format 'key=value'.";
+    }
+  }
+  return undefined;
+};
+
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value) => {
   if (!value) {
@@ -433,6 +454,7 @@ const validators = {
   validateNumericInput,
   checkOpenIDIssuer,
   checkGithubTeams,
+  checkRouteSelectors,
   checkDisconnectedConsoleURL,
   checkDisconnectedvCPU,
   checkDisconnectedSockets,
@@ -450,6 +472,7 @@ export {
   checkClusterConsoleURL,
   checkOpenIDIssuer,
   checkGithubTeams,
+  checkRouteSelectors,
   checkDisconnectedConsoleURL,
   checkDisconnectedvCPU,
   checkDisconnectedSockets,
