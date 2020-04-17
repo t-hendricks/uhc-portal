@@ -54,16 +54,16 @@ class TabsRow extends React.Component {
       displayMonitoringTab,
       displayAccessControlTab,
       displayAddOnsTab,
-      displayLogs,
-      displayInsightsTab,
       displayNetworkingTab,
+      displayInsightsTab,
+      displayLogs,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
       addOnsTabRef,
-      logsTabRef,
-      insightsTabRef,
       networkingTabRef,
+      insightsTabRef,
+      logsTabRef,
     } = this.props;
     const { activeTabKey } = this.state;
 
@@ -76,22 +76,23 @@ class TabsRow extends React.Component {
     );
 
     const accessControlTab = displayAccessControlTab && (
-    <Tab key={tabs.accessControl} eventKey={tabs.accessControl} title="Access Control" tabContentId="accessControlTabContent" tabContentRef={accessControlTabRef} />);
+      <Tab key={tabs.accessControl} eventKey={tabs.accessControl} title="Access Control" tabContentId="accessControlTabContent" tabContentRef={accessControlTabRef} />
+    );
 
     const addOnsTab = displayAddOnsTab && (
-    <Tab key={tabs.addons} eventKey={tabs.addons} title="Add-ons" tabContentId="addOnsTabContent" tabContentRef={addOnsTabRef} />
-    );
-
-    const logsTab = displayLogs && (
-    <Tab key={tabs.logs} eventKey={tabs.logs} title="Logs" tabContentId="logsTabContent" tabContentRef={logsTabRef} />
-    );
-
-    const insightsTab = displayInsightsTab && (
-    <Tab key={tabs.insights} eventKey={tabs.insights} title="Insights" tabContentId="insightsTabContent" tabContentRef={insightsTabRef} />
+      <Tab key={tabs.addons} eventKey={tabs.addons} title="Add-ons" tabContentId="addOnsTabContent" tabContentRef={addOnsTabRef} />
     );
 
     const networkingTab = displayNetworkingTab && (
-    <Tab key={tabs.networking} eventKey={tabs.networking} title="Networking" tabContentId="networkingTabContent" tabContentRef={networkingTabRef} />
+      <Tab key={tabs.networking} eventKey={tabs.networking} title="Networking" tabContentId="networkingTabContent" tabContentRef={networkingTabRef} />
+    );
+
+    const insightsTab = displayInsightsTab && (
+      <Tab key={tabs.insights} eventKey={tabs.insights} title="Insights" tabContentId="insightsTabContent" tabContentRef={insightsTabRef} />
+    );
+
+    const logsTab = displayLogs && (
+      <Tab key={tabs.logs} eventKey={tabs.logs} title="Logs" tabContentId="logsTabContent" tabContentRef={logsTabRef} />
     );
 
     const tabsToDisplay = [
@@ -99,9 +100,9 @@ class TabsRow extends React.Component {
       monitoringTab,
       accessControlTab,
       addOnsTab,
-      logsTab,
-      insightsTab,
       networkingTab,
+      insightsTab,
+      logsTab,
     ].filter(Boolean);
 
     return (
