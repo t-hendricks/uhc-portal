@@ -12,6 +12,7 @@ function NetworkingSection({
   pending,
   toggleNetwork,
   mode,
+  showClusterPrivacy,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -128,44 +129,47 @@ function NetworkingSection({
                 extendedHelpText={constants.hostPrefixHint}
               />
             </GridItem>
-            <Title headingLevel="h4" size="xl" className="privacy-heading">Cluster privacy</Title>
-            <GridItem span={8}>
-              <p>
-                Clusters may be created initially with master API endpoint
-                and application routes being all public or all private.
-                More options are available after the initial installation.
-              </p>
-            </GridItem>
-            <Field
-              component={RadioButtons}
-              name="cluster_privacy"
-              ariaLabel="Cluster privacy"
-              disabled={pending}
-              options={[{
-                value: 'external',
-                ariaLabel: 'Public',
-                label: (
-                  <>
-                Public (recommended)
-                    <div className="radio-helptext">Master API endpoint and application routes are accessible from the internet.</div>
-                  </>),
-              },
-              {
-                value: 'internal',
-                ariaLabel: 'Private',
-                label: (
-                  <>
-                    Private
-                    <div className="radio-helptext">
-                      Master API endpoint and application routes are restricted to direct,
-                      private connectivity.
-                    </div>
-                  </>
-                ),
-              }]}
-              defaultValue="external"
-            />
-
+            { showClusterPrivacy && (
+              <>
+                <Title headingLevel="h4" size="xl" className="privacy-heading">Cluster privacy</Title>
+                <GridItem span={8}>
+                  <p>
+                  Clusters may be created initially with master API endpoint
+                  and application routes being all public or all private.
+                  More options are available after the initial installation.
+                  </p>
+                </GridItem>
+                <Field
+                  component={RadioButtons}
+                  name="cluster_privacy"
+                  ariaLabel="Cluster privacy"
+                  disabled={pending}
+                  options={[{
+                    value: 'external',
+                    ariaLabel: 'Public',
+                    label: (
+                      <>
+                  Public (recommended)
+                        <div className="radio-helptext">Master API endpoint and application routes are accessible from the internet.</div>
+                      </>),
+                  },
+                  {
+                    value: 'internal',
+                    ariaLabel: 'Private',
+                    label: (
+                      <>
+                      Private
+                        <div className="radio-helptext">
+                        Master API endpoint and application routes are restricted to direct,
+                        private connectivity.
+                        </div>
+                      </>
+                    ),
+                  }]}
+                  defaultValue="external"
+                />
+              </>
+            )}
           </>
         )}
     </>
@@ -176,6 +180,7 @@ NetworkingSection.propTypes = {
   pending: PropTypes.bool,
   mode: PropTypes.string,
   toggleNetwork: PropTypes.func,
+  showClusterPrivacy: PropTypes.bool,
 };
 
 export default NetworkingSection;
