@@ -47,6 +47,7 @@ import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import clusterStates from '../common/clusterStates';
 import EditDisconnectedClusterDialog from '../common/EditDisconnectedCluster';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 
@@ -313,6 +314,7 @@ class ClusterDetails extends Component {
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
     const displayNetworkingTab = cluster.canEdit
+          && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING)
           && cluster.managed && get(cluster, 'api.url') && clusterRouters.getRouters.routers.length > 0;
 
     return (
