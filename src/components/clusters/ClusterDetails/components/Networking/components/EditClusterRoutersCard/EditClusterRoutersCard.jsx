@@ -136,6 +136,7 @@ class EditClusterRoutersCard extends React.Component {
                     </Button>
                     <Button
                       variant="secondary"
+                      isDisabled={pristine}
                       onClick={() => reset()}
                     >
                       Cancel
