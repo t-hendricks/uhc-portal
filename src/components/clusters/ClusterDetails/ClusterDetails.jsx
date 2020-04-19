@@ -329,19 +329,19 @@ class ClusterDetails extends Component {
           canAllowClusterAdmin={canAllowClusterAdmin}
         >
           <TabsRow
-            displayLogs={hasLogs}
-            displayAccessControlTab={displayAccessControlTab}
             displayMonitoringTab={!isArchived}
-            displayInsightsTab={displayInsightsTab}
+            displayAccessControlTab={displayAccessControlTab}
             displayAddOnsTab={displayAddOnsTab}
             displayNetworkingTab={displayNetworkingTab}
+            displayInsightsTab={displayInsightsTab}
+            displayLogs={hasLogs}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
-            logsTabRef={this.logsTabRef}
             addOnsTabRef={this.addOnsTabRef}
-            insightsTabRef={this.insightsTabRef}
             networkingTabRef={this.networkingTabRef}
+            insightsTabRef={this.insightsTabRef}
+            logsTabRef={this.logsTabRef}
           />
         </ClusterDetailsTop>
         <TabContent
@@ -394,15 +394,15 @@ class ClusterDetails extends Component {
             <AddOns clusterID={cluster.id} />
           </TabContent>
         )}
-        {hasLogs && (
+        {displayNetworkingTab && (
           <TabContent
             eventKey={4}
-            id="logsTabContent"
-            ref={this.logsTabRef}
-            aria-label="Logs"
+            id="networkingTabContent"
+            ref={this.networkingTabRef}
+            aria-label="Networking"
             hidden
           >
-            <LogWindow clusterID={cluster.id} />
+            <Networking clusterID={cluster.id} />
           </TabContent>
         )}
         {displayInsightsTab && (
@@ -422,9 +422,15 @@ class ClusterDetails extends Component {
             />
           </TabContent>
         )}
-        {displayNetworkingTab && (
-          <TabContent eventKey={6} id="networkingTabContent" ref={this.networkingTabRef} aria-label="Networking" hidden>
-            <Networking clusterID={cluster.id} />
+        {hasLogs && (
+          <TabContent
+            eventKey={6}
+            id="logsTabContent"
+            ref={this.logsTabRef}
+            aria-label="Logs"
+            hidden
+          >
+            <LogWindow clusterID={cluster.id} />
           </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
