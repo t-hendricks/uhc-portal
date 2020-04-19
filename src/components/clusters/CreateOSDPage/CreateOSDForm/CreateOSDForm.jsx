@@ -148,6 +148,7 @@ class CreateOSDForm extends React.Component {
         {<NetworkingSection
           mode={mode}
           toggleNetwork={this.toggleNetwork}
+          showClusterPrivacy={isAws}
         />}
       </>
     );
