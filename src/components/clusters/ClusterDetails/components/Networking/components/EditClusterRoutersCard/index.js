@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import { openModal } from '../../../../../../common/Modal/ModalActions';
 import NetworkingSelector from '../../NetworkingSelector';
 import EditClusterRoutersCard from './EditClusterRoutersCard';
-import { saveNetworkingConfiguration, getClusterRouters } from '../../NetworkingActions';
+import { saveNetworkingConfiguration } from '../../NetworkingActions';
 
 const reduxFormConfig = {
   form: 'EditClusterRouters',
@@ -46,7 +46,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   openModal: (name, data) => dispatch(openModal(name, data)),
-  getClusterRouters: clusterID => dispatch(getClusterRouters(clusterID)),
   onSubmit: (formData, clusterRouters, APIPrivate, clusterID) => {
     const currentData = { ...clusterRouters, APIPrivate };
     dispatch(saveNetworkingConfiguration(formData, currentData, clusterID));
