@@ -32,7 +32,7 @@ class ChangePrivacySettingsDialog extends React.Component {
       editClusterRoutersResponse,
     } = this.props;
     const text = "Changing the cluster's privacy settings may cause you to lose access to the cluster. Changes may be required in AWS to maintain access.";
-    const noRouteSelectorsWarning = 'All routers will be exposed publicly because there is not label match on the additional application router. This is a potential security risk.';
+    const noRouteSelectorsWarning = 'All routers will be exposed publicly because there is no label match on the additional application router. This is a potential security risk.';
     const editRoutersError = editClusterRoutersResponse.error ? (
       <ErrorBox message="Error editing cluster routers" response={editClusterRoutersResponse} />
     ) : null;
