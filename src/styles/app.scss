@@ -756,7 +756,13 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .card-disabled {
   color: var(--pf-global--disabled-color--100);
+
+  &.card-disabled:hover h5{
+  color: var(--pf-global--Color--100);
+  }
 }
+
+
 
 // Temporary hacks to make PF4 components look okay in a PF3 form
 // TODO: REMOVE THIS when we move the rest of the cluster creation form to PF4
