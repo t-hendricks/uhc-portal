@@ -404,7 +404,7 @@ class ClusterDetails extends Component {
             aria-label="Networking"
             hidden
           >
-            <Networking clusterID={cluster.id} />
+            <Networking clusterID={cluster.id} refreshCluster={this.refresh} />
           </TabContent>
         )}
         {displayInsightsTab && (

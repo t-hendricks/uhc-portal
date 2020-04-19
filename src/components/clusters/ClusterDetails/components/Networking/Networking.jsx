@@ -16,12 +16,13 @@ class Networking extends React.Component {
   render() {
     const {
       network,
+      refreshCluster,
     } = this.props;
 
     return (
       <Grid gutter="md">
         <GridItem span={9}>
-          <EditCluserRoutersCard />
+          <EditCluserRoutersCard refreshCluster={refreshCluster} />
         </GridItem>
         <GridItem span={3}>
           <NetworkConfigurationCard
@@ -36,6 +37,7 @@ class Networking extends React.Component {
 Networking.propTypes = {
   network: PropTypes.object.isRequired,
   resetRouters: PropTypes.func.isRequired,
+  refreshCluster: PropTypes.func.isRequired,
 };
 
 export default Networking;
