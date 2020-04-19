@@ -122,7 +122,7 @@
     "startmock": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server-for-mock --no-progress' 'mockdata/mockserver.py' 'yarn insights-proxy'",
     "dev-server": "webpack-dev-server --progress --hot",
     "dev-server-for-mock": "OCM_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
-    "insights-proxy": "echo Waiting on server and backend... && wait-on http://localhost:8001/ http://localhost:8010/api && yarn stop-insights-proxy; env RUNNER=${RUNNER:-podman} SPANDX_CONFIG=./profiles/local-frontend.js bash run/insights-proxy/scripts/run.sh",
+    "insights-proxy": "echo Waiting on server and backend... && wait-on http://localhost:8001/ http://localhost:8010/api && yarn stop-insights-proxy; export RUNNER=${RUNNER:-podman}; source run/insights-proxy/scripts/env.sh; $RUNNER run -e CUSTOM_CONF=true -e PLATFORM -v $PWD/profiles/local-frontend.js:/config/spandx.config.js --net=host --rm --name insightsproxy --security-opt label=disable -p 1337:1337 docker.io/redhatinsights/insights-proxy",
     "stop-insights-proxy": "${RUNNER:-podman} kill insightsproxy || true",
     "lint": "eslint src --ext js,jsx",
     "test": "jest --env=jsdom",
