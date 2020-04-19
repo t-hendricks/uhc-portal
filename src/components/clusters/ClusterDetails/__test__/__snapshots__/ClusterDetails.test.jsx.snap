@@ -186,6 +186,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       displayInsightsTab={false}
       displayLogs={false}
       displayMonitoringTab={true}
+      displayNetworkingTab={false}
       insightsTabRef={
         Object {
           "current": null,
@@ -197,6 +198,11 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
         }
       }
       monitoringTabRef={
+        Object {
+          "current": null,
+        }
+      }
+      networkingTabRef={
         Object {
           "current": null,
         }

@@ -152,6 +152,22 @@ limitations under the License.
   }
 }
 
+.networking-tab {
+  margin-bottom: 15px;
+  dt {
+    font-weight: bold;
+    font-size: 14px;
+  }
+  dd {
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+}
+
+#networking-tab-last {
+  margin-bottom: 0px;
+}
+
 .radio-tooltip {
   left: -70px
 }
@@ -740,7 +756,13 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .card-disabled {
   color: var(--pf-global--disabled-color--100);
+
+  &.card-disabled:hover h5{
+  color: var(--pf-global--Color--100);
+  }
 }
+
+
 
 // Temporary hacks to make PF4 components look okay in a PF3 form
 // TODO: REMOVE THIS when we move the rest of the cluster creation form to PF4
@@ -1155,4 +1177,8 @@ h3#grant-role-select  {
       content: ' \f35d'
     }
   }
+}
+
+.privacy-heading {
+  margin-bottom: -15px;
 }

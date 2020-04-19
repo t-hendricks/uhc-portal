@@ -9,11 +9,6 @@ exports[`<TabsRow /> should hide monitoring and add-ons tabs if needed (eg. when
     eventKey={0}
     key="0"
     tabContentId="overviewTabContent"
-    tabContentRef={
-      Object {
-        "current": null,
-      }
-    }
     title="Overview"
   />
 </Component>
@@ -28,22 +23,12 @@ exports[`<TabsRow /> should render 1`] = `
     eventKey={0}
     key="0"
     tabContentId="overviewTabContent"
-    tabContentRef={
-      Object {
-        "current": null,
-      }
-    }
     title="Overview"
   />
   <Tab
     eventKey={1}
     key="1"
     tabContentId="monitoringTabContent"
-    tabContentRef={
-      Object {
-        "current": null,
-      }
-    }
     title="Monitoring"
   />
 </Component>

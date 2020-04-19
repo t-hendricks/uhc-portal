@@ -3,25 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Tabs, Tab } from '@patternfly/react-core';
 
-const tabs = {
-  overview: 0,
-  monitoring: 1,
-  accessControl: 2,
-  addons: 3,
-  logs: 4,
-  insights: 5,
-};
-
 class TabsRow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleTabClick = (event, tabIndex) => {
-      this.setState({
-        activeTabKey: tabIndex,
-      });
-    };
-  }
-
   state = {
     activeTabKey: 0,
   }
@@ -30,73 +12,109 @@ class TabsRow extends React.Component {
     const { activeTabKey } = this.state;
     const {
       overviewTabRef,
-      displayMonitoringTab,
-      displayAccessControlTab,
-      displayAddOnsTab,
-      displayLogs,
-      displayInsightsTab,
     } = this.props;
-    if ((activeTabKey === tabs.monitoring && !displayMonitoringTab)
-        || (activeTabKey === tabs.accessControl && !displayAccessControlTab)
-        || (activeTabKey === tabs.addons && !displayAddOnsTab)
-        || (activeTabKey === tabs.insights && !displayInsightsTab)
-        || (activeTabKey === tabs.logs && !displayLogs)) {
-      this.handleTabClick(undefined, tabs.overview);
+    const activeTab = this.getTabs()[activeTabKey];
+    if (!activeTab.show) {
+      this.handleTabClick(undefined, 0);
       overviewTabRef.current.hidden = false;
     }
   }
 
-  render() {
+  getTabs() {
     const {
       displayMonitoringTab,
       displayAccessControlTab,
       displayAddOnsTab,
-      displayLogs,
+      displayNetworkingTab,
       displayInsightsTab,
+      displayLogs,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
       addOnsTabRef,
-      logsTabRef,
+      networkingTabRef,
       insightsTabRef,
+      logsTabRef,
     } = this.props;
+    return [
+      {
+        key: 0,
+        title: 'Overview',
+        contentId: 'overviewTabContent',
+        show: true,
+        ref: overviewTabRef,
+      },
+      {
+        key: 1,
+        title: 'Monitoring',
+        contentId: 'monitoringTabContent',
+        show: displayMonitoringTab,
+        ref: monitoringTabRef,
+      },
+      {
+        key: 2,
+        title: 'Access Control',
+        contentId: 'accessControlTabContent',
+        show: displayAccessControlTab,
+        ref: accessControlTabRef,
+      },
+      {
+        key: 3,
+        title: 'Add-ons',
+        contentId: 'addOnsTabContent',
+        show: displayAddOnsTab,
+        ref: addOnsTabRef,
+      },
+      {
+        key: 4,
+        title: 'Networking',
+        contentId: 'networkingTabContent',
+        show: displayNetworkingTab,
+        ref: networkingTabRef,
+      },
+      {
+        key: 5,
+        title: 'Insights',
+        contentId: 'insightsTabContent',
+        show: displayInsightsTab,
+        ref: insightsTabRef,
+      },
+      {
+        key: 6,
+        title: 'Logs',
+        contentId: 'logsTabContent',
+        show: displayLogs,
+        ref: logsTabRef,
+      },
+    ];
+  }
+
+  handleTabClick = (event, tabIndex) => {
+    this.setState({
+      activeTabKey: tabIndex,
+    });
+    this.getTabs().forEach((tab) => {
+      if (tab.ref && tab.ref.current) {
+        if (tab.key !== tabIndex) {
+          // eslint-disable-next-line no-param-reassign
+          tab.ref.current.hidden = true;
+        } else {
+          // eslint-disable-next-line no-param-reassign
+          tab.ref.current.hidden = false;
+        }
+      }
+    });
+  };
+
+  render() {
     const { activeTabKey } = this.state;
 
-    const overviewTab = (
-      <Tab key={tabs.overview} eventKey={tabs.overview} title="Overview" tabContentId="overviewTabContent" tabContentRef={overviewTabRef} />
-    );
-
-    const monitoringTab = displayMonitoringTab && (
-      <Tab key={tabs.monitoring} eventKey={tabs.monitoring} title="Monitoring" tabContentId="monitoringTabContent" tabContentRef={monitoringTabRef} />
-    );
-
-    const accessControlTab = displayAccessControlTab && (
-    <Tab key={tabs.accessControl} eventKey={tabs.accessControl} title="Access Control" tabContentId="accessControlTabContent" tabContentRef={accessControlTabRef} />);
-
-    const addOnsTab = displayAddOnsTab && (
-    <Tab key={tabs.addons} eventKey={tabs.addons} title="Add-ons" tabContentId="addOnsTabContent" tabContentRef={addOnsTabRef} />
-    );
-
-    const logsTab = displayLogs && (
-    <Tab key={tabs.logs} eventKey={tabs.logs} title="Logs" tabContentId="logsTabContent" tabContentRef={logsTabRef} />
-    );
-
-    const insightsTab = displayInsightsTab && (
-    <Tab key={tabs.insights} eventKey={tabs.insights} title="Insights" tabContentId="insightsTabContent" tabContentRef={insightsTabRef} />
-    );
-
-    const tabsToDisplay = [
-      overviewTab,
-      monitoringTab,
-      accessControlTab,
-      addOnsTab,
-      logsTab,
-      insightsTab,
-    ].filter(Boolean);
-
+    const tabsToDisplay = this.getTabs().filter(tab => tab.show);
     return (
       <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
-        {tabsToDisplay.map(tab => tab)}
+        {tabsToDisplay.map(tab => (
+          <Tab key={tab.key} eventKey={tab.key} title={tab.title} tabContentId={tab.contentId} />
+        ))}
       </Tabs>
     );
   }
@@ -108,12 +126,14 @@ TabsRow.propTypes = {
   displayAddOnsTab: PropTypes.bool,
   displayLogs: PropTypes.bool,
   displayInsightsTab: PropTypes.bool,
+  displayNetworkingTab: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
   addOnsTabRef: PropTypes.object.isRequired,
   logsTabRef: PropTypes.object.isRequired,
   insightsTabRef: PropTypes.object.isRequired,
+  networkingTabRef: PropTypes.object.isRequired,
 };
 
 TabsRow.defaultProps = {
@@ -122,6 +142,7 @@ TabsRow.defaultProps = {
   displayAccessControlTab: false,
   displayAddOnsTab: false,
   displayLogs: false,
+  displayNetworkingTab: false,
 };
 
 export default TabsRow;

@@ -23,6 +23,7 @@ import { subscriptionsReducer } from './subscriptionsReducer';
 import { loadBalancersReducer } from './loadBalancersReducer';
 import { persistentStorageReducer } from './persistentStorageReducer';
 import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
+import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -48,6 +49,7 @@ const reducers = {
   networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,
   insightsData: insightsReducer,
+  clusterRouters: NetworkingReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

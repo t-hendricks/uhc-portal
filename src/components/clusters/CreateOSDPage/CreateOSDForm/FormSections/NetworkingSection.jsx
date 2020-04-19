@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import { GridItem, FormGroup } from '@patternfly/react-core';
+import { GridItem, FormGroup, Title } from '@patternfly/react-core';
 
 import { constants } from '../CreateOSDFormConstants';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
@@ -12,7 +12,7 @@ function NetworkingSection({
   pending,
   toggleNetwork,
   mode,
-  isMultiAz,
+  showClusterPrivacy,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -28,10 +28,11 @@ function NetworkingSection({
     return value;
   };
 
-  const validateMachineCidr = value => validators.machineCidr(value, isMultiAz);
-
   return (
     <>
+      <GridItem span={4}>
+        <Title headingLevel="h4" size="xl">Networking</Title>
+      </GridItem>
       <FormGroup
         label="Network configuration"
         isRequired
@@ -49,7 +50,7 @@ function NetworkingSection({
             label: (
               <>
                 Basic
-                <div className="radio-helptext">Creates a new VPC for your cluster using default values</div>
+                <div className="radio-helptext">Creates a new VPC for your cluster using default values.</div>
               </>),
           },
           {
@@ -58,7 +59,10 @@ function NetworkingSection({
             label: (
               <>
                 Advanced
-                <div className="radio-helptext">Allow clusters to use a new VPC with customizable addresses</div>
+                <div className="radio-helptext">
+                  Choose this option if you will ever need direct, private network connectivity
+                  to your cluster, e.g. VPN, VPC peering, DirectConnect or TransitGateway.
+                </div>
               </>
             ),
           }]}
@@ -75,8 +79,9 @@ function NetworkingSection({
                 label="Machine CIDR"
                 placeholder="10.0.0.0/16"
                 type="text"
-                validate={[validators.cidr, validateMachineCidr]}
+                validate={[validators.cidr, validators.machineCidr]}
                 disabled={pending}
+                helpText="Cannot be changed once set."
                 extendedHelpText={constants.machineCIDRHint}
               />
             </GridItem>
@@ -90,6 +95,7 @@ function NetworkingSection({
                 type="text"
                 validate={[validators.cidr, validators.serviceCidr]}
                 disabled={pending}
+                helpText="Cannot be changed once set."
                 extendedHelpText={constants.serviceCIDRHint}
               />
             </GridItem>
@@ -103,6 +109,7 @@ function NetworkingSection({
                 type="text"
                 validate={[validators.cidr, validators.podCidr]}
                 disabled={pending}
+                helpText="Cannot be changed once set."
                 extendedHelpText={constants.podCIDRHint}
               />
             </GridItem>
@@ -118,9 +125,51 @@ function NetworkingSection({
                 normalize={normalizeHostPrefix}
                 validate={validators.hostPrefix}
                 disabled={pending}
+                helpText="Cannot be changed once set."
                 extendedHelpText={constants.hostPrefixHint}
               />
             </GridItem>
+            { showClusterPrivacy && (
+              <>
+                <Title headingLevel="h4" size="xl" className="privacy-heading">Cluster privacy</Title>
+                <GridItem span={8}>
+                  <p>
+                  Clusters may be created initially with master API endpoint
+                  and application routes being all public or all private.
+                  More options are available after the initial installation.
+                  </p>
+                </GridItem>
+                <Field
+                  component={RadioButtons}
+                  name="cluster_privacy"
+                  ariaLabel="Cluster privacy"
+                  disabled={pending}
+                  options={[{
+                    value: 'external',
+                    ariaLabel: 'Public',
+                    label: (
+                      <>
+                  Public (recommended)
+                        <div className="radio-helptext">Master API endpoint and application routes are accessible from the internet.</div>
+                      </>),
+                  },
+                  {
+                    value: 'internal',
+                    ariaLabel: 'Private',
+                    label: (
+                      <>
+                      Private
+                        <div className="radio-helptext">
+                        Master API endpoint and application routes are restricted to direct,
+                        private connectivity.
+                        </div>
+                      </>
+                    ),
+                  }]}
+                  defaultValue="external"
+                />
+              </>
+            )}
           </>
         )}
     </>
@@ -131,7 +180,7 @@ NetworkingSection.propTypes = {
   pending: PropTypes.bool,
   mode: PropTypes.string,
   toggleNetwork: PropTypes.func,
-  isMultiAz: PropTypes.bool,
+  showClusterPrivacy: PropTypes.bool,
 };
 
 export default NetworkingSection;

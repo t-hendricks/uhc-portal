@@ -70,13 +70,14 @@ class RenderFields extends React.Component {
       disabled,
       validateField,
       placeholderText,
+      fieldSpan = 8,
       meta: { error },
     } = this.props;
 
     const labelGridItem = (index) => {
       if (index === 0) {
         return (
-          <GridItem className="field-array-title" span={8}>
+          <GridItem className="field-array-title" span={fieldSpan}>
             <p className="pf-c-form__label-text" id="field-array-label">
               {label}
               {
@@ -99,7 +100,7 @@ class RenderFields extends React.Component {
     const fieldGridItem = (item, index) => {
       const { id } = fields.get(index);
       return (
-        <GridItem className="field-grid-item" span={8}>
+        <GridItem className="field-grid-item" span={fieldSpan}>
           <Field
             key={id}
             component={ReduxVerticalFormGroup}
@@ -195,6 +196,7 @@ RenderFields.propTypes = {
   fields: PropTypes.object.isRequired,
   validateField: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
   placeholderText: PropTypes.string,
+  fieldSpan: PropTypes.number,
   /**
    * This prop is an onChange function that comes from the parent component.
    * It has to do with upper level changes that need to occur in the form

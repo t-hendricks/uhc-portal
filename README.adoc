@@ -142,18 +142,16 @@ It's not a regular build dependency but is injected by CDN using https://en.wiki
 
 This is a one-time setup process but safe to repeat if you want to update the proxy.
 
-Make sure to start the backend proxy server (or mockserver) before starting the insights proxy!
-....
-$ ./backend
-....
-
 Now you can use
 ....
 $ yarn insights-proxy
 ....
-which runs an `insightsproxy` container with our `profiles/local-frontend.js` config, passing API requests to the mock server described above.
+which waits for a backend to be serving (might not work otherwise), then runs an `insightsproxy` container with our `profiles/local-frontend.js` config, passing API requests to the backend (or mock server) described above.
 
 You may set `RUNNER=podman` or `RUNNER=docker` env var to choose with which tool the container will be updated/run.
+
+- Some ways to kill insights-proxy "detach" the container instead of exiting.
+  `yarn stop-insights-proxy` helps.
 
 === Webpack dev server
 
@@ -189,7 +187,7 @@ To run test(s) locally, in addition to all the above (backend + insights proxy +
 
 1. `yarn selenium-chrome` — runs a browser under Xvnc in a container.
 2. `make selenium-tests-image` — clones those repos under `run/`, builds container image with Ruby depedencies and the tests.
-3. `yarn selenium-test-chrome` — executes tests in a container.
+3. `yarn selenium-test-chrome` — waits for dependencies, then executes tests in a container.
 4. Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`. If you have Vinagre, simply run `yarn selenium-viewer`.
 
 If a test fails, it'll stop & dump you into "pry" prompt, which is pretty useless but gives you chance to open VNC and play with the browser.

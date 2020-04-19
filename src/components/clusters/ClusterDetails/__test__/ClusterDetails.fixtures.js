@@ -23,6 +23,7 @@ const getAddOns = jest.fn();
 const getClusterAddOns = jest.fn();
 const getGrants = jest.fn();
 const getClusterHistory = jest.fn();
+const getClusterRouters = jest.fn();
 
 const subscriptionInfo = {
   id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
@@ -371,6 +372,12 @@ const organization = {
   },
 };
 
+const clusterRouters = {
+  getRouters: {
+    routers: [],
+  },
+};
+
 export {
   match,
   history,
@@ -399,4 +406,6 @@ export {
   getClusterAddOns,
   getGrants,
   getClusterHistory,
+  getClusterRouters,
+  clusterRouters,
 };

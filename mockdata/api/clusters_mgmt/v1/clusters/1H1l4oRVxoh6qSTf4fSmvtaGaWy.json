@@ -28,7 +28,8 @@
     "url": "https://console-openshift-console.apps.cben-osd1.h9d5.p1.openshiftapps.com"
   },
   "api": {
-    "url": "https://api.cben-osd1.h9d5.p1.openshiftapps.com:6443"
+    "url": "https://api.cben-osd1.h9d5.p1.openshiftapps.com:6443",
+    "listening": "internal"
   },
   "nodes": {
     "total": 9,

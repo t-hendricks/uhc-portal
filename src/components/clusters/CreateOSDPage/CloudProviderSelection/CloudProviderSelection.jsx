@@ -41,11 +41,6 @@ class CloudProviderSelection extends Component {
           <Redirect to="/create" />
         );
       }
-      if (!hasGcpQuota) {
-        return (
-          <Redirect to="/create/osd/aws" />
-        );
-      }
     }
 
     const breadcrumbs = (

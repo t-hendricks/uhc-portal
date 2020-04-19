@@ -28,6 +28,7 @@ import Overview from './components/Overview/Overview';
 import LogWindow from './components/LogWindow';
 import Insights from './components/Insights';
 import Monitoring from './components/Monitoring';
+import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
@@ -46,6 +47,7 @@ import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import clusterStates from '../common/clusterStates';
 import EditDisconnectedClusterDialog from '../common/EditDisconnectedCluster';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 
@@ -62,6 +64,7 @@ class ClusterDetails extends Component {
     this.accessControlTabRef = React.createRef();
     this.logsTabRef = React.createRef();
     this.addOnsTabRef = React.createRef();
+    this.networkingTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -159,9 +162,9 @@ class ClusterDetails extends Component {
       getGrants,
       clusterLogsViewOptions,
       getClusterHistory,
+      getClusterRouters,
     } = this.props;
     const clusterID = match.params.id;
-
     if (isValid(clusterID)) {
       this.fetchDetailsAndInsightsData(clusterID, get(clusterDetails, 'cluster.external_id'));
       getOrganizationAndQuota();
@@ -178,7 +181,7 @@ class ClusterDetails extends Component {
         getNodes(clusterID);
         getClusterOperators(clusterID);
         getGrants(clusterID);
-
+        getClusterRouters(clusterID);
         if (get(clusterDetails, 'cluster.managed')) {
           getClusterAddOns(clusterID);
           getLogs(clusterID);
@@ -234,6 +237,7 @@ class ClusterDetails extends Component {
       history,
       match,
       logs,
+      clusterRouters,
       clusterIdentityProviders,
       organization,
       setGlobalError,
@@ -299,21 +303,19 @@ class ClusterDetails extends Component {
       invalidateClusters();
       this.fetchDetailsAndInsightsData(cluster.id);
     };
-    const externalID = get(cluster, 'external_id');
 
     const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
-    const displayInsightsTab = !isArchived
-      && APP_BETA
-      && insightsData[externalID]
-      && (
-        !insightsData[externalID].status
-        || insightsData[externalID].status === 404
-      );
+    const displayInsightsTab = !isArchived && APP_BETA && (
+      !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
+    );
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
+    const displayNetworkingTab = cluster.canEdit
+          && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING)
+          && cluster.managed && get(cluster, 'api.url') && clusterRouters.getRouters.routers.length > 0;
 
     return (
       <PageSection id="clusterdetails-content">
@@ -329,17 +331,19 @@ class ClusterDetails extends Component {
           canAllowClusterAdmin={canAllowClusterAdmin}
         >
           <TabsRow
-            displayLogs={hasLogs}
-            displayAccessControlTab={displayAccessControlTab}
             displayMonitoringTab={!isArchived}
-            displayInsightsTab={displayInsightsTab}
+            displayAccessControlTab={displayAccessControlTab}
             displayAddOnsTab={displayAddOnsTab}
+            displayNetworkingTab={displayNetworkingTab}
+            displayInsightsTab={displayInsightsTab}
+            displayLogs={hasLogs}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
-            logsTabRef={this.logsTabRef}
             addOnsTabRef={this.addOnsTabRef}
+            networkingTabRef={this.networkingTabRef}
             insightsTabRef={this.insightsTabRef}
+            logsTabRef={this.logsTabRef}
           />
         </ClusterDetailsTop>
         <TabContent
@@ -392,15 +396,15 @@ class ClusterDetails extends Component {
             <AddOns clusterID={cluster.id} />
           </TabContent>
         )}
-        {hasLogs && (
+        {displayNetworkingTab && (
           <TabContent
             eventKey={4}
-            id="logsTabContent"
-            ref={this.logsTabRef}
-            aria-label="Logs"
+            id="networkingTabContent"
+            ref={this.networkingTabRef}
+            aria-label="Networking"
             hidden
           >
-            <LogWindow clusterID={cluster.id} />
+            <Networking clusterID={cluster.id} />
           </TabContent>
         )}
         {displayInsightsTab && (
@@ -418,6 +422,17 @@ class ClusterDetails extends Component {
                 voteOnRule(cluster.external_id, ruleId, vote);
               }}
             />
+          </TabContent>
+        )}
+        {hasLogs && (
+          <TabContent
+            eventKey={6}
+            id="logsTabContent"
+            ref={this.logsTabRef}
+            aria-label="Logs"
+            hidden
+          >
+            <LogWindow clusterID={cluster.id} />
           </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
@@ -471,6 +486,7 @@ ClusterDetails.propTypes = {
   insightsData: PropTypes.object,
   logs: PropTypes.object,
   addOns: PropTypes.object,
+  clusterRouters: PropTypes.object,
   clusterAddOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
@@ -495,6 +511,7 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   voteOnRule: PropTypes.func.isRequired,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
+  getClusterRouters: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

@@ -8,6 +8,7 @@ import {
   Title,
   Popover,
 } from '@patternfly/react-core';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { CheckCircleIcon, SearchIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -15,18 +16,17 @@ import { Link } from 'react-router-dom';
 export const RemoteHealthPopover = () => (
   <Popover
     position="right"
-    headerContent="What is Remote health?"
     bodyContent={(
       <div>
-        It helps you identify, prioritize, and resolve risks to security,
-        perfomance, aviability and stability before they become urgent issues
+        Remote Health identifies and prioritizes risks to security,
+        performance, availability, and stability.
       </div>
     )}
-    aria-label="What is Remote health?"
+    aria-label="What is Remote Health?"
     boundary="viewport"
     enableFlip
   >
-    <Button style={{ padding: '0' }} variant="link">What is Remote health?</Button>
+    <Button style={{ padding: '0' }} variant="link">What is Remote Health?</Button>
   </Popover>
 );
 
@@ -71,20 +71,20 @@ EmptyTableMessage.propTypes = {
 export const NoRulesMessage = () => (
   <EmptyTableMessage
     icon={SearchIcon}
-    header="There are no rules for this cluster"
-    body="This cluster is not affected by any known rules."
+    header="No health checks"
+    body="This cluster is not affected by any known health checks."
   />
 );
 
 export const NoIssuesMessage = ({ lastChecked }) => {
   const body = (
     <>
-      <div>No issues have been found during Insights analysis.</div>
+      <div>No issues have been found.</div>
       {
         lastChecked && (
           <div>
             <span>Last checked: </span>
-            {lastChecked}
+            <DateFormat date={new Date(lastChecked)} />
           </div>
         )
       }
