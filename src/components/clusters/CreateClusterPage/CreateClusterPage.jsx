@@ -26,7 +26,7 @@ class CreateCluster extends React.Component {
   }
 
   render() {
-    const { hasOSDQuota, hasGcpQuota, organization } = this.props;
+    const { hasOSDQuota, organization } = this.props;
 
     const title = (
       <PageTitle
@@ -54,7 +54,7 @@ class CreateCluster extends React.Component {
     );
 
     const osdCard = hasOSDQuota ? (
-      <Link to={!hasGcpQuota ? '/create/osd/aws' : '/create/osd'} className="infra-card pf-c-card create-cluster-card">
+      <Link to="/create/osd" className="infra-card pf-c-card create-cluster-card">
         {osdCardBody}
       </Link>
     ) : (
@@ -109,7 +109,6 @@ class CreateCluster extends React.Component {
 
 CreateCluster.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
-  hasGcpQuota: PropTypes.bool.isRequired,
   organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
 };
