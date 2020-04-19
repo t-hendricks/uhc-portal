@@ -34,9 +34,8 @@ class EditClusterRoutersCard extends React.Component {
       pristine,
       valid,
       additionalRouterEnabled,
-      getClusterRouters,
-      clusterID,
       reset,
+      refreshCluster,
     } = this.props;
     return (
       <>
@@ -145,7 +144,7 @@ class EditClusterRoutersCard extends React.Component {
               </Grid>
               <ChangePrivacySettingsDialog
                 onConfirm={handleSubmit}
-                getClusterRouters={() => getClusterRouters(clusterID)}
+                refreshCluster={refreshCluster}
               />
             </Form>
           </CardBody>
@@ -172,8 +171,7 @@ EditClusterRoutersCard.propTypes = {
   }).isRequired,
   shouldShowAlert: PropTypes.bool,
   additionalRouterEnabled: PropTypes.bool,
-  getClusterRouters: PropTypes.func.isRequired,
-  clusterID: PropTypes.string.isRequired,
+  refreshCluster: PropTypes.func.isRequired,
 };
 
 export default EditClusterRoutersCard;

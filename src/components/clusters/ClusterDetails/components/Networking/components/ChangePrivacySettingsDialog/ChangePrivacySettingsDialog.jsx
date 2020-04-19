@@ -10,10 +10,10 @@ import ErrorBox from '../../../../../../common/ErrorBox';
 
 class ChangePrivacySettingsDialog extends React.Component {
   componentDidUpdate(prevProps) {
-    const { editClusterRoutersResponse, getClusterRouters } = this.props;
+    const { editClusterRoutersResponse, refreshCluster } = this.props;
     if (prevProps.editClusterRoutersResponse.pending
       && editClusterRoutersResponse.fulfilled) {
-      getClusterRouters();
+      refreshCluster();
       this.onClose();
     }
   }
@@ -85,7 +85,7 @@ ChangePrivacySettingsDialog.propTypes = {
     fulfilled: PropTypes.bool,
     pending: PropTypes.bool,
   }).isRequired,
-  getClusterRouters: PropTypes.func.isRequired,
+  refreshCluster: PropTypes.func.isRequired,
 };
 
 export default ChangePrivacySettingsDialog;
