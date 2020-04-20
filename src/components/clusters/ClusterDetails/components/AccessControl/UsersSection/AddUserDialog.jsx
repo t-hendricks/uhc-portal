@@ -74,7 +74,8 @@ class AddUserDialog extends Component {
         secondaryText="Cancel"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={this.cancelAddUser}
-        isPrimaryDisabled={!!validationMessage}
+        isPrimaryDisabled={!!validationMessage || addUserResponse.pending}
+        isPending={addUserResponse.pending}
       >
         <>
           {hasError}
