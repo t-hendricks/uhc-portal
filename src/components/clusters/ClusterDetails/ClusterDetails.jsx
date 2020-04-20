@@ -268,6 +268,7 @@ class ClusterDetails extends Component {
       disableRule,
       enableRule,
       canAllowClusterAdmin,
+      canSubscribeOCP,
       anyModalOpen,
     } = this.props;
 
@@ -354,6 +355,7 @@ class ClusterDetails extends Component {
           error={clusterDetails.error}
           errorMessage={clusterDetails.errorMessage}
           canAllowClusterAdmin={canAllowClusterAdmin}
+          canSubscribeOCP={canSubscribeOCP}
           autoRefreshEnabled={!anyModalOpen}
         >
           <TabsRow
@@ -539,6 +541,7 @@ ClusterDetails.propTypes = {
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
+  canSubscribeOCP: PropTypes.bool.isRequired,
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
 };

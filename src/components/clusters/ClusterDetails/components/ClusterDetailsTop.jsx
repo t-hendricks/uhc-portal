@@ -29,6 +29,7 @@ function ClusterDetailsTop(props) {
     errorMessage,
     children,
     canAllowClusterAdmin,
+    canSubscribeOCP,
     autoRefreshEnabled,
   } = props;
 
@@ -88,6 +89,7 @@ function ClusterDetailsTop(props) {
       organization={organization.details}
       showConsoleButton={false}
       canAllowClusterAdmin={canAllowClusterAdmin}
+      canSubscribeOCP={canSubscribeOCP}
     />
   );
 
@@ -159,7 +161,11 @@ function ClusterDetailsTop(props) {
         expirationTimestamp={cluster.expiration_timestamp}
       />
       )}
-      <SubscriptionCompliancy cluster={cluster} openModal={openModal} />
+      <SubscriptionCompliancy
+        cluster={cluster}
+        openModal={openModal}
+        canSubscribeOCP={canSubscribeOCP}
+      />
       {children}
     </div>
   );
@@ -180,6 +186,7 @@ ClusterDetailsTop.propTypes = {
   ]),
   children: PropTypes.any,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
+  canSubscribeOCP: PropTypes.bool.isRequired,
   autoRefreshEnabled: PropTypes.bool,
 };
 
