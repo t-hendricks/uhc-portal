@@ -122,15 +122,15 @@
     "startmock": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server-for-mock --no-progress' 'mockdata/mockserver.py' 'yarn insights-proxy'",
     "dev-server": "webpack-dev-server --progress --hot",
     "dev-server-for-mock": "OCM_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
-    "insights-proxy": "echo Waiting on server and backend... && wait-on http://localhost:8001/ http://localhost:8010/api && yarn stop-insights-proxy; env SPANDX_CONFIG=./profiles/local-frontend.js bash run/insights-proxy/scripts/run.sh",
-    "stop-insights-proxy": "${RUNNER:-docker} kill insightsproxy || true",
+    "insights-proxy": "echo Waiting on server and backend... && wait-on http://localhost:8001/ http://localhost:8010/api && yarn stop-insights-proxy; env RUNNER=${RUNNER:-podman} SPANDX_CONFIG=./profiles/local-frontend.js bash run/insights-proxy/scripts/run.sh",
+    "stop-insights-proxy": "${RUNNER:-podman} kill insightsproxy || true",
     "lint": "eslint src --ext js,jsx",
     "test": "jest --env=jsdom",
-    "selenium-chrome": "podman run --rm --name=browser --add-host=qa.foo.redhat.com:127.0.0.1 --net=host -p 4444:4444 -p 5900:5900 -v /dev/shm:/dev/shm selenium/standalone-chrome-debug",
-    "selenium-firefox": "podman run --rm --name=browser --add-host qa.foo.redhat.com:127.0.0.1 --net=host -p 4444:4444 -p 5900:5900 -v /dev/shm:/dev/shm selenium/standalone-firefox-debug",
-    "selenium-test-chrome": "echo Waiting on insights-proxy and selenium... && wait-on --config=run/wait-on.config https-get://qa.foo.redhat.com:1337/ http-get://localhost:4444/wd/hub && podman run --name selenium-test --rm -ti --net=host ocm-selenium-tests bundle exec cucumber ../cucushift/ocm/login.feature",
+    "selenium-chrome": "${RUNNER:-podman} run --rm --name=browser --add-host=qa.foo.redhat.com:127.0.0.1 --net=host -p 4444:4444 -p 5900:5900 -v /dev/shm:/dev/shm selenium/standalone-chrome-debug",
+    "selenium-firefox": "${RUNNER:-podman} run --rm --name=browser --add-host qa.foo.redhat.com:127.0.0.1 --net=host -p 4444:4444 -p 5900:5900 -v /dev/shm:/dev/shm selenium/standalone-firefox-debug",
+    "selenium-test-chrome": "echo Waiting on insights-proxy and selenium... && wait-on --config=run/wait-on.config https-get://qa.foo.redhat.com:1337/ http-get://localhost:4444/wd/hub && ${RUNNER:-podman} run --name selenium-test --rm -ti --net=host ocm-selenium-tests bundle exec cucumber ../cucushift/ocm/login.feature",
     "selenium-viewer": "vinagre --file=run/selenium.vnc",
-    "stop": "yarn stop-insights-proxy; podman kill browser; podman kill selenium-test; pkill -f names=SERVER,BACKEND,INSIGHTS"
+    "stop": "yarn stop-insights-proxy; ${RUNNER:-podman} kill browser; ${RUNNER:-podman} kill selenium-test; pkill -f names=SERVER,BACKEND,INSIGHTS"
   },
   "insights": {
     "appname": "openshift"
