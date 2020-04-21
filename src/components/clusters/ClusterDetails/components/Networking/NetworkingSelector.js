@@ -10,15 +10,17 @@ const NetworkingSelector = (state) => {
   const { clusterRouters } = state;
   const routers = {};
   clusterRouters.getRouters.routers.forEach((r) => {
-    const routerID = r.id;
-    const isDefault = r.default;
-    const isPrivate = r.listening === 'internal';
-    const routeSelectors = !isDefault ? r.route_selectors : null;
-    const router = { routerID, isDefault, isPrivate };
+    const router = {
+      routerID: r.id,
+      isDefault: r.default,
+      isPrivate: r.listening === 'internal',
+      address: r.dns_name,
+    };
+    const routeSelectors = !router.isDefault ? r.route_selectors : null;
     if (routeSelectors) {
       router.routeSelectors = routeSelectorsToString(routeSelectors);
     }
-    if (isDefault) {
+    if (router.isDefault) {
       routers.default = router;
     } else {
       routers.additional = router;

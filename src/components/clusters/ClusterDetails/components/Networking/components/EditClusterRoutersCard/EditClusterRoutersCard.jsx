@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-
 import {
   Card,
   Form,
@@ -29,14 +28,16 @@ class EditClusterRoutersCard extends React.Component {
   render() {
     const {
       masterAPIEndpoint,
-      clusterDNSName,
       handleSubmit,
       pristine,
       valid,
       additionalRouterEnabled,
       reset,
       refreshCluster,
+      defaultRouterAddress,
+      additionalRouterAddress,
     } = this.props;
+
     return (
       <>
         <Card>
@@ -62,7 +63,7 @@ class EditClusterRoutersCard extends React.Component {
                   <Title headingLevel="h2" size="lg" className="card-title networking-tab">Default application router</Title>
                   <div className="networking-tab">
                     <ClipboardCopy isReadOnly>
-                      {`https://apps.${clusterDNSName}`}
+                      {`https://${defaultRouterAddress}`}
                     </ClipboardCopy>
                   </div>
                   <div className="networking-tab">
@@ -93,7 +94,7 @@ class EditClusterRoutersCard extends React.Component {
                     <>
                       <div className="networking-tab">
                         <ClipboardCopy isReadOnly>
-                          {`https://apps2.${clusterDNSName}`}
+                          {`https://${additionalRouterAddress}`}
                         </ClipboardCopy>
                       </div>
                       <div className="networking-tab">
@@ -159,7 +160,6 @@ EditClusterRoutersCard.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
   masterAPIEndpoint: PropTypes.string.isRequired,
-  clusterDNSName: PropTypes.string.isRequired,
   valid: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   reset: PropTypes.func.isRequired,
@@ -173,6 +173,8 @@ EditClusterRoutersCard.propTypes = {
   shouldShowAlert: PropTypes.bool,
   additionalRouterEnabled: PropTypes.bool,
   refreshCluster: PropTypes.func.isRequired,
+  defaultRouterAddress: PropTypes.string.isRequired,
+  additionalRouterAddress: PropTypes.string.isRequired,
 };
 
 export default EditClusterRoutersCard;
