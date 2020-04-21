@@ -93,7 +93,7 @@ function Router(props) {
           <Route path="/register" component={RegisterCluster} />
           <Route path="/subscriptions" component={Subscriptions} />
           <Route path="/archived" component={ArchivedClusterList} />
-          <Route path="/overview" exact component={Overview} />
+          { (APP_STAGING || APP_DEV_SERVER) && <Route path="/overview" exact component={Overview} />}
           <Route path="/" exact component={ClustersList} />
           <Route component={NotFoundError} />
         </Switch>
