@@ -63,8 +63,11 @@ function ClusterUtilizationChart(props) {
   };
 
   const donutChartWithLegend = (
-    <div style={{ height: '205px', width: '410px' }}>
-      {baseDonutUtilization(legendExtraProps)}
+    <div>
+      <Title className="metrics-chart chart-title-with-legend" headingLevel="h4" size="xl">{title}</Title>
+      <div className="metrics-chart chart-with-legend">
+        {baseDonutUtilization(legendExtraProps)}
+      </div>
     </div>
   );
 

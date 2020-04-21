@@ -20,6 +20,7 @@ import { withRouter } from 'react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
+import Overview from '../overview';
 import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetails from '../clusters/ClusterDetails';
@@ -92,6 +93,7 @@ function Router(props) {
           <Route path="/register" component={RegisterCluster} />
           <Route path="/subscriptions" component={Subscriptions} />
           <Route path="/archived" component={ArchivedClusterList} />
+          <Route path="/overview" exact component={Overview} />
           <Route path="/" exact component={ClustersList} />
           <Route component={NotFoundError} />
         </Switch>

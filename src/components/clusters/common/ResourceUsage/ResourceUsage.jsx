@@ -51,7 +51,7 @@ function ResourceUsage({
 ResourceUsage.propTypes = {
   cpu: PropTypes.object.isRequired,
   memory: PropTypes.object.isRequired,
-  metricsStatusMessage: PropTypes.string.isRequired,
+  metricsStatusMessage: PropTypes.string,
   metricsAvailable: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
 };

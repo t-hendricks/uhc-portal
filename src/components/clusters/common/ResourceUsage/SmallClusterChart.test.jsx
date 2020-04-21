@@ -15,7 +15,7 @@ const memory = {
   },
 };
 
-describe('<ResourceUsage />', () => {
+describe('<SmallClusterChart />', () => {
   it('should render', () => {
     const wrapper = shallow(
       <SmallClusterChart

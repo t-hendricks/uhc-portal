@@ -204,6 +204,11 @@ const fetchClusters = params => dispatch => dispatch({
   payload: fetchClustersAndPermissions(params),
 });
 
+const fetchClustersUsingParams = params => dispatch => dispatch({
+  type: clustersConstants.GET_CLUSTERS_WITH_PARAMS,
+  payload: clusterService.fetchClustersUsingParams(params),
+});
+
 const fetchSingleClusterAndPermissions = (clusterID) => {
   let cluster;
   let canEdit;
@@ -266,6 +271,7 @@ const clustersActions = {
   editCluster,
   fetchClusters,
   fetchClusterDetails,
+  fetchClustersUsingParams,
   setClusterDetails,
   invalidateClusters,
   resetCreatedClusterResponse,
@@ -281,6 +287,7 @@ export {
   registerDisconnectedCluster,
   editCluster,
   fetchClusters,
+  fetchClustersUsingParams,
   fetchClusterDetails,
   setClusterDetails,
   invalidateClusters,

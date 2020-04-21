@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ResourceUsage /> should render 1`] = `
+exports[`<SmallClusterChart /> should render 1`] = `
 <div>
   <div
     style={
@@ -30,10 +30,10 @@ exports[`<ResourceUsage /> should render 1`] = `
       legendData={
         Array [
           Object {
-            "name": "Used: 15.41 GiB",
+            "name": "undefined: 15.41 GiB",
           },
           Object {
-            "name": "Available: 61.23 GiB",
+            "name": "undefined: 61.23 GiB",
           },
         ]
       }
