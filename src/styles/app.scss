@@ -255,6 +255,19 @@ limitations under the License.
   margin-top: 40px;
 }
 
+#clusters-overview-card {
+  height: 100%;
+}
+
+#overview-grid {
+  max-width: 1710px;
+}
+
+#clusters-with-issues {
+  color: var(--pf-global--danger-color--100);
+  padding-right: var(--pf-global--spacer--sm)
+}
+
 #subs-hint {
   margin-top: 40px;
 }
@@ -269,6 +282,15 @@ limitations under the License.
   &.chart-title {
     font-size: var(--pf-global--FontSize--md);
     font-weight: 700;
+  }
+  &.chart-title-with-legend {
+    font-size: var(--pf-global--FontSize--md);
+    font-weight: 700;
+    padding-right: 180px; // Adjusted to accommodate legend
+  }
+  &.chart-with-legend {
+    height: 205px;
+    width: 410px;
   }
 }
 

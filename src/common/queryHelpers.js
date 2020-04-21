@@ -120,6 +120,20 @@ const createServiceLogQueryObject = (viewOptions, externalClusterID, queryObj) =
   return queryObject;
 };
 
+const createClustersWithIssuesQueryObject = (viewOptions, queryObj) => {
+  const queryObject = {
+    ...queryObj,
+  };
+
+  if (viewOptions) {
+    queryObject.page = viewOptions.currentPage;
+    queryObject.page_size = viewOptions.pageSize;
+    queryObject.filter = `health_state='${viewOptions.filter.healthState}'`;
+  }
+
+  return queryObject;
+};
+
 
 const buildUrlParams = params => Object.keys(params)
   .map(key => `${key}=${encodeURIComponent(params[key])}`)
@@ -155,6 +169,7 @@ export {
   buildUrlParams,
   createViewQueryObject,
   createServiceLogQueryObject,
+  createClustersWithIssuesQueryObject,
   viewPropsChanged,
   sqlString,
   getQueryParam,

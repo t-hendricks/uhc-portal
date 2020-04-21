@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Overview /> renders correctly 1`] = `
+<Fragment>
+  <PageHeader>
+    <PageHeaderTitle
+      className="page-title"
+      title="Overview"
+    />
+  </PageHeader>
+  <PageSection>
+    <Grid
+      gutter="sm"
+      id="overview-grid"
+    >
+      <GridItem
+        span={3}
+      >
+        <Card
+          id="clusters-overview-card"
+        >
+          <CardHeader>
+            Clusters
+          </CardHeader>
+          <CardBody>
+            <Bullseye>
+              <Title
+                headingLevel="h1"
+                size="3xl"
+              >
+                30
+              </Title>
+            </Bullseye>
+          </CardBody>
+        </Card>
+      </GridItem>
+      <GridItem
+        rowSpan={2}
+        span={9}
+      >
+        <Card
+          id="metrics-charts"
+        >
+          <CardHeader>
+            CPU and Memory utilization
+          </CardHeader>
+          <CardBody>
+            <ResourceUsage
+              cpu={
+                Object {
+                  "total": Object {
+                    "value": 150,
+                  },
+                  "used": Object {
+                    "value": 10,
+                  },
+                }
+              }
+              memory={
+                Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 100,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 10,
+                  },
+                }
+              }
+              metricsAvailable={true}
+              type="legend"
+            />
+          </CardBody>
+        </Card>
+      </GridItem>
+      <GridItem
+        span={3}
+      >
+        <Card
+          id="clusters-overview-card"
+        >
+          <CardHeader>
+            Clusters with issues
+          </CardHeader>
+          <CardBody>
+            <Bullseye>
+              <Title
+                headingLevel="h1"
+                id="clusters-with-issues"
+                size="3xl"
+              >
+                5
+              </Title>
+              <ExclamationCircleIcon
+                className="status-icon"
+                color="#c9190b"
+                noVerticalAlign={false}
+                size="sm"
+                title={null}
+              />
+            </Bullseye>
+          </CardBody>
+        </Card>
+      </GridItem>
+      <GridItem
+        span={12}
+      >
+        <Card
+          id="clusters-overview-card"
+        >
+          <CardHeader>
+            Clusters with issues
+          </CardHeader>
+          <CardBody>
+            <ClustersWithIssuesTable
+              clusters={Array []}
+              isPending={false}
+              setClusterDetails={[MockFunction]}
+            />
+            <Connect(ViewPaginationRow)
+              currentPage={1}
+              isDisabled={false}
+              pageSize={5}
+              totalCount={0}
+              totalPages={0}
+              variant="bottom"
+              viewType="OVERVIEW_VIEW"
+            />
+          </CardBody>
+        </Card>
+      </GridItem>
+      <GridItem
+        span={6}
+      >
+        <Card
+          id="clusters-overview-card"
+        >
+          <CardHeader>
+            Update status
+          </CardHeader>
+          <CardBody>
+            <SmallClusterChart
+              availableTitle="Update available"
+              donutId="update_available_donut"
+              total={11}
+              unit="clusters"
+              used={10}
+              usedTitle="Up-to-date"
+            />
+          </CardBody>
+        </Card>
+      </GridItem>
+      <GridItem
+        span={6}
+      >
+        <Card
+          id="clusters-overview-card"
+        >
+          <CardHeader>
+            Telemetry
+          </CardHeader>
+          <CardBody>
+            <SmallClusterChart
+              availableTitle="Not checking in"
+              donutId="connected_clusters_donut"
+              total={30}
+              unit="clusters"
+              used={10}
+              usedTitle="Connected"
+            />
+          </CardBody>
+        </Card>
+      </GridItem>
+    </Grid>
+  </PageSection>
+</Fragment>
+`;

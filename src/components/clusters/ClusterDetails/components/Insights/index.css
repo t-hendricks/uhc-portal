@@ -1,3 +1,5 @@
+@import "~@patternfly/react-styles/css/components/DataToolbar/data-toolbar.css";
+
 .battery {
     line-height: 2;
     display: flex;
@@ -17,6 +19,10 @@
 
 .success-color {
     color: var(--pf-global--success-color--200);
+}
+
+.info-color {
+    color: var(--pf-global--active-color--300);
 }
 
 .empty-table-message {
@@ -44,4 +50,8 @@
 
 .insights-loading-container {
     padding: var(--pf-global--gutter--md);
+}
+
+.paragraph-margin-bottom {
+	margin-bottom: var(--pf-global--FontSize--2xl);
 }

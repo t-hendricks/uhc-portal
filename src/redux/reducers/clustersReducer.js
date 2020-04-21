@@ -32,6 +32,11 @@ const initialState = {
     valid: false,
     clusters: [],
   },
+  dashboardClusters: {
+    ...baseState,
+    valid: false,
+    clusters: [],
+  },
   details: {
     ...baseState,
     cluster: null,
@@ -100,6 +105,61 @@ function clustersReducer(state = initialState, action) {
     case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
       return setStateProp(
         'clusters',
+        {
+          clusters: action.payload.data.items,
+          pending: false,
+          fulfilled: true,
+          valid: true,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS_WITH_PARAMS):
+      return setStateProp(
+        'dashboardClusters',
+        {
+          valid: false,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case REJECTED_ACTION(clustersConstants.GET_CLUSTERS_WITH_PARAMS):
+      return setStateProp(
+        'dashboardClusters',
+        {
+          ...getErrorState(action),
+          valid: true,
+          clusters: state.dashboardClusters.clusters,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case PENDING_ACTION(clustersConstants.GET_CLUSTERS_WITH_PARAMS):
+      return setStateProp(
+        'dashboardClusters',
+        {
+          pending: true,
+          valid: true,
+          clusters: state.dashboardClusters.clusters,
+        },
+        {
+          state,
+          initialState,
+        },
+      );
+
+    case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS_WITH_PARAMS):
+      return setStateProp(
+        'dashboardClusters',
         {
           clusters: action.payload.data.items,
           pending: false,

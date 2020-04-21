@@ -7,7 +7,7 @@ import { humanizeValueWithUnit, roundValueWithUnit } from '../../../../common/un
 
 function SmallClusterChart(props) {
   const {
-    used, total, unit, humanize, donutId,
+    used, total, unit, humanize, donutId, usedTitle, availableTitle,
   } = props;
 
   const format = humanize ? humanizeValueWithUnit : roundValueWithUnit;
@@ -28,7 +28,7 @@ function SmallClusterChart(props) {
           data={[{ x: `${formattedUsed.value} ${formattedUsed.unit}`, y: usedPercentage },
             { x: `${formattedUnused.value} ${formattedUnused.unit}`, y: unusedPrecentage }]}
           constrainToVisibleArea
-          legendData={[{ name: `Used: ${formattedUsed.value} ${formattedUsed.unit}` }, { name: `Available: ${formattedUnused.value} ${formattedUnused.unit}` }]}
+          legendData={[{ name: `${usedTitle}: ${formattedUsed.value} ${formattedUsed.unit}` }, { name: `${availableTitle}: ${formattedUnused.value} ${formattedUnused.unit}` }]}
           legendOrientation="vertical"
           padding={{
             bottom: 20,
@@ -49,6 +49,8 @@ SmallClusterChart.propTypes = {
   used: PropTypes.number,
   total: PropTypes.number,
   unit: PropTypes.string,
+  availableTitle: PropTypes.string,
+  usedTitle: PropTypes.string,
   humanize: PropTypes.bool,
   donutId: PropTypes.string.isRequired,
 };

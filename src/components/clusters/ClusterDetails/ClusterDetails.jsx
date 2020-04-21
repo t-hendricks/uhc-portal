@@ -309,6 +309,7 @@ class ClusterDetails extends Component {
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
     const displayInsightsTab = !isArchived && APP_BETA && (
       !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
+      || insightsData[cluster.external_id].status === 404
     );
 
     const consoleURL = get(cluster, 'console.url');

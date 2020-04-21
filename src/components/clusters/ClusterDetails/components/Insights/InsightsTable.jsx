@@ -148,10 +148,7 @@ class InsightsTable extends React.Component {
           <CardBody className="no-padding">
             <RuleTable
               rules={{
-                meta: {
-                  ...meta,
-                  isCompact: false,
-                },
+                meta,
                 data: shownData,
               }}
               fetchData={this.fetchData}

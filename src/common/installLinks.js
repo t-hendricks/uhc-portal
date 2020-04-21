@@ -1,6 +1,6 @@
 const MIRROR_CLIENTS_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/';
-const MIRROR_CLIENTS_LATEST_44_PRE = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest-4.4/';
+const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const DOCS_BASE_4_2 = ' https://docs.openshift.com/container-platform/4.2';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
@@ -23,23 +23,23 @@ const links = {
   DOWNLOAD_RHCOS_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/',
 
   INSTALLER_LINUX: `${MIRROR_CLIENTS_LATEST}openshift-install-linux.tar.gz`,
-  INSTALLER_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_44_PRE}openshift-install-linux.tar.gz`,
+  INSTALLER_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-install-linux.tar.gz`,
   INSTALLER_LINUX_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-install-linux.tar.gz`,
 
   INSTALLER_MAC: `${MIRROR_CLIENTS_LATEST}openshift-install-mac.tar.gz`,
-  INSTALLER_MAC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_44_PRE}openshift-install-mac.tar.gz`,
+  INSTALLER_MAC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-install-mac.tar.gz`,
   INSTALLER_MAC_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-install-mac.tar.gz`,
 
   CLI_TOOLS_LINUX: `${MIRROR_CLIENTS_LATEST}openshift-client-linux.tar.gz`,
-  CLI_TOOLS_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_44_PRE}openshift-client-linux.tar.gz`,
+  CLI_TOOLS_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-linux.tar.gz`,
   CLI_TOOLS_LINUX_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-client-linux.tar.gz`,
 
   CLI_TOOLS_MAC: `${MIRROR_CLIENTS_LATEST}openshift-client-mac.tar.gz`,
-  CLI_TOOLS_MAC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_44_PRE}openshift-client-mac.tar.gz`,
+  CLI_TOOLS_MAC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-mac.tar.gz`,
   CLI_TOOLS_MAC_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-client-mac.tar.gz`,
 
   CLI_TOOLS_WINDOWS: `${MIRROR_CLIENTS_LATEST}openshift-client-windows.zip`,
-  CLI_TOOLS_WINDOWS_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_44_PRE}openshift-client-windows.zip`,
+  CLI_TOOLS_WINDOWS_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-windows.zip`,
   CLI_TOOLS_WINDOWS_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-client-windows.zip`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
@@ -86,9 +86,7 @@ const links = {
 
   INSTALL_PRE_RELEASE_BUG_LIST_44: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.4.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
-  INSTALL_PRE_RELEASE_INSTALLER_LATEST_44: MIRROR_CLIENTS_LATEST_44_PRE,
   INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_44: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/pre-release/latest',
-  INSTALL_PRE_RELEASE_CLI_LATEST_44: MIRROR_CLIENTS_LATEST_44_PRE,
   INSTALL_PRE_RELEASE_FEEDBACK_MAILTO: 'mailto:***REMOVED***?subject=[dev preview build]',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/articles/4307871',
 };

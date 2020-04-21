@@ -8,6 +8,7 @@ import { deleteClusterDialogReducer } from '../../components/clusters/common/Del
 import { viewOptionsReducer } from './viewOptionsReducer';
 import userReducer from './userReducer';
 import tollboothReducer from './tollbooth';
+import { dashboardsReducer } from './dashboardsReducer';
 import { cloudProvidersReducer } from './cloudProvidersReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 import { LogsReducer } from '../../components/clusters/ClusterDetails/components/LogWindow/LogWindowReducer';
@@ -50,6 +51,7 @@ const reducers = {
   subscriptionSettings: subscriptionSettingsReducer,
   insightsData: insightsReducer,
   clusterRouters: NetworkingReducer,
+  dashboards: dashboardsReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

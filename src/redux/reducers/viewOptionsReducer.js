@@ -36,11 +36,22 @@ const INITIAL_OSL_VIEW_STATE = {
   },
 };
 
+const INITIAL_OVERVIEW_VIEW_STATE = {
+  currentPage: 1,
+  pageSize: 5,
+  totalCount: 0,
+  totalPages: 0,
+  filter: {
+    healthState: clustersConstants.CLUSTERS_STATE_UNHEALTHY,
+  },
+};
+
 const initialState = {};
 
 initialState[viewConstants.CLUSTERS_VIEW] = Object.assign(INITIAL_VIEW_STATE);
 initialState[viewConstants.ARCHIVED_CLUSTERS_VIEW] = Object.assign(INITIAL_VIEW_STATE);
 initialState[viewConstants.CLUSTER_LOGS_VIEW] = Object.assign(INITIAL_OSL_VIEW_STATE);
+initialState[viewConstants.OVERVIEW_VIEW] = Object.assign(INITIAL_OVERVIEW_VIEW_STATE);
 
 const viewOptionsReducer = (state = initialState, action) => {
   const updateState = {};
@@ -110,6 +121,10 @@ const viewOptionsReducer = (state = initialState, action) => {
     case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
       updatePageCounts(viewConstants.CLUSTERS_VIEW, action.payload.data.total);
       updatePageCounts(viewConstants.ARCHIVED_CLUSTERS_VIEW, action.payload.data.total);
+      return { ...state, ...updateState };
+
+    case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS_WITH_PARAMS):
+      updatePageCounts(viewConstants.OVERVIEW_VIEW, action.payload.data.total);
       return { ...state, ...updateState };
 
     case FULFILLED_ACTION(GET_CLUSTER_LOGS):
