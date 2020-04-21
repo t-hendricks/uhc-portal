@@ -75,8 +75,7 @@ class ToggleClusterAdminAccessDialog extends React.Component {
         Users with this level of access privilege can cause irreparable damage to the cluster.
         Per the
     <a href="https://www.redhat.com/en/about/agreements" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-        Red Hat
-        is not responsible for problems caused by cluster-admin users.
+        &nbsp;Red Hat is not responsible for problems caused by cluster-admin users.
   </>,
       };
     };

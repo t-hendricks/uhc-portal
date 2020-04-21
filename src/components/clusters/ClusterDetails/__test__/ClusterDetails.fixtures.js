@@ -12,6 +12,8 @@ const openModal = jest.fn();
 const closeModal = jest.fn();
 const getLogs = jest.fn();
 const getUsers = jest.fn();
+const getDedicatedAdmins = jest.fn();
+const getClusterAdmins = jest.fn();
 const getClusterIdentityProviders = jest.fn();
 const resetIdentityProvidersState = jest.fn();
 const clearGlobalError = jest.fn();
@@ -393,6 +395,8 @@ export {
   closeModal,
   getLogs,
   getUsers,
+  getDedicatedAdmins,
+  getClusterAdmins,
   clusterDetails,
   cloudProviders,
   clusterIdentityProviders,

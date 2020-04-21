@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import get from 'lodash/get';
 
 import { HelpIcon } from '@patternfly/react-icons';
 import {
@@ -27,27 +26,38 @@ class UsersSection extends React.Component {
   };
 
   componentDidMount() {
-    const { clusterGroupUsers, cluster } = this.props;
+    const {
+      clusterGroupUsers, cluster, getUsers, toggleClusterAdminResponse, getUsersPending,
+    } = this.props;
     if (clusterGroupUsers.clusterID !== cluster.id
-      || (!clusterGroupUsers.pending)) {
-      this.getUsers();
+      || (!getUsersPending)
+      // don't fetch usesrs if we jsut allowed/ removed cluster admin access
+      || !toggleClusterAdminResponse.pending) {
+      getUsers();
     }
   }
 
   componentDidUpdate(prevProps) {
     const {
-      deleteUserResponse, addUserResponse, clusterGroupUsers,
+      deleteUserResponse,
+      addUserResponse,
+      getUsers,
+      toggleClusterAdminResponse,
+      getUsersPending,
+      getUsersFulfilled,
     } = this.props;
     const { deletedRowIndex } = this.state;
 
+    // fetch users again if we just added/deleted a user.
     if (((deleteUserResponse.fulfilled && prevProps.deleteUserResponse.pending)
       || (addUserResponse.fulfilled && prevProps.addUserResponse.pending))
-      && !clusterGroupUsers.pending) {
-      // fetch users again if we just added/deleted a user.
-      this.getUsers();
+      && ((!getUsersPending)
+      // don't fetch usesrs if we jsut allowed/ removed cluster admin access
+      || !toggleClusterAdminResponse.pending)) {
+      getUsers();
     }
-    if (prevProps.clusterGroupUsers.pending
-      && clusterGroupUsers.fulfilled && deletedRowIndex !== null) {
+    if (prevProps.getUsersPending
+      && getUsersFulfilled && deletedRowIndex !== null) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ deletedRowIndex: null });
     }
@@ -57,16 +67,6 @@ class UsersSection extends React.Component {
     const { clearUsersResponses } = this.props;
     clearUsersResponses();
   }
-
-  getUsers = () => {
-    const { cluster, getUsers } = this.props;
-    if (!cluster.cluster_admin_enabled) {
-      getUsers(cluster.id, ['dedicated-admins']);
-    } else {
-      getUsers(cluster.id);
-    }
-  }
-
 
   render() {
     const {
@@ -81,6 +81,9 @@ class UsersSection extends React.Component {
       closeModal,
       clearAddUserResponses,
       canAddClusterAdmin,
+      getUsersPending,
+      getUserErrors,
+      hasUsers,
     } = this.props;
     const { deletedRowIndex } = this.state;
 
@@ -160,13 +163,10 @@ class UsersSection extends React.Component {
       </EmptyState>
     );
 
-    const hasUsers = !!get(clusterGroupUsers.users, 'length', false);
-
-
-    if (get(clusterGroupUsers, 'errors.length', false) && !hasUsers) {
+    if (!hasUsers && !!(getUserErrors.length)) {
       return (
         <>
-          {clusterGroupUsers.errors.map(error => getErrorBox(error))}
+          {getUserErrors.map(error => getErrorBox(error))}
         </>
       );
     }
@@ -175,7 +175,7 @@ class UsersSection extends React.Component {
 
     const userList = hasUsers ? clusterGroupUsers.users : [];
     const rows = hasUsers && userList.map(userRow);
-    const showSkeleton = !hasUsers && clusterGroupUsers.pending;
+    const showSkeleton = !hasUsers && getUsersPending;
     const skeletonRow = {
       cells: [
         {
@@ -187,7 +187,8 @@ class UsersSection extends React.Component {
 
 
     if (hasUsers
-      && (clusterGroupUsers.pending || addUserResponse.pending) && deletedRowIndex === null) {
+      && (getUsersPending
+      || addUserResponse.pending) && deletedRowIndex === null) {
       rows.push(skeletonRow);
     }
     if (hasUsers && deletedRowIndex !== null) {
@@ -208,7 +209,7 @@ class UsersSection extends React.Component {
       </Card>
     ) : (
       <Card>
-        {clusterGroupUsers.errors && clusterGroupUsers.errors.map(error => getErrorBox(error))}
+        {!!(getUserErrors.length) && getUserErrors.map(error => getErrorBox(error))}
         <CardBody>
           <Title className="card-title" headingLevel="h3" size="lg">Cluster Administrative Users</Title>
           <p>
@@ -260,6 +261,11 @@ UsersSection.propTypes = {
   closeModal: PropTypes.func.isRequired,
   clearUsersResponses: PropTypes.func.isRequired,
   clearAddUserResponses: PropTypes.func.isRequired,
+  toggleClusterAdminResponse: PropTypes.object.isRequired,
+  getUsersPending: PropTypes.bool.isRequired,
+  getUsersFulfilled: PropTypes.bool.isRequired,
+  getUserErrors: PropTypes.array.isRequired,
+  hasUsers: PropTypes.bool.isRequired,
 };
 
 export default UsersSection;
