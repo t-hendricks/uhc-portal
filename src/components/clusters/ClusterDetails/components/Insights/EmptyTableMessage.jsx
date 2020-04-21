@@ -9,34 +9,53 @@ import {
   Popover,
 } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
-import { CheckCircleIcon, SearchIcon } from '@patternfly/react-icons';
+import { CheckCircleIcon, InfoCircleIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
-export const RemoteHealthPopover = () => (
+export const RemoteHealthPopover = ({ variant }) => (
   <Popover
     position="right"
+    maxWidth="22rem"
     bodyContent={(
-      <div>
-        Remote Health identifies and prioritizes risks to security,
-        performance, availability, and stability.
-      </div>
+      <>
+        <p className="paragraph-margin-bottom">
+          Insights identifies and prioritizes risks to security, performance, availability,
+          and stability of your clusters.
+        </p>
+        <p>
+          This feature uses the Remote Health functionality of OpenShift Container Platform.
+          For further details about Insights, see the
+          {' '}
+          <a href="https://docs.openshift.com/container-platform/latest/support/getting-support.html">
+            OpenShift documentation.
+          </a>
+        </p>
+      </>
     )}
-    aria-label="What is Remote Health?"
+    aria-label="What is Insights?"
     boundary="viewport"
     enableFlip
   >
-    <Button style={{ padding: '0' }} variant="link">What is Remote Health?</Button>
+    <Button style={variant === 'link' ? { padding: '0' } : undefined} variant={variant}>What is Insights?</Button>
   </Popover>
 );
+
+RemoteHealthPopover.propTypes = {
+  variant: PropTypes.string,
+};
+
+RemoteHealthPopover.defaultProps = {
+  variant: 'link',
+};
 
 const EmptyTableMessage = ({
   icon,
   header,
   body,
   iconClassName,
+  showPopover,
 }) => (
-  <EmptyState className="empty-table-message" variant={EmptyStateVariant.full}>
+  <EmptyState className="empty-table-message" variant={EmptyStateVariant.large}>
     <EmptyStateIcon className={iconClassName} icon={icon} />
 
     <Title headingLevel="h5" size="lg">
@@ -47,17 +66,14 @@ const EmptyTableMessage = ({
       {body}
     </EmptyStateBody>
 
-    <Button
-      variant="primary"
-      component={Link}
-      to="/"
-    >
-      Return to list of clusters
-    </Button>
-
-    <EmptyStateSecondaryActions>
-      <RemoteHealthPopover />
-    </EmptyStateSecondaryActions>
+    {
+      showPopover
+      && (
+      <EmptyStateSecondaryActions>
+        <RemoteHealthPopover variant="primary" />
+      </EmptyStateSecondaryActions>
+      )
+    }
   </EmptyState>
 );
 
@@ -66,24 +82,40 @@ EmptyTableMessage.propTypes = {
   header: PropTypes.string,
   body: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   iconClassName: PropTypes.string,
+  showPopover: PropTypes.bool,
 };
 
 export const NoRulesMessage = () => (
   <EmptyTableMessage
-    icon={SearchIcon}
-    header="No health checks"
-    body="This cluster is not affected by any known health checks."
+    icon={InfoCircleIcon}
+    header="No health checks to display"
+    iconClassName="info-color"
+    body={
+      (
+        <>
+        Insights identifies and prioritizes risks to security, performance, availability,
+        and stability of your clusters. This feature uses the Remote Health
+        functionality of OpenShift Container Platform. For further details about Insights,
+        see the
+          {' '}
+          <a href="https://docs.openshift.com/container-platform/latest/support/getting-support.html">
+          OpenShift documentation
+          </a>
+        .
+        </>
+)
+    }
   />
 );
 
 export const NoIssuesMessage = ({ lastChecked }) => {
   const body = (
     <>
-      <div>No issues have been found.</div>
+      <div>No issues have been identified.</div>
       {
         lastChecked && (
           <div>
-            <span>Last checked: </span>
+            <span>Last check: </span>
             <DateFormat date={new Date(lastChecked)} />
           </div>
         )
@@ -96,8 +128,9 @@ export const NoIssuesMessage = ({ lastChecked }) => {
       <EmptyTableMessage
         icon={CheckCircleIcon}
         iconClassName="success-color"
-        header="No issues detected!"
+        header="Your cluster passed all health checks"
         body={body}
+        showPopover
       />
     </div>
   );
