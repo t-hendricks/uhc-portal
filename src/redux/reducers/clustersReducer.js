@@ -13,6 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import merge from 'lodash/merge';
+
 import {
   REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, INVALIDATE_ACTION,
   setStateProp, baseRequestState,
@@ -172,11 +174,12 @@ function clustersReducer(state = initialState, action) {
         },
       );
 
-    case clustersConstants.SET_CLUSTER_DETAILS:
+    case clustersConstants.SET_CLUSTER_DETAILS: {
+      const { cluster, mergeDetails } = action.payload;
       return setStateProp(
         'details',
         {
-          cluster: action.payload,
+          cluster: mergeDetails ? merge({}, state.details.cluster, cluster) : cluster,
           fulfilled: true,
           pending: false,
           error: false,
@@ -187,7 +190,7 @@ function clustersReducer(state = initialState, action) {
           initialState,
         },
       );
-
+    }
     // GET_CLUSTER_DETAILS
     case REJECTED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
       return setStateProp(

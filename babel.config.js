@@ -1,7 +1,16 @@
 module.exports = {
   env: {
     test: {
-      presets: ['@babel/preset-env', '@babel/preset-react'],
+      presets: [['@babel/preset-env', {
+        targets: {
+          browsers: [
+            'last 2 firefox versions',
+            'last 2 chrome versions',
+            'last 2 edge versions',
+            'last 2 safari versions',
+          ],
+        },
+      }], '@babel/preset-react'],
       plugins: [
         '@babel/plugin-proposal-class-properties',
         '@babel/plugin-syntax-dynamic-import',

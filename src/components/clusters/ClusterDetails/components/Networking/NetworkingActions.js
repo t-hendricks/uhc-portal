@@ -2,6 +2,7 @@ import has from 'lodash/has';
 import isEmpty from 'lodash/isEmpty';
 import { strToCleanObject } from '../../../../../common/helpers';
 import { networkingConstants } from './NetworkingConstants';
+import { setClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { clusterService } from '../../../../../services';
 
 const getClusterRouters = clusterID => dispatch => dispatch({
@@ -22,8 +23,7 @@ const resetClusterRouters = () => dispatch => dispatch({
   type: networkingConstants.RESET_CLUSTER_ROUTERS,
 });
 
-const sendNetworkConfigRequests = (newData, currentData, clusterID) => {
-  const promises = [];
+const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispatch) => {
   let result;
 
   // API privacy setting changed
@@ -33,7 +33,12 @@ const sendNetworkConfigRequests = (newData, currentData, clusterID) => {
         listening: newData.private_api ? 'internal' : 'external',
       },
     };
-    promises.push(clusterService.editCluster(clusterID, clusterRequest));
+    result = await clusterService.editCluster(clusterID, clusterRequest);
+    if (result.status === 204) {
+      // editing cluster succeeded.
+      // modify the details in state now (instead of waiting for a refresh) to avoid flicker
+      dispatch(setClusterDetails(clusterRequest, true));
+    }
   }
 
   const requestDefaultRouter = {
@@ -69,42 +74,30 @@ const sendNetworkConfigRequests = (newData, currentData, clusterID) => {
   }
 
   if (defaultRouterEdited) {
-    promises.push(
-      clusterService.editIngress(clusterID, requestDefaultRouter.id, requestDefaultRouter)
-        .then((response) => {
-          result = response;
-        }),
+    result = await clusterService.editIngress(
+      clusterID, requestDefaultRouter.id, requestDefaultRouter,
     );
   }
   if (additionalRouterDeleted) {
-    promises.push(
-      clusterService.deleteAdditionalIngress(
-        clusterID, currentData.additional.routerID, requestDefaultRouter,
-      ).then((response) => {
-        result = response;
-      }),
+    result = await clusterService.deleteAdditionalIngress(
+      clusterID, currentData.additional.routerID, requestDefaultRouter,
     );
   }
   if (!isEmpty(requestAdditionalRouter)) {
     if (additionalRouterCreated) {
-      promises.push(
-        clusterService.addAdditionalIngress(clusterID, requestAdditionalRouter)
-          .then((response) => { result = response; }),
-      );
+      result = await clusterService.addAdditionalIngress(clusterID, requestAdditionalRouter);
     } else {
-      promises.push(
-        clusterService.editIngress(clusterID, requestAdditionalRouter.id, requestAdditionalRouter)
-          .then((response) => { result = response; }),
+      result = await clusterService.editIngress(
+        clusterID, requestAdditionalRouter.id, requestAdditionalRouter,
       );
     }
   }
-  return Promise.all(promises)
-    .then(() => result);
+  return result;
 };
 
 const saveNetworkingConfiguration = (newData, currentData, clusterID) => dispatch => dispatch({
   type: networkingConstants.EDIT_CLUSTER_ROUTERS,
-  payload: sendNetworkConfigRequests(newData, currentData, clusterID),
+  payload: sendNetworkConfigRequests(newData, currentData, clusterID, dispatch),
 });
 
 const networkingActions = {

@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import { GridItem, FormGroup, Title } from '@patternfly/react-core';
+import {
+  GridItem, FormGroup, Title, Alert,
+} from '@patternfly/react-core';
 
 import { constants } from '../CreateOSDFormConstants';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
@@ -13,6 +15,7 @@ function NetworkingSection({
   toggleNetwork,
   mode,
   showClusterPrivacy,
+  privateClusterSelected,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -168,6 +171,15 @@ function NetworkingSection({
                   }]}
                   defaultValue="external"
                 />
+                {privateClusterSelected && (
+                <Alert className="buttom-alert" variant="warning" isInline title="You will not be able to access your cluster until you edit network settings in your cloud provider.">
+                  Follow the
+                  {' '}
+                  <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-understanding-aws.html">documetation</a>
+                  {' '}
+                  for how to do that.
+                </Alert>
+                )}
               </>
             )}
           </>
@@ -181,6 +193,7 @@ NetworkingSection.propTypes = {
   mode: PropTypes.string,
   toggleNetwork: PropTypes.func,
   showClusterPrivacy: PropTypes.bool,
+  privateClusterSelected: PropTypes.bool,
 };
 
 export default NetworkingSection;
