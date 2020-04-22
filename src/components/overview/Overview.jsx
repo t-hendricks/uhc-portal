@@ -34,6 +34,7 @@ import ResourceUsage from '../clusters/common/ResourceUsage/ResourceUsage';
 import ViewPaginationRow from '../clusters/common/ViewPaginationRow/viewPaginationRow';
 import { viewConstants } from '../../redux/constants';
 import { viewPropsChanged, createClustersWithIssuesQueryObject } from '../../common/queryHelpers';
+import OverviewEmptyState from './OverviewEmptyState';
 
 class Overview extends Component {
   componentDidMount() {
@@ -88,6 +89,15 @@ class Overview extends Component {
 
     const isPendingNoData = (!size(dashboardClusters.clusters)
     && dashboardClusters.pending && !dashboardClusters.valid);
+
+    // Revert to an "empty" state if there are no clusters.
+    if (!size(dashboardClusters.clusters) && !isPendingNoData) {
+      return (
+        <PageSection>
+          <OverviewEmptyState />
+        </PageSection>
+      );
+    }
 
     // summary dashboard contain only one {time, value} pair - the current value.
     const summaryDashboard = dashboards.summary;
