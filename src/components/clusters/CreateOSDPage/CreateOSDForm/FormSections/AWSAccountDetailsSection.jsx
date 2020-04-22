@@ -27,7 +27,7 @@ function AWSAccountDetailsSection({ pending }) {
       </GridItem>
       <GridItem span={8} />
       <GridItem span={8}>
-        <Alert variant="warning" title={billingModelConstants.awsCredentialsWarning} isInline />
+        <Alert className="buttom-alert" variant="warning" title={billingModelConstants.awsCredentialsWarning} isInline />
       </GridItem>
       <GridItem span={4} />
       <GridItem span={4}>

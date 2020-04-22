@@ -123,6 +123,7 @@ class CreateOSDPage extends React.Component {
       closeModal,
       clustersQuota,
       cloudProviderID,
+      privateClusterSelected,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -246,6 +247,7 @@ class CreateOSDPage extends React.Component {
                     closeModal={closeModal}
                     clustersQuota={clustersQuota}
                     cloudProviderID={cloudProviderID}
+                    privateClusterSelected={privateClusterSelected}
                   />
                   {/* Form footer */}
                   <GridItem>
@@ -320,6 +322,7 @@ CreateOSDPage.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
+  privateClusterSelected: PropTypes.bool.isRequired,
 };
 
 export default CreateOSDPage;

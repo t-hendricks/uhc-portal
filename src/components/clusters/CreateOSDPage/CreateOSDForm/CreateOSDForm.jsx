@@ -62,6 +62,7 @@ class CreateOSDForm extends React.Component {
       isBYOCModalOpen,
       clustersQuota,
       cloudProviderID,
+      privateClusterSelected,
     } = this.props;
 
     const {
@@ -149,6 +150,7 @@ class CreateOSDForm extends React.Component {
           mode={mode}
           toggleNetwork={this.toggleNetwork}
           showClusterPrivacy={isAws}
+          privateClusterSelected={privateClusterSelected}
         />}
       </>
     );
@@ -189,6 +191,7 @@ CreateOSDForm.propTypes = {
     }),
   }),
   cloudProviderID: PropTypes.string.isRequired,
+  privateClusterSelected: PropTypes.bool.isRequired,
 };
 
 export default CreateOSDForm;
