@@ -255,9 +255,9 @@ const fetchClusterDetails = clusterID => dispatch => dispatch({
   payload: fetchSingleClusterAndPermissions(clusterID),
 });
 
-const setClusterDetails = cluster => dispatch => dispatch({
+const setClusterDetails = (cluster, mergeDetails = false) => dispatch => dispatch({
   type: clustersConstants.SET_CLUSTER_DETAILS,
-  payload: cluster,
+  payload: { cluster, mergeDetails },
 });
 
 const resetCreatedClusterResponse = () => dispatch => dispatch({
