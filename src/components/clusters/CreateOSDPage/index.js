@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { reduxForm, reset } from 'redux-form';
+import { reduxForm, reset, formValueSelector } from 'redux-form';
 
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../redux/actions/machineTypesActions';
@@ -25,6 +25,13 @@ const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
 
 const mapStateToProps = (state, ownProps) => {
   const { organization } = state.userProfile;
+  const isAwsForm = ownProps.cloudProviderID === 'aws';
+
+  let privateClusterSelected = false;
+  if (isAwsForm) {
+    const valueSelector = formValueSelector('CreateCluster');
+    privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
+  }
 
   return ({
     createClusterResponse: state.clusters.createdCluster,
@@ -45,6 +52,8 @@ const mapStateToProps = (state, ownProps) => {
       aws: awsQuotaSelector(state),
       gcp: gcpQuotaSelector(state),
     },
+
+    privateClusterSelected,
 
     initialValues: {
       byoc: 'false',
