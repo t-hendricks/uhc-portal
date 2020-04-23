@@ -32,6 +32,15 @@ class ChangePrivacySettingsDialog extends React.Component {
       editClusterRoutersResponse,
     } = this.props;
     const text = "Changing the cluster's privacy settings may cause you to lose access to the cluster. Changes may be required in AWS to maintain access. It may take up to one hour for the settings to become effective.";
+    const learnMore = (
+      <a
+        href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-aws-private-cluster.html"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+      Learn more
+      </a>
+    );
     const noRouteSelectorsWarning = 'All routers will be exposed publicly because there is no label match on the additional application router. This is a potential security risk.';
     const editRoutersError = editClusterRoutersResponse.error ? (
       <ErrorBox message="Error editing cluster routers" response={editClusterRoutersResponse} />
@@ -54,6 +63,8 @@ class ChangePrivacySettingsDialog extends React.Component {
           <Stack gutter="md">
             <StackItem>
               {text}
+              {' '}
+              {learnMore}
             </StackItem>
             {
               shouldShowAlert && (
