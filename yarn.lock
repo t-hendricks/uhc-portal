@@ -1389,15 +1389,16 @@
   dependencies:
     "@redhat-cloud-services/frontend-components-utilities" ">=0.0.7"
 
-"@redhat-cloud-services/rule-components@0.0.14":
-  version "0.0.14"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/rule-components/-/rule-components-0.0.14.tgz#e0621264ac7a3ecbfb2ff759a491b60f06a69ce8"
-  integrity sha512-+ThFoNH5UfaHoMwwI7cjP1TxoUaGvIbmUKUOyxNnBua+cZ3UBXSJj4eOYvtip87YydP1BJHED/jU5GlEQXkciQ==
+"@redhat-cloud-services/rule-components@0.0.15":
+  version "0.0.15"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/rule-components/-/rule-components-0.0.15.tgz#1fa1819622943ac45c090dd1979f0044883d5149"
+  integrity sha512-o+ettVc8lbay6vANh1crCgtDB0J3YB5iPz72g8AlafACZGebnGTAhUqBpg+w3NPi5e+MUtSNQ0xmvozzDj69mg==
   dependencies:
     "@patternfly/react-core" "^3.134.2"
     "@patternfly/react-icons" "^3.15.4"
     "@patternfly/react-table" "^2.27.11"
     "@redhat-cloud-services/frontend-components" ">=1.0.8"
+    dot "1.1.3"
     prop-types "^15.7.2"
     react "^16.12.0"
     react-dom "^16.12.0"
@@ -4388,6 +4389,11 @@ domutils@^2.0.0:
     dom-serializer "^0.2.1"
     domelementtype "^2.0.1"
     domhandler "^3.0.0"
+
+dot@1.1.3:
+  version "1.1.3"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/dot/-/dot-1.1.3.tgz#351360e00a748bce9a1f8f27c00c394a7e4e1e9f"
+  integrity sha512-/nt74Rm+PcfnirXGEdhZleTwGC2LMnuKTeeTIlI82xb5loBBoXNYzr2ezCroPSMtilK8EZIfcNZwOcHN+ib1Lg==
 
 duplexer2@^0.1.2:
   version "0.1.4"
