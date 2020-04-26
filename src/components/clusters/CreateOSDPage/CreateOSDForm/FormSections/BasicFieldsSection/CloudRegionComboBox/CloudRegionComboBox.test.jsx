@@ -122,8 +122,8 @@ describe('<CloudRegionComboBox />', () => {
         providers: {
           aws: {
             regions: {
-              'us-east-1': { id: 'us-east-1', display_name: 'N. Virginia' },
-              'eu-west-1': { id: 'eu-west-1', display_name: 'Ireland' },
+              'us-east-1': { id: 'us-east-1', display_name: 'N. Virginia', enabled: true },
+              'eu-west-1': { id: 'eu-west-1', display_name: 'Ireland', enabled: false },
             },
           },
         },
@@ -147,6 +147,10 @@ describe('<CloudRegionComboBox />', () => {
 
     it('does not call getCloudProviders', () => {
       expect(getCloudProviders).not.toBeCalled();
+    });
+
+    it('renders only enabled regions', () => {
+      expect(wrapper.find('FormSelectOption').children()).toHaveLength(1);
     });
   });
 });
