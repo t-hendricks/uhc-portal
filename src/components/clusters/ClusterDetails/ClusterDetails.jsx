@@ -189,7 +189,7 @@ class ClusterDetails extends Component {
           this.refreshIDP();
         }
         if (get(clusterDetails, 'cluster.cluster_admin_enabled')) {
-          getClusterAdmins();
+          getClusterAdmins(clusterID);
         }
       }
     }
