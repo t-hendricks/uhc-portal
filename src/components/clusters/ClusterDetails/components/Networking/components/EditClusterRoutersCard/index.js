@@ -32,8 +32,10 @@ const mapStateToProps = (state) => {
     },
     clusterRouters,
     masterAPIEndpoint: cluster.api.url,
-    clusterDNSName: `${cluster.name}.${cluster.dns.base_domain}`,
     additionalRouterEnabled,
+    defaultRouterAddress: clusterRouters.default.address,
+    additionalRouterAddress: existsAdditionalRouter
+      ? clusterRouters.additional.address : `apps2${clusterRouters.default.address.substr(4)}`,
     APIPrivate,
     /**
      * Alert in confirmation modal should appear if both routers are enabled,
