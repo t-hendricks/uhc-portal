@@ -1,23 +1,14 @@
 import UsersConstants from './UsersConstants';
 import { clusterService } from '../../../../../../services';
 
-const getUsersPayloadload = (clusterID, userGroups) => {
-  const users = [];
-  const promises = [];
-  userGroups.forEach((userGroup) => {
-    promises.push(
-      clusterService.getClusterGroupUsers(clusterID, userGroup)
-        .then(
-          response => response.data.items.forEach(user => users.push(user)),
-        ).catch(errorData => ({ errorData, userGroup })), // handle error
-    );
-  });
-  return Promise.all(promises).then(errors => ({ clusterID, users, errors }));
-};
+const getDedicatedAdmins = clusterID => dispatch => dispatch({
+  type: UsersConstants.GET_DEDICATED_ADMNIS,
+  payload: clusterService.getClusterGroupUsers(clusterID, 'dedicated-admins'),
+});
 
-const getUsers = (clusterID, userGroups = ['dedicated-admins', 'cluster-admins']) => dispatch => dispatch({
-  type: UsersConstants.GET_USERS,
-  payload: getUsersPayloadload(clusterID, userGroups),
+const getClusterAdmins = clusterID => dispatch => dispatch({
+  type: UsersConstants.GET_CLUSTER_ADMINS,
+  payload: clusterService.getClusterGroupUsers(clusterID, 'cluster-admins'),
 });
 
 const addUser = (clusterID, groupID, userID) => dispatch => dispatch({
@@ -39,7 +30,8 @@ const clearAddUserResponses = () => ({
 });
 
 const usersActions = {
-  getUsers,
+  getDedicatedAdmins,
+  getClusterAdmins,
   addUser,
   deleteUser,
   clearUsersResponses,
