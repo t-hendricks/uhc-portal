@@ -69,10 +69,12 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
           "regions": Object {
             "eu-west-1": Object {
               "display_name": "Ireland",
+              "enabled": false,
               "id": "eu-west-1",
             },
             "us-east-1": Object {
               "display_name": "N. Virginia",
+              "enabled": true,
               "id": "us-east-1",
             },
           },
@@ -121,19 +123,6 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
           value="us-east-1"
         >
           us-east-1, N. Virginia
-        </option>
-      </FormSelectOption>
-      <FormSelectOption
-        key="eu-west-1"
-        label="eu-west-1, Ireland"
-        value="eu-west-1"
-      >
-        <option
-          className=""
-          disabled={false}
-          value="eu-west-1"
-        >
-          eu-west-1, Ireland
         </option>
       </FormSelectOption>
     </select>

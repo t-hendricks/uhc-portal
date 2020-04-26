@@ -36,7 +36,8 @@ class CloudRegionComboBox extends React.Component {
     );
 
     if (cloudProviders.fulfilled) {
-      const regions = Object.values(cloudProviders.providers[cloudProviderID].regions);
+      const regions = (Object.values(cloudProviders.providers[cloudProviderID].regions))
+        .filter(region => region.enabled);
       return (
         <FormSelect
           className="cloud-region-combo-box"
