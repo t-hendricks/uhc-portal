@@ -8,10 +8,13 @@
       {
         "rule_id": "ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report",
         "description": "Some rule description description description description description description description",
-        "details": "When fs.pipe-user-pages-soft is enabled, updating stonith fails in metadata query.\n[Knowledgebase article](https://g.co)",
+        "details": "When {{=pydata.name}} fs.pipe-user-pages-soft is enabled, updating stonith fails in metadata query.\n[Knowledgebase article](https://g.co)",
         "created_at": "2020-02-03T08:25:00Z",
         "total_risk": 3,
-        "risk_of_change": 0
+        "risk_of_change": 0,
+        "extra_data": {
+          "name": "Some name"
+        }
       },
       {
         "rule_id": "some.python.module1",

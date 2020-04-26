@@ -153,7 +153,8 @@ class ClusterDetails extends Component {
       match,
       clusterDetails,
       getLogs,
-      getUsers,
+      getDedicatedAdmins,
+      getClusterAdmins,
       getAlerts,
       getNodes,
       getClusterOperators,
@@ -176,7 +177,7 @@ class ClusterDetails extends Component {
       }
 
       if (!isUuid(clusterID)) {
-        getUsers(clusterID);
+        getDedicatedAdmins(clusterID);
         getAlerts(clusterID);
         getNodes(clusterID);
         getClusterOperators(clusterID);
@@ -186,6 +187,9 @@ class ClusterDetails extends Component {
           getClusterAddOns(clusterID);
           getLogs(clusterID);
           this.refreshIDP();
+        }
+        if (get(clusterDetails, 'cluster.cluster_admin_enabled')) {
+          getClusterAdmins(clusterID);
         }
       }
     }
@@ -477,7 +481,8 @@ ClusterDetails.propTypes = {
   getClusterOperators: PropTypes.func.isRequired,
   getAddOns: PropTypes.func.isRequired,
   getClusterAddOns: PropTypes.func.isRequired,
-  getUsers: PropTypes.func.isRequired,
+  getDedicatedAdmins: PropTypes.func.isRequired,
+  getClusterAdmins: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   displayClusterLogs: PropTypes.bool.isRequired,

@@ -2,14 +2,15 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { clustersConstants } from '../../redux/constants';
 import Overview from './Overview';
+import { clustersWithIssues } from './Overview.fixtures';
 
 const dashboardClusters = {
   error: false,
   errorMessage: '',
   pending: false,
-  fulfilled: false,
+  fulfilled: true,
   valid: false,
-  clusters: [],
+  clusters: clustersWithIssues,
 };
 
 const baseViewOptions = {

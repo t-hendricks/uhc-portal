@@ -19,9 +19,13 @@ describe('<Users />', () => {
       clusterGroupUsers={initialState.groupUsers}
       addUserResponse={initialState.addUserResponse}
       deleteUserResponse={initialState.deleteUserResponse}
+      getUsersPending={false}
+      getUsersFulfilled
+      getUserErrors={[]}
+      hasUsers={false}
     />);
     expect(wrapper).toMatchSnapshot();
-    expect(getUsers).toHaveBeenCalledWith(clusterDetails.cluster.id, ['dedicated-admins']);
+    expect(getUsers).toHaveBeenCalled();
   });
 
   describe('with users', () => {
@@ -39,9 +43,16 @@ describe('<Users />', () => {
         deleteUser={deleteUser}
         addUser={jest.fn()}
         clearUsersResponses={jest.fn()}
-        clusterGroupUsers={stateWithUsers}
+        clusterGroupUsers={{
+          ...stateWithUsers,
+          users: [...stateWithUsers.dedicatedAdmins.users, ...stateWithUsers.clusterAdmins.users],
+        }}
         addUserResponse={initialState.addUserResponse}
         deleteUserResponse={initialState.deleteUserResponse}
+        getUsersPending={false}
+        getUsersFulfilled
+        getUserErrors={[]}
+        hasUsers
       />);
     });
 

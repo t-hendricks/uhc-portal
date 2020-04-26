@@ -23,7 +23,7 @@ class ToggleClusterAdminAccessDialog extends React.Component {
       isOpen,
       closeModal,
       modalData,
-      clusterGroupUsers,
+      hasClusterAdmins,
     } = this.props;
 
     const errorContainer = toggleClusterAdminResponse.error && (
@@ -36,20 +36,9 @@ class ToggleClusterAdminAccessDialog extends React.Component {
       toggleClusterAdminAccess(modalData.id, !!(modalData.cluster_admin_enabled));
     };
 
-    const hasClusterAdmins = () => {
-      const anyClusterAdmin = clusterGroupUsers.find((user) => {
-        // parse the url to get the user group
-        const userHrefPathSections = user.href.match(/[^/?]*[^/?]/g);
-        const userGroup = userHrefPathSections[6];
-
-        return userGroup === 'cluster-admins';
-      });
-      return !!anyClusterAdmin;
-    };
-
     const getModalTitleAndText = () => {
       if (modalData.cluster_admin_enabled) {
-        if (hasClusterAdmins()) {
+        if (hasClusterAdmins) {
           return {
             title: 'Cannot disable cluster-admin access.',
             text:
@@ -75,8 +64,7 @@ class ToggleClusterAdminAccessDialog extends React.Component {
         Users with this level of access privilege can cause irreparable damage to the cluster.
         Per the
     <a href="https://www.redhat.com/en/about/agreements" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-        Red Hat
-        is not responsible for problems caused by cluster-admin users.
+        &nbsp;Red Hat is not responsible for problems caused by cluster-admin users.
   </>,
       };
     };
@@ -91,7 +79,7 @@ class ToggleClusterAdminAccessDialog extends React.Component {
       secondaryText="cancel"
       onPrimaryClick={() => submit()}
       onSecondaryClick={closeModal}
-      isPrimaryDisabled={isPending || (modalData.cluster_admin_enabled && hasClusterAdmins())}
+      isPrimaryDisabled={isPending || (modalData.cluster_admin_enabled && hasClusterAdmins)}
       isPending={isPending}
     >
       <>
@@ -110,7 +98,7 @@ ToggleClusterAdminAccessDialog.propTypes = {
   toggleClusterAdminResponse: PropTypes.object,
   clearToggleClusterAdminResponse: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  clusterGroupUsers: PropTypes.array.isRequired,
+  hasClusterAdmins: PropTypes.bool.isRequired,
 };
 
 

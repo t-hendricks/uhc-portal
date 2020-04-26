@@ -189,6 +189,7 @@ class InsightsTable extends React.Component {
                   totalRisk={details.total_risk}
                   riskOfChange={details.risk_of_change}
                   showRiskDescription={false}
+                  definitions={details.extra_data}
                   onFeedbackChanged={voteOnRule}
                 />
               )}

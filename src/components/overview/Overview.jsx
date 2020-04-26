@@ -34,6 +34,7 @@ import ResourceUsage from '../clusters/common/ResourceUsage/ResourceUsage';
 import ViewPaginationRow from '../clusters/common/ViewPaginationRow/viewPaginationRow';
 import { viewConstants } from '../../redux/constants';
 import { viewPropsChanged, createClustersWithIssuesQueryObject } from '../../common/queryHelpers';
+import OverviewEmptyState from './OverviewEmptyState';
 
 class Overview extends Component {
   componentDidMount() {
@@ -76,7 +77,8 @@ class Overview extends Component {
       setClusterDetails,
       viewOptions,
     } = this.props;
-    if (!dashboards.fulfilled || dashboards.pending) {
+    if (!dashboards.fulfilled || dashboards.pending || !dashboardClusters.fulfilled
+      || dashboardClusters.pending) {
       return (
         <EmptyState>
           <EmptyStateBody>
@@ -100,6 +102,16 @@ class Overview extends Component {
     const usedMem = get(summaryDashboard, 'sum_used_memory[0]', { value: 0 });
     const upToDate = get(summaryDashboard, 'clusters_up_to_date_total[0]', { value: 0 });
     const upgradeAvailable = get(summaryDashboard, 'clusters_upgrade_available_total[0]', { value: 0 });
+
+    // Revert to an "empty" state if there are no clusters to show.
+    if (!totalClusters) {
+      return (
+        <PageSection>
+          <OverviewEmptyState />
+        </PageSection>
+      );
+    }
+
     return (
       <>
         <PageHeader>
