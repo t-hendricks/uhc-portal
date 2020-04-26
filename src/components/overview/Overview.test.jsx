@@ -8,7 +8,7 @@ const dashboardClusters = {
   error: false,
   errorMessage: '',
   pending: false,
-  fulfilled: false,
+  fulfilled: true,
   valid: false,
   clusters: clustersWithIssues,
 };
