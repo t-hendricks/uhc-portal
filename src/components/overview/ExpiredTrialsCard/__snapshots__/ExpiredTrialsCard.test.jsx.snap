@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
+<Card
+  id="clusters-overview-card"
+>
+  <CardHeader>
+    Expired Trials
+  </CardHeader>
+  <CardBody>
+    <Component
+      actionResolver={[Function]}
+      areActionsDisabled={[Function]}
+      aria-label="Expired Trials"
+      cells={
+        Array [
+          Object {
+            "title": "Name",
+          },
+        ]
+      }
+      rows={
+        Array [
+          Object {
+            "cells": Array [
+              Object {
+                "title": <Link
+                  replace={false}
+                  to="/details/foo"
+                >
+                  my cluster
+                </Link>,
+              },
+            ],
+            "subscription": Object {
+              "canEdit": true,
+              "cluster_id": "foo",
+              "display_name": "my cluster",
+            },
+          },
+          Object {
+            "cells": Array [
+              Object {
+                "title": <Link
+                  replace={false}
+                  to="/details/foo"
+                >
+                  other cluster
+                </Link>,
+              },
+            ],
+            "subscription": Object {
+              "canEdit": false,
+              "cluster_id": "foo",
+              "display_name": "other cluster",
+            },
+          },
+        ]
+      }
+      variant="compact"
+    >
+      <TableHeader />
+      <TableBody />
+    </Component>
+    <Connect(ViewPaginationRow)
+      currentPage={1}
+      isDisabled={false}
+      pageSize={5}
+      totalCount={0}
+      totalPages={0}
+      variant="bottom"
+      viewType="OVERVIEW_EXPIRED_TRIALS"
+    />
+  </CardBody>
+</Card>
+`;
+
+exports[`<ExpiredTrialsCard /> When the request was not fulfilled renders correctly 1`] = `
+<Card
+  id="clusters-overview-card"
+>
+  <CardHeader>
+    Expired Trials
+  </CardHeader>
+  <CardBody>
+    <Component
+      actionResolver={[Function]}
+      areActionsDisabled={[Function]}
+      aria-label="Expired Trials"
+      cells={
+        Array [
+          Object {
+            "title": "Name",
+          },
+        ]
+      }
+      rows={Array []}
+      variant="compact"
+    >
+      <TableHeader />
+      <TableBody />
+    </Component>
+    <Connect(ViewPaginationRow)
+      currentPage={1}
+      isDisabled={false}
+      pageSize={5}
+      totalCount={0}
+      totalPages={0}
+      variant="bottom"
+      viewType="OVERVIEW_EXPIRED_TRIALS"
+    />
+  </CardBody>
+</Card>
+`;
