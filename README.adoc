@@ -60,7 +60,7 @@ The following explains these parts in detail; see `README-tldr.md` file for quic
 === A real backend
 
 
-You will also need to start start the backend proxy server, which acts as a proxy
+You will also need to start the backend proxy server, which acts as a proxy
 for the _OpenID_ and API services that are required by the application. Before
 starting it make sure to have an offline access token, either in the `UHC_TOKEN`
 environment variable or in the `token` parameter of the configuration file:
@@ -128,7 +128,7 @@ it should allow you to run the UI and test basic read-only functionality.
 
 To run it, run `mockdata/mockserver.py`.
 
-Then follow below in another terminal, run `yarn startmock` instead of `yarn start`, and you'll get a working UI showing mock data running with the chromed environment.
+Then follow below in another terminal, run `yarn dev-server-for-mock` instead of `yarn dev-server`, and you'll get a working UI showing mock data running with the chromed environment.
 
 === Insights "chrome" proxy
 
@@ -157,12 +157,12 @@ You may set `RUNNER=podman` or `RUNNER=docker` env var to choose with which tool
 
 If using a real backend, run webpack with:
 ....
-$ yarn build; yarn start
+$ yarn build; yarn dev-server
 ....
 
 That also works with mockdata server, but all metrics timestamps will be "too old", hiding some of the UI.  To disable these checks and show old metrics, use:
 ....
-$ yarn build; yarn startmock
+$ yarn build; yarn dev-server-for-mock
 ....
 
 The "build" step is crucial at the moment, but we should work to make it not required in the future.

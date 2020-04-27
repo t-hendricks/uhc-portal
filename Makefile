@@ -17,6 +17,10 @@
 # Binaries to build:
 binaries:=$(shell ls cmd)
 
+# Default target
+.PHONY: setup
+setup: binaries node_modules insights-proxy-check
+
 # These are declared phony so `make binaries` always rebuilds them:
 .PHONY: binaries
 binaries:
@@ -66,9 +70,6 @@ node_modules:
 app: node_modules
 	yarn build --mode=production
 
-.PHONY: setup
-setup: binaries node_modules insights-proxy-setup
-
 # Marking git clones .PHONY so we can git pull even if they already exist.
 
 .PHONY: run/insights-proxy
@@ -78,6 +79,16 @@ run/insights-proxy:
 
 # Patching /etc/hosts is needed (once) for using insights-proxy with local browser;
 # NOT needed for selenium tests where we arrange it in the container running the browser.
+.PHONY: insights-proxy-check
+.SILENT: insights-proxy-check
+insights-proxy-check: run/insights-proxy
+	if ! grep --with-filename qa.foo.redhat.com /etc/hosts; \
+	then \
+		echo "ERROR: Need aliases in /etc/hosts to access the UI."; \
+		echo "       To add them run: make insights-proxy-setup"; \
+		exit 1; \
+	fi
+
 .PHONY: insights-proxy-setup
 insights-proxy-setup: run/insights-proxy
 	sudo bash -x run/insights-proxy/scripts/patch-etc-hosts.sh
@@ -105,7 +116,7 @@ run/cucushift:
 
 .PHONY: selenium-tests-image
 selenium-tests-image: run/verification-tests run/verification-tests/private/config/config.yaml run/cucushift
-	podman build -f run/Dockerfile.selenium-tests -t ocm-selenium-tests
+	run/podman-or-docker.sh build --tag=ocm-selenium-tests --file=run/Dockerfile.selenium-tests run/
 
 .PHONY: clean
 clean:
