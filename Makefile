@@ -105,7 +105,7 @@ run/cucushift:
 
 .PHONY: selenium-tests-image
 selenium-tests-image: run/verification-tests run/verification-tests/private/config/config.yaml run/cucushift
-	podman build -f run/Dockerfile.selenium-tests -t ocm-selenium-tests
+	run/podman-or-docker.sh build --tag=ocm-selenium-tests --file=run/Dockerfile.selenium-tests run/
 
 .PHONY: clean
 clean:
