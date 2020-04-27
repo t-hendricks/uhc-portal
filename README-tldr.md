@@ -9,20 +9,22 @@ To start the "chromed environment" using the backend proxy, you'll need a token 
 
 ```sh
 export UHC_TOKEN=...
-yarn build && yarn start
+make && yarn build && yarn start
 ```
 
 ### Alternative: Running the components separately
 
-1. Run `yarn install && yarn build && yarn dev-server`
-2. Run `make && ./backend` (this will be your backend. Provide additional parameters like `--config=my_config_file.yml` if needed)
+First run `make` for various setup. Then:
+
+1. Run `yarn build && yarn dev-server`
+2. Run `./backend` (this will be your backend. Provide additional parameters like `--config=my_config_file.yml` if needed)
 3. Run `yarn insights-proxy`
 
 ## Development environment using the mock data server
 
 To start the "chromed environment" using the mock data server:
 ```
-yarn build && yarn startmock
+make && yarn build && yarn startmock
 ```
 
 If you prefer running the components separately, follow the steps above, but instead of step 2, run `./mockdata/mockserver.py`.
