@@ -68,7 +68,7 @@ const InstructionsInfrastructure = () => (
         </GalleryItem>
         <GalleryItem>
           <Link to="/install/rhv/installer-provisioned" className="infra-card infra-card-cloud-provider">
-            <CardBadge isDevPreview />
+            <CardBadge isHidden />
             <CardBody>
               <img src={RHVLogo} alt="Red Hat Virtualization" className="infra-logo-rhv" />
               <Title headingLevel="h5" size="lg">Run on Red Hat Virtualization</Title>

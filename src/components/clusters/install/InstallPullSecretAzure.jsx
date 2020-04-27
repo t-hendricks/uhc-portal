@@ -28,7 +28,7 @@ class InstallPullSecret extends Component {
     const azureText = 'Download or copy your pull secret. Your pull secret provides your Azure Red Hat OpenShift cluster with access to additional content provided by Red Hat.';
     return (
       <>
-        <PageTitle title="Azure Red Hat Openshift" />
+        <PageTitle title="Azure Red Hat OpenShift" />
         <PageSection className="ocp-instructions">
           <>
             <Title headingLevel="h3" size="2xl">

@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
 import links, { channels } from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
-import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
 
 function InstructionsRHV({ token }) {
   const cloudProviderID = window.location.pathname;
@@ -18,11 +16,6 @@ function InstructionsRHV({ token }) {
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
-          <div className="developer-preview">
-            <CodeIcon />
-            {' '}
-            Developer Preview
-          </div>
           {token.error && <TokenErrorAlert token={token} />}
           <div className="pf-c-content">
             <p>
@@ -30,8 +23,6 @@ function InstructionsRHV({ token }) {
               you can install a cluster on Red Hat Virtualization using infrastructure that
               the installation program provisions and the cluster maintains.
             </p>
-            <DeveloperPreviewStatements />
-
             <GetStarted docURL={links.INSTALL_RHV_GETTING_STARTED} />
           </div>
           <TelemetryAlert />
