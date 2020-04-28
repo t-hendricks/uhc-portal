@@ -13,7 +13,7 @@ import {
 import CardBadge from '../../common/CardBadge';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import PageTitle from '../../../common/PageTitle';
-import { noQuotaTooltip } from '../../../../common/helpers';
+import { noQuotaTooltip, shouldRefetchQuota } from '../../../../common/helpers';
 import AWSLogo from '../../../../styles/images/AWS.png';
 import GCPLogo from '../../../../styles/images/google-cloud-logo.svg';
 
@@ -25,7 +25,7 @@ class CloudProviderSelection extends Component {
   componentDidUpdate() {
     const { getOrganizationAndQuota, organization } = this.props;
 
-    if (!organization.pending) {
+    if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
   }

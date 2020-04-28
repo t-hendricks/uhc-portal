@@ -39,6 +39,7 @@ function userProfile(state = initialState, action) {
           fulfilled: true,
           details: action.payload.organization.data,
           quotaList: get(action.payload, 'quota', {}),
+          timestamp: new Date(),
         };
         break;
     }

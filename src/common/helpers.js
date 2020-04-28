@@ -93,6 +93,13 @@ const trackPendo = (event, cloudProviderID) => {
   }
 };
 
+const shouldRefetchQuota = (organization) => {
+  const lastFetchedQuota = organization.timestamp;
+  const now = new Date();
+  const TWO_MINUTES = 1000 * 60 * 2;
+  return !organization.pending && (!organization.fulfilled || now - lastFetchedQuota > TWO_MINUTES);
+};
+
 export {
   noop,
   isValid,
@@ -104,6 +111,7 @@ export {
   noQuotaTooltip,
   trackPendo,
   strToCleanObject,
+  shouldRefetchQuota,
 };
 
 export default helpers;

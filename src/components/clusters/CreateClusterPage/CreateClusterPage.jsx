@@ -13,14 +13,14 @@ import openShiftDedicatedLogo from '../../../styles/images/Logo-Red_Hat-OpenShif
 import openShiftContainerPlatformLogo from '../../../styles/images/Logo-Red_Hat-OpenShift-Container_Platform-A-Standard-RGB.svg';
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../common/Breadcrumbs';
-import { noQuotaTooltip } from '../../../common/helpers';
+import { noQuotaTooltip, shouldRefetchQuota } from '../../../common/helpers';
 
 class CreateCluster extends React.Component {
   componentDidMount() {
     // Try to get quota or organization when the component is first mounted.
     const { getOrganizationAndQuota, organization } = this.props;
 
-    if (!organization.pending) {
+    if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
   }

@@ -2,34 +2,9 @@
 
 exports[`<MachineTypeSelection /> when machine type list needs to be fetched renders correctly 1`] = `
 <MachineTypeSelection
-  getMachineTypes={
-    [MockFunction] {
-      "calls": Array [
-        Array [],
-      ],
-      "results": Array [
-        Object {
-          "type": "return",
-          "value": undefined,
-        },
-      ],
-    }
-  }
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
   isMultiAz={false}
@@ -78,7 +53,6 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
 exports[`<MachineTypeSelection /> when the machine types list is available renders correctly 1`] = `
 <MachineTypeSelection
   cloudProviderID="aws"
-  getMachineTypes={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction] {
@@ -188,7 +162,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
       }
       id="machineTypeRadio.r5.xlarge"
       isDisabled={false}
-      isSelected={true}
+      isSelected={false}
       key="r5.xlarge"
       onChange={[Function]}
       secondaryText="Memory optimized - R5.XLarge"
@@ -197,7 +171,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
       value="r5.xlarge"
     >
       <Component
-        className="ocm-flat-radio-button selected"
+        className="ocm-flat-radio-button"
         id="machineTypeRadio.r5.xlarge"
         isDisabled={false}
         onClick={[Function]}
@@ -232,7 +206,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                   Memory optimized - R5.XLarge
                 </SplitItem>
               </Split>,
-              "className": "ocm-flat-radio-button selected",
+              "className": "ocm-flat-radio-button",
               "id": "machineTypeRadio.r5.xlarge",
               "isDisabled": false,
               "onClick": [Function],
@@ -242,7 +216,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
           consumerContext={null}
         >
           <Button
-            className="ocm-flat-radio-button selected"
+            className="ocm-flat-radio-button"
             id="machineTypeRadio.r5.xlarge"
             isDisabled={false}
             onClick={[Function]}
@@ -257,7 +231,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
             <button
               aria-disabled={null}
               aria-label={null}
-              className="pf-c-button pf-m-tertiary ocm-flat-radio-button selected"
+              className="pf-c-button pf-m-tertiary ocm-flat-radio-button"
               disabled={false}
               id="machineTypeRadio.r5.xlarge"
               onClick={[Function]}
@@ -617,22 +591,9 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
 
 exports[`<MachineTypeSelection /> when the request is pending renders correctly 1`] = `
 <MachineTypeSelection
-  getMachineTypes={[MockFunction]}
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
   isMultiAz={false}
@@ -680,34 +641,9 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
 
 exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] = `
 <MachineTypeSelection
-  getMachineTypes={
-    [MockFunction] {
-      "calls": Array [
-        Array [],
-      ],
-      "results": Array [
-        Object {
-          "type": "return",
-          "value": undefined,
-        },
-      ],
-    }
-  }
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
   isMultiAz={false}

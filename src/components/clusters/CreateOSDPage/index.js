@@ -63,9 +63,10 @@ const mapStateToProps = (state, ownProps) => {
       aws_access_key_id: '',
       aws_secret_access_key: '',
       region: ownProps.cloudProviderID === 'aws' ? 'us-east-1' : 'us-east1',
-      multi_az: false,
+      multi_az: 'false',
       persistent_storage: '107374182400',
       load_balancers: '0',
+      network_configuration_toggle: 'basic',
     },
   });
 };
@@ -127,10 +128,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   openModal: (modalName) => { dispatch(openModal(modalName)); },
   closeModal: () => { dispatch(closeModal()); },
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
-  getMachineTypes,
-  getCloudProviders,
-  getPersistentStorage: getPersistentStorageValues,
-  getLoadBalancers: getLoadBalancerValues,
+  getMachineTypes: () => dispatch(getMachineTypes()),
+  getCloudProviders: () => dispatch(getCloudProviders()),
+  getPersistentStorage: () => dispatch(getPersistentStorageValues()),
+  getLoadBalancers: () => dispatch(getLoadBalancerValues()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateOSDPage);

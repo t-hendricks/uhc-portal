@@ -18,6 +18,8 @@ import {
   StackItem,
 } from '@patternfly/react-core';
 
+import { shouldRefetchQuota } from '../../../common/helpers';
+
 import PageTitle from '../../common/PageTitle';
 import ErrorModal from '../../common/ErrorModal';
 import ErrorBox from '../../common/ErrorBox';
@@ -43,9 +45,7 @@ class CreateOSDPage extends React.Component {
       getPersistentStorage,
     } = this.props;
 
-    this.reset();
-    if (!organization.fulfilled && !organization.pending) {
-      // quota can change after a cluster is provisioned/scaled, always refresh it on mount
+    if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
     if (!machineTypes.fulfilled && !machineTypes.pending) {
