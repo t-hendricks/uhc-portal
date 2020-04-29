@@ -96,26 +96,25 @@ insights-proxy-setup: run/insights-proxy
 
 .PHONY: run/verification-tests
 run/verification-tests:
-	[ -e $@ ] || git clone https://github.com/xueli181114/verification-tests $@
-	(cd $@; git pull https://github.com/xueli181114/verification-tests master:master)
+	[ -e $@ ] || git clone --origin=xueli181114 https://github.com/xueli181114/verification-tests $@
+	(cd $@; git remote | grep --quiet xueli181114 || git remote add xueli181114 https://github.com/xueli181114/verification-tests)
+	(cd $@; git remote | grep --quiet openshift || git remote add openshift https://github.com/openshift/verification-tests)
+	(cd $@; git fetch --all)
+	(cd $@; git checkout -B patched xueli181114/new-cases)
 	# Include https://github.com/openshift/verification-tests/pull/807
-	(cd $@; git checkout -B patched origin/master)
-	(cd $@; git pull https://github.com/openshift/verification-tests pull/807/head --no-edit)
-
-# For now use run/config.yaml instead of credentials from cucushift-internal.
-# https://issues.redhat.com/browse/SDA-2019
-# `|` is an "order dependency" ignoring timestamp, which is misleading on symlink.
-run/verification-tests/private/config/config.yaml: | run/verification-tests
-	mkdir -p run/verification-tests/private/config
-	ln -s ../../../config.yaml run/verification-tests/private/config/config.yaml
+	(cd $@; git fetch openshift pull/807/head; git merge --no-edit FETCH_HEAD)
+	# Symlink for running tests without container to match mount made with container.
+	ln --symbolic --no-target-directory ../private run/verification-tests/private
 
 run/cucushift:
 	# Private repo, https://github.com/orgs/openshift/teams/team-red-hat needed to clone.
 	[ -e $@ ] || git clone ssh://git@github.com/xueli181114/cucushift.git --depth=1 $@
-	(cd $@; git pull)
+	(cd $@; git remote | grep --quiet xueli181114 || git remote add xueli181114 ssh://git@github.com/xueli181114/cucushift.git)
+	(cd $@; git remote | grep --quiet openshift || git remote add openshift ssh://git@github.com/openshift/cucushift.git)
+	(cd $@; git fetch --all; git checkout xueli181114/new-cases)
 
 .PHONY: selenium-tests-image
-selenium-tests-image: run/verification-tests run/verification-tests/private/config/config.yaml run/cucushift
+selenium-tests-image: run/verification-tests run/cucushift
 	run/podman-or-docker.sh build --tag=ocm-selenium-tests --file=run/Dockerfile.selenium-tests run/
 
 .PHONY: clean

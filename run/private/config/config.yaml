@@ -1,7 +1,8 @@
 ---
 # BushSlicer framework configuration overrides/additions.
-# Should go into verification-tests/private/config/config.yaml
-# (instead of cucushift-internal repo normally checked out at verification-tests/private)
+# Mounted/linked at verification-tests/private/config/config.yaml
+# (instead of cucushift-internal repo normally checked out at verification-tests/private,
+# see also https://issues.redhat.com/browse/SDA-2019)
 
 # environment chosen by BUSHSLICER_DEFAULT_ENVIRONMENT env var
 environments:
