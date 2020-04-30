@@ -6,12 +6,12 @@ import {
   SplitItem,
 } from '@patternfly/react-core';
 import DownloadButton from './DownloadButton';
-import { channels, urls } from '../../../../../common/installLinks';
+import { urls } from '../../../../../common/installLinks';
 
 const operatingSystems = {
-  LINUX: 'Linux',
-  MAC: 'MacOS',
-  WINDOWS: 'Windows',
+  LINUX: 'linux',
+  MAC: 'mac',
+  WINDOWS: 'windows',
 };
 
 function detectOS(includeWindows = false) {
@@ -50,68 +50,15 @@ class DownloadAndOSSelection extends React.Component {
     } = this.props;
     const { OS } = this.state;
     let url;
-    let disabled = false;
+    let disabled = true;
 
-    // eslint-disable-next-line default-case
-    switch (channel) {
-      case (channels.STABLE):
-        switch (OS) {
-          case (operatingSystems.LINUX):
-            url = cliTools ? urls.stable.linux.cli : urls.stable.linux.installer;
-            break;
-          case (operatingSystems.MAC):
-            url = cliTools ? urls.stable.mac.cli : urls.stable.mac.installer;
-            break;
-          case (operatingSystems.WINDOWS):
-            if (cliTools) {
-              url = urls.stable.windows.cli;
-            } else {
-              disabled = true;
-            }
-            break;
-          default:
-            disabled = true;
-        }
-        break;
-      case (channels.PRE_RELEASE):
-        switch (OS) {
-          case (operatingSystems.LINUX):
-            url = cliTools ? urls.preRelease.linux.cli : urls.preRelease.linux.installer;
-            break;
-          case (operatingSystems.MAC):
-            url = cliTools ? urls.preRelease.mac.cli : urls.preRelease.mac.installer;
-            break;
-          case (operatingSystems.WINDOWS):
-            if (cliTools) {
-              url = urls.preRelease.windows.cli;
-            } else {
-              disabled = true;
-            }
-            break;
-          default:
-            disabled = true;
-        }
-        break;
-      case (channels.IBMZ):
-        switch (OS) {
-          case (operatingSystems.LINUX):
-            url = cliTools ? urls.ibmz.linux.cli : urls.ibmz.linux.installer;
-            break;
-          case (operatingSystems.MAC):
-            url = cliTools ? urls.ibmz.mac.cli : urls.ibmz.mac.installer;
-            break;
-          case (operatingSystems.WINDOWS):
-            if (cliTools) {
-              url = urls.ibmz.windows.cli;
-            } else {
-              disabled = true;
-            }
-            break;
-          default:
-            disabled = true;
-        }
-        break;
+    if (OS && OS !== 'Select OS') {
+      // button should only be enabled if an OS is selected
+      const channelAndOsLinks = urls[channel][OS];
+      url = cliTools ? channelAndOsLinks.cli : channelAndOsLinks.installer;
+      disabled = !url;
     }
+
     return (
       <DownloadButton
         token={token}
@@ -129,11 +76,11 @@ class DownloadAndOSSelection extends React.Component {
 
     const options = [
       { value: 'Select OS', label: 'Select OS', disabled: true },
-      { value: 'Linux', label: 'Linux', disabled: false },
-      { value: 'MacOS', label: 'MacOS', disabled: false },
+      { value: operatingSystems.LINUX, label: 'Linux', disabled: false },
+      { value: operatingSystems.MAC, label: 'MacOS', disabled: false },
     ];
     if (cliTools) {
-      options.push({ value: 'Windows', label: 'Windows', disabled: false });
+      options.push({ value: operatingSystems.WINDOWS, label: 'Windows', disabled: false });
     }
 
     return (
