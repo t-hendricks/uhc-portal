@@ -7,7 +7,7 @@ const DOCS_BASE_4_2 = ' https://docs.openshift.com/container-platform/4.2';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
 
 const channels = {
-  PRE_RELEASE: 'pre-release',
+  PRE_RELEASE: 'preRelease',
   IBMZ: 'ibm-z',
   STABLE: 'stable',
   PPC: 'ppc64le',
