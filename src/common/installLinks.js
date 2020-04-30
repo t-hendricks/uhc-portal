@@ -141,19 +141,19 @@ const urls = {
       installer: links.INSTALLER_MAC_IBMZ,
       cli: links.CLI_TOOLS_MAC_IBMZ,
     },
+  },
 
-    ppc64le: {
-      windows: {
-        cli: links.CLI_TOOLS_WINDOWS_PPC,
-      },
-      linux: {
-        installer: links.INSTALLER_LINUX_PPC,
-        cli: links.CLI_TOOLS_LINUX_PPC,
-      },
-      mac: {
-        installer: links.INSTALLER_MAC_PPC,
-        cli: links.CLI_TOOLS_MAC_PPC,
-      },
+  ppc64le: {
+    windows: {
+      cli: links.CLI_TOOLS_WINDOWS_PPC,
+    },
+    linux: {
+      installer: links.INSTALLER_LINUX_PPC,
+      cli: links.CLI_TOOLS_LINUX_PPC,
+    },
+    mac: {
+      installer: links.INSTALLER_MAC_PPC,
+      cli: links.CLI_TOOLS_MAC_PPC,
     },
   },
 };
