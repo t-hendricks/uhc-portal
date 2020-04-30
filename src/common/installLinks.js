@@ -6,13 +6,6 @@ const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const DOCS_BASE_4_2 = ' https://docs.openshift.com/container-platform/4.2';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
 
-const channels = {
-  PRE_RELEASE: 'preRelease',
-  IBMZ: 'ibm-z',
-  STABLE: 'stable',
-  PPC: 'ppc64le',
-};
-
 const links = {
 
   TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
@@ -102,8 +95,15 @@ const links = {
   DOWNLOAD_RHCOS_LATEST_PPC: 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/',
 };
 
+const channels = {
+  PRE_RELEASE: 'preRelease',
+  IBMZ: 'ibmz',
+  STABLE: 'stable',
+  PPC: 'ppc64le',
+};
+
 const urls = {
-  stable: {
+  [channels.STABLE]: {
     windows: {
       cli: links.CLI_TOOLS_WINDOWS,
     },
@@ -116,7 +116,7 @@ const urls = {
       cli: links.CLI_TOOLS_MAC,
     },
   },
-  preRelease: {
+  [channels.PRE_RELEASE]: {
     windows: {
       cli: links.CLI_TOOLS_WINDOWS_PRE_RELEASE,
     },
@@ -129,7 +129,7 @@ const urls = {
       cli: links.CLI_TOOLS_MAC_PRE_RELEASE,
     },
   },
-  ibmz: {
+  [channels.IBMZ]: {
     windows: {
       cli: links.CLI_TOOLS_WINDOWS_IBMZ,
     },
@@ -143,7 +143,7 @@ const urls = {
     },
   },
 
-  ppc64le: {
+  [channels.PPC]: {
     windows: {
       cli: links.CLI_TOOLS_WINDOWS_PPC,
     },
