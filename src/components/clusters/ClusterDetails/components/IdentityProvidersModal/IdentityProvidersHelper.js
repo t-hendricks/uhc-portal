@@ -122,7 +122,7 @@ const LDAPDocLink = `${IDPDocBase}/configuring-ldap-identity-provider.html`;
 const GithubDocLink = `${IDPDocBase}/configuring-github-identity-provider.html`;
 const GoogleDocLink = `${IDPDocBase}/configuring-google-identity-provider.html`;
 const OpenIDDocLink = `${IDPDocBase}/configuring-oidc-identity-provider.html`;
-const GitlabDocLink = `${IDPDocBase}/configuring-gitlab-identity-provider.html`;
+const GitlabDocLink = 'https://docs.openshift.com/container-platform/4.3/authentication/identity_providers/configuring-gitlab-identity-provider.html';
 
 const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({

@@ -537,19 +537,20 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 10px;
 }
 
-#ibm img{
-  height: 95px;
-  position: relative;
-}
-
-#ibm .card-badge-container{
-  position: relative;
-  top: 11px;
-}
-
-#ibm h5{
-  position: relative;
-  bottom: 11px;
+.infra-card.infra-card-cloud-provider.ibm-or-power {
+  img {
+    height: 95px;
+    position: relative;
+  }
+  .card-badge-container{
+    position: relative;
+    z-index: 2;
+    top: 11px;
+  }
+  h5{
+    position: relative;
+    bottom: 11px;
+  }
 }
 
 .infra-card.infra-card-cloud-provider h5.infra-crc-title {

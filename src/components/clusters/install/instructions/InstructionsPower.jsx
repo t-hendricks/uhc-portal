@@ -6,40 +6,46 @@ import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
+import EvaluationAlert from './components/EvaluationAlert';
 
-function InstructionsRHV({ token }) {
+function InstructionsPower({ token }) {
   const cloudProviderID = window.location.pathname;
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-        Install on Red Hat Virtualization with installer-provisioned infrastructure
+        Install on Power with user-provisioned infrastructure
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
           {token.error && <TokenErrorAlert token={token} />}
+          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
-              With OpenShift Container Platform
-              you can install a cluster on Red Hat Virtualization using infrastructure that
-              the installation program provisions and the cluster maintains.
+              With OpenShift Container Platform you can install a cluster on Power infrastructure
+              that you provide
             </p>
-            <GetStarted docURL={links.INSTALL_RHV_GETTING_STARTED} />
+
+            <GetStarted
+              docURL={links.INSTALL_POWER_GETTING_STARTED}
+              cloudProviderID={cloudProviderID}
+            />
           </div>
           <TelemetryAlert />
         </div>
       </Card>
       <DownloadsAndPullSecretSection
         token={token}
+        rhcosDownloadURL={links.DOWNLOAD_RHCOS_LATEST_PPC}
         showPreReleasePageLink={false}
         cloudProviderID={cloudProviderID}
-        channel={channels.PRE_RELEASE}
+        channel={channels.PPC}
       />
     </>
   );
 }
 
-InstructionsRHV.propTypes = {
+InstructionsPower.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default InstructionsRHV;
+export default InstructionsPower;
