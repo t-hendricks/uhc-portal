@@ -48,6 +48,7 @@ import InstallPullSecret from '../clusters/install/InstallPullSecret';
 import InstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
 import InstallCRC from '../clusters/install/InstallCRC';
 import InstallIBM from '../clusters/install/InstallIBM';
+import InstallPower from '../clusters/install/InstallPower';
 import Tokens from '../tokens/Tokens';
 import NotFoundError from './NotFoundError';
 import Subscriptions from '../subscriptions';
@@ -81,6 +82,7 @@ function Router(props) {
           <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
           <Route path="/install/crc/installer-provisioned" component={InstallCRC} />
           <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
+          <Route path="/install/power/user-provisioned" component={InstallPower} />
           <Route path="/install/pre-release" component={InstallPreRelease} />
           <Route path="/install/pull-secret" component={InstallPullSecret} />
           <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />

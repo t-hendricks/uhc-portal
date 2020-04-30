@@ -1,5 +1,6 @@
 const MIRROR_CLIENTS_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/';
+const MIRROR_CLIENTS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const DOCS_BASE_4_2 = ' https://docs.openshift.com/container-platform/4.2';
@@ -9,6 +10,7 @@ const channels = {
   PRE_RELEASE: 'pre-release',
   IBMZ: 'ibm-z',
   STABLE: 'stable',
+  PPC: 'ppc64le',
 };
 
 const links = {
@@ -25,22 +27,28 @@ const links = {
   INSTALLER_LINUX: `${MIRROR_CLIENTS_LATEST}openshift-install-linux.tar.gz`,
   INSTALLER_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-install-linux.tar.gz`,
   INSTALLER_LINUX_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-install-linux.tar.gz`,
+  INSTALLER_LINUX_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-install-linux.tar.gz`,
 
   INSTALLER_MAC: `${MIRROR_CLIENTS_LATEST}openshift-install-mac.tar.gz`,
   INSTALLER_MAC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-install-mac.tar.gz`,
   INSTALLER_MAC_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-install-mac.tar.gz`,
+  INSTALLER_MAC_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-install-mac.tar.gz`,
+
 
   CLI_TOOLS_LINUX: `${MIRROR_CLIENTS_LATEST}openshift-client-linux.tar.gz`,
   CLI_TOOLS_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-linux.tar.gz`,
   CLI_TOOLS_LINUX_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-client-linux.tar.gz`,
+  CLI_TOOLS_LINUX_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-client-linux.tar.gz`,
 
   CLI_TOOLS_MAC: `${MIRROR_CLIENTS_LATEST}openshift-client-mac.tar.gz`,
   CLI_TOOLS_MAC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-mac.tar.gz`,
   CLI_TOOLS_MAC_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-client-mac.tar.gz`,
+  CLI_TOOLS_MAC_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-client-mac.tar.gz`,
 
   CLI_TOOLS_WINDOWS: `${MIRROR_CLIENTS_LATEST}openshift-client-windows.zip`,
   CLI_TOOLS_WINDOWS_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-windows.zip`,
   CLI_TOOLS_WINDOWS_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-client-windows.zip`,
+  CLI_TOOLS_WINDOWS_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-client-windows.zip`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
   INSTALL_AWSIPI_CONFIGURE_ACCOUNT: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
@@ -89,6 +97,9 @@ const links = {
   INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_44: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/pre-release/latest',
   INSTALL_PRE_RELEASE_FEEDBACK_MAILTO: 'mailto:***REMOVED***?subject=[dev preview build]',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/articles/4307871',
+
+  INSTALL_POWER_GETTING_STARTED: 'https://github.com/openshift/installer/blob/master/docs/user/power/install_upi.md',
+  DOWNLOAD_RHCOS_LATEST_PPC: 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/',
 };
 
 const urls = {
@@ -129,6 +140,20 @@ const urls = {
     mac: {
       installer: links.INSTALLER_MAC_IBMZ,
       cli: links.CLI_TOOLS_MAC_IBMZ,
+    },
+
+    ppc64le: {
+      windows: {
+        cli: links.CLI_TOOLS_WINDOWS_PPC,
+      },
+      linux: {
+        installer: links.INSTALLER_LINUX_PPC,
+        cli: links.CLI_TOOLS_LINUX_PPC,
+      },
+      mac: {
+        installer: links.INSTALLER_MAC_PPC,
+        cli: links.CLI_TOOLS_MAC_PPC,
+      },
     },
   },
 };

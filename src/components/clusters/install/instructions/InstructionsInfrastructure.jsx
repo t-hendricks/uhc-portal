@@ -12,6 +12,7 @@ import CRCLogo from '../../../../styles/images/laptop.svg';
 import OSPLogo from '../../../../styles/images/Logo-Red_Hat-OpenStack_Platform-A-Standard-RGB.svg';
 import RHVLogo from '../../../../styles/images/Logo-Red_Hat-Virtualization-A-Standard-RGB.png';
 import IBMZLogo from '../../../../styles/images/ibmz-logo.svg';
+import PowerLogo from '../../../../styles/images/power-logo.png';
 import CardBadge from '../../common/CardBadge';
 
 const InstructionsInfrastructure = () => (
@@ -85,11 +86,20 @@ const InstructionsInfrastructure = () => (
           </Link>
         </GalleryItem>
         <GalleryItem>
-          <Link to="/install/ibmz/user-provisioned" className="infra-card infra-card-cloud-provider" id="ibm">
+          <Link to="/install/ibmz/user-provisioned" className="infra-card infra-card-cloud-provider ibm-or-power">
             <CardBadge isHidden />
             <CardBody>
               <img src={IBMZLogo} alt="IBM" className="infra-logo-ibm" />
               <Title headingLevel="h5" size="lg">Run on IBM Z</Title>
+            </CardBody>
+          </Link>
+        </GalleryItem>
+        <GalleryItem>
+          <Link to="/install/power/user-provisioned" className="infra-card infra-card-cloud-provider ibm-or-power">
+            <CardBadge isHidden />
+            <CardBody>
+              <img src={PowerLogo} alt="Power Systems" className="infra-logo-power" />
+              <Title headingLevel="h5" size="lg">Run on Power</Title>
             </CardBody>
           </Link>
         </GalleryItem>
