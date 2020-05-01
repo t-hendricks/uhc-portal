@@ -50,7 +50,11 @@ function DownloadsAndPullSecretSection({
               .
             </p>
           )}
-          <DownloadAndOSSelection token={token} channel={channel} />
+          <DownloadAndOSSelection
+            token={token}
+            channel={channel}
+            cloudProviderID={cloudProviderID}
+          />
           {showPreReleasePageLink && <DeveloperPreviewSection />}
 
           <Title headingLevel="h3" size="md" className="downloads-subtitle">Pull secret</Title>
