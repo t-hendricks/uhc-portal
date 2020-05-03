@@ -78,7 +78,7 @@ const mapLog = (log, index) => {
   } = log;
 
   const day = moment.utc(timestamp)
-    .format('D MMM YYYY, hh:mm UTC');
+    .format('D MMM YYYY, HH:mm UTC');
 
   const md = (
     <ReactMarkdown
