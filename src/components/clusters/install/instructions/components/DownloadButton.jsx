@@ -11,7 +11,7 @@ const DownloadButton = ({
   url,
   disabled = false,
   cliTools = false,
-  cloudProviderID = null,
+  cloudProviderID,
 }) => (
   <Button
     component="a"

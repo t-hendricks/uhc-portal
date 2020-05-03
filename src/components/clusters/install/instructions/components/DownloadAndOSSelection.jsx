@@ -45,7 +45,7 @@ class DownloadAndOSSelection extends React.Component {
     const {
       token,
       cliTools = false,
-      cloudProviderID = null,
+      cloudProviderID,
       channel,
     } = this.props;
     const { OS } = this.state;
