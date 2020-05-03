@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
-  Form, FormGroup, Alert,
+  Form, FormGroup, Alert, Grid, GridItem,
 } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
@@ -126,54 +126,66 @@ class ScaleClusterDialog extends Component {
         onSecondaryClick={cancelEdit}
         isPrimaryDisabled={pending || pristine}
         isPending={pending}
+        isSmall
       >
         <>
           {error}
           <Form onSubmit={handleSubmit}>
-            <Field
-              component={NodeCountInput}
-              name="nodes_compute"
-              label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
-              isMultiAz={isMultiAz}
-              isByoc={isByoc}
-              machineType={machineType}
-              isDisabled={pending}
-              isEditingCluster
-              currentNodeCount={initialValues.nodes_compute || 0}
-              cloudProviderID={cloudProviderID}
-            />
-            { !isByoc && (
-              <>
-                <FormGroup
-                  fieldId="load_balancers"
-                  label="Load balancers"
-                >
-                  <Field
-                    label="Load Balancers"
-                    name="load_balancers"
-                    component={LoadBalancersDropdown}
-                    disabled={pending}
-                    currentValue={initialValues.load_balancers}
-                    cloudProviderID={cloudProviderID}
-                  />
-                </FormGroup>
-                {showLoadBalancerAlert && scalingAlert}
-                <FormGroup
-                  fieldId="persistent_storage"
-                  label="Persistent storage"
-                >
-                  <Field
-                    label="Persistent Storage"
-                    name="persistent_storage"
-                    component={PersistentStorageDropdown}
-                    disabled={pending}
-                    currentValue={initialValues.persistent_storage}
-                    cloudProviderID={cloudProviderID}
-                  />
-                </FormGroup>
-                {showPersistentStorageAlert && scalingAlert}
-              </>
-            )}
+            <Grid gutter="md">
+              <GridItem span={8}>
+                <Field
+                  component={NodeCountInput}
+                  name="nodes_compute"
+                  label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+                  isMultiAz={isMultiAz}
+                  isByoc={isByoc}
+                  machineType={machineType}
+                  isDisabled={pending}
+                  isEditingCluster
+                  currentNodeCount={initialValues.nodes_compute || 0}
+                  cloudProviderID={cloudProviderID}
+                />
+              </GridItem>
+              <GridItem span={4} />
+              { !isByoc && (
+                <>
+                  <GridItem span={8}>
+                    <FormGroup
+                      fieldId="load_balancers"
+                      label="Load balancers"
+                    >
+                      <Field
+                        label="Load Balancers"
+                        name="load_balancers"
+                        component={LoadBalancersDropdown}
+                        disabled={pending}
+                        currentValue={initialValues.load_balancers}
+                        cloudProviderID={cloudProviderID}
+                      />
+                    </FormGroup>
+                  </GridItem>
+                  <GridItem span={4} />
+                  {showLoadBalancerAlert && scalingAlert}
+                  <GridItem span={8}>
+                    <FormGroup
+                      fieldId="persistent_storage"
+                      label="Persistent storage"
+                    >
+                      <Field
+                        label="Persistent Storage"
+                        name="persistent_storage"
+                        component={PersistentStorageDropdown}
+                        disabled={pending}
+                        currentValue={initialValues.persistent_storage}
+                        cloudProviderID={cloudProviderID}
+                      />
+                    </FormGroup>
+                  </GridItem>
+                  <GridItem span={4} />
+                  {showPersistentStorageAlert && scalingAlert}
+                </>
+              )}
+            </Grid>
           </Form>
         </>
       </Modal>

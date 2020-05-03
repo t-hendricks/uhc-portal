@@ -76,6 +76,7 @@ class NodeCountInput extends React.Component {
       <FormSelect
         aria-label="Compute nodes"
         isDisabled={disabled}
+        className="quota-dropdown"
         {...input}
       >
         {options.map(value => option(value))}
@@ -87,7 +88,6 @@ class NodeCountInput extends React.Component {
         fieldId={input.name}
         label={label}
         helperText={helpText}
-        className="compute-nodes-select"
       >
         { extendedHelpText && (
         <PopoverHint hint={extendedHelpText} />
