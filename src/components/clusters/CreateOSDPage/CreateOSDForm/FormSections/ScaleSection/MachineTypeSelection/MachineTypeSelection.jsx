@@ -10,14 +10,13 @@ import FlatRadioButton from '../../../../../../common/FlatRadioButton';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
 
-const machineTypeIcon = (machineType) => {
-  const machineTypeFamily = machineType.charAt(0);
-  switch (machineTypeFamily) {
-    case 'r':
+const machineTypeIcon = (machineTypeCategory) => {
+  switch (machineTypeCategory) {
+    case 'memory_optimized':
       return <MemoryIcon size="lg" />;
-    case 'c':
+    case 'compute_optimized':
       return <CpuIcon size="lg" />;
-    case 'm':
+    case 'general_purpose':
       return <ContainerNodeIcon size="lg" />;
     default:
       return <ContainerNodeIcon size="lg" />;
@@ -136,7 +135,7 @@ class MachineTypeSelection extends React.Component {
           isSelected={hasQuota && input.value === machineType.id}
           titleText={labelTitle}
           secondaryText={name}
-          icon={machineTypeIcon(machineType.id)}
+          icon={machineTypeIcon(machineType.category)}
           onChange={changeHandler}
         />
       );
