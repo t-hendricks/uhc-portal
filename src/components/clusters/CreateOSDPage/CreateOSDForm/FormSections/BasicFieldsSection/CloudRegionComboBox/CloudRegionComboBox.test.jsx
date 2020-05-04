@@ -5,7 +5,6 @@ import DisconnectedCloudRegionComboBox from './CloudRegionComboBox';
 
 describe('<CloudRegionComboBox />', () => {
   describe('when region list needs to be fetched', () => {
-    let getCloudProviders;
     let onChange;
     let wrapper;
     beforeAll(() => {
@@ -17,14 +16,12 @@ describe('<CloudRegionComboBox />', () => {
         providers: {},
       };
 
-      getCloudProviders = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
-          getCloudProviders={getCloudProviders}
         />,
       );
     });
@@ -32,14 +29,9 @@ describe('<CloudRegionComboBox />', () => {
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
     });
-
-    it('calls getCloudProviders', () => {
-      expect(getCloudProviders).toBeCalled();
-    });
   });
 
   describe('when there was an error', () => {
-    let getCloudProviders;
     let onChange;
     let wrapper;
     beforeAll(() => {
@@ -51,14 +43,12 @@ describe('<CloudRegionComboBox />', () => {
         providers: {},
       };
 
-      getCloudProviders = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
-          getCloudProviders={getCloudProviders}
         />,
       );
     });
@@ -69,7 +59,6 @@ describe('<CloudRegionComboBox />', () => {
   });
 
   describe('when the request is pending', () => {
-    let getCloudProviders;
     let onChange;
     let wrapper;
     const state = {
@@ -80,14 +69,12 @@ describe('<CloudRegionComboBox />', () => {
       providers: {},
     };
     beforeAll(() => {
-      getCloudProviders = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
-          getCloudProviders={getCloudProviders}
         />,
       );
     });
@@ -95,22 +82,9 @@ describe('<CloudRegionComboBox />', () => {
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
     });
-
-    it('does not call getCloudProviders', () => {
-      expect(getCloudProviders).not.toBeCalled();
-    });
-
-    it('does not call getCloudProviders if request returns an error', () => {
-      wrapper.setProps({
-        cloudProviders: { ...state, error: true, pending: false },
-      }, () => {
-        expect(getCloudProviders).not.toBeCalled();
-      });
-    });
   });
 
   describe('when the region list is available', () => {
-    let getCloudProviders;
     let onChange;
     let wrapper;
     beforeAll(() => {
@@ -129,24 +103,18 @@ describe('<CloudRegionComboBox />', () => {
         },
       };
 
-      getCloudProviders = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
-          getCloudProviders={getCloudProviders}
         />,
       );
     });
 
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
-    });
-
-    it('does not call getCloudProviders', () => {
-      expect(getCloudProviders).not.toBeCalled();
     });
 
     it('renders only enabled regions', () => {

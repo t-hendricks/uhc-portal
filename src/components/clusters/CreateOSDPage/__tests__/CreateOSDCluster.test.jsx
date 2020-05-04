@@ -87,11 +87,6 @@ describe('CreateOSDCluster', () => {
       expect(managedWrapper.find(CreateOSDForm).exists()).toBe(true);
     });
 
-    it('should call resetResponse and resetForm on mount', () => {
-      expect(resetResponse).toBeCalled();
-      expect(resetForm).toBeCalled();
-    });
-
     it('should fetch cloud providers, machine types, load balancers, persistent storage and quota when first mounted', () => {
       const getMachineTypes = jest.fn();
       const getLoadBalancers = jest.fn();

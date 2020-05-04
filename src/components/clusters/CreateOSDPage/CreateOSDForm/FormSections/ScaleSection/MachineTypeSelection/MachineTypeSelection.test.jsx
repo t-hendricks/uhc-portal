@@ -18,18 +18,15 @@ const organizationState = {
 
 describe('<MachineTypeSelection />', () => {
   describe('when machine type list needs to be fetched', () => {
-    let getMachineTypes;
     let onChange;
     let wrapper;
     beforeAll(() => {
-      getMachineTypes = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
         <MachineTypeSelection
           machineTypes={baseState}
           input={{ onChange }}
           meta={{}}
-          getMachineTypes={getMachineTypes}
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
@@ -40,18 +37,9 @@ describe('<MachineTypeSelection />', () => {
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
     });
-
-    it('calls getCloudProviders', () => {
-      expect(getMachineTypes).toBeCalled();
-    });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
-    });
   });
 
   describe('when there was an error', () => {
-    let getMachineTypes;
     let onChange;
     let wrapper;
     beforeAll(() => {
@@ -61,14 +49,12 @@ describe('<MachineTypeSelection />', () => {
         errorMessage: 'This is an error message',
       };
 
-      getMachineTypes = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
         <MachineTypeSelection
           machineTypes={state}
           input={{ onChange }}
           meta={{}}
-          getMachineTypes={getMachineTypes}
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
@@ -79,18 +65,9 @@ describe('<MachineTypeSelection />', () => {
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
     });
-
-    it('calls getMachineTypes on mount', () => {
-      expect(getMachineTypes).toBeCalled();
-    });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
-    });
   });
 
   describe('when the request is pending', () => {
-    let getMachineTypes;
     let onChange;
     let wrapper;
     const state = {
@@ -101,14 +78,12 @@ describe('<MachineTypeSelection />', () => {
       types: [],
     };
     beforeAll(() => {
-      getMachineTypes = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
         <MachineTypeSelection
           machineTypes={state}
           input={{ onChange }}
           meta={{}}
-          getMachineTypes={getMachineTypes}
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
@@ -119,30 +94,9 @@ describe('<MachineTypeSelection />', () => {
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
     });
-
-    it('does not call getCloudProviders', () => {
-      expect(getMachineTypes).not.toBeCalled();
-    });
-
-    it('calls onChange to mark as invalid', () => {
-      expect(onChange).toBeCalledWith('');
-    });
-
-    it('does not call getMachineTypes again if request returns an error', () => {
-      wrapper.setProps({
-        machineTypes: {
-          ...state,
-          error: true,
-          pending: false,
-        },
-      }, () => {
-        expect(getMachineTypes).not.toBeCalled();
-      });
-    });
   });
 
   describe('when the machine types list is available', () => {
-    let getMachineTypes;
     let onChange;
     let wrapper;
     beforeAll(() => {
@@ -209,7 +163,6 @@ describe('<MachineTypeSelection />', () => {
         },
       };
 
-      getMachineTypes = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
         <MachineTypeSelection
@@ -217,7 +170,6 @@ describe('<MachineTypeSelection />', () => {
           sortedMachineTypes={sortedMachineTypes}
           input={{ onChange }}
           meta={{}}
-          getMachineTypes={getMachineTypes}
           quota={quota}
           organization={organizationState}
           isMultiAz
@@ -228,10 +180,6 @@ describe('<MachineTypeSelection />', () => {
 
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
-    });
-
-    it('does not call getMachineTypes', () => {
-      expect(getMachineTypes).not.toBeCalled();
     });
 
     it('calls onChange with the first item that has quota', () => {
