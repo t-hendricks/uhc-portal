@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import get from 'lodash/get';
-import size from 'lodash/size';
 import PropTypes from 'prop-types';
 
 import {
@@ -28,57 +27,41 @@ import {
   // eslint-disable-next-line camelcase
   global_danger_color_100,
 } from '@patternfly/react-tokens';
-import ClustersWithIssuesTable from './ClustersWithIssuesTable';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
 import ResourceUsage from '../clusters/common/ResourceUsage/ResourceUsage';
-import ViewPaginationRow from '../clusters/common/ViewPaginationRow/viewPaginationRow';
-import { viewConstants } from '../../redux/constants';
-import { viewPropsChanged, createClustersWithIssuesQueryObject } from '../../common/queryHelpers';
 import OverviewEmptyState from './OverviewEmptyState';
+import ExpiredTrialsCard from './ExpiredTrialsCard';
+import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
+import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog';
+import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
 
 class Overview extends Component {
   componentDidMount() {
     const {
       dashboards,
       getSummaryDashboard,
-      fetchClustersUsingParams,
-      dashboardClusters,
-      viewOptions,
     } = this.props;
     if (!dashboards.fulfilled && !dashboards.pending) {
       getSummaryDashboard();
-    }
-    if (!dashboardClusters.fulfilled && !dashboardClusters.pending) {
-      fetchClustersUsingParams(createClustersWithIssuesQueryObject(viewOptions));
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const {
       dashboards,
       getSummaryDashboard,
-      fetchClustersUsingParams,
-      dashboardClusters,
-      viewOptions,
     } = this.props;
     if (!dashboards.fulfilled && !dashboards.pending) {
       getSummaryDashboard();
-    }
-    if ((!dashboardClusters.fulfilled && !dashboardClusters.pending)
-        || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
-      fetchClustersUsingParams(createClustersWithIssuesQueryObject(viewOptions));
     }
   }
 
   render() {
     const {
       dashboards,
-      dashboardClusters,
-      setClusterDetails,
-      viewOptions,
+      invalidateSubscriptions,
     } = this.props;
-    if (!dashboards.fulfilled || dashboards.pending || !dashboardClusters.fulfilled
-      || dashboardClusters.pending) {
+    if (!dashboards.fulfilled || dashboards.pending) {
       return (
         <EmptyState>
           <EmptyStateBody>
@@ -87,9 +70,6 @@ class Overview extends Component {
         </EmptyState>
       );
     }
-
-    const isPendingNoData = (!size(dashboardClusters.clusters)
-    && dashboardClusters.pending && !dashboardClusters.valid);
 
     // summary dashboard contain only one {time, value} pair - the current value.
     const summaryDashboard = dashboards.summary;
@@ -120,7 +100,7 @@ class Overview extends Component {
         <PageSection>
           <Grid gutter="sm" id="overview-grid">
             <GridItem span={3}>
-              <Card id="clusters-overview-card">
+              <Card className="clusters-overview-card">
                 <CardHeader>
                   Clusters
                 </CardHeader>
@@ -161,7 +141,7 @@ class Overview extends Component {
               </Card>
             </GridItem>
             <GridItem span={3}>
-              <Card id="clusters-overview-card">
+              <Card className="clusters-overview-card">
                 <CardHeader>
                   Clusters with issues
                 </CardHeader>
@@ -180,30 +160,10 @@ class Overview extends Component {
               </Card>
             </GridItem>
             <GridItem span={12}>
-              <Card id="clusters-overview-card">
-                <CardHeader>
-                  Clusters with issues
-                </CardHeader>
-                <CardBody>
-                  <ClustersWithIssuesTable
-                    clusters={dashboardClusters.clusters}
-                    isPending={isPendingNoData}
-                    setClusterDetails={setClusterDetails}
-                  />
-                  <ViewPaginationRow
-                    viewType={viewConstants.OVERVIEW_VIEW}
-                    currentPage={viewOptions.currentPage}
-                    pageSize={viewOptions.pageSize}
-                    totalCount={viewOptions.totalCount}
-                    totalPages={viewOptions.totalPages}
-                    variant="bottom"
-                    isDisabled={isPendingNoData}
-                  />
-                </CardBody>
-              </Card>
+              <ClustersWithIssuesTableCard />
             </GridItem>
             <GridItem span={6}>
-              <Card id="clusters-overview-card">
+              <Card className="clusters-overview-card">
                 <CardHeader>
                     Update status
                 </CardHeader>
@@ -220,7 +180,7 @@ class Overview extends Component {
               </Card>
             </GridItem>
             <GridItem span={6}>
-              <Card id="clusters-overview-card">
+              <Card className="clusters-overview-card">
                 <CardHeader>
                     Telemetry
                 </CardHeader>
@@ -236,21 +196,22 @@ class Overview extends Component {
                 </CardBody>
               </Card>
             </GridItem>
+            <GridItem span={12}>
+              <ExpiredTrialsCard />
+            </GridItem>
           </Grid>
+          <EditSubscriptionSettingsDialog onClose={invalidateSubscriptions} />
+          <ArchiveClusterDialog onClose={invalidateSubscriptions} />
         </PageSection>
       </>
     );
   }
 }
 
-
 Overview.propTypes = {
-  setClusterDetails: PropTypes.func.isRequired,
   getSummaryDashboard: PropTypes.func.isRequired,
+  invalidateSubscriptions: PropTypes.func.isRequired,
   dashboards: PropTypes.object.isRequired,
-  fetchClustersUsingParams: PropTypes.func.isRequired,
-  viewOptions: PropTypes.object.isRequired,
-  dashboardClusters: PropTypes.object.isRequired,
 };
 
 export default Overview;

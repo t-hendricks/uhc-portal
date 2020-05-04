@@ -1,27 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { clustersConstants } from '../../redux/constants';
 import Overview from './Overview';
-import { clustersWithIssues } from './Overview.fixtures';
-
-const dashboardClusters = {
-  error: false,
-  errorMessage: '',
-  pending: false,
-  fulfilled: true,
-  valid: false,
-  clusters: clustersWithIssues,
-};
-
-const baseViewOptions = {
-  currentPage: 1,
-  pageSize: 5,
-  totalCount: 0,
-  totalPages: 0,
-  filter: {
-    healthState: clustersConstants.CLUSTERS_STATE_UNHEALTHY,
-  },
-};
 
 const dashboardState = {
   fulfilled: true,
@@ -59,21 +38,14 @@ const dashboardState = {
 
 describe('<Overview />', () => {
   let getSummaryDashboard;
-  let setClusterDetails;
-  let fetchClustersUsingParams;
   let wrapper;
   beforeAll(() => {
     getSummaryDashboard = jest.fn();
-    setClusterDetails = jest.fn();
-    fetchClustersUsingParams = jest.fn();
     wrapper = shallow(
       <Overview
-        fetchClustersUsingParams={fetchClustersUsingParams}
         getSummaryDashboard={getSummaryDashboard}
-        setClusterDetails={setClusterDetails}
+        invalidateSubscriptions={jest.fn()}
         dashboards={dashboardState}
-        viewOptions={baseViewOptions}
-        dashboardClusters={dashboardClusters}
       />,
     );
   });
