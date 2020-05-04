@@ -1,15 +1,16 @@
 import { connect } from 'react-redux';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
-import { setClusterDetails, fetchClustersUsingParams } from '../../../redux/actions/clustersActions';
+import { setClusterDetails } from '../../../redux/actions/clustersActions';
+import { getUnhealthyClusters } from '../../../redux/actions/dashboardsActions';
 import { viewConstants } from '../../../redux/constants';
 
 const mapDispatchToProps = {
   setClusterDetails,
-  fetchClustersUsingParams,
+  getUnhealthyClusters,
 };
 
 const mapStateToProps = state => ({
-  dashboardClusters: state.clusters.dashboardClusters,
+  unhealthyClusters: state.dashboards.unhealthyClusters,
   viewOptions: state.viewOptions[viewConstants.OVERVIEW_VIEW],
 });
 
