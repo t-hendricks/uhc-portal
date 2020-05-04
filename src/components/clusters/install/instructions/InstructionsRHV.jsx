@@ -32,7 +32,7 @@ function InstructionsRHV({ token }) {
         token={token}
         showPreReleasePageLink={false}
         cloudProviderID={cloudProviderID}
-        channel={channels.PRE_RELEASE}
+        channel={channels.STABLE}
       />
     </>
   );
