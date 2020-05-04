@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import get from 'lodash/get';
-import { GET_CLUSTER_INSIGHTS, VOTE_ON_RULE_INSIGHTS } from './InsightsConstants';
+import {
+  GET_CLUSTER_INSIGHTS, VOTE_ON_RULE_INSIGHTS, DISABLE_RULE_INSIGHTS, ENABLE_RULE_INSIGHTS,
+} from './InsightsConstants';
 import { insightsService } from '../../../../../services';
 
 const fetchSingleClusterInsights = async (clusterId, orgId) => {
@@ -66,4 +68,38 @@ const voteOnSingleRuleInsights = async (clusterId, ruleId, vote) => {
 export const voteOnRuleInsights = (clusterId, ruleId, vote) => dispatch => dispatch({
   type: VOTE_ON_RULE_INSIGHTS,
   payload: voteOnSingleRuleInsights(clusterId, ruleId, vote),
+});
+
+// clusterId is id of the cluster
+// ruleId is id of the rule
+const disableSingleRuleInsights = async (clusterId, ruleId) => {
+  const response = insightsService.disableRuleInsights(clusterId, ruleId);
+
+  return {
+    insightsData: response.data,
+    clusterId,
+    ruleId,
+  };
+};
+
+export const disableRuleInsights = (clusterId, ruleId) => dispatch => dispatch({
+  type: DISABLE_RULE_INSIGHTS,
+  payload: disableSingleRuleInsights(clusterId, ruleId),
+});
+
+// clusterId is id of the cluster
+// ruleId is id of the rule
+const enableSingleRuleInsights = async (clusterId, ruleId) => {
+  const response = insightsService.enableRuleInsights(clusterId, ruleId);
+
+  return {
+    insightsData: response.data,
+    clusterId,
+    ruleId,
+  };
+};
+
+export const enableRuleInsights = (clusterId, ruleId) => dispatch => dispatch({
+  type: ENABLE_RULE_INSIGHTS,
+  payload: enableSingleRuleInsights(clusterId, ruleId),
 });

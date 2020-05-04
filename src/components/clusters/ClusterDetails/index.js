@@ -27,7 +27,9 @@ import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/
 import { getClusterHistory } from './components/ClusterLogs/clusterLogActions';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { viewConstants } from '../../../redux/constants';
-import { fetchClusterInsights, voteOnRuleInsights } from './components/Insights/InsightsActions';
+import {
+  fetchClusterInsights, voteOnRuleInsights, disableRuleInsights, enableRuleInsights,
+} from './components/Insights/InsightsActions';
 import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
 import helpers from '../../../common/helpers';
 
@@ -67,6 +69,8 @@ const mapDispatchToProps = {
   fetchDetails: clusterId => fetchClusterDetails(clusterId),
   fetchInsightsData: clusterId => fetchClusterInsights(clusterId),
   voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),
+  disableRule: (clusterId, ruleId) => disableRuleInsights(clusterId, ruleId),
+  enableRule: (clusterId, ruleId) => enableRuleInsights(clusterId, ruleId),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
   invalidateClusters,

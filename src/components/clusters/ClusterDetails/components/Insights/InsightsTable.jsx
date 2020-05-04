@@ -15,6 +15,7 @@ import { Battery } from '@redhat-cloud-services/frontend-components/components/B
 import AnalysisSummary from './AnalysisSummary';
 import './index.css';
 import { severityMapping } from './helpers';
+import DisabledTooltip from './DisabledTooltip';
 
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
@@ -134,13 +135,17 @@ class InsightsTable extends React.Component {
   };
 
   render() {
-    const { insightsData, voteOnRule } = this.props;
+    const {
+      insightsData, voteOnRule, disableRule, enableRule,
+    } = this.props;
+
     const {
       shownData,
       filters,
       meta,
       sortBy,
     } = this.state;
+
     return (
       <>
         <AnalysisSummary insightsData={insightsData} batteryClicked={this.addFilter} />
@@ -161,7 +166,12 @@ class InsightsTable extends React.Component {
               columns={[
                 {
                   title: 'Description',
-                  selector: 'description',
+                  selector: ({ description, disabled }) => (
+                    <>
+                      { disabled ? <DisabledTooltip /> : null }
+                      { description }
+                    </>
+                  ),
                   transforms: [cellWidth(60)],
                 },
                 {
@@ -193,6 +203,26 @@ class InsightsTable extends React.Component {
                   onFeedbackChanged={voteOnRule}
                 />
               )}
+              actionResolver={(rowData, { rowIndex }) => {
+                // we gotta do this shit
+                // since fucking Patternfly considers row details as another row
+                if (rowIndex % 2 !== 0) {
+                  return null;
+                }
+
+                const realRowIndex = rowIndex / 2;
+
+                if (typeof shownData[realRowIndex] === 'undefined') {
+                  return null;
+                }
+
+                const { rule_id: ruleId, disabled } = shownData[realRowIndex];
+
+                return [{
+                  title: `${disabled ? 'Enable' : 'Disable'} health check`,
+                  onClick: () => (disabled ? enableRule(ruleId) : disableRule(ruleId)),
+                }];
+              }}
             />
           </CardBody>
         </Card>
@@ -204,6 +234,8 @@ class InsightsTable extends React.Component {
 InsightsTable.propTypes = {
   insightsData: PropTypes.object.isRequired,
   voteOnRule: PropTypes.func.isRequired,
+  disableRule: PropTypes.func.isRequired,
+  enableRule: PropTypes.func.isRequired,
 };
 
 export default InsightsTable;
