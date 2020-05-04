@@ -3,7 +3,6 @@ const MIRROR_CLIENTS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v
 const MIRROR_CLIENTS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
-const DOCS_BASE_4_2 = ' https://docs.openshift.com/container-platform/4.2';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
 
 const links = {
@@ -79,9 +78,9 @@ const links = {
   INSTALL_VSPHERE_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
   INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
 
-  INSTALL_IBMZ_GETTING_STARTED: `${DOCS_BASE_4_2}/installing/installing_ibm_z/installing-ibm-z.html`,
-  INSTALL_IBMZ_RHCOS_LEARN_MORE: `${DOCS_BASE_4_2}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
-  DOWNLOAD_RHCOS_LATEST_IBMZ: 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/4.2/latest/',
+  INSTALL_IBMZ_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html`,
+  INSTALL_IBMZ_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
+  DOWNLOAD_RHCOS_LATEST_IBMZ: 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/',
 
   INSTALL_RHV_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-creating-custom-vm.html`,
 
