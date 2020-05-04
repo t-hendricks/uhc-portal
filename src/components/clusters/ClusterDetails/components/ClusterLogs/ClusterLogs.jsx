@@ -17,10 +17,10 @@ class ClusterLogs extends React.Component {
   componentDidMount() {
     const { setListFlag } = this.props;
 
-    const severityTypesFilter = getQueryParam('severityTypes') || '';
-    if (!isEmpty(severityTypesFilter)) {
+    const severityTypes = getQueryParam('severityTypes') || '';
+    if (!isEmpty(severityTypes)) {
       setListFlag('conditionalFilterFlags', {
-        severityTypes: severityTypesFilter.split(',').filter(type => SEVERITY_TYPES.includes(type)),
+        severityTypes: severityTypes.split(',').filter(type => SEVERITY_TYPES.includes(type)),
       });
     } else {
       // only call refresh if we're not setting the filter flag. When the flag is set, refresh
@@ -79,7 +79,7 @@ class ClusterLogs extends React.Component {
     }
 
     const hasNoFilters = isEmpty(viewOptions.filter)
-      && helpers.nestedIsEmpty(viewOptions.flags.severityTypesFilter);
+      && helpers.nestedIsEmpty(viewOptions.flags.severityTypes);
     const isPendingNoData = (!size(logs) && pending && hasNoFilters);
 
     return (
@@ -117,7 +117,7 @@ ClusterLogs.propTypes = {
     totalCount: PropTypes.number,
     totalPages: PropTypes.number,
     flags: PropTypes.shape({
-      severityTypesFilter: PropTypes.object,
+      severityTypes: PropTypes.object,
     }),
     filter: PropTypes.object,
   }).isRequired,
