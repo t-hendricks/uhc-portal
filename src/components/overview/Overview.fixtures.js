@@ -116,5 +116,16 @@ const clustersWithIssues = [{
   canDelete: true,
 }];
 
-export { clustersWithIssues };
-export default clustersWithIssues;
+const expiredTrials = [{
+  display_name: 'my cluster',
+  canEdit: true,
+  cluster_id: 'foo',
+},
+{
+  display_name: 'other cluster',
+  canEdit: false,
+  cluster_id: 'foo',
+},
+];
+
+export { clustersWithIssues, expiredTrials };

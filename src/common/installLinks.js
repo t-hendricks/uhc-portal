@@ -3,7 +3,6 @@ const MIRROR_CLIENTS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v
 const MIRROR_CLIENTS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
-const DOCS_BASE_4_2 = ' https://docs.openshift.com/container-platform/4.2';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
 
 const links = {
@@ -79,11 +78,11 @@ const links = {
   INSTALL_VSPHERE_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
   INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
 
-  INSTALL_IBMZ_GETTING_STARTED: `${DOCS_BASE_4_2}/installing/installing_ibm_z/installing-ibm-z.html`,
-  INSTALL_IBMZ_RHCOS_LEARN_MORE: `${DOCS_BASE_4_2}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
-  DOWNLOAD_RHCOS_LATEST_IBMZ: 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/4.2/latest/',
+  INSTALL_IBMZ_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html`,
+  INSTALL_IBMZ_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
+  DOWNLOAD_RHCOS_LATEST_IBMZ: 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/',
 
-  INSTALL_RHV_GETTING_STARTED: 'https://access.redhat.com/articles/4903411',
+  INSTALL_RHV_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-creating-custom-vm.html`,
 
   INSTALL_PRE_RELEASE_BUG_LIST_44: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.4.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
@@ -91,7 +90,7 @@ const links = {
   INSTALL_PRE_RELEASE_FEEDBACK_MAILTO: 'mailto:***REMOVED***?subject=[dev preview build]',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/articles/4307871',
 
-  INSTALL_POWER_GETTING_STARTED: 'https://github.com/openshift/installer/blob/master/docs/user/power/install_upi.md',
+  INSTALL_POWER_GETTING_STARTED: 'https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_power/installing-ibm-power.html',
   DOWNLOAD_RHCOS_LATEST_PPC: 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/',
 };
 

@@ -10,14 +10,13 @@ import FlatRadioButton from '../../../../../../common/FlatRadioButton';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
 
-const machineTypeIcon = (machineType) => {
-  const machineTypeFamily = machineType.charAt(0);
-  switch (machineTypeFamily) {
-    case 'r':
+const machineTypeIcon = (machineTypeCategory) => {
+  switch (machineTypeCategory) {
+    case 'memory_optimized':
       return <MemoryIcon size="lg" />;
-    case 'c':
+    case 'compute_optimized':
       return <CpuIcon size="lg" />;
-    case 'm':
+    case 'general_purpose':
       return <ContainerNodeIcon size="lg" />;
     default:
       return <ContainerNodeIcon size="lg" />;
@@ -25,48 +24,32 @@ const machineTypeIcon = (machineType) => {
 };
 
 class MachineTypeSelection extends React.Component {
-  state = {
-    currentValue: '',
-  }
-
   componentDidMount() {
     const {
-      getMachineTypes, machineTypes,
+      machineTypes, organization,
     } = this.props;
 
-    if (!machineTypes.fulfilled) {
-      // Don't let the user submit if we couldn't get machine types yet.
-      this.setInvalidValue();
-    }
-    if (!machineTypes.pending && !machineTypes.fulfilled) {
-      // fetch machine types from server only if needed.
-      getMachineTypes();
-    }
-
-    if (machineTypes.fulfilled) {
+    if (machineTypes.fulfilled && organization.fulfilled) {
       this.setDefaultValue();
     }
   }
 
   componentDidUpdate() {
-    const { machineTypes } = this.props;
-    const { currentValue } = this.state;
-    if (machineTypes.error || machineTypes.pending || !this.hasQuotaForType(currentValue)) {
+    const { machineTypes, input } = this.props;
+    if (machineTypes.error || machineTypes.pending) {
       // Don't let the user submit if we couldn't get machine types.
       this.setInvalidValue();
     }
 
-    if (currentValue === '' && machineTypes.fulfilled) {
+    if (!input.value && machineTypes.fulfilled) {
       // we got the machine types, and the user hasn't selected one yet - set to default.
       this.setDefaultValue();
     }
 
     // if some external param changed, like MultiAz, and we no longer have quota
-    // for the selected instance type, we need to unselect it, and mark ourselves as invalid.
-    if (currentValue && !this.hasQuotaForType(currentValue)) {
-      // this setState is guarded so the linter error can be ignored.
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ currentValue: '' });
+    // for the selected instance type, we need to revert to default.
+    if (input.value && !this.hasQuotaForType(input.value)) {
+      this.setDefaultValue();
     }
   }
 
@@ -76,7 +59,6 @@ class MachineTypeSelection extends React.Component {
     if (sortedMachineTypes.length > 0) {
       const defaultType = sortedMachineTypes.find(type => this.hasQuotaForType(type.id));
       if (defaultType) {
-        this.setState({ currentValue: defaultType.id });
         input.onChange(defaultType.id);
       }
     }
@@ -117,10 +99,8 @@ class MachineTypeSelection extends React.Component {
       cloudProviderID,
       ...extraProps
     } = this.props;
-    const { currentValue } = this.state;
 
     const changeHandler = (value) => {
-      this.setState({ currentValue: value });
       input.onChange(value);
     };
 
@@ -152,10 +132,10 @@ class MachineTypeSelection extends React.Component {
           value={machineType.id}
           isDisabled={!hasQuota}
           tooltip={!hasQuota && 'You do not have quota for this node type. Contact sales to purchase additional quota.'}
-          isSelected={hasQuota && currentValue === machineType.id}
+          isSelected={hasQuota && input.value === machineType.id}
           titleText={labelTitle}
           secondaryText={name}
-          icon={machineTypeIcon(machineType.id)}
+          icon={machineTypeIcon(machineType.category)}
           onChange={changeHandler}
         />
       );
@@ -186,7 +166,10 @@ class MachineTypeSelection extends React.Component {
 }
 
 MachineTypeSelection.propTypes = {
-  input: PropTypes.shape({ onChange: PropTypes.func.isRequired }).isRequired,
+  input: PropTypes.shape({
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.string,
+  }).isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   sortedMachineTypes: PropTypes.array.isRequired,

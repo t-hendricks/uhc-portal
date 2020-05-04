@@ -23,7 +23,6 @@ import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 import { NotificationsPortal } from '@redhat-cloud-services/frontend-components-notifications';
 import { userInfoResponse } from './redux/actions/userActions';
-import { getCloudProviders } from './redux/actions/cloudProviderActions';
 import config from './config';
 import App from './components/App/App';
 import { reloadReducers, store } from './redux/store';
@@ -94,7 +93,6 @@ if (!window.insights && process.env.NODE_ENV === 'development') {
       store.dispatch(userInfoResponse(data.identity.user));
       config.fetchConfig()
         .then(() => {
-          store.dispatch(getCloudProviders());
           render();
         });
     });

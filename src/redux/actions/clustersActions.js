@@ -18,7 +18,7 @@ import isUuid from 'uuid-validate';
 
 import { clustersConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
-import { INVALIDATE_ACTION } from '../reduxHelpers';
+import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
 import { normalizeCluster } from '../../common/normalize';
 
 const invalidateClusters = () => dispatch => dispatch({
@@ -108,20 +108,6 @@ const editClusterConsoleURL = (id, consoleURL) => dispatch => dispatch({
   type: clustersConstants.EDIT_CLUSTER,
   payload: clusterService.editCluster(id, { console: { url: consoleURL } }),
 });
-
-/** Build a dict mapping a cluster ID to a specific permission state
- * @param {*} response - a response from selfResourceReview
- */
-const buildPermissionDict = (response) => {
-  const ret = {};
-  if (!response || !response.data || !response.data.cluster_ids) {
-    return ret;
-  }
-  response.data.cluster_ids.forEach((clusterID) => {
-    ret[clusterID] = true;
-  });
-  return ret;
-};
 
 /**
  * Collect a list of object IDs and build a SQL-like query searching for these IDs.

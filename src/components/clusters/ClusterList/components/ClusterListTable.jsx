@@ -18,9 +18,6 @@ import {
   SortByDirection,
   cellWidth,
 } from '@patternfly/react-table';
-import {
-  Skeleton,
-} from '@redhat-cloud-services/frontend-components';
 
 import { Link } from 'react-router-dom';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
@@ -30,6 +27,7 @@ import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 import getClusterName from '../../../../common/getClusterName';
 import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
+import skeletonRows from '../../../common/SkeletonRows';
 
 function ClusterListTable(props) {
   const {
@@ -49,22 +47,6 @@ function ClusterListTable(props) {
     sorting.isAscending = direction === SortByDirection.asc;
     sorting.sortField = 'name'; // TODO support more fields
     setSorting(sorting);
-  };
-
-  const skeletonRows = () => {
-    const row = {
-      cells: [
-        {
-          props: { colSpan: 6 },
-          title: <Skeleton size="lg" />,
-        },
-      ],
-    };
-    const ret = [];
-    for (let i = 0; i < 10; i += 1) {
-      ret.push(row);
-    }
-    return ret;
   };
 
   const clusterRow = (cluster) => {

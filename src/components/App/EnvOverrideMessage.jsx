@@ -12,6 +12,7 @@ function EnvOverrideMessage({ env }) {
     <Alert
       variant="warning"
       isInline
+      id="env-override-message"
       title="Environment override active"
       action={<AlertActionLink onClick={goBackToNormal}>Go back to normal</AlertActionLink>}
     >

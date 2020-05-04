@@ -3,28 +3,21 @@ import PropTypes from 'prop-types';
 import { Radio, Tooltip } from '@patternfly/react-core';
 
 class RadioButtons extends React.Component {
-  state = {
-    currentValue: '',
-  }
-
   componentDidMount() {
     const {
       defaultValue,
       input,
     } = this.props;
 
-    this.setState({ currentValue: defaultValue });
     input.onChange(defaultValue);
   }
 
   componentDidUpdate() {
     const { options, defaultValue, input } = this.props;
-    const { currentValue } = this.state;
+
     // if an option got disabled during the lifetime of the component, we should revert to default
-    if (options.some(option => currentValue === option.value
+    if (options.some(option => input.value === option.value
                                && option.disabled && option.value !== defaultValue)) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ currentValue: defaultValue });
       input.onChange(defaultValue);
     }
   }
@@ -35,7 +28,6 @@ class RadioButtons extends React.Component {
     } = this.props;
 
     input.onChange(event.target.value, event);
-    this.setState({ currentValue: event.target.value });
   };
 
   render() {
@@ -45,16 +37,12 @@ class RadioButtons extends React.Component {
       input,
     } = this.props;
 
-    const {
-      currentValue,
-    } = this.state;
-
     return (
       options.map((option) => {
         const button = (
           <Radio
             className={className}
-            isChecked={currentValue === option.value}
+            isChecked={input.value === option.value}
             key={`${input.name}-${option.value}`}
             value={option.value}
             name={input.name}
@@ -82,6 +70,7 @@ RadioButtons.propTypes = {
   input: PropTypes.shape({
     name: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    value: PropTypes.string,
   }).isRequired,
   className: PropTypes.string,
   options: PropTypes.arrayOf(
