@@ -90,7 +90,7 @@ const links = {
   INSTALL_PRE_RELEASE_FEEDBACK_MAILTO: 'mailto:***REMOVED***?subject=[dev preview build]',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/articles/4307871',
 
-  INSTALL_POWER_GETTING_STARTED: 'https://github.com/openshift/installer/blob/master/docs/user/power/install_upi.md',
+  INSTALL_POWER_GETTING_STARTED: 'https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_power/installing-ibm-power.html',
   DOWNLOAD_RHCOS_LATEST_PPC: 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/',
 };
 
