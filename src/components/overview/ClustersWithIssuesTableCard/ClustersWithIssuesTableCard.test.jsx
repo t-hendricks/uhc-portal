@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 import { clustersWithIssues } from '../Overview.fixtures';
 
-const dashboardClusters = {
+const unhealthyClusters = {
   error: false,
   errorMessage: '',
   pending: false,
@@ -25,17 +25,17 @@ const baseViewOptions = {
 
 describe('<ClustersWithIssuesTableCard />', () => {
   let setClusterDetails;
-  let fetchClustersUsingParams;
+  let getUnhealthyClusters;
   let wrapper;
   beforeAll(() => {
     setClusterDetails = jest.fn();
-    fetchClustersUsingParams = jest.fn();
+    getUnhealthyClusters = jest.fn();
     wrapper = shallow(
       <ClustersWithIssuesTableCard
-        fetchClustersUsingParams={fetchClustersUsingParams}
+        getUnhealthyClusters={getUnhealthyClusters}
         setClusterDetails={setClusterDetails}
         viewOptions={baseViewOptions}
-        dashboardClusters={dashboardClusters}
+        unhealthyClusters={unhealthyClusters}
       />,
     );
   });
