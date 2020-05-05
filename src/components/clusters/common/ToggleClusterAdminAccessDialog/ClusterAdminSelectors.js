@@ -1,6 +1,11 @@
 import get from 'lodash/get';
 
 const canAllowAdminSelector = (state) => {
+  const product = get(state, 'clusters.details.cluster.product.id', 'osd');
+  if (product === 'rhmi') {
+    return false;
+  }
+
   const capabilites = get(state, 'clusters.details.cluster.subscription.capabilities', []);
   const manageClusterAdminCapability = capabilites.find(capability => capability.name === 'capability.cluster.manage_cluster_admin');
 

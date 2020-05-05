@@ -63,6 +63,7 @@ class CreateOSDForm extends React.Component {
       clustersQuota,
       cloudProviderID,
       privateClusterSelected,
+      product,
     } = this.props;
 
     const {
@@ -120,6 +121,7 @@ class CreateOSDForm extends React.Component {
         <BasicFieldsSection
           pending={pending}
           showDNSBaseDomain={false}
+          showAvailability={product === 'osd'}
           change={change}
           isBYOC={isBYOCForm}
           cloudProviderID={cloudProviderID}
@@ -193,6 +195,7 @@ CreateOSDForm.propTypes = {
   }),
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
+  product: PropTypes.string.isRequired,
 };
 
 export default CreateOSDForm;

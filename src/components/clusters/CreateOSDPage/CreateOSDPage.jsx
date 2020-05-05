@@ -114,6 +114,7 @@ class CreateOSDPage extends React.Component {
       machineTypes,
       organization,
       cloudProviders,
+      product,
       loadBalancerValues,
       persistentStorageValues,
       isErrorModalOpen,
@@ -132,10 +133,13 @@ class CreateOSDPage extends React.Component {
       );
     }
 
-    if (!organization.pending && organization.fulfilled && !clustersQuota.hasOsdQuota) {
-      return (
-        <Redirect to="/create" />
-      );
+    if (!organization.pending && organization.fulfilled) {
+      if ((product === 'osd' && !clustersQuota.hasOsdQuota)
+          || (product === 'rhmi' && !clustersQuota.hasRhmiQuota)) {
+        return (
+          <Redirect to="/create" />
+        );
+      }
     }
 
     if (!organization.pending && organization.fulfilled) {
@@ -168,17 +172,25 @@ class CreateOSDPage extends React.Component {
     ];
     const anyRequestPending = requests.some(request => request.data.pending);
 
+    let pageTitle;
+    const breadcrumbs = [
+      { label: 'Clusters' },
+      { label: 'Create', path: '/create' },
+    ];
+    if (product === 'rhmi') {
+      pageTitle = 'Create a Red Hat Managed Integration Cluster';
+      breadcrumbs.push({ label: 'Red Hat Managed Integration', path: '/create/rhmi' });
+    } else {
+      pageTitle = 'Create an OpenShift Dedicated Cluster';
+      breadcrumbs.push({ label: 'OpenShift Dedicated', path: '/create/osd' });
+      breadcrumbs.push({ label: cloudProviderID === 'aws' ? 'Amazon Web Services' : 'Google Cloud Platform' });
+    }
+
     const title = (
       <PageTitle
-        title="Create an OpenShift Dedicated Cluster"
+        title={pageTitle}
         breadcrumbs={(
-          <Breadcrumbs path={[
-            { label: 'Clusters' },
-            { label: 'Create', path: '/create' },
-            { label: 'OpenShift Dedicated', path: '/create/osd' },
-            { label: cloudProviderID === 'aws' ? 'Amazon Web Services' : 'Google Cloud Platform' },
-          ]}
-          />
+          <Breadcrumbs path={breadcrumbs} />
         )}
       />
     );
@@ -254,6 +266,7 @@ class CreateOSDPage extends React.Component {
                     clustersQuota={clustersQuota}
                     cloudProviderID={cloudProviderID}
                     privateClusterSelected={privateClusterSelected}
+                    product={product}
                   />
                   {/* Form footer */}
                   <GridItem>
@@ -285,12 +298,17 @@ class CreateOSDPage extends React.Component {
   }
 }
 
+CreateOSDPage.defaultProps = {
+  product: 'osd',
+};
+
 CreateOSDPage.propTypes = {
   isErrorModalOpen: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   clustersQuota: PropTypes.shape({
     hasOsdQuota: PropTypes.bool.isRequired,
+    hasRhmiQuota: PropTypes.bool.isRequired,
     hasAwsQuota: PropTypes.bool.isRequired,
     hasGcpQuota: PropTypes.bool.isRequired,
     aws: PropTypes.shape({
@@ -330,6 +348,7 @@ CreateOSDPage.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
+  product: PropTypes.string,
   privateClusterSelected: PropTypes.bool.isRequired,
 };
 

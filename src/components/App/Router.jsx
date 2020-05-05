@@ -93,6 +93,7 @@ function Router({ history }) {
           <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
           <Route path="/install" component={InstallInfrastructure} />
           <Route path="/details/:id" component={ClusterDetails} />
+          <Route path="/create/rhmi" render={() => <CreateOSDPage product="rhmi" cloudProviderID="aws" />} />
           <Route path="/create/osd/aws" render={() => <CreateOSDPage cloudProviderID="aws" />} />
           <Route path="/create/osd/gcp" render={() => <CreateOSDPage cloudProviderID="gcp" />} />
           <Route path="/create/osd" component={CloudProviderSelection} />
