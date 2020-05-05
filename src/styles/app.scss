@@ -263,9 +263,15 @@ limitations under the License.
   max-width: 1710px;
 }
 
-#clusters-with-issues {
+#clusters-with-issues-zero {
+  font-size: var(--pf-global--FontSize--3xl);
+  padding-right: var(--pf-global--spacer--sm);
+}
+
+#clusters-with-issues-non-zero {
+  font-size: var(--pf-global--FontSize--3xl);
   color: var(--pf-global--danger-color--100);
-  padding-right: var(--pf-global--spacer--sm)
+  padding-right: var(--pf-global--spacer--sm);
 }
 
 #subs-hint {
