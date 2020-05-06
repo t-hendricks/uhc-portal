@@ -3,8 +3,6 @@ import { hasCpuAndMemory } from '../clusters/ClusterDetails/clusterDetailsHelper
 import { hasResourceUsageMetrics, thresholds } from '../clusters/ClusterDetails/components/Monitoring/monitoringHelper';
 import { resourceUsageIssuesSelector } from '../clusters/ClusterDetails/components/Monitoring/MonitoringSelectors';
 
-const clustersWithIssuesFilter = "health_state='unhealthy'";
-
 function getIssuesCount(cluster) {
   const metrics = get(cluster, 'metrics', null);
   if (!metrics) {
@@ -25,7 +23,6 @@ function getIssuesCount(cluster) {
 }
 
 export {
-  clustersWithIssuesFilter,
   getIssuesCount,
 };
 

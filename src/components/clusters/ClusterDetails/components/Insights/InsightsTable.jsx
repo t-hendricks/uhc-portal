@@ -6,9 +6,9 @@ import { cellWidth } from '@patternfly/react-table';
 import {
   RuleTable,
   severity,
-  ReportDetails,
   descriptionFilter,
   totalRiskFilter,
+  ReportDetails,
 } from '@redhat-cloud-services/rule-components';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
@@ -190,6 +190,13 @@ class InsightsTable extends React.Component {
                   riskOfChange={details.risk_of_change}
                   showRiskDescription={false}
                   definitions={details.extra_data}
+                  remediating={
+                    (details.reason || details.resolution)
+                    && {
+                      reason: details.reason,
+                      resolution: details.resolution,
+                    }
+                  }
                   onFeedbackChanged={voteOnRule}
                 />
               )}

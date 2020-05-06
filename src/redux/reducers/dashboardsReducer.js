@@ -23,7 +23,13 @@ import { getErrorState } from '../../common/errors';
 import { dashboardsConstants } from '../constants';
 
 const initialState = {
-  ...baseRequestState,
+  summary: {
+    ...baseRequestState,
+  },
+  unhealthyClusters: {
+    ...baseRequestState,
+    clusters: [],
+  },
 };
 
 function dashboardsReducer(state = initialState, action) {
@@ -31,20 +37,41 @@ function dashboardsReducer(state = initialState, action) {
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
-      case REJECTED_ACTION(dashboardsConstants.GET_DASHBOARD):
-        return {
-          ...initialState,
+      // Overview dashboard data.
+      case REJECTED_ACTION(dashboardsConstants.GET_SUMMARY_DASHBOARD):
+        draft.summary = {
+          ...initialState.summary,
           ...getErrorState(action),
         };
-      case PENDING_ACTION(dashboardsConstants.GET_DASHBOARD):
-        draft.pending = true;
         break;
-      case FULFILLED_ACTION(dashboardsConstants.GET_DASHBOARD):
-        return {
-          ...initialState,
+      case PENDING_ACTION(dashboardsConstants.GET_SUMMARY_DASHBOARD):
+        draft.summary.pending = true;
+        break;
+      case FULFILLED_ACTION(dashboardsConstants.GET_SUMMARY_DASHBOARD):
+        draft.summary = {
+          ...initialState.summary,
           fulfilled: true,
-          ...action.payload,
+          metrics: action.payload.summary,
         };
+        break;
+
+      // Unhealthy Clusters table.
+      case REJECTED_ACTION(dashboardsConstants.GET_UNHEALTHY_CLUSTERS):
+        draft.unhealthyClusters = {
+          ...initialState.unhealthyClusters,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(dashboardsConstants.GET_UNHEALTHY_CLUSTERS):
+        draft.unhealthyClusters.pending = true;
+        break;
+      case FULFILLED_ACTION(dashboardsConstants.GET_UNHEALTHY_CLUSTERS):
+        draft.unhealthyClusters = {
+          ...initialState.unhealthyClusters,
+          fulfilled: true,
+          clusters: action.payload.data.items,
+        };
+        break;
     }
   });
 }

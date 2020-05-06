@@ -107,7 +107,13 @@ class AddUserDialog extends Component {
               label={(
                 <>
                   {dedicatedAdmin}
-                  <div className="radio-helptext">Grants standard administrative privileges for OpenShift Dedicated. Users can perform administrative actions listed in the documentation.</div>
+                  <div className="radio-helptext">
+                    Grants standard administrative privileges for OpenShift Dedicated.
+                    Users can perform administrative actions listed in the
+                    {' '}
+                    <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/administering_a_cluster/dedicated-admin-role.html">documentation</a>
+                    .
+                  </div>
                 </>
         )}
               id={dedicatedAdmin}

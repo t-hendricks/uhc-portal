@@ -27,25 +27,25 @@ const filter = { filter: `health_state='${CLUSTERS_STATE_UNHEALTHY}'` };
 
 class ClustersWithIssuesTableCard extends React.Component {
   componentDidMount() {
-    const { dashboardClusters, fetchClustersUsingParams, viewOptions } = this.props;
-    if (!dashboardClusters.fulfilled && !dashboardClusters.pending) {
-      fetchClustersUsingParams(createOverviewQueryObject(viewOptions, filter));
+    const { unhealthyClusters, getUnhealthyClusters, viewOptions } = this.props;
+    if (!unhealthyClusters.fulfilled && !unhealthyClusters.pending) {
+      getUnhealthyClusters(createOverviewQueryObject(viewOptions, filter));
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { fetchClustersUsingParams, viewOptions } = this.props;
+    const { getUnhealthyClusters, viewOptions } = this.props;
     if (viewPropsChanged(viewOptions, prevProps.viewOptions)) {
-      fetchClustersUsingParams(createOverviewQueryObject(viewOptions, filter));
+      getUnhealthyClusters(createOverviewQueryObject(viewOptions, filter));
     }
   }
 
   render() {
     const {
-      dashboardClusters, setClusterDetails, viewOptions,
+      unhealthyClusters, setClusterDetails, viewOptions,
     } = this.props;
-    if (!dashboardClusters.pending
-       && (!dashboardClusters || dashboardClusters.clusters.length === 0)) {
+    if (!unhealthyClusters.pending
+       && (!unhealthyClusters || unhealthyClusters.clusters.length === 0)) {
       return null;
     }
 
@@ -75,12 +75,12 @@ class ClustersWithIssuesTableCard extends React.Component {
       { title: 'Issues detected', transforms: [textCenter, cellWidth(15)], columnTransforms: [textCenter] },
     ];
 
-    const showSkeleton = dashboardClusters.pending
-      && (dashboardClusters.clusters && dashboardClusters.clusters.length > 0);
+    const showSkeleton = unhealthyClusters.pending
+      && (unhealthyClusters.clusters && unhealthyClusters.clusters.length > 0);
 
     const rows = showSkeleton ? skeletonRows(viewOptions.pageSize)
-      : dashboardClusters.clusters.map(cluster => clusterWithIssuesRow(cluster));
-    const resolver = dashboardClusters.pending ? undefined
+      : unhealthyClusters.clusters.map(cluster => clusterWithIssuesRow(cluster));
+    const resolver = unhealthyClusters.pending ? undefined
       : rowData => actionResolver(rowData.cluster);
 
     return (
@@ -114,7 +114,7 @@ class ClustersWithIssuesTableCard extends React.Component {
 }
 
 ClustersWithIssuesTableCard.propTypes = {
-  dashboardClusters: PropTypes.shape({
+  unhealthyClusters: PropTypes.shape({
     clusters: PropTypes.array,
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
@@ -126,7 +126,7 @@ ClustersWithIssuesTableCard.propTypes = {
     totalPages: PropTypes.number,
   }).isRequired,
   setClusterDetails: PropTypes.func.isRequired,
-  fetchClustersUsingParams: PropTypes.func.isRequired,
+  getUnhealthyClusters: PropTypes.func.isRequired,
 
 };
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import get from 'lodash/get';
 import PropTypes from 'prop-types';
 
 import {
@@ -38,30 +37,39 @@ import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
 class Overview extends Component {
   componentDidMount() {
     const {
-      dashboards,
+      summaryDashboard,
       getSummaryDashboard,
     } = this.props;
-    if (!dashboards.fulfilled && !dashboards.pending) {
+    if (!summaryDashboard.fulfilled && !summaryDashboard.pending) {
       getSummaryDashboard();
     }
   }
 
   componentDidUpdate() {
     const {
-      dashboards,
+      summaryDashboard,
       getSummaryDashboard,
     } = this.props;
-    if (!dashboards.fulfilled && !dashboards.pending) {
+    if (!summaryDashboard.fulfilled && !summaryDashboard.pending) {
       getSummaryDashboard();
     }
   }
 
   render() {
     const {
-      dashboards,
+      summaryDashboard,
       invalidateSubscriptions,
+      totalClusters,
+      totalConnectedClusters,
+      totalUnhealthyClusters,
+      totalCPU,
+      usedCPU,
+      totalMem,
+      usedMem,
+      upToDate,
+      upgradeAvailable,
     } = this.props;
-    if (!dashboards.fulfilled || dashboards.pending) {
+    if (!summaryDashboard.fulfilled || summaryDashboard.pending) {
       return (
         <EmptyState>
           <EmptyStateBody>
@@ -70,18 +78,6 @@ class Overview extends Component {
         </EmptyState>
       );
     }
-
-    // summary dashboard contain only one {time, value} pair - the current value.
-    const summaryDashboard = dashboards.summary;
-    const totalClusters = get(summaryDashboard, 'clusters_total[0].value', 0);
-    const totalConnectedClusters = get(summaryDashboard, 'connected_clusters_total[0].value', 0);
-    const totalClustersWithIssues = get(summaryDashboard, 'clusters_with_issues_total[0].value', 0);
-    const totalCPU = get(summaryDashboard, 'sum_total_cpu[0]', { value: 0 });
-    const usedCPU = get(summaryDashboard, 'sum_used_cpu[0]', { value: 0 });
-    const totalMem = get(summaryDashboard, 'sum_total_memory[0]', { value: 0 });
-    const usedMem = get(summaryDashboard, 'sum_used_memory[0]', { value: 0 });
-    const upToDate = get(summaryDashboard, 'clusters_up_to_date_total[0]', { value: 0 });
-    const upgradeAvailable = get(summaryDashboard, 'clusters_upgrade_available_total[0]', { value: 0 });
 
     // Revert to an "empty" state if there are no clusters to show.
     if (!totalClusters) {
@@ -148,7 +144,7 @@ class Overview extends Component {
                 <CardBody>
                   <Bullseye>
                     <Title headingLevel="h1" size="3xl" id="clusters-with-issues">
-                      { totalClustersWithIssues }
+                      { totalUnhealthyClusters }
                     </Title>
                     <ExclamationCircleIcon
                       className="status-icon"
@@ -211,7 +207,16 @@ class Overview extends Component {
 Overview.propTypes = {
   getSummaryDashboard: PropTypes.func.isRequired,
   invalidateSubscriptions: PropTypes.func.isRequired,
-  dashboards: PropTypes.object.isRequired,
+  summaryDashboard: PropTypes.object.isRequired,
+  totalClusters: PropTypes.object.isRequired,
+  totalConnectedClusters: PropTypes.object.isRequired,
+  totalUnhealthyClusters: PropTypes.object.isRequired,
+  totalCPU: PropTypes.object.isRequired,
+  usedCPU: PropTypes.object.isRequired,
+  totalMem: PropTypes.object.isRequired,
+  usedMem: PropTypes.object.isRequired,
+  upToDate: PropTypes.object.isRequired,
+  upgradeAvailable: PropTypes.object.isRequired,
 };
 
 export default Overview;
