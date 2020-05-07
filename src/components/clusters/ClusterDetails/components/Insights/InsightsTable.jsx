@@ -12,6 +12,7 @@ import {
 } from '@redhat-cloud-services/rule-components';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
+import { ruleStatusFilter } from '@redhat-cloud-services/rule-components/src/RuleFilters';
 import AnalysisSummary from './AnalysisSummary';
 import './index.css';
 import { severityMapping } from './helpers';
@@ -32,6 +33,7 @@ const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
   .reduce(
     (acc, [key, filter]) => {
       let newAcc = true;
+
       switch (key) {
         case 'totalRiskFilter':
           if (filter.length > 0) {
@@ -42,6 +44,13 @@ const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
           // Make all strings in lower case to avoid case sensitivity
           newAcc = v.description.toLowerCase().indexOf(filter.toLowerCase()) > -1;
           break;
+        case 'ruleStatusFilter': {
+          const showEnabled = filter === 'enabled' || filter === 'all';
+          const showDisabled = filter === 'disabled' || filter === 'all';
+
+          newAcc = v.disabled ? showDisabled : showEnabled;
+          break;
+        }
         default:
           break;
       }
@@ -49,6 +58,14 @@ const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
     },
     true,
   );
+
+const defaultFilters = (filterValues, v) => {
+  if (!('ruleStatusFilter' in filterValues)) {
+    return !v.disabled;
+  }
+
+  return true;
+};
 
 class InsightsTable extends React.Component {
   state = {
@@ -114,6 +131,7 @@ class InsightsTable extends React.Component {
         .sort((a, b) => (sortBy && sortBy.column
           ? sortMultiplier[sortBy.direction] * dataSortMapping[sortBy.column.title](a, b)
           : 0))
+        .filter(v => defaultFilters(filterValues, v))
         .filter(v => isValueFiltered(filterValues, v));
 
       // Total count of showed items
@@ -160,6 +178,7 @@ class InsightsTable extends React.Component {
               filters={{
                 descriptionFilter,
                 totalRiskFilter,
+                ruleStatusFilter,
               }}
               filterValues={filters}
               sortBy={sortBy}

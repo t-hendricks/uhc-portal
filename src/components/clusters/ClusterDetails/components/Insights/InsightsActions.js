@@ -82,10 +82,14 @@ const disableSingleRuleInsights = async (clusterId, ruleId) => {
   };
 };
 
-export const disableRuleInsights = (clusterId, ruleId) => dispatch => dispatch({
-  type: DISABLE_RULE_INSIGHTS,
-  payload: disableSingleRuleInsights(clusterId, ruleId),
-});
+export const disableRuleInsights = (clusterId, ruleId) => (dispatch) => {
+  dispatch({
+    type: DISABLE_RULE_INSIGHTS,
+    payload: disableSingleRuleInsights(clusterId, ruleId),
+  }).then(() => {
+    dispatch(fetchClusterInsights(clusterId));
+  });
+};
 
 // clusterId is id of the cluster
 // ruleId is id of the rule
@@ -99,7 +103,11 @@ const enableSingleRuleInsights = async (clusterId, ruleId) => {
   };
 };
 
-export const enableRuleInsights = (clusterId, ruleId) => dispatch => dispatch({
-  type: ENABLE_RULE_INSIGHTS,
-  payload: enableSingleRuleInsights(clusterId, ruleId),
-});
+export const enableRuleInsights = (clusterId, ruleId) => (dispatch) => {
+  dispatch({
+    type: ENABLE_RULE_INSIGHTS,
+    payload: enableSingleRuleInsights(clusterId, ruleId),
+  }).then(() => {
+    dispatch(fetchClusterInsights(clusterId));
+  });
+};
