@@ -72,8 +72,13 @@ export const voteOnRuleInsights = (clusterId, ruleId, vote) => dispatch => dispa
 
 // clusterId is id of the cluster
 // ruleId is id of the rule
-const disableSingleRuleInsights = async (clusterId, ruleId) => {
-  const response = insightsService.disableRuleInsights(clusterId, ruleId);
+const toggleSingleRuleInsights = async (dispatch, clusterId, ruleId, enable) => {
+  const action = enable ? insightsService.enableRuleInsights : insightsService.disableRuleInsights;
+  const response = action(clusterId, ruleId).then((resp) => {
+    dispatch(fetchClusterInsights(clusterId));
+
+    return resp;
+  });
 
   return {
     insightsData: response.data,
@@ -85,29 +90,13 @@ const disableSingleRuleInsights = async (clusterId, ruleId) => {
 export const disableRuleInsights = (clusterId, ruleId) => (dispatch) => {
   dispatch({
     type: DISABLE_RULE_INSIGHTS,
-    payload: disableSingleRuleInsights(clusterId, ruleId),
-  }).then(() => {
-    dispatch(fetchClusterInsights(clusterId));
+    payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, false),
   });
-};
-
-// clusterId is id of the cluster
-// ruleId is id of the rule
-const enableSingleRuleInsights = async (clusterId, ruleId) => {
-  const response = insightsService.enableRuleInsights(clusterId, ruleId);
-
-  return {
-    insightsData: response.data,
-    clusterId,
-    ruleId,
-  };
 };
 
 export const enableRuleInsights = (clusterId, ruleId) => (dispatch) => {
   dispatch({
     type: ENABLE_RULE_INSIGHTS,
-    payload: enableSingleRuleInsights(clusterId, ruleId),
-  }).then(() => {
-    dispatch(fetchClusterInsights(clusterId));
+    payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, true),
   });
 };
