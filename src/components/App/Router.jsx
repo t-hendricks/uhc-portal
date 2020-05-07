@@ -50,6 +50,7 @@ import InstallCRC from '../clusters/install/InstallCRC';
 import InstallIBM from '../clusters/install/InstallIBM';
 import InstallPower from '../clusters/install/InstallPower';
 import Tokens from '../tokens/Tokens';
+import TokensMOA from '../tokens/TokensMOA';
 import NotFoundError from './NotFoundError';
 import Subscriptions from '../subscriptions';
 import Insights from './Insights';
@@ -64,6 +65,7 @@ function Router(props) {
       <ConnectedRouter history={history}>
         <Switch>
           <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
+          <Route path="/token/moa" component={TokensMOA} />
           <Route path="/token" component={Tokens} />
           <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
           <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />

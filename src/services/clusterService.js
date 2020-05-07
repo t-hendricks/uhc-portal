@@ -34,9 +34,9 @@ const fetchClusterByExternalId = clusterExternalID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters?&search=external_id='${clusterExternalID}'`,
 });
 
-const fetchClustersUsingParams = params => apiRequest({
+const getUnhealthyClusters = params => apiRequest({
   method: 'get',
-  url: '/api/clusters_mgmt/v1/clusters',
+  url: '/api/clusters_mgmt/v1/dashboards/summary/unhealthy_clusters',
   params: {
     page: params.page,
     size: params.page_size,
@@ -235,10 +235,10 @@ const deleteAdditionalIngress = (clusterID, routerID) => apiRequest({
 
 const clusterService = {
   getClusters,
+  getUnhealthyClusters,
   postNewCluster,
   postDisconnectedCluster,
   getClusterDetails,
-  fetchClustersUsingParams,
   fetchClusterByExternalId,
   editCluster,
   getCloudProviders,

@@ -96,7 +96,8 @@ class AddGrantModal extends Component {
         secondaryText="Cancel"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={cancelAddGrant}
-        isPrimaryDisabled={!!validationMessage}
+        isPrimaryDisabled={!!validationMessage || addGrantResponse.pending}
+        isPending={addGrantResponse.pending}
       >
         <>
           {hasError}
