@@ -1,0 +1,34 @@
+import axios from 'axios';
+import links, { channels, urls } from '../installLinks';
+
+const IGNORE_LINKS = [
+  'INSTALL_PRE_RELEASE_FEEDBACK_MAILTO', // mailto link, can't be verified
+];
+
+
+describe('check installLinks', () => {
+  it('All channel consts should have an entry in the urls map, with at least one non-empty OS', () => {
+    Object.values(channels).forEach((channel) => {
+      expect(urls).toHaveProperty(channel);
+      expect(Object.keys(urls[channel]).length).toBeGreaterThanOrEqual(1);
+      Object.values(urls[channel]).forEach((os) => {
+        expect(Object.keys(os).length).toBeGreaterThanOrEqual(1);
+      });
+    });
+  });
+  describe('Make sure links are working', () => test.each(Object.entries(links))('%s link is functional', (linkName, link) => {
+    if (!IGNORE_LINKS.includes(linkName)) {
+      const promise = axios.head(link, {
+        config: {
+          headers: { 'User-Agent': 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0' },
+        },
+        timeout: 20000,
+      });
+      promise.catch((error) => {
+        console.error(`${linkName} : ${link} is BROKEN - ${error}`);
+      });
+      return expect(promise).resolves.toHaveProperty('status', 200);
+    }
+    return undefined;
+  }, 20000));
+});
