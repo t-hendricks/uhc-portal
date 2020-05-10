@@ -13,100 +13,37 @@ exports[`<Overview /> renders correctly 1`] = `
       gutter="sm"
       id="overview-grid"
     >
-      <GridItem
-        span={3}
-      >
-        <Card
-          className="clusters-overview-card"
-        >
-          <CardHeader>
-            Clusters
-          </CardHeader>
-          <CardBody>
-            <Bullseye>
-              <Title
-                headingLevel="h1"
-                size="3xl"
-              >
-                30
-              </Title>
-            </Bullseye>
-          </CardBody>
-        </Card>
-      </GridItem>
-      <GridItem
-        rowSpan={2}
-        span={9}
-      >
-        <Card
-          id="metrics-charts"
-        >
-          <CardHeader>
-            CPU and Memory utilization
-          </CardHeader>
-          <CardBody>
-            <ResourceUsage
-              cpu={
-                Object {
-                  "total": Object {
-                    "value": 150,
-                  },
-                  "used": Object {
-                    "value": 10,
-                  },
-                }
-              }
-              memory={
-                Object {
-                  "total": Object {
-                    "unit": "B",
-                    "value": 100,
-                  },
-                  "used": Object {
-                    "unit": "B",
-                    "value": 10,
-                  },
-                }
-              }
-              metricsAvailable={true}
-              type="legend"
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-      <GridItem
-        span={3}
-      >
-        <Card
-          className="clusters-overview-card"
-        >
-          <CardHeader>
-            Clusters with issues
-          </CardHeader>
-          <CardBody>
-            <Bullseye>
-              <Title
-                headingLevel="h1"
-                id="clusters-with-issues"
-                size="3xl"
-              >
-                5
-              </Title>
-              <ExclamationCircleIcon
-                className="status-icon"
-                color="#c9190b"
-                noVerticalAlign={false}
-                size="sm"
-                title={null}
-              />
-            </Bullseye>
-          </CardBody>
-        </Card>
-      </GridItem>
+      <TopOverviewSection
+        totalCPU={
+          Object {
+            "value": 150,
+          }
+        }
+        totalClusters={30}
+        totalConnectedClusters={10}
+        totalMem={
+          Object {
+            "value": 100,
+          }
+        }
+        totalUnhealthyClusters={5}
+        usedCPU={
+          Object {
+            "value": 10,
+          }
+        }
+        usedMem={
+          Object {
+            "value": 10,
+          }
+        }
+      />
       <GridItem
         span={12}
       >
-        <Connect(ClustersWithIssuesTableCard) />
+        <Connect(ClustersWithIssuesTableCard)
+          totalConnectedClusters={10}
+        />
       </GridItem>
       <GridItem
         span={6}
