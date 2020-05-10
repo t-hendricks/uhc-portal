@@ -33,6 +33,20 @@ const setStateProp = (prop, data, options) => {
   return obj;
 };
 
+/** Build a dict mapping a cluster ID to a specific permission state
+ * @param {*} response - a response from selfResourceReview
+ */
+const buildPermissionDict = (response) => {
+  const ret = {};
+  if (!response || !response.data || !response.data.cluster_ids) {
+    return ret;
+  }
+  response.data.cluster_ids.forEach((clusterID) => {
+    ret[clusterID] = true;
+  });
+  return ret;
+};
+
 const actionTypes = {
   INVALIDATE_ACTION,
   FULFILLED_ACTION,
@@ -56,4 +70,5 @@ export {
   actionTypes,
   setStateProp,
   baseRequestState,
+  buildPermissionDict,
 };

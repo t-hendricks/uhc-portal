@@ -18,7 +18,7 @@ import isUuid from 'uuid-validate';
 
 import { clustersConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
-import { INVALIDATE_ACTION } from '../reduxHelpers';
+import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
 import { normalizeCluster } from '../../common/normalize';
 
 const invalidateClusters = () => dispatch => dispatch({
@@ -109,20 +109,6 @@ const editClusterConsoleURL = (id, consoleURL) => dispatch => dispatch({
   payload: clusterService.editCluster(id, { console: { url: consoleURL } }),
 });
 
-/** Build a dict mapping a cluster ID to a specific permission state
- * @param {*} response - a response from selfResourceReview
- */
-const buildPermissionDict = (response) => {
-  const ret = {};
-  if (!response || !response.data || !response.data.cluster_ids) {
-    return ret;
-  }
-  response.data.cluster_ids.forEach((clusterID) => {
-    ret[clusterID] = true;
-  });
-  return ret;
-};
-
 /**
  * Collect a list of object IDs and build a SQL-like query searching for these IDs.
  * For example, to collect subscription IDs from clusters, so we can query
@@ -204,11 +190,6 @@ const fetchClusters = params => dispatch => dispatch({
   payload: fetchClustersAndPermissions(params),
 });
 
-const fetchClustersUsingParams = params => dispatch => dispatch({
-  type: clustersConstants.GET_CLUSTERS_WITH_PARAMS,
-  payload: clusterService.fetchClustersUsingParams(params),
-});
-
 const fetchSingleClusterAndPermissions = (clusterID) => {
   let cluster;
   let canEdit;
@@ -271,7 +252,6 @@ const clustersActions = {
   editCluster,
   fetchClusters,
   fetchClusterDetails,
-  fetchClustersUsingParams,
   setClusterDetails,
   invalidateClusters,
   resetCreatedClusterResponse,
@@ -287,7 +267,6 @@ export {
   registerDisconnectedCluster,
   editCluster,
   fetchClusters,
-  fetchClustersUsingParams,
   fetchClusterDetails,
   setClusterDetails,
   invalidateClusters,

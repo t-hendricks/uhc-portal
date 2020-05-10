@@ -31,16 +31,24 @@ const getDashboard = id => clusterService.getDashboard(id).then(
 );
 
 const getSummaryDashboard = () => dispatch => dispatch({
-  type: dashboardsConstants.GET_DASHBOARD,
+  type: dashboardsConstants.GET_SUMMARY_DASHBOARD,
   payload: getDashboard(dashboardsConstants.SUMMARY_DASHBOARD),
+});
+
+
+const getUnhealthyClusters = params => dispatch => dispatch({
+  type: dashboardsConstants.GET_UNHEALTHY_CLUSTERS,
+  payload: clusterService.getUnhealthyClusters(params),
 });
 
 export {
   getSummaryDashboard,
+  getUnhealthyClusters,
 };
 
 const dashboardsActions = {
   getSummaryDashboard,
+  getUnhealthyClusters,
 };
 
 export default dashboardsActions;

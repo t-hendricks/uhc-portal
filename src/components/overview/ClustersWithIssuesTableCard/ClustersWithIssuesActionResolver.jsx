@@ -1,5 +1,5 @@
 import React from 'react';
-import clusterStates from '../clusters/common/clusterStates';
+import clusterStates from '../../clusters/common/clusterStates';
 
 /**
  * This function is used by PF tables to determine which dropdown items are displayed

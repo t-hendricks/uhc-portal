@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { subscriptionsConstants } from '../constants';
-import { accountsService } from '../../services';
-
+import { accountsService, authorizationsService } from '../../services';
+import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
 
 function fetchAccount() {
   return dispatch => dispatch({
@@ -23,6 +23,31 @@ function fetchAccount() {
     payload: accountsService.getCurrentAccount(),
   });
 }
+
+const getSubscriptionsAndPermissions = async (params) => {
+  let canEdit = [];
+  const permissionsResponse = await authorizationsService.selfResourceReview(
+    { action: 'update', resource_type: 'Cluster' },
+  );
+  canEdit = buildPermissionDict(permissionsResponse);
+
+  return accountsService.getSubscriptions(params).then((response) => {
+    response.data.items.forEach((subscription) => {
+      // eslint-disable-next-line no-param-reassign
+      subscription.canEdit = canEdit['*'] || !!canEdit[subscription.cluster_id];
+    });
+    return response;
+  });
+};
+
+const getSubscriptions = params => dispatch => dispatch({
+  type: subscriptionsConstants.GET_SUBSCRIPTIONS,
+  payload: getSubscriptionsAndPermissions(params),
+});
+
+const invalidateSubscriptions = () => dispatch => dispatch({
+  type: INVALIDATE_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS),
+});
 
 function fetchQuotaSummary(organizationID, params) {
   return dispatch => dispatch({
@@ -34,10 +59,14 @@ function fetchQuotaSummary(organizationID, params) {
 const subscriptionsActions = {
   fetchAccount,
   fetchQuotaSummary,
+  getSubscriptions,
+  invalidateSubscriptions,
 };
 
 export {
   subscriptionsActions,
   fetchAccount,
   fetchQuotaSummary,
+  getSubscriptions,
+  invalidateSubscriptions,
 };
