@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import {
   Card,
   CardBody,
@@ -9,6 +9,7 @@ import {
   Title,
   Tooltip,
 } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import CardBadge from '../../common/CardBadge';
 import Breadcrumbs from '../../common/Breadcrumbs';
@@ -20,11 +21,7 @@ import GCPLogo from '../../../../styles/images/google-cloud-logo.svg';
 class CloudProviderSelection extends Component {
   componentDidMount() {
     document.title = 'Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager | Choose your cloud provider';
-  }
-
-  componentDidUpdate() {
     const { getOrganizationAndQuota, organization } = this.props;
-
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
@@ -35,7 +32,7 @@ class CloudProviderSelection extends Component {
       hasOSDQuota, hasGcpQuota, hasAwsQuota, organization,
     } = this.props;
 
-    if (!organization.pending) {
+    if (!organization.pending && (organization.fulfilled || organization.error)) {
       if (!hasOSDQuota) {
         return (
           <Redirect to="/create" />
@@ -91,21 +88,27 @@ class CloudProviderSelection extends Component {
       </Tooltip>
     );
 
+    const quotaRequestComplete = organization.fulfilled || organization.error;
+    const title = (<PageTitle title="Create an OpenShift Dedicated Cluster" breadcrumbs={breadcrumbs} />);
     return (
       <>
-        <PageTitle title="Create an OpenShift Dedicated Cluster" breadcrumbs={breadcrumbs} />
+        {title}
         <PageSection>
-          <Card>
-            <div className="pf-c-content ocm-page">
-              <Title headingLevel="h3" size="2xl">
+          { quotaRequestComplete ? (
+            <Card>
+              <div className="pf-c-content ocm-page">
+                <Title headingLevel="h3" size="2xl">
                 Select an infrastructure provider
-              </Title>
-              <div className="flex-container">
-                {awsCard}
-                {gcpCard}
+                </Title>
+                <div className="flex-container">
+                  {awsCard}
+                  {gcpCard}
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          ) : (
+            <Spinner centered />
+          )}
         </PageSection>
       </>
     );
