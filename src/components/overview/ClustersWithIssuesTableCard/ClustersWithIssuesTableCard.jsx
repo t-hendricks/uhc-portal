@@ -31,13 +31,6 @@ import { viewConstants } from '../../../redux/constants';
 import { viewPropsChanged, createOverviewQueryObject } from '../../../common/queryHelpers';
 
 class ClustersWithIssuesTableCard extends React.Component {
-  componentDidMount() {
-    const { unhealthyClusters, getUnhealthyClusters, viewOptions } = this.props;
-    if (!unhealthyClusters.fulfilled && !unhealthyClusters.pending) {
-      getUnhealthyClusters(createOverviewQueryObject(viewOptions));
-    }
-  }
-
   componentDidUpdate(prevProps) {
     const { getUnhealthyClusters, viewOptions } = this.props;
     if (viewPropsChanged(viewOptions, prevProps.viewOptions)) {
