@@ -983,22 +983,28 @@ span.dev-preview-label svg {
   padding: 0;
 }
 
-.quota-dropdown ul {
+.quota-dropdown {
+ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   max-height: 200px !important;
   overflow-y:auto;
   overflow-x:hidden;
+ }
+  div {
+    width: 100%;
+  }
+  select {
+    width: 100%;
+    margin-right: var(--pf-global--spacer--xs);
+    display: block;
+  }
 }
 
 .edit-cluster-modal {
   &.edit-cluster-modal-rhinfra {
-    min-height: 70%;
-  }
-  select.quota-dropdown {
-    width: 48%;
-    display: block;
+    min-height: 40%;
   }
 }
 
@@ -1151,16 +1157,6 @@ h3#grant-role-select  {
 
 .access-control-tables-copy {
   padding-left: 0;
-}
-
-.compute-nodes-select {
-  div {
-    width: 100%;
-  }
-  select {
-    width: 100%;
-    margin-right: var(--pf-global--spacer--xs);
-  }
 }
 
 .idp-oauth-url-label {
