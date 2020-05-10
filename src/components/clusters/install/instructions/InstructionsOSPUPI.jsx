@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Title } from '@patternfly/react-core';
-import { CodeIcon } from '@patternfly/react-icons';
 import links, { channels } from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
-import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
+import EvaluationAlert from './components/EvaluationAlert';
 
 function InstructionsOSPUPI({ token }) {
   const cloudProviderID = window.location.pathname;
@@ -18,20 +17,14 @@ function InstructionsOSPUPI({ token }) {
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
-          <div className="developer-preview">
-            <CodeIcon />
-            {' '}
-            Developer Preview
-          </div>
           {token.error && <TokenErrorAlert token={token} />}
+          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
               With OpenShift Container Platform
               you can install a cluster on Red Hat OpenStack Platform using infrastructure that
               you provide.
             </p>
-            <DeveloperPreviewStatements />
-
             <GetStarted
               docURL={links.INSTALL_OSPUPI_GETTING_STARTED}
               cloudProviderID={cloudProviderID}
@@ -43,9 +36,9 @@ function InstructionsOSPUPI({ token }) {
       <DownloadsAndPullSecretSection
         token={token}
         rhcosLearnMoreURL={links.INSTALL_OSPUPI_RHCOS_LEARN_MORE}
-        rhcosDownloadURL={links.INSTALL_OSPUPI_DOWNLOAD_RHCOS_LATEST}
+        rhcosDownloadURL={links.DOWNLOAD_RHCOS_LATEST}
         cloudProviderID={cloudProviderID}
-        channel={channels.PRE_RELEASE}
+        channel={channels.STABLE}
       />
     </>
   );
