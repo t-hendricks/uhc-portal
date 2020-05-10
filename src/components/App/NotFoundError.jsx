@@ -9,8 +9,8 @@ function NotFoundError({ location }) {
   const locationWithPrefix = `${getBaseName()}${location.pathname}`;
   return (
     <EmptyState>
-      <Alert variant="danger" isInline title="Not Found">
-        The URL&nbsp;
+      <Alert variant="danger" isInline title="Not Found" id="not-found">
+       The URL&nbsp;
         {locationWithPrefix}
         &nbsp;was not found in this application.
         <br />
