@@ -23,15 +23,23 @@ import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog';
 import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
 import TopOverviewSection from './TopOverviewSection/TopOverviewSection';
+import { createOverviewQueryObject } from '../../common/queryHelpers';
 
 class Overview extends Component {
   componentDidMount() {
     const {
       summaryDashboard,
       getSummaryDashboard,
+      unhealthyClusters,
+      getUnhealthyClusters,
+      viewOptions,
     } = this.props;
     if (!summaryDashboard.fulfilled && !summaryDashboard.pending) {
       getSummaryDashboard();
+    }
+
+    if (!unhealthyClusters.fulfilled && !unhealthyClusters.pending) {
+      getUnhealthyClusters(createOverviewQueryObject(viewOptions));
     }
   }
 
@@ -48,6 +56,8 @@ class Overview extends Component {
   render() {
     const {
       summaryDashboard,
+      unhealthyClusters,
+      viewOptions,
       invalidateSubscriptions,
       totalClusters,
       totalConnectedClusters,
@@ -59,7 +69,8 @@ class Overview extends Component {
       upToDate,
       upgradeAvailable,
     } = this.props;
-    if (!summaryDashboard.fulfilled || summaryDashboard.pending) {
+    if (!summaryDashboard.fulfilled || summaryDashboard.pending
+      || !unhealthyClusters.fulfilled || unhealthyClusters.pending) {
       return (
         <EmptyState>
           <EmptyStateBody>
@@ -97,6 +108,8 @@ class Overview extends Component {
             <GridItem span={12}>
               <ClustersWithIssuesTableCard
                 totalConnectedClusters={totalConnectedClusters}
+                unhealthyClusters={unhealthyClusters}
+                viewOptions={viewOptions}
               />
             </GridItem>
             <GridItem span={6}>
@@ -149,6 +162,18 @@ Overview.propTypes = {
   getSummaryDashboard: PropTypes.func.isRequired,
   invalidateSubscriptions: PropTypes.func.isRequired,
   summaryDashboard: PropTypes.object.isRequired,
+  getUnhealthyClusters: PropTypes.func.isRequired,
+  unhealthyClusters: PropTypes.shape({
+    clusters: PropTypes.array,
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+  }).isRequired,
+  viewOptions: PropTypes.shape({
+    currentPage: PropTypes.number,
+    pageSize: PropTypes.number,
+    totalCount: PropTypes.number,
+    totalPages: PropTypes.number,
+  }).isRequired,
   totalClusters: PropTypes.number.isRequired,
   totalConnectedClusters: PropTypes.number.isRequired,
   totalUnhealthyClusters: PropTypes.number.isRequired,
