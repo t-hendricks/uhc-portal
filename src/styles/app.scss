@@ -67,8 +67,9 @@ limitations under the License.
 
 .token-value, .token-snippet {
   pre {
-    white-space: pre-wrap;
+    overflow: auto;
   }
+  width: fit-content;
 }
 
 .navbar-pf-vertical .navbar-brand .navbar-brand-name {
