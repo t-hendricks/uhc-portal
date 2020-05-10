@@ -56,14 +56,17 @@ import Subscriptions from '../subscriptions';
 import Insights from './Insights';
 import CloudProviderSelection from '../clusters/CreateOSDPage/CloudProviderSelection';
 
-function Router(props) {
-  const { history } = props;
-
+function Router({ history }) {
   return (
     <>
       <Insights history={history} />
       <ConnectedRouter history={history}>
         <Switch>
+          {/*
+            IMPORTANT!
+            When adding new routes, make sure to add the route both here and in Router.test.jsx,
+            to ensure the route is tested.
+          */}
           <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
           <Route path="/token/moa" component={TokensMOA} />
           <Route path="/token" component={Tokens} />
