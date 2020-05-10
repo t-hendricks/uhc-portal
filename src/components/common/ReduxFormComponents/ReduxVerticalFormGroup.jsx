@@ -19,6 +19,7 @@ function ReduxVerticalFormGroup(props) {
     input,
     disabled,
     isTextArea,
+    showHelpTextOnError,
     ...extraProps // any extra props not specified above
   } = props;
 
@@ -30,13 +31,23 @@ function ReduxVerticalFormGroup(props) {
     [disabledPropName]: disabled,
   };
 
+  const helperTextInvalid = () => {
+    if (touched && error) {
+      if (showHelpTextOnError) {
+        return `${helpText} ${error}`;
+      }
+      return error;
+    }
+    return '';
+  };
+
   return (
     <FormGroup
       fieldId={input.name}
       isValid={!(touched && error)}
       label={label}
       helperText={helpText}
-      helperTextInvalid={touched && error ? `${helpText} ${error}` : ''}
+      helperTextInvalid={helperTextInvalid()}
       isRequired={isRequired}
     >
       { extendedHelpText && (
@@ -58,6 +69,7 @@ function ReduxVerticalFormGroup(props) {
 ReduxVerticalFormGroup.defaultProps = {
   helpText: '',
   isRequired: false,
+  showHelpTextOnError: true,
 };
 ReduxVerticalFormGroup.propTypes = {
   label: PropTypes.string,
@@ -75,6 +87,7 @@ ReduxVerticalFormGroup.propTypes = {
   isTextArea: PropTypes.bool,
   // plus other props passed from the <Field> component to the control (extraProps,
   // incl. children)...
+  showHelpTextOnError: PropTypes.bool,
 };
 
 export default ReduxVerticalFormGroup;
