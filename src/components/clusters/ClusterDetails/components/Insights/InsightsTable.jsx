@@ -9,10 +9,10 @@ import {
   ReportDetails,
   descriptionFilter,
   totalRiskFilter,
+  ruleStatusFilter,
 } from '@redhat-cloud-services/rule-components';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
-import { ruleStatusFilter } from '@redhat-cloud-services/rule-components/src/RuleFilters';
 import AnalysisSummary from './AnalysisSummary';
 import './index.css';
 import { severityMapping } from './helpers';
@@ -223,8 +223,8 @@ class InsightsTable extends React.Component {
                 />
               )}
               actionResolver={(rowData, { rowIndex }) => {
-                // we gotta do this shit
-                // since fucking Patternfly considers row details as another row
+                // we gotta do this trick
+                // since Patternfly considers row details as another row
                 if (rowIndex % 2 !== 0) {
                   return null;
                 }
