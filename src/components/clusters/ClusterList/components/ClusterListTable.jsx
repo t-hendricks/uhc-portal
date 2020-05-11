@@ -28,6 +28,8 @@ import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 import getClusterName from '../../../../common/getClusterName';
 import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 import skeletonRows from '../../../common/SkeletonRows';
+import ClusterTypeLabel from '../../common/ClusterTypeLabel';
+
 
 function ClusterListTable(props) {
   const {
@@ -104,17 +106,6 @@ function ClusterListTable(props) {
       );
     };
 
-    const clusterType = (
-      <Tooltip
-        content={cluster.managed
-          ? 'OpenShift Dedicated (OSD) cluster managed by Red Hat' : 'Self-managed OpenShift Container Platform (OCP) cluster'}
-      >
-        <span>
-          {cluster.managed ? 'OSD' : 'OCP'}
-        </span>
-      </Tooltip>
-    );
-
     const clusterVersion = (
       <span>
         {cluster.openshift_version || 'N/A'}
@@ -126,7 +117,7 @@ function ClusterListTable(props) {
       cells: [
         { title: clusterName },
         { title: clusterStatus(clusterState.state) },
-        { title: clusterType },
+        { title: <ClusterTypeLabel cluster={cluster} /> },
         { title: <ClusterCreatedIndicator cluster={cluster} /> },
         { title: clusterVersion },
         {
