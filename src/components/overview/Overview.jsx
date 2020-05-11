@@ -118,14 +118,24 @@ class Overview extends Component {
                     Update status
                 </CardHeader>
                 <CardBody>
-                  <SmallClusterChart
-                    donutId="update_available_donut"
-                    used={upToDate.value}
-                    total={upgradeAvailable.value + upToDate.value}
-                    unit="clusters"
-                    availableTitle="Update available"
-                    usedTitle="Up-to-date"
-                  />
+                  {!upgradeAvailable.value && !upToDate.value
+                    ? (
+                      <EmptyState>
+                        <EmptyStateBody>
+                          No data available
+                        </EmptyStateBody>
+                      </EmptyState>
+                    )
+                    : (
+                      <SmallClusterChart
+                        donutId="update_available_donut"
+                        used={upToDate.value}
+                        total={upgradeAvailable.value + upToDate.value}
+                        unit="clusters"
+                        availableTitle="Update available"
+                        usedTitle="Up-to-date"
+                      />
+                    )}
                 </CardBody>
               </Card>
             </GridItem>
