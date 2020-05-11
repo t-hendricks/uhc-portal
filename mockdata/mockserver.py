@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 import http.server
 import os.path
+import sys
+
+def output_line_buffering():
+    """Force line-buffering of output. Useful under `concurrently`."""
+    sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 1)
+    sys.stderr = os.fdopen(sys.stderr.fileno(), 'w', 1)
 
 class Handler(http.server.SimpleHTTPRequestHandler):
   def __init__(self, *args, **kwargs):
@@ -45,6 +51,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
       return self.do_GET()
 
 def main():
+    output_line_buffering()
     server_address = ('localhost', 8010)
     httpd = http.server.ThreadingHTTPServer(server_address, Handler)
     print("Listening on http://localhost:8010")
