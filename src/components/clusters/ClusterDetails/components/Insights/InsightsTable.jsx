@@ -177,6 +177,12 @@ class InsightsTable extends React.Component {
     });
   };
 
+  onRuleDisabled() {
+    if (!('ruleStatusFilter' in this.state.filters)) {
+      this.setFilter('ruleStatusFilter', 'enabled');
+    }
+  }
+
   render() {
     const {
       insightsData, voteOnRule, disableRule, enableRule,
@@ -271,7 +277,14 @@ class InsightsTable extends React.Component {
 
                 return [{
                   title: `${disabled ? 'Enable' : 'Disable'} health check`,
-                  onClick: () => (disabled ? enableRule(ruleId) : disableRule(ruleId)),
+                  onClick: () => {
+                    if (disabled) {
+                      enableRule(ruleId);
+                    } else {
+                      disableRule(ruleId);
+                      this.onRuleDisabled();
+                    }
+                  },
                 }];
               }}
               emptyStateTitle="No health checks"
