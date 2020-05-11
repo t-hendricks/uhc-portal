@@ -90,7 +90,7 @@ function subscriptionsReducer(state = initialState, action) {
       case FULFILLED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
         draft.subscriptions = {
           ...initialState.subscriptions,
-          fulfilled: action.payload.data.items && action.payload.data.items.length > 0,
+          fulfilled: true,
           valid: true,
           items: action.payload.data.items,
         };

@@ -75,40 +75,4 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
 </Card>
 `;
 
-exports[`<ExpiredTrialsCard /> When the request was not fulfilled renders correctly 1`] = `
-<Card
-  id="clusters-overview-card"
->
-  <CardHeader>
-    Expired Trials
-  </CardHeader>
-  <CardBody>
-    <Component
-      actionResolver={[Function]}
-      areActionsDisabled={[Function]}
-      aria-label="Expired Trials"
-      cells={
-        Array [
-          Object {
-            "title": "Name",
-          },
-        ]
-      }
-      rows={Array []}
-      variant="compact"
-    >
-      <TableHeader />
-      <TableBody />
-    </Component>
-    <Connect(ViewPaginationRow)
-      currentPage={1}
-      isDisabled={false}
-      pageSize={5}
-      totalCount={0}
-      totalPages={0}
-      variant="bottom"
-      viewType="OVERVIEW_EXPIRED_TRIALS"
-    />
-  </CardBody>
-</Card>
-`;
+exports[`<ExpiredTrialsCard /> When the request was not fulfilled renders correctly 1`] = `""`;
