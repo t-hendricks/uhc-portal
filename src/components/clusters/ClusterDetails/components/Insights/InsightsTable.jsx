@@ -1,7 +1,9 @@
 /* eslint react/destructuring-assignment: 0 */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardBody } from '@patternfly/react-core';
+import {
+  Button, Card, CardBody, EmptyStateIcon,
+} from '@patternfly/react-core';
 import { cellWidth } from '@patternfly/react-table';
 import {
   RuleTable,
@@ -13,6 +15,7 @@ import {
 } from '@redhat-cloud-services/rule-components';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
+import { CheckCircleIcon } from '@patternfly/react-icons';
 import AnalysisSummary from './AnalysisSummary';
 import './index.css';
 import { severityMapping } from './helpers';
@@ -67,6 +70,10 @@ const defaultFilters = (filterValues, v) => {
   return true;
 };
 
+const EmptyTableIcon = () => (
+  <EmptyStateIcon className="success-color" icon={CheckCircleIcon} />
+);
+
 class InsightsTable extends React.Component {
   state = {
     shownData: [],
@@ -95,7 +102,7 @@ class InsightsTable extends React.Component {
     }
   }
 
-  addFilter = (filterValue) => {
+  addTotalRiskFilter = (filterValue) => {
     this.setState(
       (state) => {
         const filters = { ...state.filters };
@@ -105,6 +112,24 @@ class InsightsTable extends React.Component {
         if (!filters.totalRiskFilter.includes(filterValue)) {
           filters.totalRiskFilter.push(filterValue);
         }
+        return {
+          filters,
+          meta: {
+            ...state.meta,
+            page: 1,
+          },
+        };
+      },
+      () => this.fetchData({ filterValues: this.state.filters }),
+    );
+  };
+
+  setFilter = (filterName, filterValue) => {
+    this.setState(
+      (state) => {
+        const filters = { ...state.filters };
+        filters[filterName] = filterValue;
+
         return {
           filters,
           meta: {
@@ -166,7 +191,7 @@ class InsightsTable extends React.Component {
 
     return (
       <>
-        <AnalysisSummary insightsData={insightsData} batteryClicked={this.addFilter} />
+        <AnalysisSummary insightsData={insightsData} batteryClicked={this.addTotalRiskFilter} />
         <Card>
           <CardBody className="no-padding">
             <RuleTable
@@ -249,6 +274,20 @@ class InsightsTable extends React.Component {
                   onClick: () => (disabled ? enableRule(ruleId) : disableRule(ruleId)),
                 }];
               }}
+              emptyStateTitle="No health checks"
+              emptyStateDescription={(
+                <>
+                  <p>Your cluster is not affected by enabled health checks.</p>
+                  <Button
+                    className="include-disabled-rules-link"
+                    variant="link"
+                    onClick={() => { this.setFilter('ruleStatusFilter', 'all'); }}
+                  >
+                    Include disabled health checks
+                  </Button>
+                </>
+              )}
+              emptyStateIcon={EmptyTableIcon}
             />
           </CardBody>
         </Card>
