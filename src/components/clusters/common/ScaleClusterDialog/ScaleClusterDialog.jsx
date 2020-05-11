@@ -11,6 +11,7 @@ import NodeCountInput from '../NodeCountInput';
 import ErrorBox from '../../../common/ErrorBox';
 import PersistentStorageDropdown from '../PersistentStorageDropdown';
 import LoadBalancersDropdown from '../LoadBalancersDropdown';
+import { shouldRefetchQuota } from '../../../../common/helpers';
 
 
 class ScaleClusterDialog extends Component {
@@ -29,7 +30,7 @@ class ScaleClusterDialog extends Component {
     if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
       getLoadBalancers();
     }
-    if (!organization.fulfilled && !organization.pending) {
+    if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
   }
@@ -46,7 +47,7 @@ class ScaleClusterDialog extends Component {
     } = this.props;
 
     // Fetch quota on opening the scale modal.
-    if (!prevProps.isOpen && isOpen && !organization.pending) {
+    if (!prevProps.isOpen && isOpen && shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
 

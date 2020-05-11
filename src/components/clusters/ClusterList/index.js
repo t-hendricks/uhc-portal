@@ -27,6 +27,7 @@ const mapStateToProps = state => ({
   viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
   cloudProviders: state.cloudProviders,
   organization: state.userProfile.organization,
+  anyModalOpen: !!state.modal.modalName,
 });
 
 export default connect(

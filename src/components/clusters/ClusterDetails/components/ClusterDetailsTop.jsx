@@ -29,6 +29,7 @@ function ClusterDetailsTop(props) {
     errorMessage,
     children,
     canAllowClusterAdmin,
+    autoRefreshEnabled,
   } = props;
 
   const clusterName = getClusterName(cluster);
@@ -140,7 +141,7 @@ function ClusterDetailsTop(props) {
                 Unarchive
               </Button>
             )}
-            <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
+            <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} />
           </span>
         </SplitItem>
       </Split>
@@ -178,6 +179,7 @@ ClusterDetailsTop.propTypes = {
   ]),
   children: PropTypes.any,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
+  autoRefreshEnabled: PropTypes.bool,
 };
 
 export default ClusterDetailsTop;

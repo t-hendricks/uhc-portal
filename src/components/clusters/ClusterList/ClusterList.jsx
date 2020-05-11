@@ -130,6 +130,7 @@ class ClusterList extends Component {
       operationID,
       history,
       setClusterDetails,
+      anyModalOpen,
     } = this.props;
 
     const pageHeader = (
@@ -210,7 +211,7 @@ class ClusterList extends Component {
                   isDisabled={isPendingNoData}
                 />
                 <RefreshBtn
-                  autoRefresh
+                  autoRefresh={!anyModalOpen}
                   isDisabled={isPendingNoData}
                   refreshFunc={this.refresh}
                   classOptions="cluster-list-top"
@@ -281,6 +282,7 @@ ClusterList.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  anyModalOpen: PropTypes.bool,
 };
 
 export default ClusterList;
