@@ -10,29 +10,33 @@ RUN dnf install -y ruby ruby-devel rubygem-bundler rubygem-nokogiri gcc-c++ make
 RUN dnf builddep -y rubygem-nokogiri
 
 RUN useradd user
-USER user
-# Full directory copied later, to improve build caching.
+
+# First copy only inputs to bundler, full directory copied/mounted later, to improve build caching.
 # (1st step of https://medium.com/magnetis-backstage/how-to-cache-bundle-install-with-docker-7bed453a5800)
-COPY verification-tests/Gemfile* /verification-tests/
+COPY verification-tests/Gemfile* /ruby-dependencies/
+# Bundler needs to run as non-root, but defaults to installing globally with sudo;
+# setting BUNDLE_PATH avoids that, installs as current user.
+RUN mkdir /bundle
+RUN chown --recursive user:user /ruby-dependencies /bundle
+ENV BUNDLE_GEMFILE=/ruby-dependencies/Gemfile
+ENV BUNDLE_PATH=/bundle
 
-WORKDIR verification-tests
-
-USER root
-# install_os_deps.sh works but installs too much (firefox + X + ansible).
-# findutils needed for xargs.
-#RUN dnf install -y findutils
-#RUN bash -x tools/install_os_deps.sh
-
-# Bundler needs to run as non-root, but defaults to installing globally with sudo.
-# TODO: does --path prevent it from seeing the rubygem-nokogiri rpm?
 USER user
-ENV BUNDLE_PATH=/verification-tests/vendor/bundle
 #RUN tools/hack_bundle.rb
+WORKDIR /ruby-dependencies
 RUN bundle install
 
-# Copy full tests last for minimal re-building.
-COPY verification-tests /verification-tests
-COPY cucushift /cucushift
+# This container assumes volumes will be mounted as-if the following were copied:
+#COPY verification-tests /verification-tests
+#COPY cucushift /cucushift
+#COPY private /verification-tests/private
+# plus an optional read-write volume at /output:
+USER root
+RUN mkdir /output; chown --recursive user:user /output
+ENV BUSHSLICER_REPORT_DIR=/output
 
-COPY config.yaml /verification-tests/private/config/config.yaml
+USER user
+WORKDIR /verification-tests
+# Environments configured in /verification-tests/private/config/config.yaml
 ENV BUSHSLICER_DEFAULT_ENVIRONMENT=ocm_local_dev
+CMD bundle exec cucumber ../cucushift/features/ocm/
