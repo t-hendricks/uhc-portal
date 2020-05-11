@@ -72,9 +72,8 @@ const links = {
   INSTALL_GCPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra`,
 
   INSTALL_OSPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-installer-custom.html`,
-  INSTALL_OSPUPI_GETTING_STARTED: 'https://github.com/openshift/installer/blob/master/docs/user/openstack/install_upi.md',
-  INSTALL_OSPUPI_RHCOS_LEARN_MORE: 'https://github.com/openshift/installer/blob/master/docs/user/openstack/install_upi.md#red-hat-enterprise-linux-coreos-rhcos',
-  INSTALL_OSPUPI_DOWNLOAD_RHCOS_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/pre-release/latest/',
+  INSTALL_OSPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-user.html`,
+  INSTALL_OSPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user`,
 
   INSTALL_VSPHERE_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
   INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
