@@ -102,16 +102,18 @@ class InsightsTable extends React.Component {
     }
   }
 
-  addTotalRiskFilter = (filterValue) => {
+  onRuleDisabled() {
+    if (!('ruleStatusFilter' in this.state.filters)) {
+      this.setFilter('ruleStatusFilter', 'enabled');
+    }
+  }
+
+  setFilter = (filterName, filterValue) => {
     this.setState(
       (state) => {
         const filters = { ...state.filters };
-        if (!filters.totalRiskFilter) {
-          filters.totalRiskFilter = [];
-        }
-        if (!filters.totalRiskFilter.includes(filterValue)) {
-          filters.totalRiskFilter.push(filterValue);
-        }
+        filters[filterName] = filterValue;
+
         return {
           filters,
           meta: {
@@ -124,12 +126,16 @@ class InsightsTable extends React.Component {
     );
   };
 
-  setFilter = (filterName, filterValue) => {
+  addTotalRiskFilter = (filterValue) => {
     this.setState(
       (state) => {
         const filters = { ...state.filters };
-        filters[filterName] = filterValue;
-
+        if (!filters.totalRiskFilter) {
+          filters.totalRiskFilter = [];
+        }
+        if (!filters.totalRiskFilter.includes(filterValue)) {
+          filters.totalRiskFilter.push(filterValue);
+        }
         return {
           filters,
           meta: {
@@ -176,12 +182,6 @@ class InsightsTable extends React.Component {
       };
     });
   };
-
-  onRuleDisabled() {
-    if (!('ruleStatusFilter' in this.state.filters)) {
-      this.setFilter('ruleStatusFilter', 'enabled');
-    }
-  }
 
   render() {
     const {
