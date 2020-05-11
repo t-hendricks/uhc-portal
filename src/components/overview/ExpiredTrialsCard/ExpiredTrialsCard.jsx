@@ -19,18 +19,16 @@ import {
 import ViewPaginationRow from '../../clusters/common/ViewPaginationRow/viewPaginationRow';
 import { viewConstants } from '../../../redux/constants';
 import { viewPropsChanged, createOverviewQueryObject } from '../../../common/queryHelpers';
-import { subscriptionSupportLevels } from '../../../common/subscriptionTypes';
 
 import skeletonRows from '../../common/SkeletonRows';
+import { expiredTrialsFilter } from './expiredTrialsHelpers';
 
-
-const filter = { filter: `support_level='${subscriptionSupportLevels.NONE}' AND status NOT IN ('Deprovisioned', 'Archived')` };
 
 class ExpiredTrialsCard extends React.Component {
   componentDidMount() {
     const { getSubscriptions, subscriptions, viewOptions } = this.props;
     if (!subscriptions.fulfilled && !subscriptions.pending) {
-      getSubscriptions(createOverviewQueryObject(viewOptions, filter));
+      getSubscriptions(createOverviewQueryObject(viewOptions, expiredTrialsFilter));
     }
   }
 
@@ -38,13 +36,13 @@ class ExpiredTrialsCard extends React.Component {
     const { getSubscriptions, subscriptions, viewOptions } = this.props;
     if ((!subscriptions.pending && !subscriptions.valid)
         || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
-      getSubscriptions(createOverviewQueryObject(viewOptions, filter));
+      getSubscriptions(createOverviewQueryObject(viewOptions, expiredTrialsFilter));
     }
   }
 
   render() {
     const { viewOptions, subscriptions, openModal } = this.props;
-    if (!subscriptions.items) {
+    if (!subscriptions.items || subscriptions.items.length === 0) {
       return null;
     }
 
