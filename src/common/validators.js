@@ -11,7 +11,7 @@ const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
 const MACHINE_CIDR_MAX_SINGLE_AZ = 23;
-const MACHINE_CIDR_MAX_MULTI_AZ = 24;
+const MACHINE_CIDR_MAX_MULTI_AZ = 23;
 const SERVICE_CIDR_MAX = 24;
 const POD_CIDR_MAX = 18;
 
