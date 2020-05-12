@@ -73,7 +73,7 @@ test('Field is valid Machine CIDR', () => {
   expect(validators.machineCidr('192.168.0.0/0', { multi_az: 'false' })).toBe(undefined);
   expect(validators.machineCidr('192.168.0.0/25', { multi_az: 'false' })).toBe('The subnet length can\'t be higher than \'/23\', which provides up to 23 nodes.');
   expect(validators.machineCidr('192.168.0.0/0', { multi_az: 'true' })).toBe(undefined);
-  expect(validators.machineCidr('192.168.0.0/25', { multi_az: 'true' })).toBe('The subnet length can\'t be higher than \'/24\', which provides up to 21 nodes.');
+  expect(validators.machineCidr('192.168.0.0/25', { multi_az: 'true' })).toBe('The subnet length can\'t be higher than \'/23\', which provides up to 69 nodes.');
 });
 
 test('Field is valid Service CIDR', () => {
