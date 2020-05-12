@@ -5,6 +5,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   id="clusterdetails-content"
 >
   <ClusterDetailsTop
+    autoRefreshEnabled={true}
     cluster={
       Object {
         "api": Object {

@@ -206,7 +206,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           showConsoleButton={false}
         />
         <RefreshBtn
-          autoRefresh={true}
           classOptions=""
           id="refresh"
           refreshFunc={[MockFunction]}
