@@ -2,46 +2,44 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  PageHeader, PageHeaderTitle, Spinner,
-} from '@redhat-cloud-services/frontend-components';
-
-import {
   PageSection,
-  Title,
   CardBody,
   EmptyState,
   EmptyStateBody,
   Card,
   CardHeader,
-  Bullseye,
   Grid,
   GridItem,
 } from '@patternfly/react-core';
 
 import {
-  ExclamationCircleIcon,
-} from '@patternfly/react-icons';
+  PageHeader, PageHeaderTitle, Spinner,
+} from '@redhat-cloud-services/frontend-components';
 
-import {
-  // eslint-disable-next-line camelcase
-  global_danger_color_100,
-} from '@patternfly/react-tokens';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
-import ResourceUsage from '../clusters/common/ResourceUsage/ResourceUsage';
 import OverviewEmptyState from './OverviewEmptyState';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog';
 import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
+import TopOverviewSection from './TopOverviewSection/TopOverviewSection';
+import { createOverviewQueryObject } from '../../common/queryHelpers';
 
 class Overview extends Component {
   componentDidMount() {
     const {
       summaryDashboard,
       getSummaryDashboard,
+      unhealthyClusters,
+      getUnhealthyClusters,
+      viewOptions,
     } = this.props;
     if (!summaryDashboard.fulfilled && !summaryDashboard.pending) {
       getSummaryDashboard();
+    }
+
+    if (!unhealthyClusters.fulfilled && !unhealthyClusters.pending) {
+      getUnhealthyClusters(createOverviewQueryObject(viewOptions));
     }
   }
 
@@ -58,6 +56,8 @@ class Overview extends Component {
   render() {
     const {
       summaryDashboard,
+      unhealthyClusters,
+      viewOptions,
       invalidateSubscriptions,
       totalClusters,
       totalConnectedClusters,
@@ -69,7 +69,8 @@ class Overview extends Component {
       upToDate,
       upgradeAvailable,
     } = this.props;
-    if (!summaryDashboard.fulfilled || summaryDashboard.pending) {
+    if (!summaryDashboard.fulfilled || summaryDashboard.pending
+      || !unhealthyClusters.fulfilled || unhealthyClusters.pending) {
       return (
         <EmptyState>
           <EmptyStateBody>
@@ -95,68 +96,21 @@ class Overview extends Component {
         </PageHeader>
         <PageSection>
           <Grid gutter="sm" id="overview-grid">
-            <GridItem span={3}>
-              <Card className="clusters-overview-card">
-                <CardHeader>
-                  Clusters
-                </CardHeader>
-                <CardBody>
-                  <Bullseye>
-                    <Title headingLevel="h1" size="3xl">
-                      {totalClusters}
-                    </Title>
-                  </Bullseye>
-                </CardBody>
-              </Card>
-            </GridItem>
-            <GridItem span={9} rowSpan={2}>
-              <Card id="metrics-charts">
-                <CardHeader>
-                  CPU and Memory utilization
-                </CardHeader>
-                <CardBody>
-                  <ResourceUsage
-                    cpu={{
-                      total: totalCPU,
-                      used: usedCPU,
-                    }}
-                    memory={{
-                      total: {
-                        value: totalMem.value,
-                        unit: 'B',
-                      },
-                      used: {
-                        value: usedMem.value,
-                        unit: 'B',
-                      },
-                    }}
-                    metricsAvailable
-                    type="legend"
-                  />
-                </CardBody>
-              </Card>
-            </GridItem>
-            <GridItem span={3}>
-              <Card className="clusters-overview-card">
-                <CardHeader>
-                  Clusters with issues
-                </CardHeader>
-                <CardBody>
-                  <Bullseye>
-                    <Title headingLevel="h1" size="3xl" id="clusters-with-issues">
-                      { totalUnhealthyClusters }
-                    </Title>
-                    <ExclamationCircleIcon
-                      className="status-icon"
-                      color={global_danger_color_100.value}
-                      size="sm"
-                    />
-                  </Bullseye>
-                </CardBody>
-              </Card>
-            </GridItem>
+            <TopOverviewSection
+              totalClusters={totalClusters}
+              totalUnhealthyClusters={totalUnhealthyClusters}
+              totalConnectedClusters={totalConnectedClusters}
+              totalCPU={totalCPU}
+              usedCPU={usedCPU}
+              totalMem={totalMem}
+              usedMem={usedMem}
+            />
             <GridItem span={12}>
-              <ClustersWithIssuesTableCard />
+              <ClustersWithIssuesTableCard
+                totalConnectedClusters={totalConnectedClusters}
+                unhealthyClusters={unhealthyClusters}
+                viewOptions={viewOptions}
+              />
             </GridItem>
             <GridItem span={6}>
               <Card className="clusters-overview-card">
@@ -164,14 +118,24 @@ class Overview extends Component {
                     Update status
                 </CardHeader>
                 <CardBody>
-                  <SmallClusterChart
-                    donutId="update_available_donut"
-                    used={upToDate.value}
-                    total={upgradeAvailable.value + upToDate.value}
-                    unit="clusters"
-                    availableTitle="Update available"
-                    usedTitle="Up-to-date"
-                  />
+                  {!upgradeAvailable.value && !upToDate.value
+                    ? (
+                      <EmptyState>
+                        <EmptyStateBody>
+                          No data available
+                        </EmptyStateBody>
+                      </EmptyState>
+                    )
+                    : (
+                      <SmallClusterChart
+                        donutId="update_available_donut"
+                        used={upToDate.value}
+                        total={upgradeAvailable.value + upToDate.value}
+                        unit="clusters"
+                        availableTitle="Update available"
+                        usedTitle="Up-to-date"
+                      />
+                    )}
                 </CardBody>
               </Card>
             </GridItem>
@@ -208,9 +172,21 @@ Overview.propTypes = {
   getSummaryDashboard: PropTypes.func.isRequired,
   invalidateSubscriptions: PropTypes.func.isRequired,
   summaryDashboard: PropTypes.object.isRequired,
-  totalClusters: PropTypes.object.isRequired,
-  totalConnectedClusters: PropTypes.object.isRequired,
-  totalUnhealthyClusters: PropTypes.object.isRequired,
+  getUnhealthyClusters: PropTypes.func.isRequired,
+  unhealthyClusters: PropTypes.shape({
+    clusters: PropTypes.array,
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+  }).isRequired,
+  viewOptions: PropTypes.shape({
+    currentPage: PropTypes.number,
+    pageSize: PropTypes.number,
+    totalCount: PropTypes.number,
+    totalPages: PropTypes.number,
+  }).isRequired,
+  totalClusters: PropTypes.number.isRequired,
+  totalConnectedClusters: PropTypes.number.isRequired,
+  totalUnhealthyClusters: PropTypes.number.isRequired,
   totalCPU: PropTypes.object.isRequired,
   usedCPU: PropTypes.object.isRequired,
   totalMem: PropTypes.object.isRequired,

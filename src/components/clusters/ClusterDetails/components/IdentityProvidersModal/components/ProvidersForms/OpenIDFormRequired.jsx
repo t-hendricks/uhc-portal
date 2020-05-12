@@ -7,6 +7,7 @@ import IDPBasicFields from './IDPBasicFields';
 
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { checkOpenIDIssuer } from '../../../../../../../common/validators';
+import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
 
 const validate = (_, allValues) => {
   if (!allValues.openid_preferred_username && !allValues.openid_name && !allValues.openid_email) {
@@ -34,36 +35,34 @@ function OpenIDFormRequired({ isPending }) {
       <GridItem span={8}>
         <h4>Claims Mappings</h4>
       </GridItem>
-      <GridItem span={8}>
-        <Field
-          component={ReduxVerticalFormGroup}
-          name="openid_email"
-          label="Email"
-          type="text"
-          disabled={isPending}
-          validate={validate}
-        />
-      </GridItem>
-      <GridItem span={8}>
-        <Field
-          component={ReduxVerticalFormGroup}
-          name="openid_name"
-          label="Name"
-          type="text"
-          disabled={isPending}
-          validate={validate}
-        />
-      </GridItem>
-      <GridItem span={8}>
-        <Field
-          component={ReduxVerticalFormGroup}
-          name="openid_preferred_username"
-          label="Preferred Username"
-          type="text"
-          disabled={isPending}
-          validate={validate}
-        />
-      </GridItem>
+      <ReduxFieldArray
+        fieldName="openid_email"
+        label="Email"
+        type="text"
+        placeholderText="e.g. email"
+        disabled={isPending}
+        helpText="The list of attributes whose values should be used as the email address."
+        validate={validate}
+      />
+
+      <ReduxFieldArray
+        fieldName="openid_name"
+        label="Name"
+        type="text"
+        placeholderText="e.g. preferred_username"
+        disabled={isPending}
+        validate={validate}
+        helpText="The list of attributes whose values should be used as the preferred username."
+      />
+      <ReduxFieldArray
+        fieldName="openid_preferred_username"
+        label="Preferred Username"
+        type="text"
+        placeholderText="e.g. name"
+        disabled={isPending}
+        validate={validate}
+        helpText="The list of attributes whose values should be used as the display name."
+      />
     </>
   );
 }

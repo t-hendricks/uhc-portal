@@ -25,7 +25,7 @@ const InstructionsOSP = () => (
           </CardBody>
         </Link>
         <Link to="/install/openstack/user-provisioned" className="aws-ipi-upi-infra-card infra-card pf-c-card">
-          <CardBadge isDevPreview />
+          <CardBadge isHidden />
           <CardBody>
             <UserIcon color={global_primary_color_100.value} size="xl" alt="User-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
             <Title headingLevel="h3" size="lg">User-provisioned infrastructure</Title>

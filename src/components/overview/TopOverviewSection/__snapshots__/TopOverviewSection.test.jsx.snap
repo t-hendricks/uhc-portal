@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TopOverviewSection /> renders correctly 1`] = `
+<Fragment>
+  <GridItem
+    span={3}
+  >
+    <Card
+      className="clusters-overview-card"
+    >
+      <CardHeader>
+        Clusters
+      </CardHeader>
+      <CardBody>
+        <Bullseye>
+          <Title
+            headingLevel="h1"
+            size="3xl"
+          >
+            10
+          </Title>
+        </Bullseye>
+      </CardBody>
+    </Card>
+  </GridItem>
+  <GridItem
+    rowSpan={2}
+    span={9}
+  >
+    <Card
+      id="metrics-charts"
+    >
+      <CardHeader>
+        CPU and Memory utilization
+      </CardHeader>
+      <CardBody>
+        <ResourceUsage
+          cpu={
+            Object {
+              "total": Object {
+                "value": 4,
+              },
+              "used": Object {
+                "value": 3,
+              },
+            }
+          }
+          memory={
+            Object {
+              "total": Object {
+                "unit": "B",
+                "value": 10,
+              },
+              "used": Object {
+                "unit": "B",
+                "value": 5,
+              },
+            }
+          }
+          metricsAvailable={true}
+          type="legend"
+        />
+      </CardBody>
+    </Card>
+  </GridItem>
+  <GridItem
+    span={3}
+  >
+    <ClustersWithIssuesCard
+      totalConnectedClusters={10}
+      totalUnhealthyClusters={4}
+    />
+  </GridItem>
+</Fragment>
+`;

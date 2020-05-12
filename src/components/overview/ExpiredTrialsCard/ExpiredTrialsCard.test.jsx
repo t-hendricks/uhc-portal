@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
 import { expiredTrials } from '../Overview.fixtures';
+import { expiredTrialsFilter } from './expiredTrialsHelpers';
 
 const initialState = {
   error: false,
@@ -17,9 +18,7 @@ const baseViewOptions = {
   pageSize: 5,
   totalCount: 0,
   totalPages: 0,
-  filter: {
-    healthState: 'unhealthy',
-  },
+  filter: expiredTrialsFilter,
 };
 
 

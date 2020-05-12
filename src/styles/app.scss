@@ -67,8 +67,9 @@ limitations under the License.
 
 .token-value, .token-snippet {
   pre {
-    white-space: pre-wrap;
+    overflow: auto;
   }
+  width: fit-content;
 }
 
 .navbar-pf-vertical .navbar-brand .navbar-brand-name {
@@ -263,9 +264,15 @@ limitations under the License.
   max-width: 1710px;
 }
 
-#clusters-with-issues {
+#clusters-with-issues-zero {
+  font-size: var(--pf-global--FontSize--3xl);
+  padding-right: var(--pf-global--spacer--sm);
+}
+
+#clusters-with-issues-non-zero {
+  font-size: var(--pf-global--FontSize--3xl);
   color: var(--pf-global--danger-color--100);
-  padding-right: var(--pf-global--spacer--sm)
+  padding-right: var(--pf-global--spacer--sm);
 }
 
 #subs-hint {
@@ -976,22 +983,28 @@ span.dev-preview-label svg {
   padding: 0;
 }
 
-.quota-dropdown ul {
+.quota-dropdown {
+ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   max-height: 200px !important;
   overflow-y:auto;
   overflow-x:hidden;
+ }
+  div {
+    width: 100%;
+  }
+  select {
+    width: 100%;
+    margin-right: var(--pf-global--spacer--xs);
+    display: block;
+  }
 }
 
 .edit-cluster-modal {
   &.edit-cluster-modal-rhinfra {
-    min-height: 70%;
-  }
-  select.quota-dropdown {
-    width: 48%;
-    display: block;
+    min-height: 40%;
   }
 }
 
@@ -1144,16 +1157,6 @@ h3#grant-role-select  {
 
 .access-control-tables-copy {
   padding-left: 0;
-}
-
-.compute-nodes-select {
-  div {
-    width: 100%;
-  }
-  select {
-    width: 100%;
-    margin-right: var(--pf-global--spacer--xs);
-  }
 }
 
 .idp-oauth-url-label {

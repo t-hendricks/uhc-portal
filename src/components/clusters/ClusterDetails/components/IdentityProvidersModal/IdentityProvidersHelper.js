@@ -164,9 +164,9 @@ const getCreateIDPRequestData = (formData) => {
   const openIdData = () => ({
     ca: formData.openid_ca,
     claims: {
-      email: strToCleanArray(formData.openid_email),
-      name: strToCleanArray(formData.openid_name),
-      preferred_username: strToCleanArray(formData.openid_preferred_username),
+      email: multiInputToCleanArray(formData, 'openid_email'),
+      name: multiInputToCleanArray(formData, 'openid_name'),
+      preferred_username: multiInputToCleanArray(formData, 'openid_preferred_username'),
     },
     client_id: formData.client_id,
     client_secret: formData.client_secret,
