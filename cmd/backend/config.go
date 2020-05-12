@@ -41,6 +41,7 @@ type Config struct {
 	keycloak *Keycloak
 	proxies  []*Proxy
 	token    string
+	tokenMap map[string]string
 }
 
 // NewConfig creates a builder that can then be used to create new configuration objects.
@@ -67,6 +68,7 @@ func (b *ConfigBuilder) Build() (config *Config, err error) {
 		listener: &Listener{},
 		keycloak: &Keycloak{},
 		proxies:  []*Proxy{},
+		tokenMap: make(map[string]string),
 	}
 
 	// Load the defaults:
@@ -106,10 +108,11 @@ func (c *Config) Token() string {
 
 // configData is the struct used internally to unmarshall the configuration data.
 type configData struct {
-	Listener *listenerData `json:"listener,omitempty"`
-	Keycloak *keycloakData `json:"keycloak,omitempty"`
-	Proxies  []*proxyData  `json:"proxies,omitempty"`
-	Token    *string       `json:"token,omitempty"`
+	Listener *listenerData     `json:"listener,omitempty"`
+	Keycloak *keycloakData     `json:"keycloak,omitempty"`
+	Proxies  []*proxyData      `json:"proxies,omitempty"`
+	Token    *string           `json:"token,omitempty"` // default token
+	TokenMap map[string]string `json:"token_map,omitempty"`
 }
 
 // load loads the configuration data from the given files.
@@ -218,6 +221,16 @@ func (c *Config) mergeText(text []byte) error {
 		err = c.mergeProxies(item)
 		if err != nil {
 			return err
+		}
+	}
+
+	if data.TokenMap != nil {
+		for key, value := range data.TokenMap {
+			if _, ok := c.tokenMap[key]; ok {
+				glog.Errorf("Duplicate user %v, overriding previous token", key)
+				return fmt.Errorf("duplicate user %v, overriding previous token", key)
+			}
+			c.tokenMap[key] = value
 		}
 	}
 
