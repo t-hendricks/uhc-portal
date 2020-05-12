@@ -27,13 +27,10 @@ exports[`Customer Cloud Subscription modal; should render 1`] = `
         Your AWS account has no services deployed in it. 
       </li>
       <li>
-        Your AWS account has an Enterprise Support Plan attached.
-      </li>
-      <li>
         Your AWS account has the necessary limits to support the desired cluster size.
          
         <a
-          href="https://www.openshift.com/dedicated/byoc"
+          href="https://www.openshift.com/dedicated/ccs"
           rel="noreferrer noopener"
           target="_blank"
         >
@@ -48,7 +45,7 @@ exports[`Customer Cloud Subscription modal; should render 1`] = `
         An Organization Service Control Policy (SCP) is set up according to the
          
         <a
-          href="https://www.openshift.com/dedicated/byoc"
+          href="https://www.openshift.com/dedicated/ccs"
           rel="noreferrer noopener"
           target="_blank"
         >
@@ -57,12 +54,13 @@ exports[`Customer Cloud Subscription modal; should render 1`] = `
         </a>
       </li>
     </ul>
+    It is also recommended that you have at least Business Support from AWS.
   </TextContent>
   <TextContent>
     Refer to the
      
     <a
-      href="https://www.openshift.com/dedicated/byoc"
+      href="https://www.openshift.com/dedicated/ccs"
       rel="noreferrer noopener"
       target="_blank"
     >
