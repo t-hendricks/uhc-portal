@@ -5,6 +5,7 @@ import links, { channels } from '../../../../common/installLinks';
 import GetStarted from './components/GetStarted';
 import TelemetryAlert from './components/TelemetryAlert';
 import TokenErrorAlert from './components/TokenErrorAlert';
+import EvaluationAlert from './components/EvaluationAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 
 function InstructionsRHV({ token }) {
@@ -17,6 +18,7 @@ function InstructionsRHV({ token }) {
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
           {token.error && <TokenErrorAlert token={token} />}
+          <EvaluationAlert />
           <div className="pf-c-content">
             <p>
               With OpenShift Container Platform
