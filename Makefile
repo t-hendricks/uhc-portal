@@ -104,7 +104,7 @@ run/verification-tests:
 	# Include https://github.com/openshift/verification-tests/pull/807
 	(cd $@; git fetch openshift pull/807/head; git merge --no-edit FETCH_HEAD)
 	# Symlink for running tests without container to match mount made with container.
-	ln --symbolic --no-target-directory ../private run/verification-tests/private
+	[ -L run/verification-tests/private ] || ln --symbolic --no-target-directory ../private run/verification-tests/private
 
 run/cucushift:
 	# Private repo, https://github.com/orgs/openshift/teams/team-red-hat needed to clone.
