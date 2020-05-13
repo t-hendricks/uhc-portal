@@ -184,8 +184,14 @@ QA have been developing end-to-end UI tests in 2 repos, forked from Openshift's 
   https://github.com/xueli181114/verification-tests/blob/master/doc/webauto.adoc[pseudo-YAML DSL].
 
 ==== Running
+Short version: Don't need anything running, just `yarn test-e2e` will build image, start all services, run test & kill all services.
 
-To run test(s) locally, in addition to all the above (`yarn start` or separate backend + insights proxy + dev server), you'll need:
+If a test fails, it'll stop & dump you into "pry" prompt, which is pretty useless but gives you chance to open VNC and play with the browser.
+Type `quit` or simply kbd:[Ctrl + C] to continue to next test.
+
+You can set UNATTENDED=1 env var to skip interactive prompts.
+
+Long version: to run test(s) locally, in addition to all the above (backend + insights proxy + dev server), you'll need:
 
 1. `make selenium-tests-image` — clones those repos under `run/`, builds container image with Ruby depedencies and the tests.
 2. Optional: `export BROWSER=firefox` (or `chrome` or `safari`) to choose which browser.
@@ -193,14 +199,7 @@ To run test(s) locally, in addition to all the above (`yarn start` or separate b
 4. `yarn selenium-test` — waits for dependencies, then executes tests in a container.
 5. Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`. If you have Vinagre, simply run `yarn selenium-viewer`.
 
-If a test fails, it'll stop & dump you into "pry" prompt, which is pretty useless but gives you chance to open VNC and play with the browser.
-Type `quit` or simply kbd:[Ctrl + C] to continue to next test.
-
-You can set `UNATTENDED=1` env var to skip interactive prompts.
-In this mode, some outputs will be written under `run/output/` directory (screenshots from failed cases, an xml report in junit format).
-
 Most of these tests won't work yet for us, WIP...
-Still working on making these easier and running in CI...
 
 == Deploying
 

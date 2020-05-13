@@ -128,6 +128,8 @@
     "test": "jest --env=jsdom",
     "selenium-browser": "run/selenium-browser.sh",
     "selenium-test": "run/selenium-test.sh",
+    "e2e-test": "make selenium-tests-image && yarn build --no-progress && yarn e2e-test-run",
+    "e2e-test-run": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS,BROWSER,TEST --prefix-colors=cyan,reset,green,magenta,red --handle-input --default-input-target=TEST 'webpack-dev-server' './backend' 'yarn insights-proxy' 'yarn selenium-browser' 'yarn selenium-test'",
     "selenium-viewer": "vinagre --file=run/selenium.vnc",
     "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh kill browser; run/podman-or-docker.sh kill selenium-test; pkill -f 'concurrently.*SERVER(prevent self match){0},BACKEND,INSIGHTS'; true"
   },
