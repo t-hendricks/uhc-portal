@@ -69,7 +69,7 @@ limitations under the License.
   pre {
     overflow: auto;
   }
-  width: fit-content;
+  overflow: auto;
 }
 
 #not-found > div.pf-c-alert__description {
