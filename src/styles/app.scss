@@ -72,6 +72,11 @@ limitations under the License.
   width: fit-content;
 }
 
+#not-found > div.pf-c-alert__description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .navbar-pf-vertical .navbar-brand .navbar-brand-name {
   height: 33px;
 }
