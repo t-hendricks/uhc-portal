@@ -60,6 +60,7 @@ const mapStateToProps = (state) => {
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
     canAllowClusterAdmin: canAllowAdminSelector(state),
+    anyModalOpen: !!state.modal.modalName,
   });
 };
 

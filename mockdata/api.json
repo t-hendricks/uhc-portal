@@ -1,0 +1,30 @@
+{
+  "kind": "API",
+  "services": [
+    {
+      "href": "/api/clusters_mgmt",
+      "id": "clusters_mgmt",
+      "name": "Clusters management service"
+    },
+    {
+      "href": "/api/accounts_mgmt",
+      "id": "accounts_mgmt",
+      "name": "Accounts management service"
+    },
+    {
+      "href": "/api/authorizations",
+      "id": "authorizations",
+      "name": "Authorization service"
+    },
+    {
+      "href": "/api/service_logs",
+      "id": "service_logs",
+      "name": "Service logs"
+    },
+    {
+      "href": "/api/upgrades_info",
+      "id": "upgrades_info",
+      "name": "Upgrades information service"
+    }
+  ]
+}

@@ -138,6 +138,12 @@ class CreateOSDPage extends React.Component {
       );
     }
 
+    if (!organization.pending && organization.fulfilled) {
+      if ((cloudProviderID === 'gcp' && !clustersQuota.hasGcpQuota) || (cloudProviderID === 'aws' && !clustersQuota.hasAwsQuota)) {
+        return (<Redirect to="/create/osd" />);
+      }
+    }
+
     const requests = [
       {
         data: machineTypes,
@@ -285,6 +291,8 @@ CreateOSDPage.propTypes = {
   closeModal: PropTypes.func.isRequired,
   clustersQuota: PropTypes.shape({
     hasOsdQuota: PropTypes.bool.isRequired,
+    hasAwsQuota: PropTypes.bool.isRequired,
+    hasGcpQuota: PropTypes.bool.isRequired,
     aws: PropTypes.shape({
       byoc: PropTypes.shape({
         singleAz: PropTypes.object.isRequired,

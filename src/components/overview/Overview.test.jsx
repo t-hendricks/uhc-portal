@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Overview from './Overview';
+import { clustersWithIssues } from './Overview.fixtures';
 
 const dashboardState = {
   summary: {
@@ -36,17 +37,29 @@ const dashboardState = {
       ],
     },
   },
+  unhealthyClusters: {
+    error: false,
+    errorMessage: '',
+    pending: false,
+    fulfilled: true,
+    valid: false,
+    clusters: clustersWithIssues,
+  },
 };
 
 describe('<Overview />', () => {
   let getSummaryDashboard;
+  let getUnhealthyClusters;
   let wrapper;
   beforeAll(() => {
     getSummaryDashboard = jest.fn();
+    getUnhealthyClusters = jest.fn();
     wrapper = shallow(
       <Overview
         getSummaryDashboard={getSummaryDashboard}
         invalidateSubscriptions={jest.fn()}
+        getUnhealthyClusters={getUnhealthyClusters}
+        unhealthyClusters={dashboardState.unhealthyClusters}
         summaryDashboard={dashboardState.summary}
         totalClusters={dashboardState.summary.metrics.clusters_total[0].value}
         totalConnectedClusters={dashboardState.summary.metrics.connected_clusters_total[0].value}

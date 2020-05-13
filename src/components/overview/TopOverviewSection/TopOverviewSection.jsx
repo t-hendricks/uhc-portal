@@ -1,0 +1,105 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  Title,
+  CardBody,
+  Card,
+  CardHeader,
+  Bullseye,
+  GridItem,
+  EmptyStateBody,
+  EmptyState,
+} from '@patternfly/react-core';
+import ResourceUsage from '../../clusters/common/ResourceUsage/ResourceUsage';
+import ClustersWithIssuesCard from '../ClustersWithIssuesCard';
+
+
+const TopOverviewSection = ({
+  totalClusters,
+  totalUnhealthyClusters,
+  totalConnectedClusters,
+  totalCPU,
+  usedCPU,
+  totalMem,
+  usedMem,
+}) => {
+  const resourceUsageBody = totalConnectedClusters > 0 ? (
+    <CardBody>
+      <ResourceUsage
+        cpu={{
+          total: totalCPU,
+          used: usedCPU,
+        }}
+        memory={{
+          total: {
+            value: totalMem.value,
+            unit: 'B',
+          },
+          used: {
+            value: usedMem.value,
+            unit: 'B',
+          },
+        }}
+        metricsAvailable
+        type="legend"
+      />
+    </CardBody>
+  ) : (
+    <CardBody>
+      <EmptyState>
+        <Title>
+        No data available
+        </Title>
+        <EmptyStateBody>
+        Check individual clusters web console if you expect that they should be sending metrics.
+        Note that data is not available for clusters that are installing.
+        </EmptyStateBody>
+      </EmptyState>
+    </CardBody>
+  );
+
+  return (
+    <>
+      <GridItem span={3}>
+        <Card className="clusters-overview-card">
+          <CardHeader>
+                  Clusters
+          </CardHeader>
+          <CardBody>
+            <Bullseye>
+              <Title headingLevel="h1" size="3xl">
+                {totalClusters}
+              </Title>
+            </Bullseye>
+          </CardBody>
+        </Card>
+      </GridItem>
+      <GridItem span={9} rowSpan={2}>
+        <Card id="metrics-charts">
+          <CardHeader>
+                  CPU and Memory utilization
+          </CardHeader>
+          {resourceUsageBody}
+        </Card>
+      </GridItem>
+      <GridItem span={3}>
+        <ClustersWithIssuesCard
+          totalUnhealthyClusters={totalUnhealthyClusters}
+          totalConnectedClusters={totalConnectedClusters}
+        />
+      </GridItem>
+    </>
+  );
+};
+
+TopOverviewSection.propTypes = {
+  totalClusters: PropTypes.number.isRequired,
+  totalUnhealthyClusters: PropTypes.number.isRequired,
+  totalConnectedClusters: PropTypes.number.isRequired,
+  totalCPU: PropTypes.object.isRequired,
+  usedCPU: PropTypes.object.isRequired,
+  totalMem: PropTypes.object.isRequired,
+  usedMem: PropTypes.object.isRequired,
+};
+
+export default TopOverviewSection;

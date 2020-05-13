@@ -1,16 +1,20 @@
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 import Overview from './Overview';
-import { getSummaryDashboard } from '../../redux/actions/dashboardsActions';
+import { getSummaryDashboard, getUnhealthyClusters } from '../../redux/actions/dashboardsActions';
 import { invalidateSubscriptions } from '../../redux/actions/subscriptionsActions';
+import { viewConstants } from '../../redux/constants';
 
 const mapDispatchToProps = {
   getSummaryDashboard,
+  getUnhealthyClusters,
   invalidateSubscriptions,
 };
 
 const mapStateToProps = state => ({
   summaryDashboard: state.dashboards.summary,
+  unhealthyClusters: state.dashboards.unhealthyClusters,
+  viewOptions: state.viewOptions[viewConstants.OVERVIEW_VIEW],
 
   // summary dashboard contain only one {time, value} pair - the current value.
   totalClusters: get(state.dashboards.summary, 'metrics.clusters_total[0].value', 0),

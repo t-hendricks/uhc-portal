@@ -30,7 +30,6 @@ function CustomerCloudSubscriptionModal({ closeModal }) {
         <TextContent>
           <ul>
             <li>Your AWS account has no services deployed in it. </li>
-            <li>Your AWS account has an Enterprise Support Plan attached.</li>
             <li>
                   Your AWS account has the necessary limits to support the desired
                   cluster size.
@@ -48,6 +47,7 @@ function CustomerCloudSubscriptionModal({ closeModal }) {
               </a>
             </li>
           </ul>
+          It is also recommended that you have at least Business Support from AWS.
         </TextContent>
         <TextContent>
             Refer to the

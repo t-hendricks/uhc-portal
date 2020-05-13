@@ -2,7 +2,6 @@
 
 exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
 <FormGroup
-  className="compute-nodes-select"
   fieldId="compute-nodes"
   label="compute nodes"
 >
@@ -40,7 +39,7 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
     <div>
       <FormSelect
         aria-label="Compute nodes"
-        className=""
+        className="quota-dropdown"
         isDisabled={true}
         isRequired={false}
         isValid={true}
@@ -70,13 +69,12 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
 
 exports[`<NodeCountInput> Multi AZ renders with some quota 1`] = `
 <FormGroup
-  className="compute-nodes-select"
   fieldId="compute-nodes"
   label="compute nodes"
 >
   <FormSelect
     aria-label="Compute nodes"
-    className=""
+    className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
     isValid={true}
@@ -109,13 +107,12 @@ exports[`<NodeCountInput> Multi AZ renders with some quota 1`] = `
 
 exports[`<NodeCountInput> Single AZ renders with extremely high quota (should only allow up to MAX_NODES) 1`] = `
 <FormGroup
-  className="compute-nodes-select"
   fieldId="compute-nodes"
   label="compute nodes"
 >
   <FormSelect
     aria-label="Compute nodes"
-    className=""
+    className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
     isValid={true}
@@ -1017,7 +1014,6 @@ exports[`<NodeCountInput> Single AZ renders with extremely high quota (should on
 
 exports[`<NodeCountInput> Single AZ renders with no quota 1`] = `
 <FormGroup
-  className="compute-nodes-select"
   fieldId="compute-nodes"
   label="compute nodes"
 >
@@ -1055,7 +1051,7 @@ exports[`<NodeCountInput> Single AZ renders with no quota 1`] = `
     <div>
       <FormSelect
         aria-label="Compute nodes"
-        className=""
+        className="quota-dropdown"
         isDisabled={true}
         isRequired={false}
         isValid={true}
@@ -1079,13 +1075,12 @@ exports[`<NodeCountInput> Single AZ renders with no quota 1`] = `
 
 exports[`<NodeCountInput> Single AZ renders with some quota 1`] = `
 <FormGroup
-  className="compute-nodes-select"
   fieldId="compute-nodes"
   label="compute nodes"
 >
   <FormSelect
     aria-label="Compute nodes"
-    className=""
+    className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
     isValid={true}
@@ -1157,13 +1152,12 @@ exports[`<NodeCountInput> Single AZ renders with some quota 1`] = `
 
 exports[`<NodeCountInput> scaling dialog behavior multiAz renders with no quota above current value 1`] = `
 <FormGroup
-  className="compute-nodes-select"
   fieldId="compute-nodes"
   label="compute nodes"
 >
   <FormSelect
     aria-label="Compute nodes"
-    className=""
+    className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
     isValid={true}
@@ -1196,13 +1190,12 @@ exports[`<NodeCountInput> scaling dialog behavior multiAz renders with no quota 
 
 exports[`<NodeCountInput> scaling dialog behavior singleAZ renders with no quota above current value 1`] = `
 <FormGroup
-  className="compute-nodes-select"
   fieldId="compute-nodes"
   label="compute nodes"
 >
   <FormSelect
     aria-label="Compute nodes"
-    className=""
+    className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
     isValid={true}

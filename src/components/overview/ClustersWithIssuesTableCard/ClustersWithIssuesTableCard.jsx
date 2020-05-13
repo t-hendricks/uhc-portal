@@ -4,6 +4,9 @@ import {
   CardBody,
   Card,
   CardHeader,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateBody,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -14,6 +17,11 @@ import {
   TableVariant,
 } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
+import { CheckCircleIcon } from '@patternfly/react-icons';
+import {
+  // eslint-disable-next-line camelcase
+  global_success_color_100,
+} from '@patternfly/react-tokens';
 import getClusterName from '../../../common/getClusterName';
 import { getIssuesCount } from '../overviewHelpers';
 import { actionResolver } from './ClustersWithIssuesActionResolver';
@@ -22,30 +30,37 @@ import ViewPaginationRow from '../../clusters/common/ViewPaginationRow/viewPagin
 import { viewConstants } from '../../../redux/constants';
 import { viewPropsChanged, createOverviewQueryObject } from '../../../common/queryHelpers';
 
-const CLUSTERS_STATE_UNHEALTHY = 'unhealthy';
-const filter = { filter: `health_state='${CLUSTERS_STATE_UNHEALTHY}'` };
-
 class ClustersWithIssuesTableCard extends React.Component {
-  componentDidMount() {
-    const { unhealthyClusters, getUnhealthyClusters, viewOptions } = this.props;
-    if (!unhealthyClusters.fulfilled && !unhealthyClusters.pending) {
-      getUnhealthyClusters(createOverviewQueryObject(viewOptions, filter));
-    }
-  }
-
   componentDidUpdate(prevProps) {
     const { getUnhealthyClusters, viewOptions } = this.props;
     if (viewPropsChanged(viewOptions, prevProps.viewOptions)) {
-      getUnhealthyClusters(createOverviewQueryObject(viewOptions, filter));
+      getUnhealthyClusters(createOverviewQueryObject(viewOptions));
     }
   }
 
   render() {
     const {
-      unhealthyClusters, setClusterDetails, viewOptions,
+      unhealthyClusters, setClusterDetails, viewOptions, totalConnectedClusters,
     } = this.props;
-    if (!unhealthyClusters.pending
-       && (!unhealthyClusters || unhealthyClusters.clusters.length === 0)) {
+    if (unhealthyClusters.fulfilled && unhealthyClusters.clusters.length === 0) {
+      if (totalConnectedClusters > 0) {
+        return (
+          <Card className="clusters-overview-card">
+            <CardHeader>
+              Clusters with issues
+            </CardHeader>
+            <CardBody>
+              <EmptyState>
+                <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
+                <EmptyStateBody>
+                  No issues detected
+                </EmptyStateBody>
+              </EmptyState>
+            </CardBody>
+          </Card>
+        );
+      }
+      // No connected clusters - cant say anything about clusters with issues.
       return null;
     }
 
@@ -127,7 +142,7 @@ ClustersWithIssuesTableCard.propTypes = {
   }).isRequired,
   setClusterDetails: PropTypes.func.isRequired,
   getUnhealthyClusters: PropTypes.func.isRequired,
-
+  totalConnectedClusters: PropTypes.number.isRequired,
 };
 
 export default ClustersWithIssuesTableCard;

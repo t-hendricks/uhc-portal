@@ -42,7 +42,7 @@ import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDial
 import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 
 import ErrorBox from '../../common/ErrorBox';
-import { isValid, scrollToTop } from '../../../common/helpers';
+import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
@@ -80,8 +80,6 @@ class ClusterDetails extends Component {
       clusterAddOns,
       getLogs,
       match,
-      organization,
-      getOrganizationAndQuota,
       addOns,
       getAddOns,
       clearGlobalError,
@@ -107,9 +105,6 @@ class ClusterDetails extends Component {
         getClusterAddOns(clusterID);
       }
       getLogs(clusterID);
-    }
-    if (!organization.pending && !organization.error && !organization.fulfilled) {
-      getOrganizationAndQuota();
     }
     if (!addOns.pending && !addOns.error && !addOns.fulfilled) {
       getAddOns();
@@ -164,11 +159,14 @@ class ClusterDetails extends Component {
       clusterLogsViewOptions,
       getClusterHistory,
       getClusterRouters,
+      organization,
     } = this.props;
     const clusterID = match.params.id;
     if (isValid(clusterID)) {
       this.fetchDetailsAndInsightsData(clusterID, get(clusterDetails, 'cluster.external_id'));
-      getOrganizationAndQuota();
+      if (shouldRefetchQuota(organization)) {
+        getOrganizationAndQuota();
+      }
       if (automatic) {
         const externalClusterID = get(clusterDetails, 'cluster.external_id');
         if (externalClusterID) {
@@ -249,6 +247,7 @@ class ClusterDetails extends Component {
       insightsData,
       voteOnRule,
       canAllowClusterAdmin,
+      anyModalOpen,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -334,6 +333,7 @@ class ClusterDetails extends Component {
           error={clusterDetails.error}
           errorMessage={clusterDetails.errorMessage}
           canAllowClusterAdmin={canAllowClusterAdmin}
+          autoRefreshEnabled={!anyModalOpen}
         >
           <TabsRow
             displayMonitoringTab={!isArchived}
@@ -518,6 +518,7 @@ ClusterDetails.propTypes = {
   voteOnRule: PropTypes.func.isRequired,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
   getClusterRouters: PropTypes.func.isRequired,
+  anyModalOpen: PropTypes.bool,
 };
 
 ClusterDetails.defaultProps = {

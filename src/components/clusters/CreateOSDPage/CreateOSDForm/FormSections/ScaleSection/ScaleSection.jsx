@@ -40,12 +40,9 @@ function ScaleSection({
           />
         </FormGroup>
       </GridItem>
-      <GridItem span={3}>
-        {' '}
-      </GridItem>
-
+      <GridItem span={3} />
       {/* Compute nodes */}
-      <GridItem span={2}>
+      <GridItem span={4}>
         <Field
           component={NodeCountInput}
           name="nodes_compute"
@@ -58,12 +55,12 @@ function ScaleSection({
           cloudProviderID={cloudProviderID}
         />
       </GridItem>
-      <GridItem span={9} />
+      <GridItem span={8} />
 
       {/* Persistent Storage & Load Balancers */}
       { !isBYOC && (
         <>
-          <GridItem span={2}>
+          <GridItem span={4}>
             <FormGroup
               label="Persistent storage"
               fieldId="persistent_storage"
@@ -78,9 +75,9 @@ function ScaleSection({
               />
             </FormGroup>
           </GridItem>
-          <GridItem span={9} />
+          <GridItem span={8} />
 
-          <GridItem span={2}>
+          <GridItem span={4}>
             <FormGroup
               label="Load balancers"
               fieldId="load_balancers"
@@ -95,7 +92,7 @@ function ScaleSection({
               />
             </FormGroup>
           </GridItem>
-          <GridItem span={9} />
+          <GridItem span={8} />
         </>
       )}
     </>

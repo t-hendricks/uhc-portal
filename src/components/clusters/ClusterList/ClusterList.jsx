@@ -59,12 +59,9 @@ import { viewConstants } from '../../../redux/constants';
 
 
 class ClusterList extends Component {
-  constructor(props) {
-    super(props);
-
-    // refresh needs to be bound because it is passed to another component
-    this.refresh = this.refresh.bind(this);
-  }
+  state = {
+    showSkeleton: false,
+  };
 
   componentDidMount() {
     document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
@@ -101,7 +98,13 @@ class ClusterList extends Component {
     } = this.props;
     if ((!valid && !pending)
         || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ showSkeleton: true });
       this.refresh();
+    }
+    if (prevProps.pending && !pending) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ showSkeleton: false });
     }
   }
 
@@ -110,7 +113,7 @@ class ClusterList extends Component {
     closeModal();
   }
 
-  refresh() {
+  refresh = () => {
     const { fetchClusters, viewOptions } = this.props;
     fetchClusters(createViewQueryObject(viewOptions));
   }
@@ -130,7 +133,10 @@ class ClusterList extends Component {
       operationID,
       history,
       setClusterDetails,
+      anyModalOpen,
     } = this.props;
+
+    const { showSkeleton } = this.state;
 
     const pageHeader = (
       <PageHeader>
@@ -189,12 +195,12 @@ class ClusterList extends Component {
                     view={viewConstants.CLUSTERS_VIEW}
                   />
                 </div>
-                <ClusterListFilterDropdown isDisabled={isPendingNoData} className="toolbar-item" history={history} />
+                <ClusterListFilterDropdown isDisabled={pending} className="toolbar-item" history={history} />
                 <Link to="/create">
                   <Button className="toolbar-item">Create cluster</Button>
                 </Link>
                 <ClusterListExtraActions className="toolbar-item" />
-                { (pending && !isPendingNoData) && (
+                { (pending && !isPendingNoData && !showSkeleton) && (
                   <Spinner className="cluster-list-spinner" />
                 ) }
                 { error && (
@@ -210,7 +216,7 @@ class ClusterList extends Component {
                   isDisabled={isPendingNoData}
                 />
                 <RefreshBtn
-                  autoRefresh
+                  autoRefresh={!anyModalOpen}
                   isDisabled={isPendingNoData}
                   refreshFunc={this.refresh}
                   classOptions="cluster-list-top"
@@ -222,7 +228,7 @@ class ClusterList extends Component {
                 clusters={clusters || []}
                 viewOptions={viewOptions}
                 setSorting={setSorting}
-                isPending={isPendingNoData}
+                isPending={isPendingNoData || (pending && showSkeleton)}
                 setClusterDetails={setClusterDetails}
               />
               <ViewPaginationRow
@@ -281,6 +287,7 @@ ClusterList.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  anyModalOpen: PropTypes.bool,
 };
 
 export default ClusterList;

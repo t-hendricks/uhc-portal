@@ -13,100 +13,165 @@ exports[`<Overview /> renders correctly 1`] = `
       gutter="sm"
       id="overview-grid"
     >
-      <GridItem
-        span={3}
-      >
-        <Card
-          className="clusters-overview-card"
-        >
-          <CardHeader>
-            Clusters
-          </CardHeader>
-          <CardBody>
-            <Bullseye>
-              <Title
-                headingLevel="h1"
-                size="3xl"
-              >
-                30
-              </Title>
-            </Bullseye>
-          </CardBody>
-        </Card>
-      </GridItem>
-      <GridItem
-        rowSpan={2}
-        span={9}
-      >
-        <Card
-          id="metrics-charts"
-        >
-          <CardHeader>
-            CPU and Memory utilization
-          </CardHeader>
-          <CardBody>
-            <ResourceUsage
-              cpu={
-                Object {
-                  "total": Object {
-                    "value": 150,
-                  },
-                  "used": Object {
-                    "value": 10,
-                  },
-                }
-              }
-              memory={
-                Object {
-                  "total": Object {
-                    "unit": "B",
-                    "value": 100,
-                  },
-                  "used": Object {
-                    "unit": "B",
-                    "value": 10,
-                  },
-                }
-              }
-              metricsAvailable={true}
-              type="legend"
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-      <GridItem
-        span={3}
-      >
-        <Card
-          className="clusters-overview-card"
-        >
-          <CardHeader>
-            Clusters with issues
-          </CardHeader>
-          <CardBody>
-            <Bullseye>
-              <Title
-                headingLevel="h1"
-                id="clusters-with-issues"
-                size="3xl"
-              >
-                5
-              </Title>
-              <ExclamationCircleIcon
-                className="status-icon"
-                color="#c9190b"
-                noVerticalAlign={false}
-                size="sm"
-                title={null}
-              />
-            </Bullseye>
-          </CardBody>
-        </Card>
-      </GridItem>
+      <TopOverviewSection
+        totalCPU={
+          Object {
+            "value": 150,
+          }
+        }
+        totalClusters={30}
+        totalConnectedClusters={10}
+        totalMem={
+          Object {
+            "value": 100,
+          }
+        }
+        totalUnhealthyClusters={5}
+        usedCPU={
+          Object {
+            "value": 10,
+          }
+        }
+        usedMem={
+          Object {
+            "value": 10,
+          }
+        }
+      />
       <GridItem
         span={12}
       >
-        <Connect(ClustersWithIssuesTableCard) />
+        <Connect(ClustersWithIssuesTableCard)
+          totalConnectedClusters={10}
+          unhealthyClusters={
+            Object {
+              "clusters": Array [
+                Object {
+                  "api": Object {
+                    "url": "https://api.test-liza.sdev.devshift.net:6443",
+                  },
+                  "canDelete": true,
+                  "canEdit": true,
+                  "cloud_provider": Object {
+                    "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                    "id": "aws",
+                    "kind": "CloudProviderLink",
+                  },
+                  "cluster_admin_enabled": false,
+                  "console": Object {
+                    "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
+                  },
+                  "creation_timestamp": "2019-03-26T15:18:39.06783Z",
+                  "display_name": "test-liza",
+                  "dns": Object {
+                    "base_domain": "sdev.devshift.net",
+                  },
+                  "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
+                  "flavour": Object {
+                    "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+                    "id": "osd-4",
+                    "kind": "FlavourLink",
+                  },
+                  "health_state": "unhealthy",
+                  "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
+                  "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                  "kind": "Cluster",
+                  "load_balancer_quota": 0,
+                  "managed": true,
+                  "metrics": Object {
+                    "cpu": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 16,
+                      },
+                      "updated_timestamp": "2019-04-28T14:23:18Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 3.995410922987096,
+                      },
+                    },
+                    "critical_alerts_firing": 5,
+                    "memory": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 82293346304,
+                      },
+                      "updated_timestamp": "2019-04-28T14:23:19Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 16546058240,
+                      },
+                    },
+                    "nodes": Object {
+                      "compute": 4,
+                      "master": 3,
+                      "total": 7,
+                    },
+                    "sockets": Object {
+                      "total": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "",
+                        "value": 0,
+                      },
+                    },
+                    "storage": Object {
+                      "total": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                      "updated_timestamp": "0001-01-01T00:00:00Z",
+                      "used": Object {
+                        "unit": "B",
+                        "value": 0,
+                      },
+                    },
+                  },
+                  "multi_az": false,
+                  "name": "test-liza",
+                  "network": Object {
+                    "machine_cidr": "10.0.0.0/16",
+                    "pod_cidr": "10.128.0.0/14",
+                    "router_shards": Object {
+                      "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+                      "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                      "kind": "RouterShardListLink",
+                    },
+                    "service_cidr": "172.30.0.0/16",
+                  },
+                  "nodes": Object {
+                    "compute": 2,
+                    "master": 3,
+                    "total": 5,
+                  },
+                  "region": Object {
+                    "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                    "id": "us-east-1",
+                    "kind": "CloudRegionLink",
+                  },
+                  "state": "ready",
+                  "storage_quota": Object {
+                    "unit": "B",
+                    "value": 107374182400,
+                  },
+                  "version": Object {
+                    "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+                    "id": "openshift-v4.0-latest",
+                    "kind": "VersionLink",
+                  },
+                },
+              ],
+              "error": false,
+              "errorMessage": "",
+              "fulfilled": true,
+              "pending": false,
+              "valid": false,
+            }
+          }
+        />
       </GridItem>
       <GridItem
         span={6}

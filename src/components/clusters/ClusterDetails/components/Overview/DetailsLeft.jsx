@@ -4,6 +4,8 @@ import get from 'lodash/get';
 
 import Timestamp from '../../../../common/Timestamp';
 import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
+import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
+
 
 function DetailsLeft({ cluster, cloudProviders }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
@@ -31,17 +33,9 @@ function DetailsLeft({ cluster, cloudProviders }) {
         <dt>
           Type
         </dt>
-        {
-          cluster.managed ? (
-            <dd>
-              OSD
-            </dd>
-          ) : (
-            <dd>
-              OCP
-            </dd>
-          )
-        }
+        <dd>
+          <ClusterTypeLabel cluster={cluster} />
+        </dd>
         <dt>Location</dt>
         <dd>
           {region}
