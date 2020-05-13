@@ -54,10 +54,9 @@ exports[`Customer Cloud Subscription modal; should render 1`] = `
         </a>
       </li>
     </ul>
-    It is also recommended that you have at least Business Support from AWS.
   </TextContent>
   <TextContent>
-    Refer to the
+    It is also recommended that you have at least Business Support from AWS. Refer to the
      
     <a
       href="https://www.openshift.com/dedicated/ccs"
