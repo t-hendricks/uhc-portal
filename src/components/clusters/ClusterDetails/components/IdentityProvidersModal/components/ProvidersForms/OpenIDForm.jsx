@@ -6,7 +6,7 @@ import { GridItem } from '@patternfly/react-core';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import CAUpload from '../CAUpload';
 
-function OpenIDForm({ isPending }) {
+function OpenIDForm({ isPending, isEditForm, idpEdited }) {
   return (
     <>
       <GridItem span={8}>
@@ -16,6 +16,7 @@ function OpenIDForm({ isPending }) {
           label="CA file"
           helpText="PEM encoded certificate bundle to use to validate server certificates for the configured URL"
           isDisabled={isPending}
+          certValue={isEditForm ? idpEdited.open_id.ca : ''}
         />
       </GridItem>
       <GridItem span={8}>
@@ -34,6 +35,8 @@ function OpenIDForm({ isPending }) {
 
 OpenIDForm.propTypes = {
   isPending: PropTypes.bool,
+  isEditForm: PropTypes.bool,
+  idpEdited: PropTypes.object,
 };
 
 OpenIDForm.defaultProps = {

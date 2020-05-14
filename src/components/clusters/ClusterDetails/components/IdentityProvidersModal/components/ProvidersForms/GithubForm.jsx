@@ -13,9 +13,20 @@ import CAUpload from '../CAUpload';
 
 class GithubFormRequired extends React.Component {
     state = {
-      authMode: 'organizations',
+      authMode: '',
       hostnameRequired: false,
     };
+
+    componentDidMount() {
+      const {
+        isEditForm, idpEdited,
+      } = this.props;
+      if (isEditForm) {
+        this.setState({ authMode: idpEdited.github.organizations ? 'organizations' : 'teams' });
+      } else {
+        this.setState({ authMode: 'organizations' });
+      }
+    }
 
     toggleHostnameRequired = (e, value) => {
       if (value) {
@@ -30,8 +41,11 @@ class GithubFormRequired extends React.Component {
     }
 
     render() {
-      const { isPending } = this.props;
+      const {
+        isPending, idpEdited, isEditForm,
+      } = this.props;
       const { authMode, hostnameRequired } = this.state;
+
       return (
         <>
           <IDPBasicFields />
@@ -59,6 +73,7 @@ class GithubFormRequired extends React.Component {
               helpText="PEM encoded certificate bundle to use to validate server certificates for the configured GitHub Enterprise URL."
               isDisabled={isPending}
               onChange={(e, value) => this.toggleHostnameRequired(e, value)}
+              certValue={isEditForm ? idpEdited.github.ca : ''}
             />
           </GridItem>
 
@@ -77,7 +92,7 @@ class GithubFormRequired extends React.Component {
             <Field
               component={RadioButtons}
               name="github_auth_mode"
-              defaultValue="organizations"
+              defaultValue={authMode}
               options={[
                 { value: 'organizations', label: 'Use organizations' },
                 { value: 'teams', label: 'Use teams' },
@@ -117,6 +132,8 @@ class GithubFormRequired extends React.Component {
 
 GithubFormRequired.propTypes = {
   isPending: PropTypes.bool,
+  isEditForm: PropTypes.bool,
+  idpEdited: PropTypes.object,
 };
 
 GithubFormRequired.defaultProps = {

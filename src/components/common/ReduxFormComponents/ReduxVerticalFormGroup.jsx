@@ -53,6 +53,7 @@ function ReduxVerticalFormGroup(props) {
       { extendedHelpText && (
         <PopoverHint hint={extendedHelpText} />
       )}
+
       <InputComponent
         value={input.value}
         isRequired={isRequired}

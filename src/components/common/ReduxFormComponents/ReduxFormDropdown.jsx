@@ -21,6 +21,7 @@ class DropDownSelect extends React.Component {
       helpText,
       meta: { error, touched },
       input,
+      disabled,
       ...extraProps
     } = this.props;
     const { value } = this.state;
@@ -38,6 +39,7 @@ class DropDownSelect extends React.Component {
           value={value}
           {...input}
           onChange={this.onChange}
+          isDisabled={disabled}
           {...extraProps}
         >
           {options.map(option => (
@@ -68,6 +70,7 @@ DropDownSelect.propTypes = {
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     touched: PropTypes.bool,
   }).isRequired,
+  disabled: PropTypes.bool,
 };
 
 export default DropDownSelect;
