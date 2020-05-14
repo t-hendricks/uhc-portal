@@ -157,5 +157,10 @@
     "kind": "AddOnInstallationListLink",
     "href": "/api/clusters_mgmt/v1/clusters/1H1l4oRVxoh6qSTf4fSmvtaGaWy/addons",
     "items": null
+  },
+  "product": {
+    "kind": "ProductLink",
+    "id": "osd",
+    "href": "/api/clusters_mgmt/v1/products/osd"
   }
 }

@@ -83,5 +83,10 @@
     "pod_cidr": "10.128.0.0/14"
   },
   "multi_az": false,
-  "managed": true
+  "managed": true,
+  "product": {
+    "kind": "ProductLink",
+    "id": "osd",
+    "href": "/api/clusters_mgmt/v1/products/osd"
+  }
 }

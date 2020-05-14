@@ -219,14 +219,29 @@ class ClusterDetails extends Component {
 
   // Determine if the org has quota for existing add-ons
   hasAddOns() {
-    const { addOns, clusterAddOns, organization } = this.props;
+    const {
+      addOns,
+      clusterAddOns,
+      clusterDetails,
+      organization,
+    } = this.props;
+    const { cluster } = clusterDetails;
+
     // If cluster already has add-ons installed we can show the tab regardless of quota
     if (get(clusterAddOns, 'items.length', 0)) {
       return true;
     }
+
+    // If there are free add-ons available we can show the tab on OSD clusters regardless of quota
+    if (cluster.product.id === 'osd' && get(addOns, 'freeAddOns.length', 0)) {
+      return true;
+    }
+
+    // If the organization has no add-ons quota, or there are no add-ons, we should hide the tab
     if (!has(organization.quotaList, 'addOnsQuota') || !get(addOns, 'resourceNames.length', 0)) {
       return false;
     }
+
     const addOnsQuota = Object.keys(organization.quotaList.addOnsQuota);
     return !!intersection(addOns.resourceNames, addOnsQuota).length;
   }

@@ -22,7 +22,7 @@ export const mockAddOns = {
       icon: null,
       enabled: true,
       resource_name: 'managed-integration',
-      resource_cost: 0,
+      resource_cost: 0.5,
     },
     {
       kind: 'AddOn',
@@ -34,7 +34,7 @@ export const mockAddOns = {
       icon: null,
       enabled: true,
       resource_name: 'service-mesh',
-      resource_cost: 0,
+      resource_cost: 1,
     },
     {
       kind: 'AddOn',
