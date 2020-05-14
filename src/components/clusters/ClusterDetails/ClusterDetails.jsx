@@ -246,6 +246,8 @@ class ClusterDetails extends Component {
       displayClusterLogs,
       insightsData,
       voteOnRule,
+      disableRule,
+      enableRule,
       canAllowClusterAdmin,
       anyModalOpen,
     } = this.props;
@@ -426,6 +428,12 @@ class ClusterDetails extends Component {
               voteOnRule={(ruleId, vote) => {
                 voteOnRule(cluster.external_id, ruleId, vote);
               }}
+              disableRule={(ruleId) => {
+                disableRule(cluster.external_id, ruleId);
+              }}
+              enableRule={(ruleId) => {
+                enableRule(cluster.external_id, ruleId);
+              }}
             />
           </TabContent>
         )}
@@ -516,6 +524,8 @@ ClusterDetails.propTypes = {
   clusterLogsViewOptions: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
   voteOnRule: PropTypes.func.isRequired,
+  disableRule: PropTypes.func.isRequired,
+  enableRule: PropTypes.func.isRequired,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,

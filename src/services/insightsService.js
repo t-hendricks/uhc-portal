@@ -21,12 +21,24 @@ const getClusterInsights = (clusterId, orgId) => apiRequest({
   url: `/report/${orgId}/${clusterId}`,
 }, config.configData.insightsGateway);
 
+const disableRuleInsights = (clusterID, ruleID) => apiRequest({
+  method: 'put',
+  url: `/clusters/${clusterID}/rules/${ruleID}/disable`,
+}, config.configData.insightsGateway);
+
+const enableRuleInsights = (clusterID, ruleID) => apiRequest({
+  method: 'put',
+  url: `/clusters/${clusterID}/rules/${ruleID}/enable`,
+}, config.configData.insightsGateway);
+
 
 const insigthsService = {
   getClusterInsights,
   putLikeOnRuleInsights,
   putDislikeOnRuleInsights,
   resetVoteOnRuleInsights,
+  disableRuleInsights,
+  enableRuleInsights,
 };
 
 export default insigthsService;
