@@ -5,6 +5,9 @@ import {
   CardHeader,
   CardBody,
   Bullseye,
+  EmptyStateBody,
+  EmptyState,
+  Title,
 } from '@patternfly/react-core';
 
 import {
@@ -21,7 +24,27 @@ import {
 } from '@patternfly/react-tokens';
 
 
-const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters }) => {
+const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters, isError }) => {
+  if (isError) {
+    return (
+      <Card className="clusters-overview-card">
+        <CardHeader>
+            Clusters with issues
+        </CardHeader>
+        <CardBody>
+          <EmptyState>
+            <Title>
+            No data available
+            </Title>
+            <EmptyStateBody>
+            There was an error fetching the data. Try refreshing the page.
+            </EmptyStateBody>
+          </EmptyState>
+        </CardBody>
+      </Card>
+    );
+  }
+
   let icon;
   if (totalUnhealthyClusters === 0) {
     icon = (totalConnectedClusters > 0)
@@ -76,6 +99,7 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
 ClustersWithIssuesCard.propTypes = {
   totalConnectedClusters: PropTypes.number.isRequired,
   totalUnhealthyClusters: PropTypes.number.isRequired,
+  isError: PropTypes.bool.isRequired,
 };
 
 

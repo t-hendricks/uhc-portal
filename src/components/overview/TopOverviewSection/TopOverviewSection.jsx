@@ -22,7 +22,51 @@ const TopOverviewSection = ({
   usedCPU,
   totalMem,
   usedMem,
+  isError,
 }) => {
+  const errorBody = (
+    <CardBody>
+      <EmptyState>
+        <Title>
+          No data available
+        </Title>
+        <EmptyStateBody>
+          There was an error fetching the data. Try refreshing the page.
+        </EmptyStateBody>
+      </EmptyState>
+    </CardBody>
+  );
+
+  if (isError) {
+    return (
+      <>
+        <GridItem span={3}>
+          <Card className="clusters-overview-card">
+            <CardHeader>
+                Clusters
+            </CardHeader>
+            { errorBody }
+          </Card>
+        </GridItem>
+        <GridItem span={9} rowSpan={2}>
+          <Card id="metrics-charts">
+            <CardHeader>
+                CPU and Memory utilization
+            </CardHeader>
+            { errorBody }
+          </Card>
+        </GridItem>
+        <GridItem span={3}>
+          <ClustersWithIssuesCard
+            isError={isError}
+            totalUnhealthyClusters={totalUnhealthyClusters}
+            totalConnectedClusters={totalConnectedClusters}
+          />
+        </GridItem>
+      </>
+    );
+  }
+
   const resourceUsageBody = totalConnectedClusters > 0 ? (
     <CardBody>
       <ResourceUsage
@@ -48,11 +92,11 @@ const TopOverviewSection = ({
     <CardBody>
       <EmptyState>
         <Title>
-        No data available
+          No data available
         </Title>
         <EmptyStateBody>
-        Check individual clusters web console if you expect that they should be sending metrics.
-        Note that data is not available for clusters that are installing.
+          Check individual clusters web console if you expect that they should be sending metrics.
+          Note that data is not available for clusters that are installing.
         </EmptyStateBody>
       </EmptyState>
     </CardBody>
@@ -79,11 +123,12 @@ const TopOverviewSection = ({
           <CardHeader>
                   CPU and Memory utilization
           </CardHeader>
-          {resourceUsageBody}
+          { resourceUsageBody }
         </Card>
       </GridItem>
       <GridItem span={3}>
         <ClustersWithIssuesCard
+          isError={isError}
           totalUnhealthyClusters={totalUnhealthyClusters}
           totalConnectedClusters={totalConnectedClusters}
         />
@@ -100,6 +145,7 @@ TopOverviewSection.propTypes = {
   usedCPU: PropTypes.object.isRequired,
   totalMem: PropTypes.object.isRequired,
   usedMem: PropTypes.object.isRequired,
+  isError: PropTypes.object.isRequired,
 };
 
 export default TopOverviewSection;
