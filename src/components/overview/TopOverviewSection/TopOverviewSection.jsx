@@ -147,7 +147,7 @@ TopOverviewSection.propTypes = {
   usedCPU: PropTypes.object.isRequired,
   totalMem: PropTypes.object.isRequired,
   usedMem: PropTypes.object.isRequired,
-  isError: PropTypes.object.isRequired,
+  isError: PropTypes.bool.isRequired,
 };
 
 export default TopOverviewSection;
