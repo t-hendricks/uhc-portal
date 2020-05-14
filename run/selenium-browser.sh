@@ -19,4 +19,4 @@ set -x
                       --add-host qa.foo.redhat.com:127.0.0.1 \
                       --net=host -p 4444:4444 -p 5900:5900 \
                       --volume /dev/shm:/dev/shm \
-                      selenium/standalone-"$BROWSER"-debug
+                      docker.io/selenium/standalone-"$BROWSER"-debug
