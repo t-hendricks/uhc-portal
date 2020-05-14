@@ -3,7 +3,10 @@
 # Respects RUNNER env var similarly to insights-proxy scripts, but default differs.
 RUNNER="${RUNNER:-podman}"
 
-which "$RUNNER" > /dev/null && exec "$RUNNER" "$@"
+if which "$RUNNER" > /dev/null; then
+  set -x
+  exec "$RUNNER" "$@"
+fi
 
 (
   echo "ERROR: $RUNNER not found"
