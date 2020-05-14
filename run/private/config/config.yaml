@@ -26,5 +26,4 @@ environments:
     #  regularUser: "YOU.openshift:PASSWORD"
 
 global:
-  browser: chrome
   selenium_url: http://localhost:4444/wd/hub

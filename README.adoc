@@ -187,10 +187,11 @@ QA have been developing end-to-end UI tests in 2 repos, forked from Openshift's 
 
 To run test(s) locally, in addition to all the above (`yarn start` or separate backend + insights proxy + dev server), you'll need:
 
-1. Start `yarn selenium-chrome` — runs a browser under Xvnc in a container.
-2. `make selenium-tests-image` — clones those repos under `run/`, builds container image with Ruby depedencies and the tests.
-3. `yarn selenium-test-chrome` — waits for dependencies, then executes tests in a container.
-4. Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`. If you have Vinagre, simply run `yarn selenium-viewer`.
+1. `make selenium-tests-image` — clones those repos under `run/`, builds container image with Ruby depedencies and the tests.
+2. Optional: `export BROWSER=firefox` (or `chrome` or `safari`) to choose which browser.
+3. Start `yarn selenium-browser` — runs a browser under Xvnc in a container.
+4. `yarn selenium-test` — waits for dependencies, then executes tests in a container.
+5. Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`. If you have Vinagre, simply run `yarn selenium-viewer`.
 
 If a test fails, it'll stop & dump you into "pry" prompt, which is pretty useless but gives you chance to open VNC and play with the browser.
 Type `quit` or simply kbd:[Ctrl + C] to continue to next test.
