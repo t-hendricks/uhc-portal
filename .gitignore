@@ -5,4 +5,5 @@
 /run/insights-proxy/
 /run/cucushift/
 /run/verification-tests/
+/run/output
 /vendor/
