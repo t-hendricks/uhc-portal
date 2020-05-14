@@ -111,18 +111,18 @@ func run(cmd *cobra.Command, argv []string) {
 	}
 
 	token := cfg.Token()
-	if token == "" && len(cfg.tokenMap) == 0 {
+	if token == "" {
 		token = os.Getenv(tokenEnv)
-		if token == "" {
-			glog.Errorf(
-				"Either the 'token' parameter in the configuration file or the "+
-					"environment variable '%s' must contain the offline "+
-					"access token, but both are empty",
-				tokenEnv,
-			)
-			glog.Infof("To obtain an offline access token go to '%s'", tokenPage)
-			os.Exit(1)
-		}
+	}
+	if token == "" && len(cfg.tokenMap) == 0 {
+		glog.Errorf(
+			"Neither 'token' nor 'token_map' parameters in the configuration file, "+
+				"nor environment variable '%s' were set. "+
+				"At least one of these is required.",
+			tokenEnv,
+		)
+		glog.Infof("To obtain an offline access token go to '%s'", tokenPage)
+		os.Exit(1)
 	}
 
 	logger, err := sdk.NewGoLoggerBuilder().
