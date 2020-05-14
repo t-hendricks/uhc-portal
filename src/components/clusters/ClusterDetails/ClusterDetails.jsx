@@ -138,9 +138,10 @@ class ClusterDetails extends Component {
   }
 
   componentWillUnmount() {
-    const { resetIdentityProvidersState, closeModal } = this.props;
+    const { resetIdentityProvidersState, closeModal, resetClusterHistory } = this.props;
     resetIdentityProvidersState();
     closeModal();
+    resetClusterHistory();
   }
 
   refresh(automatic = true) {
@@ -496,6 +497,7 @@ ClusterDetails.propTypes = {
   displayClusterLogs: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  resetClusterHistory: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
   logs: PropTypes.object,

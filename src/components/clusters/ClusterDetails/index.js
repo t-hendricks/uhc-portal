@@ -24,7 +24,7 @@ import {
 } from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
-import { getClusterHistory } from './components/ClusterLogs/clusterLogActions';
+import { getClusterHistory, clusterLogActions } from './components/ClusterLogs/clusterLogActions';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { viewConstants } from '../../../redux/constants';
 import {
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
   const { insightsData } = state.insightsData;
   const { filter, flags } = state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW];
   const hasNoFilters = isEmpty(filter.description)
-  && helpers.nestedIsEmpty(flags.conditionalFilterFlags.severityTypesFilter);
+  && helpers.nestedIsEmpty(flags.conditionalFilterFlags.severityTypes);
   const logsFulfilled = state.clusterLogs.requestState.fulfilled;
   const hideClusterLogs = (hasNoFilters && !size(state.clusterLogs.logs) && logsFulfilled)
   || errorCode === 403 || errorCode === 404;
@@ -82,6 +82,7 @@ const mapDispatchToProps = {
   getDedicatedAdmins: usersActions.getDedicatedAdmins,
   getClusterAdmins: usersActions.getClusterAdmins,
   resetIdentityProvidersState,
+  resetClusterHistory: clusterLogActions.resetClusterHistory,
   clearGlobalError,
   setGlobalError,
   getAlerts,

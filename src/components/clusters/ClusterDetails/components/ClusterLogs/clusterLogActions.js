@@ -29,11 +29,16 @@ const downloadClusterLogs = (externalClusterID, params, format = 'csv') => dispa
     ),
 });
 
+const resetClusterHistory = () => dispatch => dispatch({
+  type: clusterLogConstants.RESET_CLUSTER_HISTORY,
+});
+
 const clusterLogActions = {
   getClusterHistory,
   downloadClusterLogs,
+  resetClusterHistory,
 };
 
 export {
-  clusterLogActions, getClusterHistory, downloadClusterLogs,
+  clusterLogActions, getClusterHistory, downloadClusterLogs, resetClusterHistory,
 };
