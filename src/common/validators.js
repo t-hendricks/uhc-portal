@@ -1,3 +1,5 @@
+import get from 'lodash/get';
+
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
 const DNS_LABEL_REGEXP = /^[a-z]([-a-z0-9]*[a-z0-9])?$/;
@@ -426,12 +428,18 @@ const validateARN = (value) => {
  *
  * @param {*} values array of value objects, from redux-form
  */
-const atLeastOneRequired = fieldName => (values) => {
-  if (!values) {
-    return 'At least one is required.';
+const atLeastOneRequired = fieldName => (fields) => {
+  if (!fields) {
+    return undefined;
   }
-  const nonEmptyValues = values.filter(value => value[fieldName]);
-  if (!nonEmptyValues || nonEmptyValues.length === 0) {
+  let nonEmptyValues = 0;
+  fields.forEach((field) => {
+    const content = get(field, fieldName, null);
+    if (content && content.trim() !== '') {
+      nonEmptyValues += 1;
+    }
+  });
+  if (nonEmptyValues === 0) {
     return 'At least one is required.';
   }
   return undefined;

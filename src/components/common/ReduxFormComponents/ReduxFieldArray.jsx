@@ -16,7 +16,7 @@ import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { getRandomID } from '../../../common/helpers';
 
 class RenderFields extends React.Component {
-  state = { areFieldsFilled: [] };
+  state = { areFieldsFilled: [], touched: false };
 
   componentDidMount() {
     const { fields } = this.props;
@@ -30,6 +30,10 @@ class RenderFields extends React.Component {
 
   onFieldChange(e, value, index) {
     const { onFormChange } = this.props;
+    const { touched } = this.state;
+    if (!touched) {
+      this.setState({ touched: true });
+    }
     if (onFormChange) {
       onFormChange(e, value);
     }
@@ -136,9 +140,10 @@ class RenderFields extends React.Component {
     };
 
     const fieldArrayErrorGridItem = (index, errorMessage) => {
-      if (errorMessage && index === 0) {
+      const { touched } = this.state;
+      if (errorMessage && index === 0 && touched) {
         return (
-          <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">{error}</GridItem>
+          <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">{errorMessage}</GridItem>
         );
       }
       return null;
