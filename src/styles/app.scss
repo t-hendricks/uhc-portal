@@ -280,6 +280,10 @@ limitations under the License.
   padding-right: var(--pf-global--spacer--sm);
 }
 
+.empty-state-color {
+  color: var(--pf-global--Color--200);
+}
+
 #subs-hint {
   margin-top: 40px;
 }

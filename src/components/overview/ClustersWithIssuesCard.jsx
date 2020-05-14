@@ -12,7 +12,6 @@ import {
 
 import {
   ExclamationCircleIcon,
-  OutlinedQuestionCircleIcon,
   OkIcon,
 } from '@patternfly/react-icons';
 
@@ -45,39 +44,45 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
     );
   }
 
-  let icon;
-  if (totalUnhealthyClusters === 0) {
-    icon = (totalConnectedClusters > 0)
-      ? (
-        <>
-          <OkIcon
-            className="status-icon"
-            color={global_success_color_100.value}
-            size="sm"
-          />
-        </>
-      ) : (
-        <OutlinedQuestionCircleIcon
-          className="status-icon"
-          size="md"
-        />
-      );
-  } else {
-    icon = (
-      <>
-        <ExclamationCircleIcon
-          className="status-icon"
-          color={global_danger_color_100.value}
-          size="sm"
-        />
-      </>
+  if (!totalConnectedClusters) {
+    return (
+      <Card className="clusters-overview-card">
+        <CardHeader>
+          Clusters with issues
+        </CardHeader>
+        <CardBody>
+          <Bullseye>
+            <span className="empty-state-color">
+              No data available
+            </span>
+          </Bullseye>
+        </CardBody>
+      </Card>
     );
   }
+
+  const icon = (totalUnhealthyClusters === 0) ? (
+    <>
+      <OkIcon
+        className="status-icon"
+        color={global_success_color_100.value}
+        size="sm"
+      />
+    </>
+  ) : (
+    <>
+      <ExclamationCircleIcon
+        className="status-icon"
+        color={global_danger_color_100.value}
+        size="sm"
+      />
+    </>
+  );
 
   const cardContent = (
     <>
       <span id={totalUnhealthyClusters > 0 ? 'clusters-with-issues-non-zero' : 'clusters-with-issues-zero'}>
-        { totalConnectedClusters > 0 && totalUnhealthyClusters }
+        { totalUnhealthyClusters }
       </span>
     </>
   );
