@@ -26,16 +26,10 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/gorilla/handlers"
-	"github.com/openshift-online/uhc-sdk-go"
+	sdk "github.com/openshift-online/ocm-sdk-go"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
-
-// #nosec G101
-const authPath = "/auth/realms/redhat-external/protocol/openid-connect/auth"
-
-// #nosec G101
-const tokenPath = "/auth/realms/redhat-external/protocol/openid-connect/token"
 
 // tokenEnv is the name of the environment variable that should contain the offline access token of
 // the user.
@@ -103,6 +97,11 @@ func main() {
 
 func run(cmd *cobra.Command, argv []string) {
 	// Load the configuration:
+	configFileFromEnv := os.Getenv("BACKEND_CONFIG")
+	if configFileFromEnv != "" {
+		glog.Infof("Loading config file from envrionemnt: %v", configFileFromEnv)
+		args.configFiles = append(args.configFiles, configFileFromEnv)
+	}
 	cfg, err := NewConfig().
 		Files(args.configFiles).
 		Build()
@@ -111,23 +110,21 @@ func run(cmd *cobra.Command, argv []string) {
 		os.Exit(1)
 	}
 
-	// Get the offline access token:
 	token := cfg.Token()
 	if token == "" {
 		token = os.Getenv(tokenEnv)
-		if token == "" {
-			glog.Errorf(
-				"Either the 'token' parameter in the configuration file or the "+
-					"environment variable '%s' must contain the offline "+
-					"access token, but both are empty",
-				tokenEnv,
-			)
-			glog.Infof("To obtain an offline access token go to '%s'", tokenPage)
-			os.Exit(1)
-		}
+	}
+	if token == "" && len(cfg.tokenMap) == 0 {
+		glog.Errorf(
+			"Neither 'token' nor 'token_map' parameters in the configuration file, "+
+				"nor environment variable '%s' were set. "+
+				"At least one of these is required.",
+			tokenEnv,
+		)
+		glog.Infof("To obtain an offline access token go to '%s'", tokenPage)
+		os.Exit(1)
 	}
 
-	// Create the connection:
 	logger, err := sdk.NewGoLoggerBuilder().
 		Debug(true).
 		Build()
@@ -135,27 +132,9 @@ func run(cmd *cobra.Command, argv []string) {
 		glog.Errorf("Can't create logger: %v", err)
 		os.Exit(1)
 	}
-	connection, err := sdk.NewConnectionBuilder().
-		Logger(logger).
-		Client(cfg.Keycloak().ClientID(), cfg.Keycloak().ClientSecret()).
-		TokenURL(cfg.Keycloak().URL()).
-		Tokens(token).
-		Build()
-	if err != nil {
-		glog.Errorf("Can't create connection: %v", err)
-		os.Exit(1)
-	}
-
-	// Try to get a bearer token, just to verify that the connection is working and exit early if
-	// it doesn't:
-	_, _, err = connection.Tokens()
-	if err != nil {
-		glog.Errorf("Can't get bearer token: %v", err)
-		os.Exit(1)
-	}
 
 	// Create the session store:
-	store, err := NewSessionStore().
+	store, err := NewSessionStore(cfg, logger).
 		Build()
 	if err != nil {
 		glog.Errorf("Can't create session store: %v", err)
@@ -173,7 +152,6 @@ func run(cmd *cobra.Command, argv []string) {
 		)
 		proxyHandler, err := NewProxyHandler().
 			Target(proxyCfg.Target()).
-			Connection(connection).
 			Sessions(store).
 			Build()
 		if err != nil {
@@ -182,53 +160,6 @@ func run(cmd *cobra.Command, argv []string) {
 		}
 		mainMux.Handle(proxyCfg.Prefix(), proxyHandler)
 	}
-
-	// Create the authentication handlers:
-	tokenURL := cfg.Keycloak().URL()
-	glog.Infof("Creating auth handler at '%s' that calls '%s'", authPath, tokenURL)
-	var authHandler http.Handler
-	authHandler, err = NewAuthHandler().
-		Sessions(store).
-		Connection(connection).
-		Build()
-	if err != nil {
-		glog.Errorf("Can't create authentication handler: %v", err)
-		os.Exit(1)
-	}
-	glog.Infof("Creating token handler at '%s'", tokenPath)
-	var tokenHandler http.Handler
-	tokenHandler, err = NewTokenHandler().
-		Sessions(store).
-		Build()
-	if err != nil {
-		glog.Errorf("Can't create token handler: %v", err)
-		os.Exit(1)
-	}
-
-	// The API handler doesn't need explicit CORS support, as the real gateway will already
-	// support it, but the authentication and token handlers do need it:
-	corsMiddleware := handlers.CORS(
-		handlers.AllowedMethods([]string{
-			http.MethodDelete,
-			http.MethodGet,
-			http.MethodPatch,
-			http.MethodPost,
-		}),
-		handlers.AllowedHeaders([]string{
-			"Authorization",
-			"Content-Type",
-		}),
-		handlers.AllowedOrigins([]string{
-			"http://localhost:8001",
-		}),
-		handlers.AllowCredentials(),
-	)
-	authHandler = corsMiddleware(authHandler)
-	tokenHandler = corsMiddleware(tokenHandler)
-
-	// Add the authentication handlers to the multiplexer:
-	mainMux.Handle(authPath, authHandler)
-	mainMux.Handle(tokenPath, tokenHandler)
 
 	// Enable access logs:
 	logHandler := handlers.LoggingHandler(os.Stdout, mainMux)

@@ -84,6 +84,11 @@ YAML file and specify it with the `--config` command line option:
 $ ./backend --config=my.yml
 ....
 
+Or with the `BACKEND_CONFIG` environment variable:
+....
+$ BACKEND_CONFIG="my.yml" ./backend
+....
+
 The content of this file should be something like this (or any subset of it):
 
 [source,yaml]
@@ -100,7 +105,10 @@ proxies:
 - prefix: /api/
   target: https://api.stage.openshift.com
 
-token: eyJ...
+token: eyJ...  # default token for any user. Optional.
+token_map:  # map specific user names (in QA auth server) to access tokens. Optional.
+  user1: eyJ...
+  user2: eyJ...
 ----
 
 Note that this `--config` option and the configuration file are optional, the
