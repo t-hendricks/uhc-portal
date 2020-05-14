@@ -67,7 +67,9 @@ const TopOverviewSection = ({
     );
   }
 
-  const resourceUsageBody = totalConnectedClusters > 0 ? (
+  const dataAvailable = (totalConnectedClusters > 0 && (totalCPU > 0 || totalMem.value > 0));
+
+  const resourceUsageBody = dataAvailable ? (
     <CardBody>
       <ResourceUsage
         cpu={{
