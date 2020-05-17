@@ -114,6 +114,12 @@ class RenderFields extends React.Component {
             validate={validateField}
             disabled={disabled}
             onChange={(e, value) => this.onFieldChange(e, value, index)}
+            onBlur={() => {
+              const { touched } = this.state;
+              if (!touched) {
+                this.setState({ touched: true });
+              }
+            }}
           />
         </GridItem>
       );
