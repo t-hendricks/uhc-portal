@@ -40,28 +40,24 @@ class ClustersWithIssuesTableCard extends React.Component {
 
   render() {
     const {
-      unhealthyClusters, setClusterDetails, viewOptions, totalConnectedClusters,
+      unhealthyClusters, setClusterDetails, viewOptions,
     } = this.props;
     if (unhealthyClusters.fulfilled && unhealthyClusters.clusters.length === 0) {
-      if (totalConnectedClusters > 0) {
-        return (
-          <Card className="clusters-overview-card">
-            <CardHeader>
+      return (
+        <Card className="clusters-overview-card">
+          <CardHeader>
               Clusters with issues
-            </CardHeader>
-            <CardBody>
-              <EmptyState>
-                <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
-                <EmptyStateBody>
+          </CardHeader>
+          <CardBody>
+            <EmptyState>
+              <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
+              <EmptyStateBody>
                   No issues detected
-                </EmptyStateBody>
-              </EmptyState>
-            </CardBody>
-          </Card>
-        );
-      }
-      // No connected clusters - cant say anything about clusters with issues.
-      return null;
+              </EmptyStateBody>
+            </EmptyState>
+          </CardBody>
+        </Card>
+      );
     }
 
     const clusterWithIssuesRow = (cluster) => {
@@ -142,7 +138,6 @@ ClustersWithIssuesTableCard.propTypes = {
   }).isRequired,
   setClusterDetails: PropTypes.func.isRequired,
   getUnhealthyClusters: PropTypes.func.isRequired,
-  totalConnectedClusters: PropTypes.number.isRequired,
 };
 
 export default ClustersWithIssuesTableCard;
