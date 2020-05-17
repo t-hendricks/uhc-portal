@@ -81,7 +81,7 @@ function IDPSection({
       <Card>
         <CardBody>
           <Title size="lg" className="card-title">
-            Identity Providers
+            Identity providers
           </Title>
           <p>
             Configure identity providers to allow users to log into the cluster.

@@ -44,7 +44,7 @@ class InstallPullSecret extends Component {
                     variant="info"
                     isInline
                     title="Azure Red Hat OpenShift clusters do not connect to OpenShift Cluster Manager at this time. OpenShift Cluster Manager integration may be offered in a future release."
-                    className="buttom-alert"
+                    className="bottom-alert"
                   />
                 </div>
               </div>
