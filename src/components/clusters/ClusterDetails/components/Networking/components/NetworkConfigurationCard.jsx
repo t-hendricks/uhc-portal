@@ -26,8 +26,12 @@ function NetworkConfigurationCard({ network }) {
               {network.service_cidr || 'N/A'}
             </dd>
             <dt>Pod CIDR</dt>
-            <dd id="networking-tab-last">
+            <dd>
               {network.pod_cidr || 'N/A'}
+            </dd>
+            <dt>Host Prefix</dt>
+            <dd id="networking-tab-last">
+              {`/${network.host_prefix}` || 'N/A'}
             </dd>
           </dl>
         </>
