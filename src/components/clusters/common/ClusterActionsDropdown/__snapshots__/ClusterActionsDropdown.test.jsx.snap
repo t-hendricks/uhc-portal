@@ -7,28 +7,28 @@ exports[`<ClusterActionsDropdown /> admin console url does not exist should rend
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Open Console"
+        title="Open console"
         tooltip={
           <span>
             Admin console is not yet available for this cluster
           </span>
         }
       >
-        Open Console
+        Open console
       </DropdownItem>,
       <DropdownItem
         component="button"
         onClick={[Function]}
-        title="Edit Display Name"
+        title="Edit display name"
       >
-        Edit Display Name
+        Edit display name
       </DropdownItem>,
       <DropdownItem
         component="button"
         onClick={[Function]}
-        title="Add Console URL"
+        title="Add console URL"
       >
-        Add Console URL
+        Add console URL
       </DropdownItem>,
     ]
   }
@@ -52,40 +52,40 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Open Console"
+        title="Open console"
         tooltip={
           <span>
             Admin console is not yet available for this cluster
           </span>
         }
       >
-        Open Console
+        Open console
       </DropdownItem>,
       <DropdownItem
         component="button"
         onClick={[Function]}
-        title="Edit Display Name"
+        title="Edit display name"
       >
-        Edit Display Name
+        Edit display name
       </DropdownItem>,
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Scale Cluster"
+        title="Scale cluster"
         tooltip={
           <span>
             This cluster is not ready
           </span>
         }
       >
-        Scale Cluster
+        Scale cluster
       </DropdownItem>,
       <DropdownItem
         component="button"
         onClick={[Function]}
-        title="Delete Cluster"
+        title="Delete cluster"
       >
-        Delete Cluster
+        Delete cluster
       </DropdownItem>,
     ]
   }
@@ -111,30 +111,30 @@ exports[`<ClusterActionsDropdown /> cluster with state ready and console url sho
         href="www.testuhc.com"
         rel="noopener noreferrer"
         target="_blank"
-        title="Open Console"
+        title="Open console"
       >
-        Open Console
+        Open console
       </DropdownItem>,
       <DropdownItem
         component="button"
         onClick={[Function]}
-        title="Edit Display Name"
+        title="Edit display name"
       >
-        Edit Display Name
+        Edit display name
       </DropdownItem>,
       <DropdownItem
         component="button"
         onClick={[Function]}
-        title="Scale Cluster"
+        title="Scale cluster"
       >
-        Scale Cluster
+        Scale cluster
       </DropdownItem>,
       <DropdownItem
         component="button"
         onClick={[Function]}
-        title="Delete Cluster"
+        title="Delete cluster"
       >
-        Delete Cluster
+        Delete cluster
       </DropdownItem>,
     ]
   }
@@ -158,50 +158,50 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Open Console"
+        title="Open console"
         tooltip={
           <span>
             The cluster is being uninstalled
           </span>
         }
       >
-        Open Console
+        Open console
       </DropdownItem>,
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Edit Display Name"
+        title="Edit display Name"
         tooltip={
           <span>
             The cluster is being uninstalled
           </span>
         }
       >
-        Edit Display Name
+        Edit display Name
       </DropdownItem>,
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Scale Cluster"
+        title="Scale cluster"
         tooltip={
           <span>
             The cluster is being uninstalled
           </span>
         }
       >
-        Scale Cluster
+        Scale cluster
       </DropdownItem>,
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Delete Cluster"
+        title="Delete cluster"
         tooltip={
           <span>
             The cluster is being uninstalled
           </span>
         }
       >
-        Delete Cluster
+        Delete cluster
       </DropdownItem>,
     ]
   }
@@ -227,9 +227,9 @@ exports[`<ClusterActionsDropdown /> read only cluster should render correctly 1`
         href="www.testuhc.com"
         rel="noopener noreferrer"
         target="_blank"
-        title="Open Console"
+        title="Open console"
       >
-        Open Console
+        Open console
       </DropdownItem>,
     ]
   }
@@ -253,28 +253,28 @@ exports[`<ClusterActionsDropdown /> self managed cluster should render (self man
       <DropdownItem
         component="button"
         isDisabled={true}
-        title="Open Console"
+        title="Open console"
         tooltip={
           <span>
             Admin console is not yet available for this cluster
           </span>
         }
       >
-        Open Console
+        Open console
       </DropdownItem>,
       <DropdownItem
         component="button"
         onClick={[Function]}
-        title="Edit Display Name"
+        title="Edit display name"
       >
-        Edit Display Name
+        Edit display name
       </DropdownItem>,
       <DropdownItem
         component="button"
         onClick={[Function]}
-        title="Add Console URL"
+        title="Add console URL"
       >
-        Add Console URL
+        Add console URL
       </DropdownItem>,
     ]
   }
