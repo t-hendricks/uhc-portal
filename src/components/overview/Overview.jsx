@@ -112,13 +112,14 @@ class Overview extends Component {
               totalMem={totalMem}
               usedMem={usedMem}
             />
+            { totalConnectedClusters > 0 && (
             <GridItem span={12}>
               <ClustersWithIssuesTableCard
-                totalConnectedClusters={totalConnectedClusters}
                 unhealthyClusters={unhealthyClusters}
                 viewOptions={viewOptions}
               />
             </GridItem>
+            )}
             <GridItem span={6}>
               <Card className="clusters-overview-card">
                 <CardHeader>
