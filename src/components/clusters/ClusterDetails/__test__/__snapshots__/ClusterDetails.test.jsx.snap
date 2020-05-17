@@ -187,7 +187,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       displayInsightsTab={false}
       displayLogs={false}
       displayMonitoringTab={true}
-      displayNetworkingTab={false}
+      displayNetworkingTab={true}
       insightsTabRef={
         Object {
           "current": null,
@@ -841,6 +841,17 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
         }
       }
       clusterConsoleURL="https://console-openshift-console.apps.test-liza.sdev.devshift.net"
+    />
+  </ForwardRef>
+  <ForwardRef
+    aria-label="Networking"
+    eventKey={4}
+    hidden={true}
+    id="networkingTabContent"
+  >
+    <Connect(Networking)
+      clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
+      refreshCluster={[Function]}
     />
   </ForwardRef>
   <Connect(ReduxForm)

@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
   const { details } = state.clusters;
   const { cloudProviders } = state;
   const { errorCode } = state.clusterLogs.requestState;
-  const { logs, clusterRouters } = state;
+  const { logs } = state;
   const { addOns, clusterAddOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
@@ -58,7 +58,6 @@ const mapStateToProps = (state) => {
     clusterIdentityProviders,
     organization,
     displayClusterLogs: !hideClusterLogs,
-    clusterRouters,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
     canAllowClusterAdmin: canAllowAdminSelector(state),

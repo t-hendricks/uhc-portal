@@ -240,7 +240,6 @@ class ClusterDetails extends Component {
       history,
       match,
       logs,
-      clusterRouters,
       clusterIdentityProviders,
       organization,
       setGlobalError,
@@ -322,7 +321,7 @@ class ClusterDetails extends Component {
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
     const displayNetworkingTab = cluster.canEdit
           && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING)
-          && cluster.managed && get(cluster, 'api.url') && clusterRouters.getRouters.routers.length > 0;
+          && cluster.managed && !!get(cluster, 'api.url');
 
     return (
       <PageSection id="clusterdetails-content">
@@ -502,7 +501,6 @@ ClusterDetails.propTypes = {
   insightsData: PropTypes.object,
   logs: PropTypes.object,
   addOns: PropTypes.object,
-  clusterRouters: PropTypes.object,
   clusterAddOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
