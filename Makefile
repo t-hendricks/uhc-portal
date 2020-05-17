@@ -115,9 +115,25 @@ run/cucushift:
 	(cd $@; git remote | grep --quiet openshift || git remote add openshift ssh://git@github.com/openshift/cucushift.git)
 	(cd $@; git fetch --all; git checkout xueli181114/new-cases)
 
+# This is optional.
+# If you don't build the image locally, will pull it from Quay on first use.
 .PHONY: selenium-tests-image
 selenium-tests-image: run/verification-tests
-	run/podman-or-docker.sh build --tag=ocm-selenium-tests --file=run/Dockerfile.selenium-tests run/
+	. run/selenium-tests.version.sh && run/podman-or-docker.sh build --tag=$$SELENIUM_TESTS_IMAGE --file=run/Dockerfile.selenium-tests run/
+
+# Force download.  Usually not needed as we don't want images to change, at least after
+# that version got merged; further changes should increment the tag.
+.PHONY: selenium-tests-pull
+selenium-tests-pull:
+	. run/selenium-tests.version.sh && run/podman-or-docker.sh pull $$SELENIUM_TESTS_IMAGE
+
+# If you upgrade verification-tests or change Dockerfile.selenium-tests,
+# increment the tag in run/selenium-tests.version.sh then run this.
+.PHONY: selenium-tests-push
+selenium-tests-push: selenium-tests-image
+	# You have to be member of https://quay.io/organization/redhat-sd-devel
+	# and have done `podman login` / `docker login`.
+	. run/selenium-tests.version.sh && run/podman-or-docker.sh push $$SELENIUM_TESTS_IMAGE
 
 .PHONY: clean
 clean:

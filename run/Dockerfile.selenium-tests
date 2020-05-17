@@ -1,3 +1,5 @@
+# If you modify this, increment ./selenium-tests.version.sh
+
 FROM fedora:29
 
 MAINTAINER ***REMOVED***
@@ -41,4 +43,4 @@ USER user
 WORKDIR /verification-tests
 # Environments configured in /verification-tests/private/config/config.yaml
 ENV BUSHSLICER_DEFAULT_ENVIRONMENT=ocm_local_dev
-CMD bundle exec cucumber ../cucushift/features/ocm/
+CMD bundle exec cucumber /verification-tests/our-tests/features/ocm/
