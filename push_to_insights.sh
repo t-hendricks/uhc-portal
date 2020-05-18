@@ -138,6 +138,10 @@ ${SUBJECT}
   popd
 }
 
+# install the cert required to connect to Nexus:
+curl https://password.corp.redhat.com/RH-IT-Root-CA.crt > ~/RH-IT-Root-CA.crt
+yarn config set cafile ~/RH-IT-Root-CA.crt
+
 if [ "$1" == "beta" ]; then
     echo "running staging push"
     # Install dependencies:
