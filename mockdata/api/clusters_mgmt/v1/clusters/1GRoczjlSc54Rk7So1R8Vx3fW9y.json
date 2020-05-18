@@ -134,5 +134,10 @@
     "kind": "AddOnInstallationListLink",
     "href": "/api/clusters_mgmt/v1/clusters/1GRoczjlSc54Rk7So1R8Vx3fW9y/addons",
     "items": null
+  },
+  "product": {
+    "kind": "ProductLink",
+    "id": "ocp",
+    "href": "/api/clusters_mgmt/v1/products/ocp"
   }
 }

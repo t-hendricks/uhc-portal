@@ -1,5 +1,6 @@
 import { mockAddOns, mockClusterAddOns } from './AddOns.fixtures';
 import { quotaSummary } from '../../../../../subscriptions/__test__/Subscriptions.fixtures';
+import { clusterDetails } from '../../../__test__/ClusterDetails.fixtures';
 
 import {
   isAvailable,
@@ -8,14 +9,21 @@ import {
   availableAddOns,
 } from '../AddOnsHelper';
 
+const { cluster } = clusterDetails;
+
 describe('isAvailable', () => {
+  it('should determine that free add-on is available', () => {
+    const available = isAvailable(mockAddOns.items[0], cluster, { fulfilled: true }, quotaSummary);
+    expect(available).toBe(true);
+  });
+
   it('should determine that add-on is not available', () => {
-    const available = isAvailable(mockAddOns.items[2], { fulfilled: true }, quotaSummary);
+    const available = isAvailable(mockAddOns.items[2], cluster, { fulfilled: true }, quotaSummary);
     expect(available).toBe(false);
   });
 
   it('should determine that add-on is available', () => {
-    const available = isAvailable(mockAddOns.items[3], { fulfilled: true }, quotaSummary);
+    const available = isAvailable(mockAddOns.items[3], cluster, { fulfilled: true }, quotaSummary);
     expect(available).toBe(true);
   });
 });
@@ -33,29 +41,34 @@ describe('isInstalled', () => {
 });
 
 describe('hasQuota', () => {
+  it('should determine that the org does not need quota for the add-on', () => {
+    const quota = hasQuota(mockAddOns.items[0], cluster, { fulfilled: true }, quotaSummary);
+    expect(quota).toBe(true);
+  });
+
   it('should determine that the org does not have quota for the add-on', () => {
-    const quota = hasQuota(mockAddOns.items[2], { fulfilled: true }, quotaSummary);
+    const quota = hasQuota(mockAddOns.items[2], cluster, { fulfilled: true }, quotaSummary);
     expect(quota).toBe(false);
   });
 
   it('should determine that the org has quota for the add-on', () => {
-    const quota = hasQuota(mockAddOns.items[3], { fulfilled: true }, quotaSummary);
+    const quota = hasQuota(mockAddOns.items[3], cluster, { fulfilled: true }, quotaSummary);
     expect(quota).toBe(true);
   });
 });
 
 describe('availableAddOns', () => {
   it('should return an empty list', () => {
-    const addOns = availableAddOns({ items: [] }, mockClusterAddOns, {
+    const addOns = availableAddOns({ items: [] }, cluster, mockClusterAddOns, {
       fulfilled: true,
     }, quotaSummary);
     expect(addOns).toEqual([]);
   });
 
   it('should return a list of available add-ons', () => {
-    const addOns = availableAddOns(mockAddOns, mockClusterAddOns, {
+    const addOns = availableAddOns(mockAddOns, cluster, mockClusterAddOns, {
       fulfilled: true,
     }, quotaSummary);
-    expect(addOns).toEqual([mockAddOns.items[2], mockAddOns.items[3]]);
+    expect(addOns).toEqual([mockAddOns.items[0], mockAddOns.items[2], mockAddOns.items[3]]);
   });
 });

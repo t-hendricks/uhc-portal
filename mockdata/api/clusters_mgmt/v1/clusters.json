@@ -80,6 +80,11 @@
           "master": 3,
           "compute": 3
         }
+      },
+      "product": {
+        "kind": "ProductLink",
+        "id": "ocp",
+        "href": "/api/clusters_mgmt/v1/products/ocp"
       }
     },
     {
@@ -167,7 +172,12 @@
         "pod_cidr": "10.128.0.0/14"
       },
       "multi_az": false,
-      "managed": true
+      "managed": true,
+      "product": {
+        "kind": "ProductLink",
+        "id": "osd",
+        "href": "/api/clusters_mgmt/v1/products/osd"
+      }
     },
     {
       "kind": "Cluster",
@@ -179,7 +189,7 @@
       "display_name": "fake-managed-cluster",
       "creation_timestamp": "2019-02-11T09:28:16.000143Z",
       "activity_timestamp": "2019-12-22T10:18:09Z",
-      "openshift_version": "4.0",
+      "openshift_version": "4.2.13",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
@@ -199,7 +209,8 @@
         "url": "https://console-openshift-console.apps.cben-osd1.h9d5.p1.openshiftapps.com"
       },
       "api": {
-        "url": "https://api.cben-osd1.h9d5.p1.openshiftapps.com:6443"
+        "url": "https://api.cben-osd1.h9d5.p1.openshiftapps.com:6443",
+        "listening": "internal"
       },
       "nodes": {
         "total": 9,
@@ -327,6 +338,11 @@
         "kind": "AddOnInstallationListLink",
         "href": "/api/clusters_mgmt/v1/clusters/1H1l4oRVxoh6qSTf4fSmvtaGaWy/addons",
         "items": null
+      },
+      "product": {
+        "kind": "ProductLink",
+        "id": "osd",
+        "href": "/api/clusters_mgmt/v1/products/osd"
       }
     },
     {
@@ -423,7 +439,12 @@
         }
       },
       "multi_az": false,
-      "managed": true
+      "managed": true,
+      "product": {
+        "kind": "ProductLink",
+        "id": "osd",
+        "href": "/api/clusters_mgmt/v1/products/osd"
+      }
     },
     {
       "kind": "Cluster",
@@ -561,6 +582,11 @@
         "kind": "AddOnInstallationListLink",
         "href": "/api/clusters_mgmt/v1/clusters/1GRoczjlSc54Rk7So1R8Vx3fW9y/addons",
         "items": null
+      },
+      "product": {
+        "kind": "ProductLink",
+        "id": "ocp",
+        "href": "/api/clusters_mgmt/v1/products/ocp"
       }
     }
   ]
