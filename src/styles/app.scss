@@ -732,7 +732,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 24px;
 }
 
-.buttom-alert {
+.bottom-alert {
  margin-top: 24px;
  h4 {
   margin-top: 0 !important;
@@ -1140,6 +1140,12 @@ button:focus {
 
 .hand-pointer {
   cursor: pointer;
+}
+
+.access-control-form {
+  div.pf-c-form__group .pf-c-form__label{
+    cursor: default;
+  }
 }
 
 .access-control-add {

@@ -30,7 +30,7 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
       className="card-title"
       size="lg"
     >
-      Identity Providers
+      Identity providers
     </Title>
     <p>
       Configure identity providers to allow users to log into the cluster.
@@ -61,7 +61,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
       className="card-title"
       size="lg"
     >
-      Identity Providers
+      Identity providers
     </Title>
     <p>
       Configure identity providers to allow users to log into the cluster.

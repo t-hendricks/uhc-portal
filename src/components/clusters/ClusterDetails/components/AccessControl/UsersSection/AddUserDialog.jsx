@@ -79,7 +79,7 @@ class AddUserDialog extends Component {
       >
         <>
           {hasError}
-          <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
+          <Form className="access-control-form" onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
             <FormGroup
               helperTextInvalid={validationMessage}
               isValid={userIdTouched ? !validationMessage : true}

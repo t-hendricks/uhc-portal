@@ -211,7 +211,7 @@ class UsersSection extends React.Component {
       <Card>
         {!!(getUserErrors.length) && getUserErrors.map(error => getErrorBox(error))}
         <CardBody>
-          <Title className="card-title" headingLevel="h3" size="lg">Cluster Administrative Users</Title>
+          <Title className="card-title" headingLevel="h3" size="lg">Cluster administrative users</Title>
           <p>
             Grant permission to manage this cluster to users defined in your identity provider.
             {' '}
