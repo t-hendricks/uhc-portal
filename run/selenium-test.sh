@@ -6,8 +6,8 @@ set -e -u -o pipefail
 cd "$(dirname "$0")"
 
 echo Waiting on insights-proxy and selenium...
-# wait-on.config disables checking qa.foo.redhat.com certificate.
-yarn wait-on --config="$PWD/wait-on.config" https-get://qa.foo.redhat.com:1337/ http-get://localhost:4444/wd/hub
+yarn wait-on http-get://localhost:4444/wd/hub
+./wait-on-insights-proxy.js
 
 # Default must match selenium-browser.sh
 BROWSER="${BROWSER:-firefox}"
