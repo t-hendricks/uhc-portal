@@ -63,8 +63,8 @@ function NetworkingSection({
               <>
                 Advanced
                 <div className="radio-helptext">
-                  Choose this option if you will ever need direct, private network connectivity
-                  to your cluster, e.g. VPN, VPC peering, DirectConnect or TransitGateway.
+                Choose this option if you will ever need direct,
+                private network connectivity to your cluster, e.g. VPN or VPC peering.
                 </div>
               </>
             ),
