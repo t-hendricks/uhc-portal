@@ -250,6 +250,7 @@ class InsightsTable extends React.Component {
                   riskOfChange={details.risk_of_change}
                   showRiskDescription={false}
                   definitions={details.extra_data}
+                  userVote={details.user_vote}
                   remediating={
                     (details.reason || details.resolution)
                     && {

@@ -41,21 +41,23 @@ export const fetchClusterInsights = clusterID => dispatch => dispatch({
 // clusterId is id of the cluster
 // ruleId is id of the rule
 // vote is integer: -1(dislike), 0(reset_vote), 1(like)
-const voteOnSingleRuleInsights = async (clusterId, ruleId, vote) => {
+const voteOnSingleRuleInsights = async (dispatch, clusterId, ruleId, vote) => {
   let response;
   switch (vote) {
     case -1:
-      response = insightsService.putDislikeOnRuleInsights(clusterId, ruleId);
+      response = await insightsService.putDislikeOnRuleInsights(clusterId, ruleId);
       break;
     case 0:
-      response = insightsService.resetVoteOnRuleInsights(clusterId, ruleId);
+      response = await insightsService.resetVoteOnRuleInsights(clusterId, ruleId);
       break;
     case 1:
-      response = insightsService.putLikeOnRuleInsights(clusterId, ruleId);
+      response = await insightsService.putLikeOnRuleInsights(clusterId, ruleId);
       break;
     default:
       throw Error('unsupported vote');
   }
+
+  dispatch(fetchClusterInsights(clusterId));
 
   return {
     insightsData: response.data,
@@ -67,7 +69,7 @@ const voteOnSingleRuleInsights = async (clusterId, ruleId, vote) => {
 
 export const voteOnRuleInsights = (clusterId, ruleId, vote) => dispatch => dispatch({
   type: VOTE_ON_RULE_INSIGHTS,
-  payload: voteOnSingleRuleInsights(clusterId, ruleId, vote),
+  payload: voteOnSingleRuleInsights(dispatch, clusterId, ruleId, vote),
 });
 
 // clusterId is id of the cluster
