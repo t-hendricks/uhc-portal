@@ -76,7 +76,7 @@ class ToggleClusterAdminAccessDialog extends React.Component {
       title={modalStrings.title}
       onClose={closeModal}
       primaryText={!modalData.cluster_admin_enabled ? 'Allow access' : 'Remove access'}
-      secondaryText="cancel"
+      secondaryText="Cancel"
       onPrimaryClick={() => submit()}
       onSecondaryClick={closeModal}
       isPrimaryDisabled={isPending || (modalData.cluster_admin_enabled && hasClusterAdmins)}
