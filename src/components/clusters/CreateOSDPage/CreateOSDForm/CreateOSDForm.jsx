@@ -87,7 +87,7 @@ class CreateOSDForm extends React.Component {
         {isAws && (
           <>
             <GridItem span={12}>
-              <h3 className="osd-page-header">Billing Model</h3>
+              <h3 className="osd-page-header">Billing model</h3>
             </GridItem>
             <BillingModelSection
               openModal={openModal}
@@ -116,7 +116,7 @@ class CreateOSDForm extends React.Component {
 
         {/* Basic fields - Cluster Details section */}
         <GridItem span={12}>
-          <h3 className="osd-page-header">Cluster Details</h3>
+          <h3 className="osd-page-header">Cluster details</h3>
         </GridItem>
         <BasicFieldsSection
           pending={pending}

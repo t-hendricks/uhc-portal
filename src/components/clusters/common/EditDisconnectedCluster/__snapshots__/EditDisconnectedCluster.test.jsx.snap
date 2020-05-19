@@ -5,7 +5,7 @@ exports[`<EditDisconnectedClusterDialog /> renders correctly 1`] = `
   onClose={[Function]}
   onSecondaryClick={[Function]}
   primaryText="Save"
-  title="Edit Cluster Registration"
+  title="Edit cluster registration"
 >
   <Form>
     <Field
@@ -32,7 +32,7 @@ exports[`<EditDisconnectedClusterDialog /> renders correctly when an error occur
   onClose={[Function]}
   onSecondaryClick={[Function]}
   primaryText="Save"
-  title="Edit Cluster Registration"
+  title="Edit cluster registration"
 >
   <ErrorBox
     message="Error editing cluster"

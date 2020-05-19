@@ -13,7 +13,7 @@ function OpenIDForm({ isPending }) {
         <Field
           component={CAUpload}
           name="openid_ca"
-          label="CA File"
+          label="CA file"
           helpText="PEM encoded certificate bundle to use to validate server certificates for the configured URL"
           isDisabled={isPending}
         />
@@ -22,7 +22,7 @@ function OpenIDForm({ isPending }) {
         <Field
           component={ReduxVerticalFormGroup}
           name="openid_extra_scopes"
-          label="Additional Scopes"
+          label="Additional scopes"
           type="text"
           placeholder="e.g. scope1, scope2"
           disabled={isPending}

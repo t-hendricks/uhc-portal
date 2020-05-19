@@ -11,7 +11,7 @@ exports[`<Overview /> should render 1`] = `
         headingLevel="h2"
         size="lg"
       >
-        Resource Usage
+        Resource usage
       </Title>
     </CardHeader>
     <CardBody>

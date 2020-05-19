@@ -25,7 +25,7 @@ function IDPBasicFields({ isPending }) {
         <Field
           component={ReduxVerticalFormGroup}
           name="client_secret"
-          label="Client Secret"
+          label="Client secret"
           type="password"
           validate={required}
           isRequired

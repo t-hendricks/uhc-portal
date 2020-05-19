@@ -175,7 +175,7 @@ function NetworkingSection({
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_host_prefix"
-                label="Host Prefix"
+                label="Host prefix"
                 placeholder="/23"
                 type="text"
                 format={formatHostPrefix}

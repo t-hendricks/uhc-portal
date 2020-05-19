@@ -51,7 +51,7 @@ class TabsRow extends React.Component {
       },
       {
         key: 2,
-        title: 'Access Control',
+        title: 'Access control',
         contentId: 'accessControlTabContent',
         show: displayAccessControlTab,
         ref: accessControlTabRef,

@@ -34,7 +34,7 @@ class LDAPForm extends React.Component {
           <Field
             component={CAUpload}
             name="ldap_ca"
-            label="CA File"
+            label="CA file"
             helpText={`PEM encoded certificate bundle to use to validate server certificates for the configured URL. ${caDisabledHelpText}`}
             isDisabled={isInsecure || isPending}
           />
@@ -43,7 +43,7 @@ class LDAPForm extends React.Component {
           <Field
             component={ReduxCheckbox}
             name="ldap_insecure"
-            label="insecure"
+            label="Insecure"
             disabled={isPending}
             onChange={this.toggleCADisabled}
           />

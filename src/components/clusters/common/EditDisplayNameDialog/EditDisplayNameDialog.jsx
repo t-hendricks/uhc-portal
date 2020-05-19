@@ -67,7 +67,7 @@ class EditDisplayNameDialog extends Component {
     return isOpen && (
 
       <Modal
-        title="Edit Display Name"
+        title="Edit display name"
         onClose={cancelEdit}
         primaryText="Edit"
         secondaryText="Cancel"

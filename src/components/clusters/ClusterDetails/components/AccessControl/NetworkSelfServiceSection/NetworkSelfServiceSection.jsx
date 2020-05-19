@@ -175,7 +175,7 @@ class NetworkSelfServiceSection extends React.Component {
         title: 'Status',
       },
       {
-        title: 'AWS OSD Console URL',
+        title: 'AWS OSD console URL',
       },
     ];
 

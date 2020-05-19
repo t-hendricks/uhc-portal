@@ -9,7 +9,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
   onPrimaryClick={[MockFunction]}
   onSecondaryClick={[Function]}
   primaryText="Apply"
-  title="Scale Cluster"
+  title="Scale cluster"
 >
   <Form
     onSubmit={[MockFunction]}
@@ -43,7 +43,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
             component={[Function]}
             currentValue="4"
             disabled={false}
-            label="Load Balancers"
+            label="Load balancers"
             name="load_balancers"
           />
         </FormGroup>
@@ -62,7 +62,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
             component={[Function]}
             currentValue="107374182400"
             disabled={false}
-            label="Persistent Storage"
+            label="Persistent storage"
             name="persistent_storage"
           />
         </FormGroup>
@@ -84,7 +84,7 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
   onPrimaryClick={[MockFunction]}
   onSecondaryClick={[Function]}
   primaryText="Apply"
-  title="Scale Cluster"
+  title="Scale cluster"
 >
   <ErrorBox
     message="Error editing cluster"
@@ -127,7 +127,7 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
             component={[Function]}
             currentValue="4"
             disabled={false}
-            label="Load Balancers"
+            label="Load balancers"
             name="load_balancers"
           />
         </FormGroup>
@@ -146,7 +146,7 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
             component={[Function]}
             currentValue="107374182400"
             disabled={false}
-            label="Persistent Storage"
+            label="Persistent storage"
             name="persistent_storage"
           />
         </FormGroup>

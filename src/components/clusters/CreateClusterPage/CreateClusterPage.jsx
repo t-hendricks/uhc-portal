@@ -31,7 +31,7 @@ class CreateCluster extends React.Component {
 
     const title = (
       <PageTitle
-        title="Create a Cluster to Get Started"
+        title="Create a cluster to get started"
         breadcrumbs={(
           <Breadcrumbs path={[
             { label: 'Clusters' },

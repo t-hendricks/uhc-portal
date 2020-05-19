@@ -54,7 +54,7 @@ class GithubFormRequired extends React.Component {
             <Field
               component={CAUpload}
               name="github_ca"
-              label="CA File"
+              label="CA file"
               type="text"
               helpText="PEM encoded certificate bundle to use to validate server certificates for the configured GitHub Enterprise URL."
               isDisabled={isPending}
@@ -65,11 +65,11 @@ class GithubFormRequired extends React.Component {
           <GridItem span={8}>
             <Divider />
             <Title headingLevel="h3" size="xl" className="idp-helptext-heading">
-              Organizations or Teams
+              Organizations or teams
             </Title>
             <p>
-              Github authentication lets you use either GitHub Organizations or
-              GitHub Teams to restrict access.
+              Github authentication lets you use either GitHub organizations or
+              GitHub teams to restrict access.
             </p>
             <p className="idp-github-auth-mode-selection-question">
               Do you want to use GitHub organizations, or GitHub teams?
@@ -79,7 +79,7 @@ class GithubFormRequired extends React.Component {
               name="github_auth_mode"
               defaultValue="organizations"
               options={[
-                { value: 'organizations', label: 'Use organizations' },
+                { value: 'organizations', label: 'Use trganizations' },
                 { value: 'teams', label: 'Use teams' },
               ]}
               onChange={this.onAuthModeChange}
@@ -104,7 +104,7 @@ class GithubFormRequired extends React.Component {
               isRequired
               placeholderText="e.g. org/team"
               disabled={isPending}
-              helpText="Only users that are members of at least one of the listed teams will be allowed to log in.. The format is <org>/<team>."
+              helpText="Only users that are members of at least one of the listed teams will be allowed to log in. The format is <org>/<team>."
               validateField={checkGithubTeams}
               key="teams"
               validate={atLeastOneRequired('teams')}

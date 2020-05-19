@@ -51,7 +51,7 @@ function DetailsRight({ cluster }) {
           </>
         )}
         <dt>
-          Total Memory
+          Total memory
         </dt>
         <dd>
           {memoryTotalWithUnit.value}
@@ -67,7 +67,7 @@ function DetailsRight({ cluster }) {
               {cluster.load_balancer_quota}
             </dd>
             <dt>
-            Persistent Storage
+            Persistent storage
             </dt>
             <dd>
               {humanizedPersistentStorage.value}
@@ -79,7 +79,7 @@ function DetailsRight({ cluster }) {
         {showSockets && (
           <>
             <dt>
-              Total Sockets
+              Total sockets
             </dt>
             <dd>
               {cluster.metrics.sockets.total.value}
@@ -90,7 +90,7 @@ function DetailsRight({ cluster }) {
         {showDesiredNodes && (
           <>
             <dt>
-              Desired Nodes
+              Desired nodes
             </dt>
             <dd>
               <dl className="cluster-details-item-list">
@@ -127,7 +127,7 @@ function DetailsRight({ cluster }) {
         )}
 
         <dt>
-          {showDesiredNodes ? 'Actual Nodes' : 'Nodes'}
+          {showDesiredNodes ? 'Actual nodes' : 'Nodes'}
         </dt>
         <dd>
           <dl className="cluster-details-item-list">

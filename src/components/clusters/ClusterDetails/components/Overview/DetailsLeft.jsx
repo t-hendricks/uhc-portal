@@ -81,7 +81,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
         {cluster.managed && (
           <>
             <dt>
-              Billing Model
+              Billing model
             </dt>
             <dd>
               {cluster.byoc ? 'Customer Cloud Subscription' : 'Standard'}

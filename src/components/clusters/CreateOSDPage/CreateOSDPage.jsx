@@ -155,7 +155,7 @@ class CreateOSDPage extends React.Component {
     const requests = [
       {
         data: machineTypes,
-        name: 'Machine Types',
+        name: 'Machine types',
       },
       {
         data: organization,
@@ -167,7 +167,7 @@ class CreateOSDPage extends React.Component {
       },
       {
         data: loadBalancerValues,
-        name: 'Load Balancers',
+        name: 'Load balancers',
       },
       {
         data: persistentStorageValues,
@@ -245,7 +245,7 @@ class CreateOSDPage extends React.Component {
 
     const creationErrorModal = isErrorModalOpen && (
       <ErrorModal
-        title="Error Creating Cluster"
+        title="Error creating cluster"
         errorResponse={createClusterResponse}
         resetResponse={resetResponse}
       />

@@ -38,7 +38,7 @@ class DeleteIDPDialog extends React.Component {
     } = modalData;
 
     const errorContainer = deletedIDPResponse.error && (
-      <ErrorBox message="Error removing Identiy Provider" response={deletedIDPResponse} />
+      <ErrorBox message="Error removing identity provider" response={deletedIDPResponse} />
     );
 
     const isPending = deletedIDPResponse.pending;
@@ -51,7 +51,7 @@ class DeleteIDPDialog extends React.Component {
         primaryVariant="danger"
         onPrimaryClick={() => deleteIDP(clusterID, idpID)}
         onSecondaryClick={close}
-        title="Remove Identity Provider"
+        title="Remove identity provider"
         isPending={isPending}
       >
         {errorContainer}

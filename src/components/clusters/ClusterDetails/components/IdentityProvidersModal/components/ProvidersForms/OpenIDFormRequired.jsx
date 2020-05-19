@@ -29,11 +29,11 @@ function OpenIDFormRequired({ isPending }) {
           disabled={isPending}
           validate={checkOpenIDIssuer}
           isRequired
-          helpText="The URL that the OpenID Provider asserts as the Issuer Identifier. It must use the https scheme with no URL query parameters or fragment."
+          helpText="The URL that the OpenID provider asserts as the Issuer Identifier. It must use the https scheme with no URL query parameters or fragment."
         />
       </GridItem>
       <GridItem span={8}>
-        <h4>Claims Mappings</h4>
+        <h4>Claims mappings</h4>
       </GridItem>
       <ReduxFieldArray
         fieldName="openid_email"
@@ -56,7 +56,7 @@ function OpenIDFormRequired({ isPending }) {
       />
       <ReduxFieldArray
         fieldName="openid_preferred_username"
-        label="Preferred Username"
+        label="Preferred username"
         type="text"
         placeholderText="e.g. name"
         disabled={isPending}

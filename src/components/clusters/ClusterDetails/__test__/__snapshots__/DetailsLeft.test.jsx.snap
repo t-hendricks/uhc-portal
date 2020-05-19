@@ -355,7 +355,7 @@ exports[`<DetailsLeft /> should render 1`] = `
       N/A
     </dd>
     <dt>
-      Billing Model
+      Billing model
     </dt>
     <dd>
       Standard

@@ -126,12 +126,12 @@ class IDPForm extends React.Component {
               component={ReduxFormDropdown}
               options={IDPtypes}
               name="type"
-              label="Identity Provider"
+              label="Identity provider"
               disabled={isPending}
             />
           </GridItem>
           <GridItem span={8}>
-            <Title headingLevel="h3" size="xl">Step 2: Enter Provider type information</Title>
+            <Title headingLevel="h3" size="xl">Step 2: Enter provider type information</Title>
           </GridItem>
           <GridItem span={8}>
             <Field
@@ -162,7 +162,7 @@ class IDPForm extends React.Component {
               component={ReduxFormDropdown}
               options={mappingMethods}
               name="mappingMethod"
-              label="Mapping Method"
+              label="Mapping method"
               helpText="Specifies how new identities are mapped to users when they log in. Claim is recommended in most cases."
             />
           </GridItem>
@@ -178,7 +178,7 @@ class IDPForm extends React.Component {
           {SelectedProviderAdvancedOptions
           && (
             <GridItem span={8}>
-              <Expandable toggleTextCollapsed="Show Advanced Options" toggleTextExpanded="Hide Advanced Options">
+              <Expandable toggleTextCollapsed="Show advanced options" toggleTextExpanded="Hide advanced options">
                 <SelectedProviderAdvancedOptions isPending={isPending} />
               </Expandable>
             </GridItem>

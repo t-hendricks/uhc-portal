@@ -30,7 +30,7 @@ class LDAPFormRequired extends React.Component {
           <Field
             component={ReduxVerticalFormGroup}
             name="ldap_url"
-            label="LDAP url"
+            label="LDAP URL"
             type="text"
             disabled={isPending}
             validate={required}
@@ -53,7 +53,7 @@ class LDAPFormRequired extends React.Component {
           <Field
             component={ReduxVerticalFormGroup}
             name="bind_password"
-            label="Bind Password"
+            label="Bind password"
             type="password"
             helpText={!hasBindDN ? 'Cannot be used if Bind DN is not set' : 'Password to bind with during the search phase.'}
             disabled={!hasBindDN || isPending}
@@ -82,7 +82,7 @@ class LDAPFormRequired extends React.Component {
         />
         <ReduxFieldArray
           fieldName="ldap_preferred_username"
-          label="Preferred Username"
+          label="Preferred username"
           type="text"
           placeholderText="e.g. preferred_username"
           disabled={isPending}
