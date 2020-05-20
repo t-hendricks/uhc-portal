@@ -1,4 +1,6 @@
 import get from 'lodash/get';
+import inRange from 'lodash/inRange';
+import cidrTools from 'cidr-tools';
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
@@ -21,6 +23,7 @@ const POD_CIDR_MAX = 18;
 const HOST_PREFIX_REGEXP = /^\/?(3[0-2]|[1-2][0-9]|[0-9])$/;
 const HOST_PREFIX_MIN = 23;
 const HOST_PREFIX_MAX = 26;
+const DOCKER_CIDR_RANGE = '172.17.0.0/16';
 
 // Regular expression for a valid URL for a console in a self managed cluster.
 const CONSOLE_URL_REGEXP = /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
@@ -232,7 +235,7 @@ const cidr = (value) => {
   return undefined;
 };
 
-const getCIDRSubnet = (value) => {
+const getCIDRSubnetLength = (value) => {
   if (!value) {
     return undefined;
   }
@@ -246,7 +249,7 @@ const machineCidr = (value, formData) => {
   }
 
   const isMultiAz = formData.multi_az === 'true';
-  const prefixLength = getCIDRSubnet(value);
+  const prefixLength = getCIDRSubnetLength(value);
 
   if (isMultiAz && prefixLength > MACHINE_CIDR_MAX_MULTI_AZ) {
     const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX_MULTI_AZ);
@@ -268,7 +271,7 @@ const serviceCidr = (value) => {
     return undefined;
   }
 
-  const prefixLength = getCIDRSubnet(value);
+  const prefixLength = getCIDRSubnetLength(value);
 
   if (prefixLength > SERVICE_CIDR_MAX) {
     const maxServices = 2 ** (32 - SERVICE_CIDR_MAX) - 2;
@@ -283,15 +286,112 @@ const podCidr = (value, formData) => {
     return undefined;
   }
 
-  const prefixLength = getCIDRSubnet(value);
+  const prefixLength = getCIDRSubnetLength(value);
 
   if (prefixLength > POD_CIDR_MAX) {
-    const hostPrefix = getCIDRSubnet(formData.network_host_prefix) || 23;
+    const hostPrefix = getCIDRSubnetLength(formData.network_host_prefix) || 23;
     const maxPodIPs = 2 ** (32 - hostPrefix);
     const maxPodNodes = Math.floor(2 ** (32 - POD_CIDR_MAX) / maxPodIPs);
     return `The subnet length can't be higher than '/${POD_CIDR_MAX}', which provides up to ${maxPodNodes} nodes.`;
   }
 
+  return undefined;
+};
+
+const validateRange = (value) => {
+  if (cidr(value) !== undefined || !value) {
+    return undefined;
+  }
+  const parts = value.split('/');
+  const cidrBinaryString = parts[0].split('.').map(octet => Number(octet).toString(2).padEnd(8, '0')).join('');
+  const maskBits = parseInt(parts[1], 10);
+  const maskedBinaryString = cidrBinaryString.slice(0, maskBits).padEnd(32, '0');
+
+  if (maskedBinaryString !== cidrBinaryString) {
+    return 'This is not a subnet address. The subnet prefix is inconsistent with the subnet mask.';
+  }
+  return undefined;
+};
+
+const disjointSubnets = fieldName => (value, formData) => {
+  if (!value) {
+    return undefined;
+  }
+
+  const networkingFields = {
+    network_machine_cidr: 'Machine CIDR',
+    network_service_cidr: 'Service CIDR',
+    network_pod_cidr: 'Pod CIDR',
+  };
+  delete networkingFields[fieldName];
+  const overlappingFields = [];
+  try {
+    Object.keys(networkingFields).forEach((name) => {
+      const fieldValue = get(formData, name, null);
+      if (fieldValue && cidrTools.overlap(value, fieldValue)) {
+        overlappingFields.push(networkingFields[name]);
+      }
+    });
+  } catch (e) {
+    return `Failed to parse CIDR: ${e}`;
+  }
+  const plural = overlappingFields.length > 1;
+  if (overlappingFields.length > 0) {
+    return `This subnet overlaps with the subnet${plural ? 's' : ''} in the ${overlappingFields.join(', ')} field${plural ? 's' : ''}.`;
+  }
+  return undefined;
+};
+
+const privateAddress = (value) => {
+  if (cidr(value) !== undefined || !value) {
+    return undefined;
+  }
+  const parts = value.split('/');
+  const octets = parts[0].split('.').map(octet => (parseInt(octet, 10)));
+  const maskBits = parseInt(parts[1], 10);
+
+  // 10.0.0.0/8 – 10.255.255.255
+  if (octets[0] === 10 && maskBits >= 8) {
+    return undefined;
+  }
+
+  // 172.16.0.0/12 – 172.31.255.255
+  if (octets[0] === 172 && inRange(octets[1], 16, 32) && maskBits >= 12) {
+    return undefined;
+  }
+
+  // 192.168.0.0/16 – 192.168.255.255
+  if (octets[0] === 192 && octets[1] === 168 && maskBits >= 16) {
+    return undefined;
+  }
+
+  return 'Range is not private.';
+};
+
+const disjointFromDockerRange = (value) => {
+  if (!value) {
+    return undefined;
+  }
+  try {
+    if (cidrTools.overlap(value, DOCKER_CIDR_RANGE)) {
+      return 'Selected range must not overlap with 172.17.0.0/16.';
+    }
+    return undefined;
+  } catch (e) {
+    return `Failed to parse CIDR: ${e}`;
+  }
+};
+
+
+const awsSubnetMask = (value) => {
+  if (cidr(value) !== undefined || !value) {
+    return undefined;
+  }
+  const parts = value.split('/');
+  const maskBits = parseInt(parts[1], 10);
+  if (!inRange(maskBits, 16, 29)) {
+    return 'Subnet mask is not in the allowed range.';
+  }
   return undefined;
 };
 
@@ -305,7 +405,7 @@ const hostPrefix = (value) => {
     return `The value '${value}' isn't a valid subnet mask. It must follow the RFC-4632 format: '/16'.`;
   }
 
-  const prefixLength = getCIDRSubnet(value);
+  const prefixLength = getCIDRSubnetLength(value);
 
   if (prefixLength < HOST_PREFIX_MIN) {
     const maxPodIPs = 2 ** (32 - HOST_PREFIX_MIN) - 2;
@@ -457,6 +557,11 @@ const validators = {
   machineCidr,
   serviceCidr,
   podCidr,
+  disjointSubnets,
+  validateRange,
+  privateAddress,
+  awsSubnetMask,
+  disjointFromDockerRange,
   hostPrefix,
   nodes,
   nodesMultiAz,

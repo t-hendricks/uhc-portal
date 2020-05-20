@@ -16,6 +16,7 @@ function NetworkingSection({
   mode,
   showClusterPrivacy,
   privateClusterSelected,
+  cloudProviderID,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -30,6 +31,14 @@ function NetworkingSection({
     }
     return value;
   };
+
+  const additionalValidators = [];
+  if (cloudProviderID === 'gcp') {
+    additionalValidators.push(validators.privateAddress);
+  }
+  if (cloudProviderID === 'aws') {
+    additionalValidators.push(validators.awsSubnetMask);
+  }
 
   return (
     <>
@@ -75,6 +84,18 @@ function NetworkingSection({
       { mode === 'advanced'
         && (
           <>
+            <GridItem span={5}>
+              <Alert
+                id="advanced-networking-alert"
+                isInline
+                variant="info"
+                title="CIDR Ranges may not be changed once the cluster has been created."
+              >
+                 The machine, service and pod ranges may not overlap. The addresses must specify a
+                 range, and correspond to the first IP address in their subnet.
+              </Alert>
+            </GridItem>
+            <GridItem span={5} />
             <GridItem span={4}>
               <Field
                 component={ReduxVerticalFormGroup}
@@ -82,10 +103,20 @@ function NetworkingSection({
                 label="Machine CIDR"
                 placeholder="10.0.0.0/16"
                 type="text"
-                validate={[validators.cidr, validators.machineCidr]}
+                validate={
+                  [
+                    validators.cidr,
+                    validators.machineCidr,
+                    validators.validateRange,
+                    validators.disjointSubnets('network_machine_cidr'),
+                    validators.disjointFromDockerRange,
+                    ...additionalValidators,
+                  ]
+                }
                 disabled={pending}
-                helpText="Cannot be changed once set."
+                helpText={cloudProviderID === 'aws' ? 'Subnet mask must be between 16-23.' : 'Range must be private. Subnet mask must be at most 23.'}
                 extendedHelpText={constants.machineCIDRHint}
+                showHelpTextOnError={false}
               />
             </GridItem>
             <GridItem span={8} />
@@ -96,10 +127,20 @@ function NetworkingSection({
                 label="Service CIDR"
                 placeholder="172.30.0.0/16"
                 type="text"
-                validate={[validators.cidr, validators.serviceCidr]}
+                validate={
+                  [
+                    validators.cidr,
+                    validators.serviceCidr,
+                    validators.validateRange,
+                    validators.disjointSubnets('network_service_cidr'),
+                    validators.disjointFromDockerRange,
+                    ...additionalValidators,
+                  ]
+                }
                 disabled={pending}
-                helpText="Cannot be changed once set."
+                helpText={cloudProviderID === 'aws' ? 'Subnet mask must be between 16-24.' : 'Range must be private. Subnet mask must be at most 24.'}
                 extendedHelpText={constants.serviceCIDRHint}
+                showHelpTextOnError={false}
               />
             </GridItem>
             <GridItem span={8} />
@@ -108,12 +149,22 @@ function NetworkingSection({
                 component={ReduxVerticalFormGroup}
                 name="network_pod_cidr"
                 label="Pod CIDR"
-                placeholder="10.128.0.0/14"
+                placeholder={`10.128.0.0/${cloudProviderID === 'aws' ? '16' : '14'}`}
                 type="text"
-                validate={[validators.cidr, validators.podCidr]}
+                validate={
+                  [
+                    validators.cidr,
+                    validators.podCidr,
+                    validators.validateRange,
+                    validators.disjointSubnets('network_pod_cidr'),
+                    validators.disjointFromDockerRange,
+                    ...additionalValidators,
+                  ]
+                }
                 disabled={pending}
-                helpText="Cannot be changed once set."
+                helpText={cloudProviderID === 'aws' ? 'Subnet mask must be between 16-18.' : 'Range must be private. Subnet mask must be at most 18.'}
                 extendedHelpText={constants.podCIDRHint}
+                showHelpTextOnError={false}
               />
             </GridItem>
             <GridItem span={8} />
@@ -128,8 +179,9 @@ function NetworkingSection({
                 normalize={normalizeHostPrefix}
                 validate={validators.hostPrefix}
                 disabled={pending}
-                helpText="Cannot be changed once set."
+                helpText="Must be between 23-26."
                 extendedHelpText={constants.hostPrefixHint}
+                showHelpTextOnError={false}
               />
             </GridItem>
             { showClusterPrivacy && (
@@ -194,6 +246,7 @@ NetworkingSection.propTypes = {
   toggleNetwork: PropTypes.func,
   showClusterPrivacy: PropTypes.bool,
   privateClusterSelected: PropTypes.bool,
+  cloudProviderID: PropTypes.string,
 };
 
 export default NetworkingSection;

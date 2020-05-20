@@ -89,6 +89,82 @@ test('Field is valid Pod CIDR', () => {
   expect(validators.podCidr('192.168.0.0/19', { network_host_prefix: '/26' })).toBe('The subnet length can\'t be higher than \'/18\', which provides up to 256 nodes.');
 });
 
+test('Field is a private IP address', () => {
+  expect(validators.privateAddress()).toBe(undefined);
+  expect(validators.privateAddress('10.0.0.0/11')).toBe(undefined);
+  expect(validators.privateAddress('10.255.255.255/8')).toBe(undefined);
+  expect(validators.privateAddress('10.255.255.255/7')).toBe('Range is not private.');
+  expect(validators.privateAddress('172.16.0.0/12')).toBe(undefined);
+  expect(validators.privateAddress('172.31.77.250/15')).toBe(undefined);
+  expect(validators.privateAddress('172.31.255.255/11')).toBe('Range is not private.');
+  expect(validators.privateAddress('192.168.98.4/18')).toBe(undefined);
+  expect(validators.privateAddress('192.168.255.255/20')).toBe(undefined);
+  expect(validators.privateAddress('192.168.79.24/15')).toBe('Range is not private.');
+  expect(validators.privateAddress('67.25.66.98/15')).toBe('Range is not private.');
+});
+
+test('Field does not share subnets with other fields', () => {
+  expect(validators.disjointSubnets('network_machine_cidr')(null, {})).toBe(undefined);
+  expect(validators.disjointSubnets('network_machine_cidr')(
+    '190.231.125.47/12',
+    {
+      network_service_cidr: '17.26.43.56/21',
+      network_pod_cidr: '12.124.23.41',
+    },
+  )).toBe(undefined);
+
+  expect(validators.disjointSubnets('network_machine_cidr')(
+    '190.231.125.47/12',
+    {
+      network_service_cidr: '190.231.43.56/11',
+      network_pod_cidr: '12.124.23.41',
+    },
+  )).toBe('This subnet overlaps with the subnet in the Service CIDR field.');
+
+  expect(validators.disjointSubnets('network_machine_cidr')(
+    '190.231.125.47/12',
+    {
+      network_service_cidr: '12.124.23.41',
+      network_pod_cidr: '190.230.45.9/11',
+    },
+  )).toBe('This subnet overlaps with the subnet in the Pod CIDR field.');
+
+  expect(validators.disjointSubnets('network_machine_cidr')(
+    '190.231.125.47/12',
+    {
+      network_service_cidr: '190.229.251.44/14',
+      network_pod_cidr: '190.230.45.9/11',
+    },
+  )).toBe('This subnet overlaps with the subnets in the Service CIDR, Pod CIDR fields.');
+});
+
+test('Field is an IP address with subnet mask between 16-28', () => {
+  expect(validators.awsSubnetMask()).toBe(undefined);
+  expect(validators.awsSubnetMask('190.68.89.250/17')).toBe(undefined);
+  expect(validators.awsSubnetMask('190.68.89.250/10')).toBe('Subnet mask is not in the allowed range.');
+  expect(validators.awsSubnetMask('190.68.89.250/16')).toBe(undefined);
+  expect(validators.awsSubnetMask('190.68.89.250/21')).toBe(undefined);
+  expect(validators.awsSubnetMask('190.68.89.250/28')).toBe(undefined);
+  expect(validators.awsSubnetMask('190.68.89.250/29')).toBe('Subnet mask is not in the allowed range.');
+});
+
+test('Field is an IP address that does not overlap with 172.17.0.0/16, reserved for docker', () => {
+  expect(validators.disjointFromDockerRange()).toBe(undefined);
+  expect(validators.disjointFromDockerRange('172.17.0.0/16')).toBe('Selected range must not overlap with 172.17.0.0/16.');
+  expect(validators.disjointFromDockerRange('172.17.0.0/15')).toBe('Selected range must not overlap with 172.17.0.0/16.');
+  expect(validators.disjointFromDockerRange('172.17.80.0/17')).toBe('Selected range must not overlap with 172.17.0.0/16.');
+  expect(validators.disjointFromDockerRange('90.90.90.90/20')).toBe(undefined);
+});
+
+test('Field is an address the corresponds with the first host in its subnet', () => {
+  expect(validators.validateRange()).toBe(undefined);
+  expect(validators.validateRange('192.148.30.71/16')).toBe('This is not a subnet address. The subnet prefix is inconsistent with the subnet mask.');
+  // original 111111111[9]00000000000000000000000[23]
+  expect(validators.validateRange('255.128.0.0/10')).toBe(undefined);
+  // original 111111111[9]00000100000000000000000 masked 11111111100000000000000000000000
+  expect(validators.validateRange('255.130.0.0/10')).toBe('This is not a subnet address. The subnet prefix is inconsistent with the subnet mask.');
+});
+
 test('Field is valid subnet mask', () => {
   expect(validators.hostPrefix()).toBe(undefined);
   expect(validators.hostPrefix('/22')).toBe('The subnet length can\'t be lower than \'/23\', which provides up to 510 Pod IP addresses.');

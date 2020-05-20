@@ -21,6 +21,7 @@
     "@redhat-cloud-services/frontend-components-utilities": "^0.0.15",
     "@redhat-cloud-services/rule-components": "0.0.17",
     "axios": "^0.19.0",
+    "cidr-tools": "^3.0.0",
     "classnames": "^2.2.6",
     "connected-react-router": "^4.3.0",
     "core-js": "^3.6.1",
