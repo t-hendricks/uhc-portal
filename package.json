@@ -124,7 +124,7 @@
     "dev-server": "webpack-dev-server --progress --hot",
     "dev-server-for-mock": "OCM_SHOW_OLD_METRICS=true webpack-dev-server --progress --hot",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
-    "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy || true",
+    "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
     "lint": "eslint src --ext js,jsx",
     "test": "jest --env=jsdom",
     "selenium-browser": "run/selenium-browser.sh",
@@ -132,7 +132,7 @@
     "e2e-test": "make selenium-tests-image && yarn build --no-progress && yarn e2e-test-run",
     "e2e-test-run": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS,BROWSER,TEST --prefix-colors=cyan,reset,green,magenta,red --handle-input --default-input-target=TEST 'webpack-dev-server' './backend' 'run/insights-proxy.sh' 'yarn selenium-browser' 'yarn selenium-test'",
     "selenium-viewer": "wait-on tcp:5900 && vinagre --file=run/selenium.vnc",
-    "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh kill browser; run/podman-or-docker.sh kill selenium-test; pkill -f 'concurrently.*SERVER(prevent self match){0},BACKEND,INSIGHTS'; true"
+    "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; run/podman-or-docker.sh rm --force selenium-test; pkill --full 'concurrently.*SERVER(prevent self match){0},BACKEND,INSIGHTS'; true"
   },
   "insights": {
     "appname": "openshift"
