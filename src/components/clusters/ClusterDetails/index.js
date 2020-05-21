@@ -7,7 +7,7 @@ import {
   fetchClusterDetails,
   invalidateClusters,
 } from '../../../redux/actions/clustersActions';
-import { getLogs } from './components/LogWindow/LogWindowActions';
+
 import {
   getClusterIdentityProviders,
   resetIdentityProvidersState,
@@ -37,7 +37,6 @@ const mapStateToProps = (state) => {
   const { details } = state.clusters;
   const { cloudProviders } = state;
   const { errorCode } = state.clusterLogs.requestState;
-  const { logs } = state;
   const { addOns, clusterAddOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
@@ -52,7 +51,6 @@ const mapStateToProps = (state) => {
   return ({
     cloudProviders,
     clusterDetails: details,
-    logs,
     addOns,
     clusterAddOns,
     clusterIdentityProviders,
@@ -76,7 +74,6 @@ const mapDispatchToProps = {
   invalidateClusters,
   openModal: modalActions.openModal,
   closeModal: modalActions.closeModal,
-  getLogs,
   getClusterIdentityProviders,
   getDedicatedAdmins: usersActions.getDedicatedAdmins,
   getClusterAdmins: usersActions.getClusterAdmins,

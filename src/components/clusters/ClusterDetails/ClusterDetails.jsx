@@ -25,7 +25,6 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
-import LogWindow from './components/LogWindow';
 import Insights from './components/Insights';
 import Monitoring from './components/Monitoring';
 import Networking from './components/Networking';
@@ -62,7 +61,6 @@ class ClusterDetails extends Component {
     this.insightsTabRef = React.createRef();
     this.monitoringTabRef = React.createRef();
     this.accessControlTabRef = React.createRef();
-    this.logsTabRef = React.createRef();
     this.addOnsTabRef = React.createRef();
     this.networkingTabRef = React.createRef();
   }
@@ -78,7 +76,6 @@ class ClusterDetails extends Component {
       getClusterIdentityProviders,
       getClusterAddOns,
       clusterAddOns,
-      getLogs,
       match,
       addOns,
       getAddOns,
@@ -95,7 +92,7 @@ class ClusterDetails extends Component {
       getCloudProviders();
     }
     if (isValid(clusterID) && !isUuid(clusterID)) {
-      // TODO: get IDP, Add-On Installations, and Logs only for managed clusters
+      // TODO: get IDP and Add-On Installations only for managed clusters
       if (!clusterIdentityProviders.pending
           && !clusterIdentityProviders.error
           && !clusterIdentityProviders.fulfilled) {
@@ -104,7 +101,6 @@ class ClusterDetails extends Component {
       if (!clusterAddOns.pending && !clusterAddOns.error && !clusterAddOns.fulfilled) {
         getClusterAddOns(clusterID);
       }
-      getLogs(clusterID);
     }
     if (!addOns.pending && !addOns.error && !addOns.fulfilled) {
       getAddOns();
@@ -148,7 +144,6 @@ class ClusterDetails extends Component {
     const {
       match,
       clusterDetails,
-      getLogs,
       getDedicatedAdmins,
       getClusterAdmins,
       getAlerts,
@@ -184,7 +179,6 @@ class ClusterDetails extends Component {
         getClusterRouters(clusterID);
         if (get(clusterDetails, 'cluster.managed')) {
           getClusterAddOns(clusterID);
-          getLogs(clusterID);
           this.refreshIDP();
         }
         if (get(clusterDetails, 'cluster.cluster_admin_enabled')) {
@@ -254,7 +248,6 @@ class ClusterDetails extends Component {
       openModal,
       history,
       match,
-      logs,
       clusterIdentityProviders,
       organization,
       setGlobalError,
@@ -324,7 +317,6 @@ class ClusterDetails extends Component {
       this.fetchDetailsAndInsightsData(cluster.id);
     };
 
-    const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
     const displayInsightsTab = !isArchived && APP_BETA && (
@@ -358,14 +350,12 @@ class ClusterDetails extends Component {
             displayAddOnsTab={displayAddOnsTab}
             displayNetworkingTab={displayNetworkingTab}
             displayInsightsTab={displayInsightsTab}
-            displayLogs={hasLogs}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
             addOnsTabRef={this.addOnsTabRef}
             networkingTabRef={this.networkingTabRef}
             insightsTabRef={this.insightsTabRef}
-            logsTabRef={this.logsTabRef}
           />
         </ClusterDetailsTop>
         <TabContent
@@ -452,17 +442,6 @@ class ClusterDetails extends Component {
             />
           </TabContent>
         )}
-        {hasLogs && (
-          <TabContent
-            eventKey={6}
-            id="logsTabContent"
-            ref={this.logsTabRef}
-            aria-label="Logs"
-            hidden
-          >
-            <LogWindow clusterID={cluster.id} />
-          </TabContent>
-        )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
@@ -498,7 +477,6 @@ ClusterDetails.propTypes = {
   fetchInsightsData: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
-  getLogs: PropTypes.func.isRequired,
   getAlerts: PropTypes.func.isRequired,
   getNodes: PropTypes.func.isRequired,
   getClusterOperators: PropTypes.func.isRequired,
@@ -514,7 +492,6 @@ ClusterDetails.propTypes = {
   resetClusterHistory: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
-  logs: PropTypes.object,
   addOns: PropTypes.object,
   clusterAddOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
@@ -555,7 +532,6 @@ ClusterDetails.defaultProps = {
     errorMessage: '',
     fulfilled: false,
   },
-  logs: '',
   addOns: '',
 };
 
