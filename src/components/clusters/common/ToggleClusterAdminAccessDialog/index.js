@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'allow-cluster-admin'),
   modalData: state.modal.data,
   toggleClusterAdminResponse: state.clusters.editedCluster,
-  hasClusterAdmins: get(state, 'clusterUsers.groupUsers.clusterAdmins.users.length', false),
+  hasClusterAdmins: !!get(state, 'clusterUsers.groupUsers.clusterAdmins.users.length', false),
 });
 
 const mapDispatchToProps = {
