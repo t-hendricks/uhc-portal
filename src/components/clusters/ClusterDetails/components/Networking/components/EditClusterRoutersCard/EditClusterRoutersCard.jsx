@@ -117,7 +117,7 @@ class EditClusterRoutersCard extends React.Component {
                       name="labels_additional_router"
                       label="Label match for additional router (optional)"
                       type="text"
-                      helpText="Format should be key=value. If no label is specified, all routes will be exposed on both routers."
+                      helpText="Comma separated pairs in key=value format. If no label is specified, all routes will be exposed on both routers."
                       validate={checkRouteSelectors}
                       key="route_selectors"
                       onChange={this.handleChangeRouteSelectors}
