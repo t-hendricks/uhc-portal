@@ -69,9 +69,12 @@ const getCloudRegions = providerID => apiRequest({
   url: `/api/clusters_mgmt/v1/cloud_providers/${providerID}/regions`,
 });
 
-const getLogs = clusterID => apiRequest({
+const getLogs = (clusterID, offset) => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/logs/hive`,
+  params: {
+    offset,
+  },
 });
 
 const getIdentityProviders = clusterID => apiRequest({

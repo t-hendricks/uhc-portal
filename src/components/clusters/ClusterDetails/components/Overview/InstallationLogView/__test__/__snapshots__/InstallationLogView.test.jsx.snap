@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InstallationLogView /> should render with logs 1`] = `
+<article
+  className="pf-c-card"
+>
+  <CardHeader>
+    <Title
+      className="card-title logview-title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Installation Logs
+    </Title>
+    <div
+      className="logview-buttons"
+    >
+      <Component
+        icon={
+          <DownloadIcon
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+            title={null}
+          />
+        }
+        isDisabled={true}
+        onClick={[Function]}
+        variant="link"
+      >
+        Download
+      </Component>
+      <Component
+        icon={
+          <ExpandIcon
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+            title={null}
+          />
+        }
+        isDisabled={true}
+        onClick={[Function]}
+        variant="link"
+      >
+        Expand
+      </Component>
+    </div>
+  </CardHeader>
+  <CardBody>
+    <p>
+      Cluster installation has started, installation log will appear here once it becomes available.
+    </p>
+  </CardBody>
+</article>
+`;
+
+exports[`<InstallationLogView /> should render without logs 1`] = `
+<article
+  className="pf-c-card"
+>
+  <CardHeader>
+    <Title
+      className="card-title logview-title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Installation Logs
+    </Title>
+    <div
+      className="logview-buttons"
+    >
+      <Component
+        icon={
+          <DownloadIcon
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+            title={null}
+          />
+        }
+        isDisabled={true}
+        onClick={[Function]}
+        variant="link"
+      >
+        Download
+      </Component>
+      <Component
+        icon={
+          <ExpandIcon
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+            title={null}
+          />
+        }
+        isDisabled={true}
+        onClick={[Function]}
+        variant="link"
+      >
+        Expand
+      </Component>
+    </div>
+  </CardHeader>
+  <CardBody>
+    <p>
+      Cluster installation has started, installation log will appear here once it becomes available.
+    </p>
+  </CardBody>
+</article>
+`;

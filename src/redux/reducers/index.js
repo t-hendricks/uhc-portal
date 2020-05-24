@@ -11,7 +11,7 @@ import tollboothReducer from './tollbooth';
 import { dashboardsReducer } from './dashboardsReducer';
 import { cloudProvidersReducer } from './cloudProvidersReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
-import { LogsReducer } from '../../components/clusters/ClusterDetails/components/LogWindow/LogWindowReducer';
+import { InstallationLogReducer } from '../../components/clusters/ClusterDetails/components/Overview/InstallationLogView/InstallationLogReducer';
 import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersModal/IdentityProvidersReducer';
 import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetails/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
 import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
@@ -35,7 +35,7 @@ const reducers = {
   form: formReducer,
   tollbooth: tollboothReducer,
   modal: modalReducer,
-  logs: LogsReducer,
+  logs: InstallationLogReducer,
   identityProviders: IdentityProvidersReducer,
   clusterUsers: clusterUsersReducer,
   addOns: addOnsReducer,

@@ -8,8 +8,7 @@ $color-log-window-divider: $color-log-window-header-bg;
   color: $color-log-window-text;
   background-color: $color-log-window-body-bg;
   height: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  width: 100%;
 }
 
 .log-window__header {
@@ -25,10 +24,7 @@ $color-log-window-divider: $color-log-window-header-bg;
 .log-window__scroll-pane {
   overflow: auto;
   padding-top: 10px;
-}
-
-.log-window__contents {
-  height: 50vh
+  height: 20em;
 }
 
 .log-window__contents__text{
@@ -38,15 +34,14 @@ $color-log-window-divider: $color-log-window-header-bg;
   width: 0;
 }
 
-.log-window__resume-btn {
-  background-color: $color-log-window-header-bg;
-  color: $color-log-window-text;
-  padding: 4px 10px;
+.logview-buttons {
+  float: right;
 }
 
-.log-window__resume-btn:hover,
-.log-window__resume-btn:focus,
-.log-window__resume-btn:active,
-{
-  color: $color-log-window-text;
+.logview-title {
+  display: inline-block;
+}
+
+:fullscreen .log-window__scroll-pane {
+  height: 89vh;
 }
