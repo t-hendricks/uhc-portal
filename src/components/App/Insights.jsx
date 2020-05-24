@@ -44,9 +44,16 @@ class Insights extends Component {
   };
 
   highlightNavItem = (location) => {
-    let appId = '';
-    if (location.pathname.split('/')[1] === 'subscriptions') {
-      appId = 'subscriptions';
+    let appId;
+    switch (location.pathname.split('/')[1]) {
+      case 'subscriptions':
+        appId = 'subscriptions';
+        break;
+      case 'overview':
+        appId = 'overview';
+        break;
+      default:
+        appId = '';
     }
     insights.chrome.appNavClick({ id: appId });
   };
