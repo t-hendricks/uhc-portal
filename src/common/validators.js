@@ -166,6 +166,9 @@ const checkClusterDisplayName = (value) => {
 };
 
 const checkUserID = (value) => {
+  if (!value) {
+    return 'User ID cannot be empty.';
+  }
   if (value.trim() !== value) {
     return 'User ID cannot contain leading and trailing spaces';
   }

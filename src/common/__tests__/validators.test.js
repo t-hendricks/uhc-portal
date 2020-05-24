@@ -48,6 +48,7 @@ test('User ID does not contain slash', () => {
   expect(checkUserID('~')).toBe('User ID cannot be \'~\'.');
   expect(checkUserID('.')).toBe('User ID cannot be \'.\'.');
   expect(checkUserID('..')).toBe('User ID cannot be \'..\'.');
+  expect(checkUserID('')).toBe('User ID cannot be empty.');
   expect(checkUserID('aaaa')).toBe(undefined);
 });
 
