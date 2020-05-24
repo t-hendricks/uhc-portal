@@ -134,6 +134,7 @@ class ClusterList extends Component {
       history,
       setClusterDetails,
       anyModalOpen,
+      queryParams,
     } = this.props;
 
     const { showSkeleton } = this.state;
@@ -163,7 +164,7 @@ class ClusterList extends Component {
       );
     }
 
-    const hasNoFilters = isEmpty(viewOptions.filter)
+    const hasNoFilters = !queryParams.has_filters
     && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
 
     /* isPendingNoData - we're waiting for the cluster list response,
@@ -288,6 +289,9 @@ ClusterList.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   anyModalOpen: PropTypes.bool,
+  queryParams: PropTypes.shape({
+    has_filters: PropTypes.bool,
+  }),
 };
 
 export default ClusterList;

@@ -180,6 +180,8 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
       clusters.data.items = sorted;
       clusters.data.page = subscriptions.data.page;
       clusters.data.total = subscriptions.data.total || 0;
+      clusters.data.queryParams = { ...clusterRequestParams };
+
       return clusters;
     });
   });
