@@ -24,9 +24,8 @@ mkdir -p ./output
 CUCUMBER_COMMAND=(
   env BUSHSLICER_CONFIG="$BUSHSLICER_CONFIG"
   bundle exec cucumber "${FLAGS[@]}"
-  # As shown by --verbose, omitting --require=features/ or swapping them
-  # wouldn't matter, ruby code from our-tests/features/ is loaded last.
-  --verbose --require=features/ --require=our-tests/features/
+  # See comment about --guess in our-tests/features/step-definitions/ocm.rb
+  --verbose --require=features/ --require=our-tests/features/ --guess
   our-tests/features/ocm/login.feature "$@"
 )
 

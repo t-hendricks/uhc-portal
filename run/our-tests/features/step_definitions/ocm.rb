@@ -5,24 +5,11 @@ require 'webauto/webconsole_executor'
 
 # We can't stop existing verification-tests/features/step_definitions/ocm.rb from
 # being loaded too.
-def unregister_steps_matching!(str)
-  # Written for Cucumber 2.4.0 internals. Yikes.
-  lang = Cucumber::RbSupport::RbDsl.instance_variable_get(:@rb_language)
-  definition_array = lang.instance_variable_get(:@step_definitions)
-  definition_hash = lang.instance_variable_get(:@available_step_definition_hash)
+# To avoid Cucumber::Ambiguous error, we run with `--guess` and
+# add 2nd capturing group here which gives us better ranking in
+# AttemptToGuessAmbiguousMatch (https://stackoverflow.com/a/33909210/239657).
 
-  lang.step_matches(str).each do |match|
-    puts "unregister_steps_matching!: forgetting #{match.inspect}"
-    step = match.step_definition
-    definition_array.delete(step)
-    key = Cucumber::StepDefinitionLight.new(step.regexp_source, step.file_colon_line)
-    definition_hash.delete(key)
-  end
-end
-
-unregister_steps_matching!('I open ocm portal as a foo user')
-
-Given /^I open ocm portal as an? #{WORD} user$/ do |usertype|
+Given /^I open ocm portal as an? #{WORD} user()$/ do |usertype, _|
   upstream_rules = "lib/rules/web/ocm_console/"
   our_rules = "our-tests/lib/rules/web/ocm_console/"
   # Should we load both upstream_rules and our_rules?
