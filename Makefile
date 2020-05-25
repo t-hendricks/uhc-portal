@@ -105,7 +105,9 @@ run/verification-tests:
 	(cd $@; git fetch openshift pull/807/head; git merge --no-edit FETCH_HEAD)
 	# Symlink for running tests without container to match mount made with container.
 	[ -L run/verification-tests/private ] || ln --symbolic --no-target-directory ../private run/verification-tests/private
+	[ -L run/verification-tests/our-tests ] || ln --symbolic --no-target-directory ../our-tests run/verification-tests/our-tests
 
+.PHONY: run/cucushift
 run/cucushift:
 	# Private repo, https://github.com/orgs/openshift/teams/team-red-hat needed to clone.
 	[ -e $@ ] || git clone ssh://git@github.com/xueli181114/cucushift.git --depth=1 $@
@@ -114,7 +116,7 @@ run/cucushift:
 	(cd $@; git fetch --all; git checkout xueli181114/new-cases)
 
 .PHONY: selenium-tests-image
-selenium-tests-image: run/verification-tests run/cucushift
+selenium-tests-image: run/verification-tests
 	run/podman-or-docker.sh build --tag=ocm-selenium-tests --file=run/Dockerfile.selenium-tests run/
 
 .PHONY: clean

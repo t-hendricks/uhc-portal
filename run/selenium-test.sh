@@ -32,8 +32,8 @@ mkdir -p ./output
                       --security-opt label=disable \
                       --mount type=bind,src="$PWD/verification-tests",dst=/verification-tests,ro=true \
                       --mount type=bind,src="$PWD/private",dst=/verification-tests/private,ro=true \
-                      --mount type=bind,src="$PWD/cucushift",dst=/cucushift,ro=true \
+                      --mount type=bind,src="$PWD/our-tests",dst=/verification-tests/our-tests,ro=true \
                       --mount type=bind,src="$PWD/output",dst=/output,ro=false \
                       --user=root \
                       ocm-selenium-tests \
-                      bundle exec cucumber ../cucushift/ocm/login.feature "${FLAGS[@]}" "$@"
+                      bundle exec cucumber our-tests/features/ocm/login.feature "${FLAGS[@]}" "$@"
