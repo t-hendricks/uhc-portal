@@ -34,6 +34,8 @@ class Overview extends Component {
       getUnhealthyClusters,
       viewOptions,
     } = this.props;
+    document.title = 'Overview | Red Hat OpenShift Cluster Manager';
+
     if (!summaryDashboard.fulfilled && !summaryDashboard.pending) {
       getSummaryDashboard();
     }
