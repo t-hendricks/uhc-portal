@@ -21,6 +21,15 @@ fi
 
 mkdir -p ./output
 
+CUCUMBER_COMMAND=(
+  env BUSHSLICER_CONFIG="$BUSHSLICER_CONFIG"
+  bundle exec cucumber "${FLAGS[@]}"
+  # As shown by --verbose, omitting --require=features/ or swapping them
+  # wouldn't matter, ruby code from our-tests/features/ is loaded last.
+  --verbose --require=features/ --require=our-tests/features/
+  our-tests/features/ocm/login.feature "$@"
+)
+
 # See also Dockerfile.selenium-tests.
 # `--mount type=bind` works similarly on both docker and podman.
 # This syntax doesn't support :z for SELinux relabeling, so need label=disable.
@@ -28,7 +37,6 @@ mkdir -p ./output
                       --rm --name selenium-test \
                       --interactive \
                       --net=host \
-                      --env BUSHSLICER_CONFIG="$BUSHSLICER_CONFIG" \
                       --security-opt label=disable \
                       --mount type=bind,src="$PWD/verification-tests",dst=/verification-tests,ro=true \
                       --mount type=bind,src="$PWD/private",dst=/verification-tests/private,ro=true \
@@ -36,4 +44,4 @@ mkdir -p ./output
                       --mount type=bind,src="$PWD/output",dst=/output,ro=false \
                       --user=root \
                       ocm-selenium-tests \
-                      bundle exec cucumber our-tests/features/ocm/login.feature "${FLAGS[@]}" "$@"
+                      "${CUCUMBER_COMMAND[@]}"
