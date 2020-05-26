@@ -40,7 +40,7 @@ CUCUMBER_COMMAND=(
                       --mount type=bind,src="$PWD/verification-tests",dst=/verification-tests,ro=true \
                       --mount type=bind,src="$PWD/private",dst=/verification-tests/private,ro=true \
                       --mount type=bind,src="$PWD/our-tests",dst=/verification-tests/our-tests,ro=true \
-                      --mount type=bind,src="$PWD/output",dst=/output,ro=false \
+                      --mount type=bind,src="$PWD/output",dst=/output \
                       --user=root \
                       ocm-selenium-tests \
                       "${CUCUMBER_COMMAND[@]}"
