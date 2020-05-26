@@ -2,28 +2,45 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
+  Button,
   Card,
-  CardHead,
   CardActions,
   CardBody,
-  Button,
+  CardFooter,
+  CardHead,
+  CardHeader,
   EmptyState,
   EmptyStateBody,
-  Title,
   EmptyStateIcon,
+  Gallery,
+  Title,
+  Tooltip,
 } from '@patternfly/react-core';
+
+import {
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  InProgressIcon,
+  IntegrationIcon,
+  UnknownIcon,
+} from '@patternfly/react-icons';
+
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-import { IntegrationIcon } from '@patternfly/react-icons';
+
+// eslint-disable-next-line camelcase
+import { global_success_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 
 import clusterStates from '../../../common/clusterStates';
 import ErrorBox from '../../../../common/ErrorBox';
+import { noQuotaTooltip } from '../../../../../common/helpers';
 
 import {
-  getInstallState,
   isInstalled,
   hasQuota,
   availableAddOns,
 } from './AddOnsHelper';
+
+import AddOnsConstants from './AddOnsConstants';
 
 class AddOns extends React.Component {
   componentDidMount() {
@@ -59,13 +76,127 @@ class AddOns extends React.Component {
     clearClusterAddOnsResponses();
   }
 
+  getInstallState(addOn) {
+    const { clusterAddOns } = this.props;
+    const installedAddOn = clusterAddOns.items.find(item => item.addon.id === addOn.id);
+    if (!installedAddOn) {
+      return '';
+    }
+
+    switch (installedAddOn.state) {
+      case AddOnsConstants.INSTALLATION_STATE.PENDING:
+      case AddOnsConstants.INSTALLATION_STATE.INSTALLING:
+      case undefined:
+        // undefined state implies that the user just started
+        // the installation and there is no state available yet
+        return (
+          <>
+            <InProgressIcon size="md" />
+            <span>Installing</span>
+          </>
+        );
+      case AddOnsConstants.INSTALLATION_STATE.DELETING:
+        return (
+          <>
+            <InProgressIcon size="md" />
+            <span>Deleting</span>
+          </>
+        );
+      case AddOnsConstants.INSTALLATION_STATE.FAILED:
+        return (
+          <>
+            <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />
+            <span>Install failed</span>
+          </>
+        );
+      case AddOnsConstants.INSTALLATION_STATE.READY:
+        return (
+          <>
+            <CheckCircleIcon color={global_success_color_100.value} size="md" />
+            <span>Installed</span>
+          </>
+        );
+      default:
+        return (
+          <>
+            <UnknownIcon size="md" />
+            <span>Unknown</span>
+          </>
+        );
+    }
+  }
+
+  getActions(addOn) {
+    const {
+      cluster,
+      clusterAddOns,
+      clusterID,
+      addClusterAddOn,
+      addClusterAddOnResponse,
+      organization,
+      quota,
+    } = this.props;
+
+    // Show install button if not installed
+    if (!isInstalled(addOn, clusterAddOns)) {
+      if (!hasQuota(addOn, cluster, organization, quota)) {
+        return (
+          <Tooltip content={noQuotaTooltip}>
+            <div className="pf-u-display-inline-block">
+              <Button isDisabled>
+                Install
+              </Button>
+            </div>
+          </Tooltip>
+        );
+      }
+      return (
+        <Button
+          variant="secondary"
+          aria-label="Install"
+          isDisabled={
+            addClusterAddOnResponse.pending
+              || cluster.state !== clusterStates.READY
+              || !cluster.canEdit
+          }
+          onClick={() => addClusterAddOn(clusterID, addOn.id)}
+        >
+          Install
+        </Button>
+      );
+    }
+
+    const installedAddOn = clusterAddOns.items.find(item => item.addon.id === addOn.id);
+    if (!installedAddOn) {
+      return '';
+    }
+
+    let url;
+    switch (installedAddOn.state) {
+      case AddOnsConstants.INSTALLATION_STATE.FAILED:
+        url = 'https://access.redhat.com/support/cases/#/case/new';
+        return (
+          <a href={url} rel="noreferrer noopener" target="_blank">
+            <Button variant="secondary" size="sm">Contact support</Button>
+          </a>
+        );
+      case AddOnsConstants.INSTALLATION_STATE.READY:
+        url = `${cluster.console.url}/k8s/ns/${addOn.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${addOn.id}.v${installedAddOn.operator_version}`;
+        return (
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            <Button variant="secondary" size="sm">View in console</Button>
+          </a>
+        );
+      default:
+        return '';
+    }
+  }
+
   render() {
     const {
       addOns,
       cluster,
       clusterAddOns,
-      clusterID,
-      addClusterAddOn,
       addClusterAddOnResponse,
       organization,
       quota,
@@ -81,8 +212,6 @@ class AddOns extends React.Component {
       );
     }
 
-    // Add-ons can only be installed when the cluster is ready
-    const isClusterReady = cluster.state === clusterStates.READY;
     const addOnsList = availableAddOns(addOns, cluster, clusterAddOns, organization, quota);
     const hasAddOns = addOnsList.length > 0;
 
@@ -112,43 +241,35 @@ class AddOns extends React.Component {
     return (
       <div className="cluster-details-addons-tab-contents">
         { addClusterAddOnResponse.error && (
-        <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
+          <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
         )}
-        { addOnsList.map(addOn => (
-          <Card key={addOn.id}>
-            <CardHead>
-              <Title headingLevel="h2" size="lg" className="card-title">{addOn.name}</Title>
-              <CardActions>
-                { (isInstalled(addOn, clusterAddOns)
-                   && getInstallState(addOn, clusterAddOns, cluster)) || (
-                   <Button
-                     variant="secondary"
-                     aria-label="Install"
-                     isDisabled={
-                       addClusterAddOnResponse.pending
-                         || !isClusterReady
-                         || !cluster.canEdit
-                         || !hasQuota(addOn, cluster, organization, quota)
-                     }
-                     onClick={() => addClusterAddOn(clusterID, addOn.id)}
-                   >
-                     Install
-                   </Button>
-                )}
-              </CardActions>
-            </CardHead>
-            <CardBody className="addon-card">
-              <div className="addon-icon">
+        <Gallery gutter="md">
+          { addOnsList.map(addOn => (
+            <Card key={addOn.id}>
+              <CardHead className="addon-card-head">
                 { addOn.icon && (
-                <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />
+                  <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />
                 )}
-              </div>
-              <div className="addon-description">
-                {addOn.description}
-              </div>
-            </CardBody>
-          </Card>
-        ))}
+                <CardActions>
+                  { this.getInstallState(addOn) }
+                </CardActions>
+              </CardHead>
+              <CardHeader>
+                { addOn.name }
+              </CardHeader>
+              <CardBody>
+                { addOn.description }
+                { ' ' }
+                { addOn.docs_link && (
+                  <a href={addOn.docs_link} rel="noreferrer noopener" target="_blank">View documentation</a>
+                )}
+              </CardBody>
+              <CardFooter>
+                { this.getActions(addOn) }
+              </CardFooter>
+            </Card>
+          ))}
+        </Gallery>
       </div>
     );
   }

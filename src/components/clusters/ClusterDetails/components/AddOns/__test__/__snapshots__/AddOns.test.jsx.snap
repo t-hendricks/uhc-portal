@@ -4,53 +4,25 @@ exports[`<AddOns /> should render 1`] = `
 <div
   className="cluster-details-addons-tab-contents"
 >
-  <Card
-    key="crc-workspaces"
+  <Gallery
+    gutter="md"
   >
-    <CardHead>
-      <Title
-        className="card-title"
-        headingLevel="h2"
-        size="lg"
+    <Card
+      key="crc-workspaces"
+    >
+      <CardHead
+        className="addon-card-head"
       >
+        <CardActions />
+      </CardHead>
+      <CardHeader>
         Red Hat CodeReady Workspaces
-      </Title>
-      <CardActions>
-        <Component
-          aria-label="Install"
-          isDisabled={false}
-          onClick={[Function]}
-          variant="secondary"
-        >
-          Install
-        </Component>
-      </CardActions>
-    </CardHead>
-    <CardBody
-      className="addon-card"
-    >
-      <div
-        className="addon-icon"
-      />
-      <div
-        className="addon-description"
-      >
+      </CardHeader>
+      <CardBody>
         Built on the open Eclipse Che project, Red Hat CodeReady Workspaces provides developer workspaces, which include all the tools and the dependencies that are needed to code, build, test, run, and debug applications.
-      </div>
-    </CardBody>
-  </Card>
-  <Card
-    key="managed-integration"
-  >
-    <CardHead>
-      <Title
-        className="card-title"
-        headingLevel="h2"
-        size="lg"
-      >
-        Red Hat Managed Integration
-      </Title>
-      <CardActions>
+         
+      </CardBody>
+      <CardFooter>
         <Component
           aria-label="Install"
           isDisabled={false}
@@ -59,150 +31,90 @@ exports[`<AddOns /> should render 1`] = `
         >
           Install
         </Component>
-      </CardActions>
-    </CardHead>
-    <CardBody
-      className="addon-card"
+      </CardFooter>
+    </Card>
+    <Card
+      key="managed-integration"
     >
-      <div
-        className="addon-icon"
-      />
-      <div
-        className="addon-description"
+      <CardHead
+        className="addon-card-head"
       >
+        <CardActions />
+      </CardHead>
+      <CardHeader>
+        Red Hat Managed Integration
+      </CardHeader>
+      <CardBody>
         Red Hat managed integration, based on the integreatly project, is an opinionated installation of a number of independent middleware services and tools into an OpenShift Dedicated cluster.
-      </div>
-    </CardBody>
-  </Card>
-  <Card
-    key="service-mesh"
-  >
-    <CardHead>
-      <Title
-        className="card-title"
-        headingLevel="h2"
-        size="lg"
+         
+      </CardBody>
+      <CardFooter>
+        <Component
+          aria-label="Install"
+          isDisabled={false}
+          onClick={[Function]}
+          variant="secondary"
+        >
+          Install
+        </Component>
+      </CardFooter>
+    </Card>
+    <Card
+      key="service-mesh"
+    >
+      <CardHead
+        className="addon-card-head"
       >
+        <CardActions>
+          <CheckCircleIcon
+            color="#92d400"
+            noVerticalAlign={false}
+            size="md"
+            title={null}
+          />
+          <span>
+            Installed
+          </span>
+        </CardActions>
+      </CardHead>
+      <CardHeader>
         Red Hat OpenShift Service Mesh
-      </Title>
-      <CardActions>
-        <CheckCircleIcon
-          color="#92d400"
-          noVerticalAlign={false}
-          size="md"
-          title={null}
-        />
-        <span>
-          Installed
-        </span>
+      </CardHeader>
+      <CardBody>
+        Based on the open source Istio project, Red Hat OpenShift Service Mesh provides an easy way to create a network of deployed services that provides discovery, load balancing, service-to-service authentication, failure recovery, metrics, and monitoring.
+         
+      </CardBody>
+      <CardFooter>
         <a
           href="https://console-openshift-console.apps.test-liza.sdev.devshift.net/k8s/ns/undefined/operators.coreos.com~v1alpha1~ClusterServiceVersion/service-mesh.vundefined"
           rel="noopener noreferrer"
           target="_blank"
         >
           <Component
+            size="sm"
             variant="secondary"
           >
             View in console
           </Component>
         </a>
-      </CardActions>
-    </CardHead>
-    <CardBody
-      className="addon-card"
+      </CardFooter>
+    </Card>
+    <Card
+      key="dba-operator"
     >
-      <div
-        className="addon-icon"
-      />
-      <div
-        className="addon-description"
+      <CardHead
+        className="addon-card-head"
       >
-        Based on the open source Istio project, Red Hat OpenShift Service Mesh provides an easy way to create a network of deployed services that provides discovery, load balancing, service-to-service authentication, failure recovery, metrics, and monitoring.
-      </div>
-    </CardBody>
-  </Card>
-  <Card
-    key="dba-operator"
-  >
-    <CardHead>
-      <Title
-        className="card-title"
-        headingLevel="h2"
-        size="lg"
-      >
+        <CardActions />
+      </CardHead>
+      <CardHeader>
         DBA Operator
-      </Title>
-      <CardActions>
-        <Component
-          aria-label="Install"
-          isDisabled={false}
-          onClick={[Function]}
-          variant="secondary"
-        >
-          Install
-        </Component>
-      </CardActions>
-    </CardHead>
-    <CardBody
-      className="addon-card"
-    >
-      <div
-        className="addon-icon"
-      />
-      <div
-        className="addon-description"
-      >
+      </CardHeader>
+      <CardBody>
         DBA Operator description
-      </div>
-    </CardBody>
-  </Card>
-  <Card
-    key="integreatly"
-  >
-    <CardHead>
-      <Title
-        className="card-title"
-        headingLevel="h2"
-        size="lg"
-      >
-        Integreatly Operator
-      </Title>
-      <CardActions>
-        <Component
-          aria-label="Install"
-          isDisabled={true}
-          onClick={[Function]}
-          variant="secondary"
-        >
-          Install
-        </Component>
-      </CardActions>
-    </CardHead>
-    <CardBody
-      className="addon-card"
-    >
-      <div
-        className="addon-icon"
-      />
-      <div
-        className="addon-description"
-      >
-        Install and configure the integreatly suite of Software
-      </div>
-    </CardBody>
-  </Card>
-  <Card
-    key="prow-operator"
-  >
-    <CardHead>
-      <Title
-        className="card-title"
-        headingLevel="h2"
-        size="lg"
-      >
-        Prow Operator
-      </Title>
-      <CardActions>
+         
+      </CardBody>
+      <CardFooter>
         <Component
           aria-label="Install"
           isDisabled={false}
@@ -211,20 +123,93 @@ exports[`<AddOns /> should render 1`] = `
         >
           Install
         </Component>
-      </CardActions>
-    </CardHead>
-    <CardBody
-      className="addon-card"
+      </CardFooter>
+    </Card>
+    <Card
+      key="integreatly"
     >
-      <div
-        className="addon-icon"
-      />
-      <div
-        className="addon-description"
+      <CardHead
+        className="addon-card-head"
       >
+        <CardActions />
+      </CardHead>
+      <CardHeader>
+        Integreatly Operator
+      </CardHeader>
+      <CardBody>
+        Install and configure the integreatly suite of Software
+         
+      </CardBody>
+      <CardFooter>
+        <Tooltip
+          appendTo={[Function]}
+          aria="describedby"
+          boundary="window"
+          className=""
+          content="You do not have quota for this option. Contact sales to purchase additional quota."
+          distance={15}
+          enableFlip={true}
+          entryDelay={500}
+          exitDelay={500}
+          flipBehavior={
+            Array [
+              "top",
+              "right",
+              "bottom",
+              "left",
+              "top",
+              "right",
+              "bottom",
+            ]
+          }
+          id=""
+          isAppLauncher={false}
+          isContentLeftAligned={false}
+          isVisible={false}
+          maxWidth="18.75rem"
+          position="top"
+          tippyProps={Object {}}
+          trigger="mouseenter focus"
+          zIndex={9999}
+        >
+          <div
+            className="pf-u-display-inline-block"
+          >
+            <Component
+              isDisabled={true}
+            >
+              Install
+            </Component>
+          </div>
+        </Tooltip>
+      </CardFooter>
+    </Card>
+    <Card
+      key="prow-operator"
+    >
+      <CardHead
+        className="addon-card-head"
+      >
+        <CardActions />
+      </CardHead>
+      <CardHeader>
+        Prow Operator
+      </CardHeader>
+      <CardBody>
         Manage Prow CRDs
-      </div>
-    </CardBody>
-  </Card>
+         
+      </CardBody>
+      <CardFooter>
+        <Component
+          aria-label="Install"
+          isDisabled={false}
+          onClick={[Function]}
+          variant="secondary"
+        >
+          Install
+        </Component>
+      </CardFooter>
+    </Card>
+  </Gallery>
 </div>
 `;
