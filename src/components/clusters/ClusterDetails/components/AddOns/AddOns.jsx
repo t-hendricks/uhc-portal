@@ -29,6 +29,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
+import get from 'lodash/get';
 
 import clusterStates from '../../../common/clusterStates';
 import ErrorBox from '../../../../common/ErrorBox';
@@ -78,6 +79,11 @@ class AddOns extends React.Component {
 
   getInstallState(addOn) {
     const { clusterAddOns } = this.props;
+
+    if (!get(clusterAddOns, 'items.length', false)) {
+      return '';
+    }
+
     const installedAddOn = clusterAddOns.items.find(item => item.addon.id === addOn.id);
     if (!installedAddOn) {
       return '';
@@ -164,6 +170,10 @@ class AddOns extends React.Component {
           Install
         </Button>
       );
+    }
+
+    if (!get(clusterAddOns, 'items.length', false)) {
+      return '';
     }
 
     const installedAddOn = clusterAddOns.items.find(item => item.addon.id === addOn.id);
