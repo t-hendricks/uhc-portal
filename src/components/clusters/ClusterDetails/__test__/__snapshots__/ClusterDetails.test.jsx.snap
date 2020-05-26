@@ -106,6 +106,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "master": 3,
           "total": 5,
         },
+        "product": Object {
+          "id": "osd",
+        },
         "region": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
           "id": "us-east-1",
@@ -185,15 +188,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       displayAccessControlTab={true}
       displayAddOnsTab={false}
       displayInsightsTab={false}
-      displayLogs={false}
       displayMonitoringTab={true}
-      displayNetworkingTab={false}
+      displayNetworkingTab={true}
       insightsTabRef={
-        Object {
-          "current": null,
-        }
-      }
-      logsTabRef={
         Object {
           "current": null,
         }
@@ -505,6 +502,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "master": 3,
             "total": 5,
           },
+          "product": Object {
+            "id": "osd",
+          },
           "region": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
             "id": "us-east-1",
@@ -656,6 +656,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "master": 3,
             "total": 5,
           },
+          "product": Object {
+            "id": "osd",
+          },
           "region": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
             "id": "us-east-1",
@@ -803,6 +806,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "master": 3,
             "total": 5,
           },
+          "product": Object {
+            "id": "osd",
+          },
           "region": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
             "id": "us-east-1",
@@ -841,6 +847,17 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
         }
       }
       clusterConsoleURL="https://console-openshift-console.apps.test-liza.sdev.devshift.net"
+    />
+  </ForwardRef>
+  <ForwardRef
+    aria-label="Networking"
+    eventKey={4}
+    hidden={true}
+    id="networkingTabContent"
+  >
+    <Connect(Networking)
+      clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
+      refreshCluster={[Function]}
     />
   </ForwardRef>
   <Connect(ReduxForm)

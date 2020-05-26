@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import get from 'lodash/get';
-import { GET_CLUSTER_INSIGHTS, VOTE_ON_RULE_INSIGHTS } from './InsightsConstants';
+import {
+  GET_CLUSTER_INSIGHTS, VOTE_ON_RULE_INSIGHTS, DISABLE_RULE_INSIGHTS, ENABLE_RULE_INSIGHTS,
+} from './InsightsConstants';
 import { insightsService } from '../../../../../services';
 
 const fetchSingleClusterInsights = async (clusterId, orgId) => {
@@ -39,21 +41,23 @@ export const fetchClusterInsights = clusterID => dispatch => dispatch({
 // clusterId is id of the cluster
 // ruleId is id of the rule
 // vote is integer: -1(dislike), 0(reset_vote), 1(like)
-const voteOnSingleRuleInsights = async (clusterId, ruleId, vote) => {
+const voteOnSingleRuleInsights = async (dispatch, clusterId, ruleId, vote) => {
   let response;
   switch (vote) {
     case -1:
-      response = insightsService.putDislikeOnRuleInsights(clusterId, ruleId);
+      response = await insightsService.putDislikeOnRuleInsights(clusterId, ruleId);
       break;
     case 0:
-      response = insightsService.resetVoteOnRuleInsights(clusterId, ruleId);
+      response = await insightsService.resetVoteOnRuleInsights(clusterId, ruleId);
       break;
     case 1:
-      response = insightsService.putLikeOnRuleInsights(clusterId, ruleId);
+      response = await insightsService.putLikeOnRuleInsights(clusterId, ruleId);
       break;
     default:
       throw Error('unsupported vote');
   }
+
+  dispatch(fetchClusterInsights(clusterId));
 
   return {
     insightsData: response.data,
@@ -65,5 +69,36 @@ const voteOnSingleRuleInsights = async (clusterId, ruleId, vote) => {
 
 export const voteOnRuleInsights = (clusterId, ruleId, vote) => dispatch => dispatch({
   type: VOTE_ON_RULE_INSIGHTS,
-  payload: voteOnSingleRuleInsights(clusterId, ruleId, vote),
+  payload: voteOnSingleRuleInsights(dispatch, clusterId, ruleId, vote),
 });
+
+// clusterId is id of the cluster
+// ruleId is id of the rule
+const toggleSingleRuleInsights = async (dispatch, clusterId, ruleId, enable) => {
+  const action = enable ? insightsService.enableRuleInsights : insightsService.disableRuleInsights;
+  const response = action(clusterId, ruleId).then((resp) => {
+    dispatch(fetchClusterInsights(clusterId));
+
+    return resp;
+  });
+
+  return {
+    insightsData: response.data,
+    clusterId,
+    ruleId,
+  };
+};
+
+export const disableRuleInsights = (clusterId, ruleId) => (dispatch) => {
+  dispatch({
+    type: DISABLE_RULE_INSIGHTS,
+    payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, false),
+  });
+};
+
+export const enableRuleInsights = (clusterId, ruleId) => (dispatch) => {
+  dispatch({
+    type: ENABLE_RULE_INSIGHTS,
+    payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, true),
+  });
+};

@@ -69,7 +69,18 @@ limitations under the License.
   pre {
     overflow: auto;
   }
-  width: fit-content;
+  overflow: auto;
+}
+
+#not-found > div.pf-c-alert__description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#advanced-networking-alert {
+  > h4 {
+    margin-top: 0px;
+  }
 }
 
 .navbar-pf-vertical .navbar-brand .navbar-brand-name {
@@ -273,6 +284,10 @@ limitations under the License.
   font-size: var(--pf-global--FontSize--3xl);
   color: var(--pf-global--danger-color--100);
   padding-right: var(--pf-global--spacer--sm);
+}
+
+.empty-state-color {
+  color: var(--pf-global--Color--200);
 }
 
 #subs-hint {
@@ -723,7 +738,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 24px;
 }
 
-.buttom-alert {
+.bottom-alert {
  margin-top: 24px;
  h4 {
   margin-top: 0 !important;
@@ -1131,6 +1146,12 @@ button:focus {
 
 .hand-pointer {
   cursor: pointer;
+}
+
+.access-control-form {
+  div.pf-c-form__group .pf-c-form__label{
+    cursor: default;
+  }
 }
 
 .access-control-add {

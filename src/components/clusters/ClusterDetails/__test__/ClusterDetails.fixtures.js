@@ -168,6 +168,9 @@ const clusterDetails = {
     canEdit: true,
     canDelete: true,
     subscription: subscriptionInfo,
+    product: {
+      id: 'osd',
+    },
   },
 };
 

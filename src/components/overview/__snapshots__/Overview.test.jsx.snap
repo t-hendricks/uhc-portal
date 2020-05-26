@@ -42,7 +42,6 @@ exports[`<Overview /> renders correctly 1`] = `
         span={12}
       >
         <Connect(ClustersWithIssuesTableCard)
-          totalConnectedClusters={10}
           unhealthyClusters={
             Object {
               "clusters": Array [

@@ -25,7 +25,6 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
-import LogWindow from './components/LogWindow';
 import Insights from './components/Insights';
 import Monitoring from './components/Monitoring';
 import Networking from './components/Networking';
@@ -62,7 +61,6 @@ class ClusterDetails extends Component {
     this.insightsTabRef = React.createRef();
     this.monitoringTabRef = React.createRef();
     this.accessControlTabRef = React.createRef();
-    this.logsTabRef = React.createRef();
     this.addOnsTabRef = React.createRef();
     this.networkingTabRef = React.createRef();
   }
@@ -78,7 +76,6 @@ class ClusterDetails extends Component {
       getClusterIdentityProviders,
       getClusterAddOns,
       clusterAddOns,
-      getLogs,
       match,
       addOns,
       getAddOns,
@@ -95,7 +92,7 @@ class ClusterDetails extends Component {
       getCloudProviders();
     }
     if (isValid(clusterID) && !isUuid(clusterID)) {
-      // TODO: get IDP, Add-On Installations, and Logs only for managed clusters
+      // TODO: get IDP and Add-On Installations only for managed clusters
       if (!clusterIdentityProviders.pending
           && !clusterIdentityProviders.error
           && !clusterIdentityProviders.fulfilled) {
@@ -104,7 +101,6 @@ class ClusterDetails extends Component {
       if (!clusterAddOns.pending && !clusterAddOns.error && !clusterAddOns.fulfilled) {
         getClusterAddOns(clusterID);
       }
-      getLogs(clusterID);
     }
     if (!addOns.pending && !addOns.error && !addOns.fulfilled) {
       getAddOns();
@@ -138,16 +134,16 @@ class ClusterDetails extends Component {
   }
 
   componentWillUnmount() {
-    const { resetIdentityProvidersState, closeModal } = this.props;
+    const { resetIdentityProvidersState, closeModal, resetClusterHistory } = this.props;
     resetIdentityProvidersState();
     closeModal();
+    resetClusterHistory();
   }
 
   refresh(automatic = true) {
     const {
       match,
       clusterDetails,
-      getLogs,
       getDedicatedAdmins,
       getClusterAdmins,
       getAlerts,
@@ -183,7 +179,6 @@ class ClusterDetails extends Component {
         getClusterRouters(clusterID);
         if (get(clusterDetails, 'cluster.managed')) {
           getClusterAddOns(clusterID);
-          getLogs(clusterID);
           this.refreshIDP();
         }
         if (get(clusterDetails, 'cluster.cluster_admin_enabled')) {
@@ -218,14 +213,29 @@ class ClusterDetails extends Component {
 
   // Determine if the org has quota for existing add-ons
   hasAddOns() {
-    const { addOns, clusterAddOns, organization } = this.props;
+    const {
+      addOns,
+      clusterAddOns,
+      clusterDetails,
+      organization,
+    } = this.props;
+    const { cluster } = clusterDetails;
+
     // If cluster already has add-ons installed we can show the tab regardless of quota
     if (get(clusterAddOns, 'items.length', 0)) {
       return true;
     }
+
+    // If there are free add-ons available we can show the tab on OSD clusters regardless of quota
+    if (cluster.product.id === 'osd' && get(addOns, 'freeAddOns.length', 0)) {
+      return true;
+    }
+
+    // If the organization has no add-ons quota, or there are no add-ons, we should hide the tab
     if (!has(organization.quotaList, 'addOnsQuota') || !get(addOns, 'resourceNames.length', 0)) {
       return false;
     }
+
     const addOnsQuota = Object.keys(organization.quotaList.addOnsQuota);
     return !!intersection(addOns.resourceNames, addOnsQuota).length;
   }
@@ -238,14 +248,14 @@ class ClusterDetails extends Component {
       openModal,
       history,
       match,
-      logs,
-      clusterRouters,
       clusterIdentityProviders,
       organization,
       setGlobalError,
       displayClusterLogs,
       insightsData,
       voteOnRule,
+      disableRule,
+      enableRule,
       canAllowClusterAdmin,
       anyModalOpen,
     } = this.props;
@@ -307,7 +317,6 @@ class ClusterDetails extends Component {
       this.fetchDetailsAndInsightsData(cluster.id);
     };
 
-    const hasLogs = !!logs.lines;
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
     const displayInsightsTab = !isArchived && APP_BETA && (
@@ -319,7 +328,7 @@ class ClusterDetails extends Component {
     const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
     const displayNetworkingTab = cluster.canEdit
           && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING)
-          && cluster.managed && get(cluster, 'api.url') && clusterRouters.getRouters.routers.length > 0;
+          && cluster.managed && !!get(cluster, 'api.url');
 
     return (
       <PageSection id="clusterdetails-content">
@@ -341,14 +350,12 @@ class ClusterDetails extends Component {
             displayAddOnsTab={displayAddOnsTab}
             displayNetworkingTab={displayNetworkingTab}
             displayInsightsTab={displayInsightsTab}
-            displayLogs={hasLogs}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
             addOnsTabRef={this.addOnsTabRef}
             networkingTabRef={this.networkingTabRef}
             insightsTabRef={this.insightsTabRef}
-            logsTabRef={this.logsTabRef}
           />
         </ClusterDetailsTop>
         <TabContent
@@ -426,18 +433,13 @@ class ClusterDetails extends Component {
               voteOnRule={(ruleId, vote) => {
                 voteOnRule(cluster.external_id, ruleId, vote);
               }}
+              disableRule={(ruleId) => {
+                disableRule(cluster.external_id, ruleId);
+              }}
+              enableRule={(ruleId) => {
+                enableRule(cluster.external_id, ruleId);
+              }}
             />
-          </TabContent>
-        )}
-        {hasLogs && (
-          <TabContent
-            eventKey={6}
-            id="logsTabContent"
-            ref={this.logsTabRef}
-            aria-label="Logs"
-            hidden
-          >
-            <LogWindow clusterID={cluster.id} />
           </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
@@ -475,7 +477,6 @@ ClusterDetails.propTypes = {
   fetchInsightsData: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
-  getLogs: PropTypes.func.isRequired,
   getAlerts: PropTypes.func.isRequired,
   getNodes: PropTypes.func.isRequired,
   getClusterOperators: PropTypes.func.isRequired,
@@ -488,11 +489,10 @@ ClusterDetails.propTypes = {
   displayClusterLogs: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  resetClusterHistory: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
-  logs: PropTypes.object,
   addOns: PropTypes.object,
-  clusterRouters: PropTypes.object,
   clusterAddOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
@@ -516,6 +516,8 @@ ClusterDetails.propTypes = {
   clusterLogsViewOptions: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
   voteOnRule: PropTypes.func.isRequired,
+  disableRule: PropTypes.func.isRequired,
+  enableRule: PropTypes.func.isRequired,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
@@ -530,7 +532,6 @@ ClusterDetails.defaultProps = {
     errorMessage: '',
     fulfilled: false,
   },
-  logs: '',
   addOns: '',
 };
 

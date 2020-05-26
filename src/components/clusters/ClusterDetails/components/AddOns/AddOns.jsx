@@ -83,8 +83,8 @@ class AddOns extends React.Component {
 
     // Add-ons can only be installed when the cluster is ready
     const isClusterReady = cluster.state === clusterStates.READY;
-    const availableAddOnsList = availableAddOns(addOns, clusterAddOns, organization, quota);
-    const hasAddOns = availableAddOnsList.length > 0;
+    const addOnsList = availableAddOns(addOns, cluster, clusterAddOns, organization, quota);
+    const hasAddOns = addOnsList.length > 0;
 
     if (!hasAddOns) {
       return (
@@ -114,7 +114,7 @@ class AddOns extends React.Component {
         { addClusterAddOnResponse.error && (
         <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
         )}
-        { availableAddOnsList.map(addOn => (
+        { addOnsList.map(addOn => (
           <Card key={addOn.id}>
             <CardHead>
               <Title headingLevel="h2" size="lg" className="card-title">{addOn.name}</Title>
@@ -128,7 +128,7 @@ class AddOns extends React.Component {
                        addClusterAddOnResponse.pending
                          || !isClusterReady
                          || !cluster.canEdit
-                         || !hasQuota(addOn, organization, quota)
+                         || !hasQuota(addOn, cluster, organization, quota)
                      }
                      onClick={() => addClusterAddOn(clusterID, addOn.id)}
                    >

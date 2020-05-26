@@ -33,7 +33,7 @@ function actionResolver(
     const consoleURL = cluster.console ? cluster.console.url : false;
     const adminConsoleEnabled = {
       component: 'a',
-      title: 'Open Console',
+      title: 'Open console',
       href: consoleURL,
       target: '_blank',
       rel: 'noopener noreferrer',
@@ -41,7 +41,7 @@ function actionResolver(
     };
     const adminConsoleDisabled = {
       ...baseProps,
-      title: 'Open Console',
+      title: 'Open console',
       isDisabled: true,
       tooltip: isClusterUninstalling ? uninstallingMessage : consoleDisabledMessage,
       key: getKey('adminconsole'),
@@ -52,7 +52,7 @@ function actionResolver(
   const getScaleClusterProps = () => {
     const scaleClusterBaseProps = {
       ...baseProps,
-      title: 'Scale Cluster',
+      title: 'Scale cluster',
       key: getKey('scalecluster'),
     };
     const managedEditProps = {
@@ -70,7 +70,7 @@ function actionResolver(
   const getEditDisconnectedClusterProps = () => (
     {
       ...baseProps,
-      title: 'Edit Cluster Registration',
+      title: 'Edit cluster registration',
       key: getKey('editdisconnected'),
       onClick: () => openModal('edit-disconnected-cluster', cluster),
     }
@@ -79,12 +79,12 @@ function actionResolver(
   const getEditDisplayNameProps = () => {
     const editDisplayNameBaseProps = {
       ...baseProps,
-      title: 'Edit Display Name',
+      title: 'Edit display Name',
       key: getKey('editdisplayname'),
     };
     const editDisplayNameProps = {
       ...editDisplayNameBaseProps,
-      title: 'Edit Display Name',
+      title: 'Edit display name',
       onClick: () => openModal('edit-display-name', cluster),
     };
     const editDisplayNamePropsUninstalling = {
@@ -96,7 +96,7 @@ function actionResolver(
   const getArchiveClusterProps = () => {
     const baseArchiveProps = {
       ...baseProps,
-      title: 'Archive Cluster',
+      title: 'Archive cluster',
       key: getKey('archivecluster'),
     };
     const archiveModalData = {
@@ -109,7 +109,7 @@ function actionResolver(
   const getUnarchiveClusterProps = () => {
     const baseArchiveProps = {
       ...baseProps,
-      title: 'Unarchive Cluster',
+      title: 'Unarchive cluster',
       key: getKey('unarchivecluster'),
     };
     const unarchiveModalData = {
@@ -127,7 +127,7 @@ function actionResolver(
       key: getKey('editconsoleurl'),
     };
     const editConsoleURLProps = {
-      title: hasConsoleURL ? 'Edit Console URL' : 'Add Console URL',
+      title: hasConsoleURL ? 'Edit console URL' : 'Add console URL',
       ...editConsoleURLBaseProps,
       onClick: () => openModal('edit-console-url', cluster),
     };
@@ -141,7 +141,7 @@ function actionResolver(
   const getDeleteItemProps = () => {
     const baseDeleteProps = {
       ...baseProps,
-      title: 'Delete Cluster',
+      title: 'Delete cluster',
       key: getKey('deletecluster'),
     };
     const deleteModalData = {
@@ -156,7 +156,7 @@ function actionResolver(
   const getEditSubscriptionSettingsProps = () => {
     const editSubscriptionSettingsProps = {
       ...baseProps,
-      title: 'Edit Subscription Settings',
+      title: 'Edit subscription settings',
       key: getKey('editsubscriptionsettings'),
       onClick: () => openModal('edit-subscription-settings', cluster.subscription),
     };

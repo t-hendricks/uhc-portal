@@ -27,14 +27,12 @@ class TabsRow extends React.Component {
       displayAddOnsTab,
       displayNetworkingTab,
       displayInsightsTab,
-      displayLogs,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
       addOnsTabRef,
       networkingTabRef,
       insightsTabRef,
-      logsTabRef,
     } = this.props;
     return [
       {
@@ -79,13 +77,6 @@ class TabsRow extends React.Component {
         show: displayInsightsTab,
         ref: insightsTabRef,
       },
-      {
-        key: 6,
-        title: 'Logs',
-        contentId: 'logsTabContent',
-        show: displayLogs,
-        ref: logsTabRef,
-      },
     ];
   }
 
@@ -124,14 +115,12 @@ TabsRow.propTypes = {
   displayMonitoringTab: PropTypes.bool,
   displayAccessControlTab: PropTypes.bool,
   displayAddOnsTab: PropTypes.bool,
-  displayLogs: PropTypes.bool,
   displayInsightsTab: PropTypes.bool,
   displayNetworkingTab: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
   addOnsTabRef: PropTypes.object.isRequired,
-  logsTabRef: PropTypes.object.isRequired,
   insightsTabRef: PropTypes.object.isRequired,
   networkingTabRef: PropTypes.object.isRequired,
 };
@@ -141,7 +130,6 @@ TabsRow.defaultProps = {
   displayInsightsTab: false,
   displayAccessControlTab: false,
   displayAddOnsTab: false,
-  displayLogs: false,
   displayNetworkingTab: false,
 };
 

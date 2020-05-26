@@ -1,4 +1,4 @@
-FROM fedora:31
+FROM fedora:29
 
 MAINTAINER ***REMOVED***
 
@@ -6,8 +6,10 @@ MAINTAINER ***REMOVED***
 #   That's what tools/hack_bundle.rb tries to achieve, but still compiles it.
 #   Fedora's rubygem-bundler is patched (as opposed to upstream `gem install bundler`)
 #   but no luck, both compile it.  See also https://github.com/rubygems/bundler/issues/1964
-RUN dnf install -y ruby ruby-devel rubygem-bundler rubygem-nokogiri gcc-c++ make redhat-rpm-config git dnf-plugins-core
-RUN dnf builddep -y rubygem-nokogiri
+RUN dnf install -y ruby ruby-devel rubygem-bundler rubygem-nokogiri gcc-c++ make redhat-rpm-config git dnf-plugins-core && \
+    dnf builddep -y rubygem-nokogiri && \
+    dnf clean all && \
+    rm -rf /var/cache/yum
 
 RUN useradd user
 

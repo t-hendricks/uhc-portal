@@ -5,9 +5,11 @@ import {
   PENDING_ACTION,
   REJECTED_ACTION,
 } from '../../../../../redux/reduxHelpers';
+import { viewPaginationConstants } from '../../../../../redux/constants';
 import {
   DOWNLOAD_CLUSTER_LOGS,
   GET_CLUSTER_LOGS,
+  RESET_CLUSTER_HISTORY,
 } from './clusterLogConstants';
 import { getErrorState } from '../../../../../common/errors';
 
@@ -46,7 +48,9 @@ function clusterLogReducer(state = initialState, action) {
         draft.logs = [];
         draft.requestState = { ...getErrorState(action) };
         break;
-
+      case viewPaginationConstants.VIEW_CLEAR_FILTERS_AND_FLAGS:
+        draft.requestState = baseRequestState;
+        break;
       case PENDING_ACTION(DOWNLOAD_CLUSTER_LOGS):
         draft.requestDownloadState = {
           ...baseRequestState,
@@ -67,6 +71,9 @@ function clusterLogReducer(state = initialState, action) {
       case REJECTED_ACTION(DOWNLOAD_CLUSTER_LOGS):
         draft.requestDownloadState = { ...getErrorState(action) };
         draft.data = undefined;
+        break;
+      case RESET_CLUSTER_HISTORY:
+        draft.requestState = baseRequestState;
         break;
     }
   });

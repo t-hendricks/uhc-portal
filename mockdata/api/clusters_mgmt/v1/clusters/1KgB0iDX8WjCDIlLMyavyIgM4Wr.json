@@ -1,1 +1,83 @@
-{"kind":"Cluster","id":"1KgB0iDX8WjCDIlLMyavyIgM4Wr","href":"/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr","name":"61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9","external_id":"61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9","display_name":"61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9","creation_timestamp":"2019-05-02T13:18:58.077019Z","openshift_version":"4.1.0-rc.0","subscription":{"kind":"SubscriptionLink","id":"1KgB0WcVBZBdRGAreuve29yoxUB","href":"/api/accounts_mgmt/v1/subscriptions/1KgB0WcVBZBdRGAreuve29yoxUB"},"nodes":{"total":0,"master":0,"compute":0},"state":"ready","groups":{"kind":"GroupListLink","href":"/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr/groups"},"network":{"router_shards":{"kind":"RouterShardListLink","href":"/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr/router_shards","id":"1KgB0iDX8WjCDIlLMyavyIgM4Wr"}},"multi_az":false,"managed":false,"identity_providers":{"kind":"IdentityProviderListLink","href":"/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr/identity_providers"},"metrics":{"memory":{"updated_timestamp":"2019-05-02T14:56:38Z","used":{"value":11863199744,"unit":"B"},"total":{"value":75519991808,"unit":"B"}},"cpu":{"updated_timestamp":"2019-05-02T14:56:38Z","used":{"value":2.1283333333334067,"unit":""},"total":{"value":18,"unit":""}},"storage":{"updated_timestamp":"0001-01-01T00:00:00Z","used":{"value":0,"unit":"B"},"total":{"value":0,"unit":"B"}},"nodes":{"total":6,"master":3,"compute":3}}}
+{
+  "kind":"Cluster",
+  "id":"1KgB0iDX8WjCDIlLMyavyIgM4Wr",
+  "href":"/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr",
+  "name":"61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
+  "external_id":"61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
+  "display_name":"61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
+  "creation_timestamp":"2019-05-02T13:18:58.077019Z",
+  "openshift_version":"4.1.0-rc.0",
+  "subscription":{
+    "kind":"SubscriptionLink",
+    "id":"1KgB0WcVBZBdRGAreuve29yoxUB",
+    "href":"/api/accounts_mgmt/v1/subscriptions/1KgB0WcVBZBdRGAreuve29yoxUB"
+  },
+  "nodes":{
+    "total":0,
+    "master":0,
+    "compute":0
+  },
+  "state":"ready",
+  "groups":{
+    "kind":"GroupListLink",
+    "href":"/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr/groups"
+  },
+  "network":{
+    "router_shards":{
+      "kind":"RouterShardListLink",
+      "href":"/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr/router_shards",
+      "id":"1KgB0iDX8WjCDIlLMyavyIgM4Wr"
+    }
+  },
+  "multi_az":false,
+  "managed":false,
+  "identity_providers":{
+    "kind":"IdentityProviderListLink",
+    "href":"/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr/identity_providers"
+  },
+  "metrics":{
+    "memory":{
+      "updated_timestamp":"2019-05-02T14:56:38Z",
+      "used":{
+        "value":11863199744,
+        "unit":"B"
+      },
+      "total":{
+        "value":75519991808,
+        "unit":"B"
+      }
+    },
+    "cpu":{
+      "updated_timestamp":"2019-05-02T14:56:38Z",
+      "used":{
+        "value":2.1283333333334067,
+        "unit":""
+      },
+      "total":{
+        "value":18,
+        "unit":""
+      }
+    },
+    "storage":{
+      "updated_timestamp":"0001-01-01T00:00:00Z",
+      "used":{
+        "value":0,
+        "unit":"B"
+      },
+      "total":{
+        "value":0,
+        "unit":"B"
+      }
+    },
+    "nodes":{
+      "total":6,
+      "master":3,
+      "compute":3
+    }
+  },
+  "product": {
+    "kind": "ProductLink",
+    "id": "ocp",
+    "href": "/api/clusters_mgmt/v1/products/ocp"
+  }
+}

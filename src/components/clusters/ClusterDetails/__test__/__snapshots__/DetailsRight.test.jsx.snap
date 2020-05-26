@@ -152,6 +152,9 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
             "service_cidr": "172.30.0.0/16",
           },
           "nodes": null,
+          "product": Object {
+            "id": "osd",
+          },
           "region": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
             "id": "us-east-1",
@@ -348,6 +351,9 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
             "compute": 2,
             "master": 3,
             "total": 5,
+          },
+          "product": Object {
+            "id": "osd",
           },
           "region": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
@@ -570,6 +576,9 @@ exports[`<DetailsRight /> should render 1`] = `
             "compute": 2,
             "master": 3,
             "total": 5,
+          },
+          "product": Object {
+            "id": "osd",
           },
           "region": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",

@@ -47,10 +47,9 @@ function CustomerCloudSubscriptionModal({ closeModal }) {
               </a>
             </li>
           </ul>
-          It is also recommended that you have at least Business Support from AWS.
         </TextContent>
         <TextContent>
-            Refer to the
+        It is also recommended that you have at least Business Support from AWS. Refer to the
           {' '}
           <a href={billingModelConstants.scpDocumentationLink} rel="noreferrer noopener" target="_blank">documentation</a>
           {' '}

@@ -5,6 +5,41 @@ exports[`<AddOns /> should render 1`] = `
   className="cluster-details-addons-tab-contents"
 >
   <Card
+    key="crc-workspaces"
+  >
+    <CardHead>
+      <Title
+        className="card-title"
+        headingLevel="h2"
+        size="lg"
+      >
+        Red Hat CodeReady Workspaces
+      </Title>
+      <CardActions>
+        <Component
+          aria-label="Install"
+          isDisabled={false}
+          onClick={[Function]}
+          variant="secondary"
+        >
+          Install
+        </Component>
+      </CardActions>
+    </CardHead>
+    <CardBody
+      className="addon-card"
+    >
+      <div
+        className="addon-icon"
+      />
+      <div
+        className="addon-description"
+      >
+        Built on the open Eclipse Che project, Red Hat CodeReady Workspaces provides developer workspaces, which include all the tools and the dependencies that are needed to code, build, test, run, and debug applications.
+      </div>
+    </CardBody>
+  </Card>
+  <Card
     key="managed-integration"
   >
     <CardHead>

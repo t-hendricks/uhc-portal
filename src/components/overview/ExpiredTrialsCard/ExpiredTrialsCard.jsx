@@ -6,6 +6,9 @@ import {
   Card,
   CardHeader,
   CardBody,
+  Title,
+  EmptyState,
+  EmptyStateBody,
 } from '@patternfly/react-core';
 
 import {
@@ -42,6 +45,27 @@ class ExpiredTrialsCard extends React.Component {
 
   render() {
     const { viewOptions, subscriptions, openModal } = this.props;
+
+    if (subscriptions.error) {
+      return (
+        <Card id="clusters-overview-card">
+          <CardHeader>
+            Expired Trials
+          </CardHeader>
+          <CardBody>
+            <EmptyState>
+              <Title>
+              No data available
+              </Title>
+              <EmptyStateBody>
+              There was an error fetching the data. Try refreshing the page.
+              </EmptyStateBody>
+            </EmptyState>
+          </CardBody>
+        </Card>
+      );
+    }
+
     if (!subscriptions.items || subscriptions.items.length === 0) {
       return null;
     }

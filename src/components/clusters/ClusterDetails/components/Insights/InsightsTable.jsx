@@ -1,20 +1,25 @@
 /* eslint react/destructuring-assignment: 0 */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardBody } from '@patternfly/react-core';
+import {
+  Button, Card, CardBody, EmptyStateIcon,
+} from '@patternfly/react-core';
 import { cellWidth } from '@patternfly/react-table';
 import {
   RuleTable,
   severity,
   descriptionFilter,
   totalRiskFilter,
+  ruleStatusFilter,
   ReportDetails,
 } from '@redhat-cloud-services/rule-components';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
+import { CheckCircleIcon } from '@patternfly/react-icons';
 import AnalysisSummary from './AnalysisSummary';
 import './index.css';
 import { severityMapping } from './helpers';
+import DisabledTooltip from './DisabledTooltip';
 
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
@@ -31,6 +36,7 @@ const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
   .reduce(
     (acc, [key, filter]) => {
       let newAcc = true;
+
       switch (key) {
         case 'totalRiskFilter':
           if (filter.length > 0) {
@@ -41,6 +47,13 @@ const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
           // Make all strings in lower case to avoid case sensitivity
           newAcc = v.description.toLowerCase().indexOf(filter.toLowerCase()) > -1;
           break;
+        case 'ruleStatusFilter': {
+          const showEnabled = filter === 'enabled' || filter === 'all';
+          const showDisabled = filter === 'disabled' || filter === 'all';
+
+          newAcc = v.disabled ? showDisabled : showEnabled;
+          break;
+        }
         default:
           break;
       }
@@ -48,6 +61,18 @@ const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
     },
     true,
   );
+
+const defaultFilters = (filterValues, v) => {
+  if (!('ruleStatusFilter' in filterValues)) {
+    return !v.disabled;
+  }
+
+  return true;
+};
+
+const EmptyTableIcon = () => (
+  <EmptyStateIcon className="success-color" icon={CheckCircleIcon} />
+);
 
 class InsightsTable extends React.Component {
   state = {
@@ -77,7 +102,31 @@ class InsightsTable extends React.Component {
     }
   }
 
-  addFilter = (filterValue) => {
+  onRuleDisabled() {
+    if (!('ruleStatusFilter' in this.state.filters)) {
+      this.setFilter('ruleStatusFilter', 'enabled');
+    }
+  }
+
+  setFilter = (filterName, filterValue) => {
+    this.setState(
+      (state) => {
+        const filters = { ...state.filters };
+        filters[filterName] = filterValue;
+
+        return {
+          filters,
+          meta: {
+            ...state.meta,
+            page: 1,
+          },
+        };
+      },
+      () => this.fetchData({ filterValues: this.state.filters }),
+    );
+  };
+
+  addTotalRiskFilter = (filterValue) => {
     this.setState(
       (state) => {
         const filters = { ...state.filters };
@@ -113,6 +162,7 @@ class InsightsTable extends React.Component {
         .sort((a, b) => (sortBy && sortBy.column
           ? sortMultiplier[sortBy.direction] * dataSortMapping[sortBy.column.title](a, b)
           : 0))
+        .filter(v => defaultFilters(filterValues, v))
         .filter(v => isValueFiltered(filterValues, v));
 
       // Total count of showed items
@@ -134,16 +184,20 @@ class InsightsTable extends React.Component {
   };
 
   render() {
-    const { insightsData, voteOnRule } = this.props;
+    const {
+      insightsData, voteOnRule, disableRule, enableRule,
+    } = this.props;
+
     const {
       shownData,
       filters,
       meta,
       sortBy,
     } = this.state;
+
     return (
       <>
-        <AnalysisSummary insightsData={insightsData} batteryClicked={this.addFilter} />
+        <AnalysisSummary insightsData={insightsData} batteryClicked={this.addTotalRiskFilter} />
         <Card>
           <CardBody className="no-padding">
             <RuleTable
@@ -155,13 +209,19 @@ class InsightsTable extends React.Component {
               filters={{
                 descriptionFilter,
                 totalRiskFilter,
+                ruleStatusFilter,
               }}
               filterValues={filters}
               sortBy={sortBy}
               columns={[
                 {
                   title: 'Description',
-                  selector: 'description',
+                  selector: ({ description, disabled }) => (
+                    <>
+                      { disabled ? <DisabledTooltip /> : null }
+                      { description }
+                    </>
+                  ),
                   transforms: [cellWidth(60)],
                 },
                 {
@@ -190,6 +250,7 @@ class InsightsTable extends React.Component {
                   riskOfChange={details.risk_of_change}
                   showRiskDescription={false}
                   definitions={details.extra_data}
+                  userVote={details.user_vote}
                   remediating={
                     (details.reason || details.resolution)
                     && {
@@ -200,6 +261,47 @@ class InsightsTable extends React.Component {
                   onFeedbackChanged={voteOnRule}
                 />
               )}
+              actionResolver={(rowData, { rowIndex }) => {
+                // we gotta do this trick
+                // since Patternfly considers row details as another row
+                if (rowIndex % 2 !== 0) {
+                  return null;
+                }
+
+                const realRowIndex = rowIndex / 2;
+
+                if (typeof shownData[realRowIndex] === 'undefined') {
+                  return null;
+                }
+
+                const { rule_id: ruleId, disabled } = shownData[realRowIndex];
+
+                return [{
+                  title: `${disabled ? 'Enable' : 'Disable'} health check`,
+                  onClick: () => {
+                    if (disabled) {
+                      enableRule(ruleId);
+                    } else {
+                      disableRule(ruleId);
+                      this.onRuleDisabled();
+                    }
+                  },
+                }];
+              }}
+              emptyStateTitle="No health checks"
+              emptyStateDescription={(
+                <>
+                  <p>Your cluster is not affected by enabled health checks.</p>
+                  <Button
+                    className="include-disabled-rules-link"
+                    variant="link"
+                    onClick={() => { this.setFilter('ruleStatusFilter', 'all'); }}
+                  >
+                    Include disabled health checks
+                  </Button>
+                </>
+              )}
+              emptyStateIcon={EmptyTableIcon}
             />
           </CardBody>
         </Card>
@@ -211,6 +313,8 @@ class InsightsTable extends React.Component {
 InsightsTable.propTypes = {
   insightsData: PropTypes.object.isRequired,
   voteOnRule: PropTypes.func.isRequired,
+  disableRule: PropTypes.func.isRequired,
+  enableRule: PropTypes.func.isRequired,
 };
 
 export default InsightsTable;

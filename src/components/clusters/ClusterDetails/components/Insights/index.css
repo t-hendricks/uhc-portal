@@ -55,3 +55,12 @@
 .paragraph-margin-bottom {
 	margin-bottom: var(--pf-global--FontSize--2xl);
 }
+
+.disabled-tooltip {
+    background-color: var(--pf-global--disabled-color--100);
+    margin-right: var(--pf-global--gutter--md);
+}
+
+.include-disabled-rules-link {
+    margin-top: var(--pf-global--gutter--md);
+}
