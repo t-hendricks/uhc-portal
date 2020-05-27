@@ -393,7 +393,7 @@ const awsSubnetMask = (value) => {
   const parts = value.split('/');
   const maskBits = parseInt(parts[1], 10);
   if (!inRange(maskBits, 16, 29)) {
-    return 'Subnet mask is not in the allowed range.';
+    return 'Subnet mask must be between 16-23.';
   }
   return undefined;
 };

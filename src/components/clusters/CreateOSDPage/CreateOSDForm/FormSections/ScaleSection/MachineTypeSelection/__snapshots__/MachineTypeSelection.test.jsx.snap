@@ -165,7 +165,16 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
       isSelected={false}
       key="r5.xlarge"
       onChange={[Function]}
-      secondaryText="Memory optimized - R5.XLarge"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            Memory optimized
+          </div>
+          <div>
+            R5.XLarge
+          </div>
+        </React.Fragment>
+      }
       titleText="4 vCPU 32 GiB RAM"
       tooltip={false}
       value="r5.xlarge"
@@ -203,7 +212,14 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                   >
                     4 vCPU 32 GiB RAM
                   </Title>
-                  Memory optimized - R5.XLarge
+                  <React.Fragment>
+                    <div>
+                      Memory optimized
+                    </div>
+                    <div>
+                      R5.XLarge
+                    </div>
+                  </React.Fragment>
                 </SplitItem>
               </Split>,
               "className": "ocm-flat-radio-button",
@@ -294,7 +310,12 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                           4 vCPU 32 GiB RAM
                         </h4>
                       </Title>
-                      Memory optimized - R5.XLarge
+                      <div>
+                        Memory optimized
+                      </div>
+                      <div>
+                        R5.XLarge
+                      </div>
                     </div>
                   </SplitItem>
                 </div>
@@ -318,7 +339,16 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
       isSelected={false}
       key="r5.4xlarge"
       onChange={[Function]}
-      secondaryText="Memory optimized - R5.4XLarge"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            Memory optimized
+          </div>
+          <div>
+            R5.4XLarge
+          </div>
+        </React.Fragment>
+      }
       titleText="16 vCPU 128 GiB RAM"
       tooltip="You do not have quota for this node type. Contact sales to purchase additional quota."
       value="r5.4xlarge"
@@ -448,7 +478,14 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                         >
                           16 vCPU 128 GiB RAM
                         </Title>
-                        Memory optimized - R5.4XLarge
+                        <React.Fragment>
+                          <div>
+                            Memory optimized
+                          </div>
+                          <div>
+                            R5.4XLarge
+                          </div>
+                        </React.Fragment>
                       </SplitItem>
                     </Split>,
                     "className": "ocm-flat-radio-button",
@@ -539,7 +576,12 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                                 16 vCPU 128 GiB RAM
                               </h4>
                             </Title>
-                            Memory optimized - R5.4XLarge
+                            <div>
+                              Memory optimized
+                            </div>
+                            <div>
+                              R5.4XLarge
+                            </div>
                           </div>
                         </SplitItem>
                       </div>
