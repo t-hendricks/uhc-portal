@@ -141,11 +141,11 @@ test('Field does not share subnets with other fields', () => {
 test('Field is an IP address with subnet mask between 16-28', () => {
   expect(validators.awsSubnetMask()).toBe(undefined);
   expect(validators.awsSubnetMask('190.68.89.250/17')).toBe(undefined);
-  expect(validators.awsSubnetMask('190.68.89.250/10')).toBe('Subnet mask is not in the allowed range.');
+  expect(validators.awsSubnetMask('190.68.89.250/10')).toBe('Subnet mask must be between 16-23.');
   expect(validators.awsSubnetMask('190.68.89.250/16')).toBe(undefined);
   expect(validators.awsSubnetMask('190.68.89.250/21')).toBe(undefined);
   expect(validators.awsSubnetMask('190.68.89.250/28')).toBe(undefined);
-  expect(validators.awsSubnetMask('190.68.89.250/29')).toBe('Subnet mask is not in the allowed range.');
+  expect(validators.awsSubnetMask('190.68.89.250/29')).toBe('Subnet mask must be between 16-23.');
 });
 
 test('Field is an IP address that does not overlap with 172.17.0.0/16, reserved for docker', () => {
