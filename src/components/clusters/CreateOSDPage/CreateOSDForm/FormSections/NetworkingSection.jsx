@@ -10,6 +10,10 @@ import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import validators from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
+const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
+const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr');
+const podDisjointSubnets = validators.disjointSubnets('network_pod_cidr');
+
 function NetworkingSection({
   pending,
   toggleNetwork,
@@ -39,7 +43,6 @@ function NetworkingSection({
   if (cloudProviderID === 'aws') {
     additionalValidators.push(validators.awsSubnetMask);
   }
-
   return (
     <>
       <GridItem span={4}>
@@ -108,7 +111,7 @@ function NetworkingSection({
                     validators.cidr,
                     validators.machineCidr,
                     validators.validateRange,
-                    validators.disjointSubnets('network_machine_cidr'),
+                    machineDisjointSubnets,
                     validators.disjointFromDockerRange,
                     ...additionalValidators,
                   ]
@@ -132,7 +135,7 @@ function NetworkingSection({
                     validators.cidr,
                     validators.serviceCidr,
                     validators.validateRange,
-                    validators.disjointSubnets('network_service_cidr'),
+                    serviceDisjointSubnets,
                     validators.disjointFromDockerRange,
                     ...additionalValidators,
                   ]
@@ -156,7 +159,7 @@ function NetworkingSection({
                     validators.cidr,
                     validators.podCidr,
                     validators.validateRange,
-                    validators.disjointSubnets('network_pod_cidr'),
+                    podDisjointSubnets,
                     validators.disjointFromDockerRange,
                     ...additionalValidators,
                   ]
