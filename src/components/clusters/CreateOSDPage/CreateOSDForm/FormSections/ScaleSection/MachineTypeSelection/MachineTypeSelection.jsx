@@ -111,19 +111,17 @@ class MachineTypeSelection extends React.Component {
 
       const hasQuota = this.hasQuotaForType(machineType.id);
       let { name } = machineType;
-      if (cloudProviderID === 'gcp') {
-        const nameParts = name.split(' - '); // Assuming the formatting on the backend side is "type - category". If the backend changes the formatting, this assumption will break
-        name = (
-          <>
-            <div>
-              {nameParts[0]}
-            </div>
-            <div>
-              {nameParts[1]}
-            </div>
-          </>
-        );
-      }
+      const nameParts = name.split(' - '); // Assuming the formatting on the backend side is "type - category". If the backend changes the formatting, this assumption will break
+      name = (
+        <>
+          <div>
+            {nameParts[0]}
+          </div>
+          <div>
+            {nameParts[1]}
+          </div>
+        </>
+      );
       return (
         <FlatRadioButton
           {...extraProps}
