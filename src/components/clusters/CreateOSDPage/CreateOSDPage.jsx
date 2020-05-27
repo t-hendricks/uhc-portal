@@ -43,7 +43,11 @@ class CreateOSDPage extends React.Component {
       getCloudProviders,
       getLoadBalancers,
       getPersistentStorage,
+      cloudProviderID,
     } = this.props;
+
+    document.title = `Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager | OpenShift Dedicated on 
+    ${cloudProviderID === 'aws' ? 'AWS' : 'GCP'}`;
 
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
