@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import merge from 'lodash/merge';
-
+import { produce } from 'immer';
 import {
   REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, INVALIDATE_ACTION,
-  setStateProp, baseRequestState,
+  baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
@@ -58,320 +58,181 @@ const initialState = {
 };
 
 function clustersReducer(state = initialState, action) {
-  switch (action.type) {
-    // GET_CLUSTERS
-    case INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS):
-      return setStateProp(
-        'clusters',
-        {
-          valid: false,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case REJECTED_ACTION(clustersConstants.GET_CLUSTERS):
-      return setStateProp(
-        'clusters',
-        {
+  // eslint-disable-next-line consistent-return
+  return produce(state, (draft) => {
+    switch (action.type) {
+      // GET_CLUSTERS
+      case INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS):
+        draft.clusters = { ...initialState.clusters };
+        break;
+      case REJECTED_ACTION(clustersConstants.GET_CLUSTERS):
+        draft.clusters = {
+          ...initialState.clusters,
           ...getErrorState(action),
           valid: true,
           clusters: state.clusters.clusters,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(clustersConstants.GET_CLUSTERS):
-      return setStateProp(
-        'clusters',
-        {
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.GET_CLUSTERS):
+        draft.clusters = {
+          ...initialState.clusters,
           pending: true,
           valid: true,
           clusters: state.clusters.clusters,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
-      return setStateProp(
-        'clusters',
-        {
+        };
+        break;
+      case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
+        draft.clusters = {
+          ...initialState.clusters,
           clusters: action.payload.data.items,
           queryParams: action.payload.data.queryParams,
           pending: false,
           fulfilled: true,
           valid: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case clustersConstants.SET_CLUSTER_DETAILS: {
-      const { cluster, mergeDetails } = action.payload;
-      return setStateProp(
-        'details',
-        {
+        };
+        break;
+      case clustersConstants.SET_CLUSTER_DETAILS: {
+        const { cluster, mergeDetails } = action.payload;
+        draft.details = {
+          ...initialState.details,
           cluster: mergeDetails ? merge({}, state.details.cluster, cluster) : cluster,
           fulfilled: true,
-          pending: false,
-          error: false,
           incomplete: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-    }
-    // GET_CLUSTER_DETAILS
-    case REJECTED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
-      return setStateProp(
-        'details',
-        {
+        };
+        break;
+      }
+      // GET_CLUSTER_DETAILS
+      case REJECTED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
+        draft.details = {
+          ...initialState.details,
           ...getErrorState(action),
           cluster: state.details.cluster, // preserve previous cluster even on error
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
-      return setStateProp(
-        'details',
-        {
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
+        draft.details = {
+          ...initialState.details,
           pending: true,
           cluster: state.details.cluster,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
-      return setStateProp(
-        'details',
-        {
-          cluster: action.payload.data,
-          pending: false,
+        };
+        break;
+      case FULFILLED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
+        draft.details = {
+          ...initialState.details,
           fulfilled: true,
           incomplete: false,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    // CREATE_CLUSTER
-    case REJECTED_ACTION(clustersConstants.CREATE_CLUSTER):
-      return setStateProp(
-        'createdCluster',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(clustersConstants.CREATE_CLUSTER):
-      return setStateProp(
-        'createdCluster',
-        {
-          pending: true,
-          cluster: null,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(clustersConstants.CREATE_CLUSTER):
-      return setStateProp(
-        'createdCluster',
-        {
           cluster: action.payload.data,
-          pending: false,
-          fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
+        break;
 
-    // EDIT_CLUSTER
-    case REJECTED_ACTION(clustersConstants.EDIT_CLUSTER):
-      return setStateProp(
-        'editedCluster',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(clustersConstants.EDIT_CLUSTER):
-      return setStateProp(
-        'editedCluster',
-        {
+      // CREATE_CLUSTER
+      case REJECTED_ACTION(clustersConstants.CREATE_CLUSTER):
+        draft.createdCluster = {
+          ...initialState.createdCluster,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.CREATE_CLUSTER):
+        draft.createdCluster = {
+          ...initialState.createdCluster,
           pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER):
-      return setStateProp(
-        'editedCluster',
-        {
+        };
+        break;
+      case FULFILLED_ACTION(clustersConstants.CREATE_CLUSTER):
+        draft.createdCluster = {
+          ...initialState.createdCluster,
           cluster: action.payload.data,
-          pending: false,
           fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
+        break;
+      case clustersConstants.RESET_CREATED_CLUSTER_RESPONSE:
+        draft.createdCluster = {
+          ...initialState.createdCluster,
+        };
+        break;
 
-    case clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE:
-      return setStateProp(
-        'editedCluster',
-        initialState.editedCluster,
-        {
-          state,
-          initialState,
-        },
-      );
-
-
-    // Archive cluster
-    case FULFILLED_ACTION(clustersConstants.ARCHIVE_CLUSTER):
-      return setStateProp(
-        'archivedCluster',
-        {
-          cluster: action.payload.data,
-          pending: false,
-          fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case REJECTED_ACTION(clustersConstants.ARCHIVE_CLUSTER):
-      return setStateProp(
-        'archivedCluster',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(clustersConstants.ARCHIVE_CLUSTER):
-      return setStateProp(
-        'archivedCluster',
-        {
+      // EDIT_CLUSTER
+      case REJECTED_ACTION(clustersConstants.EDIT_CLUSTER):
+        draft.editedCluster = {
+          ...initialState.editedCluster,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.EDIT_CLUSTER):
+        draft.editedCluster = {
+          ...initialState.editedCluster,
           pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
+        break;
+      case FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER):
+        draft.editedCluster = {
+          ...initialState.editedCluster,
+          cluster: action.payload.data,
+          fulfilled: true,
+        };
+        break;
+      case clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE:
+        draft.editedCluster = {
+          ...initialState.editedCluster,
+        };
+        break;
 
-    case clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE:
-      return setStateProp(
-        'archivedCluster',
-        {
+      // Archive cluster
+      case FULFILLED_ACTION(clustersConstants.ARCHIVE_CLUSTER):
+        draft.archivedCluster = {
+          ...initialState.editedCluster,
+          cluster: action.payload.data,
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(clustersConstants.ARCHIVE_CLUSTER):
+        draft.archivedCluster = {
           ...initialState.archivedCluster,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    // UnArchive cluster
-    case FULFILLED_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
-      return setStateProp(
-        'unarchivedCluster',
-        {
-          cluster: action.payload.data,
-          pending: false,
-          fulfilled: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case REJECTED_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
-      return setStateProp(
-        'unarchivedCluster',
-        getErrorState(action),
-        {
-          state,
-          initialState,
-        },
-      );
-
-    case PENDING_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
-      return setStateProp(
-        'unarchivedCluster',
-        {
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.ARCHIVE_CLUSTER):
+        draft.archivedCluster = {
+          ...initialState.archivedCluster,
           pending: true,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+        };
+        break;
+      case clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE:
+        draft.archivedCluster = {
+          ...initialState.archivedCluster,
+        };
+        break;
 
-    case clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE:
-      return setStateProp(
-        'unarchivedCluster',
-        {
+      // UnArchive cluster
+      case FULFILLED_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
+        draft.unarchivedCluster = {
           ...initialState.unarchivedCluster,
-        },
-        {
-          state,
-          initialState,
-        },
-      );
+          cluster: action.payload.data,
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
+        draft.unarchivedCluster = {
+          ...initialState.unarchivedCluster,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
+        draft.unarchivedCluster = {
+          ...initialState.unarchivedCluster,
+          pending: true,
+        };
+        break;
+      case clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE:
+        draft.unarchivedCluster = {
+          ...initialState.unarchivedCluster,
+        };
+        break;
 
-    case clustersConstants.RESET_CREATED_CLUSTER_RESPONSE:
-      return setStateProp(
-        'createdCluster',
-        initialState.createdCluster,
-        {
-          state,
-          initialState,
-        },
-      );
-
-    default:
-      return state;
-  }
+      default:
+        return state;
+    }
+  });
 }
 
 clustersReducer.initialState = initialState;
