@@ -28,6 +28,16 @@ class RenderFields extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { meta: { submitFailed } } = this.props;
+    const prevSubmitFailed = prevProps.meta.submitFailed;
+    // Make sure that the field array is set as touched when form is submitted and it's invalid
+    if (submitFailed && !prevSubmitFailed) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ touched: true });
+    }
+  }
+
   onFieldChange(e, value, index) {
     const { onFormChange } = this.props;
     const { touched } = this.state;
@@ -216,6 +226,7 @@ RenderFields.propTypes = {
   onFormChange: PropTypes.func,
   meta: PropTypes.shape({
     error: PropTypes.string,
+    submitFailed: PropTypes.bool,
   }),
 };
 
