@@ -1,6 +1,7 @@
 import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
 import {
   clustersConstants,
+  dashboardsConstants,
   subscriptionsConstants,
   viewConstants,
   viewPaginationConstants,
@@ -126,7 +127,7 @@ const viewOptionsReducer = (state = initialState, action) => {
       updatePageCounts(viewConstants.ARCHIVED_CLUSTERS_VIEW, action.payload.data.total);
       return { ...state, ...updateState };
 
-    case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS_WITH_PARAMS):
+    case FULFILLED_ACTION(dashboardsConstants.GET_UNHEALTHY_CLUSTERS):
       updatePageCounts(viewConstants.OVERVIEW_VIEW, action.payload.data.total);
       return { ...state, ...updateState };
 
