@@ -21,6 +21,13 @@ exports[`<AddOns /> should render 1`] = `
       <CardBody>
         Built on the open Eclipse Che project, Red Hat CodeReady Workspaces provides developer workspaces, which include all the tools and the dependencies that are needed to code, build, test, run, and debug applications.
          
+        <a
+          href="https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          View documentation
+        </a>
       </CardBody>
       <CardFooter>
         <Component
@@ -47,6 +54,13 @@ exports[`<AddOns /> should render 1`] = `
       <CardBody>
         Red Hat managed integration, based on the integreatly project, is an opinionated installation of a number of independent middleware services and tools into an OpenShift Dedicated cluster.
          
+        <a
+          href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/2/"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          View documentation
+        </a>
       </CardBody>
       <CardFooter>
         <Component
@@ -86,7 +100,7 @@ exports[`<AddOns /> should render 1`] = `
       </CardBody>
       <CardFooter>
         <a
-          href="https://console-openshift-console.apps.test-liza.sdev.devshift.net/k8s/ns/undefined/operators.coreos.com~v1alpha1~ClusterServiceVersion/service-mesh.vundefined"
+          href="https://console-openshift-console.apps.test-liza.sdev.devshift.net/k8s/ns/redhat-service-mesh-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/service-mesh-operator.vundefined"
           rel="noopener noreferrer"
           target="_blank"
         >
@@ -139,6 +153,13 @@ exports[`<AddOns /> should render 1`] = `
       <CardBody>
         Install and configure the integreatly suite of Software
          
+        <a
+          href="https://access.redhat.com/documentation/en-us/red_hat_managed_integration/2/"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          View documentation
+        </a>
       </CardBody>
       <CardFooter>
         <Tooltip
@@ -198,6 +219,13 @@ exports[`<AddOns /> should render 1`] = `
       <CardBody>
         Manage Prow CRDs
          
+        <a
+          href="https://pkg.go.dev/k8s.io/test-infra/prow"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          View documentation
+        </a>
       </CardBody>
       <CardFooter>
         <Component
