@@ -90,14 +90,16 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         },
       },
       managed: true,
-      product: {
-        id: ownProps.product,
-      },
       cloud_provider: {
         id: ownProps.cloudProviderID,
       },
       multi_az: formData.multi_az === 'true',
     };
+    if (ownProps.product) {
+      clusterRequest.product = {
+        id: ownProps.product,
+      };
+    }
     if (formData.network_configuration_toggle === 'advanced') {
       clusterRequest.network = {
         machine_cidr: formData.network_machine_cidr,
