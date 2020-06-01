@@ -80,6 +80,7 @@ class ClusterDetails extends Component {
       addOns,
       getAddOns,
       clearGlobalError,
+      fetchGroups,
     } = this.props;
 
     clearGlobalError('clusterDetails');
@@ -87,6 +88,8 @@ class ClusterDetails extends Component {
     const clusterID = match.params.id;
 
     this.refresh(false);
+
+    fetchGroups();
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
@@ -253,6 +256,7 @@ class ClusterDetails extends Component {
       setGlobalError,
       displayClusterLogs,
       insightsData,
+      groups,
       voteOnRule,
       disableRule,
       enableRule,
@@ -430,6 +434,7 @@ class ClusterDetails extends Component {
           >
             <Insights
               cluster={cluster}
+              groups={groups}
               insightsData={insightsData[cluster.external_id]}
               voteOnRule={(ruleId, vote) => {
                 voteOnRule(cluster.external_id, ruleId, vote);
@@ -476,6 +481,7 @@ ClusterDetails.propTypes = {
   history: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
   fetchInsightsData: PropTypes.func.isRequired,
+  fetchGroups: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getAlerts: PropTypes.func.isRequired,
@@ -493,6 +499,7 @@ ClusterDetails.propTypes = {
   resetClusterHistory: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
+  groups: PropTypes.array,
   addOns: PropTypes.object,
   clusterAddOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
@@ -527,6 +534,7 @@ ClusterDetails.propTypes = {
 ClusterDetails.defaultProps = {
   clusterAddOns: {},
   insightsData: {},
+  groups: [],
   clusterDetails: {
     cluster: null,
     error: false,

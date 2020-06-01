@@ -41,6 +41,7 @@
 
 .description {
     margin-left: 20px;
+    line-height: 2;
 }
 
 .description .pf-l-stack > :not(:last-child) {

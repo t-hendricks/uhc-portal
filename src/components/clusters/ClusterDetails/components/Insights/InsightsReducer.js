@@ -20,10 +20,11 @@ import {
   REJECTED_ACTION,
 } from '../../../../../redux/reduxHelpers';
 
-import { GET_CLUSTER_INSIGHTS } from './InsightsConstants';
+import { GET_CLUSTER_INSIGHTS, GET_GROUPS_INSIGHTS } from './InsightsConstants';
 
 const initialState = {
   insightsData: {},
+  groups: [],
 };
 
 function insightsReducer(state = initialState, action) {
@@ -36,6 +37,9 @@ function insightsReducer(state = initialState, action) {
         break;
       case REJECTED_ACTION(GET_CLUSTER_INSIGHTS):
         draft.insightsData[action.payload.clusterId] = { status: action.payload.status };
+        break;
+      case FULFILLED_ACTION(GET_GROUPS_INSIGHTS):
+        draft.groups = action.payload.data.groups;
         break;
       default:
         break;

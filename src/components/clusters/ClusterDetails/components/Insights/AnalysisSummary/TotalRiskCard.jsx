@@ -1,0 +1,191 @@
+/* eslint-disable camelcase */
+
+import React from 'react';
+import {
+  Card,
+  CardBody,
+  Split,
+  SplitItem,
+  Stack,
+  StackItem, Text,
+  Title,
+} from '@patternfly/react-core';
+
+import {
+  c_button_m_control_active_after_BorderBottomColor,
+  global_palette_gold_200,
+  global_palette_gold_400,
+  global_palette_orange_300,
+  global_palette_red_200,
+  global_primary_color_200,
+} from '@patternfly/react-tokens';
+import get from 'lodash/get';
+import {
+  Chart, ChartBar, ChartAxis, ChartStack, ChartTooltip, ChartLegend,
+} from '@patternfly/react-charts';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { severity } from '@redhat-cloud-services/rule-components';
+import PropTypes from 'prop-types';
+import { RemoteHealthPopover } from '../EmptyTableMessage';
+import { severityMapping } from '../helpers';
+
+const groupRulesByRisk = data => data.reduce(
+  (acc, { total_risk: totalRisk }) => ({
+    ...acc,
+    [totalRisk]: acc[totalRisk] ? acc[totalRisk] + 1 : 1,
+  }),
+  {},
+);
+
+const colorScale = [
+  global_palette_gold_200.value,
+  global_palette_gold_400.value,
+  global_palette_orange_300.value,
+  global_palette_red_200.value,
+];
+
+const mouseOverClickMutation = props => ({
+  style: {
+
+    ...props.style,
+    fill: global_primary_color_200.value,
+    textDecoration: 'underline',
+    cursor: 'pointer',
+  },
+});
+
+const TotalRiskCard = ({ insightsData, batteryClicked }) => {
+  const groupedRules = groupRulesByRisk(insightsData.data);
+  const issueCount = get(insightsData, 'meta.count', 0);
+  const lastChecked = get(insightsData, 'meta.last_checked_at', 0);
+
+  return (
+    <Card className="insights-analysis-card">
+      <CardBody>
+        <Stack>
+          <StackItem>
+            <Split>
+              <SplitItem isFilled>
+                <Title headingLevel="h2" size="xl">
+                  {`${issueCount} potential issue${issueCount > 1 ? 's' : ''} identified`}
+                </Title>
+              </SplitItem>
+              <SplitItem className="description">
+                <Text>
+                  {'Last check: '}
+                  <DateFormat date={new Date(lastChecked)} />
+                </Text>
+              </SplitItem>
+            </Split>
+          </StackItem>
+          <StackItem>
+            <Chart
+              ariaDesc="Total risk chart"
+              ariaTitle="Total risk chart"
+              domainPadding={{ x: 0 }}
+              height={40}
+              padding={{
+                bottom: 0,
+                left: 0,
+                right: 0,
+                top: 0,
+              }}
+              width={550}
+            >
+              <ChartAxis axisComponent={<></>} />
+              <ChartStack horizontal>
+                {
+                  Object.entries(groupedRules).reverse()
+                    .map(([risk, count]) => (
+                      <ChartBar
+                        key={risk}
+                        style={{ data: { fill: colorScale[risk - 1] } }}
+                        name={`bar-${risk}`}
+                        barWidth={20}
+                        data={[
+                          {
+                            name: severity[severityMapping[risk - 1]],
+                            x: 'Total risk',
+                            y: count,
+                            label: `${severity[severityMapping[risk - 1]]} ${count}`,
+                          },
+                        ]}
+                        labelComponent={(
+                          <ChartTooltip
+                            style={
+                              {
+                                fontSize: '12px',
+                                marginLeft: '-10px',
+                              }
+                            }
+                            orientation="top"
+                            dx={-(count / 4)}
+                          />
+                        )}
+                      />
+                    ))
+                }
+              </ChartStack>
+            </Chart>
+          </StackItem>
+          <StackItem isFilled>
+            <ChartLegend
+              responsive={false}
+              height={40}
+              width={550}
+              padding={{
+                margin: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                top: -50,
+              }}
+              className="pf-m-redhat-font"
+              style={{
+                labels: {
+                  fill: c_button_m_control_active_after_BorderBottomColor.value,
+                },
+              }}
+              events={[{
+                target: 'labels',
+                eventHandlers: {
+                  onMouseOver: () => [{
+                    mutation: props => mouseOverClickMutation(props),
+                  }],
+                  onMouseOut: () => [{
+                    mutation: () => null,
+                  }],
+                  onClick: () => [{
+                    mutation: (props) => {
+                      // eslint-disable-next-line react/prop-types
+                      batteryClicked(severityMapping[parseInt(props.datum.severity, 10) - 1]);
+                      return mouseOverClickMutation(props);
+                    },
+                  }],
+                },
+              }]}
+              data={
+                Object.entries(groupedRules).reverse()
+                  .map(([risk, count]) => ({
+                    name: `${count} ${severity[severityMapping[risk - 1]]}`,
+                    severity: risk,
+                    symbol: { type: 'circle', fill: colorScale[risk - 1] },
+                  }))
+              }
+            />
+          </StackItem>
+          <StackItem>
+            <RemoteHealthPopover />
+          </StackItem>
+        </Stack>
+      </CardBody>
+    </Card>
+  );
+};
+
+TotalRiskCard.propTypes = {
+  insightsData: PropTypes.object.isRequired,
+  batteryClicked: PropTypes.func.isRequired,
+};
+
+export default TotalRiskCard;
