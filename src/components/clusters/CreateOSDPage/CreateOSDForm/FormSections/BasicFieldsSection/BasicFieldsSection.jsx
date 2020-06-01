@@ -14,7 +14,7 @@ import validators from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 
 function BasicFieldsSection({
-  pending, showDNSBaseDomain, quota, cloudProviderID, handleMultiAZChange,
+  pending, showDNSBaseDomain, showAvailability, quota, cloudProviderID, handleMultiAZChange,
 }) {
   const hasSingleAzQuota = quota.singleAz.available > 0;
   const hasMultiAzQuota = quota.multiAz.available > 0;
@@ -76,38 +76,42 @@ function BasicFieldsSection({
       <GridItem span={8} />
 
       {/* Availability */}
-      <GridItem span={4}>
-        <FormGroup
-          label="Availability"
-          isRequired
-          fieldId="availability-toggle"
-        >
-          <PopoverHint hint={constants.availabilityHint} />
-          <Field
-            component={RadioButtons}
-            className={!hasSingleAzQuota || !hasMultiAzQuota ? 'radio-az-disabled' : null}
-            name="multi_az"
-            disabled={pending}
-            onChange={handleMultiAZChange}
-            options={[
-              {
-                value: 'false',
-                label: 'Single Zone',
-                disabled: !hasSingleAzQuota,
-                tooltipText: singleAzTooltip,
-              },
-              {
-                value: 'true',
-                label: 'Multizone',
-                disabled: !hasMultiAzQuota,
-                tooltipText: multiAzTooltip,
-              },
-            ]}
-            defaultValue={hasSingleAzQuota ? 'false' : 'true'}
-          />
-        </FormGroup>
-      </GridItem>
-      <GridItem span={8} />
+      {showAvailability && (
+        <>
+          <GridItem span={4}>
+            <FormGroup
+              label="Availability"
+              isRequired
+              fieldId="availability-toggle"
+            >
+              <PopoverHint hint={constants.availabilityHint} />
+              <Field
+                component={RadioButtons}
+                className={!hasSingleAzQuota || !hasMultiAzQuota ? 'radio-az-disabled' : null}
+                name="multi_az"
+                disabled={pending}
+                onChange={handleMultiAZChange}
+                options={[
+                  {
+                    value: 'false',
+                    label: 'Single Zone',
+                    disabled: !hasSingleAzQuota,
+                    tooltipText: singleAzTooltip,
+                  },
+                  {
+                    value: 'true',
+                    label: 'Multizone',
+                    disabled: !hasMultiAzQuota,
+                    tooltipText: multiAzTooltip,
+                  },
+                ]}
+                defaultValue={hasSingleAzQuota ? 'false' : 'true'}
+              />
+            </FormGroup>
+          </GridItem>
+          <GridItem span={8} />
+        </>
+      )}
     </>
   );
 }
@@ -115,6 +119,7 @@ function BasicFieldsSection({
 BasicFieldsSection.propTypes = {
   pending: PropTypes.bool,
   showDNSBaseDomain: PropTypes.bool,
+  showAvailability: PropTypes.bool,
   handleMultiAZChange: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   quota: PropTypes.shape({

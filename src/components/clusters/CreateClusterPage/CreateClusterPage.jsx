@@ -10,6 +10,7 @@ import {
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import openShiftDedicatedLogo from '../../../styles/images/Logo-Red_Hat-OpenShift_Dedicated-A-Standard-RGB.svg';
+import rhmiLogo from '../../../styles/images/Logo-Red_Hat-Managed_Integration-B-Standard-RGB.svg';
 import openShiftContainerPlatformLogo from '../../../styles/images/Logo-Red_Hat-OpenShift-Container_Platform-A-Standard-RGB.svg';
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../common/Breadcrumbs';
@@ -26,7 +27,7 @@ class CreateCluster extends React.Component {
   }
 
   render() {
-    const { hasOSDQuota, organization } = this.props;
+    const { hasOSDQuota, hasRHMIQuota, organization } = this.props;
 
     const title = (
       <PageTitle
@@ -80,6 +81,19 @@ class CreateCluster extends React.Component {
       </Link>
     );
 
+    // Without quota, the RHMI card should be hidden
+    const rhmiCard = hasRHMIQuota ? (
+      <Link to="/create/rhmi" className="infra-card pf-c-card create-cluster-card">
+        <CardHeader className="create-cluster-header">
+          <img src={rhmiLogo} alt="Red Hat Managed Integration" className="create-cluster-logo" />
+        </CardHeader>
+        <CardBody>
+          Create a Red Hat Managed Integration Cluster (RHMI),
+          provisioned on Red Hat OpenShift Dedicated using Amazon Web Services.
+        </CardBody>
+      </Link>
+    ) : null;
+
     const quotaRequestComplete = organization.fulfilled || organization.error;
 
     return quotaRequestComplete ? (
@@ -91,6 +105,7 @@ class CreateCluster extends React.Component {
               <div className="flex-container">
                 {ocpCard}
                 {osdCard}
+                {rhmiCard}
               </div>
             </div>
           </Card>
@@ -109,6 +124,7 @@ class CreateCluster extends React.Component {
 
 CreateCluster.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
+  hasRHMIQuota: PropTypes.bool.isRequired,
   organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
 };

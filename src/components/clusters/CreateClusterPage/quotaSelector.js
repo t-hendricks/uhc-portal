@@ -3,6 +3,7 @@ import get from 'lodash/get';
 const hasAwsQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.aws.isAvailable', false);
 const hasGcpQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.gcp.isAvailable', false);
 const hasOSDQuotaSelector = state => hasAwsQuotaSelector(state) || hasGcpQuotaSelector(state);
+const hasRHMIQuotaSelector = state => hasOSDQuotaSelector(state) && !!get(state, 'userProfile.organization.quotaList.addOnsQuota.addon-rhmi-operator', 0);
 
 const awsQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.aws', {
   byoc: {
@@ -27,6 +28,7 @@ const gcpQuotaSelector = state => get(state, 'userProfile.organization.quotaList
 
 export {
   hasOSDQuotaSelector,
+  hasRHMIQuotaSelector,
   hasAwsQuotaSelector,
   hasGcpQuotaSelector,
   awsQuotaSelector,

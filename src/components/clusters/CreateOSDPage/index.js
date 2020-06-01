@@ -12,6 +12,7 @@ import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import {
   hasOSDQuotaSelector,
+  hasRHMIQuotaSelector,
   hasAwsQuotaSelector,
   hasGcpQuotaSelector,
   awsQuotaSelector,
@@ -25,7 +26,8 @@ const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
 
 const mapStateToProps = (state, ownProps) => {
   const { organization } = state.userProfile;
-  const isAwsForm = ownProps.cloudProviderID === 'aws';
+  const { product, cloudProviderID } = ownProps;
+  const isAwsForm = cloudProviderID === 'aws';
 
   let privateClusterSelected = false;
   if (isAwsForm) {
@@ -47,6 +49,7 @@ const mapStateToProps = (state, ownProps) => {
 
     clustersQuota: {
       hasOsdQuota: hasOSDQuotaSelector(state),
+      hasRhmiQuota: hasRHMIQuotaSelector(state),
       hasAwsQuota: hasAwsQuotaSelector(state),
       hasGcpQuota: hasGcpQuotaSelector(state),
       aws: awsQuotaSelector(state),
@@ -54,6 +57,7 @@ const mapStateToProps = (state, ownProps) => {
     },
 
     privateClusterSelected,
+    product,
 
     initialValues: {
       byoc: 'false',
@@ -62,7 +66,7 @@ const mapStateToProps = (state, ownProps) => {
       dns_base_domain: '',
       aws_access_key_id: '',
       aws_secret_access_key: '',
-      region: ownProps.cloudProviderID === 'aws' ? 'us-east-1' : 'us-east1',
+      region: isAwsForm ? 'us-east-1' : 'us-east1',
       multi_az: 'false',
       persistent_storage: '107374182400',
       load_balancers: '0',
@@ -86,6 +90,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         },
       },
       managed: true,
+      product: {
+        id: ownProps.product,
+      },
       cloud_provider: {
         id: ownProps.cloudProviderID,
       },
