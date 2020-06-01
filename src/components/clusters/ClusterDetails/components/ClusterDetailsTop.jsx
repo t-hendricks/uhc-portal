@@ -39,6 +39,7 @@ function ClusterDetailsTop(props) {
   const showIDPMessage = (cluster.managed
                           && cluster.state === clusterStates.READY
                           && consoleURL
+                          && clusterIdentityProviders.fulfilled
                           && !hasIdentityProviders);
 
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
@@ -148,7 +149,7 @@ function ClusterDetailsTop(props) {
       {showIDPMessage && (
       <Split>
         <SplitItem isFilled>
-          {!clusterIdentityProviders.pending && cluster.canEdit && <IdentityProvidersHint />}
+          {cluster.canEdit && <IdentityProvidersHint />}
         </SplitItem>
       </Split>
       )}

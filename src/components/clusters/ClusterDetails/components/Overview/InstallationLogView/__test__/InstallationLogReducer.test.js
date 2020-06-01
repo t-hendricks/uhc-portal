@@ -1,8 +1,8 @@
-import reducer, { initialState } from '../LogWindowReducer';
-import { GET_LOGS, CLEAR_LOGS } from '../LogWindowConstants';
-import { FULFILLED_ACTION } from '../../../../../../redux/reduxHelpers';
+import reducer, { initialState } from '../InstallationLogReducer';
+import { GET_LOGS, CLEAR_LOGS } from '../InstallationLogConstants';
+import { FULFILLED_ACTION } from '../../../../../../../redux/reduxHelpers';
 
-describe('log tab Redcuer', () => {
+describe('installation logs Redcuer', () => {
   const mockPayload = {
     data: {
       kind: 'Log',

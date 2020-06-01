@@ -216,13 +216,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
       </span>
     </SplitItem>
   </Split>
-  <Split>
-    <SplitItem
-      isFilled={true}
-    >
-      <IdentityProvidersHint />
-    </SplitItem>
-  </Split>
   <SubscriptionCompliancy
     cluster={
       Object {
