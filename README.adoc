@@ -89,6 +89,9 @@ Or with the `BACKEND_CONFIG` environment variable:
 $ BACKEND_CONFIG="my.yml" ./backend
 ....
 
+If no config file is specified, the backend proxy will attempt to load the
+default config file "backend-config.yml".
+
 The content of this file should be something like this (or any subset of it):
 
 [source,yaml]
