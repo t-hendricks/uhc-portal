@@ -18,13 +18,19 @@ import produce from 'immer';
 import {
   FULFILLED_ACTION,
   REJECTED_ACTION,
+  PENDING_ACTION,
 } from '../../../../../redux/reduxHelpers';
 
 import { GET_CLUSTER_INSIGHTS, GET_GROUPS_INSIGHTS } from './InsightsConstants';
 
 const initialState = {
   insightsData: {},
-  groups: [],
+  groups: {
+    groups: [],
+    rejected: false,
+    pending: false,
+    fulfilled: false,
+  },
 };
 
 function insightsReducer(state = initialState, action) {
@@ -39,7 +45,16 @@ function insightsReducer(state = initialState, action) {
         draft.insightsData[action.payload.clusterId] = { status: action.payload.status };
         break;
       case FULFILLED_ACTION(GET_GROUPS_INSIGHTS):
-        draft.groups = action.payload.data.groups;
+        draft.groups.groups = action.payload.data.groups;
+        draft.groups.fulfilled = true;
+        draft.groups.pending = false;
+        break;
+      case PENDING_ACTION(GET_GROUPS_INSIGHTS):
+        draft.groups.pending = true;
+        break;
+      case REJECTED_ACTION(GET_GROUPS_INSIGHTS):
+        draft.groups.rejected = true;
+        draft.groups.pending = false;
         break;
       default:
         break;

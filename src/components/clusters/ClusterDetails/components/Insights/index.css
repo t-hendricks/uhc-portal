@@ -39,12 +39,12 @@
 	color: var(--pf-global--danger-color--100);
 }
 
-.description {
+.cluster-insights-description {
     margin-left: 20px;
     line-height: 2;
 }
 
-.description .pf-l-stack > :not(:last-child) {
+.cluster-insights-description .pf-l-stack > :not(:last-child) {
     /* gutter="sm" doesn't work for some reason */
     margin-bottom: 5px;
 }

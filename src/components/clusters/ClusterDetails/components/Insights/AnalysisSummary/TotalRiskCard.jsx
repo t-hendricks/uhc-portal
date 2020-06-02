@@ -70,7 +70,7 @@ const TotalRiskCard = ({ insightsData, batteryClicked }) => {
                   {`${issueCount} potential issue${issueCount > 1 ? 's' : ''} identified`}
                 </Title>
               </SplitItem>
-              <SplitItem className="description">
+              <SplitItem className="cluster-insights-description">
                 <Text>
                   {'Last check: '}
                   <DateFormat date={new Date(lastChecked)} />
