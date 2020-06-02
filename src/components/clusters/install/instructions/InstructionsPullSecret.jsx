@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Card, Title,
 } from '@patternfly/react-core';
-import TelemetryAlert from './components/TelemetryAlert';
+import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import PullSecretSection from './components/PullSecretSection';
 
@@ -16,7 +16,7 @@ function InstructionsPullSecret({ token }) {
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">
           {token.error && <TokenErrorAlert token={token} />}
-          <TelemetryAlert />
+          <TelemetryDisclaimer />
           <div className="pf-c-content">
             <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull secret</h3>
             <PullSecretSection token={token} />
@@ -26,7 +26,6 @@ function InstructionsPullSecret({ token }) {
     </>
   );
 }
-
 
 InstructionsPullSecret.propTypes = {
   token: PropTypes.object.isRequired,

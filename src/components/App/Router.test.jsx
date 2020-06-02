@@ -18,7 +18,6 @@ global.insights = {
   },
 };
 
-
 const routes = [
   '/',
   '/token/moa',

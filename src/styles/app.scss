@@ -739,10 +739,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
  }
 }
 
-.ocp-instructions .pf-c-card {
-  margin-top: var(--pf-global--spacer--lg);
-}
-
 .pf-c-label.card-badge.pf-m-compact {
   background-color: var(--pf-global--BackgroundColor--300);
   font-size: 14px;
@@ -1222,4 +1218,86 @@ h3#grant-role-select  {
 
 .privacy-heading {
   margin-bottom: -15px;
+}
+
+.ocp-downloads {
+   .pf-c-alert{
+    max-width: 700px;
+    margin-bottom: 0;
+  } 
+  .pf-c-alert + .pf-c-alert {
+    margin-top: 24px;
+  } 
+
+  .pf-c-card {
+    margin: 24px 0;
+  }
+  .step-number {
+    font-weight: 400;
+    font-size: 36px;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    margin: 24px;
+    border: 2px solid #d2d2d2;
+    &.alert {
+      border: transparent;
+    }
+    text-align: center;
+    padding: 4px 2px 0 0;
+  }
+
+  .steps-divider {
+    margin: 0 24px;
+    max-width: 800px;
+  }
+  
+  .pre-release-card {
+    margin-top: 24px;
+  }
+
+  .download-instructions {
+    &.pre-release {
+      margin-left: 24px;
+    }
+    padding: 24px;
+    &.alert {
+      padding-bottom: 0;
+    }
+    .instructions-section {
+      max-width: 700px;
+      &:not(:last-child) {
+        margin-bottom: 24px;
+      }
+      > h2 {
+        font-weight: 400;
+        font-size: var(--pf-global--FontSize--xl);
+        margin-bottom: 16px;
+      }
+      > h3 {
+        font-weight: 400;
+        font-size: var(--pf-global--FontSize--lg);
+        margin-bottom: 16px;
+      }
+      > p.small-text {
+          font-size: 14px;
+          margin-top: 24px;
+      }
+      > p:not(:last-child) {
+        margin-bottom: 16px;
+      }
+      p + p, div + p{
+        margin-top: 8px;
+      }
+      li {
+        list-style-type: disc;
+        position: relative;
+        left: 24px;
+        > span {
+          position: relative;
+          left: 12px;
+        }
+      }
+    }
+  }
 }

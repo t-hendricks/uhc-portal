@@ -90,7 +90,6 @@ class NetworkSelfServiceSection extends React.Component {
       canEdit,
     } = this.props;
 
-
     const grantStatus = (status, description) => {
       let icon;
       let statusStr;
