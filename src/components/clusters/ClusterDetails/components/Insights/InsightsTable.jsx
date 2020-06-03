@@ -43,7 +43,7 @@ const groupsFilter = groups => ({ onChange, value, ...props } = { onChange: () =
     items: Object.entries(groups).map(groupValues => ({
       label: groupValues[1].title,
       textual: groupValues[1].title,
-      value: groupValues[1].tags,
+      value: groupValues[1].tags.join(','),
     })),
   },
 });
@@ -171,6 +171,28 @@ class InsightsTable extends React.Component {
     );
   };
 
+  addGroupsFilter = (filterValue) => {
+    this.setState(
+      (state) => {
+        const filters = { ...state.filters };
+        if (!filters.groupsFilter) {
+          filters.groupsFilter = [];
+        }
+        if (!filters.groupsFilter.includes(filterValue)) {
+          filters.groupsFilter.push(filterValue);
+        }
+        return {
+          filters,
+          meta: {
+            ...state.meta,
+            page: 1,
+          },
+        };
+      },
+      () => this.fetchData({ filterValues: this.state.filters }),
+    );
+  };
+
   fetchData = ({
     filterValues = this.state.filterValues,
     sortBy: sortByParam,
@@ -224,6 +246,7 @@ class InsightsTable extends React.Component {
           groups={groups}
           insightsData={insightsData}
           batteryClicked={this.addTotalRiskFilter}
+          groupClicked={this.addGroupsFilter}
         />
         <Card>
           <CardBody className="no-padding">
