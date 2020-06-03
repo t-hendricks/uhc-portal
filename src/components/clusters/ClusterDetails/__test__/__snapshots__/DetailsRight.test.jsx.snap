@@ -21,7 +21,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
       vCPU
     </dd>
     <dt>
-      Total Memory
+      Total memory
     </dt>
     <dd>
       76.64
@@ -217,7 +217,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
       vCPU
     </dd>
     <dt>
-      Total Memory
+      Total memory
     </dt>
     <dd>
       76.64
@@ -401,7 +401,7 @@ exports[`<DetailsRight /> should render 1`] = `
       vCPU
     </dd>
     <dt>
-      Total Memory
+      Total memory
     </dt>
     <dd>
       76.64
@@ -415,7 +415,7 @@ exports[`<DetailsRight /> should render 1`] = `
       0
     </dd>
     <dt>
-      Persistent Storage
+      Persistent storage
     </dt>
     <dd>
       100
@@ -423,7 +423,7 @@ exports[`<DetailsRight /> should render 1`] = `
       GiB
     </dd>
     <dt>
-      Desired Nodes
+      Desired nodes
     </dt>
     <dd>
       <dl
@@ -450,7 +450,7 @@ exports[`<DetailsRight /> should render 1`] = `
       </dl>
     </dd>
     <dt>
-      Actual Nodes
+      Actual nodes
     </dt>
     <dd>
       <dl

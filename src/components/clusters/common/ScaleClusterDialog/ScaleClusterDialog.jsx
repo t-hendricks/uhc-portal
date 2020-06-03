@@ -120,7 +120,7 @@ class ScaleClusterDialog extends Component {
     return isOpen && (
       <Modal
         className={className}
-        title="Scale Cluster"
+        title="Scale cluster"
         onClose={cancelEdit}
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
@@ -156,7 +156,7 @@ class ScaleClusterDialog extends Component {
                       label="Load balancers"
                     >
                       <Field
-                        label="Load Balancers"
+                        label="Load balancers"
                         name="load_balancers"
                         component={LoadBalancersDropdown}
                         disabled={pending}
@@ -173,7 +173,7 @@ class ScaleClusterDialog extends Component {
                       label="Persistent storage"
                     >
                       <Field
-                        label="Persistent Storage"
+                        label="Persistent storage"
                         name="persistent_storage"
                         component={PersistentStorageDropdown}
                         disabled={pending}

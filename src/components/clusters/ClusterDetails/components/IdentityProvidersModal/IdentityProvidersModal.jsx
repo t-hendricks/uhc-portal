@@ -56,7 +56,7 @@ class IdentityProvidersModal extends React.Component {
     <Modal
       isLarge
       onClose={() => this.onClose()}
-      title={`Create Identity Provider (${clusterName})`}
+      title={`Create identity provider (${clusterName})`}
       isPending={isPending}
       onPrimaryClick={handleSubmit}
       onSecondaryClick={() => this.onClose()}

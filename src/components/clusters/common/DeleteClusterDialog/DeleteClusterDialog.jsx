@@ -79,7 +79,7 @@ class DeleteClusterDialog extends React.Component {
 
     return isOpen && (
       <Modal
-        title="Delete Cluster"
+        title="Delete cluster"
         onClose={() => this.closeDialog(false)}
         primaryText="Delete"
         onPrimaryClick={() => doSubmit(clusterID)}

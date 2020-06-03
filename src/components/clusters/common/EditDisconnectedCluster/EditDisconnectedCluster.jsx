@@ -63,7 +63,7 @@ class EditDisconnectedClusterDialog extends Component {
 
     return isOpen && (
       <Modal
-        title="Edit Cluster Registration"
+        title="Edit cluster registration"
         primaryText="Save"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={cancelEdit}

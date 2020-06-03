@@ -40,7 +40,7 @@ function Overview({
         ) : (
           <Card id="metrics-charts">
             <CardHeader>
-              <Title headingLevel="h2" size="lg" className="card-title">Resource Usage</Title>
+              <Title headingLevel="h2" size="lg" className="card-title">Resource usage</Title>
             </CardHeader>
             <CardBody>
               <ResourceUsage
@@ -80,7 +80,7 @@ function Overview({
       {displayClusterLogs && cluster.managed && (
       <Card>
         <CardHeader>
-          <Title headingLevel="h2" size="md" className="card-title">Cluster History</Title>
+          <Title headingLevel="h2" size="md" className="card-title">Cluster history</Title>
         </CardHeader>
         <CardBody>
           <ClusterLogs externalClusterID={cluster.external_id} history={history} />
