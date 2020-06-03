@@ -8,7 +8,7 @@ import InsightsTable from './InsightsTable';
 import './index.css';
 
 const Insights = ({
-  insightsData, voteOnRule, disableRule, enableRule,
+  insightsData, voteOnRule, disableRule, enableRule, groups,
 }) => {
   if (!insightsData) {
     return (
@@ -28,6 +28,7 @@ const Insights = ({
   return (
     <InsightsTable
       insightsData={insightsData}
+      groups={groups}
       voteOnRule={voteOnRule}
       disableRule={disableRule}
       enableRule={enableRule}
@@ -37,6 +38,7 @@ const Insights = ({
 
 Insights.propTypes = {
   insightsData: PropTypes.object.isRequired,
+  groups: PropTypes.array.isRequired,
   voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,

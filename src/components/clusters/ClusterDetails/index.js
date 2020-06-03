@@ -28,7 +28,11 @@ import { getClusterHistory, clusterLogActions } from './components/ClusterLogs/c
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { viewConstants } from '../../../redux/constants';
 import {
-  fetchClusterInsights, voteOnRuleInsights, disableRuleInsights, enableRuleInsights,
+  fetchClusterInsights,
+  voteOnRuleInsights,
+  disableRuleInsights,
+  enableRuleInsights,
+  fetchGroups,
 } from './components/Insights/InsightsActions';
 import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
 import helpers from '../../../common/helpers';
@@ -40,7 +44,7 @@ const mapStateToProps = (state) => {
   const { addOns, clusterAddOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
-  const { insightsData } = state.insightsData;
+  const { insightsData, groups } = state.insightsData;
   const { filter, flags } = state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW];
   const hasNoFilters = isEmpty(filter.description)
   && helpers.nestedIsEmpty(flags.conditionalFilterFlags.severityTypes);
@@ -58,6 +62,7 @@ const mapStateToProps = (state) => {
     displayClusterLogs: !hideClusterLogs,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
+    groups,
     canAllowClusterAdmin: canAllowAdminSelector(state),
     anyModalOpen: !!state.modal.modalName,
   });
@@ -66,6 +71,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchDetails: clusterId => fetchClusterDetails(clusterId),
   fetchInsightsData: clusterId => fetchClusterInsights(clusterId),
+  fetchGroups,
   voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),
   disableRule: (clusterId, ruleId) => disableRuleInsights(clusterId, ruleId),
   enableRule: (clusterId, ruleId) => enableRuleInsights(clusterId, ruleId),
