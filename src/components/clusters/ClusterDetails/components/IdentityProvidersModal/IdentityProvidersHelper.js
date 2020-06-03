@@ -33,7 +33,7 @@ const IDPtypes = [
     value: IDPformValues.LDAP,
   },
   {
-    name: 'Gitlab',
+    name: 'GitLab',
     value: IDPformValues.GITLAB,
   },
 ];
