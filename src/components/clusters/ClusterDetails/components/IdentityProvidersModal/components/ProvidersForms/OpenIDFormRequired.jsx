@@ -49,7 +49,7 @@ function OpenIDFormRequired({ isPending }) {
         fieldName="openid_name"
         label="Name"
         type="text"
-        placeholderText="e.g. preferred_username"
+        placeholderText="e.g. name"
         disabled={isPending}
         validate={validate}
         helpText="The list of attributes whose values should be used as the preferred username."
@@ -58,7 +58,7 @@ function OpenIDFormRequired({ isPending }) {
         fieldName="openid_preferred_username"
         label="Preferred username"
         type="text"
-        placeholderText="e.g. name"
+        placeholderText="e.g. preferred_username"
         disabled={isPending}
         validate={validate}
         helpText="The list of attributes whose values should be used as the display name."
