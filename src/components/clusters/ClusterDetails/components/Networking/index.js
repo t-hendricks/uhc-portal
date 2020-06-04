@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import get from 'lodash/get';
 import { resetClusterRouters } from './NetworkingActions';
 import Networking from './Networking';
 
@@ -9,7 +10,7 @@ const mapStateToProps = (state) => {
 
   return ({
     network,
-    gotRouters: clusterRouters.getRouters.routers.length > 0,
+    gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
   });
 };
 
