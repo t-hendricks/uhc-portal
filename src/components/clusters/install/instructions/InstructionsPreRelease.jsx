@@ -57,44 +57,74 @@ function InstructionsPreRelease({ token }) {
             </p>
 
             <p>
-            The following features are being targeted for the OpenShift 4.4 release and will
+            The following features are being targeted for the OpenShift 4.5 release and will
             eventually be working in the nightly builds as they approach production readiness:
             </p>
 
-            <h4>Core Enhancements</h4>
+
+            <h4>Install experience</h4>
             <ul>
               <li>
-              Rebase to Kubernetes 1.17
+              VMware vSphere support for installer-provisioned infrastructure
+              (IPI) deployment method
+                <ul>
+                  <li>
+                  Compact 3-node clusters for bare metal (only); aligns with Edge push
+                  </li>
+                </ul>
               </li>
+              <li>GCP UPI support for shared VPC in a host project (cross-project networking)</li>
               <li>
-              Tech preview of CSI volume snapshot, restore, and clone
-              </li>
-              <li>
-                Kubernetes
-                {' '}
-                <a href="https://kubernetes-csi.github.io/docs/topology.html">CSI topology</a>
-                {' '}
-                support enables granular storage segmentation
-              </li>
-              <li>
-                Tech preview of descheduler providing policy-based pod eviction to
-                remove pods from undesirable nodes (pods are then replaced by the default scheduler)
+                OpenShift on OpenStack brings new capabilities:
+                <ul>
+                  <li>
+                    OpenStack IPI install: Admin can choose two network interfaces on OpenShift
+                    worker nodes (using Multus)
+                  </li>
+                  <li>
+                    OpenStack IPI install: Distribute OpenShift Masters on OpenStack nodes for best
+                    possible HA using anti-affinity rules
+                  </li>
+                  <li>OpenStack IPI installer allows for Customer-Provisioned Network & Subnets</li>
+                  <li>
+                    OpenShift can use OpenStack Manila (OpenStack File Service)
+                    for Read-Write-Many PVs.
+                  </li>
+                </ul>
               </li>
             </ul>
 
-            <h4>Telco/5G/Edge Enhancements</h4>
+
+            <h4>Core Platform</h4>
             <ul>
-              <li>Support for single stack IPv6</li>
               <li>
-                RHCOS Real Time Kernel brings deterministic workloads, which allow users to
-                rely on consistent response times and low and predictable latency
+                Compute
+                <ul>
+                  <li>Kube 1.18 and crio 1.18 with RHCOS 4.5</li>
+                  <li>Vertical Pod Autoscaler  </li>
+                </ul>
               </li>
               <li>
-                Added support for Stream Control Transmission Protocol (SCTP) enabling
-                simultaneous transmission of multiple streams between two endpoints
+                Networking and Ingress/Router
+                <ul>
+                  <li>SR-IOV Usability and Debugging Improvement</li>
+                  <li>Router now supports HTTP/2 and gRPC </li>
+                  <li>
+                    Capabilities to enable ingress logging for the
+                    Router for security and audit
+                  </li>
+                </ul>
               </li>
-              <li>HAProxy 2.0 support</li>
+              <li>
+                Storage
+                <ul>
+                  <li>CSI Operator for AWS EBS </li>
+                  <li>CSI Cloning GA</li>
+                  <li>CSI OpenStack Manila</li>
+                </ul>
+              </li>
             </ul>
+
 
             <h4>Operator Enhancements</h4>
             <ul>
@@ -105,6 +135,7 @@ function InstructionsPreRelease({ token }) {
               Openshift monitoring integration for Red Hat operators
               </li>
             </ul>
+
 
             <h4>Installation Enhancements</h4>
             <ul>
@@ -121,50 +152,63 @@ function InstructionsPreRelease({ token }) {
               </li>
             </ul>
 
-            <h4>Registry Enhancements</h4>
+
+            <h4>Observability: Monitoring and Logging </h4>
             <ul>
               <li>
-              Support for iSCSI persistent volumes for internal registry
+              Operators, Operator Framework and OLM supports apiextensions.k8s.io/v1 CRDs
               </li>
               <li>
-              Automated image pruning in internal registry
+              A single API that streamlines the discovery of operators for admins and users
+              </li>
+              <li>
+              Operator developers can use validating and mutating admission webhooks
               </li>
             </ul>
 
-            <h4>Developer Experience Enhancements</h4>
+
+            <h4>Developer Experience and Console</h4>
             <ul>
               <li>
-              Promotion of Helm from Tech Preview to GA
+                Ability to pull images from either the Red Hat registry or users’ specific
+                registries that require credentials
               </li>
               <li>
-              Helm added to the OpenShift Console developer perspective
-              (charts in catalog, releases, etc)
+              Console will provide native console integration for Operator managed services
               </li>
               <li>
-              Tech preview of OpenShift Pipelines - cloud-native CI/CD with Tekton pipelines
+              Ability to filter operators by badges on embedded Marketplace and OpertaorHub
               </li>
               <li>
-              Pipeline builder for authoring Tekton pipelines
+              Ability to customize the console URL of OpenShift Console
               </li>
               <li>
-              Understand the health of application via topology view in the web console
+              Ability for admins/users to BYO custom certificates for OpenShift Console
               </li>
               <li>
-              Image Registry now allows Recreate rollouts
+              Ability to use Event Sources for Serverless Applications in Topology View
               </li>
               <li>
-              Monitoring and metrics now available in the developer perspective
+              Upgrade and rollback Helm releases
               </li>
               <li>
-              Developer preview of OpenShift Builds allows developers to build images
-              using Kubernetes build tools
+              Pipelines
+                <ul>
+                  <li> Add webhooks to pipelines to trigger them on Git events</li>
+                  <li>Manage Git and registry credentials used in pipelines</li>
+                  <li>Configure pipeline workspace for sharing volumes between tasks</li>
+                  <li>
+                  Improved user experience in Tekton CLI, VS Code Tekton extension
+                  and Tekton IntellJ plugin
+                  </li>
+                </ul>
               </li>
             </ul>
 
             <p>
-            Find out more about test blockers for the OCP 4.4 dev previews by viewing the
+            Find out more about test blockers for the OCP 4.5 dev previews by viewing the
               {' '}
-              <a href={links.INSTALL_PRE_RELEASE_BUG_LIST_44} rel="noreferrer noopener" target="_blank">
+              <a href={links.INSTALL_PRE_RELEASE_BUG_LIST_45} rel="noreferrer noopener" target="_blank">
               test blocker bug list
                 {' '}
                 <ExternalLinkAltIcon color="#0066cc" size="sm" />
@@ -175,7 +219,7 @@ function InstructionsPreRelease({ token }) {
         </div>
       </Card>
       <DownloadsAndPullSecretSection
-        rhcosDownloadURL={links.INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_44}
+        rhcosDownloadURL={links.INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_LATEST}
         token={token}
         showPreReleaseDocs
         showPreReleasePageLink={false}
@@ -183,7 +227,7 @@ function InstructionsPreRelease({ token }) {
       >
         <p>
         As these are nightly builds, you will see multiple versions available at any one time
-        inside the mirror URLs. We strongly advise using the 4.4 nightlies until OpenShift 4.4
+        inside the mirror URLs. We strongly advise using the 4.5 nightlies until OpenShift 4.5
         is released.
         </p>
       </DownloadsAndPullSecretSection>
