@@ -100,9 +100,9 @@ run/verification-tests:
 	(cd $@; git remote | grep --quiet xueli181114 || git remote add xueli181114 https://github.com/xueli181114/verification-tests)
 	(cd $@; git remote | grep --quiet openshift || git remote add openshift https://github.com/openshift/verification-tests)
 	(cd $@; git fetch --all)
-	(cd $@; git checkout -B patched xueli181114/new-cases)
-	# Include https://github.com/openshift/verification-tests/pull/807
-	(cd $@; git fetch openshift pull/807/head; git merge --no-edit FETCH_HEAD)
+	# Use https://github.com/openshift/verification-tests/pull/807.
+	# No need to merge newer upstream commits as tests cases now come from run/our-tests/.
+	(cd $@; git fetch openshift pull/807/head && git checkout -B pr-807 FETCH_HEAD)
 	# Symlink for running tests without container to match mount made with container.
 	[ -L run/verification-tests/private ] || ln --symbolic --no-target-directory ../private run/verification-tests/private
 	[ -L run/verification-tests/our-tests ] || ln --symbolic --no-target-directory ../our-tests run/verification-tests/our-tests
