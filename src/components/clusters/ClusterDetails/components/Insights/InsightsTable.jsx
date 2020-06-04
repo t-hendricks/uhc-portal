@@ -5,14 +5,13 @@ import {
   Button, Card, CardBody, EmptyStateIcon,
 } from '@patternfly/react-core';
 import { cellWidth } from '@patternfly/react-table';
+import RuleTable, { severity } from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
+import ReportDetails from '@redhat-cloud-services/rule-components/dist/cjs/ReportDetails';
 import {
-  RuleTable,
-  severity,
   descriptionFilter,
   totalRiskFilter,
   ruleStatusFilter,
-  ReportDetails,
-} from '@redhat-cloud-services/rule-components';
+} from '@redhat-cloud-services/rule-components/dist/cjs/RuleFilters';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import { CheckCircleIcon } from '@patternfly/react-icons';
