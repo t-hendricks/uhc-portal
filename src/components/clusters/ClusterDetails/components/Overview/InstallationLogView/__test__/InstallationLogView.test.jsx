@@ -49,6 +49,12 @@ describe('<InstallationLogView />', () => {
     expect(getLogs).toHaveBeenCalledTimes(3);
   });
 
+  it('should clear logs and reset timer on unmount', () => {
+    wrapper.unmount();
+    expect(clearLogs).toHaveBeenCalled();
+    expect(clearInterval).toHaveBeenCalled();
+  });
+
 
   it('should render without logs', () => {
     wrapper = shallow(<LogWindow
@@ -64,10 +70,10 @@ describe('<InstallationLogView />', () => {
     expect(getLogs).toHaveBeenLastCalledWith(clusterDetails.cluster.id, 0);
   });
 
-
-  it('should clear logs and reset timer on unmount', () => {
-    wrapper.unmount();
-    expect(clearLogs).toHaveBeenCalled();
+  it('should stop the timer when recieving 403 error code', () => {
+    wrapper.setProps({ errorCode: 403 });
     expect(clearInterval).toHaveBeenCalled();
+    wrapper.update();
+    expect(wrapper).toMatchSnapshot();
   });
 });

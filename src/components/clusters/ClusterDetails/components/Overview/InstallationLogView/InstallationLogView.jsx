@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import {
   CardBody, CardHeader, Title, Button,
 } from '@patternfly/react-core';
-import { DownloadIcon, ExpandIcon } from '@patternfly/react-icons';
+import { ExpandIcon } from '@patternfly/react-icons';
+import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
+
+const AUTOSCROLL_THRESHOLD = 15;
 
 class LogWindow extends React.Component {
   updateTimer = null;
@@ -26,7 +29,7 @@ class LogWindow extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { lines } = this.props;
+    const { lines, errorCode } = this.props;
     if (!prevProps.lines && lines) {
       // If this is the first time we're getting the log, it'll trigger a scroll event,
       // setting userScrolled since the view won't be scrolled all the way down.
@@ -34,11 +37,18 @@ class LogWindow extends React.Component {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ userScrolled: false });
     }
+    if (prevProps.errorCode !== 403 && errorCode === 403) {
+      if (this.updateTimer !== null) {
+        window.clearInterval(this.updateTimer);
+      }
+    }
   }
 
   componentWillUnmount() {
     const { clearLogs } = this.props;
-    window.clearInterval(this.updateTimer);
+    if (this.updateTimer !== null) {
+      window.clearInterval(this.updateTimer);
+    }
     document.removeEventListener('fullscreenchange', this.onFullscreenChange);
     clearLogs();
     if (document.fullscreenElement) {
@@ -57,12 +67,13 @@ class LogWindow extends React.Component {
   onScroll = (event) => {
     const { userScrolled } = this.state;
     const view = event.target;
-    if (!userScrolled && view.scrollTop !== (view.scrollHeight - view.clientHeight)) {
+    const currentScrollDiff = (view.scrollHeight - view.clientHeight) - view.scrollTop;
+    if (!userScrolled && currentScrollDiff > AUTOSCROLL_THRESHOLD) {
       // user scrolled to anywhere which isn't the very bottom, stop auto-scrolling
       this.setState({ userScrolled: true });
     }
-    if (userScrolled && view.scrollTop === (view.scrollHeight - view.clientHeight)) {
-      // user scrolled to the bottom, start auto-scrolling again
+    if (userScrolled && currentScrollDiff <= AUTOSCROLL_THRESHOLD) {
+      // user scrolled to the bottom (approximately), start auto-scrolling again
       this.setState({ userScrolled: false });
     }
   }
@@ -78,19 +89,12 @@ class LogWindow extends React.Component {
 
   update = () => {
     const {
-      getLogs, clusterID, lines, pending,
+      getLogs, clusterID, lines, pending, errorCode,
     } = this.props;
-    if (!pending) {
+    if (!pending && errorCode !== 403) {
       const offset = lines ? lines.split('\n').length : 0;
       getLogs(clusterID, offset);
     }
-  }
-
-  download = () => {
-    const { lines } = this.props;
-    const blob = new Blob([lines], { type: 'application/octet-stream' });
-    const url = window.URL.createObjectURL(blob);
-    window.location.assign(url);
   }
 
   fullScreen = () => {
@@ -114,30 +118,36 @@ class LogWindow extends React.Component {
   }
 
   render() {
-    const { lines } = this.props;
+    const { lines, errorCode } = this.props;
     const { userScrolled, isFullScreen } = this.state;
     const totalLines = lines ? lines.split('\n').length - 1 : 0;
     if (!userScrolled && !!totalLines) {
       // requestAnimationFrame so this happens *after* render
       requestAnimationFrame(this.scrollToEnd);
     }
+
+    const message = errorCode === 403
+      ? metricsStatusMessages.installing
+      : 'Cluster installation has started, installation log will appear here once it becomes available.';
+
     /* using <article className="pf-c-card"> instead of <Card>
     to make it possible to add a ref for the card, so we can use requestFullScreen */
     return (
       <article className="pf-c-card" ref={this.cardRef}>
         <CardHeader>
           <Title headingLevel="h2" size="lg" className="card-title logview-title">Installation Logs</Title>
-          <div className="logview-buttons">
-            <Button onClick={this.download} variant="link" icon={<DownloadIcon />} isDisabled={!totalLines}>Download</Button>
-            <Button
-              onClick={this.fullScreen}
-              variant="link"
-              icon={<ExpandIcon />}
-              isDisabled={!totalLines || !document.fullscreenEnabled}
-            >
-              { isFullScreen ? 'Exit Fullscreen' : 'Expand' }
-            </Button>
-          </div>
+          { !!totalLines && (
+            <div className="logview-buttons">
+              <Button
+                onClick={this.fullScreen}
+                variant="link"
+                icon={<ExpandIcon />}
+                isDisabled={!totalLines || !document.fullscreenEnabled}
+              >
+                { isFullScreen ? 'Exit Fullscreen' : 'Expand' }
+              </Button>
+            </div>
+          )}
         </CardHeader>
         <CardBody>
           { totalLines ? (
@@ -159,8 +169,7 @@ class LogWindow extends React.Component {
             </div>
           ) : (
             <p>
-              Cluster installation has started,
-              installation log will appear here once it becomes available.
+              {message}
             </p>
           )}
         </CardBody>
@@ -175,6 +184,7 @@ LogWindow.propTypes = {
   pending: PropTypes.bool,
   lines: PropTypes.string,
   clusterID: PropTypes.string,
+  errorCode: PropTypes.number,
 };
 
 export default LogWindow;

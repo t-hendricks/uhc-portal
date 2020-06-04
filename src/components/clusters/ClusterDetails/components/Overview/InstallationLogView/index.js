@@ -5,6 +5,7 @@ import { clearLogs, getLogs } from './InstallationLogActions';
 const mapStateToProps = state => ({
   lines: state.logs.lines,
   pending: state.logs.pending,
+  errorCode: state.logs.errorCode,
 });
 
 const mapDispatchToProps = { clearLogs, getLogs };
