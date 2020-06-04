@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert, EmptyState } from '@patternfly/react-core';
+import * as Sentry from '@sentry/browser';
 
 class ErrorBoundary extends React.Component {
   state = { error: null, componentStack: null }
 
   componentDidCatch(error, info) {
     this.setState({ error: error.toString(), componentStack: info.componentStack });
+    Sentry.withScope((scope) => {
+      scope.setExtras(info);
+      Sentry.captureException(error);
+    });
   }
 
   render() {
