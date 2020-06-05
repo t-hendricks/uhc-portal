@@ -1,3 +1,5 @@
+import get from 'lodash/get';
+
 const routeSelectorsToString = (routeSelectors) => {
   const selectorStrings = [];
   Object.keys(routeSelectors).forEach((key) => {
@@ -9,7 +11,7 @@ const routeSelectorsToString = (routeSelectors) => {
 const NetworkingSelector = (state) => {
   const { clusterRouters } = state;
   const routers = {};
-  clusterRouters.getRouters.routers.forEach((r) => {
+  get(clusterRouters, 'getRouters.routers', []).forEach((r) => {
     const router = {
       routerID: r.id,
       isDefault: r.default,
