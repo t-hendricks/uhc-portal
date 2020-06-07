@@ -123,6 +123,21 @@ function NetworkingSection({
               >
                  The machine, service and pod ranges may not overlap. The addresses must specify a
                  range, and correspond to the first IP address in their subnet.
+                { cloudProviderID === 'gcp'
+                 && (
+                   <>
+                     <br />
+                     <span>
+                      All adresses must be private IPv4 addresses, and belong to one of the
+                      following ranges:
+                       <ul>
+                         <li>10.0.0.0 – 10.255.255.255</li>
+                         <li>172.16.0.0 – 172.31.255.255</li>
+                         <li>192.168.0.0 – 192.168.255.255</li>
+                       </ul>
+                     </span>
+                   </>
+                 )}
               </Alert>
             </GridItem>
             <GridItem span={5} />
