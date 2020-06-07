@@ -30,7 +30,7 @@ RUN bundle install
 
 # This container assumes volumes will be mounted as-if the following were copied:
 #COPY verification-tests /verification-tests
-#COPY cucushift /cucushift
+#COPY our-tests /verification-tests/our-tests
 #COPY private /verification-tests/private
 # plus an optional read-write volume at /output:
 USER root
