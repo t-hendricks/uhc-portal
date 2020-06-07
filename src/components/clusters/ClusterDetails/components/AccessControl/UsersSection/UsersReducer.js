@@ -1,4 +1,5 @@
 import produce from 'immer';
+import get from 'lodash/get';
 import {
   REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../../../../../../redux/reduxHelpers';
@@ -7,16 +8,9 @@ import UsersConstants from './UsersConstants';
 
 const initialState = {
   groupUsers: {
-    dedicatedAdmins: {
-      ...baseRequestState,
-      clusterID: undefined,
-      users: [],
-    },
-    clusterAdmins: {
-      ...baseRequestState,
-      clusterID: undefined,
-      users: [],
-    },
+    ...baseRequestState,
+    clusterID: undefined,
+    users: [],
   },
   deleteUserResponse: {
     ...baseRequestState,
@@ -31,45 +25,31 @@ function UsersReducer(state = initialState, action) {
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
-      // GET DEDICATED ADMNIS
-      case PENDING_ACTION(UsersConstants.GET_DEDICATED_ADMNIS):
-        draft.groupUsers.dedicatedAdmins.pending = true;
+      //  GET USERS
+      case PENDING_ACTION(UsersConstants.GET_USERS):
+        draft.groupUsers.pending = true;
         break;
 
-      case FULFILLED_ACTION(UsersConstants.GET_DEDICATED_ADMNIS):
-        draft.groupUsers.dedicatedAdmins = {
+      case FULFILLED_ACTION(UsersConstants.GET_USERS): {
+        const users = [];
+
+        // attach group to each user and merge users from all groups into one array
+        action.payload.data.items.forEach(
+          group => get(group, 'users.items', []).forEach(user => users.push({ ...user, group: group.id })),
+        );
+
+        draft.groupUsers = {
           ...baseRequestState,
           fulfilled: true,
           clusterID: action.payload.clusterID,
-          users: action.payload.data.items,
+          users,
         };
         break;
+      }
 
       case REJECTED_ACTION(UsersConstants.GET_DEDICATED_ADMNIS):
-        draft.groupUsers.dedicatedAdmins = {
-          ...initialState.groupUsers.dedicatedAdmins,
-          ...getErrorState(action),
-        };
-        break;
-
-
-      // GET CLUSTER ADMINS
-      case PENDING_ACTION(UsersConstants.GET_CLUSTER_ADMINS):
-        draft.groupUsers.clusterAdmins.pending = true;
-        break;
-
-      case FULFILLED_ACTION(UsersConstants.GET_CLUSTER_ADMINS):
-        draft.groupUsers.clusterAdmins = {
-          ...baseRequestState,
-          fulfilled: true,
-          clusterID: action.payload.clusterID,
-          users: action.payload.data.items,
-        };
-        break;
-
-      case REJECTED_ACTION(UsersConstants.GET_CLUSTER_ADMINS):
-        draft.groupUsers.clusterAdmins = {
-          ...initialState.groupUsers.clusterAdmins,
+        draft.groupUsers = {
+          ...initialState.groupUsers,
           ...getErrorState(action),
         };
         break;

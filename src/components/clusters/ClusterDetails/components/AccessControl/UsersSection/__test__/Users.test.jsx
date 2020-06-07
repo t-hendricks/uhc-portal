@@ -7,6 +7,7 @@ import UsersSection from '../UsersSection';
 
 import { clusterDetails } from '../../../../__test__/ClusterDetails.fixtures';
 
+
 describe('<Users />', () => {
   it('should render without users', () => {
     const getUsers = jest.fn();
@@ -15,53 +16,45 @@ describe('<Users />', () => {
       getUsers={getUsers}
       deleteUser={jest.fn()}
       addUser={jest.fn()}
+      openModal={jest.fn()}
+      closeModal={jest.fn()}
       clearUsersResponses={jest.fn()}
-      clusterGroupUsers={initialState.groupUsers}
+      clearAddUserResponses={jest.fn()}
+      toggleClusterAdminResponse={{}}
+      clusterGroupUsers={{ ...initialState.groupUsers, users: [] }}
       addUserResponse={initialState.addUserResponse}
       deleteUserResponse={initialState.deleteUserResponse}
-      getUsersPending={false}
-      getUsersFulfilled
-      getUserErrors={[]}
       hasUsers={false}
+      isAddUserModalOpen={false}
+      canAddClusterAdmin={false}
     />);
+
     expect(wrapper).toMatchSnapshot();
     expect(getUsers).toHaveBeenCalled();
   });
 
   describe('with users', () => {
-    let deleteUser;
-    let getUsers;
-    let wrapper;
-
-    beforeEach(() => {
-      deleteUser = jest.fn();
-      getUsers = jest.fn();
-
-      wrapper = shallow(<UsersSection
-        cluster={clusterDetails.cluster}
-        getUsers={deleteUser}
-        deleteUser={deleteUser}
-        addUser={jest.fn()}
-        clearUsersResponses={jest.fn()}
-        clusterGroupUsers={{
-          ...stateWithUsers,
-          users: [...stateWithUsers.dedicatedAdmins.users, ...stateWithUsers.clusterAdmins.users],
-        }}
-        addUserResponse={initialState.addUserResponse}
-        deleteUserResponse={initialState.deleteUserResponse}
-        getUsersPending={false}
-        getUsersFulfilled
-        getUserErrors={[]}
-        hasUsers
-      />);
-    });
+    const getUsers = jest.fn();
+    const wrapper = shallow(<UsersSection
+      cluster={clusterDetails.cluster}
+      getUsers={getUsers}
+      deleteUser={jest.fn()}
+      addUser={jest.fn()}
+      openModal={jest.fn()}
+      closeModal={jest.fn()}
+      clearUsersResponses={jest.fn()}
+      clearAddUserResponses={jest.fn()}
+      toggleClusterAdminResponse={{}}
+      clusterGroupUsers={stateWithUsers.groupUsers}
+      addUserResponse={initialState.addUserResponse}
+      deleteUserResponse={initialState.deleteUserResponse}
+      hasUsers
+      isAddUserModalOpen={false}
+      canAddClusterAdmin={false}
+    />);
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
-    });
-
-    it('should not call getUsers when it has users', () => {
-      expect(getUsers).not.toBeCalled();
     });
   });
 });
