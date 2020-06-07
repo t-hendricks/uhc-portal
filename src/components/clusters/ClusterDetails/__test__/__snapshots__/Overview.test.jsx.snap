@@ -13,6 +13,11 @@ exports[`<Overview /> should render 1`] = `
       >
         Resource usage
       </Title>
+      <Component
+        isInline={true}
+        title="Cluster installed successfully"
+        variant="success"
+      />
     </CardHeader>
     <CardBody>
       <ResourceUsage
