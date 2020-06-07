@@ -27,7 +27,7 @@ function Overview({
   const metricsAvailable = hasResourceUsageMetrics(cluster);
   const metricsStatusMessage = isArchived ? metricsStatusMessages.archived
     : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
-  const shouldShowLogs = cluster.managed
+  const shouldShowLogs = cluster.managed && cluster.canEdit
                       && (cluster.state === clusterStates.PENDING
                       || cluster.state === clusterStates.INSTALLING
                       || cluster.state === clusterStates.ERROR);

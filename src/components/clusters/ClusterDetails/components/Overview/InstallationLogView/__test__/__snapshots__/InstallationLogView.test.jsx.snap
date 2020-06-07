@@ -12,40 +12,6 @@ exports[`<InstallationLogView /> should render with logs 1`] = `
     >
       Installation Logs
     </Title>
-    <div
-      className="logview-buttons"
-    >
-      <Component
-        icon={
-          <DownloadIcon
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-            title={null}
-          />
-        }
-        isDisabled={true}
-        onClick={[Function]}
-        variant="link"
-      >
-        Download
-      </Component>
-      <Component
-        icon={
-          <ExpandIcon
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-            title={null}
-          />
-        }
-        isDisabled={true}
-        onClick={[Function]}
-        variant="link"
-      >
-        Expand
-      </Component>
-    </div>
   </CardHeader>
   <CardBody>
     <p>
@@ -67,44 +33,31 @@ exports[`<InstallationLogView /> should render without logs 1`] = `
     >
       Installation Logs
     </Title>
-    <div
-      className="logview-buttons"
-    >
-      <Component
-        icon={
-          <DownloadIcon
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-            title={null}
-          />
-        }
-        isDisabled={true}
-        onClick={[Function]}
-        variant="link"
-      >
-        Download
-      </Component>
-      <Component
-        icon={
-          <ExpandIcon
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-            title={null}
-          />
-        }
-        isDisabled={true}
-        onClick={[Function]}
-        variant="link"
-      >
-        Expand
-      </Component>
-    </div>
   </CardHeader>
   <CardBody>
     <p>
       Cluster installation has started, installation log will appear here once it becomes available.
+    </p>
+  </CardBody>
+</article>
+`;
+
+exports[`<InstallationLogView /> should stop the timer when recieving 403 error code 1`] = `
+<article
+  className="pf-c-card"
+>
+  <CardHeader>
+    <Title
+      className="card-title logview-title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Installation Logs
+    </Title>
+  </CardHeader>
+  <CardBody>
+    <p>
+      This cluster is installing so some data might not be available. This may take a few minutes.
     </p>
   </CardBody>
 </article>
