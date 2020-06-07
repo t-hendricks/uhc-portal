@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { HelpIcon } from '@patternfly/react-icons';
 import {
   EmptyState, Title, Button, CardHeader, CardFooter,
-  Popover, PopoverPosition, Card, CardBody,
+  Popover, PopoverPosition, Card, CardBody, Tooltip,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -195,6 +195,12 @@ class UsersSection extends React.Component {
       rows[deletedRowIndex] = skeletonRow;
     }
 
+    const addUserBtn = (
+      <Button onClick={() => openModal('add-user')} variant="secondary" className="access-control-add" isDisabled={!cluster.canEdit}>
+        Add user
+      </Button>
+    );
+
     return showSkeleton ? (
       <Card>
         <CardHeader>
@@ -224,14 +230,19 @@ class UsersSection extends React.Component {
             <ErrorBox message="Error deleting user" response={deleteUserResponse} />
           )}
           { hasUsers && (
-            <Table aria-label="Users" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows}>
+            <Table aria-label="Users" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows} areActionsDisabled={() => !cluster.canEdit}>
               <TableHeader />
               <TableBody />
             </Table>
           )}
-          <Button onClick={() => openModal('add-user')} variant="secondary" className="access-control-add">
-              Add user
-          </Button>
+          {!cluster.canEdit ? (
+            <Tooltip content="You do not have permission to add a user. Only cluster owners and organization administrators can add users.">
+              <span>
+                {addUserBtn}
+              </span>
+            </Tooltip>
+          )
+            : addUserBtn}
           <AddUserDialog
             isOpen={isAddUserModalOpen}
             closeModal={closeModal}

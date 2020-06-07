@@ -4,7 +4,17 @@ exports[`<AccessControl /> should render 1`] = `
 <div
   className="cluster-details-user-tab-contents"
 >
-  <Connect(IDPSection) />
-  <Connect(UsersSection) />
+  <Connect(IDPSection)
+    canEdit={true}
+    clusterID="fake id"
+  />
+  <Connect(UsersSection)
+    cluster={
+      Object {
+        "canEdit": true,
+        "id": "fake id",
+      }
+    }
+  />
 </div>
 `;

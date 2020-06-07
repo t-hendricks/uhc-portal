@@ -23,6 +23,7 @@ exports[`<Users /> should render without users 1`] = `
     </p>
     <Component
       className="access-control-add"
+      isDisabled={false}
       onClick={[Function]}
       variant="secondary"
     >
@@ -77,6 +78,7 @@ exports[`<Users /> with users should render 1`] = `
           },
         ]
       }
+      areActionsDisabled={[Function]}
       aria-label="Users"
       cells={
         Array [
@@ -228,6 +230,7 @@ exports[`<Users /> with users should render 1`] = `
     </Component>
     <Component
       className="access-control-add"
+      isDisabled={false}
       onClick={[Function]}
       variant="secondary"
     >

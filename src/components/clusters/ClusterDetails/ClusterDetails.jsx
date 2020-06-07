@@ -333,14 +333,14 @@ class ClusterDetails extends Component {
     };
 
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-    const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
+    const displayAddOnsTab = cluster.managed && this.hasAddOns();
     const displayInsightsTab = !isArchived && APP_BETA && (
       !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
       || insightsData[cluster.external_id].status === 404
     );
 
     const consoleURL = get(cluster, 'console.url');
-    const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
+    const displayAccessControlTab = cluster.managed && !!consoleURL && cluster.state === 'ready';
     const displayNetworkingTab = cluster.canEdit
           && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING)
           && cluster.managed && !!get(cluster, 'api.url')

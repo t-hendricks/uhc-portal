@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 import {
-  Card, Title, Button, CardBody, CardHeader, CardFooter,
+  Card, Title, Button, CardBody, CardHeader, CardFooter, Tooltip,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -21,7 +21,7 @@ import links from '../../../../../../common/installLinks';
 import { IDPTypeNames, getOauthCallbackURL, IDPNeedsOAuthURL } from '../../IdentityProvidersModal/IdentityProvidersHelper';
 
 function IDPSection({
-  clusterID, clusterConsoleURL, identityProviders, openModal,
+  clusterID, clusterConsoleURL, identityProviders, openModal, canEdit,
 }) {
   const columns = [
     { title: 'Name', transforms: [cellWidth(30)] },
@@ -64,6 +64,12 @@ function IDPSection({
 
   const hasIDPs = !!identityProviders.clusterIDPList.length;
 
+  const addIdpBtn = (
+    <Button onClick={() => openModal('create-identity-provider')} variant="secondary" className="access-control-add" isDisabled={!canEdit}>
+      Add identity provider
+    </Button>
+  );
+
   return (
     pending ? (
       <Card>
@@ -95,14 +101,20 @@ function IDPSection({
               variant={TableVariant.compact}
               cells={columns}
               rows={identityProviders.clusterIDPList.map(idpRow)}
+              areActionsDisabled={() => !canEdit}
             >
               <TableHeader />
               <TableBody />
             </Table>
           )}
-          <Button onClick={() => openModal('create-identity-provider')} variant="secondary" className="access-control-add">
-            Add identity provider
-          </Button>
+          {!canEdit ? (
+            <Tooltip content="You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers.">
+              <span>
+                {addIdpBtn}
+              </span>
+            </Tooltip>
+          )
+            : addIdpBtn}
         </CardBody>
       </Card>
     )
@@ -114,6 +126,7 @@ IDPSection.propTypes = {
   clusterConsoleURL: PropTypes.string.isRequired,
   identityProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
+  canEdit: PropTypes.bool.isRequired,
 };
 
 export default IDPSection;

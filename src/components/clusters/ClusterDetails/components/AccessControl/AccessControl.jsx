@@ -9,9 +9,9 @@ import NetworkSelfServiceSection from './NetworkSelfServiceSection';
 function AccessControl({ cluster, clusterConsoleURL, cloudProvider }) {
   return (
     <div className="cluster-details-user-tab-contents">
-      <IDPSection clusterID={get(cluster, 'id')} clusterConsoleURL={clusterConsoleURL} />
+      <IDPSection clusterID={get(cluster, 'id')} clusterConsoleURL={clusterConsoleURL} canEdit={cluster.canEdit} />
       <UsersSection cluster={cluster} />
-      {cloudProvider === 'aws' && (<NetworkSelfServiceSection clusterID={get(cluster, 'id')} />)}
+      {cloudProvider === 'aws' && (<NetworkSelfServiceSection clusterID={get(cluster, 'id')} canEdit={cluster.canEdit} />)}
     </div>
   );
 }

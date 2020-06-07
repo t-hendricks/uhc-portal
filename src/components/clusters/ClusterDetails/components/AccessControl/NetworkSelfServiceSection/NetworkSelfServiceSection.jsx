@@ -10,6 +10,7 @@ import {
   CardBody,
   CardHeader,
   CardFooter,
+  Tooltip,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -86,6 +87,7 @@ class NetworkSelfServiceSection extends React.Component {
       deleteGrant,
       deleteGrantResponse,
       openAddGrantModal,
+      canEdit,
     } = this.props;
 
 
@@ -219,6 +221,12 @@ class NetworkSelfServiceSection extends React.Component {
 
     const rows = hasGrants && grants.data.map(grantRow);
 
+    const addGrantBtn = (
+      <Button onClick={() => openAddGrantModal()} variant="secondary" className="access-control-add" isDisabled={!canEdit}>
+        Grant role
+      </Button>
+    );
+
     return grants.pending && !hasGrants ? (
       <Card>
         <CardHeader>
@@ -247,14 +255,18 @@ class NetworkSelfServiceSection extends React.Component {
               <ExternalLinkAltIcon color="#0066cc" size="sm" />
             </p>
             { hasGrants && (
-            <Table aria-label="Grants" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows} areActionsDisabled={rowData => rowData.state === 'deleting'}>
+            <Table aria-label="Grants" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows} areActionsDisabled={rowData => (rowData.state === 'deleting') || !canEdit}>
               <TableHeader />
               <TableBody />
             </Table>
             )}
-            <Button onClick={() => openAddGrantModal()} variant="secondary" className="access-control-add">
-              Grant role
-            </Button>
+            {!canEdit ? (
+              <Tooltip content="You do not have permission to grant a role. Only cluster owners and organization administrators can grant roles.">
+                <span>
+                  {addGrantBtn}
+                </span>
+              </Tooltip>
+            ) : addGrantBtn }
           </CardBody>
         </Card>
       </>
@@ -271,6 +283,7 @@ NetworkSelfServiceSection.propTypes = {
   deleteGrantResponse: PropTypes.object,
   openAddGrantModal: PropTypes.func.isRequired,
   addNotification: PropTypes.func.isRequired,
+  canEdit: PropTypes.bool.isRequired,
 };
 
 export default NetworkSelfServiceSection;
