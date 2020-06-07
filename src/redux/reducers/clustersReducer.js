@@ -33,6 +33,7 @@ const initialState = {
     ...baseState,
     valid: false,
     clusters: [],
+    queryParams: {},
   },
   details: {
     ...baseState,
@@ -104,6 +105,7 @@ function clustersReducer(state = initialState, action) {
         'clusters',
         {
           clusters: action.payload.data.items,
+          queryParams: action.payload.data.queryParams,
           pending: false,
           fulfilled: true,
           valid: true,
