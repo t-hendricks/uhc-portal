@@ -37,7 +37,8 @@ class ClusterLogsConditionalFilter extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { currentFilter, currentFlags } = this.props;
     if (nextProps.currentFilter !== currentFilter) {
       this.setState({ ...nextProps.currentFilter });
