@@ -21,7 +21,7 @@ import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
 class Overview extends React.Component {
   state = {
-    showInstallSuccessAlert: true,
+    showInstallSuccessAlert: false,
   }
 
   componentDidUpdate(prevProps) {
