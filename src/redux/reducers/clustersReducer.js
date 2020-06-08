@@ -35,6 +35,10 @@ const initialState = {
     clusters: [],
     queryParams: {},
   },
+  clusterStatus: {
+    ...baseState,
+    status: {},
+  },
   details: {
     ...baseState,
     cluster: null,
@@ -228,6 +232,29 @@ function clustersReducer(state = initialState, action) {
           ...initialState.unarchivedCluster,
         };
         break;
+
+      // GET_CLUSTER_STATUS
+      case REJECTED_ACTION(clustersConstants.GET_CLUSTER_STATUS):
+        draft.clusterStatus = {
+          ...initialState.clusterStatus,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.GET_CLUSTER_STATUS):
+        draft.clusterStatus = {
+          ...initialState.clusterStatus,
+          pending: true,
+          status: state.clusterStatus.status,
+        };
+        break;
+      case FULFILLED_ACTION(clustersConstants.GET_CLUSTER_STATUS):
+        draft.clusterStatus = {
+          ...initialState.clusterStatus,
+          fulfilled: true,
+          status: action.payload.data,
+        };
+        break;
+
 
       default:
         return state;

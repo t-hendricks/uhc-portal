@@ -547,6 +547,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "push": [MockFunction],
         }
       }
+      refresh={[Function]}
     />
   </ForwardRef>
   <ForwardRef

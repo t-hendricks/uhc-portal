@@ -13,9 +13,10 @@ describe('<InstallationLogView />', () => {
 
   beforeAll(() => {
     wrapper = shallow(<LogWindow
-      clusterID={clusterDetails.cluster.id}
+      cluster={clusterDetails.cluster}
       clearLogs={clearLogs}
       getLogs={getLogs}
+      refresh={jest.fn()}
       lines="lorem ipsum"
     />);
   });
@@ -58,7 +59,7 @@ describe('<InstallationLogView />', () => {
 
   it('should render without logs', () => {
     wrapper = shallow(<LogWindow
-      clusterID={clusterDetails.cluster.id}
+      cluster={clusterDetails.cluster}
       clearLogs={clearLogs}
       getLogs={getLogs}
       lines=""

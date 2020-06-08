@@ -5,6 +5,7 @@ import {
 } from '@patternfly/react-core';
 import { ExpandIcon } from '@patternfly/react-icons';
 import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
+import ClusterStatusMonitor from '../ClusterStatusMonitor';
 
 const AUTOSCROLL_THRESHOLD = 15;
 
@@ -89,11 +90,11 @@ class LogWindow extends React.Component {
 
   update = () => {
     const {
-      getLogs, clusterID, lines, pending, errorCode,
+      getLogs, cluster, lines, pending, errorCode,
     } = this.props;
     if (!pending && errorCode !== 403) {
       const offset = lines ? lines.split('\n').length : 0;
-      getLogs(clusterID, offset);
+      getLogs(cluster.id, offset);
     }
   }
 
@@ -118,7 +119,9 @@ class LogWindow extends React.Component {
   }
 
   render() {
-    const { lines, errorCode } = this.props;
+    const {
+      lines, errorCode, cluster, refresh,
+    } = this.props;
     const { userScrolled, isFullScreen } = this.state;
     const totalLines = lines ? lines.split('\n').length - 1 : 0;
     if (!userScrolled && !!totalLines) {
@@ -150,6 +153,7 @@ class LogWindow extends React.Component {
           )}
         </CardHeader>
         <CardBody>
+          <ClusterStatusMonitor refresh={refresh} cluster={cluster} />
           { totalLines ? (
             <div className="log-window">
               <div className="log-window__header">
@@ -183,8 +187,11 @@ LogWindow.propTypes = {
   getLogs: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   lines: PropTypes.string,
-  clusterID: PropTypes.string,
+  cluster: PropTypes.shape({
+    id: PropTypes.string,
+  }),
   errorCode: PropTypes.number,
+  refresh: PropTypes.func,
 };
 
 export default LogWindow;
