@@ -42,6 +42,6 @@ $color-log-window-divider: $color-log-window-header-bg;
   display: inline-block;
 }
 
-:fullscreen .log-window__scroll-pane {
+:fullscreen .log-window__scroll-pane, :-webkit-full-screen .log-window__scroll-pane {
   height: 89vh;
 }
