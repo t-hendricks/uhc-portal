@@ -35,6 +35,8 @@ import (
 // the user.
 const tokenEnv = "UHC_TOKEN"
 
+const defaultConfigFile = "backend-config.yml"
+
 // tokenPage is the URL of the page where the user can obtain the offline access token.
 // If updating, be sure to keep README instructions in sync.
 // #nosec G101
@@ -101,6 +103,10 @@ func run(cmd *cobra.Command, argv []string) {
 	if configFileFromEnv != "" {
 		glog.Infof("Loading config file from envrionemnt: %v", configFileFromEnv)
 		args.configFiles = append(args.configFiles, configFileFromEnv)
+	}
+	if _, err := os.Stat(defaultConfigFile); err == nil && len(args.configFiles) == 0 {
+		glog.Infof("Loading default config file: %v", defaultConfigFile)
+		args.configFiles = append(args.configFiles, defaultConfigFile)
 	}
 	cfg, err := NewConfig().
 		Files(args.configFiles).

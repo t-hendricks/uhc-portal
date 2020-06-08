@@ -17,7 +17,7 @@ exports[`<CreateClusterPage /> Quota not fetched yet should render 1`] = `
         }
       />
     }
-    title="Create a Cluster to Get Started"
+    title="Create a cluster to get started"
   />
   <PageSection>
     <Spinner
@@ -44,7 +44,7 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
         }
       />
     }
-    title="Create a Cluster to Get Started"
+    title="Create a cluster to get started"
   />
   <PageSection>
     <Card>
@@ -144,7 +144,7 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
         }
       />
     }
-    title="Create a Cluster to Get Started"
+    title="Create a cluster to get started"
   />
   <PageSection>
     <Card>

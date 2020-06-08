@@ -73,7 +73,7 @@ class EditConsoleURLDialog extends Component {
     return isOpen && (
 
       <Modal
-        title={consoleURL ? 'Edit Console URL' : 'Add Console URL'}
+        title={consoleURL ? 'Edit console URL' : 'Add console URL'}
         onClose={cancelEdit}
         primaryText={consoleURL ? 'Save' : 'Add URL'}
         secondaryText="Cancel"

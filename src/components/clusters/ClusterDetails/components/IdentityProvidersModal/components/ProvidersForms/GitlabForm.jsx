@@ -32,7 +32,7 @@ function GitlabFormRequired({ isPending }) {
         <Field
           component={CAUpload}
           name="gitlab_ca"
-          label="CA File"
+          label="CA file"
           type="text"
           disabled={isPending}
           helpText="PEM encoded certificate bundle to use to validate server certificates for the configured Gitlab URL."

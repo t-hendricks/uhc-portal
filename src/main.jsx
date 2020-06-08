@@ -22,6 +22,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 import { NotificationsPortal } from '@redhat-cloud-services/frontend-components-notifications';
+import * as Sentry from '@sentry/browser';
 import { userInfoResponse } from './redux/actions/userActions';
 import config from './config';
 import App from './components/App/App';
@@ -93,6 +94,17 @@ if (!window.insights && process.env.NODE_ENV === 'development') {
       store.dispatch(userInfoResponse(data.identity.user));
       config.fetchConfig()
         .then(() => {
+          if (!config.override && config.configData.sentryDSN) {
+            Sentry.init({
+              dsn: config.configData.sentryDSN,
+              integrations: [
+                new Sentry.Integrations.GlobalHandlers({
+                  onerror: true,
+                  onunhandledrejection: false,
+                }),
+              ],
+            });
+          }
           render();
         });
     });

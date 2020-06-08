@@ -191,7 +191,7 @@ class AddOns extends React.Component {
           </a>
         );
       case AddOnsConstants.INSTALLATION_STATE.READY:
-        url = `${cluster.console.url}/k8s/ns/${addOn.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${addOn.id}.v${installedAddOn.operator_version}`;
+        url = `${cluster.console.url}/k8s/ns/${addOn.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${addOn.operator_name}.v${installedAddOn.operator_version}`;
         return (
           <a href={url} target="_blank" rel="noopener noreferrer">
             <Button variant="secondary" size="sm">View in console</Button>

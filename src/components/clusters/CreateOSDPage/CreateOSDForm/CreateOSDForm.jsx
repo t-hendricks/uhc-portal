@@ -63,6 +63,7 @@ class CreateOSDForm extends React.Component {
       clustersQuota,
       cloudProviderID,
       privateClusterSelected,
+      product,
     } = this.props;
 
     const {
@@ -73,20 +74,21 @@ class CreateOSDForm extends React.Component {
     } = this.state;
 
     const isAws = cloudProviderID === 'aws';
+    const allowBYOC = isAws && product !== 'rhmi';
 
     const hasBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
     const hasAwsRhInfraQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
 
-    const isBYOCForm = isAws && hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
+    const isBYOCForm = allowBYOC && hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
 
     return (
       <>
         {/* Billing Model */}
-        {isAws && (
+        { allowBYOC && (
           <>
             <GridItem span={12}>
-              <h3 className="osd-page-header">Billing Model</h3>
+              <h3 className="osd-page-header">Billing model</h3>
             </GridItem>
             <BillingModelSection
               openModal={openModal}
@@ -99,12 +101,12 @@ class CreateOSDForm extends React.Component {
         )}
 
         {/* BYOC modal */}
-        {isAws && isBYOCModalOpen && (
+        { allowBYOC && isBYOCModalOpen && (
           <CustomerCloudSubscriptionModal closeModal={this.closeBYOCModal} />
         )}
 
         {/* AWS account details */}
-        { isAws && isBYOCForm && (
+        { allowBYOC && isBYOCForm && (
           <>
             <GridItem span={12}>
               <h3 className="osd-page-header">AWS account details</h3>
@@ -115,11 +117,12 @@ class CreateOSDForm extends React.Component {
 
         {/* Basic fields - Cluster Details section */}
         <GridItem span={12}>
-          <h3 className="osd-page-header">Cluster Details</h3>
+          <h3 className="osd-page-header">Cluster details</h3>
         </GridItem>
         <BasicFieldsSection
           pending={pending}
           showDNSBaseDomain={false}
+          showAvailability={product === 'osd'}
           change={change}
           isBYOC={isBYOCForm}
           cloudProviderID={cloudProviderID}
@@ -193,6 +196,7 @@ CreateOSDForm.propTypes = {
   }),
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
+  product: PropTypes.string.isRequired,
 };
 
 export default CreateOSDForm;

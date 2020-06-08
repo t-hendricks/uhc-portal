@@ -32,7 +32,23 @@ const sortMultiplier = {
   desc: -1,
 };
 
-const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
+const groupsFilter = groups => ({ onChange, value, ...props } = { onChange: () => undefined }) => ({
+  ...props,
+  label: 'Category',
+  value: 'category',
+  type: 'checkbox',
+  filterValues: {
+    value,
+    onChange,
+    items: Object.entries(groups).map(groupValues => ({
+      label: groupValues[1].title,
+      textual: groupValues[1].title,
+      value: groupValues[1].tags,
+    })),
+  },
+});
+
+const isValueFiltered = (filterValues, value) => Object.entries(filterValues)
   .reduce(
     (acc, [key, filter]) => {
       let newAcc = true;
@@ -40,18 +56,25 @@ const isValueFiltered = (filterValues, v) => Object.entries(filterValues)
       switch (key) {
         case 'totalRiskFilter':
           if (filter.length > 0) {
-            newAcc = filter.includes(severityMapping[v.total_risk - 1]);
+            newAcc = filter.includes(severityMapping[value.total_risk - 1]);
           }
           break;
         case 'descriptionFilter':
           // Make all strings in lower case to avoid case sensitivity
-          newAcc = v.description.toLowerCase().indexOf(filter.toLowerCase()) > -1;
+          newAcc = value.description.toLowerCase().indexOf(filter.toLowerCase()) > -1;
           break;
         case 'ruleStatusFilter': {
           const showEnabled = filter === 'enabled' || filter === 'all';
           const showDisabled = filter === 'disabled' || filter === 'all';
 
-          newAcc = v.disabled ? showDisabled : showEnabled;
+          newAcc = value.disabled ? showDisabled : showEnabled;
+          break;
+        }
+        case 'groupsFilter': {
+          if (filter.length > 0) {
+            const flattenFilter = new Set(filter.map(val => val.split(',')).flat());
+            newAcc = value.tags.filter(x => flattenFilter.has(x)).length > 0;
+          }
           break;
         }
         default:
@@ -185,7 +208,7 @@ class InsightsTable extends React.Component {
 
   render() {
     const {
-      insightsData, voteOnRule, disableRule, enableRule,
+      insightsData, voteOnRule, disableRule, enableRule, groups,
     } = this.props;
 
     const {
@@ -197,7 +220,11 @@ class InsightsTable extends React.Component {
 
     return (
       <>
-        <AnalysisSummary insightsData={insightsData} batteryClicked={this.addTotalRiskFilter} />
+        <AnalysisSummary
+          groups={groups}
+          insightsData={insightsData}
+          batteryClicked={this.addTotalRiskFilter}
+        />
         <Card>
           <CardBody className="no-padding">
             <RuleTable
@@ -210,6 +237,7 @@ class InsightsTable extends React.Component {
                 descriptionFilter,
                 totalRiskFilter,
                 ruleStatusFilter,
+                groupsFilter: groupsFilter(groups),
               }}
               filterValues={filters}
               sortBy={sortBy}
@@ -312,6 +340,7 @@ class InsightsTable extends React.Component {
 
 InsightsTable.propTypes = {
   insightsData: PropTypes.object.isRequired,
+  groups: PropTypes.array.isRequired,
   voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,

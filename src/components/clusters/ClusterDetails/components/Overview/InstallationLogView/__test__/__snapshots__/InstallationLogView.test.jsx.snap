@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InstallationLogView /> should render with logs 1`] = `
+<article
+  className="pf-c-card"
+>
+  <CardHeader>
+    <Title
+      className="card-title logview-title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Installation Logs
+    </Title>
+  </CardHeader>
+  <CardBody>
+    <p>
+      Cluster installation has started, installation log will appear here once it becomes available.
+    </p>
+  </CardBody>
+</article>
+`;
+
+exports[`<InstallationLogView /> should render without logs 1`] = `
+<article
+  className="pf-c-card"
+>
+  <CardHeader>
+    <Title
+      className="card-title logview-title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Installation Logs
+    </Title>
+  </CardHeader>
+  <CardBody>
+    <p>
+      Cluster installation has started, installation log will appear here once it becomes available.
+    </p>
+  </CardBody>
+</article>
+`;
+
+exports[`<InstallationLogView /> should stop the timer when recieving 403 error code 1`] = `
+<article
+  className="pf-c-card"
+>
+  <CardHeader>
+    <Title
+      className="card-title logview-title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Installation Logs
+    </Title>
+  </CardHeader>
+  <CardBody>
+    <p>
+      This cluster is installing so some data might not be available. This may take a few minutes.
+    </p>
+  </CardBody>
+</article>
+`;

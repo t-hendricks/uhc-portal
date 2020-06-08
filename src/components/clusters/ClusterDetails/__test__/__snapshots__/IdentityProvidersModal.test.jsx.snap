@@ -8,7 +8,7 @@ exports[`<IdentityProvidersModal /> renders correctly 1`] = `
   onClose={[Function]}
   onPrimaryClick={[MockFunction]}
   onSecondaryClick={[Function]}
-  title="Create Identity Provider ()"
+  title="Create identity provider ()"
 >
   <IDPForm
     clusterConsoleURL=""

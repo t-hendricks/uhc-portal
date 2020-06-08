@@ -29,6 +29,7 @@ const createViewQueryObject = (viewOptions, queryObj) => {
   if (viewOptions) {
     queryObject.page = viewOptions.currentPage;
     queryObject.page_size = viewOptions.pageSize;
+    queryObject.has_filters = !!viewOptions.filter;
 
     if (viewOptions.sorting.sortField !== null) {
       const direction = viewOptions.sorting.isAscending ? 'asc' : 'desc';
@@ -69,7 +70,6 @@ const createViewQueryObject = (viewOptions, queryObj) => {
         }
       });
     }
-
     queryObject.filter = clauses.map(c => `(${c})`).join(' AND ').trim();
   }
 

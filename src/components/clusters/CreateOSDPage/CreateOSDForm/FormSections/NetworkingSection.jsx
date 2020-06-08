@@ -13,6 +13,9 @@ import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/Redux
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
 const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr');
 const podDisjointSubnets = validators.disjointSubnets('network_pod_cidr');
+const awsMachineSubnetMask = validators.awsSubnetMask('network_machine_cidr');
+const awsServiceSubnetMask = validators.awsSubnetMask('network_service_cidr');
+const awsPodSubnetMask = validators.awsSubnetMask('network_pod_cidr');
 
 function NetworkingSection({
   pending,
@@ -36,13 +39,37 @@ function NetworkingSection({
     return value;
   };
 
-  const additionalValidators = [];
-  if (cloudProviderID === 'gcp') {
-    additionalValidators.push(validators.privateAddress);
-  }
-  if (cloudProviderID === 'aws') {
-    additionalValidators.push(validators.awsSubnetMask);
-  }
+  const machineCidrValidators = [
+    validators.cidr,
+    validators.machineCidr,
+    validators.validateRange,
+    machineDisjointSubnets,
+    validators.disjointFromDockerRange,
+    cloudProviderID === 'aws' && awsMachineSubnetMask,
+    cloudProviderID === 'gcp' && validators.privateAddress,
+  ].filter(Boolean);
+
+  const serviceCidrValidators = [
+    validators.cidr,
+    validators.serviceCidr,
+    validators.validateRange,
+    serviceDisjointSubnets,
+    validators.disjointFromDockerRange,
+    cloudProviderID === 'aws' && awsServiceSubnetMask,
+    cloudProviderID === 'gcp' && validators.privateAddress,
+  ].filter(Boolean);
+
+  const podCidrValidators = [
+    validators.cidr,
+    validators.podCidr,
+    validators.validateRange,
+    podDisjointSubnets,
+    validators.disjointFromDockerRange,
+    cloudProviderID === 'aws' && awsPodSubnetMask,
+    cloudProviderID === 'gcp' && validators.privateAddress,
+  ].filter(Boolean);
+
+
   return (
     <>
       <GridItem span={4}>
@@ -96,6 +123,21 @@ function NetworkingSection({
               >
                  The machine, service and pod ranges may not overlap. The addresses must specify a
                  range, and correspond to the first IP address in their subnet.
+                { cloudProviderID === 'gcp'
+                 && (
+                   <>
+                     <br />
+                     <span>
+                      All adresses must be private IPv4 addresses, and belong to one of the
+                      following ranges:
+                       <ul>
+                         <li>10.0.0.0 – 10.255.255.255</li>
+                         <li>172.16.0.0 – 172.31.255.255</li>
+                         <li>192.168.0.0 – 192.168.255.255</li>
+                       </ul>
+                     </span>
+                   </>
+                 )}
               </Alert>
             </GridItem>
             <GridItem span={5} />
@@ -106,16 +148,7 @@ function NetworkingSection({
                 label="Machine CIDR"
                 placeholder="10.0.0.0/16"
                 type="text"
-                validate={
-                  [
-                    validators.cidr,
-                    validators.machineCidr,
-                    validators.validateRange,
-                    machineDisjointSubnets,
-                    validators.disjointFromDockerRange,
-                    ...additionalValidators,
-                  ]
-                }
+                validate={machineCidrValidators}
                 disabled={pending}
                 helpText={cloudProviderID === 'aws' ? 'Subnet mask must be between 16-23.' : 'Range must be private. Subnet mask must be at most 23.'}
                 extendedHelpText={constants.machineCIDRHint}
@@ -130,16 +163,7 @@ function NetworkingSection({
                 label="Service CIDR"
                 placeholder="172.30.0.0/16"
                 type="text"
-                validate={
-                  [
-                    validators.cidr,
-                    validators.serviceCidr,
-                    validators.validateRange,
-                    serviceDisjointSubnets,
-                    validators.disjointFromDockerRange,
-                    ...additionalValidators,
-                  ]
-                }
+                validate={serviceCidrValidators}
                 disabled={pending}
                 helpText={cloudProviderID === 'aws' ? 'Subnet mask must be between 16-24.' : 'Range must be private. Subnet mask must be at most 24.'}
                 extendedHelpText={constants.serviceCIDRHint}
@@ -154,16 +178,7 @@ function NetworkingSection({
                 label="Pod CIDR"
                 placeholder={`10.128.0.0/${cloudProviderID === 'aws' ? '16' : '14'}`}
                 type="text"
-                validate={
-                  [
-                    validators.cidr,
-                    validators.podCidr,
-                    validators.validateRange,
-                    podDisjointSubnets,
-                    validators.disjointFromDockerRange,
-                    ...additionalValidators,
-                  ]
-                }
+                validate={podCidrValidators}
                 disabled={pending}
                 helpText={cloudProviderID === 'aws' ? 'Subnet mask must be between 16-18.' : 'Range must be private. Subnet mask must be at most 18.'}
                 extendedHelpText={constants.podCIDRHint}
@@ -175,7 +190,7 @@ function NetworkingSection({
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_host_prefix"
-                label="Host Prefix"
+                label="Host prefix"
                 placeholder="/23"
                 type="text"
                 format={formatHostPrefix}

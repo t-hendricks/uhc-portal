@@ -49,6 +49,7 @@ describe('createViewQueryObject()', () => {
   };
 
   const baseResult = {
+    has_filters: false,
     page: 3,
     page_size: 50,
     filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived'))",
@@ -117,6 +118,7 @@ describe('createViewQueryObject()', () => {
     const escaped = "hello world''s";
     const expected = {
       ...baseResult,
+      has_filters: !!viewOptions.filter,
       filter: `(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%')`,
     };
     expect(createViewQueryObject(viewOptions)).toEqual(expected);
@@ -134,6 +136,7 @@ describe('createViewQueryObject()', () => {
     };
     const expected = {
       ...baseResult,
+      has_filters: false,
       filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (entitlement_status IN ('a','b','c')) AND (type IN ('osd'))",
     };
 

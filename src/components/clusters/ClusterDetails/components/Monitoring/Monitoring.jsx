@@ -46,7 +46,7 @@ class Monitoring extends React.Component {
         <>
           <ClusterHealthCard status={healthStatus} />
           <MonitoringEmptyState hideLastCheckIn>
-            <p>Monitoring Data is not available at this time. Try again later.</p>
+            <p>Monitoring data is not available at this time. Try again later.</p>
           </MonitoringEmptyState>
         </>
       );
@@ -56,7 +56,7 @@ class Monitoring extends React.Component {
       return (
         <MonitoringEmptyState lastCheckInText={lastCheckInText}>
           <p>
-        Monitoring Data is not available if a cluster goes more than
+        Monitoring data is not available if a cluster goes more than
         three hours without sending metrics.
             <br />
         Check the cluster&apos;s web console if you think that this cluster should

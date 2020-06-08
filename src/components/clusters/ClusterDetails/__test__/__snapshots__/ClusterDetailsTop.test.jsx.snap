@@ -50,7 +50,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           <Component
             variant="primary"
           >
-            Open Console
+            Open console
           </Component>
         </a>
         <Connect(ClusterActionsDropdown)
@@ -214,13 +214,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           refreshFunc={[MockFunction]}
         />
       </span>
-    </SplitItem>
-  </Split>
-  <Split>
-    <SplitItem
-      isFilled={true}
-    >
-      <IdentityProvidersHint />
     </SplitItem>
   </Split>
   <SubscriptionCompliancy

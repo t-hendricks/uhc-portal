@@ -15,7 +15,11 @@ limitations under the License.
 */
 import get from 'lodash/get';
 import {
-  GET_CLUSTER_INSIGHTS, VOTE_ON_RULE_INSIGHTS, DISABLE_RULE_INSIGHTS, ENABLE_RULE_INSIGHTS,
+  GET_CLUSTER_INSIGHTS,
+  VOTE_ON_RULE_INSIGHTS,
+  DISABLE_RULE_INSIGHTS,
+  ENABLE_RULE_INSIGHTS,
+  GET_GROUPS_INSIGHTS,
 } from './InsightsConstants';
 import { insightsService } from '../../../../../services';
 
@@ -102,3 +106,8 @@ export const enableRuleInsights = (clusterId, ruleId) => (dispatch) => {
     payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, true),
   });
 };
+
+export const fetchGroups = () => dispatch => dispatch({
+  type: GET_GROUPS_INSIGHTS,
+  payload: insightsService.getGroupsInsights(),
+});

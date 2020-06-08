@@ -15,7 +15,7 @@ function GoogleForm({ isPending, isRequired }) {
         <Field
           component={ReduxVerticalFormGroup}
           name="hosted_domain"
-          label="Hosted Domain"
+          label="Hosted domain"
           type="text"
           helpText="Restrict users to a Google Apps domain"
           disabled={isPending}

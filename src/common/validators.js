@@ -14,10 +14,10 @@ const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}
 
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
-const MACHINE_CIDR_MAX_SINGLE_AZ = 23;
-const MACHINE_CIDR_MAX_MULTI_AZ = 23;
+const MACHINE_CIDR_MAX = 23;
 const SERVICE_CIDR_MAX = 24;
 const POD_CIDR_MAX = 18;
+const AWS_CIDR_MIN = 16;
 
 // Regular expression used to check whether input is a valid IPv4 subnet prefix length
 const HOST_PREFIX_REGEXP = /^\/?(3[0-2]|[1-2][0-9]|[0-9])$/;
@@ -254,16 +254,16 @@ const machineCidr = (value, formData) => {
   const isMultiAz = formData.multi_az === 'true';
   const prefixLength = getCIDRSubnetLength(value);
 
-  if (isMultiAz && prefixLength > MACHINE_CIDR_MAX_MULTI_AZ) {
-    const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX_MULTI_AZ);
+  if (isMultiAz && prefixLength > MACHINE_CIDR_MAX) {
+    const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX);
     const multiAZ = (maxComputeNodes - 9) * 3;
-    return `The subnet length can't be higher than '/${MACHINE_CIDR_MAX_MULTI_AZ}', which provides up to ${multiAZ} nodes.`;
+    return `The subnet length can't be higher than '/${MACHINE_CIDR_MAX}', which provides up to ${multiAZ} nodes.`;
   }
 
-  if (!isMultiAz && prefixLength > MACHINE_CIDR_MAX_SINGLE_AZ) {
-    const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX_SINGLE_AZ);
+  if (!isMultiAz && prefixLength > MACHINE_CIDR_MAX) {
+    const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX);
     const singleAZ = maxComputeNodes - 9;
-    return `The subnet length can't be higher than '/${MACHINE_CIDR_MAX_SINGLE_AZ}', which provides up to ${singleAZ} nodes.`;
+    return `The subnet length can't be higher than '/${MACHINE_CIDR_MAX}', which provides up to ${singleAZ} nodes.`;
   }
 
   return undefined;
@@ -386,14 +386,20 @@ const disjointFromDockerRange = (value) => {
 };
 
 
-const awsSubnetMask = (value) => {
+const awsSubnetMask = fieldName => (value) => {
   if (cidr(value) !== undefined || !value) {
     return undefined;
   }
+  const awsSubnetMaskRanges = {
+    network_machine_cidr: [AWS_CIDR_MIN, MACHINE_CIDR_MAX],
+    network_pod_cidr: [AWS_CIDR_MIN, POD_CIDR_MAX],
+    network_service_cidr: [AWS_CIDR_MIN, SERVICE_CIDR_MAX],
+  };
+  const maskRange = awsSubnetMaskRanges[fieldName];
   const parts = value.split('/');
   const maskBits = parseInt(parts[1], 10);
-  if (!inRange(maskBits, 16, 29)) {
-    return 'Subnet mask must be between 16-23.';
+  if (!(maskRange[0] <= maskBits && maskBits <= maskRange[1])) {
+    return `Subnet mask must be between ${maskRange[0]}-${maskRange[1]}.`;
   }
   return undefined;
 };

@@ -20,7 +20,7 @@ function actionResolver(
   const consoleURL = cluster.console ? cluster.console.url : false;
   const adminConsoleEnabled = {
     component: 'a',
-    title: 'Open Console',
+    title: 'Open console',
     href: consoleURL,
     target: '_blank',
     rel: 'noopener noreferrer',
@@ -28,7 +28,7 @@ function actionResolver(
   };
   const adminConsoleDisabled = {
     ...baseProps,
-    title: 'Open Console',
+    title: 'Open console',
     isDisabled: true,
     tooltip: isClusterUninstalling ? uninstallingMessage : consoleDisabledMessage,
     key: getKey('adminconsole'),

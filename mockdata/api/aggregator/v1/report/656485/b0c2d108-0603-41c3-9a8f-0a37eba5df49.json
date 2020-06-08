@@ -10,7 +10,7 @@
         "description": "Some rule description description description description description description description",
         "details": "Minimum resource requirements for Openshift 4 Nodes are not met, which could cause unexpected behavior.\n\n[Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html#minimum-resource-requirements_installing-bare-metal)",
         "reason": "Node{{?pydata.nodes.length>1}}s{{?}} not meeting the minimum requirements:\n{{~ pydata.nodes :node }}\n1. {{=node[\"name\"]}}\n  * Role: {{=node[\"role\"]}}{{?node.memory}}\n  * Minimum memory requirement is {{=node[\"memory_req\"]}}, but the node is configured with {{=node[\"memory\"]}}.{{?}}{{?node.cpu}}\n  * Minimum cpu requirement is {{=node[\"cpu_req\"]}}, but the node is configured with {{=node[\"cpu\"]}}.{{?}}{{~}}",
-        "resolution": "Red Hat recommends that you configure your nodes to meet the minimum resource requirements.\n\nMake sure that:\n\n{{~ pydata.nodes :node }}\n1. Node {{=node[\"name\"]}} ({{=node[\"role\"]}}){{?node[\"memory\"]}}\n   * Has enough memory, minimum requirement is {{=node[\"memory_req\"]}}. Currently its only configured with {{=node[\"memory\"]}}GB.{{?}}{{?node.cpu}}\n   * Has enough allocatable cpu, minimum requirement is {{=node[\"cpu_req\"]}}. Currently its only configured with {{=node[\"cpu\"]}}.{{?}}{{~}}",
+        "resolution": "Red Hat recommends that you configure your nodes to meet the minimum resource requirements.\n\n```hajsdkfhasdjfh asdjfhas lkdfjhas ldjkfha sjlkdfha sjdkfhas dkjfhas dkjfhads kjfhas dkjfhas dkjfhas kdjhfa ksjdhfas kjdhfas kjdf```\n\nMake sure that:\n\n{{~ pydata.nodes :node }}\n1. Node {{=node[\"name\"]}} ({{=node[\"role\"]}}){{?node[\"memory\"]}}\n   * Has enough memory, minimum requirement is {{=node[\"memory_req\"]}}. Currently its only configured with {{=node[\"memory\"]}}GB.{{?}}{{?node.cpu}}\n   * Has enough allocatable cpu, minimum requirement is {{=node[\"cpu_req\"]}}. Currently its only configured with {{=node[\"cpu\"]}}.{{?}}{{~}}",
         "created_at": "2020-02-03T08:25:00Z",
         "total_risk": 3,
         "risk_of_change": 0,
@@ -31,7 +31,10 @@
             "role":"master"
           }],
           "type":"rule"
-        }
+        },
+        "tags": [
+          "tag1"
+        ]
       },
       {
         "rule_id": "some.python.module1",
@@ -41,7 +44,11 @@
         "total_risk": 4,
         "risk_of_change": 2,
         "user_vote": 1,
-        "disabled": true
+        "disabled": true,
+        "tags": [
+          "tag2",
+          "tag3"
+        ]
       },
       {
         "rule_id": "some.python.module2",
@@ -51,7 +58,11 @@
         "total_risk": 1,
         "risk_of_change": 3,
         "user_vote": -1,
-        "disabled": true
+        "disabled": true,
+        "tags": [
+          "tag2",
+          "tag3"
+        ]
       },
       {
         "rule_id": "some.python.module3",
@@ -61,7 +72,10 @@
         "total_risk": 2,
         "risk_of_change": 1,
         "user_vote": 1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag3"
+        ]
       },
       {
         "rule_id": "some.python.module4",
@@ -71,7 +85,10 @@
         "total_risk": 2,
         "risk_of_change": 2,
         "user_vote": 1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag3"
+        ]
       },
       {
         "rule_id": "some.python.module5",
@@ -81,7 +98,10 @@
         "total_risk": 3,
         "risk_of_change": 3,
         "user_vote": -1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag3"
+        ]
       },
       {
         "rule_id": "some.python.module6",
@@ -91,7 +111,10 @@
         "total_risk": 1,
         "risk_of_change": 1,
         "user_vote": 1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag3"
+        ]
       },
       {
         "rule_id": "some.python.module7",
@@ -101,7 +124,10 @@
         "total_risk": 2,
         "risk_of_change": 2,
         "user_vote": 1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag3"
+        ]
       },
       {
         "rule_id": "some.python.module8",
@@ -111,7 +137,11 @@
         "total_risk": 3,
         "risk_of_change": 3,
         "user_vote": -1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag3",
+          "tag4"
+        ]
       },
       {
         "rule_id": "some.python.module9",
@@ -121,7 +151,11 @@
         "total_risk": 1,
         "risk_of_change": 1,
         "user_vote": 1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag3",
+          "tag4"
+        ]
       },
       {
         "rule_id": "some.python.module10",
@@ -131,7 +165,11 @@
         "total_risk": 3,
         "risk_of_change": 0,
         "user_vote": 0,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag3",
+          "tag4"
+        ]
       },
       {
         "rule_id": "some.python.module11",
@@ -141,7 +179,11 @@
         "total_risk": 2,
         "risk_of_change": 3,
         "user_vote": -1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag3",
+          "tag4"
+        ]
       },
       {
         "rule_id": "some.python.module12",
@@ -151,7 +193,11 @@
         "total_risk": 1,
         "risk_of_change": 1,
         "user_vote": 1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag3",
+          "tag4"
+        ]
       },
       {
         "rule_id": "some.python.module13",
@@ -161,7 +207,10 @@
         "total_risk": 1,
         "risk_of_change": 2,
         "user_vote": 1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag4"
+        ]
       },
       {
         "rule_id": "some.python.module14",
@@ -171,7 +220,10 @@
         "total_risk": 3,
         "risk_of_change": 3,
         "user_vote": -1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag4"
+        ]
       },
       {
         "rule_id": "some.python.module15",
@@ -181,7 +233,10 @@
         "total_risk": 2,
         "risk_of_change": 1,
         "user_vote": 1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag4"
+        ]
       },
       {
         "rule_id": "some.python.module16",
@@ -191,7 +246,10 @@
         "total_risk": 1,
         "risk_of_change": 2,
         "user_vote": 1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag4"
+        ]
       },
       {
         "rule_id": "some.python.module17",
@@ -201,7 +259,10 @@
         "total_risk": 2,
         "risk_of_change": 3,
         "user_vote": -1,
-        "disabled": false
+        "disabled": false,
+        "tags": [
+          "tag4"
+        ]
       }
     ]
   }

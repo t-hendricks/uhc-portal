@@ -4,6 +4,7 @@ const history = {
 };
 const fetchDetails = jest.fn();
 const fetchInsightsData = jest.fn();
+const fetchGroups = jest.fn();
 const getCloudProviders = jest.fn();
 const invalidateClusters = jest.fn();
 const getOrganizationAndQuota = jest.fn();
@@ -388,6 +389,7 @@ export {
   history,
   fetchDetails,
   fetchInsightsData,
+  fetchGroups,
   getCloudProviders,
   getClusterIdentityProviders,
   resetIdentityProvidersState,

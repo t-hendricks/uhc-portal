@@ -110,15 +110,29 @@ class ClusterDetails extends Component {
   componentDidUpdate(prevProps) {
     const {
       match,
+      groups,
       clusterDetails,
+      insightsData,
       fetchInsightsData,
+      fetchGroups,
     } = this.props;
     const clusterID = match.params.id;
     const oldClusterID = prevProps.match.params.id;
+    const externalId = get(clusterDetails, 'cluster.external_id');
 
     if (get(clusterDetails, 'cluster.id') === clusterID) {
       const clusterName = getClusterName(clusterDetails.cluster);
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
+    }
+
+    if (
+      APP_BETA
+      && !groups.pending
+      && !groups.fulfilled
+      && !groups.rejected
+      && get(insightsData[externalId], 'meta.count', 0) > 0
+    ) {
+      fetchGroups();
     }
 
     if (clusterID !== oldClusterID && isValid(clusterID)) {
@@ -253,6 +267,7 @@ class ClusterDetails extends Component {
       setGlobalError,
       displayClusterLogs,
       insightsData,
+      groups,
       voteOnRule,
       disableRule,
       enableRule,
@@ -318,14 +333,14 @@ class ClusterDetails extends Component {
     };
 
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-    const displayAddOnsTab = cluster.managed && cluster.canEdit && this.hasAddOns();
+    const displayAddOnsTab = cluster.managed && this.hasAddOns();
     const displayInsightsTab = !isArchived && APP_BETA && (
       !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
       || insightsData[cluster.external_id].status === 404
     );
 
     const consoleURL = get(cluster, 'console.url');
-    const displayAccessControlTab = cluster.managed && cluster.canEdit && !!consoleURL && cluster.state === 'ready';
+    const displayAccessControlTab = cluster.managed && !!consoleURL && cluster.state === 'ready';
     const displayNetworkingTab = cluster.canEdit
           && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING)
           && cluster.managed && !!get(cluster, 'api.url')
@@ -430,6 +445,7 @@ class ClusterDetails extends Component {
           >
             <Insights
               cluster={cluster}
+              groups={get(groups, 'groups', [])}
               insightsData={insightsData[cluster.external_id]}
               voteOnRule={(ruleId, vote) => {
                 voteOnRule(cluster.external_id, ruleId, vote);
@@ -476,6 +492,7 @@ ClusterDetails.propTypes = {
   history: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
   fetchInsightsData: PropTypes.func.isRequired,
+  fetchGroups: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getAlerts: PropTypes.func.isRequired,
@@ -493,6 +510,12 @@ ClusterDetails.propTypes = {
   resetClusterHistory: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
+  groups: PropTypes.shape({
+    groups: PropTypes.array,
+    fulfilled: PropTypes.bool,
+    pending: PropTypes.bool,
+    rejected: PropTypes.bool,
+  }),
   addOns: PropTypes.object,
   clusterAddOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
@@ -527,6 +550,7 @@ ClusterDetails.propTypes = {
 ClusterDetails.defaultProps = {
   clusterAddOns: {},
   insightsData: {},
+  groups: {},
   clusterDetails: {
     cluster: null,
     error: false,

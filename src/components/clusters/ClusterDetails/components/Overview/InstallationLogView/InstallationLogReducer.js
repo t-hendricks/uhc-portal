@@ -17,16 +17,16 @@ import produce from 'immer';
 
 import {
   REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
-} from '../../../../../redux/reduxHelpers';
-import { getErrorState } from '../../../../../common/errors';
-import { GET_LOGS, CLEAR_LOGS } from './LogWindowConstants';
+} from '../../../../../../redux/reduxHelpers';
+import { getErrorState } from '../../../../../../common/errors';
+import { GET_LOGS, CLEAR_LOGS } from './InstallationLogConstants';
 
 const initialState = {
   ...baseRequestState,
   lines: '',
 };
 
-function LogsReducer(state = initialState, action) {
+function InstallationLogReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
@@ -35,13 +35,16 @@ function LogsReducer(state = initialState, action) {
         draft.pending = true;
         break;
 
-      case FULFILLED_ACTION(GET_LOGS):
+      case FULFILLED_ACTION(GET_LOGS): {
+        const lines = action.payload.data.content
+          ? state.lines + action.payload.data.content
+          : state.lines;
         return {
           ...initialState,
-          lines: action.payload.data.content,
+          lines,
           fulfilled: true,
         };
-
+      }
       case REJECTED_ACTION(GET_LOGS):
         return {
           ...initialState,
@@ -54,8 +57,8 @@ function LogsReducer(state = initialState, action) {
   });
 }
 
-LogsReducer.initialState = initialState;
+InstallationLogReducer.initialState = initialState;
 
-export { initialState, LogsReducer };
+export { initialState, InstallationLogReducer };
 
-export default LogsReducer;
+export default InstallationLogReducer;

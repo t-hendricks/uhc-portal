@@ -7,7 +7,7 @@ import AccessControl from './AccessControl';
 describe('<AccessControl />', () => {
   it('should render', () => {
     const wrapper = shallow(<AccessControl
-      clusterID="fake id"
+      cluster={{ canEdit: true, id: 'fake id' }}
     />);
     expect(wrapper).toMatchSnapshot();
   });

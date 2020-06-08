@@ -39,6 +39,7 @@ function ClusterDetailsTop(props) {
   const showIDPMessage = (cluster.managed
                           && cluster.state === clusterStates.READY
                           && consoleURL
+                          && clusterIdentityProviders.fulfilled
                           && !hasIdentityProviders);
 
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
@@ -52,11 +53,11 @@ function ClusterDetailsTop(props) {
       id="idpHint"
       variant="warning"
       isInline
-      title="Missing Identity Providers"
+      title="Missing identity providers"
     >
-      Identity Providers determine how users log into the cluster.
+      Identity providers determine how users log into the cluster.
       {' '}
-      <Button variant="link" isInline onClick={openIDPModal}>Add OAuth Configuration</Button>
+      <Button variant="link" isInline onClick={openIDPModal}>Add OAuth configuration</Button>
       {' '}
       to allow  others to log in.
     </Alert>
@@ -67,17 +68,17 @@ function ClusterDetailsTop(props) {
   if (consoleURL && (cluster.state !== clusterStates.UNINSTALLING)) {
     launchConsole = (
       <a href={consoleURL} target="_blank" rel="noopener noreferrer" className="pull-left">
-        <Button variant="primary">Open Console</Button>
+        <Button variant="primary">Open console</Button>
       </a>
     );
   } else if (cluster.managed) {
     launchConsole = (
       <Button variant="primary" isDisabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
-      Open Console
+      Open console
       </Button>
     );
   } else if (cluster.canEdit) {
-    launchConsole = (<Button variant="primary" onClick={() => openModal('edit-console-url', cluster)}>Add Console URL</Button>);
+    launchConsole = (<Button variant="primary" onClick={() => openModal('edit-console-url', cluster)}>Add console URL</Button>);
   }
 
   const actions = (
@@ -148,7 +149,7 @@ function ClusterDetailsTop(props) {
       {showIDPMessage && (
       <Split>
         <SplitItem isFilled>
-          {!clusterIdentityProviders.pending && cluster.canEdit && <IdentityProvidersHint />}
+          {cluster.canEdit && <IdentityProvidersHint />}
         </SplitItem>
       </Split>
       )}

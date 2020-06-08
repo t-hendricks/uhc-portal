@@ -31,6 +31,11 @@ const enableRuleInsights = (clusterID, ruleID) => apiRequest({
   url: `/clusters/${clusterID}/rules/${ruleID}/enable`,
 }, config.configData.insightsGateway);
 
+const getGroupsInsights = () => apiRequest({
+  method: 'get',
+  url: '/groups',
+}, config.configData.insightsGateway);
+
 
 const insigthsService = {
   getClusterInsights,
@@ -39,6 +44,7 @@ const insigthsService = {
   resetVoteOnRuleInsights,
   disableRuleInsights,
   enableRuleInsights,
+  getGroupsInsights,
 };
 
 export default insigthsService;

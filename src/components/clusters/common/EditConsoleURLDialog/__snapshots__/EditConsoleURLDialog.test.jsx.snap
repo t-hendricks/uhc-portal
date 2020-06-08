@@ -23,7 +23,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
     onSecondaryClick={[Function]}
     primaryText="Save"
     secondaryText="Cancel"
-    title="Edit Console URL"
+    title="Edit console URL"
   >
     <Modal
       actions={
@@ -57,7 +57,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-0"
-                  aria-label="Edit Console URL"
+                  aria-label="Edit console URL"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
                   role="dialog"
@@ -86,7 +86,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                     class="pf-c-title pf-m-2xl"
                   >
                      
-                    Edit Console URL
+                    Edit console URL
                      
                   </h1>
                   <div
@@ -155,7 +155,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
       isSmall={true}
       onClose={[Function]}
       showClose={true}
-      title="Edit Console URL"
+      title="Edit console URL"
     >
       <Portal
         containerInfo={
@@ -168,7 +168,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-0"
-                  aria-label="Edit Console URL"
+                  aria-label="Edit console URL"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
                   role="dialog"
@@ -197,7 +197,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                     class="pf-c-title pf-m-2xl"
                   >
                      
-                    Edit Console URL
+                    Edit console URL
                      
                   </h1>
                   <div
@@ -286,7 +286,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
           isSmall={true}
           onClose={[Function]}
           showClose={true}
-          title="Edit Console URL"
+          title="Edit console URL"
         >
           <Backdrop>
             <div
@@ -313,11 +313,11 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                     isLarge={false}
                     isSmall={true}
                     style={Object {}}
-                    title="Edit Console URL"
+                    title="Edit console URL"
                   >
                     <div
                       aria-describedby="pf-modal-0"
-                      aria-label="Edit Console URL"
+                      aria-label="Edit console URL"
                       aria-modal="true"
                       className="pf-c-modal-box pf-m-sm"
                       role="dialog"
@@ -414,7 +414,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
                             className="pf-c-title pf-m-2xl"
                           >
                              
-                            Edit Console URL
+                            Edit console URL
                              
                           </h1>
                         </Title>
@@ -628,7 +628,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
     onSecondaryClick={[Function]}
     primaryText="Save"
     secondaryText="Cancel"
-    title="Edit Console URL"
+    title="Edit console URL"
   >
     <Modal
       actions={
@@ -664,7 +664,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-0"
-                  aria-label="Edit Console URL"
+                  aria-label="Edit console URL"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
                   role="dialog"
@@ -693,7 +693,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     class="pf-c-title pf-m-2xl"
                   >
                      
-                    Edit Console URL
+                    Edit console URL
                      
                   </h1>
                   <div
@@ -762,7 +762,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-1"
-                  aria-label="Edit Console URL"
+                  aria-label="Edit console URL"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
                   role="dialog"
@@ -791,7 +791,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     class="pf-c-title pf-m-2xl"
                   >
                      
-                    Edit Console URL
+                    Edit console URL
                      
                   </h1>
                   <div
@@ -860,7 +860,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-2"
-                  aria-label="Edit Console URL"
+                  aria-label="Edit console URL"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
                   role="dialog"
@@ -889,7 +889,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     class="pf-c-title pf-m-2xl"
                   >
                      
-                    Edit Console URL
+                    Edit console URL
                      
                   </h1>
                   <div
@@ -957,7 +957,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-3"
-                  aria-label="Edit Console URL"
+                  aria-label="Edit console URL"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
                   role="dialog"
@@ -986,7 +986,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     class="pf-c-title pf-m-2xl"
                   >
                      
-                    Edit Console URL
+                    Edit console URL
                      
                   </h1>
                   <div
@@ -1052,7 +1052,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-4"
-                  aria-label="Edit Console URL"
+                  aria-label="Edit console URL"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
                   role="dialog"
@@ -1081,7 +1081,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     class="pf-c-title pf-m-2xl"
                   >
                      
-                    Edit Console URL
+                    Edit console URL
                      
                   </h1>
                   <div
@@ -1193,7 +1193,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
       isSmall={true}
       onClose={[Function]}
       showClose={true}
-      title="Edit Console URL"
+      title="Edit console URL"
     >
       <Portal
         containerInfo={
@@ -1206,7 +1206,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-4"
-                  aria-label="Edit Console URL"
+                  aria-label="Edit console URL"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
                   role="dialog"
@@ -1235,7 +1235,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     class="pf-c-title pf-m-2xl"
                   >
                      
-                    Edit Console URL
+                    Edit console URL
                      
                   </h1>
                   <div
@@ -1367,7 +1367,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
           isSmall={true}
           onClose={[Function]}
           showClose={true}
-          title="Edit Console URL"
+          title="Edit console URL"
         >
           <Backdrop>
             <div
@@ -1394,11 +1394,11 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                     isLarge={false}
                     isSmall={true}
                     style={Object {}}
-                    title="Edit Console URL"
+                    title="Edit console URL"
                   >
                     <div
                       aria-describedby="pf-modal-4"
-                      aria-label="Edit Console URL"
+                      aria-label="Edit console URL"
                       aria-modal="true"
                       className="pf-c-modal-box pf-m-sm"
                       role="dialog"
@@ -1495,7 +1495,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
                             className="pf-c-title pf-m-2xl"
                           >
                              
-                            Edit Console URL
+                            Edit console URL
                              
                           </h1>
                         </Title>
