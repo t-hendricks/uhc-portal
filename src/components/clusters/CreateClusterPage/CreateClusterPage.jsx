@@ -88,7 +88,7 @@ class CreateCluster extends React.Component {
           <img src={rhmiLogo} alt="Red Hat Managed Integration" className="create-cluster-logo" />
         </CardHeader>
         <CardBody>
-          Create a Red Hat Managed Integration Cluster (RHMI),
+          Create a Red Hat Managed Integration cluster,
           provisioned on Red Hat OpenShift Dedicated using Amazon Web Services.
         </CardBody>
       </Link>
