@@ -113,6 +113,9 @@ function InstructionsPreRelease({ token }) {
                     Capabilities to enable ingress logging for the
                     Router for security and audit
                   </li>
+                  <li>
+                  Scale testing saw improvements in connection pooling and improved threading vs 4.3
+                  </li>
                 </ul>
               </li>
               <li>
@@ -125,35 +128,17 @@ function InstructionsPreRelease({ token }) {
               </li>
             </ul>
 
-
-            <h4>Operator Enhancements</h4>
-            <ul>
-              <li>
-              Developers support for operator catalogs hosted on a container registry
-              </li>
-              <li>
-              Openshift monitoring integration for Red Hat operators
-              </li>
-            </ul>
-
-
-            <h4>Installation Enhancements</h4>
-            <ul>
-              <li>
-              Installer support for cluster deployment with user provided infrastructure
-              on Red Hat OpenStack Platform (RHOSP) and Microsoft Azure
-              </li>
-              <li>
-              IPI installer support for cluster deployment on Red Hat Virtualization (RHV)
-              </li>
-              <li>
-              DNS forwarding allowing OpenShift DNS to resolve name queries for
-              your other internal devices using the DNS servers in your data center
-              </li>
-            </ul>
-
-
             <h4>Observability: Monitoring and Logging </h4>
+            <ul>
+              <li>
+                OpenShift Logging is updated with Elasticsearch 6
+                <ul>
+                  <li>Change to index scheme should improve scale</li>
+                </ul>
+              </li>
+            </ul>
+
+            <h4>Operators, Operator Framework, SDK and OLM</h4>
             <ul>
               <li>
               Operators, Operator Framework and OLM supports apiextensions.k8s.io/v1 CRDs
