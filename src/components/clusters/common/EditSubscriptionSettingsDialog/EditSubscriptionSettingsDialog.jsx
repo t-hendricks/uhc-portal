@@ -66,7 +66,8 @@ class EditSubscriptionSettingsDialog extends Component {
     [SYSTEM_UNITS]: [],
   }
 
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { subscription } = nextProps;
     const nextState = this.resetOptions(subscription);
     this.setState(nextState);

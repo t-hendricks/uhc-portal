@@ -15,7 +15,8 @@ class EditConsoleURLDialog extends Component {
     currentValue: '',
   }
 
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { validFor } = this.state;
     if (nextProps.clusterID !== validFor) {
       this.setState((state, props) => ({
