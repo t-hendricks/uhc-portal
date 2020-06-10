@@ -89,7 +89,7 @@ const helpers = {
 
 
 const trackPendo = (event, cloudProviderID) => {
-  if (window.pendo && window.pendo.isReady()) {
+  if (window.pendo && window.pendo.isReady && window.pendo.isReady() && window.pendo.track) {
     window.pendo.track(event, {
       type: cloudProviderID,
     });
