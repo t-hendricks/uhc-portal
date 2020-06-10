@@ -20,7 +20,7 @@
 
 # The cert required to connect to Nexus is already in system CA store per:
 # https://gitlab.cee.redhat.com/app-sre/infra/blob/master/ansible/playbooks/roles/baseline/tasks/main.yml
-
+ls -l /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
 yarn config list
 
 # Run the checks:
