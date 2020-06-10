@@ -3,6 +3,7 @@ import clusterStates from '../clusterStates';
 const cluster = {
   id: 1,
   name: 'test-cluster',
+  display_name: 'test-cluster',
   state: clusterStates.READY,
   console: { url: 'www.testuhc.com' },
   managed: true,

@@ -146,7 +146,7 @@ function actionResolver(
     };
     const deleteModalData = {
       clusterID: cluster.id,
-      clusterName: cluster.name,
+      clusterName,
     };
     return isClusterUninstalling
       ? { ...baseDeleteProps, ...isUninstallingProps }
