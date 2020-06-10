@@ -20,7 +20,9 @@
 
 # Were previously created this by `yarn config set cafile ~/RH-IT-Root-CA.crt`
 # but it's not the right config and anyway don't want leftovers between jobs.
-rm --verbose ~/.yarnrc || true
+if [ -n "$JENKINS_HOME" ]; then
+  rm --verbose ~/.yarnrc || true
+fi
 
 # The cert required to connect to Nexus is already in system CA store per:
 # https://gitlab.cee.redhat.com/app-sre/infra/blob/master/ansible/playbooks/roles/baseline/tasks/main.yml
