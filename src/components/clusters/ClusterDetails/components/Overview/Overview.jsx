@@ -103,7 +103,7 @@ class Overview extends React.Component {
         {displayClusterLogs && cluster.managed && (
         <Card>
           <CardHeader>
-            <Title headingLevel="h2" size="md" className="card-title">Cluster history</Title>
+            <Title headingLevel="h2" size="lg" className="card-title">Cluster history</Title>
           </CardHeader>
           <CardBody>
             <ClusterLogs externalClusterID={cluster.external_id} history={history} />
