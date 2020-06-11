@@ -21,6 +21,7 @@ class CreateCluster extends React.Component {
     // Try to get quota or organization when the component is first mounted.
     const { getOrganizationAndQuota, organization } = this.props;
 
+    document.title = 'Create an OpenShift cluster | Red Hat OpenShift Cluster Manager';
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
