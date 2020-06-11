@@ -119,7 +119,7 @@ function NetworkingSection({
                 id="advanced-networking-alert"
                 isInline
                 variant="info"
-                title="CIDR Ranges may not be changed once the cluster has been created."
+                title="CIDR ranges may not be changed once the cluster has been created."
               >
                  The machine, service and pod ranges may not overlap. The addresses must specify a
                  range, and correspond to the first IP address in their subnet.
@@ -128,7 +128,7 @@ function NetworkingSection({
                    <>
                      <br />
                      <span>
-                      All adresses must be private IPv4 addresses, and belong to one of the
+                      All addresses must be private IPv4 addresses, and belong to one of the
                       following ranges:
                        <ul>
                          <li>10.0.0.0 – 10.255.255.255</li>
