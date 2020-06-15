@@ -51,7 +51,7 @@ function AddOnsReducer(state = initialState, action) {
         draft.addOns = {
           ...initialState.addOns,
           fulfilled: true,
-          items: action.payload.addOns.data.items,
+          items: action.payload.items,
           resourceNames: action.payload.resourceNames,
           freeAddOns: action.payload.freeAddOns,
         };
@@ -72,7 +72,7 @@ function AddOnsReducer(state = initialState, action) {
           ...initialState.clusterAddOns,
           fulfilled: true,
           clusterID: action.payload.clusterID,
-          items: action.payload.clusterAddOns.data.items,
+          items: action.payload.items,
         };
         break;
 
