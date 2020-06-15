@@ -399,7 +399,7 @@ go_to_access_control_tab:
 click_logout_button:
   element:
     selector:
-      xpath: //div[@aria-label='Overflow actions']/button[@class='pf-c-dropdown__toggle pf-m-plain']
+      xpath: //div[@aria-label='Overflow actions']/button[@id='UserMenu']
     op: click
   element:
     selector:
