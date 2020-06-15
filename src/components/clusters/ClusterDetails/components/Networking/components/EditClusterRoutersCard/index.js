@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
   const APIPrivate = cluster.api.listening === 'internal';
   return {
     clusterID: cluster.id,
+    canEdit: cluster.canEdit,
     initialValues: {
       private_api: APIPrivate,
       private_default_router: clusterRouters.default.isPrivate,
