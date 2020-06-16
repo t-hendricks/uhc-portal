@@ -1,14 +1,9 @@
 import UsersConstants from './UsersConstants';
 import { clusterService } from '../../../../../../services';
 
-const getDedicatedAdmins = clusterID => dispatch => dispatch({
-  type: UsersConstants.GET_DEDICATED_ADMNIS,
-  payload: clusterService.getClusterGroupUsers(clusterID, 'dedicated-admins'),
-});
-
-const getClusterAdmins = clusterID => dispatch => dispatch({
-  type: UsersConstants.GET_CLUSTER_ADMINS,
-  payload: clusterService.getClusterGroupUsers(clusterID, 'cluster-admins'),
+const getUsers = clusterID => dispatch => dispatch({
+  type: UsersConstants.GET_USERS,
+  payload: clusterService.getClusterGroupUsers(clusterID),
 });
 
 const addUser = (clusterID, groupID, userID) => dispatch => dispatch({
@@ -30,8 +25,7 @@ const clearAddUserResponses = () => ({
 });
 
 const usersActions = {
-  getDedicatedAdmins,
-  getClusterAdmins,
+  getUsers,
   addUser,
   deleteUser,
   clearUsersResponses,

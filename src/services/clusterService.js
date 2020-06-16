@@ -93,11 +93,12 @@ const createClusterIdentityProvider = (clusterID, params) => apiRequest({
   data: params,
 });
 
-const getClusterGroupUsers = (clusterID, groupID) => apiRequest({
+
+const getClusterGroupUsers = clusterID => apiRequest({
   method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/groups/${groupID}/users`,
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/groups`,
   params: {
-    size: 10000,
+    size: -1,
   },
 });
 

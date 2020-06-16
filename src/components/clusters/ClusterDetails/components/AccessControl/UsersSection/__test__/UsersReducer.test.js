@@ -1,7 +1,7 @@
 import reducer, { initialState } from '../UsersReducer';
 import UsersConstants from '../UsersConstants';
 import { FULFILLED_ACTION } from '../../../../../../../redux/reduxHelpers';
-import { mockGetClusterAdminsPayload, mockGetDedicatedAdminsPayload } from './Users.fixtures';
+import { mockGetUsersPayload } from './Users.fixtures';
 
 describe('ClusterDetails UsersReducer', () => {
   describe('should not handle unrelated actions', () => {
@@ -13,23 +13,40 @@ describe('ClusterDetails UsersReducer', () => {
     });
   });
 
-  it('should handle get cluster admins action', () => {
+  it('should handle get users action', () => {
     const action = {
-      type: FULFILLED_ACTION(UsersConstants.GET_CLUSTER_ADMINS),
-      payload: mockGetClusterAdminsPayload,
+      type: FULFILLED_ACTION(UsersConstants.GET_USERS),
+      payload: mockGetUsersPayload,
     };
     const result = reducer(initialState, action);
 
-    expect(result).toHaveProperty('groupUsers.clusterAdmins.users', mockGetClusterAdminsPayload.data.items);
-  });
+    const expected = [
+      {
+        group: 'dedicated-admins',
+        href: '/api/clusters_mgmt/v1/clusters/1cnov3ee6p0d3n1tuu5e0a96n8rh4q5o/groups/dedicated-admins/users/u1',
+        id: 'u1',
+        kind: 'User',
+      },
+      {
+        group: 'dedicated-admins',
+        href: '/api/clusters_mgmt/v1/clusters/1cnov3ee6p0d3n1tuu5e0a96n8rh4q5o/groups/dedicated-admins/users/u2',
+        id: 'u2',
+        kind: 'User',
+      },
+      {
+        group: 'cluster-admins',
+        href: '/api/clusters_mgmt/v1/clusters/1cnov3ee6p0d3n1tuu5e0a96n8rh4q5o/groups/cluster-admins/users/u2',
+        id: 'u2',
+        kind: 'User',
+      },
+      {
+        group: 'cluster-admins',
+        href: '/api/clusters_mgmt/v1/clusters/1cnov3ee6p0d3n1tuu5e0a96n8rh4q5o/groups/cluster-admins/users/u3',
+        id: 'u3',
+        kind: 'User',
+      },
+    ];
 
-  it('should handle get dedicated admins action', () => {
-    const action = {
-      type: FULFILLED_ACTION(UsersConstants.GET_DEDICATED_ADMNIS),
-      payload: mockGetDedicatedAdminsPayload,
-    };
-    const result = reducer(initialState, action);
-
-    expect(result).toHaveProperty('groupUsers.dedicatedAdmins.users', mockGetDedicatedAdminsPayload.data.items);
+    expect(result).toHaveProperty('groupUsers.users', expected);
   });
 });
