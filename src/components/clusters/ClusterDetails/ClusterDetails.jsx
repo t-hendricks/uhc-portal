@@ -341,8 +341,8 @@ class ClusterDetails extends Component {
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && !!consoleURL && cluster.state === 'ready';
-    const displayNetworkingTab = cluster.canEdit
-          && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING)
+    const displayNetworkingTab = (cluster.state === clusterStates.READY
+          || cluster.state === clusterStates.UPDATING)
           && cluster.managed && !!get(cluster, 'api.url')
           && get(cluster, 'cloud_provider.id') === 'aws';
 
