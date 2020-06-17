@@ -9,22 +9,25 @@ describe('<IdentityProvidersModal />', () => {
   let resetForm;
   let handleSubmit;
   let wrapper;
-  let createIDPResponse;
+  let submitIDPResponse;
 
   beforeEach(() => {
     closeModal = jest.fn();
     resetResponse = jest.fn();
     resetForm = jest.fn();
     handleSubmit = jest.fn();
-    createIDPResponse = {};
+    submitIDPResponse = {};
 
     wrapper = shallow(<IdentityProvidersModal
       closeModal={closeModal}
       resetResponse={resetResponse}
       resetForm={resetForm}
       handleSubmit={handleSubmit}
-      createIDPResponse={createIDPResponse}
+      submitIDPResponse={submitIDPResponse}
       isOpen
+      initialValues={{
+        isEditForm: false,
+      }}
     />);
   });
 
@@ -38,8 +41,11 @@ describe('<IdentityProvidersModal />', () => {
       resetResponse={resetResponse}
       resetForm={resetForm}
       handleSubmit={handleSubmit}
-      createIDPResponse={createIDPResponse}
+      submitIDPResponse={submitIDPResponse}
       isOpen={false}
+      initialValues={{
+        isEditForm: false,
+      }}
     />);
     expect(wrapper).toMatchSnapshot();
   });

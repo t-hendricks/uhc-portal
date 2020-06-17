@@ -41,6 +41,16 @@ function IDPSection({
       }),
       className: 'hand-pointer',
     },
+    {
+      title: 'Edit',
+      onClick: (_, __, rowData) => openModal('create-identity-provider', {
+        clusterID,
+        idpID: rowData.idpID,
+        isEditForm: true,
+        rowId: rowData.id,
+      }),
+      className: 'hand-pointer',
+    },
   ];
 
   const idpRow = idp => ({

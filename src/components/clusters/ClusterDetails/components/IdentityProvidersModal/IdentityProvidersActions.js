@@ -13,6 +13,13 @@ const createClusterIdentityProvider = (clusterID, params) => dispatch => dispatc
     .then(response => (response)),
 });
 
+const editClusterIdentityProvider = (clusterID, params) => dispatch => dispatch({
+  type: identityProvidersConstants.UPDATE_CLUSTER_IDENTITY_PROVIDER,
+  payload: clusterService
+    .editClusterIdentityProvider(clusterID, params)
+    .then(response => (response)),
+});
+
 const resetCreatedClusterIDPResponse = () => dispatch => dispatch({
   type: identityProvidersConstants.RESET_CREATED_CLUSTER_IDP_RESPONSE,
 });
@@ -37,6 +44,7 @@ const clusterIdentityActions = {
   deleteIDP,
   resetDeletedIDPResponse,
   resetIdentityProvidersState,
+  editClusterIdentityProvider,
 };
 
 export {
@@ -47,4 +55,5 @@ export {
   deleteIDP,
   resetDeletedIDPResponse,
   resetIdentityProvidersState,
+  editClusterIdentityProvider,
 };

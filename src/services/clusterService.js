@@ -93,6 +93,11 @@ const createClusterIdentityProvider = (clusterID, params) => apiRequest({
   data: params,
 });
 
+const editClusterIdentityProvider = (clusterID, params) => apiRequest({
+  method: 'patch',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/identity_providers/${params.id}`,
+  data: params,
+});
 
 const getClusterGroupUsers = clusterID => apiRequest({
   method: 'get',
@@ -277,6 +282,7 @@ const clusterService = {
   editIngress,
   addAdditionalIngress,
   deleteAdditionalIngress,
+  editClusterIdentityProvider,
 };
 
 export default clusterService;
