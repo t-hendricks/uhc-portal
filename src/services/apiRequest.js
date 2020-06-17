@@ -6,7 +6,7 @@ const authInterceptor = (client) => {
   client.interceptors.request.use(async (cfg) => {
     await insights.chrome.auth.getUser();
     const token = await insights.chrome.auth.getToken();
-    const BASE_URL = cfg.customHost || (config.configData.apiGateway ? config.configData.apiGateway : '');
+    const BASE_URL = cfg.baseURL || (config.configData.apiGateway ? config.configData.apiGateway : '');
     const updatedCfg = { ...cfg, url: `${BASE_URL}${cfg.url}` };
     if (token) {
       updatedCfg.headers = {
@@ -20,8 +20,6 @@ const authInterceptor = (client) => {
   return client;
 };
 
-const client = authInterceptor(axios.create());
-
-const apiRequest = (cfg, customHost) => client({ ...cfg, customHost });
+const apiRequest = authInterceptor(axios.create());
 
 export default apiRequest;

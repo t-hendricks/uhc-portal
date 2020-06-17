@@ -1,40 +1,45 @@
 import apiRequest from './apiRequest';
 import config from '../config';
 
-const putLikeOnRuleInsights = (clusterID, ruleID) => apiRequest({
+const insightsAPIRequest = params => apiRequest({
+  ...params,
+  baseURL: config.configData.insightsGateway,
+});
+
+const putLikeOnRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
   method: 'put',
   url: `/clusters/${clusterID}/rules/${ruleID}/like`,
-}, config.configData.insightsGateway);
+});
 
-const putDislikeOnRuleInsights = (clusterID, ruleID) => apiRequest({
+const putDislikeOnRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
   method: 'put',
   url: `/clusters/${clusterID}/rules/${ruleID}/dislike`,
-}, config.configData.insightsGateway);
+});
 
-const resetVoteOnRuleInsights = (clusterID, ruleID) => apiRequest({
+const resetVoteOnRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
   method: 'put',
   url: `/clusters/${clusterID}/rules/${ruleID}/reset_vote`,
-}, config.configData.insightsGateway);
+});
 
-const getClusterInsights = (clusterId, orgId) => apiRequest({
+const getClusterInsights = (clusterId, orgId) => insightsAPIRequest({
   method: 'get',
   url: `/report/${orgId}/${clusterId}`,
-}, config.configData.insightsGateway);
+});
 
-const disableRuleInsights = (clusterID, ruleID) => apiRequest({
+const disableRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
   method: 'put',
   url: `/clusters/${clusterID}/rules/${ruleID}/disable`,
-}, config.configData.insightsGateway);
+});
 
-const enableRuleInsights = (clusterID, ruleID) => apiRequest({
+const enableRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
   method: 'put',
   url: `/clusters/${clusterID}/rules/${ruleID}/enable`,
-}, config.configData.insightsGateway);
+});
 
-const getGroupsInsights = () => apiRequest({
+const getGroupsInsights = () => insightsAPIRequest({
   method: 'get',
   url: '/groups',
-}, config.configData.insightsGateway);
+});
 
 
 const insigthsService = {
