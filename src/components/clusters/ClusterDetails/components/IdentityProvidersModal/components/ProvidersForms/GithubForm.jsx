@@ -79,7 +79,7 @@ class GithubFormRequired extends React.Component {
               name="github_auth_mode"
               defaultValue="organizations"
               options={[
-                { value: 'organizations', label: 'Use trganizations' },
+                { value: 'organizations', label: 'Use organizations' },
                 { value: 'teams', label: 'Use teams' },
               ]}
               onChange={this.onAuthModeChange}

@@ -5,14 +5,13 @@ import {
   Button, Card, CardBody, EmptyStateIcon,
 } from '@patternfly/react-core';
 import { cellWidth } from '@patternfly/react-table';
+import RuleTable, { severity } from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
+import ReportDetails from '@redhat-cloud-services/rule-components/dist/cjs/ReportDetails';
 import {
-  RuleTable,
-  severity,
   descriptionFilter,
   totalRiskFilter,
   ruleStatusFilter,
-  ReportDetails,
-} from '@redhat-cloud-services/rule-components';
+} from '@redhat-cloud-services/rule-components/dist/cjs/RuleFilters';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import { CheckCircleIcon } from '@patternfly/react-icons';
@@ -43,7 +42,7 @@ const groupsFilter = groups => ({ onChange, value, ...props } = { onChange: () =
     items: Object.entries(groups).map(groupValues => ({
       label: groupValues[1].title,
       textual: groupValues[1].title,
-      value: groupValues[1].tags,
+      value: groupValues[1].tags.join(','),
     })),
   },
 });
@@ -171,6 +170,28 @@ class InsightsTable extends React.Component {
     );
   };
 
+  addGroupsFilter = (filterValue) => {
+    this.setState(
+      (state) => {
+        const filters = { ...state.filters };
+        if (!filters.groupsFilter) {
+          filters.groupsFilter = [];
+        }
+        if (!filters.groupsFilter.includes(filterValue)) {
+          filters.groupsFilter.push(filterValue);
+        }
+        return {
+          filters,
+          meta: {
+            ...state.meta,
+            page: 1,
+          },
+        };
+      },
+      () => this.fetchData({ filterValues: this.state.filters }),
+    );
+  };
+
   fetchData = ({
     filterValues = this.state.filterValues,
     sortBy: sortByParam,
@@ -224,6 +245,7 @@ class InsightsTable extends React.Component {
           groups={groups}
           insightsData={insightsData}
           batteryClicked={this.addTotalRiskFilter}
+          groupClicked={this.addGroupsFilter}
         />
         <Card>
           <CardBody className="no-padding">

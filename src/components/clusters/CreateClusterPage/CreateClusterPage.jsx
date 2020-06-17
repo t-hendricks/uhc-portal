@@ -21,6 +21,7 @@ class CreateCluster extends React.Component {
     // Try to get quota or organization when the component is first mounted.
     const { getOrganizationAndQuota, organization } = this.props;
 
+    document.title = 'Create an OpenShift cluster | Red Hat OpenShift Cluster Manager';
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
@@ -88,7 +89,7 @@ class CreateCluster extends React.Component {
           <img src={rhmiLogo} alt="Red Hat Managed Integration" className="create-cluster-logo" />
         </CardHeader>
         <CardBody>
-          Create a Red Hat Managed Integration Cluster (RHMI),
+          Create a Red Hat Managed Integration cluster,
           provisioned on Red Hat OpenShift Dedicated using Amazon Web Services.
         </CardBody>
       </Link>

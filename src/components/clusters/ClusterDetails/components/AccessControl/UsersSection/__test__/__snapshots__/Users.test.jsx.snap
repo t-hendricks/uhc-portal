@@ -39,6 +39,9 @@ exports[`<Users /> should render without users 1`] = `
           "pending": false,
         }
       }
+      canAddClusterAdmin={false}
+      clearAddUserResponses={[MockFunction]}
+      closeModal={[MockFunction]}
       clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
       isOpen={false}
       submit={[MockFunction]}
@@ -209,17 +212,31 @@ exports[`<Users /> with users should render 1`] = `
         Array [
           Object {
             "cells": Array [
-              "user_name",
-              "cluster-admins",
+              "u1",
+              "dedicated-admins",
             ],
-            "userID": "user_name",
+            "userID": "u1",
           },
           Object {
             "cells": Array [
-              "user_name",
+              "u2",
+              "dedicated-admins",
+            ],
+            "userID": "u2",
+          },
+          Object {
+            "cells": Array [
+              "u2",
               "cluster-admins",
             ],
-            "userID": "user_name",
+            "userID": "u2",
+          },
+          Object {
+            "cells": Array [
+              "u3",
+              "cluster-admins",
+            ],
+            "userID": "u3",
           },
         ]
       }
@@ -246,6 +263,9 @@ exports[`<Users /> with users should render 1`] = `
           "pending": false,
         }
       }
+      canAddClusterAdmin={false}
+      clearAddUserResponses={[MockFunction]}
+      closeModal={[MockFunction]}
       clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
       isOpen={false}
       submit={[MockFunction]}

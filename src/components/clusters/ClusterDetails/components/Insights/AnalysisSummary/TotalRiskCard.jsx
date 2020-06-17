@@ -24,7 +24,7 @@ import {
   Chart, ChartBar, ChartAxis, ChartStack, ChartTooltip, ChartLegend,
 } from '@patternfly/react-charts';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
-import { severity } from '@redhat-cloud-services/rule-components';
+import { severity } from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
 import PropTypes from 'prop-types';
 import { RemoteHealthPopover } from '../EmptyTableMessage';
 import { severityMapping } from '../helpers';

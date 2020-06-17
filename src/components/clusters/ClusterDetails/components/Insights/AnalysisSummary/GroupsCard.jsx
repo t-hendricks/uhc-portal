@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import React from 'react';
 import {
   Card,
@@ -5,22 +7,41 @@ import {
   Stack,
   StackItem,
   Title,
+  Popover,
 } from '@patternfly/react-core';
-import { ChartPie } from '@patternfly/react-charts';
+import {
+  c_button_m_control_active_after_BorderBottomColor,
+  global_primary_color_200,
+  global_Color_200,
+} from '@patternfly/react-tokens';
+import { ChartPie, ChartLegend } from '@patternfly/react-charts';
+import { HelpIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
 const groupRulesByGroups = (data, groups) => groups.reduce(
   (acc, { tags, title }) => ({
     ...acc,
-    [title]: data.reduce((a, v) => (v.tags.filter(x => tags.includes(x)).length > 0
-      ? a + 1
-      : a),
-    0),
+    [title]: {
+      count: data.reduce((a, v) => (v.tags.filter(x => tags.includes(x)).length > 0
+        ? a + 1
+        : a),
+      0),
+      tags: tags.join(','),
+    },
   }),
   {},
 );
 
-const GroupsCard = ({ insightsData, groups }) => {
+const mouseOverClickMutation = props => ({
+  style: {
+    ...props.style,
+    fill: global_primary_color_200.value,
+    textDecoration: 'underline',
+    cursor: 'pointer',
+  },
+});
+
+const GroupsCard = ({ insightsData, groups, groupClicked }) => {
   const groupedRulesByGroups = groupRulesByGroups(insightsData.data, groups);
 
   return (
@@ -28,9 +49,23 @@ const GroupsCard = ({ insightsData, groups }) => {
       <CardBody>
         <Stack>
           <StackItem>
-            <Title headingLevel="h2" size="xl">
+            <Title className="group-card-title" headingLevel="h2" size="xl">
               Health checks by category
             </Title>
+            <Popover
+              position="right"
+              maxWidth="22rem"
+              bodyContent={(
+                <p>
+                  Insights Health Checks grouped by the type of recommendation
+                </p>
+              )}
+              aria-label="What is Grouping?"
+              boundary="viewport"
+              enableFlip
+            >
+              <HelpIcon color={global_Color_200.value} className="group-card-icon" />
+            </Popover>
           </StackItem>
           <StackItem>
             <ChartPie
@@ -38,12 +73,43 @@ const GroupsCard = ({ insightsData, groups }) => {
               ariaTitle="Groups statistics"
               constrainToVisibleArea
               data={Object.entries(groupedRulesByGroups)
-                .map(([title, count]) => ({ x: title, y: count }))}
+                .map(([title, group]) => ({ x: title, y: group.count }))}
               height={140}
               labels={({ datum }) => `${datum.x}: ${datum.y}`}
-              legendData={Object.entries(groupedRulesByGroups).map(([title, count]) => ({ name: `${title}: ${count}` }))}
+              legendData={Object.entries(groupedRulesByGroups).map(([title, group]) => ({ name: `${title}: ${group.count}`, tags: group.tags }))}
               legendOrientation="vertical"
               legendPosition="right"
+              legendComponent={(
+                <ChartLegend
+                  responsive={false}
+                  height={140}
+                  width={200}
+                  className="pf-m-redhat-font"
+                  style={{
+                    labels: {
+                      fill: c_button_m_control_active_after_BorderBottomColor.value,
+                    },
+                  }}
+                  events={[{
+                    target: 'labels',
+                    eventHandlers: {
+                      onMouseOver: () => [{
+                        mutation: props => mouseOverClickMutation(props),
+                      }],
+                      onMouseOut: () => [{
+                        mutation: () => null,
+                      }],
+                      onClick: () => [{
+                        mutation: (props) => {
+                          // eslint-disable-next-line react/prop-types
+                          groupClicked(props.datum.tags);
+                          return mouseOverClickMutation(props);
+                        },
+                      }],
+                    },
+                  }]}
+                />
+              )}
               padding={{
                 bottom: 0,
                 left: -40,
@@ -62,6 +128,7 @@ const GroupsCard = ({ insightsData, groups }) => {
 GroupsCard.propTypes = {
   insightsData: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
+  groupClicked: PropTypes.func.isRequired,
 };
 
 export default GroupsCard;

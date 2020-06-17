@@ -13,6 +13,7 @@ import {
   SplitItem,
   ActionGroup,
   Button,
+  Tooltip,
 } from '@patternfly/react-core';
 
 import { ReduxCheckbox, ReduxVerticalFormGroup } from '../../../../../../common/ReduxFormComponents';
@@ -36,7 +37,18 @@ class EditClusterRoutersCard extends React.Component {
       refreshCluster,
       defaultRouterAddress,
       additionalRouterAddress,
+      canEdit,
     } = this.props;
+
+    const changeSettingsBtn = (
+      <Button
+        variant="primary"
+        onClick={this.handleSaveChanges}
+        isDisabled={!canEdit || pristine || !valid}
+      >
+      Change settings
+      </Button>
+    );
 
     return (
       <>
@@ -56,6 +68,7 @@ class EditClusterRoutersCard extends React.Component {
                       component={ReduxCheckbox}
                       name="private_api"
                       label="Make API private"
+                      isDisabled={!canEdit}
                     />
                   </div>
                 </GridItem>
@@ -71,6 +84,7 @@ class EditClusterRoutersCard extends React.Component {
                       component={ReduxCheckbox}
                       name="private_default_router"
                       label="Make router private"
+                      isDisabled={!canEdit}
                     />
                   </div>
                 </GridItem>
@@ -86,6 +100,7 @@ class EditClusterRoutersCard extends React.Component {
                         name="enable_additional_router"
                         labelOff="Not enabled"
                         label="Enabled"
+                        isDisabled={!canEdit}
                       />
                     </SplitItem>
                   </Split>
@@ -102,6 +117,7 @@ class EditClusterRoutersCard extends React.Component {
                           component={ReduxCheckbox}
                           name="private_additional_router"
                           label="Make router private"
+                          disabled={!canEdit}
                         />
                       </div>
                     </>
@@ -121,19 +137,20 @@ class EditClusterRoutersCard extends React.Component {
                       validate={checkRouteSelectors}
                       key="route_selectors"
                       onChange={this.handleChangeRouteSelectors}
+                      isReadOnly={!canEdit}
                     />
                   </GridItem>
                 )
               }
                 <GridItem span={9}>
                   <ActionGroup>
-                    <Button
-                      variant="primary"
-                      onClick={this.handleSaveChanges}
-                      isDisabled={pristine || !valid}
-                    >
-                      Change settings
-                    </Button>
+                    { !canEdit ? (
+                      <Tooltip content="You do not have permission to edit routers. Only cluster owners and organization administrators can edit routers.">
+                        <span>
+                          {changeSettingsBtn}
+                        </span>
+                      </Tooltip>
+                    ) : changeSettingsBtn }
                     <Button
                       variant="secondary"
                       isDisabled={pristine}
@@ -175,6 +192,7 @@ EditClusterRoutersCard.propTypes = {
   refreshCluster: PropTypes.func.isRequired,
   defaultRouterAddress: PropTypes.string.isRequired,
   additionalRouterAddress: PropTypes.string.isRequired,
+  canEdit: PropTypes.bool.isRequired,
 };
 
 export default EditClusterRoutersCard;

@@ -24,7 +24,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ReplaceWebpackPlugin = require('html-replace-webpack-plugin');
 const { insights } = require('./package.json');
 
-const modDir = path.resolve(__dirname, 'node_modules');
+const modDir = 'node_modules';
 const srcDir = path.resolve(__dirname, 'src');
 const outDir = path.resolve(__dirname, 'build', insights.appname);
 

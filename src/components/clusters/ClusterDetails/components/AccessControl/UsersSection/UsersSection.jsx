@@ -27,10 +27,10 @@ class UsersSection extends React.Component {
 
   componentDidMount() {
     const {
-      clusterGroupUsers, cluster, getUsers, toggleClusterAdminResponse, getUsersPending,
+      clusterGroupUsers, cluster, getUsers, toggleClusterAdminResponse,
     } = this.props;
     if (clusterGroupUsers.clusterID !== cluster.id
-      || (!getUsersPending)
+      || (!clusterGroupUsers.pending)
       // don't fetch usesrs if we jsut allowed/ removed cluster admin access
       || !toggleClusterAdminResponse.pending) {
       getUsers();
@@ -43,21 +43,20 @@ class UsersSection extends React.Component {
       addUserResponse,
       getUsers,
       toggleClusterAdminResponse,
-      getUsersPending,
-      getUsersFulfilled,
+      clusterGroupUsers,
     } = this.props;
     const { deletedRowIndex } = this.state;
 
     // fetch users again if we just added/deleted a user.
     if (((deleteUserResponse.fulfilled && prevProps.deleteUserResponse.pending)
       || (addUserResponse.fulfilled && prevProps.addUserResponse.pending))
-      && ((!getUsersPending)
+      && ((!clusterGroupUsers.pending)
       // don't fetch usesrs if we jsut allowed/ removed cluster admin access
       || !toggleClusterAdminResponse.pending)) {
       getUsers();
     }
-    if (prevProps.getUsersPending
-      && getUsersFulfilled && deletedRowIndex !== null) {
+    if (prevProps.clusterGroupUsers.pending
+      && clusterGroupUsers.fulfilled && deletedRowIndex !== null) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ deletedRowIndex: null });
     }
@@ -81,8 +80,6 @@ class UsersSection extends React.Component {
       closeModal,
       clearAddUserResponses,
       canAddClusterAdmin,
-      getUsersPending,
-      getUserErrors,
       hasUsers,
     } = this.props;
     const { deletedRowIndex } = this.state;
@@ -143,39 +140,26 @@ class UsersSection extends React.Component {
       },
     ];
 
-    const userRow = (user) => {
-      // parse the url to get the user group
-      const userHrefPathSections = user.href.match(/[^/?]*[^/?]/g);
-      const userGroup = userHrefPathSections[6];
+    const userRow = user => ({
+      cells: [
+        user.id,
+        user.group,
+      ],
+      userID: user.id,
+    });
 
-      return ({
-        cells: [
-          user.id,
-          userGroup,
-        ],
-        userID: user.id,
-      });
-    };
-
-    const getErrorBox = error => (
-      <EmptyState>
-        <ErrorBox message="Error getting cluster users" response={error} />
-      </EmptyState>
-    );
-
-    if (!hasUsers && !!(getUserErrors.length)) {
+    if (!hasUsers && clusterGroupUsers.error) {
       return (
-        <>
-          {getUserErrors.map(error => getErrorBox(error))}
-        </>
+        <EmptyState>
+          <ErrorBox message="Error getting cluster users" response={clusterGroupUsers} />
+        </EmptyState>
       );
     }
 
     const learnMoreLink = <a rel="noopener noreferrer" href={links.DEDICATED_ADMIN_ROLE} target="_blank">Learn more.</a>;
 
-    const userList = hasUsers ? clusterGroupUsers.users : [];
-    const rows = hasUsers && userList.map(userRow);
-    const showSkeleton = !hasUsers && getUsersPending;
+    const rows = hasUsers && clusterGroupUsers.users.map(userRow);
+    const showSkeleton = !hasUsers && clusterGroupUsers.pending;
     const skeletonRow = {
       cells: [
         {
@@ -187,7 +171,7 @@ class UsersSection extends React.Component {
 
 
     if (hasUsers
-      && (getUsersPending
+      && (clusterGroupUsers.pending
       || addUserResponse.pending) && deletedRowIndex === null) {
       rows.push(skeletonRow);
     }
@@ -215,7 +199,9 @@ class UsersSection extends React.Component {
       </Card>
     ) : (
       <Card>
-        {!!(getUserErrors.length) && getUserErrors.map(error => getErrorBox(error))}
+        { clusterGroupUsers.error && (
+        <ErrorBox message="Error getting cluster users" response={clusterGroupUsers} />
+        )}
         <CardBody>
           <Title className="card-title" headingLevel="h3" size="lg">Cluster administrative users</Title>
           <p>
@@ -273,9 +259,6 @@ UsersSection.propTypes = {
   clearUsersResponses: PropTypes.func.isRequired,
   clearAddUserResponses: PropTypes.func.isRequired,
   toggleClusterAdminResponse: PropTypes.object.isRequired,
-  getUsersPending: PropTypes.bool.isRequired,
-  getUsersFulfilled: PropTypes.bool.isRequired,
-  getUserErrors: PropTypes.array.isRequired,
   hasUsers: PropTypes.bool.isRequired,
 };
 

@@ -158,8 +158,7 @@ class ClusterDetails extends Component {
     const {
       match,
       clusterDetails,
-      getDedicatedAdmins,
-      getClusterAdmins,
+      getUsers,
       getAlerts,
       getNodes,
       getClusterOperators,
@@ -185,7 +184,7 @@ class ClusterDetails extends Component {
       }
 
       if (!isUuid(clusterID)) {
-        getDedicatedAdmins(clusterID);
+        getUsers(clusterID);
         getAlerts(clusterID);
         getNodes(clusterID);
         getClusterOperators(clusterID);
@@ -194,9 +193,6 @@ class ClusterDetails extends Component {
         if (get(clusterDetails, 'cluster.managed')) {
           getClusterAddOns(clusterID);
           this.refreshIDP();
-        }
-        if (get(clusterDetails, 'cluster.cluster_admin_enabled')) {
-          getClusterAdmins(clusterID);
         }
       }
     }
@@ -341,8 +337,8 @@ class ClusterDetails extends Component {
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && !!consoleURL && cluster.state === 'ready';
-    const displayNetworkingTab = cluster.canEdit
-          && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING)
+    const displayNetworkingTab = (cluster.state === clusterStates.READY
+          || cluster.state === clusterStates.UPDATING)
           && cluster.managed && !!get(cluster, 'api.url')
           && get(cluster, 'cloud_provider.id') === 'aws';
 
@@ -500,8 +496,7 @@ ClusterDetails.propTypes = {
   getClusterOperators: PropTypes.func.isRequired,
   getAddOns: PropTypes.func.isRequired,
   getClusterAddOns: PropTypes.func.isRequired,
-  getDedicatedAdmins: PropTypes.func.isRequired,
-  getClusterAdmins: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   displayClusterLogs: PropTypes.bool.isRequired,

@@ -142,6 +142,8 @@ ${SUBJECT}
 # The file is placed there by
 # https://gitlab.cee.redhat.com/app-sre/infra/blob/master/ansible/playbooks/roles/baseline/tasks/main.yml
 export npm_config_cafile=/etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
+ls -l /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
+yarn config list
 
 if [ "$1" == "beta" ]; then
     echo "running staging push"
