@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import { PageSection } from '@patternfly/react-core';
-
-import PageTitle from '../../common/PageTitle';
+import {
+  PageSection,
+} from '@patternfly/react-core';
 import Breadcrumbs from '../common/Breadcrumbs';
-
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsAzureIPI from './instructions/InstructionsAzureIPI';
 import { scrollToTop } from '../../../common/helpers';
+import instructionsMapping from './instructions/instructionsMapping';
+import OCPInstructions from './instructions/OCPInstructions';
+import PageTitle from '../../common/PageTitle';
 
 class InstallAzureIPI extends Component {
   componentDidMount() {
@@ -35,9 +35,13 @@ class InstallAzureIPI extends Component {
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
-        <PageSection className="ocp-instructions">
-          <InstructionsAzureIPI token={token} />
+        <PageTitle title={instructionsMapping.azure.ipi.title} breadcrumbs={breadcrumbs} />
+        <PageSection>
+          <OCPInstructions
+            token={token}
+            cloudProvider={instructionsMapping.azure.cloudProvider}
+            {...instructionsMapping.azure.ipi}
+          />
         </PageSection>
       </>
     );

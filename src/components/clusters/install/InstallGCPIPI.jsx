@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {
+  PageSection,
+} from '@patternfly/react-core';
 
-import { PageSection } from '@patternfly/react-core';
 import Breadcrumbs from '../common/Breadcrumbs';
-import PageTitle from '../../common/PageTitle';
-
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsGCPIPI from './instructions/InstructionsGCPIPI';
 import { scrollToTop } from '../../../common/helpers';
+import instructionsMapping from './instructions/instructionsMapping';
+import OCPInstructions from './instructions/OCPInstructions';
+import PageTitle from '../../common/PageTitle';
 
 class InstallGCPIPI extends Component {
   componentDidMount() {
@@ -34,11 +36,16 @@ class InstallGCPIPI extends Component {
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
-        <PageSection className="ocp-instructions">
-          <InstructionsGCPIPI token={token} />
+        <PageTitle title={instructionsMapping.gcp.ipi.title} breadcrumbs={breadcrumbs} />
+        <PageSection>
+          <OCPInstructions
+            token={token}
+            cloudProvider={instructionsMapping.gcp.cloudProvider}
+            {...instructionsMapping.gcp.ipi}
+          />
         </PageSection>
       </>
+
     );
   }
 }

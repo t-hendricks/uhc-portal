@@ -76,7 +76,6 @@ const checkOpenIDIssuer = (value) => {
   return undefined;
 };
 
-
 // Function to validate that the cluster name field contains a valid DNS label:
 const checkClusterName = (value) => {
   if (!value) {
@@ -384,7 +383,6 @@ const disjointFromDockerRange = (value) => {
     return `Failed to parse CIDR: ${e}`;
   }
 };
-
 
 const awsSubnetMask = fieldName => (value) => {
   if (cidr(value) !== undefined || !value) {

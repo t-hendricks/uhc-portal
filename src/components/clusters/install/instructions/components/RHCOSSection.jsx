@@ -19,19 +19,17 @@ const RHCOSSection = ({ learnMoreURL, token, downloadURL = links.DOWNLOAD_RHCOS_
         </a>
       </p>
     )}
-    <p>
-      <Button
-        component="a"
-        href={downloadURL}
-        rel="noreferrer noopener"
-        target="_blank"
-        variant="secondary"
-        className="install--download-installer"
-        disabled={!!token.error}
-      >
-        Download RHCOS
-      </Button>
-    </p>
+    <Button
+      component="a"
+      href={downloadURL}
+      rel="noreferrer noopener"
+      target="_blank"
+      variant="secondary"
+      className="install--download-installer"
+      disabled={!!token.error}
+    >
+      Download RHCOS
+    </Button>
   </>
 );
 RHCOSSection.propTypes = {

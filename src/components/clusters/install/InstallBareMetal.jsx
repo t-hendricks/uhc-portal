@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import { PageSection } from '@patternfly/react-core';
+import {
+  PageSection,
+} from '@patternfly/react-core';
 
 import { tollboothActions } from '../../../redux/actions';
 import Breadcrumbs from '../common/Breadcrumbs';
-import PageTitle from '../../common/PageTitle';
-import InstructionsBareMetal from './instructions/InstructionsBareMetal';
 import { scrollToTop } from '../../../common/helpers';
+import instructionsMapping from './instructions/instructionsMapping';
+import OCPInstructions from './instructions/OCPInstructions';
+import PageTitle from '../../common/PageTitle';
 
 class InstallBareMetal extends Component {
   componentDidMount() {
@@ -31,10 +33,26 @@ class InstallBareMetal extends Component {
       />
     );
     return (
+    /**
+       *  <>
+        <PageTitle title={instructionsMapping.vmware.title} breadcrumbs={breadcrumbs} />
+        <PageSection>
+          <OCPInstructions
+            token={token}
+            {...instructionsMapping.vmware}
+          />
+        </PageSection>
+      </>
+       */
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
-        <PageSection className="ocp-instructions">
-          <InstructionsBareMetal token={token} />
+        <PageTitle title={instructionsMapping.vmware.title} breadcrumbs={breadcrumbs} />
+        <PageSection>
+          <OCPInstructions
+            token={token}
+            breadcrumbs={breadcrumbs}
+            cloudProvider={instructionsMapping.bareMetal.cloudProvider}
+            {...instructionsMapping.bareMetal}
+          />
         </PageSection>
       </>
     );
