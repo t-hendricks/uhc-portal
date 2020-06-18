@@ -8,7 +8,12 @@ import { closeModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import getLoadBalancerValues from '../../../../redux/actions/loadBalancerActions';
 import getPersistentStorageValues from '../../../../redux/actions/persistentStorageActions';
-import { minValueSelector, shouldShowStorageQuotaAlert, shouldShowLoadBalancerAlert } from './SclaeClusterSelectors';
+import {
+  minValueSelector,
+  shouldShowStorageQuotaAlert,
+  shouldShowLoadBalancerAlert,
+  masterResizeAlertThreshold,
+} from './ScaleClusterSelectors';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 
 const reduxFormConfig = {
@@ -28,6 +33,7 @@ const mapStateToProps = (state) => {
     isMultiAz: modalData.multi_az,
     showLoadBalancerAlert: shouldShowLoadBalancerAlert(state),
     showPersistentStorageAlert: shouldShowStorageQuotaAlert(state),
+    masterResizeAlertThreshold: masterResizeAlertThreshold(state),
     persistentStorageValues: state.persistentStorageValues,
     loadBalancerValues: state.loadBalancerValues,
     organization: state.userProfile.organization,
