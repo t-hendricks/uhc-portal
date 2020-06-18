@@ -35,7 +35,7 @@ function OverviewEmptyState() {
             <CardBody>
               Help developers simplify the process of delivering
               code from development to production.
-              <a href="https://docs.openshift.com/container-platform/latest/serverless/serverless-getting-started.html" rel="noreferrer noopener">
+              <a href="https://docs.openshift.com/container-platform/latest/serverless/serverless-getting-started.html" rel="noreferrer noopener" target="_blank">
                 <Button variant="link" icon={<ArrowRightIcon />}>
                 Get started
                 </Button>
@@ -51,7 +51,7 @@ function OverviewEmptyState() {
             <CardBody>
               Connect, secure and monitor microservices in your
               OpenShift Container Platform environment.
-              <a href="https://docs.openshift.com/container-platform/latest/service_mesh/service_mesh_arch/understanding-ossm.html" rel="noreferrer noopener">
+              <a href="https://docs.openshift.com/container-platform/latest/service_mesh/service_mesh_arch/understanding-ossm.html" rel="noreferrer noopener" target="_blank">
                 <Button variant="link" icon={<ArrowRightIcon />}>
                 Get started
                 </Button>
@@ -66,7 +66,7 @@ function OverviewEmptyState() {
             </CardHeader>
             <CardBody>
               Run and manage virtual machine workloads alongside your container workloads.
-              <a href="https://docs.openshift.com/container-platform/latest/cnv/cnv-about-cnv.html" rel="noreferrer noopener">
+              <a href="https://docs.openshift.com/container-platform/latest/cnv/cnv-about-cnv.html" rel="noreferrer noopener" target="_blank">
                 <Button variant="link" icon={<ArrowRightIcon />}>
                 Get started
                 </Button>
@@ -83,7 +83,7 @@ function OverviewEmptyState() {
             </CardHeader>
             <CardBody>
                 Plan your transition and migrate from OpenShift Container Platform 3 to 4.
-              <a href="https://docs.openshift.com/container-platform/latest/migration/migrating_3_4/about-migration.html" rel="noreferrer noopener">
+              <a href="https://docs.openshift.com/container-platform/latest/migration/migrating_3_4/about-migration.html" rel="noreferrer noopener" target="_blank">
                 <Button variant="link" icon={<ArrowRightIcon />}>
                 Get started
                 </Button>
@@ -101,15 +101,14 @@ function OverviewEmptyState() {
             <CardBody>
               Red hat OpenShift Dedicated is a single-tenant, high availablity Kubernetes clusters,
               managed by Red Hat on Amazon Web Services or Google Cloud Platform.
-              <Button
+              <a
                 href="https://www.openshift.com/products/dedicated/contact/"
                 rel="noreferrer noopener"
                 target="_blank"
-                variant="secondary"
                 id="request-information-btn"
               >
-                 Request information
-              </Button>
+                <Button variant="secondary">Request information</Button>
+              </a>
             </CardBody>
           </Card>
         </GridItem>

@@ -1377,7 +1377,7 @@ h3#grant-role-select  {
  }
 
 #overview-emptystate {
-  iframe{
+  iframe {
     width: 100%;
     height: 375px;
   }
@@ -1388,6 +1388,9 @@ h3#grant-role-select  {
 }
 
 #request-information-btn {
-  display: block;
-  margin-top: var(--pf-global--spacer--md);
+  text-decoration: none;
+  button {
+    display: block;
+    margin-top: var(--pf-global--spacer--md);
+  }
 }
