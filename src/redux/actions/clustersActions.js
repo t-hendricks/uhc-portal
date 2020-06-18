@@ -247,6 +247,11 @@ const resetCreatedClusterResponse = () => dispatch => dispatch({
   type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
 });
 
+const getClusterStatus = clusterID => dispatch => dispatch({
+  type: clustersConstants.GET_CLUSTER_STATUS,
+  payload: clusterService.getClusterStatus(clusterID),
+});
+
 const clustersActions = {
   clearClusterResponse,
   createCluster,
@@ -260,6 +265,7 @@ const clustersActions = {
   editClusterDisplayName,
   archiveCluster,
   unarchiveCluster,
+  getClusterStatus,
 };
 
 export {
@@ -279,4 +285,5 @@ export {
   unarchiveCluster,
   clearClusterUnarchiveResponse,
   editClusterConsoleURL,
+  getClusterStatus,
 };

@@ -29,6 +29,11 @@ const getClusterDetails = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}`,
 });
 
+const getClusterStatus = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/status`,
+});
+
 const fetchClusterByExternalId = clusterExternalID => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters?&search=external_id='${clusterExternalID}'`,
@@ -283,6 +288,7 @@ const clusterService = {
   addAdditionalIngress,
   deleteAdditionalIngress,
   editClusterIdentityProvider,
+  getClusterStatus,
 };
 
 export default clusterService;

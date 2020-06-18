@@ -381,6 +381,7 @@ class ClusterDetails extends Component {
             cloudProviders={cloudProviders}
             history={history}
             displayClusterLogs={displayClusterLogs}
+            refresh={this.refresh}
           />
         </TabContent>
         {!isArchived && (
