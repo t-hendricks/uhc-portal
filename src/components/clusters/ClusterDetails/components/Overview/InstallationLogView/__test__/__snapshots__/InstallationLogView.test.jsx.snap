@@ -15,7 +15,7 @@ exports[`<InstallationLogView /> should render with logs 1`] = `
   </CardHeader>
   <CardBody>
     <p>
-      Cluster installation has started, installation log will appear here once it becomes available.
+      Cluster installation has started. Installation log will appear here once it becomes available.
     </p>
   </CardBody>
 </article>
@@ -36,7 +36,7 @@ exports[`<InstallationLogView /> should render without logs 1`] = `
   </CardHeader>
   <CardBody>
     <p>
-      Cluster installation has started, installation log will appear here once it becomes available.
+      Cluster installation has started. Installation log will appear here once it becomes available.
     </p>
   </CardBody>
 </article>

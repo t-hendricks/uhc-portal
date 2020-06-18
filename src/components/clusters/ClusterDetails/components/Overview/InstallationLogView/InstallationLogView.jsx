@@ -128,7 +128,7 @@ class LogWindow extends React.Component {
 
     const message = errorCode === 403
       ? metricsStatusMessages.installing
-      : 'Cluster installation has started, installation log will appear here once it becomes available.';
+      : 'Cluster installation has started. Installation log will appear here once it becomes available.';
 
     /* using <article className="pf-c-card"> instead of <Card>
     to make it possible to add a ref for the card, so we can use requestFullScreen */
