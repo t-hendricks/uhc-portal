@@ -9,7 +9,11 @@ cd "$(dirname "$0")"
 echo Waiting on server and backend...
 yarn wait-on http://localhost:8001/ http://localhost:8010/api
 
+# If insights-proxy is already running, spandx will happily start on
+# next available port, despite us requesting specific SPANDX_PORT.
 yarn stop-insights-proxy
+export SPANDX_PORT=1337
+./check-spandx-port-available.js
 
 case "$(uname -s)" in
     Linux*)
