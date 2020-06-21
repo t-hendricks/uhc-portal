@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as Sentry from '@sentry/browser';
 
 import config from '../config';
 
@@ -13,6 +14,11 @@ const authInterceptor = (client) => {
         ...updatedCfg.headers,
         Authorization: `Bearer ${token}`,
       };
+    } else {
+      Sentry.withScope((scope) => {
+        scope.setFingerprint(['empty token']); // group all "empty token" errors together
+        Sentry.captureException(new Error('Got empty token from Insights'));
+      });
     }
     delete updatedCfg.customHost;
     return updatedCfg;

@@ -21,6 +21,7 @@
     "@redhat-cloud-services/frontend-components-utilities": "^0.0.15",
     "@redhat-cloud-services/rule-components": "2.0.3",
     "@sentry/browser": "5.15.5",
+    "@sentry/integrations": "^5.17.0",
     "axios": "^0.19.0",
     "cidr-tools": "^3.0.0",
     "classnames": "^2.2.6",
