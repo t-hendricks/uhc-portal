@@ -23,6 +23,7 @@ import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 import { NotificationsPortal } from '@redhat-cloud-services/frontend-components-notifications';
 import * as Sentry from '@sentry/browser';
+import { SessionTiming } from '@sentry/integrations';
 import { userInfoResponse } from './redux/actions/userActions';
 import config from './config';
 import App from './components/App/App';
@@ -98,12 +99,20 @@ if (!window.insights && process.env.NODE_ENV === 'development') {
             Sentry.init({
               dsn: config.configData.sentryDSN,
               integrations: [
+                new SessionTiming(),
                 new Sentry.Integrations.GlobalHandlers({
                   onerror: true,
                   onunhandledrejection: false,
                 }),
               ],
             });
+            if (data && data.identity && data.identity.user) {
+              // add user info to Sentry
+              Sentry.configureScope((scope) => {
+                const { email, username } = data.identity.user;
+                scope.setUser({ email, username });
+              });
+            }
           }
           render();
         });
