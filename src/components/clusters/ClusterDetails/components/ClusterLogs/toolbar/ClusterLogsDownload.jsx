@@ -123,7 +123,7 @@ class ClusterLogsDownload extends React.Component {
         <Button variant="primary" onClick={() => this.handleClick(true)}>Download history</Button>
         <PfModal
           isSmall
-          title="Download Cluster History"
+          title="Download cluster history"
           isOpen={isOpen}
           onClose={() => this.closeModal()}
           actions={[this.renderDownloadButton()]}
