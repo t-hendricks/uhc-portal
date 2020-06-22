@@ -12,6 +12,13 @@ class LDAPFormRequired extends React.Component {
     hasBindDN: false,
   }
 
+  componentDidMount() {
+    const { isEditForm, idpEdited } = this.props;
+    if (isEditForm && idpEdited.ldap.bind_dn && idpEdited.ldap.bind_dn !== '') {
+      this.setState({ hasBindDN: true });
+    }
+  }
+
   toggleBindPasswordDisabled = (e, value) => {
     if (value) {
       this.setState({ hasBindDN: true });
@@ -23,7 +30,6 @@ class LDAPFormRequired extends React.Component {
   render() {
     const { isPending } = this.props;
     const { hasBindDN } = this.state;
-
     return (
       <>
         <GridItem span={8}>
@@ -49,6 +55,7 @@ class LDAPFormRequired extends React.Component {
             helpText="DN to bind with during the search phase."
           />
         </GridItem>
+
         <GridItem span={8}>
           <Field
             component={ReduxVerticalFormGroup}
@@ -111,6 +118,8 @@ class LDAPFormRequired extends React.Component {
 
 LDAPFormRequired.propTypes = {
   isPending: PropTypes.bool,
+  isEditForm: PropTypes.bool,
+  idpEdited: PropTypes.object,
 };
 
 LDAPFormRequired.defaultProps = {
