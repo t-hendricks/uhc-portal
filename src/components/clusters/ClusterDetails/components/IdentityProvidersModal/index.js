@@ -51,7 +51,6 @@ const initialValuesForEditing = (idpEdited, editedType) => ({
   hostname: idpEdited[editedType].hostname,
   teams: getGitHubTeamsAndOrgsData(idpEdited[editedType]),
   organizations: getGitHubTeamsAndOrgsData(idpEdited[editedType]),
-  github_ca_text: 'Test',
 });
 
 const mapStateToProps = (state) => {
