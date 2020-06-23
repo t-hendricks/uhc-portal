@@ -33,4 +33,35 @@ const shouldShowStorageQuotaAlert = (state) => {
   return false;
 };
 
-export { minValueSelector, shouldShowStorageQuotaAlert, shouldShowLoadBalancerAlert };
+
+// Determine whether a master instance resize alert should be shown.
+// Since the threshold is depenent on the current nodes, we return it
+// for inclusion in the alert itself.
+const masterResizeThresholds = {
+  medium: 25,
+  large: 100,
+};
+const masterResizeAlertThreshold = (state) => {
+  const { data } = state.modal;
+  const currentNodes = get(data, 'nodes.compute', 0);
+  const values = getFormValues('ScaleCluster')(state);
+  const requestedNodes = parseInt(get(values, 'nodes_compute', 0), 10);
+  if (requestedNodes && currentNodes) {
+    if (currentNodes <= masterResizeThresholds.large
+        && requestedNodes > masterResizeThresholds.large) {
+      return masterResizeThresholds.large;
+    }
+    if (currentNodes <= masterResizeThresholds.medium
+        && requestedNodes > masterResizeThresholds.medium) {
+      return masterResizeThresholds.medium;
+    }
+  }
+  return 0;
+};
+
+export {
+  minValueSelector,
+  shouldShowStorageQuotaAlert,
+  shouldShowLoadBalancerAlert,
+  masterResizeAlertThreshold,
+};
