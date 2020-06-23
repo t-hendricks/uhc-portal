@@ -101,6 +101,7 @@ const channels = {
   IBMZ: 'ibmz',
   STABLE: 'stable',
   PPC: 'ppc64le',
+  CRC: 'CRC',
 };
 
 const urls = {
@@ -155,6 +156,18 @@ const urls = {
     mac: {
       installer: links.INSTALLER_MAC_PPC,
       cli: links.CLI_TOOLS_MAC_PPC,
+    },
+  },
+
+  [channels.CRC]: {
+    windows: {
+      installer: links.INSTALL_CRC_DOWNLOAD_WINDOWS,
+    },
+    mac: {
+      installer: links.INSTALL_CRC_DOWNLOAD_MACOS,
+    },
+    linux: {
+      installer: links.INSTALL_CRC_DOWNLOAD_LINUX,
     },
   },
 };
