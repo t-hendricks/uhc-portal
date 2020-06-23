@@ -8,7 +8,7 @@ import { viewActions } from '../../../redux/actions/viewOptionsActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
 import canAllowAdminListSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminListSelectors';
-import canSubscribeOListCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPListSelector';
+import canSubscribeOCPListSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPListSelector';
 
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
@@ -31,7 +31,7 @@ const mapStateToProps = state => ({
   organization: state.userProfile.organization,
   anyModalOpen: !!state.modal.modalName,
   canAllowClusterAdminList: canAllowAdminListSelector(state),
-  canSubscribeOCPList: canSubscribeOListCPSelector(state),
+  canSubscribeOCPList: canSubscribeOCPListSelector(state),
 });
 
 export default connect(
