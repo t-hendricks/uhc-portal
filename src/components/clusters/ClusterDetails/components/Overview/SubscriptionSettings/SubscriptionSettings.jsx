@@ -15,8 +15,10 @@ import {
   subscriptionSettings,
 } from '../../../../../../common/subscriptionTypes';
 
-
-function SubscriptionSettings({ subscription, openModal, canEdit = false }) {
+function SubscriptionSettings({
+  subscription, openModal,
+  canEdit = false, canSubscribeOCP = false,
+}) {
   const planID = get(subscription, 'plan.id');
   if (planID !== 'OCP') {
     return null;
@@ -60,6 +62,8 @@ function SubscriptionSettings({ subscription, openModal, canEdit = false }) {
   const obligationStr = systemUnitsStr === subscriptionSystemUnits.SOCKETS
     ? socketTotalStr : cpuTotalStr;
 
+  const salesURL = 'https://www.redhat.com/en/contact';
+
   return (
     <Card>
       <CardHeader>
@@ -80,7 +84,14 @@ function SubscriptionSettings({ subscription, openModal, canEdit = false }) {
               <dd>{serviceLevelStr}</dd>
               {isEditViewable && (
               <dd>
-                <Button variant="link" isInline onClick={handleEditSettings}>Edit subscription settings</Button>
+                {canSubscribeOCP ? (
+                  <Button variant="link" isInline onClick={handleEditSettings}>Edit subscription settings</Button>
+                ) : (
+                  <>
+                    <a href={salesURL} target="_blank" rel="noreferrer noopener">Contact sales</a>
+                    {' to purchase an OpenShift subscription.'}
+                  </>
+                )}
               </dd>
               )}
             </dl>
@@ -108,6 +119,7 @@ function SubscriptionSettings({ subscription, openModal, canEdit = false }) {
 SubscriptionSettings.propTypes = {
   subscription: PropTypes.object.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  canSubscribeOCP: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
 };
 

@@ -1,6 +1,7 @@
 const openModal = jest.fn();
 
 const canEdit = true;
+const canSubscribeOCP = true;
 
 const subscription = {
   id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
@@ -34,4 +35,5 @@ export {
   subscription,
   openModal,
   canEdit,
+  canSubscribeOCP,
 };

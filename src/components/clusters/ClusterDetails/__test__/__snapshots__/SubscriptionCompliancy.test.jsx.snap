@@ -9,14 +9,6 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
 >
   <p>
     Your 60-day OpenShift evaluation expires in 0 days. 
-    <Component
-      isInline={true}
-      onClick={[Function]}
-      variant="link"
-    >
-      Edit subscription settings
-    </Component>
-     for non-evaluation use. 
     <a
       href="https://www.redhat.com/en/contact"
       rel="noreferrer noopener"
@@ -24,7 +16,7 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
     >
       Contact sales
     </a>
-     if you are not an active OpenShift customer.
+     to purchase an OpenShift subscription.
   </p>
 </Component>
 `;
@@ -53,14 +45,6 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] =
   <p>
     Your cluster is not supported and you may stop receving updates.
      
-    <Component
-      isInline={true}
-      onClick={[Function]}
-      variant="link"
-    >
-      Edit subscription settings
-    </Component>
-     for non-evaluation use. 
     <a
       href="https://www.redhat.com/en/contact"
       rel="noreferrer noopener"
@@ -68,7 +52,7 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] =
     >
       Contact sales
     </a>
-     if you are not an active OpenShift customer.
+     to purchase an OpenShift subscription.
      
     <Component
       isInline={true}

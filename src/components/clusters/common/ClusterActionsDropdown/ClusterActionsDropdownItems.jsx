@@ -14,7 +14,7 @@ import getClusterName from '../../../../common/getClusterName';
  * @param {*} openModal           Action to open modal
  */
 function actionResolver(
-  cluster, showConsoleButton, openModal, canAllowClusterAdmin,
+  cluster, showConsoleButton, openModal, canAllowClusterAdmin, canSubscribeOCP,
 ) {
   const baseProps = {
     component: 'button',
@@ -192,7 +192,7 @@ function actionResolver(
     && isArchived;
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
   const showEditDisconnected = cluster.canEdit && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED);
-  const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && cluster.subscription;
+  const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && canSubscribeOCP;
   const showToggleClusterAdmin = cluster.managed && canAllowClusterAdmin;
 
   return [
@@ -210,10 +210,10 @@ function actionResolver(
 }
 
 function dropDownItems({
-  cluster, showConsoleButton, openModal, canAllowClusterAdmin,
+  cluster, showConsoleButton, openModal, canAllowClusterAdmin, canSubscribeOCP,
 }) {
   const actions = actionResolver(
-    cluster, showConsoleButton, openModal, canAllowClusterAdmin,
+    cluster, showConsoleButton, openModal, canAllowClusterAdmin, canSubscribeOCP,
   );
   const menuItems = actions.map(
     action => (<DropdownItem {...action}>{action.title}</DropdownItem>),

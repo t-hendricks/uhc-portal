@@ -135,6 +135,8 @@ class ClusterList extends Component {
       setClusterDetails,
       anyModalOpen,
       queryParams,
+      canAllowClusterAdminList,
+      canSubscribeOCPList,
     } = this.props;
 
     const { showSkeleton } = this.state;
@@ -231,6 +233,8 @@ class ClusterList extends Component {
                 setSorting={setSorting}
                 isPending={isPendingNoData || (pending && showSkeleton)}
                 setClusterDetails={setClusterDetails}
+                canAllowClusterAdminList={canAllowClusterAdminList}
+                canSubscribeOCPList={canSubscribeOCPList}
               />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
@@ -292,6 +296,8 @@ ClusterList.propTypes = {
   queryParams: PropTypes.shape({
     has_filters: PropTypes.bool,
   }),
+  canAllowClusterAdminList: PropTypes.objectOf(PropTypes.bool),
+  canSubscribeOCPList: PropTypes.objectOf(PropTypes.bool),
 };
 
 export default ClusterList;
