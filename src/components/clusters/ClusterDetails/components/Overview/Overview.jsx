@@ -47,7 +47,10 @@ class Overview extends React.Component {
     const { showInstallSuccessAlert } = this.state;
     const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-    const metricsAvailable = hasResourceUsageMetrics(cluster);
+    const metricsAvailable = hasResourceUsageMetrics(cluster)
+      && (cluster.canEdit
+          || (cluster.state !== clusterStates.PENDING
+              && cluster.state !== clusterStates.INSTALLING));
     const metricsStatusMessage = isArchived ? metricsStatusMessages.archived
       : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
 
