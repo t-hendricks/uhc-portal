@@ -31,3 +31,31 @@ make \
   app \
   test \
   binaries
+
+# Selenium tests
+# --------------
+function finish {
+  # Commands here should always return 0, to retain exit code from the test.
+
+  # Don't leave run-away containers.
+  yarn stop || true
+  run/podman-or-docker.sh ps --all || true
+  pgrep --full --list-full spandx || true
+}
+trap finish EXIT
+
+make run/verification-tests
+# Re-pulling allows iterating on a new version of the image (OK to keep pushing the new tag until merged).
+# But when Quay is down and we have a cached image, use it.
+make selenium-tests-pull || true
+
+# Comes from Vault, see
+# https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/resources/jenkins/uhc/secrets.yaml
+export UHC_TOKEN=$TEST_SELENIUM_NOANYQUOTA_OFFLINE_TOKEN
+export UNATTENDED=1
+export FORCE_COLOR=1
+
+# If test gets stuck, stop after realistic time.
+# Jenkins aborting after 30min is wasteful and doesn't
+# give our `finish` function enough time to clean up.
+timeout --signal=TERM --kill-after=2m 5m yarn e2e-test-run
