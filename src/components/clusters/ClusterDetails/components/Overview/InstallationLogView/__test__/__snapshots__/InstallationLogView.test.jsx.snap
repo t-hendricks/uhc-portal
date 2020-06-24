@@ -10,7 +10,7 @@ exports[`<InstallationLogView /> should render with logs 1`] = `
       headingLevel="h2"
       size="lg"
     >
-      Installation Logs
+      Installation logs
     </Title>
   </CardHeader>
   <CardBody>
@@ -174,7 +174,7 @@ exports[`<InstallationLogView /> should render without logs 1`] = `
       headingLevel="h2"
       size="lg"
     >
-      Installation Logs
+      Installation logs
     </Title>
   </CardHeader>
   <CardBody>
@@ -337,7 +337,7 @@ exports[`<InstallationLogView /> should stop the timer when recieving 403 error 
       headingLevel="h2"
       size="lg"
     >
-      Installation Logs
+      Installation logs
     </Title>
   </CardHeader>
   <CardBody>

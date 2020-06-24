@@ -68,7 +68,7 @@ function SubscriptionSettings({
     <Card>
       <CardHeader>
         <Title headingLevel="h2" size="lg" className="card-title">
-          Subscription Settings
+          Subscription settings
           {titleIcon}
         </Title>
       </CardHeader>

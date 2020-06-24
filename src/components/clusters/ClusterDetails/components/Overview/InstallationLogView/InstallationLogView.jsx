@@ -138,7 +138,7 @@ class LogWindow extends React.Component {
     return (
       <article className="pf-c-card" ref={this.cardRef}>
         <CardHeader>
-          <Title headingLevel="h2" size="lg" className="card-title logview-title">Installation Logs</Title>
+          <Title headingLevel="h2" size="lg" className="card-title logview-title">Installation logs</Title>
           { !!totalLines && (
             <div className="logview-buttons">
               <Button

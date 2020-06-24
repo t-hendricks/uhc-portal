@@ -35,7 +35,7 @@ function OCPSubscriptionCard() {
       </CardBody>
       <CardBody className="section-text">
         <Button component="a" href="https://cloud.redhat.com/subscriptions/openshift-sw" rel="noopener noreferrer" target="_blank">
-          Open Subscription Watch
+          Open subscription watch
         </Button>
       </CardBody>
       <CardBody />
