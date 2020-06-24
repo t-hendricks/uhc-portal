@@ -175,6 +175,9 @@ class ClusterList extends Component {
     const isPendingNoData = (!size(clusters) && pending && (hasNoFilters || !valid))
     || (!organization.fulfilled && !organization.error);
 
+    const showSpinner = !isPendingNoData && pending && !loadingChangedView;
+    const showSkeleton = isPendingNoData || (pending && loadingChangedView);
+
     if (!size(clusters) && !isPendingNoData && hasNoFilters) {
       return (
         <PageSection>
@@ -203,7 +206,7 @@ class ClusterList extends Component {
                   <Button className="toolbar-item">Create cluster</Button>
                 </Link>
                 <ClusterListExtraActions className="toolbar-item" />
-                { (pending && !isPendingNoData && !loadingChangedView) && (
+                { showSpinner && (
                   <Spinner className="cluster-list-spinner" />
                 ) }
                 { error && (
@@ -231,7 +234,7 @@ class ClusterList extends Component {
                 clusters={clusters || []}
                 viewOptions={viewOptions}
                 setSorting={setSorting}
-                isPending={isPendingNoData || (pending && loadingChangedView)}
+                isPending={showSkeleton}
                 setClusterDetails={setClusterDetails}
                 canAllowClusterAdminList={canAllowClusterAdminList}
                 canSubscribeOCPList={canSubscribeOCPList}
