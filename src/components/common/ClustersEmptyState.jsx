@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   Button,
@@ -18,15 +19,22 @@ import { ArrowRightIcon } from '@patternfly/react-icons';
 
 const VIDEO_URL = 'https://www.youtube.com/embed/D_Lj0rObunI';
 
-function OverviewEmptyState() {
+function ClustersEmptyState({ showRegisterCluster = false }) {
   return (
     <>
       <div id="overview-emptystate-bg-img-container">
         <Title headingLevel="h1" size="3xl" className="space-left-lg space-bottom-md">Get started with OpenShift Container Platform</Title>
         <Title headingLevel="h2" size="lg" className="space-left-lg space-bottom-md">Download, install and configure Red Hat OpenShift 4 for free now.</Title>
         <Link to="/create" className="space-left-lg">
-          <span>Create an OpenShift cluser</span>
+          <span id="overview-emptystate-create-cluster">Create an OpenShift cluser</span>
         </Link>
+        {showRegisterCluster && (
+        <Link to="/register" id="overview-emptystate-register-cluster" className="space-left-lg">
+          <Button className="buttonHref" icon={<ArrowRightIcon />}>
+                Register a disconnected cluster
+          </Button>
+        </Link>
+        )}
       </div>
       <Title size="xl" headingLevel="h1" className="space-top-lg space-bottom-lg">Get productive with OpenShift</Title>
       <Flex id="overview-emptystate-get-productive">
@@ -134,4 +142,9 @@ function OverviewEmptyState() {
   );
 }
 
-export default OverviewEmptyState;
+
+ClustersEmptyState.propTypes = {
+  showRegisterCluster: PropTypes.bool,
+};
+
+export default ClustersEmptyState;
