@@ -409,7 +409,7 @@ exports[`<DetailsRight /> should render 1`] = `
       GiB
     </dd>
     <dt>
-      Load Balancers
+      Load balancers
     </dt>
     <dd>
       0

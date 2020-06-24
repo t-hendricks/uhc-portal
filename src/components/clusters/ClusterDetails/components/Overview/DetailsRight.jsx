@@ -61,7 +61,7 @@ function DetailsRight({ cluster }) {
         { cluster.managed && !cluster.byoc && (
           <>
             <dt>
-            Load Balancers
+            Load balancers
             </dt>
             <dd>
               {cluster.load_balancer_quota}

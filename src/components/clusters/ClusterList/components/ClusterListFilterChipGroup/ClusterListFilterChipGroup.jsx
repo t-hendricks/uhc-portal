@@ -24,7 +24,7 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
   const groups = [
     {
       key: 'plan_id',
-      label: 'Cluster Type',
+      label: 'Cluster type',
       optionLabels: {
         OSD: 'OSD',
         OCP: 'OCP',

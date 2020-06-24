@@ -5,7 +5,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
   dropdownItems={
     Array [
       <DropdownGroup
-        label="Cluster Type"
+        label="Cluster type"
       >
         <DropdownItem>
           <div>
