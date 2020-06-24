@@ -23,7 +23,7 @@ function OCPSubscriptionCard() {
         <List component={ListComponent.ol} type={OrderType.number} className="ocp-list">
           <ListItem>View a cluster in OpenShift Cluster Manager.</ListItem>
           <ListItem>
-            Choose “Edit Subscription Settings” from either the actions menu in the upper right,
+            Choose “Edit subscription settings” from either the actions menu in the upper right,
             or in the Subscriptions settings section of the Overview.
           </ListItem>
           <ListItem>Select the options that apply to your cluster in the dialog and save.</ListItem>
