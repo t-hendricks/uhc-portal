@@ -13,7 +13,7 @@ const BASE_DOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z
 const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 // Regular expression used to check whether input is a valid IPv4 CIDR range
-const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
+const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[1-9]))$/;
 const MACHINE_CIDR_MAX = 23;
 const SERVICE_CIDR_MAX = 24;
 const POD_CIDR_MAX = 18;
@@ -390,12 +390,18 @@ const awsSubnetMask = fieldName => (value) => {
   }
   const awsSubnetMaskRanges = {
     network_machine_cidr: [AWS_CIDR_MIN, MACHINE_CIDR_MAX],
-    network_pod_cidr: [AWS_CIDR_MIN, POD_CIDR_MAX],
-    network_service_cidr: [AWS_CIDR_MIN, SERVICE_CIDR_MAX],
+    network_pod_cidr: [undefined, POD_CIDR_MAX],
+    network_service_cidr: [undefined, SERVICE_CIDR_MAX],
   };
   const maskRange = awsSubnetMaskRanges[fieldName];
   const parts = value.split('/');
   const maskBits = parseInt(parts[1], 10);
+  if (!maskRange[0]) {
+    if (maskBits > maskRange[1] || maskBits < 1) {
+      return `Subnet mask must be between 1-${maskRange[1]}.`;
+    }
+    return undefined;
+  }
   if (!(maskRange[0] <= maskBits && maskBits <= maskRange[1])) {
     return `Subnet mask must be between ${maskRange[0]}-${maskRange[1]}.`;
   }
