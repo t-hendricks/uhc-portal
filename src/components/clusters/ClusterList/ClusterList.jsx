@@ -60,7 +60,7 @@ import { viewConstants } from '../../../redux/constants';
 
 class ClusterList extends Component {
   state = {
-    showSkeleton: false,
+    loadingChangedView: false,
   };
 
   componentDidMount() {
@@ -99,12 +99,12 @@ class ClusterList extends Component {
     if ((!valid && !pending)
         || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ showSkeleton: true });
+      this.setState({ loadingChangedView: true });
       this.refresh();
     }
     if (prevProps.pending && !pending) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ showSkeleton: false });
+      this.setState({ loadingChangedView: false });
     }
   }
 
@@ -139,7 +139,7 @@ class ClusterList extends Component {
       canSubscribeOCPList,
     } = this.props;
 
-    const { showSkeleton } = this.state;
+    const { loadingChangedView } = this.state;
 
     const pageHeader = (
       <PageHeader>
@@ -203,7 +203,7 @@ class ClusterList extends Component {
                   <Button className="toolbar-item">Create cluster</Button>
                 </Link>
                 <ClusterListExtraActions className="toolbar-item" />
-                { (pending && !isPendingNoData && !showSkeleton) && (
+                { (pending && !isPendingNoData && !loadingChangedView) && (
                   <Spinner className="cluster-list-spinner" />
                 ) }
                 { error && (
@@ -231,7 +231,7 @@ class ClusterList extends Component {
                 clusters={clusters || []}
                 viewOptions={viewOptions}
                 setSorting={setSorting}
-                isPending={isPendingNoData || (pending && showSkeleton)}
+                isPending={isPendingNoData || (pending && loadingChangedView)}
                 setClusterDetails={setClusterDetails}
                 canAllowClusterAdminList={canAllowClusterAdminList}
                 canSubscribeOCPList={canSubscribeOCPList}
