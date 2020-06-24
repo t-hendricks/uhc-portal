@@ -152,15 +152,17 @@ class ClusterList extends Component {
         <>
           {pageHeader}
           <PageSection>
-            <EmptyState>
-              <ErrorBox
-                message="Error retrieving clusters"
-                response={{
-                  errorMessage,
-                  operationID,
-                }}
-              />
-            </EmptyState>
+            <div data-ready>
+              <EmptyState>
+                <ErrorBox
+                  message="Error retrieving clusters"
+                  response={{
+                    errorMessage,
+                    operationID,
+                  }}
+                />
+              </EmptyState>
+            </div>
           </PageSection>
         </>
       );
@@ -178,11 +180,19 @@ class ClusterList extends Component {
     const showSpinner = !isPendingNoData && pending && !loadingChangedView;
     const showSkeleton = isPendingNoData || (pending && loadingChangedView);
 
+    // This signals to end-to-end tests that page has completed loading.
+    // For now deliberately ignoring in-place reloads with a spinner;
+    // tests that modify clusters (e.g. create or scale a cluster) should wait
+    // for concrete data they expect to see.
+    const dataReady = !showSkeleton;
+
     if (!size(clusters) && !isPendingNoData && hasNoFilters) {
       return (
         <PageSection>
           <GlobalErrorBox />
-          <ClusterListEmptyState />
+          <div data-ready>
+            <ClusterListEmptyState />
+          </div>
         </PageSection>
       );
     }
@@ -192,7 +202,7 @@ class ClusterList extends Component {
         {pageHeader}
         <PageSection>
           <Card>
-            <div className="cluster-list">
+            <div className="cluster-list" data-ready={dataReady}>
               <GlobalErrorBox />
               <TableToolbar id="cluster-list-toolbar">
                 <div className="toolbar-item">
