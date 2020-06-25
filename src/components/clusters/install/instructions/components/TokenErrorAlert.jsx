@@ -4,18 +4,23 @@ import { Alert } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import * as Sentry from '@sentry/browser';
 
+const BANNED_USER_CODE = 'ACCT-MGMT-22';
+
 class TokenErrorAlert extends React.Component {
   componentDidMount() {
     const { token } = this.props;
     const errorMessage = token.errorMessage || '';
-    Sentry.captureException(new Error(`Failed to fetch OCP token: ${errorMessage}`));
+    const code = token.internalErrorCode || '';
+    if (code !== BANNED_USER_CODE) {
+      Sentry.captureException(new Error(`Failed to fetch OCP token: ${errorMessage}`));
+    }
   }
 
   render() {
     const { token } = this.props;
     const code = token.internalErrorCode || '';
     const errorMessage = token.errorMessage || '';
-    const message = code === 'ACCT-MGMT-22' ? errorMessage : (
+    const message = code === BANNED_USER_CODE ? errorMessage : (
       <>
         {errorMessage}
         <br />
