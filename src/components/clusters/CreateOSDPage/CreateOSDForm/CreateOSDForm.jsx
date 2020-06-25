@@ -74,18 +74,17 @@ class CreateOSDForm extends React.Component {
     } = this.state;
 
     const isAws = cloudProviderID === 'aws';
-    const allowBYOC = isAws && product !== 'rhmi';
 
     const hasBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
     const hasAwsRhInfraQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
 
-    const isBYOCForm = allowBYOC && hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
+    const isBYOCForm = isAws && hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
 
     return (
       <>
         {/* Billing Model */}
-        { allowBYOC && (
+        { isAws && (
           <>
             <GridItem span={12}>
               <h3 className="osd-page-header">Billing model</h3>
@@ -101,12 +100,12 @@ class CreateOSDForm extends React.Component {
         )}
 
         {/* BYOC modal */}
-        { allowBYOC && isBYOCModalOpen && (
+        { isAws && isBYOCModalOpen && (
           <CustomerCloudSubscriptionModal closeModal={this.closeBYOCModal} />
         )}
 
         {/* AWS account details */}
-        { allowBYOC && isBYOCForm && (
+        { isAws && isBYOCForm && (
           <>
             <GridItem span={12}>
               <h3 className="osd-page-header">AWS account details</h3>
