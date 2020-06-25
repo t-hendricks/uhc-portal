@@ -66,7 +66,7 @@ class ClusterList extends Component {
   componentDidMount() {
     document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
     const {
-      getCloudProviders, cloudProviders, organization, getOrganizationAndQuota, setListFlag,
+      getCloudProviders, cloudProviders, setListFlag,
     } = this.props;
 
     scrollToTop();
@@ -85,9 +85,6 @@ class ClusterList extends Component {
 
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
-    }
-    if (!organization.fulfilled && !organization.pending) {
-      getOrganizationAndQuota();
     }
   }
 
@@ -129,7 +126,6 @@ class ClusterList extends Component {
       openModal,
       invalidateClusters,
       errorMessage,
-      organization,
       operationID,
       history,
       setClusterDetails,
@@ -174,8 +170,7 @@ class ClusterList extends Component {
     /* isPendingNoData - we're waiting for the cluster list response,
       and we have no valid data to show. In this case we probably want to show a "Skeleton".
     */
-    const isPendingNoData = (!size(clusters) && pending && (hasNoFilters || !valid))
-    || (!organization.fulfilled && !organization.error);
+    const isPendingNoData = !size(clusters) && pending && (hasNoFilters || !valid);
 
     const showSpinner = !isPendingNoData && pending && !loadingChangedView;
     const showSkeleton = isPendingNoData || (pending && loadingChangedView);
@@ -298,8 +293,6 @@ ClusterList.propTypes = {
   cloudProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  organization: PropTypes.object.isRequired,
-  getOrganizationAndQuota: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
   history: PropTypes.shape({
