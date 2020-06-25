@@ -20,7 +20,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { NotificationsPortal } from '@redhat-cloud-services/frontend-components-notifications';
+import { NotificationPortal } from '@redhat-cloud-services/frontend-components-notifications';
 import * as Sentry from '@sentry/browser';
 import { SessionTiming } from '@sentry/integrations';
 import { userInfoResponse } from './redux/actions/userActions';
@@ -37,7 +37,7 @@ const render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <>
-        <NotificationsPortal store={store} />
+        <NotificationPortal store={store} />
         <BrowserRouter basename={basename}>
           <App />
         </BrowserRouter>

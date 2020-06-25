@@ -75,10 +75,10 @@ module.exports = (env, argv) => {
       new ReplaceWebpackPlugin(
         [{
           pattern: '@@insights-esi-body@@',
-          replacement: `<esi:include src="/${appDeployment}/chrome/snippets/body.html" />`
+          replacement: `<esi:include src="/${appDeployment}/chrome/snippets/body.html" />`,
         }, {
           pattern: '@@insights-esi-head@@',
-          replacement: `<esi:include src="/${appDeployment}/chrome/snippets/head.html" />`
+          replacement: `<esi:include src="/${appDeployment}/chrome/snippets/head.html" />`,
         }],
       ),
       new CopyWebpackPlugin([
@@ -93,15 +93,9 @@ module.exports = (env, argv) => {
           test: /\.jsx?$/,
           exclude: [/node_modules/],
           use: {
-            loader: 'babel-loader',
+            loader: 'babel-loader', // babel config is in babel.config.js
             options: {
-              presets: ['@babel/preset-react', '@babel/preset-env'],
-              plugins: [
-                '@babel/plugin-proposal-class-properties',
-                '@babel/plugin-proposal-object-rest-spread',
-                '@babel/plugin-transform-object-assign',
-                '@babel/plugin-syntax-dynamic-import'
-              ],
+              cacheDirectory: true,
             },
           },
         },
@@ -142,7 +136,7 @@ module.exports = (env, argv) => {
         {
           test: /\.mjs$/,
           include: /node_modules/,
-          type: 'javascript/auto'
+          type: 'javascript/auto',
         },
       ],
     },
