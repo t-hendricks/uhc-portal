@@ -13,7 +13,6 @@ const defaultOptions = {
 };
 
 const history = createBrowserHistory();
-// eslint-disable-next-line no-underscore-dangle
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
@@ -23,10 +22,6 @@ const store = createStore(
     sentryMiddleware)),
 );
 
-const reloadReducers = () => {
-  store.replaceReducer(connectRouter(history)(reduxReducers));
-};
-
 export {
-  store as default, store, reloadReducers, history,
+  store as default, store, history,
 };
