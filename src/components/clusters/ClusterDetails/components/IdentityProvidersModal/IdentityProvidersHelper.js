@@ -161,7 +161,7 @@ const getCreateIDPRequestData = (formData) => {
     bind_password: formData.bind_password,
     insecure: formData.ldap_insecure,
     url: formData.ldap_url,
-    ca: formData.ldap_ca,
+    ca: !formData.ldap_insecure ? formData.ldap_ca : '',
   });
 
   const gitlabData = () => ({
