@@ -173,7 +173,8 @@ exports[`<Overview /> renders correctly 1`] = `
         />
       </GridItem>
       <GridItem
-        span={6}
+        md={6}
+        sm={12}
       >
         <Card
           className="clusters-overview-card"
@@ -194,7 +195,8 @@ exports[`<Overview /> renders correctly 1`] = `
         </Card>
       </GridItem>
       <GridItem
-        span={6}
+        md={6}
+        sm={12}
       >
         <Card
           className="clusters-overview-card"

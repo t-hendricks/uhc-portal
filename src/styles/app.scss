@@ -319,6 +319,10 @@ limitations under the License.
   margin-top: 10px;
 }
 
+#overview-grid #metrics-charts {
+  min-height: 300px;
+}
+
 #deleteClusterHint {
   margin-top: 20px
 }
@@ -1393,4 +1397,9 @@ h3#grant-role-select  {
     display: block;
     margin-top: var(--pf-global--spacer--md);
   }
+}
+
+.small-donut-chart-container {
+  max-height: 205px;
+  max-width: 410px;
 }
