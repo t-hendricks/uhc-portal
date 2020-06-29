@@ -5,6 +5,8 @@ set -e -u -o pipefail
 
 cd "$(dirname "$0")"
 
+. ./selenium-tests.version.sh
+
 echo Waiting on insights-proxy and selenium...
 yarn wait-on http-get://localhost:4444/wd/hub
 ./wait-on-insights-proxy.js
@@ -42,5 +44,5 @@ CUCUMBER_COMMAND=(
                       --mount type=bind,src="$PWD/our-tests",dst=/verification-tests/our-tests,ro=true \
                       --mount type=bind,src="$PWD/output",dst=/output \
                       --user=root \
-                      ocm-selenium-tests \
+                      $SELENIUM_TESTS_IMAGE \
                       "${CUCUMBER_COMMAND[@]}"

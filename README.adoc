@@ -195,7 +195,7 @@ QA have been developing end-to-end UI tests in 2 repos, forked from Openshift's 
   https://github.com/xueli181114/verification-tests/blob/master/doc/webauto.adoc[pseudo-YAML DSL].
 
 ==== Running
-Short version: Don't need anything running, just `yarn test-e2e` will build image, start all services, run test & kill all services.
+Short version: Don't need anything running, just `yarn test-e2e` will start all services, run test & kill all services.
 
 If a test fails, it'll stop & dump you into "pry" prompt, which is pretty useless but gives you chance to open VNC and play with the browser.
 Type `quit` or simply kbd:[Ctrl + C] to continue to next test.
@@ -204,7 +204,12 @@ You can set UNATTENDED=1 env var to skip interactive prompts.
 
 Long version: to run test(s) locally, in addition to all the above (backend + insights proxy + dev server), you'll need:
 
-1. `make selenium-tests-image` — clones those repos under `run/`, builds container image with Ruby depedencies and the tests.
+1. `make run/verification-tests` — clones repo under `run/verification-tests`.
+   Note you need this whether you build local image or pull Quay in next step,
+   Ruby code from that dir is mounted into the container.
+1. Optional: `make selenium-tests-image` , re-builds container image with Ruby depedencies.
+   Otherwise, the image will be pulled from Quay on first use.
+   If you update verification-tests of the Dockerfile, increment the tag in `run/selenium-tests.version.sh` and run `make selenium-tests-push` so that CI and rest of the team can use it.
 2. Optional: `export BROWSER=firefox` (or `chrome` or `safari`) to choose which browser.
 3. Start `yarn selenium-browser` — runs a browser under Xvnc in a container.
 4. `yarn selenium-test` — waits for dependencies, then executes tests in a container.

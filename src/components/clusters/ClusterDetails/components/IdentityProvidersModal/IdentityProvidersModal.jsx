@@ -23,8 +23,8 @@ import IDPForm from './components/IDPForm';
 
 class IdentityProvidersModal extends React.Component {
   componentDidUpdate() {
-    const { createIDPResponse, getClusterIdentityProviders } = this.props;
-    if (createIDPResponse.fulfilled) {
+    const { submitIDPResponse, getClusterIdentityProviders } = this.props;
+    if (submitIDPResponse.fulfilled) {
       this.onClose(true);
       getClusterIdentityProviders();
     }
@@ -44,30 +44,33 @@ class IdentityProvidersModal extends React.Component {
 
   render() {
     const {
-      isOpen, handleSubmit, createIDPResponse, clusterName, selectedIDP, selectedMappingMethod,
+      isOpen, handleSubmit, submitIDPResponse, clusterName, selectedIDP, selectedMappingMethod,
       change, IDPList,
-      clusterConsoleURL,
+      clusterConsoleURL, initialValues, idpEdited, isEditForm,
     } = this.props;
 
-    const isPending = createIDPResponse.pending;
+    const isPending = submitIDPResponse.pending;
 
     return isOpen
     && (
     <Modal
       isLarge
       onClose={() => this.onClose()}
-      title={`Create identity provider (${clusterName})`}
+      title={isEditForm ? `Edit identity provider (${clusterName})` : `Create identity provider (${clusterName})`}
       isPending={isPending}
       onPrimaryClick={handleSubmit}
       onSecondaryClick={() => this.onClose()}
     >
       <IDPForm
         selectedIDP={selectedIDP}
-        createIDPResponse={createIDPResponse}
+        submitIDPResponse={submitIDPResponse}
         selectedMappingMethod={selectedMappingMethod}
         clusterConsoleURL={clusterConsoleURL}
         change={change}
         IDPList={IDPList}
+        isEditForm={isEditForm}
+        idpEdited={idpEdited}
+        idpName={initialValues.name}
       />
     </Modal>
     );
@@ -82,13 +85,20 @@ IdentityProvidersModal.propTypes = {
   resetResponse: PropTypes.func.isRequired,
   resetForm: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  createIDPResponse: PropTypes.object,
+  submitIDPResponse: PropTypes.object,
   getClusterIdentityProviders: PropTypes.func,
   selectedIDP: PropTypes.string,
   selectedMappingMethod: PropTypes.string,
   refreshParent: PropTypes.func,
   change: PropTypes.func.isRequired,
   IDPList: PropTypes.array.isRequired,
+  idpEdited: PropTypes.object,
+  isEditForm: PropTypes.bool,
+  initialValues: PropTypes.shape({
+    idpId: PropTypes.string,
+    name: PropTypes.string,
+  }).isRequired,
+
 };
 
 IdentityProvidersModal.defaultProps = {

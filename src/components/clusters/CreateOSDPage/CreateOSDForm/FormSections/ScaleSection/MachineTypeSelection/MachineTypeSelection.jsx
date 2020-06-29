@@ -4,6 +4,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import capitalize from 'lodash/capitalize';
 import { CpuIcon, MemoryIcon, ContainerNodeIcon } from '@patternfly/react-icons';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import FlatRadioButton from '../../../../../../common/FlatRadioButton';
@@ -118,7 +119,7 @@ class MachineTypeSelection extends React.Component {
             {nameParts[0]}
           </div>
           <div>
-            {nameParts[1]}
+            {capitalize(nameParts[1])}
           </div>
         </>
       );

@@ -32,6 +32,10 @@ const initialState = {
   deletedIDP: {
     ...baseRequestState,
   },
+  editClusterIDP: {
+    ...baseRequestState,
+    data: {},
+  },
 };
 
 function IdentityProvidersReducer(state = initialState, action) {
@@ -76,10 +80,31 @@ function IdentityProvidersReducer(state = initialState, action) {
           clusterIdentityProviders: action.payload.data,
         };
         break;
+        // UPDATE_CLUSTER_IDENTITY_PROVIDER
+      case REJECTED_ACTION(identityProvidersConstants.UPDATE_CLUSTER_IDENTITY_PROVIDER):
+        draft.editClusterIDP = {
+          ...initialState.editClusterIDP,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(identityProvidersConstants.UPDATE_CLUSTER_IDENTITY_PROVIDER):
+        draft.editClusterIDP.pending = true;
+        break;
+      case FULFILLED_ACTION(identityProvidersConstants.UPDATE_CLUSTER_IDENTITY_PROVIDER):
+        draft.editClusterIDP = {
+          ...initialState.editClusterIDP,
+          fulfilled: true,
+          clusterIdentityProviders: action.payload.data,
+        };
+        break;
+
       // RESET_CREATED_CLUSTER_IDP_RESPONSE
       case identityProvidersConstants.RESET_CREATED_CLUSTER_IDP_RESPONSE:
         draft.createdClusterIDP = {
           ...initialState.createdClusterIDP,
+        };
+        draft.editClusterIDP = {
+          ...initialState.editClusterIDP,
         };
         break;
 

@@ -171,7 +171,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
             Memory optimized
           </div>
           <div>
-            R5.XLarge
+            R5.xlarge
           </div>
         </React.Fragment>
       }
@@ -217,7 +217,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                       Memory optimized
                     </div>
                     <div>
-                      R5.XLarge
+                      R5.xlarge
                     </div>
                   </React.Fragment>
                 </SplitItem>
@@ -314,7 +314,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                         Memory optimized
                       </div>
                       <div>
-                        R5.XLarge
+                        R5.xlarge
                       </div>
                     </div>
                   </SplitItem>
@@ -345,7 +345,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
             Memory optimized
           </div>
           <div>
-            R5.4XLarge
+            R5.4xlarge
           </div>
         </React.Fragment>
       }
@@ -483,7 +483,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                             Memory optimized
                           </div>
                           <div>
-                            R5.4XLarge
+                            R5.4xlarge
                           </div>
                         </React.Fragment>
                       </SplitItem>
@@ -580,7 +580,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                               Memory optimized
                             </div>
                             <div>
-                              R5.4XLarge
+                              R5.4xlarge
                             </div>
                           </div>
                         </SplitItem>

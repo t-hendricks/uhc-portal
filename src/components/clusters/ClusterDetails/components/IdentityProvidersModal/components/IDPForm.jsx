@@ -38,48 +38,80 @@ import {
 class IDPForm extends React.Component {
   state = {
     IDPName: '',
+    isExpanded: false,
   };
 
   componentDidMount() {
-    const { selectedIDP, change, IDPList } = this.props;
-    const generatedName = generateIDPName(selectedIDP, IDPList);
-    change('name', generatedName);
-    this.setState({ IDPName: generatedName });
+    const {
+      selectedIDP, isEditForm, idpEdited, idpName,
+    } = this.props;
+    this.setState({ IDPName: idpName });
+    if (isEditForm) {
+      this.setState({ isExpanded: this.checkIfExpandable(selectedIDP, idpEdited) });
+    }
   }
 
+
   componentDidUpdate(prevProps) {
-    const { selectedIDP, change, IDPList } = this.props;
+    const {
+      selectedIDP, change, IDPList, isEditForm,
+    } = this.props;
     const { IDPName } = this.state;
-    if (selectedIDP !== prevProps.selectedIDP) {
-      const generatedName = generateIDPName(selectedIDP, IDPList);
-      if (generatedName !== IDPName) {
-        change('name', generatedName);
-        // eslint-disable-next-line react/no-did-update-set-state
-        this.setState({ IDPName: generatedName });
+    if (!isEditForm) {
+      if (selectedIDP !== prevProps.selectedIDP) {
+        const generatedName = generateIDPName(selectedIDP, IDPList);
+        if (generatedName !== IDPName) {
+          change('name', generatedName);
+          // eslint-disable-next-line react/no-did-update-set-state
+          this.setState({ IDPName: generatedName });
+        }
       }
     }
   }
 
   checkDuplicateName = (IDPName) => {
-    const { IDPList } = this.props;
+    const { IDPList, isEditForm } = this.props;
     const idpNameList = IDPList.map(idp => idp.name);
-    if (idpNameList.includes(IDPName)) {
+    if (idpNameList.includes(IDPName) && !isEditForm) {
       return `The name "${IDPName}" is already taken. Identity provider names must not be duplicate.`;
     }
     return undefined;
   }
 
+  checkIfExpandable = (selectedIDP, idpEdited) => {
+    if (selectedIDP === IDPformValues.OPENID) {
+      if (idpEdited.open_id.openid_extra_scopes !== '' || idpEdited.open_id.openid_ca !== '') {
+        return true;
+      }
+    } else if (selectedIDP === IDPformValues.LDAP) {
+      if (idpEdited.ldap.ldap_ca !== '' || idpEdited.ldap.ldap_insecure !== '') {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  updateIsExpanded = () => {
+    const { isExpanded } = this.state;
+    this.setState({ isExpanded: !isExpanded });
+  }
+
   render() {
     const {
-      createIDPResponse, selectedIDP, selectedMappingMethod, clusterConsoleURL,
+      submitIDPResponse, selectedMappingMethod, clusterConsoleURL, isEditForm,
+      idpEdited, change, selectedIDP,
     } = this.props;
-    const { IDPName } = this.state;
+    const { IDPName, isExpanded } = this.state;
 
-    const isPending = createIDPResponse.pending;
-
-    const createIDPError = createIDPResponse.error && (
-    <ErrorBox title="Error creating Identity Provider" response={createIDPResponse} />
-    );
+    const isPending = submitIDPResponse.pending;
+    let submissionError;
+    if (submitIDPResponse.error) {
+      if (!isEditForm) {
+        submissionError = <ErrorBox title="Error creating Identity Provider" response={submitIDPResponse} />;
+      } else {
+        submissionError = <ErrorBox title="Error updating Identity Provider" response={submitIDPResponse} />;
+      }
+    }
 
     const providersAdvancedOptions = {
       OpenIDIdentityProvider: OpenIDForm,
@@ -105,11 +137,12 @@ class IDPForm extends React.Component {
     const SelectedProivderRequiredFields = providersRequiredFields[selectedIDP];
     const SelectedProviderAdvancedOptions = providersAdvancedOptions[selectedIDP];
 
+
     return (
       <Form>
         <Grid gutter="sm">
           <GridItem span={8}>
-            {createIDPError}
+            {submissionError}
             <p>
         Identity providers determine how users log into the cluster.
         Add an identity provider by selecting a type from the dropdown below.
@@ -126,8 +159,8 @@ class IDPForm extends React.Component {
               component={ReduxFormDropdown}
               options={IDPtypes}
               name="type"
-              label="Identity provider"
-              disabled={isPending}
+              label="Identity Provider"
+              disabled={isPending || isEditForm}
             />
           </GridItem>
           <GridItem span={8}>
@@ -141,7 +174,7 @@ class IDPForm extends React.Component {
               type="text"
               validate={[checkIdentityProviderName, this.checkDuplicateName]}
               isRequired
-              disabled={isPending}
+              disabled={isPending || isEditForm}
               onChange={(_, value) => this.setState({ IDPName: value })}
               helpText="Unique name for the identity provider. This cannot be changed later."
             />
@@ -164,6 +197,7 @@ class IDPForm extends React.Component {
               name="mappingMethod"
               label="Mapping method"
               helpText="Specifies how new identities are mapped to users when they log in. Claim is recommended in most cases."
+              value={idpEdited.mapping_method}
             />
           </GridItem>
           {SelectedProivderRequiredFields
@@ -173,13 +207,25 @@ class IDPForm extends React.Component {
             // make google required form optional when mapping method is lookup
             isRequired={selectedIDP === IDPformValues.GOOGLE
             && !(selectedMappingMethod === mappingMethodsformValues.LOOKUP)}
+            isEditForm={isEditForm}
+            idpEdited={idpEdited}
+            change={change}
           />
         )}
           {SelectedProviderAdvancedOptions
           && (
             <GridItem span={8}>
-              <Expandable toggleTextCollapsed="Show advanced options" toggleTextExpanded="Hide advanced options">
-                <SelectedProviderAdvancedOptions isPending={isPending} />
+              <Expandable
+                toggleTextCollapsed="Show advanced Options"
+                toggleTextExpanded="Hide advanced Options"
+                isExpanded={isExpanded}
+                onToggle={() => this.updateIsExpanded()}
+              >
+                <SelectedProviderAdvancedOptions
+                  isPending={isPending}
+                  isEditForm={isEditForm}
+                  idpEdited={idpEdited}
+                />
               </Expandable>
             </GridItem>
           )}
@@ -191,11 +237,14 @@ class IDPForm extends React.Component {
 
 IDPForm.propTypes = {
   clusterConsoleURL: PropTypes.string,
-  createIDPResponse: PropTypes.object,
+  submitIDPResponse: PropTypes.object,
   selectedIDP: PropTypes.string,
   selectedMappingMethod: PropTypes.string,
   change: PropTypes.func.isRequired,
   IDPList: PropTypes.array.isRequired,
+  isEditForm: PropTypes.bool,
+  idpEdited: PropTypes.object,
+  idpName: PropTypes.string,
 };
 
 IDPForm.defaultProps = {

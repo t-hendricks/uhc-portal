@@ -4,6 +4,8 @@ import {
   FormGroup,
   TextInput,
   InputGroup,
+  TextArea,
+  Button,
 } from '@patternfly/react-core';
 import PopoverHint from '../../../../../common/PopoverHint';
 
@@ -14,7 +16,20 @@ class CAUpload extends React.Component {
   state = {
     fileName: '',
     errorMessage: '',
+    certValue: '',
+    showCAText: false,
   }
+
+  componentDidMount() {
+    const {
+      certValue,
+    } = this.props;
+    if (certValue && certValue !== '') {
+      this.setState({ showCAText: true });
+      this.setState({ certValue });
+    }
+  }
+
 
   fileUpload = (event) => {
     const { input } = this.props;
@@ -27,11 +42,16 @@ class CAUpload extends React.Component {
         this.setState({
           fileName: file.name,
           errorMessage: '',
+          certValue: reader.result,
         });
         input.onChange(reader.result);
       };
       reader.readAsText(file, 'UTF-8');
     }
+  }
+
+  revealValue(status) {
+    this.setState({ showCAText: status });
   }
 
   render() {
@@ -43,10 +63,14 @@ class CAUpload extends React.Component {
       input,
       isDisabled,
     } = this.props;
-    const { errorMessage, fileName } = this.state;
+    const {
+      errorMessage, fileName, certValue, showCAText,
+    } = this.state;
+
+
     const baseButtonClass = 'pf-c-button pf-m-tertiary co-btn-file';
     const buttonClass = isDisabled ? `${baseButtonClass} pf-m-disabled` : baseButtonClass;
-
+    const shouldShowCAText = (!isDisabled && certValue !== '' && showCAText);
 
     return (
       <FormGroup
@@ -79,6 +103,25 @@ class CAUpload extends React.Component {
             Browse&hellip;
           </span>
         </InputGroup>
+
+        {shouldShowCAText
+          ? (
+            <>
+              <Button variant="link" onClick={() => this.revealValue(false)}>Hide</Button>
+
+              <TextArea
+                value={certValue}
+                id={`${input.name}_text`}
+                name={`${input.name}_text`}
+                readOnly
+                className="ca-textarea"
+              />
+            </>
+          ) : (
+            <>
+              <Button variant="link" onClick={() => this.revealValue(true)} isDisabled={certValue === '' || isDisabled}>Reveal</Button>
+            </>
+          )}
       </FormGroup>
     );
   }
@@ -98,6 +141,7 @@ CAUpload.propTypes = {
   // redux-form metadata like error or active states
   // is this a required field?
   isRequired: PropTypes.bool,
+  certValue: PropTypes.string,
 };
 
 export default CAUpload;

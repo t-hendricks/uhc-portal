@@ -117,6 +117,11 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
             "onClick": [Function],
             "title": "Delete",
           },
+          Object {
+            "className": "hand-pointer",
+            "onClick": [Function],
+            "title": "Edit",
+          },
         ]
       }
       areActionsDisabled={[Function]}

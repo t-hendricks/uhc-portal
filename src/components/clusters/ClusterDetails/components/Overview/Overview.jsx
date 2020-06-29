@@ -15,6 +15,7 @@ import DetailsLeft from './DetailsLeft';
 import SubscriptionSettings from './SubscriptionSettings';
 import ClusterLogs from '../ClusterLogs';
 import InstallationLogView from './InstallationLogView';
+import ClusterStatusMonitor from './ClusterStatusMonitor';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
@@ -41,14 +42,21 @@ class Overview extends React.Component {
 
   render() {
     const {
-      cluster, cloudProviders, history, displayClusterLogs,
+      cluster, cloudProviders, history, displayClusterLogs, refresh,
     } = this.props;
     const { showInstallSuccessAlert } = this.state;
     const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-    const metricsAvailable = hasResourceUsageMetrics(cluster);
+    const metricsAvailable = hasResourceUsageMetrics(cluster)
+      && (cluster.canEdit
+          || (cluster.state !== clusterStates.PENDING
+              && cluster.state !== clusterStates.INSTALLING));
     const metricsStatusMessage = isArchived ? metricsStatusMessages.archived
       : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
+
+    const shouldMonitorStatus = cluster.state === clusterStates.PENDING
+                             || cluster.state === clusterStates.INSTALLING;
+
     const shouldShowLogs = cluster.managed && cluster.canEdit
                       && (cluster.state === clusterStates.PENDING
                       || cluster.state === clusterStates.INSTALLING
@@ -58,12 +66,15 @@ class Overview extends React.Component {
       <>
         { shouldShowLogs
           ? (
-            <InstallationLogView clusterID={cluster.id} />
+            <InstallationLogView cluster={cluster} refresh={refresh} />
           ) : (
             <Card id="metrics-charts">
               <CardHeader>
                 <Title headingLevel="h2" size="lg" className="card-title">Resource usage</Title>
                 { showInstallSuccessAlert && <Alert variant="success" isInline title="Cluster installed successfully" />}
+                { shouldMonitorStatus && (
+                  <ClusterStatusMonitor refresh={refresh} cluster={cluster} />
+                )}
               </CardHeader>
               <CardBody>
                 <ResourceUsage
@@ -120,6 +131,7 @@ Overview.propTypes = {
   cloudProviders: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   displayClusterLogs: PropTypes.bool.isRequired,
+  refresh: PropTypes.func,
 };
 
 export default Overview;

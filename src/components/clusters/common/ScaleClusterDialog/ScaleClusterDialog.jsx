@@ -73,6 +73,7 @@ class ScaleClusterDialog extends Component {
       consoleURL,
       showLoadBalancerAlert,
       showPersistentStorageAlert,
+      masterResizeAlertThreshold,
       persistentStorageValues,
       loadBalancerValues,
       initialValues,
@@ -94,6 +95,26 @@ class ScaleClusterDialog extends Component {
 
     const usageLink = consoleURL
       ? <a href={`${consoleURL}/k8s/ns/default/resourcequotas`} target="_blank" rel="noopener noreferrer">Check your usage</a> : 'Check your usage';
+
+    const resizingAlert = nodes => (
+      <Alert
+        variant="warning"
+        isInline
+        title={`Scaling to more than ${nodes} nodes may take 24 hours`}
+      >
+        <div>
+          <p>
+            In order to scale to more than
+            {' '}
+            {nodes}
+            {' '}
+            nodes, the cluster&apos;s master nodes have
+            to be manually resized by a Red Hat SRE.
+            This process will take about 24 hours.
+          </p>
+        </div>
+      </Alert>
+    );
 
     const scalingAlert = (
       <Alert
@@ -148,6 +169,7 @@ class ScaleClusterDialog extends Component {
                 />
               </GridItem>
               <GridItem span={4} />
+              {!!masterResizeAlertThreshold && resizingAlert(masterResizeAlertThreshold)}
               { !isByoc && (
                 <>
                   <GridItem span={8}>
@@ -215,6 +237,7 @@ ScaleClusterDialog.propTypes = {
   }).isRequired,
   showLoadBalancerAlert: PropTypes.bool,
   showPersistentStorageAlert: PropTypes.bool,
+  masterResizeAlertThreshold: PropTypes.number,
   getLoadBalancers: PropTypes.func.isRequired,
   getPersistentStorage: PropTypes.func.isRequired,
   persistentStorageValues: PropTypes.object.isRequired,

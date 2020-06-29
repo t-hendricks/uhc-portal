@@ -48,7 +48,7 @@ function ClusterHealthCard({
       break;
     case monitoringStatuses.HEALTHY:
       icon = <CheckCircleIcon color={global_success_color_100.value} size="md" />;
-      title = <Title headingLevel="h2" size="lg" className="card-title">No Issues Detected</Title>;
+      title = <Title headingLevel="h2" size="lg" className="card-title">No issues detected</Title>;
       break;
     case monitoringStatuses.HAS_ISSUES:
       icon = <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />;

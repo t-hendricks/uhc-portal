@@ -9,7 +9,9 @@ import { required } from '../../../../../../../common/validators';
 
 import CAUpload from '../CAUpload';
 
-function GitlabFormRequired({ isPending }) {
+function GitlabFormRequired({
+  isPending, isEditForm, idpEdited,
+}) {
   return (
 
     <>
@@ -36,6 +38,7 @@ function GitlabFormRequired({ isPending }) {
           type="text"
           disabled={isPending}
           helpText="PEM encoded certificate bundle to use to validate server certificates for the configured Gitlab URL."
+          certValue={isEditForm ? idpEdited.gitlab.ca : ''}
         />
       </GridItem>
     </>
@@ -45,6 +48,8 @@ function GitlabFormRequired({ isPending }) {
 
 GitlabFormRequired.propTypes = {
   isPending: PropTypes.bool,
+  isEditForm: PropTypes.bool,
+  idpEdited: PropTypes.object,
 };
 
 GitlabFormRequired.defaultProps = {

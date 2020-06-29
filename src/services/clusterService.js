@@ -29,6 +29,11 @@ const getClusterDetails = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}`,
 });
 
+const getClusterStatus = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/status`,
+});
+
 const fetchClusterByExternalId = clusterExternalID => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters?&search=external_id='${clusterExternalID}'`,
@@ -93,6 +98,11 @@ const createClusterIdentityProvider = (clusterID, params) => apiRequest({
   data: params,
 });
 
+const editClusterIdentityProvider = (clusterID, params) => apiRequest({
+  method: 'patch',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/identity_providers/${params.id}`,
+  data: params,
+});
 
 const getClusterGroupUsers = clusterID => apiRequest({
   method: 'get',
@@ -277,6 +287,8 @@ const clusterService = {
   editIngress,
   addAdditionalIngress,
   deleteAdditionalIngress,
+  editClusterIdentityProvider,
+  getClusterStatus,
 };
 
 export default clusterService;

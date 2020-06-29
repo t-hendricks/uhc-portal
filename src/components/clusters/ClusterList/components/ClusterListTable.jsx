@@ -34,6 +34,7 @@ import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 function ClusterListTable(props) {
   const {
     viewOptions, setSorting, clusters, openModal, isPending, setClusterDetails,
+    canAllowClusterAdminList = {}, canSubscribeOCPList = {},
   } = props;
   if (!isPending && (!clusters || clusters.length === 0)) {
     return <p className="notfound">No results match the filter criteria.</p>;
@@ -146,7 +147,10 @@ function ClusterListTable(props) {
 
   const rows = isPending ? skeletonRows() : clusters.map(cluster => clusterRow(cluster));
   const resolver = isPending ? undefined
-    : rowData => actionResolver(rowData.cluster, true, openModal);
+    : rowData => actionResolver(rowData.cluster, true, openModal,
+      canAllowClusterAdminList[get(rowData, 'cluster.id')] || false,
+      canSubscribeOCPList[get(rowData, 'cluster.id')] || false);
+
 
   return (
     <Table
@@ -170,6 +174,8 @@ ClusterListTable.propTypes = {
   setSorting: PropTypes.func.isRequired,
   isPending: PropTypes.bool,
   setClusterDetails: PropTypes.func.isRequired,
+  canAllowClusterAdminList: PropTypes.objectOf(PropTypes.bool),
+  canSubscribeOCPList: PropTypes.objectOf(PropTypes.bool),
 };
 
 export default ClusterListTable;

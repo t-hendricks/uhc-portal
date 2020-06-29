@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {
+  PageSection,
+} from '@patternfly/react-core';
 
-import { PageSection } from '@patternfly/react-core';
 import Breadcrumbs from '../common/Breadcrumbs';
-import PageTitle from '../../common/PageTitle';
-
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsPower from './instructions/InstructionsPower';
 import { scrollToTop } from '../../../common/helpers';
+import instructionsMapping from './instructions/instructionsMapping';
+import OCPInstructions from './instructions/OCPInstructions';
+import PageTitle from '../../common/PageTitle';
 
 class InstallIBM extends Component {
   componentDidMount() {
@@ -33,9 +35,12 @@ class InstallIBM extends Component {
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
-        <PageSection className="ocp-instructions">
-          <InstructionsPower token={token} />
+        <PageTitle title={instructionsMapping.power.title} breadcrumbs={breadcrumbs} />
+        <PageSection>
+          <OCPInstructions
+            token={token}
+            {...instructionsMapping.power}
+          />
         </PageSection>
       </>
     );

@@ -40,7 +40,7 @@ const TopOverviewSection = ({
   if (isError) {
     return (
       <>
-        <GridItem span={3}>
+        <GridItem md={3} sm={12}>
           <Card className="clusters-overview-card">
             <CardHeader>
                 Clusters
@@ -48,7 +48,7 @@ const TopOverviewSection = ({
             { errorBody }
           </Card>
         </GridItem>
-        <GridItem span={9} rowSpan={2}>
+        <GridItem md={9} sm={12} rowSpan={2}>
           <Card id="metrics-charts">
             <CardHeader>
                 CPU and Memory utilization
@@ -56,7 +56,7 @@ const TopOverviewSection = ({
             { errorBody }
           </Card>
         </GridItem>
-        <GridItem span={3}>
+        <GridItem md={3} sm={12}>
           <ClustersWithIssuesCard
             isError={isError}
             totalUnhealthyClusters={totalUnhealthyClusters}
@@ -106,7 +106,7 @@ const TopOverviewSection = ({
 
   return (
     <>
-      <GridItem span={3}>
+      <GridItem md={3} sm={12}>
         <Card className="clusters-overview-card">
           <CardHeader>
                   Clusters
@@ -120,7 +120,7 @@ const TopOverviewSection = ({
           </CardBody>
         </Card>
       </GridItem>
-      <GridItem span={9} rowSpan={2}>
+      <GridItem md={9} rowSpan={2} sm={12}>
         <Card id="metrics-charts">
           <CardHeader>
                   CPU and Memory utilization
@@ -128,7 +128,7 @@ const TopOverviewSection = ({
           { resourceUsageBody }
         </Card>
       </GridItem>
-      <GridItem span={3}>
+      <GridItem md={3} sm={12}>
         <ClustersWithIssuesCard
           isError={isError}
           totalUnhealthyClusters={totalUnhealthyClusters}

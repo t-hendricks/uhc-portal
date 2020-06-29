@@ -5,8 +5,6 @@ import {
   CardHeader,
   CardBody,
   Bullseye,
-  EmptyStateBody,
-  EmptyState,
   Title,
 } from '@patternfly/react-core';
 
@@ -31,14 +29,14 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
             Clusters with issues
         </CardHeader>
         <CardBody>
-          <EmptyState>
+          <Bullseye>
             <Title>
             No data available
             </Title>
-            <EmptyStateBody>
+            <span className="empty-state-color">
             There was an error fetching the data. Try refreshing the page.
-            </EmptyStateBody>
-          </EmptyState>
+            </span>
+          </Bullseye>
         </CardBody>
       </Card>
     );

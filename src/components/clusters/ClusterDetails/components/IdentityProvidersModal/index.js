@@ -1,35 +1,90 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset, formValueSelector } from 'redux-form';
-
 import IdentityProvidersModal from './IdentityProvidersModal';
-import { createClusterIdentityProvider, resetCreatedClusterIDPResponse, getClusterIdentityProviders } from './IdentityProvidersActions';
+import {
+  createClusterIdentityProvider, resetCreatedClusterIDPResponse, getClusterIdentityProviders,
+  editClusterIdentityProvider,
+} from './IdentityProvidersActions';
 import { closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
-import { getCreateIDPRequestData, generateIDPName, IDPformValues } from './IdentityProvidersHelper';
+import {
+  getCreateIDPRequestData, generateIDPName, IDPformValues, IDPObjectNames,
+  getldapAttributes, getOpenIdClaims, getGitHubTeamsAndOrgsData,
+} from './IdentityProvidersHelper';
 
 const reduxFormConfig = {
   form: 'CreateIdentityProvider',
+  enableReinitialize: true,
+
 };
 const reduxFormCreateClusterIDP = reduxForm(reduxFormConfig)(IdentityProvidersModal);
+const CLIENT_SECRET = 'CLIENT_SECRET'; // Predefined value
+const initialValuesForEditing = (idpEdited, editedType) => ({
+  idpId: idpEdited.id,
+  type: idpEdited.type,
+  name: idpEdited.name,
+  client_id: idpEdited[editedType].client_id,
+  client_secret: CLIENT_SECRET,
+  mappingMethod: idpEdited.mapping_method,
+  selectedIDP: idpEdited.type,
+  // gitlab
+  gitlab_url: idpEdited[editedType].url,
+  // openid
+  issuer: idpEdited[editedType].issuer,
+  openid_name: getOpenIdClaims(idpEdited[editedType].claims, 'name'),
+  openid_email: getOpenIdClaims(idpEdited[editedType].claims, 'email'),
+  openid_preferred_username: getOpenIdClaims(idpEdited[editedType].claims, 'preferred_username'),
+  openid_extra_scopes: idpEdited[editedType].extra_scopes ? idpEdited[editedType].extra_scopes.join() : '',
+  // google
+  hosted_domain: idpEdited[editedType].hosted_domain,
+  // ldap
+  ldap_id: getldapAttributes(idpEdited[editedType].attributes, 'id'),
+  ldap_preferred_username: getldapAttributes(idpEdited[editedType].attributes, 'preferred_username'),
+  ldap_name: getldapAttributes(idpEdited[editedType].attributes, 'name'),
+  ldap_email: getldapAttributes(idpEdited[editedType].attributes, 'email'),
+  ldap_url: idpEdited[editedType].url,
+  bind_dn: idpEdited[editedType].bind_dn,
+  bind_password: idpEdited[editedType].bind_dn,
+  ldap_insecure: idpEdited[editedType].insecure,
+  // github
+  hostname: idpEdited[editedType].hostname,
+  teams: getGitHubTeamsAndOrgsData(idpEdited[editedType]),
+  organizations: getGitHubTeamsAndOrgsData(idpEdited[editedType]),
+  github_ca_text: 'Test',
+});
 
 const mapStateToProps = (state) => {
+  let idpEdited = {};
+  let editedType;
   const valueSelector = formValueSelector('CreateIdentityProvider');
   const IDPList = state.identityProviders.clusterIdentityProviders.clusterIDPList || [];
   const defaultIDP = IDPformValues.GITHUB;
+  const { isEditForm } = state.modal.data;
+  if (isEditForm) {
+    idpEdited = IDPList[state.modal.data.rowId];
+    editedType = IDPObjectNames[idpEdited.type];
+  }
 
   return ({
     isOpen: shouldShowModal(state, 'create-identity-provider'),
-    createIDPResponse: state.identityProviders.createdClusterIDP,
-    initialValues: {
+    submitIDPResponse: isEditForm ? state.identityProviders.editClusterIDP
+      : state.identityProviders.createdClusterIDP,
+    idpEdited,
+    isEditForm,
+    initialValues: isEditForm ? initialValuesForEditing(idpEdited, editedType) : {
+      idpId: null,
       type: defaultIDP,
       name: generateIDPName(defaultIDP, IDPList),
       client_id: '',
       client_secret: '',
       mappingMethod: 'claim',
+      selectedIDP: defaultIDP,
+      // ldap
       ldap_id: [{ ldap_id: 'dn', id: 'default' }],
       ldap_preferred_username: [{ ldap_preferred_username: 'uid', id: 'default' }],
       ldap_name: [{ ldap_name: 'cn', id: 'default' }],
+
     },
     selectedIDP: valueSelector(state, 'type') || defaultIDP,
     selectedMappingMethod: valueSelector(state, 'mappingMethod'),
@@ -37,11 +92,15 @@ const mapStateToProps = (state) => {
   });
 };
 
+
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (formData) => {
     const createIdentityProviderRequest = getCreateIDPRequestData(formData);
-
-    dispatch(createClusterIdentityProvider(ownProps.clusterID, createIdentityProviderRequest));
+    if (createIdentityProviderRequest.id) {
+      dispatch(editClusterIdentityProvider(ownProps.clusterID, createIdentityProviderRequest));
+    } else {
+      dispatch(createClusterIdentityProvider(ownProps.clusterID, createIdentityProviderRequest));
+    }
   },
   resetResponse: () => dispatch(resetCreatedClusterIDPResponse()),
   closeModal: () => dispatch(closeModal()),

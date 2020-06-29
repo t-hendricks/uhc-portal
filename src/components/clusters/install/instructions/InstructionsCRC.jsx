@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Card, List, ListItem, Title,
+  Card, List, ListItem, Title, Button,
 } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import links from '../../../../common/installLinks';
-import GetStarted from './components/GetStarted';
 import PullSecretSection from './components/PullSecretSection';
 import TokenErrorAlert from './components/TokenErrorAlert';
+import { trackPendo } from '../../../../common/helpers';
 
 function InstructionsCRC({ token }) {
   const cloudProviderID = window.location.pathname;
+  const docURL = 'https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.11/';
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -23,8 +25,31 @@ function InstructionsCRC({ token }) {
               Red Hat CodeReady Containers brings a minimal OpenShift 4.2 or newer cluster
               to your local laptop or desktop computer.
             </p>
-
-            <GetStarted docURL={links.INSTALL_CRC_GETTING_STARTED} />
+            <p>
+      Follow the
+              {' '}
+              <a href={docURL} rel="noreferrer noopener" target="_blank" onClick={() => trackPendo('OCP-Download-OfficialDocumentation', cloudProviderID)}>
+        official documentation
+                {' '}
+                <ExternalLinkAltIcon color="#0066cc" size="sm" />
+              </a>
+              {' '}
+      for detailed installation instructions.
+            </p>
+            <Button
+              component="a"
+              href={docURL}
+              rel="noreferrer noopener"
+              target="_blank"
+              variant="secondary"
+              onClick={() => trackPendo('OCP-Download-OfficialDocumentation', cloudProviderID)}
+            >
+      Get started
+            </Button>
+            <p />
+            <p>
+      Relevant downloads are provided below.
+            </p>
           </div>
         </div>
       </Card>

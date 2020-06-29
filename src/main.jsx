@@ -20,13 +20,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { AppContainer } from 'react-hot-loader';
-import { NotificationsPortal } from '@redhat-cloud-services/frontend-components-notifications';
+import { NotificationPortal } from '@redhat-cloud-services/frontend-components-notifications';
 import * as Sentry from '@sentry/browser';
+import { SessionTiming } from '@sentry/integrations';
 import { userInfoResponse } from './redux/actions/userActions';
 import config from './config';
 import App from './components/App/App';
-import { reloadReducers, store } from './redux/store';
+import { store } from './redux/store';
 import getBaseName from './common/getBaseName';
 
 import './styles/main.scss';
@@ -35,16 +35,14 @@ const basename = getBaseName();
 
 const render = () => {
   ReactDOM.render(
-    <AppContainer>
-      <Provider store={store}>
-        <>
-          <NotificationsPortal store={store} />
-          <BrowserRouter basename={basename}>
-            <App />
-          </BrowserRouter>
-        </>
-      </Provider>
-    </AppContainer>,
+    <Provider store={store}>
+      <>
+        <NotificationPortal store={store} />
+        <BrowserRouter basename={basename}>
+          <App />
+        </BrowserRouter>
+      </>
+    </Provider>,
     document.getElementById('root'),
   );
 };
@@ -74,14 +72,6 @@ const renderDevEnvError = () => {
   );
 };
 
-// Hot reloading
-if (module.hot) {
-  // Reload reducers
-  module.hot.accept('./redux/reducers', reloadReducers);
-
-  module.hot.accept();
-}
-
 if (!window.insights && process.env.NODE_ENV === 'development') {
   // we don't want this info to ever be complied to the prod build,
   // so I made sure it's only ever called in development mode
@@ -98,12 +88,20 @@ if (!window.insights && process.env.NODE_ENV === 'development') {
             Sentry.init({
               dsn: config.configData.sentryDSN,
               integrations: [
+                new SessionTiming(),
                 new Sentry.Integrations.GlobalHandlers({
                   onerror: true,
                   onunhandledrejection: false,
                 }),
               ],
             });
+            if (data && data.identity && data.identity.user) {
+              // add user info to Sentry
+              Sentry.configureScope((scope) => {
+                const { email, username } = data.identity.user;
+                scope.setUser({ email, username });
+              });
+            }
           }
           render();
         });

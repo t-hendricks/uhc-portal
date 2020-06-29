@@ -15,9 +15,14 @@ class RadioButtons extends React.Component {
   componentDidUpdate() {
     const { options, defaultValue, input } = this.props;
 
+    // when we set the default value dynamically in the parent file
+    // it was not updated until it is rendered.
+    if (input.value === '') {
+      input.onChange(defaultValue);
+    }
     // if an option got disabled during the lifetime of the component, we should revert to default
-    if (options.some(option => input.value === option.value
-                               && option.disabled && option.value !== defaultValue)) {
+    if (options.some(option => input.value === option.value && option.disabled
+                               && option.value !== defaultValue)) {
       input.onChange(defaultValue);
     }
   }
@@ -36,7 +41,6 @@ class RadioButtons extends React.Component {
       className,
       input,
     } = this.props;
-
     return (
       options.map((option) => {
         const button = (

@@ -153,10 +153,10 @@ if [ "$1" == "beta" ]; then
     # Build the application for deployment to staging
     # of the Insights platform:
     rm --recursive --force build
-    yarn build --mode=production --staging=true
+    yarn build --no-progress --mode=production --staging=true
     push_build "qa-stable"
     rm --recursive --force build
-    yarn build --mode=production --beta=true --staging=true
+    yarn build --no-progress --mode=production --beta=true --staging=true
     push_build "qa-beta"
 
 elif [ "$1" == "stable" ]; then
@@ -167,10 +167,10 @@ elif [ "$1" == "stable" ]; then
     # Build the application for deployment to the prod-stable branch
     # of the Insights platform:
     rm --recursive --force build
-    yarn build --mode=production
+    yarn build --no-progress --mode=production
     push_build "prod-stable"
     rm --recursive --force build
-    yarn build --mode=production --beta=true
+    yarn build --no-progress --mode=production --beta=true
     push_build "prod-beta"
 
 else

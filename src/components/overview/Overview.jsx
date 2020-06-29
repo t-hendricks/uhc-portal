@@ -122,7 +122,7 @@ class Overview extends Component {
               />
             </GridItem>
             )}
-            <GridItem span={6}>
+            <GridItem md={6} sm={12}>
               <Card className="clusters-overview-card">
                 <CardHeader>
                     Update status
@@ -149,7 +149,7 @@ class Overview extends Component {
                 </CardBody>
               </Card>
             </GridItem>
-            <GridItem span={6}>
+            <GridItem md={6} sm={12}>
               <Card className="clusters-overview-card">
                 <CardHeader>
                     Telemetry

@@ -116,6 +116,7 @@ const TotalRiskCard = ({ insightsData, batteryClicked }) => {
                               {
                                 fontSize: '12px',
                                 marginLeft: '-10px',
+                                padding: '10',
                               }
                             }
                             orientation="top"

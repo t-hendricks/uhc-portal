@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {
+  PageSection,
+} from '@patternfly/react-core';
 
-import { PageSection } from '@patternfly/react-core';
 import Breadcrumbs from '../common/Breadcrumbs';
-import PageTitle from '../../common/PageTitle';
-
 import { tollboothActions } from '../../../redux/actions';
-import InstructionsOSPUPI from './instructions/InstructionsOSPUPI';
 import { scrollToTop } from '../../../common/helpers';
+import instructionsMapping from './instructions/instructionsMapping';
+import OCPInstructions from './instructions/OCPInstructions';
+import PageTitle from '../../common/PageTitle';
 
 class InstallOSPUPI extends Component {
   componentDidMount() {
@@ -34,9 +36,14 @@ class InstallOSPUPI extends Component {
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
-        <PageSection className="ocp-instructions">
-          <InstructionsOSPUPI token={token} />
+        <PageTitle title={instructionsMapping.openstack.upi.title} breadcrumbs={breadcrumbs} />
+        <PageSection>
+          <OCPInstructions
+            token={token}
+            breadcrumbs={breadcrumbs}
+            cloudProvider={instructionsMapping.openstack.cloudProvider}
+            {...instructionsMapping.openstack.upi}
+          />
         </PageSection>
       </>
     );

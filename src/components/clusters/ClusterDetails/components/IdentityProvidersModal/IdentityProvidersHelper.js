@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty';
 import { strToCleanArray, multiInputToCleanArray } from '../../../../../common/helpers';
 
 const IDPformValues = {
@@ -44,6 +45,14 @@ const IDPTypeNames = {
   [IDPformValues.OPENID]: 'OpenID',
   [IDPformValues.LDAP]: 'LDAP',
   [IDPformValues.GITLAB]: 'GitLab',
+};
+
+const IDPObjectNames = {
+  [IDPformValues.GITHUB]: 'github',
+  [IDPformValues.GOOGLE]: 'google',
+  [IDPformValues.OPENID]: 'open_id',
+  [IDPformValues.LDAP]: 'ldap',
+  [IDPformValues.GITLAB]: 'gitlab',
 };
 
 const mappingMethods = [
@@ -124,6 +133,7 @@ const GoogleDocLink = `${IDPDocBase}/configuring-google-identity-provider.html`;
 const OpenIDDocLink = `${IDPDocBase}/configuring-oidc-identity-provider.html`;
 const GitlabDocLink = 'https://docs.openshift.com/container-platform/4.3/authentication/identity_providers/configuring-gitlab-identity-provider.html';
 
+
 const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
     client_id: formData.client_id,
@@ -151,7 +161,7 @@ const getCreateIDPRequestData = (formData) => {
     bind_password: formData.bind_password,
     insecure: formData.ldap_insecure,
     url: formData.ldap_url,
-    ca: formData.ldap_ca,
+    ca: !formData.ldap_insecure ? formData.ldap_ca : '',
   });
 
   const gitlabData = () => ({
@@ -186,9 +196,15 @@ const getCreateIDPRequestData = (formData) => {
     type: formData.type,
     name: formData.name,
     mapping_method: formData.mappingMethod || 'claim',
+    id: formData.idpId,
   };
-
   const selectedIDPData = IDPs[formData.type].data();
+  if (formData.idpId && formData.idpId !== '') {
+    if (selectedIDPData.client_secret === 'CLIENT_SECRET') {
+      delete selectedIDPData.client_secret;
+    }
+  }
+
   const selectedIDPName = IDPs[formData.type].name;
 
   const requestData = {
@@ -198,6 +214,138 @@ const getCreateIDPRequestData = (formData) => {
 
   return requestData;
 };
+
+const getOpenIdClaims = (claims, type) => {
+  const openIdClaimsData = [];
+  if (claims && claims[type]) {
+    switch (type) {
+      case 'name': {
+        claims[type].forEach((openIDName, index) => {
+          const obj = {
+            id: index,
+            openid_name: openIDName,
+          };
+          openIdClaimsData.push(obj);
+        });
+        break;
+      }
+      case 'email': {
+        claims[type].forEach((openIDEmail, index) => {
+          const obj = {
+            id: index,
+            openid_email: openIDEmail,
+          };
+          openIdClaimsData.push(obj);
+        });
+        break;
+      }
+      case 'preferred_username': {
+        claims[type].forEach((openIDUserName, index) => {
+          const obj = {
+            id: index,
+            openid_preferred_username: openIDUserName,
+          };
+          openIdClaimsData.push(obj);
+        });
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
+  return openIdClaimsData;
+};
+
+const getldapAttributes = (attributes, type) => {
+  const ldapAttributesData = [];
+  if (attributes && attributes[type]) {
+    switch (type) {
+      case 'name': {
+        attributes[type].forEach((name, index) => {
+          const obj = {
+            id: index,
+            ldap_name: name,
+          };
+          ldapAttributesData.push(obj);
+        });
+        break;
+      }
+      case 'email': {
+        attributes[type].forEach((email, index) => {
+          const obj = {
+            id: index,
+            ldap_email: email,
+          };
+          ldapAttributesData.push(obj);
+        });
+        break;
+      }
+      case 'preferred_username': {
+        attributes[type].forEach((userName, index) => {
+          const obj = {
+            id: index,
+            ldap_preferred_username: userName,
+          };
+          ldapAttributesData.push(obj);
+        });
+        break;
+      }
+      case 'id': {
+        attributes[type].forEach((id, index) => {
+          const obj = {
+            id: index,
+            ldap_id: id,
+          };
+          ldapAttributesData.push(obj);
+        });
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
+  return ldapAttributesData;
+};
+
+
+const getGitHubTeamsAndOrgsData = (type) => {
+  const data = [];
+
+  if (type.teams) {
+    type.teams.forEach((name, index) => {
+      const obj = {
+        id: index,
+        teams: name,
+      };
+      data.push(obj);
+    });
+  } else if (type.organizations) {
+    type.organizations.forEach((name, index) => {
+      const obj = {
+        id: index,
+        organizations: name,
+      };
+      data.push(obj);
+    });
+  }
+
+  return data;
+};
+
+/**
+ * Returns `true` if the provided array of `ReduxFieldArray` values has only empty values,
+ * false otherwise.
+ * @param {Array} arr array of `ReduxFieldArray` values
+ * @param {String} key Field name of the `ReduxFieldArray`
+ */
+
+const isEmptyReduxArray = (arr, key) => (arr ? arr.map(currentValue => isEmpty(currentValue[key]))
+  .every(item => item) : false);
+
 
 export {
   getCreateIDPRequestData,
@@ -214,4 +362,9 @@ export {
   GoogleDocLink,
   GitlabDocLink,
   generateIDPName,
+  IDPObjectNames,
+  getldapAttributes,
+  getOpenIdClaims,
+  getGitHubTeamsAndOrgsData,
+  isEmptyReduxArray,
 };

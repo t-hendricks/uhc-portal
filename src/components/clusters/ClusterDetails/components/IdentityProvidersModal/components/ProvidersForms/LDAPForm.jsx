@@ -7,11 +7,17 @@ import { ReduxCheckbox } from '../../../../../../common/ReduxFormComponents';
 import CAUpload from '../CAUpload';
 
 class LDAPForm extends React.Component {
-  state = this.getInitialState();
+  state = {
+    isInsecure: false,
+    caDisabledHelpText: '',
+  }
 
-  getInitialState() {
-    return ({
-      isInsecure: false,
+  componentDidMount() {
+    const {
+      isEditForm, idpEdited,
+    } = this.props;
+    this.setState({
+      isInsecure: isEditForm ? idpEdited.ldap.insecure : false,
       caDisabledHelpText: '',
     });
   }
@@ -20,12 +26,12 @@ class LDAPForm extends React.Component {
     if (value) {
       this.setState({ isInsecure: true, caDisabledHelpText: 'Cannot be used if insecure is set.' });
     } else {
-      this.setState(this.getInitialState());
+      this.setState({ isInsecure: false, caDisabledHelpText: '' });
     }
   };
 
   render() {
-    const { isPending } = this.props;
+    const { isPending, isEditForm, idpEdited } = this.props;
     const { isInsecure, caDisabledHelpText } = this.state;
 
     return (
@@ -37,6 +43,8 @@ class LDAPForm extends React.Component {
             label="CA file"
             helpText={`PEM encoded certificate bundle to use to validate server certificates for the configured URL. ${caDisabledHelpText}`}
             isDisabled={isInsecure || isPending}
+            certValue={isEditForm && !isInsecure ? idpEdited.ldap.ca : ''}
+
           />
         </GridItem>
         <GridItem span={8}>
@@ -55,6 +63,8 @@ class LDAPForm extends React.Component {
 
 LDAPForm.propTypes = {
   isPending: PropTypes.bool,
+  isEditForm: PropTypes.bool,
+  idpEdited: PropTypes.object,
 };
 
 LDAPForm.defaultProps = {
