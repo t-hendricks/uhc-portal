@@ -1,0 +1,248 @@
+{
+  "kind": "CloudRegionList",
+  "page": 1,
+  "size": 20,
+  "total": 20,
+  "items": [
+    {
+      "kind": "CloudRegion",
+      "id": "asia-east1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/asia-east1",
+      "display_name": "Changhua County, Taiwan",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "asia-east2",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/asia-east2",
+      "display_name": "Hong Kong",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "asia-northeast1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/asia-northeast1",
+      "display_name": "Tokyo, Japan",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "asia-northeast2",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/asia-northeast2",
+      "display_name": "Osaka, Japan",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": false
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "asia-south1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/asia-south1",
+      "display_name": "Mumbai, India",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "asia-southeast1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/asia-southeast1",
+      "display_name": "Jurong West, Singapore",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "australia-southeast1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/australia-southeast1",
+      "display_name": "Sydney, Australia",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": false
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "europe-north1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/europe-north1",
+      "display_name": "Hamina, Finland",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": false
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "europe-west1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/europe-west1",
+      "display_name": "St. Ghislain, Belgium",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "europe-west2",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/europe-west2",
+      "display_name": "London, England, UK",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "europe-west3",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/europe-west3",
+      "display_name": "Frankfurt, Germany",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": false
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "europe-west4",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/europe-west4",
+      "display_name": "Eemshaven, Netherlands",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "europe-west6",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/europe-west6",
+      "display_name": "Zürich, Switzerland",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": false
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "northamerica-northeast1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/northamerica-northeast1",
+      "display_name": "Montréal, Québec, Canada",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": false
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "southamerica-east1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/southamerica-east1",
+      "display_name": "Osasco (São Paulo), Brazil",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": false
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "us-central1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/us-central1",
+      "display_name": "Council Bluffs, Iowa, USA",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "us-east1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/us-east1",
+      "display_name": "Moncks Corner, South Carolina, USA",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "us-east4",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/us-east4",
+      "display_name": "Ashburn, Northern Virginia, USA",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "us-west1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/us-west1",
+      "display_name": "The Dalles, Oregon, USA",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "us-west2",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/us-west2",
+      "display_name": "Los Angeles, California, USA",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "enabled": true
+    }
+  ]
+}
