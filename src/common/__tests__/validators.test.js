@@ -147,14 +147,12 @@ test('Field is an IP address with subnet mask between 16-28', () => {
   expect(validators.awsSubnetMask('network_machine_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 16-23.');
   expect(validators.awsSubnetMask('network_pod_cidr')()).toBe(undefined);
   expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/17')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/10')).toBe('Subnet mask must be between 16-18.');
   expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/18')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 16-18.');
+  expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 1-18.');
   expect(validators.awsSubnetMask('network_service_cidr')()).toBe(undefined);
   expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/17')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/10')).toBe('Subnet mask must be between 16-24.');
   expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/24')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 16-24.');
+  expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 1-24.');
 });
 
 test('Field is an IP address that does not overlap with 172.17.0.0/16, reserved for docker', () => {

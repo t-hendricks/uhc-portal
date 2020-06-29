@@ -42,6 +42,6 @@ trap 'yarn stop-insights-proxy' EXIT
                       --security-opt label=disable \
                       $OPTS \
                       -p 1337:1337 \
-                      docker.io/redhatinsights/insights-proxy &
+                      quay.io/redhat-sd-devel/insights-proxy:pull-33 &
 child_pid=$!
 wait $child_pid

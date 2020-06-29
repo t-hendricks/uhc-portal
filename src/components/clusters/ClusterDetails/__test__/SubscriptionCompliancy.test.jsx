@@ -25,6 +25,11 @@ describe('<SubscriptionCompliancy />', () => {
   it('should warn during evaluation period', () => {
     const cluster = { ...clusterDetails.cluster, canEdit: true };
     cluster.subscription[SUPPORT_LEVEL] = EVAL;
+    cluster.subscription.capabilities = [{
+      name: 'capability.cluster.subscribed_ocp',
+      value: 'true',
+      inherited: true,
+    }];
     wrapper.setProps({ cluster }, () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);
@@ -40,6 +45,7 @@ describe('<SubscriptionCompliancy />', () => {
   it('should warn when evaluation is expired', () => {
     const cluster = { ...clusterDetails.cluster, canEdit: true };
     cluster.subscription[SUPPORT_LEVEL] = NONE;
+    cluster.subscription.capabilities = [];
     wrapper.setProps({ cluster }, () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);

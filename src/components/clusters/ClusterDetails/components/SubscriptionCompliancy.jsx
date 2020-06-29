@@ -9,7 +9,7 @@ import {
   getSubscriptionLastReconciledDate,
 } from '../clusterDetailsHelper';
 
-function SubscriptionCompliancy({ cluster, openModal }) {
+function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false }) {
   const subscription = get(cluster, 'subscription');
 
   const planID = get(subscription, 'plan.id');
@@ -54,12 +54,15 @@ function SubscriptionCompliancy({ cluster, openModal }) {
     openModal('archive-cluster', data);
   };
 
-  const textForUsersCanEdit = (
+  const textForUsersCanEdit = canSubscribeOCP ? (
     <>
       <Button variant="link" isInline onClick={handleEditSettings}>Edit subscription settings</Button>
       {' for non-evaluation use. '}
+    </>
+  ) : (
+    <>
       <a href={salesURL} target="_blank" rel="noreferrer noopener">Contact sales</a>
-      {' if you are not an active OpenShift customer.'}
+      {' to purchase an OpenShift subscription.'}
     </>
   );
 
@@ -106,6 +109,7 @@ SubscriptionCompliancy.propTypes = {
     canEdit: PropTypes.bool,
   }),
   openModal: PropTypes.func.isRequired,
+  canSubscribeOCP: PropTypes.bool.isRequired,
 };
 
 export default SubscriptionCompliancy;

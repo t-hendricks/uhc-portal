@@ -50,7 +50,7 @@ class ExpiredTrialsCard extends React.Component {
       return (
         <Card id="clusters-overview-card">
           <CardHeader>
-            Expired Trials
+            Expired trials
           </CardHeader>
           <CardBody>
             <EmptyState>
@@ -91,11 +91,11 @@ class ExpiredTrialsCard extends React.Component {
 
     const actionResolver = ({ subscription }) => [
       {
-        title: 'Edit Subscription Settings',
+        title: 'Edit subscription settings',
         onClick: () => openModal('edit-subscription-settings', subscription),
       },
       {
-        title: 'Archive Cluster',
+        title: 'Archive cluster',
         onClick: () => openModal('archive-cluster', {
           subscriptionID: subscription.id,
           name: subscription.display_name || subscription.external_cluster_id,

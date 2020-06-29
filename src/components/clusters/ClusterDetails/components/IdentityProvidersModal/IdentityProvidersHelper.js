@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty';
 import { strToCleanArray, multiInputToCleanArray } from '../../../../../common/helpers';
 
 const IDPformValues = {
@@ -345,6 +346,16 @@ const getGitHubTeamsAndOrgsData = (type) => {
   return data;
 };
 
+/**
+ * Returns `true` if the provided array of `ReduxFieldArray` values has only empty values,
+ * false otherwise.
+ * @param {Array} arr array of `ReduxFieldArray` values
+ * @param {String} key Field name of the `ReduxFieldArray`
+ */
+
+const isEmptyReduxArray = (arr, key) => (arr ? arr.map(currentValue => isEmpty(currentValue[key]))
+  .every(item => item) : false);
+
 
 export {
   getCreateIDPRequestData,
@@ -365,4 +376,5 @@ export {
   getldapAttributes,
   getOpenIdClaims,
   getGitHubTeamsAndOrgsData,
+  isEmptyReduxArray,
 };

@@ -11,7 +11,7 @@ function CustomerCloudSubscriptionModal({ closeModal }) {
   return (
     <Modal
       className="ccsModal"
-      title="Customer Cloud Subscription"
+      title="Customer cloud subscription"
       onClose={closeModal}
       primaryText="Close"
       onPrimaryClick={closeModal}
@@ -53,8 +53,8 @@ function CustomerCloudSubscriptionModal({ closeModal }) {
           {' '}
           <a href={billingModelConstants.scpDocumentationLink} rel="noreferrer noopener" target="_blank">documentation</a>
           {' '}
-            for more detail around the requirements for Customer Cloud
-            Subscription.
+            for more detail around the requirements for customer cloud
+            subscription.
         </TextContent>
       </>
     </Modal>

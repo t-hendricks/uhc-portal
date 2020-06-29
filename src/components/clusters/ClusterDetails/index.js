@@ -35,6 +35,7 @@ import {
   fetchGroups,
 } from './components/Insights/InsightsActions';
 import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
+import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import helpers from '../../../common/helpers';
 
 const mapStateToProps = (state) => {
@@ -64,6 +65,7 @@ const mapStateToProps = (state) => {
     insightsData,
     groups,
     canAllowClusterAdmin: canAllowAdminSelector(state),
+    canSubscribeOCP: canSubscribeOCPSelector(state),
     anyModalOpen: !!state.modal.modalName,
   });
 };

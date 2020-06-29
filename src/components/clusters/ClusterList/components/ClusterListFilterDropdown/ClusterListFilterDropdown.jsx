@@ -32,7 +32,7 @@ class ClusterListFilterDropdown extends React.Component {
     const filterOptions = [
       {
         key: 'plan_id',
-        label: 'Cluster Type',
+        label: 'Cluster type',
         options: [
           ['OSD', 'OSD'],
           ['OCP', 'OCP'],

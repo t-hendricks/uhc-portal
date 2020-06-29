@@ -3,12 +3,7 @@
 exports[`<SmallClusterChart /> should render 1`] = `
 <div>
   <div
-    style={
-      Object {
-        "height": "205px",
-        "width": "410px",
-      }
-    }
+    className="small-donut-chart-container"
   >
     <ChartDonut
       constrainToVisibleArea={true}

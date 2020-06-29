@@ -31,7 +31,7 @@ function ClusterNetwork({ cluster }) {
           { cluster.network.host_prefix
           && (
           <dl className="cluster-details-item-list left">
-            <dt>Host Prefix: </dt>
+            <dt>Host prefix: </dt>
             <dd>{cluster.network.host_prefix}</dd>
           </dl>
           )}
