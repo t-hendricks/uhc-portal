@@ -111,6 +111,7 @@ describe('<MachineTypeSelection />', () => {
           name: 'Memory optimized - R5.XLarge',
           category: 'memory_optimized',
           id: 'r5.xlarge',
+          resource_name: 'mem.small',
           href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
           memory: {
             value: 34359738368,
@@ -131,6 +132,7 @@ describe('<MachineTypeSelection />', () => {
           name: 'Memory optimized - R5.4XLarge',
           category: 'memory_optimized',
           id: 'r5.4xlarge',
+          resource_name: 'mem.large',
           href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
           memory: {
             value: 137438953472,
@@ -148,15 +150,60 @@ describe('<MachineTypeSelection />', () => {
         },
       ];
 
+      const machineTypesByID = {
+        'r5.xlarge': {
+          kind: 'MachineType',
+          name: 'Memory optimized - R5.XLarge',
+          category: 'memory_optimized',
+          id: 'r5.xlarge',
+          resource_name: 'mem.small',
+          href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
+          memory: {
+            value: 34359738368,
+            unit: 'B',
+          },
+          cpu: {
+            value: 4,
+            unit: 'vCPU',
+          },
+          cloud_provider: {
+            kind: 'CloudProviderLink',
+            id: 'aws',
+            href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+          },
+        },
+        'r5.4xlarge': {
+          kind: 'MachineType',
+          name: 'Memory optimized - R5.4XLarge',
+          category: 'memory_optimized',
+          id: 'r5.4xlarge',
+          resource_name: 'mem.large',
+          href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
+          memory: {
+            value: 137438953472,
+            unit: 'B',
+          },
+          cpu: {
+            value: 16,
+            unit: 'vCPU',
+          },
+          cloud_provider: {
+            kind: 'CloudProviderLink',
+            id: 'aws',
+            href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+          },
+        },
+      };
+
       const quota = {
         clustersQuota: {
           aws: {
             rhInfra: {
               multiAz: {
-                'r5.xlarge': 5,
+                'mem.small': 5,
               },
               singleAz: {
-                'r5.xlarge': 0,
+                'mem.small': 0,
               },
             },
           },
@@ -168,6 +215,7 @@ describe('<MachineTypeSelection />', () => {
         <MachineTypeSelection
           machineTypes={state}
           sortedMachineTypes={sortedMachineTypes}
+          machineTypesByID={machineTypesByID}
           input={{ onChange }}
           meta={{}}
           quota={quota}

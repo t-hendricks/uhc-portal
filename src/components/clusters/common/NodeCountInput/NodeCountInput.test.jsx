@@ -7,6 +7,9 @@ const baseProps = {
   isDisabled: false,
   label: 'compute nodes',
   quota: { },
+  machineTypesByID: {
+    fake: { id: 'fake', resource_name: 'fake' },
+  },
   input: {
     name: 'compute-nodes',
     onChange: jest.fn(),

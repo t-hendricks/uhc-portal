@@ -41,7 +41,10 @@ const editSubscription = (subscriptionID, data) => apiRequest({
 
 const getOrganizationQuota = organizationID => apiRequest({
   method: 'get',
-  url: `/api/accounts_mgmt/v1/organizations/${organizationID}/quota_summary`,
+  params: {
+    fetchRelatedResources: true,
+  },
+  url: `/api/accounts_mgmt/v1/organizations/${organizationID}/quota_cost`,
 });
 
 function getRequest(pathParams, params = {}) {

@@ -54,6 +54,7 @@ describe('clusterMachineTypesReducer', () => {
 
       expect(result).toEqual({
         types: action.payload,
+        typesByID: {},
         errorMessage: '',
         errorDetails: null,
         fulfilled: true,
@@ -72,6 +73,34 @@ describe('clusterMachineTypesReducer', () => {
           error: false,
         }),
       );
+    });
+
+    it('maps the machine types by ID', () => {
+      const action = {
+        payload: {
+          aws: [
+            { id: 'foo' },
+          ],
+          gcp: [
+            { id: 'bar' },
+          ],
+        },
+        type: `${type}_FULFILLED`,
+      };
+      const result = machineTypesReducer(initialState, action);
+
+      expect(result).toEqual({
+        types: action.payload,
+        typesByID: {
+          foo: { id: 'foo' },
+          bar: { id: 'bar' },
+        },
+        errorMessage: '',
+        errorDetails: null,
+        fulfilled: true,
+        pending: false,
+        error: false,
+      });
     });
   });
 });

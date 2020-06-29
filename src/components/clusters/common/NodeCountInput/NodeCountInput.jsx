@@ -33,10 +33,19 @@ class NodeCountInput extends React.Component {
   }
 
   getAvailableQuota() {
-    const { quota, isByoc, machineType } = this.props;
+    const {
+      quota,
+      isByoc,
+      machineType,
+      machineTypesByID,
+    } = this.props;
 
     const infraType = isByoc ? 'byoc' : 'rhInfra';
-    return get(quota, `${infraType}['${machineType}']`, 0);
+    const machineTypeResource = machineTypesByID[machineType];
+    if (!machineTypeResource) {
+      return 0;
+    }
+    return get(quota, `${infraType}['${machineTypeResource.resource_name}']`, 0);
   }
 
   render() {
@@ -128,6 +137,7 @@ NodeCountInput.propTypes = {
   isByoc: PropTypes.bool,
   isMultiAz: PropTypes.bool,
   machineType: PropTypes.string,
+  machineTypesByID: PropTypes.object,
   input: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

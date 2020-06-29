@@ -72,27 +72,34 @@ class MachineTypeSelection extends React.Component {
     input.onChange('');
   }
 
-  hasQuotaForType(machineType) {
+  hasQuotaForType(machineTypeID) {
     const {
-      isMultiAz, organization, quota, isBYOC, cloudProviderID,
+      isMultiAz, organization, quota, isBYOC, cloudProviderID, machineTypesByID,
     } = this.props;
     if (!organization.fulfilled) {
       return false;
     }
     const infra = isBYOC ? 'byoc' : 'rhInfra';
-    const available = quota.clustersQuota[cloudProviderID][infra][isMultiAz ? 'multiAz' : 'singleAz'][machineType] || 0;
+    const zoneType = isMultiAz ? 'multiAz' : 'singleAz';
+    const machineType = machineTypesByID[machineTypeID];
+    if (!machineType) {
+      return false;
+    }
+    const resourceName = machineType.resource_name;
+    const available = quota.clustersQuota[cloudProviderID][infra][zoneType][resourceName] || 0;
     return available > 0;
   }
 
   render() {
-    // getMachineTypes and isBYOC is unused here, but it's needed so it won't
-    // go into extraProps and then get to the DOM, generating a React warning.
+    // getMachineTypes, isBYOC , and machineTypesByID are unused here, but it's needed so
+    // it won't go into extraProps and then get to the DOM, generating a React warning.
     const {
       machineTypes,
       sortedMachineTypes,
       getMachineTypes,
       isBYOC,
       isMultiAz,
+      machineTypesByID,
       quota,
       organization,
       input,
@@ -172,6 +179,7 @@ MachineTypeSelection.propTypes = {
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   sortedMachineTypes: PropTypes.array.isRequired,
+  machineTypesByID: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   isBYOC: PropTypes.bool.isRequired,
   cloudProviderID: PropTypes.string.isRequired,

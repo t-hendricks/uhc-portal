@@ -13,6 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+import get from 'lodash/get';
+import keyBy from 'lodash/keyBy';
 import {
   REJECTED_ACTION, FULFILLED_ACTION, PENDING_ACTION, baseRequestState,
 } from '../reduxHelpers';
@@ -23,7 +26,16 @@ import { machineTypesConstants } from '../constants';
 const initialState = {
   ...baseRequestState,
   types: {},
+  typesByID: {},
 };
+
+function mapMachineTypesById(types) {
+  const machineTypes = [].concat(
+    get(types, 'aws', []),
+    get(types, 'gcp', []),
+  );
+  return keyBy(machineTypes, 'id');
+}
 
 function machineTypesReducer(state = initialState, action) {
   switch (action.type) {
@@ -46,6 +58,7 @@ function machineTypesReducer(state = initialState, action) {
         ...initialState,
         ...state,
         types: action.payload,
+        typesByID: mapMachineTypesById(action.payload),
         pending: false,
         fulfilled: true,
       };
