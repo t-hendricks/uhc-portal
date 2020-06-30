@@ -125,19 +125,11 @@ const checkRouteSelectors = (value) => {
   if (!value) {
     return undefined;
   }
+
   const selectors = value.split(',');
 
-  for (let i = 0; i < selectors.length; i += 1) {
-    const selector = selectors[i];
-    const labelValue = selector.split('=');
-
-    if (labelValue.length !== 2) {
-      return "Each route selector must be of format 'key=value'.";
-    }
-
-    if (!labelValue[0] || !labelValue[1]) {
-      return "Each route selector must be of format 'key=value'.";
-    }
+  if (selectors.some(pair => (!(/^([0-9a-z]+([-_][0-9a-z]+)*)=([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(pair)))) {
+    return "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
   }
   return undefined;
 };
