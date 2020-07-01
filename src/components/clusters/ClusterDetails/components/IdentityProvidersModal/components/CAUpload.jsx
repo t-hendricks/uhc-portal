@@ -25,8 +25,7 @@ class CAUpload extends React.Component {
       certValue,
     } = this.props;
     if (certValue && certValue !== '') {
-      this.setState({ showCAText: true });
-      this.setState({ certValue });
+      this.setState({ showCAText: true, certValue });
     }
   }
 
@@ -43,11 +42,23 @@ class CAUpload extends React.Component {
           fileName: file.name,
           errorMessage: '',
           certValue: reader.result,
+          showCAText: true,
         });
         input.onChange(reader.result);
       };
       reader.readAsText(file, 'UTF-8');
     }
+  }
+
+  // This method updates the value to space if the user removes the CA value
+  // When the user clears the CA value redux form removes the field from value
+  // state and in order to differentiate whether the user did not have the value or
+  // whether they cleared it in the edit screen we store ' '(space) in the value and
+  // trim it when sending it to backend
+  updateCertificateValue = (value) => {
+    const { input } = this.props;
+    input.onChange(value || ' ');
+    this.setState({ fileName: '', certValue: value });
   }
 
   revealValue(status) {
@@ -113,7 +124,7 @@ class CAUpload extends React.Component {
                 value={certValue}
                 id={`${input.name}_text`}
                 name={`${input.name}_text`}
-                readOnly
+                onChange={this.updateCertificateValue}
                 className="ca-textarea"
               />
             </>
