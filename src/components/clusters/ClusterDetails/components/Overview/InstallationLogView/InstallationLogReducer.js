@@ -24,6 +24,7 @@ import { GET_LOGS, CLEAR_LOGS } from './InstallationLogConstants';
 const initialState = {
   ...baseRequestState,
   lines: '',
+  logType: undefined,
 };
 
 function InstallationLogReducer(state = initialState, action) {
@@ -36,19 +37,27 @@ function InstallationLogReducer(state = initialState, action) {
         break;
 
       case FULFILLED_ACTION(GET_LOGS): {
-        const lines = action.payload.data.content
-          ? state.lines + action.payload.data.content
-          : state.lines;
+        let lines;
+        if (action.payload.logType === state.logType) {
+          lines = action.payload.data.content
+            ? state.lines + action.payload.data.content
+            : state.lines;
+        } else {
+          // if we moved from install to uninstall, we need to start fresh instead of appending
+          lines = action.payload.data.content || '';
+        }
         return {
           ...initialState,
           lines,
           fulfilled: true,
+          logType: action.payload.logType,
         };
       }
       case REJECTED_ACTION(GET_LOGS):
         return {
           ...initialState,
           ...getErrorState(action),
+          lines: state.lines,
         };
 
       case CLEAR_LOGS:
