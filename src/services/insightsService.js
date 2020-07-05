@@ -21,9 +21,9 @@ const resetVoteOnRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
   url: `/clusters/${clusterID}/rules/${ruleID}/reset_vote`,
 });
 
-const getClusterInsights = (clusterId, orgId) => insightsAPIRequest({
+const getClusterInsights = clusterId => insightsAPIRequest({
   method: 'get',
-  url: `/report/${orgId}/${clusterId}`,
+  url: `/clusters/${clusterId}/report`,
 });
 
 const disableRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
