@@ -43,10 +43,6 @@ const FECMapper = {
   conditionalFilterType: 'ConditionalFilter',
 };
 
-const NotificationsMapper = {
-  addNotification: 'actions',
-};
-
 module.exports = {
   presets: [['@babel/preset-env', {
     targets: {
@@ -115,8 +111,8 @@ module.exports = {
       'transform-imports',
       {
         '@redhat-cloud-services/frontend-components-notifications': {
-          transform: importName => `@redhat-cloud-services/frontend-components-notifications/cjs/${NotificationsMapper[importName] || importName}`,
-          preventFullImport: true,
+          transform: importName => `@redhat-cloud-services/frontend-components-notifications/cjs/${importName}`,
+          preventFullImport: false,
         },
       },
       'frontend-notifications',

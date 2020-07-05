@@ -6,12 +6,11 @@ import {
 import { ExpandIcon } from '@patternfly/react-icons';
 import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
 import ClusterStatusMonitor from '../ClusterStatusMonitor';
+import clusterStates from '../../../../common/clusterStates';
 
-const AUTOSCROLL_THRESHOLD = 15;
+const AUTOSCROLL_THRESHOLD = 20;
 
 class LogWindow extends React.Component {
-  updateTimer = null;
-
   constructor(props) {
     super(props);
     this.logPaneRef = React.createRef();
@@ -27,10 +26,12 @@ class LogWindow extends React.Component {
     this.update();
     this.updateTimer = window.setInterval(this.update, 2000);
     document.addEventListener('fullscreenchange', this.onFullscreenChange);
+    document.addEventListener('visibilitychange', this.onVisibilityChange);
+    this.isPageVisible = document.visibilityState === 'visible';
   }
 
   componentDidUpdate(prevProps) {
-    const { lines, errorCode } = this.props;
+    const { lines, errorCode, cluster } = this.props;
     if (!prevProps.lines && lines) {
       // If this is the first time we're getting the log, it'll trigger a scroll event,
       // setting userScrolled since the view won't be scrolled all the way down.
@@ -38,7 +39,8 @@ class LogWindow extends React.Component {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ userScrolled: false });
     }
-    if (prevProps.errorCode !== 403 && errorCode === 403) {
+    if ((prevProps.errorCode !== 403 && errorCode === 403)
+        || cluster.state === clusterStates.ERROR) {
       if (this.updateTimer !== null) {
         window.clearInterval(this.updateTimer);
       }
@@ -51,6 +53,7 @@ class LogWindow extends React.Component {
       window.clearInterval(this.updateTimer);
     }
     document.removeEventListener('fullscreenchange', this.onFullscreenChange);
+    document.removeEventListener('visibilitychange', this.onVisibilityChange);
     clearLogs();
     if (document.fullscreenElement) {
       document.exitFullscreen();
@@ -61,7 +64,9 @@ class LogWindow extends React.Component {
     const { lines } = this.props;
     if (lines) {
       const pane = this.logPaneRef.current;
-      pane.scrollTo({ top: pane.scrollHeight });
+      if (pane && pane.scrollTo) {
+        pane.scrollTo({ top: pane.scrollHeight });
+      }
     }
   }
 
@@ -69,7 +74,7 @@ class LogWindow extends React.Component {
     const { userScrolled } = this.state;
     const view = event.target;
     const currentScrollDiff = (view.scrollHeight - view.clientHeight) - view.scrollTop;
-    if (!userScrolled && currentScrollDiff > AUTOSCROLL_THRESHOLD) {
+    if (!userScrolled && currentScrollDiff > AUTOSCROLL_THRESHOLD && !this.isPageVisible) {
       // user scrolled to anywhere which isn't the very bottom, stop auto-scrolling
       this.setState({ userScrolled: true });
     }
@@ -88,13 +93,33 @@ class LogWindow extends React.Component {
     }
   }
 
+  onVisibilityChange = () => {
+    if (this.updateTimer !== null) {
+      window.clearInterval(this.updateTimer);
+    }
+    this.isPageVisible = document.visibilityState === 'visible';
+    if (this.isPageVisible) {
+      // update very 2s when page is visible
+      this.updateTimer = window.setInterval(this.update, 2000);
+      // issue another update call just to make sure we show fresh logs
+      //  when the page becomes visible
+      this.update();
+    } else {
+      // update every 15s if page is not visible, for better performance
+      this.updateTimer = window.setInterval(this.update, 15000);
+    }
+  }
+
   update = () => {
     const {
-      getLogs, cluster, lines, pending, errorCode,
+      getLogs, cluster, lines, logType, pending, errorCode,
     } = this.props;
     if (!pending && errorCode !== 403) {
-      const offset = lines ? lines.split('\n').length : 0;
-      getLogs(cluster.id, offset);
+      const requestLogType = cluster.state !== clusterStates.UNINSTALLING ? 'install' : 'uninstall';
+      let offset = lines ? lines.split('\n').length : 0;
+      if (logType !== requestLogType) { offset = 0; }
+
+      getLogs(cluster.id, offset, requestLogType);
     }
   }
 
@@ -120,7 +145,7 @@ class LogWindow extends React.Component {
 
   render() {
     const {
-      lines, errorCode, cluster, refresh,
+      lines, errorCode, cluster, refresh, history,
     } = this.props;
     const { userScrolled, isFullScreen } = this.state;
     const totalLines = lines ? lines.split('\n').length - 1 : 0;
@@ -129,16 +154,25 @@ class LogWindow extends React.Component {
       requestAnimationFrame(this.scrollToEnd);
     }
 
-    const message = errorCode === 403
-      ? metricsStatusMessages.installing
-      : 'Cluster installation has started. Installation log will appear here once it becomes available.';
+    let message;
+    if (cluster.state === clusterStates.UNINSTALLING) {
+      message = errorCode === 403
+        ? metricsStatusMessages.uninstalling
+        : 'Cluster uninstallation has started. Uninstallation log will appear here once it becomes available.';
+    } else {
+      message = errorCode === 403
+        ? metricsStatusMessages.installing
+        : 'Cluster installation has started. Installation log will appear here once it becomes available.';
+    }
 
     /* using <article className="pf-c-card"> instead of <Card>
     to make it possible to add a ref for the card, so we can use requestFullScreen */
     return (
       <article className="pf-c-card" ref={this.cardRef}>
         <CardHeader>
-          <Title headingLevel="h2" size="lg" className="card-title logview-title">Installation logs</Title>
+          <Title headingLevel="h2" size="lg" className="card-title logview-title">
+            {cluster.state === clusterStates.UNINSTALLING ? 'Uninstallation logs' : 'Installation logs'}
+          </Title>
           { !!totalLines && (
             <div className="logview-buttons">
               <Button
@@ -153,7 +187,7 @@ class LogWindow extends React.Component {
           )}
         </CardHeader>
         <CardBody>
-          <ClusterStatusMonitor refresh={refresh} cluster={cluster} />
+          <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
           { totalLines ? (
             <div className="log-window">
               <div className="log-window__header">
@@ -187,11 +221,14 @@ LogWindow.propTypes = {
   getLogs: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   lines: PropTypes.string,
+  logType: PropTypes.oneOf(['install', 'uninstall']),
   cluster: PropTypes.shape({
     id: PropTypes.string,
+    state: PropTypes.string,
   }),
   errorCode: PropTypes.number,
   refresh: PropTypes.func,
+  history: PropTypes.object,
 };
 
 export default LogWindow;
