@@ -17,6 +17,7 @@ set -x
 ./podman-or-docker.sh run \
                       --rm --name=browser \
                       --add-host qa.foo.redhat.com:127.0.0.1 \
+                      --add-host prod.foo.redhat.com:127.0.0.1 \
                       --net=host -p 4444:4444 -p 5900:5900 \
                       --volume /dev/shm:/dev/shm \
                       docker.io/selenium/standalone-"$BROWSER"-debug
