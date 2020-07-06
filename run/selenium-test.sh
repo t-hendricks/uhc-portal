@@ -13,7 +13,21 @@ yarn wait-on http-get://localhost:4444/wd/hub
 
 # Default must match selenium-browser.sh
 BROWSER="${BROWSER:-firefox}"
-export BUSHSLICER_CONFIG="{\"global\": {\"browser\": \"$BROWSER\"}}"
+export BUSHSLICER_CONFIG="{
+  \"environments\": {
+    \"ocm_local_dev_prod_sso\": {
+      \"static_users_map\": {
+        \"regularUser\": \"$TEST_SELENIUM_NOANYQUOTA_USERNAME:$TEST_SELENIUM_NOANYQUOTA_PASSWORD\",
+        \"noAnyQuotaUser\": \"$TEST_SELENIUM_NOANYQUOTA_USERNAME:$TEST_SELENIUM_NOANYQUOTA_PASSWORD\"
+      }
+    }
+  },
+  \"global\": {
+    \"browser\": \"$BROWSER\",
+    \"default_environment\": \"ocm_local_dev_prod_sso\"
+  }
+}"
+export BUSHSLICER_DEFAULT_ENVIRONMENT=ocm_local_dev_prod_sso
 
 if [ -n "${UNATTENDED-}" ]; then
   FLAGS=('--profile=_debug' '--profile=junit')
@@ -24,7 +38,6 @@ fi
 mkdir -p ./output
 
 CUCUMBER_COMMAND=(
-  env BUSHSLICER_CONFIG="$BUSHSLICER_CONFIG"
   bundle exec cucumber "${FLAGS[@]}"
   # See comment about --guess in our-tests/features/step-definitions/ocm.rb
   --verbose --require=features/ --require=our-tests/features/ --guess
@@ -44,5 +57,7 @@ CUCUMBER_COMMAND=(
                       --mount type=bind,src="$PWD/our-tests",dst=/verification-tests/our-tests,ro=true \
                       --mount type=bind,src="$PWD/output",dst=/output \
                       --user=root \
+                      --env BUSHSLICER_CONFIG \
+                      --env BUSHSLICER_DEFAULT_ENVIRONMENT \
                       $SELENIUM_TESTS_IMAGE \
                       "${CUCUMBER_COMMAND[@]}"
