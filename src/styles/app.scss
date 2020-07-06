@@ -310,10 +310,10 @@ limitations under the License.
     font-weight: 700;
     padding-right: 180px; // Adjusted to accommodate legend
   }
-  &.chart-with-legend {
-    height: 205px;
-    width: 410px;
-  }
+}
+#clusterdetails-content .metrics-chart.chart-with-legend {
+  height: 205px;
+  width: 410px;
 }
 #metrics-charts .pf-c-card__header .pf-c-alert {
   margin-top: 10px;
