@@ -1,6 +1,14 @@
 import get from 'lodash/get';
 import has from 'lodash/has';
 
+// Add-ons with 0 resource cost are free for OSD/MOA clusters
+const isFreeAddOn = (addOn, cluster) => {
+  if (addOn.resource_cost === 0) {
+    return ['osd', 'moa'].includes(cluster.product.id);
+  }
+  return false;
+};
+
 // An add-on is only visible if it has an entry in the quota summary
 // regardless of whether the org has quota or not
 const isAvailable = (addOn, cluster, organization, quota) => {
@@ -8,8 +16,8 @@ const isAvailable = (addOn, cluster, organization, quota) => {
     return false;
   }
 
-  // If the add-on is free, it should be available on OSD clusters
-  if (cluster.product.id === 'osd' && addOn.resource_cost === 0) {
+  // If the add-on is free, it should be available
+  if (isFreeAddOn(addOn, cluster)) {
     return true;
   }
 
@@ -31,8 +39,8 @@ const hasQuota = (addOn, cluster, organization, quota) => {
     return false;
   }
 
-  // Quota is unnecessary for free add-ons on OSD clusters
-  if (cluster.product.id === 'osd' && addOn.resource_cost === 0) {
+  // Quota is unnecessary for free add-ons
+  if (isFreeAddOn(addOn, cluster)) {
     return true;
   }
 
