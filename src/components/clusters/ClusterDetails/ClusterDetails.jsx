@@ -236,8 +236,8 @@ class ClusterDetails extends Component {
       return true;
     }
 
-    // If there are free add-ons available we can show the tab on OSD clusters regardless of quota
-    if (cluster.product.id === 'osd' && get(addOns, 'freeAddOns.length', 0)) {
+    // If there are compatible free add-ons available we can show the tab regardless of quota
+    if (['osd', 'moa'].includes(cluster.product.id) && get(addOns, 'freeAddOns.length', 0)) {
       return true;
     }
 

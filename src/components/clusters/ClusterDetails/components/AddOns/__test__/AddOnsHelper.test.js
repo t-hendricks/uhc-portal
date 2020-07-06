@@ -26,6 +26,27 @@ describe('isAvailable', () => {
     const available = isAvailable(mockAddOns.items[3], cluster, { fulfilled: true }, quotaSummary);
     expect(available).toBe(true);
   });
+
+  it('should determine that add-on is not available for non-OSD cluster', () => {
+    const available = isAvailable(mockAddOns.items[0], {
+      product: { id: 'rhmi' },
+    }, { fulfilled: true }, quotaSummary);
+    expect(available).toBe(false);
+  });
+
+  it('should determine that add-on is available for OSD cluster', () => {
+    const available = isAvailable(mockAddOns.items[0], {
+      product: { id: 'osd' },
+    }, { fulfilled: true }, quotaSummary);
+    expect(available).toBe(true);
+  });
+
+  it('should determine that add-on is available for MOA cluster', () => {
+    const available = isAvailable(mockAddOns.items[0], {
+      product: { id: 'moa' },
+    }, { fulfilled: true }, quotaSummary);
+    expect(available).toBe(true);
+  });
 });
 
 describe('isInstalled', () => {
@@ -53,6 +74,20 @@ describe('hasQuota', () => {
 
   it('should determine that the org has quota for the add-on', () => {
     const quota = hasQuota(mockAddOns.items[3], cluster, { fulfilled: true }, quotaSummary);
+    expect(quota).toBe(true);
+  });
+
+  it('should determine that the org does not need quota for the add-on on an OSD cluster', () => {
+    const quota = hasQuota(mockAddOns.items[0], {
+      product: { id: 'osd' },
+    }, { fulfilled: true }, quotaSummary);
+    expect(quota).toBe(true);
+  });
+
+  it('should determine that the org does not need quota for the add-on on a MOA cluster', () => {
+    const quota = hasQuota(mockAddOns.items[0], {
+      product: { id: 'moa' },
+    }, { fulfilled: true }, quotaSummary);
     expect(quota).toBe(true);
   });
 });
