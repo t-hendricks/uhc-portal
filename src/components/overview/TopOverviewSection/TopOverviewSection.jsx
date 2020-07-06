@@ -10,6 +10,7 @@ import {
   EmptyStateBody,
   EmptyState,
 } from '@patternfly/react-core';
+import { Link } from 'react-router-dom';
 import ResourceUsage from '../../clusters/common/ResourceUsage/ResourceUsage';
 import ClustersWithIssuesCard from '../ClustersWithIssuesCard';
 
@@ -107,18 +108,20 @@ const TopOverviewSection = ({
   return (
     <>
       <GridItem md={3} sm={12}>
-        <Card className="clusters-overview-card">
-          <CardHeader>
+        <Link to="/" className="overview-clusters-link">
+          <Card className="clusters-overview-card">
+            <CardHeader>
                   Clusters
-          </CardHeader>
-          <CardBody>
-            <Bullseye>
-              <Title headingLevel="h1" size="3xl">
-                {totalClusters}
-              </Title>
-            </Bullseye>
-          </CardBody>
-        </Card>
+            </CardHeader>
+            <CardBody>
+              <Bullseye>
+                <Title headingLevel="h1" size="3xl">
+                  {totalClusters}
+                </Title>
+              </Bullseye>
+            </CardBody>
+          </Card>
+        </Link>
       </GridItem>
       <GridItem md={9} rowSpan={2} sm={12}>
         <Card id="metrics-charts">
