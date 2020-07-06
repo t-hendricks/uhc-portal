@@ -6,23 +6,29 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
     md={3}
     sm={12}
   >
-    <Card
-      className="clusters-overview-card"
+    <Link
+      className="overview-clusters-link"
+      replace={false}
+      to="/"
     >
-      <CardHeader>
-        Clusters
-      </CardHeader>
-      <CardBody>
-        <Bullseye>
-          <Title
-            headingLevel="h1"
-            size="3xl"
-          >
-            10
-          </Title>
-        </Bullseye>
-      </CardBody>
-    </Card>
+      <Card
+        className="clusters-overview-card"
+      >
+        <CardHeader>
+          Clusters
+        </CardHeader>
+        <CardBody>
+          <Bullseye>
+            <Title
+              headingLevel="h1"
+              size="3xl"
+            >
+              10
+            </Title>
+          </Bullseye>
+        </CardBody>
+      </Card>
+    </Link>
   </GridItem>
   <GridItem
     md={9}
