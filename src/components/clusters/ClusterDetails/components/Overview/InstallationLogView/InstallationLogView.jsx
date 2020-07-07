@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -29,6 +30,21 @@ class LogWindow extends React.Component {
     document.addEventListener('visibilitychange', this.onVisibilityChange);
     this.isPageVisible = document.visibilityState === 'visible';
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // avoid rendering on every prop/state change by manually comparing the ones we care about.
+    // effectively this avoids rendering when a completed request has no new lines.
+    return (
+      nextState.userScrolled !== this.state.userScrolled
+      || nextState.isFullScreen !== this.state.isFullScreen
+      || nextProps.lines !== this.props.lines
+      || nextProps.cluster.state !== this.props.cluster.state
+      || nextProps.cluster.id !== this.props.cluster.id
+      || nextProps.errorCode !== this.props.errorCode
+      || nextProps.logType !== this.props.logType
+    );
+  }
+
 
   componentDidUpdate(prevProps) {
     const { lines, errorCode, cluster } = this.props;
@@ -74,7 +90,7 @@ class LogWindow extends React.Component {
     const { userScrolled } = this.state;
     const view = event.target;
     const currentScrollDiff = (view.scrollHeight - view.clientHeight) - view.scrollTop;
-    if (!userScrolled && currentScrollDiff > AUTOSCROLL_THRESHOLD && !this.isPageVisible) {
+    if (!userScrolled && currentScrollDiff > AUTOSCROLL_THRESHOLD && this.isPageVisible) {
       // user scrolled to anywhere which isn't the very bottom, stop auto-scrolling
       this.setState({ userScrolled: true });
     }
