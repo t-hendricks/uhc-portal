@@ -39,6 +39,7 @@ trap 'yarn stop-insights-proxy' EXIT
                       --rm --name insightsproxy \
                       --add-host qa.foo.redhat.com:127.0.0.1 \
                       --add-host prod.foo.redhat.com:127.0.0.1 \
+                      --env SPANDX_PORT \
                       --env CUSTOM_CONF=true --volume "$PWD"/../profiles/local-frontend.js:/config/spandx.config.js \
                       --security-opt label=disable \
                       $OPTS \
