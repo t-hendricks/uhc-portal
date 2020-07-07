@@ -39,7 +39,7 @@ exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
       rel="noopener noreferrer"
       target="_blank"
     >
-      Open subscription watch
+      Open Subscription Watch
     </Component>
   </CardBody>
   <CardBody />
