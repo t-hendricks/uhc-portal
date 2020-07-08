@@ -334,6 +334,8 @@ class ClusterDetails extends Component {
     const displayInsightsTab = !cluster.managed && !isArchived && APP_BETA && (
       !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
       || insightsData[cluster.external_id].status === 404
+      || insightsData[cluster.external_id].status === 500
+      || insightsData[cluster.external_id].status === 204
     );
 
     const consoleURL = get(cluster, 'console.url');
