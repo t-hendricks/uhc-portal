@@ -116,6 +116,10 @@
       "api": {
         "url": ""
       },
+      "storage_quota": {
+        "value": 107374182400,
+        "unit": "B"
+      },
       "nodes": {
         "total": 6,
         "master": 3,
@@ -134,6 +138,17 @@
           }
         },
         "cpu": {
+          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "used": {
+            "value": 0,
+            "unit": ""
+          },
+          "total": {
+            "value": 0,
+            "unit": ""
+          }
+        },
+        "sockets": {
           "updated_timestamp": "0001-01-01T00:00:00Z",
           "used": {
             "value": 0,

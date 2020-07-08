@@ -14,7 +14,7 @@ import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
 import SubscriptionSettings from './SubscriptionSettings';
 import ClusterLogs from '../ClusterLogs';
-import InstallationLogView from './InstallationLogView';
+import InstallationLogView, { shouldShowLogs } from './InstallationLogView';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
@@ -55,25 +55,21 @@ class Overview extends React.Component {
       : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
 
     const shouldMonitorStatus = cluster.state === clusterStates.PENDING
-                             || cluster.state === clusterStates.INSTALLING;
-
-    const shouldShowLogs = cluster.managed && cluster.canEdit
-                      && (cluster.state === clusterStates.PENDING
-                      || cluster.state === clusterStates.INSTALLING
-                      || cluster.state === clusterStates.ERROR);
+                             || cluster.state === clusterStates.INSTALLING
+                             || cluster.state === clusterStates.UNINSTALLING;
 
     return (
       <>
-        { shouldShowLogs
+        { shouldShowLogs(cluster)
           ? (
-            <InstallationLogView cluster={cluster} refresh={refresh} />
+            <InstallationLogView cluster={cluster} refresh={refresh} history={history} />
           ) : (
             <Card id="metrics-charts">
               <CardHeader>
                 <Title headingLevel="h2" size="lg" className="card-title">Resource usage</Title>
                 { showInstallSuccessAlert && <Alert variant="success" isInline title="Cluster installed successfully" />}
                 { shouldMonitorStatus && (
-                  <ClusterStatusMonitor refresh={refresh} cluster={cluster} />
+                  <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
                 )}
               </CardHeader>
               <CardBody>

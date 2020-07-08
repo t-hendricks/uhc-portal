@@ -1,11 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'AWS',
-  title:
-   'Install OpenShift on AWS with installer-provisioned infrastructure',
-  docURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-account.html',
-  channel: 'stable' } 1`] = `
+exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -93,12 +88,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'AWS',
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'AWS',
-  title:
-   'Install OpenShift on AWS with user-provisioned infrastructure',
-  docURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-user-infra.html',
-  channel: 'stable' } 1`] = `
+exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -186,12 +176,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'AWS',
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'Azure',
-  title:
-   'Install OpenShift on Azure with installer-provisioned infrastructure',
-  channel: 'stable',
-  docURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-default.html' } 1`] = `
+exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -279,12 +264,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'Azure',
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'Azure',
-  title:
-   'Install OpenShift on Azure with user-provisioned infrastructure',
-  channel: 'preRelease',
-  docURL:
-   'https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md' } 1`] = `
+exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -372,14 +352,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'Azure',
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'Bare Metal',
-  title:
-   'Install OpenShift on Bare Metal with user-provisioned infrastructure',
-  rhcosLearnMoreURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal',
-  channel: 'stable',
-  docURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html' } 1`] = `
+exports[`Every OCP instruction page should render:  Bare Metal 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -468,12 +441,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'Bare Metal
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'GCP',
-  title:
-   'Install OpenShift on GCP with installer-provisioned infrastructure',
-  docURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-account.html',
-  channel: 'stable' } 1`] = `
+exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -561,14 +529,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'GCP',
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'GCP',
-  title:
-   'Install OpenShift on GCP with user-provisioned infrastructure',
-  docURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html',
-  rhcosLearnMoreURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra',
-  channel: 'stable' } 1`] = `
+exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -657,16 +618,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'GCP',
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'IBM-Z',
-  title:
-   'Install OpenShift on IBM Z with user-provisioned infrastructure',
-  rhcosDownloadURL:
-   'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/',
-  rhcosLearnMoreURL:
-   'https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z',
-  docURL:
-   'https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_z/installing-ibm-z.html',
-  channel: 'ibmz' } 1`] = `
+exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -689,6 +641,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'IBM-Z',
             <DownloadsAndPullSecretSection
               channel="ibmz"
               cloudProviderID="/"
+              rhcosDownloadURL="https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/"
               rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z"
               token={Object {}}
             />
@@ -755,15 +708,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'IBM-Z',
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'Power',
-  title:
-   'Install OpenShift on Power with user-provisioned infrastructure',
-  channel: 'ppc64le',
-  rhcosDownloadURL:
-   'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/',
-  showPreReleasePageLink: false,
-  docURL:
-   'https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_power/installing-ibm-power.html' } 1`] = `
+exports[`Every OCP instruction page should render:  Power 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -786,6 +731,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'Power',
             <DownloadsAndPullSecretSection
               channel="ppc64le"
               cloudProviderID="/"
+              rhcosDownloadURL="https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/"
               token={Object {}}
             />
           </SplitItem>
@@ -851,12 +797,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'Power',
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'Red Hat OpenStack Platform',
-  title:
-   'Install OpenShift on Red Hat OpenStack Platform with installer-provisioned infrastructure',
-  channel: 'stable',
-  docURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html' } 1`] = `
+exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-ipi 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -944,16 +885,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'Red Hat Op
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'Red Hat OpenStack Platform',
-  title:
-   'Install OpenShift on Red Hat OpenStack Platform with user-provisioned infrastructure',
-  docURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-user.html',
-  rhcosLearnMoreURL:
-   'https://docs.openshift.com/container-platform/latestinstalling/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user',
-  rhcosDownloadURL:
-   'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/',
-  channel: 'stable' } 1`] = `
+exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-upi 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -976,6 +908,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'Red Hat Op
             <DownloadsAndPullSecretSection
               channel="stable"
               cloudProviderID="/"
+              rhcosDownloadURL="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/"
               rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latestinstalling/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user"
               token={Object {}}
             />
@@ -1042,13 +975,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'Red Hat Op
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'Red Hat Virutalization',
-  title:
-   'Install OpenShift on Red Hat Virtualization with installer-provisioned infrastructure',
-  docURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-default.html',
-  showPreReleasePageLink: false,
-  channel: 'stable' } 1`] = `
+exports[`Every OCP instruction page should render:  Red Hat Virutalization 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -1136,14 +1063,7 @@ exports[`Every OCP instruction page should render:  { cloudProvider: 'Red Hat Vi
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  { cloudProvider: 'VMWare vSphere',
-  title:
-   'Install OpenShift on vSphere with user-provisioned infrastructure',
-  docURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html',
-  rhcosLearnMoreURL:
-   'https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere',
-  channel: 'stable' } 1`] = `
+exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"

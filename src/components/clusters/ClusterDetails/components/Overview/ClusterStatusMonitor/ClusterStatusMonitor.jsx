@@ -6,6 +6,7 @@ import {
 } from '@patternfly/react-core';
 
 import clusterStates from '../../../../common/clusterStates';
+import getClusterName from '../../../../../../common/getClusterName';
 
 class clusterStatusMonitor extends React.Component {
   timerID = null;
@@ -15,7 +16,9 @@ class clusterStatusMonitor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { status, cluster, refresh } = this.props;
+    const {
+      status, cluster, refresh, addNotification, history,
+    } = this.props;
     if (prevProps.status.pending && !status.pending) {
       if (this.timerID !== null) {
         clearTimeout(this.timerID);
@@ -29,13 +32,22 @@ class clusterStatusMonitor extends React.Component {
         if (clusterState !== cluster.state) {
           refresh(); // state transition -> refresh main view
         }
-        if (isInstalling(clusterState)) {
-          this.timerID = setTimeout(this.update, 5000); // still installing, check again in 5s
+        if (isInstalling(clusterState) || clusterState === clusterStates.UNINSTALLING) {
+          // still installing/uninstalling, check again in 5s
+          this.timerID = setTimeout(this.update, 5000);
         }
-      } else if (status.error && isInstalling(cluster.state)) {
-        // if we failed to get the /status endpoint
-        // all we can do is look at the state in cluster object and hope for the best
-        this.timerID = setTimeout(this.update, 5000);
+      } else if (status.error) {
+        if (isInstalling(cluster.state)) {
+          // if we failed to get the /status endpoint (and we weren't uninstalling)
+          // all we can do is look at the state in cluster object and hope for the best
+          this.timerID = setTimeout(this.update, 5000);
+        } else if (cluster.state === clusterStates.UNINSTALLING && status.errorCode === 404) {
+          addNotification({
+            title: `Successfully uninstalled cluster ${getClusterName(cluster)}`,
+            variant: 'success',
+          });
+          history.push('/');
+        }
       }
     }
   }
@@ -72,6 +84,7 @@ clusterStatusMonitor.propTypes = {
     state: PropTypes.string,
   }),
   refresh: PropTypes.func,
+  addNotification: PropTypes.func,
   getClusterStatus: PropTypes.func,
   status: PropTypes.shape({
     pending: PropTypes.bool,
@@ -84,6 +97,9 @@ clusterStatusMonitor.propTypes = {
       state: PropTypes.string,
     }),
   }),
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default clusterStatusMonitor;

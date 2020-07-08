@@ -21,14 +21,14 @@ describe('installationLogActions', () => {
   it('calls clusterService.getLogs', () => {
     const fakeId = '1234';
     installationLogActions.getLogs(fakeId)(mockDispatch);
-    expect(clusterService.getLogs).toBeCalledWith(fakeId, 0);
+    expect(clusterService.getLogs).toBeCalledWith(fakeId, 0, 'install');
   });
 
   it('calls clusterService.getLogs with offset', () => {
     const fakeId = '1234';
     const offset = 50;
-    installationLogActions.getLogs(fakeId, offset)(mockDispatch);
-    expect(clusterService.getLogs).toBeCalledWith(fakeId, offset);
+    installationLogActions.getLogs(fakeId, offset, 'install')(mockDispatch);
+    expect(clusterService.getLogs).toBeCalledWith(fakeId, offset, 'install');
   });
 
   it('dispatches successfully', () => {

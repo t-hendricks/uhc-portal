@@ -82,7 +82,8 @@ run/insights-proxy:
 .PHONY: insights-proxy-check
 .SILENT: insights-proxy-check
 insights-proxy-check: run/insights-proxy
-	if ! grep --with-filename qa.foo.redhat.com /etc/hosts; \
+	if ! grep --with-filename qa.foo.redhat.com /etc/hosts \
+        || ! grep --with-filename prod.foo.redhat.com /etc/hosts; \
 	then \
 		echo "ERROR: Need aliases in /etc/hosts to access the UI."; \
 		echo "       To add them run: make insights-proxy-setup"; \

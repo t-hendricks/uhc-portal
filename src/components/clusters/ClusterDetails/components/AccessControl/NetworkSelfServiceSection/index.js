@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/cjs/actions';
 
 // import usersActions from './UsersActions';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';

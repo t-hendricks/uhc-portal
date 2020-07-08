@@ -42,6 +42,19 @@ $color-log-window-divider: $color-log-window-header-bg;
   display: inline-block;
 }
 
-:fullscreen .log-window__scroll-pane, :-webkit-full-screen .log-window__scroll-pane {
+:fullscreen .log-window div.log-window__scroll-pane {
+  height: 89vh;
+}
+/* we need the prefixed :-webkit-full-screen to support some versions of Chrome,
+ but because firefox wants the unprefixed version, it has to be its own selector
+and not a selector list.
+
+According to the spec: "a group of selectors containing an invalid selector is invalid."
+https://www.w3.org/TR/selectors-3/#Conformance
+*/
+:-webkit-full-screen .log-window div.log-window__scroll-pane {
+  height: 89vh;
+}
+:-moz-full-screen .log-window div.log-window__scroll-pane {
   height: 89vh;
 }

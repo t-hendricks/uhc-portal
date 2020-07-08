@@ -16,17 +16,21 @@
 #
 
 # This script builds the OCM portal code and pushes it to the Insights
-# deployment repositories. It is called via uhc-portal git hooks, when
-# code is merged to master and stable branches. (Master gets deployed to
-# prod-beta, and stable gets deployed to prod-stable.) See app-interface
-# for the job definition:
-# https://gitlab.cee.redhat.com/service/app-interface/blob/master/resources/jenkins/uhc/job-templates.yaml
+# deployment repositories. It is called via git hooks that trigger Jenkins jobs
+# when code is merged to the 'master', 'candidate' or ' stable' branches.
 #
+# See app-interface for the job definition:
+#
+#  https://gitlab.cee.redhat.com/service/app-interface/blob/master/resources/jenkins/uhc/job-templates.yaml
+#
+# The script requires the following enviroment variables:
 #
 # PUSH_KEY - Base64 encoded SSH private key used to push to the Insights
-# platform git repository. Available in Jenkins via Vault. If you run this
-# script locally for some reason, you must set PUSH_KEY.
+# platform git repository. Available in Jenkins via Vault.
 #
+# This script expects either "stable", "staging" or "candidate" as the first paramter, specifying which branch to deploy
+
+
 # URL of the Insights deployment repository for OCM:
 PUSH_URL="git@github.com:RedHatInsights/uhc-portal-frontend-deploy.git"
 
@@ -35,17 +39,17 @@ PUSH_HOSTKEY="github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9I
 
 # Check the environment variables:
 if [ -z "${PUSH_KEY}" ]; then
-  echo "The Insights push key hasn't been provided."
+  echo "Insights push key hasn't been provided."
   echo "Make sure to set the 'PUSH_KEY' environment variable."
   exit 1
 fi
 if [ -z "${PUSH_URL}" ]; then
-  echo "The Insights push URL hasn't been provided."
+  echo "Insights push URL hasn't been provided."
   echo "Make sure to set the 'PUSH_URL' environment variable."
   exit 1
 fi
 if [ -z "${PUSH_HOSTKEY}" ]; then
-  echo "The Insights push host key hasn't been provided."
+  echo "Insights push host key hasn't been provided."
   echo "Make sure to set the 'PUSH_HOSTKEY' environment variable."
   exit 1
 fi
@@ -95,6 +99,7 @@ git clone \
 function push_build {
   # Get the parameters:
   local branch="$1"
+  echo "Pushing to Insights branch '${branch}'"
 
   # Fetch the target branch:
   pushd target
@@ -126,7 +131,7 @@ ${SUBJECT}
   pushd target
     git add \
       --force \
-      *
+      ./*
     git commit \
       --all \
       --allow-empty \
@@ -145,34 +150,36 @@ export npm_config_cafile=/etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
 ls -l /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
 yarn config list
 
-if [ "$1" == "beta" ]; then
-    echo "running staging push"
-    # Install dependencies:
-    rm --recursive --force node_modules
-    yarn install
-    # Build the application for deployment to staging
-    # of the Insights platform:
-    rm --recursive --force build
-    yarn build --no-progress --mode=production --staging=true
-    push_build "qa-stable"
-    rm --recursive --force build
-    yarn build --no-progress --mode=production --beta=true --staging=true
-    push_build "qa-beta"
+# Install dependencies:
+echo "Installing dependencies"
+rm -rf node_modules
+yarn install
 
+if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
+    echo "running staging push"
+    # staging branch available on https://qaprodauth.cloud.redhat.com/openshift
+    rm -rf build
+    yarn build --mode=production --staging="true"
+    push_build "qa-stable"
+
+    echo "running staging (qa-beta) push"
+    # staging branch available on https://qaprodauth.cloud.redhat.com/beta/openshift
+    rm -rf build
+    yarn build --mode=production --beta="true" --staging="true"
+    push_build "qa-beta"
+elif [ "$1" == "candidate" ]; then
+    echo "running candidate push"
+    # Candidate branch available on https://cloud.redhat.com/beta/openshift
+    rm -rf build
+    yarn build --mode=production --beta="true" --staging="false"
+    push_build "prod-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
-    # Install dependencies:
-    rm --recursive --force node_modules
-    yarn install
-    # Build the application for deployment to the prod-stable branch
-    # of the Insights platform:
-    rm --recursive --force build
-    yarn build --no-progress --mode=production
+    # stable branch available on https://cloud.redhat.com/openshift
+    rm -rf build
+    yarn build --mode=production --beta="false" --staging="false"
     push_build "prod-stable"
-    rm --recursive --force build
-    yarn build --no-progress --mode=production --beta=true
-    push_build "prod-beta"
-
 else
-    echo "no mode specified, doing nothing"
+    echo "mode (first param) must be one of: staging / candidate / stable"
+    exit 1
 fi

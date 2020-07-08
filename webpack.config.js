@@ -151,7 +151,13 @@ module.exports = (env, argv) => {
       contentBase: outDir,
       disableHostCheck: true,
       publicPath,
+      // Watching & hot reloading defaults on under webpack-dev-server anyway,
+      // and is hard to turn off (https://github.com/webpack/webpack-dev-server/issues/1251).
       hot: true,
+      watchOptions: {
+      // Kludge: Effectively disable watching by polling once a day.
+        poll: (process.env.WEBPACK_WATCH === 'false') ? 24*60*60*1000 : false,
+      },
       inline: true,
       port: 8001,
     },
