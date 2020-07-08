@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DeleteClusterDialog /> renders correctly 1`] = `
+<Modal
+  isPending={false}
+  isPrimaryDisabled={true}
+  onClose={[Function]}
+  onPrimaryClick={[Function]}
+  onSecondaryClick={[Function]}
+  primaryText="Delete"
+  primaryVariant="danger"
+  title="Delete cluster"
+>
+  <p>
+    This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
+  </p>
+  <Form
+    onSubmit={[Function]}
+  >
+    <p>
+      Confirm deletion by typing
+       
+      <span
+        style={
+          Object {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        fake-name
+      </span>
+       
+      below:
+    </p>
+    <ForwardRef
+      aria-label="cluster name"
+      onChange={[Function]}
+      placeholder="Enter name"
+      type="text"
+      value=""
+    />
+  </Form>
+</Modal>
+`;

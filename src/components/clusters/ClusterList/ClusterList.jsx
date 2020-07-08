@@ -48,7 +48,7 @@ import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
-import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
+import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import EditDisconnectedCluster from '../common/EditDisconnectedCluster';
 import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 

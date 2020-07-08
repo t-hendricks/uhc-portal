@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import { Form, TextInput } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
 
-import { deleteClusterDialogActions } from './DeleteClusterDialogActions';
-import { closeModal } from '../../../common/Modal/ModalActions';
-import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import ErroBox from '../../../common/ErrorBox';
 import { noop } from '../../../../common/helpers';
 
@@ -17,15 +13,15 @@ class DeleteClusterDialog extends React.Component {
     clusterNameInput: '',
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { deleteClusterResponse } = this.props;
-    if (deleteClusterResponse.fulfilled) {
+    if (!prevProps.deleteClusterResponse.fulfilled && deleteClusterResponse.fulfilled) {
       // Close the dialog and tell the parent they might want to refresh.
       this.closeDialog(true);
     }
   }
 
-  setValue(newInput) {
+  setValue = (newInput) => {
     this.setState({
       clusterNameInput: newInput,
     });
@@ -106,7 +102,7 @@ class DeleteClusterDialog extends React.Component {
             type="text"
             value={clusterNameInput}
             placeholder="Enter name"
-            onChange={newInput => this.setValue(newInput)}
+            onChange={this.setValue}
             aria-label="cluster name"
           />
         </Form>
@@ -117,7 +113,10 @@ class DeleteClusterDialog extends React.Component {
 
 DeleteClusterDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  modalData: PropTypes.object,
+  modalData: PropTypes.shape({
+    clusterName: PropTypes.string,
+    clusterID: PropTypes.string,
+  }),
   clearDeleteClusterResponse: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
   deleteCluster: PropTypes.func.isRequired,
@@ -129,16 +128,4 @@ DeleteClusterDialog.defaultProps = {
   onClose: noop,
 };
 
-const mapStateToProps = state => ({
-  isOpen: shouldShowModal(state, 'delete-cluster'),
-  modalData: state.modal.data,
-  deleteClusterResponse: state.deleteCluster,
-});
-
-const mapDispatchToProps = {
-  clearDeleteClusterResponse: () => deleteClusterDialogActions.deletedClusterResponse(),
-  deleteCluster: clusterID => deleteClusterDialogActions.deleteCluster(clusterID),
-  close: () => closeModal('delete-cluster'),
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteClusterDialog);
+export default DeleteClusterDialog;
