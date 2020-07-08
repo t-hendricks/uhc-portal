@@ -331,7 +331,7 @@ class ClusterDetails extends Component {
 
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
-    const displayInsightsTab = !isArchived && APP_BETA && (
+    const displayInsightsTab = !cluster.managed && !isArchived && APP_BETA && (
       !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
       || insightsData[cluster.external_id].status === 404
     );
