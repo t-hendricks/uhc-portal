@@ -25,6 +25,14 @@
     color: var(--pf-global--active-color--300);
 }
 
+.disabled-color {
+    color: var(--pf-global--disabled-color--100);
+}
+
+.danger-color {
+    color: var(--pf-global--danger-color--100);
+}
+
 .empty-table-message {
     padding-top: 64px;
 }
