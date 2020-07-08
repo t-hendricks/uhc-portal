@@ -165,7 +165,7 @@ function NetworkingSection({
                 type="text"
                 validate={serviceCidrValidators}
                 disabled={pending}
-                helpText={cloudProviderID === 'aws' ? 'Subnet mask must be between 16-24.' : 'Range must be private. Subnet mask must be at most 24.'}
+                helpText={cloudProviderID === 'aws' ? 'Subnet mask must be at most 24.' : 'Range must be private. Subnet mask must be at most 24.'}
                 extendedHelpText={constants.serviceCIDRHint}
                 showHelpTextOnError={false}
               />
@@ -180,7 +180,7 @@ function NetworkingSection({
                 type="text"
                 validate={podCidrValidators}
                 disabled={pending}
-                helpText={cloudProviderID === 'aws' ? 'Subnet mask must be between 16-18.' : 'Range must be private. Subnet mask must be at most 18.'}
+                helpText={cloudProviderID === 'aws' ? 'Subnet mask must be at most 18.' : 'Range must be private. Subnet mask must be at most 18.'}
                 extendedHelpText={constants.podCIDRHint}
                 showHelpTextOnError={false}
               />

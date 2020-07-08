@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { GridItem } from '@patternfly/react-core';
 
+
 import IDPBasicFields from './IDPBasicFields';
 
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { checkOpenIDIssuer } from '../../../../../../../common/validators';
 import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
+import { isEmptyReduxArray } from '../../IdentityProvidersHelper';
 
 const validate = (_, allValues) => {
-  if (!allValues.openid_preferred_username && !allValues.openid_name && !allValues.openid_email) {
+  if (isEmptyReduxArray(allValues.openid_preferred_username, 'openid_preferred_username')
+    && isEmptyReduxArray(allValues.openid_name, 'openid_name') && isEmptyReduxArray(allValues.openid_email, 'openid_email')) {
     return 'At least one claim is required';
   }
   return undefined;

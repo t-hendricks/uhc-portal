@@ -17,6 +17,7 @@ describe('<InstallationLogView />', () => {
       clearLogs={clearLogs}
       getLogs={getLogs}
       refresh={jest.fn()}
+      logType="install"
       lines="lorem ipsum"
     />);
   });
@@ -27,20 +28,20 @@ describe('<InstallationLogView />', () => {
 
   it('should fetch logs on mount', () => {
     // offset=1 because we have one line on mount in this test
-    expect(getLogs).toHaveBeenCalledWith(clusterDetails.cluster.id, 1);
+    expect(getLogs).toHaveBeenCalledWith(clusterDetails.cluster.id, 1, 'install');
   });
 
   it('should fetch logs using a timer', () => {
     expect(getLogs).toHaveBeenCalledTimes(1);
     jest.runOnlyPendingTimers();
     expect(getLogs).toHaveBeenCalledTimes(2); // one call on mount, second on timer
-    expect(getLogs).toHaveBeenLastCalledWith(clusterDetails.cluster.id, 1);
+    expect(getLogs).toHaveBeenLastCalledWith(clusterDetails.cluster.id, 1, 'install');
   });
 
   it('should fetch logs with offset using a timer', () => {
     wrapper.setProps({ lines: 'hello\nworld' });
     jest.runOnlyPendingTimers();
-    expect(getLogs).toHaveBeenLastCalledWith(clusterDetails.cluster.id, 2);
+    expect(getLogs).toHaveBeenLastCalledWith(clusterDetails.cluster.id, 2, 'install');
   });
 
   it('should not fetch logs when pending', () => {
@@ -68,7 +69,7 @@ describe('<InstallationLogView />', () => {
   });
 
   it('without logs, getLogs() offset should be 0', () => {
-    expect(getLogs).toHaveBeenLastCalledWith(clusterDetails.cluster.id, 0);
+    expect(getLogs).toHaveBeenLastCalledWith(clusterDetails.cluster.id, 0, 'install');
   });
 
   it('should stop the timer when recieving 403 error code', () => {

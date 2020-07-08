@@ -74,9 +74,9 @@ const getCloudRegions = providerID => apiRequest({
   url: `/api/clusters_mgmt/v1/cloud_providers/${providerID}/regions`,
 });
 
-const getLogs = (clusterID, offset) => apiRequest({
+const getLogs = (clusterID, offset, logType) => apiRequest({
   method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/logs/hive`,
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/logs/${logType}/${logType === 'install' ? 'hive' : 'deprovision'}`,
   params: {
     offset,
   },

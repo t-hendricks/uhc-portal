@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import flatten from 'lodash/flatten';
 import ReactMarkdown from 'react-markdown';
 
 import {
@@ -126,8 +127,7 @@ class LogTable extends React.Component {
     const oldIds = oldRows.map(row => row.expandId).filter(x => x !== undefined);
     const newIds = newRows.map(row => row.id);
     if (!isEqual(oldIds, newIds)) {
-      const rows = newRows.length === 0 ? emptyState : newRows.map(mapLog)
-        .flat();
+      const rows = newRows.length === 0 ? emptyState : flatten(newRows.map(mapLog));
       return { rows };
     }
     return null;

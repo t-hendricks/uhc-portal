@@ -310,13 +310,17 @@ limitations under the License.
     font-weight: 700;
     padding-right: 180px; // Adjusted to accommodate legend
   }
-  &.chart-with-legend {
-    height: 205px;
-    width: 410px;
-  }
+}
+#clusterdetails-content .metrics-chart.chart-with-legend {
+  height: 205px;
+  width: 410px;
 }
 #metrics-charts .pf-c-card__header .pf-c-alert {
   margin-top: 10px;
+}
+
+#overview-grid #metrics-charts {
+  min-height: 300px;
 }
 
 #deleteClusterHint {
@@ -1340,10 +1344,38 @@ h3#grant-role-select  {
   }
 }
 
+.dashboard-emptystate-card{
+  max-width: 570px;
+}
+
+#dashboard-emptystate-osd{
+  padding-bottom: var(--pf-global--spacer--lg);
+}
+
+#overview-emptystate-get-productive .flex-pair{
+  div{
+    margin-bottom: var(--pf-global--spacer--lg);
+    @media (max-width: 480px) {
+      width: 338px;
+    }
+    @media (min-width: 481px) and (max-width: 768px) {
+      width: 520px;
+    }
+    @media (min-width: 779px) and (max-width: 1199px){
+      width: 463px;
+    }
+  }
+  div:first-child{
+      @media (min-width: 1023px) {
+      margin-right: var(--pf-global--spacer--lg);
+    } 
+  }
+}
 
 .dashboard-emptystate-card .pf-c-card__body {
   a {
     display: block;
+    margin-top: 16px;
   }
 
   .pf-c-button {
@@ -1376,14 +1408,25 @@ h3#grant-role-select  {
   margin-bottom: var(--pf-global--spacer--md);
  }
 
-#overview-emptystate {
+#emptystate-learn-more {
+  display: flex;
+  flex-wrap: wrap;
+
   iframe {
-    width: 100%;
-    height: 375px;
+    min-height: 375px;
   }
 
-.pf-c-list{
+  .pf-c-list{
    list-style: none;
+  }
+
+  div:first-child{
+    @media (max-width: 769px) {
+      margin-bottom: var(--pf-global--spacer--lg);
+    } 
+    @media (min-width: 737px) {
+      margin-right: var(--pf-global--spacer--lg);
+    } 
   }
 }
 
@@ -1393,4 +1436,13 @@ h3#grant-role-select  {
     display: block;
     margin-top: var(--pf-global--spacer--md);
   }
+}
+
+.small-donut-chart-container {
+  max-height: 205px;
+  max-width: 410px;
+}
+
+a.overview-clusters-link:hover {
+  text-decoration: none;
 }

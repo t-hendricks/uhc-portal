@@ -94,7 +94,7 @@ function BasicFieldsSection({
                 options={[
                   {
                     value: 'false',
-                    label: 'Single Zone',
+                    label: 'Single zone',
                     disabled: !hasSingleAzQuota,
                     tooltipText: singleAzTooltip,
                   },

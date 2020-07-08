@@ -50,6 +50,7 @@ import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
 import EditDisconnectedCluster from '../common/EditDisconnectedCluster';
+import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
@@ -60,13 +61,13 @@ import { viewConstants } from '../../../redux/constants';
 
 class ClusterList extends Component {
   state = {
-    showSkeleton: false,
+    loadingChangedView: false,
   };
 
   componentDidMount() {
     document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
     const {
-      getCloudProviders, cloudProviders, organization, getOrganizationAndQuota, setListFlag,
+      getCloudProviders, cloudProviders, setListFlag,
     } = this.props;
 
     scrollToTop();
@@ -86,9 +87,6 @@ class ClusterList extends Component {
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
     }
-    if (!organization.fulfilled && !organization.pending) {
-      getOrganizationAndQuota();
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -99,12 +97,12 @@ class ClusterList extends Component {
     if ((!valid && !pending)
         || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ showSkeleton: true });
+      this.setState({ loadingChangedView: true });
       this.refresh();
     }
     if (prevProps.pending && !pending) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ showSkeleton: false });
+      this.setState({ loadingChangedView: false });
     }
   }
 
@@ -129,15 +127,16 @@ class ClusterList extends Component {
       openModal,
       invalidateClusters,
       errorMessage,
-      organization,
       operationID,
       history,
       setClusterDetails,
       anyModalOpen,
       queryParams,
+      canAllowClusterAdminList,
+      canSubscribeOCPList,
     } = this.props;
 
-    const { showSkeleton } = this.state;
+    const { loadingChangedView } = this.state;
 
     const pageHeader = (
       <PageHeader>
@@ -150,15 +149,17 @@ class ClusterList extends Component {
         <>
           {pageHeader}
           <PageSection>
-            <EmptyState>
-              <ErrorBox
-                message="Error retrieving clusters"
-                response={{
-                  errorMessage,
-                  operationID,
-                }}
-              />
-            </EmptyState>
+            <div data-ready>
+              <EmptyState>
+                <ErrorBox
+                  message="Error retrieving clusters"
+                  response={{
+                    errorMessage,
+                    operationID,
+                  }}
+                />
+              </EmptyState>
+            </div>
           </PageSection>
         </>
       );
@@ -170,14 +171,24 @@ class ClusterList extends Component {
     /* isPendingNoData - we're waiting for the cluster list response,
       and we have no valid data to show. In this case we probably want to show a "Skeleton".
     */
-    const isPendingNoData = (!size(clusters) && pending && (hasNoFilters || !valid))
-    || (!organization.fulfilled && !organization.error);
+    const isPendingNoData = !size(clusters) && pending && (hasNoFilters || !valid);
+
+    const showSpinner = !isPendingNoData && pending && !loadingChangedView;
+    const showSkeleton = isPendingNoData || (pending && loadingChangedView);
+
+    // This signals to end-to-end tests that page has completed loading.
+    // For now deliberately ignoring in-place reloads with a spinner;
+    // tests that modify clusters (e.g. create or scale a cluster) should wait
+    // for concrete data they expect to see.
+    const dataReady = !showSkeleton;
 
     if (!size(clusters) && !isPendingNoData && hasNoFilters) {
       return (
         <PageSection>
           <GlobalErrorBox />
-          <ClusterListEmptyState />
+          <div data-ready>
+            <ClusterListEmptyState />
+          </div>
         </PageSection>
       );
     }
@@ -187,7 +198,7 @@ class ClusterList extends Component {
         {pageHeader}
         <PageSection>
           <Card>
-            <div className="cluster-list">
+            <div className="cluster-list" data-ready={dataReady}>
               <GlobalErrorBox />
               <TableToolbar id="cluster-list-toolbar">
                 <div className="toolbar-item">
@@ -201,7 +212,7 @@ class ClusterList extends Component {
                   <Button className="toolbar-item">Create cluster</Button>
                 </Link>
                 <ClusterListExtraActions className="toolbar-item" />
-                { (pending && !isPendingNoData && !showSkeleton) && (
+                { showSpinner && (
                   <Spinner className="cluster-list-spinner" />
                 ) }
                 { error && (
@@ -229,8 +240,10 @@ class ClusterList extends Component {
                 clusters={clusters || []}
                 viewOptions={viewOptions}
                 setSorting={setSorting}
-                isPending={isPendingNoData || (pending && showSkeleton)}
+                isPending={showSkeleton}
                 setClusterDetails={setClusterDetails}
+                canAllowClusterAdminList={canAllowClusterAdminList}
+                canSubscribeOCPList={canSubscribeOCPList}
               />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
@@ -248,6 +261,7 @@ class ClusterList extends Component {
               <EditDisconnectedCluster onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
               <UnarchiveClusterDialog onClose={invalidateClusters} />
+              <ToggleClusterAdminAccessDialog onClose={invalidateClusters} />
               <DeleteClusterDialog onClose={(shouldRefresh) => {
                 if (shouldRefresh) {
                   invalidateClusters();
@@ -281,8 +295,6 @@ ClusterList.propTypes = {
   cloudProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  organization: PropTypes.object.isRequired,
-  getOrganizationAndQuota: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
   history: PropTypes.shape({
@@ -292,6 +304,8 @@ ClusterList.propTypes = {
   queryParams: PropTypes.shape({
     has_filters: PropTypes.bool,
   }),
+  canAllowClusterAdminList: PropTypes.objectOf(PropTypes.bool),
+  canSubscribeOCPList: PropTypes.objectOf(PropTypes.bool),
 };
 
 export default ClusterList;

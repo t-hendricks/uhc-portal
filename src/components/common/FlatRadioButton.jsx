@@ -20,7 +20,6 @@ function FlatRadioButton({
   ...extraProps
 }) {
   const isSelectedClass = isSelected ? 'selected' : '';
-
   const className = cx(BASE_CLASS_NAME, isSelectedClass, extraClass);
 
   const onClick = () => {

@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty';
 import { strToCleanArray, multiInputToCleanArray } from '../../../../../common/helpers';
 
 const IDPformValues = {
@@ -125,6 +126,16 @@ const generateIDPName = (IDPType, IDPList) => {
   return idpName;
 };
 
+const getldapca = (formData) => {
+  if (formData.ldap_ca) {
+    if (!formData.ldap_insecure) {
+      return formData.ldap_ca.trim();
+    }
+    return '';
+  }
+  return formData.ldap_ca;
+};
+
 const IDPDocBase = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers';
 const LDAPDocLink = `${IDPDocBase}/configuring-ldap-identity-provider.html`;
 const GithubDocLink = `${IDPDocBase}/configuring-github-identity-provider.html`;
@@ -140,7 +151,7 @@ const getCreateIDPRequestData = (formData) => {
     organizations: formData.github_auth_mode === 'organizations' ? multiInputToCleanArray(formData, 'organizations') : undefined,
     teams: formData.github_auth_mode === 'teams' ? multiInputToCleanArray(formData, 'teams') : undefined,
     hostname: formData.hostname,
-    ca: formData.github_ca,
+    ca: formData.github_ca ? formData.github_ca.trim() : formData.github_ca,
   });
 
   const googleData = () => ({
@@ -160,18 +171,18 @@ const getCreateIDPRequestData = (formData) => {
     bind_password: formData.bind_password,
     insecure: formData.ldap_insecure,
     url: formData.ldap_url,
-    ca: formData.ldap_ca,
+    ca: getldapca(formData),
   });
 
   const gitlabData = () => ({
     client_id: formData.client_id,
     client_secret: formData.client_secret,
     url: formData.gitlab_url,
-    ca: formData.gitlab_ca,
+    ca: formData.gitlab_ca ? formData.gitlab_ca.trim() : formData.gitlab_ca,
   });
 
   const openIdData = () => ({
-    ca: formData.openid_ca,
+    ca: formData.openid_ca ? formData.openid_ca.trim() : formData.openid_ca,
     claims: {
       email: multiInputToCleanArray(formData, 'openid_email'),
       name: multiInputToCleanArray(formData, 'openid_name'),
@@ -335,6 +346,16 @@ const getGitHubTeamsAndOrgsData = (type) => {
   return data;
 };
 
+/**
+ * Returns `true` if the provided array of `ReduxFieldArray` values has only empty values,
+ * false otherwise.
+ * @param {Array} arr array of `ReduxFieldArray` values
+ * @param {String} key Field name of the `ReduxFieldArray`
+ */
+
+const isEmptyReduxArray = (arr, key) => (arr ? arr.map(currentValue => isEmpty(currentValue[key]))
+  .every(item => item) : false);
+
 
 export {
   getCreateIDPRequestData,
@@ -355,4 +376,5 @@ export {
   getldapAttributes,
   getOpenIdClaims,
   getGitHubTeamsAndOrgsData,
+  isEmptyReduxArray,
 };

@@ -13,7 +13,7 @@ const BASE_DOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z
 const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 // Regular expression used to check whether input is a valid IPv4 CIDR range
-const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[0-9]))$/;
+const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[1-9]))$/;
 const MACHINE_CIDR_MAX = 23;
 const SERVICE_CIDR_MAX = 24;
 const POD_CIDR_MAX = 18;
@@ -125,19 +125,11 @@ const checkRouteSelectors = (value) => {
   if (!value) {
     return undefined;
   }
+
   const selectors = value.split(',');
 
-  for (let i = 0; i < selectors.length; i += 1) {
-    const selector = selectors[i];
-    const labelValue = selector.split('=');
-
-    if (labelValue.length !== 2) {
-      return "Each route selector must be of format 'key=value'.";
-    }
-
-    if (!labelValue[0] || !labelValue[1]) {
-      return "Each route selector must be of format 'key=value'.";
-    }
+  if (selectors.some(pair => (!(/^([0-9a-z]+([-_][0-9a-z]+)*)=([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(pair)))) {
+    return "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
   }
   return undefined;
 };
@@ -390,12 +382,18 @@ const awsSubnetMask = fieldName => (value) => {
   }
   const awsSubnetMaskRanges = {
     network_machine_cidr: [AWS_CIDR_MIN, MACHINE_CIDR_MAX],
-    network_pod_cidr: [AWS_CIDR_MIN, POD_CIDR_MAX],
-    network_service_cidr: [AWS_CIDR_MIN, SERVICE_CIDR_MAX],
+    network_pod_cidr: [undefined, POD_CIDR_MAX],
+    network_service_cidr: [undefined, SERVICE_CIDR_MAX],
   };
   const maskRange = awsSubnetMaskRanges[fieldName];
   const parts = value.split('/');
   const maskBits = parseInt(parts[1], 10);
+  if (!maskRange[0]) {
+    if (maskBits > maskRange[1] || maskBits < 1) {
+      return `Subnet mask must be between 1-${maskRange[1]}.`;
+    }
+    return undefined;
+  }
   if (!(maskRange[0] <= maskBits && maskBits <= maskRange[1])) {
     return `Subnet mask must be between ${maskRange[0]}-${maskRange[1]}.`;
   }

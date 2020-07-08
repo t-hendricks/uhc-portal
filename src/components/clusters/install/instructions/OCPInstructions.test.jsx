@@ -4,21 +4,26 @@ import get from 'lodash/get';
 import OCPInstructions from './OCPInstructions';
 import instructionsMapping from './instructionsMapping';
 
-const ocpOptions = [];
-// eslint-disable-next-line no-unused-vars
-Object.entries(instructionsMapping).forEach(([_, value]) => {
+const ocpOptions = {};
+const providers = [];
+Object.values(instructionsMapping).forEach((value) => {
   const { cloudProvider } = value;
   const ipi = get(value, 'ipi', null);
   const upi = get(value, 'upi', null);
   if (ipi && upi) {
-    ocpOptions.push({ cloudProvider, ...ipi });
-    ocpOptions.push({ cloudProvider, ...upi });
+    ocpOptions[`${cloudProvider}-ipi`] = ({ cloudProvider, ...ipi });
+    providers.push(`${cloudProvider}-ipi`);
+    ocpOptions[`${cloudProvider}-upi`] = ({ cloudProvider, ...upi });
+    providers.push(`${cloudProvider}-upi`);
   } else {
-    ocpOptions.push({ ...value });
+    ocpOptions[cloudProvider] = { ...value };
+    providers.push(cloudProvider);
   }
 });
+providers.sort();
 
-describe('Every OCP instruction page should render: ', () => test.each(ocpOptions)('%o', (option) => {
+describe('Every OCP instruction page should render: ', () => test.each(providers)('%s', (provider) => {
+  const option = ocpOptions[provider];
   const wrapper = shallow(<OCPInstructions {...option} token={{}} />);
   expect(wrapper).toMatchSnapshot();
 }, 20000));

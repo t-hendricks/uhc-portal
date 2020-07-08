@@ -236,8 +236,8 @@ class ClusterDetails extends Component {
       return true;
     }
 
-    // If there are free add-ons available we can show the tab on OSD clusters regardless of quota
-    if (cluster.product.id === 'osd' && get(addOns, 'freeAddOns.length', 0)) {
+    // If there are compatible free add-ons available we can show the tab regardless of quota
+    if (['osd', 'moa'].includes(cluster.product.id) && get(addOns, 'freeAddOns.length', 0)) {
       return true;
     }
 
@@ -268,6 +268,7 @@ class ClusterDetails extends Component {
       disableRule,
       enableRule,
       canAllowClusterAdmin,
+      canSubscribeOCP,
       anyModalOpen,
     } = this.props;
 
@@ -330,7 +331,7 @@ class ClusterDetails extends Component {
 
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
-    const displayInsightsTab = !isArchived && APP_BETA && (
+    const displayInsightsTab = !cluster.managed && !isArchived && APP_BETA && (
       !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
       || insightsData[cluster.external_id].status === 404
     );
@@ -354,6 +355,7 @@ class ClusterDetails extends Component {
           error={clusterDetails.error}
           errorMessage={clusterDetails.errorMessage}
           canAllowClusterAdmin={canAllowClusterAdmin}
+          canSubscribeOCP={canSubscribeOCP}
           autoRefreshEnabled={!anyModalOpen}
         >
           <TabsRow
@@ -539,6 +541,7 @@ ClusterDetails.propTypes = {
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
+  canSubscribeOCP: PropTypes.bool.isRequired,
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
 };

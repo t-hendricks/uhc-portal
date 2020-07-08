@@ -23,6 +23,7 @@ const OCPInstructions = (props) => {
     channel,
     docURL,
     showPreReleaseDocs,
+    rhcosDownloadURL,
   } = props;
   const cloudProviderID = window.location.pathname;
   const cloudProviders = [
@@ -62,6 +63,7 @@ const OCPInstructions = (props) => {
                   cloudProviderID={cloudProviderID}
                   rhcosLearnMoreURL={rhcosLearnMoreURL}
                   channel={channel}
+                  rhcosDownloadURL={rhcosDownloadURL}
                 />
               </SplitItem>
             </Split>
@@ -105,6 +107,7 @@ OCPInstructions.propTypes = {
   token: PropTypes.object.isRequired,
   cloudProvider: PropTypes.string.isRequired,
   rhcosLearnMoreURL: PropTypes.string,
+  rhcosDownloadURL: PropTypes.string,
   channel: PropTypes.string.isRequired,
   docURL: PropTypes.string.isRequired,
   showPreReleaseDocs: PropTypes.bool,

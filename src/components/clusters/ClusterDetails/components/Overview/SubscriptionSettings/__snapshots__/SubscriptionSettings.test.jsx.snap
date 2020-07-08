@@ -8,7 +8,7 @@ exports[`<SubscriptionSettings /> should render for OCP 1`] = `
       headingLevel="h2"
       size="lg"
     >
-      Subscription Settings
+      Subscription settings
     </Title>
   </CardHeader>
   <CardBody>

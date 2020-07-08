@@ -18,6 +18,7 @@ const getSubscriptions = params => apiRequest({
     orderBy: params.order,
     search: params.filter,
     fetchAccounts: true,
+    fetchCapabilities: true,
   },
   url: '/api/accounts_mgmt/v1/subscriptions',
 });

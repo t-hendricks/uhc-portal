@@ -3,29 +3,37 @@
 exports[`<TopOverviewSection /> renders correctly 1`] = `
 <Fragment>
   <GridItem
-    span={3}
+    md={3}
+    sm={12}
   >
-    <Card
-      className="clusters-overview-card"
+    <Link
+      className="overview-clusters-link"
+      replace={false}
+      to="/"
     >
-      <CardHeader>
-        Clusters
-      </CardHeader>
-      <CardBody>
-        <Bullseye>
-          <Title
-            headingLevel="h1"
-            size="3xl"
-          >
-            10
-          </Title>
-        </Bullseye>
-      </CardBody>
-    </Card>
+      <Card
+        className="clusters-overview-card"
+      >
+        <CardHeader>
+          Clusters
+        </CardHeader>
+        <CardBody>
+          <Bullseye>
+            <Title
+              headingLevel="h1"
+              size="3xl"
+            >
+              10
+            </Title>
+          </Bullseye>
+        </CardBody>
+      </Card>
+    </Link>
   </GridItem>
   <GridItem
+    md={9}
     rowSpan={2}
-    span={9}
+    sm={12}
   >
     <Card
       id="metrics-charts"
@@ -64,7 +72,8 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
     </Card>
   </GridItem>
   <GridItem
-    span={3}
+    md={3}
+    sm={12}
   >
     <ClustersWithIssuesCard
       totalConnectedClusters={10}

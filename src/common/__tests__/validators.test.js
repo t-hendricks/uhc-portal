@@ -12,6 +12,7 @@ import validators, {
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
   validateARN,
+  checkRouteSelectors,
 } from '../validators';
 
 test('Field is required', () => {
@@ -147,14 +148,12 @@ test('Field is an IP address with subnet mask between 16-28', () => {
   expect(validators.awsSubnetMask('network_machine_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 16-23.');
   expect(validators.awsSubnetMask('network_pod_cidr')()).toBe(undefined);
   expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/17')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/10')).toBe('Subnet mask must be between 16-18.');
   expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/18')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 16-18.');
+  expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 1-18.');
   expect(validators.awsSubnetMask('network_service_cidr')()).toBe(undefined);
   expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/17')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/10')).toBe('Subnet mask must be between 16-24.');
   expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/24')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 16-24.');
+  expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 1-24.');
 });
 
 test('Field is an IP address that does not overlap with 172.17.0.0/16, reserved for docker', () => {
@@ -367,4 +366,21 @@ test('Field is a valid ARN', () => {
   expect(validateARN('arn:aws:iam::0123456789:user/richard')).toBe('ARN value should be in the format arn:aws:iam::123456789012:user/name.');
   expect(validateARN('arn:aws:iam:0123456789:user/richard')).toBe('ARN value should be in the format arn:aws:iam::123456789012:user/name.');
   expect(validateARN('0123456789:user/richard')).toBe('ARN value should be in the format arn:aws:iam::123456789012:user/name.');
+});
+
+test('Field is a valid key value pair', () => {
+  const errorStr = "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+  expect(checkRouteSelectors('foo=bar')).toBe(undefined);
+  expect(checkRouteSelectors('fOo=BAr')).toBe(undefined);
+  expect(checkRouteSelectors('foo=3')).toBe(undefined);
+  expect(checkRouteSelectors('foo=bar,foo=3')).toBe(undefined);
+  expect(checkRouteSelectors('fo_o=ba-r')).toBe(undefined);
+  expect(checkRouteSelectors('fo-o=ba_r')).toBe(undefined);
+  expect(checkRouteSelectors('键=值')).toBe(errorStr);
+  expect(checkRouteSelectors('foo:bar')).toBe(errorStr);
+  expect(checkRouteSelectors('foo')).toBe(errorStr);
+  expect(checkRouteSelectors('_foo=bar')).toBe(errorStr);
+  expect(checkRouteSelectors('foo-=bar')).toBe(errorStr);
+  expect(checkRouteSelectors('foo=-bar')).toBe(errorStr);
+  expect(checkRouteSelectors('foo=bar_')).toBe(errorStr);
 });

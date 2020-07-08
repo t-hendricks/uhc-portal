@@ -1,5 +1,6 @@
 
 import { connect } from 'react-redux';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/cjs/actions';
 import { getClusterStatus } from '../../../../../../redux/actions/clustersActions';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 
@@ -7,8 +8,9 @@ const mapStateToProps = state => ({
   status: state.clusters.clusterStatus,
 });
 
-const mapDispatchToProps = {
-  getClusterStatus,
-};
+const mapDispatchToProps = dispatch => ({
+  getClusterStatus: clusterID => dispatch(getClusterStatus(clusterID)),
+  addNotification: data => dispatch(addNotification(data)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterStatusMonitor);

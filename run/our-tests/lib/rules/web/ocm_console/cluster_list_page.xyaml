@@ -17,13 +17,17 @@ check_cluster_list_page_without_cluster:
             xpath: //a[contains(@href, '/openshift/archived')]/button[text()='View archived clusters']
 
 cluster_list_page_loaded:
-    action: create_cluster_button_loaded
+    element:
+        selector:
+            css: div[data-ready='true']
     elements:
-        # Either clusters list, or empty state
+        # Either clusters list, or empty state.
+        # Other possible outcome "Error retrieving clusters" not considered success.
         - selector:
             xpath: //h1[text()='Clusters'] | //*[contains(@class, 'pf-c-title') and text()='No OpenShift clusters to display']
         - selector:
             xpath: //button[@class='pf-c-button pf-m-plain' and text()='Name'] | //*[contains(@class, 'pf-c-title') and text()='No OpenShift clusters to display']
+    action: create_cluster_button_loaded
 
 check_cluster_list_page:
     action: create_cluster_button_loaded

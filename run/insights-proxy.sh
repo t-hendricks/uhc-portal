@@ -38,10 +38,11 @@ trap 'yarn stop-insights-proxy' EXIT
 ./podman-or-docker.sh run \
                       --rm --name insightsproxy \
                       --add-host qa.foo.redhat.com:127.0.0.1 \
+                      --add-host prod.foo.redhat.com:127.0.0.1 \
                       --env CUSTOM_CONF=true --volume "$PWD"/../profiles/local-frontend.js:/config/spandx.config.js \
                       --security-opt label=disable \
                       $OPTS \
                       -p 1337:1337 \
-                      docker.io/redhatinsights/insights-proxy &
+                      quay.io/redhat-sd-devel/insights-proxy:pull-33 &
 child_pid=$!
 wait $child_pid

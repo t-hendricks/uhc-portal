@@ -25,9 +25,9 @@ const constants = {
 
 const billingModelConstants = {
   standard: 'Standard',
-  customerCloudSubscription: 'Customer Cloud Subscription',
+  customerCloudSubscription: 'Customer cloud subscription',
   standardText: 'Deploy in cloud provider accounts owned by Red Hat.',
-  customerCloudSubscriptionText: 'Leverage your existisng cloud provider discounts and settings.',
+  customerCloudSubscriptionText: 'Leverage your existing cloud provider discounts and settings.',
   resourceRequirementsLink: 'https://www.openshift.com/dedicated/ccs',
   scpDocumentationLink: 'https://www.openshift.com/dedicated/ccs',
   awsCredentialsWarning: 'The access credentials you provide here may only be used once. They may not be used to create another OpenShift Dedicated cluster.',

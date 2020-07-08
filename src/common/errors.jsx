@@ -112,23 +112,27 @@ function formatErrorDetails(errorDetails) {
         };
 
         // Add extra error details
-        customErrors.push((
-          <ul>
-            { details.items.map((excessResource) => {
-              if (resourceMap[excessResource.resource_type]) {
-                return (
-                  <li>
-                    { `${excessResource.count} additional
-                 ${getName(excessResource.resource_type, excessResource.count)} of type
-                 ${excessResource.availability_zone_type} availability zone, instance size
-                 ${excessResource.resource_name}.`}
-                  </li>
-                );
-              }
-              return 'An error occurred';
-            })}
-          </ul>
-        ));
+        if (details && details.items) {
+          customErrors.push((
+            <ul>
+              { details.items.map((excessResource) => {
+                if (resourceMap[excessResource.resource_type]) {
+                  return (
+                    <li>
+                      { `${excessResource.count} additional
+                  ${getName(excessResource.resource_type, excessResource.count)} of type
+                  ${excessResource.availability_zone_type} availability zone, instance size
+                  ${excessResource.resource_name}.`}
+                    </li>
+                  );
+                }
+                return 'An error occurred';
+              })}
+            </ul>
+          ));
+        } else {
+          customErrors.push('Unknown resource');
+        }
         break;
       }
       default:

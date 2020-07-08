@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { hot } from 'react-hot-loader';
 import Router from './Router';
 import ErrorBoundary from './ErrorBoundary';
 import EnvOverrideMessage from './EnvOverrideMessage';
@@ -51,4 +50,4 @@ const mapStateToProps = state => ({
   userProfile: state.userProfile,
 });
 
-export default hot(module)(connect(mapStateToProps)(App));
+export default connect(mapStateToProps)(App);

@@ -21,7 +21,7 @@ function SmallClusterChart(props) {
   const unusedPrecentage = Math.round(((total - used) / total) * 100 * 100) / 100;
   return (
     <div>
-      <div style={{ height: '205px', width: '410px' }}>
+      <div className="small-donut-chart-container">
         <ChartDonut
           id={donutId}
           labels={({ datum }) => (datum.x ? `${datum.x}` : null)}

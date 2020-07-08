@@ -12,7 +12,7 @@ exports[`<ClusterListFilterChipGroup /> should render 1`] = `
       withToolbar={true}
     >
       <ChipGroupToolbarItem
-        categoryName="Cluster Type"
+        categoryName="Cluster type"
         key="chipgroup-plan_id"
       >
         <Component
