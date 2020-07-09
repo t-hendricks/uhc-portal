@@ -1,0 +1,736 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
+<Fragment>
+  <Card
+    id="networkSelfService"
+  >
+    <CardBody>
+      <Title
+        className="card-title"
+        headingLevel="h3"
+        size="lg"
+      >
+        AWS infrastructure access
+      </Title>
+      <p>
+        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account.
+         
+        <a
+          href="https://console.aws.amazon.com/console/home"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Log in to your aws account.
+        </a>
+        <ExternalLinkAltIcon
+          color="#0066cc"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </p>
+      <Table
+        actions={
+          Array [
+            Object {
+              "className": "hand-pointer",
+              "onClick": [Function],
+              "title": "Delete",
+            },
+          ]
+        }
+        areActionsDisabled={[Function]}
+        aria-label="Grants"
+        borders={true}
+        canSelectAll={true}
+        cells={
+          Array [
+            Object {
+              "title": <React.Fragment>
+                ARN
+                <Popover
+                  appendTo={[Function]}
+                  aria-label="ARNs"
+                  bodyContent={
+                    <p>
+                      Amazon Resource Names (ARNs) uniquely identify AWS resources.
+                    </p>
+                  }
+                  boundary="window"
+                  className=""
+                  closeBtnAriaLabel="Close"
+                  distance={25}
+                  enableFlip={true}
+                  flipBehavior={
+                    Array [
+                      "top",
+                      "right",
+                      "bottom",
+                      "left",
+                      "top",
+                      "right",
+                      "bottom",
+                    ]
+                  }
+                  footerContent={null}
+                  headerContent={null}
+                  hideOnOutsideClick={true}
+                  isVisible={null}
+                  maxWidth="calc(1rem + 1rem + 18.75rem)"
+                  onHidden={[Function]}
+                  onHide={[Function]}
+                  onMount={[Function]}
+                  onShow={[Function]}
+                  onShown={[Function]}
+                  position="top"
+                  shouldClose={[Function]}
+                  tippyProps={Object {}}
+                  zIndex={9999}
+                >
+                  <Button
+                    isInline={true}
+                    variant="plain"
+                  >
+                    <HelpIcon
+                      color="currentColor"
+                      noVerticalAlign={false}
+                      size="sm"
+                    />
+                  </Button>
+                </Popover>
+              </React.Fragment>,
+            },
+            Object {
+              "title": "Role",
+            },
+            Object {
+              "title": "Status",
+            },
+            Object {
+              "title": "AWS OSD console URL",
+            },
+          ]
+        }
+        className=""
+        contentId="expanded-content"
+        dropdownDirection="down"
+        dropdownPosition="right"
+        expandId="expandable-toggle"
+        gridBreakPoint="grid-md"
+        ouiaSafe={true}
+        role="grid"
+        rowLabeledBy="simple-node"
+        rows={
+          Array [
+            Object {
+              "cells": Array [
+                "fake-arn",
+                "Network Management",
+                Object {
+                  "title": <span>
+                    <Popover
+                      appendTo={[Function]}
+                      aria-label="grant-failed"
+                      bodyContent="some failure"
+                      boundary="window"
+                      className=""
+                      closeBtnAriaLabel="Close"
+                      distance={25}
+                      enableFlip={true}
+                      flipBehavior={
+                        Array [
+                          "top",
+                          "right",
+                          "bottom",
+                          "left",
+                          "top",
+                          "right",
+                          "bottom",
+                        ]
+                      }
+                      footerContent={null}
+                      headerContent={null}
+                      hideOnOutsideClick={true}
+                      isVisible={null}
+                      maxWidth="calc(1rem + 1rem + 18.75rem)"
+                      onHidden={[Function]}
+                      onHide={[Function]}
+                      onMount={[Function]}
+                      onShow={[Function]}
+                      onShown={[Function]}
+                      position="top"
+                      shouldClose={[Function]}
+                      tippyProps={Object {}}
+                      zIndex={9999}
+                    >
+                      <Button
+                        className="self-service-failed"
+                        icon={
+                          <ExclamationCircleIcon
+                            className="status-icon"
+                            color="#c9190b"
+                            noVerticalAlign={false}
+                            size="md"
+                          />
+                        }
+                        isInline={true}
+                        variant="link"
+                      >
+                        Failed
+                      </Button>
+                    </Popover>
+                  </span>,
+                },
+                Object {
+                  "title": <React.Fragment>
+                    <ClipboardCopyLinkButton
+                      className="access-control-tables-copy"
+                      isDisabled={false}
+                      text="http://example.com"
+                    >
+                      Copy URL to clipboard
+                    </ClipboardCopyLinkButton>
+                  </React.Fragment>,
+                },
+              ],
+              "grantId": "fake-id-1",
+              "state": "failed",
+            },
+            Object {
+              "cells": Array [
+                "fake-arn2",
+                "Read Only",
+                Object {
+                  "title": <React.Fragment>
+                    <InProgressIcon
+                      className="status-icon"
+                      color="currentColor"
+                      noVerticalAlign={false}
+                      size="md"
+                    />
+                     
+                    <span>
+                      Pending
+                    </span>
+                     
+                  </React.Fragment>,
+                },
+                Object {
+                  "title": <React.Fragment>
+                    <ClipboardCopyLinkButton
+                      className="access-control-tables-copy"
+                      isDisabled={false}
+                      text="http://example.com"
+                    >
+                      Copy URL to clipboard
+                    </ClipboardCopyLinkButton>
+                  </React.Fragment>,
+                },
+              ],
+              "grantId": "fake-id-2",
+              "state": "pending",
+            },
+          ]
+        }
+        variant="compact"
+      >
+        <TableHeader />
+        <Component />
+      </Table>
+      <Button
+        className="access-control-add"
+        isDisabled={false}
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Grant role
+      </Button>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] = `
+<Fragment>
+  <Card
+    id="networkSelfService"
+  >
+    <CardBody>
+      <Title
+        className="card-title"
+        headingLevel="h3"
+        size="lg"
+      >
+        AWS infrastructure access
+      </Title>
+      <p>
+        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account.
+         
+        <a
+          href="https://console.aws.amazon.com/console/home"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Log in to your aws account.
+        </a>
+        <ExternalLinkAltIcon
+          color="#0066cc"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </p>
+      <Table
+        actions={
+          Array [
+            Object {
+              "className": "hand-pointer",
+              "onClick": [Function],
+              "title": "Delete",
+            },
+          ]
+        }
+        areActionsDisabled={[Function]}
+        aria-label="Grants"
+        borders={true}
+        canSelectAll={true}
+        cells={
+          Array [
+            Object {
+              "title": <React.Fragment>
+                ARN
+                <Popover
+                  appendTo={[Function]}
+                  aria-label="ARNs"
+                  bodyContent={
+                    <p>
+                      Amazon Resource Names (ARNs) uniquely identify AWS resources.
+                    </p>
+                  }
+                  boundary="window"
+                  className=""
+                  closeBtnAriaLabel="Close"
+                  distance={25}
+                  enableFlip={true}
+                  flipBehavior={
+                    Array [
+                      "top",
+                      "right",
+                      "bottom",
+                      "left",
+                      "top",
+                      "right",
+                      "bottom",
+                    ]
+                  }
+                  footerContent={null}
+                  headerContent={null}
+                  hideOnOutsideClick={true}
+                  isVisible={null}
+                  maxWidth="calc(1rem + 1rem + 18.75rem)"
+                  onHidden={[Function]}
+                  onHide={[Function]}
+                  onMount={[Function]}
+                  onShow={[Function]}
+                  onShown={[Function]}
+                  position="top"
+                  shouldClose={[Function]}
+                  tippyProps={Object {}}
+                  zIndex={9999}
+                >
+                  <Button
+                    isInline={true}
+                    variant="plain"
+                  >
+                    <HelpIcon
+                      color="currentColor"
+                      noVerticalAlign={false}
+                      size="sm"
+                    />
+                  </Button>
+                </Popover>
+              </React.Fragment>,
+            },
+            Object {
+              "title": "Role",
+            },
+            Object {
+              "title": "Status",
+            },
+            Object {
+              "title": "AWS OSD console URL",
+            },
+          ]
+        }
+        className=""
+        contentId="expanded-content"
+        dropdownDirection="down"
+        dropdownPosition="right"
+        expandId="expandable-toggle"
+        gridBreakPoint="grid-md"
+        ouiaSafe={true}
+        role="grid"
+        rowLabeledBy="simple-node"
+        rows={
+          Array [
+            Object {
+              "cells": Array [
+                "fake-arn",
+                "Network Management",
+                Object {
+                  "title": <React.Fragment>
+                    <InProgressIcon
+                      className="status-icon"
+                      color="currentColor"
+                      noVerticalAlign={false}
+                      size="md"
+                    />
+                     
+                    <span>
+                      Pending
+                    </span>
+                     
+                  </React.Fragment>,
+                },
+                Object {
+                  "title": <React.Fragment>
+                    <ClipboardCopyLinkButton
+                      className="access-control-tables-copy"
+                      isDisabled={false}
+                      text="http://example.com"
+                    >
+                      Copy URL to clipboard
+                    </ClipboardCopyLinkButton>
+                  </React.Fragment>,
+                },
+              ],
+              "grantId": "fake-id-1",
+              "state": "pending",
+            },
+            Object {
+              "cells": Array [
+                "fake-arn2",
+                "Read Only",
+                Object {
+                  "title": <React.Fragment>
+                    <CheckCircleIcon
+                      className="status-icon"
+                      color="#3e8635"
+                      noVerticalAlign={false}
+                      size="md"
+                    />
+                     
+                    <span>
+                      Ready
+                    </span>
+                     
+                  </React.Fragment>,
+                },
+                Object {
+                  "title": <React.Fragment>
+                    <ClipboardCopyLinkButton
+                      className="access-control-tables-copy"
+                      isDisabled={false}
+                      text="http://example.com"
+                    >
+                      Copy URL to clipboard
+                    </ClipboardCopyLinkButton>
+                  </React.Fragment>,
+                },
+              ],
+              "grantId": "fake-id-2",
+              "state": "ready",
+            },
+          ]
+        }
+        variant="compact"
+      >
+        <TableHeader />
+        <Component />
+      </Table>
+      <Button
+        className="access-control-add"
+        isDisabled={false}
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Grant role
+      </Button>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`<NetworkSelfServiceSection /> should render skeleton when pending and no grants are set 1`] = `
+<Card>
+  <CardTitle>
+    <Skeleton
+      isDark={false}
+      size="md"
+    />
+  </CardTitle>
+  <CardBody>
+    <Skeleton
+      isDark={false}
+      size="lg"
+    />
+  </CardBody>
+  <CardFooter>
+    <Skeleton
+      isDark={false}
+      size="md"
+    />
+  </CardFooter>
+</Card>
+`;
+
+exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
+<Fragment>
+  <Card
+    id="networkSelfService"
+  >
+    <CardBody>
+      <Title
+        className="card-title"
+        headingLevel="h3"
+        size="lg"
+      >
+        AWS infrastructure access
+      </Title>
+      <p>
+        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account.
+         
+        <a
+          href="https://console.aws.amazon.com/console/home"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Log in to your aws account.
+        </a>
+        <ExternalLinkAltIcon
+          color="#0066cc"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </p>
+      <Table
+        actions={
+          Array [
+            Object {
+              "className": "hand-pointer",
+              "onClick": [Function],
+              "title": "Delete",
+            },
+          ]
+        }
+        areActionsDisabled={[Function]}
+        aria-label="Grants"
+        borders={true}
+        canSelectAll={true}
+        cells={
+          Array [
+            Object {
+              "title": <React.Fragment>
+                ARN
+                <Popover
+                  appendTo={[Function]}
+                  aria-label="ARNs"
+                  bodyContent={
+                    <p>
+                      Amazon Resource Names (ARNs) uniquely identify AWS resources.
+                    </p>
+                  }
+                  boundary="window"
+                  className=""
+                  closeBtnAriaLabel="Close"
+                  distance={25}
+                  enableFlip={true}
+                  flipBehavior={
+                    Array [
+                      "top",
+                      "right",
+                      "bottom",
+                      "left",
+                      "top",
+                      "right",
+                      "bottom",
+                    ]
+                  }
+                  footerContent={null}
+                  headerContent={null}
+                  hideOnOutsideClick={true}
+                  isVisible={null}
+                  maxWidth="calc(1rem + 1rem + 18.75rem)"
+                  onHidden={[Function]}
+                  onHide={[Function]}
+                  onMount={[Function]}
+                  onShow={[Function]}
+                  onShown={[Function]}
+                  position="top"
+                  shouldClose={[Function]}
+                  tippyProps={Object {}}
+                  zIndex={9999}
+                >
+                  <Button
+                    isInline={true}
+                    variant="plain"
+                  >
+                    <HelpIcon
+                      color="currentColor"
+                      noVerticalAlign={false}
+                      size="sm"
+                    />
+                  </Button>
+                </Popover>
+              </React.Fragment>,
+            },
+            Object {
+              "title": "Role",
+            },
+            Object {
+              "title": "Status",
+            },
+            Object {
+              "title": "AWS OSD console URL",
+            },
+          ]
+        }
+        className=""
+        contentId="expanded-content"
+        dropdownDirection="down"
+        dropdownPosition="right"
+        expandId="expandable-toggle"
+        gridBreakPoint="grid-md"
+        ouiaSafe={true}
+        role="grid"
+        rowLabeledBy="simple-node"
+        rows={
+          Array [
+            Object {
+              "cells": Array [
+                "fake-arn",
+                "Network Management",
+                Object {
+                  "title": <React.Fragment>
+                    <InProgressIcon
+                      className="status-icon"
+                      color="currentColor"
+                      noVerticalAlign={false}
+                      size="md"
+                    />
+                     
+                    <span>
+                      Pending
+                    </span>
+                     
+                  </React.Fragment>,
+                },
+                Object {
+                  "title": <React.Fragment>
+                    <ClipboardCopyLinkButton
+                      className="access-control-tables-copy"
+                      isDisabled={false}
+                      text="http://example.com"
+                    >
+                      Copy URL to clipboard
+                    </ClipboardCopyLinkButton>
+                  </React.Fragment>,
+                },
+              ],
+              "grantId": "fake-id-1",
+              "state": "pending",
+            },
+            Object {
+              "cells": Array [
+                "fake-arn2",
+                "Read Only",
+                Object {
+                  "title": <React.Fragment>
+                    <InProgressIcon
+                      className="status-icon"
+                      color="currentColor"
+                      noVerticalAlign={false}
+                      size="md"
+                    />
+                     
+                    <span>
+                      Pending
+                    </span>
+                     
+                  </React.Fragment>,
+                },
+                Object {
+                  "title": <React.Fragment>
+                    <ClipboardCopyLinkButton
+                      className="access-control-tables-copy"
+                      isDisabled={false}
+                      text="http://example.com"
+                    >
+                      Copy URL to clipboard
+                    </ClipboardCopyLinkButton>
+                  </React.Fragment>,
+                },
+              ],
+              "grantId": "fake-id-2",
+              "state": "pending",
+            },
+          ]
+        }
+        variant="compact"
+      >
+        <TableHeader />
+        <Component />
+      </Table>
+      <Button
+        className="access-control-add"
+        isDisabled={false}
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Grant role
+      </Button>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`<NetworkSelfServiceSection /> should render with no data 1`] = `
+<Fragment>
+  <Card
+    id="networkSelfService"
+  >
+    <CardBody>
+      <Title
+        className="card-title"
+        headingLevel="h3"
+        size="lg"
+      >
+        AWS infrastructure access
+      </Title>
+      <p>
+        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account.
+         
+        <a
+          href="https://console.aws.amazon.com/console/home"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Log in to your aws account.
+        </a>
+        <ExternalLinkAltIcon
+          color="#0066cc"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </p>
+      <Button
+        className="access-control-add"
+        isDisabled={false}
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Grant role
+      </Button>
+    </CardBody>
+  </Card>
+</Fragment>
+`;

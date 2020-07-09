@@ -19,7 +19,7 @@ const initialState = {
 class AddGrantModal extends Component {
  state = initialState;
 
- componentDidUpdate() {
+ componentDidUpdate(prevProps) {
    const { selectedRole } = this.state;
    const { roles } = this.props;
    // set default role
@@ -31,7 +31,7 @@ class AddGrantModal extends Component {
    const {
      addGrantResponse, clearAddGrantResponse, closeModal,
    } = this.props;
-   if (addGrantResponse.fulfilled) {
+   if (!prevProps.addGrantResponse.fulfilled && addGrantResponse.fulfilled) {
      closeModal();
      clearAddGrantResponse();
      // eslint-disable-next-line react/no-did-update-set-state

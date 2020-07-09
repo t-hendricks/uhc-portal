@@ -48,7 +48,7 @@ class NetworkSelfServiceSection extends React.Component {
     // fetch grants again after deleting or adding a grant
     if (((deleteGrantResponse.fulfilled && prevProps.deleteGrantResponse.pending)
       || (addGrantResponse.fulfilled && prevProps.addGrantResponse.pending))
-      && !getGrants.pending) {
+      && !grants.pending) {
       getGrants();
     }
     if (grants.fulfilled && prevProps.grants.pending && grants.data.length !== 0) {
