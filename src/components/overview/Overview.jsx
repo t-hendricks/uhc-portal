@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import {
   PageSection,
+  CardTitle,
   CardBody,
   EmptyState,
   EmptyStateBody,
   Card,
-  CardHeader,
   Grid,
   GridItem,
 } from '@patternfly/react-core';
@@ -103,7 +103,7 @@ class Overview extends Component {
           <PageHeaderTitle title="Overview" className="page-title" />
         </PageHeader>
         <PageSection>
-          <Grid gutter="sm" id="overview-grid">
+          <Grid hasGutter id="overview-grid">
             <TopOverviewSection
               isError={summaryDashboard.error}
               totalClusters={totalClusters}
@@ -124,9 +124,9 @@ class Overview extends Component {
             )}
             <GridItem md={6} sm={12}>
               <Card className="clusters-overview-card">
-                <CardHeader>
+                <CardTitle>
                     Update status
-                </CardHeader>
+                </CardTitle>
                 <CardBody>
                   {!upgradeAvailable.value && !upToDate.value
                     ? (
@@ -151,9 +151,9 @@ class Overview extends Component {
             </GridItem>
             <GridItem md={6} sm={12}>
               <Card className="clusters-overview-card">
-                <CardHeader>
+                <CardTitle>
                     Telemetry
-                </CardHeader>
+                </CardTitle>
                 <CardBody>
                   {!totalConnectedClusters && !totalClusters ? (
                     <EmptyState>

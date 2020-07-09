@@ -4,7 +4,7 @@ exports[`<InstallationLogView /> should render with logs 1`] = `
 <article
   className="pf-c-card"
 >
-  <CardHeader>
+  <CardTitle>
     <Title
       className="card-title logview-title"
       headingLevel="h2"
@@ -12,7 +12,7 @@ exports[`<InstallationLogView /> should render with logs 1`] = `
     >
       Installation logs
     </Title>
-  </CardHeader>
+  </CardTitle>
   <CardBody>
     <Connect(clusterStatusMonitor)
       cluster={
@@ -168,7 +168,7 @@ exports[`<InstallationLogView /> should render without logs 1`] = `
 <article
   className="pf-c-card"
 >
-  <CardHeader>
+  <CardTitle>
     <Title
       className="card-title logview-title"
       headingLevel="h2"
@@ -176,7 +176,7 @@ exports[`<InstallationLogView /> should render without logs 1`] = `
     >
       Installation logs
     </Title>
-  </CardHeader>
+  </CardTitle>
   <CardBody>
     <Connect(clusterStatusMonitor)
       cluster={
@@ -331,7 +331,7 @@ exports[`<InstallationLogView /> should stop the timer when recieving 403 error 
 <article
   className="pf-c-card"
 >
-  <CardHeader>
+  <CardTitle>
     <Title
       className="card-title logview-title"
       headingLevel="h2"
@@ -339,7 +339,7 @@ exports[`<InstallationLogView /> should stop the timer when recieving 403 error 
     >
       Installation logs
     </Title>
-  </CardHeader>
+  </CardTitle>
   <CardBody>
     <Connect(clusterStatusMonitor)
       cluster={

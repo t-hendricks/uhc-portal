@@ -11,12 +11,12 @@ exports[`<Tokens /> Renders loading screen 1`] = `
     <Card
       className="ins-c-card__skeleton"
     >
-      <CardHeader>
+      <CardTitle>
         <Skeleton
           isDark={false}
           size="md"
         />
-      </CardHeader>
+      </CardTitle>
       <CardBody>
         <Skeleton
           isDark={false}
@@ -43,11 +43,11 @@ exports[`<Tokens /> Renders token 1`] = `
   </PageHeader>
   <PageSection>
     <Card>
-      <CardHeader>
+      <CardTitle>
         <h2>
           OpenShift Cluster Manager API Token
         </h2>
-      </CardHeader>
+      </CardTitle>
       <CardBody>
         <p>
           Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you to use OpenShift without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.

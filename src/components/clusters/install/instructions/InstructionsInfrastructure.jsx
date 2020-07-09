@@ -21,7 +21,7 @@ const InstructionsInfrastructure = () => (
       <Title headingLevel="h3" size="2xl">
         Select an infrastructure provider
       </Title>
-      <Gallery gutter="md" className="ocp-infra-gallery">
+      <Gallery hasGutter className="ocp-infra-gallery">
         <GalleryItem>
           <Link to="/install/aws" className="infra-card infra-card-cloud-provider">
             <CardBadge isHidden />

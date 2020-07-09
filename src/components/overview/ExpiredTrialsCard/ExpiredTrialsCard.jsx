@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import {
   Card,
-  CardHeader,
+  CardTitle,
   CardBody,
   Title,
   EmptyState,
@@ -49,12 +49,12 @@ class ExpiredTrialsCard extends React.Component {
     if (subscriptions.error) {
       return (
         <Card id="clusters-overview-card">
-          <CardHeader>
+          <CardTitle>
             Expired trials
-          </CardHeader>
+          </CardTitle>
           <CardBody>
             <EmptyState>
-              <Title>
+              <Title headingLevel="h2">
               No data available
               </Title>
               <EmptyStateBody>
@@ -113,9 +113,9 @@ class ExpiredTrialsCard extends React.Component {
 
     return (
       <Card id="clusters-overview-card">
-        <CardHeader>
+        <CardTitle>
           Expired Trials
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           <Table
             aria-label="Expired Trials"

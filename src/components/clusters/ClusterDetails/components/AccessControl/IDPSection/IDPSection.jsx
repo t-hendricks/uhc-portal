@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 import {
-  Card, Title, Button, CardBody, CardHeader, CardFooter, Tooltip,
+  Card, Title, Button, CardBody, CardFooter, Tooltip, CardTitle,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -83,9 +83,9 @@ function IDPSection({
   return (
     pending ? (
       <Card>
-        <CardHeader>
+        <CardTitle>
           <Skeleton size="md" />
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           <Skeleton size="lg" />
         </CardBody>
@@ -96,7 +96,7 @@ function IDPSection({
     ) : (
       <Card>
         <CardBody>
-          <Title size="lg" className="card-title">
+          <Title headingLevel="h2" size="lg" className="card-title">
             Identity providers
           </Title>
           <p>

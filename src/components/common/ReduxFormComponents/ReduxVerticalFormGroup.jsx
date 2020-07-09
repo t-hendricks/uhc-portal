@@ -41,25 +41,24 @@ function ReduxVerticalFormGroup(props) {
     return '';
   };
 
+  const isValid = !(touched && error);
+
   return (
     <FormGroup
       fieldId={input.name}
-      isValid={!(touched && error)}
+      validated={isValid ? 'default' : 'error'}
       label={label}
       helperText={helpText}
       helperTextInvalid={helperTextInvalid()}
       isRequired={isRequired}
+      labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
     >
-      { extendedHelpText && (
-        <PopoverHint hint={extendedHelpText} />
-      )}
-
       <InputComponent
         value={input.value}
         isRequired={isRequired}
         id={input.name}
         name={input.name}
-        isValid={!(touched && error)}
+        validated={isValid ? 'default' : 'error'}
         {...disabledProp}
         {...input}
         {...extraProps}

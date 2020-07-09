@@ -104,26 +104,28 @@ class AddGrantModal extends Component {
           <Form className="access-control-form" onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
             <FormGroup
               helperTextInvalid={validationMessage}
-              isValid={arnTouched ? !validationMessage : true}
+              validated={(arnTouched ? !validationMessage : true) ? 'default' : 'error'}
               label="AWS IAM ARN"
               isRequired
               fieldId="aws-iam-arn"
-            >
-              <PopoverHint
-                hint={(
-                  <div>
-                    <p>Need help configuring ARNs?</p>
-                    <a href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html" target="_blank" rel="noreferrer noopener">Check the AWS documention.</a>
-                  </div>
+              labelIcon={(
+                <PopoverHint
+                  hint={(
+                    <div>
+                      <p>Need help configuring ARNs?</p>
+                      <a href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html" target="_blank" rel="noreferrer noopener">Check the AWS documention.</a>
+                    </div>
               )}
-                iconClassName="hand-pointer"
-              />
+                  iconClassName="hand-pointer"
+                />
+              )}
+            >
               <TextInput
                 value={arn}
                 isRequired
                 id="aws-iam-arn-input"
                 type="text"
-                isValid={arnTouched ? !validationMessage : true}
+                validated={(arnTouched ? !validationMessage : true) ? 'default' : 'error'}
                 placeholder="arn:aws:iam::123456789012:user/name"
                 onChange={this.setArnValue}
                 aria-label="AWS IAM ARN"

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Grid, GridItem, Card, CardHeader, CardBody, Title, Alert,
+  Grid, GridItem, Card, CardBody, Title, Alert, CardTitle,
 } from '@patternfly/react-core';
 
 import get from 'lodash/get';
@@ -65,13 +65,13 @@ class Overview extends React.Component {
             <InstallationLogView cluster={cluster} refresh={refresh} history={history} />
           ) : (
             <Card id="metrics-charts">
-              <CardHeader>
+              <CardTitle>
                 <Title headingLevel="h2" size="lg" className="card-title">Resource usage</Title>
                 { showInstallSuccessAlert && <Alert variant="success" isInline title="Cluster installed successfully" />}
                 { shouldMonitorStatus && (
                   <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
                 )}
-              </CardHeader>
+              </CardTitle>
               <CardBody>
                 <ResourceUsage
                   metricsAvailable={metricsAvailable}
@@ -90,9 +90,9 @@ class Overview extends React.Component {
             </Card>
           )}
         <Card>
-          <CardHeader>
+          <CardTitle>
             <Title headingLevel="h2" size="lg" className="card-title">Details</Title>
-          </CardHeader>
+          </CardTitle>
           <CardBody>
             <Grid>
               <GridItem sm={6}>
@@ -109,9 +109,9 @@ class Overview extends React.Component {
         <SubscriptionSettings />
         {displayClusterLogs && cluster.managed && (
         <Card>
-          <CardHeader>
+          <CardTitle>
             <Title headingLevel="h2" size="lg" className="card-title">Cluster history</Title>
-          </CardHeader>
+          </CardTitle>
           <CardBody>
             <ClusterLogs externalClusterID={cluster.external_id} history={history} />
           </CardBody>

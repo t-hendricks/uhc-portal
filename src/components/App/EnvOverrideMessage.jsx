@@ -14,7 +14,7 @@ function EnvOverrideMessage({ env }) {
       isInline
       id="env-override-message"
       title="Environment override active"
-      action={<AlertActionLink onClick={goBackToNormal}>Go back to normal</AlertActionLink>}
+      actionLinks={<AlertActionLink onClick={goBackToNormal}>Go back to normal</AlertActionLink>}
     >
       You&apos;re now using the
       {' '}

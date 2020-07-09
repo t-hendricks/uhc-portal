@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
   Card,
-  CardHeader,
-  CardBody,
+  CardBody, CardTitle,
 } from '@patternfly/react-core';
 import {
   ExclamationTriangleIcon,
@@ -78,7 +77,7 @@ class OSDSubscriptionCard extends Component {
 
     return (
       <Card>
-        <CardHeader className="section-header">OpenShift Dedicated</CardHeader>
+        <CardTitle className="section-header">OpenShift Dedicated</CardTitle>
         <CardBody className="section-text">
         The summary of all subscriptions for OpenShift Dedicated
         purchased by your organization or granted by Red Hat.

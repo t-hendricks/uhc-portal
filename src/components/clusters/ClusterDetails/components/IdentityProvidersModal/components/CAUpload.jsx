@@ -87,7 +87,7 @@ class CAUpload extends React.Component {
       <FormGroup
         className="ca-upload"
         fieldId={input.name}
-        isValid={!!errorMessage}
+        validated={!errorMessage ? 'default' : 'error'}
         label={label}
         helperText={helpText}
         helperTextInvalid={errorMessage}

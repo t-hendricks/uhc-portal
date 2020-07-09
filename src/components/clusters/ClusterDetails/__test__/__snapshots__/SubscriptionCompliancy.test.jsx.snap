@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
-<Component
+<Alert
   className="subscription-settings compliancy-alert"
   isInline={true}
   title="Your OpenShift evaluation expires in 0 days"
@@ -18,11 +18,11 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
     </a>
      to purchase an OpenShift subscription.
   </p>
-</Component>
+</Alert>
 `;
 
 exports[`<SubscriptionCompliancy /> should warn during evaluation period 2`] = `
-<Component
+<Alert
   className="subscription-settings compliancy-alert"
   isInline={true}
   title="Your OpenShift evaluation expires in 0 days"
@@ -32,11 +32,11 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 2`] = `
     Your 60-day OpenShift evaluation expires in 0 days. 
     The cluster owner or an organization administrator can edit subscription settings for non-evaluation use.
   </p>
-</Component>
+</Alert>
 `;
 
 exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] = `
-<Component
+<Alert
   className="subscription-settings compliancy-alert"
   isInline={true}
   title="Your 60-day OpenShift evaluation has expired"
@@ -54,20 +54,20 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] =
     </a>
      to purchase an OpenShift subscription.
      
-    <Component
+    <Button
       isInline={true}
       onClick={[Function]}
       variant="link"
     >
       Archive this cluster
-    </Component>
+    </Button>
      if it no longer exits. 
   </p>
-</Component>
+</Alert>
 `;
 
 exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 2`] = `
-<Component
+<Alert
   className="subscription-settings compliancy-alert"
   isInline={true}
   title="Your 60-day OpenShift evaluation has expired"
@@ -78,5 +78,5 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 2`] =
      
     The cluster owner or an organization administrator can edit subscription settings for non-evaluation use.
   </p>
-</Component>
+</Alert>
 `;

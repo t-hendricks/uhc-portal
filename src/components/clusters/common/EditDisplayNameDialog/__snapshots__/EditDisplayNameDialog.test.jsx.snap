@@ -29,20 +29,20 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
     <Modal
       actions={
         Array [
-          <Unknown
+          <Button
             isDisabled={false}
             onClick={[Function]}
             type="submit"
             variant="primary"
           >
             Edit
-          </Unknown>,
-          <Unknown
+          </Button>,
+          <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
-          </Unknown>,
+          </Button>,
         ]
       }
       appendTo={
@@ -57,15 +57,23 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                 class="pf-l-bullseye"
               >
                 <div
-                  aria-describedby="pf-modal-0"
-                  aria-label="Edit display name"
+                  aria-describedby="pf-modal-part-2"
+                  aria-labelledby="pf-modal-part-1"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
+                  data-ouia-component-id="0"
+                  data-ouia-component-type="PF4/ModalContent"
+                  data-ouia-safe="true"
+                  id="pf-modal-part-0"
                   role="dialog"
                 >
                   <button
+                    aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
+                    data-ouia-component-id="1"
+                    data-ouia-component-type="PF4/Button"
+                    data-ouia-safe="true"
                     type="button"
                   >
                     <svg
@@ -83,16 +91,19 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                       />
                     </svg>
                   </button>
-                  <h1
-                    class="pf-c-title pf-m-2xl"
+                  <header
+                    class="pf-c-modal-box__header"
                   >
-                     
-                    Edit display name
-                     
-                  </h1>
+                    <h1
+                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      id="pf-modal-part-1"
+                    >
+                      Edit display name
+                    </h1>
+                  </header>
                   <div
                     class="pf-c-modal-box__body"
-                    id="pf-modal-0"
+                    id="pf-modal-part-2"
                   >
                     <form
                       class="pf-c-form"
@@ -101,51 +112,64 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                       <div
                         class="pf-c-form__group"
                       >
-                        <input
-                          aria-invalid="false"
-                          aria-label="Edit display name"
-                          class="pf-c-form-control"
-                          id="edit-display-name-input"
-                          placeholder="Enter display name"
-                          type="text"
-                          value=""
-                        />
-                        
+                        <div
+                          class="pf-c-form__group-control"
+                        >
+                          <input
+                            aria-invalid="false"
+                            aria-label="Edit display name"
+                            class="pf-c-form-control"
+                            id="edit-display-name-input"
+                            placeholder="Enter display name"
+                            type="text"
+                            value=""
+                          />
+                          
+                        </div>
                       </div>
                     </form>
                   </div>
-                  <div
-                    class="pf-c-modal-box__footer pf-m-align-left"
+                  <footer
+                    class="pf-c-modal-box__footer"
                   >
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-primary"
+                      data-ouia-component-id="2"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="submit"
                     >
                       Edit
                     </button>
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-secondary"
+                      data-ouia-component-id="3"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="button"
                     >
                       Cancel
                     </button>
-                  </div>
+                  </footer>
                 </div>
               </div>
             </div>
           </div>
         </body>
       }
-      ariaDescribedById=""
+      aria-describedby=""
+      aria-label=""
+      aria-labelledby=""
       className={null}
-      hideTitle={false}
-      isFooterLeftAligned={true}
-      isLarge={false}
+      hasNoBodyWrapper={false}
       isOpen={true}
-      isSmall={true}
       onClose={[Function]}
+      ouiaSafe={true}
       showClose={true}
       title="Edit display name"
+      variant="small"
     >
       <Portal
         containerInfo={
@@ -157,15 +181,23 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                 class="pf-l-bullseye"
               >
                 <div
-                  aria-describedby="pf-modal-0"
-                  aria-label="Edit display name"
+                  aria-describedby="pf-modal-part-2"
+                  aria-labelledby="pf-modal-part-1"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
+                  data-ouia-component-id="0"
+                  data-ouia-component-type="PF4/ModalContent"
+                  data-ouia-safe="true"
+                  id="pf-modal-part-0"
                   role="dialog"
                 >
                   <button
+                    aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
+                    data-ouia-component-id="1"
+                    data-ouia-component-type="PF4/Button"
+                    data-ouia-safe="true"
                     type="button"
                   >
                     <svg
@@ -183,16 +215,19 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                       />
                     </svg>
                   </button>
-                  <h1
-                    class="pf-c-title pf-m-2xl"
+                  <header
+                    class="pf-c-modal-box__header"
                   >
-                     
-                    Edit display name
-                     
-                  </h1>
+                    <h1
+                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      id="pf-modal-part-1"
+                    >
+                      Edit display name
+                    </h1>
+                  </header>
                   <div
                     class="pf-c-modal-box__body"
-                    id="pf-modal-0"
+                    id="pf-modal-part-2"
                   >
                     <form
                       class="pf-c-form"
@@ -201,35 +236,47 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                       <div
                         class="pf-c-form__group"
                       >
-                        <input
-                          aria-invalid="false"
-                          aria-label="Edit display name"
-                          class="pf-c-form-control"
-                          id="edit-display-name-input"
-                          placeholder="Enter display name"
-                          type="text"
-                          value=""
-                        />
-                        
+                        <div
+                          class="pf-c-form__group-control"
+                        >
+                          <input
+                            aria-invalid="false"
+                            aria-label="Edit display name"
+                            class="pf-c-form-control"
+                            id="edit-display-name-input"
+                            placeholder="Enter display name"
+                            type="text"
+                            value=""
+                          />
+                          
+                        </div>
                       </div>
                     </form>
                   </div>
-                  <div
-                    class="pf-c-modal-box__footer pf-m-align-left"
+                  <footer
+                    class="pf-c-modal-box__footer"
                   >
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-primary"
+                      data-ouia-component-id="2"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="submit"
                     >
                       Edit
                     </button>
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-secondary"
+                      data-ouia-component-id="3"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="button"
                     >
                       Cancel
                     </button>
-                  </div>
+                  </footer>
                 </div>
               </div>
             </div>
@@ -239,40 +286,42 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
         <ModalContent
           actions={
             Array [
-              <Unknown
+              <Button
                 isDisabled={false}
                 onClick={[Function]}
                 type="submit"
                 variant="primary"
               >
                 Edit
-              </Unknown>,
-              <Unknown
+              </Button>,
+              <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
-              </Unknown>,
+              </Button>,
             ]
           }
-          ariaDescribedById=""
+          aria-describedby=""
+          aria-label=""
+          aria-labelledby=""
+          boxId="pf-modal-part-0"
           className={null}
-          hideTitle={false}
-          id="pf-modal-0"
-          isFooterLeftAligned={true}
-          isLarge={false}
+          descriptorId="pf-modal-part-2"
+          hasNoBodyWrapper={false}
           isOpen={true}
-          isSmall={true}
+          labelId="pf-modal-part-1"
           onClose={[Function]}
+          ouiaSafe={true}
           showClose={true}
           title="Edit display name"
+          variant="small"
         >
           <Backdrop>
             <div
               className="pf-c-backdrop"
             >
               <FocusTrap
-                _createFocusTrap={[Function]}
                 active={true}
                 className="pf-l-bullseye"
                 focusTrapOptions={
@@ -281,129 +330,107 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                   }
                 }
                 paused={false}
-                tag="div"
               >
                 <div
                   className="pf-l-bullseye"
                 >
                   <ModalBox
+                    aria-describedby="pf-modal-part-2"
+                    aria-label=""
+                    aria-labelledby="pf-modal-part-1"
                     className={null}
-                    id="pf-modal-0"
-                    isLarge={false}
-                    isSmall={true}
+                    data-ouia-component-id={0}
+                    data-ouia-component-type="PF4/ModalContent"
+                    data-ouia-safe={true}
+                    id="pf-modal-part-0"
                     style={Object {}}
-                    title="Edit display name"
+                    variant="small"
                   >
                     <div
-                      aria-describedby="pf-modal-0"
-                      aria-label="Edit display name"
+                      aria-describedby="pf-modal-part-2"
+                      aria-label={null}
+                      aria-labelledby="pf-modal-part-1"
                       aria-modal="true"
                       className="pf-c-modal-box pf-m-sm"
+                      data-ouia-component-id={0}
+                      data-ouia-component-type="PF4/ModalContent"
+                      data-ouia-safe={true}
+                      id="pf-modal-part-0"
                       role="dialog"
                       style={Object {}}
                     >
                       <ModalBoxCloseButton
                         onClose={[Function]}
                       >
-                        <Component
+                        <Button
                           aria-label="Close"
                           className=""
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <ComponentWithOuia
-                            component={[Function]}
-                            componentProps={
-                              Object {
-                                "aria-label": "Close",
-                                "children": <TimesIcon
-                                  color="currentColor"
-                                  noVerticalAlign={false}
-                                  size="sm"
-                                  title={null}
-                                />,
-                                "className": "",
-                                "onClick": [Function],
-                                "variant": "plain",
-                              }
-                            }
-                            consumerContext={null}
+                          <button
+                            aria-disabled={false}
+                            aria-label="Close"
+                            className="pf-c-button pf-m-plain"
+                            data-ouia-component-id={1}
+                            data-ouia-component-type="PF4/Button"
+                            data-ouia-safe={true}
+                            disabled={false}
+                            onClick={[Function]}
+                            type="button"
                           >
-                            <Button
-                              aria-label="Close"
-                              className=""
-                              onClick={[Function]}
-                              ouiaContext={
-                                Object {
-                                  "isOuia": false,
-                                  "ouiaId": null,
-                                }
-                              }
-                              variant="plain"
+                            <TimesIcon
+                              color="currentColor"
+                              noVerticalAlign={false}
+                              size="sm"
                             >
-                              <button
-                                aria-disabled={null}
-                                aria-label="Close"
-                                className="pf-c-button pf-m-plain"
-                                disabled={false}
-                                onClick={[Function]}
-                                tabIndex={null}
-                                type="button"
+                              <svg
+                                aria-hidden={true}
+                                aria-labelledby={null}
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                style={
+                                  Object {
+                                    "verticalAlign": "-0.125em",
+                                  }
+                                }
+                                viewBox="0 0 352 512"
+                                width="1em"
                               >
-                                <TimesIcon
-                                  color="currentColor"
-                                  noVerticalAlign={false}
-                                  size="sm"
-                                  title={null}
-                                >
-                                  <svg
-                                    aria-hidden={true}
-                                    aria-labelledby={null}
-                                    fill="currentColor"
-                                    height="1em"
-                                    role="img"
-                                    style={
-                                      Object {
-                                        "verticalAlign": "-0.125em",
-                                      }
-                                    }
-                                    viewBox="0 0 352 512"
-                                    width="1em"
-                                  >
-                                    <path
-                                      d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                      transform=""
-                                    />
-                                  </svg>
-                                </TimesIcon>
-                              </button>
-                            </Button>
-                          </ComponentWithOuia>
-                        </Component>
+                                <path
+                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  transform=""
+                                />
+                              </svg>
+                            </TimesIcon>
+                          </button>
+                        </Button>
                       </ModalBoxCloseButton>
-                      <ModalBoxHeader
-                        hideTitle={false}
-                      >
-                        <Title
-                          className=""
-                          headingLevel="h1"
-                          size="2xl"
+                      <ModalBoxHeader>
+                        <header
+                          className="pf-c-modal-box__header"
                         >
-                          <h1
-                            className="pf-c-title pf-m-2xl"
+                          <ModalBoxTitle
+                            className="pf-c-modal-box__title"
+                            id="pf-modal-part-1"
+                            title="Edit display name"
                           >
-                             
-                            Edit display name
-                             
-                          </h1>
-                        </Title>
+                            <h1
+                              className="pf-c-modal-box__title pf-c-modal-box__title"
+                              id="pf-modal-part-1"
+                            >
+                              Edit display name
+                            </h1>
+                          </ModalBoxTitle>
+                        </header>
                       </ModalBoxHeader>
                       <ModalBoxBody
-                        id="pf-modal-0"
+                        id="pf-modal-part-2"
                       >
                         <div
                           className="pf-c-modal-box__body"
-                          id="pf-modal-0"
+                          id="pf-modal-part-2"
                         >
                           <Form
                             onSubmit={[Function]}
@@ -415,149 +442,104 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                             >
                               <FormGroup
                                 fieldId="edit-display-name-input"
-                                isValid={true}
+                                validated="default"
                               >
                                 <div
                                   className="pf-c-form__group"
                                 >
-                                  <ForwardRef
-                                    aria-label="Edit display name"
-                                    id="edit-display-name-input"
-                                    isValid={true}
-                                    onChange={[Function]}
-                                    placeholder="Enter display name"
-                                    type="text"
-                                    value=""
+                                  <div
+                                    className="pf-c-form__group-control"
                                   >
-                                    <TextInputBase
+                                    <ForwardRef
                                       aria-label="Edit display name"
-                                      className=""
                                       id="edit-display-name-input"
-                                      innerRef={null}
-                                      isDisabled={false}
-                                      isReadOnly={false}
-                                      isRequired={false}
-                                      isValid={true}
                                       onChange={[Function]}
                                       placeholder="Enter display name"
                                       type="text"
                                       validated="default"
                                       value=""
                                     >
-                                      <input
-                                        aria-invalid={false}
+                                      <TextInputBase
                                         aria-label="Edit display name"
-                                        className="pf-c-form-control"
-                                        disabled={false}
+                                        className=""
                                         id="edit-display-name-input"
+                                        innerRef={null}
+                                        isDisabled={false}
+                                        isReadOnly={false}
+                                        isRequired={false}
                                         onChange={[Function]}
                                         placeholder="Enter display name"
-                                        readOnly={false}
-                                        required={false}
                                         type="text"
+                                        validated="default"
                                         value=""
-                                      />
-                                    </TextInputBase>
-                                  </ForwardRef>
+                                      >
+                                        <input
+                                          aria-invalid={false}
+                                          aria-label="Edit display name"
+                                          className="pf-c-form-control"
+                                          disabled={false}
+                                          id="edit-display-name-input"
+                                          onChange={[Function]}
+                                          placeholder="Enter display name"
+                                          readOnly={false}
+                                          required={false}
+                                          type="text"
+                                          value=""
+                                        />
+                                      </TextInputBase>
+                                    </ForwardRef>
+                                  </div>
                                 </div>
                               </FormGroup>
                             </form>
                           </Form>
                         </div>
                       </ModalBoxBody>
-                      <ModalBoxFooter
-                        isLeftAligned={true}
-                      >
-                        <div
-                          className="pf-c-modal-box__footer pf-m-align-left"
+                      <ModalBoxFooter>
+                        <footer
+                          className="pf-c-modal-box__footer"
                         >
-                          <Component
+                          <Button
                             isDisabled={false}
                             key="confirm"
                             onClick={[Function]}
                             type="submit"
                             variant="primary"
                           >
-                            <ComponentWithOuia
-                              component={[Function]}
-                              componentProps={
-                                Object {
-                                  "children": "Edit",
-                                  "isDisabled": false,
-                                  "onClick": [Function],
-                                  "type": "submit",
-                                  "variant": "primary",
-                                }
-                              }
-                              consumerContext={null}
+                            <button
+                              aria-disabled={false}
+                              aria-label={null}
+                              className="pf-c-button pf-m-primary"
+                              data-ouia-component-id={2}
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              type="submit"
                             >
-                              <Button
-                                isDisabled={false}
-                                onClick={[Function]}
-                                ouiaContext={
-                                  Object {
-                                    "isOuia": false,
-                                    "ouiaId": null,
-                                  }
-                                }
-                                type="submit"
-                                variant="primary"
-                              >
-                                <button
-                                  aria-disabled={null}
-                                  aria-label={null}
-                                  className="pf-c-button pf-m-primary"
-                                  disabled={false}
-                                  onClick={[Function]}
-                                  tabIndex={null}
-                                  type="submit"
-                                >
-                                  Edit
-                                </button>
-                              </Button>
-                            </ComponentWithOuia>
-                          </Component>
-                          <Component
+                              Edit
+                            </button>
+                          </Button>
+                          <Button
                             key="cancel"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <ComponentWithOuia
-                              component={[Function]}
-                              componentProps={
-                                Object {
-                                  "children": "Cancel",
-                                  "onClick": [Function],
-                                  "variant": "secondary",
-                                }
-                              }
-                              consumerContext={null}
+                            <button
+                              aria-disabled={false}
+                              aria-label={null}
+                              className="pf-c-button pf-m-secondary"
+                              data-ouia-component-id={3}
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              type="button"
                             >
-                              <Button
-                                onClick={[Function]}
-                                ouiaContext={
-                                  Object {
-                                    "isOuia": false,
-                                    "ouiaId": null,
-                                  }
-                                }
-                                variant="secondary"
-                              >
-                                <button
-                                  aria-disabled={null}
-                                  aria-label={null}
-                                  className="pf-c-button pf-m-secondary"
-                                  disabled={false}
-                                  onClick={[Function]}
-                                  tabIndex={null}
-                                  type="button"
-                                >
-                                  Cancel
-                                </button>
-                              </Button>
-                            </ComponentWithOuia>
-                          </Component>
-                        </div>
+                              Cancel
+                            </button>
+                          </Button>
+                        </footer>
                       </ModalBoxFooter>
                     </div>
                   </ModalBox>
@@ -601,20 +583,20 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
     <Modal
       actions={
         Array [
-          <Unknown
+          <Button
             isDisabled={false}
             onClick={[Function]}
             type="submit"
             variant="primary"
           >
             Edit
-          </Unknown>,
-          <Unknown
+          </Button>,
+          <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
-          </Unknown>,
+          </Button>,
         ]
       }
       appendTo={
@@ -631,15 +613,23 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                 class="pf-l-bullseye"
               >
                 <div
-                  aria-describedby="pf-modal-0"
-                  aria-label="Edit display name"
+                  aria-describedby="pf-modal-part-2"
+                  aria-labelledby="pf-modal-part-1"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
+                  data-ouia-component-id="0"
+                  data-ouia-component-type="PF4/ModalContent"
+                  data-ouia-safe="true"
+                  id="pf-modal-part-0"
                   role="dialog"
                 >
                   <button
+                    aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
+                    data-ouia-component-id="1"
+                    data-ouia-component-type="PF4/Button"
+                    data-ouia-safe="true"
                     type="button"
                   >
                     <svg
@@ -657,16 +647,19 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       />
                     </svg>
                   </button>
-                  <h1
-                    class="pf-c-title pf-m-2xl"
+                  <header
+                    class="pf-c-modal-box__header"
                   >
-                     
-                    Edit display name
-                     
-                  </h1>
+                    <h1
+                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      id="pf-modal-part-1"
+                    >
+                      Edit display name
+                    </h1>
+                  </header>
                   <div
                     class="pf-c-modal-box__body"
-                    id="pf-modal-0"
+                    id="pf-modal-part-2"
                   >
                     <form
                       class="pf-c-form"
@@ -675,35 +668,47 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       <div
                         class="pf-c-form__group"
                       >
-                        <input
-                          aria-invalid="false"
-                          aria-label="Edit display name"
-                          class="pf-c-form-control"
-                          id="edit-display-name-input"
-                          placeholder="Enter display name"
-                          type="text"
-                          value=""
-                        />
-                        
+                        <div
+                          class="pf-c-form__group-control"
+                        >
+                          <input
+                            aria-invalid="false"
+                            aria-label="Edit display name"
+                            class="pf-c-form-control"
+                            id="edit-display-name-input"
+                            placeholder="Enter display name"
+                            type="text"
+                            value=""
+                          />
+                          
+                        </div>
                       </div>
                     </form>
                   </div>
-                  <div
-                    class="pf-c-modal-box__footer pf-m-align-left"
+                  <footer
+                    class="pf-c-modal-box__footer"
                   >
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-primary"
+                      data-ouia-component-id="2"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="submit"
                     >
                       Edit
                     </button>
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-secondary"
+                      data-ouia-component-id="3"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="button"
                     >
                       Cancel
                     </button>
-                  </div>
+                  </footer>
                 </div>
               </div>
             </div>
@@ -718,15 +723,23 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                 class="pf-l-bullseye"
               >
                 <div
-                  aria-describedby="pf-modal-1"
-                  aria-label="Edit display name"
+                  aria-describedby="pf-modal-part-3"
+                  aria-labelledby="pf-modal-part-2"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
+                  data-ouia-component-id="4"
+                  data-ouia-component-type="PF4/ModalContent"
+                  data-ouia-safe="true"
+                  id="pf-modal-part-1"
                   role="dialog"
                 >
                   <button
+                    aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
+                    data-ouia-component-id="5"
+                    data-ouia-component-type="PF4/Button"
+                    data-ouia-safe="true"
                     type="button"
                   >
                     <svg
@@ -744,16 +757,19 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       />
                     </svg>
                   </button>
-                  <h1
-                    class="pf-c-title pf-m-2xl"
+                  <header
+                    class="pf-c-modal-box__header"
                   >
-                     
-                    Edit display name
-                     
-                  </h1>
+                    <h1
+                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      id="pf-modal-part-2"
+                    >
+                      Edit display name
+                    </h1>
+                  </header>
                   <div
                     class="pf-c-modal-box__body"
-                    id="pf-modal-1"
+                    id="pf-modal-part-3"
                   >
                     <form
                       class="pf-c-form"
@@ -762,35 +778,47 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       <div
                         class="pf-c-form__group"
                       >
-                        <input
-                          aria-invalid="false"
-                          aria-label="Edit display name"
-                          class="pf-c-form-control"
-                          id="edit-display-name-input"
-                          placeholder="Enter display name"
-                          type="text"
-                          value=""
-                        />
-                        
+                        <div
+                          class="pf-c-form__group-control"
+                        >
+                          <input
+                            aria-invalid="false"
+                            aria-label="Edit display name"
+                            class="pf-c-form-control"
+                            id="edit-display-name-input"
+                            placeholder="Enter display name"
+                            type="text"
+                            value=""
+                          />
+                          
+                        </div>
                       </div>
                     </form>
                   </div>
-                  <div
-                    class="pf-c-modal-box__footer pf-m-align-left"
+                  <footer
+                    class="pf-c-modal-box__footer"
                   >
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-primary"
+                      data-ouia-component-id="6"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="submit"
                     >
                       Edit
                     </button>
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-secondary"
+                      data-ouia-component-id="7"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="button"
                     >
                       Cancel
                     </button>
-                  </div>
+                  </footer>
                 </div>
               </div>
             </div>
@@ -805,15 +833,23 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                 class="pf-l-bullseye"
               >
                 <div
-                  aria-describedby="pf-modal-2"
-                  aria-label="Edit display name"
+                  aria-describedby="pf-modal-part-4"
+                  aria-labelledby="pf-modal-part-3"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
+                  data-ouia-component-id="12"
+                  data-ouia-component-type="PF4/ModalContent"
+                  data-ouia-safe="true"
+                  id="pf-modal-part-2"
                   role="dialog"
                 >
                   <button
+                    aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
+                    data-ouia-component-id="13"
+                    data-ouia-component-type="PF4/Button"
+                    data-ouia-safe="true"
                     type="button"
                   >
                     <svg
@@ -831,16 +867,19 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       />
                     </svg>
                   </button>
-                  <h1
-                    class="pf-c-title pf-m-2xl"
+                  <header
+                    class="pf-c-modal-box__header"
                   >
-                     
-                    Edit display name
-                     
-                  </h1>
+                    <h1
+                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      id="pf-modal-part-3"
+                    >
+                      Edit display name
+                    </h1>
+                  </header>
                   <div
                     class="pf-c-modal-box__body"
-                    id="pf-modal-2"
+                    id="pf-modal-part-4"
                   >
                     <form
                       class="pf-c-form"
@@ -849,35 +888,47 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       <div
                         class="pf-c-form__group"
                       >
-                        <input
-                          aria-invalid="false"
-                          aria-label="Edit display name"
-                          class="pf-c-form-control"
-                          id="edit-display-name-input"
-                          placeholder="Enter display name"
-                          type="text"
-                          value="hello"
-                        />
-                        
+                        <div
+                          class="pf-c-form__group-control"
+                        >
+                          <input
+                            aria-invalid="false"
+                            aria-label="Edit display name"
+                            class="pf-c-form-control"
+                            id="edit-display-name-input"
+                            placeholder="Enter display name"
+                            type="text"
+                            value="hello"
+                          />
+                          
+                        </div>
                       </div>
                     </form>
                   </div>
-                  <div
-                    class="pf-c-modal-box__footer pf-m-align-left"
+                  <footer
+                    class="pf-c-modal-box__footer"
                   >
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-primary"
+                      data-ouia-component-id="14"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="submit"
                     >
                       Edit
                     </button>
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-secondary"
+                      data-ouia-component-id="15"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="button"
                     >
                       Cancel
                     </button>
-                  </div>
+                  </footer>
                 </div>
               </div>
             </div>
@@ -892,15 +943,23 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                 class="pf-l-bullseye"
               >
                 <div
-                  aria-describedby="pf-modal-3"
-                  aria-label="Edit display name"
+                  aria-describedby="pf-modal-part-5"
+                  aria-labelledby="pf-modal-part-4"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
+                  data-ouia-component-id="20"
+                  data-ouia-component-type="PF4/ModalContent"
+                  data-ouia-safe="true"
+                  id="pf-modal-part-3"
                   role="dialog"
                 >
                   <button
+                    aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
+                    data-ouia-component-id="21"
+                    data-ouia-component-type="PF4/Button"
+                    data-ouia-safe="true"
                     type="button"
                   >
                     <svg
@@ -918,16 +977,19 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       />
                     </svg>
                   </button>
-                  <h1
-                    class="pf-c-title pf-m-2xl"
+                  <header
+                    class="pf-c-modal-box__header"
                   >
-                     
-                    Edit display name
-                     
-                  </h1>
+                    <h1
+                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      id="pf-modal-part-4"
+                    >
+                      Edit display name
+                    </h1>
+                  </header>
                   <div
                     class="pf-c-modal-box__body"
-                    id="pf-modal-3"
+                    id="pf-modal-part-5"
                   >
                     <form
                       class="pf-c-form"
@@ -936,35 +998,47 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       <div
                         class="pf-c-form__group"
                       >
-                        <input
-                          aria-invalid="false"
-                          aria-label="Edit display name"
-                          class="pf-c-form-control"
-                          id="edit-display-name-input"
-                          placeholder="Enter display name"
-                          type="text"
-                          value="some-name"
-                        />
-                        
+                        <div
+                          class="pf-c-form__group-control"
+                        >
+                          <input
+                            aria-invalid="false"
+                            aria-label="Edit display name"
+                            class="pf-c-form-control"
+                            id="edit-display-name-input"
+                            placeholder="Enter display name"
+                            type="text"
+                            value="some-name"
+                          />
+                          
+                        </div>
                       </div>
                     </form>
                   </div>
-                  <div
-                    class="pf-c-modal-box__footer pf-m-align-left"
+                  <footer
+                    class="pf-c-modal-box__footer"
                   >
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-primary"
+                      data-ouia-component-id="22"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="submit"
                     >
                       Edit
                     </button>
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-secondary"
+                      data-ouia-component-id="23"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="button"
                     >
                       Cancel
                     </button>
-                  </div>
+                  </footer>
                 </div>
               </div>
             </div>
@@ -977,15 +1051,23 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                 class="pf-l-bullseye"
               >
                 <div
-                  aria-describedby="pf-modal-4"
-                  aria-label="Edit display name"
+                  aria-describedby="pf-modal-part-6"
+                  aria-labelledby="pf-modal-part-5"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
+                  data-ouia-component-id="28"
+                  data-ouia-component-type="PF4/ModalContent"
+                  data-ouia-safe="true"
+                  id="pf-modal-part-4"
                   role="dialog"
                 >
                   <button
+                    aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
+                    data-ouia-component-id="29"
+                    data-ouia-component-type="PF4/Button"
+                    data-ouia-safe="true"
                     type="button"
                   >
                     <svg
@@ -1003,20 +1085,26 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       />
                     </svg>
                   </button>
-                  <h1
-                    class="pf-c-title pf-m-2xl"
+                  <header
+                    class="pf-c-modal-box__header"
                   >
-                     
-                    Edit display name
-                     
-                  </h1>
+                    <h1
+                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      id="pf-modal-part-5"
+                    >
+                      Edit display name
+                    </h1>
+                  </header>
                   <div
                     class="pf-c-modal-box__body"
-                    id="pf-modal-4"
+                    id="pf-modal-part-6"
                   >
                     <div
                       aria-label="Danger Alert"
                       class="pf-c-alert pf-m-inline pf-m-danger error-box"
+                      data-ouia-component-id="30"
+                      data-ouia-component-type="PF4/Alert"
+                      data-ouia-safe="true"
                     >
                       <div
                         class="pf-c-alert__icon"
@@ -1065,51 +1153,64 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       <div
                         class="pf-c-form__group"
                       >
-                        <input
-                          aria-invalid="false"
-                          aria-label="Edit display name"
-                          class="pf-c-form-control"
-                          id="edit-display-name-input"
-                          placeholder="Enter display name"
-                          type="text"
-                          value="some-name"
-                        />
-                        
+                        <div
+                          class="pf-c-form__group-control"
+                        >
+                          <input
+                            aria-invalid="false"
+                            aria-label="Edit display name"
+                            class="pf-c-form-control"
+                            id="edit-display-name-input"
+                            placeholder="Enter display name"
+                            type="text"
+                            value="some-name"
+                          />
+                          
+                        </div>
                       </div>
                     </form>
                   </div>
-                  <div
-                    class="pf-c-modal-box__footer pf-m-align-left"
+                  <footer
+                    class="pf-c-modal-box__footer"
                   >
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-primary"
+                      data-ouia-component-id="31"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="submit"
                     >
                       Edit
                     </button>
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-secondary"
+                      data-ouia-component-id="32"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="button"
                     >
                       Cancel
                     </button>
-                  </div>
+                  </footer>
                 </div>
               </div>
             </div>
           </div>
         </body>
       }
-      ariaDescribedById=""
+      aria-describedby=""
+      aria-label=""
+      aria-labelledby=""
       className={null}
-      hideTitle={false}
-      isFooterLeftAligned={true}
-      isLarge={false}
+      hasNoBodyWrapper={false}
       isOpen={true}
-      isSmall={true}
       onClose={[Function]}
+      ouiaSafe={true}
       showClose={true}
       title="Edit display name"
+      variant="small"
     >
       <Portal
         containerInfo={
@@ -1121,15 +1222,23 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                 class="pf-l-bullseye"
               >
                 <div
-                  aria-describedby="pf-modal-4"
-                  aria-label="Edit display name"
+                  aria-describedby="pf-modal-part-6"
+                  aria-labelledby="pf-modal-part-5"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
+                  data-ouia-component-id="28"
+                  data-ouia-component-type="PF4/ModalContent"
+                  data-ouia-safe="true"
+                  id="pf-modal-part-4"
                   role="dialog"
                 >
                   <button
+                    aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
+                    data-ouia-component-id="29"
+                    data-ouia-component-type="PF4/Button"
+                    data-ouia-safe="true"
                     type="button"
                   >
                     <svg
@@ -1147,20 +1256,26 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       />
                     </svg>
                   </button>
-                  <h1
-                    class="pf-c-title pf-m-2xl"
+                  <header
+                    class="pf-c-modal-box__header"
                   >
-                     
-                    Edit display name
-                     
-                  </h1>
+                    <h1
+                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      id="pf-modal-part-5"
+                    >
+                      Edit display name
+                    </h1>
+                  </header>
                   <div
                     class="pf-c-modal-box__body"
-                    id="pf-modal-4"
+                    id="pf-modal-part-6"
                   >
                     <div
                       aria-label="Danger Alert"
                       class="pf-c-alert pf-m-inline pf-m-danger error-box"
+                      data-ouia-component-id="30"
+                      data-ouia-component-type="PF4/Alert"
+                      data-ouia-safe="true"
                     >
                       <div
                         class="pf-c-alert__icon"
@@ -1209,35 +1324,47 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                       <div
                         class="pf-c-form__group"
                       >
-                        <input
-                          aria-invalid="false"
-                          aria-label="Edit display name"
-                          class="pf-c-form-control"
-                          id="edit-display-name-input"
-                          placeholder="Enter display name"
-                          type="text"
-                          value="some-name"
-                        />
-                        
+                        <div
+                          class="pf-c-form__group-control"
+                        >
+                          <input
+                            aria-invalid="false"
+                            aria-label="Edit display name"
+                            class="pf-c-form-control"
+                            id="edit-display-name-input"
+                            placeholder="Enter display name"
+                            type="text"
+                            value="some-name"
+                          />
+                          
+                        </div>
                       </div>
                     </form>
                   </div>
-                  <div
-                    class="pf-c-modal-box__footer pf-m-align-left"
+                  <footer
+                    class="pf-c-modal-box__footer"
                   >
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-primary"
+                      data-ouia-component-id="31"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="submit"
                     >
                       Edit
                     </button>
                     <button
+                      aria-disabled="false"
                       class="pf-c-button pf-m-secondary"
+                      data-ouia-component-id="32"
+                      data-ouia-component-type="PF4/Button"
+                      data-ouia-safe="true"
                       type="button"
                     >
                       Cancel
                     </button>
-                  </div>
+                  </footer>
                 </div>
               </div>
             </div>
@@ -1247,40 +1374,42 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
         <ModalContent
           actions={
             Array [
-              <Unknown
+              <Button
                 isDisabled={false}
                 onClick={[Function]}
                 type="submit"
                 variant="primary"
               >
                 Edit
-              </Unknown>,
-              <Unknown
+              </Button>,
+              <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
-              </Unknown>,
+              </Button>,
             ]
           }
-          ariaDescribedById=""
+          aria-describedby=""
+          aria-label=""
+          aria-labelledby=""
+          boxId="pf-modal-part-4"
           className={null}
-          hideTitle={false}
-          id="pf-modal-4"
-          isFooterLeftAligned={true}
-          isLarge={false}
+          descriptorId="pf-modal-part-6"
+          hasNoBodyWrapper={false}
           isOpen={true}
-          isSmall={true}
+          labelId="pf-modal-part-5"
           onClose={[Function]}
+          ouiaSafe={true}
           showClose={true}
           title="Edit display name"
+          variant="small"
         >
           <Backdrop>
             <div
               className="pf-c-backdrop"
             >
               <FocusTrap
-                _createFocusTrap={[Function]}
                 active={true}
                 className="pf-l-bullseye"
                 focusTrapOptions={
@@ -1289,129 +1418,107 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                   }
                 }
                 paused={false}
-                tag="div"
               >
                 <div
                   className="pf-l-bullseye"
                 >
                   <ModalBox
+                    aria-describedby="pf-modal-part-6"
+                    aria-label=""
+                    aria-labelledby="pf-modal-part-5"
                     className={null}
-                    id="pf-modal-4"
-                    isLarge={false}
-                    isSmall={true}
+                    data-ouia-component-id={28}
+                    data-ouia-component-type="PF4/ModalContent"
+                    data-ouia-safe={true}
+                    id="pf-modal-part-4"
                     style={Object {}}
-                    title="Edit display name"
+                    variant="small"
                   >
                     <div
-                      aria-describedby="pf-modal-4"
-                      aria-label="Edit display name"
+                      aria-describedby="pf-modal-part-6"
+                      aria-label={null}
+                      aria-labelledby="pf-modal-part-5"
                       aria-modal="true"
                       className="pf-c-modal-box pf-m-sm"
+                      data-ouia-component-id={28}
+                      data-ouia-component-type="PF4/ModalContent"
+                      data-ouia-safe={true}
+                      id="pf-modal-part-4"
                       role="dialog"
                       style={Object {}}
                     >
                       <ModalBoxCloseButton
                         onClose={[Function]}
                       >
-                        <Component
+                        <Button
                           aria-label="Close"
                           className=""
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <ComponentWithOuia
-                            component={[Function]}
-                            componentProps={
-                              Object {
-                                "aria-label": "Close",
-                                "children": <TimesIcon
-                                  color="currentColor"
-                                  noVerticalAlign={false}
-                                  size="sm"
-                                  title={null}
-                                />,
-                                "className": "",
-                                "onClick": [Function],
-                                "variant": "plain",
-                              }
-                            }
-                            consumerContext={null}
+                          <button
+                            aria-disabled={false}
+                            aria-label="Close"
+                            className="pf-c-button pf-m-plain"
+                            data-ouia-component-id={29}
+                            data-ouia-component-type="PF4/Button"
+                            data-ouia-safe={true}
+                            disabled={false}
+                            onClick={[Function]}
+                            type="button"
                           >
-                            <Button
-                              aria-label="Close"
-                              className=""
-                              onClick={[Function]}
-                              ouiaContext={
-                                Object {
-                                  "isOuia": false,
-                                  "ouiaId": null,
-                                }
-                              }
-                              variant="plain"
+                            <TimesIcon
+                              color="currentColor"
+                              noVerticalAlign={false}
+                              size="sm"
                             >
-                              <button
-                                aria-disabled={null}
-                                aria-label="Close"
-                                className="pf-c-button pf-m-plain"
-                                disabled={false}
-                                onClick={[Function]}
-                                tabIndex={null}
-                                type="button"
+                              <svg
+                                aria-hidden={true}
+                                aria-labelledby={null}
+                                fill="currentColor"
+                                height="1em"
+                                role="img"
+                                style={
+                                  Object {
+                                    "verticalAlign": "-0.125em",
+                                  }
+                                }
+                                viewBox="0 0 352 512"
+                                width="1em"
                               >
-                                <TimesIcon
-                                  color="currentColor"
-                                  noVerticalAlign={false}
-                                  size="sm"
-                                  title={null}
-                                >
-                                  <svg
-                                    aria-hidden={true}
-                                    aria-labelledby={null}
-                                    fill="currentColor"
-                                    height="1em"
-                                    role="img"
-                                    style={
-                                      Object {
-                                        "verticalAlign": "-0.125em",
-                                      }
-                                    }
-                                    viewBox="0 0 352 512"
-                                    width="1em"
-                                  >
-                                    <path
-                                      d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                      transform=""
-                                    />
-                                  </svg>
-                                </TimesIcon>
-                              </button>
-                            </Button>
-                          </ComponentWithOuia>
-                        </Component>
+                                <path
+                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  transform=""
+                                />
+                              </svg>
+                            </TimesIcon>
+                          </button>
+                        </Button>
                       </ModalBoxCloseButton>
-                      <ModalBoxHeader
-                        hideTitle={false}
-                      >
-                        <Title
-                          className=""
-                          headingLevel="h1"
-                          size="2xl"
+                      <ModalBoxHeader>
+                        <header
+                          className="pf-c-modal-box__header"
                         >
-                          <h1
-                            className="pf-c-title pf-m-2xl"
+                          <ModalBoxTitle
+                            className="pf-c-modal-box__title"
+                            id="pf-modal-part-5"
+                            title="Edit display name"
                           >
-                             
-                            Edit display name
-                             
-                          </h1>
-                        </Title>
+                            <h1
+                              className="pf-c-modal-box__title pf-c-modal-box__title"
+                              id="pf-modal-part-5"
+                            >
+                              Edit display name
+                            </h1>
+                          </ModalBoxTitle>
+                        </header>
                       </ModalBoxHeader>
                       <ModalBoxBody
-                        id="pf-modal-4"
+                        id="pf-modal-part-6"
                       >
                         <div
                           className="pf-c-modal-box__body"
-                          id="pf-modal-4"
+                          id="pf-modal-part-6"
                         >
                           <ErrorBox
                             message="Error changing display name"
@@ -1422,109 +1529,75 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                               }
                             }
                           >
-                            <Component
+                            <Alert
                               className="error-box"
                               isInline={true}
                               title="Error changing display name"
                               variant="danger"
                             >
-                              <ComponentWithOuia
-                                component={[Function]}
-                                componentProps={
-                                  Object {
-                                    "children": Array [
-                                      <span>
-                                        this is an error
-                                      </span>,
-                                      Array [],
-                                      <br />,
-                                      <span>
-                                        Operation ID: N/A
-                                      </span>,
-                                    ],
-                                    "className": "error-box",
-                                    "isInline": true,
-                                    "title": "Error changing display name",
-                                    "variant": "danger",
-                                  }
-                                }
-                                consumerContext={null}
+                              <div
+                                aria-label="Danger Alert"
+                                className="pf-c-alert pf-m-inline pf-m-danger error-box"
+                                data-ouia-component-id={30}
+                                data-ouia-component-type="PF4/Alert"
+                                data-ouia-safe={true}
                               >
-                                <Alert
-                                  className="error-box"
-                                  isInline={true}
-                                  ouiaContext={
-                                    Object {
-                                      "isOuia": false,
-                                      "ouiaId": null,
-                                    }
-                                  }
-                                  title="Error changing display name"
+                                <Component
                                   variant="danger"
                                 >
                                   <div
-                                    aria-label="Danger Alert"
-                                    className="pf-c-alert pf-m-inline pf-m-danger error-box"
+                                    className="pf-c-alert__icon"
                                   >
-                                    <AlertIcon
-                                      variant="danger"
+                                    <ExclamationCircleIcon
+                                      color="currentColor"
+                                      noVerticalAlign={false}
+                                      size="sm"
                                     >
-                                      <div
-                                        className="pf-c-alert__icon"
+                                      <svg
+                                        aria-hidden={true}
+                                        aria-labelledby={null}
+                                        fill="currentColor"
+                                        height="1em"
+                                        role="img"
+                                        style={
+                                          Object {
+                                            "verticalAlign": "-0.125em",
+                                          }
+                                        }
+                                        viewBox="0 0 512 512"
+                                        width="1em"
                                       >
-                                        <ExclamationCircleIcon
-                                          color="currentColor"
-                                          noVerticalAlign={false}
-                                          size="sm"
-                                          title={null}
-                                        >
-                                          <svg
-                                            aria-hidden={true}
-                                            aria-labelledby={null}
-                                            fill="currentColor"
-                                            height="1em"
-                                            role="img"
-                                            style={
-                                              Object {
-                                                "verticalAlign": "-0.125em",
-                                              }
-                                            }
-                                            viewBox="0 0 512 512"
-                                            width="1em"
-                                          >
-                                            <path
-                                              d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
-                                              transform=""
-                                            />
-                                          </svg>
-                                        </ExclamationCircleIcon>
-                                      </div>
-                                    </AlertIcon>
-                                    <h4
-                                      className="pf-c-alert__title"
-                                    >
-                                      <span
-                                        className="pf-u-screen-reader"
-                                      >
-                                        Danger alert:
-                                      </span>
-                                      Error changing display name
-                                    </h4>
-                                    <div
-                                      className="pf-c-alert__description"
-                                    >
-                                      <span>
-                                        this is an error
-                                      </span>
-                                      <br />
-                                      <span>
-                                        Operation ID: N/A
-                                      </span>
-                                    </div>
+                                        <path
+                                          d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                                          transform=""
+                                        />
+                                      </svg>
+                                    </ExclamationCircleIcon>
                                   </div>
-                                </Alert>
-                              </ComponentWithOuia>
-                            </Component>
+                                </Component>
+                                <h4
+                                  className="pf-c-alert__title"
+                                >
+                                  <span
+                                    className="pf-u-screen-reader"
+                                  >
+                                    Danger alert:
+                                  </span>
+                                  Error changing display name
+                                </h4>
+                                <div
+                                  className="pf-c-alert__description"
+                                >
+                                  <span>
+                                    this is an error
+                                  </span>
+                                  <br />
+                                  <span>
+                                    Operation ID: N/A
+                                  </span>
+                                </div>
+                              </div>
+                            </Alert>
                           </ErrorBox>
                           <Form
                             onSubmit={[Function]}
@@ -1536,149 +1609,104 @@ exports[`<EditDisplayNameDialog /> renders correctly when an erorr occurs 1`] = 
                             >
                               <FormGroup
                                 fieldId="edit-display-name-input"
-                                isValid={true}
+                                validated="default"
                               >
                                 <div
                                   className="pf-c-form__group"
                                 >
-                                  <ForwardRef
-                                    aria-label="Edit display name"
-                                    id="edit-display-name-input"
-                                    isValid={true}
-                                    onChange={[Function]}
-                                    placeholder="Enter display name"
-                                    type="text"
-                                    value="some-name"
+                                  <div
+                                    className="pf-c-form__group-control"
                                   >
-                                    <TextInputBase
+                                    <ForwardRef
                                       aria-label="Edit display name"
-                                      className=""
                                       id="edit-display-name-input"
-                                      innerRef={null}
-                                      isDisabled={false}
-                                      isReadOnly={false}
-                                      isRequired={false}
-                                      isValid={true}
                                       onChange={[Function]}
                                       placeholder="Enter display name"
                                       type="text"
                                       validated="default"
                                       value="some-name"
                                     >
-                                      <input
-                                        aria-invalid={false}
+                                      <TextInputBase
                                         aria-label="Edit display name"
-                                        className="pf-c-form-control"
-                                        disabled={false}
+                                        className=""
                                         id="edit-display-name-input"
+                                        innerRef={null}
+                                        isDisabled={false}
+                                        isReadOnly={false}
+                                        isRequired={false}
                                         onChange={[Function]}
                                         placeholder="Enter display name"
-                                        readOnly={false}
-                                        required={false}
                                         type="text"
+                                        validated="default"
                                         value="some-name"
-                                      />
-                                    </TextInputBase>
-                                  </ForwardRef>
+                                      >
+                                        <input
+                                          aria-invalid={false}
+                                          aria-label="Edit display name"
+                                          className="pf-c-form-control"
+                                          disabled={false}
+                                          id="edit-display-name-input"
+                                          onChange={[Function]}
+                                          placeholder="Enter display name"
+                                          readOnly={false}
+                                          required={false}
+                                          type="text"
+                                          value="some-name"
+                                        />
+                                      </TextInputBase>
+                                    </ForwardRef>
+                                  </div>
                                 </div>
                               </FormGroup>
                             </form>
                           </Form>
                         </div>
                       </ModalBoxBody>
-                      <ModalBoxFooter
-                        isLeftAligned={true}
-                      >
-                        <div
-                          className="pf-c-modal-box__footer pf-m-align-left"
+                      <ModalBoxFooter>
+                        <footer
+                          className="pf-c-modal-box__footer"
                         >
-                          <Component
+                          <Button
                             isDisabled={false}
                             key="confirm"
                             onClick={[Function]}
                             type="submit"
                             variant="primary"
                           >
-                            <ComponentWithOuia
-                              component={[Function]}
-                              componentProps={
-                                Object {
-                                  "children": "Edit",
-                                  "isDisabled": false,
-                                  "onClick": [Function],
-                                  "type": "submit",
-                                  "variant": "primary",
-                                }
-                              }
-                              consumerContext={null}
+                            <button
+                              aria-disabled={false}
+                              aria-label={null}
+                              className="pf-c-button pf-m-primary"
+                              data-ouia-component-id={31}
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              type="submit"
                             >
-                              <Button
-                                isDisabled={false}
-                                onClick={[Function]}
-                                ouiaContext={
-                                  Object {
-                                    "isOuia": false,
-                                    "ouiaId": null,
-                                  }
-                                }
-                                type="submit"
-                                variant="primary"
-                              >
-                                <button
-                                  aria-disabled={null}
-                                  aria-label={null}
-                                  className="pf-c-button pf-m-primary"
-                                  disabled={false}
-                                  onClick={[Function]}
-                                  tabIndex={null}
-                                  type="submit"
-                                >
-                                  Edit
-                                </button>
-                              </Button>
-                            </ComponentWithOuia>
-                          </Component>
-                          <Component
+                              Edit
+                            </button>
+                          </Button>
+                          <Button
                             key="cancel"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <ComponentWithOuia
-                              component={[Function]}
-                              componentProps={
-                                Object {
-                                  "children": "Cancel",
-                                  "onClick": [Function],
-                                  "variant": "secondary",
-                                }
-                              }
-                              consumerContext={null}
+                            <button
+                              aria-disabled={false}
+                              aria-label={null}
+                              className="pf-c-button pf-m-secondary"
+                              data-ouia-component-id={32}
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              type="button"
                             >
-                              <Button
-                                onClick={[Function]}
-                                ouiaContext={
-                                  Object {
-                                    "isOuia": false,
-                                    "ouiaId": null,
-                                  }
-                                }
-                                variant="secondary"
-                              >
-                                <button
-                                  aria-disabled={null}
-                                  aria-label={null}
-                                  className="pf-c-button pf-m-secondary"
-                                  disabled={false}
-                                  onClick={[Function]}
-                                  tabIndex={null}
-                                  type="button"
-                                >
-                                  Cancel
-                                </button>
-                              </Button>
-                            </ComponentWithOuia>
-                          </Component>
-                        </div>
+                              Cancel
+                            </button>
+                          </Button>
+                        </footer>
                       </ModalBoxFooter>
                     </div>
                   </ModalBox>

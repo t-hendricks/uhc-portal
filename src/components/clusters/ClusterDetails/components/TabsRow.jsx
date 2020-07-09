@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Tabs, Tab } from '@patternfly/react-core';
+import { Tabs, Tab, TabTitleText } from '@patternfly/react-core';
 
 class TabsRow extends React.Component {
   state = {
@@ -104,7 +104,12 @@ class TabsRow extends React.Component {
     return (
       <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
         {tabsToDisplay.map(tab => (
-          <Tab key={tab.key} eventKey={tab.key} title={tab.title} tabContentId={tab.contentId} />
+          <Tab
+            key={tab.key}
+            eventKey={tab.key}
+            title={<TabTitleText>{tab.title}</TabTitleText>}
+            tabContentId={tab.contentId}
+          />
         ))}
       </Tabs>
     );

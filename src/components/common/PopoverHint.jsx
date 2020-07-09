@@ -5,7 +5,6 @@ import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 
 const PopoverHint = ({ hint, iconClassName }) => (
   <>
-    { ' ' }
     <Popover
       bodyContent={hint}
       aria-label="help"

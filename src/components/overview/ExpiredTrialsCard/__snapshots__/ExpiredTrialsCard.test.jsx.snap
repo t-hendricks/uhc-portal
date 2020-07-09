@@ -4,14 +4,16 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
 <Card
   id="clusters-overview-card"
 >
-  <CardHeader>
+  <CardTitle>
     Expired Trials
-  </CardHeader>
+  </CardTitle>
   <CardBody>
-    <Component
+    <Table
       actionResolver={[Function]}
       areActionsDisabled={[Function]}
       aria-label="Expired Trials"
+      borders={true}
+      canSelectAll={true}
       cells={
         Array [
           Object {
@@ -19,6 +21,15 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
           },
         ]
       }
+      className=""
+      contentId="expanded-content"
+      dropdownDirection="down"
+      dropdownPosition="right"
+      expandId="expandable-toggle"
+      gridBreakPoint="grid-md"
+      ouiaSafe={true}
+      role="grid"
+      rowLabeledBy="simple-node"
       rows={
         Array [
           Object {
@@ -60,8 +71,8 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
       variant="compact"
     >
       <TableHeader />
-      <TableBody />
-    </Component>
+      <Component />
+    </Table>
     <Connect(ViewPaginationRow)
       currentPage={1}
       isDisabled={false}

@@ -20,7 +20,7 @@ function ErrorModal({
   return (
     <Modal
       header={(
-        <Title size="2xl">
+        <Title headingLevel="h2" size="2xl">
           <ExclamationCircleIcon color={global_danger_color_100.value} />
           {' '}
           {title}

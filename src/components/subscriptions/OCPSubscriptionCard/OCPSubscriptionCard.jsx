@@ -1,23 +1,22 @@
 import React from 'react';
 import {
   Card,
-  CardHeader,
   CardBody,
   Button,
   List,
   ListItem,
   ListComponent,
-  OrderType,
+  OrderType, CardTitle,
 } from '@patternfly/react-core';
 
 
 function OCPSubscriptionCard() {
   return (
     <Card>
-      <CardHeader className="section-header">
+      <CardTitle className="section-header">
         OpenShift Container Platform now uses Subscription Watch to
         manage subscriptions.
-      </CardHeader>
+      </CardTitle>
       <CardBody className="section-text">
         To get started, cluster owners or organization administrators should:
         <List component={ListComponent.ol} type={OrderType.number} className="ocp-list">

@@ -4,11 +4,11 @@ exports[`<IdentityProvidersModal /> doesn't render when closed 1`] = `""`;
 
 exports[`<IdentityProvidersModal /> renders correctly 1`] = `
 <Modal
-  isLarge={true}
   onClose={[Function]}
   onPrimaryClick={[MockFunction]}
   onSecondaryClick={[Function]}
   title="Create identity provider ()"
+  variant="large"
 >
   <IDPForm
     clusterConsoleURL=""

@@ -88,11 +88,9 @@ class NodeCountInput extends React.Component {
         fieldId={input.name}
         label={label}
         helperText={helpText}
+        labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
       >
-        { extendedHelpText && (
-        <PopoverHint hint={extendedHelpText} />
-        )}
-        {notEnoughQuota && (
+        {notEnoughQuota ? (
           <Tooltip
             content={noQuotaTooltip}
             position="right"
@@ -101,8 +99,7 @@ class NodeCountInput extends React.Component {
               {formSelect}
             </div>
           </Tooltip>
-        )}
-        {!notEnoughQuota && (formSelect)}
+        ) : formSelect}
         { isMultiAz && (
         <span>
         × 3 zones =

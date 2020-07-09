@@ -94,12 +94,12 @@ class EditConsoleURLDialog extends Component {
             <FormGroup
               label="Web console URL"
               helperTextInvalid={validationMessage}
-              isValid={beenSet ? !validationMessage : true}
+              validated={(beenSet ? !validationMessage : true) ? 'default' : 'error'}
               fieldId="edit-console-url-input"
             >
               <TextInput
                 type="text"
-                isValid={beenSet ? !validationMessage : true}
+                validated={(beenSet ? !validationMessage : true) ? 'default' : 'error'}
                 value={currentValue}
                 placeholder="https://console-openshift-console.apps.mycluster.example.com/"
                 onChange={newValue => this.setValue(newValue)}

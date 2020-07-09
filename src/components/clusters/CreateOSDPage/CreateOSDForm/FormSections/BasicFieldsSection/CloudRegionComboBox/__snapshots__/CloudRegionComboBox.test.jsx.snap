@@ -80,10 +80,10 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
     className="cloud-region-combo-box"
     isDisabled={false}
     isRequired={false}
-    isValid={true}
     onBlur={[Function]}
     onChange={[MockFunction]}
     onFocus={[Function]}
+    ouiaSafe={true}
     validated="default"
     value=""
   >
@@ -91,6 +91,9 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
       aria-invalid={false}
       aria-label="Region"
       className="pf-c-form-control cloud-region-combo-box"
+      data-ouia-component-id={1}
+      data-ouia-component-type="PF4/FormSelect"
+      data-ouia-safe={true}
       disabled={false}
       onBlur={[Function]}
       onChange={[Function]}
@@ -188,109 +191,75 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
       }
     }
   >
-    <Component
+    <Alert
       className="error-box"
       isInline={true}
       title="Error loading region list"
       variant="danger"
     >
-      <ComponentWithOuia
-        component={[Function]}
-        componentProps={
-          Object {
-            "children": Array [
-              <span>
-                This is an error message
-              </span>,
-              Array [],
-              <br />,
-              <span>
-                Operation ID: N/A
-              </span>,
-            ],
-            "className": "error-box",
-            "isInline": true,
-            "title": "Error loading region list",
-            "variant": "danger",
-          }
-        }
-        consumerContext={null}
+      <div
+        aria-label="Danger Alert"
+        className="pf-c-alert pf-m-inline pf-m-danger error-box"
+        data-ouia-component-id={0}
+        data-ouia-component-type="PF4/Alert"
+        data-ouia-safe={true}
       >
-        <Alert
-          className="error-box"
-          isInline={true}
-          ouiaContext={
-            Object {
-              "isOuia": false,
-              "ouiaId": null,
-            }
-          }
-          title="Error loading region list"
+        <Component
           variant="danger"
         >
           <div
-            aria-label="Danger Alert"
-            className="pf-c-alert pf-m-inline pf-m-danger error-box"
+            className="pf-c-alert__icon"
           >
-            <AlertIcon
-              variant="danger"
+            <ExclamationCircleIcon
+              color="currentColor"
+              noVerticalAlign={false}
+              size="sm"
             >
-              <div
-                className="pf-c-alert__icon"
+              <svg
+                aria-hidden={true}
+                aria-labelledby={null}
+                fill="currentColor"
+                height="1em"
+                role="img"
+                style={
+                  Object {
+                    "verticalAlign": "-0.125em",
+                  }
+                }
+                viewBox="0 0 512 512"
+                width="1em"
               >
-                <ExclamationCircleIcon
-                  color="currentColor"
-                  noVerticalAlign={false}
-                  size="sm"
-                  title={null}
-                >
-                  <svg
-                    aria-hidden={true}
-                    aria-labelledby={null}
-                    fill="currentColor"
-                    height="1em"
-                    role="img"
-                    style={
-                      Object {
-                        "verticalAlign": "-0.125em",
-                      }
-                    }
-                    viewBox="0 0 512 512"
-                    width="1em"
-                  >
-                    <path
-                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
-                      transform=""
-                    />
-                  </svg>
-                </ExclamationCircleIcon>
-              </div>
-            </AlertIcon>
-            <h4
-              className="pf-c-alert__title"
-            >
-              <span
-                className="pf-u-screen-reader"
-              >
-                Danger alert:
-              </span>
-              Error loading region list
-            </h4>
-            <div
-              className="pf-c-alert__description"
-            >
-              <span>
-                This is an error message
-              </span>
-              <br />
-              <span>
-                Operation ID: N/A
-              </span>
-            </div>
+                <path
+                  d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+                  transform=""
+                />
+              </svg>
+            </ExclamationCircleIcon>
           </div>
-        </Alert>
-      </ComponentWithOuia>
-    </Component>
+        </Component>
+        <h4
+          className="pf-c-alert__title"
+        >
+          <span
+            className="pf-u-screen-reader"
+          >
+            Danger alert:
+          </span>
+          Error loading region list
+        </h4>
+        <div
+          className="pf-c-alert__description"
+        >
+          <span>
+            This is an error message
+          </span>
+          <br />
+          <span>
+            Operation ID: N/A
+          </span>
+        </div>
+      </div>
+    </Alert>
   </ErrorBox>
 </CloudRegionComboBox>
 `;
