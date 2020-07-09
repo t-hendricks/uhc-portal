@@ -39,6 +39,8 @@ const MAX_NODE_COUNT = 180;
 
 const AWS_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
 
+const INGRESS_ROUTE_LABEL_MAX_LEN = 63;
+
 // Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');
 
@@ -128,9 +130,31 @@ const checkRouteSelectors = (value) => {
 
   const selectors = value.split(',');
 
-  if (selectors.some(pair => (!(/^([0-9a-z]+([-_][0-9a-z]+)*)=([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(pair)))) {
-    return "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+
+  let error;
+
+  if (selectors.length) {
+    if (selectors.some((pair) => {
+      const pairParts = pair.split('=');
+      // check if prefix exists and get the label
+      const keyParts = pairParts[0].split('/');
+      const label = keyParts.length > 1 ? keyParts[1] : keyParts[0];
+
+      if (label.length > INGRESS_ROUTE_LABEL_MAX_LEN) {
+        error = `Length of ingress route label selector key name must be less or equal to ${INGRESS_ROUTE_LABEL_MAX_LEN}`;
+        return true;
+      }
+      if ((!(/^([0-9a-z]+([-_][0-9a-z]+)*)=([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(pair))) {
+        error = "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+        return true;
+      }
+
+      return false;
+    })) {
+      return error;
+    }
   }
+
   return undefined;
 };
 
