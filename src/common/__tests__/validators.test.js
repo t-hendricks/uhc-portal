@@ -369,18 +369,24 @@ test('Field is a valid ARN', () => {
 });
 
 test('Field is a valid key value pair', () => {
-  const errorStr = "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+  const validCharError = "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+  const maxLenError = 'Length of ingress route label selector key name must be less or equal to 63';
+  const longStr = 'ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff';
+
   expect(checkRouteSelectors('foo=bar')).toBe(undefined);
   expect(checkRouteSelectors('fOo=BAr')).toBe(undefined);
   expect(checkRouteSelectors('foo=3')).toBe(undefined);
   expect(checkRouteSelectors('foo=bar,foo=3')).toBe(undefined);
   expect(checkRouteSelectors('fo_o=ba-r')).toBe(undefined);
   expect(checkRouteSelectors('fo-o=ba_r')).toBe(undefined);
-  expect(checkRouteSelectors('键=值')).toBe(errorStr);
-  expect(checkRouteSelectors('foo:bar')).toBe(errorStr);
-  expect(checkRouteSelectors('foo')).toBe(errorStr);
-  expect(checkRouteSelectors('_foo=bar')).toBe(errorStr);
-  expect(checkRouteSelectors('foo-=bar')).toBe(errorStr);
-  expect(checkRouteSelectors('foo=-bar')).toBe(errorStr);
-  expect(checkRouteSelectors('foo=bar_')).toBe(errorStr);
+  expect(checkRouteSelectors('键=值')).toBe(validCharError);
+  expect(checkRouteSelectors('foo:bar')).toBe(validCharError);
+  expect(checkRouteSelectors('foo')).toBe(validCharError);
+  expect(checkRouteSelectors('_foo=bar')).toBe(validCharError);
+  expect(checkRouteSelectors('foo-=bar')).toBe(validCharError);
+  expect(checkRouteSelectors('foo=-bar')).toBe(validCharError);
+  expect(checkRouteSelectors('foo=bar_')).toBe(validCharError);
+  expect(checkRouteSelectors('foo=bar_')).toBe(validCharError);
+  expect(checkRouteSelectors(longStr)).toBe(maxLenError);
+  expect(checkRouteSelectors(`someprefix/${longStr}`)).toBe(maxLenError);
 });
