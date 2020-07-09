@@ -60,7 +60,7 @@ class ChangePrivacySettingsDialog extends React.Component {
       >
         {editRoutersError}
         <Form>
-          <Stack gutter="md">
+          <Stack hasGutter>
             <StackItem>
               {text}
               {' '}

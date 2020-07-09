@@ -20,7 +20,7 @@ limitations under the License.
 import React from 'react';
 import { Skeleton, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 import {
-  PageSection, Card, CardHeader, CardBody, CardFooter, ClipboardCopy,
+  PageSection, Card, CardBody, CardFooter, ClipboardCopy, CardTitle,
 } from '@patternfly/react-core';
 
 
@@ -91,9 +91,9 @@ class Tokens extends React.Component {
           {title}
           <PageSection>
             <Card className="ins-c-card__skeleton">
-              <CardHeader>
+              <CardTitle>
                 <Skeleton size="md" />
-              </CardHeader>
+              </CardTitle>
               <CardBody>
                 <Skeleton size="lg" />
               </CardBody>
@@ -122,9 +122,9 @@ class Tokens extends React.Component {
         {title}
         <PageSection>
           <Card>
-            <CardHeader>
+            <CardTitle>
               <h2>OpenShift Cluster Manager API Token</h2>
-            </CardHeader>
+            </CardTitle>
             <CardBody>
               <p>
                 Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you

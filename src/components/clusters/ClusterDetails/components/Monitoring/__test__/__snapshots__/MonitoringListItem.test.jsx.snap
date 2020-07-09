@@ -33,7 +33,6 @@ exports[`<MonitoringListItem /> should render 1`] = `
                 color="#f0ab00"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Metrics not available

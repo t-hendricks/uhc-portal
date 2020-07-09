@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { HelpIcon } from '@patternfly/react-icons';
 import {
-  EmptyState, Title, Button, CardHeader, CardFooter,
-  Popover, PopoverPosition, Card, CardBody, Tooltip,
+  EmptyState, Title, Button, CardFooter,
+  Popover, PopoverPosition, Card, CardBody, Tooltip, CardTitle,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -187,9 +187,9 @@ class UsersSection extends React.Component {
 
     return showSkeleton ? (
       <Card>
-        <CardHeader>
+        <CardTitle>
           <Skeleton size="md" />
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           <Skeleton size="lg" />
         </CardBody>

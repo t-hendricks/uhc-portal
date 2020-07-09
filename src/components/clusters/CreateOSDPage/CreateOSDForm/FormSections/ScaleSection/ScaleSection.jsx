@@ -26,8 +26,8 @@ function ScaleSection({
           label="Compute node instance type"
           isRequired
           fieldId="node_type"
+          labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
         >
-          <PopoverHint hint={constants.computeNodeInstanceTypeHint} />
           <Field
             component={MachineTypeSelection}
             name="machine_type"
@@ -64,8 +64,8 @@ function ScaleSection({
             <FormGroup
               label="Persistent storage"
               fieldId="persistent_storage"
+              labelIcon={<PopoverHint hint={constants.persistentStorageHint} />}
             >
-              <PopoverHint hint={constants.persistentStorageHint} />
               <Field
                 name="persistent_storage"
                 component={PersistentStorageDropdown}
@@ -81,8 +81,8 @@ function ScaleSection({
             <FormGroup
               label="Load balancers"
               fieldId="load_balancers"
+              labelIcon={<PopoverHint hint={constants.loadBalancersHint} />}
             >
-              <PopoverHint hint={constants.loadBalancersHint} />
               <Field
                 name="load_balancers"
                 component={LoadBalancersDropdown}

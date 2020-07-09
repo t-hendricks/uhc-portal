@@ -22,32 +22,32 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
     replace={false}
     to="/create"
   >
-    <Component
+    <Button
       id="cluster-list-emptystate-primary-action"
     >
       Create cluster
-    </Component>
+    </Button>
   </Link>
   <EmptyStateSecondaryActions>
     <Link
       replace={false}
       to="/register"
     >
-      <Component
+      <Button
         variant="link"
       >
         Register cluster
-      </Component>
+      </Button>
     </Link>
     <Link
       replace={false}
       to="/archived"
     >
-      <Component
+      <Button
         variant="link"
       >
         View archived clusters
-      </Component>
+      </Button>
     </Link>
   </EmptyStateSecondaryActions>
 </EmptyState>

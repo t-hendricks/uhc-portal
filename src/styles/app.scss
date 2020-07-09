@@ -743,14 +743,19 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
  }
 }
 
-.pf-c-label.card-badge.pf-m-compact {
+.card-badge-container > span.card-badge {
   background-color: var(--pf-global--BackgroundColor--300);
   font-size: 14px;
+  font-weight: 400;
   color: var(--pf-global--Color--300);
   padding: 5px 10px 5px 10px;
   width: 95%;
   margin: 8px;
   min-height: 21px;
+  line-height: 21px;
+  border-radius: 3px;
+  text-align: center;
+  display: inline-block;
   svg {
     margin-right: var(--pf-global--spacer--xs);
   }
@@ -1446,3 +1451,15 @@ h3#grant-role-select  {
 a.overview-clusters-link:hover {
   text-decoration: none;
 }
+
+/* TEMPORARY WORKAROUND for PatternFly 4 upgrade
+
+styles from the Chrome (which wasn't updated yet) were overriding the padding on the new alert.
+
+Once the Insights Chrome updates, this won't be needed.
+*/
+div.pf-c-alert div.pf-c-alert__icon {
+  padding: 0 !important;
+}
+
+/* END TEMPORARY WORKAROUND */

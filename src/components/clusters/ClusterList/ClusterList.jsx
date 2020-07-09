@@ -21,13 +21,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
-  Spinner, PageHeader, PageHeaderTitle, TableToolbar,
+  Spinner, PageHeader, PageHeaderTitle,
 } from '@redhat-cloud-services/frontend-components';
 import {
   Button,
   Card,
   EmptyState,
   PageSection,
+  Toolbar,
+  ToolbarItem,
+  ToolbarContent,
 } from '@patternfly/react-core';
 
 import ClusterListFilter from '../common/ClusterListFilter';
@@ -200,40 +203,54 @@ class ClusterList extends Component {
           <Card>
             <div className="cluster-list" data-ready={dataReady}>
               <GlobalErrorBox />
-              <TableToolbar id="cluster-list-toolbar">
-                <div className="toolbar-item">
-                  <ClusterListFilter
-                    isDisabled={isPendingNoData}
-                    view={viewConstants.CLUSTERS_VIEW}
-                  />
-                </div>
-                <ClusterListFilterDropdown isDisabled={pending} className="toolbar-item" history={history} />
-                <Link to="/create">
-                  <Button className="toolbar-item">Create cluster</Button>
-                </Link>
-                <ClusterListExtraActions className="toolbar-item" />
-                { showSpinner && (
-                  <Spinner className="cluster-list-spinner" />
-                ) }
-                { error && (
-                  <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
-                ) }
-                <ViewPaginationRow
-                  viewType={viewConstants.CLUSTERS_VIEW}
-                  currentPage={viewOptions.currentPage}
-                  pageSize={viewOptions.pageSize}
-                  totalCount={viewOptions.totalCount}
-                  totalPages={viewOptions.totalPages}
-                  variant="top"
-                  isDisabled={isPendingNoData}
-                />
-                <RefreshBtn
-                  autoRefresh={!anyModalOpen}
-                  isDisabled={isPendingNoData}
-                  refreshFunc={this.refresh}
-                  classOptions="cluster-list-top"
-                />
-              </TableToolbar>
+              <Toolbar id="cluster-list-toolbar">
+                <ToolbarContent>
+                  <ToolbarItem>
+                    <ClusterListFilter
+                      isDisabled={isPendingNoData}
+                      view={viewConstants.CLUSTERS_VIEW}
+                    />
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    <ClusterListFilterDropdown isDisabled={pending} history={history} />
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    <Link to="/create">
+                      <Button>Create cluster</Button>
+                    </Link>
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    <ClusterListExtraActions />
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    { showSpinner && (
+                    <Spinner className="cluster-list-spinner" />
+                    ) }
+                    { error && (
+                    <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
+                    ) }
+                  </ToolbarItem>
+                  <ToolbarItem alignment={{ default: 'alignRight' }} variant="pagination">
+                    <ViewPaginationRow
+                      viewType={viewConstants.CLUSTERS_VIEW}
+                      currentPage={viewOptions.currentPage}
+                      pageSize={viewOptions.pageSize}
+                      totalCount={viewOptions.totalCount}
+                      totalPages={viewOptions.totalPages}
+                      variant="top"
+                      isDisabled={isPendingNoData}
+                    />
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    <RefreshBtn
+                      autoRefresh={!anyModalOpen}
+                      isDisabled={isPendingNoData}
+                      refreshFunc={this.refresh}
+                      classOptions="cluster-list-top"
+                    />
+                  </ToolbarItem>
+                </ToolbarContent>
+              </Toolbar>
               <ClusterListFilterChipGroup history={history} />
               <ClusterListTable
                 openModal={openModal}

@@ -54,7 +54,7 @@ class IdentityProvidersModal extends React.Component {
     return isOpen
     && (
     <Modal
-      isLarge
+      variant="large"
       onClose={() => this.onClose()}
       title={isEditForm ? `Edit identity provider (${clusterName})` : `Create identity provider (${clusterName})`}
       isPending={isPending}

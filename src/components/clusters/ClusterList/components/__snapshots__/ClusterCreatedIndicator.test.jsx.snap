@@ -27,7 +27,7 @@ exports[`<ClusterCreatedIndicator /> should render when trial expires 1`] = `
   headerContent={null}
   hideOnOutsideClick={true}
   isVisible={null}
-  maxWidth="calc(2rem + 18.75rem)"
+  maxWidth="calc(1rem + 1rem + 18.75rem)"
   onHidden={[Function]}
   onHide={[Function]}
   onMount={[Function]}
@@ -38,19 +38,18 @@ exports[`<ClusterCreatedIndicator /> should render when trial expires 1`] = `
   tippyProps={Object {}}
   zIndex={9999}
 >
-  <Component
+  <Button
     icon={
       <ExclamationCircleIcon
         color="#c9190b"
         noVerticalAlign={false}
         size="sm"
-        title={null}
       />
     }
     isInline={true}
     variant="link"
   >
     Evaluation expired
-  </Component>
+  </Button>
 </Popover>
 `;

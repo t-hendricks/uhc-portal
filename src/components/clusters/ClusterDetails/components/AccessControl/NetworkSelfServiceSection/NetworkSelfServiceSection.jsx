@@ -8,9 +8,8 @@ import {
   PopoverPosition,
   Card,
   CardBody,
-  CardHeader,
   CardFooter,
-  Tooltip,
+  Tooltip, CardTitle,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -228,9 +227,9 @@ class NetworkSelfServiceSection extends React.Component {
 
     return grants.pending && !hasGrants ? (
       <Card>
-        <CardHeader>
+        <CardTitle>
           <Skeleton size="md" />
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           <Skeleton size="lg" />
         </CardBody>

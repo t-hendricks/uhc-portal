@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Button, Modal as PfModal } from '@patternfly/react-core';
+import { Button, Modal } from '@patternfly/react-core';
 import { find } from 'lodash';
 import { ReduxFormRadioGroup } from '../../../../../common/ReduxFormComponents';
 import ErrorTriangle from '../../../../common/ErrorTriangle';
@@ -121,13 +121,12 @@ class ClusterLogsDownload extends React.Component {
     return (
       <>
         <Button variant="primary" onClick={() => this.handleClick(true)}>Download history</Button>
-        <PfModal
-          isSmall
+        <Modal
+          variant="small"
           title="Download cluster history"
           isOpen={isOpen}
           onClose={() => this.closeModal()}
           actions={[this.renderDownloadButton()]}
-          isFooterLeftAligned
         >
           <ReduxFormRadioGroup
             name="export_history"
@@ -148,7 +147,7 @@ class ClusterLogsDownload extends React.Component {
           </>
         )
       }
-        </PfModal>
+        </Modal>
       </>
     );
   }

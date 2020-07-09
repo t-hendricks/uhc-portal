@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import {
   Button,
   CardBody,
+  CardTitle,
   Card,
-  CardHeader,
   Grid,
   GridItem,
   Title,
@@ -33,9 +33,9 @@ function OverviewEmptyState() {
         <Flex className="flex-pair">
           <FlexItem>
             <Card className="dashboard-emptystate-card">
-              <CardHeader>
+              <CardTitle>
                 <Title headingLevel="h2" size="lg" className="card-title">OpenShift Serverless</Title>
-              </CardHeader>
+              </CardTitle>
               <CardBody>
               Help developers simplify the process of delivering
               code from development to production.
@@ -49,9 +49,9 @@ function OverviewEmptyState() {
           </FlexItem>
           <FlexItem>
             <Card className="dashboard-emptystate-card">
-              <CardHeader>
+              <CardTitle>
                 <Title headingLevel="h2" size="lg" className="card-title">Red Hat OpenShift Service Mesh</Title>
-              </CardHeader>
+              </CardTitle>
               <CardBody>
               Connect, secure and monitor microservices in your
               OpenShift Container Platform environment.
@@ -67,9 +67,9 @@ function OverviewEmptyState() {
         <Flex className="flex-pair">
           <FlexItem>
             <Card className="dashboard-emptystate-card">
-              <CardHeader>
+              <CardTitle>
                 <Title headingLevel="h2" size="lg">Container-native virtualization</Title>
-              </CardHeader>
+              </CardTitle>
               <CardBody>
               Run and manage virtual machine workloads alongside your container workloads.
                 <a href="https://docs.openshift.com/container-platform/latest/cnv/cnv-about-cnv.html" rel="noreferrer noopener" target="_blank">
@@ -82,9 +82,9 @@ function OverviewEmptyState() {
           </FlexItem>
           <FlexItem>
             <Card className="dashboard-emptystate-card">
-              <CardHeader>
+              <CardTitle>
                 <Title headingLevel="h2" size="lg">Migrating OpenShift Contatiner Platform 3 to 4</Title>
-              </CardHeader>
+              </CardTitle>
               <CardBody>
                 Plan your transition and migrate from OpenShift Container Platform 3 to 4.
                 <a href="https://docs.openshift.com/container-platform/latest/migration/migrating_3_4/about-migration.html" rel="noreferrer noopener" target="_blank">

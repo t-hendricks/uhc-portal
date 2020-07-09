@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ClusterStatusMonitor /> renders an alert when cluster is errored 1`] = `
-<Component
+<Alert
   isInline={true}
   title="Cluster installation failed"
   variant="danger"

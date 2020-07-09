@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 
 import {
   Card,
-  CardHeader,
   Title,
-  CardBody,
+  CardBody, CardTitle,
 } from '@patternfly/react-core';
 
 function NetworkConfigurationCard({ network }) {
   return (
     <Card>
-      <CardHeader>
+      <CardTitle>
         <Title headingLevel="h2" size="lg" className="card-title">Network configuration</Title>
-      </CardHeader>
+      </CardTitle>
       <CardBody>
         <>
           <dl className="networking-tab">

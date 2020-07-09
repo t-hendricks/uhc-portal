@@ -32,7 +32,7 @@ exports[`<RefreshButton /> renders correctly 1`] = `
   trigger="mouseenter focus"
   zIndex={9999}
 >
-  <Component
+  <Button
     aria-label="Refresh"
     className=""
     onClick={[MockFunction]}
@@ -42,9 +42,8 @@ exports[`<RefreshButton /> renders correctly 1`] = `
       color="currentColor"
       noVerticalAlign={false}
       size="sm"
-      title={null}
     />
-  </Component>
+  </Button>
 </Tooltip>
 `;
 
@@ -80,7 +79,7 @@ exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
   trigger="mouseenter focus"
   zIndex={9999}
 >
-  <Component
+  <Button
     aria-label="Refresh"
     className=""
     onClick={[MockFunction]}
@@ -90,8 +89,7 @@ exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
       color="currentColor"
       noVerticalAlign={false}
       size="sm"
-      title={null}
     />
-  </Component>
+  </Button>
 </Tooltip>
 `;

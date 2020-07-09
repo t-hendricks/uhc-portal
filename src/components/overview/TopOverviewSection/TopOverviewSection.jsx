@@ -4,11 +4,10 @@ import {
   Title,
   CardBody,
   Card,
-  CardHeader,
   Bullseye,
   GridItem,
   EmptyStateBody,
-  EmptyState,
+  EmptyState, CardTitle,
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import ResourceUsage from '../../clusters/common/ResourceUsage/ResourceUsage';
@@ -28,7 +27,7 @@ const TopOverviewSection = ({
   const errorBody = (
     <CardBody>
       <EmptyState>
-        <Title>
+        <Title headingLevel="h2">
           No data available
         </Title>
         <EmptyStateBody>
@@ -43,17 +42,17 @@ const TopOverviewSection = ({
       <>
         <GridItem md={3} sm={12}>
           <Card className="clusters-overview-card">
-            <CardHeader>
+            <CardTitle>
                 Clusters
-            </CardHeader>
+            </CardTitle>
             { errorBody }
           </Card>
         </GridItem>
         <GridItem md={9} sm={12} rowSpan={2}>
           <Card id="metrics-charts">
-            <CardHeader>
+            <CardTitle>
                 CPU and Memory utilization
-            </CardHeader>
+            </CardTitle>
             { errorBody }
           </Card>
         </GridItem>
@@ -94,7 +93,7 @@ const TopOverviewSection = ({
   ) : (
     <CardBody>
       <EmptyState>
-        <Title>
+        <Title headingLevel="h2">
           No data available
         </Title>
         <EmptyStateBody>
@@ -110,9 +109,9 @@ const TopOverviewSection = ({
       <GridItem md={3} sm={12}>
         <Link to="/" className="overview-clusters-link">
           <Card className="clusters-overview-card">
-            <CardHeader>
+            <CardTitle>
                   Clusters
-            </CardHeader>
+            </CardTitle>
             <CardBody>
               <Bullseye>
                 <Title headingLevel="h1" size="3xl">
@@ -125,9 +124,9 @@ const TopOverviewSection = ({
       </GridItem>
       <GridItem md={9} rowSpan={2} sm={12}>
         <Card id="metrics-charts">
-          <CardHeader>
+          <CardTitle>
                   CPU and Memory utilization
-          </CardHeader>
+          </CardTitle>
           { resourceUsageBody }
         </Card>
       </GridItem>

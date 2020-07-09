@@ -185,7 +185,7 @@ class EditSubscriptionSettingsDialog extends Component {
       <Modal
         title="Subscription settings"
         width={810}
-        isLarge
+        variant="large"
         onClose={this.handleClose}
         primaryText="Save settings"
         secondaryText="Cancel"

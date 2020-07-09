@@ -71,7 +71,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
           onSubmit={[MockFunction]}
         >
           <Grid
-            gutter="sm"
+            hasGutter={true}
           >
             <CreateOSDForm
               cloudProviderID="aws"
@@ -120,29 +120,29 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             <GridItem>
               <Split
                 className="create-osd-form-button-split"
-                gutter="sm"
+                hasGutter={true}
               >
                 <SplitItem>
-                  <Component
+                  <Button
                     isDisabled={false}
                     onClick={[MockFunction]}
                     type="submit"
                     variant="primary"
                   >
                     Create cluster
-                  </Component>
+                  </Button>
                 </SplitItem>
                 <SplitItem>
                   <Link
                     replace={false}
                     to="/"
                   >
-                    <Component
+                    <Button
                       isDisabled={false}
                       variant="secondary"
                     >
                       Cancel
-                    </Component>
+                    </Button>
                   </Link>
                 </SplitItem>
                 <SplitItem />

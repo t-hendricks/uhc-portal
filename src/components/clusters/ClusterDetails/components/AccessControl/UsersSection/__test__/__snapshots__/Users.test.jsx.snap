@@ -21,14 +21,14 @@ exports[`<Users /> should render without users 1`] = `
         Learn more.
       </a>
     </p>
-    <Component
+    <Button
       className="access-control-add"
       isDisabled={false}
       onClick={[Function]}
       variant="secondary"
     >
       Add user
-    </Component>
+    </Button>
     <AddUserDialog
       addUserResponse={
         Object {
@@ -71,7 +71,7 @@ exports[`<Users /> with users should render 1`] = `
         Learn more.
       </a>
     </p>
-    <Component
+    <Table
       actions={
         Array [
           Object {
@@ -83,6 +83,8 @@ exports[`<Users /> with users should render 1`] = `
       }
       areActionsDisabled={[Function]}
       aria-label="Users"
+      borders={true}
+      canSelectAll={true}
       cells={
         Array [
           Object {
@@ -116,7 +118,7 @@ exports[`<Users /> with users should render 1`] = `
                 headerContent={null}
                 hideOnOutsideClick={true}
                 isVisible={null}
-                maxWidth="calc(2rem + 18.75rem)"
+                maxWidth="calc(1rem + 1rem + 18.75rem)"
                 onHidden={[Function]}
                 onHide={[Function]}
                 onMount={[Function]}
@@ -127,7 +129,7 @@ exports[`<Users /> with users should render 1`] = `
                 tippyProps={Object {}}
                 zIndex={9999}
               >
-                <Unknown
+                <Button
                   isInline={true}
                   variant="plain"
                 >
@@ -135,9 +137,8 @@ exports[`<Users /> with users should render 1`] = `
                     color="currentColor"
                     noVerticalAlign={false}
                     size="sm"
-                    title={null}
                   />
-                </Unknown>
+                </Button>
               </Popover>
             </React.Fragment>,
           },
@@ -181,7 +182,7 @@ exports[`<Users /> with users should render 1`] = `
                 headerContent={null}
                 hideOnOutsideClick={true}
                 isVisible={null}
-                maxWidth="calc(2rem + 18.75rem)"
+                maxWidth="calc(1rem + 1rem + 18.75rem)"
                 onHidden={[Function]}
                 onHide={[Function]}
                 onMount={[Function]}
@@ -192,7 +193,7 @@ exports[`<Users /> with users should render 1`] = `
                 tippyProps={Object {}}
                 zIndex={9999}
               >
-                <Unknown
+                <Button
                   isInline={true}
                   variant="plain"
                 >
@@ -200,14 +201,22 @@ exports[`<Users /> with users should render 1`] = `
                     color="currentColor"
                     noVerticalAlign={false}
                     size="sm"
-                    title={null}
                   />
-                </Unknown>
+                </Button>
               </Popover>
             </React.Fragment>,
           },
         ]
       }
+      className=""
+      contentId="expanded-content"
+      dropdownDirection="down"
+      dropdownPosition="right"
+      expandId="expandable-toggle"
+      gridBreakPoint="grid-md"
+      ouiaSafe={true}
+      role="grid"
+      rowLabeledBy="simple-node"
       rows={
         Array [
           Object {
@@ -243,16 +252,16 @@ exports[`<Users /> with users should render 1`] = `
       variant="compact"
     >
       <TableHeader />
-      <TableBody />
-    </Component>
-    <Component
+      <Component />
+    </Table>
+    <Button
       className="access-control-add"
       isDisabled={false}
       onClick={[Function]}
       variant="secondary"
     >
       Add user
-    </Component>
+    </Button>
     <AddUserDialog
       addUserResponse={
         Object {

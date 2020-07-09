@@ -218,7 +218,7 @@ class CreateOSDPage extends React.Component {
           {title}
           <PageSection>
             <EmptyState variant="full">
-              <Stack gutter="md">
+              <Stack hasGutter>
                 { requests.map(request => request.data.error && (
                 <StackItem key={request.name}>
                   <ErrorBox
@@ -260,7 +260,7 @@ class CreateOSDPage extends React.Component {
               {creationErrorModal}
               {/* Form */}
               <Form onSubmit={handleSubmit}>
-                <Grid gutter="sm">
+                <Grid hasGutter>
                   <CreateOSDForm
                     pending={createClusterResponse.pending}
                     change={change}
@@ -274,7 +274,7 @@ class CreateOSDPage extends React.Component {
                   />
                   {/* Form footer */}
                   <GridItem>
-                    <Split gutter="sm" className="create-osd-form-button-split">
+                    <Split hasGutter className="create-osd-form-button-split">
                       <SplitItem>
                         <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={createClusterResponse.pending}>
                         Create cluster

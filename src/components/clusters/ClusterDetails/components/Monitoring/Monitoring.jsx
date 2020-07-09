@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Card,
-  CardHeader,
   CardBody,
-  Title,
+  Title, CardTitle,
 } from '@patternfly/react-core';
 
 import ClusterHealthCard from './components/ClusterHealthCard';
@@ -74,9 +73,9 @@ class Monitoring extends React.Component {
           discoveredIssues={discoveredIssues}
         />
         <Card id="monitoring">
-          <CardHeader>
+          <CardTitle>
             <Title headingLevel="h2" className="card-title" size="md">Status</Title>
-          </CardHeader>
+          </CardTitle>
           <CardBody>
             <MonitoringList
               cluster={cluster}

@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TableToolbar } from '@redhat-cloud-services/frontend-components';
+import {
+  Toolbar,
+  ToolbarItem,
+  ToolbarContent,
+} from '@patternfly/react-core';
 import { viewConstants } from '../../../../../../redux/constants';
 
 import ClusterLogsFilterChipGroup from './ClusterLogsFilterChipGroup';
@@ -27,35 +31,39 @@ class ClusterLogsToolbar extends React.PureComponent {
 
     return (
       <>
-        <TableToolbar>
-          <div className="toolbar-item">
-            <ClusterLogsConditionalFilter
-              view={viewConstants.CLUSTER_LOGS_VIEW}
-              history={history}
-              currentFilter={currentFilter}
-              currentFlags={currentFlags}
-              setFilter={setFilter}
-              setFlags={setFlags}
-            />
-          </div>
-          <div className="toolbar-item">
-            <ClusterLogsDownload
-              externalClusterID={externalClusterID}
-              viewOptions={viewOptions}
-              clusterLogs={clusterLogs}
-              downloadClusterLogs={downloadClusterLogs}
-            />
-          </div>
-          <ViewPaginationRow
-            viewType={viewConstants.CLUSTER_LOGS_VIEW}
-            currentPage={viewOptions.currentPage}
-            pageSize={viewOptions.pageSize}
-            totalCount={viewOptions.totalCount}
-            totalPages={viewOptions.totalPages}
-            variant="top"
-            isDisabled={isPendingNoData}
-          />
-        </TableToolbar>
+        <Toolbar>
+          <ToolbarContent>
+            <ToolbarItem>
+              <ClusterLogsConditionalFilter
+                view={viewConstants.CLUSTER_LOGS_VIEW}
+                history={history}
+                currentFilter={currentFilter}
+                currentFlags={currentFlags}
+                setFilter={setFilter}
+                setFlags={setFlags}
+              />
+            </ToolbarItem>
+            <ToolbarItem>
+              <ClusterLogsDownload
+                externalClusterID={externalClusterID}
+                viewOptions={viewOptions}
+                clusterLogs={clusterLogs}
+                downloadClusterLogs={downloadClusterLogs}
+              />
+            </ToolbarItem>
+            <ToolbarItem alignment={{ default: 'alignRight' }} variant="pagination">
+              <ViewPaginationRow
+                viewType={viewConstants.CLUSTER_LOGS_VIEW}
+                currentPage={viewOptions.currentPage}
+                pageSize={viewOptions.pageSize}
+                totalCount={viewOptions.totalCount}
+                totalPages={viewOptions.totalPages}
+                variant="top"
+                isDisabled={isPendingNoData}
+              />
+            </ToolbarItem>
+          </ToolbarContent>
+        </Toolbar>
         <ClusterLogsFilterChipGroup
           view={viewConstants.CLUSTER_LOGS_VIEW}
           history={history}

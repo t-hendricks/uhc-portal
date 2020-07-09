@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  CardBody, CardHeader, Title, Button,
+  CardBody, Title, Button, CardTitle,
 } from '@patternfly/react-core';
 import { ExpandIcon } from '@patternfly/react-icons';
 import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
@@ -185,7 +185,7 @@ class LogWindow extends React.Component {
     to make it possible to add a ref for the card, so we can use requestFullScreen */
     return (
       <article className="pf-c-card" ref={this.cardRef}>
-        <CardHeader>
+        <CardTitle>
           <Title headingLevel="h2" size="lg" className="card-title logview-title">
             {cluster.state === clusterStates.UNINSTALLING ? 'Uninstallation logs' : 'Installation logs'}
           </Title>
@@ -201,7 +201,7 @@ class LogWindow extends React.Component {
               </Button>
             </div>
           )}
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
           { totalLines ? (
