@@ -10,7 +10,7 @@ import {
   ErrorMessage,
 } from './EmptyTableMessage';
 import InsightsTable from './InsightsTable';
-import './index.css';
+import './index.scss';
 
 const Insights = ({
   insightsData, voteOnRule, disableRule, enableRule, groups,

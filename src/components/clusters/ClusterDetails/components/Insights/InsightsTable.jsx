@@ -16,7 +16,6 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/component
 import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
 import { CheckCircleIcon } from '@patternfly/react-icons';
 import AnalysisSummary from './AnalysisSummary';
-import './index.css';
 import { severityMapping } from './helpers';
 import DisabledTooltip from './DisabledTooltip';
 
