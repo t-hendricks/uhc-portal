@@ -45,7 +45,7 @@ class InstallBareMetal extends Component {
       </>
        */
       <>
-        <PageTitle title={instructionsMapping.vmware.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.bareMetal.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
