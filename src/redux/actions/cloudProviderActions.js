@@ -4,21 +4,24 @@ import { clusterService } from '../../services';
 const getCloudProvidersAndRegions = () => clusterService.getCloudProviders().then(
   (cloudProvidersResponse) => {
     const cloudProviders = {};
-    const promises = [];
     cloudProvidersResponse.data.items.forEach((provider) => {
       cloudProviders[provider.id] = provider;
-      promises.push(
-        clusterService.getCloudRegions(provider.id).then((response) => {
-          // build a map of region id -> region info
-          const regions = {};
-          response.data.items.forEach((region) => {
-            regions[region.id] = region;
-          });
-          cloudProviders[provider.id].regions = regions;
-        }),
-      );
+      // build a map of region id -> region info
+      const regions = {};
+      if (provider.regions !== undefined) {
+        provider.regions.forEach((region) => {
+          regions[region.id] = {
+            // explicitly keeping only the fields we care about,
+            // to avoid memory bloat with useless "Kind" and "href"
+            id: region.id,
+            display_name: region.display_name,
+            enabled: region.enabled,
+          };
+        });
+      }
+      cloudProviders[provider.id].regions = regions;
     });
-    return Promise.all(promises).then(() => cloudProviders);
+    return cloudProviders;
   },
 );
 
