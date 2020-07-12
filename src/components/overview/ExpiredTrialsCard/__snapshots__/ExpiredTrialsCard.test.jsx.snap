@@ -35,12 +35,11 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
           Object {
             "cells": Array [
               Object {
-                "title": <Link
-                  replace={false}
+                "title": <ForwardRef
                   to="/details/foo"
                 >
                   my cluster
-                </Link>,
+                </ForwardRef>,
               },
             ],
             "subscription": Object {
@@ -52,12 +51,11 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
           Object {
             "cells": Array [
               Object {
-                "title": <Link
-                  replace={false}
+                "title": <ForwardRef
                   to="/details/foo"
                 >
                   other cluster
-                </Link>,
+                </ForwardRef>,
               },
             ],
             "subscription": Object {

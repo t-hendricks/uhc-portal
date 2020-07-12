@@ -21,7 +21,6 @@ exports[`<ClustersEmptyState /> should render with register disconnected cluster
     </Title>
     <Link
       className="space-left-lg"
-      replace={false}
       to="/create"
     >
       <span
@@ -33,7 +32,6 @@ exports[`<ClustersEmptyState /> should render with register disconnected cluster
     <Link
       className="space-left-lg"
       id="overview-emptystate-register-cluster"
-      replace={false}
       to="/register"
     >
       <Button
@@ -344,7 +342,6 @@ exports[`<ClustersEmptyState /> should render without register disconnected clus
     </Title>
     <Link
       className="space-left-lg"
-      replace={false}
       to="/create"
     >
       <span
