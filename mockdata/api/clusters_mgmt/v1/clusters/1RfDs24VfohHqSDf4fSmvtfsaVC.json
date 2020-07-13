@@ -1,11 +1,11 @@
 {
   "kind": "Cluster",
-  "id": "1H1l4oRVxoh6qSTf4fSmvtaGaWy",
-  "href": "/api/clusters_mgmt/v1/clusters/1H1l4oRVxoh6qSTf4fSmvtaGaWy",
-  "name": "cben-osd1",
-  "external_id": "b0c2d108-0603-41c3-9a8f-0a37eba5df49",
-  "infra_id": "cben-osd1-lwqwn",
-  "display_name": "fake-managed-cluster",
+  "id": "1RfDs24VfohHqSDf4fSmvtfsaVC",
+  "href": "/api/clusters_mgmt/v1/clusters/1RfDs24VfohHqSDf4fSmvtfsaVC",
+  "name": "cben-osd2",
+  "external_id": "16ff188e-6dcb-4d1e-bb5d-8717e127ebde",
+  "infra_id": "cben-osd2-lwqwn",
+  "display_name": "fake-insights-cluster",
   "creation_timestamp": "2019-02-11T09:28:16.000143Z",
   "activity_timestamp": "2019-12-22T10:18:09Z",
   "openshift_version": "4.2.13",
@@ -25,10 +25,10 @@
     "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1"
   },
   "console": {
-    "url": "https://console-openshift-console.apps.cben-osd1.h9d5.p1.openshiftapps.com"
+    "url": "https://console-openshift-console.apps.cben-osd2.h9d5.p1.openshiftapps.com"
   },
   "api": {
-    "url": "https://api.cben-osd1.h9d5.p1.openshiftapps.com:6443",
+    "url": "https://api.cben-osd2.h9d5.p1.openshiftapps.com:6443",
     "listening": "internal"
   },
   "nodes": {
@@ -122,7 +122,7 @@
   },
   "groups": {
     "kind": "GroupListLink",
-    "href": "/api/clusters_mgmt/v1/clusters/1H1l4oRVxoh6qSTf4fSmvtaGaWy/groups"
+    "href": "/api/clusters_mgmt/v1/clusters/1RfDs24VfohHqSDf4fSmvtfsaVC/groups"
   },
   "dns": {
     "base_domain": "h9d5.p1.openshiftapps.com"
@@ -133,7 +133,7 @@
     "pod_cidr": "10.128.0.0/14",
     "router_shards": {
       "kind": "RouterShardListLink",
-      "href": "/api/clusters_mgmt/v1/clusters/1H1l4oRVxoh6qSTf4fSmvtaGaWy/router_shards",
+      "href": "/api/clusters_mgmt/v1/clusters/1RfDs24VfohHqSDf4fSmvtfsaVC/router_shards",
       "id": "1a42vvd2e0b9tnn2e6mgr8q4mj378jae"
     }
   },
@@ -150,12 +150,12 @@
   },
   "load_balancer_quota": 0,
   "identity_providers": {
-    "href": "/api/clusters_mgmt/v1/clusters/1H1l4oRVxoh6qSTf4fSmvtaGaWy/identity_providers",
+    "href": "/api/clusters_mgmt/v1/clusters/1RfDs24VfohHqSDf4fSmvtfsaVC/identity_providers",
     "kind": "IdentityProviderListLink"
   },
   "addons": {
     "kind": "AddOnInstallationListLink",
-    "href": "/api/clusters_mgmt/v1/clusters/1H1l4oRVxoh6qSTf4fSmvtaGaWy/addons",
+    "href": "/api/clusters_mgmt/v1/clusters/1RfDs24VfohHqSDf4fSmvtfsaVC/addons",
     "items": null
   },
   "product": {
