@@ -53,7 +53,6 @@ import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import EditDisconnectedCluster from '../common/EditDisconnectedCluster';
-import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
@@ -135,7 +134,6 @@ class ClusterList extends Component {
       setClusterDetails,
       anyModalOpen,
       queryParams,
-      canAllowClusterAdminList,
       canSubscribeOCPList,
     } = this.props;
 
@@ -259,7 +257,6 @@ class ClusterList extends Component {
                 setSorting={setSorting}
                 isPending={showSkeleton}
                 setClusterDetails={setClusterDetails}
-                canAllowClusterAdminList={canAllowClusterAdminList}
                 canSubscribeOCPList={canSubscribeOCPList}
               />
               <ViewPaginationRow
@@ -278,7 +275,6 @@ class ClusterList extends Component {
               <EditDisconnectedCluster onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
               <UnarchiveClusterDialog onClose={invalidateClusters} />
-              <ToggleClusterAdminAccessDialog onClose={invalidateClusters} />
               <DeleteClusterDialog onClose={(shouldRefresh) => {
                 if (shouldRefresh) {
                   invalidateClusters();
@@ -321,7 +317,6 @@ ClusterList.propTypes = {
   queryParams: PropTypes.shape({
     has_filters: PropTypes.bool,
   }),
-  canAllowClusterAdminList: PropTypes.objectOf(PropTypes.bool),
   canSubscribeOCPList: PropTypes.objectOf(PropTypes.bool),
 };
 

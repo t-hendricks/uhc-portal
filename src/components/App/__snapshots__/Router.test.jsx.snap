@@ -315,7 +315,6 @@ exports[`Every route should render:  / 1`] = `
                       >
                         <ClusterList
                           anyModalOpen={false}
-                          canAllowClusterAdminList={Object {}}
                           canSubscribeOCPList={Object {}}
                           closeModal={[Function]}
                           cloudProviders={
@@ -2215,7 +2214,6 @@ exports[`Every route should render:  / 1`] = `
                                       />
                                     </Connect(ClusterListFilterChipGroup)>
                                     <ClusterListTable
-                                      canAllowClusterAdminList={Object {}}
                                       canSubscribeOCPList={Object {}}
                                       clusters={Array []}
                                       isPending={true}
@@ -12564,30 +12562,6 @@ exports[`Every route should render:  / 1`] = `
                                         }
                                       />
                                     </Connect(UnarchiveClusterDialog)>
-                                    <Connect(ToggleClusterAdminAccessDialog)
-                                      onClose={[Function]}
-                                    >
-                                      <ToggleClusterAdminAccessDialog
-                                        clearToggleClusterAdminResponse={[Function]}
-                                        closeModal={[Function]}
-                                        hasClusterAdmins={false}
-                                        isOpen={false}
-                                        modalData={Object {}}
-                                        onClose={[Function]}
-                                        toggleClusterAdminAccess={[Function]}
-                                        toggleClusterAdminResponse={
-                                          Object {
-                                            "cluster": null,
-                                            "error": false,
-                                            "errorDetails": null,
-                                            "errorMessage": "",
-                                            "fulfilled": false,
-                                            "pending": false,
-                                            "valid": true,
-                                          }
-                                        }
-                                      />
-                                    </Connect(ToggleClusterAdminAccessDialog)>
                                     <Connect(DeleteClusterDialog)
                                       onClose={[Function]}
                                     >
