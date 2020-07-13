@@ -1,7 +1,5 @@
-#clusterdetails-content {
+#cluster-insights-table {
 	.battery {
-		line-height: 2;
-		display: flex;
 		button {
 			padding-left: 0;
 		}
@@ -84,5 +82,10 @@
     .pf-c-empty-state {
         flex-direction: column;
     }
-
+    .pf-c-chip-group {
+	    --pf-c-chip-group--m-toolbar--BackgroundColor: var(--pf-global--BackgroundColor--200);
+	    .pf-c-chip {
+	    	margin-bottom: 0;
+	    }
+    }
 }

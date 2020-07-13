@@ -1,0 +1,166 @@
+{
+  "kind": "Cluster",
+  "id": "1RfDs24VfohHqSDf4fSmvtfsaVC",
+  "href": "/api/clusters_mgmt/v1/clusters/1RfDs24VfohHqSDf4fSmvtfsaVC",
+  "name": "cben-osd2",
+  "external_id": "16ff188e-6dcb-4d1e-bb5d-8717e127ebde",
+  "infra_id": "cben-osd2-lwqwn",
+  "display_name": "fake-insights-cluster",
+  "creation_timestamp": "2019-02-11T09:28:16.000143Z",
+  "activity_timestamp": "2019-12-22T10:18:09Z",
+  "openshift_version": "4.2.13",
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  },
+  "subscription": {
+    "kind": "SubscriptionLink",
+    "id": "1VAYPPHgFNHENCwB4rsfDmgCS8z",
+    "href": "/api/accounts_mgmt/v1/subscriptions/1VAYPPHgFNHENCwB4rsfDmgCS8z"
+  },
+  "region": {
+    "kind": "CloudRegionLink",
+    "id": "us-east-1",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1"
+  },
+  "console": {
+    "url": "https://console-openshift-console.apps.cben-osd2.h9d5.p1.openshiftapps.com"
+  },
+  "api": {
+    "url": "https://api.cben-osd2.h9d5.p1.openshiftapps.com:6443",
+    "listening": "internal"
+  },
+  "nodes": {
+    "total": 9,
+    "master": 3,
+    "infra": 2,
+    "compute": 4,
+    "compute_machine_type": {
+      "kind": "MachineTypeLink",
+      "id": "m5.xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge"
+    }
+  },
+  "metrics": {
+    "memory": {
+      "updated_timestamp": "2019-12-22T10:18:08Z",
+      "used": {
+        "value": 21870698496,
+        "unit": "B"
+      },
+      "total": {
+        "value": 146961108992,
+        "unit": "B"
+      }
+    },
+    "cpu": {
+      "updated_timestamp": "2019-12-22T10:18:08Z",
+      "used": {
+        "value": 2.5423333333320146,
+        "unit": ""
+      },
+      "total": {
+        "value": 36,
+        "unit": ""
+      }
+    },
+    "sockets": {
+      "updated_timestamp": "0001-01-01T00:00:00Z",
+      "used": {
+        "value": 0,
+        "unit": ""
+      },
+      "total": {
+        "value": 0,
+        "unit": ""
+      }
+    },
+    "compute_nodes_memory": {
+      "updated_timestamp": "0001-01-01T00:00:00Z",
+      "total": {
+        "value": 97974067200,
+        "unit": "B"
+      }
+    },
+    "compute_nodes_cpu": {
+      "updated_timestamp": "0001-01-01T00:00:00Z",
+      "total": {
+        "value": 24,
+        "unit": ""
+      }
+    },
+    "storage": {
+      "updated_timestamp": "0001-01-01T00:00:00Z",
+      "used": {
+        "value": 0,
+        "unit": "B"
+      },
+      "total": {
+        "value": 0,
+        "unit": "B"
+      }
+    },
+    "nodes": {
+      "total": 9,
+      "master": 3,
+      "infra": 2,
+      "compute": 4
+    },
+    "version_update_available": true,
+    "upgrade": {
+      "available": true,
+      "state": "running",
+      "version": "5.0"
+    }
+  },
+  "state": "error",
+  "flavour": {
+    "kind": "FlavourLink",
+    "id": "4",
+    "href": "/api/clusters_mgmt/v1/flavours/4"
+  },
+  "groups": {
+    "kind": "GroupListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/1RfDs24VfohHqSDf4fSmvtfsaVC/groups"
+  },
+  "dns": {
+    "base_domain": "h9d5.p1.openshiftapps.com"
+  },
+  "network": {
+    "machine_cidr": "10.0.0.0/16",
+    "service_cidr": "172.30.0.0/16",
+    "pod_cidr": "10.128.0.0/14",
+    "router_shards": {
+      "kind": "RouterShardListLink",
+      "href": "/api/clusters_mgmt/v1/clusters/1RfDs24VfohHqSDf4fSmvtfsaVC/router_shards",
+      "id": "1a42vvd2e0b9tnn2e6mgr8q4mj378jae"
+    }
+  },
+  "multi_az": false,
+  "managed": false,
+  "version": {
+    "kind": "VersionLink",
+    "id": "openshift-v4.2.9",
+    "href": "/api/clusters_mgmt/v1/versions/openshift-v4.2.9"
+  },
+  "storage_quota": {
+    "value": 107374182400,
+    "unit": "B"
+  },
+  "load_balancer_quota": 0,
+  "identity_providers": {
+    "href": "/api/clusters_mgmt/v1/clusters/1RfDs24VfohHqSDf4fSmvtfsaVC/identity_providers",
+    "kind": "IdentityProviderListLink"
+  },
+  "addons": {
+    "kind": "AddOnInstallationListLink",
+    "href": "/api/clusters_mgmt/v1/clusters/1RfDs24VfohHqSDf4fSmvtfsaVC/addons",
+    "items": null
+  },
+  "product": {
+    "kind": "ProductLink",
+    "id": "osd",
+    "href": "/api/clusters_mgmt/v1/products/osd"
+  }
+}

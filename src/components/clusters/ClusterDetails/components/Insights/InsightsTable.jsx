@@ -239,7 +239,7 @@ class InsightsTable extends React.Component {
     } = this.state;
 
     return (
-      <>
+      <div id="cluster-insights-table">
         <AnalysisSummary
           groups={groups}
           insightsData={insightsData}
@@ -354,7 +354,7 @@ class InsightsTable extends React.Component {
             />
           </CardBody>
         </Card>
-      </>
+      </div>
     );
   }
 }
