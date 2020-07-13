@@ -68,6 +68,7 @@ const instructionsMapping = {
     title: 'Install OpenShift on Power with user-provisioned infrastructure',
     channel: channels.PPC,
     rhcosDownloadURL: links.DOWNLOAD_RHCOS_LATEST_PPC,
+    rhcosLearnMoreURL: links.INSTALL_POWER_RHCOS_LEARN_MORE,
     showPreReleasePageLink: false,
     docURL: links.INSTALL_POWER_GETTING_STARTED,
   },
