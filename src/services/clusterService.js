@@ -64,14 +64,10 @@ const deleteCluster = id => apiRequest({
 const getCloudProviders = () => apiRequest({
   method: 'get',
   params: {
-    size: 1000,
+    size: -1,
+    fetchRegions: true,
   },
   url: '/api/clusters_mgmt/v1/cloud_providers',
-});
-
-const getCloudRegions = providerID => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/cloud_providers/${providerID}/regions`,
 });
 
 const getLogs = (clusterID, offset, logType) => apiRequest({
@@ -256,7 +252,6 @@ const clusterService = {
   fetchClusterByExternalId,
   editCluster,
   getCloudProviders,
-  getCloudRegions,
   deleteCluster,
   getLogs,
   getIdentityProviders,
