@@ -16,7 +16,7 @@ function MonitoringEmptyState(
     hideLastCheckIn = false,
     lastCheckInText = null,
     hideIcon = false,
-    title = 'Monitoring Data is not available',
+    title = 'Monitoring data is not available',
   },
 ) {
   return (
