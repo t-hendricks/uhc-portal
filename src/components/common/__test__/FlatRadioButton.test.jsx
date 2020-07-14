@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import FlatRadioButton from './FlatRadioButton';
+import FlatRadioButton from '../FlatRadioButton';
 
 const props = {
   titleText: 'hello',

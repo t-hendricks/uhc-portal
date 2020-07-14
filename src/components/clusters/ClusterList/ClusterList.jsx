@@ -38,7 +38,7 @@ import ClusterListExtraActions from './components/ClusterListExtraActions';
 import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup';
 
-import ClusterListEmptyState from './components/ClusterListEmptyState';
+import ClustersEmptyState from '../../common/ClustersEmptyState';
 import ClusterListTable from './components/ClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
@@ -190,7 +190,7 @@ class ClusterList extends Component {
         <PageSection>
           <GlobalErrorBox />
           <div data-ready>
-            <ClusterListEmptyState />
+            <ClustersEmptyState showRegisterCluster />
           </div>
         </PageSection>
       );

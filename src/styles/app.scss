@@ -1334,7 +1334,7 @@ h3#grant-role-select  {
     display: block;
     text-decoration: none;
   }
-  span {
+  #overview-emptystate-create-cluster {
     background-color: #fff;
     color: #000000;
     font-size: var(--pf-global--FontSize--md);
@@ -1346,6 +1346,14 @@ h3#grant-role-select  {
     padding-right: var(--pf-global--spacer--lg);
     padding-left: var(--pf-global--spacer--lg);
     border-radius: 4px;
+  }
+  #overview-emptystate-register-cluster{
+    top: 50%;
+    color: #ffffff;
+    span{
+      float: right;
+      margin-left: 5px;
+    }
   }
 }
 
