@@ -21,7 +21,6 @@ function InsightsRuleDetailsTop(props) {
     pending,
     refreshFunc,
     children,
-    autoRefreshEnabled,
     voteOnRule,
     disableRule,
     enableRule,
@@ -68,7 +67,7 @@ function InsightsRuleDetailsTop(props) {
             actions={(
               <span id="cl-details-btns">
                 {actions}
-                <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} />
+                <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
               </span>
             )}
             createdAt={<DateFormat date={rule.created_at} />}
@@ -97,7 +96,6 @@ InsightsRuleDetailsTop.propTypes = {
   voteOnRule: PropTypes.func.isRequired,
   pending: PropTypes.bool.isRequired,
   children: PropTypes.any,
-  autoRefreshEnabled: PropTypes.bool,
 };
 
 export default InsightsRuleDetailsTop;

@@ -11,12 +11,8 @@ import {
 
 import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalErrorActions';
 
-import {
-  fetchClusterDetails,
-  invalidateClusters,
-} from '../../../redux/actions/clustersActions';
+import { fetchClusterDetails } from '../../../redux/actions/clustersActions';
 
-import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
 import './index.scss';
 
 const mapStateToProps = (state) => {
@@ -26,8 +22,6 @@ const mapStateToProps = (state) => {
   return ({
     clusterDetails: details,
     reportDetails,
-    anyModalOpen: !!state.modal.modalName,
-    canAllowClusterAdmin: canAllowAdminSelector(state),
   });
 };
 
@@ -36,7 +30,6 @@ const mapDispatchToProps = {
   fetchReportData: (clusterId, ruleId) => fetchReportDetails(clusterId, ruleId),
   disableRule: (clusterId, ruleId) => disableRuleInsights(clusterId, ruleId),
   enableRule: (clusterId, ruleId) => enableRuleInsights(clusterId, ruleId),
-  invalidateClusters,
   clearGlobalError,
   setGlobalError,
   voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),

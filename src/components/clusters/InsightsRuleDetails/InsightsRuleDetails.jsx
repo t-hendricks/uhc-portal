@@ -111,11 +111,9 @@ class InsightsRuleDetails extends Component {
     const {
       clusterDetails,
       reportDetails,
-      canAllowClusterAdmin,
       history,
       match,
       voteOnRule,
-      anyModalOpen,
       setGlobalError,
       disableRule,
       enableRule,
@@ -129,7 +127,7 @@ class InsightsRuleDetails extends Component {
     const requestedReportID = match.params.reportId.replace(/\|/g, '.');
     if (cluster && cluster.shouldRedirect && isUuid(requestedClusterID)) {
       return (
-        <Redirect to={`/details/${cluster.id}`} />
+        <Redirect to={`/details/${cluster.id}/insights/${match.params.reportId}`} />
       );
     }
 
@@ -139,9 +137,16 @@ class InsightsRuleDetails extends Component {
 
     const isPending = (((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error) || (get(reportDetails.report, 'rule_id') !== requestedReportID && !reportDetails.rejected));
 
-    const errorState = () => (
+    const errorClusterState = () => (
       <EmptyState>
         <ErrorBox message="Error retrieving cluster details" response={clusterDetails} />
+        {isPending && <Spinner />}
+      </EmptyState>
+    );
+
+    const errorReportState = () => (
+      <EmptyState>
+        <ErrorBox message="Error retrieving report details" response={reportDetails} />
         {isPending && <Spinner />}
       </EmptyState>
     );
@@ -171,7 +176,7 @@ class InsightsRuleDetails extends Component {
         ), 'clusterDetails', clusterDetails.errorMessage);
         history.push('/');
       }
-      return errorState();
+      return errorClusterState();
     }
 
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
@@ -191,7 +196,7 @@ class InsightsRuleDetails extends Component {
         </>
       ), 'clusterDetails', clusterDetails.errorMessage);
       history.push('/');
-      return errorState();
+      return errorReportState();
     }
 
     const displayReasonTab = !!reportDetails.report.reason;
@@ -204,8 +209,6 @@ class InsightsRuleDetails extends Component {
           rule={reportDetails.report}
           pending={clusterDetails.pending || reportDetails.pending}
           refreshFunc={this.refresh}
-          canAllowClusterAdmin={canAllowClusterAdmin}
-          autoRefreshEnabled={!anyModalOpen}
           voteOnRule={voteOnRule}
           disableRule={disableRule}
           enableRule={enableRule}
@@ -271,7 +274,6 @@ InsightsRuleDetails.propTypes = {
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   reportDetails: PropTypes.object,
-  canAllowClusterAdmin: PropTypes.bool.isRequired,
   clusterDetails: PropTypes.shape({
     cluster: PropTypes.object,
     error: PropTypes.bool,
@@ -286,7 +288,6 @@ InsightsRuleDetails.propTypes = {
     pending: PropTypes.bool.isRequired,
   }),
   voteOnRule: PropTypes.func.isRequired,
-  anyModalOpen: PropTypes.bool,
 };
 
 InsightsRuleDetails.defaultProps = {
