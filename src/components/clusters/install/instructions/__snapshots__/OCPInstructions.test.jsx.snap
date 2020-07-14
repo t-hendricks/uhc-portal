@@ -732,6 +732,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
               channel="ppc64le"
               cloudProviderID="/"
               rhcosDownloadURL="https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/"
+              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power"
               token={Object {}}
             />
           </SplitItem>
@@ -765,7 +766,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
               <GetStarted
                 cloudProvider="Power"
                 cloudProviderID="/"
-                docURL="https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_power/installing-ibm-power.html"
+                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_power/installing-ibm-power.html"
               />
             </div>
           </SplitItem>
