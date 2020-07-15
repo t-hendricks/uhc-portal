@@ -84,7 +84,7 @@ class DownloadAndOSSelection extends React.Component {
     }
 
     return (
-      <Split gutter="sm" className="os-based-download">
+      <Split hasGutter className="os-based-download">
         <SplitItem span={4}>
           <FormSelect value={OS} onChange={this.onChange} aria-label="select-os-dropdown">
             {options.map(option => (

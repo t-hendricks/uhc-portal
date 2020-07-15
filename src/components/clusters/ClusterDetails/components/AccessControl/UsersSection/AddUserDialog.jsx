@@ -82,7 +82,7 @@ class AddUserDialog extends Component {
           <Form className="access-control-form" onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
             <FormGroup
               helperTextInvalid={validationMessage}
-              isValid={userIdTouched ? !validationMessage : true}
+              validated={(userIdTouched ? !validationMessage : true) ? 'default' : 'error'}
               label="User ID"
               isRequired
               fieldId="user-id"
@@ -92,7 +92,7 @@ class AddUserDialog extends Component {
                 isRequired
                 id="user-id"
                 type="text"
-                isValid={userIdTouched ? !validationMessage : true}
+                validated={(userIdTouched ? !validationMessage : true) ? 'default' : 'error'}
                 onChange={this.setUserIdValue}
                 aria-label="user id"
               />

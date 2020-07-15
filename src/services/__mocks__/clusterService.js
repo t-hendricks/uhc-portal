@@ -17,9 +17,6 @@ deleteCluster.mockResolvedValue({});
 const getCloudProviders = jest.fn();
 getCloudProviders.mockResolvedValue({});
 
-const getCloudRegions = jest.fn();
-getCloudRegions.mockResolvedValue({});
-
 const getLogs = jest.fn();
 getLogs.mockResolvedValue({});
 
@@ -41,7 +38,6 @@ const clusterService = {
   getClusterDetails,
   editCluster,
   getCloudProviders,
-  getCloudRegions,
   deleteCluster,
   getLogs,
   getClusterGroupUsers,

@@ -4,33 +4,52 @@ exports[`<ClusterListFilterChipGroup /> should render 1`] = `
 <Split>
   <SplitItem>
     <ChipGroup
-      className=""
+      aria-label="Chip group category"
+      categoryName=""
+      closeBtnAriaLabel="Close chip group"
       collapsedText="\${remaining} more"
       defaultIsOpen={false}
       expandedText="Show Less"
+      isClosable={false}
       numChips={3}
-      withToolbar={true}
+      onClick={[Function]}
+      tooltipPosition="top"
     >
-      <ChipGroupToolbarItem
+      <ChipGroup
+        aria-label="Chip group category"
         categoryName="Cluster type"
+        closeBtnAriaLabel="Close chip group"
+        collapsedText="\${remaining} more"
+        defaultIsOpen={false}
+        expandedText="Show Less"
+        isClosable={false}
         key="chipgroup-plan_id"
+        numChips={3}
+        onClick={[Function]}
+        tooltipPosition="top"
       >
-        <Component
+        <Chip
+          className=""
+          closeBtnAriaLabel="close"
+          component="div"
+          isOverflowChip={false}
+          isReadOnly={false}
           key="OSD"
           onClick={[Function]}
+          tooltipPosition="top"
         >
           OSD
-        </Component>
-      </ChipGroupToolbarItem>
+        </Chip>
+      </ChipGroup>
     </ChipGroup>
   </SplitItem>
   <SplitItem>
-    <Component
+    <Button
       onClick={[Function]}
       variant="link"
     >
       Clear filters
-    </Component>
+    </Button>
   </SplitItem>
 </Split>
 `;

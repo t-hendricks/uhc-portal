@@ -47,11 +47,11 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           rel="noopener noreferrer"
           target="_blank"
         >
-          <Component
+          <Button
             variant="primary"
           >
             Open console
-          </Component>
+          </Button>
         </a>
         <Connect(ClusterActionsDropdown)
           cluster={

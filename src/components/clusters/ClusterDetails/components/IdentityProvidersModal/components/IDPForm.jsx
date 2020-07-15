@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Field } from 'redux-form';
 import {
-  Form, Grid, GridItem, Expandable, Title, ClipboardCopy,
+  Form, Grid, GridItem, ExpandableSection, Title, ClipboardCopy,
 } from '@patternfly/react-core';
 import ErrorBox from '../../../../../common/ErrorBox';
 
@@ -140,7 +140,7 @@ class IDPForm extends React.Component {
 
     return (
       <Form>
-        <Grid gutter="sm">
+        <Grid hasGutter>
           <GridItem span={8}>
             {submissionError}
             <p>
@@ -215,7 +215,7 @@ class IDPForm extends React.Component {
           {SelectedProviderAdvancedOptions
           && (
             <GridItem span={8}>
-              <Expandable
+              <ExpandableSection
                 toggleTextCollapsed="Show advanced Options"
                 toggleTextExpanded="Hide advanced Options"
                 isExpanded={isExpanded}
@@ -226,7 +226,7 @@ class IDPForm extends React.Component {
                   isEditForm={isEditForm}
                   idpEdited={idpEdited}
                 />
-              </Expandable>
+              </ExpandableSection>
             </GridItem>
           )}
         </Grid>

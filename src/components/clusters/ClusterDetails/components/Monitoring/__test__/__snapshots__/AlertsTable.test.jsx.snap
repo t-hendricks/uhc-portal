@@ -15,9 +15,10 @@ exports[`<AlertsTable /> should render empty state when there are no alerts 1`] 
 `;
 
 exports[`<AlertsTable /> should render table when there are alerts 1`] = `
-<Component
+<Table
   aria-label="alerts"
   borders={false}
+  canSelectAll={true}
   cells={
     Array [
       Object {
@@ -28,6 +29,15 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
       },
     ]
   }
+  className=""
+  contentId="expanded-content"
+  dropdownDirection="down"
+  dropdownPosition="right"
+  expandId="expandable-toggle"
+  gridBreakPoint="grid-md"
+  ouiaSafe={true}
+  role="grid"
+  rowLabeledBy="simple-node"
   rows={
     Array [
       Object {
@@ -42,7 +52,6 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
                 color="#f0ab00"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Warning
@@ -63,7 +72,6 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
                 color="#c9190b"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Critical
@@ -84,7 +92,6 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
                 color="#c9190b"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Critical
@@ -105,7 +112,6 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
                 color="#f0ab00"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Warning
@@ -126,7 +132,6 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
                 color="#f0ab00"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Warning
@@ -140,14 +145,15 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
   variant="compact"
 >
   <TableHeader />
-  <TableBody />
-</Component>
+  <Component />
+</Table>
 `;
 
 exports[`<AlertsTable /> should render table with links there are alerts and a console URL 1`] = `
-<Component
+<Table
   aria-label="alerts"
   borders={false}
+  canSelectAll={true}
   cells={
     Array [
       Object {
@@ -158,6 +164,15 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
       },
     ]
   }
+  className=""
+  contentId="expanded-content"
+  dropdownDirection="down"
+  dropdownPosition="right"
+  expandId="expandable-toggle"
+  gridBreakPoint="grid-md"
+  ouiaSafe={true}
+  role="grid"
+  rowLabeledBy="simple-node"
   rows={
     Array [
       Object {
@@ -178,7 +193,6 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
                 color="#f0ab00"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Warning
@@ -205,7 +219,6 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
                 color="#c9190b"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Critical
@@ -232,7 +245,6 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
                 color="#c9190b"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Critical
@@ -259,7 +271,6 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
                 color="#f0ab00"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Warning
@@ -286,7 +297,6 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
                 color="#f0ab00"
                 noVerticalAlign={false}
                 size="md"
-                title={null}
               />
               <span>
                 Warning
@@ -300,6 +310,6 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
   variant="compact"
 >
   <TableHeader />
-  <TableBody />
-</Component>
+  <Component />
+</Table>
 `;

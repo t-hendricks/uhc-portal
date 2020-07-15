@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Card,
-  CardHeader,
+  CardTitle,
   CardBody,
   Bullseye,
   Title,
@@ -25,12 +25,12 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
   if (isError) {
     return (
       <Card className="clusters-overview-card">
-        <CardHeader>
+        <CardTitle>
             Clusters with issues
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           <Bullseye>
-            <Title>
+            <Title headingLevel="h2">
             No data available
             </Title>
             <span className="empty-state-color">
@@ -45,9 +45,9 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
   if (!totalConnectedClusters) {
     return (
       <Card className="clusters-overview-card">
-        <CardHeader>
+        <CardTitle>
           Clusters with issues
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           <Bullseye>
             <span className="empty-state-color">
@@ -86,9 +86,9 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
   );
   return (
     <Card className="clusters-overview-card">
-      <CardHeader>
+      <CardTitle>
             Clusters with issues
-      </CardHeader>
+      </CardTitle>
       <CardBody>
         <Bullseye>
           {cardContent}

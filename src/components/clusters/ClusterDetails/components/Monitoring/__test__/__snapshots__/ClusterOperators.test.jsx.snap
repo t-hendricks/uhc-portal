@@ -1,9 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ClusterOperators /> should render 1`] = `
-<Component
+<Table
   aria-label="operators"
   borders={false}
+  canSelectAll={true}
   cells={
     Array [
       Object {
@@ -17,10 +18,19 @@ exports[`<ClusterOperators /> should render 1`] = `
       },
     ]
   }
+  className=""
+  contentId="expanded-content"
+  dropdownDirection="down"
+  dropdownPosition="right"
+  expandId="expandable-toggle"
+  gridBreakPoint="grid-md"
+  ouiaSafe={true}
+  role="grid"
+  rowLabeledBy="simple-node"
   rows={Array []}
   variant="compact"
 >
   <TableHeader />
-  <TableBody />
-</Component>
+  <Component />
+</Table>
 `;

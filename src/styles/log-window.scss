@@ -1,7 +1,7 @@
 $color-log-window-body-bg: #030303;
 $color-log-window-header-bg: #72767b;
 $color-log-window-text: #f5f5f5;
-$font-family-log-window-body: $font-family-monospace;
+$font-family-log-window-body: var(--pf-global--FontFamily--monospace);
 $color-log-window-divider: $color-log-window-header-bg;
 
 .log-window {

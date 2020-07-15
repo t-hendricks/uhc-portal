@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ErrorBox from './ErrorBox';
+import ErrorBox from '../ErrorBox';
 
 const baseResponse = {
   errorMessage: 'this is some error message',

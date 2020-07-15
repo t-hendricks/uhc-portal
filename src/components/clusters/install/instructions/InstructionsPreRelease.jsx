@@ -21,7 +21,7 @@ function InstructionsPreRelease({ token }) {
       <Title headingLevel="h3" size="2xl">
           Experimental Developer Preview Builds
       </Title>
-      <Stack gutter="md">
+      <Stack hasGutter>
         <StackItem>
           <Card className="pre-release-card">
             <div className="pf-l-grid pf-m-gutter ocm-page instructions-section">

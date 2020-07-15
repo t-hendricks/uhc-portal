@@ -55,7 +55,7 @@ class EditClusterRoutersCard extends React.Component {
         <Card>
           <CardBody>
             <Form>
-              <Grid gutter="md">
+              <Grid hasGutter>
                 <GridItem span={9}>
                   <Title headingLevel="h2" size="lg" className="card-title networking-tab">Master endpoint API</Title>
                   <div className="networking-tab">
@@ -89,7 +89,7 @@ class EditClusterRoutersCard extends React.Component {
                   </div>
                 </GridItem>
                 <GridItem span={9}>
-                  <Split gutter="md">
+                  <Split hasGutter>
                     <SplitItem>
                       <Title headingLevel="h2" size="lg" className="card-title networking-tab">Additional application router</Title>
                     </SplitItem>

@@ -86,9 +86,31 @@ test('Field is valid Service CIDR', () => {
 
 test('Field is valid Pod CIDR', () => {
   expect(validators.podCidr()).toBe(undefined);
+
+  // These are the highest subnet values for the Pod CIDR that still allow for at least 32 nodes
+  expect(validators.podCidr('192.168.0.0/17', { network_host_prefix: '/22' })).toBe(undefined); // unreachable
   expect(validators.podCidr('192.168.0.0/18', { network_host_prefix: '/23' })).toBe(undefined);
-  expect(validators.podCidr('192.168.0.0/19', { network_host_prefix: '/23' })).toBe('The subnet length can\'t be higher than \'/18\', which provides up to 32 nodes.');
-  expect(validators.podCidr('192.168.0.0/19', { network_host_prefix: '/26' })).toBe('The subnet length can\'t be higher than \'/18\', which provides up to 256 nodes.');
+  expect(validators.podCidr('192.168.0.0/19', { network_host_prefix: '/24' })).toBe(undefined);
+  expect(validators.podCidr('192.168.0.0/20', { network_host_prefix: '/25' })).toBe(undefined);
+  expect(validators.podCidr('192.168.0.0/21', { network_host_prefix: '/26' })).toBe(undefined);
+  expect(validators.podCidr('192.168.0.0/22', { network_host_prefix: '/27' })).toBe('The subnet length can\'t be higher than /21.');
+
+  // With host prefix /23, pod subnet needs to be at most /18
+  expect(validators.podCidr('192.168.0.0/17', { network_host_prefix: '/23' })).toBe(undefined);
+  expect(validators.podCidr('192.168.0.0/18', { network_host_prefix: '/23' })).toBe(undefined);
+  expect(validators.podCidr('192.168.0.0/19', { network_host_prefix: '/23' })).toBe('The subnet length of /19 does not allow for enough nodes. Try changing the host prefix or the pod subnet range.');
+
+  // With host prefix /24, pod subnet needs to be at most /19
+  expect(validators.podCidr('192.168.0.0/19', { network_host_prefix: '/24' })).toBe(undefined);
+  expect(validators.podCidr('192.168.0.0/20', { network_host_prefix: '/24' })).toBe('The subnet length of /20 does not allow for enough nodes. Try changing the host prefix or the pod subnet range.');
+
+  // With host prefix /25, pod subnet needs to be at most /20
+  expect(validators.podCidr('192.168.0.0/20', { network_host_prefix: '/25' })).toBe(undefined);
+  expect(validators.podCidr('192.168.0.0/21', { network_host_prefix: '/25' })).toBe('The subnet length of /21 does not allow for enough nodes. Try changing the host prefix or the pod subnet range.');
+
+  // With host prefix /26, pod subnet needs to be at most /21
+  expect(validators.podCidr('192.168.0.0/21', { network_host_prefix: '/26' })).toBe(undefined);
+  expect(validators.podCidr('192.168.0.0/22', { network_host_prefix: '/26' })).toBe('The subnet length can\'t be higher than /21.');
 });
 
 test('Field is a private IP address', () => {
@@ -143,17 +165,13 @@ test('Field does not share subnets with other fields', () => {
 test('Field is an IP address with subnet mask between 16-28', () => {
   expect(validators.awsSubnetMask('network_machine_cidr')()).toBe(undefined);
   expect(validators.awsSubnetMask('network_machine_cidr')('190.68.89.250/17')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_machine_cidr')('190.68.89.250/10')).toBe('Subnet mask must be between 16-23.');
+  expect(validators.awsSubnetMask('network_machine_cidr')('190.68.89.250/10')).toBe('Subnet mask must be between /16 and /23.');
   expect(validators.awsSubnetMask('network_machine_cidr')('190.68.89.250/16')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_machine_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 16-23.');
-  expect(validators.awsSubnetMask('network_pod_cidr')()).toBe(undefined);
-  expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/17')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/18')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_pod_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 1-18.');
+  expect(validators.awsSubnetMask('network_machine_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between /16 and /23.');
   expect(validators.awsSubnetMask('network_service_cidr')()).toBe(undefined);
   expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/17')).toBe(undefined);
   expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/24')).toBe(undefined);
-  expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between 1-24.');
+  expect(validators.awsSubnetMask('network_service_cidr')('190.68.89.250/28')).toBe('Subnet mask must be between /1 and /24.');
 });
 
 test('Field is an IP address that does not overlap with 172.17.0.0/16, reserved for docker', () => {
@@ -369,18 +387,24 @@ test('Field is a valid ARN', () => {
 });
 
 test('Field is a valid key value pair', () => {
-  const errorStr = "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+  const validCharError = "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+  const maxLenError = 'Length of ingress route label selector key name must be less or equal to 63';
+  const longStr = 'ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff';
+
   expect(checkRouteSelectors('foo=bar')).toBe(undefined);
   expect(checkRouteSelectors('fOo=BAr')).toBe(undefined);
   expect(checkRouteSelectors('foo=3')).toBe(undefined);
   expect(checkRouteSelectors('foo=bar,foo=3')).toBe(undefined);
   expect(checkRouteSelectors('fo_o=ba-r')).toBe(undefined);
   expect(checkRouteSelectors('fo-o=ba_r')).toBe(undefined);
-  expect(checkRouteSelectors('键=值')).toBe(errorStr);
-  expect(checkRouteSelectors('foo:bar')).toBe(errorStr);
-  expect(checkRouteSelectors('foo')).toBe(errorStr);
-  expect(checkRouteSelectors('_foo=bar')).toBe(errorStr);
-  expect(checkRouteSelectors('foo-=bar')).toBe(errorStr);
-  expect(checkRouteSelectors('foo=-bar')).toBe(errorStr);
-  expect(checkRouteSelectors('foo=bar_')).toBe(errorStr);
+  expect(checkRouteSelectors('键=值')).toBe(validCharError);
+  expect(checkRouteSelectors('foo:bar')).toBe(validCharError);
+  expect(checkRouteSelectors('foo')).toBe(validCharError);
+  expect(checkRouteSelectors('_foo=bar')).toBe(validCharError);
+  expect(checkRouteSelectors('foo-=bar')).toBe(validCharError);
+  expect(checkRouteSelectors('foo=-bar')).toBe(validCharError);
+  expect(checkRouteSelectors('foo=bar_')).toBe(validCharError);
+  expect(checkRouteSelectors('foo=bar_')).toBe(validCharError);
+  expect(checkRouteSelectors(longStr)).toBe(maxLenError);
+  expect(checkRouteSelectors(`someprefix/${longStr}`)).toBe(maxLenError);
 });

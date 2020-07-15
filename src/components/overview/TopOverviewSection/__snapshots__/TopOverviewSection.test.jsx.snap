@@ -14,9 +14,9 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
       <Card
         className="clusters-overview-card"
       >
-        <CardHeader>
+        <CardTitle>
           Clusters
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           <Bullseye>
             <Title
@@ -38,9 +38,9 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
     <Card
       id="metrics-charts"
     >
-      <CardHeader>
+      <CardTitle>
         CPU and Memory utilization
-      </CardHeader>
+      </CardTitle>
       <CardBody>
         <ResourceUsage
           cpu={

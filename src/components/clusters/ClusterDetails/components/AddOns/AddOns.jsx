@@ -7,7 +7,7 @@ import {
   CardActions,
   CardBody,
   CardFooter,
-  CardHead,
+  CardTitle,
   CardHeader,
   EmptyState,
   EmptyStateBody,
@@ -253,20 +253,20 @@ class AddOns extends React.Component {
         { addClusterAddOnResponse.error && (
           <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
         )}
-        <Gallery gutter="md">
+        <Gallery hasGutter>
           { addOnsList.map(addOn => (
             <Card key={addOn.id}>
-              <CardHead className="addon-card-head">
+              <CardHeader className="addon-card-head">
                 { addOn.icon && (
                   <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />
                 )}
                 <CardActions>
                   { this.getInstallState(addOn) }
                 </CardActions>
-              </CardHead>
-              <CardHeader>
-                { addOn.name }
               </CardHeader>
+              <CardTitle>
+                { addOn.name }
+              </CardTitle>
               <CardBody>
                 { addOn.description }
                 { ' ' }

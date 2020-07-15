@@ -153,7 +153,7 @@ class ScaleClusterDialog extends Component {
         <>
           {error}
           <Form onSubmit={handleSubmit}>
-            <Grid gutter="md">
+            <Grid hasGutter>
               <GridItem span={8}>
                 <Field
                   component={NodeCountInput}

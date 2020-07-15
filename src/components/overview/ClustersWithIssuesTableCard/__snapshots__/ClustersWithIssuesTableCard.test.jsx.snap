@@ -4,13 +4,15 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
 <Card
   className="clusters-overview-card"
 >
-  <CardHeader>
+  <CardTitle>
     Clusters with issues
-  </CardHeader>
+  </CardTitle>
   <CardBody>
-    <Component
+    <Table
       actionResolver={[Function]}
       aria-label="Clusters with issues"
+      borders={true}
+      canSelectAll={true}
       cells={
         Array [
           Object {
@@ -31,6 +33,15 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
           },
         ]
       }
+      className=""
+      contentId="expanded-content"
+      dropdownDirection="down"
+      dropdownPosition="right"
+      expandId="expandable-toggle"
+      gridBreakPoint="grid-md"
+      ouiaSafe={true}
+      role="grid"
+      rowLabeledBy="simple-node"
       rows={
         Array [
           Object {
@@ -173,8 +184,8 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
       variant="compact"
     >
       <TableHeader />
-      <TableBody />
-    </Component>
+      <Component />
+    </Table>
     <Connect(ViewPaginationRow)
       currentPage={1}
       pageSize={5}

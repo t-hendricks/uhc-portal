@@ -2,7 +2,7 @@
 
 exports[`<SubscriptionSettings /> should render for OCP 1`] = `
 <Card>
-  <CardHeader>
+  <CardTitle>
     <Title
       className="card-title"
       headingLevel="h2"
@@ -10,7 +10,7 @@ exports[`<SubscriptionSettings /> should render for OCP 1`] = `
     >
       Subscription settings
     </Title>
-  </CardHeader>
+  </CardTitle>
   <CardBody>
     <Grid>
       <GridItem
@@ -38,13 +38,13 @@ exports[`<SubscriptionSettings /> should render for OCP 1`] = `
             L1-L3
           </dd>
           <dd>
-            <Component
+            <Button
               isInline={true}
               onClick={[Function]}
               variant="link"
             >
               Edit subscription settings
-            </Component>
+            </Button>
           </dd>
         </dl>
       </GridItem>

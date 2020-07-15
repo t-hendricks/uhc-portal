@@ -4,14 +4,13 @@ exports[`<ClusterHealthCard /> should render 1`] = `
 <Card
   id="cluster-health"
 >
-  <CardHeader>
+  <CardTitle>
     <Split>
       <SplitItem>
         <ExclamationTriangleIcon
           color="#f0ab00"
           noVerticalAlign={false}
           size="md"
-          title={null}
         />
       </SplitItem>
       <SplitItem
@@ -27,6 +26,6 @@ exports[`<ClusterHealthCard /> should render 1`] = `
       </SplitItem>
       <SplitItem />
     </Split>
-  </CardHeader>
+  </CardTitle>
 </Card>
 `;

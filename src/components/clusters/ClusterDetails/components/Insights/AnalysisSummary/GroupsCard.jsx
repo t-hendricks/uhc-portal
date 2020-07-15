@@ -12,7 +12,7 @@ import {
 import {
   c_button_m_control_active_after_BorderBottomColor,
   global_primary_color_200,
-  global_Color_200,
+  global_Color_dark_200,
 } from '@patternfly/react-tokens';
 import { ChartPie, ChartLegend } from '@patternfly/react-charts';
 import { HelpIcon } from '@patternfly/react-icons';
@@ -64,7 +64,7 @@ const GroupsCard = ({ insightsData, groups, groupClicked }) => {
               boundary="viewport"
               enableFlip
             >
-              <HelpIcon color={global_Color_200.value} className="group-card-icon" />
+              <HelpIcon color={global_Color_dark_200.value} className="group-card-icon" />
             </Popover>
           </StackItem>
           <StackItem>

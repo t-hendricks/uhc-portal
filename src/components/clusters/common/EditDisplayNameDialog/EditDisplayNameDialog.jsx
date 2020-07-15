@@ -81,12 +81,12 @@ class EditDisplayNameDialog extends Component {
           <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
             <FormGroup
               helperTextInvalid={validationMessage}
-              isValid={!validationMessage}
+              validated={(!validationMessage) ? 'default' : 'error'}
               fieldId="edit-display-name-input"
             >
               <TextInput
                 type="text"
-                isValid={!validationMessage}
+                validated={(!validationMessage) ? 'default' : 'error'}
                 value={currentValue}
                 placeholder="Enter display name"
                 onChange={newValue => this.setValue(newValue)}

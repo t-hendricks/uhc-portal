@@ -6,7 +6,6 @@ import {
   Button,
   Chip,
   ChipGroup,
-  ChipGroupToolbarItem,
   Split,
   SplitItem,
 } from '@patternfly/react-core';
@@ -34,11 +33,11 @@ const mapFilterGroup = (group, currentFilter, setFilter, history) => {
     });
   };
   return (
-    <ChipGroupToolbarItem key={`chipgroup-${group.key}`} categoryName={group.label}>
+    <ChipGroup key={`chipgroup-${group.key}`} categoryName={group.label}>
       <Chip key={key} onClick={deleteItem}>
         {filter}
       </Chip>
-    </ChipGroupToolbarItem>
+    </ChipGroup>
   );
 };
 
@@ -55,7 +54,7 @@ const mapFlagsGroup = (group, currentFlags, setFlags, history) => {
     return null;
   }
   return (
-    <ChipGroupToolbarItem key={`chipgroup-${group.key}`} categoryName={group.label}>
+    <ChipGroup key={`chipgroup-${group.key}`} categoryName={group.label}>
       {currentFlag.map((value) => {
         const label = group.optionLabels[value];
         const deleteItem = () => {
@@ -70,7 +69,7 @@ const mapFlagsGroup = (group, currentFlags, setFlags, history) => {
           </Chip>
         );
       })}
-    </ChipGroupToolbarItem>
+    </ChipGroup>
   );
 };
 
@@ -111,14 +110,14 @@ function ClusterLogsFilterChipGroup({
     <Split>
       <SplitItem>
         {/* Filters */}
-        <ChipGroup withToolbar>
+        <ChipGroup>
           {
             groupFilters.map(group => mapFilterGroup(group, currentFilter, setFilter, history))
               .filter(Boolean)
           }
         </ChipGroup>
         {/* Flags */}
-        <ChipGroup withToolbar>
+        <ChipGroup>
           {
             groupFlags.map(group => mapFlagsGroup(
               group, currentFlags, setFlags, history,

@@ -1,20 +1,20 @@
 import React from 'react';
 import {
-  Flex, FlexModifiers,
+  Flex,
 } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 import TotalRiskCard from './TotalRiskCard';
 import GroupsCard from './GroupsCard';
-import './index.css';
+import './index.scss';
 
 const AnalysisSummary = ({
   insightsData, batteryClicked, groupClicked, groups,
 }) => (
   <Flex>
-    <Flex breakpointMods={[{ modifier: FlexModifiers.grow }, { modifier: FlexModifiers['align-self-stretch'] }]}>
+    <Flex grow={{ default: 'grow' }} alignSelf={{ default: 'alignSelfStretch' }}>
       <TotalRiskCard insightsData={insightsData} batteryClicked={batteryClicked} />
     </Flex>
-    <Flex breakpointMods={[{ modifier: FlexModifiers['align-self-stretch'] }]}>
+    <Flex grow={{ default: 'grow' }} alignSelf={{ default: 'alignSelfStretch' }}>
       <GroupsCard insightsData={insightsData} groups={groups} groupClicked={groupClicked} />
     </Flex>
   </Flex>

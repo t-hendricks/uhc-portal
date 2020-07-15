@@ -24,10 +24,10 @@ function Modal({
 }) {
   return (
     <PfModal
-      // For a medium size modal use isSmall=false and isLarge=true.
+      // For a medium size modal use variant="large".
       // For a full screen modal use isSmall=false.
       className={isPending ? 'pending-modal' : null}
-      isSmall={isSmall}
+      variant={isSmall ? 'small' : undefined}
       title={title}
       isOpen
       onClose={onClose}
@@ -49,7 +49,6 @@ function Modal({
           </Button>
         ),
       ]}
-      isFooterLeftAligned
       {...extraProps}
     >
       {isPending ? <Spinner centered /> : children}

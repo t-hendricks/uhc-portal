@@ -9,7 +9,7 @@ exports[`<Monitoring /> should render 1`] = `
   <Card
     id="monitoring"
   >
-    <CardHeader>
+    <CardTitle>
       <Title
         className="card-title"
         headingLevel="h2"
@@ -17,7 +17,7 @@ exports[`<Monitoring /> should render 1`] = `
       >
         Status
       </Title>
-    </CardHeader>
+    </CardTitle>
     <CardBody>
       <MonitoringList
         alerts={Object {}}

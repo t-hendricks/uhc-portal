@@ -1,35 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<TabsRow /> should hide monitoring and add-ons tabs if needed (eg. when we archive a cluster) 1`] = `
-<Component
+<Tabs
   activeKey={0}
+  component="div"
+  isBox={false}
+  isFilled={false}
+  isSecondary={false}
+  isVertical={false}
+  leftScrollAriaLabel="Scroll left"
+  mountOnEnter={false}
   onSelect={[Function]}
+  ouiaSafe={true}
+  rightScrollAriaLabel="Scroll right"
+  unmountOnExit={false}
 >
   <Tab
     eventKey={0}
     key="0"
     tabContentId="overviewTabContent"
-    title="Overview"
+    title={
+      <TabTitleText>
+        Overview
+      </TabTitleText>
+    }
   />
-</Component>
+</Tabs>
 `;
 
 exports[`<TabsRow /> should render 1`] = `
-<Component
+<Tabs
   activeKey={0}
+  component="div"
+  isBox={false}
+  isFilled={false}
+  isSecondary={false}
+  isVertical={false}
+  leftScrollAriaLabel="Scroll left"
+  mountOnEnter={false}
   onSelect={[Function]}
+  ouiaSafe={true}
+  rightScrollAriaLabel="Scroll right"
+  unmountOnExit={false}
 >
   <Tab
     eventKey={0}
     key="0"
     tabContentId="overviewTabContent"
-    title="Overview"
+    title={
+      <TabTitleText>
+        Overview
+      </TabTitleText>
+    }
   />
   <Tab
     eventKey={1}
     key="1"
     tabContentId="monitoringTabContent"
-    title="Monitoring"
+    title={
+      <TabTitleText>
+        Monitoring
+      </TabTitleText>
+    }
   />
-</Component>
+</Tabs>
 `;
