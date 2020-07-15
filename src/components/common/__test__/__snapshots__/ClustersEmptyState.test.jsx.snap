@@ -27,7 +27,7 @@ exports[`<ClustersEmptyState /> should render with register disconnected cluster
       <span
         id="overview-emptystate-create-cluster"
       >
-        Create an OpenShift cluser
+        Create an OpenShift cluster
       </span>
     </Link>
     <Link
@@ -183,7 +183,7 @@ exports[`<ClustersEmptyState /> should render with register disconnected cluster
               headingLevel="h2"
               size="lg"
             >
-              Migrating OpenShift Contatiner Platform 3 to 4
+              Migrating OpenShift Container Platform 3 to 4
             </Title>
           </CardTitle>
           <CardBody>
@@ -226,7 +226,7 @@ exports[`<ClustersEmptyState /> should render with register disconnected cluster
         >
           Let Red Hat run it for you
         </Title>
-        Red hat OpenShift Dedicated is a single-tenant, high availablity Kubernetes clusters, managed by Red Hat on Amazon Web Services or Google Cloud Platform.
+        Red hat OpenShift Dedicated is a single-tenant, high availability Kubernetes clusters, managed by Red Hat on Amazon Web Services or Google Cloud Platform.
         <a
           href="https://www.openshift.com/products/dedicated/contact/"
           id="request-information-btn"
@@ -350,7 +350,7 @@ exports[`<ClustersEmptyState /> should render without register disconnected clus
       <span
         id="overview-emptystate-create-cluster"
       >
-        Create an OpenShift cluser
+        Create an OpenShift cluster
       </span>
     </Link>
   </div>
@@ -487,7 +487,7 @@ exports[`<ClustersEmptyState /> should render without register disconnected clus
               headingLevel="h2"
               size="lg"
             >
-              Migrating OpenShift Contatiner Platform 3 to 4
+              Migrating OpenShift Container Platform 3 to 4
             </Title>
           </CardTitle>
           <CardBody>
@@ -530,7 +530,7 @@ exports[`<ClustersEmptyState /> should render without register disconnected clus
         >
           Let Red Hat run it for you
         </Title>
-        Red hat OpenShift Dedicated is a single-tenant, high availablity Kubernetes clusters, managed by Red Hat on Amazon Web Services or Google Cloud Platform.
+        Red hat OpenShift Dedicated is a single-tenant, high availability Kubernetes clusters, managed by Red Hat on Amazon Web Services or Google Cloud Platform.
         <a
           href="https://www.openshift.com/products/dedicated/contact/"
           id="request-information-btn"

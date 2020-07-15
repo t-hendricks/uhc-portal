@@ -26,7 +26,7 @@ function ClustersEmptyState({ showRegisterCluster = false }) {
         <Title headingLevel="h1" size="3xl" className="space-left-lg space-bottom-md">Get started with OpenShift Container Platform</Title>
         <Title headingLevel="h2" size="lg" className="space-left-lg space-bottom-md">Download, install and configure Red Hat OpenShift 4 for free now.</Title>
         <Link to="/create" className="space-left-lg">
-          <span id="overview-emptystate-create-cluster">Create an OpenShift cluser</span>
+          <span id="overview-emptystate-create-cluster">Create an OpenShift cluster</span>
         </Link>
         {showRegisterCluster && (
         <Link to="/register" id="overview-emptystate-register-cluster" className="space-left-lg">
@@ -91,7 +91,7 @@ function ClustersEmptyState({ showRegisterCluster = false }) {
           <FlexItem>
             <Card className="dashboard-emptystate-card">
               <CardTitle>
-                <Title headingLevel="h2" size="lg">Migrating OpenShift Contatiner Platform 3 to 4</Title>
+                <Title headingLevel="h2" size="lg">Migrating OpenShift Container Platform 3 to 4</Title>
               </CardTitle>
               <CardBody>
                 Plan your transition and migrate from OpenShift Container Platform 3 to 4.
@@ -109,7 +109,7 @@ function ClustersEmptyState({ showRegisterCluster = false }) {
         <GridItem span={12}>
           <div id="dashboard-emptystate-osd" className="top-row space-top-lg">
             <Title headingLevel="h2" size="lg" className="card-title">Let Red Hat run it for you</Title>
-              Red hat OpenShift Dedicated is a single-tenant, high availablity Kubernetes clusters,
+              Red hat OpenShift Dedicated is a single-tenant, high availability Kubernetes clusters,
               managed by Red Hat on Amazon Web Services or Google Cloud Platform.
             <a
               href="https://www.openshift.com/products/dedicated/contact/"
