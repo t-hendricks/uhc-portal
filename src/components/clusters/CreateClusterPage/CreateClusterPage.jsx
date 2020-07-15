@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   Card,
-  CardHeader,
+  CardTitle,
   CardBody,
   PageSection,
   Tooltip,
@@ -45,9 +45,9 @@ class CreateCluster extends React.Component {
 
     const osdCardBody = (
       <>
-        <CardHeader className="create-cluster-header">
+        <CardTitle className="create-cluster-header">
           <img src={openShiftDedicatedLogo} alt="OpenShift Dedicated" className="create-cluster-logo" />
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           Create a Red Hat-managed cluster (OSD),
           provisioned on Amazon Web Services or Google Cloud Platform.
@@ -71,9 +71,9 @@ class CreateCluster extends React.Component {
 
     const ocpCard = (
       <Link to="/install" className="infra-card pf-c-card create-cluster-card">
-        <CardHeader className="create-cluster-header">
+        <CardTitle className="create-cluster-header">
           <img src={openShiftContainerPlatformLogo} alt="OpenShift Container Platform" className="create-cluster-logo" />
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           Create an OCP cluster using the command-line installer.
           Your cluster will automatically register to
@@ -85,9 +85,9 @@ class CreateCluster extends React.Component {
     // Without quota, the RHMI card should be hidden
     const rhmiCard = hasRHMIQuota ? (
       <Link to="/create/rhmi" className="infra-card pf-c-card create-cluster-card">
-        <CardHeader className="create-cluster-header">
+        <CardTitle className="create-cluster-header">
           <img src={rhmiLogo} alt="Red Hat Managed Integration" className="create-cluster-logo" />
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           Create a Red Hat Managed Integration cluster,
           provisioned on Red Hat OpenShift Dedicated using Amazon Web Services.

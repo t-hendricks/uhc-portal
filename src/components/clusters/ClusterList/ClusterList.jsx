@@ -21,13 +21,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
-  Spinner, PageHeader, PageHeaderTitle, TableToolbar,
+  Spinner, PageHeader, PageHeaderTitle,
 } from '@redhat-cloud-services/frontend-components';
 import {
   Button,
   Card,
   EmptyState,
   PageSection,
+  Toolbar,
+  ToolbarItem,
+  ToolbarContent,
 } from '@patternfly/react-core';
 
 import ClusterListFilter from '../common/ClusterListFilter';
@@ -35,7 +38,7 @@ import ClusterListExtraActions from './components/ClusterListExtraActions';
 import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup';
 
-import ClusterListEmptyState from './components/ClusterListEmptyState';
+import ClustersEmptyState from '../../common/ClustersEmptyState';
 import ClusterListTable from './components/ClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
@@ -48,9 +51,8 @@ import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
-import DeleteClusterDialog from '../common/DeleteClusterDialog/DeleteClusterDialog';
+import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import EditDisconnectedCluster from '../common/EditDisconnectedCluster';
-import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
@@ -132,7 +134,6 @@ class ClusterList extends Component {
       setClusterDetails,
       anyModalOpen,
       queryParams,
-      canAllowClusterAdminList,
       canSubscribeOCPList,
     } = this.props;
 
@@ -187,7 +188,7 @@ class ClusterList extends Component {
         <PageSection>
           <GlobalErrorBox />
           <div data-ready>
-            <ClusterListEmptyState />
+            <ClustersEmptyState showRegisterCluster />
           </div>
         </PageSection>
       );
@@ -200,40 +201,54 @@ class ClusterList extends Component {
           <Card>
             <div className="cluster-list" data-ready={dataReady}>
               <GlobalErrorBox />
-              <TableToolbar id="cluster-list-toolbar">
-                <div className="toolbar-item">
-                  <ClusterListFilter
-                    isDisabled={isPendingNoData}
-                    view={viewConstants.CLUSTERS_VIEW}
-                  />
-                </div>
-                <ClusterListFilterDropdown isDisabled={pending} className="toolbar-item" history={history} />
-                <Link to="/create">
-                  <Button className="toolbar-item">Create cluster</Button>
-                </Link>
-                <ClusterListExtraActions className="toolbar-item" />
-                { showSpinner && (
-                  <Spinner className="cluster-list-spinner" />
-                ) }
-                { error && (
-                  <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
-                ) }
-                <ViewPaginationRow
-                  viewType={viewConstants.CLUSTERS_VIEW}
-                  currentPage={viewOptions.currentPage}
-                  pageSize={viewOptions.pageSize}
-                  totalCount={viewOptions.totalCount}
-                  totalPages={viewOptions.totalPages}
-                  variant="top"
-                  isDisabled={isPendingNoData}
-                />
-                <RefreshBtn
-                  autoRefresh={!anyModalOpen}
-                  isDisabled={isPendingNoData}
-                  refreshFunc={this.refresh}
-                  classOptions="cluster-list-top"
-                />
-              </TableToolbar>
+              <Toolbar id="cluster-list-toolbar">
+                <ToolbarContent>
+                  <ToolbarItem>
+                    <ClusterListFilter
+                      isDisabled={isPendingNoData}
+                      view={viewConstants.CLUSTERS_VIEW}
+                    />
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    <ClusterListFilterDropdown isDisabled={pending} history={history} />
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    <Link to="/create">
+                      <Button>Create cluster</Button>
+                    </Link>
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    <ClusterListExtraActions />
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    { showSpinner && (
+                    <Spinner className="cluster-list-spinner" />
+                    ) }
+                    { error && (
+                    <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
+                    ) }
+                  </ToolbarItem>
+                  <ToolbarItem alignment={{ default: 'alignRight' }} variant="pagination">
+                    <ViewPaginationRow
+                      viewType={viewConstants.CLUSTERS_VIEW}
+                      currentPage={viewOptions.currentPage}
+                      pageSize={viewOptions.pageSize}
+                      totalCount={viewOptions.totalCount}
+                      totalPages={viewOptions.totalPages}
+                      variant="top"
+                      isDisabled={isPendingNoData}
+                    />
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    <RefreshBtn
+                      autoRefresh={!anyModalOpen}
+                      isDisabled={isPendingNoData}
+                      refreshFunc={this.refresh}
+                      classOptions="cluster-list-top"
+                    />
+                  </ToolbarItem>
+                </ToolbarContent>
+              </Toolbar>
               <ClusterListFilterChipGroup history={history} />
               <ClusterListTable
                 openModal={openModal}
@@ -242,7 +257,6 @@ class ClusterList extends Component {
                 setSorting={setSorting}
                 isPending={showSkeleton}
                 setClusterDetails={setClusterDetails}
-                canAllowClusterAdminList={canAllowClusterAdminList}
                 canSubscribeOCPList={canSubscribeOCPList}
               />
               <ViewPaginationRow
@@ -261,7 +275,6 @@ class ClusterList extends Component {
               <EditDisconnectedCluster onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
               <UnarchiveClusterDialog onClose={invalidateClusters} />
-              <ToggleClusterAdminAccessDialog onClose={invalidateClusters} />
               <DeleteClusterDialog onClose={(shouldRefresh) => {
                 if (shouldRefresh) {
                   invalidateClusters();
@@ -304,7 +317,6 @@ ClusterList.propTypes = {
   queryParams: PropTypes.shape({
     has_filters: PropTypes.bool,
   }),
-  canAllowClusterAdminList: PropTypes.objectOf(PropTypes.bool),
   canSubscribeOCPList: PropTypes.objectOf(PropTypes.bool),
 };
 

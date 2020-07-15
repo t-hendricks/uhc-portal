@@ -4,6 +4,7 @@ const MIRROR_CLIENTS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4
 const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const IBMZ_DOCS_BASE = 'https://docs.openshift.com/container-platform/4.3';
+const PPC_DOCS_BASE = 'https://docs.openshift.com/container-platform/4.4';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
 
 const links = {
@@ -90,7 +91,8 @@ const links = {
   INSTALL_PRE_RELEASE_FEEDBACK_MAILTO: 'mailto:***REMOVED***?subject=[dev preview build]',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/articles/4307871',
 
-  INSTALL_POWER_GETTING_STARTED: 'https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_power/installing-ibm-power.html',
+  INSTALL_POWER_GETTING_STARTED: `${PPC_DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html`,
+  INSTALL_POWER_RHCOS_LEARN_MORE: `${PPC_DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power`,
   DOWNLOAD_RHCOS_LATEST_PPC: 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/',
 };
 

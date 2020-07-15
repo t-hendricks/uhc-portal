@@ -3,10 +3,9 @@ import React from 'react';
 import {
   CardBody,
   Card,
-  CardHeader,
   EmptyState,
   EmptyStateIcon,
-  EmptyStateBody,
+  EmptyStateBody, CardTitle,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -45,9 +44,9 @@ class ClustersWithIssuesTableCard extends React.Component {
     if (unhealthyClusters.fulfilled && unhealthyClusters.clusters.length === 0) {
       return (
         <Card className="clusters-overview-card">
-          <CardHeader>
+          <CardTitle>
               Clusters with issues
-          </CardHeader>
+          </CardTitle>
           <CardBody>
             <EmptyState>
               <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
@@ -96,9 +95,9 @@ class ClustersWithIssuesTableCard extends React.Component {
 
     return (
       <Card className="clusters-overview-card">
-        <CardHeader>
+        <CardTitle>
           Clusters with issues
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           <Table
             aria-label="Clusters with issues"

@@ -42,11 +42,11 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
         className="quota-dropdown"
         isDisabled={true}
         isRequired={false}
-        isValid={true}
         name="compute-nodes"
         onBlur={[Function]}
         onChange={[MockFunction]}
         onFocus={[Function]}
+        ouiaSafe={true}
         validated="default"
         value=""
       >
@@ -77,11 +77,11 @@ exports[`<NodeCountInput> Multi AZ renders with some quota 1`] = `
     className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
-    isValid={true}
     name="compute-nodes"
     onBlur={[Function]}
     onChange={[MockFunction]}
     onFocus={[Function]}
+    ouiaSafe={true}
     validated="default"
     value=""
   >
@@ -115,11 +115,11 @@ exports[`<NodeCountInput> Single AZ renders with extremely high quota (should on
     className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
-    isValid={true}
     name="compute-nodes"
     onBlur={[Function]}
     onChange={[MockFunction]}
     onFocus={[Function]}
+    ouiaSafe={true}
     validated="default"
     value=""
   >
@@ -1054,11 +1054,11 @@ exports[`<NodeCountInput> Single AZ renders with no quota 1`] = `
         className="quota-dropdown"
         isDisabled={true}
         isRequired={false}
-        isValid={true}
         name="compute-nodes"
         onBlur={[Function]}
         onChange={[MockFunction]}
         onFocus={[Function]}
+        ouiaSafe={true}
         validated="default"
         value=""
       >
@@ -1083,11 +1083,11 @@ exports[`<NodeCountInput> Single AZ renders with some quota 1`] = `
     className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
-    isValid={true}
     name="compute-nodes"
     onBlur={[Function]}
     onChange={[MockFunction]}
     onFocus={[Function]}
+    ouiaSafe={true}
     validated="default"
     value=""
   >
@@ -1160,11 +1160,11 @@ exports[`<NodeCountInput> scaling dialog behavior multiAz renders with no quota 
     className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
-    isValid={true}
     name="compute-nodes"
     onBlur={[Function]}
     onChange={[MockFunction]}
     onFocus={[Function]}
+    ouiaSafe={true}
     validated="default"
     value=""
   >
@@ -1198,11 +1198,11 @@ exports[`<NodeCountInput> scaling dialog behavior singleAZ renders with no quota
     className="quota-dropdown"
     isDisabled={false}
     isRequired={false}
-    isValid={true}
     name="compute-nodes"
     onBlur={[Function]}
     onChange={[MockFunction]}
     onFocus={[Function]}
+    ouiaSafe={true}
     validated="default"
     value=""
   >

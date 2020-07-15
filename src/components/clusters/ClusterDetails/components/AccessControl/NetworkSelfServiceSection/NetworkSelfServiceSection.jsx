@@ -8,9 +8,8 @@ import {
   PopoverPosition,
   Card,
   CardBody,
-  CardHeader,
   CardFooter,
-  Tooltip,
+  Tooltip, CardTitle,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -49,7 +48,7 @@ class NetworkSelfServiceSection extends React.Component {
     // fetch grants again after deleting or adding a grant
     if (((deleteGrantResponse.fulfilled && prevProps.deleteGrantResponse.pending)
       || (addGrantResponse.fulfilled && prevProps.addGrantResponse.pending))
-      && !getGrants.pending) {
+      && !grants.pending) {
       getGrants();
     }
     if (grants.fulfilled && prevProps.grants.pending && grants.data.length !== 0) {
@@ -228,9 +227,9 @@ class NetworkSelfServiceSection extends React.Component {
 
     return grants.pending && !hasGrants ? (
       <Card>
-        <CardHeader>
+        <CardTitle>
           <Skeleton size="md" />
-        </CardHeader>
+        </CardTitle>
         <CardBody>
           <Skeleton size="lg" />
         </CardBody>

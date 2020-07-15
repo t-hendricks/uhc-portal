@@ -34,7 +34,7 @@ function FlatRadioButton({
       variant="tertiary"
       {...extraProps}
     >
-      <Split gutter="sm">
+      <Split hasGutter>
         {icon && (
           <SplitItem className="ocm-flat-button-icon">
             {icon}

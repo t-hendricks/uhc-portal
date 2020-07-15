@@ -62,8 +62,8 @@ function BasicFieldsSection({
           label="Region"
           isRequired
           fieldId="region"
+          labelIcon={<PopoverHint hint={constants.regionHint} />}
         >
-          <PopoverHint hint={constants.regionHint} />
           <Field
             component={CloudRegionComboBox}
             name="region"
@@ -83,8 +83,8 @@ function BasicFieldsSection({
               label="Availability"
               isRequired
               fieldId="availability-toggle"
+              labelIcon={<PopoverHint hint={constants.availabilityHint} />}
             >
-              <PopoverHint hint={constants.availabilityHint} />
               <Field
                 component={RadioButtons}
                 className={!hasSingleAzQuota || !hasMultiAzQuota ? 'radio-az-disabled' : null}

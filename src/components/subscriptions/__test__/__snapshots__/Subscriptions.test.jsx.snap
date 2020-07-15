@@ -2,11 +2,11 @@
 
 exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
 <Card>
-  <CardHeader
+  <CardTitle
     className="section-header"
   >
     OpenShift Container Platform now uses Subscription Watch to manage subscriptions.
-  </CardHeader>
+  </CardTitle>
   <CardBody
     className="section-text"
   >
@@ -33,14 +33,14 @@ exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
   <CardBody
     className="section-text"
   >
-    <Component
+    <Button
       component="a"
       href="https://cloud.redhat.com/subscriptions/openshift-sw"
       rel="noopener noreferrer"
       target="_blank"
     >
       Open Subscription Watch
-    </Component>
+    </Button>
   </CardBody>
   <CardBody />
 </Card>
@@ -94,11 +94,11 @@ exports[`<Subscriptions /> OSDSubscriptionCard Error should render error OSD quo
         Operation ID: N/A
       </p>
     </EmptyStateBody>
-    <Component
+    <Button
       onClick={[MockFunction]}
     >
       Try again
-    </Component>
+    </Button>
   </EmptyState>
 </PageSection>
 `;
@@ -113,11 +113,11 @@ exports[`<Subscriptions /> OSDSubscriptionCard Loading should render loading OSD
 
 exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
 <Card>
-  <CardHeader
+  <CardTitle
     className="section-header"
   >
     OpenShift Dedicated
-  </CardHeader>
+  </CardTitle>
   <CardBody
     className="section-text"
   >
@@ -148,7 +148,6 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
                 color="currentColor"
                 noVerticalAlign={false}
                 size="sm"
-                title={null}
               />,
             },
           ],
@@ -166,7 +165,6 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
                 color="currentColor"
                 noVerticalAlign={false}
                 size="sm"
-                title={null}
               />,
             },
           ],
@@ -184,7 +182,6 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
                 color="currentColor"
                 noVerticalAlign={false}
                 size="sm"
-                title={null}
               />,
             },
           ],
@@ -202,7 +199,6 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
                 color="currentColor"
                 noVerticalAlign={false}
                 size="sm"
-                title={null}
               />,
             },
           ],
@@ -215,8 +211,10 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
 
 exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
 <Fragment>
-  <Component
+  <Table
     aria-label="Quota Table"
+    borders={true}
+    canSelectAll={true}
     cells={
       Array [
         "Resource type",
@@ -243,11 +241,21 @@ exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
         "Capacity",
       ]
     }
+    className=""
+    contentId="expanded-content"
+    dropdownDirection="down"
+    dropdownPosition="right"
+    expandId="expandable-toggle"
+    gridBreakPoint="grid-md"
+    ouiaSafe={true}
+    role="grid"
+    rowLabeledBy="simple-node"
     rows={Array []}
+    variant={null}
   >
     <TableHeader />
-    <TableBody />
-  </Component>
+    <Component />
+  </Table>
 </Fragment>
 `;
 

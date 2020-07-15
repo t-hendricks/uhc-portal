@@ -11,12 +11,12 @@ exports[`<TokensMOA /> Renders loading screen 1`] = `
     <Card
       className="ins-c-card__skeleton"
     >
-      <CardHeader>
+      <CardTitle>
         <Skeleton
           isDark={false}
           size="md"
         />
-      </CardHeader>
+      </CardTitle>
       <CardBody>
         <Skeleton
           isDark={false}
@@ -43,11 +43,11 @@ exports[`<TokensMOA /> Renders token 1`] = `
   </PageHeader>
   <PageSection>
     <Card>
-      <CardHeader>
+      <CardTitle>
         <h2>
           Fully managed OpenShift clusters
         </h2>
-      </CardHeader>
+      </CardTitle>
       <CardBody>
         <p>
           Red Hat Managed OpenShift on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
@@ -115,11 +115,11 @@ hello offline access token!\\
           rel="noopener noreferrer"
           target="_blank"
         >
-          <Component
+          <Button
             variant="primary"
           >
             Go back to AWS quickstart
-          </Component>
+          </Button>
         </a>
       </CardBody>
     </Card>

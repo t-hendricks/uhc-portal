@@ -10,7 +10,7 @@ exports[`<Overview /> renders correctly 1`] = `
   </PageHeader>
   <PageSection>
     <Grid
-      gutter="sm"
+      hasGutter={true}
       id="overview-grid"
     >
       <TopOverviewSection
@@ -179,9 +179,9 @@ exports[`<Overview /> renders correctly 1`] = `
         <Card
           className="clusters-overview-card"
         >
-          <CardHeader>
+          <CardTitle>
             Update status
-          </CardHeader>
+          </CardTitle>
           <CardBody>
             <SmallClusterChart
               availableTitle="Update available"
@@ -201,9 +201,9 @@ exports[`<Overview /> renders correctly 1`] = `
         <Card
           className="clusters-overview-card"
         >
-          <CardHeader>
+          <CardTitle>
             Telemetry
-          </CardHeader>
+          </CardTitle>
           <CardBody>
             <SmallClusterChart
               availableTitle="Not checking in"

@@ -5,7 +5,7 @@ exports[`<Overview /> should render 1`] = `
   <Card
     id="metrics-charts"
   >
-    <CardHeader>
+    <CardTitle>
       <Title
         className="card-title"
         headingLevel="h2"
@@ -13,7 +13,7 @@ exports[`<Overview /> should render 1`] = `
       >
         Resource usage
       </Title>
-    </CardHeader>
+    </CardTitle>
     <CardBody>
       <ResourceUsage
         cpu={
@@ -47,7 +47,7 @@ exports[`<Overview /> should render 1`] = `
     </CardBody>
   </Card>
   <Card>
-    <CardHeader>
+    <CardTitle>
       <Title
         className="card-title"
         headingLevel="h2"
@@ -55,7 +55,7 @@ exports[`<Overview /> should render 1`] = `
       >
         Details
       </Title>
-    </CardHeader>
+    </CardTitle>
     <CardBody>
       <Grid>
         <GridItem

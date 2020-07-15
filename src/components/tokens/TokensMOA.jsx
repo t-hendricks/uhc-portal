@@ -22,10 +22,9 @@ import { Skeleton, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/fr
 import {
   PageSection,
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
-  Button,
+  Button, CardTitle,
 } from '@patternfly/react-core';
 import Tokens, { splitToken, snippetBox, tokenBox } from './Tokens';
 
@@ -48,9 +47,9 @@ class TokensMOA extends Tokens {
           {title}
           <PageSection>
             <Card className="ins-c-card__skeleton">
-              <CardHeader>
+              <CardTitle>
                 <Skeleton size="md" />
-              </CardHeader>
+              </CardTitle>
               <CardBody>
                 <Skeleton size="lg" />
               </CardBody>
@@ -80,9 +79,9 @@ class TokensMOA extends Tokens {
         {title}
         <PageSection>
           <Card>
-            <CardHeader>
+            <CardTitle>
               <h2>Fully managed OpenShift clusters</h2>
-            </CardHeader>
+            </CardTitle>
             <CardBody>
               <p>
                 Red Hat Managed OpenShift on AWS is a managed service that makes it easy for you to

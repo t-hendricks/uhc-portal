@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   Button,
   CardBody,
+  CardTitle,
   Card,
-  CardHeader,
   Grid,
   GridItem,
   Title,
@@ -18,24 +19,31 @@ import { ArrowRightIcon } from '@patternfly/react-icons';
 
 const VIDEO_URL = 'https://www.youtube.com/embed/D_Lj0rObunI';
 
-function OverviewEmptyState() {
+function ClustersEmptyState({ showRegisterCluster = false }) {
   return (
     <>
       <div id="overview-emptystate-bg-img-container">
         <Title headingLevel="h1" size="3xl" className="space-left-lg space-bottom-md">Get started with OpenShift Container Platform</Title>
         <Title headingLevel="h2" size="lg" className="space-left-lg space-bottom-md">Download, install and configure Red Hat OpenShift 4 for free now.</Title>
         <Link to="/create" className="space-left-lg">
-          <span>Create an OpenShift cluser</span>
+          <span id="overview-emptystate-create-cluster">Create an OpenShift cluster</span>
         </Link>
+        {showRegisterCluster && (
+        <Link to="/register" id="overview-emptystate-register-cluster" className="space-left-lg">
+          <Button className="buttonHref" icon={<ArrowRightIcon />}>
+                Register a disconnected cluster
+          </Button>
+        </Link>
+        )}
       </div>
       <Title size="xl" headingLevel="h1" className="space-top-lg space-bottom-lg">Get productive with OpenShift</Title>
       <Flex id="overview-emptystate-get-productive">
         <Flex className="flex-pair">
           <FlexItem>
             <Card className="dashboard-emptystate-card">
-              <CardHeader>
+              <CardTitle>
                 <Title headingLevel="h2" size="lg" className="card-title">OpenShift Serverless</Title>
-              </CardHeader>
+              </CardTitle>
               <CardBody>
               Help developers simplify the process of delivering
               code from development to production.
@@ -49,9 +57,9 @@ function OverviewEmptyState() {
           </FlexItem>
           <FlexItem>
             <Card className="dashboard-emptystate-card">
-              <CardHeader>
+              <CardTitle>
                 <Title headingLevel="h2" size="lg" className="card-title">Red Hat OpenShift Service Mesh</Title>
-              </CardHeader>
+              </CardTitle>
               <CardBody>
               Connect, secure and monitor microservices in your
               OpenShift Container Platform environment.
@@ -67,9 +75,9 @@ function OverviewEmptyState() {
         <Flex className="flex-pair">
           <FlexItem>
             <Card className="dashboard-emptystate-card">
-              <CardHeader>
+              <CardTitle>
                 <Title headingLevel="h2" size="lg">Container-native virtualization</Title>
-              </CardHeader>
+              </CardTitle>
               <CardBody>
               Run and manage virtual machine workloads alongside your container workloads.
                 <a href="https://docs.openshift.com/container-platform/latest/cnv/cnv-about-cnv.html" rel="noreferrer noopener" target="_blank">
@@ -82,9 +90,9 @@ function OverviewEmptyState() {
           </FlexItem>
           <FlexItem>
             <Card className="dashboard-emptystate-card">
-              <CardHeader>
-                <Title headingLevel="h2" size="lg">Migrating OpenShift Contatiner Platform 3 to 4</Title>
-              </CardHeader>
+              <CardTitle>
+                <Title headingLevel="h2" size="lg">Migrating OpenShift Container Platform 3 to 4</Title>
+              </CardTitle>
               <CardBody>
                 Plan your transition and migrate from OpenShift Container Platform 3 to 4.
                 <a href="https://docs.openshift.com/container-platform/latest/migration/migrating_3_4/about-migration.html" rel="noreferrer noopener" target="_blank">
@@ -101,7 +109,7 @@ function OverviewEmptyState() {
         <GridItem span={12}>
           <div id="dashboard-emptystate-osd" className="top-row space-top-lg">
             <Title headingLevel="h2" size="lg" className="card-title">Let Red Hat run it for you</Title>
-              Red hat OpenShift Dedicated is a single-tenant, high availablity Kubernetes clusters,
+              Red hat OpenShift Dedicated is a single-tenant, high availability Kubernetes clusters,
               managed by Red Hat on Amazon Web Services or Google Cloud Platform.
             <a
               href="https://www.openshift.com/products/dedicated/contact/"
@@ -134,4 +142,9 @@ function OverviewEmptyState() {
   );
 }
 
-export default OverviewEmptyState;
+
+ClustersEmptyState.propTypes = {
+  showRegisterCluster: PropTypes.bool,
+};
+
+export default ClustersEmptyState;

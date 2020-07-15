@@ -26,7 +26,11 @@ import { insightsService } from '../../../../../services';
 const fetchSingleClusterInsights = async (clusterId, orgId) => {
   try {
     const insightsResponse = await insightsService.getClusterInsights(clusterId, orgId);
-    return { insightsData: get(insightsResponse, 'data.report', {}), clusterId };
+    return {
+      insightsData: get(insightsResponse, 'data.report', {}),
+      clusterId,
+      status: insightsResponse.status,
+    };
   } catch (e) {
     const error = Error('Insights for cluster not found');
     error.status = e.response.status;

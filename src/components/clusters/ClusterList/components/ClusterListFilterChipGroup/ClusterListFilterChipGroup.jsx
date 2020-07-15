@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
 import {
-  Chip, ChipGroup, ChipGroupToolbarItem, Button, Split, SplitItem,
+  Chip, ChipGroup, Button, Split, SplitItem,
 } from '@patternfly/react-core';
 
 import helpers from '../../../../../common/helpers';
@@ -35,14 +35,14 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
   return (
     <Split>
       <SplitItem>
-        <ChipGroup withToolbar>
+        <ChipGroup>
           {groups.map((group) => {
             const currentFilter = currentFilters[group.key] || [];
             if (isEmpty(currentFilter)) {
               return null;
             }
             return (
-              <ChipGroupToolbarItem key={`chipgroup-${group.key}`} categoryName={group.label}>
+              <ChipGroup key={`chipgroup-${group.key}`} categoryName={group.label}>
                 {currentFilter.map((key) => {
                   const label = group.optionLabels[key];
                   const deleteItem = () => {
@@ -57,7 +57,7 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
                     </Chip>
                   );
                 })}
-              </ChipGroupToolbarItem>
+              </ChipGroup>
             );
           }).filter(Boolean)}
         </ChipGroup>

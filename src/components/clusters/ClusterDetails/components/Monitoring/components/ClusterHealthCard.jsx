@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Card,
-  CardHeader,
   Title,
   Split,
-  SplitItem,
+  SplitItem, CardTitle,
 } from '@patternfly/react-core';
 
 import {
@@ -69,7 +68,7 @@ function ClusterHealthCard({
 
   return (
     <Card id="cluster-health">
-      <CardHeader>
+      <CardTitle>
         <Split>
           <SplitItem>
             {icon}
@@ -82,7 +81,7 @@ function ClusterHealthCard({
             {lastCheckIn && `Last check-in: ${lastCheckIn}`}
           </SplitItem>
         </Split>
-      </CardHeader>
+      </CardTitle>
     </Card>
   );
 }

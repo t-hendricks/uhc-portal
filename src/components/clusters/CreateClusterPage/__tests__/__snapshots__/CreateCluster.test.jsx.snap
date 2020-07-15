@@ -59,7 +59,7 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
             replace={false}
             to="/install"
           >
-            <CardHeader
+            <CardTitle
               className="create-cluster-header"
             >
               <img
@@ -67,7 +67,7 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
                 className="create-cluster-logo"
                 src="test-file-stub"
               />
-            </CardHeader>
+            </CardTitle>
             <CardBody>
               Create an OCP cluster using the command-line installer. Your cluster will automatically register to the Cluster Manager after installation completes.
             </CardBody>
@@ -106,7 +106,7 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
             <Card
               className="infra-card create-cluster-card card-disabled"
             >
-              <CardHeader
+              <CardTitle
                 className="create-cluster-header"
               >
                 <img
@@ -114,7 +114,7 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
                   className="create-cluster-logo"
                   src="test-file-stub"
                 />
-              </CardHeader>
+              </CardTitle>
               <CardBody>
                 Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services or Google Cloud Platform.
               </CardBody>
@@ -159,7 +159,7 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
             replace={false}
             to="/install"
           >
-            <CardHeader
+            <CardTitle
               className="create-cluster-header"
             >
               <img
@@ -167,7 +167,7 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
                 className="create-cluster-logo"
                 src="test-file-stub"
               />
-            </CardHeader>
+            </CardTitle>
             <CardBody>
               Create an OCP cluster using the command-line installer. Your cluster will automatically register to the Cluster Manager after installation completes.
             </CardBody>
@@ -206,7 +206,7 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
             <Card
               className="infra-card create-cluster-card card-disabled"
             >
-              <CardHeader
+              <CardTitle
                 className="create-cluster-header"
               >
                 <img
@@ -214,7 +214,7 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
                   className="create-cluster-logo"
                   src="test-file-stub"
                 />
-              </CardHeader>
+              </CardTitle>
               <CardBody>
                 Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services or Google Cloud Platform.
               </CardBody>

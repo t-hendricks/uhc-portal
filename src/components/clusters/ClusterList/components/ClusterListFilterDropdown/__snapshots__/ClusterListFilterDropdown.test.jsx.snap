@@ -46,7 +46,6 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
         color="currentColor"
         noVerticalAlign={false}
         size="sm"
-        title={null}
       />
        
       Filter

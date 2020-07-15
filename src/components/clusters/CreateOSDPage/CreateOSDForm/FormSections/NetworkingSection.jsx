@@ -15,7 +15,6 @@ const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr'
 const podDisjointSubnets = validators.disjointSubnets('network_pod_cidr');
 const awsMachineSubnetMask = validators.awsSubnetMask('network_machine_cidr');
 const awsServiceSubnetMask = validators.awsSubnetMask('network_service_cidr');
-const awsPodSubnetMask = validators.awsSubnetMask('network_pod_cidr');
 
 function NetworkingSection({
   pending,
@@ -65,7 +64,6 @@ function NetworkingSection({
     validators.validateRange,
     podDisjointSubnets,
     validators.disjointFromDockerRange,
-    cloudProviderID === 'aws' && awsPodSubnetMask,
     cloudProviderID === 'gcp' && validators.privateAddress,
   ].filter(Boolean);
 
@@ -180,7 +178,7 @@ function NetworkingSection({
                 type="text"
                 validate={podCidrValidators}
                 disabled={pending}
-                helpText={cloudProviderID === 'aws' ? 'Subnet mask must be at most 18.' : 'Range must be private. Subnet mask must be at most 18.'}
+                helpText={cloudProviderID === 'aws' ? 'Subnet mask must allow for at least 32 nodes.' : 'Range must be private. Subnet mask must allow for at least 32 nodes.'}
                 extendedHelpText={constants.podCIDRHint}
                 showHelpTextOnError={false}
               />

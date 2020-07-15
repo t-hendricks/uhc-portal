@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import {
-  Grid, GridItem, Button, Card, CardHeader, CardBody, Title,
+  Grid, GridItem, Button, Card, CardBody, Title, CardTitle,
 } from '@patternfly/react-core';
 import {
   ExclamationCircleIcon, ExclamationTriangleIcon,
@@ -66,12 +66,12 @@ function SubscriptionSettings({
 
   return (
     <Card>
-      <CardHeader>
+      <CardTitle>
         <Title headingLevel="h2" size="lg" className="card-title">
           Subscription settings
           {titleIcon}
         </Title>
-      </CardHeader>
+      </CardTitle>
       <CardBody>
         <Grid>
           <GridItem sm={6}>

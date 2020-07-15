@@ -16,7 +16,8 @@ const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}
 const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[1-9]))$/;
 const MACHINE_CIDR_MAX = 23;
 const SERVICE_CIDR_MAX = 24;
-const POD_CIDR_MAX = 18;
+const POD_CIDR_MAX = 21;
+const POD_NODES_MIN = 32;
 const AWS_CIDR_MIN = 16;
 
 // Regular expression used to check whether input is a valid IPv4 subnet prefix length
@@ -38,6 +39,8 @@ const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 const MAX_NODE_COUNT = 180;
 
 const AWS_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
+
+const INGRESS_ROUTE_LABEL_MAX_LEN = 63;
 
 // Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');
@@ -128,9 +131,31 @@ const checkRouteSelectors = (value) => {
 
   const selectors = value.split(',');
 
-  if (selectors.some(pair => (!(/^([0-9a-z]+([-_][0-9a-z]+)*)=([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(pair)))) {
-    return "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+
+  let error;
+
+  if (selectors.length) {
+    if (selectors.some((pair) => {
+      const pairParts = pair.split('=');
+      // check if prefix exists and get the label
+      const keyParts = pairParts[0].split('/');
+      const label = keyParts.length > 1 ? keyParts[1] : keyParts[0];
+
+      if (label.length > INGRESS_ROUTE_LABEL_MAX_LEN) {
+        error = `Length of ingress route label selector key name must be less or equal to ${INGRESS_ROUTE_LABEL_MAX_LEN}`;
+        return true;
+      }
+      if ((!(/^([0-9a-z]+([-_][0-9a-z]+)*)=([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(pair))) {
+        error = "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+        return true;
+      }
+
+      return false;
+    })) {
+      return error;
+    }
   }
+
   return undefined;
 };
 
@@ -281,12 +306,15 @@ const podCidr = (value, formData) => {
   }
 
   const prefixLength = getCIDRSubnetLength(value);
-
   if (prefixLength > POD_CIDR_MAX) {
-    const hostPrefix = getCIDRSubnetLength(formData.network_host_prefix) || 23;
-    const maxPodIPs = 2 ** (32 - hostPrefix);
-    const maxPodNodes = Math.floor(2 ** (32 - POD_CIDR_MAX) / maxPodIPs);
-    return `The subnet length can't be higher than '/${POD_CIDR_MAX}', which provides up to ${maxPodNodes} nodes.`;
+    return `The subnet length can't be higher than /${POD_CIDR_MAX}.`;
+  }
+
+  const hostPrefix = getCIDRSubnetLength(formData.network_host_prefix) || 23;
+  const maxPodIPs = 2 ** (32 - hostPrefix);
+  const maxPodNodes = Math.floor(2 ** (32 - prefixLength) / maxPodIPs);
+  if (maxPodNodes < POD_NODES_MIN) {
+    return `The subnet length of /${prefixLength} does not allow for enough nodes. Try changing the host prefix or the pod subnet range.`;
   }
 
   return undefined;
@@ -382,7 +410,6 @@ const awsSubnetMask = fieldName => (value) => {
   }
   const awsSubnetMaskRanges = {
     network_machine_cidr: [AWS_CIDR_MIN, MACHINE_CIDR_MAX],
-    network_pod_cidr: [undefined, POD_CIDR_MAX],
     network_service_cidr: [undefined, SERVICE_CIDR_MAX],
   };
   const maskRange = awsSubnetMaskRanges[fieldName];
@@ -390,12 +417,12 @@ const awsSubnetMask = fieldName => (value) => {
   const maskBits = parseInt(parts[1], 10);
   if (!maskRange[0]) {
     if (maskBits > maskRange[1] || maskBits < 1) {
-      return `Subnet mask must be between 1-${maskRange[1]}.`;
+      return `Subnet mask must be between /1 and /${maskRange[1]}.`;
     }
     return undefined;
   }
   if (!(maskRange[0] <= maskBits && maskBits <= maskRange[1])) {
-    return `Subnet mask must be between ${maskRange[0]}-${maskRange[1]}.`;
+    return `Subnet mask must be between /${maskRange[0]} and /${maskRange[1]}.`;
   }
   return undefined;
 };

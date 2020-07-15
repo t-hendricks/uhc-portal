@@ -138,7 +138,7 @@
     }
   },
   "multi_az": false,
-  "managed": true,
+  "managed": false,
   "version": {
     "kind": "VersionLink",
     "id": "openshift-v4.2.9",

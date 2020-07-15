@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<FlatRadioButton /> should render normally 1`] = `
-<Component
+<Button
   className="ocm-flat-radio-button"
   isDisabled={false}
   onClick={[Function]}
   variant="tertiary"
 >
   <Split
-    gutter="sm"
+    hasGutter={true}
   >
     <SplitItem
       isFilled={true}
@@ -22,18 +22,18 @@ exports[`<FlatRadioButton /> should render normally 1`] = `
       test
     </SplitItem>
   </Split>
-</Component>
+</Button>
 `;
 
 exports[`<FlatRadioButton /> should render when disabled 1`] = `
-<Component
+<Button
   className="ocm-flat-radio-button"
   isDisabled={true}
   onClick={[Function]}
   variant="tertiary"
 >
   <Split
-    gutter="sm"
+    hasGutter={true}
   >
     <SplitItem
       isFilled={true}
@@ -47,18 +47,18 @@ exports[`<FlatRadioButton /> should render when disabled 1`] = `
       test
     </SplitItem>
   </Split>
-</Component>
+</Button>
 `;
 
 exports[`<FlatRadioButton /> should render when selected 1`] = `
-<Component
+<Button
   className="ocm-flat-radio-button selected"
   isDisabled={false}
   onClick={[Function]}
   variant="tertiary"
 >
   <Split
-    gutter="sm"
+    hasGutter={true}
   >
     <SplitItem
       isFilled={true}
@@ -72,7 +72,7 @@ exports[`<FlatRadioButton /> should render when selected 1`] = `
       test
     </SplitItem>
   </Split>
-</Component>
+</Button>
 `;
 
 exports[`<FlatRadioButton /> should render with tooltip 1`] = `
@@ -110,14 +110,14 @@ exports[`<FlatRadioButton /> should render with tooltip 1`] = `
   <div
     className="ocm-flat-radio-button-disabled"
   >
-    <Component
+    <Button
       className="ocm-flat-radio-button"
       isDisabled={false}
       onClick={[Function]}
       variant="tertiary"
     >
       <Split
-        gutter="sm"
+        hasGutter={true}
       >
         <SplitItem
           isFilled={true}
@@ -131,7 +131,7 @@ exports[`<FlatRadioButton /> should render with tooltip 1`] = `
           test
         </SplitItem>
       </Split>
-    </Component>
+    </Button>
   </div>
 </Tooltip>
 `;

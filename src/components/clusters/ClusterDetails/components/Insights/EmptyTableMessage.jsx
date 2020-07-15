@@ -9,7 +9,12 @@ import {
   Popover,
 } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
-import { CheckCircleIcon, InfoCircleIcon } from '@patternfly/react-icons';
+import {
+  CheckCircleIcon,
+  InfoCircleIcon,
+  InProgressIcon,
+  ExclamationCircleIcon,
+} from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
 export const RemoteHealthPopover = ({ variant }) => (
@@ -138,4 +143,44 @@ export const NoIssuesMessage = ({ lastChecked }) => {
 
 NoIssuesMessage.propTypes = {
   lastChecked: PropTypes.node,
+};
+
+export const AnalysisInProgressMessage = () => (
+  <div className="AnalysisInProgressMessage">
+    <EmptyTableMessage
+      icon={InProgressIcon}
+      iconClassName="disabled-color"
+      header="The analysis of your cluster is in progress"
+      body="Your cluster has been identified, and Insights analyzes your cluster. The results will be displayed shortly."
+      showPopover
+    />
+  </div>
+);
+
+export const ErrorMessage = () => {
+  const body = (
+    <>
+      Try refreshing the page.
+      {' '}
+      If the problem persists,
+      {' '}
+      contact your organization administrator or visit our
+      {' '}
+      <a target="_blank" rel="noopener noreferrer" href="https://status.redhat.com/">status page</a>
+      {' '}
+      for known outages.
+    </>
+  );
+
+  return (
+    <div className="ErrorMessage">
+      <EmptyTableMessage
+        icon={ExclamationCircleIcon}
+        iconClassName="danger-color"
+        header="This page is temporarily unavailable"
+        body={body}
+        showPopover
+      />
+    </div>
+  );
 };

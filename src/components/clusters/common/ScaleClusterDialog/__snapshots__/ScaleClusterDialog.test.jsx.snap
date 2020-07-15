@@ -15,7 +15,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
     onSubmit={[MockFunction]}
   >
     <Grid
-      gutter="md"
+      hasGutter={true}
     >
       <GridItem
         span={8}
@@ -99,7 +99,7 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
     onSubmit={[MockFunction]}
   >
     <Grid
-      gutter="md"
+      hasGutter={true}
     >
       <GridItem
         span={8}

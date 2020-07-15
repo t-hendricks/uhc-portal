@@ -4,13 +4,13 @@ exports[`<ErrorModal /> should render 1`] = `
 <Modal
   header={
     <Title
+      headingLevel="h2"
       size="2xl"
     >
       <ExclamationCircleIcon
         color="#c9190b"
         noVerticalAlign={false}
         size="sm"
-        title={null}
       />
        
       Error Modal
