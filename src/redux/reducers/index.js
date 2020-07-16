@@ -25,6 +25,7 @@ import { loadBalancersReducer } from './loadBalancersReducer';
 import { persistentStorageReducer } from './persistentStorageReducer';
 import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
 import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
+import supportStatusReducer from '../../components/clusters/ClusterDetails/components/Overview/SupportStatusLabel/supportStatusReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -52,6 +53,7 @@ const reducers = {
   insightsData: insightsReducer,
   clusterRouters: NetworkingReducer,
   dashboards: dashboardsReducer,
+  supportStatus: supportStatusReducer,
 };
 
 const reduxReducers = combineReducers(reducers);

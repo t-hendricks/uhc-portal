@@ -5,6 +5,7 @@ import get from 'lodash/get';
 import Timestamp from '../../../../common/Timestamp';
 import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
+import SupportStatusLabel from './SupportStatusLabel';
 
 
 function DetailsLeft({ cluster, cloudProviders }) {
@@ -22,6 +23,8 @@ function DetailsLeft({ cluster, cloudProviders }) {
   } else {
     cloudProvider = cloudProviderId ? cloudProviderId.toUpperCase() : 'N/A';
   }
+  const clusterVersion = get(cluster, 'openshift_version', 'N/A');
+  const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
 
   return (
     <>
@@ -61,9 +64,17 @@ function DetailsLeft({ cluster, cloudProviders }) {
               {' '}
             </dt>
             <dd>
-              {get(cluster, 'openshift_version', 'N/A')}
+              {clusterVersion}
               <ClusterUpdateLink cluster={cluster} />
             </dd>
+            { !cluster.managed && !isUpgrading && (
+              <div>
+                <dt>Life cycle state: </dt>
+                <dd>
+                  <SupportStatusLabel clusterVersion={clusterVersion} />
+                </dd>
+              </div>
+            )}
           </dl>
         </dd>
         <dt>Operating system</dt>
