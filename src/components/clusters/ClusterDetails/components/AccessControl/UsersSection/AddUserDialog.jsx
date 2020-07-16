@@ -12,7 +12,7 @@ import { checkUserID } from '../../../../../../common/validators';
 const initialState = {
   selectedGroup: 'dedicated-admins',
   userId: '',
-  idTouched: false,
+  userIdTouched: false,
 };
 
 class AddUserDialog extends Component {
