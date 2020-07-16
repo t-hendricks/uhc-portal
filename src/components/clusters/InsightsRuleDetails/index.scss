@@ -1,0 +1,39 @@
+#ruledetails-content {
+	.pf-l-grid.ins-c-rule__report-detail {
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 0;
+	}
+
+	.pf-c-card {
+		margin-top: var(--pf-global--gutter--md);
+	}
+
+	#cl-details-top-row, #ruledetails-content #cl-details-top-row > .pf-l-split__item {
+		width: 100%;
+	}
+
+	.battery {
+	    line-height: 2;
+	    display: block;
+	    i {
+			margin-right: 5px;
+		}
+		button {
+			padding-left: 0;
+		}
+	}
+	
+	#cl-details-top-row ol, .pf-c-tab-content ol {
+		margin-top: 10px;
+		margin-left: 15px;
+	}
+
+	#cl-details-top-row p + pre, #cl-details-top-row ul + pre, .pf-c-tab-content p + pre, .pf-c-tab-content ul + pre {
+		margin-bottom: 20px;
+	}
+
+	#cl-details-top-row .pf-c-list, .pf-c-tab-content  .pf-c-list {
+		margin: 5px 0;
+	}
+}

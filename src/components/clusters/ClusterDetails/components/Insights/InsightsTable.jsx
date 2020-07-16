@@ -5,6 +5,7 @@ import {
   Button, Card, CardBody, EmptyStateIcon,
 } from '@patternfly/react-core';
 import { cellWidth } from '@patternfly/react-table';
+import { Link } from 'react-router-dom';
 import RuleTable, { severity } from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
 import ReportDetails from '@redhat-cloud-services/rule-components/dist/cjs/ReportDetails';
 import {
@@ -18,6 +19,7 @@ import { CheckCircleIcon } from '@patternfly/react-icons';
 import AnalysisSummary from './AnalysisSummary';
 import { severityMapping } from './helpers';
 import DisabledTooltip from './DisabledTooltip';
+import { setReportDetails } from './InsightsActions';
 
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
@@ -228,7 +230,12 @@ class InsightsTable extends React.Component {
 
   render() {
     const {
-      insightsData, voteOnRule, disableRule, enableRule, groups,
+      insightsData,
+      voteOnRule,
+      disableRule,
+      enableRule,
+      groups,
+      cluster,
     } = this.props;
 
     const {
@@ -265,10 +272,15 @@ class InsightsTable extends React.Component {
               columns={[
                 {
                   title: 'Description',
-                  selector: ({ description, disabled }) => (
+                  selector: report => (
                     <>
-                      { disabled ? <DisabledTooltip /> : null }
-                      { description }
+                      { report.disabled ? <DisabledTooltip /> : null }
+                      <Link
+                        to={`/details/${cluster.id}/insights/${report.rule_id.replace(/\./g, '|')}`}
+                        onClick={() => setReportDetails(report)}
+                      >
+                        { report.description }
+                      </Link>
                     </>
                   ),
                   transforms: [cellWidth(60)],
@@ -292,7 +304,6 @@ class InsightsTable extends React.Component {
               ]}
               detail={details => (
                 <ReportDetails
-                  createdAt={details.created_at}
                   details={details.details}
                   ruleId={details.rule_id}
                   totalRisk={details.total_risk}
@@ -360,6 +371,7 @@ class InsightsTable extends React.Component {
 }
 
 InsightsTable.propTypes = {
+  cluster: PropTypes.object.isRequired,
   insightsData: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
   voteOnRule: PropTypes.func.isRequired,
