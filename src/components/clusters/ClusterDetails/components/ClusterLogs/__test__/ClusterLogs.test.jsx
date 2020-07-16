@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ClusterLogs from '../ClusterLogs';
-import { clusterDetails } from '../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 describe('<ClusterLogs />', () => {
   let wrapper;
@@ -13,13 +13,13 @@ describe('<ClusterLogs />', () => {
 
   it('should render', () => {
     wrapper = shallow(<ClusterLogs
-      externalClusterID={clusterDetails.cluster.external_id}
+      externalClusterID={fixtures.clusterDetails.cluster.external_id}
       history={{ push }}
       getClusterHistory={getClusterHistory}
       setSorting={setSorting}
       setListFlag={setListFlag}
       clusterLogs={{
-        requestState: clusterDetails,
+        requestState: fixtures.clusterDetails,
       }}
       viewOptions={{
         flags: {},

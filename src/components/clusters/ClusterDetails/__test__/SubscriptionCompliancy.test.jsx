@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { Alert } from '@patternfly/react-core';
 
 import SubscriptionCompliancy from '../components/SubscriptionCompliancy';
-import { clusterDetails, organization } from './ClusterDetails.fixtures';
+import fixtures from './ClusterDetails.fixtures';
 import {
   subscriptionSettings,
   subscriptionSupportLevels,
@@ -14,6 +14,7 @@ const { SUPPORT_LEVEL } = subscriptionSettings;
 const { EVAL, STANDARD, NONE } = subscriptionSupportLevels;
 
 describe('<SubscriptionCompliancy />', () => {
+  const { clusterDetails, organization } = fixtures;
   let wrapper;
   beforeEach(() => {
     const props = { cluster: clusterDetails.cluster, organization };

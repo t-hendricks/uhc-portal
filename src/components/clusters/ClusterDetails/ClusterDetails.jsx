@@ -188,11 +188,14 @@ class ClusterDetails extends Component {
         getAlerts(clusterID);
         getNodes(clusterID);
         getClusterOperators(clusterID);
-        getGrants(clusterID);
         getClusterRouters(clusterID);
         if (get(clusterDetails, 'cluster.managed')) {
           getClusterAddOns(clusterID);
           this.refreshIDP();
+        }
+        // don't fetch grants if cloud provider is known to be gcp
+        if (get(clusterDetails, 'cluster.cloud_provider.id') !== 'gcp') {
+          getGrants(clusterID);
         }
       }
     }

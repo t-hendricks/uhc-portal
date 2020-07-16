@@ -2,23 +2,29 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ClusterDetails from '../ClusterDetails';
-import * as Fixtures from './ClusterDetails.fixtures';
+import fixtures, { funcs } from './ClusterDetails.fixtures';
 
 describe('<ClusterDetails />', () => {
   describe('Cluster Details', () => {
-    const wrapper = shallow(<ClusterDetails {...Fixtures} />);
+    const functions = funcs();
+    const wrapper = shallow(<ClusterDetails {...fixtures} {...functions} />);
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
     it('should call clearGlobalError on mount', () => {
-      expect(Fixtures.clearGlobalError).toBeCalledWith('clusterDetails');
+      expect(functions.clearGlobalError).toBeCalledWith('clusterDetails');
+    });
+
+    it('should call get grants for aws cluster', () => {
+      expect(functions.getGrants).toBeCalledWith(fixtures.clusterDetails.cluster.id);
     });
   });
 
   describe('Loading', () => {
-    const props = { ...Fixtures, match: { params: { id: '1234' } } };
+    const functions = funcs();
+    const props = { ...fixtures, ...functions, match: { params: { id: '1234' } } };
     const wrapper = shallow(<ClusterDetails {...props} />);
 
     it('should render loading modal when pending', () => {
@@ -28,10 +34,12 @@ describe('<ClusterDetails />', () => {
   });
 
   describe('Error', () => {
+    const functions = funcs();
     const props = {
-      ...Fixtures,
+      ...fixtures,
+      ...functions,
       clusterDetails: {
-        ...Fixtures.clusterDetails,
+        ...fixtures.clusterDetails,
         error: true,
         cluster: undefined,
       },
@@ -45,9 +53,10 @@ describe('<ClusterDetails />', () => {
 
     it('should redirect back to cluster list and set global error on 404 error', () => {
       const props404 = {
-        ...Fixtures,
+        ...fixtures,
+        ...functions,
         clusterDetails: {
-          ...Fixtures.clusterDetails,
+          ...fixtures.clusterDetails,
           error: true,
           errorMessage: 'This is an error message',
           errorCode: 404,
@@ -56,8 +65,33 @@ describe('<ClusterDetails />', () => {
       };
       shallow(<ClusterDetails {...props404} />);
 
-      expect(Fixtures.setGlobalError).toBeCalled();
-      expect(Fixtures.history.push).toBeCalledWith('/');
+      expect(functions.setGlobalError).toBeCalled();
+      expect(functions.history.push).toBeCalledWith('/');
+    });
+  });
+
+  describe('gcp cluster details', () => {
+    const functions = funcs();
+    const props = {
+      ...fixtures,
+      ...functions,
+      clusterDetails: {
+        ...fixtures.clusterDetails,
+        cluster: {
+          ...fixtures.clusterDetails.cluster,
+          cloud_provider: {
+            kind: 'CloudProviderLink',
+            id: 'gcp',
+            href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
+          },
+        },
+      },
+    };
+
+    shallow(<ClusterDetails {...props} />);
+
+    it('should not call get grants for gcp cluster', () => {
+      expect(functions.getGrants).not.toBeCalled();
     });
   });
 });

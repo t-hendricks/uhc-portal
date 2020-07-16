@@ -2,9 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import ClusterStatusMonitor from './ClusterStatusMonitor';
-import { clusterDetails } from '../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 jest.useFakeTimers();
+
+const { clusterDetails } = fixtures;
 
 const status = {
   pending: false,

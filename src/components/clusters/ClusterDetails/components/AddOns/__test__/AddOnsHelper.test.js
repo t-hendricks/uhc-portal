@@ -1,6 +1,6 @@
 import { mockAddOns, mockClusterAddOns } from './AddOns.fixtures';
 import { quotaSummary } from '../../../../../subscriptions/__test__/Subscriptions.fixtures';
-import { clusterDetails } from '../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 import {
   isAvailable,
@@ -9,7 +9,7 @@ import {
   availableAddOns,
 } from '../AddOnsHelper';
 
-const { cluster } = clusterDetails;
+const { cluster } = fixtures.clusterDetails;
 
 describe('isAvailable', () => {
   it('should determine that free add-on is available', () => {
