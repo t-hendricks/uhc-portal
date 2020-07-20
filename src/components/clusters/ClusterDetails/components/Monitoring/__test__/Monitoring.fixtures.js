@@ -50,6 +50,26 @@ const mockAlerts = {
   ],
 };
 
+const mockOperators = {
+  data: [
+    {
+      time: '2020-07-20T08:59:35Z',
+      name: 'storage',
+      condition: 'available',
+      reason: 'AsExpected',
+      version: '4.3.18',
+    },
+    {
+      time: '2020-07-20T08:59:35Z',
+      name: 'version',
+      condition: 'failing',
+      reason: 'ClusterOperatorDegraded',
+      version: '',
+    },
+  ],
+};
+
+
 const mockWatchdog = [{ name: 'Watchdog', severity: 'none' }];
 
 const resourceUsageWithIssues = {
@@ -491,6 +511,7 @@ export {
   mockAlerts,
   mockWatchdog,
   mockNodes,
+  mockOperators,
   resourceUsageWithIssues,
   resourceUsageWithoutIssues,
   mockOSDCluserDetails,

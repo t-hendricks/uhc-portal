@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Tabs, Tab, TabTitleText } from '@patternfly/react-core';
+import {
+  Tabs, Tab, TabTitleText, TabTitleIcon,
+} from '@patternfly/react-core';
+import { ExclamationCircleIcon } from '@patternfly/react-icons';
+// eslint-disable-next-line camelcase
+import { global_danger_color_100 } from '@patternfly/react-tokens';
+
 
 class TabsRow extends React.Component {
   state = {
@@ -33,6 +39,7 @@ class TabsRow extends React.Component {
       addOnsTabRef,
       networkingTabRef,
       insightsTabRef,
+      hasIssues,
     } = this.props;
     return [
       {
@@ -44,7 +51,12 @@ class TabsRow extends React.Component {
       },
       {
         key: 1,
-        title: 'Monitoring',
+        title:
+  <>
+    <TabTitleText>Monitoring</TabTitleText>
+    {hasIssues
+    && <TabTitleIcon id="issues-icon"><ExclamationCircleIcon color={global_danger_color_100.value} /></TabTitleIcon>}
+  </>,
         contentId: 'monitoringTabContent',
         show: displayMonitoringTab,
         ref: monitoringTabRef,
@@ -128,6 +140,7 @@ TabsRow.propTypes = {
   addOnsTabRef: PropTypes.object.isRequired,
   insightsTabRef: PropTypes.object.isRequired,
   networkingTabRef: PropTypes.object.isRequired,
+  hasIssues: PropTypes.bool.isRequired,
 };
 
 TabsRow.defaultProps = {

@@ -59,7 +59,11 @@ exports[`<TabsRow /> should render 1`] = `
     tabContentId="monitoringTabContent"
     title={
       <TabTitleText>
-        Monitoring
+        <React.Fragment>
+          <TabTitleText>
+            Monitoring
+          </TabTitleText>
+        </React.Fragment>
       </TabTitleText>
     }
   />

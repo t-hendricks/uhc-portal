@@ -3,19 +3,18 @@ import get from 'lodash/get';
 
 import Monitoring from './Monitoring';
 import { clearMonitoringState } from './MonitoringActions';
-import { hasCpuAndMemory } from '../../clusterDetailsHelper';
+
 import {
-  issuesSelector,
+  issuesCountSelector,
   lastCheckInSelector,
   resourceUsageIssuesSelector,
   clusterHealthSelector,
-  hasDataSelector,
+  issuesSelector,
 } from './MonitoringSelectors';
 import {
   alertsSeverity,
   operatorsStatuses,
   thresholds,
-  hasResourceUsageMetrics,
 } from './monitoringHelper';
 
 const mapDispatchToProps = {
@@ -29,58 +28,48 @@ const mapStateToProps = (state) => {
   const cpu = get(state, 'clusters.details.cluster.metrics.cpu', null);
   const memory = get(state, 'clusters.details.cluster.metrics.memory', null);
 
-  // For each entity, check if there is data available
-  const hasAlerts = hasDataSelector(alerts);
-  const hasNodes = hasDataSelector(nodes);
-  const hasClusterOperators = hasDataSelector(operators);
-  const hasResourceUsageData = hasCpuAndMemory(cpu, memory) && hasResourceUsageMetrics(cluster);
+  const issues = issuesSelector(state);
 
-  // Calculate the number of issues
-  const alertsIssues = hasAlerts ? issuesSelector(alerts.data, 'severity', alertsSeverity.CRITICAL) : null;
-  const nodesIssues = hasNodes ? issuesSelector(nodes.data, 'up', false) : null;
-  const operatorsIssues = hasClusterOperators ? issuesSelector(operators.data, 'condition', operatorsStatuses.FAILING) : null;
-  const resourceUsageIssues = hasResourceUsageData
-    ? resourceUsageIssuesSelector(cpu, memory, thresholds.DANGER) : null;
+  const hasAlerts = issues.alerts !== null;
+  const hasClusterOperators = issues.operators !== null;
+  const hasResourceUsageData = issues.resourceUsage !== null;
 
-  // Sum all issues
-  const discoveredIssues = alertsIssues + nodesIssues + resourceUsageIssues + operatorsIssues;
-
-  // Calculate the number of warnings
-  const alertsWarnings = hasAlerts ? issuesSelector(alerts.data, 'severity', alertsSeverity.WARNING) : null;
-  const operatorsWarnings = hasClusterOperators ? issuesSelector(operators.data, 'condition', operatorsStatuses.DEGRADED) : null;
+  // Calculate warnings
+  const alertsWarnings = hasAlerts ? issuesCountSelector(alerts.data, 'severity', alertsSeverity.WARNING) : null;
+  const operatorsWarnings = hasClusterOperators ? issuesCountSelector(operators.data, 'condition', operatorsStatuses.DEGRADED) : null;
   const resourceUsageWarnings = hasResourceUsageData
     ? resourceUsageIssuesSelector(cpu, memory, thresholds.WARNING) : null;
 
   const lastCheckIn = lastCheckInSelector(cluster.activity_timestamp);
 
   // Get overall cluster health status
-  const healthStatus = clusterHealthSelector(cluster, lastCheckIn, discoveredIssues);
+  const healthStatus = clusterHealthSelector(cluster, lastCheckIn, issues.count);
 
   return ({
     alerts: {
       ...alerts,
-      numOfIssues: alertsIssues,
+      numOfIssues: issues.alerts,
       numOfWarnings: alertsWarnings,
       hasData: hasAlerts,
     },
     nodes: {
       ...nodes,
-      numOfIssues: nodesIssues,
-      hasData: hasNodes,
+      numOfIssues: issues.nodes,
+      hasData: !!(issues.nodes),
     },
     operators: {
       ...operators,
-      numOfIssues: operatorsIssues,
+      numOfIssues: issues.operators,
       numOfWarnings: operatorsWarnings,
       hasData: hasClusterOperators,
     },
     resourceUsage: {
-      numOfIssues: resourceUsageIssues,
+      numOfIssues: issues.resourceUsage,
       numOfWarnings: resourceUsageWarnings,
       hasData: hasResourceUsageData,
     },
     lastCheckIn: lastCheckIn.message,
-    discoveredIssues,
+    discoveredIssues: issues.count,
     healthStatus,
   });
 };

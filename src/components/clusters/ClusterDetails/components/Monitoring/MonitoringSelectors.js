@@ -1,6 +1,11 @@
 import get from 'lodash/get';
 
-import { monitoringStatuses } from './monitoringHelper';
+import {
+  monitoringStatuses,
+  hasResourceUsageMetrics,
+  alertsSeverity,
+  operatorsStatuses, thresholds,
+} from './monitoringHelper';
 import { hasCpuAndMemory } from '../../clusterDetailsHelper';
 import clusterStates from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
@@ -16,7 +21,7 @@ import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
  * @param {string} healthCriteria
  * @param {string} isIssue
  */
-const issuesSelector = (data, healthCriteria, match) => data.filter(
+const issuesCountSelector = (data, healthCriteria, match) => data.filter(
   item => item[healthCriteria] === match,
 ).length;
 
@@ -126,10 +131,42 @@ const clusterHealthSelector = (cluster, lastCheckIn, discoveredIssues) => {
  */
 const hasDataSelector = obj => get(obj, 'data.length', 0) > 0;
 
+
+const issuesSelector = (state) => {
+  const { cluster } = state.clusters.details;
+  const { alerts, nodes, operators } = state.monitoring;
+
+  const cpu = get(state, 'clusters.details.cluster.metrics.cpu', null);
+  const memory = get(state, 'clusters.details.cluster.metrics.memory', null);
+
+  // For each entity, check if there is data available
+  const hasAlerts = hasDataSelector(alerts);
+  const hasNodes = hasDataSelector(nodes);
+  const hasClusterOperators = hasDataSelector(operators);
+  const hasResourceUsageData = hasCpuAndMemory(cpu, memory) && hasResourceUsageMetrics(cluster);
+
+  // Calculate the number of issues
+  const alertsIssues = hasAlerts ? issuesCountSelector(alerts.data, 'severity', alertsSeverity.CRITICAL) : null;
+  const nodesIssues = hasNodes ? issuesCountSelector(nodes.data, 'up', false) : null;
+  const operatorsIssues = hasClusterOperators ? issuesCountSelector(operators.data, 'condition', operatorsStatuses.FAILING) : null;
+  const resourceUsageIssues = hasResourceUsageData
+    ? resourceUsageIssuesSelector(cpu, memory, thresholds.DANGER) : null;
+
+  // Sum all issues
+  return {
+    count: alertsIssues + nodesIssues + resourceUsageIssues + operatorsIssues,
+    alerts: alertsIssues,
+    nodes: nodesIssues,
+    resourceUsage: resourceUsageIssues,
+    operators: operatorsIssues,
+  };
+};
+
 export {
-  issuesSelector,
+  issuesCountSelector,
   lastCheckInSelector,
   resourceUsageIssuesSelector,
   clusterHealthSelector,
   hasDataSelector,
+  issuesSelector,
 };
