@@ -134,7 +134,6 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
                 </SplitItem>
                 <SplitItem>
                   <Link
-                    replace={false}
                     to="/"
                   >
                     <Button

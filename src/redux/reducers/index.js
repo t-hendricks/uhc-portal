@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import { connectRouter } from 'connected-react-router';
 import { notifications } from '@redhat-cloud-services/frontend-components-notifications';
 
 import { clustersReducer } from './clustersReducer';
@@ -54,7 +55,10 @@ const reducers = {
   dashboards: dashboardsReducer,
 };
 
-const reduxReducers = combineReducers(reducers);
+const reduxReducers = history => combineReducers({
+  ...reducers,
+  router: connectRouter(history),
+});
 
 export { reduxReducers, reducers };
 
