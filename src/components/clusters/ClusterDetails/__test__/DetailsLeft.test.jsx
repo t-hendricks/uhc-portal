@@ -2,11 +2,15 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import DetailsLeft from '../components/Overview/DetailsLeft';
-import { clusterDetails, cloudProviders } from './ClusterDetails.fixtures';
+import fixtures from './ClusterDetails.fixtures';
+
 
 describe('<DetailsLeft />', () => {
   const wrapper = shallow(
-    <DetailsLeft cluster={clusterDetails.cluster} cloudProviders={cloudProviders} />,
+    <DetailsLeft
+      cluster={fixtures.clusterDetails.cluster}
+      cloudProviders={fixtures.cloudProviders}
+    />,
   );
 
   it('should render', () => {

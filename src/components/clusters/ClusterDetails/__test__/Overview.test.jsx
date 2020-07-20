@@ -2,10 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Overview from '../components/Overview/Overview';
-import { clusterDetails, cloudProviders } from './ClusterDetails.fixtures';
+import fixtures from './ClusterDetails.fixtures';
 
 describe('<Overview />', () => {
-  const props = { cluster: clusterDetails.cluster, cloudProviders };
+  const props = {
+    cluster: fixtures.clusterDetails.cluster,
+    cloudProviders: fixtures.cloudProviders,
+  };
   const wrapper = shallow(
     <Overview {...props} />,
   );

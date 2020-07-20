@@ -2,9 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import DetailsRight from '../components/Overview/DetailsRight';
-import { clusterDetails } from './ClusterDetails.fixtures';
+import fixtures from './ClusterDetails.fixtures';
 
 describe('<DetailsRight />', () => {
+  const { clusterDetails } = fixtures;
   it('should render', () => {
     const wrapper = shallow(
       <DetailsRight

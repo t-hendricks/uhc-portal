@@ -1,11 +1,11 @@
 import { hasCpuAndMemory } from '../clusterDetailsHelper';
-import { clusterDetails } from './ClusterDetails.fixtures';
+import fixtures from './ClusterDetails.fixtures';
 
 describe('hasCpuAndMemory', () => {
   let metrics = null;
 
   beforeEach(() => {
-    metrics = { ...clusterDetails.cluster.metrics };
+    metrics = { ...fixtures.clusterDetails.cluster.metrics };
   });
 
   it('returns false when there is no cpu', () => {

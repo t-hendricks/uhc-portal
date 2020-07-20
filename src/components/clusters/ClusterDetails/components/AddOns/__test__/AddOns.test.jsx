@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import AddOns from '../AddOns';
 import { mockAddOns, mockClusterAddOns, mockQuota } from './AddOns.fixtures';
-import { clusterDetails, organization, getOrganizationAndQuota } from '../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 describe('<AddOns />', () => {
   let wrapper;
@@ -12,6 +12,9 @@ describe('<AddOns />', () => {
   const addClusterAddOn = jest.fn();
   const clearAddOnsResponses = jest.fn();
   const addClusterAddOnResponse = jest.fn();
+  const getOrganizationAndQuota = jest.fn();
+
+  const { clusterDetails, organization } = fixtures;
 
   beforeAll(() => {
     wrapper = shallow(<AddOns
