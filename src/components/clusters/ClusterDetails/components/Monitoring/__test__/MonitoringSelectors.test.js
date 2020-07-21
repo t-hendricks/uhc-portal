@@ -1,6 +1,5 @@
 import moment from 'moment';
 import {
-  issuesCountSelector,
   resourceUsageIssuesSelector,
   clusterHealthSelector,
   lastCheckInSelector,
@@ -17,18 +16,8 @@ import {
   mockOCPClusterDetails,
   mockLastCheckIn,
 } from './Monitoring.fixtures';
-import { alertsSeverity, thresholds, monitoringStatuses } from '../monitoringHelper';
+import { thresholds, monitoringStatuses } from '../monitoringHelper';
 import clusterStates from '../../../../common/clusterStates';
-
-describe('issuesCountSelector', () => {
-  it('should count existing issues', () => {
-    expect(issuesCountSelector(mockAlerts.data, 'severity', alertsSeverity.CRITICAL)).toEqual(2);
-  });
-
-  it('should find no issues', () => {
-    expect(issuesCountSelector(mockNodes.data, 'up', false)).toEqual(0);
-  });
-});
 
 describe('resourceUsageIssuesSelector', () => {
   it('should count existing issues', () => {

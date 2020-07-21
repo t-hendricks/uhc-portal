@@ -43,6 +43,21 @@ const baseURLProps = {
   target: '_blank',
 };
 
+/**
+ * Get the number of items matches some criteria from a set of data
+ * Example:
+ * An item is considered an issue if it's value of the health criteria mathces the value
+ * of the definition of issue for this data.
+ * An Alert has an issue if alert's severity is critical.
+ * Therefore: issuesSelector(alerts, 'severity', 'critical' )
+ * @param {Array} data
+ * @param {string} healthCriteria
+ * @param {string} match
+ */
+const countByCriteria = (data, healthCriteria, match) => data.filter(
+  item => item[healthCriteria] === match,
+).length;
+
 const hasResourceUsageMetrics = (cluster) => {
   const metricsLastUpdate = moment.utc(get(cluster, 'metrics.cpu.updated_timestamp', 0));
   const now = moment.utc();
@@ -101,4 +116,5 @@ export {
   monitoringItemLinkProps,
   monitoringItemTypes,
   hasResourceUsageMetrics,
+  countByCriteria,
 };

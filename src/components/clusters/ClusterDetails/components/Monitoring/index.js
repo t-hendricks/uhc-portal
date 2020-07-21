@@ -5,13 +5,13 @@ import Monitoring from './Monitoring';
 import { clearMonitoringState } from './MonitoringActions';
 
 import {
-  issuesCountSelector,
   lastCheckInSelector,
   resourceUsageIssuesSelector,
   clusterHealthSelector,
   issuesSelector,
 } from './MonitoringSelectors';
 import {
+  countByCriteria,
   alertsSeverity,
   operatorsStatuses,
   thresholds,
@@ -35,8 +35,8 @@ const mapStateToProps = (state) => {
   const hasResourceUsageData = issues.resourceUsage !== null;
 
   // Calculate warnings
-  const alertsWarnings = hasAlerts ? issuesCountSelector(alerts.data, 'severity', alertsSeverity.WARNING) : null;
-  const operatorsWarnings = hasClusterOperators ? issuesCountSelector(operators.data, 'condition', operatorsStatuses.DEGRADED) : null;
+  const alertsWarnings = hasAlerts ? countByCriteria(alerts.data, 'severity', alertsSeverity.WARNING) : null;
+  const operatorsWarnings = hasClusterOperators ? countByCriteria(operators.data, 'condition', operatorsStatuses.DEGRADED) : null;
   const resourceUsageWarnings = hasResourceUsageData
     ? resourceUsageIssuesSelector(cpu, memory, thresholds.WARNING) : null;
 

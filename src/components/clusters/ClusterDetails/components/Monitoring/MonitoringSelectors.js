@@ -1,29 +1,17 @@
 import get from 'lodash/get';
 
 import {
+  countByCriteria,
   monitoringStatuses,
   hasResourceUsageMetrics,
   alertsSeverity,
-  operatorsStatuses, thresholds,
+  operatorsStatuses,
+  thresholds,
 } from './monitoringHelper';
 import { hasCpuAndMemory } from '../../clusterDetailsHelper';
 import clusterStates from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
-/**
- * Get the number of items matches some criteria from a set of data
- * Example:
- * An item is considered an issue if it's value of the health criteria mathces the value
- * of the definition of issue for this data.
- * An Alert has an issue if alert's severity is critical.
- * Therefore: issuesSelector(alerts, 'severity', 'critical' )
- * @param {Array} data
- * @param {string} healthCriteria
- * @param {string} isIssue
- */
-const issuesCountSelector = (data, healthCriteria, match) => data.filter(
-  item => item[healthCriteria] === match,
-).length;
 
 const lastCheckInSelector = (lastCheckIn) => {
   const MAX_DIFF_HOURS = 3;
@@ -146,9 +134,9 @@ const issuesSelector = (state) => {
   const hasResourceUsageData = hasCpuAndMemory(cpu, memory) && hasResourceUsageMetrics(cluster);
 
   // Calculate the number of issues
-  const alertsIssues = hasAlerts ? issuesCountSelector(alerts.data, 'severity', alertsSeverity.CRITICAL) : null;
-  const nodesIssues = hasNodes ? issuesCountSelector(nodes.data, 'up', false) : null;
-  const operatorsIssues = hasClusterOperators ? issuesCountSelector(operators.data, 'condition', operatorsStatuses.FAILING) : null;
+  const alertsIssues = hasAlerts ? countByCriteria(alerts.data, 'severity', alertsSeverity.CRITICAL) : null;
+  const nodesIssues = hasNodes ? countByCriteria(nodes.data, 'up', false) : null;
+  const operatorsIssues = hasClusterOperators ? countByCriteria(operators.data, 'condition', operatorsStatuses.FAILING) : null;
   const resourceUsageIssues = hasResourceUsageData
     ? resourceUsageIssuesSelector(cpu, memory, thresholds.DANGER) : null;
 
@@ -163,7 +151,6 @@ const issuesSelector = (state) => {
 };
 
 export {
-  issuesCountSelector,
   lastCheckInSelector,
   resourceUsageIssuesSelector,
   clusterHealthSelector,
