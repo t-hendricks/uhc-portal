@@ -641,7 +641,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 20px;
 }
 
-.infra-card, a.infra-card {
+.infra-card, a.infra-card, .ocm-page a.infra-card {
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -656,10 +656,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
   h5, h3 {
     color: var(--pf-global--Color--100);
-    font-weight: var(--pf-global--FontWeight--bold);
   }
 
   &:hover {
+    text-decoration: none;
     border-color: var(--pf-global--primary-color--100);
     h5, h3, .infra-crc-icon-text {
       color: var(--pf-global--primary-color--100);
@@ -805,7 +805,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   color: var(--pf-global--Color--100);
   }
 }
-
 
 
 // Temporary hacks to make PF4 components look okay in a PF3 form
