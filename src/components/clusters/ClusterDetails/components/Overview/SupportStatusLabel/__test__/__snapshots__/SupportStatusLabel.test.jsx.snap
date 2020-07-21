@@ -1,0 +1,324 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SupportStatusLabel /> should render 1`] = `"N/A"`;
+
+exports[`<SupportStatusLabel /> should render for every possible support status renders for End of Life 1`] = `
+<Popover
+  appendTo={[Function]}
+  aria-label="End of life"
+  bodyContent=" This minor version of OpenShift has reached the end of life and is no longer supported. Upgrade to a newer version so that this cluster is supportable."
+  boundary="window"
+  className="cluster-support-status-popover"
+  closeBtnAriaLabel="Close"
+  distance={25}
+  enableFlip={true}
+  flipBehavior={
+    Array [
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "top",
+      "right",
+      "bottom",
+    ]
+  }
+  footerContent={
+    <React.Fragment>
+      See
+       
+      <a
+        href="https://access.redhat.com/support/policy/updates/openshift"
+        rel="noopener noreferrer"
+      >
+        this resource
+      </a>
+       
+      to learn more about the support lifecycle.
+    </React.Fragment>
+  }
+  headerContent={null}
+  hideOnOutsideClick={true}
+  isVisible={null}
+  maxWidth="calc(1rem + 1rem + 18.75rem)"
+  onHidden={[Function]}
+  onHide={[Function]}
+  onMount={[Function]}
+  onShow={[Function]}
+  onShown={[Function]}
+  position="top"
+  shouldClose={[Function]}
+  tippyProps={Object {}}
+  zIndex={9999}
+>
+  <Label
+    className="cluster-support-label-clickable"
+    color="red"
+  >
+    End of life
+  </Label>
+</Popover>
+`;
+
+exports[`<SupportStatusLabel /> should render for every possible support status renders for Extended Update Support 1`] = `
+<Popover
+  appendTo={[Function]}
+  aria-label="Extended update support"
+  bodyContent=" This minor version of OpenShift has reached the extended update support phase. Critical and selected high priority fixes will continue to be delivered in patch (z-stream) releases."
+  boundary="window"
+  className="cluster-support-status-popover"
+  closeBtnAriaLabel="Close"
+  distance={25}
+  enableFlip={true}
+  flipBehavior={
+    Array [
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "top",
+      "right",
+      "bottom",
+    ]
+  }
+  footerContent={
+    <React.Fragment>
+      See
+       
+      <a
+        href="https://access.redhat.com/support/policy/updates/openshift"
+        rel="noopener noreferrer"
+      >
+        this resource
+      </a>
+       
+      to learn more about the support lifecycle.
+    </React.Fragment>
+  }
+  headerContent={null}
+  hideOnOutsideClick={true}
+  isVisible={null}
+  maxWidth="calc(1rem + 1rem + 18.75rem)"
+  onHidden={[Function]}
+  onHide={[Function]}
+  onMount={[Function]}
+  onShow={[Function]}
+  onShown={[Function]}
+  position="top"
+  shouldClose={[Function]}
+  tippyProps={Object {}}
+  zIndex={9999}
+>
+  <Label
+    className="cluster-support-label-clickable"
+    color="blue"
+    variant="outline"
+  >
+    Extended update support
+  </Label>
+</Popover>
+`;
+
+exports[`<SupportStatusLabel /> should render for every possible support status renders for Full Support 1`] = `
+<Popover
+  appendTo={[Function]}
+  aria-label="full support"
+  bodyContent="This minor version of OpenShift is fully supported. In order to receive security and bug fixes, continue to install patch (z-stream) updates to your cluster or upgrade to the latest minor version when available."
+  boundary="window"
+  className="cluster-support-status-popover"
+  closeBtnAriaLabel="Close"
+  distance={25}
+  enableFlip={true}
+  flipBehavior={
+    Array [
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "top",
+      "right",
+      "bottom",
+    ]
+  }
+  footerContent={
+    <React.Fragment>
+      See
+       
+      <a
+        href="https://access.redhat.com/support/policy/updates/openshift"
+        rel="noopener noreferrer"
+      >
+        this resource
+      </a>
+       
+      to learn more about the support lifecycle.
+    </React.Fragment>
+  }
+  headerContent={null}
+  hideOnOutsideClick={true}
+  isVisible={null}
+  maxWidth="calc(1rem + 1rem + 18.75rem)"
+  onHidden={[Function]}
+  onHide={[Function]}
+  onMount={[Function]}
+  onShow={[Function]}
+  onShown={[Function]}
+  position="top"
+  shouldClose={[Function]}
+  tippyProps={Object {}}
+  zIndex={9999}
+>
+  <Label
+    className="cluster-support-label-clickable"
+    color="blue"
+    variant="outline"
+  >
+    Full support
+  </Label>
+</Popover>
+`;
+
+exports[`<SupportStatusLabel /> should render for every possible support status renders for Maintainence Support 1`] = `
+<Label
+  color="blue"
+  variant="outline"
+>
+  Maintainence Support
+</Label>
+`;
+
+exports[`<SupportStatusLabel /> should render for every possible support status renders for an unrecognized status 1`] = `
+<Label
+  color="blue"
+  variant="outline"
+>
+  some other status
+</Label>
+`;
+
+exports[`<SupportStatusLabel /> should render skeleton when pending 1`] = `
+<Skeleton
+  className="inline-skeleton"
+  isDark={false}
+  size="sm"
+/>
+`;
+
+exports[`<SupportStatusLabel /> should show N/A when support status is unknown 1`] = `"N/A"`;
+
+exports[`<SupportStatusLabel /> should show blue label when status is still supported 1`] = `
+<Popover
+  appendTo={[Function]}
+  aria-label="full support"
+  bodyContent="This minor version of OpenShift is fully supported. In order to receive security and bug fixes, continue to install patch (z-stream) updates to your cluster or upgrade to the latest minor version when available."
+  boundary="window"
+  className="cluster-support-status-popover"
+  closeBtnAriaLabel="Close"
+  distance={25}
+  enableFlip={true}
+  flipBehavior={
+    Array [
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "top",
+      "right",
+      "bottom",
+    ]
+  }
+  footerContent={
+    <React.Fragment>
+      See
+       
+      <a
+        href="https://access.redhat.com/support/policy/updates/openshift"
+        rel="noopener noreferrer"
+      >
+        this resource
+      </a>
+       
+      to learn more about the support lifecycle.
+    </React.Fragment>
+  }
+  headerContent={null}
+  hideOnOutsideClick={true}
+  isVisible={null}
+  maxWidth="calc(1rem + 1rem + 18.75rem)"
+  onHidden={[Function]}
+  onHide={[Function]}
+  onMount={[Function]}
+  onShow={[Function]}
+  onShown={[Function]}
+  position="top"
+  shouldClose={[Function]}
+  tippyProps={Object {}}
+  zIndex={9999}
+>
+  <Label
+    className="cluster-support-label-clickable"
+    color="blue"
+    variant="outline"
+  >
+    Full support
+  </Label>
+</Popover>
+`;
+
+exports[`<SupportStatusLabel /> should show red label when status is not supported 1`] = `
+<Popover
+  appendTo={[Function]}
+  aria-label="End of life"
+  bodyContent=" This minor version of OpenShift has reached the end of life and is no longer supported. Upgrade to a newer version so that this cluster is supportable."
+  boundary="window"
+  className="cluster-support-status-popover"
+  closeBtnAriaLabel="Close"
+  distance={25}
+  enableFlip={true}
+  flipBehavior={
+    Array [
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "top",
+      "right",
+      "bottom",
+    ]
+  }
+  footerContent={
+    <React.Fragment>
+      See
+       
+      <a
+        href="https://access.redhat.com/support/policy/updates/openshift"
+        rel="noopener noreferrer"
+      >
+        this resource
+      </a>
+       
+      to learn more about the support lifecycle.
+    </React.Fragment>
+  }
+  headerContent={null}
+  hideOnOutsideClick={true}
+  isVisible={null}
+  maxWidth="calc(1rem + 1rem + 18.75rem)"
+  onHidden={[Function]}
+  onHide={[Function]}
+  onMount={[Function]}
+  onShow={[Function]}
+  onShown={[Function]}
+  position="top"
+  shouldClose={[Function]}
+  tippyProps={Object {}}
+  zIndex={9999}
+>
+  <Label
+    className="cluster-support-label-clickable"
+    color="red"
+  >
+    End of life
+  </Label>
+</Popover>
+`;
