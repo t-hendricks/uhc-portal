@@ -5,12 +5,12 @@ import OSDSubscriptionCard from './OSDSubscriptionCard';
 
 
 const mapDispatchToProps = {
-  fetchQuotaSummary: organizationID => subscriptionsActions.fetchQuotaSummary(organizationID),
+  fetchQuotaCost: organizationID => subscriptionsActions.fetchQuotaCost(organizationID),
 };
 
 function mapStateToProps(state) {
   return {
-    quotaSummary: state.subscriptions.quotaSummary,
+    quotaCost: state.subscriptions.quotaCost,
   };
 }
 

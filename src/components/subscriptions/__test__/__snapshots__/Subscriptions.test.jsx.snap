@@ -135,12 +135,12 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
       rows={
         Array [
           Array [
-            "cluster.aws",
-            "c5.4xlarge",
+            "compute.node",
+            "cpu.large",
             Object {
-              "title": "multizone",
+              "title": "N/A",
             },
-            "BYOC",
+            "Standard",
             10,
             15,
             Object {
@@ -152,12 +152,12 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
             },
           ],
           Array [
-            "cluster.aws",
-            "m5.xlarge",
+            "compute.node",
+            "cpu.large",
             Object {
-              "title": "multizone",
+              "title": "N/A",
             },
-            "BYOC",
+            "Standard",
             15,
             15,
             Object {
@@ -169,12 +169,12 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
             },
           ],
           Array [
-            "compute.node.aws",
-            "c5.4xlarge",
+            "compute.node",
+            "cpu.large",
             Object {
-              "title": "multizone",
+              "title": "N/A",
             },
-            "BYOC",
+            "Standard",
             0,
             4,
             Object {
@@ -186,12 +186,12 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
             },
           ],
           Array [
-            "addon",
-            "dbaOperatorAddon",
+            "add-on",
+            "addon-dba-operator",
             Object {
               "title": "N/A",
             },
-            "Standard",
+            "BYOC",
             0,
             5,
             Object {

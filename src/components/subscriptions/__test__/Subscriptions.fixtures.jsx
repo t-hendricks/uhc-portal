@@ -1,5 +1,6 @@
 const fetchAccount = jest.fn();
 const fetchQuotaSummary = jest.fn();
+const fetchQuotaCost = jest.fn();
 
 const organizationID = 'org-1';
 
@@ -64,13 +65,86 @@ const quotaSummary = {
   },
 };
 
+const quotaCost = {
+  empty: false,
+  error: false,
+  errorDetails: null,
+  errorMessage: '',
+  fulfilled: true,
+  pending: false,
+  valid: true,
+  items: [
+    {
+      allowed: 15,
+      consumed: 10,
+      related_resources: [
+        {
+          cloud_provider: 'any',
+          resource_name: 'cpu.large',
+          resource_type: 'compute.node',
+          byoc: 'rhinfra',
+          availability_zone_type: 'any',
+          product: '',
+        },
+      ],
+    },
+    {
+      allowed: 15,
+      consumed: 15,
+      related_resources: [
+        {
+          cloud_provider: 'any',
+          resource_name: 'cpu.large',
+          resource_type: 'compute.node',
+          byoc: 'rhinfra',
+          availability_zone_type: 'any',
+          product: '',
+        },
+      ],
+    },
+    {
+      allowed: 4,
+      consumed: 0,
+      related_resources: [
+        {
+          cloud_provider: 'any',
+          resource_name: 'cpu.large',
+          resource_type: 'compute.node',
+          byoc: 'rhinfra',
+          availability_zone_type: 'any',
+          product: '',
+        },
+      ],
+    },
+    {
+      allowed: 5,
+      consumed: 0,
+      related_resources: [
+        {
+          cloud_provider: 'any',
+          resource_name: 'addon-dba-operator',
+          resource_type: 'add-on',
+          byoc: 'any',
+          availability_zone_type: 'any',
+          product: '',
+        },
+      ],
+    },
+  ],
+  addOnsQuota: {
+    dbaOperatorAddon: 5,
+  },
+};
+
 const rows = [];
 
 export {
   fetchAccount,
   fetchQuotaSummary,
+  fetchQuotaCost,
   organizationID,
   account,
   quotaSummary,
+  quotaCost,
   rows,
 };
