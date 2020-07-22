@@ -9,7 +9,7 @@ import * as actions from '../../../../redux/actions/viewOptionsActions';
 const ViewPaginationRow = ({
   currentPage, pageSize, totalCount, onFirstPage,
   onLastPage, onPreviousPage, onNextPage, onPageInput, onPerPageSelect, variant,
-  isDisabled,
+  isDisabled, perPageOptions,
 }) => (
   <Pagination
     page={currentPage}
@@ -27,6 +27,7 @@ const ViewPaginationRow = ({
     dropDirection={variant === 'bottom' ? 'up' : 'down'}
     isCompact={variant !== 'bottom'}
     isDisabled={isDisabled}
+    perPageOptions={perPageOptions}
   />
 );
 
@@ -46,6 +47,9 @@ ViewPaginationRow.propTypes = {
   onPerPageSelect: PropTypes.func,
   variant: PropTypes.oneOf(['top', 'bottom']).isRequired,
   isDisabled: PropTypes.bool,
+  perPageOptions: PropTypes.arrayOf(
+    PropTypes.shape({ title: PropTypes.string, value: PropTypes.number }),
+  ),
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

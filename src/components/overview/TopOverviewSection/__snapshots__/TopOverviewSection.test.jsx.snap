@@ -8,7 +8,6 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
   >
     <Link
       className="overview-clusters-link"
-      replace={false}
       to="/"
     >
       <Card

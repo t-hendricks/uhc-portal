@@ -31,6 +31,11 @@ const disableRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
   url: `/clusters/${clusterID}/rules/${ruleID}/disable`,
 });
 
+const getReportDetails = (clusterID, ruleID) => insightsAPIRequest({
+  method: 'get',
+  url: `/clusters/${clusterID}/rules/${ruleID}/report`,
+});
+
 const enableRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
   method: 'put',
   url: `/clusters/${clusterID}/rules/${ruleID}/enable`,
@@ -50,6 +55,7 @@ const insigthsService = {
   disableRuleInsights,
   enableRuleInsights,
   getGroupsInsights,
+  getReportDetails,
 };
 
 export default insigthsService;

@@ -197,7 +197,7 @@ class LogWindow extends React.Component {
                 icon={<ExpandIcon />}
                 isDisabled={!totalLines || !document.fullscreenEnabled}
               >
-                { isFullScreen ? 'Exit Fullscreen' : 'Expand' }
+                { isFullScreen ? 'Exit fullscreen' : 'Expand' }
               </Button>
             </div>
           )}

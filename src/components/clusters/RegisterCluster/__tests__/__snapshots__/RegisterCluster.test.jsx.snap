@@ -151,7 +151,6 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
           Register cluster
         </Button>
         <Link
-          replace={false}
           to="/"
         >
           <Button

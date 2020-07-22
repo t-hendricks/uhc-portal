@@ -20,8 +20,15 @@ import {
   DISABLE_RULE_INSIGHTS,
   ENABLE_RULE_INSIGHTS,
   GET_GROUPS_INSIGHTS,
+  GET_REPORT_DETAILS,
+  SET_REPORT_DETAILS,
 } from './InsightsConstants';
 import { insightsService } from '../../../../../services';
+
+export const setReportDetails = report => ({
+  type: SET_REPORT_DETAILS,
+  payload: report,
+});
 
 const fetchSingleClusterInsights = async (clusterId, orgId) => {
   try {
@@ -112,4 +119,9 @@ export const enableRuleInsights = (clusterId, ruleId) => (dispatch) => {
 export const fetchGroups = () => dispatch => dispatch({
   type: GET_GROUPS_INSIGHTS,
   payload: insightsService.getGroupsInsights(),
+});
+
+export const fetchReportDetails = (clusterId, ruleId) => dispatch => dispatch({
+  type: GET_REPORT_DETAILS,
+  payload: insightsService.getReportDetails(clusterId, ruleId),
 });

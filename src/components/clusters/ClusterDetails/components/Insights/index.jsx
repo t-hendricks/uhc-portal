@@ -13,7 +13,12 @@ import InsightsTable from './InsightsTable';
 import './index.scss';
 
 const Insights = ({
-  insightsData, voteOnRule, disableRule, enableRule, groups,
+  insightsData,
+  voteOnRule,
+  disableRule,
+  enableRule,
+  groups,
+  cluster,
 }) => {
   if (!insightsData) {
     return (
@@ -42,6 +47,7 @@ const Insights = ({
 
   return (
     <InsightsTable
+      cluster={cluster}
       insightsData={insightsData}
       groups={groups}
       voteOnRule={voteOnRule}
@@ -52,6 +58,7 @@ const Insights = ({
 };
 
 Insights.propTypes = {
+  cluster: PropTypes.object.isRequired,
   insightsData: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
   voteOnRule: PropTypes.func.isRequired,
