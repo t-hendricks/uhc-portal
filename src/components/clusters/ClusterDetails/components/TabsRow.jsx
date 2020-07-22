@@ -55,7 +55,7 @@ class TabsRow extends React.Component {
   <>
     <TabTitleText>Monitoring</TabTitleText>
     {hasIssues
-    && <TabTitleIcon id="issues-icon"><ExclamationCircleIcon color={global_danger_color_100.value} /></TabTitleIcon>}
+    && <TabTitleIcon id="monitoring-issues-icon"><ExclamationCircleIcon color={global_danger_color_100.value} /></TabTitleIcon>}
   </>,
         contentId: 'monitoringTabContent',
         show: displayMonitoringTab,

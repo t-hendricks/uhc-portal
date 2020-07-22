@@ -15,7 +15,7 @@ const mockNodes = {
     {
       internal_ip: '10.0.143.198',
       hostname: 'ip-10-0-143-198.ec2.internal',
-      up: true,
+      up: false,
       time: '1562168629557',
     },
   ],
