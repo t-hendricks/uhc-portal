@@ -21,12 +21,23 @@ import {
   PENDING_ACTION,
 } from '../../../../../redux/reduxHelpers';
 
-import { GET_CLUSTER_INSIGHTS, GET_GROUPS_INSIGHTS } from './InsightsConstants';
+import {
+  GET_CLUSTER_INSIGHTS,
+  GET_GROUPS_INSIGHTS,
+  GET_REPORT_DETAILS,
+  SET_REPORT_DETAILS,
+} from './InsightsConstants';
 
 const initialState = {
   insightsData: {},
   groups: {
     groups: [],
+    rejected: false,
+    pending: false,
+    fulfilled: false,
+  },
+  reportDetails: {
+    report: null,
     rejected: false,
     pending: false,
     fulfilled: false,
@@ -58,6 +69,23 @@ function insightsReducer(state = initialState, action) {
       case REJECTED_ACTION(GET_GROUPS_INSIGHTS):
         draft.groups.rejected = true;
         draft.groups.pending = false;
+        break;
+      case FULFILLED_ACTION(GET_REPORT_DETAILS):
+        draft.reportDetails.report = action.payload.data.report;
+        draft.reportDetails.fulfilled = true;
+        draft.reportDetails.pending = false;
+        break;
+      case PENDING_ACTION(GET_REPORT_DETAILS):
+        draft.reportDetails.pending = true;
+        break;
+      case REJECTED_ACTION(GET_REPORT_DETAILS):
+        draft.reportDetails.rejected = true;
+        draft.reportDetails.pending = false;
+        break;
+      case SET_REPORT_DETAILS:
+        draft.reportDetails.report = action.payload.data.report;
+        draft.reportDetails.fulfilled = true;
+        draft.reportDetails.pending = false;
         break;
       default:
         break;

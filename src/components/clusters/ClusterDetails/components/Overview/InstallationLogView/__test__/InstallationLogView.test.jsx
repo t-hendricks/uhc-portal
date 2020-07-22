@@ -2,11 +2,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import LogWindow from '../InstallationLogView';
-import { clusterDetails } from '../../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../../__test__/ClusterDetails.fixtures';
 
 jest.useFakeTimers();
 
 describe('<InstallationLogView />', () => {
+  const { clusterDetails } = fixtures;
   let wrapper;
   const clearLogs = jest.fn();
   const getLogs = jest.fn();

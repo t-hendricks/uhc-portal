@@ -4,7 +4,7 @@
 
 set -e -u -o pipefail
 
-cd "$(dirname "$0")"
+cd "$(dirname "$(dirname "$0")")"
 
 echo Waiting on server and backend...
 yarn wait-on http://localhost:8001/ http://localhost:8010/api
@@ -13,7 +13,10 @@ yarn wait-on http://localhost:8001/ http://localhost:8010/api
 # next available port, despite us requesting specific SPANDX_PORT.
 yarn stop-insights-proxy
 export SPANDX_PORT=1337
-./check-spandx-port-available.js
+run/check-spandx-port-available.js
+
+export CUSTOM_CONF=true
+export CUSTOM_CONF_PATH="${CUSTOM_CONF_PATH:-$PWD/profiles/local-frontend.js}"
 
 case "$(uname -s)" in
     Linux*)
@@ -35,11 +38,12 @@ trap 'yarn stop-insights-proxy' EXIT
 
 # bash doesn't trap signals while a foreground command is running.
 # Running in background + wait allows the trap to work.
-./podman-or-docker.sh run \
+run/podman-or-docker.sh run \
                       --rm --name insightsproxy \
                       --add-host qa.foo.redhat.com:127.0.0.1 \
                       --add-host prod.foo.redhat.com:127.0.0.1 \
-                      --env CUSTOM_CONF=true --volume "$PWD"/../profiles/local-frontend.js:/config/spandx.config.js \
+                      --env SPANDX_PORT \
+                      --env CUSTOM_CONF --volume "$CUSTOM_CONF_PATH":/config/spandx.config.js \
                       --security-opt label=disable \
                       $OPTS \
                       -p 1337:1337 \

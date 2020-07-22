@@ -5,14 +5,14 @@ import { initialState } from '../UsersReducer';
 import { stateWithUsers } from './Users.fixtures';
 import UsersSection from '../UsersSection';
 
-import { clusterDetails } from '../../../../__test__/ClusterDetails.fixtures';
+import fixtures from '../../../../__test__/ClusterDetails.fixtures';
 
 
 describe('<Users />', () => {
   it('should render without users', () => {
     const getUsers = jest.fn();
     const wrapper = shallow(<UsersSection
-      cluster={clusterDetails.cluster}
+      cluster={fixtures.clusterDetails.cluster}
       getUsers={getUsers}
       deleteUser={jest.fn()}
       addUser={jest.fn()}
@@ -36,7 +36,7 @@ describe('<Users />', () => {
   describe('with users', () => {
     const getUsers = jest.fn();
     const wrapper = shallow(<UsersSection
-      cluster={clusterDetails.cluster}
+      cluster={fixtures.clusterDetails.cluster}
       getUsers={getUsers}
       deleteUser={jest.fn()}
       addUser={jest.fn()}

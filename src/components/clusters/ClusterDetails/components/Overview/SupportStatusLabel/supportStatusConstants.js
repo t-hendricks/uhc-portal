@@ -1,0 +1,3 @@
+const GET_SUPPORT_STATUS = 'GET_SUPPORT_STATUS';
+
+export default GET_SUPPORT_STATUS;

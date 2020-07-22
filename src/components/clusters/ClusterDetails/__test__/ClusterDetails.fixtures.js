@@ -1,32 +1,34 @@
 const match = { params: { id: '1IztzhAGrbjtKkMbiPewJanhTXk' } };
-const history = {
-  push: jest.fn(),
-};
-const fetchDetails = jest.fn();
-const fetchInsightsData = jest.fn();
-const fetchGroups = jest.fn();
-const getCloudProviders = jest.fn();
-const invalidateClusters = jest.fn();
-const getOrganizationAndQuota = jest.fn();
-const refreshFunc = jest.fn();
-const openModal = jest.fn();
-const closeModal = jest.fn();
-const getLogs = jest.fn();
-const getUsers = jest.fn();
-const getDedicatedAdmins = jest.fn();
-const getClusterAdmins = jest.fn();
-const getClusterIdentityProviders = jest.fn();
-const resetIdentityProvidersState = jest.fn();
-const clearGlobalError = jest.fn();
-const setGlobalError = jest.fn();
-const getAlerts = jest.fn();
-const getNodes = jest.fn();
-const getClusterOperators = jest.fn();
-const getAddOns = jest.fn();
-const getClusterAddOns = jest.fn();
-const getGrants = jest.fn();
-const getClusterHistory = jest.fn();
-const getClusterRouters = jest.fn();
+const funcs = () => ({
+  history: {
+    push: jest.fn(),
+  },
+  fetchDetails: jest.fn(),
+  fetchInsightsData: jest.fn(),
+  fetchGroups: jest.fn(),
+  getCloudProviders: jest.fn(),
+  invalidateClusters: jest.fn(),
+  getOrganizationAndQuota: jest.fn(),
+  refreshFunc: jest.fn(),
+  openModal: jest.fn(),
+  closeModal: jest.fn(),
+  getLogs: jest.fn(),
+  getUsers: jest.fn(),
+  getDedicatedAdmins: jest.fn(),
+  getClusterAdmins: jest.fn(),
+  getClusterIdentityProviders: jest.fn(),
+  resetIdentityProvidersState: jest.fn(),
+  clearGlobalError: jest.fn(),
+  setGlobalError: jest.fn(),
+  getAlerts: jest.fn(),
+  getNodes: jest.fn(),
+  getClusterOperators: jest.fn(),
+  getAddOns: jest.fn(),
+  getClusterAddOns: jest.fn(),
+  getGrants: jest.fn(),
+  getClusterHistory: jest.fn(),
+  getClusterRouters: jest.fn(),
+});
 
 const subscriptionInfo = {
   id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
@@ -384,37 +386,14 @@ const clusterRouters = {
   },
 };
 
-export {
+const fixtures = {
   match,
-  history,
-  fetchDetails,
-  fetchInsightsData,
-  fetchGroups,
-  getCloudProviders,
-  getClusterIdentityProviders,
-  resetIdentityProvidersState,
-  getOrganizationAndQuota,
-  invalidateClusters,
-  refreshFunc,
-  openModal,
-  closeModal,
-  getLogs,
-  getUsers,
-  getDedicatedAdmins,
-  getClusterAdmins,
   clusterDetails,
   cloudProviders,
   clusterIdentityProviders,
   organization,
-  clearGlobalError,
-  setGlobalError,
-  getAlerts,
-  getNodes,
-  getClusterOperators,
-  getAddOns,
-  getClusterAddOns,
-  getGrants,
-  getClusterHistory,
-  getClusterRouters,
   clusterRouters,
 };
+
+export { funcs };
+export default fixtures;

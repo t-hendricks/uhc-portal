@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import { connectRouter } from 'connected-react-router';
 import { notifications } from '@redhat-cloud-services/frontend-components-notifications';
 
 import { clustersReducer } from './clustersReducer';
@@ -25,6 +26,7 @@ import { loadBalancersReducer } from './loadBalancersReducer';
 import { persistentStorageReducer } from './persistentStorageReducer';
 import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
 import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
+import supportStatusReducer from '../../components/clusters/ClusterDetails/components/Overview/SupportStatusLabel/supportStatusReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -52,9 +54,13 @@ const reducers = {
   insightsData: insightsReducer,
   clusterRouters: NetworkingReducer,
   dashboards: dashboardsReducer,
+  supportStatus: supportStatusReducer,
 };
 
-const reduxReducers = combineReducers(reducers);
+const reduxReducers = history => combineReducers({
+  ...reducers,
+  router: connectRouter(history),
+});
 
 export { reduxReducers, reducers };
 

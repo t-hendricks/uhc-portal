@@ -641,7 +641,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 20px;
 }
 
-.infra-card, a.infra-card {
+.infra-card, a.infra-card, .ocm-page a.infra-card {
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -656,10 +656,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
   h5, h3 {
     color: var(--pf-global--Color--100);
-    font-weight: var(--pf-global--FontWeight--bold);
   }
 
   &:hover {
+    text-decoration: none;
     border-color: var(--pf-global--primary-color--100);
     h5, h3, .infra-crc-icon-text {
       color: var(--pf-global--primary-color--100);
@@ -805,7 +805,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   color: var(--pf-global--Color--100);
   }
 }
-
 
 
 // Temporary hacks to make PF4 components look okay in a PF3 form
@@ -1334,7 +1333,7 @@ h3#grant-role-select  {
     display: block;
     text-decoration: none;
   }
-  #overview-emptystate-create-cluster {
+  span {
     background-color: #fff;
     color: #000000;
     font-size: var(--pf-global--FontSize--md);
@@ -1346,14 +1345,6 @@ h3#grant-role-select  {
     padding-right: var(--pf-global--spacer--lg);
     padding-left: var(--pf-global--spacer--lg);
     border-radius: 4px;
-  }
-  #overview-emptystate-register-cluster{
-    top: 50%;
-    color: #ffffff;
-    span{
-      float: right;
-      margin-left: 5px;
-    }
   }
 }
 
@@ -1471,3 +1462,20 @@ div.pf-c-alert div.pf-c-alert__icon {
 }
 
 /* END TEMPORARY WORKAROUND */
+
+.inline-skeleton {
+  display: inline-block;
+}
+
+.cluster-support-label-clickable {
+  cursor: pointer;
+}
+
+.cluster-support-status-popover footer a {
+  // something in PF or Insights overrides link styling for <a> in <footer>, breaking the intened style of this popover
+  // to avoid that, I'm copying here the default <a> styles so it'll look right
+  font-weight: var(--pf-global--link--FontWeight);
+  color: var(--pf-global--link--Color);
+  text-decoration: var(--pf-global--link--TextDecoration);
+  margin: 0;
+}

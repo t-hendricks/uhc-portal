@@ -47,13 +47,12 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
           Object {
             "cells": Array [
               Object {
-                "title": <Link
+                "title": <ForwardRef
                   onClick={[Function]}
-                  replace={false}
                   to="/details/1IztzhAGrbjtKkMbiPewJanhTXk"
                 >
                   test-liza
-                </Link>,
+                </ForwardRef>,
               },
               Object {
                 "title": <span>

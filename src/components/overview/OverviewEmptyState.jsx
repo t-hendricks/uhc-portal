@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   Button,
@@ -19,7 +18,7 @@ import { ArrowRightIcon } from '@patternfly/react-icons';
 
 const VIDEO_URL = 'https://www.youtube.com/embed/D_Lj0rObunI';
 
-function ClustersEmptyState({ showRegisterCluster = false }) {
+function OverviewEmptyState() {
   return (
     <>
       <div id="overview-emptystate-bg-img-container">
@@ -28,13 +27,6 @@ function ClustersEmptyState({ showRegisterCluster = false }) {
         <Link to="/create" className="space-left-lg">
           <span id="overview-emptystate-create-cluster">Create an OpenShift cluster</span>
         </Link>
-        {showRegisterCluster && (
-        <Link to="/register" id="overview-emptystate-register-cluster" className="space-left-lg">
-          <Button className="buttonHref" icon={<ArrowRightIcon />}>
-                Register a disconnected cluster
-          </Button>
-        </Link>
-        )}
       </div>
       <Title size="xl" headingLevel="h1" className="space-top-lg space-bottom-lg">Get productive with OpenShift</Title>
       <Flex id="overview-emptystate-get-productive">
@@ -142,9 +134,4 @@ function ClustersEmptyState({ showRegisterCluster = false }) {
   );
 }
 
-
-ClustersEmptyState.propTypes = {
-  showRegisterCluster: PropTypes.bool,
-};
-
-export default ClustersEmptyState;
+export default OverviewEmptyState;

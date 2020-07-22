@@ -56,7 +56,6 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
         >
           <Link
             className="infra-card pf-c-card create-cluster-card"
-            replace={false}
             to="/install"
           >
             <CardTitle
@@ -156,7 +155,6 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
         >
           <Link
             className="infra-card pf-c-card create-cluster-card"
-            replace={false}
             to="/install"
           >
             <CardTitle
