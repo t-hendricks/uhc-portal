@@ -13,7 +13,8 @@ import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/Redux
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
 const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr');
 const podDisjointSubnets = validators.disjointSubnets('network_pod_cidr');
-const awsMachineSubnetMask = validators.awsSubnetMask('network_machine_cidr');
+const awsMachineSingleAZSubnetMask = validators.awsSubnetMask('network_machine_cidr_single_az');
+const awsMachineMultiAZSubnetMask = validators.awsSubnetMask('network_machine_cidr_multi_az');
 const awsServiceSubnetMask = validators.awsSubnetMask('network_service_cidr');
 
 function NetworkingSection({
@@ -23,6 +24,7 @@ function NetworkingSection({
   showClusterPrivacy,
   privateClusterSelected,
   cloudProviderID,
+  isMultiAz,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -40,11 +42,13 @@ function NetworkingSection({
 
   const machineCidrValidators = [
     validators.cidr,
-    validators.machineCidr,
+    cloudProviderID === 'aws' && validators.awsMachineCidr,
+    cloudProviderID === 'gcp' && validators.gcpMachineCidr,
     validators.validateRange,
     machineDisjointSubnets,
     validators.disjointFromDockerRange,
-    cloudProviderID === 'aws' && awsMachineSubnetMask,
+    cloudProviderID === 'aws' && !isMultiAz && awsMachineSingleAZSubnetMask,
+    cloudProviderID === 'aws' && isMultiAz && awsMachineMultiAZSubnetMask,
     cloudProviderID === 'gcp' && validators.privateAddress,
   ].filter(Boolean);
 
@@ -67,6 +71,9 @@ function NetworkingSection({
     cloudProviderID === 'gcp' && validators.privateAddress,
   ].filter(Boolean);
 
+  const awsMachineCIDRMax = isMultiAz
+    ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
+    : validators.AWS_MACHINE_CIDR_MAX_SINGLE_AZ;
 
   return (
     <>
@@ -148,7 +155,7 @@ function NetworkingSection({
                 type="text"
                 validate={machineCidrValidators}
                 disabled={pending}
-                helpText={cloudProviderID === 'aws' ? 'Subnet mask must be between 16-23.' : 'Range must be private. Subnet mask must be at most 23.'}
+                helpText={cloudProviderID === 'aws' ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.` : `Range must be private. Subnet mask must be at most /${validators.GCP_MACHINE_CIDR_MAX}.`}
                 extendedHelpText={constants.machineCIDRHint}
                 showHelpTextOnError={false}
               />
@@ -163,7 +170,7 @@ function NetworkingSection({
                 type="text"
                 validate={serviceCidrValidators}
                 disabled={pending}
-                helpText={cloudProviderID === 'aws' ? 'Subnet mask must be at most 24.' : 'Range must be private. Subnet mask must be at most 24.'}
+                helpText={cloudProviderID === 'aws' ? `Subnet mask must be at most /${validators.SERVICE_CIDR_MAX}.` : `Range must be private. Subnet mask must be at most /${validators.SERVICE_CIDR_MAX}.`}
                 extendedHelpText={constants.serviceCIDRHint}
                 showHelpTextOnError={false}
               />
@@ -178,7 +185,7 @@ function NetworkingSection({
                 type="text"
                 validate={podCidrValidators}
                 disabled={pending}
-                helpText={cloudProviderID === 'aws' ? 'Subnet mask must allow for at least 32 nodes.' : 'Range must be private. Subnet mask must allow for at least 32 nodes.'}
+                helpText={cloudProviderID === 'aws' ? `Subnet mask must allow for at least ${validators.POD_NODES_MIN} nodes.` : `Range must be private. Subnet mask must allow for at least ${validators.POD_NODES_MIN} nodes.`}
                 extendedHelpText={constants.podCIDRHint}
                 showHelpTextOnError={false}
               />
@@ -195,7 +202,7 @@ function NetworkingSection({
                 normalize={normalizeHostPrefix}
                 validate={validators.hostPrefix}
                 disabled={pending}
-                helpText="Must be between 23-26."
+                helpText={`Must be between /${validators.HOST_PREFIX_MIN} and /${validators.HOST_PREFIX_MAX}.`}
                 extendedHelpText={constants.hostPrefixHint}
                 showHelpTextOnError={false}
               />
@@ -263,6 +270,7 @@ NetworkingSection.propTypes = {
   showClusterPrivacy: PropTypes.bool,
   privateClusterSelected: PropTypes.bool,
   cloudProviderID: PropTypes.string,
+  isMultiAz: PropTypes.bool,
 };
 
 export default NetworkingSection;
