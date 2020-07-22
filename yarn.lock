@@ -1581,10 +1581,10 @@
     "@redhat-cloud-services/frontend-components-utilities" "*"
     sanitize-html "^1.25.0"
 
-"@redhat-cloud-services/frontend-components@2.1.3":
-  version "2.1.3"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components/-/frontend-components-2.1.3.tgz#7c71c6f78945d734145fef2724e61a6ec8e4ce8f"
-  integrity sha512-c9IYvcLqpq+JUS1cT9tjCQ94inUmtLnN34PXWCcmPoBERYSvpNX0ebGERC8Mw09QqTeNHPM1cV5r6JATP5YMQQ==
+"@redhat-cloud-services/frontend-components@2.3.0":
+  version "2.3.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components/-/frontend-components-2.3.0.tgz#8c4971c821a4148408a813379b813a395dc3d1df"
+  integrity sha512-+uLghO9L6Aty9URpEieMBypjFAWB5MBXpXn1MQBZaDRcWXeZGJYcoC/XmD1stBCm7nBDgeVn5f2VHH5KAgCAJw==
   dependencies:
     "@redhat-cloud-services/frontend-components-utilities" "*"
     sanitize-html "^1.25.0"
