@@ -19,7 +19,10 @@ class RenderFields extends React.Component {
   state = { areFieldsFilled: [], touched: false };
 
   componentDidMount() {
-    const { fields } = this.props;
+    const { fields, meta: { submitFailed } } = this.props;
+    if (submitFailed) {
+      this.setState({ touched: true });
+    }
     if (fields.length === 0) {
       this.addNewField();
     } else {
