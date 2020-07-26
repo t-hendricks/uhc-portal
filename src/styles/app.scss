@@ -1295,8 +1295,12 @@ h3#grant-role-select  {
       > p:not(:last-child) {
         margin-bottom: 16px;
       }
-      p + p, div + p{
-        margin-top: 8px;
+      p + p, div + p, a + div{
+        margin-top: 16px;
+      }
+      #copy-command {
+        margin: 8px 0;
+        font-family: monospace;
       }
       li {
         list-style-type: disc;

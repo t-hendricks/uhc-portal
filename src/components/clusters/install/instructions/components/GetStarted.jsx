@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@patternfly/react-core';
+import { Button, ClipboardCopy } from '@patternfly/react-core';
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
 
@@ -36,6 +36,24 @@ const GetStarted = ({ docURL, cloudProviderID, cloudProvider }) => (
     >
       Get started
     </Button>
+    <div>
+      To quickly create a cluster with the default options, run the following command:
+      <ClipboardCopy
+        id="copy-command"
+        isReadOnly
+        isCode
+      >
+        ./openshift-install create cluster
+      </ClipboardCopy>
+      Refer to the documentation to
+      {' '}
+      <a
+        href="https://docs.openshift.com/container-platform/4.4/installing/installing_aws/installing-aws-customizations.html"
+      >
+        install with customizations
+      </a>
+      .
+    </div>
     <TelemetryDisclaimer />
   </>
 );
