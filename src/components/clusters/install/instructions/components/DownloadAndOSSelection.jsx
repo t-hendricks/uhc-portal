@@ -5,7 +5,7 @@ import {
   Split,
   SplitItem,
 } from '@patternfly/react-core';
-import DownloadButton from './DownloadButton';
+import DownloadButton, { downloadButtonModes } from './DownloadButton';
 import { urls } from '../../../../../common/installLinks';
 
 const operatingSystems = {
@@ -44,7 +44,7 @@ class DownloadAndOSSelection extends React.Component {
   downloadButton = () => {
     const {
       token,
-      cliTools = false,
+      mode = downloadButtonModes.INSTALLER,
       cloudProviderID,
       channel,
     } = this.props;
@@ -55,7 +55,8 @@ class DownloadAndOSSelection extends React.Component {
     if (OS && OS !== 'Select OS') {
       // button should only be enabled if an OS is selected
       const channelAndOsLinks = urls[channel][OS];
-      url = cliTools ? channelAndOsLinks.cli : channelAndOsLinks.installer;
+      url = mode === downloadButtonModes.CLI_TOOLS
+        ? channelAndOsLinks.cli : channelAndOsLinks.installer;
       disabled = !url;
     }
 
@@ -63,15 +64,15 @@ class DownloadAndOSSelection extends React.Component {
       <DownloadButton
         token={token}
         url={url}
+        mode={mode}
         disabled={disabled}
-        cliTools={cliTools}
         cloudProviderID={cloudProviderID}
       />
     );
   }
 
   render() {
-    const { cliTools = false } = this.props;
+    const { mode = downloadButtonModes.INSTALLER } = this.props;
     const { OS } = this.state;
 
     const options = [
@@ -79,7 +80,7 @@ class DownloadAndOSSelection extends React.Component {
       { value: operatingSystems.LINUX, label: 'Linux', disabled: false },
       { value: operatingSystems.MAC, label: 'MacOS', disabled: false },
     ];
-    if (cliTools) {
+    if (mode !== downloadButtonModes.INSTALLER) {
       options.push({ value: operatingSystems.WINDOWS, label: 'Windows', disabled: false });
     }
 
@@ -106,6 +107,7 @@ DownloadAndOSSelection.propTypes = {
   cliTools: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   channel: PropTypes.string.isRequired,
+  mode: PropTypes.oneOf(['CLI_TOOLS', 'CRC', 'INSTALLER']),
 };
 
 export default DownloadAndOSSelection;
