@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GetStarted /> GetStarted should render 1`] = `
+<Fragment>
+  <p>
+    The installer will take about 45 minutes to run.
+     
+  </p>
+  <Button
+    component="a"
+    href=""
+    onClick={[Function]}
+    rel="noreferrer noopener"
+    target="_blank"
+    variant="secondary"
+  >
+    Get started
+  </Button>
+  <div>
+    To quickly create a cluster with the default options, run the following command:
+    <ClipboardCopy
+      clickTip="Successfully copied to clipboard!"
+      entryDelay={100}
+      exitDelay={1600}
+      hoverTip="Copy to clipboard"
+      id="copy-command"
+      isCode={true}
+      isExpanded={false}
+      isReadOnly={true}
+      maxWidth="150px"
+      onChange={[Function]}
+      onCopy={[Function]}
+      position="top"
+      switchDelay={2000}
+      textAriaLabel="Copyable input"
+      toggleAriaLabel="Show content"
+      variant="inline"
+    >
+      ./openshift-install create cluster
+    </ClipboardCopy>
+    Refer to the documentation to
+     
+    <a
+      href="https://docs.openshift.com/container-platform/4.4/installing/installing_aws/installing-aws-customizations.html"
+    >
+      install with customizations
+    </a>
+    .
+  </div>
+  <TelemetryDisclaimer />
+</Fragment>
+`;
