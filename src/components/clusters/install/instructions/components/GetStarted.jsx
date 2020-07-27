@@ -17,7 +17,9 @@ const additionalInstructions = (cloudProvider) => {
   return '';
 };
 
-const GetStarted = ({ docURL, cloudProviderID, cloudProvider }) => (
+const GetStarted = ({
+  docURL, cloudProviderID, cloudProvider, customizations,
+}) => (
   <>
     <p>
       The installer will take about 45 minutes to run.
@@ -45,14 +47,19 @@ const GetStarted = ({ docURL, cloudProviderID, cloudProvider }) => (
       >
         ./openshift-install create cluster
       </ClipboardCopy>
-      Refer to the documentation to
-      {' '}
-      <a
-        href="https://docs.openshift.com/container-platform/4.4/installing/installing_aws/installing-aws-customizations.html"
-      >
+      {customizations
+        && (
+          <p>
+            Refer to the documentation to
+            {' '}
+            <a
+              href={customizations}
+            >
         install with customizations
-      </a>
+            </a>
       .
+          </p>
+        )}
     </div>
     <TelemetryDisclaimer />
   </>
@@ -61,6 +68,7 @@ GetStarted.propTypes = {
   docURL: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string,
   cloudProvider: PropTypes.string.isRequired,
+  customizations: PropTypes.string,
 };
 
 export default GetStarted;

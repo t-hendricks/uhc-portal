@@ -51,6 +51,7 @@ class InstallBareMetal extends Component {
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProvider={instructionsMapping.bareMetal.cloudProvider}
+            customizations={instructionsMapping.bareMetal.customizations}
             {...instructionsMapping.bareMetal}
           />
         </PageSection>

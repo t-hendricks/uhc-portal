@@ -22,6 +22,7 @@ const OCPInstructions = (props) => {
     rhcosLearnMoreURL,
     channel,
     docURL,
+    customizations = '',
     showPreReleaseDocs,
     rhcosDownloadURL,
   } = props;
@@ -81,6 +82,7 @@ const OCPInstructions = (props) => {
                     docURL={docURL}
                     cloudProviderID={cloudProviderID}
                     cloudProvider={cloudProvider}
+                    customizations={customizations}
                   />
                 </div>
               </SplitItem>
@@ -111,6 +113,7 @@ OCPInstructions.propTypes = {
   channel: PropTypes.string.isRequired,
   docURL: PropTypes.string.isRequired,
   showPreReleaseDocs: PropTypes.bool,
+  customizations: PropTypes.string,
 };
 
 export default OCPInstructions;

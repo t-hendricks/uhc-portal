@@ -28,7 +28,6 @@ const links = {
   INSTALLER_MAC_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-install-mac.tar.gz`,
   INSTALLER_MAC_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-install-mac.tar.gz`,
 
-
   CLI_TOOLS_LINUX: `${MIRROR_CLIENTS_LATEST}openshift-client-linux.tar.gz`,
   CLI_TOOLS_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-linux.tar.gz`,
   CLI_TOOLS_LINUX_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-client-linux.tar.gz`,
@@ -45,23 +44,21 @@ const links = {
   CLI_TOOLS_WINDOWS_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-client-windows.zip`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
-  INSTALL_AWSIPI_CONFIGURE_ACCOUNT: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
-  INSTALL_AWSIPI_INSTALLATION_CONFIG: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations`,
-  INSTALL_AWSIPI_SAMPLE_YAML: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html#installation-aws-config-yaml_installing-aws-customizations`,
-  INSTALL_AWSIPI_CUSTOMIZING_NETWORK: `${DOCS_BASE}/installing/installing_aws/installing-aws-network-customizations.html`,
-  INSTALL_AWSIPI_LIKELY_FAILURE_MODES: 'https://github.com/openshift/installer/blob/master/docs/user/troubleshooting.md#common-failures',
-  INSTALL_AWSIPI_GENERIC_TROUBLESHOOTING: 'https://github.com/openshift/installer/blob/master/docs/user/troubleshooting.md#generic-troubleshooting',
   INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
 
   INSTALL_AWSUPI_INSTALLER_LATEST: MIRROR_CLIENTS_LATEST,
   INSTALL_AWSUPI_CLI_LATEST: MIRROR_CLIENTS_LATEST,
   INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/installing-aws-user-infra.html`,
 
+  INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
+
   INSTALL_AZUREUPI_GETTING_STARTED: 'https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md',
   INSTALL_AZUREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-default.html`,
+  INSTALL_AZURE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure/installing-azure-network-customizations.html`,
 
   INSTALL_BAREMETAL_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html`,
   INSTALL_BAREMETAL_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal`,
+  INSTALL_BAREMETAL_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal-network-customizations.html`,
 
   INSTALL_CRC_GETTING_STARTED: 'https://access.redhat.com/documentation/en-us/red_hat_codeready_containers',
   INSTALL_CRC_DOWNLOAD_WINDOWS: 'https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-windows-amd64.zip',
@@ -71,19 +68,23 @@ const links = {
   INSTALL_GCPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-account.html`,
   INSTALL_GCPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html`,
   INSTALL_GCPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra`,
+  INSTALL_GCP_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-network-customizations.html`,
 
   INSTALL_OSPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-installer-custom.html`,
   INSTALL_OSPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-user.html`,
-  INSTALL_OSPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user`,
+  INSTALL_OSPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user`,
+  INSTALL_OSP_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-installer-custom.html`,
 
   INSTALL_VSPHERE_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
   INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
+  INSTALL_VSPHERE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-network-customizations.html`,
 
   INSTALL_IBMZ_GETTING_STARTED: `${IBMZ_DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html`,
   INSTALL_IBMZ_RHCOS_LEARN_MORE: `${IBMZ_DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
   DOWNLOAD_RHCOS_LATEST_IBMZ: 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/',
 
   INSTALL_RHV_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-default.html`,
+  INSTALL_RHV_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-customizations.html`,
 
   INSTALL_PRE_RELEASE_BUG_LIST_45: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.5.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
