@@ -473,8 +473,8 @@ class ClusterDetails extends Component {
         <EditDisplayNameDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
         <EditConsoleURLDialog onClose={onDialogClose} />
-        <EditSubscriptionSettingsDialog onClose={onDialogClose} />
         <TransferClusterOwnershipDialog onClose={onDialogClose} />
+        <EditSubscriptionSettingsDialog onClose={onDialogClose} isDialog />
         <ArchiveClusterDialog onClose={onDialogClose} />
         <ToggleClusterAdminAccessDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {

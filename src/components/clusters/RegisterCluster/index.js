@@ -3,7 +3,12 @@ import { reduxForm, reset } from 'redux-form';
 import RegisterCluster from './RegisterCluster';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
+import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
 import { registerDisconnectedCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
+import hasOrgLevelsubscribeOCPCapability from './RegisterClusterSelectors';
+import {
+  subscriptionSystemUnits,
+} from '../../../common/subscriptionTypes';
 
 
 const reduxFormConfig = {
@@ -12,20 +17,20 @@ const reduxFormConfig = {
 
 const reduxFormRegisterCluster = reduxForm(reduxFormConfig)(RegisterCluster);
 
-
 const mapStateToProps = state => ({
+  canSubscribeOCP: hasOrgLevelsubscribeOCPCapability(state),
   registerClusterResponse: state.clusters.createdCluster,
   isOpen: shouldShowModal(state, 'register-cluster-error'),
   initialValues: {
     cluster_id: '',
     display_name: '',
     web_console_url: '',
-    vcpu_num: '',
-    socket_num: '',
-    operating_system: 'Red Hat Enterprise Linux CoreOS',
-    system_type: 'physical',
-    memory_gib: '',
-    nodes_compute: '',
+    support_level: '',
+    service_level: '',
+    usage: '',
+    system_units: subscriptionSystemUnits.CORES_VCPU,
+    cpu_total: '',
+    socket_total: '',
   },
 });
 
@@ -33,52 +38,39 @@ const mapDispatchToProps = dispatch => ({
   closeModal: (name) => { dispatch(closeModal(name)); },
   openModal: (name) => { dispatch(openModal(name)); },
   onSubmit: (formData) => {
-    let cpuMetric = {};
-    if (formData.system_type === 'physical') {
-      cpuMetric = {
-        sockets: {
-          total: {
-            value: parseInt(formData.socket_num, 10),
-          },
-        },
-      };
-    }
-
-    if (formData.system_type === 'virtual') {
-      cpuMetric = {
-        cpu: {
-          total: {
-            value: parseInt(formData.vcpu_num, 10),
-          },
-        },
-      };
-    }
-
     const clusterRequest = {
-      external_id: formData.cluster_id,
+      cluster_uuid: formData.cluster_id,
+      plan_id: 'OCP',
+      status: 'Disconnected',
       display_name: formData.display_name,
-      metrics: {
-        nodes: {
-          compute: parseInt(formData.nodes_compute, 10),
-        },
-        operating_system: formData.operating_system,
-        ...cpuMetric,
-        memory: {
-          total: {
-            value: parseFloat(formData.memory_gib),
-            unit: 'GiB',
-          },
-        },
-      },
-      console: {
-        url: formData.web_console_url,
-      },
+      console_url: formData.web_console_url,
     };
 
-    dispatch(registerDisconnectedCluster(clusterRequest));
+    let subscriptionRequest = null;
+
+    if (formData.support_level !== 'Eval' && formData.support_level !== '') {
+      subscriptionRequest = {
+        support_level: formData.support_level,
+        service_level: formData.service_level,
+        usage: formData.usage,
+        system_units: formData.system_units,
+      };
+
+      if (formData.system_units === 'Sockets') {
+        subscriptionRequest.socket_total = parseInt(formData.socket_total, 10);
+      }
+
+      if (formData.system_units === 'Cores/vCPU') {
+        subscriptionRequest.cpu_total = parseInt(formData.cpu_total, 10);
+        subscriptionRequest.socket_total = 1;
+      }
+    }
+
+    dispatch(registerDisconnectedCluster(clusterRequest, subscriptionRequest));
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('RegisterCluster')),
+  getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
 });
 
 

@@ -26,9 +26,10 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
       <CardBody>
         <Grid>
           <GridItem
-            span={8}
+            span={5}
           >
             <Form
+              className="subscription-settings form"
               onSubmit={[MockFunction]}
             >
               <Field
@@ -57,84 +58,115 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
                 type="text"
                 validate={[Function]}
               />
-              <FormGroup
-                fieldId="operating_system"
-                isRequired={true}
-                label="Operating system"
+              <Title
+                headingLevel="h4"
+                size="xl"
               >
-                <Field
-                  component={[Function]}
-                  defaultValue="Red Hat Enterprise Linux CoreOS"
-                  disabled={false}
-                  name="operating_system"
-                  options={
-                    Array [
-                      Object {
-                        "label": "Red Hat Enterprise Linux CoreOS",
-                        "value": "Red Hat Enterprise Linux CoreOS",
-                      },
-                      Object {
-                        "label": "Red Hat Enterprise Linux",
-                        "value": "Red Hat Enterprise Linux",
-                      },
-                    ]
+                Subscription Settings
+              </Title>
+              <TextContent>
+                <Text
+                  component="p"
+                >
+                  Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                </Text>
+              </TextContent>
+              <EditSubscriptionSettingsDialog
+                isDialog={false}
+                isOpen={false}
+                onChangeNumericInputCallback={[Function]}
+                onChangeSupportLevelCallback={[Function]}
+                subscription={
+                  Object {
+                    "support_level": "Eval",
                   }
-                />
-              </FormGroup>
-              <FormGroup
-                fieldId="system_type"
-                isRequired={true}
-                label="System type"
-              >
-                <Field
-                  component={[Function]}
-                  defaultValue="physical"
-                  disabled={false}
-                  name="system_type"
-                  onChange={[Function]}
-                  options={
-                    Array [
-                      Object {
-                        "label": "Physical",
-                        "value": "physical",
-                      },
-                      Object {
-                        "label": "Virtual",
-                        "value": "virtual",
-                      },
-                    ]
-                  }
-                />
-              </FormGroup>
-              <Field
-                component={[Function]}
-                disabled={false}
-                inputMode="numeric"
-                isRequired={true}
-                label="Number of sockets or LPARs"
-                name="socket_num"
-                validate={
-                  Array [
-                    [Function],
-                    [Function],
-                  ]
                 }
               />
+            </Form>
+          </GridItem>
+        </Grid>
+      </CardBody>
+      <CardFooter>
+        <Button
+          isDisabled={false}
+          onClick={[MockFunction]}
+          type="submit"
+          variant="primary"
+        >
+          Register cluster
+        </Button>
+        <Link
+          to="/"
+        >
+          <Button
+            isDisabled={false}
+            variant="secondary"
+          >
+            Cancel
+          </Button>
+        </Link>
+      </CardFooter>
+    </Card>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`] = `
+<Fragment>
+  <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Clusters",
+          },
+          Object {
+            "label": "Cluster registration",
+          },
+        ]
+      }
+    />
+    <PageHeaderTitle
+      title="Cluster registration"
+    />
+  </PageHeader>
+  <PageSection>
+    <Card
+      id="register-cluster"
+    >
+      <CardBody>
+        <Grid>
+          <GridItem
+            span={5}
+          >
+            <Form
+              className="subscription-settings form"
+              onSubmit={[MockFunction]}
+            >
               <Field
                 component={[Function]}
                 disabled={false}
-                inputMode="numeric"
-                label="Memory capacity (GiB)"
-                name="memory_gib"
-                step="any"
+                extendedHelpText="The cluster ID may be found on the About page of the cluster web console"
+                isRequired={true}
+                label="Cluster ID"
+                name="cluster_id"
+                type="text"
                 validate={[Function]}
               />
               <Field
                 component={[Function]}
                 disabled={false}
-                inputMode="numeric"
-                label="Number of compute nodes"
-                name="nodes_compute"
+                label="Display name"
+                name="display_name"
+                type="text"
+                validate={[Function]}
+              />
+              <Field
+                component={[Function]}
+                disabled={false}
+                label="Web console URL"
+                name="web_console_url"
+                type="text"
                 validate={[Function]}
               />
             </Form>

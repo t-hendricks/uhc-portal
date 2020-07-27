@@ -21,6 +21,8 @@ import { accountsService, authorizationsService, clusterService } from '../../se
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
 import { normalizeCluster } from '../../common/normalize';
 
+import { editSubscriptionSettings } from './subscriptionSettingsActions';
+
 const invalidateClusters = () => dispatch => dispatch({
   type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
 });
@@ -35,15 +37,22 @@ const createCluster = params => dispatch => dispatch({
   }),
 });
 
-const registerDisconnectedCluster = params => dispatch => dispatch({
+const registerClusterAndUpdateSubscription = async (
+  clusterRequest, subscriptionRequest, dispatch) => {
+  const registerClusterResponse = await clusterService.postDisconnectedCluster(clusterRequest);
+
+  if (subscriptionRequest && registerClusterResponse.status === 201) {
+    dispatch(editSubscriptionSettings(registerClusterResponse.data.id, subscriptionRequest));
+  }
+  dispatch(invalidateClusters());
+  return registerClusterResponse;
+};
+
+const registerDisconnectedCluster = (clusterRequest, subscriptionRequest) => dispatch => dispatch({
   type: clustersConstants.CREATE_CLUSTER,
-  payload: clusterService.postDisconnectedCluster(params).then((response) => {
-    // TODO: this artificially delays CREATE_CLUSTER_FULLFILLED action
-    // until after the INVALIDATE action.
-    invalidateClusters()(dispatch);
-    return response;
-  }),
+  payload: registerClusterAndUpdateSubscription(clusterRequest, subscriptionRequest, dispatch),
 });
+
 
 const clearClusterResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
