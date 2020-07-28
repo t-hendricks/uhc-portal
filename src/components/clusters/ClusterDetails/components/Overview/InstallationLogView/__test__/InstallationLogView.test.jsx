@@ -1,8 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import LogWindow from '../InstallationLogView';
+import InstallationLogView from '../InstallationLogView';
 import fixtures from '../../../../__test__/ClusterDetails.fixtures';
+import clusterStates from '../../../../../common/clusterStates';
+
 
 jest.useFakeTimers();
 
@@ -13,7 +15,7 @@ describe('<InstallationLogView />', () => {
   const getLogs = jest.fn();
 
   beforeAll(() => {
-    wrapper = shallow(<LogWindow
+    wrapper = shallow(<InstallationLogView
       cluster={clusterDetails.cluster}
       clearLogs={clearLogs}
       getLogs={getLogs}
@@ -60,7 +62,7 @@ describe('<InstallationLogView />', () => {
 
 
   it('should render without logs', () => {
-    wrapper = shallow(<LogWindow
+    wrapper = shallow(<InstallationLogView
       cluster={clusterDetails.cluster}
       clearLogs={clearLogs}
       getLogs={getLogs}
@@ -78,5 +80,18 @@ describe('<InstallationLogView />', () => {
     expect(clearInterval).toHaveBeenCalled();
     wrapper.update();
     expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should not show any message when cluster status is error', () => {
+    wrapper = shallow(<InstallationLogView
+      cluster={{ ...clusterDetails.cluster, state: clusterStates.ERROR }}
+      clearLogs={clearLogs}
+      getLogs={getLogs}
+      refresh={jest.fn()}
+      logType="install"
+      lines="lorem ipsum"
+    />);
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find('p').length).toEqual(0);
   });
 });
