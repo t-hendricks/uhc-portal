@@ -154,6 +154,7 @@ class CreateOSDForm extends React.Component {
           showClusterPrivacy={isAws}
           privateClusterSelected={privateClusterSelected}
           cloudProviderID={cloudProviderID}
+          isMultiAz={isMultiAz}
         />}
       </>
     );
