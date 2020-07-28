@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BareMetal instructions renders correctly 1`] = `
+<Fragment>
+  <Card>
+    <div
+      className="pf-c-content ocm-page"
+    >
+      <Title
+        headingLevel="h3"
+        size="2xl"
+      >
+        Bare Metal: Select an installation type
+      </Title>
+      <div
+        className="flex-container"
+      >
+        <Button
+          className="aws-ipi-upi-infra-card infra-card pf-c-card infra-card-button"
+          data-testid="ai-button"
+          onClick={[Function]}
+          variant="link"
+        >
+          <CardBadge
+            devPreviewText="Technology Preview"
+            isDevPreview={true}
+          />
+          <CardBody>
+            <ConnectedIcon
+              alt="Installer-Provisioned Infrastructure"
+              className="aws-ipi-upi-infra-logo"
+              color="#73bcf7"
+              noVerticalAlign={false}
+              size="xl"
+            />
+            <Title
+              headingLevel="h3"
+              size="lg"
+            >
+              Assisted Bare Metal Installer
+            </Title>
+             
+            Deploy an OpenShift 4.6 cluster on your own infrastructure using a Discovery ISO that makes it easy to connect discovered hardware.
+          </CardBody>
+        </Button>
+        <Link
+          className="aws-ipi-upi-infra-card infra-card pf-c-card"
+          to="/install/metal/user-provisioned"
+        >
+          <CardBadge
+            isHidden={true}
+          />
+          <CardBody>
+            <UserIcon
+              alt="User-Provisioned Infrastructure"
+              className="aws-ipi-upi-infra-logo"
+              color="#73bcf7"
+              noVerticalAlign={false}
+              size="xl"
+            />
+            <Title
+              headingLevel="h3"
+              size="lg"
+            >
+              User-provisioned infrastructure
+            </Title>
+            Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
+          </CardBody>
+        </Link>
+      </div>
+    </div>
+  </Card>
+</Fragment>
+`;

@@ -9,6 +9,7 @@ $pf-global--font-path: '~@patternfly/patternfly/assets/fonts/';
 
 @import "~@patternfly/patternfly/sass-utilities/_all";
 @import "~@patternfly/patternfly/patternfly.css";
+@import "~@patternfly/patternfly/patternfly-addons.css";
 @import '~@patternfly/patternfly/utilities/Accessibility/accessibility.scss';
 @import '~@patternfly/patternfly/utilities/Display/display.css';
 @import '~@patternfly/patternfly/utilities/Spacing/spacing.css';
@@ -18,6 +19,7 @@ $pf-global--font-path: '~@patternfly/patternfly/assets/fonts/';
 @import '~@redhat-cloud-services/frontend-components-notifications/index.css';
 @import '~@redhat-cloud-services/frontend-components/components/TableToolbar.css';
 @import '~@redhat-cloud-services/frontend-components/components/ConditionalFilter.css';
+@import '~facet-lib/dist/index.css';
 
 body {
   margin: 0;

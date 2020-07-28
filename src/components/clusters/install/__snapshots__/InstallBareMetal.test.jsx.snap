@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BareMetal install renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "OpenShift Container Platform",
+              "path": "/install",
+            },
+            Object {
+              "label": "Bare Metal",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on Bare Metal with user-provisioned infrastructure"
+  />
+  <PageSection>
+    <withRouter(InstructionsBareMetal) />
+  </PageSection>
+</Fragment>
+`;
