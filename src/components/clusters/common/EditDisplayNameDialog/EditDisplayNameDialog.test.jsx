@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import Modal from '../../../common/Modal/Modal';
 
 import EditDisplayNameDialog from './EditDisplayNameDialog';
 import ErrorBox from '../../../common/ErrorBox';
@@ -54,9 +55,16 @@ describe('<EditDisplayNameDialog />', () => {
     expect(onClose).toBeCalled();
   });
 
-  it('renders correctly when an erorr occurs', () => {
+  it('renders correctly when an error occurs', () => {
     wrapper.setProps({ editClusterResponse: { error: true, errorMessage: 'this is an error' } });
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(ErrorBox).length).toEqual(1);
+  });
+
+  it('renders correctly when pending', () => {
+    wrapper.setProps({ editClusterResponse: { pending: true, error: false, fulfilled: false } });
+    expect(wrapper).toMatchSnapshot();
+    const modal = wrapper.find(Modal);
+    expect(modal.props().isPending).toBeTruthy();
   });
 });

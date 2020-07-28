@@ -58,6 +58,8 @@ class EditDisplayNameDialog extends Component {
       <ErrorBox message="Error changing display name" response={editClusterResponse} />
     );
 
+    const { pending } = editClusterResponse;
+
     const validationMessage = checkClusterDisplayName(currentValue);
     const handleSubmit = () => {
       if (!validationMessage) {
@@ -75,6 +77,7 @@ class EditDisplayNameDialog extends Component {
         onPrimaryClick={handleSubmit}
         onSecondaryClick={cancelEdit}
         isPrimaryDisabled={!!validationMessage}
+        isPending={pending}
       >
         <>
           {hasError}
