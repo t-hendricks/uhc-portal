@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<GetStarted /> GetStarted should render 1`] = `
+exports[`<GetStarted /> GetStarted w/ customizations should render 1`] = `
 <Fragment>
   <p>
     The installer will take about 45 minutes to run.
@@ -38,14 +38,59 @@ exports[`<GetStarted /> GetStarted should render 1`] = `
     >
       ./openshift-install create cluster
     </ClipboardCopy>
-    Refer to the documentation to
+    <p>
+      Refer to the documentation to
+       
+      <a
+        href="example.doc.link"
+      >
+        install with customizations
+      </a>
+      .
+    </p>
+  </div>
+  <TelemetryDisclaimer />
+</Fragment>
+`;
+
+exports[`<GetStarted /> GetStarted w/o customizations should render 1`] = `
+<Fragment>
+  <p>
+    The installer will take about 45 minutes to run.
      
-    <a
-      href="https://docs.openshift.com/container-platform/4.4/installing/installing_aws/installing-aws-customizations.html"
+  </p>
+  <Button
+    component="a"
+    href=""
+    onClick={[Function]}
+    rel="noreferrer noopener"
+    target="_blank"
+    variant="secondary"
+  >
+    Get started
+  </Button>
+  <div>
+    To quickly create a cluster with the default options, run the following command:
+    <ClipboardCopy
+      clickTip="Successfully copied to clipboard!"
+      entryDelay={100}
+      exitDelay={1600}
+      hoverTip="Copy to clipboard"
+      id="copy-command"
+      isCode={true}
+      isExpanded={false}
+      isReadOnly={true}
+      maxWidth="150px"
+      onChange={[Function]}
+      onCopy={[Function]}
+      position="top"
+      switchDelay={2000}
+      textAriaLabel="Copyable input"
+      toggleAriaLabel="Show content"
+      variant="inline"
     >
-      install with customizations
-    </a>
-    .
+      ./openshift-install create cluster
+    </ClipboardCopy>
   </div>
   <TelemetryDisclaimer />
 </Fragment>

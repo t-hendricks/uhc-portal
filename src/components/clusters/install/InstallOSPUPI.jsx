@@ -42,6 +42,7 @@ class InstallOSPUPI extends Component {
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProvider={instructionsMapping.openstack.cloudProvider}
+            customizations={instructionsMapping.openstack.customizations}
             {...instructionsMapping.openstack.upi}
           />
         </PageSection>
