@@ -222,9 +222,11 @@ class LogWindow extends React.Component {
               </div>
             </div>
           ) : (
+            cluster.state !== clusterStates.ERROR && (
             <p>
               {message}
             </p>
+            )
           )}
         </CardBody>
       </article>
