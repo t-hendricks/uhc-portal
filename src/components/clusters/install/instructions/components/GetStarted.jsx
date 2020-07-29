@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@patternfly/react-core';
+import { Button, ClipboardCopy } from '@patternfly/react-core';
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
 
@@ -17,7 +17,9 @@ const additionalInstructions = (cloudProvider) => {
   return '';
 };
 
-const GetStarted = ({ docURL, cloudProviderID, cloudProvider }) => (
+const GetStarted = ({
+  docURL, cloudProviderID, cloudProvider, customizations,
+}) => (
   <>
     <p>
       The installer will take about 45 minutes to run.
@@ -36,6 +38,29 @@ const GetStarted = ({ docURL, cloudProviderID, cloudProvider }) => (
     >
       Get started
     </Button>
+    <div>
+      To quickly create a cluster with the default options, run the following command:
+      <ClipboardCopy
+        id="copy-command"
+        isReadOnly
+        isCode
+      >
+        ./openshift-install create cluster
+      </ClipboardCopy>
+      {customizations
+        && (
+          <p>
+            Refer to the documentation to
+            {' '}
+            <a
+              href={customizations}
+            >
+        install with customizations
+            </a>
+      .
+          </p>
+        )}
+    </div>
     <TelemetryDisclaimer />
   </>
 );
@@ -43,6 +68,7 @@ GetStarted.propTypes = {
   docURL: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string,
   cloudProvider: PropTypes.string.isRequired,
+  customizations: PropTypes.string,
 };
 
 export default GetStarted;

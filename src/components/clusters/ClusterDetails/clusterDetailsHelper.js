@@ -1,6 +1,5 @@
 import { has, get } from 'lodash';
 
-
 const hasCpuAndMemory = (cpu, memory) => {
   const totalCPU = has(cpu, 'total.value');
   const totalMemory = has(memory, 'total.value');

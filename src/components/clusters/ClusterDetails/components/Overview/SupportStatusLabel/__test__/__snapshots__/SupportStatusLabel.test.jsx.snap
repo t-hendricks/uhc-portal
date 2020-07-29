@@ -30,6 +30,7 @@ exports[`<SupportStatusLabel /> should render for every possible support status 
       <a
         href="https://access.redhat.com/support/policy/updates/openshift"
         rel="noopener noreferrer"
+        target="_blank"
       >
         this resource
       </a>
@@ -88,6 +89,7 @@ exports[`<SupportStatusLabel /> should render for every possible support status 
       <a
         href="https://access.redhat.com/support/policy/updates/openshift"
         rel="noopener noreferrer"
+        target="_blank"
       >
         this resource
       </a>
@@ -147,6 +149,7 @@ exports[`<SupportStatusLabel /> should render for every possible support status 
       <a
         href="https://access.redhat.com/support/policy/updates/openshift"
         rel="noopener noreferrer"
+        target="_blank"
       >
         this resource
       </a>
@@ -204,6 +207,8 @@ exports[`<SupportStatusLabel /> should render skeleton when pending 1`] = `
 />
 `;
 
+exports[`<SupportStatusLabel /> should show N/A for a pre-release version 1`] = `"N/A"`;
+
 exports[`<SupportStatusLabel /> should show N/A when support status is unknown 1`] = `"N/A"`;
 
 exports[`<SupportStatusLabel /> should show blue label when status is still supported 1`] = `
@@ -234,6 +239,7 @@ exports[`<SupportStatusLabel /> should show blue label when status is still supp
       <a
         href="https://access.redhat.com/support/policy/updates/openshift"
         rel="noopener noreferrer"
+        target="_blank"
       >
         this resource
       </a>
@@ -293,6 +299,7 @@ exports[`<SupportStatusLabel /> should show red label when status is not support
       <a
         href="https://access.redhat.com/support/policy/updates/openshift"
         rel="noopener noreferrer"
+        target="_blank"
       >
         this resource
       </a>

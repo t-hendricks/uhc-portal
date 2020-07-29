@@ -42,6 +42,7 @@ class InstallAzureUPI extends Component {
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProvider={instructionsMapping.azure.cloudProvider}
+            customizations={instructionsMapping.azure.customizations}
             {...instructionsMapping.azure.ipi}
           />
         </PageSection>

@@ -14,11 +14,13 @@ const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}
 
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[1-9]))$/;
-const MACHINE_CIDR_MAX = 23;
 const SERVICE_CIDR_MAX = 24;
 const POD_CIDR_MAX = 21;
 const POD_NODES_MIN = 32;
-const AWS_CIDR_MIN = 16;
+const AWS_MACHINE_CIDR_MIN = 16;
+const AWS_MACHINE_CIDR_MAX_SINGLE_AZ = 25;
+const AWS_MACHINE_CIDR_MAX_MULTI_AZ = 24;
+const GCP_MACHINE_CIDR_MAX = 23;
 
 // Regular expression used to check whether input is a valid IPv4 subnet prefix length
 const HOST_PREFIX_REGEXP = /^\/?(3[0-2]|[1-2][0-9]|[0-9])$/;
@@ -262,7 +264,7 @@ const getCIDRSubnetLength = (value) => {
   return parseInt(value.split('/').pop(), 10);
 };
 
-const machineCidr = (value, formData) => {
+const awsMachineCidr = (value, formData) => {
   if (!value) {
     return undefined;
   }
@@ -270,16 +272,39 @@ const machineCidr = (value, formData) => {
   const isMultiAz = formData.multi_az === 'true';
   const prefixLength = getCIDRSubnetLength(value);
 
-  if (isMultiAz && prefixLength > MACHINE_CIDR_MAX) {
-    const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX);
-    const multiAZ = (maxComputeNodes - 9) * 3;
-    return `The subnet length can't be higher than '/${MACHINE_CIDR_MAX}', which provides up to ${multiAZ} nodes.`;
+  if (prefixLength < AWS_MACHINE_CIDR_MIN) {
+    return `The subnet mask can't be lower than '/${AWS_MACHINE_CIDR_MIN}'.`;
   }
 
-  if (!isMultiAz && prefixLength > MACHINE_CIDR_MAX) {
-    const maxComputeNodes = 2 ** (28 - MACHINE_CIDR_MAX);
+  if (isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_MULTI_AZ) {
+    return `The subnet mask can't be higher than '/${AWS_MACHINE_CIDR_MAX_MULTI_AZ}'.`;
+  }
+
+  if (!isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_SINGLE_AZ) {
+    return `The subnet mask can't be higher than '/${AWS_MACHINE_CIDR_MAX_SINGLE_AZ}'.`;
+  }
+
+  return undefined;
+};
+
+const gcpMachineCidr = (value, formData) => {
+  if (!value) {
+    return undefined;
+  }
+
+  const isMultiAz = formData.multi_az === 'true';
+  const prefixLength = getCIDRSubnetLength(value);
+
+  if (isMultiAz && prefixLength > GCP_MACHINE_CIDR_MAX) {
+    const maxComputeNodes = 2 ** (28 - GCP_MACHINE_CIDR_MAX);
+    const multiAZ = (maxComputeNodes - 9) * 3;
+    return `The subnet mask can't be higher than '/${GCP_MACHINE_CIDR_MAX}', which provides up to ${multiAZ} nodes.`;
+  }
+
+  if (!isMultiAz && prefixLength > GCP_MACHINE_CIDR_MAX) {
+    const maxComputeNodes = 2 ** (28 - GCP_MACHINE_CIDR_MAX);
     const singleAZ = maxComputeNodes - 9;
-    return `The subnet length can't be higher than '/${MACHINE_CIDR_MAX}', which provides up to ${singleAZ} nodes.`;
+    return `The subnet mask can't be higher than '/${GCP_MACHINE_CIDR_MAX}', which provides up to ${singleAZ} nodes.`;
   }
 
   return undefined;
@@ -294,7 +319,7 @@ const serviceCidr = (value) => {
 
   if (prefixLength > SERVICE_CIDR_MAX) {
     const maxServices = 2 ** (32 - SERVICE_CIDR_MAX) - 2;
-    return `The subnet length can't be higher than '/${SERVICE_CIDR_MAX}', which provides up to ${maxServices} services.`;
+    return `The subnet mask can't be higher than '/${SERVICE_CIDR_MAX}', which provides up to ${maxServices} services.`;
   }
 
   return undefined;
@@ -307,14 +332,14 @@ const podCidr = (value, formData) => {
 
   const prefixLength = getCIDRSubnetLength(value);
   if (prefixLength > POD_CIDR_MAX) {
-    return `The subnet length can't be higher than /${POD_CIDR_MAX}.`;
+    return `The subnet mask can't be higher than /${POD_CIDR_MAX}.`;
   }
 
   const hostPrefix = getCIDRSubnetLength(formData.network_host_prefix) || 23;
   const maxPodIPs = 2 ** (32 - hostPrefix);
   const maxPodNodes = Math.floor(2 ** (32 - prefixLength) / maxPodIPs);
   if (maxPodNodes < POD_NODES_MIN) {
-    return `The subnet length of /${prefixLength} does not allow for enough nodes. Try changing the host prefix or the pod subnet range.`;
+    return `The subnet mask of /${prefixLength} does not allow for enough nodes. Try changing the host prefix or the pod subnet range.`;
   }
 
   return undefined;
@@ -409,7 +434,8 @@ const awsSubnetMask = fieldName => (value) => {
     return undefined;
   }
   const awsSubnetMaskRanges = {
-    network_machine_cidr: [AWS_CIDR_MIN, MACHINE_CIDR_MAX],
+    network_machine_cidr_single_az: [AWS_MACHINE_CIDR_MIN, AWS_MACHINE_CIDR_MAX_SINGLE_AZ],
+    network_machine_cidr_multi_az: [AWS_MACHINE_CIDR_MIN, AWS_MACHINE_CIDR_MAX_MULTI_AZ],
     network_service_cidr: [undefined, SERVICE_CIDR_MAX],
   };
   const maskRange = awsSubnetMaskRanges[fieldName];
@@ -441,11 +467,11 @@ const hostPrefix = (value) => {
 
   if (prefixLength < HOST_PREFIX_MIN) {
     const maxPodIPs = 2 ** (32 - HOST_PREFIX_MIN) - 2;
-    return `The subnet length can't be lower than '/${HOST_PREFIX_MIN}', which provides up to ${maxPodIPs} Pod IP addresses.`;
+    return `The subnet mask can't be lower than '/${HOST_PREFIX_MIN}', which provides up to ${maxPodIPs} Pod IP addresses.`;
   }
   if (prefixLength > HOST_PREFIX_MAX) {
     const maxPodIPs = 2 ** (32 - HOST_PREFIX_MAX) - 2;
-    return `The subnet length can't be higher than '/${HOST_PREFIX_MAX}', which provides up to ${maxPodIPs} Pod IP addresses.`;
+    return `The subnet mask can't be higher than '/${HOST_PREFIX_MAX}', which provides up to ${maxPodIPs} Pod IP addresses.`;
   }
 
   return undefined;
@@ -586,7 +612,8 @@ const validators = {
   checkUserID,
   checkBaseDNSDomain,
   cidr,
-  machineCidr,
+  awsMachineCidr,
+  gcpMachineCidr,
   serviceCidr,
   podCidr,
   disjointSubnets,
@@ -606,6 +633,14 @@ const validators = {
   checkDisconnectedSockets,
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
+  AWS_MACHINE_CIDR_MIN,
+  AWS_MACHINE_CIDR_MAX_SINGLE_AZ,
+  AWS_MACHINE_CIDR_MAX_MULTI_AZ,
+  GCP_MACHINE_CIDR_MAX,
+  SERVICE_CIDR_MAX,
+  POD_NODES_MIN,
+  HOST_PREFIX_MIN,
+  HOST_PREFIX_MAX,
 };
 
 export {

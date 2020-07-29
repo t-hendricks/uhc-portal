@@ -1,26 +1,20 @@
 import get from 'lodash/get';
 
-import { monitoringStatuses } from './monitoringHelper';
-import { hasCpuAndMemory } from '../../clusterDetailsHelper';
+import {
+  getIssuesAndWarnings,
+  monitoringStatuses,
+  alertsSeverity,
+  operatorsStatuses,
+  thresholds,
+  resourceUsageIssuesHelper,
+} from './monitoringHelper';
 import clusterStates from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
-/**
- * Get the number of items matches some criteria from a set of data
- * Example:
- * An item is considered an issue if it's value of the health criteria mathces the value
- * of the definition of issue for this data.
- * An Alert has an issue if alert's severity is critical.
- * Therefore: issuesSelector(alerts, 'severity', 'critical' )
- * @param {Array} data
- * @param {string} healthCriteria
- * @param {string} isIssue
- */
-const issuesSelector = (data, healthCriteria, match) => data.filter(
-  item => item[healthCriteria] === match,
-).length;
 
-const lastCheckInSelector = (lastCheckIn) => {
+const lastCheckInSelector = (state) => {
+  const lastCheckIn = get(state, 'clusters.details.cluster.activity_timestamp', '');
+
   const MAX_DIFF_HOURS = 3;
   const date = new Date(lastCheckIn);
 
@@ -73,28 +67,15 @@ const lastCheckInSelector = (lastCheckIn) => {
   };
 };
 
-const resourceUsageIssuesSelector = (cpu, memory, threshold) => {
-  const totalCPU = cpu.total.value;
-  const totalMemory = memory.total.value;
-
-  if (!hasCpuAndMemory(cpu, memory)) {
-    return null;
-  }
-
-  let numOfIssues = 0;
-  if (cpu && totalCPU && (cpu.used.value / cpu.total.value > threshold)) {
-    numOfIssues += 1;
-  }
-  if (memory && totalMemory && (memory.used.value / memory.total.value > threshold)) {
-    numOfIssues += 1;
-  }
-  return numOfIssues;
-};
-
-const clusterHealthSelector = (cluster, lastCheckIn, discoveredIssues) => {
+const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
+  const cluster = get(state, 'clusters.details.cluster', null);
   const { hours, minutes } = lastCheckIn;
 
-  const noFreshActivity = hours > 3 || (hours === 3 && minutes > 0);
+  const noFreshActivity = hours > 3 || (hours === 3 && minutes > 0) || !cluster;
+
+  if (noFreshActivity) {
+    return monitoringStatuses.NO_METRICS;
+  }
 
   if (!cluster.managed && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED)) {
     return monitoringStatuses.DISCONNECTED;
@@ -108,10 +89,6 @@ const clusterHealthSelector = (cluster, lastCheckIn, discoveredIssues) => {
     return monitoringStatuses.INSTALLING;
   }
 
-  if (noFreshActivity) {
-    return monitoringStatuses.NO_METRICS;
-  }
-
   if (discoveredIssues > 0) {
     return monitoringStatuses.HAS_ISSUES;
   }
@@ -119,17 +96,60 @@ const clusterHealthSelector = (cluster, lastCheckIn, discoveredIssues) => {
   return monitoringStatuses.HEALTHY;
 };
 
-/**
- * Returns true if an object has a property named 'data' which is not empty,
- * otherwise returns false.
- * @param {Object} obj
- */
-const hasDataSelector = obj => get(obj, 'data.length', 0) > 0;
+
+const issuesAndWarningsSelector = (state) => {
+  const { alerts, nodes, operators } = state.monitoring;
+
+  const cpu = get(state, 'clusters.details.cluster.metrics.cpu', null);
+  const memory = get(state, 'clusters.details.cluster.metrics.memory', null);
+
+  const alertsIssuesAndWarnings = getIssuesAndWarnings({
+    data: alerts.data,
+    criteria: 'severity',
+    issuesMatch: alertsSeverity.CRITICAL,
+    warningsMatch: alertsSeverity.WARNING,
+  });
+
+  const nodesIssues = getIssuesAndWarnings({
+    data: nodes.data,
+    criteria: 'up',
+    issuesMatch: false,
+  });
+
+  const operatorsIssuesAndWarnings = getIssuesAndWarnings({
+    data: operators.data,
+    criteria: 'condition',
+    issuesMatch: operatorsStatuses.FAILING,
+    warningsMatch: operatorsStatuses.DEGRADED,
+  });
+
+  const resourceUsageIssuesAndWarnings = {
+    issuesCount: resourceUsageIssuesHelper(cpu, memory, thresholds.DANGER),
+    warningsCount: resourceUsageIssuesHelper(cpu, memory, thresholds.WARNING),
+  };
+
+  return {
+    issues: {
+      alerts: alertsIssuesAndWarnings.issuesCount,
+      nodes: nodesIssues.issuesCount,
+      operators: operatorsIssuesAndWarnings.issuesCount,
+      resourceUsage: resourceUsageIssuesAndWarnings.issuesCount,
+      totalCount:
+        alertsIssuesAndWarnings.issuesCount
+        + nodesIssues.issuesCount
+        + operatorsIssuesAndWarnings.issuesCount
+        + resourceUsageIssuesAndWarnings.issuesCount,
+    },
+    warnings: {
+      alerts: alertsIssuesAndWarnings.warningsCount,
+      operators: operatorsIssuesAndWarnings.warningsCount,
+      resourceUsage: resourceUsageIssuesAndWarnings.warningsCount,
+    },
+  };
+};
 
 export {
-  issuesSelector,
   lastCheckInSelector,
-  resourceUsageIssuesSelector,
   clusterHealthSelector,
-  hasDataSelector,
+  issuesAndWarningsSelector,
 };

@@ -3,6 +3,7 @@ import links, { channels } from '../../../../common/installLinks';
 const instructionsMapping = {
   aws: {
     cloudProvider: 'AWS',
+    customizations: links.INSTALL_AWS_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on AWS with installer-provisioned infrastructure',
       docURL: links.INSTALL_AWSIPI_DOCS_LANDING,
@@ -16,6 +17,7 @@ const instructionsMapping = {
   },
   gcp: {
     cloudProvider: 'GCP',
+    customizations: links.INSTALL_GCP_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on GCP with installer-provisioned infrastructure',
       docURL: links.INSTALL_GCPIPI_GETTING_STARTED,
@@ -30,6 +32,7 @@ const instructionsMapping = {
   },
   azure: {
     cloudProvider: 'Azure',
+    customizations: links.INSTALL_AZURE_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on Azure with installer-provisioned infrastructure',
       channel: channels.STABLE,
@@ -51,6 +54,7 @@ const instructionsMapping = {
   },
   bareMetal: {
     cloudProvider: 'Bare Metal',
+    customizations: links.INSTALL_BAREMETAL_CUSTOMIZATIONS,
     title: 'Install OpenShift on Bare Metal with user-provisioned infrastructure',
     rhcosLearnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
     channel: channels.STABLE,
@@ -58,6 +62,7 @@ const instructionsMapping = {
   },
   vmware: {
     cloudProvider: 'VMWare vSphere',
+    customizations: links.INSTALL_VSPHERE_CUSTOMIZATIONS,
     title: 'Install OpenShift on vSphere with user-provisioned infrastructure',
     docURL: links.INSTALL_VSPHERE_GETTING_STARTED,
     rhcosLearnMoreURL: links.INSTALL_VSPHERE_RHCOS_LEARN_MORE,
@@ -74,6 +79,7 @@ const instructionsMapping = {
   },
   openstack: {
     cloudProvider: 'Red Hat OpenStack Platform',
+    customizations: links.INSTALL_OSP_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on Red Hat OpenStack Platform with installer-provisioned infrastructure',
       channel: channels.STABLE,
@@ -89,6 +95,7 @@ const instructionsMapping = {
   },
   rhv: {
     cloudProvider: 'Red Hat Virutalization',
+    customizations: links.INSTALL_RHV_CUSTOMIZATIONS,
     title: 'Install OpenShift on Red Hat Virtualization with installer-provisioned infrastructure',
     docURL: links.INSTALL_RHV_GETTING_STARTED,
     showPreReleasePageLink: false,

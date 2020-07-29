@@ -1,7 +1,6 @@
 import get from 'lodash/get';
 import { hasCpuAndMemory } from '../clusters/ClusterDetails/clusterDetailsHelper';
-import { hasResourceUsageMetrics, thresholds } from '../clusters/ClusterDetails/components/Monitoring/monitoringHelper';
-import { resourceUsageIssuesSelector } from '../clusters/ClusterDetails/components/Monitoring/MonitoringSelectors';
+import { hasResourceUsageMetrics, thresholds, resourceUsageIssuesHelper } from '../clusters/ClusterDetails/components/Monitoring/monitoringHelper';
 
 function getIssuesCount(cluster) {
   const metrics = get(cluster, 'metrics', null);
@@ -16,7 +15,7 @@ function getIssuesCount(cluster) {
 
   const hasResourceUsageData = hasCpuAndMemory(cpu, memory) && hasResourceUsageMetrics(cluster);
   const resourceUsageIssues = hasResourceUsageData
-    ? resourceUsageIssuesSelector(cpu, memory, thresholds.DANGER) : 0;
+    ? resourceUsageIssuesHelper(cpu, memory, thresholds.DANGER) : 0;
 
   // Sum all issues
   return clustersAlertsFiringCritical + resourceUsageIssues + clusterOperatorsConditionFailing;

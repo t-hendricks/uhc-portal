@@ -36,6 +36,7 @@ import {
 } from './components/Insights/InsightsActions';
 import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
 import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
+import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
 import helpers from '../../../common/helpers';
 
 const mapStateToProps = (state) => {
@@ -67,6 +68,7 @@ const mapStateToProps = (state) => {
     canAllowClusterAdmin: canAllowAdminSelector(state),
     canSubscribeOCP: canSubscribeOCPSelector(state),
     anyModalOpen: !!state.modal.modalName,
+    hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
   });
 };
 
