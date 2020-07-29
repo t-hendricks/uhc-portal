@@ -7,13 +7,13 @@ import instructionsMapping from './instructionsMapping';
 const ocpOptions = {};
 const providers = [];
 Object.values(instructionsMapping).forEach((value) => {
-  const { cloudProvider } = value;
+  const { cloudProvider, customizations } = value;
   const ipi = get(value, 'ipi', null);
   const upi = get(value, 'upi', null);
   if (ipi && upi) {
-    ocpOptions[`${cloudProvider}-ipi`] = ({ cloudProvider, ...ipi });
+    ocpOptions[`${cloudProvider}-ipi`] = ({ cloudProvider, customizations, ...ipi });
     providers.push(`${cloudProvider}-ipi`);
-    ocpOptions[`${cloudProvider}-upi`] = ({ cloudProvider, ...upi });
+    ocpOptions[`${cloudProvider}-upi`] = ({ cloudProvider, customizations, ...upi });
     providers.push(`${cloudProvider}-upi`);
   } else {
     ocpOptions[cloudProvider] = { ...value };

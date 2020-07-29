@@ -52,6 +52,11 @@ describe('<SupportStatusLabel />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('should show N/A for a pre-release version', () => {
+    wrapper.setProps({ clusterVersion: '4.5.0-0.nightly-2020-07-14-052310' });
+    expect(wrapper).toMatchSnapshot();
+  });
+
   describe('should render for every possible support status', () => {
     const props = {
       getSupportStatus,

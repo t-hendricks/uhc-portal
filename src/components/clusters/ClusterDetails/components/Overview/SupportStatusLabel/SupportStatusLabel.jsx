@@ -21,8 +21,9 @@ class SupportStatusLabel extends React.Component {
     if (pending) {
       return <Skeleton className="inline-skeleton" size="sm" />;
     }
+    const supportedVersionRegex = /^[4-6]\.\d{1,3}(\.\d{1,3})?$/;
     const status = supportStatus[clusterVersion.split('.', 2).join('.')];
-    if (!clusterVersion || clusterVersion === 'N/A' || error || !status) {
+    if (!clusterVersion || clusterVersion === 'N/A' || error || !status || !supportedVersionRegex.test(clusterVersion)) {
       return 'N/A';
     }
     const defaultLabelProps = { color: 'blue', variant: 'outline' };
@@ -31,7 +32,7 @@ class SupportStatusLabel extends React.Component {
       <>
         See
         {' '}
-        <a href="https://access.redhat.com/support/policy/updates/openshift" rel="noopener noreferrer">this resource</a>
+        <a href="https://access.redhat.com/support/policy/updates/openshift" rel="noopener noreferrer" target="_blank">this resource</a>
         {' '}
         to learn more about the support lifecycle.
       </>

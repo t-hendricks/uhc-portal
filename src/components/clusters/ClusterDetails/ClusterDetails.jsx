@@ -273,6 +273,7 @@ class ClusterDetails extends Component {
       canAllowClusterAdmin,
       canSubscribeOCP,
       anyModalOpen,
+      hasIssues,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -375,6 +376,7 @@ class ClusterDetails extends Component {
             addOnsTabRef={this.addOnsTabRef}
             networkingTabRef={this.networkingTabRef}
             insightsTabRef={this.insightsTabRef}
+            hasIssues={hasIssues}
           />
         </ClusterDetailsTop>
         <TabContent
@@ -549,6 +551,7 @@ ClusterDetails.propTypes = {
   canSubscribeOCP: PropTypes.bool.isRequired,
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
+  hasIssues: PropTypes.bool.isRequired,
 };
 
 ClusterDetails.defaultProps = {

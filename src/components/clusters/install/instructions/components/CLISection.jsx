@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
+import { downloadButtonModes } from './DownloadButton';
 
 const CLISection = ({ token, cloudProviderID, channel }) => (
   <>
@@ -15,7 +16,7 @@ const CLISection = ({ token, cloudProviderID, channel }) => (
         token={token}
         cloudProviderID={cloudProviderID}
         channel={channel}
-        cliTools
+        mode={downloadButtonModes.CLI_TOOLS}
       />
     </div>
     <p />

@@ -32,8 +32,8 @@ class InstallCRC extends Component {
     );
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
-        <PageSection className="ocp-downloads">
+        <PageTitle title="Install OpenShift 4 on a laptop with CodeReady Containers" breadcrumbs={breadcrumbs} />
+        <PageSection>
           <InstructionsCRC token={token} />
         </PageSection>
       </>

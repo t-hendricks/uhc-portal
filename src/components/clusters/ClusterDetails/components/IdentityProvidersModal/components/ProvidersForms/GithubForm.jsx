@@ -22,7 +22,7 @@ class GithubFormRequired extends React.Component {
         isEditForm, idpEdited,
       } = this.props;
       if (isEditForm) {
-        if (idpEdited.github.ca !== '') {
+        if (idpEdited.github.ca) {
           this.setState({ hostnameRequired: true });
         }
         this.setState({ authMode: idpEdited.github.organizations ? 'organizations' : 'teams' });

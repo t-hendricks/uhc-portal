@@ -15,7 +15,7 @@ const mockNodes = {
     {
       internal_ip: '10.0.143.198',
       hostname: 'ip-10-0-143-198.ec2.internal',
-      up: true,
+      up: false,
       time: '1562168629557',
     },
   ],
@@ -49,6 +49,26 @@ const mockAlerts = {
     },
   ],
 };
+
+const mockOperators = {
+  data: [
+    {
+      time: '2020-07-20T08:59:35Z',
+      name: 'storage',
+      condition: 'available',
+      reason: 'AsExpected',
+      version: '4.3.18',
+    },
+    {
+      time: '2020-07-20T08:59:35Z',
+      name: 'version',
+      condition: 'failing',
+      reason: 'ClusterOperatorDegraded',
+      version: '',
+    },
+  ],
+};
+
 
 const mockWatchdog = [{ name: 'Watchdog', severity: 'none' }];
 
@@ -491,6 +511,7 @@ export {
   mockAlerts,
   mockWatchdog,
   mockNodes,
+  mockOperators,
   resourceUsageWithIssues,
   resourceUsageWithoutIssues,
   mockOSDCluserDetails,

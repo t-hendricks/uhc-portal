@@ -41,6 +41,7 @@ class InstallGCPIPI extends Component {
           <OCPInstructions
             token={token}
             cloudProvider={instructionsMapping.gcp.cloudProvider}
+            customizations={instructionsMapping.gcp.customizations}
             {...instructionsMapping.gcp.ipi}
           />
         </PageSection>

@@ -45,4 +45,12 @@ describe('<TabsRow />', () => {
     wrapper = shallow(<TabsRow {...props} displayMonitoringTab={false} />);
     expect(wrapper).toMatchSnapshot();
   });
+
+  it('should render monitoring tab with issues icon', () => {
+    wrapper.setProps({
+      hasIssues: true,
+    }, () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 });
