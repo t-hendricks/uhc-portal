@@ -876,6 +876,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   <Connect(EditSubscriptionSettingsDialog)
     onClose={[Function]}
   />
+  <Connect(TransferClusterOwnershipDialog)
+    onClose={[Function]}
+  />
   <Connect(ArchiveClusterDialog)
     onClose={[Function]}
   />

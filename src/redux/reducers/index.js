@@ -25,6 +25,7 @@ import { subscriptionsReducer } from './subscriptionsReducer';
 import { loadBalancersReducer } from './loadBalancersReducer';
 import { persistentStorageReducer } from './persistentStorageReducer';
 import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
+import { subscriptionReleasedReducer } from '../../components/clusters/common/TransferClusterOwnershipDialog/subscriptionReleasedReducer';
 import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
 import supportStatusReducer from '../../components/clusters/ClusterDetails/components/Overview/SupportStatusLabel/supportStatusReducer';
 
@@ -51,6 +52,7 @@ const reducers = {
   notifications,
   networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,
+  subscriptionReleased: subscriptionReleasedReducer,
   insightsData: insightsReducer,
   clusterRouters: NetworkingReducer,
   dashboards: dashboardsReducer,

@@ -37,6 +37,7 @@ import ScaleClusterDialog from '../common/ScaleClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
+import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 
@@ -272,8 +273,10 @@ class ClusterDetails extends Component {
       enableRule,
       canAllowClusterAdmin,
       canSubscribeOCP,
+      canTransferClusterOwnership,
       anyModalOpen,
       hasIssues,
+      toggleSubscriptionReleased,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -362,7 +365,9 @@ class ClusterDetails extends Component {
           errorMessage={clusterDetails.errorMessage}
           canAllowClusterAdmin={canAllowClusterAdmin}
           canSubscribeOCP={canSubscribeOCP}
+          canTransferClusterOwnership={canTransferClusterOwnership}
           autoRefreshEnabled={!anyModalOpen}
+          toggleSubscriptionReleased={toggleSubscriptionReleased}
         >
           <TabsRow
             displayMonitoringTab={!isArchived}
@@ -470,6 +475,7 @@ class ClusterDetails extends Component {
         <UnarchiveClusterDialog onClose={onDialogClose} />
         <EditConsoleURLDialog onClose={onDialogClose} />
         <EditSubscriptionSettingsDialog onClose={onDialogClose} />
+        <TransferClusterOwnershipDialog onClose={onDialogClose} />
         <ArchiveClusterDialog onClose={onDialogClose} />
         <ToggleClusterAdminAccessDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {
@@ -549,9 +555,11 @@ ClusterDetails.propTypes = {
   enableRule: PropTypes.func.isRequired,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
+  canTransferClusterOwnership: PropTypes.bool.isRequired,
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
+  toggleSubscriptionReleased: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {
