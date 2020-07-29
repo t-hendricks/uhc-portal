@@ -46,8 +46,8 @@ function OpenIDFormRequired({ isPending }) {
         disabled={isPending}
         helpText="The list of attributes whose values should be used as the email address."
         validate={validate}
+        isRequired
       />
-
       <ReduxFieldArray
         fieldName="openid_name"
         label="Name"
@@ -56,6 +56,7 @@ function OpenIDFormRequired({ isPending }) {
         disabled={isPending}
         validate={validate}
         helpText="The list of attributes whose values should be used as the preferred username."
+        isRequired
       />
       <ReduxFieldArray
         fieldName="openid_preferred_username"
@@ -65,6 +66,7 @@ function OpenIDFormRequired({ isPending }) {
         disabled={isPending}
         validate={validate}
         helpText="The list of attributes whose values should be used as the display name."
+        isRequired
       />
     </>
   );
