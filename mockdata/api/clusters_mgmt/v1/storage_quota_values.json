@@ -1,0 +1,28 @@
+{
+  "kind": "StorageQuotaValueList",
+  "size": 5,
+  "page": 1,
+  "total": 5,
+  "items": [
+    {
+      "value": 107374182400,
+      "unit": "B"
+    },
+    {
+      "value": 644245094400,
+      "unit": "B"
+    },
+    {
+      "value": 1181116006400,
+      "unit": "B"
+    },
+    {
+      "value": 1717986918400,
+      "unit": "B"
+    },
+    {
+      "value": 2254857830400,
+      "unit": "B"
+    }
+  ]
+}

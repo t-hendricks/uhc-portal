@@ -8,6 +8,96 @@ const userInfoResponse = payload => ({
   type: userConstants.USER_INFO_RESPONSE,
 });
 
+const processClusterQuota = (clustersQuota, item, resources) => {
+  const quota = clustersQuota;
+  const available = item.allowed - item.consumed;
+  const cloudProvider = resources.cloud_provider;
+  const infraCategory = resources.byoc === 'rhinfra' ? 'rhInfra' : resources.byoc;
+  const availabilityZoneType = resources.availability_zone_type;
+  const machineType = resources.resource_name;
+
+  // Since quota can apply to either AWS or GCP, or "any", we compare an exact match or an
+  // "any" match. If the quota applies to a specific cloud provider, we add it there. If it
+  // applies to "any" cloud provider, we add it to both providers in the quota object.
+  // This also applies to BYOC and AZ.
+  Object.keys(quota).forEach((provider) => {
+    if (cloudProvider === provider || cloudProvider === 'any') {
+      Object.keys(quota[provider]).forEach((category) => {
+        if (infraCategory === category || infraCategory === 'any') {
+          Object.keys(quota[provider][category]).forEach((zoneType) => {
+            const categoryQuota = quota[provider][category];
+            if (`${availabilityZoneType}Az` === zoneType) {
+              categoryQuota[zoneType][machineType] = available;
+              categoryQuota[zoneType].available += available;
+              categoryQuota.totalAvailable += available;
+            }
+            // When calculating for any AZ, skip the totalAvailable property
+            if (availabilityZoneType === 'any' && zoneType !== 'totalAvailable') {
+              categoryQuota[zoneType][machineType] = available;
+              categoryQuota[zoneType].available += available;
+              // To avoid double-counting, we calculate only half for each of the two AZ's
+              categoryQuota.totalAvailable += available / 2;
+            }
+          });
+        }
+      });
+    }
+  });
+};
+
+const processNodeQuota = (nodesQuota, item, resources) => {
+  const quota = nodesQuota;
+  const available = item.allowed - item.consumed;
+  const cloudProvider = resources.cloud_provider;
+  const infraCategory = resources.byoc === 'rhinfra' ? 'rhInfra' : resources.byoc;
+  const machineType = resources.resource_name;
+
+  Object.keys(quota).forEach((provider) => {
+    if (cloudProvider === provider || cloudProvider === 'any') {
+      Object.keys(quota[provider]).forEach((category) => {
+        if (infraCategory === category || infraCategory === 'any') {
+          quota[provider][category][machineType] = available;
+        }
+      });
+    }
+  });
+};
+
+const processStorageQuota = (storageQuota, item, resources) => {
+  const quota = storageQuota;
+  const available = item.allowed - item.consumed;
+  const cloudProvider = resources.cloud_provider;
+
+  Object.keys(quota).forEach((provider) => {
+    if (cloudProvider === provider || cloudProvider === 'any') {
+      quota[provider].available += available;
+    }
+  });
+};
+
+const processLoadBalancerQuota = (loadBalancerQuota, item, resources) => {
+  const quota = loadBalancerQuota;
+  const available = item.allowed - item.consumed;
+  const cloudProvider = resources.cloud_provider;
+
+  Object.keys(quota).forEach((provider) => {
+    if (cloudProvider === provider || cloudProvider === 'any') {
+      quota[provider].available += available;
+    }
+  });
+};
+
+const processAddOnQuota = (addOnsQuota, item, resources) => {
+  const quota = addOnsQuota;
+  const available = item.allowed - item.consumed;
+  const name = resources.resource_name;
+
+  if (!quota[name]) {
+    quota[name] = 0;
+  }
+  quota[name] += available;
+};
+
 const fetchQuota = organizationID => accountsService.getOrganizationQuota(organizationID).then(
   (response) => {
     /* construct an easy to query structure to figure out how many of each resource types
@@ -48,22 +138,13 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
       nodesQuota: {
         // AWS
         aws: {
-          byoc: {
-            singleAz: {},
-            multiAz: {},
-          },
-          rhInfra: {
-            singleAz: {},
-            multiAz: {},
-          },
+          byoc: {},
+          rhInfra: {},
         },
 
         // GCP
         gcp: {
-          rhInfra: {
-            singleAz: {},
-            multiAz: {},
-          },
+          rhInfra: {},
         },
       },
 
@@ -85,56 +166,32 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
 
     const items = get(response.data, 'items', []);
 
-    const processNodeQuota = (item, provider) => {
-      const available = item.allowed - item.reserved;
-      const category = item.byoc ? 'byoc' : 'rhInfra';
-      allQuotas.nodesQuota[provider][category][item.resource_name] = available;
-    };
-
-    const processClusterQuota = (item, provider) => {
-      const available = item.allowed - item.reserved;
-      const category = item.byoc ? 'byoc' : 'rhInfra';
-      const zoneType = item.availability_zone_type === 'single' ? 'singleAz' : 'multiAz';
-
-      allQuotas.clustersQuota[provider][category][zoneType][item.resource_name] = available;
-      allQuotas.clustersQuota[provider][category][zoneType].available += available;
-      allQuotas.clustersQuota[provider][category].totalAvailable += available;
-    };
-
     items.forEach((item) => {
-      const provider = item.resource_type && item.resource_type.split('.').pop();
-      switch (item.resource_type) {
-        // AWS
-        case 'cluster.gcp':
-        case 'cluster.aws':
+      const resources = get(item, 'related_resources[0]');
+      switch (resources.resource_type) {
+        case 'cluster':
           // cluster quota: "how many clusters am I allowed to provision?"
-          processClusterQuota(item, provider);
+          processClusterQuota(allQuotas.clustersQuota, item, resources);
           break;
 
-        case 'compute.node.gcp':
-        case 'compute.node.aws':
+        case 'compute.node':
           // node quota: "how many extra nodes can I add on top of the base cluster?"
-          processNodeQuota(item, provider);
+          processNodeQuota(allQuotas.nodesQuota, item, resources);
           break;
 
-        case 'pv.storage.aws':
-        case 'pv.storage.gcp':
-          // Create a map of storage quota.
-          allQuotas.storageQuota[provider].available += (item.allowed - item.reserved);
+        case 'pv.storage':
+          // storage quota: "how much persistent storage quota can I set on the cluster?"
+          processStorageQuota(allQuotas.storageQuota, item, resources);
           break;
 
-        case 'network.loadbalancer.aws':
-        case 'network-gcp.loadbalancer.gcp':
-          allQuotas.loadBalancerQuota[provider].available += (item.allowed - item.reserved);
+        case 'network.loadbalancer':
+          // load balancer quota: "how much load balancer quota can I set on the cluster?"
+          processLoadBalancerQuota(allQuotas.loadBalancerQuota, item, resources);
           break;
 
-        // ADDONS
-        case 'addon':
-          if (!allQuotas.addOnsQuota[item.resource_name]) {
-            allQuotas.addOnsQuota[item.resource_name] = 0;
-          }
-          // Accumulate all available quota per resource name
-          allQuotas.addOnsQuota[item.resource_name] += item.allowed - item.reserved;
+        case 'add-on':
+          // add-on quota: "how many of each add-on can I add on top of the base cluster?"
+          processAddOnQuota(allQuotas.addOnsQuota, item, resources);
           break;
 
         default:
@@ -178,8 +235,15 @@ const getOrganizationAndQuota = () => ({
 const userActions = {
   userInfoResponse,
   getOrganizationAndQuota,
+  processClusterQuota,
+  processNodeQuota,
+  processStorageQuota,
+  processLoadBalancerQuota,
+  processAddOnQuota,
 };
 
 export {
-  userActions, userInfoResponse, getOrganizationAndQuota,
+  userActions,
+  userInfoResponse,
+  getOrganizationAndQuota,
 };

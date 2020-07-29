@@ -1,6 +1,10 @@
 
 const getCurrentAccount = jest.fn();
-getCurrentAccount.mockResolvedValue({});
+getCurrentAccount.mockResolvedValue({
+  data: {
+    organization: { id: 'foo' },
+  },
+});
 
 const getOrganization = jest.fn();
 getOrganization.mockResolvedValue({});
