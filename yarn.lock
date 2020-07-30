@@ -4889,10 +4889,10 @@ extsprintf@^1.2.0:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-facet-lib@1.0.24:
-  version "1.0.24"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/facet-lib/-/facet-lib-1.0.24.tgz#080c3ddffa0dd4ed7af11adc7ef3d10c570646be"
-  integrity sha512-78WTmIl85IT9vy7iFdDVK3pbxRr5sTNA9tkSMTwEbKhDXZDx42ObrUsByK1OBgOKbfqBpF64Pyc3cP1vqXZi0Q==
+facet-lib@1.0.26:
+  version "1.0.26"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/facet-lib/-/facet-lib-1.0.26.tgz#a85a56a0fb2914a9ce2e039e2c0768918b5ae193"
+  integrity sha512-nILLQ1NtSNdeT11XA/qGU5CVg+CBmEhofwNbYgMcoWHb0njvByyY0MSq35/2ypFYxLIKcwYwYxqsWpfwf+gw/w==
   dependencies:
     axios-case-converter "^0.6.0"
     unique-names-generator "^4.2.0"
@@ -9218,11 +9218,6 @@ redent@^1.0.0:
   dependencies:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
-
-redux-devtools-extension@^2.13.8:
-  version "2.13.8"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/redux-devtools-extension/-/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
-  integrity sha512-8qlpooP2QqPtZHQZRhx3x3OP5skEV1py/zUdMY28WNAocbafxdG2tRD1MWE7sp8obGMNYuLWanhhQ7EQvT1FBg==
 
 redux-form@^8.3.6:
   version "8.3.6"
