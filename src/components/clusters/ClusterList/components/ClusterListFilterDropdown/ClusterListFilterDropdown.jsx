@@ -71,21 +71,13 @@ class ClusterListFilterDropdown extends React.Component {
             };
             return (
               <DropdownItem key={key}>
-                <div>
-                  {/* Hack: the extra div is here because PatternFly
-                REMOVES the pf-c-dropdown__menu-itemclassName from
-                the first child, but doesn't put it anywhere if the child
-                is a checkbox, so the dropdown is not styled correctly.
-
-                Having a div here ensures the dropdown items will be styled correctly. */}
-                  <Checkbox
-                    className="pf-c-dropdown__menu-item"
-                    isChecked={selected[key]}
-                    id={key}
-                    label={label}
-                    onChange={onChange}
-                  />
-                </div>
+                <Checkbox
+                  className="pf-c-dropdown__menu-item"
+                  isChecked={selected[key]}
+                  id={key}
+                  label={label}
+                  onChange={onChange}
+                />
               </DropdownItem>
             );
           })}
