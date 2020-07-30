@@ -18,7 +18,6 @@ import { Redirect } from 'react-router';
 import get from 'lodash/get';
 
 import {
-  EmptyState,
   PageSection,
   TabContent,
   Card,
@@ -31,7 +30,7 @@ import InsightsRuleDetailsTop from './components/InsightsRuleDetailsTop';
 import EmptyRemediationInfo from './components/EmptyRemediationInfo';
 import TabsRow from './components/TabsRow';
 
-import ErrorBox from '../../common/ErrorBox';
+import Unavailable from '../../common/Unavailable';
 import { isValid, scrollToTop } from '../../../common/helpers';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
@@ -139,17 +138,17 @@ class InsightsRuleDetails extends Component {
     const isPending = (((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error) || (get(reportDetails.report, 'rule_id') !== requestedReportID && !reportDetails.rejected));
 
     const errorClusterState = () => (
-      <EmptyState>
-        <ErrorBox message="Error retrieving cluster details" response={clusterDetails} />
+      <>
+        <Unavailable message="Error retrieving cluster details" response={clusterDetails} />
         {isPending && <Spinner />}
-      </EmptyState>
+      </>
     );
 
     const errorReportState = () => (
-      <EmptyState>
-        <ErrorBox message="Error retrieving report details" response={reportDetails} />
+      <>
+        <Unavailable message="Error retrieving report details" response={reportDetails} />
         {isPending && <Spinner />}
-      </EmptyState>
+      </>
     );
 
     if (isPending) {

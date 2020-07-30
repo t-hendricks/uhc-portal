@@ -1,23 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Alert, EmptyState } from '@patternfly/react-core';
-import { Link } from 'react-router-dom';
+import { EmptyState, EmptyStateBody } from '@patternfly/react-core';
+import { InvalidObject } from '@redhat-cloud-services/frontend-components';
 
-import getBaseName from '../../common/getBaseName';
-
-function NotFoundError({ location }) {
-  const locationWithPrefix = `${getBaseName()}${location.pathname}`;
+function NotFoundError() {
   return (
-    <EmptyState>
-      <Alert variant="danger" isInline title="Not Found" id="not-found">
-       The URL&nbsp;
-        {locationWithPrefix}
-        &nbsp;was not found in this application.
-        <br />
-        <Link to="/">
-          Go back to the main page
-        </Link>
-      </Alert>
+    <EmptyState id="not-found">
+      <EmptyStateBody>
+        <InvalidObject />
+      </EmptyStateBody>
     </EmptyState>
   );
 }

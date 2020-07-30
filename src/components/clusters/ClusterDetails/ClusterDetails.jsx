@@ -19,7 +19,7 @@ import get from 'lodash/get';
 import has from 'lodash/has';
 import intersection from 'lodash/intersection';
 
-import { EmptyState, PageSection, TabContent } from '@patternfly/react-core';
+import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
@@ -41,7 +41,6 @@ import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDi
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 
-import ErrorBox from '../../common/ErrorBox';
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
@@ -49,6 +48,7 @@ import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 import clusterStates from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
+import Unavailable from '../../common/Unavailable';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -295,10 +295,10 @@ class ClusterDetails extends Component {
     const isPending = ((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error);
 
     const errorState = () => (
-      <EmptyState>
-        <ErrorBox message="Error retrieving cluster details" response={clusterDetails} />
+      <>
+        <Unavailable message="Error retrieving cluster details" response={clusterDetails} />
         {isPending && <Spinner />}
-      </EmptyState>
+      </>
     );
 
     if (isPending) {
