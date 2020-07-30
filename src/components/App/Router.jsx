@@ -20,6 +20,8 @@ import { withRouter } from 'react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
+import { FacetRouter } from 'facet-lib';
+
 import Overview from '../overview';
 import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
@@ -56,6 +58,14 @@ import NotFoundError from './NotFoundError';
 import Subscriptions from '../subscriptions';
 import Insights from './Insights';
 import CloudProviderSelection from '../clusters/CreateOSDPage/CloudProviderSelection';
+import withFeatureGate from '../features/with-feature-gate';
+import { ASSISTED_INSTALLER_FEATURE } from '../../redux/constants/featureConstants';
+import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
+
+const GatedFacetRouter = withFeatureGate(FacetRouter, ASSISTED_INSTALLER_FEATURE);
+const GatedMetalInstall = withFeatureGate(
+  InstallBareMetal, ASSISTED_INSTALLER_FEATURE, InstallBMUPI,
+);
 
 function Router({ history }) {
   return (
@@ -84,7 +94,8 @@ function Router({ history }) {
           <Route path="/install/azure/installer-provisioned" component={InstallAzureIPI} />
           <Route path="/install/azure/user-provisioned" component={InstallAzureUPI} />
           <Route path="/install/azure" exact component={InstallAzure} />
-          <Route path="/install/metal/user-provisioned" component={InstallBareMetal} />
+          <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
+          <Route path="/install/metal" component={GatedMetalInstall} />
           <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
           <Route path="/install/crc/installer-provisioned" component={InstallCRC} />
           <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
@@ -104,6 +115,7 @@ function Router({ history }) {
           <Route path="/subscriptions" component={Subscriptions} />
           <Route path="/archived" component={ArchivedClusterList} />
           <Route path="/overview" exact component={Overview} />
+          <Route path="/assisted-installer" component={GatedFacetRouter} />
           <Route path="/" exact component={ClustersList} />
           <Route component={NotFoundError} />
         </Switch>

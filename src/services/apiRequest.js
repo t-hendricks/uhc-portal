@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/browser';
 
 import config from '../config';
 
-const authInterceptor = (client) => {
+export const authInterceptor = (client) => {
   client.interceptors.request.use(async (cfg) => {
     await insights.chrome.auth.getUser();
     const token = await insights.chrome.auth.getToken();
