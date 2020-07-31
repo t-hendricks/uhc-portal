@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import get from 'lodash/get';
 import {
   Card,
   CardBody, CardTitle,
@@ -22,8 +23,8 @@ class OSDSubscriptionCard extends Component {
   }
 
   refresh = () => {
-    const { organizationID, fetchQuotaSummary } = this.props;
-    fetchQuotaSummary(organizationID);
+    const { organizationID, fetchQuotaCost } = this.props;
+    fetchQuotaCost(organizationID);
   }
 
   getCapacityIcon = (used, max) => {
@@ -47,17 +48,17 @@ class OSDSubscriptionCard extends Component {
   }
 
   render() {
-    const { quotaSummary } = this.props;
+    const { quotaCost } = this.props;
     let content;
-    if (quotaSummary.fulfilled) {
-      const rows = quotaSummary.items.map(quotaItem => [
-        quotaItem.resource_type,
-        quotaItem.resource_name,
-        { title: this.getZoneType(quotaItem.availability_zone_type) },
-        quotaItem.byoc ? 'BYOC' : 'Standard',
-        quotaItem.reserved,
+    if (quotaCost.fulfilled) {
+      const rows = quotaCost.items.map(quotaItem => [
+        get(quotaItem, 'related_resources[0].resource_type'),
+        get(quotaItem, 'related_resources[0].resource_name'),
+        { title: this.getZoneType(get(quotaItem, 'related_resources[0].availability_zone_type')) },
+        get(quotaItem, 'related_resources[0].byoc') === 'any' ? 'BYOC' : 'Standard',
+        quotaItem.consumed,
         quotaItem.allowed,
-        { title: this.getCapacityIcon(quotaItem.reserved, quotaItem.allowed) },
+        { title: this.getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
       ]);
       content = (
         <>
@@ -67,8 +68,8 @@ class OSDSubscriptionCard extends Component {
       );
     } else {
       const data = {
-        error: quotaSummary.error,
-        pending: quotaSummary.pending,
+        error: quotaCost.error,
+        pending: quotaCost.pending,
         type: 'osd',
         empty: true,
       };
@@ -92,8 +93,8 @@ class OSDSubscriptionCard extends Component {
 
 OSDSubscriptionCard.propTypes = {
   organizationID: PropTypes.string.isRequired,
-  fetchQuotaSummary: PropTypes.func.isRequired,
-  quotaSummary: PropTypes.object.isRequired,
+  fetchQuotaCost: PropTypes.func.isRequired,
+  quotaCost: PropTypes.object.isRequired,
 };
 
 export default OSDSubscriptionCard;

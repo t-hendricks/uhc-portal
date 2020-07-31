@@ -56,9 +56,18 @@ function fetchQuotaSummary(organizationID, params) {
   });
 }
 
+function fetchQuotaCost(organizationID) {
+  return dispatch => dispatch({
+    type: subscriptionsConstants.GET_QUOTA_COST,
+    payload: accountsService.getOrganizationQuota(organizationID),
+  });
+}
+
+
 const subscriptionsActions = {
   fetchAccount,
   fetchQuotaSummary,
+  fetchQuotaCost,
   getSubscriptions,
   invalidateSubscriptions,
 };
@@ -67,6 +76,7 @@ export {
   subscriptionsActions,
   fetchAccount,
   fetchQuotaSummary,
+  fetchQuotaCost,
   getSubscriptions,
   invalidateSubscriptions,
 };
