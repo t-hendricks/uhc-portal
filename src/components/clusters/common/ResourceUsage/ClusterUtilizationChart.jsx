@@ -40,6 +40,8 @@ function ClusterUtilizationChart(props) {
           ariaDesc={title}
           data={[{ x: '', y: 80 }, { x: 'Warning at 80%', y: 95 }, { x: 'Danger at 95%', y: 100 }]}
           labels={({ datum }) => datum.x || null}
+          height={185}
+          width={185}
         >
           {baseDonutUtilization()}
         </ChartDonutThreshold>
