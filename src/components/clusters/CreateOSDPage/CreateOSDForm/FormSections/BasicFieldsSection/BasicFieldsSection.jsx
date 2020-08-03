@@ -14,7 +14,13 @@ import validators from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 
 function BasicFieldsSection({
-  pending, showDNSBaseDomain, showAvailability, quota, cloudProviderID, handleMultiAZChange,
+  pending,
+  showDNSBaseDomain,
+  showAvailability,
+  quota,
+  cloudProviderID,
+  handleMultiAZChange,
+  isMultiAz,
 }) {
   const hasSingleAzQuota = quota.singleAz.available > 0;
   const hasMultiAzQuota = quota.multiAz.available > 0;
@@ -70,6 +76,7 @@ function BasicFieldsSection({
             cloudProviderID={cloudProviderID}
             disabled={pending}
             isRequired
+            isMultiAz={isMultiAz}
           />
         </FormGroup>
       </GridItem>
@@ -118,6 +125,7 @@ function BasicFieldsSection({
 
 BasicFieldsSection.propTypes = {
   pending: PropTypes.bool,
+  isMultiAz: PropTypes.bool.isRequired,
   showDNSBaseDomain: PropTypes.bool,
   showAvailability: PropTypes.bool,
   handleMultiAZChange: PropTypes.func.isRequired,

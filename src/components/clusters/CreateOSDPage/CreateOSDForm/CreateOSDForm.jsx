@@ -36,9 +36,11 @@ class CreateOSDForm extends React.Component {
   handleMultiAZChange = (_, value) => {
     const { change } = this.props;
     const isMultiAz = value === 'true';
+
     this.setState({ isMultiAz });
     change('nodes_compute', isMultiAz ? '9' : '4');
   };
+
 
   handleMachineTypesChange = (_, value) => {
     this.setState({ machineType: value });
@@ -127,6 +129,7 @@ class CreateOSDForm extends React.Component {
           cloudProviderID={cloudProviderID}
           quota={clustersQuota[cloudProviderID][infraType]}
           handleMultiAZChange={this.handleMultiAZChange}
+          isMultiAz={isMultiAz}
         />
 
         {/* Scale section */}
