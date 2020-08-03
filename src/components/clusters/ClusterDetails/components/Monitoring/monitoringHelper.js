@@ -17,6 +17,7 @@ const monitoringStatuses = {
 const alertsSeverity = {
   WARNING: 'warning',
   CRITICAL: 'critical',
+  INFO: 'info',
 };
 
 const operatorsStatuses = {
