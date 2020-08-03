@@ -6,7 +6,7 @@ import {
 } from '@patternfly/react-core';
 import { cellWidth } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
-import RuleTable, { severity } from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
+import RuleTable from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
 import ReportDetails from '@redhat-cloud-services/rule-components/dist/cjs/ReportDetails';
 import {
   descriptionFilter,
@@ -14,7 +14,7 @@ import {
   ruleStatusFilter,
 } from '@redhat-cloud-services/rule-components/dist/cjs/RuleFilters';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
-import { Battery } from '@redhat-cloud-services/frontend-components/components/Battery';
+import { InsightsLabel } from '@redhat-cloud-services/frontend-components/components/InsightsLabel';
 import { CheckCircleIcon } from '@patternfly/react-icons';
 import AnalysisSummary from './AnalysisSummary';
 import { severityMapping } from './helpers';
@@ -288,18 +288,19 @@ class InsightsTable extends React.Component {
                 {
                   title: 'Added',
                   selector: ({ created_at: created }) => <DateFormat date={new Date(created)} />,
+                  props: { className: 'no-padding' },
                 },
                 {
                   title: 'Total risk',
                   selector:
                     ({ total_risk: riskNumber }) => (
                       <div className="battery">
-                        <Battery
-                          label={severity[severityMapping[riskNumber - 1]]}
-                          severity={riskNumber}
+                        <InsightsLabel
+                          value={riskNumber}
                         />
                       </div>
                     ),
+                  props: { className: 'no-padding' },
                 },
               ]}
               detail={details => (
