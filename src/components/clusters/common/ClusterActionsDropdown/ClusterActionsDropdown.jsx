@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Dropdown, DropdownToggle, KebabToggle, DropdownPosition,
+  Dropdown, DropdownToggle, KebabToggle, DropdownPosition, Tooltip,
 } from '@patternfly/react-core';
 import { dropDownItems } from './ClusterActionsDropdownItems';
 
@@ -51,7 +51,8 @@ class ClusterActionsDropdown extends React.Component {
       canTransferClusterOwnership,
       toggleSubscriptionReleased,
     });
-    return (
+
+    const dropdown = (
       <Dropdown
         position={DropdownPosition.right}
         onSelect={this.onSelect}
@@ -61,6 +62,18 @@ class ClusterActionsDropdown extends React.Component {
         isOpen={isOpen}
       />
     );
+
+    if (disabled) {
+      return (
+        <Tooltip
+          content="You do not have permission to make changes in this cluster. Only cluster owners and organization administrators can make these changes."
+          position="bottom"
+        >
+          {dropdown}
+        </Tooltip>
+      );
+    }
+    return dropdown;
   }
 }
 
