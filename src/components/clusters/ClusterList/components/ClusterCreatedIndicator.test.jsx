@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import moment from 'moment';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 import {
   subscriptionSupportLevels,
@@ -19,7 +18,7 @@ describe('<ClusterCreatedIndicator />', () => {
   });
 
   it('should show created date when cluster is OSD', () => {
-    const creationTimeStamp = moment().format();
+    const creationTimeStamp = '2020-01-01T00:00:00Z';
     const cluster = {
       managed: true,
       subscription: {
@@ -28,11 +27,11 @@ describe('<ClusterCreatedIndicator />', () => {
       creation_timestamp: creationTimeStamp,
     };
     const wrapper = shallow(<ClusterCreatedIndicator cluster={cluster} />);
-    expect(wrapper.text()).toEqual(moment(creationTimeStamp).format('DD MMM YYYY'));
+    expect(wrapper.text()).toEqual('01 Jan 2020');
   });
 
   it('should show created date when it has a valid support', () => {
-    const creationTimeStamp = moment().format();
+    const creationTimeStamp = '2020-01-01T00:00:00Z';
     const cluster = {
       managed: false,
       subscription: {
@@ -41,11 +40,11 @@ describe('<ClusterCreatedIndicator />', () => {
       creation_timestamp: creationTimeStamp,
     };
     const wrapper = shallow(<ClusterCreatedIndicator cluster={cluster} />);
-    expect(wrapper.text()).toEqual(moment(creationTimeStamp).format('DD MMM YYYY'));
+    expect(wrapper.text()).toEqual('01 Jan 2020');
   });
 
   it('should render when cluster is in 60-day trial', () => {
-    const creationTimeStamp = moment().format();
+    const creationTimeStamp = '2020-01-01T00:00:00Z';
     const cluster = {
       managed: false,
       subscription: {
@@ -59,7 +58,7 @@ describe('<ClusterCreatedIndicator />', () => {
   });
 
   it('should render when trial expires', () => {
-    const creationTimeStamp = moment().format();
+    const creationTimeStamp = '2020-01-01T00:00:00Z';
     const cluster = {
       managed: false,
       subscription: {
