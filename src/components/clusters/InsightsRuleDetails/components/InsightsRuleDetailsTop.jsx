@@ -78,7 +78,7 @@ function InsightsRuleDetailsTop(props) {
             showRiskDescription={false}
             definitions={rule.extra_data}
             userVote={rule.user_vote}
-            onFeedbackChanged={voteOnRule}
+            onFeedbackChanged={(ruleId, vote) => voteOnRule(cluster.id, ruleId, vote)}
           />
         </SplitItem>
       </Split>
