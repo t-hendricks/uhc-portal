@@ -1,4 +1,3 @@
-import moment from 'moment';
 import {
   clusterHealthSelector,
   lastCheckInSelector,
@@ -104,11 +103,11 @@ describe('issuesAndWarningsSelector', () => {
       ...resourceUsageWithIssues,
       memory: {
         ...resourceUsageWithIssues.memory,
-        updated_timestamp: moment.utc(),
+        updated_timestamp: new Date().toISOString(),
       },
       cpu: {
         ...resourceUsageWithIssues.cpu,
-        updated_timestamp: moment.utc(),
+        updated_timestamp: new Date().toISOString(),
       },
     },
   };
