@@ -36,8 +36,10 @@ import {
 } from './components/Insights/InsightsActions';
 import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
 import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
+import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
 import helpers from '../../../common/helpers';
+import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
@@ -67,6 +69,7 @@ const mapStateToProps = (state) => {
     groups,
     canAllowClusterAdmin: canAllowAdminSelector(state),
     canSubscribeOCP: canSubscribeOCPSelector(state),
+    canTransferClusterOwnership: canTransferClusterOwnershipSelector(state),
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
   });
@@ -100,6 +103,7 @@ const mapDispatchToProps = {
   getClusterHistory: (
     externalClusterID, queryObj,
   ) => getClusterHistory(externalClusterID, queryObj),
+  toggleSubscriptionReleased,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

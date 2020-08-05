@@ -32,6 +32,9 @@ deleteClusterGroupUser.mockResolvedValue({});
 const getClusterStatus = jest.fn();
 getClusterStatus.mockResolvedValue({});
 
+const getMachineTypes = jest.fn();
+getMachineTypes.mockResolvedValue({});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -44,6 +47,7 @@ const clusterService = {
   addClusterGroupUser,
   deleteClusterGroupUser,
   getClusterStatus,
+  getMachineTypes,
 };
 
 export default clusterService;

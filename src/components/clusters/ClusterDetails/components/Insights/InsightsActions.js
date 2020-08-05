@@ -67,7 +67,7 @@ const voteOnSingleRuleInsights = async (dispatch, clusterId, ruleId, vote) => {
       response = await insightsService.putLikeOnRuleInsights(clusterId, ruleId);
       break;
     default:
-      throw Error('unsupported vote');
+      throw Error(`unsupported vote ${vote}`);
   }
 
   dispatch(fetchClusterInsights(clusterId));

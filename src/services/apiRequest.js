@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/browser';
 
 import config from '../config';
 
-const authInterceptor = (client) => {
+export const authInterceptor = (client) => {
   client.interceptors.request.use(async (cfg) => {
     await insights.chrome.auth.getUser();
     const token = await insights.chrome.auth.getToken();
@@ -15,10 +15,17 @@ const authInterceptor = (client) => {
         Authorization: `Bearer ${token}`,
       };
     } else {
-      Sentry.withScope((scope) => {
-        scope.setFingerprint(['empty token']); // group all "empty token" errors together
-        Sentry.captureException(new Error('Got empty token from Insights'));
-      });
+      setTimeout(() => {
+        /* this is in a timeout to give Insights a chance to redirect
+         if the token is expired, before we report it as an error.
+         The assumption is that if Insights is trying to redirect, it might happen asynchronously,
+         so we should wait a bit before reporting this error, assuming once a redirect happens
+         our code will stop running and this timer won't be reached */
+        Sentry.withScope((scope) => {
+          scope.setFingerprint(['empty token']); // group all "empty token" errors together
+          Sentry.captureException(new Error('Got empty token from Insights'));
+        });
+      }, 15000);
     }
     delete updatedCfg.customHost;
     return updatedCfg;

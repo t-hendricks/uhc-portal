@@ -24,7 +24,7 @@ class ClusterListExtraActions extends React.Component {
 
   render() {
     const { isOpen } = this.state;
-    const { className } = this.props;
+    const { className, aiEnabled } = this.props;
     const dropdownItems = [
       <DropdownItem component="button" key="registercluster">
         <div>
@@ -41,6 +41,17 @@ class ClusterListExtraActions extends React.Component {
         </div>
       </DropdownItem>,
     ];
+    if (aiEnabled) {
+      dropdownItems.push(
+        <DropdownItem component="button" key="assistedinstaller">
+          <div>
+            <Link to="/assisted-installer" className="pf-c-dropdown__menu-item">
+              Assisted Installer clusters
+            </Link>
+          </div>
+        </DropdownItem>,
+      );
+    }
     return (
       <Dropdown
         onSelect={this.onSelect}
@@ -59,6 +70,7 @@ ClusterListExtraActions.propTypes = {
     showArchived: PropTypes.bool.isRequired,
   }).isRequired,
   className: PropTypes.string,
+  aiEnabled: PropTypes.bool,
 };
 
 export default ClusterListExtraActions;

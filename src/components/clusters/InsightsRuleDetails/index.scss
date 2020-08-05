@@ -13,17 +13,6 @@
 		width: 100%;
 	}
 
-	.battery {
-	    line-height: 2;
-	    display: block;
-	    i {
-			margin-right: 5px;
-		}
-		button {
-			padding-left: 0;
-		}
-	}
-	
 	#cl-details-top-row ol, .pf-c-tab-content ol {
 		margin-top: 10px;
 		margin-left: 15px;
@@ -35,5 +24,19 @@
 
 	#cl-details-top-row .pf-c-list, .pf-c-tab-content  .pf-c-list {
 		margin: 5px 0;
+	}
+
+	.cl-details-page-title {
+		transform: inherit;
+	}
+	.ins-c-critical-icon {
+		width: 1em;
+		height: 1em;
+		vertical-align: -0.3em;
+		fill: var(--pf-global--danger-color--200);
+	}
+	.disabled-tooltip {
+		margin-right: var(--pf-global--spacer--sm);
+		font-weight: lighter;
 	}
 }

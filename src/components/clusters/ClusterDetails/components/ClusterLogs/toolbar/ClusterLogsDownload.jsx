@@ -68,7 +68,7 @@ class ClusterLogsDownload extends React.Component {
     let url;
     let download;
     const timestamp = moment()
-      .format('YYYY-MM-DD hhmm');
+      .format('YYYY-MM-DD HHmm');
 
     const format = this.getFormat();
     if (format === 'json') {

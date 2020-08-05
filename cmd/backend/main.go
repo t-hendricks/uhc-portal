@@ -157,6 +157,7 @@ func run(cmd *cobra.Command, argv []string) {
 			proxyCfg.Prefix(), proxyCfg.Target(),
 		)
 		proxyHandler, err := NewProxyHandler().
+			Prefix(proxyCfg.Prefix()).
 			Target(proxyCfg.Target()).
 			Sessions(store).
 			Build()

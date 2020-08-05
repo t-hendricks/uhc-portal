@@ -77,7 +77,7 @@ const InstructionsInfrastructure = () => (
           </Link>
         </GalleryItem>
         <GalleryItem>
-          <Link to="/install/metal/user-provisioned" className="infra-card infra-card-cloud-provider">
+          <Link to="/install/metal" className="infra-card infra-card-cloud-provider">
             <CardBadge isHidden />
             <CardBody>
               <img src={bareMetalIcon} alt="Bare Metal" className="infra-logo" />

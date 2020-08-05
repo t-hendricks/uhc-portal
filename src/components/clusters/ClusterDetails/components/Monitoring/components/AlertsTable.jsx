@@ -15,9 +15,10 @@ import {
   ExclamationCircleIcon,
   ExclamationTriangleIcon,
   CheckCircleIcon,
+  InfoCircleIcon,
 } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
-import { global_danger_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
+import { global_danger_color_100, global_warning_color_100, global_info_color_100 } from '@patternfly/react-tokens';
 
 import {
   alertsSeverity,
@@ -40,12 +41,21 @@ function AlertsTable({ alerts = [], clusterConsole }) {
     </>
   );
 
+  const infoIcon = (
+    <>
+      <InfoCircleIcon className="status-icon" color={global_info_color_100.value} size="md" />
+      <span>Info</span>
+    </>
+  );
+
   const columns = [
     { title: 'Name' },
     { title: 'Severity' },
   ];
 
-  if (alerts.length === 1 && alerts[0].name === 'Watchdog') {
+  const isNotRealAlert = name => name === 'Watchdog' || name === 'DeadMansSwitch';
+
+  if (alerts.every(alert => isNotRealAlert(alert.name))) {
     return (
       <EmptyState>
         <EmptyStateIcon icon={CheckCircleIcon} />
@@ -55,7 +65,7 @@ function AlertsTable({ alerts = [], clusterConsole }) {
   }
 
   const rows = alerts.map((alert) => {
-    if (alert.name === 'Watchdog') {
+    if (isNotRealAlert(alert.name)) {
       return null;
     }
     let severityIcon = null;
@@ -65,6 +75,10 @@ function AlertsTable({ alerts = [], clusterConsole }) {
     if (alert.severity === alertsSeverity.CRITICAL) {
       severityIcon = errorIcon;
     }
+    if (alert.severity === alertsSeverity.INFO) {
+      severityIcon = infoIcon;
+    }
+
     const alertLinkProps = monitoringItemLinkProps(
       clusterConsole, monitoringItemTypes.ALERT, alert.name,
     );

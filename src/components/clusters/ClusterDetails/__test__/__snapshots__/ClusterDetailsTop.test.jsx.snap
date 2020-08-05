@@ -359,5 +359,29 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
     }
     openModal={[MockFunction]}
   />
+  <TransferClusterOwnershipInfo
+    subscription={
+      Object {
+        "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+        "created_at": "2019-01-02T18:28:14.851121Z",
+        "external_cluster_id": "test-liza",
+        "href": "/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8",
+        "id": "1FDpnxsGxqFFFp2VNIWp5VajPc8",
+        "kind": "Subscription",
+        "last_telemetry_date": "0001-01-01T00:00:00Z",
+        "plan": Object {
+          "href": "/api/accounts_mgmt/v1/plans/OCP",
+          "id": "OCP",
+          "kind": "Plan",
+        },
+        "registry_credential": Object {
+          "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
+          "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
+          "kind": "RegistryCredential",
+        },
+        "updated_at": "2019-01-02T18:28:14.851121Z",
+      }
+    }
+  />
 </div>
 `;

@@ -1,173 +1,212 @@
 {
   "kind": "CloudRegionList",
   "page": 1,
-  "size": 15,
-  "total": 15,
+  "size": 17,
+  "total": 17,
   "items": [
     {
       "kind": "CloudRegion",
       "id": "ap-northeast-1",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-northeast-1",
-      "display_name": "Asia Pacific (Tokyo)",
+      "display_name": "Asia Pacific, Tokyo",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "ap-northeast-2",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-northeast-2",
-      "display_name": "Asia Pacific (Seoul)",
+      "display_name": "Asia Pacific, Seoul",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "ap-south-1",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-south-1",
-      "display_name": "Asia Pacific (Mumbai)",
+      "display_name": "Asia Pacific, Mumbai",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "ap-southeast-1",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-1",
-      "display_name": "Asia Pacific (Singapore)",
+      "display_name": "Asia Pacific, Singapore",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "ap-southeast-2",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-2",
-      "display_name": "Asia Pacific (Sydney)",
+      "display_name": "Asia Pacific, Sydney",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "ca-central-1",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ca-central-1",
-      "display_name": "Canada (Central)",
+      "display_name": "Canada, Central",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "eu-central-1",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-central-1",
-      "display_name": "EU (Frankfurt)",
+      "display_name": "EU, Frankfurt",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "eu-north-1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-north-1",
+      "display_name": "EU, Stockholm",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "eu-west-1",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-west-1",
-      "display_name": "EU (Ireland)",
+      "display_name": "EU, Ireland",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "eu-west-2",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-west-2",
-      "display_name": "EU (London)",
+      "display_name": "EU, London",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "eu-west-3",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-west-3",
-      "display_name": "EU (Paris)",
+      "display_name": "EU, Paris",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "me-south-1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/me-south-1",
+      "display_name": "Middle East, Bahrain",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "sa-east-1",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/sa-east-1",
-      "display_name": "South America (São Paulo)",
+      "display_name": "South America, São Paulo",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "us-east-1",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
-      "display_name": "US East (N. Virginia)",
+      "display_name": "US East, N. Virginia",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "us-east-2",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-2",
-      "display_name": "US East (Ohio)",
+      "display_name": "US East, Ohio",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "us-west-1",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-west-1",
-      "display_name": "US West (N. California)",
+      "display_name": "US West, N. California",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     },
     {
       "kind": "CloudRegion",
       "id": "us-west-2",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-west-2",
-      "display_name": "US West (Oregon)",
+      "display_name": "US West, Oregon",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-      }
+      },
+      "enabled": true
     }
   ]
 }

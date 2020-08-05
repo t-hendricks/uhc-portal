@@ -10,6 +10,7 @@ import * as persistentStorageConstants from './persistentStorageConstants';
 import * as loadBalancerConstants from './loadBalancerConstants';
 import * as subscriptionSettingsConstants from './subscriptionSettingsConstants';
 import * as dashboardsConstants from './dashboardsConstants';
+import * as featureConstants from './featureConstants';
 
 
 export {
@@ -25,4 +26,5 @@ export {
   loadBalancerConstants,
   subscriptionSettingsConstants,
   dashboardsConstants,
+  featureConstants,
 };

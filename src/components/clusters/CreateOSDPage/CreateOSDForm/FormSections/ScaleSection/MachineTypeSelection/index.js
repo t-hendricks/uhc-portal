@@ -6,6 +6,7 @@ import sortMachineTypes from './sortMachineTypes';
 const mapStateToProps = (state, ownProps) => ({
   sortedMachineTypes: sortMachineTypes(state, ownProps.cloudProviderID),
   machineTypes: state.machineTypes,
+  machineTypesByID: state.machineTypes.typesByID,
   organization: state.userProfile.organization,
   quota: state.userProfile.organization.quotaList,
 });
