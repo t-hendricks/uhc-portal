@@ -102,7 +102,7 @@ class InsightsRuleDetails extends Component {
       fetchReportData,
     } = this.props;
     fetchClusterDetails(clusterId);
-    if (externalId && APP_BETA) {
+    if (externalId) {
       fetchReportData(externalId, reportId);
     }
   }
@@ -183,7 +183,7 @@ class InsightsRuleDetails extends Component {
 
     // show a full error state only if we don't have data at all,
     // or when we only have data for a different cluster
-    if ((isArchived || !APP_BETA) || (!reportDetails.pending && reportDetails.rejected)) {
+    if (isArchived || (!reportDetails.pending && reportDetails.rejected)) {
       setGlobalError((
         <>
           Report
