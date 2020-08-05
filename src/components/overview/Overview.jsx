@@ -17,7 +17,7 @@ import {
 } from '@redhat-cloud-services/frontend-components';
 
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
-import ClustersEmptyState from '../common/ClustersEmptyState';
+import OverviewEmptyState from './OverviewEmptyState';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
 import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog';
@@ -92,7 +92,7 @@ class Overview extends Component {
     if (summaryDashboard.fulfilled && !totalClusters) {
       return (
         <PageSection>
-          <ClustersEmptyState />
+          <OverviewEmptyState />
         </PageSection>
       );
     }
