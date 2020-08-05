@@ -234,7 +234,7 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
               <GetStarted
                 cloudProvider="Azure"
                 cloudProviderID="/"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-network-customizations.html"
+                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-default.html"
               />
             </div>
@@ -323,7 +323,7 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
               <GetStarted
                 cloudProvider="Azure"
                 cloudProviderID="/"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-network-customizations.html"
+                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
                 docURL="https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md"
               />
             </div>
@@ -502,7 +502,7 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
               <GetStarted
                 cloudProvider="GCP"
                 cloudProviderID="/"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-network-customizations.html"
+                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-account.html"
               />
             </div>
@@ -592,7 +592,7 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
               <GetStarted
                 cloudProvider="GCP"
                 cloudProviderID="/"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-network-customizations.html"
+                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html"
               />
             </div>
@@ -1133,7 +1133,7 @@ exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
               <GetStarted
                 cloudProvider="VMWare vSphere"
                 cloudProviderID="/"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-network-customizations.html"
+                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html"
               />
             </div>
