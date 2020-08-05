@@ -288,7 +288,6 @@ class InsightsTable extends React.Component {
                 {
                   title: 'Added',
                   selector: ({ created_at: created }) => <DateFormat date={new Date(created)} />,
-                  props: { className: 'no-padding' },
                 },
                 {
                   title: 'Total risk',
@@ -300,7 +299,6 @@ class InsightsTable extends React.Component {
                         />
                       </div>
                     ),
-                  props: { className: 'no-padding' },
                 },
               ]}
               detail={details => (

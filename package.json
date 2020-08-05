@@ -18,7 +18,7 @@
     "@redhat-cloud-services/frontend-components": "2.3.11",
     "@redhat-cloud-services/frontend-components-notifications": "^2.1.1",
     "@redhat-cloud-services/frontend-components-utilities": "^2.1.0",
-    "@redhat-cloud-services/rule-components": "2.1.2",
+    "@redhat-cloud-services/rule-components": "2.1.4",
     "@sentry/browser": "5.19.1",
     "@sentry/integrations": "^5.19.1",
     "axios": "^0.19.2",
