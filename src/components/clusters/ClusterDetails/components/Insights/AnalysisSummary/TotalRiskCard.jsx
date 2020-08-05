@@ -13,7 +13,8 @@ import {
 
 import {
   c_button_m_control_active_after_BorderBottomColor,
-  global_palette_gold_200,
+  global_palette_blue_50,
+  global_palette_blue_300,
   global_palette_gold_400,
   global_palette_orange_300,
   global_palette_red_200,
@@ -38,7 +39,14 @@ const groupRulesByRisk = data => data.reduce(
 );
 
 const colorScale = [
-  global_palette_gold_200.value,
+  global_palette_blue_50.value,
+  global_palette_gold_400.value,
+  global_palette_orange_300.value,
+  global_palette_red_200.value,
+];
+
+const legendColorScale = [
+  global_palette_blue_300.value,
   global_palette_gold_400.value,
   global_palette_orange_300.value,
   global_palette_red_200.value,
@@ -170,7 +178,7 @@ const TotalRiskCard = ({ insightsData, batteryClicked }) => {
                   .map(([risk, count]) => ({
                     name: `${count} ${severity[severityMapping[risk - 1]]}`,
                     severity: risk,
-                    symbol: { type: 'circle', fill: colorScale[risk - 1] },
+                    symbol: { type: 'circle', fill: legendColorScale[risk - 1] },
                   }))
               }
             />
