@@ -39,4 +39,8 @@
 		margin-right: var(--pf-global--spacer--sm);
 		font-weight: lighter;
 	}
+
+	.disabled-color {
+		color: var(--pf-global--disabled-color--100);
+	}
 }
