@@ -23,12 +23,17 @@ class ScaleClusterDialog extends Component {
       getPersistentStorage,
       organization,
       getOrganizationAndQuota,
+      machineTypes,
+      getMachineTypes,
     } = this.props;
     if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
       getPersistentStorage();
     }
     if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
       getLoadBalancers();
+    }
+    if (!machineTypes.fulfilled && !machineTypes.pending) {
+      getMachineTypes();
     }
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
@@ -244,6 +249,8 @@ ScaleClusterDialog.propTypes = {
   loadBalancerValues: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
+  machineTypes: PropTypes.object.isRequired,
+  getMachineTypes: PropTypes.func.isRequired,
   isByoc: PropTypes.bool,
   machineType: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
