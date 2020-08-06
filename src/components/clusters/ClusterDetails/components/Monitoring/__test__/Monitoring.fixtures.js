@@ -44,6 +44,14 @@ const mockAlerts = {
       severity: 'warning',
     },
     {
+      name: 'test',
+      severity: 'info',
+    },
+    {
+      name: 'DeadMansSwitch',
+      severity: 'none',
+    },
+    {
       name: 'Watchdog',
       severity: 'none',
     },

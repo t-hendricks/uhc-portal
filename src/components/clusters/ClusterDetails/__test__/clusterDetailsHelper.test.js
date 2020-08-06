@@ -29,8 +29,8 @@ describe('hasCpuAndMemory', () => {
   });
 
   it('returns true when there is memory and cpu data', () => {
-    metrics.cpu.updated_timestamp = new Date();
-    metrics.memory.updated_timestamp = new Date();
+    metrics.cpu.updated_timestamp = new Date().toISOString();
+    metrics.memory.updated_timestamp = new Date().toISOString();
     expect(hasCpuAndMemory(metrics.cpu, metrics.memory)).toBe(true);
   });
 });

@@ -1,13 +1,6 @@
-#cluster-insights-table {
-	.battery {
-		button {
-			padding-left: 0;
-		}
-		i {
-			margin-right: 5px;
-		}
-	}
+@import '~@redhat-cloud-services/frontend-components/components/InsightsLabel.css';
 
+#cluster-insights-table {
 	.pf-c-card__body.no-padding {
 		padding: 0;
 	}
@@ -60,32 +53,38 @@
 		margin-bottom: var(--pf-global--FontSize--2xl);
 	}
 
-	.disabled-tooltip {
-		background-color: var(--pf-global--BackgroundColor--200);
-		margin-right: var(--pf-global--gutter--md);
+	.pf-c-label.disabled-tooltip {
+		background-color: var(--pf-global--disabled-color--300);
+		margin-right: var(--pf-global--spacer--sm);
 	}
 
 	.include-disabled-rules-link {
 		margin-top: var(--pf-global--gutter--md);
 	}
 
-    .pf-c-data-toolbar__content {
-        position: relative;
-        padding-right: var(--pf-c-data-toolbar__content--PaddingRight);
-        padding-left: var(--pf-c-data-toolbar__content--PaddingLeft);
-    }
+	.pf-c-data-toolbar__content {
+		position: relative;
+		padding-right: var(--pf-c-data-toolbar__content--PaddingRight);
+		padding-left: var(--pf-c-data-toolbar__content--PaddingLeft);
+	}
 
-    .ins-c-primary-toolbar {
-        padding: var(--pf-global--spacer--md);
-    }
+	.ins-c-primary-toolbar {
+		padding: var(--pf-global--spacer--md);
+	}
 
-    .pf-c-empty-state {
-        flex-direction: column;
-    }
-    .pf-c-chip-group {
-	    --pf-c-chip-group--m-toolbar--BackgroundColor: var(--pf-global--BackgroundColor--200);
-	    .pf-c-chip {
-	    	margin-bottom: 0;
-	    }
-    }
+	.pf-c-empty-state {
+		flex-direction: column;
+	}
+	.pf-c-chip-group {
+		--pf-c-chip-group--m-toolbar--BackgroundColor: var(--pf-global--BackgroundColor--200);
+		.pf-c-chip {
+			margin-bottom: 0;
+		}
+	}
+	.ins-c-critical-icon {
+		width: 1em;
+		height: 1em;
+		vertical-align: -0.3em;
+		fill: var(--pf-global--danger-color--200);
+	}
 }

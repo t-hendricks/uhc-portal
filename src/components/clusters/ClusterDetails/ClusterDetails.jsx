@@ -37,6 +37,7 @@ import ScaleClusterDialog from '../common/ScaleClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
+import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 
@@ -126,8 +127,7 @@ class ClusterDetails extends Component {
     }
 
     if (
-      APP_BETA
-      && !groups.pending
+      !groups.pending
       && !groups.fulfilled
       && !groups.rejected
       && get(insightsData[externalId], 'meta.count', 0) > 0
@@ -219,7 +219,7 @@ class ClusterDetails extends Component {
       fetchInsightsData,
     } = this.props;
     fetchDetails(id);
-    if (externalId && APP_BETA) {
+    if (externalId) {
       fetchInsightsData(externalId);
     }
   }
@@ -272,8 +272,10 @@ class ClusterDetails extends Component {
       enableRule,
       canAllowClusterAdmin,
       canSubscribeOCP,
+      canTransferClusterOwnership,
       anyModalOpen,
       hasIssues,
+      toggleSubscriptionReleased,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -335,7 +337,7 @@ class ClusterDetails extends Component {
 
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
-    const displayInsightsTab = !cluster.managed && !isArchived && APP_BETA && (
+    const displayInsightsTab = !cluster.managed && !isArchived && (
       !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
       || insightsData[cluster.external_id].status === 404
       || insightsData[cluster.external_id].status === 500
@@ -362,7 +364,9 @@ class ClusterDetails extends Component {
           errorMessage={clusterDetails.errorMessage}
           canAllowClusterAdmin={canAllowClusterAdmin}
           canSubscribeOCP={canSubscribeOCP}
+          canTransferClusterOwnership={canTransferClusterOwnership}
           autoRefreshEnabled={!anyModalOpen}
+          toggleSubscriptionReleased={toggleSubscriptionReleased}
         >
           <TabsRow
             displayMonitoringTab={!isArchived}
@@ -470,6 +474,7 @@ class ClusterDetails extends Component {
         <UnarchiveClusterDialog onClose={onDialogClose} />
         <EditConsoleURLDialog onClose={onDialogClose} />
         <EditSubscriptionSettingsDialog onClose={onDialogClose} />
+        <TransferClusterOwnershipDialog onClose={onDialogClose} />
         <ArchiveClusterDialog onClose={onDialogClose} />
         <ToggleClusterAdminAccessDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {
@@ -549,9 +554,11 @@ ClusterDetails.propTypes = {
   enableRule: PropTypes.func.isRequired,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
+  canTransferClusterOwnership: PropTypes.bool.isRequired,
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
+  toggleSubscriptionReleased: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

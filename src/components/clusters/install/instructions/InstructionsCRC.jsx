@@ -19,7 +19,7 @@ import { trackPendo } from '../../../../common/helpers';
 
 function InstructionsCRC({ token }) {
   const cloudProviderID = window.location.pathname;
-  const docURL = 'https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/1.11/';
+  const docURL = 'https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/';
   return (
     <>
       <Card className="ocp-downloads">

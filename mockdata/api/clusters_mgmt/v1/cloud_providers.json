@@ -1,15 +1,22 @@
 {
   "kind": "CloudProviderList",
   "page": 1,
-  "size": 1,
-  "total": 1,
+  "size": 2,
+  "total": 2,
   "items": [
     {
       "kind": "CloudProvider",
       "id": "aws",
       "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
       "name": "aws",
-      "display_name": "Amazon Web Services"
+      "display_name": "AWS"
+    },
+    {
+      "kind": "CloudProvider",
+      "id": "gcp",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/gcp",
+      "name": "gcp",
+      "display_name": "GCP"
     }
   ]
 }

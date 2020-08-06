@@ -140,6 +140,26 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
           },
         ],
       },
+      Object {
+        "cells": Array [
+          Object {
+            "title": "test",
+          },
+          Object {
+            "title": <React.Fragment>
+              <InfoCircleIcon
+                className="status-icon"
+                color="#2b9af3"
+                noVerticalAlign={false}
+                size="md"
+              />
+              <span>
+                Info
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
     ]
   }
   variant="compact"
@@ -300,6 +320,32 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
               />
               <span>
                 Warning
+              </span>
+            </React.Fragment>,
+          },
+        ],
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "title": <a
+              href="http://example.com/monitoring/alerts?orderBy=asc&sortBy=Severity&alert-name=test"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              test
+            </a>,
+          },
+          Object {
+            "title": <React.Fragment>
+              <InfoCircleIcon
+                className="status-icon"
+                color="#2b9af3"
+                noVerticalAlign={false}
+                size="md"
+              />
+              <span>
+                Info
               </span>
             </React.Fragment>,
           },

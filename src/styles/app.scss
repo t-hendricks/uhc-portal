@@ -135,7 +135,7 @@ limitations under the License.
     font-size: 14px;
   }
   dd {
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     font-size: 16px;
   }
 }
@@ -406,6 +406,10 @@ p.notfound {
   margin-top: 20px;
 }
 
+#transfer-cluster-ownership-alert {
+  margin-top: 20px;
+}
+
 #idp-advanced-options {
   padding-top: 10px;
 }
@@ -643,6 +647,12 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 #cloud-provider-selection > a {
   flex: 1;
   margin: 20px;
+}
+
+.infra-card-button {
+  white-space: normal;
+  --pf-c-button--m-link--Color: var(--pf-global--Color--100);
+  --pf-c-button--m-link--hover--Color: var(--pf-global--Color--100);
 }
 
 .infra-card, a.infra-card, .ocm-page a.infra-card {
@@ -938,8 +948,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   height: 132px;
 }
 
-div .pf-c-dropdown__menu-item .pf-c-check__input {
-  margin: -2px 0 0;
+.pf-c-dropdown__menu-item .pf-c-check__input {
+  margin-right: 10px;
 }
 
 .split-margin-left {

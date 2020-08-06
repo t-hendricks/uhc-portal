@@ -51,6 +51,7 @@ import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
+import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import EditDisconnectedCluster from '../common/EditDisconnectedCluster';
 
@@ -135,6 +136,8 @@ class ClusterList extends Component {
       anyModalOpen,
       queryParams,
       canSubscribeOCPList,
+      canTransferClusterOwnershipList,
+      toggleSubscriptionReleased,
     } = this.props;
 
     const { loadingChangedView } = this.state;
@@ -258,6 +261,8 @@ class ClusterList extends Component {
                 isPending={showSkeleton}
                 setClusterDetails={setClusterDetails}
                 canSubscribeOCPList={canSubscribeOCPList}
+                canTransferClusterOwnershipList={canTransferClusterOwnershipList}
+                toggleSubscriptionReleased={toggleSubscriptionReleased}
               />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
@@ -271,6 +276,7 @@ class ClusterList extends Component {
               <EditDisplayNameDialog onClose={invalidateClusters} />
               <EditConsoleURLDialog onClose={invalidateClusters} />
               <EditSubscriptionSettingsDialog onClose={invalidateClusters} />
+              <TransferClusterOwnershipDialog onClose={invalidateClusters} />
               <ScaleClusterDialog onClose={invalidateClusters} />
               <EditDisconnectedCluster onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
@@ -318,6 +324,8 @@ ClusterList.propTypes = {
     has_filters: PropTypes.bool,
   }),
   canSubscribeOCPList: PropTypes.objectOf(PropTypes.bool),
+  canTransferClusterOwnershipList: PropTypes.objectOf(PropTypes.bool),
+  toggleSubscriptionReleased: PropTypes.func.isRequired,
 };
 
 export default ClusterList;

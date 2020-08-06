@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
-import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import { subscriptionStatuses, subscriptionPlans } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
 
 /**
@@ -15,6 +15,7 @@ import getClusterName from '../../../../common/getClusterName';
  */
 function actionResolver(
   cluster, showConsoleButton, openModal, canAllowClusterAdmin, canSubscribeOCP,
+  canTransferClusterOwnership, toggleSubscriptionReleased,
 ) {
   const baseProps = {
     component: 'button',
@@ -163,6 +164,26 @@ function actionResolver(
     return editSubscriptionSettingsProps;
   };
 
+  const getTransferClusterOwnershipProps = () => {
+    const isReleased = get(cluster, 'subscription.released', false);
+    const title = isReleased
+      ? 'Cancel ownership transfer'
+      : 'Transfer cluster ownership';
+    const transferClusterOwnershipProps = {
+      ...baseProps,
+      title,
+      key: getKey('transferclusterownership'),
+      onClick: () => {
+        if (isReleased) {
+          toggleSubscriptionReleased(get(cluster, 'subscription.id'), false);
+        } else {
+          openModal('transfer-cluster-ownership', cluster.subscription);
+        }
+      },
+    };
+    return transferClusterOwnershipProps;
+  };
+
   const getToggleClusterAdminAccessDialogProps = () => (
     {
       ...baseProps,
@@ -181,6 +202,7 @@ function actionResolver(
   const unarchiveClusterItemProps = getUnarchiveClusterProps();
   const editDisconnectedItemProps = getEditDisconnectedClusterProps();
   const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
+  const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
   const ToggleClusterAdminAccessDialogProps = getToggleClusterAdminAccessDialogProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
@@ -193,6 +215,8 @@ function actionResolver(
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
   const showEditDisconnected = cluster.canEdit && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED);
   const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && canSubscribeOCP;
+  const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership && get(cluster, 'subscription.plan.id', false) === subscriptionPlans.OCP
+    && ![subscriptionStatuses.ARCHIVED, subscriptionStatuses.DISCONNECTED].includes(get(cluster, 'subscription.status', subscriptionStatuses.ARCHIVED));
   const showToggleClusterAdmin = cluster.managed && canAllowClusterAdmin;
 
   return [
@@ -205,15 +229,18 @@ function actionResolver(
     showUnarchive && unarchiveClusterItemProps,
     showEditDisconnected && editDisconnectedItemProps,
     showEditSubscriptionSettings && editSubscriptionSettingsProps,
+    showTransferClusterOwnership && transferClusterOwnershipProps,
     showToggleClusterAdmin && ToggleClusterAdminAccessDialogProps,
   ].filter(Boolean);
 }
 
 function dropDownItems({
   cluster, showConsoleButton, openModal, canAllowClusterAdmin, canSubscribeOCP,
+  canTransferClusterOwnership, toggleSubscriptionReleased,
 }) {
   const actions = actionResolver(
     cluster, showConsoleButton, openModal, canAllowClusterAdmin, canSubscribeOCP,
+    canTransferClusterOwnership, toggleSubscriptionReleased,
   );
   const menuItems = actions.map(
     action => (<DropdownItem {...action}>{action.title}</DropdownItem>),

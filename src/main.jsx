@@ -23,15 +23,30 @@ import { Provider } from 'react-redux';
 import { NotificationPortal } from '@redhat-cloud-services/frontend-components-notifications';
 import * as Sentry from '@sentry/browser';
 import { SessionTiming } from '@sentry/integrations';
+
+import { Api, Config } from 'facet-lib';
+
 import { userInfoResponse } from './redux/actions/userActions';
 import config from './config';
 import App from './components/App/App';
 import { store } from './redux/store';
 import getBaseName from './common/getBaseName';
+import { authInterceptor } from './services/apiRequest';
+import { detectFeatures } from './redux/actions/featureActions';
 
 import './styles/main.scss';
 
 const basename = getBaseName();
+
+/**
+ * Assisted Installer configuration
+ *
+ * We need to pass axios auth interceptor so every request from AI has proper headers.
+ *
+ * We also need to set the route base path for the internal AI routing to work properly.
+ */
+Api.setAuthInterceptor(authInterceptor);
+Config.setRouteBasePath('/assisted-installer');
 
 const render = () => {
   ReactDOM.render(
@@ -84,6 +99,7 @@ if (!window.insights && process.env.NODE_ENV === 'development') {
       store.dispatch(userInfoResponse(data.identity.user));
       config.fetchConfig()
         .then(() => {
+          store.dispatch(detectFeatures());
           if (!config.override && config.configData.sentryDSN) {
             Sentry.init({
               dsn: config.configData.sentryDSN,

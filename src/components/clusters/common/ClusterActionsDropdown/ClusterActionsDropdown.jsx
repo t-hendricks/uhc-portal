@@ -33,6 +33,8 @@ class ClusterActionsDropdown extends React.Component {
       disabled,
       canAllowClusterAdmin,
       canSubscribeOCP,
+      canTransferClusterOwnership,
+      toggleSubscriptionReleased,
     } = this.props;
     const { isOpen } = this.state;
 
@@ -41,7 +43,13 @@ class ClusterActionsDropdown extends React.Component {
       : <DropdownToggle isDisabled={disabled} onToggle={this.onToggle}>Actions</DropdownToggle>;
 
     const menuItems = dropDownItems({
-      cluster, showConsoleButton, openModal, canAllowClusterAdmin, canSubscribeOCP,
+      cluster,
+      showConsoleButton,
+      openModal,
+      canAllowClusterAdmin,
+      canSubscribeOCP,
+      canTransferClusterOwnership,
+      toggleSubscriptionReleased,
     });
     return (
       <Dropdown
@@ -64,6 +72,8 @@ ClusterActionsDropdown.propTypes = {
   disabled: PropTypes.bool,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
+  canTransferClusterOwnership: PropTypes.bool.isRequired,
+  toggleSubscriptionReleased: PropTypes.func.isRequired,
 };
 
 export default ClusterActionsDropdown;

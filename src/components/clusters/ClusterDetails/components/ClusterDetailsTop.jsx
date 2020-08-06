@@ -16,6 +16,7 @@ import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import ExpirationAlert from './ExpirationAlert';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
+import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 
 function ClusterDetailsTop(props) {
   const {
@@ -30,7 +31,9 @@ function ClusterDetailsTop(props) {
     children,
     canAllowClusterAdmin,
     canSubscribeOCP,
+    canTransferClusterOwnership,
     autoRefreshEnabled,
+    toggleSubscriptionReleased,
   } = props;
 
   const clusterName = getClusterName(cluster);
@@ -90,6 +93,8 @@ function ClusterDetailsTop(props) {
       showConsoleButton={false}
       canAllowClusterAdmin={canAllowClusterAdmin}
       canSubscribeOCP={canSubscribeOCP}
+      canTransferClusterOwnership={canTransferClusterOwnership}
+      toggleSubscriptionReleased={toggleSubscriptionReleased}
     />
   );
 
@@ -166,6 +171,7 @@ function ClusterDetailsTop(props) {
         openModal={openModal}
         canSubscribeOCP={canSubscribeOCP}
       />
+      <TransferClusterOwnershipInfo subscription={cluster.subscription} />
       {children}
     </div>
   );
@@ -187,7 +193,9 @@ ClusterDetailsTop.propTypes = {
   children: PropTypes.any,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
+  canTransferClusterOwnership: PropTypes.bool.isRequired,
   autoRefreshEnabled: PropTypes.bool,
+  toggleSubscriptionReleased: PropTypes.func.isRequired,
 };
 
 export default ClusterDetailsTop;

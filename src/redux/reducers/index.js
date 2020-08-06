@@ -25,8 +25,10 @@ import { subscriptionsReducer } from './subscriptionsReducer';
 import { loadBalancersReducer } from './loadBalancersReducer';
 import { persistentStorageReducer } from './persistentStorageReducer';
 import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
+import { subscriptionReleasedReducer } from '../../components/clusters/common/TransferClusterOwnershipDialog/subscriptionReleasedReducer';
 import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
 import supportStatusReducer from '../../components/clusters/ClusterDetails/components/Overview/SupportStatusLabel/supportStatusReducer';
+import featuresReducer from './featuresReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -51,10 +53,12 @@ const reducers = {
   notifications,
   networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,
+  subscriptionReleased: subscriptionReleasedReducer,
   insightsData: insightsReducer,
   clusterRouters: NetworkingReducer,
   dashboards: dashboardsReducer,
   supportStatus: supportStatusReducer,
+  features: featuresReducer,
 };
 
 const reduxReducers = history => combineReducers({

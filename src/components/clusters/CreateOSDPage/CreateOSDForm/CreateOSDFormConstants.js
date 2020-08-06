@@ -30,7 +30,7 @@ const billingModelConstants = {
   customerCloudSubscriptionText: 'Leverage your existing cloud provider discounts and settings.',
   resourceRequirementsLink: 'https://www.openshift.com/dedicated/ccs',
   scpDocumentationLink: 'https://www.openshift.com/dedicated/ccs',
-  awsCredentialsWarning: 'The access credentials you provide here may only be used once. They may not be used to create another OpenShift Dedicated cluster.',
+  awsCredentialsWarning: 'Revoking these credentials in AWS will result in a loss of access to any cluster created with these credentials.',
 };
 
 export { constants, billingModelConstants };

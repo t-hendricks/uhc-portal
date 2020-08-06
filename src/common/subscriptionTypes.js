@@ -68,6 +68,17 @@ const subscriptionStatuses = {
   DISCONNECTED: 'Disconnected',
 };
 
+/**
+ * plan
+ */
+const subscriptionPlans = {
+  OSD: 'OSD',
+  OCP: 'OCP',
+  MOA: 'MOA',
+  RHMI: 'RHMI',
+  ANY: 'ANY',
+};
+
 export {
   subscriptionStatuses,
   subscriptionSettings,
@@ -76,4 +87,5 @@ export {
   subscriptionUsages,
   subscriptionProductBundles,
   subscriptionSystemUnits,
+  subscriptionPlans,
 };

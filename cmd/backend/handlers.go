@@ -32,6 +32,7 @@ import (
 
 // ProxyHandlerBuilder contains the configuration and logic needed to build proxy handlers.
 type ProxyHandlerBuilder struct {
+	prefix   string
 	target   string
 	sessions *SessionStore
 }
@@ -39,6 +40,7 @@ type ProxyHandlerBuilder struct {
 // ProxyHandler is an an HTTP handler that forwards requests to a real API gateway, replacing the
 // authorization header with a valid token.
 type ProxyHandler struct {
+	prefix   string
 	target   *url.URL
 	sessions *SessionStore
 	parser   *jwt.Parser
@@ -53,6 +55,12 @@ func NewProxyHandler() *ProxyHandlerBuilder {
 // Target sets the URL of the real API gateway.
 func (b *ProxyHandlerBuilder) Target(value string) *ProxyHandlerBuilder {
 	b.target = value
+	return b
+}
+
+// Prefix string against which requests are matched
+func (b *ProxyHandlerBuilder) Prefix(value string) *ProxyHandlerBuilder {
+	b.prefix = value
 	return b
 }
 
@@ -72,6 +80,10 @@ func (b *ProxyHandlerBuilder) Build() (handler *ProxyHandler, err error) {
 	}
 	if b.sessions == nil {
 		err = fmt.Errorf("session store is mandatory")
+		return
+	}
+	if b.prefix == "" {
+		err = fmt.Errorf("prefix is mandatory")
 		return
 	}
 
@@ -100,6 +112,7 @@ func (b *ProxyHandlerBuilder) Build() (handler *ProxyHandler, err error) {
 
 	// Create and populate the object:
 	handler = new(ProxyHandler)
+	handler.prefix = b.prefix
 	handler.target = target
 	handler.sessions = b.sessions
 	handler.parser = &jwt.Parser{}
@@ -124,6 +137,9 @@ func (h *ProxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// Replace the scheme and host with the ones of the real gateway:
 	r.URL.Scheme = h.target.Scheme
 	r.URL.Host = h.target.Host
+	if h.target.Path != "" {
+		r.URL.Path = strings.Replace(r.URL.Path, h.prefix, h.target.Path, 1)
+	}
 	r.Host = h.target.Host
 
 	// Let the proxy do the rest of the work:
