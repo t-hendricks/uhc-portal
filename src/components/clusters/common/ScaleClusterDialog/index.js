@@ -8,6 +8,7 @@ import { closeModal } from '../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import getLoadBalancerValues from '../../../../redux/actions/loadBalancerActions';
 import getPersistentStorageValues from '../../../../redux/actions/persistentStorageActions';
+import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
 import {
   minValueSelector,
   shouldShowStorageQuotaAlert,
@@ -37,6 +38,7 @@ const mapStateToProps = (state) => {
     persistentStorageValues: state.persistentStorageValues,
     loadBalancerValues: state.loadBalancerValues,
     organization: state.userProfile.organization,
+    machineTypes: state.machineTypes,
     isByoc: modalData.byoc,
     cloudProviderID: get(modalData, 'cloud_provider.id', ''),
     machineType: get(modalData, 'nodes.compute_machine_type.id', ''),
@@ -75,6 +77,7 @@ const mapDispatchToProps = dispatch => ({
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getPersistentStorage: getPersistentStorageValues,
   getLoadBalancers: getLoadBalancerValues,
+  getMachineTypes: () => dispatch(getMachineTypes()),
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
