@@ -36,6 +36,8 @@ import MachinePools from './components/MachinePools';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 
+import ErrorBoundary from '../../App/ErrorBoundary';
+
 import ScaleClusterDialog from '../common/ScaleClusterDialog';
 import EditNodeCountModal from '../common/EditNodeCountModal';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
@@ -115,8 +117,8 @@ class ClusterDetails extends Component {
     if (isValid(clusterID) && !isUuid(clusterID)) {
       // TODO: get IDP and Add-On Installations only for managed clusters
       if (!clusterIdentityProviders.pending
-        && !clusterIdentityProviders.error
-        && !clusterIdentityProviders.fulfilled) {
+          && !clusterIdentityProviders.error
+          && !clusterIdentityProviders.fulfilled) {
         getClusterIdentityProviders(clusterID);
       }
       if (!clusterAddOns.pending && !clusterAddOns.error && !clusterAddOns.fulfilled) {
@@ -415,8 +417,8 @@ class ClusterDetails extends Component {
     const displayAccessControlTab = cluster.managed && !!consoleURL && cluster.state === 'ready';
     const cloudProvider = get(cluster, 'cloud_provider.id');
     const displayNetworkingTab = (cluster.state === clusterStates.READY
-      || cluster.state === clusterStates.UPDATING)
-      && cluster.managed && !!get(cluster, 'api.url')
+          || cluster.state === clusterStates.UPDATING)
+          && cluster.managed && !!get(cluster, 'api.url')
       && (cloudProvider === 'aws'
          || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')));
     const displayMachinePoolsTab = cluster.managed && cluster.state === clusterStates.READY;
@@ -477,14 +479,16 @@ class ClusterDetails extends Component {
           aria-label="Overview"
           ouiaId="overviewTabContent"
         >
-          <Overview
-            cluster={cluster}
-            cloudProviders={cloudProviders}
-            history={history}
-            displayClusterLogs={displayClusterLogs}
-            refresh={this.refresh}
-            openModal={openModal}
-          />
+          <ErrorBoundary>
+            <Overview
+              cluster={cluster}
+              cloudProviders={cloudProviders}
+              history={history}
+              displayClusterLogs={displayClusterLogs}
+              refresh={this.refresh}
+              openModal={openModal}
+            />
+          </ErrorBoundary>
         </TabContent>
         { displayMonitoringTab && (
           <TabContent
@@ -494,7 +498,9 @@ class ClusterDetails extends Component {
             aria-label="Monitoring"
             hidden
           >
-            <Monitoring cluster={cluster} />
+            <ErrorBoundary>
+              <Monitoring cluster={cluster} />
+            </ErrorBoundary>
           </TabContent>
         )}
         {displayAccessControlTab && (
@@ -505,11 +511,13 @@ class ClusterDetails extends Component {
             aria-label="Access Control"
             hidden
           >
-            <AccessControl
-              cluster={cluster}
-              clusterConsoleURL={consoleURL}
-              cloudProvider={get(cluster, 'cloud_provider.id')}
-            />
+            <ErrorBoundary>
+              <AccessControl
+                cluster={cluster}
+                clusterConsoleURL={consoleURL}
+                cloudProvider={get(cluster, 'cloud_provider.id')}
+              />
+            </ErrorBoundary>
           </TabContent>
         )}
         {displayAddOnsTab && (
@@ -520,7 +528,9 @@ class ClusterDetails extends Component {
             aria-label="Add-ons"
             hidden
           >
-            <AddOns clusterID={cluster.id} />
+            <ErrorBoundary>
+              <AddOns clusterID={cluster.id} />
+            </ErrorBoundary>
           </TabContent>
         )}
         {displayNetworkingTab && (
@@ -531,7 +541,9 @@ class ClusterDetails extends Component {
             aria-label="Networking"
             hidden
           >
-            <Networking clusterID={cluster.id} refreshCluster={this.refresh} />
+            <ErrorBoundary>
+              <Networking clusterID={cluster.id} refreshCluster={this.refresh} />
+            </ErrorBoundary>
           </TabContent>
         )}
         {displayInsightsTab && (
@@ -543,21 +555,23 @@ class ClusterDetails extends Component {
             ouiaId="insightsTabContent"
             hidden
           >
-            <Insights
-              cluster={cluster}
-              groups={get(groups, 'groups', [])}
-              insightsData={insightsData[cluster.external_id]}
-              voteOnRule={(ruleId, vote) => {
-                voteOnRule(cluster.external_id, ruleId, vote);
-              }}
-              disableRule={(ruleId) => {
-                disableRule(cluster.external_id, ruleId);
-              }}
-              enableRule={(ruleId) => {
-                enableRule(cluster.external_id, ruleId);
-              }}
-              openModal={openModal}
-            />
+            <ErrorBoundary>
+              <Insights
+                cluster={cluster}
+                groups={get(groups, 'groups', [])}
+                insightsData={insightsData[cluster.external_id]}
+                voteOnRule={(ruleId, vote) => {
+                  voteOnRule(cluster.external_id, ruleId, vote);
+                }}
+                disableRule={(ruleId) => {
+                  disableRule(cluster.external_id, ruleId);
+                }}
+                enableRule={(ruleId) => {
+                  enableRule(cluster.external_id, ruleId);
+                }}
+                openModal={openModal}
+              />
+            </ErrorBoundary>
           </TabContent>
         )}
         {
@@ -568,7 +582,9 @@ class ClusterDetails extends Component {
             aria-label="Support"
             hidden
           >
-            <Support />
+            <ErrorBoundary>
+              <Support />
+            </ErrorBoundary>
           </TabContent>
         }
         {displayMachinePoolsTab && (
@@ -578,7 +594,9 @@ class ClusterDetails extends Component {
             ref={this.machinePoolsTabRef}
             aria-label="Machine pools"
           >
-            <MachinePools cluster={cluster} />
+            <ErrorBoundary>
+              <MachinePools cluster={cluster} />
+            </ErrorBoundary>
           </TabContent>
         )}
         {displayUpgradeSettingsTab && (
@@ -588,7 +606,9 @@ class ClusterDetails extends Component {
             ref={this.upgradeSettingsTabRef}
             aria-label="Upgrade settings"
           >
-            <UpgradeSettingsTab />
+            <ErrorBoundary>
+              <UpgradeSettingsTab />
+            </ErrorBoundary>
           </TabContent>
         )}
         {displayAddBareMetalHosts && (
@@ -599,10 +619,12 @@ class ClusterDetails extends Component {
             aria-label="Add Bare Metal Hosts"
             hidden
           >
-            <BareMetalHostsClusterDetailTab
-              cluster={cluster}
-              isVisible={selectedTab === 'addBareMetalHosts'}
-            />
+            <ErrorBoundary>
+              <BareMetalHostsClusterDetailTab
+                cluster={cluster}
+                isVisible={selectedTab === 'addBareMetalHosts'}
+              />
+            </ErrorBoundary>
           </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
