@@ -4,7 +4,7 @@ import { Button } from '@patternfly/react-core';
 
 import RefreshButton from './RefreshButton';
 
-jest.useFakeTimers();
+jest.useFakeTimers('legacy'); // TODO 'modern'
 
 describe('<RefreshButton />', () => {
   let onClickFunc;
