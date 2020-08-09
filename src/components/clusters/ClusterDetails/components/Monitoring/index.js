@@ -51,8 +51,8 @@ const mapStateToProps = (state) => {
       numOfWarnings: warnings.resourceUsage,
       hasData: hasResourceUsageMetrics(cluster),
     },
-    lastCheckIn: lastCheckIn.message,
     discoveredIssues: issues.totalCount,
+    lastCheckIn,
     healthStatus,
   });
 };

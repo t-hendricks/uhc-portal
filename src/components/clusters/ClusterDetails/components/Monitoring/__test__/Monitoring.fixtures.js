@@ -516,18 +516,10 @@ const mockOCPActiveClusterDetails = produce(mockOCPDisconnectedClusterDetails, (
 });
 
 const minute = 60 * 1000;
-const makeFutureDate = () => new Date(new Date().getTime() + 2 * minute);
-
-const mockLastCheckIn = {
-  hours: 2,
-  minutes: 20,
-  message: '2 hours ago',
-};
-const oldLastCheckIn = {
-  hours: 3,
-  minutes: 20,
-  message: '3 hours ago',
-};
+const hour = 60 * minute;
+const makeFutureDate = () => new Date(Date.now() + 2 * minute);
+const makeFreshCheckIn = () => new Date(Date.now() - (2 * hour + 20 * minute));
+const makeStaleCheckIn = () => new Date(Date.now() - (3 * hour + 20 * minute));
 
 export {
   mockAlerts,
@@ -540,6 +532,6 @@ export {
   mockOCPActiveClusterDetails,
   mockOCPDisconnectedClusterDetails,
   makeFutureDate,
-  mockLastCheckIn,
-  oldLastCheckIn,
+  makeFreshCheckIn,
+  makeStaleCheckIn,
 };

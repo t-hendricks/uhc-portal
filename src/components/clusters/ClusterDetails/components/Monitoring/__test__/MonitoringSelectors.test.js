@@ -12,35 +12,17 @@ import {
   mockOCPActiveClusterDetails,
   mockOCPDisconnectedClusterDetails,
   makeFutureDate,
-  mockLastCheckIn,
-  oldLastCheckIn,
+  makeFreshCheckIn,
+  makeStaleCheckIn,
 } from './Monitoring.fixtures';
 import { monitoringStatuses } from '../monitoringHelper';
 import clusterStates from '../../../../common/clusterStates';
 
 describe('lastCheckInSelector', () => {
   it('returns something valid if activity_timestamp is missing (unrealistic)', () => {
-    expect(lastCheckInSelector({})).toMatchObject(
-      {
-        hours: expect.any(Number),
-        minutes: expect.any(Number),
-        message: expect.any(String),
-      },
-    );
-  });
-
-  it("handles timestamp in future (relative to browser's clock)", () => {
-    const stateWithFutureTimestamp = {
-      clusters: {
-        details: {
-          cluster: {
-            ...mockOSDCluserDetails,
-            activity_timestamp: makeFutureDate().toISOString(),
-          },
-        },
-      },
-    };
-    expect(lastCheckInSelector(stateWithFutureTimestamp).message).toEqual('less than 1 minute ago');
+    const checkIn = lastCheckInSelector({});
+    expect(checkIn).toBeInstanceOf(Date);
+    expect(checkIn.getTime() < new Date('1900-01-01').getTime()); // far in the past.
   });
 });
 
@@ -67,19 +49,24 @@ describe('clusterHealthSelector', () => {
     };
 
     it('should return DISCONNECTED when subscription Disconnected and metrics are stale', () => {
-      expect(clusterHealthSelector(stateWithOCPDisconnected, oldLastCheckIn, null))
+      expect(clusterHealthSelector(stateWithOCPDisconnected, makeStaleCheckIn(), null))
         .toBe(monitoringStatuses.DISCONNECTED);
     });
 
     it.todo("if fresh metrics arrived for a Disconnected cluster, but subscription didn't yet switch to Active, what should we return?");
 
     it('should return NO_METRICS when metrics are stale', () => {
-      expect(clusterHealthSelector(stateWithOCPActive, oldLastCheckIn, null))
+      expect(clusterHealthSelector(stateWithOCPActive, makeStaleCheckIn(), null))
         .toBe(monitoringStatuses.NO_METRICS);
     });
 
     it('should return HEALTHY when metrics are fresh & good', () => {
-      expect(clusterHealthSelector(stateWithOCPActive, mockLastCheckIn, 0))
+      expect(clusterHealthSelector(stateWithOCPActive, makeFreshCheckIn(), 0))
+        .toBe(monitoringStatuses.HEALTHY);
+    });
+
+    it("handles timestamp in future (relative to browser's clock)", () => {
+      expect(clusterHealthSelector(stateWithOCPActive, makeFutureDate(), 0))
         .toBe(monitoringStatuses.HEALTHY);
     });
   });
@@ -96,7 +83,7 @@ describe('clusterHealthSelector', () => {
     };
 
     it('should not return status DISCONNECTED for OSD cluster', () => {
-      expect(clusterHealthSelector(stateWithOsdCluster, oldLastCheckIn, null))
+      expect(clusterHealthSelector(stateWithOsdCluster, makeStaleCheckIn(), null))
         .not.toBe(monitoringStatuses.DISCONNECTED);
     });
 
@@ -113,7 +100,7 @@ describe('clusterHealthSelector', () => {
           },
         },
       };
-      expect(clusterHealthSelector(state, mockLastCheckIn, 1))
+      expect(clusterHealthSelector(state, makeFreshCheckIn(), 1))
         .toBe(monitoringStatuses.UPGRADING);
     });
 
@@ -129,22 +116,22 @@ describe('clusterHealthSelector', () => {
           },
         },
       };
-      expect(clusterHealthSelector(state, mockLastCheckIn, null))
+      expect(clusterHealthSelector(state, makeFreshCheckIn(), null))
         .toBe(monitoringStatuses.INSTALLING);
     });
 
     it('should return status HAS_ISSUES', () => {
-      expect(clusterHealthSelector(stateWithOsdCluster, mockLastCheckIn, 2))
+      expect(clusterHealthSelector(stateWithOsdCluster, makeFreshCheckIn(), 2))
         .toBe(monitoringStatuses.HAS_ISSUES);
     });
 
     it('return status NO_METRICS', () => {
-      expect(clusterHealthSelector(stateWithOsdCluster, oldLastCheckIn, 3))
+      expect(clusterHealthSelector(stateWithOsdCluster, makeStaleCheckIn(), 3))
         .toBe(monitoringStatuses.NO_METRICS);
     });
 
     it('return status HEALTHY', () => {
-      expect(clusterHealthSelector(stateWithOsdCluster, mockLastCheckIn, 0))
+      expect(clusterHealthSelector(stateWithOsdCluster, makeFreshCheckIn(), 0))
         .toBe(monitoringStatuses.HEALTHY);
     });
   });
