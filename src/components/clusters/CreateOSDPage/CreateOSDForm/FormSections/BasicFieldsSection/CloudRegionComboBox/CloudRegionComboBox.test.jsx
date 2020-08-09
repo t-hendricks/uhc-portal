@@ -3,6 +3,8 @@ import { mount } from 'enzyme';
 
 import DisconnectedCloudRegionComboBox from './CloudRegionComboBox';
 
+const enabledRegions = [{ id: 'us-east-1', display_name: 'N. Virginia', enabled: true }];
+
 describe('<CloudRegionComboBox />', () => {
   describe('when region list needs to be fetched', () => {
     let onChange;
@@ -22,6 +24,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
+          enabledRegions={enabledRegions}
         />,
       );
     });
@@ -49,6 +52,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
+          enabledRegions={enabledRegions}
         />,
       );
     });
@@ -75,6 +79,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
+          enabledRegions={enabledRegions}
         />,
       );
     });
@@ -109,6 +114,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
+          enabledRegions={enabledRegions}
         />,
       );
     });

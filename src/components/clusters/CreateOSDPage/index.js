@@ -19,17 +19,23 @@ import {
   gcpQuotaSelector,
 } from '../CreateClusterPage/quotaSelector';
 
+const AWS_DEFAULT_REGION = 'us-east-1';
+const GCP_DEFAULT_REGION = 'us-east1';
+
 const reduxFormConfig = {
   form: 'CreateCluster',
 };
+
 const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
 
 const mapStateToProps = (state, ownProps) => {
   const { organization } = state.userProfile;
   const { product, cloudProviderID } = ownProps;
   const isAwsForm = cloudProviderID === 'aws';
+  const defaultRegion = isAwsForm ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
 
   let privateClusterSelected = false;
+
   if (isAwsForm) {
     const valueSelector = formValueSelector('CreateCluster');
     privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
@@ -66,7 +72,7 @@ const mapStateToProps = (state, ownProps) => {
       dns_base_domain: '',
       aws_access_key_id: '',
       aws_secret_access_key: '',
-      region: isAwsForm ? 'us-east-1' : 'us-east1',
+      region: defaultRegion,
       multi_az: 'false',
       persistent_storage: '107374182400',
       load_balancers: '0',
