@@ -16,6 +16,7 @@ const getCloudProvidersAndRegions = () => clusterService.getCloudProviders().the
             id: region.id,
             display_name: region.display_name,
             enabled: region.enabled,
+            supports_multi_az: region.supports_multi_az,
           };
         });
       }

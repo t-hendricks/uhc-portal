@@ -7,51 +7,70 @@ import {
   FormSelect,
   FormSelectOption,
 } from '@patternfly/react-core';
+import get from 'lodash/get';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
-function CloudRegionComboBox({
-  input, cloudProviderID, cloudProviders, disabled,
-}) {
-  const regionOption = region => (
-    <FormSelectOption
-      key={region.id}
-      value={region.id}
-      label={`${region.id}, ${region.display_name}`}
-    />
-  );
+class CloudRegionComboBox extends React.Component {
+  componentDidUpdate(prevProps) {
+    const {
+      isMultiAz, input, cloudProviderID, cloudProviders,
+    } = this.props;
 
-  if (cloudProviders.fulfilled) {
-    const regions = (Object.values(cloudProviders.providers[cloudProviderID].regions))
-      .filter(region => region.enabled);
-    return (
-      <FormSelect
-        className="cloud-region-combo-box"
-        aria-label="Region"
-        isDisabled={disabled}
-        {...input}
-      >
-        {regions.map(region => regionOption(region))}
-      </FormSelect>
-    );
+
+    const selectedRegionData = get(cloudProviders, 'providers[cloudProviderID].regions[input.value]', {});
+
+    if ((isMultiAz && !prevProps.isMultiAz) && !selectedRegionData.supports_multi_az) {
+      input.onChange(cloudProviderID === 'aws' ? 'us-east-1' : 'us-east1');
+    }
   }
 
-  return cloudProviders.error ? (
-    <ErrorBox message="Error loading region list" response={cloudProviders} />
-  ) : (
-    <>
-      <div className="spinner-fit-container"><Spinner /></div>
-      <div className="spinner-loading-text">Loading region list...</div>
-    </>
-  );
+  render() {
+    const {
+      input, enabledRegions, cloudProviders, disabled, isMultiAz,
+    } = this.props;
+
+    const regionOption = region => (
+      <FormSelectOption
+        key={region.id}
+        value={region.id}
+        label={`${region.id}, ${region.display_name}`}
+        isDisabled={isMultiAz && !region.supports_multi_az}
+      />
+    );
+
+    if (cloudProviders.fulfilled) {
+      return (
+        <FormSelect
+          className="cloud-region-combo-box"
+          aria-label="Region"
+          isDisabled={disabled}
+          {...input}
+        >
+          {enabledRegions.map(region => regionOption(region))}
+        </FormSelect>
+      );
+    }
+
+    return cloudProviders.error ? (
+      <ErrorBox message="Error loading region list" response={cloudProviders} />
+    ) : (
+      <>
+        <div className="spinner-fit-container"><Spinner /></div>
+        <div className="spinner-loading-text">Loading region list...</div>
+      </>
+    );
+  }
 }
 
 CloudRegionComboBox.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
+  enabledRegions: PropTypes.array.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
+  isMultiAz: PropTypes.bool,
   // Plus extraprops passed by react-bootstrap / patternfly-react FormControl
 };
 

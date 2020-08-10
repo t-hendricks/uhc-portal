@@ -15,7 +15,6 @@ const processClusterQuota = (clustersQuota, item, resources) => {
   const infraCategory = resources.byoc === 'rhinfra' ? 'rhInfra' : resources.byoc;
   const availabilityZoneType = resources.availability_zone_type;
   const machineType = resources.resource_name;
-
   // Since quota can apply to either AWS or GCP, or "any", we compare an exact match or an
   // "any" match. If the quota applies to a specific cloud provider, we add it there. If it
   // applies to "any" cloud provider, we add it to both providers in the quota object.
@@ -200,11 +199,12 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
     });
 
     // check if any quota available for aws clusters
-    allQuotas.clustersQuota.aws.isAvailable = !!(allQuotas.clustersQuota.aws.byoc.totalAvailable
-     || allQuotas.clustersQuota.aws.rhInfra.totalAvailable);
+    allQuotas.clustersQuota.aws.isAvailable = allQuotas.clustersQuota.aws.byoc.totalAvailable > 0
+     || allQuotas.clustersQuota.aws.rhInfra.totalAvailable > 0;
 
     // check if any quota available for gcp clusters
-    allQuotas.clustersQuota.gcp.isAvailable = !!allQuotas.clustersQuota.gcp.rhInfra.totalAvailable;
+    allQuotas.clustersQuota.gcp.isAvailable = allQuotas.clustersQuota
+      .gcp.rhInfra.totalAvailable > 0;
 
     return allQuotas;
   },
