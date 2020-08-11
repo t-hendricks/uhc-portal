@@ -15,6 +15,10 @@ const subscriptionCapabilities = {
 };
 
 const hasCapability = (subscription, name) => {
+  if (name === subscriptionCapabilities.RELEASE_OCP_CLUSTERS) {
+    return true;
+  }
+
   const capabilities = get(subscription, 'capabilities', []);
   const found = capabilities.find(capability => capability.name === name);
   return get(found, 'value', false) === 'true';
