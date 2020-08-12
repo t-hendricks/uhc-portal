@@ -72,7 +72,7 @@ const getCloudProviders = () => apiRequest({
 
 const getLogs = (clusterID, offset, logType) => apiRequest({
   method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/logs/${logType}${logType === 'install' ? '/hive' : ''}`,
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/logs/${logType}`,
   params: {
     offset,
   },

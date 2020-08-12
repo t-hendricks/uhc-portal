@@ -5,8 +5,8 @@ import {
   GridItem,
   EmptyState,
   EmptyStateBody,
-  Spinner,
 } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 import NetworkConfigurationCard from './components/NetworkConfigurationCard';
 import EditCluserRoutersCard from './components/EditClusterRoutersCard';
 
