@@ -191,7 +191,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
             Object {
               "title": "N/A",
             },
-            "BYOC",
+            "CSS",
             0,
             5,
             Object {

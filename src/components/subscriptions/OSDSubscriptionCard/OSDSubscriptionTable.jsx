@@ -18,7 +18,7 @@ function OSDSubscriptionTable({ rows, children }) {
       Standard: Cluster infrastructure costs paid by Red Hat
       </p>
       <p>
-      BYOC: Cluster infrastructure costs paid by the customer
+      CCS: Cluster infrastructure costs paid by the customer
       </p>
     </>
   );
