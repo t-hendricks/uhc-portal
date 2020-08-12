@@ -28,6 +28,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { Markdown } from '@redhat-cloud-services/rule-components/dist/cjs/index';
 
 import InsightsRuleDetailsTop from './components/InsightsRuleDetailsTop';
+import EmptyRemediationInfo from './components/EmptyRemediationInfo';
 import TabsRow from './components/TabsRow';
 
 import ErrorBox from '../../common/ErrorBox';
@@ -199,8 +200,8 @@ class InsightsRuleDetails extends Component {
       return errorReportState();
     }
 
-    const displayReasonTab = !!reportDetails.report.reason;
-    const displayResolutionTab = !!reportDetails.report.resolution;
+    const reasonInfoExist = !!reportDetails.report.reason;
+    const resolutionInfoExist = !!reportDetails.report.resolution;
 
     return (
       <PageSection id="ruledetails-content">
@@ -213,18 +214,12 @@ class InsightsRuleDetails extends Component {
           disableRule={disableRule}
           enableRule={enableRule}
         >
-          {
-            (displayReasonTab || displayResolutionTab) && (
-              <TabsRow
-                displayReasonTab={displayReasonTab}
-                displayResolutionTab={displayResolutionTab}
-                reasonTabRef={this.reasonTabRef}
-                resolutionTabRef={this.resolutionTabRef}
-              />
-            )
-          }
+          <TabsRow
+            reasonTabRef={this.reasonTabRef}
+            resolutionTabRef={this.resolutionTabRef}
+          />
         </InsightsRuleDetailsTop>
-        {displayReasonTab && (
+        {
           <TabContent
             eventKey={0}
             id="reasonTabContent"
@@ -233,32 +228,50 @@ class InsightsRuleDetails extends Component {
           >
             <Card>
               <CardBody>
-                <Markdown
-                  template={reportDetails.report.reason}
-                  definitions={reportDetails.report.extra_data}
-                />
+                {
+                  reasonInfoExist && (
+                    <Markdown
+                      template={reportDetails.report.reason}
+                      definitions={reportDetails.report.extra_data}
+                    />
+                  )
+                }
+                {
+                  !reasonInfoExist && (
+                    <EmptyRemediationInfo title="reason" />
+                  )
+                }
               </CardBody>
             </Card>
           </TabContent>
-        )}
-        {displayResolutionTab && (
+        }
+        {
           <TabContent
             eventKey={1}
             id="resolutionTabContent"
             ref={this.resolutionTabRef}
             aria-label="How to remediate"
-            hidden={displayReasonTab}
+            hidden
           >
             <Card>
               <CardBody>
-                <Markdown
-                  template={reportDetails.report.resolution}
-                  definitions={reportDetails.report.extra_data}
-                />
+                {
+                  resolutionInfoExist && (
+                    <Markdown
+                      template={reportDetails.report.resolution}
+                      definitions={reportDetails.report.extra_data}
+                    />
+                  )
+                }
+                {
+                  !resolutionInfoExist && (
+                    <EmptyRemediationInfo title="resolution" />
+                  )
+                }
               </CardBody>
             </Card>
           </TabContent>
-        )}
+        }
       </PageSection>
     );
   }
