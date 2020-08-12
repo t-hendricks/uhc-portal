@@ -55,7 +55,7 @@ class OSDSubscriptionCard extends Component {
         get(quotaItem, 'related_resources[0].resource_type'),
         get(quotaItem, 'related_resources[0].resource_name'),
         { title: this.getZoneType(get(quotaItem, 'related_resources[0].availability_zone_type')) },
-        get(quotaItem, 'related_resources[0].byoc') === 'rhinfra' ? 'Standard' : 'BYOC',
+        get(quotaItem, 'related_resources[0].byoc') === 'rhinfra' ? 'Standard' : 'CSS',
         quotaItem.consumed,
         quotaItem.allowed,
         { title: this.getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
