@@ -18,6 +18,9 @@ const clusterLogConstants = {
 };
 
 export {
-  GET_CLUSTER_LOGS, DOWNLOAD_CLUSTER_LOGS, SEVERITY_TYPES, RESET_CLUSTER_HISTORY,
+  GET_CLUSTER_LOGS,
+  DOWNLOAD_CLUSTER_LOGS,
+  SEVERITY_TYPES,
+  RESET_CLUSTER_HISTORY,
 };
 export default clusterLogConstants;
