@@ -128,7 +128,7 @@
       "APP_DEVMODE": false,
       "APP_BETA": false,
       "APP_DEV_SERVER": false,
-      "APP_STAGING": false,
+      "APP_API_ENV": "production",
       "OCM_SHOW_OLD_METRICS": false
     }
   },
