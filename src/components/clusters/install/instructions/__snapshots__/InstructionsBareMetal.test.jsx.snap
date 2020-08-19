@@ -22,7 +22,6 @@ exports[`BareMetal instructions renders correctly 1`] = `
           variant="link"
         >
           <CardBadge
-            devPreviewText="Technology Preview"
             isDevPreview={true}
           />
           <CardBody>

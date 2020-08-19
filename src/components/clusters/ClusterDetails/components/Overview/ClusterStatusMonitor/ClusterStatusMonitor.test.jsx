@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
-jest.useFakeTimers();
+jest.useFakeTimers('legacy'); // TODO 'modern'
 
 const { clusterDetails } = fixtures;
 

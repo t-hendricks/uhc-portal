@@ -6,7 +6,7 @@ import fixtures from '../../../../__test__/ClusterDetails.fixtures';
 import clusterStates from '../../../../../common/clusterStates';
 
 
-jest.useFakeTimers();
+jest.useFakeTimers('legacy'); // TODO 'modern'
 
 describe('<InstallationLogView />', () => {
   const { clusterDetails } = fixtures;

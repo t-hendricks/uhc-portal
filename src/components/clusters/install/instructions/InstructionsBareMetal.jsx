@@ -22,7 +22,7 @@ export const InstructionsBareMetal = ({ history }) => {
           </Title>
           <div className="flex-container">
             <Button onClick={() => setModalOpen(true)} variant="link" className="aws-ipi-upi-infra-card infra-card pf-c-card infra-card-button" data-testid="ai-button">
-              <CardBadge isDevPreview devPreviewText="Technology Preview" />
+              <CardBadge isDevPreview />
               <CardBody>
                 <ConnectedIcon color={global_primary_color_100.value} size="xl" alt="Installer-Provisioned Infrastructure" className="aws-ipi-upi-infra-logo" />
                 <Title headingLevel="h3" size="lg">Assisted Bare Metal Installer</Title>

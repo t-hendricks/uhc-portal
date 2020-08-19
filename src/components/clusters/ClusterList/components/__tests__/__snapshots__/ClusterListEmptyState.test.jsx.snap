@@ -46,6 +46,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
         View archived clusters
       </Button>
     </Link>
+    <Connect(Component) />
   </EmptyStateSecondaryActions>
 </EmptyState>
 `;
