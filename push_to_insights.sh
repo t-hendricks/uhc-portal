@@ -167,13 +167,6 @@ if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     rm -rf build
     yarn build --mode=production --beta="true" --api-env="staging"
     push_build "qa-beta"
-
-    echo "running ci (ci-stable) push"
-    echo "ci branch (stage sso) is available on https://ci.cloud.redhat.com/openshift"
-    rm -rf build
-    yarn build --mode=production --api-env="ci"
-    push_build "ci-stable"
-
 elif [ "$1" == "candidate" ]; then
     echo "running candidate push"
     echo "Candidate branch is available on https://cloud.redhat.com/beta/openshift"
