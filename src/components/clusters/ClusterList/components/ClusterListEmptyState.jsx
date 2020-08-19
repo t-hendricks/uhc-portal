@@ -12,6 +12,20 @@ import {
 } from '@patternfly/react-core';
 import { OpenshiftIcon } from '@patternfly/react-icons';
 
+import { ASSISTED_INSTALLER_FEATURE } from '../../../../redux/constants/featureConstants';
+import withFeatureGate from '../../../features/with-feature-gate';
+
+const AssistedInstallerLink = withFeatureGate(
+  () => (
+    <Link to="/assisted-installer">
+      <Button variant="link">
+        Assisted Installer clusters
+      </Button>
+    </Link>
+  ),
+  ASSISTED_INSTALLER_FEATURE,
+  () => false,
+);
 
 function ClusterListEmptyState() {
   return (
@@ -35,6 +49,7 @@ function ClusterListEmptyState() {
         <Link to="/archived">
           <Button variant="link">View archived clusters</Button>
         </Link>
+        <AssistedInstallerLink />
       </EmptyStateSecondaryActions>
     </EmptyState>
   );

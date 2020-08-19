@@ -4,7 +4,7 @@ import { TextInput } from '@patternfly/react-core';
 
 import ClusterListFilter from './ClusterListFilter';
 
-jest.useFakeTimers();
+jest.useFakeTimers('legacy'); // TODO 'modern'
 
 describe('<ClusterListFilter />', () => {
   let setFilter;
