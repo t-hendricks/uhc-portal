@@ -46,7 +46,7 @@
     "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.3.0",
     "uuid-validate": "^0.0.3",
-    "facet-lib": "1.0.31",
+    "facet-lib": "1.0.32",
     "yup":"^0.28.3",
     "reselect": "^4.0.0",
     "uuid": "^8.1.0",
@@ -128,7 +128,7 @@
       "APP_DEVMODE": false,
       "APP_BETA": false,
       "APP_DEV_SERVER": false,
-      "APP_STAGING": false,
+      "APP_API_ENV": "production",
       "OCM_SHOW_OLD_METRICS": false
     }
   },
