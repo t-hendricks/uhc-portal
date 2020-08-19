@@ -5,11 +5,13 @@ const configs = {};
 // get bundled in the main chunk, and not spilt to tiny chunks
 
 configs.production = import(/* webpackMode: "eager" */ './config/production.json');
+configs.stageSSO = import(/* webpackMode: "eager" */ './config/ci.json');
+
 if (APP_BETA || APP_DEVMODE || APP_API_ENV !== 'production') {
   configs.staging = import(/* webpackMode: "eager" */ './config/staging.json');
   configs.integration = import(/* webpackMode: "eager" */ './config/integration.json');
-  configs.ci = import(/* webpackMode: "eager" */ './config/ci.json');
 }
+
 if (APP_DEV_SERVER) {
   // running in webpack dev server, default to development config
   configs.development = import(/* webpackMode: "eager" */ './config/development.json');
