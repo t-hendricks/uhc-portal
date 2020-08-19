@@ -31,7 +31,7 @@ const outDir = path.resolve(__dirname, 'build', insights.appname);
 module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
   const betaMode = argv.beta == 'true';
-  const apiEnv = argv['api-env'];
+  const isStaging = argv.staging == 'true';
   const isDevServer = !!process.argv.find(v => v.includes('webpack-dev-server'));
 
   let bundleAnalyzer = null;
@@ -70,7 +70,7 @@ module.exports = (env, argv) => {
         APP_BETA: betaMode,
         APP_DEVMODE: devMode,
         APP_DEV_SERVER: isDevServer,
-        APP_API_ENV: apiEnv,
+        APP_STAGING: isStaging,
       }),
       new ReplaceWebpackPlugin(
         [{

@@ -157,34 +157,27 @@ yarn install
 
 if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     echo "running staging push"
-    echo "staging branch is available on https://qaprodauth.cloud.redhat.com/openshift"
+    # staging branch available on https://qaprodauth.cloud.redhat.com/openshift
     rm -rf build
-    yarn build --mode=production --api-env="staging"
+    yarn build --mode=production --staging="true"
     push_build "qa-stable"
 
     echo "running staging (qa-beta) push"
-    echo "staging branch is available on https://qaprodauth.cloud.redhat.com/beta/openshift"
+    # staging branch available on https://qaprodauth.cloud.redhat.com/beta/openshift
     rm -rf build
-    yarn build --mode=production --beta="true" --api-env="staging"
+    yarn build --mode=production --beta="true" --staging="true"
     push_build "qa-beta"
-
-    echo "running ci (ci-stable) push"
-    echo "ci branch (stage sso) is available on https://ci.cloud.redhat.com/openshift"
-    rm -rf build
-    yarn build --mode=production --api-env="ci"
-    push_build "ci-stable"
-
 elif [ "$1" == "candidate" ]; then
     echo "running candidate push"
-    echo "Candidate branch is available on https://cloud.redhat.com/beta/openshift"
+    # Candidate branch available on https://cloud.redhat.com/beta/openshift
     rm -rf build
-    yarn build --mode=production --beta="true" --api-env="production"
+    yarn build --mode=production --beta="true" --staging="false"
     push_build "prod-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
-    echo "stable branch is available on https://cloud.redhat.com/openshift"
+    # stable branch available on https://cloud.redhat.com/openshift
     rm -rf build
-    yarn build --mode=production --beta="false" --api-env="production"
+    yarn build --mode=production --beta="false" --staging="false"
     push_build "prod-stable"
 else
     echo "mode (first param) must be one of: staging / candidate / stable"
