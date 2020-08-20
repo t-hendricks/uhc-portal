@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import get from 'lodash/get';
+import startCase from 'lodash/startCase';
 import {
   Card,
   CardBody, CardTitle,
@@ -47,6 +48,13 @@ class OSDSubscriptionCard extends Component {
     return 'N/A';
   }
 
+  getPlanType = (byoc) => {
+    if (byoc === 'rhinfra') { return 'Standard'; }
+    if (byoc === 'byoc') { return 'CCS'; }
+    if (byoc === 'any') { return 'Any'; }
+    return 'N/A';
+  }
+
   render() {
     const { quotaCost } = this.props;
     let content;
@@ -55,9 +63,9 @@ class OSDSubscriptionCard extends Component {
         get(quotaItem, 'related_resources[0].resource_type'),
         get(quotaItem, 'related_resources[0].resource_name'),
         { title: this.getZoneType(get(quotaItem, 'related_resources[0].availability_zone_type')) },
-        get(quotaItem, 'related_resources[0].byoc') === 'rhinfra' ? 'Standard' : 'CSS',
-        quotaItem.consumed,
-        quotaItem.allowed,
+        this.getPlanType(get(quotaItem, 'related_resources[0].byoc')),
+        `${quotaItem.consumed} of ${quotaItem.allowed}`,
+        startCase(get(quotaItem, 'related_resources[0].product')),
         { title: this.getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
       ]);
       content = (
