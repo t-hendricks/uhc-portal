@@ -57,6 +57,7 @@ fi
 # The version should be the short git hash:
 VERSION="$(git log --pretty=format:'%h' -n 1)"
 SUBJECT="$(git log --pretty=format:'%s' -n 1)"
+COMMIT_DATE="$(git log --pretty=format:'%ci' -n 1)"
 
 # Save the push key:
 rm --force key
@@ -123,6 +124,14 @@ function push_build {
 
   # Copy the Insights deployment jenkins file to the target
   cp insights-Jenkinsfile target/58231b16fdee45a03a4ee3cf94a9f2c3
+
+  # Populate the app.info.json file with build information
+  echo "{
+    \"app_name\": \"OCM\",
+    \"src_hash\": \"$VERSION\",
+    \"src_branch\": \"$branch\",
+    \"commit_date\": \"$COMMIT_DATE\",
+  }" > target/app.info.json
 
   # Create a commit for the new build and push it:
   cat > message <<.
