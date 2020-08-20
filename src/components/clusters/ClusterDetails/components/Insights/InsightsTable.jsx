@@ -40,11 +40,13 @@ const groupsFilter = groups => ({ onChange, value, ...props } = { onChange: () =
   filterValues: {
     value,
     onChange,
-    items: Object.entries(groups).map(groupValues => ({
-      label: groupValues[1].title,
-      textual: groupValues[1].title,
-      value: groupValues[1].tags.join(','),
-    })),
+    items: Object.entries(groups)
+      .sort((a, b) => a[1].title.localeCompare(b[1].title))
+      .map(groupValues => ({
+        label: groupValues[1].title,
+        textual: groupValues[1].title,
+        value: groupValues[1].tags.join(','),
+      })),
   },
 });
 

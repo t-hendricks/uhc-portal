@@ -90,9 +90,14 @@
 
 	.rhcs-c-rules-table .pf-c-table .pf-c-table__toggle {
 		padding: 0;
-		width: 2rem;
+		width: 40px;
+		padding-left: 16px;
 		.pf-c-button {
-			width: 2rem;
+			width: 24px;
+			.pf-c-table__toggle-icon {
+				height: 24px;
+				width: 24px;
+			}
 		}
 	}
 }
