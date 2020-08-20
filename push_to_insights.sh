@@ -118,9 +118,11 @@ function push_build {
     --archive \
     --delete \
     --exclude=.git \
-    --exclude=58231b16fdee45a03a4ee3cf94a9f2c3 \
     build/openshift/ \
     target/
+
+  # Copy the Insights deployment jenkins file to the target
+  cp insights-Jenkinsfile target/58231b16fdee45a03a4ee3cf94a9f2c3
 
   # Create a commit for the new build and push it:
   cat > message <<.
