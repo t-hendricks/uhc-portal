@@ -20,7 +20,7 @@ const postNewCluster = params => apiRequest({
 
 const postDisconnectedCluster = params => apiRequest({
   method: 'post',
-  url: '/api/clusters_mgmt/v1/register_disconnected',
+  url: '/api/accounts_mgmt/v1/subscriptions',
   data: params,
 });
 

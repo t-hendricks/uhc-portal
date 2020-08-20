@@ -7,6 +7,9 @@ const getCurrentAccount = () => apiRequest({
 
 const getOrganization = organizationID => apiRequest({
   method: 'get',
+  params: {
+    fetchCapabilities: true,
+  },
   url: `/api/accounts_mgmt/v1/organizations/${organizationID}`,
 });
 

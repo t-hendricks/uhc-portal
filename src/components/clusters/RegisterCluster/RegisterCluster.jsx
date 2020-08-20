@@ -11,34 +11,35 @@ import {
   Form,
   CardBody,
   Button,
-  FormGroup,
   PageSection,
+  TextContent,
+  Text,
+  TextVariants,
+  Title,
 } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 
 import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ErrorModal from '../../common/ErrorModal';
 import Breadcrumbs from '../common/Breadcrumbs';
-import RadioButtons from '../../common/ReduxFormComponents/RadioButtons';
 import {
-  required,
   checkClusterDisplayName,
   checkClusterUUID,
   checkDisconnectedConsoleURL,
-  checkDisconnectedvCPU,
-  checkDisconnectedSockets,
-  checkDisconnectedMemCapacity,
-  checkDisconnectedNodeCount,
 } from '../../../common/validators';
 import constants from './RegisterClusterHelper';
 
+import EditSubscriptionFields from '../common/EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
+
 class RegisterCluster extends React.Component {
   state = {
-    systemType: 'physical',
+    supportLevel: 'Eval',
   }
 
   componentDidMount() {
+    const { getOrganizationAndQuota } = this.props;
     this.reset();
+    getOrganizationAndQuota();
   }
 
   componentDidUpdate() {
@@ -52,25 +53,22 @@ class RegisterCluster extends React.Component {
     this.reset();
   }
 
-  toggleSystemType = (_, value) => {
-    const { change, untouch } = this.props;
-    if (value === 'physical') {
-      change('socket_num', '');
-      untouch('socket_num');
-    } else {
-      change('vcpu_num', '');
-      untouch('vcpu_num');
-    }
-    this.setState({ systemType: value });
+  onChangeUnitsNumericInput = (units, newValue) => {
+    const { change } = this.props;
+    const unitsFieldName = units === 'Sockets' ? 'socket_total' : 'cpu_total';
+    change(unitsFieldName, newValue);
+  }
+
+  onChangeSupportLevel = (newValue) => {
+    this.setState({ supportLevel: newValue });
   }
 
   reset() {
-    const {
-      resetResponse, resetForm,
-    } = this.props;
+    const { resetResponse, resetForm } = this.props;
     resetResponse();
     resetForm();
   }
+
 
   render() {
     const {
@@ -78,12 +76,14 @@ class RegisterCluster extends React.Component {
       registerClusterResponse,
       isOpen,
       resetResponse,
+      canSubscribeOCP,
     } = this.props;
-    const { systemType } = this.state;
+
+    const { supportLevel } = this.state;
 
     if (registerClusterResponse.fulfilled) {
       return (
-        <Redirect to={`/details/${registerClusterResponse.cluster.id}`} />
+        <Redirect to={`/details/${registerClusterResponse.cluster.cluster_id}`} />
       );
     }
 
@@ -110,8 +110,8 @@ class RegisterCluster extends React.Component {
           <Card id="register-cluster">
             <CardBody>
               <Grid>
-                <GridItem span={8}>
-                  <Form onSubmit={handleSubmit}>
+                <GridItem span={5}>
+                  <Form onSubmit={handleSubmit} className="subscription-settings form">
                     <Field
                       component={ReduxVerticalFormGroup}
                       name="cluster_id"
@@ -138,74 +138,24 @@ class RegisterCluster extends React.Component {
                       disabled={registerClusterResponse.pending}
                       type="text"
                     />
-                    <FormGroup
-                      label="Operating system"
-                      isRequired
-                      fieldId="operating_system"
-                    >
-                      <Field
-                        component={RadioButtons}
-                        name="operating_system"
-                        options={[{ value: 'Red Hat Enterprise Linux CoreOS', label: 'Red Hat Enterprise Linux CoreOS' },
-                          { value: 'Red Hat Enterprise Linux', label: 'Red Hat Enterprise Linux' }]}
-                        disabled={registerClusterResponse.pending}
-                        defaultValue="Red Hat Enterprise Linux CoreOS"
-                      />
-                    </FormGroup>
-                    <FormGroup
-                      label="System type"
-                      isRequired
-                      fieldId="system_type"
-                    >
-                      <Field
-                        component={RadioButtons}
-                        name="system_type"
-                        options={[{ value: 'physical', label: 'Physical' },
-                          { value: 'virtual', label: 'Virtual' }]}
-                        defaultValue="physical"
-                        disabled={registerClusterResponse.pending}
-                        onChange={this.toggleSystemType}
-                      />
-                    </FormGroup>
-                    {systemType === 'physical' && (
-                    <Field
-                      component={ReduxVerticalFormGroup}
-                      name="socket_num"
-                      label="Number of sockets or LPARs"
-                      inputMode="numeric"
-                      disabled={registerClusterResponse.pending}
-                      validate={[required, checkDisconnectedSockets]}
-                      isRequired
-                    />
+                    {canSubscribeOCP && (
+                      <>
+                        <Title headingLevel="h4" size="xl">Subscription Settings</Title>
+                        <TextContent>
+                          <Text component={TextVariants.p}>
+                        Editing the subscription settings will help ensure that
+                        you receive the level of support that you expect, and that
+                        your cluster is consuming the correct type of subscription.
+                          </Text>
+                        </TextContent>
+                        <EditSubscriptionFields
+                          isDialog={false}
+                          subscription={{ support_level: supportLevel }}
+                          onChangeNumericInputCallback={this.onChangeUnitsNumericInput}
+                          onChangeSupportLevelCallback={this.onChangeSupportLevel}
+                        />
+                      </>
                     )}
-                    {systemType === 'virtual' && (
-                    <Field
-                      component={ReduxVerticalFormGroup}
-                      name="vcpu_num"
-                      label="Number of vCPUs"
-                      inputMode="numeric"
-                      disabled={registerClusterResponse.pending}
-                      validate={checkDisconnectedvCPU}
-                      isRequired
-                    />
-                    )}
-                    <Field
-                      component={ReduxVerticalFormGroup}
-                      name="memory_gib"
-                      label="Memory capacity (GiB)"
-                      inputMode="numeric"
-                      validate={checkDisconnectedMemCapacity}
-                      step="any"
-                      disabled={registerClusterResponse.pending}
-                    />
-                    <Field
-                      component={ReduxVerticalFormGroup}
-                      name="nodes_compute"
-                      label="Number of compute nodes"
-                      inputMode="numeric"
-                      validate={checkDisconnectedNodeCount}
-                      disabled={registerClusterResponse.pending}
-                    />
                   </Form>
                 </GridItem>
               </Grid>
@@ -231,7 +181,8 @@ RegisterCluster.propTypes = {
   isOpen: PropTypes.bool,
   resetForm: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
-  untouch: PropTypes.func.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
+  canSubscribeOCP: PropTypes.bool.isRequired,
 };
 
 export default RegisterCluster;

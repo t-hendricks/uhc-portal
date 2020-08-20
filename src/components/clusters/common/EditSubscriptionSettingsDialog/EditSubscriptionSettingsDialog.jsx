@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { get, findIndex } from 'lodash';
+import { Field } from 'redux-form';
 import {
-  Form, TextContent, Text, TextVariants,
+  Form, TextContent, Text, TextVariants, FormGroup,
 } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
 import { ReduxFormRadioGroup } from '../../../common/ReduxFormComponents';
+import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
 import {
   subscriptionSettings,
   subscriptionSupportLevels,
@@ -16,6 +18,7 @@ import {
   subscriptionSystemUnits,
 } from '../../../../common/subscriptionTypes';
 import EditSubscriptionSettingsRequestState from './EditSubscriptionSettingsRequestState';
+import UnitFields from './UnitsFields';
 
 const {
   SUPPORT_LEVEL,
@@ -173,30 +176,136 @@ class EditSubscriptionSettingsDialog extends Component {
     closeModal();
   }
 
+  handleSupportlevelChange = (name, value) => {
+    const { onChangeSupportLevelCallback } = this.props;
+    this.handleChange(name, value);
+    onChangeSupportLevelCallback(value);
+  }
+
   render() {
-    const { isOpen, requestState, onClose } = this.props;
+    const {
+      isOpen,
+      requestState,
+      onClose,
+      isDialog,
+      onChangeNumericInputCallback,
+      subscription,
+    } = this.props;
     const radioGroupClassName = 'subscription-settings radio-group';
-    const { [SUPPORT_LEVEL]: supportLevel } = this.state;
+    const { [SUPPORT_LEVEL]: supportLevel, [SYSTEM_UNITS]: systemUnits } = this.state;
+
     const isDisabled = supportLevel !== PREMIUM
       && supportLevel !== STANDARD
       && supportLevel !== SELF_SUPPORT;
 
-    return isOpen && (
-      <Modal
-        title="Subscription settings"
-        width={810}
-        variant="large"
-        onClose={this.handleClose}
-        primaryText="Save settings"
-        secondaryText="Cancel"
-        onPrimaryClick={this.handleSubmit}
-        onSecondaryClick={this.handleClose}
-        isPrimaryDisabled={requestState.pending || isDisabled}
-      >
-        <EditSubscriptionSettingsRequestState
-          requestState={requestState}
-          onFulfilled={() => { this.handleClose(); onClose(); }}
+    const reduxFormFields = (
+      <>
+        <FormGroup className={radioGroupClassName} label="Choose the support type for this cluster.">
+          <Field
+            component={RadioButtons}
+            name={SUPPORT_LEVEL}
+            defaultValue={EVAL}
+            options={this.options[SUPPORT_LEVEL]}
+            onChangeCallback={this.handleChange}
+          />
+        </FormGroup>
+        <FormGroup className={radioGroupClassName} label="How do you intend to use this cluster?">
+          <Field
+            component={RadioButtons}
+            name={USAGE}
+            defaultValue={PRODUCTION}
+            options={this.options[USAGE]}
+            isDisabled={isDisabled}
+            onChangeCallback={this.handleChange}
+          />
+        </FormGroup>
+        <FormGroup className={radioGroupClassName} label="Choose your service level. (If you bought your subscription through Red Hat, choose L1-L3.)">
+          <Field
+            component={RadioButtons}
+            name={SERVICE_LEVEL}
+            defaultValue={L1_L3}
+            options={this.options[SERVICE_LEVEL]}
+            isDisabled={isDisabled}
+            onChangeCallback={this.handleChange}
+          />
+        </FormGroup>
+        <FormGroup className={radioGroupClassName} label="What unit of measure do you want to use, cores/vCPU or sockets?">
+          <Field
+            component={UnitFields}
+            name={SYSTEM_UNITS}
+            defaultValue={CORES_VCPU}
+            isDisabled={isDisabled}
+            onChangeCallback={this.handleChange}
+            onChangeNumericInputCallback={onChangeNumericInputCallback}
+          />
+        </FormGroup>
+      </>
+    );
+
+    const fields = (
+      <>
+        <ReduxFormRadioGroup
+          name={SUPPORT_LEVEL}
+          fieldId={SUPPORT_LEVEL}
+          label="Choose the support type for this cluster."
+          className={radioGroupClassName}
+          items={this.options[SUPPORT_LEVEL]}
+          onChange={this.handleChange}
         />
+        <ReduxFormRadioGroup
+          name={USAGE}
+          fieldId={USAGE}
+          label="How do you intend to use this cluster?"
+          className={radioGroupClassName}
+          items={this.options[USAGE]}
+          onChange={this.handleChange}
+          isDisabled={isDisabled}
+        />
+        <ReduxFormRadioGroup
+          name={SERVICE_LEVEL}
+          fieldId={SERVICE_LEVEL}
+          label="Choose your service level. (If you bought your subscription through Red Hat, choose L1-L3.)"
+          className={radioGroupClassName}
+          items={this.options[SERVICE_LEVEL]}
+          onChange={this.handleChange}
+          isDisabled={isDisabled}
+        />
+        <FormGroup className={radioGroupClassName} label="What unit of measure do you want to use, cores/vCPU or sockets?">
+          <UnitFields
+            name={SYSTEM_UNITS}
+            defaultValue={CORES_VCPU}
+            isDisabled={isDisabled}
+            onChangeCallback={this.handleChange}
+            onChangeNumericInputCallback={this.handleChange}
+            input={{ name: SYSTEM_UNITS, value: systemUnits, onChange: this.handleChange }}
+            subscription={subscription}
+          />
+        </FormGroup>
+      </>
+    );
+
+    if (!isDialog) {
+      return reduxFormFields;
+    }
+
+
+    return isOpen && isDialog && (
+    <Modal
+      title="Subscription settings"
+      width={810}
+      variant="large"
+      onClose={this.handleClose}
+      primaryText="Save settings"
+      secondaryText="Cancel"
+      onPrimaryClick={this.handleSubmit}
+      onSecondaryClick={this.handleClose}
+      isPrimaryDisabled={requestState.pending || isDisabled}
+    >
+      <EditSubscriptionSettingsRequestState
+        requestState={requestState}
+        onFulfilled={() => { this.handleClose(); onClose(); }}
+      />
+      <Form onSubmit={(e) => { this.handleSubmit(); e.preventDefault(); }} className="subscription-settings form">
         <TextContent>
           <Text component={TextVariants.p}>
           Editing the subscription settings will help ensure that
@@ -204,55 +313,9 @@ class EditSubscriptionSettingsDialog extends Component {
           your cluster is consuming the correct type of subscription.
           </Text>
         </TextContent>
-        <Form onSubmit={(e) => { this.handleSubmit(); e.preventDefault(); }} className="subscription-settings form">
-          <ReduxFormRadioGroup
-            name={SUPPORT_LEVEL}
-            fieldId={SUPPORT_LEVEL}
-            label="Choose the support type for this cluster."
-            className={radioGroupClassName}
-            items={this.options[SUPPORT_LEVEL]}
-            onChange={this.handleChange}
-          />
-          <ReduxFormRadioGroup
-            name={USAGE}
-            fieldId={USAGE}
-            label="How do you intend to use this cluster?"
-            className={radioGroupClassName}
-            items={this.options[USAGE]}
-            onChange={this.handleChange}
-            isDisabled={isDisabled}
-          />
-          <ReduxFormRadioGroup
-            name={SERVICE_LEVEL}
-            fieldId={SERVICE_LEVEL}
-            label="Choose your service level. (If you bought your subscription through Red Hat, choose L1-L3.)"
-            className={radioGroupClassName}
-            items={this.options[SERVICE_LEVEL]}
-            onChange={this.handleChange}
-            isDisabled={isDisabled}
-          />
-          {false && ( // TODO: either add back or remove PRODUCT_BUNDLE
-            <ReduxFormRadioGroup
-              name={PRODUCT_BUNDLE}
-              fieldId={PRODUCT_BUNDLE}
-              label="Do you intend to use an OpenShift subscription, or is this cluster associated with JBoss Middleware or an IBM CloudPak?"
-              className={radioGroupClassName}
-              items={this.options[PRODUCT_BUNDLE]}
-              onChange={this.handleChange}
-              isDisabled={isDisabled}
-            />
-          )}
-          <ReduxFormRadioGroup
-            name={SYSTEM_UNITS}
-            fieldId={SYSTEM_UNITS}
-            label="What unit of measure do you want to use, cores/vCPU or sockets?"
-            className={radioGroupClassName}
-            items={this.options[SYSTEM_UNITS]}
-            onChange={this.handleChange}
-            isDisabled={isDisabled}
-          />
-        </Form>
-      </Modal>
+        {fields}
+      </Form>
+    </Modal>
     );
   }
 }
@@ -261,9 +324,12 @@ EditSubscriptionSettingsDialog.propTypes = {
   subscription: PropTypes.object,
   requestState: PropTypes.object,
   isOpen: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
-  submit: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
+  isDialog: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func,
+  submit: PropTypes.func,
+  onClose: PropTypes.func,
+  onChangeNumericInputCallback: PropTypes.func,
+  onChangeSupportLevelCallback: PropTypes.func,
 };
 
 EditSubscriptionSettingsDialog.defaultProps = {

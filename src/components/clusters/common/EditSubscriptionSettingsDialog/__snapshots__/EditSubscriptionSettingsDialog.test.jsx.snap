@@ -3,6 +3,7 @@
 exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
 <EditSubscriptionSettingsDialog
   closeModal={[MockFunction]}
+  isDialog={true}
   isOpen={true}
   onClose={[MockFunction]}
   requestState={
@@ -115,20 +116,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                     class="pf-c-modal-box__body"
                     id="pf-modal-part-2"
                   >
-                    <div
-                      class="pf-c-content"
-                    >
-                      <p
-                        class=""
-                        data-pf-content="true"
-                      >
-                        Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                      </p>
-                    </div>
                     <form
                       class="pf-c-form subscription-settings form"
                       novalidate=""
                     >
+                      <div
+                        class="pf-c-content"
+                      >
+                        <p
+                          class=""
+                          data-pf-content="true"
+                        >
+                          Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                        </p>
+                      </div>
                       <div
                         class="pf-c-form__group subscription-settings radio-group"
                       >
@@ -356,7 +357,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                         >
                           <label
                             class="pf-c-form__label"
-                            for="system_units"
                           >
                             <span
                               class="pf-c-form__label-text"
@@ -374,19 +374,65 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                           >
                             <input
                               aria-invalid="false"
-                              checked=""
                               class="pf-c-radio__input"
-                              id="system_units:Cores/vCPU"
-                              name="system_units:Cores/vCPU"
+                              id="system_units-Cores/vCPU"
+                              name="system_units"
                               type="radio"
                               value="Cores/vCPU"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Cores/vCPU"
+                              for="system_units-Cores/vCPU"
                             >
                               Cores/vCPU
                             </label>
+                          </div>
+                          <div
+                            class="pf-c-form__group units-numeric-input"
+                            id="compute-cores-input"
+                          >
+                            <div
+                              class="pf-c-form__group-label"
+                            >
+                              <label
+                                class="pf-c-form__label"
+                              >
+                                <span
+                                  class="pf-c-form__label-text"
+                                >
+                                  Number of compute cores
+                                </span>
+                                <span
+                                  aria-hidden="true"
+                                  class="pf-c-form__label-required"
+                                >
+                                   
+                                  *
+                                </span>
+                              </label>
+                               
+                            </div>
+                            <div
+                              class="pf-c-form__group-control"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-label="compute cores"
+                                class="pf-c-form-control"
+                                disabled=""
+                                name="compute_cores"
+                                required=""
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                aria-live="polite"
+                                class="pf-c-form__helper-text"
+                                id="undefined-helper"
+                              >
+                                This number should not include master nodes
+                              </div>
+                            </div>
                           </div>
                           <div
                             class="pf-c-radio"
@@ -394,14 +440,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                             <input
                               aria-invalid="false"
                               class="pf-c-radio__input"
-                              id="system_units:Sockets"
-                              name="system_units:Sockets"
+                              id="system_units-Sockets"
+                              name="system_units"
                               type="radio"
                               value="Sockets"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Sockets"
+                              for="system_units-Sockets"
                             >
                               Sockets
                             </label>
@@ -513,20 +559,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                     class="pf-c-modal-box__body"
                     id="pf-modal-part-2"
                   >
-                    <div
-                      class="pf-c-content"
-                    >
-                      <p
-                        class=""
-                        data-pf-content="true"
-                      >
-                        Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                      </p>
-                    </div>
                     <form
                       class="pf-c-form subscription-settings form"
                       novalidate=""
                     >
+                      <div
+                        class="pf-c-content"
+                      >
+                        <p
+                          class=""
+                          data-pf-content="true"
+                        >
+                          Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                        </p>
+                      </div>
                       <div
                         class="pf-c-form__group subscription-settings radio-group"
                       >
@@ -754,7 +800,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                         >
                           <label
                             class="pf-c-form__label"
-                            for="system_units"
                           >
                             <span
                               class="pf-c-form__label-text"
@@ -772,19 +817,65 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                           >
                             <input
                               aria-invalid="false"
-                              checked=""
                               class="pf-c-radio__input"
-                              id="system_units:Cores/vCPU"
-                              name="system_units:Cores/vCPU"
+                              id="system_units-Cores/vCPU"
+                              name="system_units"
                               type="radio"
                               value="Cores/vCPU"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Cores/vCPU"
+                              for="system_units-Cores/vCPU"
                             >
                               Cores/vCPU
                             </label>
+                          </div>
+                          <div
+                            class="pf-c-form__group units-numeric-input"
+                            id="compute-cores-input"
+                          >
+                            <div
+                              class="pf-c-form__group-label"
+                            >
+                              <label
+                                class="pf-c-form__label"
+                              >
+                                <span
+                                  class="pf-c-form__label-text"
+                                >
+                                  Number of compute cores
+                                </span>
+                                <span
+                                  aria-hidden="true"
+                                  class="pf-c-form__label-required"
+                                >
+                                   
+                                  *
+                                </span>
+                              </label>
+                               
+                            </div>
+                            <div
+                              class="pf-c-form__group-control"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-label="compute cores"
+                                class="pf-c-form-control"
+                                disabled=""
+                                name="compute_cores"
+                                required=""
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                aria-live="polite"
+                                class="pf-c-form__helper-text"
+                                id="undefined-helper"
+                              >
+                                This number should not include master nodes
+                              </div>
+                            </div>
                           </div>
                           <div
                             class="pf-c-radio"
@@ -792,14 +883,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                             <input
                               aria-invalid="false"
                               class="pf-c-radio__input"
-                              id="system_units:Sockets"
-                              name="system_units:Sockets"
+                              id="system_units-Sockets"
+                              name="system_units"
                               type="radio"
                               value="Sockets"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Sockets"
+                              for="system_units-Sockets"
                             >
                               Sockets
                             </label>
@@ -1007,22 +1098,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               }
                             }
                           />
-                          <TextContent>
-                            <div
-                              className="pf-c-content"
-                            >
-                              <Text
-                                component="p"
-                              >
-                                <p
-                                  className=""
-                                  data-pf-content={true}
-                                >
-                                  Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                                </p>
-                              </Text>
-                            </div>
-                          </TextContent>
                           <Form
                             className="subscription-settings form"
                             onSubmit={[Function]}
@@ -1032,6 +1107,22 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               noValidate={true}
                               onSubmit={[Function]}
                             >
+                              <TextContent>
+                                <div
+                                  className="pf-c-content"
+                                >
+                                  <Text
+                                    component="p"
+                                  >
+                                    <p
+                                      className=""
+                                      data-pf-content={true}
+                                    >
+                                      Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                                    </p>
+                                  </Text>
+                                </div>
+                              </TextContent>
                               <ReduxFormRadioGroup
                                 className="subscription-settings radio-group"
                                 fieldId="support_level"
@@ -1466,63 +1557,64 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                   </div>
                                 </FormGroup>
                               </ReduxFormRadioGroup>
-                              <ReduxFormRadioGroup
+                              <FormGroup
                                 className="subscription-settings radio-group"
-                                fieldId="system_units"
-                                isDisabled={false}
-                                items={
-                                  Array [
-                                    Object {
-                                      "isChecked": true,
-                                      "isDefault": true,
-                                      "label": "Cores/vCPU",
-                                      "value": "Cores/vCPU",
-                                    },
-                                    Object {
-                                      "label": "Sockets",
-                                      "value": "Sockets",
-                                    },
-                                  ]
-                                }
                                 label="What unit of measure do you want to use, cores/vCPU or sockets?"
-                                name="system_units"
-                                onChange={[Function]}
                               >
-                                <FormGroup
-                                  className="subscription-settings radio-group"
-                                  fieldId="system_units"
-                                  label="What unit of measure do you want to use, cores/vCPU or sockets?"
+                                <div
+                                  className="pf-c-form__group subscription-settings radio-group"
                                 >
                                   <div
-                                    className="pf-c-form__group subscription-settings radio-group"
+                                    className="pf-c-form__group-label"
                                   >
-                                    <div
-                                      className="pf-c-form__group-label"
+                                    <label
+                                      className="pf-c-form__label"
                                     >
-                                      <label
-                                        className="pf-c-form__label"
-                                        htmlFor="system_units"
+                                      <span
+                                        className="pf-c-form__label-text"
                                       >
-                                        <span
-                                          className="pf-c-form__label-text"
-                                        >
-                                          What unit of measure do you want to use, cores/vCPU or sockets?
-                                        </span>
-                                      </label>
-                                       
-                                    </div>
-                                    <div
-                                      className="pf-c-form__group-control"
+                                        What unit of measure do you want to use, cores/vCPU or sockets?
+                                      </span>
+                                    </label>
+                                     
+                                  </div>
+                                  <div
+                                    className="pf-c-form__group-control"
+                                  >
+                                    <UnitFields
+                                      defaultValue="Cores/vCPU"
+                                      input={
+                                        Object {
+                                          "name": "system_units",
+                                          "onChange": [Function],
+                                          "value": "Cores/vCPU",
+                                        }
+                                      }
+                                      isDisabled={false}
+                                      name="system_units"
+                                      onChangeCallback={[Function]}
+                                      onChangeNumericInputCallback={[Function]}
+                                      subscription={
+                                        Object {
+                                          "id": "0",
+                                          "product_bundle": "Openshift",
+                                          "service_level": "L1-L3",
+                                          "support_level": "Standard",
+                                          "system_units": "Cores/vCPU",
+                                          "usage": "Production",
+                                        }
+                                      }
                                     >
                                       <Radio
+                                        aria-label="Cores/vCPU"
                                         className=""
-                                        id="system_units:Cores/vCPU"
+                                        id="system_units-Cores/vCPU"
                                         isChecked={true}
                                         isDisabled={false}
                                         isValid={true}
-                                        key="system_units:Cores/vCPU"
+                                        key="system_units-Cores/vCPU"
                                         label="Cores/vCPU"
-                                        name="system_units:Cores/vCPU"
+                                        name="system_units"
                                         onChange={[Function]}
                                         value="Cores/vCPU"
                                       >
@@ -1534,29 +1626,113 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                             checked={true}
                                             className="pf-c-radio__input"
                                             disabled={false}
-                                            id="system_units:Cores/vCPU"
-                                            name="system_units:Cores/vCPU"
+                                            id="system_units-Cores/vCPU"
+                                            name="system_units"
                                             onChange={[Function]}
                                             type="radio"
                                             value="Cores/vCPU"
                                           />
                                           <label
                                             className="pf-c-radio__label"
-                                            htmlFor="system_units:Cores/vCPU"
+                                            htmlFor="system_units-Cores/vCPU"
                                           >
                                             Cores/vCPU
                                           </label>
                                         </div>
                                       </Radio>
+                                      <FormGroup
+                                        className="units-numeric-input"
+                                        helperText="This number should not include master nodes"
+                                        helperTextInvalid="Compute cores must be a number."
+                                        id="compute-cores-input"
+                                        isRequired={true}
+                                        label="Number of compute cores"
+                                        validated="default"
+                                      >
+                                        <div
+                                          className="pf-c-form__group units-numeric-input"
+                                          id="compute-cores-input"
+                                        >
+                                          <div
+                                            className="pf-c-form__group-label"
+                                          >
+                                            <label
+                                              className="pf-c-form__label"
+                                            >
+                                              <span
+                                                className="pf-c-form__label-text"
+                                              >
+                                                Number of compute cores
+                                              </span>
+                                              <span
+                                                aria-hidden="true"
+                                                className="pf-c-form__label-required"
+                                              >
+                                                 
+                                                *
+                                              </span>
+                                            </label>
+                                             
+                                          </div>
+                                          <div
+                                            className="pf-c-form__group-control"
+                                          >
+                                            <ForwardRef
+                                              aria-label="compute cores"
+                                              isDisabled={true}
+                                              isRequired={true}
+                                              name="compute_cores"
+                                              onChange={[Function]}
+                                              type="text"
+                                              value=""
+                                            >
+                                              <TextInputBase
+                                                aria-label="compute cores"
+                                                className=""
+                                                innerRef={null}
+                                                isDisabled={true}
+                                                isReadOnly={false}
+                                                isRequired={true}
+                                                name="compute_cores"
+                                                onChange={[Function]}
+                                                type="text"
+                                                validated="default"
+                                                value=""
+                                              >
+                                                <input
+                                                  aria-invalid={false}
+                                                  aria-label="compute cores"
+                                                  className="pf-c-form-control"
+                                                  disabled={true}
+                                                  name="compute_cores"
+                                                  onChange={[Function]}
+                                                  readOnly={false}
+                                                  required={true}
+                                                  type="text"
+                                                  value=""
+                                                />
+                                              </TextInputBase>
+                                            </ForwardRef>
+                                            <div
+                                              aria-live="polite"
+                                              className="pf-c-form__helper-text"
+                                              id="undefined-helper"
+                                            >
+                                              This number should not include master nodes
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </FormGroup>
                                       <Radio
+                                        aria-label="Sockets"
                                         className=""
-                                        id="system_units:Sockets"
+                                        id="system_units-Sockets"
                                         isChecked={false}
                                         isDisabled={false}
                                         isValid={true}
-                                        key="system_units:Sockets"
+                                        key="system_units-Sockets"
                                         label="Sockets"
-                                        name="system_units:Sockets"
+                                        name="system_units"
                                         onChange={[Function]}
                                         value="Sockets"
                                       >
@@ -1568,24 +1744,24 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                             checked={false}
                                             className="pf-c-radio__input"
                                             disabled={false}
-                                            id="system_units:Sockets"
-                                            name="system_units:Sockets"
+                                            id="system_units-Sockets"
+                                            name="system_units"
                                             onChange={[Function]}
                                             type="radio"
                                             value="Sockets"
                                           />
                                           <label
                                             className="pf-c-radio__label"
-                                            htmlFor="system_units:Sockets"
+                                            htmlFor="system_units-Sockets"
                                           >
                                             Sockets
                                           </label>
                                         </div>
                                       </Radio>
-                                    </div>
+                                    </UnitFields>
                                   </div>
-                                </FormGroup>
-                              </ReduxFormRadioGroup>
+                                </div>
+                              </FormGroup>
                             </form>
                           </Form>
                         </div>
@@ -1652,6 +1828,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
 exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occurs 1`] = `
 <EditSubscriptionSettingsDialog
   closeModal={[MockFunction]}
+  isDialog={true}
   isOpen={true}
   onClose={[MockFunction]}
   requestState={
@@ -1765,20 +1942,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                     class="pf-c-modal-box__body"
                     id="pf-modal-part-2"
                   >
-                    <div
-                      class="pf-c-content"
-                    >
-                      <p
-                        class=""
-                        data-pf-content="true"
-                      >
-                        Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                      </p>
-                    </div>
                     <form
                       class="pf-c-form subscription-settings form"
                       novalidate=""
                     >
+                      <div
+                        class="pf-c-content"
+                      >
+                        <p
+                          class=""
+                          data-pf-content="true"
+                        >
+                          Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                        </p>
+                      </div>
                       <div
                         class="pf-c-form__group subscription-settings radio-group"
                       >
@@ -2006,7 +2183,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                         >
                           <label
                             class="pf-c-form__label"
-                            for="system_units"
                           >
                             <span
                               class="pf-c-form__label-text"
@@ -2024,19 +2200,65 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           >
                             <input
                               aria-invalid="false"
-                              checked=""
                               class="pf-c-radio__input"
-                              id="system_units:Cores/vCPU"
-                              name="system_units:Cores/vCPU"
+                              id="system_units-Cores/vCPU"
+                              name="system_units"
                               type="radio"
                               value="Cores/vCPU"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Cores/vCPU"
+                              for="system_units-Cores/vCPU"
                             >
                               Cores/vCPU
                             </label>
+                          </div>
+                          <div
+                            class="pf-c-form__group units-numeric-input"
+                            id="compute-cores-input"
+                          >
+                            <div
+                              class="pf-c-form__group-label"
+                            >
+                              <label
+                                class="pf-c-form__label"
+                              >
+                                <span
+                                  class="pf-c-form__label-text"
+                                >
+                                  Number of compute cores
+                                </span>
+                                <span
+                                  aria-hidden="true"
+                                  class="pf-c-form__label-required"
+                                >
+                                   
+                                  *
+                                </span>
+                              </label>
+                               
+                            </div>
+                            <div
+                              class="pf-c-form__group-control"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-label="compute cores"
+                                class="pf-c-form-control"
+                                disabled=""
+                                name="compute_cores"
+                                required=""
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                aria-live="polite"
+                                class="pf-c-form__helper-text"
+                                id="undefined-helper"
+                              >
+                                This number should not include master nodes
+                              </div>
+                            </div>
                           </div>
                           <div
                             class="pf-c-radio"
@@ -2044,14 +2266,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                             <input
                               aria-invalid="false"
                               class="pf-c-radio__input"
-                              id="system_units:Sockets"
-                              name="system_units:Sockets"
+                              id="system_units-Sockets"
+                              name="system_units"
                               type="radio"
                               value="Sockets"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Sockets"
+                              for="system_units-Sockets"
                             >
                               Sockets
                             </label>
@@ -2148,20 +2370,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                     class="pf-c-modal-box__body"
                     id="pf-modal-part-3"
                   >
-                    <div
-                      class="pf-c-content"
-                    >
-                      <p
-                        class=""
-                        data-pf-content="true"
-                      >
-                        Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                      </p>
-                    </div>
                     <form
                       class="pf-c-form subscription-settings form"
                       novalidate=""
                     >
+                      <div
+                        class="pf-c-content"
+                      >
+                        <p
+                          class=""
+                          data-pf-content="true"
+                        >
+                          Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                        </p>
+                      </div>
                       <div
                         class="pf-c-form__group subscription-settings radio-group"
                       >
@@ -2412,7 +2634,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                         >
                           <label
                             class="pf-c-form__label"
-                            for="system_units"
                           >
                             <span
                               class="pf-c-form__label-text"
@@ -2430,20 +2651,66 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           >
                             <input
                               aria-invalid="false"
-                              checked=""
                               class="pf-c-radio__input"
                               disabled=""
-                              id="system_units:Cores/vCPU"
-                              name="system_units:Cores/vCPU"
+                              id="system_units-Cores/vCPU"
+                              name="system_units"
                               type="radio"
                               value="Cores/vCPU"
                             />
                             <label
                               class="pf-c-radio__label pf-m-disabled"
-                              for="system_units:Cores/vCPU"
+                              for="system_units-Cores/vCPU"
                             >
                               Cores/vCPU
                             </label>
+                          </div>
+                          <div
+                            class="pf-c-form__group units-numeric-input"
+                            id="compute-cores-input"
+                          >
+                            <div
+                              class="pf-c-form__group-label"
+                            >
+                              <label
+                                class="pf-c-form__label"
+                              >
+                                <span
+                                  class="pf-c-form__label-text"
+                                >
+                                  Number of compute cores
+                                </span>
+                                <span
+                                  aria-hidden="true"
+                                  class="pf-c-form__label-required"
+                                >
+                                   
+                                  *
+                                </span>
+                              </label>
+                               
+                            </div>
+                            <div
+                              class="pf-c-form__group-control"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-label="compute cores"
+                                class="pf-c-form-control"
+                                disabled=""
+                                name="compute_cores"
+                                required=""
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                aria-live="polite"
+                                class="pf-c-form__helper-text"
+                                id="undefined-helper"
+                              >
+                                This number should not include master nodes
+                              </div>
+                            </div>
                           </div>
                           <div
                             class="pf-c-radio"
@@ -2452,14 +2719,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               aria-invalid="false"
                               class="pf-c-radio__input"
                               disabled=""
-                              id="system_units:Sockets"
-                              name="system_units:Sockets"
+                              id="system_units-Sockets"
+                              name="system_units"
                               type="radio"
                               value="Sockets"
                             />
                             <label
                               class="pf-c-radio__label pf-m-disabled"
-                              for="system_units:Sockets"
+                              for="system_units-Sockets"
                             >
                               Sockets
                             </label>
@@ -2557,20 +2824,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                     class="pf-c-modal-box__body"
                     id="pf-modal-part-4"
                   >
-                    <div
-                      class="pf-c-content"
-                    >
-                      <p
-                        class=""
-                        data-pf-content="true"
-                      >
-                        Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                      </p>
-                    </div>
                     <form
                       class="pf-c-form subscription-settings form"
                       novalidate=""
                     >
+                      <div
+                        class="pf-c-content"
+                      >
+                        <p
+                          class=""
+                          data-pf-content="true"
+                        >
+                          Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                        </p>
+                      </div>
                       <div
                         class="pf-c-form__group subscription-settings radio-group"
                       >
@@ -2825,7 +3092,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                         >
                           <label
                             class="pf-c-form__label"
-                            for="system_units"
                           >
                             <span
                               class="pf-c-form__label-text"
@@ -2843,20 +3109,66 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           >
                             <input
                               aria-invalid="false"
-                              checked=""
                               class="pf-c-radio__input"
                               disabled=""
-                              id="system_units:Cores/vCPU"
-                              name="system_units:Cores/vCPU"
+                              id="system_units-Cores/vCPU"
+                              name="system_units"
                               type="radio"
                               value="Cores/vCPU"
                             />
                             <label
                               class="pf-c-radio__label pf-m-disabled"
-                              for="system_units:Cores/vCPU"
+                              for="system_units-Cores/vCPU"
                             >
                               Cores/vCPU
                             </label>
+                          </div>
+                          <div
+                            class="pf-c-form__group units-numeric-input"
+                            id="compute-cores-input"
+                          >
+                            <div
+                              class="pf-c-form__group-label"
+                            >
+                              <label
+                                class="pf-c-form__label"
+                              >
+                                <span
+                                  class="pf-c-form__label-text"
+                                >
+                                  Number of compute cores
+                                </span>
+                                <span
+                                  aria-hidden="true"
+                                  class="pf-c-form__label-required"
+                                >
+                                   
+                                  *
+                                </span>
+                              </label>
+                               
+                            </div>
+                            <div
+                              class="pf-c-form__group-control"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-label="compute cores"
+                                class="pf-c-form-control"
+                                disabled=""
+                                name="compute_cores"
+                                required=""
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                aria-live="polite"
+                                class="pf-c-form__helper-text"
+                                id="undefined-helper"
+                              >
+                                This number should not include master nodes
+                              </div>
+                            </div>
                           </div>
                           <div
                             class="pf-c-radio"
@@ -2865,14 +3177,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               aria-invalid="false"
                               class="pf-c-radio__input"
                               disabled=""
-                              id="system_units:Sockets"
-                              name="system_units:Sockets"
+                              id="system_units-Sockets"
+                              name="system_units"
                               type="radio"
                               value="Sockets"
                             />
                             <label
                               class="pf-c-radio__label pf-m-disabled"
-                              for="system_units:Sockets"
+                              for="system_units-Sockets"
                             >
                               Sockets
                             </label>
@@ -2970,20 +3282,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                     class="pf-c-modal-box__body"
                     id="pf-modal-part-5"
                   >
-                    <div
-                      class="pf-c-content"
-                    >
-                      <p
-                        class=""
-                        data-pf-content="true"
-                      >
-                        Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                      </p>
-                    </div>
                     <form
                       class="pf-c-form subscription-settings form"
                       novalidate=""
                     >
+                      <div
+                        class="pf-c-content"
+                      >
+                        <p
+                          class=""
+                          data-pf-content="true"
+                        >
+                          Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                        </p>
+                      </div>
                       <div
                         class="pf-c-form__group subscription-settings radio-group"
                       >
@@ -3064,7 +3376,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                         >
                           <label
                             class="pf-c-form__label"
-                            for="system_units"
                           >
                             <span
                               class="pf-c-form__label-text"
@@ -3077,6 +3388,44 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                         <div
                           class="pf-c-form__group-control"
                         >
+                          <div
+                            class="pf-c-radio"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="pf-c-radio__input"
+                              disabled=""
+                              id="system_units-Cores/vCPU"
+                              name="system_units"
+                              type="radio"
+                              value="Cores/vCPU"
+                            />
+                            <label
+                              class="pf-c-radio__label pf-m-disabled"
+                              for="system_units-Cores/vCPU"
+                            >
+                              Cores/vCPU
+                            </label>
+                          </div>
+                          <div
+                            class="pf-c-radio"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="pf-c-radio__input"
+                              disabled=""
+                              id="system_units-Sockets"
+                              name="system_units"
+                              type="radio"
+                              value="Sockets"
+                            />
+                            <label
+                              class="pf-c-radio__label pf-m-disabled"
+                              for="system_units-Sockets"
+                            >
+                              Sockets
+                            </label>
+                          </div>
                           
                         </div>
                       </div>
@@ -3170,20 +3519,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                     class="pf-c-modal-box__body"
                     id="pf-modal-part-6"
                   >
-                    <div
-                      class="pf-c-content"
-                    >
-                      <p
-                        class=""
-                        data-pf-content="true"
-                      >
-                        Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                      </p>
-                    </div>
                     <form
                       class="pf-c-form subscription-settings form"
                       novalidate=""
                     >
+                      <div
+                        class="pf-c-content"
+                      >
+                        <p
+                          class=""
+                          data-pf-content="true"
+                        >
+                          Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                        </p>
+                      </div>
                       <div
                         class="pf-c-form__group subscription-settings radio-group"
                       >
@@ -3411,7 +3760,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                         >
                           <label
                             class="pf-c-form__label"
-                            for="system_units"
                           >
                             <span
                               class="pf-c-form__label-text"
@@ -3429,19 +3777,65 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           >
                             <input
                               aria-invalid="false"
-                              checked=""
                               class="pf-c-radio__input"
-                              id="system_units:Cores/vCPU"
-                              name="system_units:Cores/vCPU"
+                              id="system_units-Cores/vCPU"
+                              name="system_units"
                               type="radio"
                               value="Cores/vCPU"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Cores/vCPU"
+                              for="system_units-Cores/vCPU"
                             >
                               Cores/vCPU
                             </label>
+                          </div>
+                          <div
+                            class="pf-c-form__group units-numeric-input"
+                            id="compute-cores-input"
+                          >
+                            <div
+                              class="pf-c-form__group-label"
+                            >
+                              <label
+                                class="pf-c-form__label"
+                              >
+                                <span
+                                  class="pf-c-form__label-text"
+                                >
+                                  Number of compute cores
+                                </span>
+                                <span
+                                  aria-hidden="true"
+                                  class="pf-c-form__label-required"
+                                >
+                                   
+                                  *
+                                </span>
+                              </label>
+                               
+                            </div>
+                            <div
+                              class="pf-c-form__group-control"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-label="compute cores"
+                                class="pf-c-form-control"
+                                disabled=""
+                                name="compute_cores"
+                                required=""
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                aria-live="polite"
+                                class="pf-c-form__helper-text"
+                                id="undefined-helper"
+                              >
+                                This number should not include master nodes
+                              </div>
+                            </div>
                           </div>
                           <div
                             class="pf-c-radio"
@@ -3449,14 +3843,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                             <input
                               aria-invalid="false"
                               class="pf-c-radio__input"
-                              id="system_units:Sockets"
-                              name="system_units:Sockets"
+                              id="system_units-Sockets"
+                              name="system_units"
                               type="radio"
                               value="Sockets"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Sockets"
+                              for="system_units-Sockets"
                             >
                               Sockets
                             </label>
@@ -3598,20 +3992,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                         </span>
                       </div>
                     </div>
-                    <div
-                      class="pf-c-content"
-                    >
-                      <p
-                        class=""
-                        data-pf-content="true"
-                      >
-                        Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                      </p>
-                    </div>
                     <form
                       class="pf-c-form subscription-settings form"
                       novalidate=""
                     >
+                      <div
+                        class="pf-c-content"
+                      >
+                        <p
+                          class=""
+                          data-pf-content="true"
+                        >
+                          Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                        </p>
+                      </div>
                       <div
                         class="pf-c-form__group subscription-settings radio-group"
                       >
@@ -3839,7 +4233,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                         >
                           <label
                             class="pf-c-form__label"
-                            for="system_units"
                           >
                             <span
                               class="pf-c-form__label-text"
@@ -3857,19 +4250,65 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           >
                             <input
                               aria-invalid="false"
-                              checked=""
                               class="pf-c-radio__input"
-                              id="system_units:Cores/vCPU"
-                              name="system_units:Cores/vCPU"
+                              id="system_units-Cores/vCPU"
+                              name="system_units"
                               type="radio"
                               value="Cores/vCPU"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Cores/vCPU"
+                              for="system_units-Cores/vCPU"
                             >
                               Cores/vCPU
                             </label>
+                          </div>
+                          <div
+                            class="pf-c-form__group units-numeric-input"
+                            id="compute-cores-input"
+                          >
+                            <div
+                              class="pf-c-form__group-label"
+                            >
+                              <label
+                                class="pf-c-form__label"
+                              >
+                                <span
+                                  class="pf-c-form__label-text"
+                                >
+                                  Number of compute cores
+                                </span>
+                                <span
+                                  aria-hidden="true"
+                                  class="pf-c-form__label-required"
+                                >
+                                   
+                                  *
+                                </span>
+                              </label>
+                               
+                            </div>
+                            <div
+                              class="pf-c-form__group-control"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-label="compute cores"
+                                class="pf-c-form-control"
+                                disabled=""
+                                name="compute_cores"
+                                required=""
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                aria-live="polite"
+                                class="pf-c-form__helper-text"
+                                id="undefined-helper"
+                              >
+                                This number should not include master nodes
+                              </div>
+                            </div>
                           </div>
                           <div
                             class="pf-c-radio"
@@ -3877,14 +4316,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                             <input
                               aria-invalid="false"
                               class="pf-c-radio__input"
-                              id="system_units:Sockets"
-                              name="system_units:Sockets"
+                              id="system_units-Sockets"
+                              name="system_units"
                               type="radio"
                               value="Sockets"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Sockets"
+                              for="system_units-Sockets"
                             >
                               Sockets
                             </label>
@@ -4043,20 +4482,20 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                         </span>
                       </div>
                     </div>
-                    <div
-                      class="pf-c-content"
-                    >
-                      <p
-                        class=""
-                        data-pf-content="true"
-                      >
-                        Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                      </p>
-                    </div>
                     <form
                       class="pf-c-form subscription-settings form"
                       novalidate=""
                     >
+                      <div
+                        class="pf-c-content"
+                      >
+                        <p
+                          class=""
+                          data-pf-content="true"
+                        >
+                          Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                        </p>
+                      </div>
                       <div
                         class="pf-c-form__group subscription-settings radio-group"
                       >
@@ -4284,7 +4723,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                         >
                           <label
                             class="pf-c-form__label"
-                            for="system_units"
                           >
                             <span
                               class="pf-c-form__label-text"
@@ -4302,19 +4740,65 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           >
                             <input
                               aria-invalid="false"
-                              checked=""
                               class="pf-c-radio__input"
-                              id="system_units:Cores/vCPU"
-                              name="system_units:Cores/vCPU"
+                              id="system_units-Cores/vCPU"
+                              name="system_units"
                               type="radio"
                               value="Cores/vCPU"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Cores/vCPU"
+                              for="system_units-Cores/vCPU"
                             >
                               Cores/vCPU
                             </label>
+                          </div>
+                          <div
+                            class="pf-c-form__group units-numeric-input"
+                            id="compute-cores-input"
+                          >
+                            <div
+                              class="pf-c-form__group-label"
+                            >
+                              <label
+                                class="pf-c-form__label"
+                              >
+                                <span
+                                  class="pf-c-form__label-text"
+                                >
+                                  Number of compute cores
+                                </span>
+                                <span
+                                  aria-hidden="true"
+                                  class="pf-c-form__label-required"
+                                >
+                                   
+                                  *
+                                </span>
+                              </label>
+                               
+                            </div>
+                            <div
+                              class="pf-c-form__group-control"
+                            >
+                              <input
+                                aria-invalid="false"
+                                aria-label="compute cores"
+                                class="pf-c-form-control"
+                                disabled=""
+                                name="compute_cores"
+                                required=""
+                                type="text"
+                                value=""
+                              />
+                              <div
+                                aria-live="polite"
+                                class="pf-c-form__helper-text"
+                                id="undefined-helper"
+                              >
+                                This number should not include master nodes
+                              </div>
+                            </div>
                           </div>
                           <div
                             class="pf-c-radio"
@@ -4322,14 +4806,14 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                             <input
                               aria-invalid="false"
                               class="pf-c-radio__input"
-                              id="system_units:Sockets"
-                              name="system_units:Sockets"
+                              id="system_units-Sockets"
+                              name="system_units"
                               type="radio"
                               value="Sockets"
                             />
                             <label
                               class="pf-c-radio__label"
-                              for="system_units:Sockets"
+                              for="system_units-Sockets"
                             >
                               Sockets
                             </label>
@@ -4616,22 +5100,6 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               </Alert>
                             </ErrorBox>
                           </EditSubscriptionSettingsRequestState>
-                          <TextContent>
-                            <div
-                              className="pf-c-content"
-                            >
-                              <Text
-                                component="p"
-                              >
-                                <p
-                                  className=""
-                                  data-pf-content={true}
-                                >
-                                  Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
-                                </p>
-                              </Text>
-                            </div>
-                          </TextContent>
                           <Form
                             className="subscription-settings form"
                             onSubmit={[Function]}
@@ -4641,6 +5109,22 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               noValidate={true}
                               onSubmit={[Function]}
                             >
+                              <TextContent>
+                                <div
+                                  className="pf-c-content"
+                                >
+                                  <Text
+                                    component="p"
+                                  >
+                                    <p
+                                      className=""
+                                      data-pf-content={true}
+                                    >
+                                      Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                                    </p>
+                                  </Text>
+                                </div>
+                              </TextContent>
                               <ReduxFormRadioGroup
                                 className="subscription-settings radio-group"
                                 fieldId="support_level"
@@ -5075,63 +5559,64 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                   </div>
                                 </FormGroup>
                               </ReduxFormRadioGroup>
-                              <ReduxFormRadioGroup
+                              <FormGroup
                                 className="subscription-settings radio-group"
-                                fieldId="system_units"
-                                isDisabled={false}
-                                items={
-                                  Array [
-                                    Object {
-                                      "isChecked": true,
-                                      "isDefault": true,
-                                      "label": "Cores/vCPU",
-                                      "value": "Cores/vCPU",
-                                    },
-                                    Object {
-                                      "label": "Sockets",
-                                      "value": "Sockets",
-                                    },
-                                  ]
-                                }
                                 label="What unit of measure do you want to use, cores/vCPU or sockets?"
-                                name="system_units"
-                                onChange={[Function]}
                               >
-                                <FormGroup
-                                  className="subscription-settings radio-group"
-                                  fieldId="system_units"
-                                  label="What unit of measure do you want to use, cores/vCPU or sockets?"
+                                <div
+                                  className="pf-c-form__group subscription-settings radio-group"
                                 >
                                   <div
-                                    className="pf-c-form__group subscription-settings radio-group"
+                                    className="pf-c-form__group-label"
                                   >
-                                    <div
-                                      className="pf-c-form__group-label"
+                                    <label
+                                      className="pf-c-form__label"
                                     >
-                                      <label
-                                        className="pf-c-form__label"
-                                        htmlFor="system_units"
+                                      <span
+                                        className="pf-c-form__label-text"
                                       >
-                                        <span
-                                          className="pf-c-form__label-text"
-                                        >
-                                          What unit of measure do you want to use, cores/vCPU or sockets?
-                                        </span>
-                                      </label>
-                                       
-                                    </div>
-                                    <div
-                                      className="pf-c-form__group-control"
+                                        What unit of measure do you want to use, cores/vCPU or sockets?
+                                      </span>
+                                    </label>
+                                     
+                                  </div>
+                                  <div
+                                    className="pf-c-form__group-control"
+                                  >
+                                    <UnitFields
+                                      defaultValue="Cores/vCPU"
+                                      input={
+                                        Object {
+                                          "name": "system_units",
+                                          "onChange": [Function],
+                                          "value": "Cores/vCPU",
+                                        }
+                                      }
+                                      isDisabled={false}
+                                      name="system_units"
+                                      onChangeCallback={[Function]}
+                                      onChangeNumericInputCallback={[Function]}
+                                      subscription={
+                                        Object {
+                                          "id": "0",
+                                          "product_bundle": "Openshift",
+                                          "service_level": "L1-L3",
+                                          "support_level": "Standard",
+                                          "system_units": "Cores/vCPU",
+                                          "usage": "Production",
+                                        }
+                                      }
                                     >
                                       <Radio
+                                        aria-label="Cores/vCPU"
                                         className=""
-                                        id="system_units:Cores/vCPU"
+                                        id="system_units-Cores/vCPU"
                                         isChecked={true}
                                         isDisabled={false}
                                         isValid={true}
-                                        key="system_units:Cores/vCPU"
+                                        key="system_units-Cores/vCPU"
                                         label="Cores/vCPU"
-                                        name="system_units:Cores/vCPU"
+                                        name="system_units"
                                         onChange={[Function]}
                                         value="Cores/vCPU"
                                       >
@@ -5143,29 +5628,113 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                             checked={true}
                                             className="pf-c-radio__input"
                                             disabled={false}
-                                            id="system_units:Cores/vCPU"
-                                            name="system_units:Cores/vCPU"
+                                            id="system_units-Cores/vCPU"
+                                            name="system_units"
                                             onChange={[Function]}
                                             type="radio"
                                             value="Cores/vCPU"
                                           />
                                           <label
                                             className="pf-c-radio__label"
-                                            htmlFor="system_units:Cores/vCPU"
+                                            htmlFor="system_units-Cores/vCPU"
                                           >
                                             Cores/vCPU
                                           </label>
                                         </div>
                                       </Radio>
+                                      <FormGroup
+                                        className="units-numeric-input"
+                                        helperText="This number should not include master nodes"
+                                        helperTextInvalid="Compute cores must be a number."
+                                        id="compute-cores-input"
+                                        isRequired={true}
+                                        label="Number of compute cores"
+                                        validated="default"
+                                      >
+                                        <div
+                                          className="pf-c-form__group units-numeric-input"
+                                          id="compute-cores-input"
+                                        >
+                                          <div
+                                            className="pf-c-form__group-label"
+                                          >
+                                            <label
+                                              className="pf-c-form__label"
+                                            >
+                                              <span
+                                                className="pf-c-form__label-text"
+                                              >
+                                                Number of compute cores
+                                              </span>
+                                              <span
+                                                aria-hidden="true"
+                                                className="pf-c-form__label-required"
+                                              >
+                                                 
+                                                *
+                                              </span>
+                                            </label>
+                                             
+                                          </div>
+                                          <div
+                                            className="pf-c-form__group-control"
+                                          >
+                                            <ForwardRef
+                                              aria-label="compute cores"
+                                              isDisabled={true}
+                                              isRequired={true}
+                                              name="compute_cores"
+                                              onChange={[Function]}
+                                              type="text"
+                                              value=""
+                                            >
+                                              <TextInputBase
+                                                aria-label="compute cores"
+                                                className=""
+                                                innerRef={null}
+                                                isDisabled={true}
+                                                isReadOnly={false}
+                                                isRequired={true}
+                                                name="compute_cores"
+                                                onChange={[Function]}
+                                                type="text"
+                                                validated="default"
+                                                value=""
+                                              >
+                                                <input
+                                                  aria-invalid={false}
+                                                  aria-label="compute cores"
+                                                  className="pf-c-form-control"
+                                                  disabled={true}
+                                                  name="compute_cores"
+                                                  onChange={[Function]}
+                                                  readOnly={false}
+                                                  required={true}
+                                                  type="text"
+                                                  value=""
+                                                />
+                                              </TextInputBase>
+                                            </ForwardRef>
+                                            <div
+                                              aria-live="polite"
+                                              className="pf-c-form__helper-text"
+                                              id="undefined-helper"
+                                            >
+                                              This number should not include master nodes
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </FormGroup>
                                       <Radio
+                                        aria-label="Sockets"
                                         className=""
-                                        id="system_units:Sockets"
+                                        id="system_units-Sockets"
                                         isChecked={false}
                                         isDisabled={false}
                                         isValid={true}
-                                        key="system_units:Sockets"
+                                        key="system_units-Sockets"
                                         label="Sockets"
-                                        name="system_units:Sockets"
+                                        name="system_units"
                                         onChange={[Function]}
                                         value="Sockets"
                                       >
@@ -5177,24 +5746,24 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                             checked={false}
                                             className="pf-c-radio__input"
                                             disabled={false}
-                                            id="system_units:Sockets"
-                                            name="system_units:Sockets"
+                                            id="system_units-Sockets"
+                                            name="system_units"
                                             onChange={[Function]}
                                             type="radio"
                                             value="Sockets"
                                           />
                                           <label
                                             className="pf-c-radio__label"
-                                            htmlFor="system_units:Sockets"
+                                            htmlFor="system_units-Sockets"
                                           >
                                             Sockets
                                           </label>
                                         </div>
                                       </Radio>
-                                    </div>
+                                    </UnitFields>
                                   </div>
-                                </FormGroup>
-                              </ReduxFormRadioGroup>
+                                </div>
+                              </FormGroup>
                             </form>
                           </Form>
                         </div>

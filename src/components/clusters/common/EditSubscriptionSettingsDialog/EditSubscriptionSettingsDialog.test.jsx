@@ -55,6 +55,9 @@ describe('<EditSubscriptionSettingsDialog />', () => {
   let requestState;
   const radioSelector = name => (`ReduxFormRadioGroup[name="${name}"] Radio`);
   const disabledGroupSelector = name => (`ReduxFormRadioGroup[name="${name}"][isDisabled=true]`);
+  const usageGroupSelector = 'FormGroup[fieldId="usage"]';
+  const usageRadioSelector = 'UnitFields Radio';
+  const disabledUsageSelector = 'UnitFields[isDisabled=true]';
   const buttonSelector = variant => (`Button[variant="${variant}"]`);
   const disabledButtonSelector = variant => (`Button[variant="${variant}"][isDisabled=true]`);
 
@@ -82,23 +85,22 @@ describe('<EditSubscriptionSettingsDialog />', () => {
       submit={submit}
       subscription={subscription}
       requestState={requestState}
+      isDialog
     />);
   });
 
   it('renders correctly', () => {
     wrapper.setProps({ subscription });
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(4);
+    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(3);
     expect(wrapper.find(disabledGroupSelector(SUPPORT_LEVEL)).length).toEqual(0);
     expect(wrapper.find(radioSelector(SUPPORT_LEVEL)).length).toEqual(3);
     expect(wrapper.find(disabledGroupSelector(USAGE)).length).toEqual(0);
     expect(wrapper.find(radioSelector(USAGE)).length).toEqual(3);
     expect(wrapper.find(disabledGroupSelector(SERVICE_LEVEL)).length).toEqual(0);
     expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
-    // expect(wrapper.find(disabledGroupSelector(PRODUCT_BUNDLE)).length).toEqual(0);
-    // expect(wrapper.find(radioSelector(PRODUCT_BUNDLE)).length).toEqual(3);
     expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(0);
-    expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
+    expect(wrapper.find(usageGroupSelector).length).toEqual(1);
     expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
     expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
     expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(0);
@@ -106,17 +108,15 @@ describe('<EditSubscriptionSettingsDialog />', () => {
 
   it('renders eval support correctly', () => {
     wrapper.setProps({ subscription: { ...subscription, [SUPPORT_LEVEL]: EVAL } });
-    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(4);
+    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(3);
     expect(wrapper.find(disabledGroupSelector(SUPPORT_LEVEL)).length).toEqual(0);
     expect(wrapper.find(radioSelector(SUPPORT_LEVEL)).length).toEqual(4);
     expect(wrapper.find(disabledGroupSelector(USAGE)).length).toEqual(1);
     expect(wrapper.find(radioSelector(USAGE)).length).toEqual(3);
     expect(wrapper.find(disabledGroupSelector(SERVICE_LEVEL)).length).toEqual(1);
     expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
-    // expect(wrapper.find(disabledGroupSelector(PRODUCT_BUNDLE)).length).toEqual(1);
-    // expect(wrapper.find(radioSelector(PRODUCT_BUNDLE)).length).toEqual(3);
-    expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
+    expect(wrapper.find(disabledUsageSelector).length).toEqual(1);
+    expect(wrapper.find(usageRadioSelector).length).toEqual(2);
     expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
     expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
     expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(1);
@@ -124,17 +124,15 @@ describe('<EditSubscriptionSettingsDialog />', () => {
 
   it('renders none support correctly', () => {
     wrapper.setProps({ subscription: { ...subscription, [SUPPORT_LEVEL]: NONE } });
-    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(4);
+    expect(wrapper.find(ReduxFormRadioGroup).length).toEqual(3);
     expect(wrapper.find(disabledGroupSelector(SUPPORT_LEVEL)).length).toEqual(0);
     expect(wrapper.find(radioSelector(SUPPORT_LEVEL)).length).toEqual(4);
     expect(wrapper.find(disabledGroupSelector(USAGE)).length).toEqual(1);
     expect(wrapper.find(radioSelector(USAGE)).length).toEqual(3);
     expect(wrapper.find(disabledGroupSelector(SERVICE_LEVEL)).length).toEqual(1);
     expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
-    // expect(wrapper.find(disabledGroupSelector(PRODUCT_BUNDLE)).length).toEqual(1);
-    // expect(wrapper.find(radioSelector(PRODUCT_BUNDLE)).length).toEqual(3);
-    expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(1);
-    expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
+    expect(wrapper.find(disabledUsageSelector).length).toEqual(1);
+    expect(wrapper.find(usageRadioSelector).length).toEqual(2);
     expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
     expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
     expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(1);

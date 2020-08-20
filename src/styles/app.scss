@@ -1127,6 +1127,17 @@ div.pf-c-alert.archived-cluster-toast {
       position: absolute;
       margin-left: -20px;
     }
+
+    .units-numeric-input .pf-c-form__label-text::before {
+      counter-increment: none;
+      content: none;
+    }
+    .units-numeric-input{
+      margin-left: 23px;
+    }
+    #compute-cores-input {
+      margin-bottom: 12px;
+    }
   }
   &.expired-eval-option {
     color: var(--pf-global--danger-color--100);
@@ -1144,6 +1155,8 @@ div.pf-c-alert.archived-cluster-toast {
     fill: var(--pf-global--danger-color--100);
   }
 }
+
+
 
 button:focus {
   &.install--copy-pull-secret::after {

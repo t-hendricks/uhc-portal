@@ -275,8 +275,8 @@ class ClusterList extends Component {
               />
               <EditDisplayNameDialog onClose={invalidateClusters} />
               <EditConsoleURLDialog onClose={invalidateClusters} />
-              <EditSubscriptionSettingsDialog onClose={invalidateClusters} />
               <TransferClusterOwnershipDialog onClose={invalidateClusters} />
+              <EditSubscriptionSettingsDialog onClose={invalidateClusters} isDialog />
               <ScaleClusterDialog onClose={invalidateClusters} />
               <EditDisconnectedCluster onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
