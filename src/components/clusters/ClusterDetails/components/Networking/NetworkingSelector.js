@@ -5,7 +5,7 @@ const routeSelectorsToString = (routeSelectors) => {
   Object.keys(routeSelectors).forEach((key) => {
     selectorStrings.push(`${key}=${routeSelectors[key]}`);
   });
-  return selectorStrings.join(', ');
+  return selectorStrings.join(',');
 };
 
 const NetworkingSelector = (state) => {
