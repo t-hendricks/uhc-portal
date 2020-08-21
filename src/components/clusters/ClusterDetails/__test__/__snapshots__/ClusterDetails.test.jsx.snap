@@ -190,6 +190,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       displayInsightsTab={false}
       displayMonitoringTab={true}
       displayNetworkingTab={true}
+      hasIssues={true}
       insightsTabRef={
         Object {
           "current": null,
