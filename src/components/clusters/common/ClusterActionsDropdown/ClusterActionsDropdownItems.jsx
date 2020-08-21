@@ -190,6 +190,7 @@ function actionResolver(
       title: !cluster.cluster_admin_enabled ? 'Allow cluster-admin access' : 'Remove cluster-admin access',
       key: getKey('allowclusteradmin'),
       onClick: () => openModal('allow-cluster-admin', cluster),
+      ...isUninstallingProps,
     }
   );
 
