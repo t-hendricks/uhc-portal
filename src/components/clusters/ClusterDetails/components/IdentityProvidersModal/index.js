@@ -13,10 +13,39 @@ import {
   getldapAttributes, getOpenIdClaims, getGitHubTeamsAndOrgsData,
 } from './IdentityProvidersHelper';
 
+
+function scrollToFirstError(errors) {
+  const errorNodeNames = Object.keys(errors);
+  if (!errorNodeNames.length) {
+    return;
+  }
+  const errorNodes = errorNodeNames.map(name => (
+    document.querySelector(`[name^="${name}"`)
+  ));
+  const compare = (node1, node2) => {
+    const result = node1.compareDocumentPosition(node2);
+    switch (result) {
+      case (Node.DOCUMENT_POSITION_PRECEDING):
+        return 1;
+      case (Node.DOCUMENT_POSITION_FOLLOWING):
+        return -1;
+      default:
+        return 0;
+    }
+  };
+  let firstError;
+  errorNodes.forEach((node, i) => {
+    if (i === 0 || compare(node, firstError) < 0) {
+      firstError = node;
+    }
+  });
+  firstError.scrollIntoView({ behavior: 'smooth' });
+}
+
 const reduxFormConfig = {
   form: 'CreateIdentityProvider',
   enableReinitialize: true,
-
+  onSubmitFail: scrollToFirstError,
 };
 const reduxFormCreateClusterIDP = reduxForm(reduxFormConfig)(IdentityProvidersModal);
 const CLIENT_SECRET = 'CLIENT_SECRET'; // Predefined value
