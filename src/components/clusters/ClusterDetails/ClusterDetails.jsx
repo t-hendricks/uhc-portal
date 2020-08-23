@@ -379,7 +379,7 @@ class ClusterDetails extends Component {
             addOnsTabRef={this.addOnsTabRef}
             networkingTabRef={this.networkingTabRef}
             insightsTabRef={this.insightsTabRef}
-            hasIssues={hasIssues}
+            hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
           />
         </ClusterDetailsTop>
         <TabContent
