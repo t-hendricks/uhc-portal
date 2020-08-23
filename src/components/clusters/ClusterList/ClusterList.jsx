@@ -53,7 +53,6 @@ import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
 import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
-import EditDisconnectedCluster from '../common/EditDisconnectedCluster';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
@@ -278,7 +277,6 @@ class ClusterList extends Component {
               <TransferClusterOwnershipDialog onClose={invalidateClusters} />
               <EditSubscriptionSettingsDialog onClose={invalidateClusters} isDialog />
               <ScaleClusterDialog onClose={invalidateClusters} />
-              <EditDisconnectedCluster onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
               <UnarchiveClusterDialog onClose={invalidateClusters} />
               <DeleteClusterDialog onClose={(shouldRefresh) => {
