@@ -407,8 +407,10 @@ test('Field is a valid ARN', () => {
 
 test('Field is a valid key value pair', () => {
   const validCharError = "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
-  const maxLenError = 'Length of ingress route label selector key name must be less or equal to 63';
-  const longStr = 'ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff';
+  const maxLenKeyError = 'Length of ingress route label selector key name must be less or equal to 63';
+  const maxLenValueError = 'Length of ingress route label selector value must be less or equal to 63';
+  const longKeyStr = 'ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff=val';
+  const longValStr = 'key=ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff';
 
   expect(checkRouteSelectors('foo=bar')).toBe(undefined);
   expect(checkRouteSelectors('fOo=BAr')).toBe(undefined);
@@ -424,6 +426,7 @@ test('Field is a valid key value pair', () => {
   expect(checkRouteSelectors('foo=-bar')).toBe(validCharError);
   expect(checkRouteSelectors('foo=bar_')).toBe(validCharError);
   expect(checkRouteSelectors('foo=bar_')).toBe(validCharError);
-  expect(checkRouteSelectors(longStr)).toBe(maxLenError);
-  expect(checkRouteSelectors(`someprefix/${longStr}`)).toBe(maxLenError);
+  expect(checkRouteSelectors(longValStr)).toBe(maxLenValueError);
+  expect(checkRouteSelectors(longKeyStr)).toBe(maxLenKeyError);
+  expect(checkRouteSelectors(`someprefix/${longKeyStr}`)).toBe(maxLenKeyError);
 });

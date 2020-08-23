@@ -126,12 +126,12 @@ const checkGithubTeams = (value) => {
   return undefined;
 };
 
-const checkRouteSelectors = (value) => {
-  if (!value) {
+const checkRouteSelectors = (input) => {
+  if (!input) {
     return undefined;
   }
 
-  const selectors = value.split(',');
+  const selectors = input.split(',');
 
 
   let error;
@@ -140,10 +140,16 @@ const checkRouteSelectors = (value) => {
     if (selectors.some((pair) => {
       const pairParts = pair.split('=');
       // check if prefix exists and get the label
+      const value = pairParts[1];
       const keyParts = pairParts[0].split('/');
-      const label = keyParts.length > 1 ? keyParts[1] : keyParts[0];
+      const key = keyParts.length > 1 ? keyParts[1] : keyParts[0];
 
-      if (label.length > INGRESS_ROUTE_LABEL_MAX_LEN) {
+      if (value && value.length > INGRESS_ROUTE_LABEL_MAX_LEN) {
+        error = `Length of ingress route label selector value must be less or equal to ${INGRESS_ROUTE_LABEL_MAX_LEN}`;
+        return true;
+      }
+
+      if (key && key.length > INGRESS_ROUTE_LABEL_MAX_LEN) {
         error = `Length of ingress route label selector key name must be less or equal to ${INGRESS_ROUTE_LABEL_MAX_LEN}`;
         return true;
       }
