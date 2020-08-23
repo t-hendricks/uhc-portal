@@ -52,7 +52,10 @@ describe('Cluster Actions Dropdown Items', () => {
   });
 
   describe('cluster with state uninstalling', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.clusterUninstallingProps} />);
+    const wrapper = shallow(<DropDownItemsRenderHelper
+      {...Fixtures.clusterUninstallingProps}
+      canAllowClusterAdmin
+    />);
 
     it('should render (uninstalling)', () => {
       expect(wrapper).toMatchSnapshot();
@@ -63,10 +66,12 @@ describe('Cluster Actions Dropdown Items', () => {
       const editDisplayNameDisabled = wrapper.find(DropdownItem).at(1).props().isDisabled;
       const editDisabled = wrapper.find(DropdownItem).at(2).props().isDisabled;
       const deleteDisabled = wrapper.find(DropdownItem).at(3).props().isDisabled;
+      const toggleClsuterAdminsDisabled = wrapper.find(DropdownItem).at(4).props().isDisabled;
       expect(launchConsoleDisabled).toEqual(true);
       expect(editDisplayNameDisabled).toEqual(true);
       expect(editDisabled).toEqual(true);
       expect(deleteDisabled).toEqual(true);
+      expect(toggleClsuterAdminsDisabled).toEqual(true);
     });
   });
 
