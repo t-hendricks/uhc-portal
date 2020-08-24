@@ -87,4 +87,17 @@
 		vertical-align: -0.3em;
 		fill: var(--pf-global--danger-color--200);
 	}
+
+	.rhcs-c-rules-table .pf-c-table .pf-c-table__toggle {
+		padding: 0;
+		width: 40px;
+		padding-left: 16px;
+		.pf-c-button {
+			width: 24px;
+			.pf-c-table__toggle-icon {
+				height: 24px;
+				width: 24px;
+			}
+		}
+	}
 }
