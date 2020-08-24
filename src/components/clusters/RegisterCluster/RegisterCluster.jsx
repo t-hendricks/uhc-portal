@@ -17,8 +17,7 @@ import {
   TextVariants,
   Title,
 } from '@patternfly/react-core';
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
-
+import { PageHeader, PageHeaderTitle, Spinner } from '@redhat-cloud-services/frontend-components';
 import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ErrorModal from '../../common/ErrorModal';
 import Breadcrumbs from '../common/Breadcrumbs';
@@ -77,6 +76,7 @@ class RegisterCluster extends React.Component {
       isOpen,
       resetResponse,
       canSubscribeOCP,
+      quotaRequstFullfilled,
     } = this.props;
 
     const { supportLevel } = this.state;
@@ -95,15 +95,17 @@ class RegisterCluster extends React.Component {
       />
     );
 
+    const topText = 'Use this form to register clusters that are not connected to OpenShift Cluster Manager. To edit subscription settings for clusters that are already connected to OpenShift Cluster Manager, the cluster owner or organization administrator should choose the "Edit subscription settings" action for that cluster.';
+
     return (
       <>
         <PageHeader>
           <Breadcrumbs path={[
             { label: 'Clusters' },
-            { label: 'Cluster registration' },
+            { label: 'Register disconnected cluster' },
           ]}
           />
-          <PageHeaderTitle title="Cluster registration" />
+          <PageHeaderTitle title="Register disconnected cluster" />
         </PageHeader>
         <PageSection>
           {errorModal}
@@ -111,36 +113,39 @@ class RegisterCluster extends React.Component {
             <CardBody>
               <Grid>
                 <GridItem span={5}>
-                  <Form onSubmit={handleSubmit} className="subscription-settings form">
-                    <Field
-                      component={ReduxVerticalFormGroup}
-                      name="cluster_id"
-                      label="Cluster ID"
-                      type="text"
-                      extendedHelpText={constants.clusterIDHint}
-                      disabled={registerClusterResponse.pending}
-                      validate={checkClusterUUID}
-                      isRequired
-                    />
-                    <Field
-                      component={ReduxVerticalFormGroup}
-                      name="display_name"
-                      label="Display name"
-                      type="text"
-                      disabled={registerClusterResponse.pending}
-                      validate={checkClusterDisplayName}
-                    />
-                    <Field
-                      component={ReduxVerticalFormGroup}
-                      name="web_console_url"
-                      label="Web console URL"
-                      validate={checkDisconnectedConsoleURL}
-                      disabled={registerClusterResponse.pending}
-                      type="text"
-                    />
-                    {canSubscribeOCP && (
-                      <>
-                        <Title headingLevel="h4" size="xl">Subscription Settings</Title>
+                  <TextContent id="register-cluster-top-text">
+                    <Text component={TextVariants.p}>{topText}</Text>
+                  </TextContent>
+                  { quotaRequstFullfilled
+                    ? (
+                      <Form onSubmit={handleSubmit} className="subscription-settings form">
+                        <Field
+                          component={ReduxVerticalFormGroup}
+                          name="cluster_id"
+                          label="Cluster ID"
+                          type="text"
+                          extendedHelpText={constants.clusterIDHint}
+                          disabled={registerClusterResponse.pending}
+                          validate={checkClusterUUID}
+                          isRequired
+                        />
+                        <Field
+                          component={ReduxVerticalFormGroup}
+                          name="display_name"
+                          label="Display name"
+                          type="text"
+                          disabled={registerClusterResponse.pending}
+                          validate={checkClusterDisplayName}
+                        />
+                        <Field
+                          component={ReduxVerticalFormGroup}
+                          name="web_console_url"
+                          label="Web console URL"
+                          validate={checkDisconnectedConsoleURL}
+                          disabled={registerClusterResponse.pending}
+                          type="text"
+                        />
+                        <Title headingLevel="h4" size="xl">Subscription settings</Title>
                         <TextContent>
                           <Text component={TextVariants.p}>
                         Editing the subscription settings will help ensure that
@@ -148,15 +153,17 @@ class RegisterCluster extends React.Component {
                         your cluster is consuming the correct type of subscription.
                           </Text>
                         </TextContent>
+
                         <EditSubscriptionFields
                           isDialog={false}
                           subscription={{ support_level: supportLevel }}
                           onChangeNumericInputCallback={this.onChangeUnitsNumericInput}
                           onChangeSupportLevelCallback={this.onChangeSupportLevel}
+                          hideSubscriptionSettings={!canSubscribeOCP}
                         />
-                      </>
-                    )}
-                  </Form>
+                      </Form>
+                    )
+                    : <Spinner />}
                 </GridItem>
               </Grid>
             </CardBody>
@@ -183,6 +190,7 @@ RegisterCluster.propTypes = {
   change: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
+  quotaRequstFullfilled: PropTypes.bool.isRequired,
 };
 
 export default RegisterCluster;
