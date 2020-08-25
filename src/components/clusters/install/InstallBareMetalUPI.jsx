@@ -41,6 +41,7 @@ export class InstallBareMetalUPI extends Component {
           <OCPInstructions
             token={token}
             breadcrumbs={breadcrumbs}
+            cloudProviderID="bareMetal"
             {...instructionsMapping.bareMetal}
           />
         </PageSection>

@@ -39,7 +39,7 @@ class InstallAzureIPI extends Component {
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProvider={instructionsMapping.azure.cloudProvider}
+            cloudProviderID="azure"
             customizations={instructionsMapping.azure.customizations}
             {...instructionsMapping.azure.ipi}
           />
