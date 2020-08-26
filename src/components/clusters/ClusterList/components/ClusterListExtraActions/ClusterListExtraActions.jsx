@@ -26,7 +26,7 @@ class ClusterListExtraActions extends React.Component {
     const { isOpen } = this.state;
     const { className, aiEnabled } = this.props;
     const dropdownItems = [
-      <DropdownItem component="button" key="registercluster">
+      <DropdownItem component="button" key="registercluster" data-testid="register-cluster-item">
         <div>
           <Link to="/register" className="pf-c-dropdown__menu-item">
             Register cluster
@@ -54,6 +54,7 @@ class ClusterListExtraActions extends React.Component {
     }
     return (
       <Dropdown
+        data-testid="cluster-list-extra-actions-dropdown"
         onSelect={this.onSelect}
         toggle={<KebabToggle onToggle={this.onToggle} />}
         isOpen={isOpen}
