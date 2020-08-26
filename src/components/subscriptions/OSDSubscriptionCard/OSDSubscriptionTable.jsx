@@ -33,8 +33,8 @@ function OSDSubscriptionTable({ rows, children }) {
     'Resource name',
     'Availability',
     { title: 'Plan type', transforms: [() => ({ children: planType })] },
-    { title: 'Used', props: { className: 'quota-table-used' } },
     'Cluster type',
+    { title: 'Used', props: { className: 'quota-table-used' } },
     'Capacity',
   ];
 
