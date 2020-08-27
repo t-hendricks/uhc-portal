@@ -61,6 +61,14 @@ function getRequest(pathParams, params = {}) {
   return apiRequest({ method: 'get', params, url });
 }
 
+const getFeature = (featureID, organizationID) => apiRequest({
+  method: 'post',
+  data: {
+    organization_id: organizationID,
+  },
+  url: `/api/accounts_mgmt/v1/feature_toggles/${featureID}/query`,
+});
+
 const accountsService = {
   getCurrentAccount,
   getOrganization,
@@ -69,6 +77,7 @@ const accountsService = {
   getOrganizationQuota,
   editSubscription,
   getRequest,
+  getFeature,
 };
 
 export default accountsService;
