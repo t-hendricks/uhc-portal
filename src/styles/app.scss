@@ -649,12 +649,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 20px;
 }
 
-.infra-card-button {
-  white-space: normal;
-  --pf-c-button--m-link--Color: var(--pf-global--Color--100);
-  --pf-c-button--m-link--hover--Color: var(--pf-global--Color--100);
-}
-
 .infra-card, a.infra-card, .ocm-page a.infra-card {
   padding: 20px;
   display: flex;
