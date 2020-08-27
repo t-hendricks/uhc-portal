@@ -12,7 +12,6 @@ import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import {
   hasOSDQuotaSelector,
-  hasRHMIQuotaSelector,
   hasAwsQuotaSelector,
   hasGcpQuotaSelector,
   awsQuotaSelector,
@@ -55,7 +54,6 @@ const mapStateToProps = (state, ownProps) => {
 
     clustersQuota: {
       hasOsdQuota: hasOSDQuotaSelector(state),
-      hasRhmiQuota: hasRHMIQuotaSelector(state),
       hasAwsQuota: hasAwsQuotaSelector(state),
       hasGcpQuota: hasGcpQuotaSelector(state),
       aws: awsQuotaSelector(state),

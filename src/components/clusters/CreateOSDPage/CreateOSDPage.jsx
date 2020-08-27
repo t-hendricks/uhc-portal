@@ -44,15 +44,11 @@ class CreateOSDPage extends React.Component {
       getLoadBalancers,
       getPersistentStorage,
       cloudProviderID,
-      product,
     } = this.props;
 
-    if (product === 'rhmi') {
-      document.title = 'Create an OpenShift cluster | Red Hat OpenShift Cluster Manager | Red Hat Managed Integration cluster';
-    } else {
-      document.title = `Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager | OpenShift Dedicated on 
-      ${cloudProviderID.toUpperCase()}`;
-    }
+    document.title = `Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager | OpenShift Dedicated on 
+    ${cloudProviderID.toUpperCase()}`;
+
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
@@ -141,13 +137,10 @@ class CreateOSDPage extends React.Component {
       );
     }
 
-    if (!organization.pending && organization.fulfilled) {
-      if ((product === 'osd' && !clustersQuota.hasOsdQuota)
-          || (product === 'rhmi' && !clustersQuota.hasRhmiQuota)) {
-        return (
-          <Redirect to="/create" />
-        );
-      }
+    if (!organization.pending && organization.fulfilled && !clustersQuota.hasOsdQuota) {
+      return (
+        <Redirect to="/create" />
+      );
     }
 
     if (!organization.pending && organization.fulfilled) {
@@ -180,23 +173,16 @@ class CreateOSDPage extends React.Component {
     ];
     const anyRequestPending = requests.some(request => request.data.pending);
 
-    let pageTitle;
     const breadcrumbs = [
       { label: 'Clusters' },
       { label: 'Create', path: '/create' },
+      { label: 'OpenShift Dedicated', path: '/create/osd' },
+      { label: cloudProviderID === 'aws' ? 'Amazon Web Services' : 'Google Cloud Platform' },
     ];
-    if (product === 'rhmi') {
-      pageTitle = 'Create a Red Hat Managed Integration Cluster';
-      breadcrumbs.push({ label: 'Red Hat Managed Integration', path: '/create/rhmi' });
-    } else {
-      pageTitle = 'Create an OpenShift Dedicated Cluster';
-      breadcrumbs.push({ label: 'OpenShift Dedicated', path: '/create/osd' });
-      breadcrumbs.push({ label: cloudProviderID === 'aws' ? 'Amazon Web Services' : 'Google Cloud Platform' });
-    }
 
     const title = (
       <PageTitle
-        title={pageTitle}
+        title="Create an OpenShift Dedicated Cluster"
         breadcrumbs={(
           <Breadcrumbs path={breadcrumbs} />
         )}
@@ -316,7 +302,6 @@ CreateOSDPage.propTypes = {
   closeModal: PropTypes.func.isRequired,
   clustersQuota: PropTypes.shape({
     hasOsdQuota: PropTypes.bool.isRequired,
-    hasRhmiQuota: PropTypes.bool.isRequired,
     hasAwsQuota: PropTypes.bool.isRequired,
     hasGcpQuota: PropTypes.bool.isRequired,
     aws: PropTypes.shape({
