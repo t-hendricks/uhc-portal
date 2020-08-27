@@ -13,6 +13,7 @@ import validators, {
   checkDisconnectedNodeCount,
   validateARN,
   checkRouteSelectors,
+  awsNumericAccountID,
 } from '../validators';
 
 test('Field is required', () => {
@@ -429,4 +430,14 @@ test('Field is a valid key value pair', () => {
   expect(checkRouteSelectors(longValStr)).toBe(maxLenValueError);
   expect(checkRouteSelectors(longKeyStr)).toBe(maxLenKeyError);
   expect(checkRouteSelectors(`someprefix/${longKeyStr}`)).toBe(maxLenKeyError);
+});
+
+test('awsNumericAccountID', () => {
+  const errStr = 'AWS account ID must be a 12 digits positive number.';
+  expect(awsNumericAccountID()).toBe('AWS account ID is required.');
+  expect(awsNumericAccountID('1')).toBe(errStr);
+  expect(awsNumericAccountID('123456789')).toBe(errStr);
+  expect(awsNumericAccountID('1e5')).toBe(errStr);
+  expect(awsNumericAccountID('-12345678901')).toBe(errStr);
+  expect(awsNumericAccountID('123456789012')).toBe(undefined);
 });

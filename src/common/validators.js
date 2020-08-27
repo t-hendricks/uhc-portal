@@ -44,6 +44,8 @@ const AWS_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
 
 const INGRESS_ROUTE_LABEL_MAX_LEN = 63;
 
+const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}/;
+
 // Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');
 
@@ -609,6 +611,16 @@ const atLeastOneRequired = fieldName => (fields) => {
   return undefined;
 };
 
+const awsNumericAccountID = (input) => {
+  if (!input) {
+    return 'AWS account ID is required.';
+  }
+  if (!AWS_NUMERIC_ACCOUNT_ID_REGEX.test(input)) {
+    return 'AWS account ID must be a 12 digits positive number.';
+  }
+  return undefined;
+};
+
 const validators = {
   required,
   checkIdentityProviderName,
@@ -666,6 +678,7 @@ export {
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
   validateARN,
+  awsNumericAccountID,
 };
 
 export default validators;
