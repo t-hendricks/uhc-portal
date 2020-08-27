@@ -324,7 +324,7 @@ EditSubscriptionSettingsDialog.propTypes = {
   subscription: PropTypes.object,
   requestState: PropTypes.object,
   isOpen: PropTypes.bool,
-  isDialog: PropTypes.bool.isRequired,
+  isDialog: PropTypes.bool,
   closeModal: PropTypes.func,
   submit: PropTypes.func,
   onClose: PropTypes.func,
@@ -334,6 +334,7 @@ EditSubscriptionSettingsDialog.propTypes = {
 
 EditSubscriptionSettingsDialog.defaultProps = {
   isOpen: false,
+  isDialog: true,
 };
 
 export default EditSubscriptionSettingsDialog;
