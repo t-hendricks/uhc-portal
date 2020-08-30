@@ -103,6 +103,39 @@ const shouldRefetchQuota = (organization) => {
   return !organization.pending && (!organization.fulfilled || now - lastFetchedQuota > TWO_MINUTES);
 };
 
+/**
+ * Used for onSubmitFail in Redux Form config.
+ */
+function scrollToFirstError(errors) {
+  const errorNodeNames = Object.keys(errors);
+  if (!errorNodeNames.length) {
+    return;
+  }
+  const errorNodes = errorNodeNames.map(name => (
+    document.querySelector(`[name^="${name}"`)
+  ));
+  const compare = (node1, node2) => {
+    const result = node1.compareDocumentPosition(node2);
+    switch (result) {
+      case (Node.DOCUMENT_POSITION_PRECEDING):
+        return 1;
+      case (Node.DOCUMENT_POSITION_FOLLOWING):
+        return -1;
+      default:
+        return 0;
+    }
+  };
+  let firstError = errorNodes[0];
+  if (errorNodes.length > 1) {
+    errorNodes.forEach((node) => {
+      if (compare(node, firstError) < 0) {
+        firstError = node;
+      }
+    });
+  }
+  setTimeout(() => firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }), 0);
+}
+
 export {
   noop,
   isValid,
@@ -115,6 +148,7 @@ export {
   trackPendo,
   strToCleanObject,
   shouldRefetchQuota,
+  scrollToFirstError,
 };
 
 export default helpers;
