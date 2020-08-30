@@ -423,7 +423,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                 name="compute_cores"
                                 required=""
                                 type="text"
-                                value=""
+                                value="0"
                               />
                               <div
                                 aria-live="polite"
@@ -866,7 +866,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                 name="compute_cores"
                                 required=""
                                 type="text"
-                                value=""
+                                value="0"
                               />
                               <div
                                 aria-live="polite"
@@ -1684,7 +1684,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                               name="compute_cores"
                                               onChange={[Function]}
                                               type="text"
-                                              value=""
+                                              value="0"
                                             >
                                               <TextInputBase
                                                 aria-label="compute cores"
@@ -1697,7 +1697,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                 onChange={[Function]}
                                                 type="text"
                                                 validated="default"
-                                                value=""
+                                                value="0"
                                               >
                                                 <input
                                                   aria-invalid={false}
@@ -1709,7 +1709,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                   readOnly={false}
                                                   required={true}
                                                   type="text"
-                                                  value=""
+                                                  value="0"
                                                 />
                                               </TextInputBase>
                                             </ForwardRef>
@@ -2249,7 +2249,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                 name="compute_cores"
                                 required=""
                                 type="text"
-                                value=""
+                                value="0"
                               />
                               <div
                                 aria-live="polite"
@@ -2701,7 +2701,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                 name="compute_cores"
                                 required=""
                                 type="text"
-                                value=""
+                                value="0"
                               />
                               <div
                                 aria-live="polite"
@@ -3159,7 +3159,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                 name="compute_cores"
                                 required=""
                                 type="text"
-                                value=""
+                                value="0"
                               />
                               <div
                                 aria-live="polite"
@@ -3826,7 +3826,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                 name="compute_cores"
                                 required=""
                                 type="text"
-                                value=""
+                                value="0"
                               />
                               <div
                                 aria-live="polite"
@@ -4299,7 +4299,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                 name="compute_cores"
                                 required=""
                                 type="text"
-                                value=""
+                                value="0"
                               />
                               <div
                                 aria-live="polite"
@@ -4789,7 +4789,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                 name="compute_cores"
                                 required=""
                                 type="text"
-                                value=""
+                                value="0"
                               />
                               <div
                                 aria-live="polite"
@@ -5686,7 +5686,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                               name="compute_cores"
                                               onChange={[Function]}
                                               type="text"
-                                              value=""
+                                              value="0"
                                             >
                                               <TextInputBase
                                                 aria-label="compute cores"
@@ -5699,7 +5699,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                 onChange={[Function]}
                                                 type="text"
                                                 validated="default"
-                                                value=""
+                                                value="0"
                                               >
                                                 <input
                                                   aria-invalid={false}
@@ -5711,7 +5711,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                   readOnly={false}
                                                   required={true}
                                                   type="text"
-                                                  value=""
+                                                  value="0"
                                                 />
                                               </TextInputBase>
                                             </ForwardRef>

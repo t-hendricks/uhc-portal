@@ -18,14 +18,10 @@ class UnitFields extends React.Component {
 
     componentDidMount() {
       const { subscription } = this.props;
-      if (subscription.status && subscription.status !== 'Disconnected') {
-        if (subscription.system_units === subscriptionSystemUnits.CORES_VCPU) {
-          this.setState({ computeCoresValue: subscription.cpu_total || 0 });
-        }
-        if (subscription.system_units === subscriptionSystemUnits.SOCKETS) {
-          this.setState({ socketsValue: subscription.socket_total || 0 });
-        }
-      }
+      this.setState({
+        computeCoresValue: subscription.cpu_total || '0',
+        socketsValue: subscription.socket_total || '0',
+      });
     }
 
     changeHandler = (value, event) => {
@@ -82,13 +78,13 @@ class UnitFields extends React.Component {
         isDisabled,
         subscription,
       } = this.props;
-      const { computeCoresValue, socketsValue } = this.state;
 
+      const { computeCoresValue, socketsValue } = this.state;
       const { SYSTEM_UNITS } = subscriptionSettings;
       const { CORES_VCPU, SOCKETS } = subscriptionSystemUnits;
 
       // changing units is disabled for connected cluster
-      const isTextDisabled = !subscription.id ? false : subscription.status !== 'Disconnected';
+      const isUnitsNumDisabled = !!subscription.id && subscription.status !== 'Disconnected';
 
       return (
         <>
@@ -122,7 +118,7 @@ class UnitFields extends React.Component {
               isDisabled={
                 input.value !== CORES_VCPU
                  || isDisabled
-                 || isTextDisabled
+                 || isUnitsNumDisabled
               }
               type="text"
               onChange={(value, event) => this.changeNumericInputHandler(value, event, CORES_VCPU)}
@@ -159,7 +155,7 @@ class UnitFields extends React.Component {
               isDisabled={
                 input.value !== SOCKETS
                 || isDisabled
-                || isTextDisabled
+                || isUnitsNumDisabled
               }
               type="text"
               onChange={(value, event) => this.changeNumericInputHandler(value, event, SOCKETS)}
