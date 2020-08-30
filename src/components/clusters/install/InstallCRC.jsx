@@ -32,7 +32,7 @@ class InstallCRC extends Component {
     );
     return (
       <>
-        <PageTitle title="Install OpenShift 4 on a laptop with CodeReady Containers" breadcrumbs={breadcrumbs} />
+        <PageTitle title="Install OpenShift on a laptop with CodeReady Containers" breadcrumbs={breadcrumbs} />
         <PageSection>
           <InstructionsCRC token={token} />
         </PageSection>
