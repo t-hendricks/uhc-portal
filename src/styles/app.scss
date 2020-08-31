@@ -744,8 +744,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   padding-top: 2px;
 }
 
-.ocm-page {
-  margin: 24px;
+.ocm-page.with-helptext {
+  padding-bottom: 6px;
 }
 
 .bottom-alert {
@@ -1529,5 +1529,25 @@ div.pf-c-alert div.pf-c-alert__icon {
   }
   .pf-c-expandable-section__content {
     text-align: center;
+  }
+}
+
+.title-with-link {
+  .show-on-hover {
+    display: none;
+  }
+
+  &:hover .show-on-hover {
+    display: block;
+  }
+
+  svg {
+    vertical-align: -0.5em !important;
+  }
+}
+
+.ocp-infrastructure {
+  .pf-l-stack__item:not(:last-child) {
+    margin-bottom: 24px;
   }
 }
