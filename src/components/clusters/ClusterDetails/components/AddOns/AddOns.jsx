@@ -145,9 +145,13 @@ class AddOns extends React.Component {
 
     // Show install button if not installed
     if (!isInstalled(addOn, clusterAddOns)) {
-      if (!hasQuota(addOn, cluster, organization, quota)) {
+      if (!hasQuota(addOn, cluster, organization, quota) || !cluster.canEdit) {
         return (
-          <Tooltip content={noQuotaTooltip}>
+          <Tooltip
+            content={!cluster.canEdit
+              ? 'You do not have permission to install add ons. Only cluster owners and organization administrators can install add ons.'
+              : noQuotaTooltip}
+          >
             <div className="pf-u-display-inline-block">
               <Button isDisabled>
                 Install
@@ -156,6 +160,7 @@ class AddOns extends React.Component {
           </Tooltip>
         );
       }
+
       return (
         <Button
           variant="secondary"
