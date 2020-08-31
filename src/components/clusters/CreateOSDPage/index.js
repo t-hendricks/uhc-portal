@@ -10,6 +10,7 @@ import getPersistentStorageValues from '../../../redux/actions/persistentStorage
 import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
+import { scrollToFirstError } from '../../../common/helpers';
 import {
   hasOSDQuotaSelector,
   hasAwsQuotaSelector,
@@ -23,6 +24,7 @@ const GCP_DEFAULT_REGION = 'us-east1';
 
 const reduxFormConfig = {
   form: 'CreateCluster',
+  onSubmitFail: scrollToFirstError,
 };
 
 const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
