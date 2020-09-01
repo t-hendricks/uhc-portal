@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
+import get from 'lodash/get';
 import RegisterCluster from './RegisterCluster';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
@@ -17,22 +18,26 @@ const reduxFormConfig = {
 
 const reduxFormRegisterCluster = reduxForm(reduxFormConfig)(RegisterCluster);
 
-const mapStateToProps = state => ({
-  canSubscribeOCP: hasOrgLevelsubscribeOCPCapability(state),
-  registerClusterResponse: state.clusters.createdCluster,
-  isOpen: shouldShowModal(state, 'register-cluster-error'),
-  initialValues: {
-    cluster_id: '',
-    display_name: '',
-    web_console_url: '',
-    support_level: '',
-    service_level: '',
-    usage: '',
-    system_units: subscriptionSystemUnits.CORES_VCPU,
-    cpu_total: '',
-    socket_total: '',
-  },
-});
+const mapStateToProps = (state) => {
+  const canSubscribeOCP = hasOrgLevelsubscribeOCPCapability(state);
+  return ({
+    canSubscribeOCP,
+    registerClusterResponse: state.clusters.createdCluster,
+    isOpen: shouldShowModal(state, 'register-cluster-error'),
+    quotaRequstFullfilled: get(state, 'userProfile.organization.fulfilled', false),
+    initialValues: {
+      cluster_id: '',
+      display_name: '',
+      web_console_url: '',
+      support_level: '',
+      service_level: '',
+      usage: '',
+      system_units: canSubscribeOCP ? subscriptionSystemUnits.CORES_VCPU : '',
+      cpu_total: '',
+      socket_total: '',
+    },
+  });
+};
 
 const mapDispatchToProps = dispatch => ({
   closeModal: (name) => { dispatch(closeModal(name)); },

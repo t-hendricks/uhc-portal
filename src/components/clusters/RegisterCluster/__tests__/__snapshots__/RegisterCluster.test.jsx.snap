@@ -10,13 +10,13 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
             "label": "Clusters",
           },
           Object {
-            "label": "Cluster registration",
+            "label": "Register disconnected cluster",
           },
         ]
       }
     />
     <PageHeaderTitle
-      title="Cluster registration"
+      title="Register disconnected cluster"
     />
   </PageHeader>
   <PageSection>
@@ -28,6 +28,15 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
           <GridItem
             span={5}
           >
+            <TextContent
+              id="register-cluster-top-text"
+            >
+              <Text
+                component="p"
+              >
+                Use this form to register clusters that are not connected to OpenShift Cluster Manager. To edit subscription settings for clusters that are already connected to OpenShift Cluster Manager, the cluster owner or organization administrator should choose the "Edit subscription settings" action for that cluster.
+              </Text>
+            </TextContent>
             <Form
               className="subscription-settings form"
               onSubmit={[MockFunction]}
@@ -62,7 +71,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
                 headingLevel="h4"
                 size="xl"
               >
-                Subscription Settings
+                Subscription settings
               </Title>
               <TextContent>
                 <Text
@@ -72,6 +81,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
                 </Text>
               </TextContent>
               <EditSubscriptionSettingsDialog
+                hideSubscriptionSettings={false}
                 isDialog={false}
                 isOpen={false}
                 onChangeNumericInputCallback={[Function]}
@@ -121,13 +131,13 @@ exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`]
             "label": "Clusters",
           },
           Object {
-            "label": "Cluster registration",
+            "label": "Register disconnected cluster",
           },
         ]
       }
     />
     <PageHeaderTitle
-      title="Cluster registration"
+      title="Register disconnected cluster"
     />
   </PageHeader>
   <PageSection>
@@ -139,6 +149,15 @@ exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`]
           <GridItem
             span={5}
           >
+            <TextContent
+              id="register-cluster-top-text"
+            >
+              <Text
+                component="p"
+              >
+                Use this form to register clusters that are not connected to OpenShift Cluster Manager. To edit subscription settings for clusters that are already connected to OpenShift Cluster Manager, the cluster owner or organization administrator should choose the "Edit subscription settings" action for that cluster.
+              </Text>
+            </TextContent>
             <Form
               className="subscription-settings form"
               onSubmit={[MockFunction]}
@@ -168,6 +187,31 @@ exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`]
                 name="web_console_url"
                 type="text"
                 validate={[Function]}
+              />
+              <Title
+                headingLevel="h4"
+                size="xl"
+              >
+                Subscription settings
+              </Title>
+              <TextContent>
+                <Text
+                  component="p"
+                >
+                  Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
+                </Text>
+              </TextContent>
+              <EditSubscriptionSettingsDialog
+                hideSubscriptionSettings={true}
+                isDialog={false}
+                isOpen={false}
+                onChangeNumericInputCallback={[Function]}
+                onChangeSupportLevelCallback={[Function]}
+                subscription={
+                  Object {
+                    "support_level": "Eval",
+                  }
+                }
               />
             </Form>
           </GridItem>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get, findIndex } from 'lodash';
 import { Field } from 'redux-form';
 import {
-  Form, TextContent, Text, TextVariants, FormGroup,
+  Form, TextContent, Text, TextVariants, FormGroup, Tooltip, TooltipPosition,
 } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
@@ -190,6 +190,7 @@ class EditSubscriptionSettingsDialog extends Component {
       isDialog,
       onChangeNumericInputCallback,
       subscription,
+      hideSubscriptionSettings,
     } = this.props;
     const radioGroupClassName = 'subscription-settings radio-group';
     const { [SUPPORT_LEVEL]: supportLevel, [SYSTEM_UNITS]: systemUnits } = this.state;
@@ -198,7 +199,9 @@ class EditSubscriptionSettingsDialog extends Component {
       && supportLevel !== STANDARD
       && supportLevel !== SELF_SUPPORT;
 
-    const reduxFormFields = (
+    const tooltipText = 'You cannot edit subscription settings because your organization does not have any OpenShift subscriptions. Contact sales to purchase OpenShift.';
+
+    const subscriptionFieldsRegisterNewCluster = (
       <>
         <FormGroup className={radioGroupClassName} label="Choose the support type for this cluster.">
           <Field
@@ -207,6 +210,7 @@ class EditSubscriptionSettingsDialog extends Component {
             defaultValue={EVAL}
             options={this.options[SUPPORT_LEVEL]}
             onChangeCallback={this.handleChange}
+            isDisabled={hideSubscriptionSettings}
           />
         </FormGroup>
         <FormGroup className={radioGroupClassName} label="How do you intend to use this cluster?">
@@ -215,7 +219,7 @@ class EditSubscriptionSettingsDialog extends Component {
             name={USAGE}
             defaultValue={PRODUCTION}
             options={this.options[USAGE]}
-            isDisabled={isDisabled}
+            isDisabled={isDisabled || hideSubscriptionSettings}
             onChangeCallback={this.handleChange}
           />
         </FormGroup>
@@ -225,7 +229,7 @@ class EditSubscriptionSettingsDialog extends Component {
             name={SERVICE_LEVEL}
             defaultValue={L1_L3}
             options={this.options[SERVICE_LEVEL]}
-            isDisabled={isDisabled}
+            isDisabled={isDisabled || hideSubscriptionSettings}
             onChangeCallback={this.handleChange}
           />
         </FormGroup>
@@ -234,7 +238,7 @@ class EditSubscriptionSettingsDialog extends Component {
             component={UnitFields}
             name={SYSTEM_UNITS}
             defaultValue={CORES_VCPU}
-            isDisabled={isDisabled}
+            isDisabled={isDisabled || hideSubscriptionSettings}
             onChangeCallback={this.handleChange}
             onChangeNumericInputCallback={onChangeNumericInputCallback}
           />
@@ -242,7 +246,7 @@ class EditSubscriptionSettingsDialog extends Component {
       </>
     );
 
-    const fields = (
+    const editSubscriptionFields = (
       <>
         <ReduxFormRadioGroup
           name={SUPPORT_LEVEL}
@@ -285,9 +289,17 @@ class EditSubscriptionSettingsDialog extends Component {
     );
 
     if (!isDialog) {
-      return reduxFormFields;
+      return hideSubscriptionSettings
+        ? (
+          <Tooltip
+            content={tooltipText}
+            position={TooltipPosition.auto}
+          >
+            <div>{subscriptionFieldsRegisterNewCluster}</div>
+          </Tooltip>
+        )
+        : subscriptionFieldsRegisterNewCluster;
     }
-
 
     return isOpen && isDialog && (
     <Modal
@@ -313,7 +325,7 @@ class EditSubscriptionSettingsDialog extends Component {
           your cluster is consuming the correct type of subscription.
           </Text>
         </TextContent>
-        {fields}
+        {editSubscriptionFields}
       </Form>
     </Modal>
     );
@@ -324,7 +336,8 @@ EditSubscriptionSettingsDialog.propTypes = {
   subscription: PropTypes.object,
   requestState: PropTypes.object,
   isOpen: PropTypes.bool,
-  isDialog: PropTypes.bool,
+  hideSubscriptionSettings: PropTypes.bool,
+  isDialog: PropTypes.bool.isRequired,
   closeModal: PropTypes.func,
   submit: PropTypes.func,
   onClose: PropTypes.func,
@@ -334,7 +347,7 @@ EditSubscriptionSettingsDialog.propTypes = {
 
 EditSubscriptionSettingsDialog.defaultProps = {
   isOpen: false,
-  isDialog: true,
+  hideSubscriptionSettings: true,
 };
 
 export default EditSubscriptionSettingsDialog;

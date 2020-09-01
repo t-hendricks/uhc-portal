@@ -3,6 +3,7 @@
 exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
 <EditSubscriptionSettingsDialog
   closeModal={[MockFunction]}
+  hideSubscriptionSettings={true}
   isDialog={true}
   isOpen={true}
   onClose={[MockFunction]}
@@ -1828,6 +1829,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
 exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occurs 1`] = `
 <EditSubscriptionSettingsDialog
   closeModal={[MockFunction]}
+  hideSubscriptionSettings={true}
   isDialog={true}
   isOpen={true}
   onClose={[MockFunction]}
