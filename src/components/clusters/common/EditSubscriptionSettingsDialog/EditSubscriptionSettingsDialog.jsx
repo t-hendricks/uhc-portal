@@ -108,7 +108,7 @@ class EditSubscriptionSettingsDialog extends Component {
           { label: 'Standard', value: STANDARD },
           { label: 'Self-support', value: SELF_SUPPORT },
         ];
-        if (value === EVAL) {
+        if (value === EVAL || !subscription.id) {
           options.push({
             label: 'Self-support 60-day evaluation',
             value: EVAL,
@@ -209,8 +209,8 @@ class EditSubscriptionSettingsDialog extends Component {
             name={SUPPORT_LEVEL}
             defaultValue={EVAL}
             options={this.options[SUPPORT_LEVEL]}
-            onChangeCallback={this.handleChange}
             isDisabled={hideSubscriptionSettings}
+            onChangeCallback={this.handleSupportlevelChange}
           />
         </FormGroup>
         <FormGroup className={radioGroupClassName} label="How do you intend to use this cluster?">
@@ -348,6 +348,7 @@ EditSubscriptionSettingsDialog.propTypes = {
 EditSubscriptionSettingsDialog.defaultProps = {
   isOpen: false,
   hideSubscriptionSettings: true,
+  subscription: {},
 };
 
 export default EditSubscriptionSettingsDialog;
