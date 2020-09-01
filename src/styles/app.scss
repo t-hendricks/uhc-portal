@@ -1508,3 +1508,22 @@ div.pf-c-alert div.pf-c-alert__icon {
 #copyPullSecret {
   margin: 10px;
 }
+
+#not-found {
+  #Icon404 {
+    height: 10vh;
+  }
+}
+
+.pf-c-empty-state__icon {
+  color: var(--pf-global--danger-color--100);
+}
+
+#error-expand {
+  .pf-c-expandable-section__toggle {
+    margin: auto;
+  }
+  .pf-c-expandable-section__content {
+    text-align: center;
+  }
+}

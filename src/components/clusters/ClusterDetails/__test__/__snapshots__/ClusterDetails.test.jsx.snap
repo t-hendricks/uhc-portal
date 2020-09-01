@@ -906,8 +906,8 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
 `;
 
 exports[`<ClusterDetails /> Error should render error message 1`] = `
-<EmptyState>
-  <ErrorBox
+<Fragment>
+  <Unavailable
     message="Error retrieving cluster details"
     response={
       Object {
@@ -919,7 +919,7 @@ exports[`<ClusterDetails /> Error should render error message 1`] = `
       }
     }
   />
-</EmptyState>
+</Fragment>
 `;
 
 exports[`<ClusterDetails /> Loading should render loading modal when pending 1`] = `

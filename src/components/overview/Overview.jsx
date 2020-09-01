@@ -24,6 +24,7 @@ import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionS
 import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
 import TopOverviewSection from './TopOverviewSection/TopOverviewSection';
 import { createOverviewQueryObject } from '../../common/queryHelpers';
+import Unavailable from '../common/Unavailable';
 
 class Overview extends Component {
   componentDidMount() {
@@ -76,6 +77,22 @@ class Overview extends Component {
     const isError = (summaryDashboard.error || unhealthyClusters.error);
     const isPending = (!summaryDashboard.fulfilled || summaryDashboard.pending
        || !unhealthyClusters.fulfilled || unhealthyClusters.pending);
+
+    if (isError) {
+      let errorSource;
+      if (summaryDashboard.error) {
+        errorSource = summaryDashboard;
+      } else {
+        errorSource = unhealthyClusters;
+      }
+      const { errorMessage, errorCode, operationID } = errorSource;
+      const response = { errorMessage, errorCode, operationID };
+      return (
+        <Unavailable
+          response={response}
+        />
+      );
+    }
 
     // Show spinner if while waiting for responses.
     if (isPending && !isError) {
