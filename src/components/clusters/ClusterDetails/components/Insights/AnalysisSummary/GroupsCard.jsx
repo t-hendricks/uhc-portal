@@ -43,7 +43,7 @@ const mouseOverClickMutation = props => ({
 });
 
 const GroupsCard = ({ insightsData, groups, groupClicked }) => {
-  const groupedRulesByGroups = groupRulesByGroups(insightsData.data, [...groups]);
+  const groupedRulesByGroups = groupRulesByGroups(insightsData.data || [], [...groups]);
 
   return (
     <Card className="insights-analysis-card group-card">
