@@ -32,7 +32,9 @@ class RadioButtons extends React.Component {
     const newValue = event.target.value;
 
     input.onChange(newValue, event);
-    onChangeCallback(input.name, newValue);
+    if (onChangeCallback) {
+      onChangeCallback(input.name, newValue);
+    }
   };
 
   render() {
