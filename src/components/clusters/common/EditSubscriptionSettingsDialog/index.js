@@ -17,7 +17,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   submit: (subscriptionID, updates) => {
-    dispatch(editSubscriptionSettings(subscriptionID, updates));
+    const requestData = updates;
+    if (updates.socket_total) {
+      requestData.socket_total = parseInt(updates.socekt_total, 10);
+    }
+    if (updates.cpu_total) {
+      requestData.cpu_total = parseInt(updates.cpu_total, 10);
+    }
+    dispatch(editSubscriptionSettings(subscriptionID, requestData));
   },
   closeModal: () => {
     dispatch(clearEditSubscriptionSettingsResponse());
