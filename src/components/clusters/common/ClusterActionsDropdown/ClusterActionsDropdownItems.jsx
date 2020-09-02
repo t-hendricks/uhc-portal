@@ -68,15 +68,6 @@ function actionResolver(
     return isClusterReady ? managedEditProps : disabledManagedEditProps;
   };
 
-  const getEditDisconnectedClusterProps = () => (
-    {
-      ...baseProps,
-      title: 'Edit cluster registration',
-      key: getKey('editdisconnected'),
-      onClick: () => openModal('edit-disconnected-cluster', cluster),
-    }
-  );
-
   const getEditDisplayNameProps = () => {
     const editDisplayNameBaseProps = {
       ...baseProps,
@@ -190,6 +181,7 @@ function actionResolver(
       title: !cluster.cluster_admin_enabled ? 'Allow cluster-admin access' : 'Remove cluster-admin access',
       key: getKey('allowclusteradmin'),
       onClick: () => openModal('allow-cluster-admin', cluster),
+      ...isUninstallingProps,
     }
   );
 
@@ -200,7 +192,6 @@ function actionResolver(
   const deleteClusterItemProps = getDeleteItemProps();
   const archiveClusterItemProps = getArchiveClusterProps();
   const unarchiveClusterItemProps = getUnarchiveClusterProps();
-  const editDisconnectedItemProps = getEditDisconnectedClusterProps();
   const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
   const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
   const ToggleClusterAdminAccessDialogProps = getToggleClusterAdminAccessDialogProps();
@@ -213,7 +204,6 @@ function actionResolver(
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && isArchived;
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
-  const showEditDisconnected = cluster.canEdit && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED);
   const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && canSubscribeOCP;
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership && get(cluster, 'subscription.plan.id', false) === subscriptionPlans.OCP
     && ![subscriptionStatuses.ARCHIVED, subscriptionStatuses.DISCONNECTED].includes(get(cluster, 'subscription.status', subscriptionStatuses.ARCHIVED));
@@ -227,7 +217,6 @@ function actionResolver(
     showDelete && deleteClusterItemProps,
     showArchive && archiveClusterItemProps,
     showUnarchive && unarchiveClusterItemProps,
-    showEditDisconnected && editDisconnectedItemProps,
     showEditSubscriptionSettings && editSubscriptionSettingsProps,
     showTransferClusterOwnership && transferClusterOwnershipProps,
     showToggleClusterAdmin && ToggleClusterAdminAccessDialogProps,

@@ -28,11 +28,13 @@ class RadioButtons extends React.Component {
   }
 
   changeHandler = (value, event) => {
-    const {
-      input,
-    } = this.props;
+    const { input, onChangeCallback } = this.props;
+    const newValue = event.target.value;
 
-    input.onChange(event.target.value, event);
+    input.onChange(newValue, event);
+    if (onChangeCallback) {
+      onChangeCallback(input.name, newValue);
+    }
   };
 
   render() {
@@ -40,7 +42,9 @@ class RadioButtons extends React.Component {
       options,
       className,
       input,
+      isDisabled,
     } = this.props;
+
     return (
       options.map((option) => {
         const button = (
@@ -54,7 +58,7 @@ class RadioButtons extends React.Component {
             aria-label={option.ariaLabel || option.label}
             label={option.label}
             onChange={this.changeHandler}
-            isDisabled={option.disabled}
+            isDisabled={option.disabled || isDisabled}
           />
         );
         if (option.tooltipText) {
@@ -71,6 +75,8 @@ class RadioButtons extends React.Component {
 
 RadioButtons.propTypes = {
   defaultValue: PropTypes.string.isRequired,
+  isDisabled: PropTypes.bool,
+  onChangeCallback: PropTypes.func,
   input: PropTypes.shape({
     name: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,

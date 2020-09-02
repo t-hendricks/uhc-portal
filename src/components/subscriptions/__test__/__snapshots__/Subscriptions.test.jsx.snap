@@ -141,8 +141,8 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
               "title": "N/A",
             },
             "Standard",
-            10,
-            15,
+            "",
+            "10 of 15",
             Object {
               "title": <ResourcesAlmostFullIcon
                 color="currentColor"
@@ -158,8 +158,8 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
               "title": "N/A",
             },
             "Standard",
-            15,
-            15,
+            "",
+            "15 of 15",
             Object {
               "title": <ResourcesFullIcon
                 color="currentColor"
@@ -175,8 +175,8 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
               "title": "N/A",
             },
             "Standard",
-            0,
-            4,
+            "",
+            "0 of 4",
             Object {
               "title": <OutlinedCircleIcon
                 color="currentColor"
@@ -191,9 +191,9 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
             Object {
               "title": "N/A",
             },
-            "CSS",
-            0,
-            5,
+            "Any",
+            "",
+            "0 of 5",
             Object {
               "title": <OutlinedCircleIcon
                 color="currentColor"
@@ -226,17 +226,12 @@ exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
             [Function],
           ],
         },
+        "Cluster type",
         Object {
           "props": Object {
             "className": "quota-table-used",
           },
           "title": "Used",
-        },
-        Object {
-          "props": Object {
-            "className": "quota-table-max",
-          },
-          "title": "Max",
         },
         "Capacity",
       ]

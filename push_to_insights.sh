@@ -57,6 +57,7 @@ fi
 # The version should be the short git hash:
 VERSION="$(git log --pretty=format:'%h' -n 1)"
 SUBJECT="$(git log --pretty=format:'%s' -n 1)"
+COMMIT_DATE="$(git log --pretty=format:'%ci' -n 1)"
 
 # Save the push key:
 rm --force key
@@ -118,9 +119,19 @@ function push_build {
     --archive \
     --delete \
     --exclude=.git \
-    --exclude=58231b16fdee45a03a4ee3cf94a9f2c3 \
     build/openshift/ \
     target/
+
+  # Copy the Insights deployment jenkins file to the target
+  cp insights-Jenkinsfile target/58231b16fdee45a03a4ee3cf94a9f2c3
+
+  # Populate the app.info.json file with build information
+  echo "{
+    \"app_name\": \"OCM\",
+    \"src_hash\": \"$VERSION\",
+    \"src_branch\": \"$branch\",
+    \"commit_date\": \"$COMMIT_DATE\",
+  }" > target/app.info.json
 
   # Create a commit for the new build and push it:
   cat > message <<.
@@ -157,27 +168,27 @@ yarn install
 
 if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     echo "running staging push"
-    # staging branch available on https://qaprodauth.cloud.redhat.com/openshift
+    echo "staging branch is available on https://qaprodauth.cloud.redhat.com/openshift"
     rm -rf build
-    yarn build --mode=production --staging="true"
+    yarn build --mode=production --api-env="staging"
     push_build "qa-stable"
 
     echo "running staging (qa-beta) push"
-    # staging branch available on https://qaprodauth.cloud.redhat.com/beta/openshift
+    echo "staging branch is available on https://qaprodauth.cloud.redhat.com/beta/openshift"
     rm -rf build
-    yarn build --mode=production --beta="true" --staging="true"
+    yarn build --mode=production --beta="true" --api-env="staging"
     push_build "qa-beta"
 elif [ "$1" == "candidate" ]; then
     echo "running candidate push"
-    # Candidate branch available on https://cloud.redhat.com/beta/openshift
+    echo "Candidate branch is available on https://cloud.redhat.com/beta/openshift"
     rm -rf build
-    yarn build --mode=production --beta="true" --staging="false"
+    yarn build --mode=production --beta="true" --api-env="production"
     push_build "prod-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
-    # stable branch available on https://cloud.redhat.com/openshift
+    echo "stable branch is available on https://cloud.redhat.com/openshift"
     rm -rf build
-    yarn build --mode=production --beta="false" --staging="false"
+    yarn build --mode=production --beta="false" --api-env="production"
     push_build "prod-stable"
 else
     echo "mode (first param) must be one of: staging / candidate / stable"

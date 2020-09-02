@@ -63,7 +63,9 @@ const mouseOverClickMutation = props => ({
 });
 
 const TotalRiskCard = ({ insightsData, batteryClicked }) => {
-  const filteredData = insightsData.data.filter(val => !val.disabled);
+  const filteredData = insightsData.data
+    ? insightsData.data.filter(val => !val.disabled)
+    : [];
   const groupedRules = groupRulesByRisk(filteredData);
   const issueCount = filteredData.length;
   const lastChecked = get(insightsData, 'meta.last_checked_at', 0);

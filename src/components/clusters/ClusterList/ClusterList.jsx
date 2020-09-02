@@ -26,7 +26,6 @@ import {
 import {
   Button,
   Card,
-  EmptyState,
   PageSection,
   Toolbar,
   ToolbarItem,
@@ -43,7 +42,7 @@ import ClusterListTable from './components/ClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
-import ErrorBox from '../../common/ErrorBox';
+import Unavailable from '../../common/Unavailable';
 
 import ScaleClusterDialog from '../common/ScaleClusterDialog';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
@@ -53,7 +52,6 @@ import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
 import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
-import EditDisconnectedCluster from '../common/EditDisconnectedCluster';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
@@ -122,6 +120,8 @@ class ClusterList extends Component {
   render() {
     const {
       error,
+      errorCode,
+      errorDetails,
       valid,
       pending,
       clusters,
@@ -154,15 +154,15 @@ class ClusterList extends Component {
           {pageHeader}
           <PageSection>
             <div data-ready>
-              <EmptyState>
-                <ErrorBox
-                  message="Error retrieving clusters"
-                  response={{
-                    errorMessage,
-                    operationID,
-                  }}
-                />
-              </EmptyState>
+              <Unavailable
+                message="Error retrieving clusters"
+                response={{
+                  errorMessage,
+                  operationID,
+                  errorCode,
+                  errorDetails,
+                }}
+              />
             </div>
           </PageSection>
         </>
@@ -275,10 +275,9 @@ class ClusterList extends Component {
               />
               <EditDisplayNameDialog onClose={invalidateClusters} />
               <EditConsoleURLDialog onClose={invalidateClusters} />
-              <EditSubscriptionSettingsDialog onClose={invalidateClusters} />
               <TransferClusterOwnershipDialog onClose={invalidateClusters} />
+              <EditSubscriptionSettingsDialog onClose={invalidateClusters} isDialog />
               <ScaleClusterDialog onClose={invalidateClusters} />
-              <EditDisconnectedCluster onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
               <UnarchiveClusterDialog onClose={invalidateClusters} />
               <DeleteClusterDialog onClose={(shouldRefresh) => {
@@ -307,6 +306,8 @@ ClusterList.propTypes = {
     PropTypes.node,
     PropTypes.element,
   ]).isRequired,
+  errorDetails: PropTypes.array,
+  errorCode: PropTypes.number,
   pending: PropTypes.bool.isRequired,
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,

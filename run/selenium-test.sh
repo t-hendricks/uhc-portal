@@ -61,3 +61,6 @@ CUCUMBER_COMMAND=(
                       --env BUSHSLICER_DEFAULT_ENVIRONMENT \
                       $SELENIUM_TESTS_IMAGE \
                       "${CUCUMBER_COMMAND[@]}"
+
+# now run javascript tests
+yarn run wdio 

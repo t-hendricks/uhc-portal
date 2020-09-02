@@ -24,7 +24,6 @@ import { Link } from 'react-router-dom';
 
 import {
   Card,
-  EmptyState,
   Split,
   SplitItem,
   PageSection,
@@ -37,7 +36,7 @@ import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
 import Breadcrumbs from '../common/Breadcrumbs';
 
-import ErrorBox from '../../common/ErrorBox';
+import Unavailable from '../../common/Unavailable';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
@@ -92,6 +91,7 @@ class ArchivedClusterList extends Component {
   render() {
     const {
       error,
+      errorCode,
       valid,
       pending,
       clusters,
@@ -121,15 +121,14 @@ class ArchivedClusterList extends Component {
     if (error && !size(clusters)) {
       return (
         <PageSection>
-          <EmptyState>
-            <ErrorBox
-              message="Error retrieving archived clusters"
-              response={{
-                errorMessage,
-                operationID,
-              }}
-            />
-          </EmptyState>
+          <Unavailable
+            message="Error retrieving archived clusters"
+            response={{
+              errorMessage,
+              operationID,
+              errorCode,
+            }}
+          />
         </PageSection>
       );
     }
@@ -217,6 +216,7 @@ ArchivedClusterList.propTypes = {
   valid: PropTypes.bool.isRequired,
   clusters: PropTypes.array.isRequired,
   error: PropTypes.bool.isRequired,
+  errorCode: PropTypes.number,
   errorMessage: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,

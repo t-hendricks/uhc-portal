@@ -2,11 +2,10 @@ import { connect } from 'react-redux';
 import CreateClusterPage from './CreateClusterPage';
 import { modalActions } from '../../common/Modal/ModalActions';
 import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
-import { hasOSDQuotaSelector, hasRHMIQuotaSelector } from './quotaSelector';
+import { hasOSDQuotaSelector } from './quotaSelector';
 
 const mapStateToProps = state => ({
   hasOSDQuota: hasOSDQuotaSelector(state),
-  hasRHMIQuota: hasRHMIQuotaSelector(state),
   organization: state.userProfile.organization,
 });
 

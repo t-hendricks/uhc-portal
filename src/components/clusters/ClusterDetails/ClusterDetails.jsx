@@ -19,7 +19,7 @@ import get from 'lodash/get';
 import has from 'lodash/has';
 import intersection from 'lodash/intersection';
 
-import { EmptyState, PageSection, TabContent } from '@patternfly/react-core';
+import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
@@ -41,15 +41,14 @@ import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDi
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 
-import ErrorBox from '../../common/ErrorBox';
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 import clusterStates from '../common/clusterStates';
-import EditDisconnectedClusterDialog from '../common/EditDisconnectedCluster';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
+import Unavailable from '../../common/Unavailable';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -296,10 +295,10 @@ class ClusterDetails extends Component {
     const isPending = ((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error);
 
     const errorState = () => (
-      <EmptyState>
-        <ErrorBox message="Error retrieving cluster details" response={clusterDetails} />
+      <>
+        <Unavailable message="Error retrieving cluster details" response={clusterDetails} />
         {isPending && <Spinner />}
-      </EmptyState>
+      </>
     );
 
     if (isPending) {
@@ -380,7 +379,7 @@ class ClusterDetails extends Component {
             addOnsTabRef={this.addOnsTabRef}
             networkingTabRef={this.networkingTabRef}
             insightsTabRef={this.insightsTabRef}
-            hasIssues={hasIssues}
+            hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
           />
         </ClusterDetailsTop>
         <TabContent
@@ -473,8 +472,8 @@ class ClusterDetails extends Component {
         <EditDisplayNameDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
         <EditConsoleURLDialog onClose={onDialogClose} />
-        <EditSubscriptionSettingsDialog onClose={onDialogClose} />
         <TransferClusterOwnershipDialog onClose={onDialogClose} />
+        <EditSubscriptionSettingsDialog onClose={onDialogClose} isDialog />
         <ArchiveClusterDialog onClose={onDialogClose} />
         <ToggleClusterAdminAccessDialog onClose={onDialogClose} />
         <DeleteClusterDialog onClose={(shouldRefresh) => {
@@ -491,7 +490,6 @@ class ClusterDetails extends Component {
           refreshParent={this.refreshIDP}
         />
         <DeleteIDPDialog refreshParent={this.refreshIDP} />
-        <EditDisconnectedClusterDialog onClose={onDialogClose} />
         <AddGrantModal clusterID={cluster.id} />
       </PageSection>
     );

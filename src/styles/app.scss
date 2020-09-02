@@ -448,6 +448,10 @@ p.notfound {
   margin-right: 20px;
 }
 
+#register-cluster-top-text{
+  margin-bottom: 20px;
+}
+
 .top-row {
   background-color: var(--pf-global--BackgroundColor--100);
   margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
@@ -647,12 +651,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 #cloud-provider-selection > a {
   flex: 1;
   margin: 20px;
-}
-
-.infra-card-button {
-  white-space: normal;
-  --pf-c-button--m-link--Color: var(--pf-global--Color--100);
-  --pf-c-button--m-link--hover--Color: var(--pf-global--Color--100);
 }
 
 .infra-card, a.infra-card, .ocm-page a.infra-card {
@@ -1127,6 +1125,17 @@ div.pf-c-alert.archived-cluster-toast {
       position: absolute;
       margin-left: -20px;
     }
+
+    .units-numeric-input .pf-c-form__label-text::before {
+      counter-increment: none;
+      content: none;
+    }
+    .units-numeric-input{
+      margin-left: 23px;
+    }
+    #compute-cores-input {
+      margin-bottom: 12px;
+    }
   }
   &.expired-eval-option {
     color: var(--pf-global--danger-color--100);
@@ -1144,6 +1153,8 @@ div.pf-c-alert.archived-cluster-toast {
     fill: var(--pf-global--danger-color--100);
   }
 }
+
+
 
 button:focus {
   &.install--copy-pull-secret::after {
@@ -1496,4 +1507,27 @@ div.pf-c-alert div.pf-c-alert__icon {
   color: var(--pf-global--link--Color);
   text-decoration: var(--pf-global--link--TextDecoration);
   margin: 0;
+}
+
+#copyPullSecret {
+  margin: 10px;
+}
+
+#not-found {
+  #Icon404 {
+    height: 10vh;
+  }
+}
+
+.pf-c-empty-state__icon {
+  color: var(--pf-global--danger-color--100);
+}
+
+#error-expand {
+  .pf-c-expandable-section__toggle {
+    margin: auto;
+  }
+  .pf-c-expandable-section__content {
+    text-align: center;
+  }
 }

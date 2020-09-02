@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ExternalLink /> should render 1`] = `
+<a
+  href="http://example.com"
+  rel="noreferrer noopener"
+  target="_blank"
+>
+  Hello World
+   
+  <ExternalLinkAltIcon
+    color="#0066cc"
+    noVerticalAlign={false}
+    size="sm"
+  />
+</a>
+`;
