@@ -5,7 +5,8 @@ import { GridItem, Alert } from '@patternfly/react-core';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 
 import { billingModelConstants } from '../CreateOSDFormConstants';
-import { required } from '../../../../../common/validators';
+import { required, awsNumericAccountID } from '../../../../../common/validators';
+import ExternalLink from '../../../../common/ExternalLink';
 
 function AWSAccountDetailsSection({ pending }) {
   return (
@@ -16,8 +17,19 @@ function AWSAccountDetailsSection({ pending }) {
           name="account_id"
           label="AWS account ID"
           type="text"
-          validate={required}
+          validate={awsNumericAccountID}
           disabled={pending}
+          extendedHelpText={(
+            <>
+              The 12 digits numeric identifier of your AWS account.
+              <br />
+              See
+              {' '}
+              <ExternalLink href="https://docs.aws.amazon.com/general/latest/gr/acct-identifiers.html">AWS documentation</ExternalLink>
+              {' '}
+              for more details.
+            </>
+        )}
           isRequired
         />
       </GridItem>

@@ -12,11 +12,12 @@ import {
   getCreateIDPRequestData, generateIDPName, IDPformValues, IDPObjectNames,
   getldapAttributes, getOpenIdClaims, getGitHubTeamsAndOrgsData,
 } from './IdentityProvidersHelper';
+import { scrollToFirstError } from '../../../../../common/helpers';
 
 const reduxFormConfig = {
   form: 'CreateIdentityProvider',
   enableReinitialize: true,
-
+  onSubmitFail: scrollToFirstError,
 };
 const reduxFormCreateClusterIDP = reduxForm(reduxFormConfig)(IdentityProvidersModal);
 const CLIENT_SECRET = 'CLIENT_SECRET'; // Predefined value

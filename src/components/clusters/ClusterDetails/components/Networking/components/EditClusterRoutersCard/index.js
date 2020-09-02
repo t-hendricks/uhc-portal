@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('EditClusterRouters');
   const additionalRouterEnabled = valueSelector(state, 'enable_additional_router');
   const APIPrivate = cluster.api.listening === 'internal';
+
   return {
     clusterID: cluster.id,
     canEdit: cluster.canEdit,

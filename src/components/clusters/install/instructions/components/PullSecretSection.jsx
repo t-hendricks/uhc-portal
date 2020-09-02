@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@patternfly/react-core';
+import { Button, Tooltip } from '@patternfly/react-core';
 import { PasteIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Download from '@axetroy/react-download';
@@ -8,12 +8,29 @@ import Download from '@axetroy/react-download';
 import { trackPendo } from '../../../../../common/helpers';
 
 class PullSecretSection extends React.Component {
-  state = { copied: false }
+  constructor(props) {
+    super(props);
+    this.timer = null;
+  }
+
+  state = { clicked: false };
+
+  onCopy = () => {
+    if (this.timer) {
+      window.clearTimeout(this.timer);
+    }
+    this.setState({ clicked: true }, () => {
+      this.timer = window.setTimeout(() => {
+        this.setState({ clicked: false });
+        this.timer = null;
+      }, 2500);
+    });
+  }
 
   render() {
     const { token, cloudProviderID, text } = this.props;
-    const { copied } = this.state;
     const isDisabled = (!token || !!token.error);
+    const { clicked } = this.state;
     const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
     const downloadButton = (
       <Button variant="secondary" isDisabled={isDisabled} onClick={() => trackPendo('OCP-Download-PullSecret', cloudProviderID)}>
@@ -32,11 +49,17 @@ class PullSecretSection extends React.Component {
               {downloadButton}
             </Download>
           )}
-          <CopyToClipboard
-            text={isDisabled ? '' : tokenView}
-            onCopy={isDisabled ? null : () => { this.setState({ copied: true }); }}
+          <Tooltip
+            trigger="manual"
+            content="Copied!"
+            position="right"
+            isVisible={clicked}
           >
-            <span style={{ margin: '10px' }}>
+            <CopyToClipboard
+              text={isDisabled ? '' : tokenView}
+              onCopy={this.onCopy}
+            >
+
               <Button
                 variant="link"
                 id="copyPullSecret"
@@ -49,9 +72,8 @@ class PullSecretSection extends React.Component {
               &nbsp;
               Copy pull secret
               </Button>
-              { !isDisabled && copied && ' Copied!' }
-            </span>
-          </CopyToClipboard>
+            </CopyToClipboard>
+          </Tooltip>
         </div>
       </>
     );

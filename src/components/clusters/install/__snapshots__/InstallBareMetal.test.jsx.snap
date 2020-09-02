@@ -28,7 +28,7 @@ exports[`BareMetal install renders correctly 1`] = `
     title="Install OpenShift on Bare Metal with user-provisioned infrastructure"
   />
   <PageSection>
-    <withRouter(InstructionsBareMetal) />
+    <InstructionsBareMetal />
   </PageSection>
 </Fragment>
 `;

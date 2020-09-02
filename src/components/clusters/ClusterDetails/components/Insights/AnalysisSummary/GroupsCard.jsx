@@ -18,19 +18,20 @@ import { ChartPie, ChartLegend } from '@patternfly/react-charts';
 import { HelpIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
-const groupRulesByGroups = (data, groups) => groups.reduce(
-  (acc, { tags, title }) => ({
-    ...acc,
-    [title]: {
-      count: data.reduce((a, v) => (v.tags.filter(x => tags.includes(x)).length > 0
-        ? a + 1
-        : a),
-      0),
-      tags: tags.join(','),
-    },
-  }),
-  {},
-);
+const groupRulesByGroups = (data, groups) => groups.sort((a, b) => a.title.localeCompare(b.title))
+  .reduce(
+    (acc, { tags, title }) => ({
+      ...acc,
+      [title]: {
+        count: data.reduce((a, v) => (v.tags.filter(x => tags.includes(x)).length > 0
+          ? a + 1
+          : a),
+        0),
+        tags: tags.join(','),
+      },
+    }),
+    {},
+  );
 
 const mouseOverClickMutation = props => ({
   style: {
@@ -42,7 +43,7 @@ const mouseOverClickMutation = props => ({
 });
 
 const GroupsCard = ({ insightsData, groups, groupClicked }) => {
-  const groupedRulesByGroups = groupRulesByGroups(insightsData.data, groups);
+  const groupedRulesByGroups = groupRulesByGroups(insightsData.data || [], [...groups]);
 
   return (
     <Card className="insights-analysis-card group-card">

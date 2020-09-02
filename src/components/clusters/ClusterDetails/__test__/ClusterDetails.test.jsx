@@ -3,11 +3,12 @@ import { shallow } from 'enzyme';
 
 import ClusterDetails from '../ClusterDetails';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
+import clusterStates from '../../common/clusterStates';
 
 describe('<ClusterDetails />', () => {
   describe('Cluster Details', () => {
     const functions = funcs();
-    const wrapper = shallow(<ClusterDetails {...fixtures} {...functions} />);
+    const wrapper = shallow(<ClusterDetails {...fixtures} {...functions} hasIssues />);
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
@@ -19,6 +20,21 @@ describe('<ClusterDetails />', () => {
 
     it('should call get grants for aws cluster', () => {
       expect(functions.getGrants).toBeCalledWith(fixtures.clusterDetails.cluster.id);
+    });
+
+    it('should not consider issues when cluster is installing', () => {
+      const installingClusterWithIssuesProps = {
+        ...fixtures,
+        ...functions,
+        clusterDetails: {
+          ...fixtures.clusterDetails,
+          cluster: { ...fixtures.clusterDetails.cluster, state: clusterStates.INSTALLING },
+        },
+        hasIssues: true,
+      };
+
+      wrapper.setProps(installingClusterWithIssuesProps);
+      expect(wrapper.find('TabsRow').props().hasIssues).toBe(false);
     });
   });
 
@@ -48,7 +64,7 @@ describe('<ClusterDetails />', () => {
 
     it('should render error message', () => {
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find('ErrorBox').length).toEqual(1);
+      expect(wrapper.find('Unavailable').length).toEqual(1);
     });
 
     it('should redirect back to cluster list and set global error on 404 error', () => {

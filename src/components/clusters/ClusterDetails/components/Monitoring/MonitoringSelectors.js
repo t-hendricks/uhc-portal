@@ -73,12 +73,12 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
 
   const noFreshActivity = hours > 3 || (hours === 3 && minutes > 0) || !cluster;
 
-  if (noFreshActivity) {
-    return monitoringStatuses.NO_METRICS;
-  }
-
   if (!cluster.managed && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED)) {
     return monitoringStatuses.DISCONNECTED;
+  }
+
+  if (noFreshActivity) {
+    return monitoringStatuses.NO_METRICS;
   }
 
   if (cluster.metrics.upgrade.state === 'running') {

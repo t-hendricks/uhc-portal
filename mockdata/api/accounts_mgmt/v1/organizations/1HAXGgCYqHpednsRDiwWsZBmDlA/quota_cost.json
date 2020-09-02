@@ -18,7 +18,7 @@
           "resource_type": "network.loadbalancer",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -36,7 +36,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "multi",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -54,7 +54,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "multi",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -72,7 +72,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "multi",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -90,7 +90,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "single",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -108,7 +108,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "multi",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -126,7 +126,7 @@
           "resource_type": "compute.node",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -144,7 +144,7 @@
           "resource_type": "add-on",
           "byoc": "any",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -162,7 +162,7 @@
           "resource_type": "pv.storage",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -180,7 +180,7 @@
           "resource_type": "compute.node",
           "byoc": "byoc",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -198,7 +198,7 @@
           "resource_type": "cluster",
           "byoc": "byoc",
           "availability_zone_type": "multi",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -216,7 +216,7 @@
           "resource_type": "cluster",
           "byoc": "byoc",
           "availability_zone_type": "single",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -234,7 +234,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "single",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -252,7 +252,7 @@
           "resource_type": "compute.node",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -270,7 +270,7 @@
           "resource_type": "network.io",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -288,7 +288,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "multi",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -306,7 +306,7 @@
           "resource_type": "compute.node",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -324,7 +324,7 @@
           "resource_type": "add-on",
           "byoc": "any",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -342,7 +342,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "multi",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -360,7 +360,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "single",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -378,7 +378,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "multi",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -396,7 +396,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "single",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -414,7 +414,7 @@
           "resource_type": "compute.node",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -432,7 +432,7 @@
           "resource_type": "compute.node",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -450,7 +450,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "single",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -468,7 +468,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "single",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -486,7 +486,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "multi",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -504,7 +504,7 @@
           "resource_type": "add-on",
           "byoc": "any",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -522,7 +522,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "single",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -540,7 +540,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "single",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -558,7 +558,7 @@
           "resource_type": "compute.node",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -576,7 +576,7 @@
           "resource_type": "cluster",
           "byoc": "rhinfra",
           "availability_zone_type": "single",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -594,7 +594,7 @@
           "resource_type": "compute.node",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     },
@@ -612,7 +612,7 @@
           "resource_type": "compute.node",
           "byoc": "rhinfra",
           "availability_zone_type": "any",
-          "product": ""
+          "product": "OSD"
         }
       ]
     }

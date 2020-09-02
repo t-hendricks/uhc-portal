@@ -59,6 +59,7 @@ module.exports = {
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-transform-object-assign',
+    '@babel/plugin-proposal-optional-chaining',
     [
       'transform-imports',
       {

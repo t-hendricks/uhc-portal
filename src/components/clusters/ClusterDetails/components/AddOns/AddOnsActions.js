@@ -2,13 +2,10 @@ import get from 'lodash/get';
 import AddOnsConstants from './AddOnsConstants';
 import { clusterService } from '../../../../../services';
 
-// Add-ons provided as top-level products should be hidden from the tab
-const hiddenAddOns = ['rhmi'];
-
 const getAddOns = () => dispatch => dispatch({
   type: AddOnsConstants.GET_ADDONS,
   payload: clusterService.getAddOns().then((response) => {
-    const items = get(response, 'data.items', []).filter(item => !hiddenAddOns.includes(item.id));
+    const items = get(response, 'data.items', []);
     return ({
       items,
       resourceNames: items.map(addOn => addOn.resource_name),
@@ -20,7 +17,7 @@ const getAddOns = () => dispatch => dispatch({
 const getClusterAddOns = clusterID => dispatch => dispatch({
   type: AddOnsConstants.GET_CLUSTER_ADDONS,
   payload: clusterService.getClusterAddOns(clusterID).then((response) => {
-    const items = get(response, 'data.items', []).filter(item => !hiddenAddOns.includes(item.id));
+    const items = get(response, 'data.items', []);
     return ({
       clusterID,
       items,
