@@ -1,4 +1,5 @@
 import apiRequest from './apiRequest';
+import { dashboardsConstants } from '../redux/constants';
 
 const getClusters = search => apiRequest({
   method: 'post',
@@ -163,10 +164,15 @@ const unarchiveCluster = id => apiRequest({
   data: '{"status":"Disconnected"}',
 });
 
-const getDashboard = id => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/dashboards/${id}`,
-});
+const getDashboard = (id) => {
+  const url = id === dashboardsConstants.SUMMARY_DASHBOARD
+    ? `/api/accounts_mgmt/v1/organization_dashboards/${id}`
+    : `/api/clusters_mgmt/v1/dashboards/${id}`;
+  return apiRequest({
+    method: 'get',
+    url,
+  });
+};
 
 const getAddOns = () => apiRequest({
   method: 'get',
