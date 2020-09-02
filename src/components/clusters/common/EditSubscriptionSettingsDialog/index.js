@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => ({
   submit: (subscriptionID, updates) => {
     const requestData = updates;
     if (updates.socket_total) {
-      requestData.socket_total = parseInt(updates.socekt_total, 10);
+      requestData.socket_total = parseInt(updates.socket_total, 10);
     }
     if (updates.cpu_total) {
       requestData.cpu_total = parseInt(updates.cpu_total, 10);
