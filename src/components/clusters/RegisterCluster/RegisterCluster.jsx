@@ -52,9 +52,8 @@ class RegisterCluster extends React.Component {
     this.reset();
   }
 
-  onChangeUnitsNumericInput = (units, newValue) => {
+  onChangeUnitsNumericInput = (unitsFieldName, newValue) => {
     const { change } = this.props;
-    const unitsFieldName = units === 'Sockets' ? 'socket_total' : 'cpu_total';
     change(unitsFieldName, newValue);
   }
 
@@ -153,7 +152,6 @@ class RegisterCluster extends React.Component {
                         your cluster is consuming the correct type of subscription.
                           </Text>
                         </TextContent>
-
                         <EditSubscriptionFields
                           isDialog={false}
                           subscription={{ support_level: supportLevel }}

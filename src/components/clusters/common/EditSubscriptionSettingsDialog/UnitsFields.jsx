@@ -35,15 +35,18 @@ class UnitFields extends React.Component {
     changeNumericInputHandler = (value, event, unitsValue) => {
       const { onChangeNumericInputCallback } = this.props;
       const newValue = event.target.value;
+      let unitsFieldName = null;
       if (unitsValue === subscriptionSystemUnits.CORES_VCPU) {
+        unitsFieldName = 'cpu_total';
         this.setState({ computeCoresValue: newValue, computeCoresTouched: true });
       }
 
       if (unitsValue === subscriptionSystemUnits.SOCKETS) {
+        unitsFieldName = 'socket_total';
         this.setState({ socketsValue: newValue, socketsTouched: true });
       }
 
-      onChangeNumericInputCallback(unitsValue, newValue);
+      onChangeNumericInputCallback(unitsFieldName, newValue);
     };
 
     validate = (units) => {
