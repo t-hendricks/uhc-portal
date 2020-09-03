@@ -70,7 +70,8 @@ function IDPSection({
 
   const learnMoreLink = <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">Learn more.</a>;
 
-  const pending = !identityProviders.fulfilled && !identityProviders.error;
+  const pending = (!identityProviders.fulfilled && !identityProviders.error)
+                  || identityProviders.pending;
 
   const hasIDPs = !!identityProviders.clusterIDPList.length;
 
