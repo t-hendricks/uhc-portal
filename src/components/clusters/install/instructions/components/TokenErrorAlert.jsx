@@ -4,7 +4,7 @@ import { Alert } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import * as Sentry from '@sentry/browser';
 
-const BANNED_USER_CODE = 'ACCT-MGMT-22';
+import { BANNED_USER_CODE } from '../../../../../common/errors';
 
 class TokenErrorAlert extends React.Component {
   componentDidMount() {
