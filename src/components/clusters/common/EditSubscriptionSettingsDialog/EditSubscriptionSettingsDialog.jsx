@@ -337,7 +337,7 @@ EditSubscriptionSettingsDialog.propTypes = {
   requestState: PropTypes.object,
   isOpen: PropTypes.bool,
   hideSubscriptionSettings: PropTypes.bool,
-  isDialog: PropTypes.bool.isRequired,
+  isDialog: PropTypes.bool,
   closeModal: PropTypes.func,
   submit: PropTypes.func,
   onClose: PropTypes.func,
@@ -347,6 +347,7 @@ EditSubscriptionSettingsDialog.propTypes = {
 
 EditSubscriptionSettingsDialog.defaultProps = {
   isOpen: false,
+  isDialog: true, // TODO FIXME this prop needs to be removed.
   hideSubscriptionSettings: true,
   subscription: {},
 };
