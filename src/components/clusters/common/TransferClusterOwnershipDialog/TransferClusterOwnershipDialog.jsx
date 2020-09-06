@@ -8,6 +8,9 @@ import {
 
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
+import getBaseName from '../../../../common/getBaseName';
+import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import ExternalLink from '../../../common/ExternalLink';
 
 
 class TransferClusterOwnershipDialog extends Component {
@@ -34,9 +37,41 @@ class TransferClusterOwnershipDialog extends Component {
     const {
       isOpen,
       requestState,
+      subscription,
     } = this.props;
 
     const changePullSecretUrl = 'https://access.redhat.com/solutions/4902871';
+    const descriptionText = subscription.status === subscriptionStatuses.DISCONNECTED ? (
+      <>
+        <TextList component={TextListVariants.ol}>
+          <TextListItem>Initiate transfer</TextListItem>
+          <TextListItem>
+            <ExternalLink href={`${getBaseName()}/register`}>
+            Register the cluster
+            </ExternalLink>
+            {' '}
+            within 5 days
+          </TextListItem>
+        </TextList>
+      </>
+    ) : (
+      <>
+        <TextList component={TextListVariants.ol}>
+          <TextListItem>Initiate transfer</TextListItem>
+          <TextListItem>
+            <ExternalLink href={changePullSecretUrl}>
+            Change the cluster&apos;s pull secret
+            </ExternalLink>
+            {' '}
+            within 5 days
+          </TextListItem>
+        </TextList>
+        <Text component={TextVariants.p}>
+        The transfer is complete when OpenShift Cluster Manager receives
+        telemetry data from the cluster with the new pull secret.
+        </Text>
+      </>
+    );
 
     return isOpen && (
       <Modal
@@ -58,20 +93,7 @@ class TransferClusterOwnershipDialog extends Component {
             Transferring cluster ownership will allow another individual to manage this cluster.
             The steps for transferring cluster ownership are:
           </Text>
-          <TextList component={TextListVariants.ol}>
-            <TextListItem>Initiate transfer</TextListItem>
-            <TextListItem>
-              <a href={changePullSecretUrl} target="_blank" rel="noreferrer noopener">
-                Change the cluster&apos;s pull secret
-              </a>
-              {' '}
-              within 5 days
-            </TextListItem>
-          </TextList>
-          <Text component={TextVariants.p}>
-            The transfer is complete when OpenShift Cluster Manager receives
-            telemetry data from the cluster with the new pull secret.
-          </Text>
+          { descriptionText }
           <Text component={TextVariants.h4}>
             If the transfer is not completed within 5 days, the procedure must be restarted.
           </Text>

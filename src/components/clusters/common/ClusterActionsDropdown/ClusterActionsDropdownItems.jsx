@@ -206,7 +206,7 @@ function actionResolver(
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
   const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && canSubscribeOCP;
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership && get(cluster, 'subscription.plan.id', false) === subscriptionPlans.OCP
-    && ![subscriptionStatuses.ARCHIVED, subscriptionStatuses.DISCONNECTED].includes(get(cluster, 'subscription.status', subscriptionStatuses.ARCHIVED));
+    && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   const showToggleClusterAdmin = cluster.managed && canAllowClusterAdmin;
 
   return [
