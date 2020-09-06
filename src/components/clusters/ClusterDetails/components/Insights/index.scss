@@ -1,6 +1,6 @@
 @import '~@redhat-cloud-services/frontend-components/components/InsightsLabel.css';
 
-#cluster-insights-table {
+#insightsTabContent {
 	.pf-c-card__body.no-padding {
 		padding: 0;
 	}
@@ -10,7 +10,7 @@
 	}
 
 	.info-color {
-		color: var(--pf-global--active-color--300);
+		color: var(--pf-global--info-color--100);
 	}
 
 	.disabled-color {
