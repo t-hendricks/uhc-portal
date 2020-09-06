@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 const mockNodes = {
   data: [
     {
@@ -369,7 +371,7 @@ const mockOSDCluserDetails = {
   canDelete: true,
 };
 
-const mockOCPClusterDetails = {
+const mockOCPDisconnectedClusterDetails = {
   kind: 'Cluster',
   id: '19bap5d1h6q3p9qsdjsgjrpv1esfhfnb',
   href: '/api/clusters_mgmt/v1/clusters/19bap5d1h6q3p9qsdjsgjrpv1esfhfnb',
@@ -509,10 +511,22 @@ const mockOCPClusterDetails = {
   canDelete: true,
 };
 
+const mockOCPActiveClusterDetails = produce(mockOCPDisconnectedClusterDetails, (draft) => {
+  draft.subscription.status = 'Active';
+});
+
+const minute = 60 * 1000;
+const makeFutureDate = () => new Date(new Date().getTime() + 2 * minute);
+
 const mockLastCheckIn = {
   hours: 2,
   minutes: 20,
   message: '2 hours ago',
+};
+const oldLastCheckIn = {
+  hours: 3,
+  minutes: 20,
+  message: '3 hours ago',
 };
 
 export {
@@ -523,6 +537,9 @@ export {
   resourceUsageWithIssues,
   resourceUsageWithoutIssues,
   mockOSDCluserDetails,
-  mockOCPClusterDetails,
+  mockOCPActiveClusterDetails,
+  mockOCPDisconnectedClusterDetails,
+  makeFutureDate,
   mockLastCheckIn,
+  oldLastCheckIn,
 };
