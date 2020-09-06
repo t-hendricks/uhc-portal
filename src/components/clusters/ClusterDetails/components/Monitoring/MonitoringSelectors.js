@@ -13,57 +13,51 @@ import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
 
 const lastCheckInSelector = (state) => {
-  const lastCheckIn = get(state, 'clusters.details.cluster.activity_timestamp', '');
+  // activity_timestamp is initalized on (1) OSD creation (2) OCP registration from telemetry,
+  // so in practice it's always available.
+  const lastCheckIn = get(state, 'clusters.details.cluster.activity_timestamp', '0001-01-01');
 
   const MAX_DIFF_HOURS = 3;
   const date = new Date(lastCheckIn);
 
-  if (date.getTime() > 0) {
-    // clculate time delta
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    // calculate time delta in hours
-    const hours = Math.floor(diff / 1000 / 60 / 60);
-    // calculate time delta in minutes
-    const minutes = diff / 1000 / 60;
+  // calculate time delta
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  // calculate time delta in hours
+  const hours = Math.floor(diff / 1000 / 60 / 60);
+  // calculate time delta in minutes
+  const minutes = diff / 1000 / 60;
 
-    const values = { hours, minutes };
+  const values = { hours, minutes };
 
-    if (hours > MAX_DIFF_HOURS) {
-      return {
-        ...values,
-        message: `more than ${MAX_DIFF_HOURS} hours ago`,
-      };
-    }
-    if (hours > 1) {
-      return {
-        ...values,
-        message: hours === 1 ? 'one hour ago' : `${hours} hours ago`,
-      };
-    }
-    if (minutes > 1) {
-      return {
-        ...values,
-        message: `${Math.floor(minutes)} minutes ago`,
-      };
-    }
-    if (minutes === 1) {
-      return {
-        ...values,
-        message: '1 minute ago',
-      };
-    }
-    if (minutes > 0) {
-      return {
-        ...values,
-        message: 'less than 1 minute ago',
-      };
-    }
+  if (hours > MAX_DIFF_HOURS) {
+    return {
+      ...values,
+      message: `more than ${MAX_DIFF_HOURS} hours ago`,
+    };
   }
+  if (hours > 1) {
+    return {
+      ...values,
+      message: hours === 1 ? 'one hour ago' : `${hours} hours ago`,
+    };
+  }
+  if (minutes > 1) {
+    return {
+      ...values,
+      message: `${Math.floor(minutes)} minutes ago`,
+    };
+  }
+  if (minutes === 1) {
+    return {
+      ...values,
+      message: '1 minute ago',
+    };
+  }
+  // minutes may be even negative if data is fresh and browser clock is inaccurate.
   return {
-    value: null,
-    unit: null,
-    message: 'unknown',
+    ...values,
+    message: 'less than 1 minute ago',
   };
 };
 

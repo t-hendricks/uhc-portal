@@ -515,6 +515,9 @@ const mockOCPActiveClusterDetails = produce(mockOCPDisconnectedClusterDetails, (
   draft.subscription.status = 'Active';
 });
 
+const minute = 60 * 1000;
+const makeFutureDate = () => new Date(new Date().getTime() + 2 * minute);
+
 const mockLastCheckIn = {
   hours: 2,
   minutes: 20,
@@ -536,6 +539,7 @@ export {
   mockOSDCluserDetails,
   mockOCPActiveClusterDetails,
   mockOCPDisconnectedClusterDetails,
+  makeFutureDate,
   mockLastCheckIn,
   oldLastCheckIn,
 };

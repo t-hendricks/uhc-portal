@@ -11,11 +11,38 @@ import {
   mockOSDCluserDetails,
   mockOCPActiveClusterDetails,
   mockOCPDisconnectedClusterDetails,
+  makeFutureDate,
   mockLastCheckIn,
   oldLastCheckIn,
 } from './Monitoring.fixtures';
 import { monitoringStatuses } from '../monitoringHelper';
 import clusterStates from '../../../../common/clusterStates';
+
+describe('lastCheckInSelector', () => {
+  it('returns something valid if activity_timestamp is missing (unrealistic)', () => {
+    expect(lastCheckInSelector({})).toMatchObject(
+      {
+        hours: expect.any(Number),
+        minutes: expect.any(Number),
+        message: expect.any(String),
+      },
+    );
+  });
+
+  it("handles timestamp in future (relative to browser's clock)", () => {
+    const stateWithFutureTimestamp = {
+      clusters: {
+        details: {
+          cluster: {
+            ...mockOSDCluserDetails,
+            activity_timestamp: makeFutureDate().toISOString(),
+          },
+        },
+      },
+    };
+    expect(lastCheckInSelector(stateWithFutureTimestamp).message).toEqual('less than 1 minute ago');
+  });
+});
 
 describe('clusterHealthSelector', () => {
   describe('OCP', () => {
@@ -39,22 +66,12 @@ describe('clusterHealthSelector', () => {
       },
     };
 
-    it('should return DISCONNECTED when subscription Disconnected and checkin unknown', () => {
-      expect(clusterHealthSelector(stateWithOCPDisconnected, lastCheckInSelector(null), null))
-        .toBe(monitoringStatuses.DISCONNECTED);
-    });
-
     it('should return DISCONNECTED when subscription Disconnected and metrics are stale', () => {
       expect(clusterHealthSelector(stateWithOCPDisconnected, oldLastCheckIn, null))
         .toBe(monitoringStatuses.DISCONNECTED);
     });
 
     it.todo("if fresh metrics arrived for a Disconnected cluster, but subscription didn't yet switch to Active, what should we return?");
-
-    it('should return NO_METRICS when checkin unknown', () => {
-      expect(clusterHealthSelector(stateWithOCPActive, lastCheckInSelector(null), null))
-        .toBe(monitoringStatuses.NO_METRICS);
-    });
 
     it('should return NO_METRICS when metrics are stale', () => {
       expect(clusterHealthSelector(stateWithOCPActive, oldLastCheckIn, null))
@@ -79,7 +96,7 @@ describe('clusterHealthSelector', () => {
     };
 
     it('should not return status DISCONNECTED for OSD cluster', () => {
-      expect(clusterHealthSelector(stateWithOsdCluster, lastCheckInSelector(null), null))
+      expect(clusterHealthSelector(stateWithOsdCluster, oldLastCheckIn, null))
         .not.toBe(monitoringStatuses.DISCONNECTED);
     });
 
