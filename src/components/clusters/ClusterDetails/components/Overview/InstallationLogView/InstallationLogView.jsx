@@ -1,12 +1,10 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  CardBody, Title, Button, CardTitle,
-} from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
 import { ExpandIcon } from '@patternfly/react-icons';
+import cx from 'classnames';
 import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
-import ClusterStatusMonitor from '../ClusterStatusMonitor';
 import clusterStates from '../../../../common/clusterStates';
 
 const AUTOSCROLL_THRESHOLD = 20;
@@ -160,9 +158,7 @@ class LogWindow extends React.Component {
   }
 
   render() {
-    const {
-      lines, errorCode, cluster, refresh, history,
-    } = this.props;
+    const { lines, errorCode, cluster } = this.props;
     const { userScrolled, isFullScreen } = this.state;
     const totalLines = lines ? lines.split('\n').length - 1 : 0;
     if (!userScrolled && !!totalLines) {
@@ -181,55 +177,45 @@ class LogWindow extends React.Component {
         : 'Cluster installation has started. Installation log will appear here once it becomes available.';
     }
 
-    /* using <article className="pf-c-card"> instead of <Card>
-    to make it possible to add a ref for the card, so we can use requestFullScreen */
     return (
-      <article className="pf-c-card" ref={this.cardRef}>
-        <CardTitle>
-          <Title headingLevel="h2" size="lg" className="card-title logview-title">
-            {cluster.state === clusterStates.UNINSTALLING ? 'Uninstallation logs' : 'Installation logs'}
-          </Title>
-          { !!totalLines && (
-            <div className="logview-buttons">
-              <Button
-                onClick={this.fullScreen}
-                variant="link"
-                icon={<ExpandIcon />}
-                isDisabled={!totalLines || !document.fullscreenEnabled}
-              >
-                { isFullScreen ? 'Exit fullscreen' : 'Expand' }
-              </Button>
-            </div>
-          )}
-        </CardTitle>
-        <CardBody>
-          <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
-          { totalLines ? (
-            <div className="log-window">
-              <div className="log-window__header">
-                {totalLines}
-                {' '}
+      <div id="log-window-container" className={cx(isFullScreen && 'pf-c-card__body')} ref={this.cardRef}>
+        { !!totalLines && (
+        <div className="logview-buttons pf-c-card__title">
+          <Button
+            onClick={this.fullScreen}
+            variant="link"
+            icon={<ExpandIcon />}
+            isDisabled={!totalLines || !document.fullscreenEnabled}
+          >
+            { isFullScreen ? 'Exit fullscreen' : 'Fullscreen' }
+          </Button>
+        </div>
+        )}
+        { totalLines ? (
+          <div className="log-window">
+            <div className="log-window__header">
+              {totalLines}
+              {' '}
               lines
-              </div>
-              <div className="log-window__body">
-                <div className="log-window__scroll-pane" ref={this.logPaneRef} onScroll={this.onScroll}>
-                  <div className="log-window__contents">
-                    <div className="log-window__contents__text">
-                      {lines || ''}
-                    </div>
+            </div>
+            <div className="log-window__body">
+              <div className="log-window__scroll-pane" ref={this.logPaneRef} onScroll={this.onScroll}>
+                <div className="log-window__contents">
+                  <div className="log-window__contents__text">
+                    {lines || ''}
                   </div>
                 </div>
               </div>
             </div>
-          ) : (
-            cluster.state !== clusterStates.ERROR && (
+          </div>
+        ) : (
+          cluster.state !== clusterStates.ERROR && (
             <p>
               {message}
             </p>
-            )
-          )}
-        </CardBody>
-      </article>
+          )
+        )}
+      </div>
     );
   }
 }
@@ -245,8 +231,6 @@ LogWindow.propTypes = {
     state: PropTypes.string,
   }),
   errorCode: PropTypes.number,
-  refresh: PropTypes.func,
-  history: PropTypes.object,
 };
 
 export default LogWindow;
