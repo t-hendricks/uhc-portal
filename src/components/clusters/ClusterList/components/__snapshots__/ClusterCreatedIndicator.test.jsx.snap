@@ -4,39 +4,9 @@ exports[`<ClusterCreatedIndicator /> should not crash when the cluster has no su
 
 exports[`<ClusterCreatedIndicator /> should render when trial expires 1`] = `
 <Popover
-  appendTo={[Function]}
   aria-label="Evaluation expired"
   bodyContent="Your 60-day evaluation has expired. Edit subscription settings to continue using this cluster, or archive this cluster if it no longer exits"
-  boundary="window"
-  className=""
-  closeBtnAriaLabel="Close"
-  distance={25}
-  enableFlip={true}
-  flipBehavior={
-    Array [
-      "top",
-      "right",
-      "bottom",
-      "left",
-      "top",
-      "right",
-      "bottom",
-    ]
-  }
-  footerContent={null}
-  headerContent={null}
-  hideOnOutsideClick={true}
-  isVisible={null}
-  maxWidth="calc(1rem + 1rem + 18.75rem)"
-  onHidden={[Function]}
-  onHide={[Function]}
-  onMount={[Function]}
-  onShow={[Function]}
-  onShown={[Function]}
   position="top"
-  shouldClose={[Function]}
-  tippyProps={Object {}}
-  zIndex={9999}
 >
   <Button
     icon={

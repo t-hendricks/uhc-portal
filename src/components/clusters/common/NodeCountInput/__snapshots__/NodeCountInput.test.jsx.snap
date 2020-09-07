@@ -6,35 +6,8 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
   label="compute nodes"
 >
   <Tooltip
-    appendTo={[Function]}
-    aria="describedby"
-    boundary="window"
-    className=""
     content="You do not have quota for this option. Contact sales to purchase additional quota."
-    distance={15}
-    enableFlip={true}
-    entryDelay={500}
-    exitDelay={500}
-    flipBehavior={
-      Array [
-        "top",
-        "right",
-        "bottom",
-        "left",
-        "top",
-        "right",
-        "bottom",
-      ]
-    }
-    id=""
-    isAppLauncher={false}
-    isContentLeftAligned={false}
-    isVisible={false}
-    maxWidth="18.75rem"
     position="right"
-    tippyProps={Object {}}
-    trigger="mouseenter focus"
-    zIndex={9999}
   >
     <div>
       <FormSelect
@@ -1018,35 +991,8 @@ exports[`<NodeCountInput> Single AZ renders with no quota 1`] = `
   label="compute nodes"
 >
   <Tooltip
-    appendTo={[Function]}
-    aria="describedby"
-    boundary="window"
-    className=""
     content="You do not have quota for this option. Contact sales to purchase additional quota."
-    distance={15}
-    enableFlip={true}
-    entryDelay={500}
-    exitDelay={500}
-    flipBehavior={
-      Array [
-        "top",
-        "right",
-        "bottom",
-        "left",
-        "top",
-        "right",
-        "bottom",
-      ]
-    }
-    id=""
-    isAppLauncher={false}
-    isContentLeftAligned={false}
-    isVisible={false}
-    maxWidth="18.75rem"
     position="right"
-    tippyProps={Object {}}
-    trigger="mouseenter focus"
-    zIndex={9999}
   >
     <div>
       <FormSelect

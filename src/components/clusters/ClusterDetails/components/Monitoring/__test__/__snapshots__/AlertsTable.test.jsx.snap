@@ -35,6 +35,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
   dropdownPosition="right"
   expandId="expandable-toggle"
   gridBreakPoint="grid-md"
+  isStickyHeader={false}
   ouiaSafe={true}
   role="grid"
   rowLabeledBy="simple-node"
@@ -190,6 +191,7 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
   dropdownPosition="right"
   expandId="expandable-toggle"
   gridBreakPoint="grid-md"
+  isStickyHeader={false}
   ouiaSafe={true}
   role="grid"
   rowLabeledBy="simple-node"

@@ -91,43 +91,13 @@ exports[`<Users /> with users should render 1`] = `
             "title": <React.Fragment>
               User ID
               <Popover
-                appendTo={[Function]}
                 aria-label="User IDs"
                 bodyContent={
                   <p>
                     User IDs are matched by the cluster's identity providers.
                   </p>
                 }
-                boundary="window"
-                className=""
-                closeBtnAriaLabel="Close"
-                distance={25}
-                enableFlip={true}
-                flipBehavior={
-                  Array [
-                    "top",
-                    "right",
-                    "bottom",
-                    "left",
-                    "top",
-                    "right",
-                    "bottom",
-                  ]
-                }
-                footerContent={null}
-                headerContent={null}
-                hideOnOutsideClick={true}
-                isVisible={null}
-                maxWidth="calc(1rem + 1rem + 18.75rem)"
-                onHidden={[Function]}
-                onHide={[Function]}
-                onMount={[Function]}
-                onShow={[Function]}
-                onShown={[Function]}
                 position="top"
-                shouldClose={[Function]}
-                tippyProps={Object {}}
-                zIndex={9999}
               >
                 <Button
                   isInline={true}
@@ -146,7 +116,6 @@ exports[`<Users /> with users should render 1`] = `
             "title": <React.Fragment>
               Group
               <Popover
-                appendTo={[Function]}
                 aria-label="Groups"
                 bodyContent={
                   <p>
@@ -162,36 +131,7 @@ exports[`<Users /> with users should render 1`] = `
                     .
                   </p>
                 }
-                boundary="window"
-                className=""
-                closeBtnAriaLabel="Close"
-                distance={25}
-                enableFlip={true}
-                flipBehavior={
-                  Array [
-                    "top",
-                    "right",
-                    "bottom",
-                    "left",
-                    "top",
-                    "right",
-                    "bottom",
-                  ]
-                }
-                footerContent={null}
-                headerContent={null}
-                hideOnOutsideClick={true}
-                isVisible={null}
-                maxWidth="calc(1rem + 1rem + 18.75rem)"
-                onHidden={[Function]}
-                onHide={[Function]}
-                onMount={[Function]}
-                onShow={[Function]}
-                onShown={[Function]}
                 position="top"
-                shouldClose={[Function]}
-                tippyProps={Object {}}
-                zIndex={9999}
               >
                 <Button
                   isInline={true}
@@ -214,6 +154,7 @@ exports[`<Users /> with users should render 1`] = `
       dropdownPosition="right"
       expandId="expandable-toggle"
       gridBreakPoint="grid-md"
+      isStickyHeader={false}
       ouiaSafe={true}
       role="grid"
       rowLabeledBy="simple-node"
