@@ -15,11 +15,17 @@ limitations under the License.
 */
 
 import { dashboardsConstants } from '../constants';
-import { clusterService } from '../../services';
+import { accountManager, accountsService, clusterService } from '../../services';
 
-
-const getDashboard = id => clusterService.getDashboard(id).then(
-  (dashboardResponse) => {
+const getDashboard = () => accountsService.getCurrentAccount()
+  .then(organizationResponse => organizationResponse.data?.organization?.id)
+  .then((orgId) => {
+    if (orgId) {
+      return accountManager.getDashboard(orgId);
+    }
+    return Promise.reject(new Error('No logged in user'));
+  })
+  .then((dashboardResponse) => {
     const dashboard = {};
     const metrics = {};
     dashboardResponse.data.metrics.forEach((metric) => {
@@ -27,12 +33,11 @@ const getDashboard = id => clusterService.getDashboard(id).then(
     });
     dashboard[dashboardResponse.data.name] = metrics;
     return dashboard;
-  },
-);
+  });
 
 const getSummaryDashboard = () => dispatch => dispatch({
   type: dashboardsConstants.GET_SUMMARY_DASHBOARD,
-  payload: getDashboard(dashboardsConstants.SUMMARY_DASHBOARD),
+  payload: getDashboard(),
 });
 
 
