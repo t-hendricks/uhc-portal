@@ -41,6 +41,12 @@ const enableRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
   url: `/clusters/${clusterID}/rules/${ruleID}/enable`,
 });
 
+const sendFeedbackOnRuleDisableInsights = (clusterID, ruleID, message) => insightsAPIRequest({
+  method: 'post',
+  url: `/clusters/${clusterID}/rules/${ruleID}/disable_feedback`,
+  data: { message },
+});
+
 const getGroupsInsights = () => insightsAPIRequest({
   method: 'get',
   url: '/groups',
@@ -54,6 +60,7 @@ const insigthsService = {
   resetVoteOnRuleInsights,
   disableRuleInsights,
   enableRuleInsights,
+  sendFeedbackOnRuleDisableInsights,
   getGroupsInsights,
   getReportDetails,
 };

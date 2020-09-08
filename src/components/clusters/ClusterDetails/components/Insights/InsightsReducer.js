@@ -26,6 +26,7 @@ import {
   GET_GROUPS_INSIGHTS,
   GET_REPORT_DETAILS,
   SET_REPORT_DETAILS,
+  SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS,
 } from './InsightsConstants';
 
 const initialState = {
@@ -38,6 +39,11 @@ const initialState = {
   },
   reportDetails: {
     report: null,
+    rejected: false,
+    pending: false,
+    fulfilled: false,
+  },
+  sendFeedbackOnRuleDisable: {
     rejected: false,
     pending: false,
     fulfilled: false,
@@ -81,6 +87,21 @@ function insightsReducer(state = initialState, action) {
       case REJECTED_ACTION(GET_REPORT_DETAILS):
         draft.reportDetails.rejected = true;
         draft.reportDetails.pending = false;
+        break;
+      case FULFILLED_ACTION(SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS):
+        draft.sendFeedbackOnRuleDisable.rejected = false;
+        draft.sendFeedbackOnRuleDisable.pending = false;
+        draft.sendFeedbackOnRuleDisable.fulfilled = true;
+        break;
+      case PENDING_ACTION(SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS):
+        draft.sendFeedbackOnRuleDisable.rejected = false;
+        draft.sendFeedbackOnRuleDisable.pending = true;
+        draft.sendFeedbackOnRuleDisable.fulfilled = false;
+        break;
+      case REJECTED_ACTION(SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS):
+        draft.sendFeedbackOnRuleDisable.rejected = true;
+        draft.sendFeedbackOnRuleDisable.pending = false;
+        draft.sendFeedbackOnRuleDisable.fulfilled = false;
         break;
       case SET_REPORT_DETAILS:
         draft.reportDetails.report = action.payload.data.report;

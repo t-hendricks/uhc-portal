@@ -20,6 +20,7 @@ import AnalysisSummary from './AnalysisSummary';
 import { severityMapping } from './helpers';
 import DisabledTooltip from './DisabledTooltip';
 import { setReportDetails } from './InsightsActions';
+import OnRuleDisableFeedbackModal from './OnRuleDisableFeedbackModal';
 
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
@@ -127,10 +128,15 @@ class InsightsTable extends React.Component {
     }
   }
 
-  onRuleDisabled() {
+  onRuleDisable(ruleId) {
     if (!('ruleStatusFilter' in this.state.filters)) {
       this.setFilter('ruleStatusFilter', 'enabled');
     }
+
+    const { openModal, cluster } = this.props;
+    const clusterId = cluster.id;
+
+    openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId });
   }
 
   setFilter = (filterName, filterValue) => {
@@ -344,7 +350,7 @@ class InsightsTable extends React.Component {
                       enableRule(ruleId);
                     } else {
                       disableRule(ruleId);
-                      this.onRuleDisabled();
+                      this.onRuleDisable(ruleId);
                     }
                   },
                 }];
@@ -364,6 +370,7 @@ class InsightsTable extends React.Component {
               )}
               emptyStateIcon={EmptyTableIcon}
             />
+            <OnRuleDisableFeedbackModal />
           </CardBody>
         </Card>
       </div>
@@ -378,6 +385,7 @@ InsightsTable.propTypes = {
   voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default InsightsTable;

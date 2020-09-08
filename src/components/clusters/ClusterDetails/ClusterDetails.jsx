@@ -465,6 +465,7 @@ class ClusterDetails extends Component {
               enableRule={(ruleId) => {
                 enableRule(cluster.external_id, ruleId);
               }}
+              openModal={openModal}
             />
           </TabContent>
         )}
