@@ -68,6 +68,7 @@ class Subscriptions extends Component {
         error: account.error,
         pending: account.pending,
         type: 'account',
+        internalErrorCode: account.internalErrorCode,
       };
       content = <SubscriptionNotFulfilled data={data} refresh={this.refresh} />;
     }
