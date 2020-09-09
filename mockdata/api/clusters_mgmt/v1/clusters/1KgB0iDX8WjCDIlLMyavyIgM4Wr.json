@@ -58,6 +58,34 @@
         "unit":""
       }
     },
+    "sockets": {
+      "used": {
+        "value": 0,
+        "unit": ""
+      },
+      "total": {
+        "value": 0,
+        "unit": ""
+      }
+    },
+    "compute_nodes_memory": {
+      "total": {
+        "value": 42949672960,
+        "unit": "B"
+      }
+    },
+    "compute_nodes_cpu": {
+      "total": {
+        "value": 12,
+        "unit": ""
+      }
+    },
+    "compute_nodes_sockets": {
+      "total": {
+        "value": 0,
+        "unit": ""
+      }
+    },
     "storage":{
       "updated_timestamp":"0001-01-01T00:00:00Z",
       "used":{

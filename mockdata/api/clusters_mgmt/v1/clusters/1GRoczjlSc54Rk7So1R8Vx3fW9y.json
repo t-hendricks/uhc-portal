@@ -7,6 +7,7 @@
   "external_id": "8b00e902-f675-4903-9118-91a8f9f5110a",
   "display_name": "fake-selfmanaged-cluster",
   "creation_timestamp": "2019-01-29T16:04:15.281411Z",
+  "activity_timestamp": "2020-01-01T00:00:00.000000Z",
   "cloud_provider": {
     "kind": "CloudProviderLink",
     "id": "aws",
@@ -41,24 +42,24 @@
   },
   "metrics": {
     "memory": {
-      "updated_timestamp": "0001-01-01T00:00:00Z",
+      "updated_timestamp": "2020-01-01T00:00:00.000000Z",
       "used": {
-        "value": 0,
+        "value": 12345678900,
         "unit": "B"
       },
       "total": {
-        "value": 0,
+        "value": 137438953472,
         "unit": "B"
       }
     },
     "cpu": {
-      "updated_timestamp": "0001-01-01T00:00:00Z",
+      "updated_timestamp": "2020-01-01T00:00:00.000000Z",
       "used": {
-        "value": 0,
+        "value": 6.54321,
         "unit": ""
       },
       "total": {
-        "value": 0,
+        "value": 16,
         "unit": ""
       }
     },
@@ -74,16 +75,16 @@
       }
     },
     "compute_nodes_memory": {
-      "updated_timestamp": "0001-01-01T00:00:00Z",
+      "updated_timestamp": "2020-01-01T00:00:00.000000Z",
       "total": {
-        "value": 0,
+        "value": 68719476736,
         "unit": "B"
       }
     },
     "compute_nodes_cpu": {
-      "updated_timestamp": "0001-01-01T00:00:00Z",
+      "updated_timestamp": "2020-01-01T00:00:00.000000Z",
       "total": {
-        "value": 24,
+        "value": 8,
         "unit": ""
       }
     },
