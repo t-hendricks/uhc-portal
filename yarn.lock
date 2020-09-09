@@ -5728,10 +5728,10 @@ extsprintf@^1.2.0:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-facet-lib@1.0.36:
-  version "1.0.36"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/facet-lib/-/facet-lib-1.0.36.tgz#9ee1e77d4ef783c7fc8eebe8c43007e9268bcccd"
-  integrity sha512-R2ofCcP0smOY0p44btEk1nACiTrhYby7igYUudw6p7NqgfIVI7SF5NlwIJfwQi/mu7GNNxcJbLbLDWJ8A6xfGg==
+facet-lib@1.0.37:
+  version "1.0.37"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/facet-lib/-/facet-lib-1.0.37.tgz#14765aac500038d32c5365ea4469bc6b04330538"
+  integrity sha512-xEk53dNwqHQBrtAKLdFrZ0iBXEoj2nAtV/fu3+StSLeI0Kam5Va2NE++6bFJq2JVv6LmD/DM35lukEwQL3WRaw==
   dependencies:
     axios-case-converter "^0.6.0"
     unique-names-generator "^4.2.0"
