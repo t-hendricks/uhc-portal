@@ -72,35 +72,7 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
             </CardBody>
           </Link>
           <Tooltip
-            appendTo={[Function]}
-            aria="describedby"
-            boundary="window"
-            className=""
             content="You do not have quota for this option. Contact sales to purchase additional quota."
-            distance={15}
-            enableFlip={true}
-            entryDelay={500}
-            exitDelay={500}
-            flipBehavior={
-              Array [
-                "top",
-                "right",
-                "bottom",
-                "left",
-                "top",
-                "right",
-                "bottom",
-              ]
-            }
-            id=""
-            isAppLauncher={false}
-            isContentLeftAligned={false}
-            isVisible={false}
-            maxWidth="18.75rem"
-            position="top"
-            tippyProps={Object {}}
-            trigger="mouseenter focus"
-            zIndex={9999}
           >
             <Card
               className="infra-card create-cluster-card card-disabled"
@@ -171,35 +143,7 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
             </CardBody>
           </Link>
           <Tooltip
-            appendTo={[Function]}
-            aria="describedby"
-            boundary="window"
-            className=""
             content="You do not have quota for this option. Contact sales to purchase additional quota."
-            distance={15}
-            enableFlip={true}
-            entryDelay={500}
-            exitDelay={500}
-            flipBehavior={
-              Array [
-                "top",
-                "right",
-                "bottom",
-                "left",
-                "top",
-                "right",
-                "bottom",
-              ]
-            }
-            id=""
-            isAppLauncher={false}
-            isContentLeftAligned={false}
-            isVisible={false}
-            maxWidth="18.75rem"
-            position="top"
-            tippyProps={Object {}}
-            trigger="mouseenter focus"
-            zIndex={9999}
           >
             <Card
               className="infra-card create-cluster-card card-disabled"

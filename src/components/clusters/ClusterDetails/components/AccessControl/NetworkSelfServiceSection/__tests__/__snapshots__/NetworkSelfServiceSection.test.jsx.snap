@@ -49,43 +49,13 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
               "title": <React.Fragment>
                 ARN
                 <Popover
-                  appendTo={[Function]}
                   aria-label="ARNs"
                   bodyContent={
                     <p>
                       Amazon Resource Names (ARNs) uniquely identify AWS resources.
                     </p>
                   }
-                  boundary="window"
-                  className=""
-                  closeBtnAriaLabel="Close"
-                  distance={25}
-                  enableFlip={true}
-                  flipBehavior={
-                    Array [
-                      "top",
-                      "right",
-                      "bottom",
-                      "left",
-                      "top",
-                      "right",
-                      "bottom",
-                    ]
-                  }
-                  footerContent={null}
-                  headerContent={null}
-                  hideOnOutsideClick={true}
-                  isVisible={null}
-                  maxWidth="calc(1rem + 1rem + 18.75rem)"
-                  onHidden={[Function]}
-                  onHide={[Function]}
-                  onMount={[Function]}
-                  onShow={[Function]}
-                  onShown={[Function]}
                   position="top"
-                  shouldClose={[Function]}
-                  tippyProps={Object {}}
-                  zIndex={9999}
                 >
                   <Button
                     isInline={true}
@@ -117,6 +87,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
         dropdownPosition="right"
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
+        isStickyHeader={false}
         ouiaSafe={true}
         role="grid"
         rowLabeledBy="simple-node"
@@ -129,39 +100,9 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
                 Object {
                   "title": <span>
                     <Popover
-                      appendTo={[Function]}
                       aria-label="grant-failed"
                       bodyContent="some failure"
-                      boundary="window"
-                      className=""
-                      closeBtnAriaLabel="Close"
-                      distance={25}
-                      enableFlip={true}
-                      flipBehavior={
-                        Array [
-                          "top",
-                          "right",
-                          "bottom",
-                          "left",
-                          "top",
-                          "right",
-                          "bottom",
-                        ]
-                      }
-                      footerContent={null}
-                      headerContent={null}
-                      hideOnOutsideClick={true}
-                      isVisible={null}
-                      maxWidth="calc(1rem + 1rem + 18.75rem)"
-                      onHidden={[Function]}
-                      onHide={[Function]}
-                      onMount={[Function]}
-                      onShow={[Function]}
-                      onShown={[Function]}
                       position="top"
-                      shouldClose={[Function]}
-                      tippyProps={Object {}}
-                      zIndex={9999}
                     >
                       <Button
                         className="self-service-failed"
@@ -299,43 +240,13 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] =
               "title": <React.Fragment>
                 ARN
                 <Popover
-                  appendTo={[Function]}
                   aria-label="ARNs"
                   bodyContent={
                     <p>
                       Amazon Resource Names (ARNs) uniquely identify AWS resources.
                     </p>
                   }
-                  boundary="window"
-                  className=""
-                  closeBtnAriaLabel="Close"
-                  distance={25}
-                  enableFlip={true}
-                  flipBehavior={
-                    Array [
-                      "top",
-                      "right",
-                      "bottom",
-                      "left",
-                      "top",
-                      "right",
-                      "bottom",
-                    ]
-                  }
-                  footerContent={null}
-                  headerContent={null}
-                  hideOnOutsideClick={true}
-                  isVisible={null}
-                  maxWidth="calc(1rem + 1rem + 18.75rem)"
-                  onHidden={[Function]}
-                  onHide={[Function]}
-                  onMount={[Function]}
-                  onShow={[Function]}
-                  onShown={[Function]}
                   position="top"
-                  shouldClose={[Function]}
-                  tippyProps={Object {}}
-                  zIndex={9999}
                 >
                   <Button
                     isInline={true}
@@ -367,6 +278,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] =
         dropdownPosition="right"
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
+        isStickyHeader={false}
         ouiaSafe={true}
         role="grid"
         rowLabeledBy="simple-node"
@@ -532,43 +444,13 @@ exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
               "title": <React.Fragment>
                 ARN
                 <Popover
-                  appendTo={[Function]}
                   aria-label="ARNs"
                   bodyContent={
                     <p>
                       Amazon Resource Names (ARNs) uniquely identify AWS resources.
                     </p>
                   }
-                  boundary="window"
-                  className=""
-                  closeBtnAriaLabel="Close"
-                  distance={25}
-                  enableFlip={true}
-                  flipBehavior={
-                    Array [
-                      "top",
-                      "right",
-                      "bottom",
-                      "left",
-                      "top",
-                      "right",
-                      "bottom",
-                    ]
-                  }
-                  footerContent={null}
-                  headerContent={null}
-                  hideOnOutsideClick={true}
-                  isVisible={null}
-                  maxWidth="calc(1rem + 1rem + 18.75rem)"
-                  onHidden={[Function]}
-                  onHide={[Function]}
-                  onMount={[Function]}
-                  onShow={[Function]}
-                  onShown={[Function]}
                   position="top"
-                  shouldClose={[Function]}
-                  tippyProps={Object {}}
-                  zIndex={9999}
                 >
                   <Button
                     isInline={true}
@@ -600,6 +482,7 @@ exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
         dropdownPosition="right"
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
+        isStickyHeader={false}
         ouiaSafe={true}
         role="grid"
         rowLabeledBy="simple-node"

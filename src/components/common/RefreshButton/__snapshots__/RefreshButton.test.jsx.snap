@@ -2,35 +2,8 @@
 
 exports[`<RefreshButton /> renders correctly 1`] = `
 <Tooltip
-  appendTo={[Function]}
-  aria="describedby"
-  boundary="window"
-  className=""
   content="Refresh"
-  distance={15}
-  enableFlip={true}
-  entryDelay={500}
-  exitDelay={500}
-  flipBehavior={
-    Array [
-      "top",
-      "right",
-      "bottom",
-      "left",
-      "top",
-      "right",
-      "bottom",
-    ]
-  }
-  id=""
-  isAppLauncher={false}
-  isContentLeftAligned={false}
-  isVisible={false}
-  maxWidth="18.75rem"
   position="bottom"
-  tippyProps={Object {}}
-  trigger="mouseenter focus"
-  zIndex={9999}
 >
   <Button
     aria-label="Refresh"
@@ -49,35 +22,8 @@ exports[`<RefreshButton /> renders correctly 1`] = `
 
 exports[`<RefreshButton autoRefresh /> renders correctly 1`] = `
 <Tooltip
-  appendTo={[Function]}
-  aria="describedby"
-  boundary="window"
-  className=""
   content="Refresh"
-  distance={15}
-  enableFlip={true}
-  entryDelay={500}
-  exitDelay={500}
-  flipBehavior={
-    Array [
-      "top",
-      "right",
-      "bottom",
-      "left",
-      "top",
-      "right",
-      "bottom",
-    ]
-  }
-  id=""
-  isAppLauncher={false}
-  isContentLeftAligned={false}
-  isVisible={false}
-  maxWidth="18.75rem"
   position="bottom"
-  tippyProps={Object {}}
-  trigger="mouseenter focus"
-  zIndex={9999}
 >
   <Button
     aria-label="Refresh"
