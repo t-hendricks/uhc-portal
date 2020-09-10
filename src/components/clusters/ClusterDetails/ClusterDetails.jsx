@@ -324,7 +324,7 @@ class ClusterDetails extends Component {
             was not found, it might have been deleted or you don&apos;t have permission to see it.
           </>
         ), 'clusterDetails', clusterDetails.errorMessage);
-        history.push('/');
+        return (<Redirect to="/" />);
       }
       return errorState();
     }
