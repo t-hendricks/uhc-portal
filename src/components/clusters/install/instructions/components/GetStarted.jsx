@@ -1,31 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { Button, ClipboardCopy } from '@patternfly/react-core';
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
-
 import { trackPendo } from '../../../../../common/helpers';
 
-const additionalInstructions = (cloudProvider) => {
-  if (
-    cloudProvider === instructionsMapping.aws.cloudProvider
-      || cloudProvider === instructionsMapping.azure.cloudProvider
-      || cloudProvider === instructionsMapping.gcp.cloudProvider
-  ) {
-    return `The installer will ask you for the domain or subdomain you wish to use (this can be purchased through ${cloudProvider} but it will take some time for the DNS to propogate).`;
-  }
-  return '';
-};
-
 const GetStarted = ({
-  docURL, cloudProviderID, cloudProvider, customizations,
+  docURL, pendoID, cloudProviderID, customizations,
 }) => (
   <>
     <p>
       The installer will take about 45 minutes to run.
       {' '}
       {
-      additionalInstructions(cloudProvider)
+        get(instructionsMapping, `${cloudProviderID}.getStartedAdditional`, null) || ''
       }
     </p>
     <Button
@@ -34,7 +23,7 @@ const GetStarted = ({
       rel="noreferrer noopener"
       target="_blank"
       variant="secondary"
-      onClick={() => trackPendo('OCP-Download-OfficialDocumentation', cloudProviderID)}
+      onClick={() => trackPendo('OCP-Download-OfficialDocumentation', pendoID)}
     >
       Get started
     </Button>
@@ -66,8 +55,8 @@ const GetStarted = ({
 );
 GetStarted.propTypes = {
   docURL: PropTypes.string.isRequired,
-  cloudProviderID: PropTypes.string,
-  cloudProvider: PropTypes.string.isRequired,
+  pendoID: PropTypes.string,
+  cloudProviderID: PropTypes.string.isRequired,
   customizations: PropTypes.string,
 };
 

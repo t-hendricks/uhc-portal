@@ -2,6 +2,9 @@ const MIRROR_CLIENTS_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/cli
 const MIRROR_CLIENTS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
+const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
+const MIROR_RHCOS_LATEST_S390X = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
+const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const IBMZ_DOCS_BASE = 'https://docs.openshift.com/container-platform/4.3';
 const PPC_DOCS_BASE = 'https://docs.openshift.com/container-platform/4.4';
@@ -15,8 +18,6 @@ const links = {
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
   DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/dedicated-admin-role.html`,
-
-  DOWNLOAD_RHCOS_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/',
 
   INSTALLER_LINUX: `${MIRROR_CLIENTS_LATEST}openshift-install-linux.tar.gz`,
   INSTALLER_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-install-linux.tar.gz`,
@@ -59,6 +60,12 @@ const links = {
   INSTALL_BAREMETAL_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html`,
   INSTALL_BAREMETAL_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal`,
   INSTALL_BAREMETAL_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal-network-customizations.html`,
+  RHCOS_BAREMETAL_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-installer.x86_64.iso`,
+  RHCOS_BAREMETAL_ISO_S390X: `${MIROR_RHCOS_LATEST_S390X}/rhcos-installer.s390x.iso`,
+  RHCOS_BAREMETAL_ISO_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-installer.ppc64le.iso`,
+  RHCOS_BAREMETAL_RAW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-metal.x86_64.raw.gz`,
+  RHCOS_BAREMETAL_RAW_S390X: `${MIROR_RHCOS_LATEST_S390X}/rhcos-metal.s390x.raw.gz`,
+  RHCOS_BAREMETAL_RAW_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-metal.ppc64le.raw.gz`,
 
   INSTALL_CRC_GETTING_STARTED: 'https://access.redhat.com/documentation/en-us/red_hat_codeready_containers',
   INSTALL_CRC_DOWNLOAD_WINDOWS: 'https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-windows-amd64.zip',
@@ -69,19 +76,27 @@ const links = {
   INSTALL_GCPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html`,
   INSTALL_GCPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra`,
   INSTALL_GCP_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-customizations.html`,
+  RHCOS_GCPUPI_TAR_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-4.5.6-x86_64-gcp.x86_64.tar.gz`,
 
   INSTALL_OSPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-installer-custom.html`,
   INSTALL_OSPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-user.html`,
   INSTALL_OSPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user`,
   INSTALL_OSP_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-installer-custom.html`,
+  RHCOS_OSPUPI_QCOW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-openstack.x86_64.qcow2.gz`,
+  RHCOS_OSPUPI_QCOW_S390X: `${MIROR_RHCOS_LATEST_S390X}/rhcos-openstack.s390x.qcow2.gz`,
+  RHCOS_OSPUPI_QCOW_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-openstack.ppc64le.qcow2.gz`,
 
   INSTALL_VSPHERE_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
   INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
   INSTALL_VSPHERE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html`,
+  RHCOS_VSPHERE_OVA_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-vmware.x86_64.ova`,
 
   INSTALL_IBMZ_GETTING_STARTED: `${IBMZ_DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html`,
   INSTALL_IBMZ_RHCOS_LEARN_MORE: `${IBMZ_DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
-  DOWNLOAD_RHCOS_LATEST_IBMZ: 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/',
+  RHCOS_IBMZ_INITRAMFS: `${MIROR_RHCOS_LATEST_S390X}/rhcos-installer-initramfs.s390x.img`,
+  RHCOS_IBMZ_KERNEL: `${MIROR_RHCOS_LATEST_S390X}/rhcos-installer-kernel-s390x`,
+  RHCOS_IBMZ_DASD: `${MIROR_RHCOS_LATEST_S390X}/rhcos-dasd.s390x.raw.gz`,
+  RHCOS_IBMZ_FCP: `${MIROR_RHCOS_LATEST_S390X}/rhcos-metal.s390x.raw.gz`,
 
   INSTALL_RHV_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-default.html`,
   INSTALL_RHV_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-customizations.html`,
@@ -94,7 +109,8 @@ const links = {
 
   INSTALL_POWER_GETTING_STARTED: `${PPC_DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html`,
   INSTALL_POWER_RHCOS_LEARN_MORE: `${PPC_DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power`,
-  DOWNLOAD_RHCOS_LATEST_PPC: 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/',
+  RHCOS_POWER_ISO_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-installer.ppc64le.iso`,
+  RHCOS_POWER_RAW_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-metal.ppc64le.raw.gz`,
 };
 
 const channels = {
@@ -173,6 +189,8 @@ const urls = {
   },
 };
 
-
-export { channels, urls };
+export {
+  channels,
+  urls,
+};
 export default links;

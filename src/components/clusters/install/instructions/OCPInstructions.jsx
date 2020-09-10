@@ -18,23 +18,22 @@ import instructionsMapping from './instructionsMapping';
 const OCPInstructions = (props) => {
   const {
     token,
-    cloudProvider,
+    cloudProviderID,
     rhcosLearnMoreURL,
     channel,
     docURL,
     customizations = '',
     showPreReleaseDocs,
-    rhcosDownloadURL,
   } = props;
-  const cloudProviderID = window.location.pathname;
+  const pendoID = window.location.pathname;
   const cloudProviders = [
-    instructionsMapping.aws.cloudProvider,
-    instructionsMapping.azure.cloudProvider,
-    instructionsMapping.gcp.cloudProvider,
+    'aws',
+    'azure',
+    'gcp',
   ];
-  const getStartedTitleText = cloudProviders.indexOf(cloudProvider) === -1
+  const getStartedTitleText = cloudProviders.indexOf(cloudProviderID) === -1
     ? 'Follow the instructions to configure your environment and install your cluster'
-    : `Follow the documentation to configure your ${cloudProvider} account and run the installer`;
+    : `Follow the documentation to configure your ${instructionsMapping[cloudProviderID].cloudProvider} account and run the installer`;
   return (
     <>
       <Card className="ocp-downloads">
@@ -61,10 +60,10 @@ const OCPInstructions = (props) => {
                 <DownloadsAndPullSecretSection
                   showPreReleaseDocs={showPreReleaseDocs}
                   token={token}
+                  pendoID={pendoID}
                   cloudProviderID={cloudProviderID}
                   rhcosLearnMoreURL={rhcosLearnMoreURL}
                   channel={channel}
-                  rhcosDownloadURL={rhcosDownloadURL}
                 />
               </SplitItem>
             </Split>
@@ -80,8 +79,8 @@ const OCPInstructions = (props) => {
                   <Title headingLevel="h2">{getStartedTitleText}</Title>
                   <GetStarted
                     docURL={docURL}
+                    pendoID={pendoID}
                     cloudProviderID={cloudProviderID}
-                    cloudProvider={cloudProvider}
                     customizations={customizations}
                   />
                 </div>
@@ -107,9 +106,8 @@ const OCPInstructions = (props) => {
 
 OCPInstructions.propTypes = {
   token: PropTypes.object.isRequired,
-  cloudProvider: PropTypes.string.isRequired,
+  cloudProviderID: PropTypes.string.isRequired,
   rhcosLearnMoreURL: PropTypes.string,
-  rhcosDownloadURL: PropTypes.string,
   channel: PropTypes.string.isRequired,
   docURL: PropTypes.string.isRequired,
   showPreReleaseDocs: PropTypes.bool,

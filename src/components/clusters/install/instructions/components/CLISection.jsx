@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
 import { downloadButtonModes } from './DownloadButton';
 
-const CLISection = ({ token, cloudProviderID, channel }) => (
+const CLISection = ({ token, pendoID, channel }) => (
   <>
     <p>
       Download the OpenShift command-line tools and add them to your
@@ -14,7 +14,7 @@ const CLISection = ({ token, cloudProviderID, channel }) => (
     <div>
       <DownloadAndOSSelection
         token={token}
-        cloudProviderID={cloudProviderID}
+        pendoID={pendoID}
         channel={channel}
         mode={downloadButtonModes.CLI_TOOLS}
       />
@@ -35,7 +35,7 @@ const CLISection = ({ token, cloudProviderID, channel }) => (
   </>
 );
 CLISection.propTypes = {
-  cloudProviderID: PropTypes.string,
+  pendoID: PropTypes.string,
   token: PropTypes.object.isRequired,
   channel: PropTypes.string.isRequired,
 };
