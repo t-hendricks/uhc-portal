@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Grid, GridItem, Card, CardBody, Title, Alert, CardTitle,
+  Grid, GridItem, Card, CardBody, Title, Alert, CardTitle, ExpandableSection,
 } from '@patternfly/react-core';
 
 import get from 'lodash/get';
 import clusterStates, { getClusterStateAndDescription } from '../../../common/clusterStates';
-
 
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
@@ -19,6 +18,7 @@ import ClusterStatusMonitor from './ClusterStatusMonitor';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import InstallProgress from '../../../common/InstallProgress/InstallProgress';
 
 class Overview extends React.Component {
   state = {
@@ -62,7 +62,16 @@ class Overview extends React.Component {
       <>
         { shouldShowLogs(cluster)
           ? (
-            <InstallationLogView cluster={cluster} refresh={refresh} history={history} />
+            <InstallProgress cluster={cluster}>
+              <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
+              <ExpandableSection
+                id="toggle-logs"
+                toggleTextCollapsed="View logs"
+                toggleTextExpanded="Hide logs"
+              >
+                <InstallationLogView cluster={cluster} />
+              </ExpandableSection>
+            </InstallProgress>
           ) : (
             <Card id="metrics-charts">
               <CardTitle>
