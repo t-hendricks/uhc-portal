@@ -37,3 +37,6 @@ diff --report-identical-files --side-by-side --label="from $CLUSTERS.json" --lab
  <(jq '.items[] | [.id, .subscription.id, .external_id, .display_name]' "$CLUSTERS.json") \
  <(jq '.items[] | [.cluster_id, .id, .external_cluster_id, .display_name]' "$SUBSCRIPTIONS.json") |
 (colordiff || cat)
+
+# exit status - only 0 if nothing changes and consistency was good
+[ "${PIPESTATUS[0]}" == 0 ] && git diff --quiet -- "$CLUSTERS.json" "$SUBSCRIPTIONS.json"
