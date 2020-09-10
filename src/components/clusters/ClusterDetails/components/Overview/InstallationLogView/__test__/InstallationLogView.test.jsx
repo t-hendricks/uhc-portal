@@ -22,6 +22,7 @@ describe('<InstallationLogView />', () => {
       refresh={jest.fn()}
       logType="install"
       lines="lorem ipsum"
+      len={1}
     />);
   });
 
@@ -42,7 +43,7 @@ describe('<InstallationLogView />', () => {
   });
 
   it('should fetch logs with offset using a timer', () => {
-    wrapper.setProps({ lines: 'hello\nworld' });
+    wrapper.setProps({ lines: 'hello\nworld', len: 2 });
     jest.runOnlyPendingTimers();
     expect(getLogs).toHaveBeenLastCalledWith(clusterDetails.cluster.id, 2, 'install');
   });
@@ -67,6 +68,7 @@ describe('<InstallationLogView />', () => {
       clearLogs={clearLogs}
       getLogs={getLogs}
       lines=""
+      len={0}
     />);
     expect(wrapper).toMatchSnapshot();
   });
@@ -89,6 +91,7 @@ describe('<InstallationLogView />', () => {
       getLogs={getLogs}
       refresh={jest.fn()}
       logType="install"
+      len={1}
       lines="lorem ipsum"
     />);
     expect(wrapper).toMatchSnapshot();

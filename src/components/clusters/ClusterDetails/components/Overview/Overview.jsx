@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Grid, GridItem, Card, CardBody, Title, Alert, CardTitle, ExpandableSection,
+  Grid, GridItem, Card, CardBody, Title, Alert, CardTitle,
 } from '@patternfly/react-core';
 
 import get from 'lodash/get';
@@ -64,17 +64,10 @@ class Overview extends React.Component {
           ? (
             <InstallProgress cluster={cluster}>
               <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
-              {cluster.state === clusterStates.UNINSTALLING
-                ? <InstallationLogView cluster={cluster} />
-                : (
-                  <ExpandableSection
-                    id="toggle-logs"
-                    toggleTextCollapsed="View logs"
-                    toggleTextExpanded="Hide logs"
-                  >
-                    <InstallationLogView cluster={cluster} />
-                  </ExpandableSection>
-                )}
+              <InstallationLogView
+                cluster={cluster}
+                isExpandable={cluster.state !== clusterStates.UNINSTALLING}
+              />
             </InstallProgress>
           ) : (
             <Card id="metrics-charts">
