@@ -2,7 +2,6 @@ import get from 'lodash/get';
 import moment from 'moment';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { hasCpuAndMemory } from '../../clusterDetailsHelper';
-import { maxMetricsTimeDelta } from '../../../common/ResourceUsage/ResourceUsage.consts';
 
 const monitoringStatuses = {
   HEALTHY: 'HEALTHY',
@@ -86,6 +85,9 @@ const getIssuesAndWarnings = ({
   return { issuesCount, warningsCount };
 };
 
+// metrics are available with max delta of 3 hours from last update
+const maxMetricsTimeDelta = 3;
+
 const hasResourceUsageMetrics = (cluster) => {
   const metricsLastUpdate = moment.utc(get(cluster, 'metrics.cpu.updated_timestamp', 0));
   const now = moment.utc();
@@ -161,6 +163,7 @@ export {
   thresholds,
   monitoringItemLinkProps,
   monitoringItemTypes,
+  maxMetricsTimeDelta,
   hasResourceUsageMetrics,
   getIssuesAndWarnings,
   hasData,

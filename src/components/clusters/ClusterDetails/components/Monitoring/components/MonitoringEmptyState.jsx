@@ -10,11 +10,13 @@ import {
 
 import { ExclamationTriangleIcon } from '@patternfly/react-icons';
 
+import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+
 function MonitoringEmptyState(
   {
     children = null,
     hideLastCheckIn = false,
-    lastCheckInText = null,
+    lastCheckIn = null,
     hideIcon = false,
     title = 'Monitoring data is not available',
   },
@@ -25,7 +27,12 @@ function MonitoringEmptyState(
       <Title headingLevel="h5" size="lg">{title}</Title>
       <EmptyStateBody>
         {children}
-        {!hideLastCheckIn && <p>{lastCheckInText}</p>}
+        {!hideLastCheckIn && (
+          <p>
+            Last Check-in:
+            <DateFormat date={lastCheckIn} type="relative" />
+          </p>
+        )}
       </EmptyStateBody>
     </EmptyState>
   );
@@ -34,7 +41,7 @@ function MonitoringEmptyState(
 MonitoringEmptyState.propTypes = {
   children: PropTypes.node,
   hideLastCheckIn: PropTypes.bool,
-  lastCheckInText: PropTypes.string,
+  lastCheckIn: PropTypes.instanceOf(Date),
   hideIcon: PropTypes.bool,
   title: PropTypes.string,
 };

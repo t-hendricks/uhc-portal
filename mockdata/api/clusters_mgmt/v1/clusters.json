@@ -12,6 +12,7 @@
       "external_id": "61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
       "display_name": "61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
       "creation_timestamp": "2019-05-02T13:18:58.077019Z",
+      "activity_timestamp": "2019-05-02T13:18:58.077019Z",
       "openshift_version": "4.1.0-rc.0",
       "subscription": {
         "kind": "SubscriptionLink",
@@ -289,6 +290,7 @@
       "external_id": "whatever-external-id",
       "display_name": "fake-installing-cluster",
       "creation_timestamp": "2019-02-11T09:28:16.000143Z",
+      "activity_timestamp": "2019-02-11T09:28:16.000143Z",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
@@ -561,6 +563,7 @@
       "name": "fake-managed-cluster-2",
       "external_id": "b0c2d108-0603-41c3-9a8f-fake",
       "display_name": "fake-managed-cluster-2",
+      "activity_timestamp": "2019-02-11T09:28:16.000143Z",
       "creation_timestamp": "2019-02-11T09:28:16.000143Z",
       "cloud_provider": {
         "kind": "CloudProviderLink",

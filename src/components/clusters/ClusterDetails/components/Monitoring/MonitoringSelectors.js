@@ -7,71 +7,33 @@ import {
   operatorsStatuses,
   thresholds,
   resourceUsageIssuesHelper,
+  maxMetricsTimeDelta,
 } from './monitoringHelper';
 import clusterStates from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
 
+// returns a Date.
 const lastCheckInSelector = (state) => {
-  // activity_timestamp is initalized on (1) OSD creation (2) OCP registration from telemetry,
-  // so in practice it's always available.
-  const lastCheckIn = get(state, 'clusters.details.cluster.activity_timestamp', '0001-01-01');
-
-  const MAX_DIFF_HOURS = 3;
-  const date = new Date(lastCheckIn);
-
-  // calculate time delta
-  const now = new Date();
-  const diff = now.getTime() - date.getTime();
-  // calculate time delta in hours
-  const hours = Math.floor(diff / 1000 / 60 / 60);
-  // calculate time delta in minutes
-  const minutes = diff / 1000 / 60;
-
-  const values = { hours, minutes };
-
-  if (hours > MAX_DIFF_HOURS) {
-    return {
-      ...values,
-      message: `more than ${MAX_DIFF_HOURS} hours ago`,
-    };
-  }
-  if (hours > 1) {
-    return {
-      ...values,
-      message: hours === 1 ? 'one hour ago' : `${hours} hours ago`,
-    };
-  }
-  if (minutes > 1) {
-    return {
-      ...values,
-      message: `${Math.floor(minutes)} minutes ago`,
-    };
-  }
-  if (minutes === 1) {
-    return {
-      ...values,
-      message: '1 minute ago',
-    };
-  }
-  // minutes may be even negative if data is fresh and browser clock is inaccurate.
-  return {
-    ...values,
-    message: 'less than 1 minute ago',
-  };
+  const timestamp = get(state, 'clusters.details.cluster.activity_timestamp', '0001-01-01');
+  return new Date(timestamp);
 };
 
 const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
   const cluster = get(state, 'clusters.details.cluster', null);
-  const { hours, minutes } = lastCheckIn;
+  if (!cluster) {
+    return monitoringStatuses.NO_METRICS;
+  }
 
-  const noFreshActivity = hours > 3 || (hours === 3 && minutes > 0) || !cluster;
+  const diff = new Date().getTime() - lastCheckIn.getTime();
+  const hours = diff / 1000 / 60 / 60;
+  const freshActivity = OCM_SHOW_OLD_METRICS || hours < maxMetricsTimeDelta;
 
   if (!cluster.managed && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED)) {
     return monitoringStatuses.DISCONNECTED;
   }
 
-  if (noFreshActivity) {
+  if (!freshActivity) {
     return monitoringStatuses.NO_METRICS;
   }
 

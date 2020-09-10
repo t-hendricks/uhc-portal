@@ -13,12 +13,8 @@ const metricsStatusMessages = {
   default: 'The cluster currently does not have any metrics data. Try again later.',
 };
 
-// metrics are available with max delta of 2 hours from last update
-const maxMetricsTimeDelta = 2;
-
 const clusterDetailConsts = {
   metricsStatusMessages,
-  maxMetricsTimeDelta,
 };
 
-export { clusterDetailConsts, metricsStatusMessages, maxMetricsTimeDelta };
+export { clusterDetailConsts, metricsStatusMessages };
