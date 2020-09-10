@@ -17,6 +17,17 @@ jq --slurp '{
 echo "Regenerated '$CLUSTERS.json'."
 git status --short "$CLUSTERS.json"
 
+jq --slurp '{
+  kind: "SubscriptionList",
+  page: 1,
+  size: . | length,
+  total: . | length,
+  items: . | sort_by(.display_name),
+}' "$SUBSCRIPTIONS"/*.json > "$SUBSCRIPTIONS.json"
+
+echo "Regenerated '$SUBSCRIPTIONS.json'."
+git status --short "$SUBSCRIPTIONS.json"
+
 echo
 echo "Checking consistency between '$CLUSTERS.json' and '$SUBSCRIPTIONS.json':"
 echo "# order is [cluster id, subscription id, external id, display name]"

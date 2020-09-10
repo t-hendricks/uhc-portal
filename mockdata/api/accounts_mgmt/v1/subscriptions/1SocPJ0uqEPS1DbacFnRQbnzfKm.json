@@ -1,0 +1,28 @@
+{
+  "id": "1SocPJ0uqEPS1DbacFnRQbnzfKm",
+  "kind": "Subscription",
+  "href": "/api/accounts_mgmt/v1/subscriptions/1SocPJ0uqEPS1DbacFnRQbnzfKm",
+  "plan": {
+    "id": "OCP",
+    "kind": "Plan",
+    "href": "/api/accounts_mgmt/v1/plans/OCP"
+  },
+  "cluster_id": "fake-installing-cluster",
+  "external_cluster_id": "whatever-external-id",
+  "organization_id": "1Hjy0dhTVwN0oQ29KY6J47w0K8n",
+  "last_telemetry_date": "2019-10-28T04:09:56.769537Z",
+  "created_at": "2019-10-28T03:29:23.036005Z",
+  "updated_at": "2019-12-22T10:42:33.505227Z",
+  "display_name": "fake-installing-cluster",
+  "creator": {
+    "id": "1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1",
+    "kind": "Account",
+    "href": "/api/accounts_mgmt/v1/accounts/1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1",
+    "name": "Clayton Coleman",
+    "username": "openshift-ci-test"
+  },
+  "managed": false,
+  "status": "Disconnected",
+  "last_reconcile_date": "2019-12-22T10:42:33.500505Z",
+  "consumer_uuid": "ae614bdc-b273-4fb5-8d65-a6b1eea19c1d"
+}

@@ -1,8 +1,8 @@
 {
-  "kind":"SubscriptionList",
-  "page":1,
-  "size":6,
-  "total":6,
+  "kind": "SubscriptionList",
+  "page": 1,
+  "size": 6,
+  "total": 6,
   "items": [
     {
       "id": "1KgB0WcVBZBdRGAreuve29yoxUB",
@@ -145,36 +145,36 @@
       "consumer_uuid": "ffca7424-941a-4780-9ca5-f209b0ac2346"
     },
     {
-      "id":"1MmOwBoTq1uDmcpBk0NBqJ3dXej",
-      "kind":"Subscription",
-      "href":"/api/accounts_mgmt/v1/subscriptions/1MmOwBoTq1uDmcpBk0NBqJ3dXej",
+      "id": "1MmOwBoTq1uDmcpBk0NBqJ3dXej",
+      "kind": "Subscription",
+      "href": "/api/accounts_mgmt/v1/subscriptions/1MmOwBoTq1uDmcpBk0NBqJ3dXej",
       "plan": {
-        "id":"OCP",
-        "kind":"Plan",
-        "href":"/api/accounts_mgmt/v1/plans/OCP"
+        "id": "OCP",
+        "kind": "Plan",
+        "href": "/api/accounts_mgmt/v1/plans/OCP"
       },
       "registry_credential": {
-        "id":"1MKhDB0nvC8s8l1LLUvsHG16T0V",
-        "kind":"RegistryCredential",
-        "href":"/api/accounts_mgmt/v1/registry_credentials/1MKhDB0nvC8s8l1LLUvsHG16T0V"
+        "id": "1MKhDB0nvC8s8l1LLUvsHG16T0V",
+        "kind": "RegistryCredential",
+        "href": "/api/accounts_mgmt/v1/registry_credentials/1MKhDB0nvC8s8l1LLUvsHG16T0V"
       },
-      "cluster_id":"1GRoczjlSc54Rk7So1R8Vx3fW9y",
-      "external_cluster_id":"8b00e902-f675-4903-9118-91a8f9f5110a",
-      "organization_id":"1HAXGgCYqHpednsRDiwWsZBmDlA",
-      "last_telemetry_date":"2019-06-17T15:49:01.199142Z",
-      "created_at":"2019-06-17T15:49:01.069268Z",
-      "updated_at":"2019-06-24T18:30:15.127924Z",
+      "cluster_id": "1GRoczjlSc54Rk7So1R8Vx3fW9y",
+      "external_cluster_id": "8b00e902-f675-4903-9118-91a8f9f5110a",
+      "organization_id": "1HAXGgCYqHpednsRDiwWsZBmDlA",
+      "last_telemetry_date": "2019-06-17T15:49:01.199142Z",
+      "created_at": "2019-06-17T15:49:01.069268Z",
+      "updated_at": "2019-06-24T18:30:15.127924Z",
       "display_name": "fake-selfmanaged-cluster",
       "creator": {
-        "id":"1MKgULsFYKVJfrfb1eJxLBYtQm1",
-        "kind":"Account",
-        "href":"/api/accounts_mgmt/v1/accounts/1MKgULsFYKVJfrfb1eJxLBYtQm1",
-        "name":"Juan Hernandez",
-        "username":"jhernand-openshift"
+        "id": "1MKgULsFYKVJfrfb1eJxLBYtQm1",
+        "kind": "Account",
+        "href": "/api/accounts_mgmt/v1/accounts/1MKgULsFYKVJfrfb1eJxLBYtQm1",
+        "name": "Juan Hernandez",
+        "username": "jhernand-openshift"
       },
-      "managed":false,
-      "status":"Stale",
-      "last_reconcile_date":"2019-06-24T18:30:15.127924Z"
+      "managed": false,
+      "status": "Stale",
+      "last_reconcile_date": "2019-06-24T18:30:15.127924Z"
     }
   ]
 }
