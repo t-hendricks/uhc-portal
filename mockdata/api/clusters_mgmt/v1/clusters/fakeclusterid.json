@@ -5,6 +5,7 @@
   "name": "fake-managed-cluster-2",
   "external_id": "b0c2d108-0603-41c3-9a8f-fake",
   "display_name": "fake-managed-cluster-2",
+  "activity_timestamp": "2019-02-11T09:28:16.000143Z",
   "creation_timestamp": "2019-02-11T09:28:16.000143Z",
   "cloud_provider": {
     "kind": "CloudProviderLink",
