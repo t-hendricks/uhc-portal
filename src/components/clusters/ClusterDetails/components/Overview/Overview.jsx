@@ -64,13 +64,17 @@ class Overview extends React.Component {
           ? (
             <InstallProgress cluster={cluster}>
               <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
-              <ExpandableSection
-                id="toggle-logs"
-                toggleTextCollapsed="View logs"
-                toggleTextExpanded="Hide logs"
-              >
-                <InstallationLogView cluster={cluster} />
-              </ExpandableSection>
+              {cluster.state === clusterStates.UNINSTALLING
+                ? <InstallationLogView cluster={cluster} />
+                : (
+                  <ExpandableSection
+                    id="toggle-logs"
+                    toggleTextCollapsed="View logs"
+                    toggleTextExpanded="Hide logs"
+                  >
+                    <InstallationLogView cluster={cluster} />
+                  </ExpandableSection>
+                )}
             </InstallProgress>
           ) : (
             <Card id="metrics-charts">
