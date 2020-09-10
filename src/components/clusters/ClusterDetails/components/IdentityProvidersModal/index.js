@@ -46,7 +46,7 @@ const initialValuesForEditing = (idpEdited, editedType) => ({
   ldap_email: getldapAttributes(idpEdited[editedType].attributes, 'email'),
   ldap_url: idpEdited[editedType].url,
   bind_dn: idpEdited[editedType].bind_dn,
-  bind_password: 'BIND_PASSWORD',
+  bind_password: idpEdited[editedType].bind_dn ? 'BIND_PASSWORD' : '',
   ldap_insecure: idpEdited[editedType].insecure,
   // github
   hostname: idpEdited[editedType].hostname,
