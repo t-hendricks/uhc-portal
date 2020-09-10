@@ -29,6 +29,7 @@ import getClusterName from '../../../../common/getClusterName';
 import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActionsDropdownItems';
 import skeletonRows from '../../../common/SkeletonRows';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
+import ProgressList from '../../common/InstallProgress/ProgressList';
 
 
 function ClusterListTable(props) {
@@ -97,6 +98,25 @@ function ClusterListTable(props) {
               </Button>
             </Popover>
           </span>
+        );
+      }
+      if (state === clusterStates.PENDING || state === clusterStates.INSTALLING) {
+        return (
+          <Popover
+            headerContent={<div>Installation status</div>}
+            position={PopoverPosition.top}
+            bodyContent={<ProgressList cluster={cluster} />}
+            aria-label="Status: installing"
+          >
+            <Button
+              className="cluster-status-string status-installing"
+              variant="link"
+              isInline
+              icon={icon}
+            >
+              {state}
+            </Button>
+          </Popover>
         );
       }
       return (
