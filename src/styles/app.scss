@@ -175,13 +175,19 @@ limitations under the License.
     font-size: 14px;
   }
   dd {
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     font-size: 16px;
   }
 }
 
 #networking-tab-last {
   margin-bottom: 0px;
+}
+
+#edit-cluster-routers {
+  @media (min-width: 992px) {
+    margin-right: 24px;
+  }
 }
 
 .radio-tooltip {
@@ -268,7 +274,7 @@ limitations under the License.
 }
 
 #clusterdetails-content .pf-c-card {
-  margin-top: 40px;
+  margin-top: 24px;
 }
 
 .clusters-overview-card {
@@ -514,9 +520,14 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: 5px;
 }
 
-#cluster-health svg{
-  margin-right: 10px;
-  margin-top: 2px;
+#cluster-health {
+  svg {
+    margin-right: 10px;
+    margin-top: 2px;
+  }
+  #last-checkin {
+    font-weight: 400;
+  }
 }
 
 #monitoring .status-icon, #networkSelfService .status-icon {
@@ -1089,6 +1100,7 @@ div.pf-c-alert.archived-cluster-toast {
   }
   .section-header {
     font-size: var(--pf-global--FontSize--lg);
+    font-weight: 400;
     padding-bottom: 0;
   }
   .section-text {

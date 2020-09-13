@@ -24,7 +24,9 @@ exports[`<ClusterHealthCard /> should render 1`] = `
           Cluster has no metrics
         </Title>
       </SplitItem>
-      <SplitItem />
+      <SplitItem
+        id="last-checkin"
+      />
     </Split>
   </CardTitle>
 </Card>

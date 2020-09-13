@@ -31,6 +31,16 @@ function IDPSection({
 
   const actions = [
     {
+      title: 'Edit',
+      onClick: (_, __, rowData) => openModal('create-identity-provider', {
+        clusterID,
+        idpID: rowData.idpID,
+        isEditForm: true,
+        rowId: rowData.id,
+      }),
+      className: 'hand-pointer',
+    },
+    {
       title: 'Delete',
       onClick: (_, __, rowData) => openModal('delete-idp', {
         clusterID,
@@ -38,16 +48,6 @@ function IDPSection({
         rowData.idpID,
         idpName: rowData.name.title,
         idpType: rowData.type.title,
-      }),
-      className: 'hand-pointer',
-    },
-    {
-      title: 'Edit',
-      onClick: (_, __, rowData) => openModal('create-identity-provider', {
-        clusterID,
-        idpID: rowData.idpID,
-        isEditForm: true,
-        rowId: rowData.id,
       }),
       className: 'hand-pointer',
     },
