@@ -335,12 +335,6 @@ exports[`<DetailsLeft /> should render 1`] = `
       </dl>
     </dd>
     <dt>
-      Operating system
-    </dt>
-    <dd>
-      N/A
-    </dd>
-    <dt>
       Created at
     </dt>
     <dd>
