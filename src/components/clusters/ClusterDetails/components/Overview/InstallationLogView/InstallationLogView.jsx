@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@patternfly/react-core';
+import { Button, ExpandableSection } from '@patternfly/react-core';
 import { ExpandIcon } from '@patternfly/react-icons';
 import cx from 'classnames';
 import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
@@ -19,11 +19,14 @@ class LogWindow extends React.Component {
   state = {
     userScrolled: false,
     isFullScreen: false,
+    isExpanded: false,
   }
 
   componentDidMount() {
-    this.update();
-    this.updateTimer = window.setInterval(this.update, 2000);
+    if (this.isShown()) {
+      this.update();
+      this.updateTimer = window.setInterval(this.update, 2000);
+    }
     document.addEventListener('fullscreenchange', this.onFullscreenChange);
     document.addEventListener('visibilitychange', this.onVisibilityChange);
     this.isPageVisible = document.visibilityState === 'visible';
@@ -34,18 +37,21 @@ class LogWindow extends React.Component {
     // effectively this avoids rendering when a completed request has no new lines.
     return (
       nextState.userScrolled !== this.state.userScrolled
+      || nextState.isExpanded !== this.state.isExpanded
       || nextState.isFullScreen !== this.state.isFullScreen
       || nextProps.lines !== this.props.lines
       || nextProps.cluster.state !== this.props.cluster.state
       || nextProps.cluster.id !== this.props.cluster.id
       || nextProps.errorCode !== this.props.errorCode
       || nextProps.logType !== this.props.logType
+      || nextProps.isExpandable !== this.props.isExpandable
     );
   }
 
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { lines, errorCode, cluster } = this.props;
+    const { isExpanded } = this.state;
     if (!prevProps.lines && lines) {
       // If this is the first time we're getting the log, it'll trigger a scroll event,
       // setting userScrolled since the view won't be scrolled all the way down.
@@ -58,6 +64,14 @@ class LogWindow extends React.Component {
       if (this.updateTimer !== null) {
         window.clearInterval(this.updateTimer);
       }
+    }
+    if (isExpanded !== prevState.isExpanded) {
+      // make sure to start or stop the timer when expanding / collapsing
+      if (isExpanded) {
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({ userScrolled: false });
+      }
+      this.onVisibilityChange();
     }
   }
 
@@ -74,6 +88,19 @@ class LogWindow extends React.Component {
     }
   }
 
+  /**
+   * Is the view expanded (or non-expandable)?
+   */
+  isShown = () => {
+    const { isExpanded } = this.state;
+    const { isExpandable } = this.props;
+    return (!isExpandable || isExpanded);
+  }
+
+  toggleExpanded = (isExpanded) => {
+    this.setState({ isExpanded });
+  }
+
   scrollToEnd = () => {
     const { lines } = this.props;
     if (lines) {
@@ -88,7 +115,10 @@ class LogWindow extends React.Component {
     const { userScrolled } = this.state;
     const view = event.target;
     const currentScrollDiff = (view.scrollHeight - view.clientHeight) - view.scrollTop;
-    if (!userScrolled && currentScrollDiff > AUTOSCROLL_THRESHOLD && this.isPageVisible) {
+    if (!userScrolled
+        && currentScrollDiff > AUTOSCROLL_THRESHOLD
+        && this.isPageVisible
+        && this.isShown()) {
       // user scrolled to anywhere which isn't the very bottom, stop auto-scrolling
       this.setState({ userScrolled: true });
     }
@@ -112,25 +142,27 @@ class LogWindow extends React.Component {
       window.clearInterval(this.updateTimer);
     }
     this.isPageVisible = document.visibilityState === 'visible';
-    if (this.isPageVisible) {
-      // update very 2s when page is visible
-      this.updateTimer = window.setInterval(this.update, 2000);
-      // issue another update call just to make sure we show fresh logs
-      //  when the page becomes visible
-      this.update();
-    } else {
-      // update every 15s if page is not visible, for better performance
-      this.updateTimer = window.setInterval(this.update, 15000);
+    if (this.isShown()) {
+      if (this.isPageVisible) {
+        // update very 2s when page is visible
+        this.updateTimer = window.setInterval(this.update, 2000);
+        // issue another update call just to make sure we show fresh logs
+        //  when the page becomes visible
+        this.update();
+      } else {
+        // update every 15s if page is not visible, for better performance
+        this.updateTimer = window.setInterval(this.update, 15000);
+      }
     }
   }
 
   update = () => {
     const {
-      getLogs, cluster, lines, logType, pending, errorCode,
+      getLogs, cluster, lines, len, logType, pending, errorCode,
     } = this.props;
     if (!pending && errorCode !== 403) {
       const requestLogType = cluster.state !== clusterStates.UNINSTALLING ? 'install' : 'uninstall';
-      let offset = lines ? lines.split('\n').length : 0;
+      let offset = lines ? len : 0;
       if (logType !== requestLogType) { offset = 0; }
 
       getLogs(cluster.id, offset, requestLogType);
@@ -158,10 +190,12 @@ class LogWindow extends React.Component {
   }
 
   render() {
-    const { lines, errorCode, cluster } = this.props;
-    const { userScrolled, isFullScreen } = this.state;
-    const totalLines = lines ? lines.split('\n').length - 1 : 0;
-    if (!userScrolled && !!totalLines) {
+    const {
+      lines, len, errorCode, cluster, isExpandable,
+    } = this.props;
+    const { userScrolled, isFullScreen, isExpanded } = this.state;
+    const totalLines = lines ? len - 1 : 0;
+    if (!userScrolled && !!totalLines && this.isShown()) {
       // requestAnimationFrame so this happens *after* render
       requestAnimationFrame(this.scrollToEnd);
     }
@@ -177,17 +211,17 @@ class LogWindow extends React.Component {
         : 'Cluster installation has started. Installation log will appear here once it becomes available.';
     }
 
-    return (
+    const view = (
       <div id="log-window-container" className={cx(isFullScreen && 'pf-c-card__body')} ref={this.cardRef}>
         { !!totalLines && (
-        <div className="logview-buttons pf-c-card__title">
+        <div className="logview-buttons">
           <Button
             onClick={this.fullScreen}
             variant="link"
             icon={<ExpandIcon />}
             isDisabled={!totalLines || !document.fullscreenEnabled}
           >
-            { isFullScreen ? 'Exit fullscreen' : 'Fullscreen' }
+            { isFullScreen ? 'Exit full screen' : 'Full screen' }
           </Button>
         </div>
         )}
@@ -217,14 +251,29 @@ class LogWindow extends React.Component {
         )}
       </div>
     );
+    return isExpandable
+      ? (
+        <ExpandableSection
+          id="toggle-logs"
+          toggleTextCollapsed="View logs"
+          toggleTextExpanded="Hide logs"
+          onToggle={this.toggleExpanded}
+          isExpanded={isExpanded}
+          isActive={!isFullScreen}
+        >
+          {view}
+        </ExpandableSection>
+      ) : view;
   }
 }
 
 LogWindow.propTypes = {
+  isExpandable: PropTypes.bool,
   clearLogs: PropTypes.func.isRequired,
   getLogs: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   lines: PropTypes.string,
+  len: PropTypes.number,
   logType: PropTypes.oneOf(['install', 'uninstall']),
   cluster: PropTypes.shape({
     id: PropTypes.string,
