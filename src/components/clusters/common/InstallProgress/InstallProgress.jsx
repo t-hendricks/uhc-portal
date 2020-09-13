@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import get from 'lodash/get';
 import {
   DescriptionList,
   DescriptionListTerm,
@@ -72,7 +73,7 @@ function InstallProgress({ cluster, children }) {
         || cluster.state === clusterStates.PENDING) && (
         <DescriptionList>
           <DescriptionListGroup>
-            <DescriptionListTerm>AWS account setup</DescriptionListTerm>
+            <DescriptionListTerm>{get(cluster, 'cluster.cloud_provider.id') === 'aws' ? 'AWS account setup' : 'Account setup'}</DescriptionListTerm>
             <DescriptionListDescription>
               {progressData.awsAccountSetup.icon}
               {progressData.awsAccountSetup.text}
