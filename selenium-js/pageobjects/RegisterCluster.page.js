@@ -6,9 +6,19 @@ import Page from './page';
 class RegisterCluster extends Page {
   get clusterIDInput() { return $('input#cluster_id'); }
 
-  get clusterIDError() { return $('input#cluster_id ~ div.pf-m-error'); }
+  get clusterURLInput() { return $('input#web_console_url'); }
 
   get displayNameInput() { return $('input#display_name'); }
+
+  get clusterIDError() { return $('input#cluster_id ~ div.pf-m-error'); }
+
+  get clusterURLError() { return $('input#web_console_url ~ div.pf-m-error'); }
+
+  get displayNameError() { return $('input#display_name ~ div.pf-m-error'); }
+
+  get submitButton() { return $('button.pf-c-button.pf-m-primary'); }
+
+  get cancelButton() { return $('button.pf-c-button.pf-m-secondary'); }
 
   async isRegisterClusterPage() {
     const URL = await browser.getUrl();
