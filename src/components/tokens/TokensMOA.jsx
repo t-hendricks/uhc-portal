@@ -32,7 +32,16 @@ import Tokens, { splitToken, snippetBox, tokenBox } from './Tokens';
 // cause breakage if ever we change the <Tokens> component heavily, but in the
 // meantime prevents unnecessary code duplication with minimal effort.
 class TokensMOA extends Tokens {
+  componentDidMount() {
+    const { blockedByTerms = false } = this.props;
+    if (!blockedByTerms) {
+      // it reaches SSO for offline token.
+      super.componentDidMount();
+    }
+  }
+
   render() {
+    const { blockedByTerms = false } = this.props;
     const { offlineAccessToken } = this.state;
 
     const title = (
@@ -41,7 +50,7 @@ class TokensMOA extends Tokens {
       </PageHeader>
     );
 
-    if (offlineAccessToken === undefined) {
+    if (offlineAccessToken === undefined || blockedByTerms) {
       return (
         <>
           {title}

@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 
 import { userConstants } from '../constants';
-import { accountsService } from '../../services';
+import { accountsService, authorizationsService } from '../../services';
 
 const userInfoResponse = payload => ({
   payload,
@@ -232,6 +232,13 @@ const getOrganizationAndQuota = () => ({
   type: userConstants.GET_ORGANIZATION,
 });
 
+function selfTermsReview() {
+  return dispatch => dispatch({
+    type: userConstants.SELF_TERMS_REVIEW,
+    payload: authorizationsService.selfTermsReview(),
+  });
+}
+
 const userActions = {
   userInfoResponse,
   getOrganizationAndQuota,
@@ -240,10 +247,12 @@ const userActions = {
   processStorageQuota,
   processLoadBalancerQuota,
   processAddOnQuota,
+  selfTermsReview,
 };
 
 export {
   userActions,
   userInfoResponse,
   getOrganizationAndQuota,
+  selfTermsReview,
 };
