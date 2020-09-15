@@ -68,7 +68,7 @@ function OverviewEmptyState() {
           <FlexItem>
             <Card className="dashboard-emptystate-card">
               <CardTitle>
-                <Title headingLevel="h2" size="lg">OpenShift virtualization</Title>
+                <Title headingLevel="h2" size="lg">OpenShift Virtualization</Title>
               </CardTitle>
               <CardBody>
               Run and manage virtual machine workloads alongside your container workloads.
