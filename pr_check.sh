@@ -26,6 +26,9 @@ ls -l /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
 yarn config list
 
 # Run the checks:
+
+mockdata/regenerate-clusters.json.sh  # first because really fast
+
 make \
   lint \
   app \

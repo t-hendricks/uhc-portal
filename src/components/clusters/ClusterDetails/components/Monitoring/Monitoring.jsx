@@ -24,7 +24,6 @@ class Monitoring extends React.Component {
       cluster, alerts, nodes, operators, lastCheckIn, resourceUsage, healthStatus, discoveredIssues,
     } = this.props;
 
-    const lastCheckInText = lastCheckIn && `Last check-in: ${lastCheckIn}`;
     const isInstalling = healthStatus === monitoringStatuses.INSTALLING;
 
     if (healthStatus === monitoringStatuses.DISCONNECTED) {
@@ -35,7 +34,7 @@ class Monitoring extends React.Component {
             status={healthStatus}
             discoveredIssues={discoveredIssues}
           />
-          <MonitoringEmptyState lastCheckInText={lastCheckInText} />
+          <MonitoringEmptyState lastCheckIn={lastCheckIn} />
         </>
       );
     }
@@ -53,10 +52,10 @@ class Monitoring extends React.Component {
 
     if (healthStatus === monitoringStatuses.NO_METRICS) {
       return (
-        <MonitoringEmptyState lastCheckInText={lastCheckInText}>
+        <MonitoringEmptyState lastCheckIn={lastCheckIn}>
           <p>
-        Monitoring data is not available if a cluster goes more than
-        three hours without sending metrics.
+            Monitoring data is not available if a cluster goes more than
+            three hours without sending metrics.
             <br />
         Check the cluster&apos;s web console if you think that this cluster should
         be sending metrics.
@@ -98,7 +97,7 @@ Monitoring.propTypes = {
   nodes: PropTypes.object,
   operators: PropTypes.object,
   resourceUsage: PropTypes.object,
-  lastCheckIn: PropTypes.string,
+  lastCheckIn: PropTypes.instanceOf(Date).isRequired,
   healthStatus: PropTypes.string,
   discoveredIssues: PropTypes.number,
 };
@@ -109,7 +108,6 @@ Monitoring.defaultProps = {
   nodes: {},
   operators: {},
   clearMonitoringState: noop,
-  lastCheckIn: '',
   discoveredIssues: null,
 };
 

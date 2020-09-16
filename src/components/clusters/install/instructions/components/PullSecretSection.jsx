@@ -28,12 +28,12 @@ class PullSecretSection extends React.Component {
   }
 
   render() {
-    const { token, cloudProviderID, text } = this.props;
+    const { token, pendoID, text } = this.props;
     const isDisabled = (!token || !!token.error);
     const { clicked } = this.state;
     const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
     const downloadButton = (
-      <Button variant="secondary" isDisabled={isDisabled} onClick={() => trackPendo('OCP-Download-PullSecret', cloudProviderID)}>
+      <Button variant="secondary" isDisabled={isDisabled} onClick={() => trackPendo('OCP-Download-PullSecret', pendoID)}>
       Download pull secret
       </Button>
     );
@@ -82,7 +82,7 @@ class PullSecretSection extends React.Component {
 
 PullSecretSection.propTypes = {
   token: PropTypes.object.isRequired,
-  cloudProviderID: PropTypes.string,
+  pendoID: PropTypes.string,
   text: PropTypes.string,
 };
 

@@ -6,7 +6,7 @@ import GetStarted from '../GetStarted';
 
 describe('<GetStarted />', () => {
   describe('GetStarted w/ customizations', () => {
-    const wrapper = shallow(<GetStarted docURL="" cloudProvider="" customizations="example.doc.link" />);
+    const wrapper = shallow(<GetStarted docURL="" cloudProviderID="" customizations="example.doc.link" />);
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
@@ -27,7 +27,7 @@ describe('<GetStarted />', () => {
   });
 
   describe('GetStarted w/o customizations', () => {
-    const wrapper = shallow(<GetStarted docURL="" cloudProvider="" />);
+    const wrapper = shallow(<GetStarted docURL="" cloudProviderID="" />);
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();

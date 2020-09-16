@@ -6,24 +6,24 @@ import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import PullSecretSection from './PullSecretSection';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
 import CLISection from './CLISection';
-import RHCOSSection from './RHCOSSection';
+import RHCOSSection from './RHCOSSection/RHCOSSection';
 import DeveloperPreviewSection from './DeveloperPreviewSection';
 import links from '../../../../../common/installLinks';
 
 function DownloadsAndPullSecretSection({
   rhcosLearnMoreURL,
   token,
-  rhcosDownloadURL,
   showPreReleaseDocs = false,
   showPreReleasePageLink = true,
   children,
-  cloudProviderID,
+  pendoID,
   channel,
+  cloudProviderID,
 }) {
   return (
     <div className="ocp-downloads">
       {children}
-      <div className="instructions-section">
+      <div key="install" className="instructions-section">
         <Title headingLevel="h2">What you need to get started</Title>
         <Title headingLevel="h3">OpenShift installer</Title>
         <p>
@@ -49,27 +49,28 @@ function DownloadsAndPullSecretSection({
           <DownloadAndOSSelection
             token={token}
             channel={channel}
-            cloudProviderID={cloudProviderID}
+            pendoID={pendoID}
           />
         </div>
 
         {showPreReleasePageLink && <div><DeveloperPreviewSection /></div>}
       </div>
-      <div className="instructions-section">
+      <div key="pull-secret" className="instructions-section">
         <Title headingLevel="h3">Pull secret</Title>
-        <PullSecretSection token={token} cloudProviderID={cloudProviderID} />
+        <PullSecretSection token={token} pendoID={pendoID} />
       </div>
-      <div className="instructions-section">
+      <div key="cli" className="instructions-section">
         <Title headingLevel="h3">Command line interface</Title>
-        <CLISection token={token} cloudProviderID={cloudProviderID} channel={channel} />
+        <CLISection token={token} pendoID={pendoID} channel={channel} />
       </div>
-      {(rhcosLearnMoreURL || rhcosDownloadURL) && (
-        <div className="instructions-section">
+      {rhcosLearnMoreURL && (
+        <div key="rhcos" className="instructions-section">
           <Title headingLevel="h3">Red Hat Enterprise Linux CoreOS (RHCOS)</Title>
           <RHCOSSection
-            downloadURL={rhcosDownloadURL || links.DOWNLOAD_RHCOS_LATEST}
             learnMoreURL={rhcosLearnMoreURL}
             token={token}
+            pendoID={pendoID}
+            cloudProviderID={cloudProviderID}
           />
         </div>
       )}
@@ -79,13 +80,13 @@ function DownloadsAndPullSecretSection({
 
 DownloadsAndPullSecretSection.propTypes = {
   rhcosLearnMoreURL: PropTypes.string,
-  rhcosDownloadURL: PropTypes.string,
   showPreReleasePageLink: PropTypes.bool,
   showPreReleaseDocs: PropTypes.bool,
   token: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
-  cloudProviderID: PropTypes.string,
+  pendoID: PropTypes.string,
   channel: PropTypes.string.isRequired,
+  cloudProviderID: PropTypes.string.isRequired,
 };
 
 export default DownloadsAndPullSecretSection;

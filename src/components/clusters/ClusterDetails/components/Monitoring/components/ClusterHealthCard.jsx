@@ -19,6 +19,8 @@ import {
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_success_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
 
+import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+
 import { monitoringStatuses } from '../monitoringHelper';
 
 function ClusterHealthCard({
@@ -78,7 +80,8 @@ function ClusterHealthCard({
           </SplitItem>
           <SplitItem>
             {status === monitoringStatuses.UNKNOWN && <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />}
-            {lastCheckIn && `Last check-in: ${lastCheckIn}`}
+            Last check-in:
+            <DateFormat date={lastCheckIn} type="relative" />
           </SplitItem>
         </Split>
       </CardTitle>
@@ -89,7 +92,7 @@ function ClusterHealthCard({
 ClusterHealthCard.propTypes = {
   status: PropTypes.string,
   discoveredIssues: PropTypes.number,
-  lastCheckIn: PropTypes.string,
+  lastCheckIn: PropTypes.instanceOf(Date),
 };
 
 

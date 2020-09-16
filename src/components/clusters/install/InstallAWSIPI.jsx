@@ -40,7 +40,7 @@ class InstallAWSIPI extends Component {
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProvider={instructionsMapping.aws.cloudProvider}
+            cloudProviderID="aws"
             customizations={instructionsMapping.aws.customizations}
             {...instructionsMapping.aws.ipi}
           />

@@ -9,6 +9,7 @@ import {
   Button,
   PageSection,
 } from '@patternfly/react-core';
+import { overrideErrorMessage, BANNED_USER_CODE } from '../../common/errors';
 
 
 function SubscriptionNotFulfilled({ data, refresh }) {
@@ -26,8 +27,9 @@ function SubscriptionNotFulfilled({ data, refresh }) {
     </PageSection>
   );
 
-  const getErrorText = ({ errorMessage, operationID }) => {
-    const text = (
+  const getErrorText = ({ errorMessage, operationID, internalErrorCode }) => {
+    const payload = { code: internalErrorCode };
+    const text = BANNED_USER_CODE === payload.code ? overrideErrorMessage(payload) : (
       <>
         <p>
         An error has occured!

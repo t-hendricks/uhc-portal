@@ -242,6 +242,7 @@ exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
     dropdownPosition="right"
     expandId="expandable-toggle"
     gridBreakPoint="grid-md"
+    isStickyHeader={false}
     ouiaSafe={true}
     role="grid"
     rowLabeledBy="simple-node"

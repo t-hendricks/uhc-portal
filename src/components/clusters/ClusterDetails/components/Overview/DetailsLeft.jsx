@@ -25,6 +25,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
   }
   const clusterVersion = get(cluster, 'openshift_version', 'N/A');
   const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
+  const channel = get(cluster, 'metrics.channel');
 
   return (
     <>
@@ -75,11 +76,13 @@ function DetailsLeft({ cluster, cloudProviders }) {
                 </dd>
               </div>
             )}
+            { channel && (
+              <div>
+                <dt>Upgrade channel: </dt>
+                <dd>{channel}</dd>
+              </div>
+            )}
           </dl>
-        </dd>
-        <dt>Operating system</dt>
-        <dd>
-          {get(cluster, 'metrics.operating_system', 'N/A')}
         </dd>
         <dt>Created at</dt>
         <dd>

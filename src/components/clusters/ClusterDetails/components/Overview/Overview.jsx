@@ -8,7 +8,6 @@ import {
 import get from 'lodash/get';
 import clusterStates, { getClusterStateAndDescription } from '../../../common/clusterStates';
 
-
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
@@ -19,6 +18,7 @@ import ClusterStatusMonitor from './ClusterStatusMonitor';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import InstallProgress from '../../../common/InstallProgress/InstallProgress';
 
 class Overview extends React.Component {
   state = {
@@ -62,7 +62,13 @@ class Overview extends React.Component {
       <>
         { shouldShowLogs(cluster)
           ? (
-            <InstallationLogView cluster={cluster} refresh={refresh} history={history} />
+            <InstallProgress cluster={cluster}>
+              <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
+              <InstallationLogView
+                cluster={cluster}
+                isExpandable={cluster.state !== clusterStates.UNINSTALLING}
+              />
+            </InstallProgress>
           ) : (
             <Card id="metrics-charts">
               <CardTitle>

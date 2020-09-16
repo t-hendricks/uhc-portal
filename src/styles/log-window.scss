@@ -4,11 +4,16 @@ $color-log-window-text: #f5f5f5;
 $font-family-log-window-body: var(--pf-global--FontFamily--monospace);
 $color-log-window-divider: $color-log-window-header-bg;
 
+#log-window-container{
+ background-color: #ffffff;
+}
+
 .log-window {
   color: $color-log-window-text;
-  background-color: $color-log-window-body-bg;
+  background-color: #ffffff;
   height: 100%;
   width: 100%;
+  float: left;
 }
 
 .log-window__header {
@@ -36,6 +41,11 @@ $color-log-window-divider: $color-log-window-header-bg;
 
 .logview-buttons {
   float: right;
+  padding-top: 0;
+}
+
+#toggle-logs {
+  padding-top: 10px;
 }
 
 .logview-title {

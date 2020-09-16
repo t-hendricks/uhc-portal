@@ -18,7 +18,7 @@ describe('<ClusterCreatedIndicator />', () => {
   });
 
   it('should show created date when cluster is OSD', () => {
-    const creationTimeStamp = '2020-01-01T00:00:00Z';
+    const creationTimeStamp = '2020-01-01T12:00:00Z';
     const cluster = {
       managed: true,
       subscription: {
@@ -31,7 +31,7 @@ describe('<ClusterCreatedIndicator />', () => {
   });
 
   it('should show created date when it has a valid support', () => {
-    const creationTimeStamp = '2020-01-01T00:00:00Z';
+    const creationTimeStamp = '2020-01-01T12:00:00Z';
     const cluster = {
       managed: false,
       subscription: {

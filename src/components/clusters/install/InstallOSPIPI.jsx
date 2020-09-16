@@ -40,7 +40,7 @@ class InstallOSPIPI extends Component {
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProvider={instructionsMapping.openstack.cloudProvider}
+            cloudProviderID="openstack"
             customizations={instructionsMapping.openstack.customizations}
             {...instructionsMapping.openstack.ipi}
           />

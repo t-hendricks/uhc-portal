@@ -79,10 +79,10 @@ describe('<ClusterDetails />', () => {
           cluster: undefined,
         },
       };
-      shallow(<ClusterDetails {...props404} />);
+      const wrapper404 = shallow(<ClusterDetails {...props404} />);
 
       expect(functions.setGlobalError).toBeCalled();
-      expect(functions.history.push).toBeCalledWith('/');
+      expect(wrapper404.find('Redirect').length).toEqual(1);
     });
   });
 

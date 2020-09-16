@@ -1,6 +1,6 @@
 @import '~@redhat-cloud-services/frontend-components/components/InsightsLabel.css';
 
-#cluster-insights-table {
+#insightsTabContent {
 	.pf-c-card__body.no-padding {
 		padding: 0;
 	}
@@ -10,7 +10,7 @@
 	}
 
 	.info-color {
-		color: var(--pf-global--active-color--300);
+		color: var(--pf-global--info-color--100);
 	}
 
 	.disabled-color {
@@ -100,4 +100,17 @@
 			}
 		}
 	}
+}
+
+.insights-justification-note {
+	margin-top: var(--pf-global--spacer--md) !important;
+	margin-bottom: var(--pf-global--spacer--sm) !important;
+}
+
+.insights-on-rule-disabled-feedback-modal .pf-c-modal-box__title {
+	font-weight: normal;
+}
+
+.insights-on-rule-disabled-feedback-modal .error-message {
+	color: var(--pf-global--danger-color--100);
 }

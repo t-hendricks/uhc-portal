@@ -12,6 +12,7 @@
       "external_id": "61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
       "display_name": "61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
       "creation_timestamp": "2019-05-02T13:18:58.077019Z",
+      "activity_timestamp": "2019-05-02T13:18:58.077019Z",
       "openshift_version": "4.1.0-rc.0",
       "subscription": {
         "kind": "SubscriptionLink",
@@ -64,6 +65,34 @@
             "unit": ""
           }
         },
+        "sockets": {
+          "used": {
+            "value": 0,
+            "unit": ""
+          },
+          "total": {
+            "value": 0,
+            "unit": ""
+          }
+        },
+        "compute_nodes_memory": {
+          "total": {
+            "value": 42949672960,
+            "unit": "B"
+          }
+        },
+        "compute_nodes_cpu": {
+          "total": {
+            "value": 12,
+            "unit": ""
+          }
+        },
+        "compute_nodes_sockets": {
+          "total": {
+            "value": 0,
+            "unit": ""
+          }
+        },
         "storage": {
           "updated_timestamp": "0001-01-01T00:00:00Z",
           "used": {
@@ -105,7 +134,7 @@
       },
       "subscription": {
         "kind": "SubscriptionLink",
-        "id": "1VAYPPHgFNHENCwB4rsfDmgCS8z",
+        "id": "1KJHPPHFDSHxcvwB4rsfDmgHG6c",
         "href": "/api/accounts_mgmt/v1/subscriptions/1VAYPPHgFNHENCwB4rsfDmgCS8z"
       },
       "region": {
@@ -261,6 +290,7 @@
       "external_id": "whatever-external-id",
       "display_name": "fake-installing-cluster",
       "creation_timestamp": "2019-02-11T09:28:16.000143Z",
+      "activity_timestamp": "2019-02-11T09:28:16.000143Z",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
@@ -533,6 +563,7 @@
       "name": "fake-managed-cluster-2",
       "external_id": "b0c2d108-0603-41c3-9a8f-fake",
       "display_name": "fake-managed-cluster-2",
+      "activity_timestamp": "2019-02-11T09:28:16.000143Z",
       "creation_timestamp": "2019-02-11T09:28:16.000143Z",
       "cloud_provider": {
         "kind": "CloudProviderLink",
@@ -583,6 +614,34 @@
             "unit": ""
           }
         },
+        "sockets": {
+          "used": {
+            "value": 0,
+            "unit": ""
+          },
+          "total": {
+            "value": 0,
+            "unit": ""
+          }
+        },
+        "compute_nodes_memory": {
+          "total": {
+            "value": 200,
+            "unit": "MiB"
+          }
+        },
+        "compute_nodes_cpu": {
+          "total": {
+            "value": 5,
+            "unit": ""
+          }
+        },
+        "compute_nodes_sockets": {
+          "total": {
+            "value": 0,
+            "unit": ""
+          }
+        },
         "storage": {
           "updated_timestamp": "0001-01-01T00:00:00Z",
           "used": {
@@ -621,6 +680,10 @@
       },
       "multi_az": false,
       "managed": true,
+      "storage_quota": {
+        "value": 107374182400,
+        "unit": "B"
+      },
       "product": {
         "kind": "ProductLink",
         "id": "osd",
@@ -636,6 +699,7 @@
       "external_id": "8b00e902-f675-4903-9118-91a8f9f5110a",
       "display_name": "fake-selfmanaged-cluster",
       "creation_timestamp": "2019-01-29T16:04:15.281411Z",
+      "activity_timestamp": "2020-01-01T00:00:00.000000Z",
       "cloud_provider": {
         "kind": "CloudProviderLink",
         "id": "aws",
@@ -670,24 +734,24 @@
       },
       "metrics": {
         "memory": {
-          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "updated_timestamp": "2020-01-01T00:00:00.000000Z",
           "used": {
-            "value": 0,
+            "value": 12345678900,
             "unit": "B"
           },
           "total": {
-            "value": 0,
+            "value": 137438953472,
             "unit": "B"
           }
         },
         "cpu": {
-          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "updated_timestamp": "2020-01-01T00:00:00.000000Z",
           "used": {
-            "value": 0,
+            "value": 6.54321,
             "unit": ""
           },
           "total": {
-            "value": 0,
+            "value": 16,
             "unit": ""
           }
         },
@@ -703,16 +767,16 @@
           }
         },
         "compute_nodes_memory": {
-          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "updated_timestamp": "2020-01-01T00:00:00.000000Z",
           "total": {
-            "value": 0,
+            "value": 68719476736,
             "unit": "B"
           }
         },
         "compute_nodes_cpu": {
-          "updated_timestamp": "0001-01-01T00:00:00Z",
+          "updated_timestamp": "2020-01-01T00:00:00.000000Z",
           "total": {
-            "value": 24,
+            "value": 8,
             "unit": ""
           }
         },
