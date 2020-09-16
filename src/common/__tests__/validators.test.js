@@ -438,6 +438,7 @@ test('awsNumericAccountID', () => {
   expect(awsNumericAccountID('1')).toBe(errStr);
   expect(awsNumericAccountID('123456789')).toBe(errStr);
   expect(awsNumericAccountID('1e5')).toBe(errStr);
+  expect(awsNumericAccountID('11111111122222222aaaaaaaaaa')).toBe(errStr);
   expect(awsNumericAccountID('-12345678901')).toBe(errStr);
   expect(awsNumericAccountID('123456789012')).toBe(undefined);
 });

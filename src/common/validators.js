@@ -44,7 +44,7 @@ const AWS_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
 
 const INGRESS_ROUTE_LABEL_MAX_LEN = 63;
 
-const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}/;
+const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}$/;
 
 // Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');

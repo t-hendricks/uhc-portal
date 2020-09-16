@@ -1,6 +1,8 @@
 import React from 'react';
 import get from 'lodash/get';
 
+const BANNED_USER_CODE = 'ACCT-MGMT-22';
+
 function overrideErrorMessage(payload) {
   if (!payload) {
     return '';
@@ -22,7 +24,7 @@ function overrideErrorMessage(payload) {
   // override error by its code
   const errorCode = get(payload, 'code', '');
   switch (errorCode) {
-    case 'ACCT-MGMT-22': // ErrorBanned
+    case BANNED_USER_CODE: // ErrorBanned
       message = (
         <span>
           Your account has been placed on
@@ -147,4 +149,7 @@ export {
   getErrorState,
   formatErrorDetails,
   getErrorMessage,
+  overrideErrorMessage,
+
+  BANNED_USER_CODE,
 };

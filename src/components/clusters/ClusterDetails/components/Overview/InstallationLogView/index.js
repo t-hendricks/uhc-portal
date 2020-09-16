@@ -5,6 +5,7 @@ import shouldShowLogs from './shouldShowLogs';
 
 const mapStateToProps = state => ({
   lines: state.logs.lines,
+  len: state.logs.len,
   pending: state.logs.pending,
   errorCode: state.logs.errorCode,
   logType: state.logs.logType,

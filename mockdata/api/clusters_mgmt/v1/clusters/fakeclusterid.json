@@ -5,6 +5,7 @@
   "name": "fake-managed-cluster-2",
   "external_id": "b0c2d108-0603-41c3-9a8f-fake",
   "display_name": "fake-managed-cluster-2",
+  "activity_timestamp": "2019-02-11T09:28:16.000143Z",
   "creation_timestamp": "2019-02-11T09:28:16.000143Z",
   "cloud_provider": {
     "kind": "CloudProviderLink",
@@ -55,6 +56,34 @@
         "unit": ""
       }
     },
+    "sockets": {
+      "used": {
+        "value": 0,
+        "unit": ""
+      },
+      "total": {
+        "value": 0,
+        "unit": ""
+      }
+    },
+    "compute_nodes_memory": {
+      "total": {
+        "value": 200,
+        "unit": "MiB"
+      }
+    },
+    "compute_nodes_cpu": {
+      "total": {
+        "value": 5,
+        "unit": ""
+      }
+    },
+    "compute_nodes_sockets": {
+      "total": {
+        "value": 0,
+        "unit": ""
+      }
+    },
     "storage": {
       "updated_timestamp": "0001-01-01T00:00:00Z",
       "used": {
@@ -93,6 +122,10 @@
   },
   "multi_az": false,
   "managed": true,
+  "storage_quota": {
+    "value": 107374182400,
+    "unit": "B"
+  },
   "product": {
     "kind": "ProductLink",
     "id": "osd",

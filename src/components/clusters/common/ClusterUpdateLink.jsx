@@ -9,7 +9,7 @@ const ClusterUpdateLink = ({ cluster }) => {
   const { upgrade } = cluster.metrics;
 
   // Show which version the cluster is currently updating to
-  if (upgrade.state === 'running' && upgrade.version) {
+  if (upgrade.state === 'running' && upgrade.version && (cluster.openshift_version !== upgrade.version)) {
     return (
       <span>
         {' '}

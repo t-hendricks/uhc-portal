@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InstallProgress /> should render when first step completed 1`] = `
+<Card>
+  <CardTitle>
+    <Title
+      className="card-title logview-title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Installing cluster
+    </Title>
+  </CardTitle>
+  <CardBody>
+    <Connect(clusterStatusMonitor) />
+    <DescriptionList>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          AWS account setup
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <CheckCircleIcon
+            className="icon-space-right"
+            color="#3e8635"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          Completed
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          DNS setup
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <PendingIcon
+            className="icon-space-right"
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          Pending
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          Cluster installation
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <PendingIcon
+            className="icon-space-right"
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          Pending
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+    </DescriptionList>
+    <Connect(LogWindow) />
+  </CardBody>
+</Card>
+`;
+
+exports[`<InstallProgress /> should render when first step in progress 1`] = `
+<Card>
+  <CardTitle>
+    <Title
+      className="card-title logview-title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Installing cluster
+    </Title>
+  </CardTitle>
+  <CardBody>
+    <Connect(clusterStatusMonitor) />
+    <DescriptionList>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          AWS account setup
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <InProgressIcon
+            className="icon-space-right"
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          preparing account
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          DNS setup
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <PendingIcon
+            className="icon-space-right"
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          Pending
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          Cluster installation
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <PendingIcon
+            className="icon-space-right"
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          Pending
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+    </DescriptionList>
+    <Connect(LogWindow) />
+  </CardBody>
+</Card>
+`;
+
+exports[`<InstallProgress /> should render when second step completed 1`] = `
+<Card>
+  <CardTitle>
+    <Title
+      className="card-title logview-title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Installing cluster
+    </Title>
+  </CardTitle>
+  <CardBody>
+    <Connect(clusterStatusMonitor) />
+    <DescriptionList>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          AWS account setup
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <CheckCircleIcon
+            className="icon-space-right"
+            color="#3e8635"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          Completed
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          DNS setup
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <CheckCircleIcon
+            className="icon-space-right"
+            color="#3e8635"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          Completed
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          Cluster installation
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <InProgressIcon
+            className="icon-space-right"
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          installing cluster
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+    </DescriptionList>
+    <Connect(LogWindow) />
+  </CardBody>
+</Card>
+`;

@@ -10,6 +10,7 @@ export const downloadButtonModes = {
   CLI_TOOLS: 'CLI_TOOLS',
   CRC: 'CRC',
   INSTALLER: 'INSTALLER',
+  RHCOS: 'RHCOS',
 };
 
 const DownloadButton = ({
@@ -17,9 +18,12 @@ const DownloadButton = ({
   url,
   disabled = false,
   mode = downloadButtonModes.INSTALLER,
-  cloudProviderID,
+  pendoID,
+  text = '',
+  name = '',
 }) => {
   let buttonText;
+  // eslint-disable-next-line default-case
   switch (mode) {
     case (downloadButtonModes.CRC):
       buttonText = 'Download Code-Ready Containers';
@@ -27,8 +31,12 @@ const DownloadButton = ({
     case (downloadButtonModes.CLI_TOOLS):
       buttonText = 'Download command-line tools';
       break;
-    default:
+    case (downloadButtonModes.INSTALLER):
       buttonText = 'Download installer';
+      break;
+    case (downloadButtonModes.RHCOS):
+      buttonText = text;
+      break;
   }
 
   return (
@@ -38,15 +46,20 @@ const DownloadButton = ({
       variant="secondary"
       className="install--download-installer"
       onClick={() => {
+        // eslint-disable-next-line default-case
         switch (mode) {
           case (downloadButtonModes.CRC):
-            trackPendo('OCP-Download-CRC', cloudProviderID);
+            trackPendo('OCP-Download-CRC', pendoID);
             break;
           case (downloadButtonModes.CLI_TOOLS):
-            trackPendo('OCP-Download-CLITools', cloudProviderID);
+            trackPendo('OCP-Download-CLITools', pendoID);
             break;
-          default:
-            trackPendo('OCP-Download-Installer', cloudProviderID);
+          case (downloadButtonModes.INSTALLER):
+            trackPendo('OCP-Download-Installer', pendoID);
+            break;
+          case (downloadButtonModes.RHCOS):
+            trackPendo(name, pendoID);
+            break;
         }
       }}
       disabled={!!token.error || disabled}
@@ -58,10 +71,12 @@ const DownloadButton = ({
 };
 DownloadButton.propTypes = {
   token: PropTypes.object.isRequired,
-  cloudProviderID: PropTypes.string,
+  pendoID: PropTypes.string,
   url: PropTypes.string,
   disabled: PropTypes.bool,
-  mode: PropTypes.oneOf(['CLI_TOOLS', 'CRC', 'INSTALLER']),
+  mode: PropTypes.oneOf(['CLI_TOOLS', 'CRC', 'INSTALLER', 'RHCOS']),
+  text: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default DownloadButton;

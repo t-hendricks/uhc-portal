@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 
 import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
 import ErrorBox from '../../../common/ErrorBox';
+import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 
 
 describe('<TransferClusterOwnershipDialog />', () => {
@@ -20,6 +21,7 @@ describe('<TransferClusterOwnershipDialog />', () => {
     subscription = {
       id: '0',
       released: false,
+      status: subscriptionStatuses.ACTIVE,
     };
     requestState = {
       fulfilled: false,
@@ -46,6 +48,17 @@ describe('<TransferClusterOwnershipDialog />', () => {
   it('should not show dialog for canceling transfer', () => {
     wrapper.setProps({ subscription: { ...subscription, released: true } });
     expect(wrapper).toEqual({});
+  });
+
+  it('should show dialog for transferring disconnected clusters', () => {
+    wrapper.setProps({
+      subscription: {
+        ...subscription,
+        released: false,
+        status: subscriptionStatuses.DISCONNECTED,
+      },
+    });
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('should show error', () => {

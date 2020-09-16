@@ -39,6 +39,7 @@ class InstallIBM extends Component {
         <PageSection>
           <OCPInstructions
             token={token}
+            cloudProviderID="power"
             {...instructionsMapping.power}
           />
         </PageSection>

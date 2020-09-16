@@ -6,6 +6,7 @@
   "external_id": "whatever-external-id",
   "display_name": "fake-installing-cluster",
   "creation_timestamp": "2019-02-11T09:28:16.000143Z",
+  "activity_timestamp": "2019-02-11T09:28:16.000143Z",
   "cloud_provider": {
     "kind": "CloudProviderLink",
     "id": "aws",

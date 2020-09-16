@@ -210,6 +210,7 @@ const getCreateIDPRequestData = (formData) => {
   };
   const selectedIDPData = IDPs[formData.type].data();
   if (formData.idpId && formData.idpId !== '') {
+    delete basicData.name;
     if (selectedIDPData.client_secret === 'CLIENT_SECRET') {
       delete selectedIDPData.client_secret;
     }

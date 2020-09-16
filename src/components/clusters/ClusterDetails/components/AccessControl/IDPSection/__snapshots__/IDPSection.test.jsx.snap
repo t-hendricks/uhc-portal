@@ -45,35 +45,7 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
       </a>
     </p>
     <Tooltip
-      appendTo={[Function]}
-      aria="describedby"
-      boundary="window"
-      className=""
       content="You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers."
-      distance={15}
-      enableFlip={true}
-      entryDelay={500}
-      exitDelay={500}
-      flipBehavior={
-        Array [
-          "top",
-          "right",
-          "bottom",
-          "left",
-          "top",
-          "right",
-          "bottom",
-        ]
-      }
-      id=""
-      isAppLauncher={false}
-      isContentLeftAligned={false}
-      isVisible={false}
-      maxWidth="18.75rem"
-      position="top"
-      tippyProps={Object {}}
-      trigger="mouseenter focus"
-      zIndex={9999}
     >
       <span>
         <Button
@@ -158,6 +130,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
       dropdownPosition="right"
       expandId="expandable-toggle"
       gridBreakPoint="grid-md"
+      isStickyHeader={false}
       ouiaSafe={true}
       role="grid"
       rowLabeledBy="simple-node"
@@ -203,35 +176,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
       <Component />
     </Table>
     <Tooltip
-      appendTo={[Function]}
-      aria="describedby"
-      boundary="window"
-      className=""
       content="You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers."
-      distance={15}
-      enableFlip={true}
-      entryDelay={500}
-      exitDelay={500}
-      flipBehavior={
-        Array [
-          "top",
-          "right",
-          "bottom",
-          "left",
-          "top",
-          "right",
-          "bottom",
-        ]
-      }
-      id=""
-      isAppLauncher={false}
-      isContentLeftAligned={false}
-      isVisible={false}
-      maxWidth="18.75rem"
-      position="top"
-      tippyProps={Object {}}
-      trigger="mouseenter focus"
-      zIndex={9999}
     >
       <span>
         <Button

@@ -39,6 +39,7 @@ class InstallRHV extends Component {
         <PageSection>
           <OCPInstructions
             token={token}
+            cloudProviderID="rhv"
             {...instructionsMapping.rhv}
           />
         </PageSection>

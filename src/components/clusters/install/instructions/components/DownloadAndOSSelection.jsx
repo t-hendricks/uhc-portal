@@ -45,7 +45,7 @@ class DownloadAndOSSelection extends React.Component {
     const {
       token,
       mode = downloadButtonModes.INSTALLER,
-      cloudProviderID,
+      pendoID,
       channel,
     } = this.props;
     const { OS } = this.state;
@@ -66,7 +66,7 @@ class DownloadAndOSSelection extends React.Component {
         url={url}
         mode={mode}
         disabled={disabled}
-        cloudProviderID={cloudProviderID}
+        pendoID={pendoID}
       />
     );
   }
@@ -86,17 +86,16 @@ class DownloadAndOSSelection extends React.Component {
 
     return (
       <Split hasGutter className="os-based-download">
-        <SplitItem span={4}>
+        <SplitItem>
           <FormSelect value={OS} onChange={this.onChange} aria-label="select-os-dropdown">
             {options.map(option => (
               <FormSelectOption isDisabled={option.disabled} key={`OS.${option.value}`} value={option.value} label={option.label} />
             ))}
           </FormSelect>
         </SplitItem>
-        <SplitItem span={5}>
+        <SplitItem>
           {this.downloadButton()}
         </SplitItem>
-        <SplitItem span={3} />
       </Split>
     );
   }
@@ -105,7 +104,7 @@ class DownloadAndOSSelection extends React.Component {
 DownloadAndOSSelection.propTypes = {
   token: PropTypes.object.isRequired,
   cliTools: PropTypes.bool,
-  cloudProviderID: PropTypes.string,
+  pendoID: PropTypes.string,
   channel: PropTypes.string.isRequired,
   mode: PropTypes.oneOf(['CLI_TOOLS', 'CRC', 'INSTALLER']),
 };

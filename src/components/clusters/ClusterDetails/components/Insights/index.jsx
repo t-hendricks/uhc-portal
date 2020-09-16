@@ -19,6 +19,7 @@ const Insights = ({
   enableRule,
   groups,
   cluster,
+  openModal,
 }) => {
   if (!insightsData) {
     return (
@@ -53,6 +54,7 @@ const Insights = ({
       voteOnRule={voteOnRule}
       disableRule={disableRule}
       enableRule={enableRule}
+      openModal={openModal}
     />
   );
 };
@@ -64,6 +66,7 @@ Insights.propTypes = {
   voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default Insights;

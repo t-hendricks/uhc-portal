@@ -38,6 +38,7 @@ class InstallVSphere extends Component {
         <PageSection>
           <OCPInstructions
             token={token}
+            cloudProviderID="vmware"
             {...instructionsMapping.vmware}
           />
         </PageSection>

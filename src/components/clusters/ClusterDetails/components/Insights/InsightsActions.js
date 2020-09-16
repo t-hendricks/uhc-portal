@@ -19,6 +19,7 @@ import {
   VOTE_ON_RULE_INSIGHTS,
   DISABLE_RULE_INSIGHTS,
   ENABLE_RULE_INSIGHTS,
+  SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS,
   GET_GROUPS_INSIGHTS,
   GET_REPORT_DETAILS,
   SET_REPORT_DETAILS,
@@ -102,19 +103,41 @@ const toggleSingleRuleInsights = async (dispatch, clusterId, ruleId, enable) => 
   };
 };
 
-export const disableRuleInsights = (clusterId, ruleId) => (dispatch) => {
+// clusterId is id of the cluster
+// ruleId is id of the rule
+// feedback is feedback on rule
+const sendFeedbackOnSingleRuleDisableInsights = async (clusterId, ruleId, feedback) => {
+  const response = await insightsService.sendFeedbackOnRuleDisableInsights(
+    clusterId, ruleId, feedback,
+  );
+
+  return {
+    insightsData: response.data,
+    clusterId,
+    ruleId,
+  };
+};
+
+export const disableRuleInsights = (clusterId, ruleId) => dispatch => (
   dispatch({
     type: DISABLE_RULE_INSIGHTS,
     payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, false),
-  });
-};
+  })
+);
 
-export const enableRuleInsights = (clusterId, ruleId) => (dispatch) => {
+export const enableRuleInsights = (clusterId, ruleId) => dispatch => (
   dispatch({
     type: ENABLE_RULE_INSIGHTS,
     payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, true),
-  });
-};
+  })
+);
+
+export const sendFeedbackOnRuleDisableInsights = (clusterId, ruleId, feedback) => dispatch => (
+  dispatch({
+    type: SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS,
+    payload: sendFeedbackOnSingleRuleDisableInsights(clusterId, ruleId, feedback),
+  })
+);
 
 export const fetchGroups = () => dispatch => dispatch({
   type: GET_GROUPS_INSIGHTS,

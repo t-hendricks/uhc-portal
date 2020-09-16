@@ -5,7 +5,7 @@ exports[`<GlobalErrorBox /> should not render when errorMessage is empty 1`] = `
 exports[`<GlobalErrorBox /> should render 1`] = `
 <Alert
   actionClose={
-    <Unknown
+    <AlertActionCloseButton
       onClose={[MockFunction]}
     />
   }

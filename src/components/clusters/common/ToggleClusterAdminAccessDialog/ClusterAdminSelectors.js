@@ -1,8 +1,11 @@
 import get from 'lodash/get';
 
+import clusterStates from '../clusterStates';
+
 const canAllowAdminSelector = (state) => {
   const product = get(state, 'clusters.details.cluster.product.id', 'osd');
-  if (product === 'rhmi') {
+  const clusterState = get(state, 'clusters.details.cluster.state');
+  if (product === 'rhmi' || clusterState !== clusterStates.READY) {
     return false;
   }
 
