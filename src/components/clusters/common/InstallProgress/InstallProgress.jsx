@@ -29,7 +29,7 @@ function InstallProgress({ cluster, children }) {
     // first step in progress
     if (cluster.state === clusterStates.PENDING) {
       return {
-        awsAccountSetup: { icon: inProgressIcon, text: 'preparing account' },
+        awsAccountSetup: { icon: inProgressIcon, text: 'Preparing account' },
         DNSSetup: pending,
         clusterInstallation: pending,
       };
@@ -48,7 +48,7 @@ function InstallProgress({ cluster, children }) {
       return {
         awsAccountSetup: completed,
         DNSSetup: completed,
-        clusterInstallation: { icon: inProgressIcon, text: 'installing cluster' },
+        clusterInstallation: { icon: inProgressIcon, text: 'Installing cluster' },
       };
     }
     return {

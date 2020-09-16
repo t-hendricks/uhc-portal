@@ -87,7 +87,7 @@ exports[`<InstallProgress /> should render when first step in progress 1`] = `
             noVerticalAlign={false}
             size="sm"
           />
-          preparing account
+          Preparing account
         </DescriptionListDescription>
       </DescriptionListGroup>
       <DescriptionListGroup>
@@ -177,7 +177,7 @@ exports[`<InstallProgress /> should render when second step completed 1`] = `
             noVerticalAlign={false}
             size="sm"
           />
-          installing cluster
+          Installing cluster
         </DescriptionListDescription>
       </DescriptionListGroup>
     </DescriptionList>
