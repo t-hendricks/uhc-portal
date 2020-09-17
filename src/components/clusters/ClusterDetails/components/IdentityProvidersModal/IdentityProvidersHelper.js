@@ -214,6 +214,9 @@ const getCreateIDPRequestData = (formData) => {
     if (selectedIDPData.client_secret === 'CLIENT_SECRET') {
       delete selectedIDPData.client_secret;
     }
+    if (selectedIDPData.bind_password && selectedIDPData.bind_password === 'BIND_PASSWORD') {
+      delete selectedIDPData.bind_password;
+    }
   }
 
   const selectedIDPName = IDPs[formData.type].name;
