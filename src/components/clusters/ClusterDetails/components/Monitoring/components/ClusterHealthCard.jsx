@@ -26,7 +26,7 @@ import { monitoringStatuses } from '../monitoringHelper';
 function ClusterHealthCard({
   status = monitoringStatuses.NO_METRICS,
   discoveredIssues = null,
-  lastCheckIn = null,
+  lastCheckIn,
 }) {
   let icon;
   let title;
@@ -80,8 +80,12 @@ function ClusterHealthCard({
           </SplitItem>
           <SplitItem>
             {status === monitoringStatuses.UNKNOWN && <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />}
-            Last check-in:
-            <DateFormat date={lastCheckIn} type="relative" />
+            {lastCheckIn !== undefined && (
+              <>
+                Last check-in:
+                <DateFormat date={lastCheckIn} type="relative" />
+              </>
+            )}
           </SplitItem>
         </Split>
       </CardTitle>
