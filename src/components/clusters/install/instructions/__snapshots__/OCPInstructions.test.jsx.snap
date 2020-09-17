@@ -1028,7 +1028,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization 1`] =
               </Title>
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-default.html"
+                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
                 pendoID="/"
               />
             </div>

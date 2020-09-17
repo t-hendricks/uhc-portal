@@ -203,7 +203,8 @@ const instructionsMapping = {
     cloudProvider: 'Red Hat Virutalization',
     customizations: links.INSTALL_RHV_CUSTOMIZATIONS,
     title: 'Install OpenShift on Red Hat Virtualization with installer-provisioned infrastructure',
-    docURL: links.INSTALL_RHV_GETTING_STARTED,
+    // TODO: Check whether this needs to be reverted
+    docURL: links.INSTALL_RHV_CUSTOMIZATIONS,
     showPreReleasePageLink: false,
     channel: channels.STABLE,
   },
