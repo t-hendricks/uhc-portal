@@ -209,9 +209,10 @@ class InsightsTable extends React.Component {
     this.setState((state) => {
       const { insightsData } = this.props;
       const sortBy = sortByParam && sortByParam.column ? sortByParam : state.sortBy;
+      const data = insightsData.data || [];
 
       // Filter and sort data
-      let rules = [...insightsData.data]
+      let rules = [...data]
         .sort((a, b) => (sortBy && sortBy.column
           ? sortMultiplier[sortBy.direction] * dataSortMapping[sortBy.column.title](a, b)
           : 0))
