@@ -8,6 +8,8 @@
     "risk_of_change": 2,
     "user_vote": 1,
     "disabled": true,
+    "disable_feedback": "test",
+    "disabled_at": "2020-09-19T15:24:30Z",
     "resolution": "Red Hat recommends that you configure your nodes to meet the minimum resource requirements.\n\n```hajsdkfhasdjfh asdjfhas lkdfjhas ldjkfha sjlkdfha sjdkfhas dkjfhas dkjfhads kjfhas dkjfhas dkjfhas kdjhfa ksjdhfas kjdhfas kjdf```\n\nMake sure that:\n\n{{~ pydata.nodes :node }}\n1. Node {{=node[\"name\"]}} ({{=node[\"role\"]}}){{?node[\"memory\"]}}\n   * Has enough memory, minimum requirement is {{=node[\"memory_req\"]}}. Currently its only configured with {{=node[\"memory\"]}}GB.{{?}}{{?node.cpu}}\n   * Has enough allocatable cpu, minimum requirement is {{=node[\"cpu_req\"]}}. Currently its only configured with {{=node[\"cpu\"]}}.{{?}}{{~}}",
     "tags": [
       "tag2",

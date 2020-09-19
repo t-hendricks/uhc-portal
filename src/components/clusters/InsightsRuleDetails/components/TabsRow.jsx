@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 
 import { Tabs, Tab } from '@patternfly/react-core';
 
+import './TabsRow.scss';
+
 class TabsRow extends React.Component {
   state = {
     activeTabKey: 0,
-  }
+  };
 
   getTabs() {
     const {
@@ -50,9 +52,14 @@ class TabsRow extends React.Component {
 
   render() {
     const { activeTabKey } = this.state;
+    const { isDisabled } = this.props;
 
     return (
-      <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
+      <Tabs
+        className={isDisabled ? 'disabled-tabs' : ''}
+        activeKey={activeTabKey}
+        onSelect={this.handleTabClick}
+      >
         {this.getTabs().map(tab => (
           <Tab key={tab.key} eventKey={tab.key} title={tab.title} tabContentId={tab.contentId} />
         ))}
@@ -64,6 +71,7 @@ class TabsRow extends React.Component {
 TabsRow.propTypes = {
   reasonTabRef: PropTypes.object.isRequired,
   resolutionTabRef: PropTypes.object.isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 export default TabsRow;

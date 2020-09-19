@@ -43,4 +43,8 @@
 	.disabled-color {
 		color: var(--pf-global--disabled-color--100);
 	}
+
+	.disabled-heath-check-message > * {
+		padding-left: var(--pf-global--spacer--xs);
+	}
 }
