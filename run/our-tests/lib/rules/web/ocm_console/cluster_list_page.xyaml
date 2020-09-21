@@ -26,7 +26,7 @@ cluster_list_page_loaded:
         - selector:
             xpath: //h1[text()='Clusters'] | //*[contains(@class, 'pf-c-title') and text()='No OpenShift clusters to display']
         - selector:
-            xpath: //button[@class='pf-c-button pf-m-plain' and text()='Name'] | //*[contains(@class, 'pf-c-title') and text()='No OpenShift clusters to display']
+            xpath: //button[@class='pf-c-table__button']/div/span[text()='Name'] | //*[contains(@class, 'pf-c-title') and text()='No OpenShift clusters to display']
     action: create_cluster_button_loaded
 
 check_cluster_list_page:
@@ -69,7 +69,7 @@ check_cluster_list_page:
             xpath: //button[@aria-label='Refresh']
     elements:
         - selector:
-            xpath: //button[@class='pf-c-button pf-m-plain' and text()='Name']
+            xpath: //button[@class='pf-c-table__button']/div/span[text()='Name']
         - selector:
             xpath: //span[@class='pf-c-table__sort-indicator']
         - selector:
