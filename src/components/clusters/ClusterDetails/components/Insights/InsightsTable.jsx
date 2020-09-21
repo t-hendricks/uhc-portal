@@ -88,14 +88,6 @@ const isValueFiltered = (filterValues, value) => Object.entries(filterValues)
     true,
   );
 
-const defaultFilters = (filterValues, v) => {
-  if (!('ruleStatusFilter' in filterValues)) {
-    return !v.disabled;
-  }
-
-  return true;
-};
-
 const EmptyTableIcon = () => (
   <EmptyStateIcon className="success-color" icon={CheckCircleIcon} />
 );
@@ -103,7 +95,7 @@ const EmptyTableIcon = () => (
 class InsightsTable extends React.Component {
   state = {
     shownData: [],
-    filters: {},
+    filters: { ruleStatusFilter: 'enabled' },
     sortBy: {
       column: { title: 'Description' },
       direction: 'asc',
@@ -215,7 +207,6 @@ class InsightsTable extends React.Component {
         .sort((a, b) => (sortBy && sortBy.column
           ? sortMultiplier[sortBy.direction] * dataSortMapping[sortBy.column.title](a, b)
           : 0))
-        .filter(v => defaultFilters(filterValues, v))
         .filter(v => isValueFiltered(filterValues, v));
 
       // Total count of showed items
