@@ -15,11 +15,11 @@ function DetailsRight({ cluster }) {
   const showDesiredNodes = cluster.managed;
   const showInfraNodes = (!cluster.managed && get(cluster, 'metrics.nodes.infra', null))
                          || get(cluster, 'nodes.infra', 0) > 0;
-  const showSockets = cluster.metrics.sockets.total.value > 0;
+  const hasSockets = get(cluster, 'metrics.sockets.total.value', 0) > 0;
 
   const humanizedPersistentStorage = cluster.managed
              && humanizeValueWithUnitGiB(cluster.storage_quota.value);
-  const showVCPU = !showSockets;
+  const showVCPU = !hasSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   return (
     <>
@@ -54,9 +54,16 @@ function DetailsRight({ cluster }) {
           Total memory
         </dt>
         <dd>
-          {memoryTotalWithUnit.value}
-          {' '}
-          {memoryTotalWithUnit.unit}
+          {get(cluster, 'subscription.status') === subscriptionStatuses.DISCONNECTED ? (
+            'N/A'
+          )
+            : (
+              <>
+                {memoryTotalWithUnit.value}
+                {' '}
+                {memoryTotalWithUnit.unit}
+              </>
+            )}
         </dd>
         { cluster.managed && !cluster.byoc && (
           <>
@@ -76,17 +83,6 @@ function DetailsRight({ cluster }) {
             </dd>
           </>
         )}
-        {showSockets && (
-          <>
-            <dt>
-              Total sockets
-            </dt>
-            <dd>
-              {cluster.metrics.sockets.total.value}
-            </dd>
-          </>
-        )}
-
         {showDesiredNodes && (
           <>
             <dt>
