@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-
+import Unavailable from '../../../common/Unavailable';
 import CardBadge from '../../common/CardBadge';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import PageTitle from '../../../common/PageTitle';
@@ -88,27 +88,42 @@ class CloudProviderSelection extends Component {
       </Tooltip>
     );
 
-    const quotaRequestComplete = organization.fulfilled || organization.error;
     const title = (<PageTitle title="Create an OpenShift Dedicated Cluster" breadcrumbs={breadcrumbs} />);
+
+    if (organization.fulfilled) {
+      return (
+        <PageSection>
+          <Card>
+            <div className="pf-c-content ocm-page">
+              <Title headingLevel="h3" size="2xl">
+                Select an infrastructure provider
+              </Title>
+              <div className="flex-container">
+                {awsCard}
+                {gcpCard}
+              </div>
+            </div>
+          </Card>
+        </PageSection>
+      );
+    }
+
+    if (organization.error) {
+      return (
+        <PageSection>
+          <Unavailable
+            message="Error retrieving quota"
+            response={organization}
+          />
+        </PageSection>
+      );
+    }
+
     return (
       <>
         {title}
         <PageSection>
-          { quotaRequestComplete ? (
-            <Card>
-              <div className="pf-c-content ocm-page">
-                <Title headingLevel="h3" size="2xl">
-                Select an infrastructure provider
-                </Title>
-                <div className="flex-container">
-                  {awsCard}
-                  {gcpCard}
-                </div>
-              </div>
-            </Card>
-          ) : (
-            <Spinner centered />
-          )}
+          <Spinner centered />
         </PageSection>
       </>
     );

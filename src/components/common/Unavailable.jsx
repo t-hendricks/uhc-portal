@@ -28,7 +28,6 @@ class Unavailable extends React.Component {
           >
             { message && (<Title headingLevel="h6">{message}</Title>) }
             <span>{`Error code: ${response.errorCode}`}</span>
-            <br />
             <span>{response.errorMessage}</span>
             { formatErrorDetails(response.errorDetails) }
             <br />
