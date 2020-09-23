@@ -8,17 +8,17 @@ import ClusterStatusMonitor from '../../ClusterDetails/components/Overview/Clust
 
 describe('<InstallProgress />', () => {
   const firstStepPending = {
-    ...fixtures.clusterDetails,
+    ...fixtures.clusterDetails.cluster,
     state: clusterStates.PENDING,
   };
 
   const firstStepCompleted = {
-    ...fixtures.clusterDetails,
+    ...fixtures.clusterDetails.cluster,
     state: clusterStates.INSTALLING,
   };
 
   const secondStepCompleted = {
-    ...fixtures.clusterDetails,
+    ...fixtures.clusterDetails.cluster,
     state: clusterStates.INSTALLING,
     dns_ready: true,
   };
