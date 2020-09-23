@@ -73,7 +73,7 @@ function InstallProgress({ cluster, children }) {
         || cluster.state === clusterStates.PENDING) && (
         <DescriptionList>
           <DescriptionListGroup>
-            <DescriptionListTerm>{get(cluster, 'cluster.cloud_provider.id') === 'aws' ? 'AWS account setup' : 'Account setup'}</DescriptionListTerm>
+            <DescriptionListTerm>{get(cluster, 'cloud_provider.id') === 'aws' ? 'AWS account setup' : 'Account setup'}</DescriptionListTerm>
             <DescriptionListDescription>
               {progressData.awsAccountSetup.icon}
               {progressData.awsAccountSetup.text}
