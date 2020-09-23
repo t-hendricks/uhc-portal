@@ -29,6 +29,6 @@ login_ocm_portal:
   elements:
     - selector:
         #id: kc-login
-        text: Log in
+        text: Log In
       type: button
       op: click
