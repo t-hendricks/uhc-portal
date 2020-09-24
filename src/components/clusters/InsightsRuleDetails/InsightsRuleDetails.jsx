@@ -25,10 +25,15 @@ import {
   CardTitle,
   Button,
   CardFooter,
+  EmptyState,
+  EmptyStateIcon,
+  Title,
+  EmptyStateBody,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { Markdown } from '@redhat-cloud-services/rule-components/dist/cjs/index';
 import moment from 'moment';
+import { EyeSlashIcon } from '@patternfly/react-icons';
 
 import InsightsRuleDetailsTop from './components/InsightsRuleDetailsTop';
 import EmptyRemediationInfo from './components/EmptyRemediationInfo';
@@ -232,21 +237,32 @@ class InsightsRuleDetails extends Component {
         {
           isRuleDisabled
             ? (
-              <Card>
-                <CardTitle>Heath check is disabled</CardTitle>
-                <CardBody>
-                  <div className="disabled-heath-check-message">
-                    This health check is disabled for the following reason:
-                    <i>{ ruleDisableFeedback && ruleDisableFeedback.length ? ruleDisableFeedback : 'None' }</i>
-                    <span>{moment(ruleDisabledAtDate).format('DD MMM YYYY')}</span>
-                  </div>
-                </CardBody>
-                <CardFooter>
-                  <Button variant="link" isInline onClick={() => enableRule(ruleId)}>
-                    Enable health check
-                  </Button>
-                </CardFooter>
-              </Card>
+              <div>
+                <Card>
+                  <CardTitle className="disabled-health-check-title">Heath check is disabled</CardTitle>
+                  <CardBody>
+                    <div className="disabled-heath-check-message">
+                      This health check is disabled for the following reason:
+                      <i>{ ruleDisableFeedback && ruleDisableFeedback.length ? ruleDisableFeedback : 'None' }</i>
+                      <span>{moment(ruleDisabledAtDate).format('DD MMM YYYY')}</span>
+                    </div>
+                  </CardBody>
+                  <CardFooter>
+                    <Button variant="link" isInline onClick={() => enableRule(ruleId)}>
+                      Enable health check
+                    </Button>
+                  </CardFooter>
+                </Card>
+                <EmptyState>
+                  <EmptyStateIcon icon={EyeSlashIcon} />
+                  <Title size="lg" headingLevel="h4">
+                    Health check is disabled
+                  </Title>
+                  <EmptyStateBody>
+                    This health check has been disabled and has no results.
+                  </EmptyStateBody>
+                </EmptyState>
+              </div>
             )
             : (
               <div>

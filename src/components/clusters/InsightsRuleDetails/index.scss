@@ -47,4 +47,8 @@
 	.disabled-heath-check-message > * {
 		padding-left: var(--pf-global--spacer--xs);
 	}
+
+	.disabled-health-check-title {
+		font-size: var(--pf-global--FontSize--lg);
+	}
 }
