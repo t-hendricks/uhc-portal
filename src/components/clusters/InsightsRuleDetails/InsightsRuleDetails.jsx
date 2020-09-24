@@ -211,7 +211,7 @@ class InsightsRuleDetails extends Component {
     const reasonInfoExist = !!reportDetails.report.reason;
     const resolutionInfoExist = !!reportDetails.report.resolution;
     const {
-      rule_id: ruleId,
+      rule_id: currentRuleId,
       disabled: isRuleDisabled,
       disable_feedback: ruleDisableFeedback,
       disabled_at: ruleDisabledAtDate,
@@ -248,7 +248,7 @@ class InsightsRuleDetails extends Component {
                     </div>
                   </CardBody>
                   <CardFooter>
-                    <Button variant="link" isInline onClick={() => enableRule(ruleId)}>
+                    <Button variant="link" isInline onClick={() => enableRule(currentRuleId)}>
                       Enable health check
                     </Button>
                   </CardFooter>
