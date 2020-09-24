@@ -234,6 +234,9 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
       if (subscriptionID) {
         return accountsService.getSubscription(subscriptionID).then((subscription) => {
           cluster.data.subscription = subscription.data;
+          if (subscription.data.metrics !== undefined && subscription.data.metrics.length > 0) {
+            [cluster.data.metrics] = subscription.data.metrics;
+          }
           return cluster;
         }).catch(() => cluster);
       }
