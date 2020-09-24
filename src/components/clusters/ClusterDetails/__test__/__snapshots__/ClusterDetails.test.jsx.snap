@@ -191,6 +191,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       displayMonitoringTab={true}
       displayNetworkingTab={true}
       hasIssues={true}
+      initTabOpen=""
       insightsTabRef={
         Object {
           "current": null,
@@ -211,6 +212,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "current": null,
         }
       }
+      setOpenedTab={[MockFunction]}
     />
   </ClusterDetailsTop>
   <ForwardRef
