@@ -8,7 +8,7 @@ import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import SupportStatusLabel from './SupportStatusLabel';
 
 
-function DetailsLeft({ cluster, cloudProviders }) {
+function DetailsLeft({ cluster, cloudProviders, openModal }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
   let cloudProvider;
   let region = get(cluster, 'region.id', 'N/A');
@@ -66,7 +66,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
             </dt>
             <dd>
               {clusterVersion}
-              <ClusterUpdateLink cluster={cluster} />
+              <ClusterUpdateLink cluster={cluster} openModal={openModal} />
             </dd>
             { !cluster.managed && !isUpgrading && (
               <div>
@@ -110,6 +110,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
 DetailsLeft.propTypes = {
   cluster: PropTypes.any,
   cloudProviders: PropTypes.object.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default DetailsLeft;

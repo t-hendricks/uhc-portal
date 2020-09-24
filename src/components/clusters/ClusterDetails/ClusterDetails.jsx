@@ -40,6 +40,7 @@ import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDi
 import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
+import UpgradeWizard from '../common/Upgrades/UpgradeWizard';
 
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
@@ -351,6 +352,7 @@ class ClusterDetails extends Component {
           || cluster.state === clusterStates.UPDATING)
           && cluster.managed && !!get(cluster, 'api.url')
           && get(cluster, 'cloud_provider.id') === 'aws';
+    const clusterName = getClusterName(cluster);
 
     return (
       <PageSection id="clusterdetails-content">
@@ -398,6 +400,7 @@ class ClusterDetails extends Component {
             history={history}
             displayClusterLogs={displayClusterLogs}
             refresh={this.refresh}
+            openModal={openModal}
           />
         </TabContent>
         {!isArchived && (
@@ -490,12 +493,13 @@ class ClusterDetails extends Component {
         />
         <IdentityProvidersModal
           clusterID={cluster.id}
-          clusterName={getClusterName(cluster)}
+          clusterName={clusterName}
           clusterConsoleURL={consoleURL}
           refreshParent={this.refreshIDP}
         />
         <DeleteIDPDialog refreshParent={this.refreshIDP} />
         <AddGrantModal clusterID={cluster.id} />
+        <UpgradeWizard />
       </PageSection>
     );
   }

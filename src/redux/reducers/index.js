@@ -28,6 +28,7 @@ import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
 import { subscriptionReleasedReducer } from '../../components/clusters/common/TransferClusterOwnershipDialog/subscriptionReleasedReducer';
 import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
 import supportStatusReducer from '../../components/clusters/ClusterDetails/components/Overview/SupportStatusLabel/supportStatusReducer';
+import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import featuresReducer from './featuresReducer';
 
 const reducers = {
@@ -59,6 +60,7 @@ const reducers = {
   dashboards: dashboardsReducer,
   supportStatus: supportStatusReducer,
   features: featuresReducer,
+  clusterUpgrades,
 };
 
 const reduxReducers = history => combineReducers({
