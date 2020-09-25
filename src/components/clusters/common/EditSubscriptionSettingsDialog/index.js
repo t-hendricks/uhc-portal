@@ -18,11 +18,13 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   submit: (subscriptionID, updates) => {
     const requestData = updates;
-    if (updates.socket_total) {
+    if (updates.socket_total && updates.system_units === 'Sockets') {
       requestData.socket_total = parseInt(updates.socket_total, 10);
+      requestData.cpu_total = requestData.socket_total;
     }
-    if (updates.cpu_total) {
+    if (updates.cpu_total && updates.system_units === 'Cores/vCPU') {
       requestData.cpu_total = parseInt(updates.cpu_total, 10);
+      requestData.socket_total = 1;
     }
     dispatch(editSubscriptionSettings(subscriptionID, requestData));
   },
