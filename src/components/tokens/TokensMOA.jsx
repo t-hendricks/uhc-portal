@@ -24,7 +24,7 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Button, CardTitle,
+  CardTitle,
 } from '@patternfly/react-core';
 import Tokens, { splitToken, snippetBox, tokenBox } from './Tokens';
 
@@ -37,7 +37,7 @@ class TokensMOA extends Tokens {
 
     const title = (
       <PageHeader>
-        <PageHeaderTitle title="Red Hat Managed OpenShift on AWS" />
+        <PageHeaderTitle title="Amazon Red Hat OpenShift" />
       </PageHeader>
     );
 
@@ -69,7 +69,6 @@ class TokensMOA extends Tokens {
       '"',
     ];
 
-    const awsURL = 'https://github.com/jeremyeder/quickstart';
     const moactlURL = 'https://github.com/openshift/moactl/releases/latest';
     const moactlLink = <a href={moactlURL}>moactl</a>;
 
@@ -84,7 +83,7 @@ class TokensMOA extends Tokens {
             </CardTitle>
             <CardBody>
               <p>
-                Red Hat Managed OpenShift on AWS is a managed service that makes it easy for you to
+                Amazon Red Hat OpenShift is a managed service that makes it easy for you to
                 use OpenShift on AWS without needing to install, operate or upgrade your own
                 OpenShift (Kubernetes) cluster.
               </p>
@@ -100,9 +99,6 @@ class TokensMOA extends Tokens {
               <p>
                 Run <code>moactl login --help</code> to get more information.
               </p>
-              <a href={awsURL} target="_blank" rel="noopener noreferrer" className="pull-left">
-                <Button variant="primary">Go back to AWS quickstart</Button>
-              </a>
             </CardBody>
           </Card>
         </PageSection>
