@@ -126,7 +126,7 @@ function OverviewEmptyState() {
             <ListItem><a href="https://www.openshift.com/blog" rel="noreferrer noopener" target="_blank">Blog</a></ListItem>
             <ListItem><a href="https://www.openshift.com/learn/courses/getting-started/" rel="noreferrer noopener" target="_blank">Tutorials</a></ListItem>
             <ListItem><a href="https://www.openshift.com/learn/courses/playground/" rel="noreferrer noopener" target="_blank">Playground</a></ListItem>
-            <ListItem><a href="https://www.twitch.tv/redhatopenshift" rel="noreferrer noopener" target="_blank">Twich</a></ListItem>
+            <ListItem><a href="https://www.twitch.tv/redhatopenshift" rel="noreferrer noopener" target="_blank">Twitch</a></ListItem>
           </List>
         </div>
       </div>
