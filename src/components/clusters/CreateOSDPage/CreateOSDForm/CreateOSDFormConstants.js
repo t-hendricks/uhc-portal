@@ -21,6 +21,9 @@ const constants = {
   hostPrefixHint: `The subnet prefix length to assign to each individual node.  For example, if host
     prefix is set to /23, then each node is assigned a /23 subnet out of the given CIDR, allowing
     for 510 (2^(32 - 23) - 2) Pod IP addresses.`,
+  bypassSCPChecksHint: `Some AWS Service Control Policies will cause intallation to fail even if
+    the credentials have the correct permissions. Disabling SCP checks allows installation to proceed.
+    The SCP will still be enforced even if the checks are bypassed.`,
 };
 
 const billingModelConstants = {

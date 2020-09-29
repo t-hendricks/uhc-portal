@@ -17,8 +17,9 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Checkbox, FormGroup, Switch,
+  Checkbox, FormGroup, Switch, Split, SplitItem,
 } from '@patternfly/react-core';
+import PopoverHint from '../PopoverHint';
 
 // To be used inside redux-form Field component.
 function ReduxCheckbox(props) {
@@ -33,13 +34,22 @@ function ReduxCheckbox(props) {
   const InputComponent = isSwitch ? Switch : Checkbox;
   return (
     <FormGroup fieldId={input.name} validated={touched && error ? 'error' : null}>
-      <InputComponent
-        isChecked={!!input.value}
-        id={input.name}
-        {...input}
-        {...extraProps}
-        label={label}
-      />
+      <Split hasGutter>
+        <SplitItem>
+          <InputComponent
+            isChecked={!!input.value}
+            id={input.name}
+            {...input}
+            {...extraProps}
+            label={label}
+          />
+        </SplitItem>
+        {extraProps.extendedHelpText && (
+          <SplitItem>
+            <PopoverHint hint={extraProps.extendedHelpText} />
+          </SplitItem>
+        )}
+      </Split>
     </FormGroup>
   );
 }
