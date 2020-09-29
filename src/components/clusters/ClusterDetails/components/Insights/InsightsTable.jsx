@@ -126,7 +126,7 @@ class InsightsTable extends React.Component {
     }
 
     const { openModal, cluster } = this.props;
-    const clusterId = cluster.id;
+    const clusterId = cluster.external_id;
 
     openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId });
   }
