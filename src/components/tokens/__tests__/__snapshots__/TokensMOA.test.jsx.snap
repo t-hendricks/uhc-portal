@@ -4,7 +4,7 @@ exports[`<TokensMOA /> Renders loading screen 1`] = `
 <Fragment>
   <PageHeader>
     <PageHeaderTitle
-      title="Red Hat Managed OpenShift on AWS"
+      title="Amazon Red Hat OpenShift"
     />
   </PageHeader>
   <PageSection>
@@ -38,7 +38,7 @@ exports[`<TokensMOA /> Renders token 1`] = `
 <Fragment>
   <PageHeader>
     <PageHeaderTitle
-      title="Red Hat Managed OpenShift on AWS"
+      title="Amazon Red Hat OpenShift"
     />
   </PageHeader>
   <PageSection>
@@ -50,7 +50,7 @@ exports[`<TokensMOA /> Renders token 1`] = `
       </CardTitle>
       <CardBody>
         <p>
-          Red Hat Managed OpenShift on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
+          Amazon Red Hat OpenShift is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
         </p>
         <p>
           Download and install the 
@@ -109,18 +109,6 @@ hello offline access token!\\
           </code>
            to get more information.
         </p>
-        <a
-          className="pull-left"
-          href="https://github.com/jeremyeder/quickstart"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Button
-            variant="primary"
-          >
-            Go back to AWS quickstart
-          </Button>
-        </a>
       </CardBody>
     </Card>
   </PageSection>

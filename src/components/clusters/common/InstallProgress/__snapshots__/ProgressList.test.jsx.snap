@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProgressList /> should render when first step completed 1`] = `
+<DescriptionList>
+  <DescriptionListGroup>
+    <DescriptionListTerm>
+      AWS account setup
+    </DescriptionListTerm>
+    <DescriptionListDescription>
+      <CheckCircleIcon
+        className="icon-space-right"
+        color="#3e8635"
+        noVerticalAlign={false}
+        size="sm"
+      />
+      Completed
+    </DescriptionListDescription>
+  </DescriptionListGroup>
+  <DescriptionListGroup>
+    <DescriptionListTerm>
+      DNS setup
+    </DescriptionListTerm>
+    <DescriptionListDescription>
+      <PendingIcon
+        className="icon-space-right"
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+      Pending
+    </DescriptionListDescription>
+  </DescriptionListGroup>
+  <DescriptionListGroup>
+    <DescriptionListTerm>
+      Cluster installation
+    </DescriptionListTerm>
+    <DescriptionListDescription>
+      <PendingIcon
+        className="icon-space-right"
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+      Pending
+    </DescriptionListDescription>
+  </DescriptionListGroup>
+</DescriptionList>
+`;
+
+exports[`<ProgressList /> should render when first step in progress 1`] = `
+<DescriptionList>
+  <DescriptionListGroup>
+    <DescriptionListTerm>
+      AWS account setup
+    </DescriptionListTerm>
+    <DescriptionListDescription>
+      <InProgressIcon
+        className="icon-space-right"
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+      Preparing account
+    </DescriptionListDescription>
+  </DescriptionListGroup>
+  <DescriptionListGroup>
+    <DescriptionListTerm>
+      DNS setup
+    </DescriptionListTerm>
+    <DescriptionListDescription>
+      <PendingIcon
+        className="icon-space-right"
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+      Pending
+    </DescriptionListDescription>
+  </DescriptionListGroup>
+  <DescriptionListGroup>
+    <DescriptionListTerm>
+      Cluster installation
+    </DescriptionListTerm>
+    <DescriptionListDescription>
+      <PendingIcon
+        className="icon-space-right"
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+      Pending
+    </DescriptionListDescription>
+  </DescriptionListGroup>
+</DescriptionList>
+`;
+
+exports[`<ProgressList /> should render when second step completed 1`] = `
+<DescriptionList>
+  <DescriptionListGroup>
+    <DescriptionListTerm>
+      AWS account setup
+    </DescriptionListTerm>
+    <DescriptionListDescription>
+      <CheckCircleIcon
+        className="icon-space-right"
+        color="#3e8635"
+        noVerticalAlign={false}
+        size="sm"
+      />
+      Completed
+    </DescriptionListDescription>
+  </DescriptionListGroup>
+  <DescriptionListGroup>
+    <DescriptionListTerm>
+      DNS setup
+    </DescriptionListTerm>
+    <DescriptionListDescription>
+      <CheckCircleIcon
+        className="icon-space-right"
+        color="#3e8635"
+        noVerticalAlign={false}
+        size="sm"
+      />
+      Completed
+    </DescriptionListDescription>
+  </DescriptionListGroup>
+  <DescriptionListGroup>
+    <DescriptionListTerm>
+      Cluster installation
+    </DescriptionListTerm>
+    <DescriptionListDescription>
+      <InProgressIcon
+        className="icon-space-right"
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+      Installing cluster
+    </DescriptionListDescription>
+  </DescriptionListGroup>
+</DescriptionList>
+`;

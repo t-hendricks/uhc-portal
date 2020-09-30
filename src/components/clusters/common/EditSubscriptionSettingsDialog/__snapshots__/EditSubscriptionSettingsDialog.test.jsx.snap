@@ -1270,7 +1270,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                       <FormGroup
                                         className="units-numeric-input"
                                         helperText="This number should not include master nodes"
-                                        helperTextInvalid="Compute cores must be a number."
+                                        helperTextInvalid="Cores/vCPU value can only be a positive integer."
                                         id="compute-cores-input"
                                         isRequired={true}
                                         label="Number of compute cores"
@@ -2853,7 +2853,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                       <FormGroup
                                         className="units-numeric-input"
                                         helperText="This number should not include master nodes"
-                                        helperTextInvalid="Compute cores must be a number."
+                                        helperTextInvalid="Cores/vCPU value can only be a positive integer."
                                         id="compute-cores-input"
                                         isRequired={true}
                                         label="Number of compute cores"

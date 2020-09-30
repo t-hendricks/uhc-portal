@@ -63,6 +63,7 @@ const mapDispatchToProps = dispatch => ({
 
       if (formData.system_units === 'Sockets') {
         subscriptionRequest.socket_total = parseInt(formData.socket_total, 10);
+        subscriptionRequest.cpu_total = subscriptionRequest.socket_total;
       }
 
       if (formData.system_units === 'Cores/vCPU') {

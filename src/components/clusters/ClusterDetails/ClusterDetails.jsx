@@ -275,6 +275,8 @@ class ClusterDetails extends Component {
       anyModalOpen,
       hasIssues,
       toggleSubscriptionReleased,
+      setOpenedTab,
+      initTabOpen,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -380,6 +382,8 @@ class ClusterDetails extends Component {
             networkingTabRef={this.networkingTabRef}
             insightsTabRef={this.insightsTabRef}
             hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
+            initTabOpen={initTabOpen}
+            setOpenedTab={setOpenedTab}
           />
         </ClusterDetailsTop>
         <TabContent
@@ -551,6 +555,7 @@ ClusterDetails.propTypes = {
   voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
+  setOpenedTab: PropTypes.func.isRequired,
   canAllowClusterAdmin: PropTypes.bool.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
@@ -558,6 +563,7 @@ ClusterDetails.propTypes = {
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
+  initTabOpen: PropTypes.string.isRequired,
 };
 
 ClusterDetails.defaultProps = {

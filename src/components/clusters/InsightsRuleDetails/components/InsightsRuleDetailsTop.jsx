@@ -40,7 +40,7 @@ function InsightsRuleDetailsTop(props) {
     <Breadcrumbs path={
         [
           { label: 'Clusters' },
-          { label: clusterName, path: `/details/${cluster.id}` },
+          { label: clusterName, path: `/details/${cluster.id}#insights` },
           { label: rule.description },
         ]
       }
@@ -78,7 +78,7 @@ function InsightsRuleDetailsTop(props) {
             showRiskDescription={false}
             definitions={rule.extra_data}
             userVote={rule.user_vote}
-            onFeedbackChanged={(ruleId, vote) => voteOnRule(cluster.id, ruleId, vote)}
+            onFeedbackChanged={(ruleId, vote) => voteOnRule(cluster.external_id, ruleId, vote)}
           />
         </SplitItem>
       </Split>

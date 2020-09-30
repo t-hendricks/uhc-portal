@@ -15,6 +15,7 @@ describe('<TabsRow />', () => {
       accessControlTabRef: mockRef,
       monitoringTabRef: mockRef,
       addOnsTabRef: mockRef,
+      setOpenedTab: jest.fn(),
     };
 
     wrapper = shallow(

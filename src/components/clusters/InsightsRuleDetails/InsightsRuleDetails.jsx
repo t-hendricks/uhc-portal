@@ -210,8 +210,8 @@ class InsightsRuleDetails extends Component {
           pending={clusterDetails.pending || reportDetails.pending}
           refreshFunc={this.refresh}
           voteOnRule={voteOnRule}
-          disableRule={disableRule}
-          enableRule={enableRule}
+          disableRule={ruleId => disableRule(cluster.external_id, ruleId)}
+          enableRule={ruleId => enableRule(cluster.external_id, ruleId)}
         >
           <TabsRow
             reasonTabRef={this.reasonTabRef}

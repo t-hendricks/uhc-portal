@@ -942,6 +942,9 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .cluster-status-string {
   text-transform: capitalize;
+  &.status-installing svg {
+    color:  var(--pf-c-table--cell--Color);
+  }
 }
 
 .spinner-loading-text {
