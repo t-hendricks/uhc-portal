@@ -66,14 +66,37 @@ class clusterStatusMonitor extends React.Component {
 
   render() {
     const { status, cluster } = this.props;
-    if (status.status.id === cluster.id
-        && status.status.state === clusterStates.ERROR) {
-      return (
-        <Alert variant="danger" isInline title="Cluster installation failed">
-          {status.status.description}
-        </Alert>
-      );
+    const title = status.status.provision_error_code || '';
+
+    let errorMsg = '';
+    if (status.status.provision_error_message) {
+      errorMsg = status.status.provision_error_message;
+      if (!status.status.provision_error_code) {
+        errorMsg = '';
+      }
     }
+
+    if (status.status.id === cluster.id) {
+      if (status.status.state === clusterStates.ERROR) {
+        return (
+          <Alert variant="danger" isInline title={`${title}Cluster installation failed`}>
+            {errorMsg}
+          </Alert>
+        );
+      }
+      if ((status.status.provision_error_code
+          || status.status.provision_error_message)) {
+        return (
+          <span>
+            <Alert variant="warning" isInline title={`${title} Installation is taking longer than expected`}>
+              {errorMsg}
+            </Alert>
+            <br />
+          </span>
+        );
+      }
+    }
+
     return null;
   }
 }
@@ -95,6 +118,8 @@ clusterStatusMonitor.propTypes = {
       id: PropTypes.string,
       description: PropTypes.string,
       state: PropTypes.string,
+      provision_error_code: PropTypes.string,
+      provision_error_message: PropTypes.string,
     }),
   }),
   history: PropTypes.shape({
