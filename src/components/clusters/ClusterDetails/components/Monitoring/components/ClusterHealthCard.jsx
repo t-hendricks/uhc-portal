@@ -78,7 +78,7 @@ function ClusterHealthCard({
           <SplitItem isFilled>
             {title}
           </SplitItem>
-          <SplitItem>
+          <SplitItem id="last-checkin">
             {status === monitoringStatuses.UNKNOWN && <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />}
             {lastCheckIn !== undefined && (
               <>

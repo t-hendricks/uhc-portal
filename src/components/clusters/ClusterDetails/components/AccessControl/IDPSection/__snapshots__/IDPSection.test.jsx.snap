@@ -89,12 +89,12 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
           Object {
             "className": "hand-pointer",
             "onClick": [Function],
-            "title": "Delete",
+            "title": "Edit",
           },
           Object {
             "className": "hand-pointer",
             "onClick": [Function],
-            "title": "Edit",
+            "title": "Delete",
           },
         ]
       }

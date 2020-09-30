@@ -52,12 +52,12 @@ class EditClusterRoutersCard extends React.Component {
 
     return (
       <>
-        <Card>
+        <Card id="edit-cluster-routers">
           <CardBody>
             <Form>
               <Grid hasGutter>
                 <GridItem span={9}>
-                  <Title headingLevel="h2" size="lg" className="card-title networking-tab">Master endpoint API</Title>
+                  <Title headingLevel="h1" size="md" className="card-title networking-tab">Master API endpoint</Title>
                   <div className="networking-tab">
                     <ClipboardCopy isReadOnly>
                       {masterAPIEndpoint}
@@ -73,7 +73,7 @@ class EditClusterRoutersCard extends React.Component {
                   </div>
                 </GridItem>
                 <GridItem span={9}>
-                  <Title headingLevel="h2" size="lg" className="card-title networking-tab">Default application router</Title>
+                  <Title headingLevel="h2" size="md" className="card-title networking-tab">Default application router</Title>
                   <div className="networking-tab">
                     <ClipboardCopy isReadOnly>
                       {`https://${defaultRouterAddress}`}
@@ -91,7 +91,7 @@ class EditClusterRoutersCard extends React.Component {
                 <GridItem span={9}>
                   <Split hasGutter>
                     <SplitItem>
-                      <Title headingLevel="h2" size="lg" className="card-title networking-tab">Additional application router</Title>
+                      <Title headingLevel="h2" size="md" className="card-title networking-tab">Additional application router</Title>
                     </SplitItem>
                     <SplitItem>
                       <Field
