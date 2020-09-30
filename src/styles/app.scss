@@ -629,7 +629,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
     min-width: 460px;
     margin-left: 0;
     margin-right: 2em;
-    div { 
+    div {
       min-width: 444px;
     }
   }
@@ -664,7 +664,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .aws-ipi-upi-infra-card {
   flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
-  margin: 20px;  
+  margin: 20px;
 }
 
 #cloud-provider-selection > a {
@@ -807,7 +807,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-top: -20px;
 }
 
-.infra-card-cloud-provider .card-badge-container { 
+.infra-card-cloud-provider .card-badge-container {
   margin-top: -15px;
 }
 
@@ -1198,7 +1198,7 @@ button:focus {
   cursor: pointer;
 }
 
-.access-control-form {
+.control-form-cursor {
   div.pf-c-form__group .pf-c-form__label{
     cursor: default;
   }
@@ -1285,10 +1285,10 @@ h3#grant-role-select  {
    .pf-c-alert{
     max-width: 700px;
     margin-bottom: 0;
-  } 
+  }
   .pf-c-alert + .pf-c-alert {
     margin-top: 24px;
-  } 
+  }
 
   .pf-c-card {
     margin: 24px 0;
@@ -1312,7 +1312,7 @@ h3#grant-role-select  {
     margin: 0 24px;
     max-width: 800px;
   }
-  
+
   .pre-release-card {
     margin-top: 24px;
   }
@@ -1428,7 +1428,7 @@ h3#grant-role-select  {
   div:first-child{
       @media (min-width: 1023px) {
       margin-right: var(--pf-global--spacer--lg);
-    } 
+    }
   }
 }
 
@@ -1483,10 +1483,10 @@ h3#grant-role-select  {
   div:first-child{
     @media (max-width: 769px) {
       margin-bottom: var(--pf-global--spacer--lg);
-    } 
+    }
     @media (min-width: 737px) {
       margin-right: var(--pf-global--spacer--lg);
-    } 
+    }
   }
 }
 
@@ -1584,4 +1584,9 @@ div.pf-c-alert div.pf-c-alert__icon {
     // the modal uses an <a> for primary button so override the conflicting css.
     margin-left: 0px;
   }
+}
+
+.support-subtitle {
+  font-size: var(--pf-global--FontSize--md);
+  font-weight: var(--pf-global--FontWeight--light);
 }

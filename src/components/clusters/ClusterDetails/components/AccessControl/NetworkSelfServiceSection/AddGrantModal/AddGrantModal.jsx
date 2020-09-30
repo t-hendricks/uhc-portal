@@ -101,7 +101,7 @@ class AddGrantModal extends Component {
       >
         <>
           {hasError}
-          <Form className="access-control-form" onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
+          <Form className="control-form-cursor" onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
             <FormGroup
               helperTextInvalid={validationMessage}
               validated={(arnTouched ? !validationMessage : true) ? 'default' : 'error'}

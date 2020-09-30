@@ -43,6 +43,22 @@ const editSubscription = (subscriptionID, data) => apiRequest({
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}`,
 });
 
+const getNotificationContacts = subscriptionID => apiRequest({
+  method: 'get',
+  url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/notification_contacts`,
+});
+
+const addNotificationContact = (subscriptionID, username) => apiRequest({
+  method: 'post',
+  data: { account_username: username },
+  url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/notification_contacts`,
+});
+
+const deleteNotificationContact = (subscriptionID, accountID) => apiRequest({
+  method: 'delete',
+  url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/notification_contacts/${accountID}`,
+});
+
 const getOrganizationQuota = organizationID => apiRequest({
   method: 'get',
   params: {
@@ -75,6 +91,9 @@ const accountsService = {
   getOrganization,
   getSubscription,
   getSubscriptions,
+  getNotificationContacts,
+  addNotificationContact,
+  deleteNotificationContact,
   getOrganizationQuota,
   editSubscription,
   getRequest,

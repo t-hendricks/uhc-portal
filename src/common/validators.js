@@ -191,32 +191,42 @@ const checkClusterDisplayName = (value) => {
   return undefined;
 };
 
-const checkUserID = (value) => {
+const checkUser = (value) => {
   if (!value) {
-    return 'User ID cannot be empty.';
+    return 'cannot be empty.';
   }
   if (value.trim() !== value) {
-    return 'User ID cannot contain leading and trailing spaces';
+    return 'cannot contain leading and trailing spaces';
   }
   if (value.includes('/')) {
-    return 'User ID cannot contain \'/\'.';
+    return 'cannot contain \'/\'.';
   }
   if (value.includes(':')) {
-    return 'User ID cannot contain \':\'.';
+    return 'cannot contain \':\'.';
   }
   if (value.includes('%')) {
-    return 'User ID cannot contain \'%\'.';
+    return 'cannot contain \'%\'.';
   }
   if (value === '~') {
-    return 'User ID cannot be \'~\'.';
+    return 'cannot be \'~\'.';
   }
   if (value === '.') {
-    return 'User ID cannot be \'.\'.';
+    return 'cannot be \'.\'.';
   }
   if (value === '..') {
-    return 'User ID cannot be \'..\'.';
+    return 'cannot be \'..\'.';
   }
   return undefined;
+};
+
+const checkUserID = (value) => {
+  const invalid = checkUser(value);
+  return invalid ? `User ID ${invalid}` : undefined;
+};
+
+const checkUserName = (value) => {
+  const invalid = checkUser(value);
+  return invalid ? `Username ${invalid}` : undefined;
 };
 
 // Function to validate the cluster console URL
@@ -628,6 +638,7 @@ const validators = {
   checkClusterUUID,
   checkClusterDisplayName,
   checkUserID,
+  checkUserName,
   checkBaseDNSDomain,
   cidr,
   awsMachineCidr,
@@ -668,6 +679,7 @@ export {
   checkIdentityProviderName,
   checkClusterDisplayName,
   checkUserID,
+  checkUserName,
   checkClusterConsoleURL,
   checkOpenIDIssuer,
   checkGithubTeams,

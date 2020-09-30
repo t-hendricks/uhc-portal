@@ -31,7 +31,7 @@ class UsersSection extends React.Component {
     } = this.props;
     if (clusterGroupUsers.clusterID !== cluster.id
       || (!clusterGroupUsers.pending)
-      // don't fetch usesrs if we jsut allowed/ removed cluster admin access
+      // don't fetch users if we just allowed/ removed cluster admin access
       || !toggleClusterAdminResponse.pending) {
       getUsers();
     }
@@ -51,7 +51,7 @@ class UsersSection extends React.Component {
     if (((deleteUserResponse.fulfilled && prevProps.deleteUserResponse.pending)
       || (addUserResponse.fulfilled && prevProps.addUserResponse.pending))
       && ((!clusterGroupUsers.pending)
-      // don't fetch usesrs if we jsut allowed/ removed cluster admin access
+      // don't fetch users if we just allowed/ removed cluster admin access
       || !toggleClusterAdminResponse.pending)) {
       getUsers();
     }
