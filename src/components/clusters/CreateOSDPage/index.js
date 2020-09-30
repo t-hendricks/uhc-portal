@@ -77,6 +77,7 @@ const mapStateToProps = (state, ownProps) => {
       persistent_storage: '107374182400',
       load_balancers: '0',
       network_configuration_toggle: 'basic',
+      disable_scp_checks: false,
     },
   });
 };
@@ -84,7 +85,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (formData) => {
     const clusterRequest = {
-      byoc: formData.byoc === 'true',
       name: formData.name,
       region: {
         id: formData.region,
@@ -117,12 +117,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         listening: formData.cluster_privacy,
       };
     }
-
     if (formData.byoc === 'true') {
       clusterRequest.aws = {
         access_key_id: formData.access_key_id,
         account_id: formData.account_id,
         secret_access_key: formData.secret_access_key,
+      };
+      clusterRequest.ccs = {
+        enabled: true,
+        disable_scp_checks: formData.disable_scp_checks,
       };
     } else {
       // Don't pass LB and storage to byoc cluster.
