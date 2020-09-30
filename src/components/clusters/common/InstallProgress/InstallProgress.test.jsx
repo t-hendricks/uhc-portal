@@ -6,7 +6,7 @@ import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 describe('<InstallProgress />', () => {
   const clusterInstalling = {
-    ...fixtures.clusterDetails,
+    ...fixtures.clusterDetails.cluster,
     state: clusterStates.INSTALLING,
   };
 
@@ -23,7 +23,7 @@ describe('<InstallProgress />', () => {
       {
         cluster:
         {
-          ...fixtures.clusterDetails,
+          ...fixtures.clusterDetails.cluster,
           state: clusterStates.UNINSTALLING,
         },
       },

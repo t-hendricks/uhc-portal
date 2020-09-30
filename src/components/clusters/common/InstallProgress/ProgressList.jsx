@@ -58,7 +58,7 @@ function ProgressList({ cluster }) {
   return (
     <DescriptionList>
       <DescriptionListGroup>
-        <DescriptionListTerm>AWS account setup</DescriptionListTerm>
+        <DescriptionListTerm>Account setup</DescriptionListTerm>
         <DescriptionListDescription>
           {progressData.awsAccountSetup.icon}
           {progressData.awsAccountSetup.text}
