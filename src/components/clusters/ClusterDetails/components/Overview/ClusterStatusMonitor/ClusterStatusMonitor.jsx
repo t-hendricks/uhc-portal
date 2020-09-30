@@ -82,8 +82,8 @@ class clusterStatusMonitor extends React.Component {
           </Alert>
         );
       }
-      if ((status.status.provision_error_code
-          || status.status.provision_error_message)) {
+      if (status.status.provision_error_code
+          || status.status.provision_error_message) {
         return (
           <span>
             <Alert variant="warning" isInline title={`${title} Installation is taking longer than expected`}>
