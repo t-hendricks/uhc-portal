@@ -34,11 +34,11 @@ class Networking extends React.Component {
     }
 
     return (
-      <Grid hasGutter>
-        <GridItem span={9}>
+      <Grid>
+        <GridItem lg={9} md={12}>
           <EditCluserRoutersCard refreshCluster={refreshCluster} />
         </GridItem>
-        <GridItem span={3}>
+        <GridItem lg={3} md={12}>
           <NetworkConfigurationCard
             network={network}
           />

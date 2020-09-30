@@ -11,7 +11,7 @@ function NetworkConfigurationCard({ network }) {
   return (
     <Card>
       <CardTitle>
-        <Title headingLevel="h2" size="lg" className="card-title">Network configuration</Title>
+        <Title headingLevel="h2" size="md" className="card-title">Network configuration</Title>
       </CardTitle>
       <CardBody>
         <>
