@@ -12,10 +12,11 @@ import { global_danger_color_100 } from '@patternfly/react-tokens';
 class TabsRow extends React.Component {
   state = {
     activeTabKey: 0,
+    initialTabKey: this.getInitTab(),
   }
 
   componentDidUpdate() {
-    const { activeTabKey } = this.state;
+    const { activeTabKey, initialTabKey } = this.state;
     const {
       overviewTabRef,
     } = this.props;
@@ -24,6 +25,20 @@ class TabsRow extends React.Component {
       this.handleTabClick(undefined, 0);
       overviewTabRef.current.hidden = false;
     }
+
+    const initialTab = this.getTabs()[initialTabKey];
+    if (initialTabKey !== null && initialTab.show) {
+      this.handleTabClick(undefined, initialTabKey);
+    }
+  }
+
+  getInitTab() {
+    const { initTabOpen } = this.props;
+    const tabIndex = this.getTabs().findIndex(tab => tab.id === initTabOpen);
+    if (tabIndex === -1) {
+      return 0;
+    }
+    return tabIndex;
   }
 
   getTabs() {
@@ -46,6 +61,7 @@ class TabsRow extends React.Component {
         key: 0,
         title: 'Overview',
         contentId: 'overviewTabContent',
+        id: 'overview',
         show: true,
         ref: overviewTabRef,
       },
@@ -58,12 +74,14 @@ class TabsRow extends React.Component {
     && <TabTitleIcon id="monitoring-issues-icon"><ExclamationCircleIcon color={global_danger_color_100.value} /></TabTitleIcon>}
   </>,
         contentId: 'monitoringTabContent',
+        id: 'monitoring',
         show: displayMonitoringTab,
         ref: monitoringTabRef,
       },
       {
         key: 2,
         title: 'Access control',
+        id: 'accessControl',
         contentId: 'accessControlTabContent',
         show: displayAccessControlTab,
         ref: accessControlTabRef,
@@ -72,6 +90,7 @@ class TabsRow extends React.Component {
         key: 3,
         title: 'Add-ons',
         contentId: 'addOnsTabContent',
+        id: 'addOns',
         show: displayAddOnsTab,
         ref: addOnsTabRef,
       },
@@ -79,6 +98,7 @@ class TabsRow extends React.Component {
         key: 4,
         title: 'Networking',
         contentId: 'networkingTabContent',
+        id: 'networking',
         show: displayNetworkingTab,
         ref: networkingTabRef,
       },
@@ -86,6 +106,7 @@ class TabsRow extends React.Component {
         key: 5,
         title: 'Insights',
         contentId: 'insightsTabContent',
+        id: 'insights',
         show: displayInsightsTab,
         ref: insightsTabRef,
       },
@@ -93,10 +114,20 @@ class TabsRow extends React.Component {
   }
 
   handleTabClick = (event, tabIndex) => {
-    this.setState({
+    const { setOpenedTab } = this.props;
+    const tabs = this.getTabs();
+
+    this.setState(state => ({
       activeTabKey: tabIndex,
+      initialTabKey: state.initialTabKey === tabIndex ? null : state.initialTabKey,
+    }), () => {
+      const { initialTabKey } = this.state;
+      if (initialTabKey === null) {
+        setOpenedTab(tabs[tabIndex].id);
+      }
     });
-    this.getTabs().forEach((tab) => {
+
+    tabs.forEach((tab) => {
       if (tab.ref && tab.ref.current) {
         if (tab.key !== tabIndex) {
           // eslint-disable-next-line no-param-reassign
@@ -141,6 +172,8 @@ TabsRow.propTypes = {
   insightsTabRef: PropTypes.object.isRequired,
   networkingTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
+  initTabOpen: PropTypes.string,
+  setOpenedTab: PropTypes.func.isRequired,
 };
 
 TabsRow.defaultProps = {
@@ -149,6 +182,7 @@ TabsRow.defaultProps = {
   displayAccessControlTab: false,
   displayAddOnsTab: false,
   displayNetworkingTab: false,
+  initTabOpen: '',
 };
 
 export default TabsRow;

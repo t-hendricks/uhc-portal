@@ -3,42 +3,31 @@ import { shallow } from 'enzyme';
 import InstallProgress from './InstallProgress';
 import clusterStates from '../clusterStates';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
-import InstallationLogView from '../../ClusterDetails/components/Overview/InstallationLogView';
-import ClusterStatusMonitor from '../../ClusterDetails/components/Overview/ClusterStatusMonitor';
 
 describe('<InstallProgress />', () => {
-  const firstStepPending = {
-    ...fixtures.clusterDetails,
-    state: clusterStates.PENDING,
-  };
-
-  const firstStepCompleted = {
+  const clusterInstalling = {
     ...fixtures.clusterDetails,
     state: clusterStates.INSTALLING,
-  };
-
-  const secondStepCompleted = {
-    ...fixtures.clusterDetails,
-    state: clusterStates.INSTALLING,
-    dns_ready: true,
   };
 
   const wrapper = shallow(
-    <InstallProgress cluster={firstStepPending}>
-      <ClusterStatusMonitor />
-      <InstallationLogView />
-    </InstallProgress>,
+    <InstallProgress cluster={clusterInstalling} />,
   );
 
-  it('should render when first step in progress', () => {
+  it('should render correclty installing cluster', () => {
     expect(wrapper).toMatchSnapshot();
   });
-  it('should render when first step completed', () => {
-    wrapper.setProps({ cluster: firstStepCompleted });
-    expect(wrapper).toMatchSnapshot();
-  });
-  it('should render when second step completed', () => {
-    wrapper.setProps({ cluster: secondStepCompleted });
+
+  it('should render correclty uninstalling cluster', () => {
+    wrapper.setProps(
+      {
+        cluster:
+        {
+          ...fixtures.clusterDetails,
+          state: clusterStates.UNINSTALLING,
+        },
+      },
+    );
     expect(wrapper).toMatchSnapshot();
   });
 });

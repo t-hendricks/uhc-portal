@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<InstallProgress /> should render when first step completed 1`] = `
+exports[`<InstallProgress /> should render correclty installing cluster 1`] = `
 <Card>
   <CardTitle>
     <Title
@@ -12,57 +12,160 @@ exports[`<InstallProgress /> should render when first step completed 1`] = `
     </Title>
   </CardTitle>
   <CardBody>
-    <Connect(clusterStatusMonitor) />
-    <DescriptionList>
-      <DescriptionListGroup>
-        <DescriptionListTerm>
-          AWS account setup
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          <CheckCircleIcon
-            className="icon-space-right"
-            color="#3e8635"
-            noVerticalAlign={false}
-            size="sm"
-          />
-          Completed
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-      <DescriptionListGroup>
-        <DescriptionListTerm>
-          DNS setup
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          <PendingIcon
-            className="icon-space-right"
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-          />
-          Pending
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-      <DescriptionListGroup>
-        <DescriptionListTerm>
-          Cluster installation
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          <PendingIcon
-            className="icon-space-right"
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-          />
-          Pending
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-    </DescriptionList>
-    <Connect(LogWindow) />
+    <ProgressList
+      cluster={
+        Object {
+          "cluster": Object {
+            "api": Object {
+              "url": "https://api.test-liza.sdev.devshift.net:6443",
+            },
+            "canDelete": true,
+            "canEdit": true,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cluster_admin_enabled": false,
+            "console": Object {
+              "url": "https://console-openshift-console.apps.test-liza.sdev.devshift.net",
+            },
+            "creation_timestamp": "2019-03-26T15:18:39.06783Z",
+            "display_name": "test-liza",
+            "dns": Object {
+              "base_domain": "sdev.devshift.net",
+            },
+            "external_id": "9f50940b-fba8-4c59-9c6c-d64284b2026d",
+            "flavour": Object {
+              "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+              "id": "osd-4",
+              "kind": "FlavourLink",
+            },
+            "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk",
+            "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+            "kind": "Cluster",
+            "load_balancer_quota": 0,
+            "managed": true,
+            "metrics": Object {
+              "cpu": Object {
+                "total": Object {
+                  "unit": "",
+                  "value": 16,
+                },
+                "updated_timestamp": "2019-04-28T14:23:18Z",
+                "used": Object {
+                  "unit": "",
+                  "value": 3.995410922987096,
+                },
+              },
+              "memory": Object {
+                "total": Object {
+                  "unit": "B",
+                  "value": 82293346304,
+                },
+                "updated_timestamp": "2019-04-28T14:23:19Z",
+                "used": Object {
+                  "unit": "B",
+                  "value": 16546058240,
+                },
+              },
+              "nodes": Object {
+                "compute": 4,
+                "master": 3,
+                "total": 7,
+              },
+              "sockets": Object {
+                "total": Object {
+                  "unit": "",
+                  "value": 0,
+                },
+                "updated_timestamp": "0001-01-01T00:00:00Z",
+                "used": Object {
+                  "unit": "",
+                  "value": 0,
+                },
+              },
+              "storage": Object {
+                "total": Object {
+                  "unit": "B",
+                  "value": 0,
+                },
+                "updated_timestamp": "0001-01-01T00:00:00Z",
+                "used": Object {
+                  "unit": "B",
+                  "value": 0,
+                },
+              },
+            },
+            "multi_az": false,
+            "name": "test-liza",
+            "network": Object {
+              "machine_cidr": "10.0.0.0/16",
+              "pod_cidr": "10.128.0.0/14",
+              "router_shards": Object {
+                "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards",
+                "id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+                "kind": "RouterShardListLink",
+              },
+              "service_cidr": "172.30.0.0/16",
+            },
+            "nodes": Object {
+              "compute": 2,
+              "master": 3,
+              "total": 5,
+            },
+            "product": Object {
+              "id": "osd",
+            },
+            "region": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+              "id": "us-east-1",
+              "kind": "CloudRegionLink",
+            },
+            "state": "ready",
+            "storage_quota": Object {
+              "unit": "B",
+              "value": 107374182400,
+            },
+            "subscription": Object {
+              "cluster_id": "1IztzhAGrbjtKkMbiPewJanhTXk",
+              "created_at": "2019-01-02T18:28:14.851121Z",
+              "external_cluster_id": "test-liza",
+              "href": "/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8",
+              "id": "1FDpnxsGxqFFFp2VNIWp5VajPc8",
+              "kind": "Subscription",
+              "last_telemetry_date": "0001-01-01T00:00:00Z",
+              "plan": Object {
+                "href": "/api/accounts_mgmt/v1/plans/OCP",
+                "id": "OCP",
+                "kind": "Plan",
+              },
+              "registry_credential": Object {
+                "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
+                "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
+                "kind": "RegistryCredential",
+              },
+              "updated_at": "2019-01-02T18:28:14.851121Z",
+            },
+            "version": Object {
+              "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+              "id": "openshift-v4.0-latest",
+              "kind": "VersionLink",
+            },
+          },
+          "error": false,
+          "errorMessage": "",
+          "fulfilled": true,
+          "pending": false,
+          "state": "installing",
+        }
+      }
+    />
   </CardBody>
 </Card>
 `;
 
-exports[`<InstallProgress /> should render when first step in progress 1`] = `
+exports[`<InstallProgress /> should render correclty uninstalling cluster 1`] = `
 <Card>
   <CardTitle>
     <Title
@@ -70,118 +173,9 @@ exports[`<InstallProgress /> should render when first step in progress 1`] = `
       headingLevel="h2"
       size="lg"
     >
-      Installing cluster
+      Uninstallation logs
     </Title>
   </CardTitle>
-  <CardBody>
-    <Connect(clusterStatusMonitor) />
-    <DescriptionList>
-      <DescriptionListGroup>
-        <DescriptionListTerm>
-          AWS account setup
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          <InProgressIcon
-            className="icon-space-right"
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-          />
-          Preparing account
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-      <DescriptionListGroup>
-        <DescriptionListTerm>
-          DNS setup
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          <PendingIcon
-            className="icon-space-right"
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-          />
-          Pending
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-      <DescriptionListGroup>
-        <DescriptionListTerm>
-          Cluster installation
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          <PendingIcon
-            className="icon-space-right"
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-          />
-          Pending
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-    </DescriptionList>
-    <Connect(LogWindow) />
-  </CardBody>
-</Card>
-`;
-
-exports[`<InstallProgress /> should render when second step completed 1`] = `
-<Card>
-  <CardTitle>
-    <Title
-      className="card-title logview-title"
-      headingLevel="h2"
-      size="lg"
-    >
-      Installing cluster
-    </Title>
-  </CardTitle>
-  <CardBody>
-    <Connect(clusterStatusMonitor) />
-    <DescriptionList>
-      <DescriptionListGroup>
-        <DescriptionListTerm>
-          AWS account setup
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          <CheckCircleIcon
-            className="icon-space-right"
-            color="#3e8635"
-            noVerticalAlign={false}
-            size="sm"
-          />
-          Completed
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-      <DescriptionListGroup>
-        <DescriptionListTerm>
-          DNS setup
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          <CheckCircleIcon
-            className="icon-space-right"
-            color="#3e8635"
-            noVerticalAlign={false}
-            size="sm"
-          />
-          Completed
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-      <DescriptionListGroup>
-        <DescriptionListTerm>
-          Cluster installation
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          <InProgressIcon
-            className="icon-space-right"
-            color="currentColor"
-            noVerticalAlign={false}
-            size="sm"
-          />
-          Installing cluster
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-    </DescriptionList>
-    <Connect(LogWindow) />
-  </CardBody>
+  <CardBody />
 </Card>
 `;

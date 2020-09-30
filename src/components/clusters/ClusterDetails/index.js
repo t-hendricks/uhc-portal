@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
+import { push } from 'connected-react-router';
 import ClusterDetails from './ClusterDetails';
 import {
   fetchClusterDetails,
@@ -40,8 +42,9 @@ import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOw
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
 import helpers from '../../../common/helpers';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
+import getBaseName from '../../../common/getBaseName';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
   const { cloudProviders } = state;
   const { errorCode } = state.clusterLogs.requestState;
@@ -72,10 +75,11 @@ const mapStateToProps = (state) => {
     canTransferClusterOwnership: canTransferClusterOwnershipSelector(state),
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
+    initTabOpen: location.hash.replace('#', ''),
   });
 };
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   fetchDetails: clusterId => fetchClusterDetails(clusterId),
   fetchInsightsData: clusterId => fetchClusterInsights(clusterId),
   fetchGroups,
@@ -100,10 +104,11 @@ const mapDispatchToProps = {
   getClusterAddOns,
   getGrants,
   getClusterRouters,
+  setOpenedTab: tabKey => push(`${getBaseName()}${location.pathname}#${tabKey}`),
   getClusterHistory: (
     externalClusterID, queryObj,
   ) => getClusterHistory(externalClusterID, queryObj),
   toggleSubscriptionReleased,
-};
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

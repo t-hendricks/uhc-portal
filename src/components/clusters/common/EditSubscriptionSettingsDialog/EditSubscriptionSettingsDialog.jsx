@@ -60,7 +60,7 @@ const {
 
 
 class EditSubscriptionSettingsDialog extends Component {
-  state = {}
+  state = { isValid: true }
 
   options = {
     [SUPPORT_LEVEL]: [],
@@ -162,8 +162,8 @@ class EditSubscriptionSettingsDialog extends Component {
     return options;
   }
 
-  handleChange = (name, value) => {
-    this.setState({ [name]: value });
+  handleChange = (name, value, isValid = true) => {
+    this.setState({ [name]: value, isValid });
   };
 
   handleSubmit = () => {
@@ -193,7 +193,7 @@ class EditSubscriptionSettingsDialog extends Component {
       hideSubscriptionSettings,
     } = this.props;
     const radioGroupClassName = 'subscription-settings radio-group';
-    const { [SUPPORT_LEVEL]: supportLevel, [SYSTEM_UNITS]: systemUnits } = this.state;
+    const { [SUPPORT_LEVEL]: supportLevel, [SYSTEM_UNITS]: systemUnits, isValid } = this.state;
 
     const isDisabled = supportLevel !== PREMIUM
       && supportLevel !== STANDARD
@@ -311,7 +311,7 @@ class EditSubscriptionSettingsDialog extends Component {
       secondaryText="Cancel"
       onPrimaryClick={this.handleSubmit}
       onSecondaryClick={this.handleClose}
-      isPrimaryDisabled={requestState.pending || isDisabled}
+      isPrimaryDisabled={requestState.pending || isDisabled || !isValid}
     >
       <EditSubscriptionSettingsRequestState
         requestState={requestState}

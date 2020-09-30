@@ -34,44 +34,41 @@ class UnitFields extends React.Component {
 
     changeNumericInputHandler = (value, event, unitsValue) => {
       const { onChangeNumericInputCallback } = this.props;
-      const newValue = event.target.value;
+      const newNumericInputValue = event.target.value;
       let unitsFieldName = null;
       if (unitsValue === subscriptionSystemUnits.CORES_VCPU) {
         unitsFieldName = 'cpu_total';
-        this.setState({ computeCoresValue: newValue, computeCoresTouched: true });
+        this.setState({ computeCoresValue: newNumericInputValue, computeCoresTouched: true });
       }
 
       if (unitsValue === subscriptionSystemUnits.SOCKETS) {
         unitsFieldName = 'socket_total';
-        this.setState({ socketsValue: newValue, socketsTouched: true });
+        this.setState({ socketsValue: newNumericInputValue, socketsTouched: true });
       }
 
-      onChangeNumericInputCallback(unitsFieldName, newValue);
+      const isValid = !this.validationMessege(unitsValue, newNumericInputValue);
+
+      onChangeNumericInputCallback(unitsFieldName, newNumericInputValue, isValid);
     };
 
-    validate = (units) => {
+
+    validationMessege = (units, value) => {
+      const MAX_VAL = 200000;
       const { input } = this.props;
-      const {
-        computeCoresTouched,
-        computeCoresValue,
-        socketsTouched,
-        socketsValue,
-      } = this.state;
 
-      const value = units === subscriptionSystemUnits.CORES_VCPU
-        ? computeCoresValue : socketsValue;
-      const touched = units === subscriptionSystemUnits.CORES_VCPU
-        ? computeCoresTouched : socketsTouched;
-
-      const numericVal = parseInt(value, 10);
-
-      if (!(touched && input.value === units)
-      || (Number.isInteger(numericVal) && numericVal > 0)
-      ) {
-        return 'default';
+      if (input.value === units) {
+        if (!(/^\d+$/.test(value))) {
+          return `${units} value can only be a positive integer.`;
+        }
+        if (!(parseInt(value, 10) > 0)) {
+          return `${units} value can only be a positive integer.`;
+        }
+        if (value > MAX_VAL) {
+          return `${units} cannot be larger than ${MAX_VAL}.`;
+        }
       }
-      return 'error';
-    };
+      return undefined;
+    }
 
 
     render() {
@@ -82,7 +79,12 @@ class UnitFields extends React.Component {
         subscription,
       } = this.props;
 
-      const { computeCoresValue, socketsValue } = this.state;
+      const {
+        computeCoresValue,
+        socketsValue,
+        computeCoresTouched,
+        socketsTouched,
+      } = this.state;
       const { SYSTEM_UNITS } = subscriptionSettings;
       const { CORES_VCPU, SOCKETS } = subscriptionSystemUnits;
 
@@ -111,8 +113,8 @@ class UnitFields extends React.Component {
             label="Number of compute cores"
             isRequired={input.value === CORES_VCPU}
             helperText="This number should not include master nodes"
-            helperTextInvalid="Compute cores must be a number."
-            validated={this.validate(CORES_VCPU)}
+            helperTextInvalid={this.validationMessege(CORES_VCPU, computeCoresValue)}
+            validated={(computeCoresTouched ? !this.validationMessege(CORES_VCPU, computeCoresValue) : true) ? 'default' : 'error'}
           >
             <TextInput
               value={computeCoresValue}
@@ -147,8 +149,8 @@ class UnitFields extends React.Component {
             className="units-numeric-input"
             label="Number of sockets"
             isRequired={input.value === SOCKETS}
-            helperTextInvalid="Sockets must be a number."
-            validated={this.validate(SOCKETS)}
+            helperTextInvalid={this.validationMessege(SOCKETS, socketsValue)}
+            validated={(socketsTouched ? !this.validationMessege(SOCKETS, socketsValue) : true) ? 'default' : 'error'}
           >
             <TextInput
               value={socketsValue}

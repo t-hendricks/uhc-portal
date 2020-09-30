@@ -3,8 +3,12 @@ const funcs = () => ({
   history: {
     push: jest.fn(),
   },
+  location: {
+    hash: '',
+  },
   fetchDetails: jest.fn(),
   fetchInsightsData: jest.fn(),
+  setOpenedTab: jest.fn(),
   fetchGroups: jest.fn(),
   getCloudProviders: jest.fn(),
   invalidateClusters: jest.fn(),
