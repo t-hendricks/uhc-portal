@@ -22,7 +22,8 @@ const ClusterUpdateLink = ({ cluster, openModal, osdUpgradesEnabled }) => {
 
   // Only show Update tooltip/link for OCP clusters that have available updates
   // or OSD clusters when the feature toggle is enabled
-  if (!upgrade.available || !openModal || (cluster.managed && !osdUpgradesEnabled)) {
+  if (!upgrade.available || !openModal
+      || (cluster.managed && (!osdUpgradesEnabled || !cluster.canEdit))) {
     return null;
   }
 
