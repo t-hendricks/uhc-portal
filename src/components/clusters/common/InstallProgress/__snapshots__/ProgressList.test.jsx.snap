@@ -4,7 +4,7 @@ exports[`<ProgressList /> should render when first step completed 1`] = `
 <DescriptionList>
   <DescriptionListGroup>
     <DescriptionListTerm>
-      AWS account setup
+      Account setup
     </DescriptionListTerm>
     <DescriptionListDescription>
       <CheckCircleIcon
@@ -51,7 +51,7 @@ exports[`<ProgressList /> should render when first step in progress 1`] = `
 <DescriptionList>
   <DescriptionListGroup>
     <DescriptionListTerm>
-      AWS account setup
+      Account setup
     </DescriptionListTerm>
     <DescriptionListDescription>
       <InProgressIcon
@@ -98,7 +98,7 @@ exports[`<ProgressList /> should render when second step completed 1`] = `
 <DescriptionList>
   <DescriptionListGroup>
     <DescriptionListTerm>
-      AWS account setup
+      Account setup
     </DescriptionListTerm>
     <DescriptionListDescription>
       <CheckCircleIcon

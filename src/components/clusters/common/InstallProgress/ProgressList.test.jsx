@@ -6,17 +6,17 @@ import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 describe('<ProgressList />', () => {
   const firstStepPending = {
-    ...fixtures.clusterDetails,
+    ...fixtures.clusterDetails.cluster,
     state: clusterStates.PENDING,
   };
 
   const firstStepCompleted = {
-    ...fixtures.clusterDetails,
+    ...fixtures.clusterDetails.cluster,
     state: clusterStates.INSTALLING,
   };
 
   const secondStepCompleted = {
-    ...fixtures.clusterDetails,
+    ...fixtures.clusterDetails.cluster,
     state: clusterStates.INSTALLING,
     dns_ready: true,
   };
