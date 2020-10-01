@@ -3,7 +3,7 @@
 exports[`<ClusterStatusMonitor /> renders an alert when cluster is errored 1`] = `
 <Alert
   isInline={true}
-  title="Cluster installation failed"
+  title=" Cluster installation failed"
   variant="danger"
 />
 `;
