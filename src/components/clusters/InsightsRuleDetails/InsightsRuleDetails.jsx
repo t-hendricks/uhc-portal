@@ -22,9 +22,18 @@ import {
   TabContent,
   Card,
   CardBody,
+  CardTitle,
+  Button,
+  CardFooter,
+  EmptyState,
+  EmptyStateIcon,
+  Title,
+  EmptyStateBody,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { Markdown } from '@redhat-cloud-services/rule-components/dist/cjs/index';
+import moment from 'moment';
+import { EyeSlashIcon } from '@patternfly/react-icons';
 
 import InsightsRuleDetailsTop from './components/InsightsRuleDetailsTop';
 import EmptyRemediationInfo from './components/EmptyRemediationInfo';
@@ -201,6 +210,12 @@ class InsightsRuleDetails extends Component {
 
     const reasonInfoExist = !!reportDetails.report.reason;
     const resolutionInfoExist = !!reportDetails.report.resolution;
+    const {
+      rule_id: currentRuleId,
+      disabled: isRuleDisabled,
+      disable_feedback: ruleDisableFeedback,
+      disabled_at: ruleDisabledAtDate,
+    } = reportDetails.report;
 
     return (
       <PageSection id="ruledetails-content">
@@ -216,60 +231,92 @@ class InsightsRuleDetails extends Component {
           <TabsRow
             reasonTabRef={this.reasonTabRef}
             resolutionTabRef={this.resolutionTabRef}
+            isDisabled={isRuleDisabled}
           />
         </InsightsRuleDetailsTop>
         {
-          <TabContent
-            eventKey={0}
-            id="reasonTabContent"
-            ref={this.reasonTabRef}
-            aria-label="Reason"
-          >
-            <Card>
-              <CardBody>
-                {
-                  reasonInfoExist && (
-                    <Markdown
-                      template={reportDetails.report.reason}
-                      definitions={reportDetails.report.extra_data}
-                    />
-                  )
-                }
-                {
-                  !reasonInfoExist && (
-                    <EmptyRemediationInfo title="reason" />
-                  )
-                }
-              </CardBody>
-            </Card>
-          </TabContent>
-        }
-        {
-          <TabContent
-            eventKey={1}
-            id="resolutionTabContent"
-            ref={this.resolutionTabRef}
-            aria-label="How to remediate"
-            hidden
-          >
-            <Card>
-              <CardBody>
-                {
-                  resolutionInfoExist && (
-                    <Markdown
-                      template={reportDetails.report.resolution}
-                      definitions={reportDetails.report.extra_data}
-                    />
-                  )
-                }
-                {
-                  !resolutionInfoExist && (
-                    <EmptyRemediationInfo title="resolution" />
-                  )
-                }
-              </CardBody>
-            </Card>
-          </TabContent>
+          isRuleDisabled
+            ? (
+              <div>
+                <Card>
+                  <CardTitle className="disabled-health-check-title">Heath check is disabled</CardTitle>
+                  <CardBody>
+                    <div className="disabled-heath-check-message">
+                      This health check is disabled for the following reason:
+                      <i>{ ruleDisableFeedback && ruleDisableFeedback.length ? ruleDisableFeedback : 'None' }</i>
+                      <span>{moment(ruleDisabledAtDate).format('DD MMM YYYY')}</span>
+                    </div>
+                  </CardBody>
+                  <CardFooter>
+                    <Button variant="link" isInline onClick={() => enableRule(currentRuleId)}>
+                      Enable health check
+                    </Button>
+                  </CardFooter>
+                </Card>
+                <EmptyState>
+                  <EmptyStateIcon icon={EyeSlashIcon} />
+                  <Title size="lg" headingLevel="h4">
+                    Health check is disabled
+                  </Title>
+                  <EmptyStateBody>
+                    This health check has been disabled and has no results.
+                  </EmptyStateBody>
+                </EmptyState>
+              </div>
+            )
+            : (
+              <div>
+                <TabContent
+                  eventKey={0}
+                  id="reasonTabContent"
+                  ref={this.reasonTabRef}
+                  aria-label="Reason"
+                >
+                  <Card>
+                    <CardBody>
+                      {
+                        reasonInfoExist && (
+                          <Markdown
+                            template={reportDetails.report.reason}
+                            definitions={reportDetails.report.extra_data}
+                          />
+                        )
+                      }
+                      {
+                        !reasonInfoExist && (
+                          <EmptyRemediationInfo title="reason" />
+                        )
+                      }
+                    </CardBody>
+                  </Card>
+                </TabContent>
+                <TabContent
+                  eventKey={1}
+                  id="resolutionTabContent"
+                  ref={this.resolutionTabRef}
+                  aria-label="How to remediate"
+                  hidden
+                >
+                  <Card>
+                    <CardBody>
+                      {
+                        resolutionInfoExist && (
+                          <Markdown
+                            template={reportDetails.report.resolution}
+                            definitions={reportDetails.report.extra_data}
+                          />
+                        )
+                      }
+                      {
+                        !resolutionInfoExist && (
+                          <EmptyRemediationInfo title="resolution" />
+                        )
+                      }
+                    </CardBody>
+                  </Card>
+                </TabContent>
+              </div>
+            )
         }
       </PageSection>
     );
