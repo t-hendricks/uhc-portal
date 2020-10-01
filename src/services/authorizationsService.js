@@ -12,10 +12,15 @@ const selfAccessReview = params => apiRequest({
   data: params,
 });
 
+const selfTermsReview = () => apiRequest({
+  method: 'post',
+  url: '/api/authorizations/v1/self_terms_review',
+});
 
 const authorizationsService = {
   selfResourceReview,
   selfAccessReview,
+  selfTermsReview,
 };
 
 export default authorizationsService;
