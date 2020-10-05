@@ -66,6 +66,24 @@ describe('<ClusterStatusMonitor />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('Displays warning when install takes longer', () => {
+    wrapper.setProps(
+      {
+        status: {
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'installing',
+            provision_error_code: '',
+            provision_error_message: 'Install taking longer than expected',
+          },
+        },
+      },
+    );
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('calls refresh when the status changes', () => {
     wrapper.setProps(
       {
@@ -84,6 +102,8 @@ describe('<ClusterStatusMonitor />', () => {
           status: {
             id: clusterDetails.cluster.id,
             state: 'error',
+            provision_error_code: 'OCM1002',
+            provision_error_message: 'Invalid AWS credentials (authentication)',
           },
         },
       },

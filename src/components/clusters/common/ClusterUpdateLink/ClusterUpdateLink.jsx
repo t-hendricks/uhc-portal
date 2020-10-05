@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Popover } from '@patternfly/react-core';
 import { InfoCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
-import links from '../../../common/installLinks';
+import links from '../../../../common/installLinks';
+import getClusterName from '../../../../common/getClusterName';
 
 
-const ClusterUpdateLink = ({ cluster }) => {
+const ClusterUpdateLink = ({ cluster, openModal, osdUpgradesEnabled }) => {
   const { upgrade } = cluster.metrics;
 
   // Show which version the cluster is currently updating to
@@ -20,8 +21,28 @@ const ClusterUpdateLink = ({ cluster }) => {
   }
 
   // Only show Update tooltip/link for OCP clusters that have available updates
-  if (cluster.managed || !upgrade.available) {
+  // or OSD clusters when the feature toggle is enabled
+  if (!upgrade.available || !openModal
+      || (cluster.managed && (!osdUpgradesEnabled || !cluster.canEdit))) {
     return null;
+  }
+
+  if (cluster.managed) {
+    return (
+      <Button
+        className="cluster-update-link"
+        variant="link"
+        onClick={() => openModal('upgrade-wizard',
+          {
+            clusterName: getClusterName(cluster),
+            clusterVersion: cluster.openshift_version,
+            clusterID: cluster.id,
+          })}
+        icon={<OutlinedArrowAltCircleUpIcon />}
+      >
+      Update
+      </Button>
+    );
   }
 
   // Display a link to the cluster settings page in the console
@@ -60,6 +81,8 @@ const ClusterUpdateLink = ({ cluster }) => {
 
 ClusterUpdateLink.propTypes = {
   cluster: PropTypes.object.isRequired,
+  openModal: PropTypes.func,
+  osdUpgradesEnabled: PropTypes.bool,
 };
 
 export default ClusterUpdateLink;

@@ -13,6 +13,12 @@ const initialState = {
     quotaList: {},
     ...baseRequestState,
   },
+  selfTermsReviewResult: {
+    terms_available: false,
+    terms_required: false,
+    redirect_url: '',
+    ...baseRequestState,
+  },
 };
 
 function userProfile(state = initialState, action) {
@@ -40,6 +46,23 @@ function userProfile(state = initialState, action) {
           details: action.payload.organization.data,
           quotaList: get(action.payload, 'quota', {}),
           timestamp: new Date(),
+        };
+        break;
+      // SELF_TERMS_REVIEW
+      case REJECTED_ACTION(userConstants.SELF_TERMS_REVIEW):
+        draft.selfTermsReviewResult = {
+          ...initialState.selfTermsReviewResult,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(userConstants.SELF_TERMS_REVIEW):
+        draft.selfTermsReviewResult.pending = true;
+        break;
+      case FULFILLED_ACTION(userConstants.SELF_TERMS_REVIEW):
+        draft.selfTermsReviewResult = {
+          ...initialState.selfTermsReviewResult,
+          fulfilled: true,
+          ...action.payload.data,
         };
         break;
     }

@@ -130,7 +130,7 @@ function ClusterListTable(props) {
     const clusterVersion = (
       <span>
         {cluster.openshift_version || 'N/A'}
-        <ClusterUpdateLink cluster={cluster} />
+        <ClusterUpdateLink cluster={cluster} openModal={openModal} />
       </span>
     );
 
