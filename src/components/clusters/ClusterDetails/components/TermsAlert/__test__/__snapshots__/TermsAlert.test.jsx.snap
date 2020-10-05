@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TermsAlert /> TermsAlert has required terms should render 1`] = `
+<Alert
+  actionLinks={
+    <AlertActionLink
+      component="a"
+      href="https://www.redhat.com/wapps/tnc/ackrequired?site=ocm&event=register&redirect=http%3A%2F%2Fcloud.openshift.com%2Fdetails%2F123&cancelRedirect=http%3A%2F%2Fcloud.openshift.com%2Fdetails%2F123"
+    >
+      View Terms and Conditions
+    </AlertActionLink>
+  }
+  id="terms-alert"
+  isInline={true}
+  title="You must accept the Terms and Conditions"
+  variant="warning"
+>
+  <p>
+    Access to this cluster will be read-only until you accept the Terms and Conditions.
+  </p>
+</Alert>
+`;
