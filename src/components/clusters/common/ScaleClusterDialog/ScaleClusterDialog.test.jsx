@@ -13,7 +13,6 @@ describe('<ScaleClusterDialog />', () => {
   let change;
   let resetResponse;
   let getLoadBalancers;
-  let getMachineTypes;
   let getPersistentStorage;
 
   const fulfilledRequest = {
@@ -35,7 +34,6 @@ describe('<ScaleClusterDialog />', () => {
     change = jest.fn();
     resetResponse = jest.fn();
     getLoadBalancers = jest.fn();
-    getMachineTypes = jest.fn();
     getPersistentStorage = jest.fn();
     wrapper = shallow(<ScaleClusterDialog
       isOpen
@@ -48,11 +46,9 @@ describe('<ScaleClusterDialog />', () => {
       getCloudProviders={jest.fn()}
       getOrganizationAndQuota={jest.fn()}
       getLoadBalancers={getLoadBalancers}
-      getMachineTypes={getMachineTypes}
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
       organization={fulfilledRequest}
-      machineTypes={fulfilledRequest}
       initialValues={{
         id: 'test-id', nodes_compute: 4, load_balancers: '4', persistent_storage: '107374182400',
       }}
@@ -90,18 +86,15 @@ describe('<ScaleClusterDialog />', () => {
         getCloudProviders={jest.fn()}
         getOrganizationAndQuota={jest.fn()}
         getLoadBalancers={getLoadBalancers}
-        getMachineTypes={getMachineTypes}
         loadBalancerValues={requestInitialState}
         persistentStorageValues={requestInitialState}
         organization={fulfilledRequest}
-        machineTypes={requestInitialState}
         initialValues={{
           id: 'test-id', nodes_compute: 4, load_balancers: '4', persistent_storage: '107374182400',
         }}
         min={{ value: 4, validationMsg: 'error' }}
         prestine={false}
       />);
-      expect(getMachineTypes).toBeCalled();
       expect(getLoadBalancers).toBeCalled();
       expect(getPersistentStorage).toBeCalled();
     });

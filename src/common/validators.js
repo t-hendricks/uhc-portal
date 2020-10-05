@@ -85,19 +85,24 @@ const checkOpenIDIssuer = (value) => {
   return undefined;
 };
 
-// Function to validate that the cluster name field contains a valid DNS label:
-const checkClusterName = (value) => {
+// Function to validate that the object name contains a valid DNS label:
+const checkObjectName = (value, objectName) => {
   if (!value) {
-    return 'Cluster name is required.';
+    return `${objectName} name is required.`;
   }
   if (!DNS_LABEL_REGEXP.test(value)) {
-    return `Cluster name '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-name', or 'abc-123'.`;
+    return `${objectName} name '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-name', or 'abc-123'.`;
   }
   if (value.length > MAX_CLUSTER_NAME_LENGTH) {
-    return `Cluster names may not exceed ${MAX_CLUSTER_NAME_LENGTH} characters.`;
+    return `${objectName} names may not exceed ${MAX_CLUSTER_NAME_LENGTH} characters.`;
   }
   return undefined;
 };
+
+const checkClusterName = value => checkObjectName(value, 'Cluster');
+
+const checkMachinePoolName = value => checkObjectName(value, 'Machine pool');
+
 
 // Function to validate that the github team is formatted: <org/team>
 const checkGithubTeams = (value) => {
@@ -788,6 +793,7 @@ export {
   awsNumericAccountID,
   validateGCPServiceAccount,
   validateServiceAccountObject,
+  checkMachinePoolName,
 };
 
 export default validators;

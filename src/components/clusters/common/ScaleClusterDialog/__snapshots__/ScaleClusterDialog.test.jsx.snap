@@ -9,7 +9,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
   onPrimaryClick={[MockFunction]}
   onSecondaryClick={[Function]}
   primaryText="Apply"
-  title="Scale cluster"
+  title="Edit load balancers and persistent storage"
 >
   <Form
     onSubmit={[MockFunction]}
@@ -17,29 +17,6 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
     <Grid
       hasGutter={true}
     >
-      <GridItem
-        span={8}
-      >
-        <Field
-          component={
-            Object {
-              "$$typeof": Symbol(react.memo),
-              "WrappedComponent": [Function],
-              "compare": null,
-              "displayName": "Connect(NodeCountInput)",
-              "type": [Function],
-            }
-          }
-          currentNodeCount={4}
-          isDisabled={false}
-          isEditingCluster={true}
-          label="Compute node count"
-          name="nodes_compute"
-        />
-      </GridItem>
-      <GridItem
-        span={4}
-      />
       <GridItem
         span={8}
       >
@@ -108,7 +85,7 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
   onPrimaryClick={[MockFunction]}
   onSecondaryClick={[Function]}
   primaryText="Apply"
-  title="Scale cluster"
+  title="Edit load balancers and persistent storage"
 >
   <ErrorBox
     message="Error editing cluster"
@@ -125,29 +102,6 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
     <Grid
       hasGutter={true}
     >
-      <GridItem
-        span={8}
-      >
-        <Field
-          component={
-            Object {
-              "$$typeof": Symbol(react.memo),
-              "WrappedComponent": [Function],
-              "compare": null,
-              "displayName": "Connect(NodeCountInput)",
-              "type": [Function],
-            }
-          }
-          currentNodeCount={4}
-          isDisabled={false}
-          isEditingCluster={true}
-          label="Compute node count"
-          name="nodes_compute"
-        />
-      </GridItem>
-      <GridItem
-        span={4}
-      />
       <GridItem
         span={8}
       >

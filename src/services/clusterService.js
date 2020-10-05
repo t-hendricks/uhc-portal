@@ -269,6 +269,28 @@ const deleteUpgradeSchedule = (clusterID, policyID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}`,
 });
 
+const getMachinePools = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools`,
+});
+
+const addMachinePool = (clusterID, params) => apiRequest({
+  method: 'post',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools`,
+  data: params,
+});
+
+const scaleMachinePool = (clusterID, machinePoolID, params) => apiRequest({
+  method: 'patch',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools/${machinePoolID}`,
+  data: params,
+});
+
+const deleteMachinePool = (clusterID, machinePoolID) => apiRequest({
+  method: 'delete',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools/${machinePoolID}`,
+});
+
 
 const clusterService = {
   getClusters,
@@ -311,6 +333,10 @@ const clusterService = {
   deleteAdditionalIngress,
   editClusterIdentityProvider,
   getClusterStatus,
+  getMachinePools,
+  addMachinePool,
+  scaleMachinePool,
+  deleteMachinePool,
 };
 export {
   getVersionInfo,

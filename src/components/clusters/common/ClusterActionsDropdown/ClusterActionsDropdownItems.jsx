@@ -53,7 +53,7 @@ function actionResolver(
   const getScaleClusterProps = () => {
     const scaleClusterBaseProps = {
       ...baseProps,
-      title: 'Scale cluster',
+      title: 'Edit load balancers and persistent storage',
       key: getKey('scalecluster'),
     };
     const managedEditProps = {
@@ -197,7 +197,7 @@ function actionResolver(
   const ToggleClusterAdminAccessDialogProps = getToggleClusterAdminAccessDialogProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
-  const showScale = cluster.canEdit && cluster.managed;
+  const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && !isArchived;

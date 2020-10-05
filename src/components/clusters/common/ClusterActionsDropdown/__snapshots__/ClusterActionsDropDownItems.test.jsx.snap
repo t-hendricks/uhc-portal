@@ -61,14 +61,14 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
     component="button"
     isDisabled={true}
     key="undefined.menu.scalecluster"
-    title="Scale cluster"
+    title="Edit load balancers and persistent storage"
     tooltip={
       <span>
         This cluster is not ready
       </span>
     }
   >
-    Scale cluster
+    Edit load balancers and persistent storage
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -105,9 +105,9 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
     component="button"
     key="1.menu.scalecluster"
     onClick={[Function]}
-    title="Scale cluster"
+    title="Edit load balancers and persistent storage"
   >
-    Scale cluster
+    Edit load balancers and persistent storage
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -152,14 +152,14 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
     component="button"
     isDisabled={true}
     key="undefined.menu.scalecluster"
-    title="Scale cluster"
+    title="Edit load balancers and persistent storage"
     tooltip={
       <span>
         The cluster is being uninstalled
       </span>
     }
   >
-    Scale cluster
+    Edit load balancers and persistent storage
   </DropdownItem>
   <DropdownItem
     component="button"

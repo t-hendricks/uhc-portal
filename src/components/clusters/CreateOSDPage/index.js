@@ -11,7 +11,8 @@ import getPersistentStorageValues from '../../../redux/actions/persistentStorage
 import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
-import { scrollToFirstError, readFile } from '../../../common/helpers';
+import { scrollToFirstError, readFile, strToCleanObject } from '../../../common/helpers';
+
 import {
   hasOSDQuotaSelector,
   hasAwsQuotaSelector,
@@ -105,6 +106,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         compute_machine_type: {
           id: formData.machine_type,
         },
+        compute_labels: strToCleanObject(formData.node_labels, '='),
       },
       managed: true,
       cloud_provider: {
