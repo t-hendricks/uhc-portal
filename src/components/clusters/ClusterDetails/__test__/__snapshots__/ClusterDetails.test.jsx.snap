@@ -550,6 +550,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "push": [MockFunction],
         }
       }
+      openModal={[MockFunction]}
       refresh={[Function]}
     />
   </ForwardRef>
@@ -904,6 +905,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   <Connect(AddGrantModal)
     clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
   />
+  <Connect(UpgradeWizard) />
 </PageSection>
 `;
 

@@ -36,6 +36,7 @@ function clusterLogReducer(state = initialState, action) {
 
       case FULFILLED_ACTION(GET_CLUSTER_LOGS):
         draft.externalClusterID = action.payload.externalClusterID;
+        draft.clusterLogInitialized = draft.externalClusterID; // This cluster *has* logs
         draft.requestState = {
           ...baseRequestState,
           fulfilled: true,
@@ -48,9 +49,11 @@ function clusterLogReducer(state = initialState, action) {
         draft.logs = [];
         draft.requestState = { ...getErrorState(action) };
         break;
+
       case viewPaginationConstants.VIEW_CLEAR_FILTERS_AND_FLAGS:
         draft.requestState = baseRequestState;
         break;
+
       case PENDING_ACTION(DOWNLOAD_CLUSTER_LOGS):
         draft.requestDownloadState = {
           ...baseRequestState,

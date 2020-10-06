@@ -22,6 +22,7 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import { FacetRouter } from 'facet-lib';
 
+import TermsGuardedRoute from './TermsGuardedRoute';
 import Overview from '../overview';
 import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
@@ -79,7 +80,7 @@ function Router({ history }) {
             to ensure the route is tested.
           */}
           <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
-          <Route path="/token/moa" component={TokensMOA} />
+          <TermsGuardedRoute path="/token/moa" component={TokensMOA} history={history} />
           <Route path="/token" component={Tokens} />
           <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
           <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
@@ -106,8 +107,8 @@ function Router({ history }) {
           <Route path="/install" component={InstallInfrastructure} />
           <Route path="/details/:clusterId/insights/:reportId" component={InsightsRuleDetails} />
           <Route path="/details/:id" component={ClusterDetails} />
-          <Route path="/create/osd/aws" render={() => <CreateOSDPage cloudProviderID="aws" />} />
-          <Route path="/create/osd/gcp" render={() => <CreateOSDPage cloudProviderID="gcp" />} />
+          <TermsGuardedRoute path="/create/osd/aws" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="aws" />} history={history} />
+          <TermsGuardedRoute path="/create/osd/gcp" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="gcp" />} history={history} />
           <Route path="/create/osd" component={CloudProviderSelection} />
           <Route path="/create" component={CreateClusterPage} />
           <Route path="/register" component={RegisterCluster} />

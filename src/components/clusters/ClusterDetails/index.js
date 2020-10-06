@@ -1,14 +1,10 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import size from 'lodash/size';
-import isEmpty from 'lodash/isEmpty';
 import { push } from 'connected-react-router';
+
 import ClusterDetails from './ClusterDetails';
-import {
-  fetchClusterDetails,
-  invalidateClusters,
-} from '../../../redux/actions/clustersActions';
+import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
 
 import {
   getClusterIdentityProviders,
@@ -16,31 +12,31 @@ import {
 } from './components/IdentityProvidersModal/IdentityProvidersActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
-import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalErrorActions';
-import { userActions } from '../../../redux/actions/userActions';
+import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';
+import { userActions } from '../../../redux/actions';
 import { modalActions } from '../../common/Modal/ModalActions';
 import {
   getAlerts,
-  getNodes,
   getClusterOperators,
+  getNodes,
 } from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
-import { getClusterHistory, clusterLogActions } from './components/ClusterLogs/clusterLogActions';
+import { clusterLogActions, getClusterHistory } from './components/ClusterLogs/clusterLogActions';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { viewConstants } from '../../../redux/constants';
 import {
-  fetchClusterInsights,
-  voteOnRuleInsights,
   disableRuleInsights,
   enableRuleInsights,
+  fetchClusterInsights,
   fetchGroups,
+  voteOnRuleInsights,
 } from './components/Insights/InsightsActions';
 import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
-import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
+import canSubscribeOCPSelector
+  from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
-import helpers from '../../../common/helpers';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import getBaseName from '../../../common/getBaseName';
 
@@ -52,12 +48,9 @@ const mapStateToProps = (state, { location }) => {
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
   const { insightsData, groups } = state.insightsData;
-  const { filter, flags } = state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW];
-  const hasNoFilters = isEmpty(filter.description)
-  && helpers.nestedIsEmpty(flags.conditionalFilterFlags.severityTypes);
-  const logsFulfilled = state.clusterLogs.requestState.fulfilled;
-  const hideClusterLogs = (hasNoFilters && !size(state.clusterLogs.logs) && logsFulfilled)
-  || errorCode === 403 || errorCode === 404;
+  const logsPresent = state.clusterLogs.clusterLogInitialized
+    === state.clusterLogs.externalClusterID;
+  const hideClusterLogs = !logsPresent || errorCode === 403 || errorCode === 404;
 
   return ({
     cloudProviders,
