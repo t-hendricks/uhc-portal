@@ -8,6 +8,7 @@ import {
 } from '@patternfly/react-core';
 import get from 'lodash/get';
 import range from 'lodash/range';
+import floor from 'lodash/floor';
 
 import PopoverHint from '../../../common/PopoverHint';
 import { noQuotaTooltip } from '../../../../common/helpers';
@@ -48,7 +49,7 @@ class NodeCountInput extends React.Component {
 
     if (isByoc) {
       const available = get(quota, `${infraType}['${machineTypeResource.resource_name}']`, 0);
-      return (available / machineTypeResource.cpu.value);
+      return floor(available / machineTypeResource.cpu.value);
     }
 
     return get(quota, `${infraType}['${machineTypeResource.resource_name}']`, 0);
