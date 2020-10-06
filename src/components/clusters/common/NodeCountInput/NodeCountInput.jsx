@@ -33,6 +33,14 @@ class NodeCountInput extends React.Component {
     return isMultiAz ? 9 : 4;
   }
 
+  getIncludedNodes() {
+    const { isByoc, isMultiAz } = this.props;
+    if (isByoc) {
+      return 0;
+    }
+    return isMultiAz ? 9 : 4;
+  }
+
   getAvailableQuota() {
     const {
       quota,
@@ -61,12 +69,13 @@ class NodeCountInput extends React.Component {
       label, helpText, extendedHelpText,
     } = this.props;
 
+    const included = this.getIncludedNodes();
     const available = this.getAvailableQuota();
     const minimum = this.getMinimumValue();
     const increment = isMultiAz ? 3 : 1; // MultiAz requires nodes to be a multiple of 3
     // no extra node quota = only base cluster size is available
     const optionsAvailable = (available > 0 || isEditingCluster);
-    let maxValue = isEditingCluster ? available + currentNodeCount : available + minimum;
+    let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
     if (maxValue > MAX_NODES) {
       maxValue = MAX_NODES;
     }
