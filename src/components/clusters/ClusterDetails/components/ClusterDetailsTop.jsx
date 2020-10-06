@@ -17,6 +17,7 @@ import ExpirationAlert from './ExpirationAlert';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
 import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
+import TermsAlert from './TermsAlert';
 
 function ClusterDetailsTop(props) {
   const {
@@ -172,6 +173,7 @@ function ClusterDetailsTop(props) {
         canSubscribeOCP={canSubscribeOCP}
       />
       <TransferClusterOwnershipInfo subscription={cluster.subscription} />
+      <TermsAlert subscription={cluster.subscription} />
       {children}
     </div>
   );
