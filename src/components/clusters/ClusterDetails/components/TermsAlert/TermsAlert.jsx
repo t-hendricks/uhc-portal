@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import { Alert, AlertActionLink } from '@patternfly/react-core';
 
 import { subscriptionPlans, subscriptionStatuses } from '../../../../../common/subscriptionTypes';
-import { buildUrlParams } from '../../../../../common/queryHelpers';
+import getTermsAppLink from '../../../../../common/getTermsAppLink';
 
 class TermsAlert extends Component {
   componentDidMount() {
@@ -23,14 +23,10 @@ class TermsAlert extends Component {
   }
 
   getTncAppURL = (baseURL) => {
+    // redirect back to the same page
     const currentHref = window.location.href;
-    const params = {
-      // redirect back to the same page
-      redirect: currentHref,
-      cancelRedirect: currentHref,
-    };
-    // baseURL contains params already.
-    return `${baseURL}&${buildUrlParams(params)}`;
+
+    return getTermsAppLink(baseURL, currentHref, currentHref);
   };
 
   isTermsReviewRquired() {
