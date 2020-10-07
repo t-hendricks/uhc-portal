@@ -1,4 +1,6 @@
-import { SET_FEATURE, ASSISTED_INSTALLER_FEATURE, OSD_UPGRADES_FEATURE } from '../constants/featureConstants';
+import {
+  SET_FEATURE, ASSISTED_INSTALLER_FEATURE, OSD_UPGRADES_FEATURE, SUPPORT_TAB_FEATURE,
+} from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
 
@@ -21,6 +23,13 @@ export const features = [
     name: OSD_UPGRADES_FEATURE,
     action: organizationID => (organizationID
       ? accountsService.getFeature('upgrade-policy', organizationID)
+        .then(unleash => unleash.data.enabled)
+      : Promise.reject(Error('No organization'))),
+  },
+  {
+    name: SUPPORT_TAB_FEATURE,
+    action: organizationID => (organizationID
+      ? accountsService.getFeature('support-tab', organizationID)
         .then(unleash => unleash.data.enabled)
       : Promise.reject(Error('No organization'))),
   },

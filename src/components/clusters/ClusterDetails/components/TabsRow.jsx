@@ -13,7 +13,7 @@ class TabsRow extends React.Component {
   state = {
     activeTabKey: 0,
     initialTabKey: this.getInitTab(),
-  }
+  };
 
   componentDidUpdate() {
     const { activeTabKey, initialTabKey } = this.state;
@@ -48,11 +48,13 @@ class TabsRow extends React.Component {
       displayAddOnsTab,
       displayNetworkingTab,
       displayInsightsTab,
+      displaySupportTab,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
       addOnsTabRef,
       networkingTabRef,
+      supportTabRef,
       insightsTabRef,
       hasIssues,
     } = this.props;
@@ -110,6 +112,13 @@ class TabsRow extends React.Component {
         show: displayInsightsTab,
         ref: insightsTabRef,
       },
+      {
+        key: 6,
+        title: 'Support',
+        contentId: 'supportTabContent',
+        show: displaySupportTab,
+        ref: supportTabRef,
+      },
     ];
   }
 
@@ -126,7 +135,6 @@ class TabsRow extends React.Component {
         setOpenedTab(tabs[tabIndex].id);
       }
     });
-
     tabs.forEach((tab) => {
       if (tab.ref && tab.ref.current) {
         if (tab.key !== tabIndex) {
@@ -144,6 +152,7 @@ class TabsRow extends React.Component {
     const { activeTabKey } = this.state;
 
     const tabsToDisplay = this.getTabs().filter(tab => tab.show);
+
     return (
       <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
         {tabsToDisplay.map(tab => (
@@ -165,12 +174,14 @@ TabsRow.propTypes = {
   displayAddOnsTab: PropTypes.bool,
   displayInsightsTab: PropTypes.bool,
   displayNetworkingTab: PropTypes.bool,
+  displaySupportTab: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
   addOnsTabRef: PropTypes.object.isRequired,
   insightsTabRef: PropTypes.object.isRequired,
   networkingTabRef: PropTypes.object.isRequired,
+  supportTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
   initTabOpen: PropTypes.string,
   setOpenedTab: PropTypes.func.isRequired,

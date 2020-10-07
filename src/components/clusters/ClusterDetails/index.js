@@ -39,6 +39,7 @@ import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOw
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import getBaseName from '../../../common/getBaseName';
+import { SUPPORT_TAB_FEATURE } from '../../../redux/constants/featureConstants';
 
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
@@ -51,6 +52,7 @@ const mapStateToProps = (state, { location }) => {
   const logsPresent = state.clusterLogs.clusterLogInitialized
     === state.clusterLogs.externalClusterID;
   const hideClusterLogs = !logsPresent || errorCode === 403 || errorCode === 404;
+  const supportTabFeature = state.features[SUPPORT_TAB_FEATURE];
 
   return ({
     cloudProviders,
@@ -69,6 +71,7 @@ const mapStateToProps = (state, { location }) => {
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
     initTabOpen: location.hash.replace('#', ''),
+    supportTabFeature,
   });
 };
 

@@ -50,6 +50,9 @@ import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 import clusterStates from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
+import Support from './components/Support';
+import AddNotificationContactDialog
+  from './components/Support/components/AddNotificationContactDialog';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -64,6 +67,7 @@ class ClusterDetails extends Component {
     this.accessControlTabRef = React.createRef();
     this.addOnsTabRef = React.createRef();
     this.networkingTabRef = React.createRef();
+    this.supportTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -95,8 +99,8 @@ class ClusterDetails extends Component {
     if (isValid(clusterID) && !isUuid(clusterID)) {
       // TODO: get IDP and Add-On Installations only for managed clusters
       if (!clusterIdentityProviders.pending
-          && !clusterIdentityProviders.error
-          && !clusterIdentityProviders.fulfilled) {
+        && !clusterIdentityProviders.error
+        && !clusterIdentityProviders.fulfilled) {
         getClusterIdentityProviders(clusterID);
       }
       if (!clusterAddOns.pending && !clusterAddOns.error && !clusterAddOns.fulfilled) {
@@ -278,6 +282,7 @@ class ClusterDetails extends Component {
       toggleSubscriptionReleased,
       setOpenedTab,
       initTabOpen,
+      supportTabFeature,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -349,10 +354,12 @@ class ClusterDetails extends Component {
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && !!consoleURL && cluster.state === 'ready';
     const displayNetworkingTab = (cluster.state === clusterStates.READY
-          || cluster.state === clusterStates.UPDATING)
-          && cluster.managed && !!get(cluster, 'api.url')
-          && get(cluster, 'cloud_provider.id') === 'aws';
+      || cluster.state === clusterStates.UPDATING)
+      && cluster.managed && !!get(cluster, 'api.url')
+      && get(cluster, 'cloud_provider.id') === 'aws';
     const clusterName = getClusterName(cluster);
+    const displaySupportTab = supportTabFeature
+      && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING);
 
     return (
       <PageSection id="clusterdetails-content">
@@ -377,12 +384,14 @@ class ClusterDetails extends Component {
             displayAddOnsTab={displayAddOnsTab}
             displayNetworkingTab={displayNetworkingTab}
             displayInsightsTab={displayInsightsTab}
+            displaySupportTab={displaySupportTab}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
             addOnsTabRef={this.addOnsTabRef}
             networkingTabRef={this.networkingTabRef}
             insightsTabRef={this.insightsTabRef}
+            supportTabRef={this.supportTabRef}
             hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
             initTabOpen={initTabOpen}
             setOpenedTab={setOpenedTab}
@@ -476,6 +485,17 @@ class ClusterDetails extends Component {
             />
           </TabContent>
         )}
+        {
+          <TabContent
+            eventKey={5}
+            id="supportTabContent"
+            ref={this.supportTabRef}
+            aria-label="Support"
+            hidden
+          >
+            <Support />
+          </TabContent>
+        }
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
@@ -498,6 +518,7 @@ class ClusterDetails extends Component {
           refreshParent={this.refreshIDP}
         />
         <DeleteIDPDialog refreshParent={this.refreshIDP} />
+        <AddNotificationContactDialog />
         <AddGrantModal clusterID={cluster.id} />
         <UpgradeWizard />
       </PageSection>
@@ -568,6 +589,7 @@ ClusterDetails.propTypes = {
   hasIssues: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   initTabOpen: PropTypes.string.isRequired,
+  supportTabFeature: PropTypes.bool.isRequired,
 };
 
 ClusterDetails.defaultProps = {
