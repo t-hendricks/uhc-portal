@@ -116,6 +116,7 @@ class TabsRow extends React.Component {
         key: 6,
         title: 'Support',
         contentId: 'supportTabContent',
+        id: 'support',
         show: displaySupportTab,
         ref: supportTabRef,
       },
