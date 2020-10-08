@@ -872,7 +872,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   </ForwardRef>
   <ForwardRef
     aria-label="Support"
-    eventKey={5}
+    eventKey={6}
     hidden={true}
     id="supportTabContent"
   >

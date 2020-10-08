@@ -32,13 +32,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   clearNotificationContacts: () => dispatch(supportActions.clearNotificationContacts()),
   clearDeleteNotificationContacts: () => dispatch(supportActions.clearDeleteNotificationContacts()),
-  getNotificationContacts: clusterID => dispatch(supportActions.getNotificationContacts(clusterID)),
-  deleteNotificationContact: (clusterID, userID) => dispatch(
-    supportActions.deleteNotificationContact(clusterID, userID),
+  getNotificationContacts:
+    subscriptionID => dispatch(supportActions.getNotificationContacts(subscriptionID)),
+  deleteNotificationContact: (subscriptionID, userID) => dispatch(
+    supportActions.deleteNotificationContact(subscriptionID, userID),
   ),
   openModal: modalId => dispatch(openModal(modalId)),
-  addNotificationContact: (clusterID, username) => dispatch(
-    supportActions.addNotificationContact(clusterID, username),
+  addNotificationContact: (subscriptionID, username) => dispatch(
+    supportActions.addNotificationContact(subscriptionID, username),
   ),
   addNotificationToaster: data => dispatch(addNotification(data)),
 });

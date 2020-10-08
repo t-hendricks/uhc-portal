@@ -60,6 +60,7 @@ class ClusterDetails extends Component {
     this.refresh = this.refresh.bind(this);
     this.refreshIDP = this.refreshIDP.bind(this);
     this.fetchDetailsAndInsightsData = this.fetchDetailsAndInsightsData.bind(this);
+    this.fetchSupportData = this.fetchSupportData.bind(this);
 
     this.overviewTabRef = React.createRef();
     this.insightsTabRef = React.createRef();
@@ -185,6 +186,7 @@ class ClusterDetails extends Component {
         if (externalClusterID) {
           getClusterHistory(externalClusterID, clusterLogsViewOptions);
         }
+        this.fetchSupportData();
       }
 
       if (!isUuid(clusterID)) {
@@ -225,6 +227,20 @@ class ClusterDetails extends Component {
     fetchDetails(id);
     if (externalId) {
       fetchInsightsData(externalId);
+    }
+  }
+
+  fetchSupportData() {
+    const {
+      clusterDetails,
+      getNotificationContacts,
+      notificationContacts,
+    } = this.props;
+
+    const subscriptionID = clusterDetails.cluster?.subscription?.id;
+
+    if (isValid(subscriptionID) && !notificationContacts.pending) {
+      getNotificationContacts(subscriptionID);
     }
   }
 
@@ -487,7 +503,7 @@ class ClusterDetails extends Component {
         )}
         {
           <TabContent
-            eventKey={5}
+            eventKey={6}
             id="supportTabContent"
             ref={this.supportTabRef}
             aria-label="Support"
@@ -590,6 +606,8 @@ ClusterDetails.propTypes = {
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   initTabOpen: PropTypes.string.isRequired,
   supportTabFeature: PropTypes.bool.isRequired,
+  notificationContacts: PropTypes.object.isRequired,
+  getNotificationContacts: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {
