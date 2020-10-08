@@ -40,6 +40,7 @@ import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSel
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import getBaseName from '../../../common/getBaseName';
 import { SUPPORT_TAB_FEATURE } from '../../../redux/constants/featureConstants';
+import supportActions from './components/Support/SupportActions';
 
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
@@ -53,6 +54,11 @@ const mapStateToProps = (state, { location }) => {
     === state.clusterLogs.externalClusterID;
   const hideClusterLogs = !logsPresent || errorCode === 403 || errorCode === 404;
   const supportTabFeature = state.features[SUPPORT_TAB_FEATURE];
+  const {
+    notificationContacts = {
+      pending: false,
+    },
+  } = state.clusterSupport;
 
   return ({
     cloudProviders,
@@ -72,6 +78,7 @@ const mapStateToProps = (state, { location }) => {
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
     initTabOpen: location.hash.replace('#', ''),
     supportTabFeature,
+    notificationContacts,
   });
 };
 
@@ -105,6 +112,8 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
     externalClusterID, queryObj,
   ) => getClusterHistory(externalClusterID, queryObj),
   toggleSubscriptionReleased,
+  getNotificationContacts:
+    subscriptionID => dispatch(supportActions.getNotificationContacts(subscriptionID)),
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
