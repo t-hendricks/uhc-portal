@@ -5,6 +5,7 @@ import {
 } from '@patternfly/react-core';
 
 import NotificationContactsCard from './components/NotificationContactsSection';
+import SupportCasesCard from './components/SupportCasesSection';
 import AddNotificationContactSection from './components/AddNotificationContactButton';
 
 const Support = ({
@@ -20,34 +21,50 @@ const Support = ({
   clearDeleteNotificationContacts,
   clearNotificationContacts,
   addNotificationToaster,
+  supportCases,
+  getSupportCases,
 }) => (
-  <Card>
-    <CardTitle>
-      <Title headingLevel="h2" size="lg" className="card-title">Notification contacts</Title>
-      <div className="support-subtitle">
+  <>
+    <Card>
+      <CardTitle>
+        <Title headingLevel="h2" size="lg" className="card-title">Notification contacts</Title>
+        <div className="support-subtitle">
         Add users to be contacted in the event of notifications about this cluster.
-      </div>
-    </CardTitle>
-    <CardBody>
-      <AddNotificationContactSection
-        canEdit={canEdit}
-        openModal={openModal}
-      />
-      <NotificationContactsCard
-        subscriptionID={subscriptionID}
-        canEdit={canEdit}
-        notificationContacts={notificationContacts}
-        deleteContactResponse={deleteContactResponse}
-        addContactResponse={addContactResponse}
-        getNotificationContacts={getNotificationContacts}
-        hasContacts={hasContacts}
-        deleteNotificationContact={deleteNotificationContact}
-        clearDeleteNotificationContacts={clearDeleteNotificationContacts}
-        clearNotificationContacts={clearNotificationContacts}
-        addNotificationToaster={addNotificationToaster}
-      />
-    </CardBody>
-  </Card>
+        </div>
+      </CardTitle>
+      <CardBody>
+        <AddNotificationContactSection
+          canEdit={canEdit}
+          openModal={openModal}
+        />
+        <NotificationContactsCard
+          subscriptionID={subscriptionID}
+          canEdit={canEdit}
+          notificationContacts={notificationContacts}
+          deleteContactResponse={deleteContactResponse}
+          addContactResponse={addContactResponse}
+          getNotificationContacts={getNotificationContacts}
+          hasContacts={hasContacts}
+          deleteNotificationContact={deleteNotificationContact}
+          clearDeleteNotificationContacts={clearDeleteNotificationContacts}
+          clearNotificationContacts={clearNotificationContacts}
+          addNotificationToaster={addNotificationToaster}
+        />
+      </CardBody>
+    </Card>
+    <Card>
+      <CardTitle>
+        <Title headingLevel="h2" size="lg" className="card-title">Support cases</Title>
+      </CardTitle>
+      <CardBody>
+        <SupportCasesCard
+          subscriptionID={subscriptionID}
+          supportCases={supportCases}
+          getSupportCases={getSupportCases}
+        />
+      </CardBody>
+    </Card>
+  </>
 );
 
 Support.propTypes = {
@@ -63,6 +80,8 @@ Support.propTypes = {
   clearNotificationContacts: PropTypes.func.isRequired,
   addNotificationToaster: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
+  supportCases: PropTypes.object.isRequired,
+  getSupportCases: PropTypes.func.isRequired,
 };
 
 export default Support;
