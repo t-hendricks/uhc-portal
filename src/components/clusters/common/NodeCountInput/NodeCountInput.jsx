@@ -29,7 +29,10 @@ class NodeCountInput extends React.Component {
   }
 
   getMinimumValue() {
-    const { isMultiAz } = this.props;
+    const { isMultiAz, isByoc } = this.props;
+    if (isByoc) {
+      return isMultiAz ? 3 : 2;
+    }
     return isMultiAz ? 9 : 4;
   }
 
