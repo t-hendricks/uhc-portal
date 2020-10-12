@@ -31,7 +31,10 @@ describe('<NodeCountInput>', () => {
         machineType="fake"
         quota={{
           rhInfra: {
-            fake: 10,
+            fake: {
+              available: 10,
+              cost: 1,
+            },
           },
         }}
       />);
@@ -45,7 +48,10 @@ describe('<NodeCountInput>', () => {
         machineType="fake"
         quota={{
           rhInfra: {
-            fake: 10000,
+            fake: {
+              available: 10000,
+              cost: 1,
+            },
           },
         }}
       />);
@@ -93,7 +99,10 @@ describe('<NodeCountInput>', () => {
         isMultiAz
         quota={{
           rhInfra: {
-            fake: 3,
+            fake: {
+              available: 3,
+              cost: 1,
+            },
           },
         }}
       />);
