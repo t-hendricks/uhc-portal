@@ -14,7 +14,9 @@ import validators, {
   validateARN,
   checkRouteSelectors,
   awsNumericAccountID,
+  validateServiceAccountObject,
 } from '../validators';
+import fixtures from './validators.fixtures';
 
 test('Field is required', () => {
   expect(required()).toBe('Field is required');
@@ -441,4 +443,20 @@ test('awsNumericAccountID', () => {
   expect(awsNumericAccountID('11111111122222222aaaaaaaaaa')).toBe(errStr);
   expect(awsNumericAccountID('-12345678901')).toBe(errStr);
   expect(awsNumericAccountID('123456789012')).toBe(undefined);
+});
+
+test('GCP service account JSON', () => {
+  fixtures.GCPServiceAccounts.forEach((item) => {
+    const { expectedError, testObj } = item;
+    if (expectedError) {
+      try {
+        validateServiceAccountObject(testObj);
+      } catch (e) {
+        expect(e.property).toBe(expectedError.property);
+        expect(e.message).toBe(expectedError.message);
+      }
+    } else {
+      expect(validateServiceAccountObject(testObj)).toBe(undefined);
+    }
+  });
 });

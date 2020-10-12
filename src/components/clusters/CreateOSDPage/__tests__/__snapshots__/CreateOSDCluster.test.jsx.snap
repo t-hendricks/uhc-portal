@@ -113,6 +113,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
                   "hasOsdQuota": true,
                 }
               }
+              gcpCCSEnabled={false}
               isBYOCModalOpen={false}
               pending={false}
               product="osd"

@@ -7,7 +7,7 @@ describe('Customer Cloud Subscription modal;', () => {
   let wrapper;
 
   beforeAll(() => {
-    wrapper = shallow(<CustomerCloudSubscriptionModal closeModal={jest.fn()} />);
+    wrapper = shallow(<CustomerCloudSubscriptionModal cloudProviderID="aws" closeModal={jest.fn()} />);
   });
 
   it('should render', () => {

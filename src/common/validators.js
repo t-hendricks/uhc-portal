@@ -1,6 +1,8 @@
 import get from 'lodash/get';
 import inRange from 'lodash/inRange';
 import cidrTools from 'cidr-tools';
+import { Validator, ValidationError } from 'jsonschema';
+import { readFile } from './helpers';
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
@@ -631,6 +633,99 @@ const awsNumericAccountID = (input) => {
   return undefined;
 };
 
+const validateServiceAccountObject = (obj) => {
+  const osdServiceAccountSchema = {
+    id: '/osdServiceAccount',
+    type: 'object',
+    properties: {
+      type: {
+        const: 'service_account',
+      },
+      project_id: {
+        type: 'string',
+      },
+      private_key_id: {
+        type: 'string',
+      },
+      private_key: {
+        type: 'string',
+        pattern: '^-----BEGIN PRIVATE KEY-----\n(.|\n)*\n-----END PRIVATE KEY-----\n$',
+      },
+      client_email: {
+        type: 'string',
+        format: 'email',
+      },
+      client_id: { // maybe numeric?
+        type: 'string',
+      },
+      auth_uri: {
+        const: 'https://accounts.google.com/o/oauth2/auth',
+      },
+      token_uri: {
+        type: 'string',
+        format: 'uri',
+      },
+      auth_provider_x509_cert_url: {
+        const: 'https://www.googleapis.com/oauth2/v1/certs',
+      },
+      client_x509_cert_url: {
+        type: 'string',
+        format: 'uri',
+      },
+    },
+    required: [
+      'type',
+      'project_id',
+      'private_key_id',
+      'private_key',
+      'client_email',
+      'client_id',
+      'auth_uri',
+      'token_uri',
+      'auth_provider_x509_cert_url',
+      'client_x509_cert_url',
+    ],
+  };
+  const v = new Validator();
+  v.validate(obj, osdServiceAccountSchema, { throwError: true });
+  return undefined;
+};
+
+const validateGCPServiceAccount = async (fileList) => {
+  if (!fileList) {
+    return undefined;
+  }
+  const file = fileList[0];
+
+  try {
+    const fileContent = await readFile(file);
+    const contentObj = JSON.parse(fileContent);
+    return validateServiceAccountObject(contentObj);
+  } catch (e) {
+    if (e instanceof SyntaxError) {
+      // eslint-disable-next-line no-throw-literal
+      throw { gcp_service_account: 'Invalid JSON format.' };
+    }
+    if (e instanceof ValidationError) {
+      let errorMessage;
+      if (e.property.startsWith('instance.')) {
+        const errorFieldName = e.property.replace('instance.', '');
+        if (e.message.indexOf('does not match pattern') !== -1) {
+          errorMessage = `The field '${errorFieldName}' is not in the required format`;
+        } else {
+          errorMessage = `The field '${errorFieldName}' ${e.message}`;
+        }
+      } else {
+        errorMessage = e.message;
+      }
+      // eslint-disable-next-line no-throw-literal
+      throw { gcp_service_account: `The provided JSON does not meet the requirements: ${errorMessage}` };
+    }
+    // eslint-disable-next-line no-throw-literal
+    throw { gcp_service_account: 'Error reading file.' };
+  }
+};
+
 const validators = {
   required,
   checkIdentityProviderName,
@@ -691,6 +786,8 @@ export {
   checkDisconnectedNodeCount,
   validateARN,
   awsNumericAccountID,
+  validateGCPServiceAccount,
+  validateServiceAccountObject,
 };
 
 export default validators;
