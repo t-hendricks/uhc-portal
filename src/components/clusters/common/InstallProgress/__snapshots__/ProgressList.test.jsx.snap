@@ -21,13 +21,13 @@ exports[`<ProgressList /> should render when first step completed 1`] = `
       DNS setup
     </DescriptionListTerm>
     <DescriptionListDescription>
-      <PendingIcon
+      <CheckCircleIcon
         className="icon-space-right"
-        color="currentColor"
+        color="#3e8635"
         noVerticalAlign={false}
         size="sm"
       />
-      Pending
+      Completed
     </DescriptionListDescription>
   </DescriptionListGroup>
   <DescriptionListGroup>
@@ -35,13 +35,13 @@ exports[`<ProgressList /> should render when first step completed 1`] = `
       Cluster installation
     </DescriptionListTerm>
     <DescriptionListDescription>
-      <PendingIcon
+      <InProgressIcon
         className="icon-space-right"
         color="currentColor"
         noVerticalAlign={false}
         size="sm"
       />
-      Pending
+      Installing cluster
     </DescriptionListDescription>
   </DescriptionListGroup>
 </DescriptionList>

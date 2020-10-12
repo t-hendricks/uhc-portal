@@ -161,6 +161,10 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "status": Object {
+            "dns_ready": true,
+            "state": "ready",
+          },
           "storage_quota": Object {
             "unit": "B",
             "value": 107374182400,
@@ -361,6 +365,10 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "status": Object {
+            "dns_ready": true,
+            "state": "ready",
+          },
           "storage_quota": Object {
             "unit": "B",
             "value": 107374182400,
@@ -586,6 +594,10 @@ exports[`<DetailsRight /> should render 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "status": Object {
+            "dns_ready": true,
+            "state": "ready",
+          },
           "storage_quota": Object {
             "unit": "B",
             "value": 107374182400,
