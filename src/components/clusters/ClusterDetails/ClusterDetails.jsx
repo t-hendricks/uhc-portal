@@ -235,8 +235,12 @@ class ClusterDetails extends Component {
       clusterDetails,
       getNotificationContacts,
       notificationContacts,
+      supportTabFeature,
     } = this.props;
 
+    if (!supportTabFeature) {
+      return;
+    }
     const subscriptionID = clusterDetails.cluster?.subscription?.id;
 
     if (isValid(subscriptionID) && !notificationContacts.pending) {

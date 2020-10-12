@@ -112,8 +112,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
     externalClusterID, queryObj,
   ) => getClusterHistory(externalClusterID, queryObj),
   toggleSubscriptionReleased,
-  getNotificationContacts:
-    subscriptionID => dispatch(supportActions.getNotificationContacts(subscriptionID)),
+  getNotificationContacts: supportActions.getNotificationContacts,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
