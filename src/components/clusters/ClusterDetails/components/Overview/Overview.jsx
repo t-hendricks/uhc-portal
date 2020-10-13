@@ -5,6 +5,7 @@ import {
   Grid, GridItem, Card, CardBody, Title, Alert, CardTitle,
 } from '@patternfly/react-core';
 
+import { HostsToBeAddedAlert } from 'facet-lib';
 import get from 'lodash/get';
 import clusterStates, { getClusterStateAndDescription } from '../../../common/clusterStates';
 
@@ -19,6 +20,8 @@ import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsa
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import InstallProgress from '../../../common/InstallProgress/InstallProgress';
+import withFeatureGate from '../../../../features/with-feature-gate';
+import { ASSISTED_INSTALLER_FEATURE } from '../../../../../redux/constants/featureConstants';
 
 class Overview extends React.Component {
   state = {
@@ -58,8 +61,15 @@ class Overview extends React.Component {
                              || cluster.state === clusterStates.INSTALLING
                              || cluster.state === clusterStates.UNINSTALLING;
 
+    const HostsToBeAdded = withFeatureGate(
+      () => (<HostsToBeAddedAlert cluster={cluster} />),
+      ASSISTED_INSTALLER_FEATURE,
+      () => null,
+    );
+
     return (
       <>
+        <HostsToBeAdded />
         { shouldShowLogs(cluster)
           ? (
             <InstallProgress cluster={cluster}>

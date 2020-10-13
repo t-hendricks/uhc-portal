@@ -59,6 +59,7 @@ import Support from './components/Support';
 import AddNotificationContactDialog
   from './components/Support/components/AddNotificationContactDialog';
 import UpgradeSettingsTab from './components/UpgradeSettings';
+import AddBareMetalHostsDialog from '../common/AddBareMetalHostsDialog';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -602,6 +603,7 @@ class ClusterDetails extends Component {
         <AddGrantModal clusterID={cluster.id} />
         <UpgradeWizard />
         <CancelUpgradeModal />
+        <AddBareMetalHostsDialog onClose={onDialogClose} />
       </PageSection>
     );
   }

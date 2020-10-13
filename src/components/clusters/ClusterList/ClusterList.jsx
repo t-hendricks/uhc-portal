@@ -61,6 +61,7 @@ import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 import helpers, { scrollToTop } from '../../../common/helpers';
 import { viewPropsChanged, createViewQueryObject, getQueryParam } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
+import AddBareMetalHostsDialog from '../common/AddBareMetalHostsDialog';
 
 class ClusterList extends Component {
   state = {
@@ -284,6 +285,7 @@ class ClusterList extends Component {
               <ArchiveClusterDialog onClose={invalidateClusters} />
               <UnarchiveClusterDialog onClose={invalidateClusters} />
               <EditCCSCredentialsDialog onClose={invalidateClusters} />
+              <AddBareMetalHostsDialog onClose={invalidateClusters} />
               <UpgradeWizard />
               <DeleteClusterDialog onClose={(shouldRefresh) => {
                 if (shouldRefresh) {

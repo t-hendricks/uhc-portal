@@ -1,9 +1,12 @@
 import get from 'lodash/get';
 import React from 'react';
+import { canAddBareMetalHost } from 'facet-lib';
 import { DropdownItem } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
 import { subscriptionStatuses, subscriptionPlans } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
+import { ASSISTED_INSTALLER_FEATURE } from '../../../../redux/constants/featureConstants';
+import { withFeatureGateCallback } from '../../../features/with-feature-gate';
 
 /**
  * This function is used by PF tables to determine which dropdown items are displayed
@@ -225,6 +228,15 @@ function actionResolver(
     }
   );
 
+  const getAddBareMetalHostProps = withFeatureGateCallback(() => (
+    {
+      ...baseProps,
+      title: 'Add Bare Metal Hosts',
+      key: getKey('addBareMetalHosts'),
+      onClick: () => openModal('add-bare-metal-hosts', cluster),
+    }
+  ), ASSISTED_INSTALLER_FEATURE);
+
   const adminConsoleItemProps = getAdminConosleProps();
   const scaleClusterItemProps = getScaleClusterProps();
   const editNodeCountItemProps = getEditNodeCountProps();
@@ -237,6 +249,8 @@ function actionResolver(
   const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
   const ToggleClusterAdminAccessDialogProps = getToggleClusterAdminAccessDialogProps();
   const editccscredentialsProps = getEditCCSCredentialsProps();
+  const addBareMetalHostProps = getAddBareMetalHostProps();
+
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
   const showEditNodeCount = cluster.canEdit && cluster.managed;
@@ -253,12 +267,15 @@ function actionResolver(
   // eslint-disable-next-line max-len
   // const showccscredentials = cluster.ccs?.enabled && cluster.cloud_provider && cluster.cloud_provider.id !== 'gcp';
   const showccscredentials = false; // Temporary until backend is fixed
+  const showAddBareMetalHost = cluster.canEdit && canAddBareMetalHost({ cluster });
+
   return [
     showConsoleButton && adminConsoleItemProps,
     cluster.canEdit && editDisplayNameItemProps,
     showEditURL && editConsoleURLItemProps,
     showScale && scaleClusterItemProps,
     showEditNodeCount && editNodeCountItemProps,
+    showAddBareMetalHost && addBareMetalHostProps,
     showDelete && deleteClusterItemProps,
     showArchive && archiveClusterItemProps,
     showUnarchive && unarchiveClusterItemProps,
