@@ -6,7 +6,7 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
   label="compute nodes"
 >
   <Tooltip
-    content="You do not have quota for this option. Contact sales to purchase additional quota."
+    content="You do not have enough quota for this option. Contact sales to purchase additional quota."
     position="right"
   >
     <div>
@@ -991,7 +991,7 @@ exports[`<NodeCountInput> Single AZ renders with no quota 1`] = `
   label="compute nodes"
 >
   <Tooltip
-    content="You do not have quota for this option. Contact sales to purchase additional quota."
+    content="You do not have enough quota for this option. Contact sales to purchase additional quota."
     position="right"
   >
     <div>
