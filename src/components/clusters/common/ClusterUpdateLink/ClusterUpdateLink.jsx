@@ -6,7 +6,12 @@ import links from '../../../../common/installLinks';
 import getClusterName from '../../../../common/getClusterName';
 
 
-const ClusterUpdateLink = ({ cluster, openModal, osdUpgradesEnabled }) => {
+const ClusterUpdateLink = ({
+  cluster,
+  openModal,
+  osdUpgradesEnabled,
+  osdUpgradeAvailable,
+}) => {
   const { upgrade } = cluster.metrics;
 
   // Show which version the cluster is currently updating to
@@ -22,8 +27,8 @@ const ClusterUpdateLink = ({ cluster, openModal, osdUpgradesEnabled }) => {
 
   // Only show Update tooltip/link for OCP clusters that have available updates
   // or OSD clusters when the feature toggle is enabled
-  if (!upgrade.available || !openModal
-      || (cluster.managed && (!osdUpgradesEnabled || !cluster.canEdit))) {
+  if ((cluster.managed && (!osdUpgradesEnabled || !cluster.canEdit || !osdUpgradeAvailable))
+      || (!cluster.managed && !upgrade.available)) {
     return null;
   }
 
@@ -83,6 +88,7 @@ ClusterUpdateLink.propTypes = {
   cluster: PropTypes.object.isRequired,
   openModal: PropTypes.func,
   osdUpgradesEnabled: PropTypes.bool,
+  osdUpgradeAvailable: PropTypes.bool,
 };
 
 export default ClusterUpdateLink;
