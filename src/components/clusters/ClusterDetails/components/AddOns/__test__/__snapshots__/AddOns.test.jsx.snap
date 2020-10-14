@@ -162,7 +162,7 @@ exports[`<AddOns /> should render 1`] = `
       </CardBody>
       <CardFooter>
         <Tooltip
-          content="You do not have quota for this option. Contact sales to purchase additional quota."
+          content="You do not have enough quota for this option. Contact sales to purchase additional quota."
         >
           <div
             className="pf-u-display-inline-block"

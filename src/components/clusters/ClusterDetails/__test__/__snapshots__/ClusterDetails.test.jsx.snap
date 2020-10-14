@@ -115,6 +115,10 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "kind": "CloudRegionLink",
         },
         "state": "ready",
+        "status": Object {
+          "dns_ready": true,
+          "state": "ready",
+        },
         "storage_quota": Object {
           "unit": "B",
           "value": 107374182400,
@@ -213,6 +217,11 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
         }
       }
       setOpenedTab={[MockFunction]}
+      supportTabRef={
+        Object {
+          "current": null,
+        }
+      }
     />
   </ClusterDetailsTop>
   <ForwardRef
@@ -514,6 +523,10 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "status": Object {
+            "dns_ready": true,
+            "state": "ready",
+          },
           "storage_quota": Object {
             "unit": "B",
             "value": 107374182400,
@@ -670,6 +683,10 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "status": Object {
+            "dns_ready": true,
+            "state": "ready",
+          },
           "storage_quota": Object {
             "unit": "B",
             "value": 107374182400,
@@ -820,6 +837,10 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": "ready",
+          "status": Object {
+            "dns_ready": true,
+            "state": "ready",
+          },
           "storage_quota": Object {
             "unit": "B",
             "value": 107374182400,
@@ -865,6 +886,14 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       refreshCluster={[Function]}
     />
   </ForwardRef>
+  <ForwardRef
+    aria-label="Support"
+    eventKey={6}
+    hidden={true}
+    id="supportTabContent"
+  >
+    <Connect(Support) />
+  </ForwardRef>
   <Connect(ReduxForm)
     onClose={[Function]}
   />
@@ -902,6 +931,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   <Connect(DeleteIDPDialog)
     refreshParent={[Function]}
   />
+  <Connect(AddNotificationContactDialog) />
   <Connect(AddGrantModal)
     clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
   />

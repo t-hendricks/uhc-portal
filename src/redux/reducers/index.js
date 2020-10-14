@@ -17,6 +17,8 @@ import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetai
 import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetails/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
 import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/AccessControl/UsersSection/UsersReducer';
+import clustersSupportReducer
+  from '../../components/clusters/ClusterDetails/components/Support/SupportReducer';
 import addOnsReducer from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsReducer';
 import globalErrorReducer from './globalErrorReducer';
 import machineTypesReducer from './machineTypesReducer';
@@ -43,6 +45,7 @@ const reducers = {
   logs: InstallationLogReducer,
   identityProviders: IdentityProvidersReducer,
   clusterUsers: clusterUsersReducer,
+  clusterSupport: clustersSupportReducer,
   addOns: addOnsReducer,
   globalError: globalErrorReducer,
   machineTypes: machineTypesReducer,

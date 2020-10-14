@@ -32,7 +32,7 @@ function ProgressList({ cluster }) {
 
     // first step completed
     if (cluster.state === clusterStates.INSTALLING) {
-      if (!cluster.dns_ready) {
+      if (!cluster.status.dns_ready) {
         return {
           awsAccountSetup: completed,
           DNSSetup: pending,

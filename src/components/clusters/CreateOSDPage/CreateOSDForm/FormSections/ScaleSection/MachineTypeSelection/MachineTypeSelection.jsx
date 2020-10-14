@@ -87,6 +87,11 @@ class MachineTypeSelection extends React.Component {
     }
     const resourceName = machineType.resource_name;
     const available = quota.clustersQuota[cloudProviderID][infra][zoneType][resourceName] || 0;
+    if (isBYOC) {
+      const nodesAvailable = quota.nodesQuota[cloudProviderID][infra][resourceName] || 0;
+      return available > 0 && (nodesAvailable / machineType.cpu.value) >= 1;
+    }
+
     return available > 0;
   }
 
