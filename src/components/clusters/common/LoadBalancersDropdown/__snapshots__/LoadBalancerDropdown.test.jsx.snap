@@ -95,7 +95,7 @@ exports[`<LoadBalancersDropdown /> when the load balancer list is available rend
   }
 >
   <Tooltip
-    content="You do not have quota for this option. Contact sales to purchase additional quota."
+    content="You do not have enough quota for this option. Contact sales to purchase additional quota."
     position="right"
   >
     <Popper
@@ -139,7 +139,7 @@ exports[`<LoadBalancersDropdown /> when the load balancer list is available rend
           <TooltipContent
             isLeftAligned={false}
           >
-            You do not have quota for this option. Contact sales to purchase additional quota.
+            You do not have enough quota for this option. Contact sales to purchase additional quota.
           </TooltipContent>
         </div>
       }

@@ -355,6 +355,10 @@ exports[`<Overview /> should render 1`] = `
                   "kind": "CloudRegionLink",
                 },
                 "state": "ready",
+                "status": Object {
+                  "dns_ready": true,
+                  "state": "ready",
+                },
                 "storage_quota": Object {
                   "unit": "B",
                   "value": 107374182400,
@@ -506,6 +510,10 @@ exports[`<Overview /> should render 1`] = `
                   "style": Object {
                     "textTransform": "capitalize",
                   },
+                },
+                "status": Object {
+                  "dns_ready": true,
+                  "state": "ready",
                 },
                 "storage_quota": Object {
                   "unit": "B",

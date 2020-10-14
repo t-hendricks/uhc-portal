@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
   return ({
     isOpen: shouldShowModal(state, 'edit-cluster'),
     editClusterResponse: state.clusters.editedCluster,
-    min: minValueSelector(modalData.multi_az),
+    min: minValueSelector(modalData.multi_az, modalData.byoc),
     consoleURL: get(modalData, 'console.url', null),
     isMultiAz: modalData.multi_az,
     showLoadBalancerAlert: shouldShowLoadBalancerAlert(state),

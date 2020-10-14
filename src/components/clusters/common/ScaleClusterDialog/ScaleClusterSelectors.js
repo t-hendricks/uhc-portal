@@ -1,13 +1,18 @@
 import get from 'lodash/get';
 import { getFormValues } from 'redux-form';
 
-const minValueSelector = isMultiAz => (isMultiAz ? {
-  value: 9,
-  validationMsg: 'At least 9 nodes are required for multiple availability zone cluster.',
-} : {
-  value: 4,
-  validationMsg: 'At least 4 nodes are required',
-});
+const minValueSelector = (isMultiAz, isByoc) => {
+  const multiAzNodes = isByoc ? 3 : 9;
+  const singleAzNodes = isByoc ? 2 : 4;
+
+  return isMultiAz ? {
+    value: multiAzNodes,
+    validationMsg: `At least ${multiAzNodes} nodes are required for multiple availability zone cluster.`,
+  } : {
+    value: singleAzNodes,
+    validationMsg: `At least ${singleAzNodes} nodes are required`,
+  };
+};
 
 
 const shouldShowLoadBalancerAlert = (state) => {

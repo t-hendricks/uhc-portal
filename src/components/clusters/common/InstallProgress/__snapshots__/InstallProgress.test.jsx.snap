@@ -122,6 +122,10 @@ exports[`<InstallProgress /> should render correclty installing cluster 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": "installing",
+          "status": Object {
+            "dns_ready": true,
+            "state": "ready",
+          },
           "storage_quota": Object {
             "unit": "B",
             "value": 107374182400,

@@ -178,6 +178,10 @@ const clusterDetails = {
     product: {
       id: 'osd',
     },
+    status: {
+      state: 'ready',
+      dns_ready: true,
+    },
   },
 };
 
