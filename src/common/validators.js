@@ -32,7 +32,7 @@ const DOCKER_CIDR_RANGE = '172.17.0.0/16';
 const CONSOLE_URL_REGEXP = /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
 
 // Maximum length for a cluster name
-const MAX_CLUSTER_NAME_LENGTH = 50;
+const MAX_CLUSTER_NAME_LENGTH = 15;
 
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
