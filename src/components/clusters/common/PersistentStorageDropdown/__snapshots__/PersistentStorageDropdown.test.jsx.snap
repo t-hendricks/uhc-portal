@@ -153,7 +153,7 @@ exports[`<PersistentStorageDropdown /> when the storage list is available render
   }
 >
   <Tooltip
-    content="You do not have quota for this option. Contact sales to purchase additional quota."
+    content="You do not have enough quota for this option. Contact sales to purchase additional quota."
     position="right"
   >
     <Popper
@@ -197,7 +197,7 @@ exports[`<PersistentStorageDropdown /> when the storage list is available render
           <TooltipContent
             isLeftAligned={false}
           >
-            You do not have quota for this option. Contact sales to purchase additional quota.
+            You do not have enough quota for this option. Contact sales to purchase additional quota.
           </TooltipContent>
         </div>
       }

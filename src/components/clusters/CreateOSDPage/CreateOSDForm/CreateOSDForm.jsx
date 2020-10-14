@@ -28,17 +28,25 @@ class CreateOSDForm extends React.Component {
   };
 
   closeBYOCModal = () => {
-    const { closeModal } = this.props;
+    const { closeModal, change } = this.props;
+    const { isMultiAz } = this.state;
+    const computeNodes = isMultiAz ? '3' : '2';
+
     this.setState({ byocSelected: true });
+    change('nodes_compute', computeNodes);
     closeModal();
   }
 
   handleMultiAZChange = (_, value) => {
     const { change } = this.props;
     const isMultiAz = value === 'true';
+    let computeNodes = isMultiAz ? '9' : '4';
 
+    if (this.isByocForm()) {
+      computeNodes = isMultiAz ? '3' : '2';
+    }
     this.setState({ isMultiAz });
-    change('nodes_compute', isMultiAz ? '9' : '4');
+    change('nodes_compute', computeNodes);
   };
 
 
@@ -56,6 +64,24 @@ class CreateOSDForm extends React.Component {
     this.setState({ mode: value });
   };
 
+  isByocForm = () => {
+    const {
+      clustersQuota,
+      cloudProviderID,
+    } = this.props;
+
+    const {
+      byocSelected,
+    } = this.state;
+
+    const isAws = cloudProviderID === 'aws';
+
+    const hasBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
+    const hasAwsRhInfraQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
+
+    return isAws && hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
+  }
+
   render() {
     const {
       pending,
@@ -69,7 +95,6 @@ class CreateOSDForm extends React.Component {
     } = this.props;
 
     const {
-      byocSelected,
       isMultiAz,
       machineType,
       mode,
@@ -80,7 +105,7 @@ class CreateOSDForm extends React.Component {
     const hasBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
     const hasAwsRhInfraQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
 
-    const isBYOCForm = isAws && hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
+    const isBYOCForm = this.isByocForm();
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
 
     return (
