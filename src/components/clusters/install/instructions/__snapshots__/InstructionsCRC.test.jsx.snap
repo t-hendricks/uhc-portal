@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CRC instructions renders correctly 1`] = `
+<Fragment>
+  <Card
+    className="ocp-downloads"
+  >
+    <Stack>
+      <StackItem>
+        <Split>
+          <SplitItem>
+            <Title
+              className="step-number"
+              headingLevel="h1"
+            >
+              1
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <div
+              className="ocp-downloads"
+            >
+              <div
+                className="instructions-section"
+              >
+                <Title
+                  headingLevel="h2"
+                >
+                  What you need to get started
+                </Title>
+                <Title
+                  headingLevel="h3"
+                >
+                  CodeReady Containers archive
+                </Title>
+                <p>
+                  Download and extract the CodeReady Containers archive for your operating system and place the binary in your
+                   
+                  <code>
+                    $PATH
+                  </code>
+                   
+                  .
+                </p>
+              </div>
+              <div
+                className="instructions-section"
+              >
+                <DownloadAndOSSelection
+                  channel="CRC"
+                  cloudProviderID="/"
+                  mode="CRC"
+                  token={Object {}}
+                />
+              </div>
+              <div
+                className="instructions-section"
+              >
+                <Title
+                  headingLevel="h3"
+                >
+                  Pull secret
+                </Title>
+                <PullSecretSection
+                  cloudProviderID="/"
+                  token={Object {}}
+                />
+              </div>
+            </div>
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider
+        className="steps-divider"
+      />
+      <StackItem>
+        <Split>
+          <SplitItem>
+            <Title
+              className="step-number"
+              headingLevel="h1"
+            >
+              2
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <div
+              className="instructions-section"
+            >
+              <Title
+                headingLevel="h2"
+              >
+                Follow the documentation to install CodeReady containers
+              </Title>
+              <p>
+                Run the
+                 
+                <code>
+                  crc setup
+                </code>
+                 
+                command to set up your host operating system for the CodeReady Containers virtual machine.
+              </p>
+              <p>
+                Then, the
+                 
+                <code>
+                  crc start
+                </code>
+                 
+                will create a minimal OpenShift 4 cluster on your laptop or desktop computer.
+              </p>
+              <Button
+                component="a"
+                href="https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/"
+                onClick={[Function]}
+                rel="noreferrer noopener"
+                target="_blank"
+                variant="secondary"
+              >
+                Get started
+              </Button>
+              <p
+                className="small-text"
+              >
+                Note: Your CodeReady Container cluster will not show in your list of clusters in OpenShift Cluster Manager since it is short-lived and occasionally running. OpenShift Cluster Manager currently shows only production-level clusters.
+              </p>
+            </div>
+          </SplitItem>
+        </Split>
+      </StackItem>
+    </Stack>
+  </Card>
+</Fragment>
+`;
