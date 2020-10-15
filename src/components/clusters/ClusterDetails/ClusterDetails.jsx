@@ -234,6 +234,8 @@ class ClusterDetails extends Component {
     const {
       clusterDetails,
       getNotificationContacts,
+      getSupportCases,
+      supportCases,
       notificationContacts,
       supportTabFeature,
     } = this.props;
@@ -243,8 +245,14 @@ class ClusterDetails extends Component {
     }
     const subscriptionID = clusterDetails.cluster?.subscription?.id;
 
-    if (isValid(subscriptionID) && !notificationContacts.pending) {
-      getNotificationContacts(subscriptionID);
+    if (isValid(subscriptionID)) {
+      if (!notificationContacts.pending) {
+        getNotificationContacts(subscriptionID);
+      }
+
+      if (!supportCases.pending) {
+        getSupportCases(subscriptionID);
+      }
     }
   }
 
@@ -612,6 +620,8 @@ ClusterDetails.propTypes = {
   supportTabFeature: PropTypes.bool.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
+  getSupportCases: PropTypes.func.isRequired,
+  supportCases: PropTypes.object.isRequired,
 };
 
 ClusterDetails.defaultProps = {

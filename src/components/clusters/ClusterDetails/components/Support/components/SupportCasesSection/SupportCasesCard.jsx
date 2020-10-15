@@ -1,0 +1,110 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import {
+  Button, EmptyState, EmptyStateBody, EmptyStateVariant,
+} from '@patternfly/react-core';
+import {
+  Table, TableBody, TableHeader, TableVariant,
+} from '@patternfly/react-table';
+
+class SupportCasesCard extends React.Component {
+  componentDidMount() {
+    const {
+      subscriptionID,
+      supportCases,
+      getSupportCases,
+    } = this.props;
+    if ((supportCases.subscriptionID !== subscriptionID) || (!supportCases.pending)) {
+      getSupportCases(subscriptionID);
+    }
+  }
+
+  render() {
+    const {
+      subscriptionID,
+      supportCases,
+    } = this.props;
+
+    const columns = [
+      { title: 'Case ID' },
+      { title: 'Issue summary' },
+      { title: 'Owner' },
+      { title: 'Modified by' },
+      { title: 'Severity' },
+      { title: 'Status' },
+    ];
+
+    const url = `https://access.redhat.com/support/cases/#/case/new/open-case?clusterId=${subscriptionID}&caseCreate=true`;
+
+    const supportCaseRow = (supportCase) => {
+      const caseIdURL = `https://access.redhat.com/support/cases/#/case/${supportCase.caseID}`;
+      const caseID = (
+        <>
+          <a href={caseIdURL} target="_blank" rel="noopener noreferrer">{supportCase.caseID}</a>
+        </>
+      );
+
+      const lastModifiedDate = moment.utc(supportCase.lastModifiedDate).format('D MMM YYYY');
+
+      const lastModifiedBy = (
+        <>
+          {supportCase.lastModifiedBy}
+          <br />
+          {lastModifiedDate}
+        </>
+      );
+      return {
+        cells: [
+          caseID,
+          supportCase.summary,
+          supportCase.ownerID,
+          lastModifiedBy,
+          supportCase.severity,
+          supportCase.status,
+        ],
+        caseID: supportCase.caseID,
+      };
+    };
+
+    const rows = supportCases.cases.map(supportCaseRow);
+    const hasRows = rows.length > 0;
+
+    return (
+      <>
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          <Button
+            variant="secondary"
+            className="support-cases-add"
+          >
+             Open support case
+          </Button>
+        </a>
+        <Table
+          aria-label="Support Cases"
+          variant={TableVariant.compact}
+          cells={columns}
+          rows={rows}
+        >
+          <TableHeader />
+          <TableBody />
+        </Table>
+        {!hasRows && (
+          <EmptyState variant={EmptyStateVariant.small}>
+            <EmptyStateBody>
+          You have no open support cases
+            </EmptyStateBody>
+          </EmptyState>
+        )}
+      </>
+    );
+  }
+}
+
+SupportCasesCard.propTypes = {
+  subscriptionID: PropTypes.string.isRequired,
+  supportCases: PropTypes.object.isRequired,
+  getSupportCases: PropTypes.func.isRequired,
+};
+
+export default SupportCasesCard;

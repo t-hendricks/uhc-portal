@@ -5,12 +5,14 @@ const GET_NOTIFICATION_CONTACTS = 'GET_NOTIFICATION_CONTACTS';
 const ADD_NOTIFICATION_CONTACT = 'ADD_NOTIFICATION_CONTACT';
 const DELETE_NOTIFICATION_CONTACT = 'DELETE_NOTIFICATION_CONTACT';
 const NOTIFICATION_CONTACTS = 'NOTIFICATION_CONTACTS';
+const GET_SUPPORT_CASES = 'GET_SUPPORT_CASES';
 
 export const SupportConstants = {
   GET_NOTIFICATION_CONTACTS,
   ADD_NOTIFICATION_CONTACT,
   DELETE_NOTIFICATION_CONTACT,
   NOTIFICATION_CONTACTS,
+  GET_SUPPORT_CASES,
 };
 
 /** Build a notification
@@ -72,6 +74,15 @@ const deleteNotificationContact = (subscriptionID, accountID) => dispatch => dis
   meta: buildNotificationsMeta('Notification contact deleted successfully'),
 });
 
+const getSupportCases = subscriptionID => dispatch => dispatch({
+  type: GET_SUPPORT_CASES,
+  payload: accountsService.getSupportCases(subscriptionID)
+    .then((response) => {
+      response.data.subscriptionID = subscriptionID;
+      return response;
+    }),
+});
+
 const supportActions = {
   clearNotificationContacts,
   clearAddNotificationContacts,
@@ -79,6 +90,7 @@ const supportActions = {
   getNotificationContacts,
   addNotificationContact,
   deleteNotificationContact,
+  getSupportCases,
 };
 
 export default supportActions;

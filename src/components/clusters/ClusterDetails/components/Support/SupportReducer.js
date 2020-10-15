@@ -22,6 +22,11 @@ const initialState = {
   addContactResponse: {
     ...baseRequestState,
   },
+  supportCases: {
+    ...baseRequestState,
+    cases: [],
+    clusterID: '',
+  },
 };
 
 function SupportReducer(state = initialState, action) {
@@ -29,6 +34,7 @@ function SupportReducer(state = initialState, action) {
   return produce(state, (draft) => {
     let data;
     let items;
+    let cases;
     // eslint-disable-next-line default-case
     switch (action.type) {
       // GET NOTIFICATION CONTACTS
@@ -115,6 +121,33 @@ function SupportReducer(state = initialState, action) {
       case INVALIDATE_ACTION(SupportConstants.ADD_NOTIFICATION_CONTACT):
         draft.addContactResponse = {
           ...baseRequestState,
+        };
+        break;
+      // GET SUPPORT CASES
+      case PENDING_ACTION(SupportConstants.GET_SUPPORT_CASES):
+        draft.supportCases.pending = true;
+        break;
+      case FULFILLED_ACTION(SupportConstants.GET_SUPPORT_CASES):
+        cases = action.payload?.data?.response?.docs || [];
+        draft.supportCases = {
+          ...baseRequestState,
+          fulfilled: true,
+          subscriptionID: action.payload?.data?.subscriptionID,
+          cases: cases.map(supportCase => ({
+            summary: supportCase.case_summary,
+            caseID: supportCase.case_number,
+            ownerID: supportCase.case_owner,
+            severity: supportCase.case_severity,
+            status: supportCase.case_status,
+            lastModifiedBy: supportCase.case_lastModifiedByName,
+            lastModifiedDate: supportCase.case_lastModifiedDate,
+          })),
+        };
+        break;
+      case REJECTED_ACTION(SupportConstants.GET_SUPPORT_CASES):
+        draft.supportCases = {
+          ...initialState.supportCases,
+          ...getErrorState(action),
         };
         break;
 
