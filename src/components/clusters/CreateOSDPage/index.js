@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset, formValueSelector } from 'redux-form';
+import pick from 'lodash/pick';
 
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../redux/actions/machineTypesActions';
@@ -10,7 +11,7 @@ import getPersistentStorageValues from '../../../redux/actions/persistentStorage
 import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
-import { scrollToFirstError } from '../../../common/helpers';
+import { scrollToFirstError, readFile } from '../../../common/helpers';
 import {
   hasOSDQuotaSelector,
   hasAwsQuotaSelector,
@@ -18,6 +19,8 @@ import {
   awsQuotaSelector,
   gcpQuotaSelector,
 } from '../CreateClusterPage/quotaSelector';
+import { validateGCPServiceAccount } from '../../../common/validators';
+import { GCP_CCS_FEATURE } from '../../../redux/constants/featureConstants';
 
 const AWS_DEFAULT_REGION = 'us-east-1';
 const GCP_DEFAULT_REGION = 'us-east1';
@@ -25,6 +28,13 @@ const GCP_DEFAULT_REGION = 'us-east1';
 const reduxFormConfig = {
   form: 'CreateCluster',
   onSubmitFail: scrollToFirstError,
+  asyncValidate: (values) => {
+    if (values.gcp_service_account) {
+      return validateGCPServiceAccount(values.gcp_service_account);
+    }
+    return Promise.resolve(); // RF API requires to return a promise
+  },
+  asyncChangeFields: ['gcp_service_account'],
 };
 
 const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
@@ -49,6 +59,7 @@ const mapStateToProps = (state, ownProps) => {
 
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
+    gcpCCSEnabled: state.features[GCP_CCS_FEATURE],
 
     cloudProviders: state.cloudProviders,
     persistentStorageValues: state.persistentStorageValues,
@@ -83,7 +94,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: (formData) => {
+  onSubmit: async (formData) => {
     const clusterRequest = {
       name: formData.name,
       region: {
@@ -118,15 +129,37 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       };
     }
     if (formData.byoc === 'true') {
-      clusterRequest.aws = {
-        access_key_id: formData.access_key_id,
-        account_id: formData.account_id,
-        secret_access_key: formData.secret_access_key,
-      };
       clusterRequest.ccs = {
         enabled: true,
-        disable_scp_checks: formData.disable_scp_checks,
       };
+      if (ownProps.cloudProviderID === 'aws') {
+        clusterRequest.aws = {
+          access_key_id: formData.access_key_id,
+          account_id: formData.account_id,
+          secret_access_key: formData.secret_access_key,
+        };
+        clusterRequest.ccs.disable_scp_check = formData.disable_scp_checks;
+      } else if (ownProps.cloudProviderID === 'gcp') {
+        const text = await readFile(formData.gcp_service_account[0]);
+        const parsed = JSON.parse(text);
+        clusterRequest.gcp = pick(parsed, [
+          'type',
+          'project_id',
+          'private_key_id',
+          'private_key',
+          'client_email',
+          'client_id',
+          'auth_uri',
+          'token_uri',
+          'auth_provider_x509_cert_url',
+          'client_x509_cert_url',
+        ]);
+        clusterRequest.cloud_provider.display_name = 'gcp';
+        clusterRequest.cloud_provider.name = 'gcp';
+        clusterRequest.flavour = {
+          id: 'osd-4',
+        };
+      }
     } else {
       // Don't pass LB and storage to byoc cluster.
       // default to zero load balancers

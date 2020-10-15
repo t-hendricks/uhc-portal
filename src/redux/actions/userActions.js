@@ -145,6 +145,11 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
             multiAz: { available: 0 },
             totalAvailable: 0,
           },
+          byoc: {
+            singleAz: { available: 0 },
+            multiAz: { available: 0 },
+            totalAvailable: 0,
+          },
           isAvailable: false,
         },
       },
@@ -159,6 +164,7 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
 
         // GCP
         gcp: {
+          byoc: {},
           rhInfra: {},
         },
       },

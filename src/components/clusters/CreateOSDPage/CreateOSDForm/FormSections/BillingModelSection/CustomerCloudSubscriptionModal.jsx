@@ -7,16 +7,9 @@ import { Title, TextContent } from '@patternfly/react-core';
 import { billingModelConstants } from '../../CreateOSDFormConstants';
 import Modal from '../../../../../common/Modal/Modal';
 
-function CustomerCloudSubscriptionModal({ closeModal }) {
-  return (
-    <Modal
-      className="ccsModal"
-      title="Customer cloud subscription"
-      onClose={closeModal}
-      primaryText="Close"
-      onPrimaryClick={closeModal}
-      showSecondery={false}
-    >
+const contentByCloudProvider = (cloudProviderID) => {
+  if (cloudProviderID === 'aws') {
+    return (
       <>
         <TextContent>
         With this subscription option, the cluster will be provisioned in an AWS account
@@ -57,12 +50,32 @@ function CustomerCloudSubscriptionModal({ closeModal }) {
             subscription.
         </TextContent>
       </>
+    );
+  } return (
+    <TextContent>
+    GCP modal - content TBD
+    </TextContent>
+  );
+};
+
+function CustomerCloudSubscriptionModal({ closeModal, cloudProviderID }) {
+  return (
+    <Modal
+      className="ccsModal"
+      title="Customer cloud subscription"
+      onClose={closeModal}
+      primaryText="Close"
+      onPrimaryClick={closeModal}
+      showSecondery={false}
+    >
+      {contentByCloudProvider(cloudProviderID)}
     </Modal>
   );
 }
 
 CustomerCloudSubscriptionModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
+  cloudProviderID: PropTypes.string.isRequired,
 };
 
 export default CustomerCloudSubscriptionModal;
