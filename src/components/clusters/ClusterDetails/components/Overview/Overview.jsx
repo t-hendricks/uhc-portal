@@ -42,7 +42,7 @@ class Overview extends React.Component {
 
   render() {
     const {
-      cluster, cloudProviders, history, displayClusterLogs, refresh, openModal,
+      cluster, cloudProviders, history, displayClusterLogs, refresh,
     } = this.props;
     const { showInstallSuccessAlert } = this.state;
     const clusterState = getClusterStateAndDescription(cluster);
@@ -105,7 +105,6 @@ class Overview extends React.Component {
                 <DetailsLeft
                   cluster={cluster}
                   cloudProviders={cloudProviders}
-                  openModal={openModal}
                 />
               </GridItem>
               <GridItem sm={6}>
@@ -138,7 +137,6 @@ Overview.propTypes = {
   history: PropTypes.object.isRequired,
   displayClusterLogs: PropTypes.bool.isRequired,
   refresh: PropTypes.func,
-  openModal: PropTypes.func.isRequired,
 };
 
 export default Overview;

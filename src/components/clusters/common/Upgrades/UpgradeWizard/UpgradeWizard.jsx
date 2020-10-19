@@ -45,6 +45,7 @@ class UpgradeWizard extends React.Component {
       clusterName,
       clusterVersion,
       upgradeScheduleRequest,
+      clusterChannel,
     } = this.props;
     const {
       selectedVersion,
@@ -60,6 +61,7 @@ class UpgradeWizard extends React.Component {
         component: (
           <VersionSelectionGrid
             clusterVersion={clusterVersion}
+            clusterChannel={clusterChannel}
             selected={selectedVersion}
             onSelect={this.selectVersion}
           />
@@ -132,6 +134,7 @@ UpgradeWizard.propTypes = {
   clusterName: PropTypes.string,
   clusterID: PropTypes.string,
   clusterVersion: PropTypes.string,
+  clusterChannel: PropTypes.string,
   upgradeScheduleRequest: PropTypes.object.isRequired,
   postSchedule: PropTypes.func.isRequired,
 };

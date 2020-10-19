@@ -1,0 +1,25 @@
+import { connect } from 'react-redux';
+import supportActions from '../../SupportActions';
+import SupportCasesCard from './SupportCasesCard';
+
+const mapStateToProps = (state) => {
+  const { cluster } = state.clusters.details;
+  const {
+    supportCases = {
+      cases: [],
+      pending: false,
+      subscriptionID: '',
+    },
+  } = state.clusterSupport;
+
+  return ({
+    subscriptionID: cluster.subscription?.id,
+    supportCases,
+  });
+};
+
+const mapDispatchToProps = dispatch => ({
+  getSupportCases: clusterID => dispatch(supportActions.getSupportCases(clusterID)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SupportCasesCard);

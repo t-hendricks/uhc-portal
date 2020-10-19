@@ -3,10 +3,13 @@ import { getVersionInfo, postUpgradeSchedule } from '../../../../services/cluste
 const GET_VERSION_INFO = 'GET_VERSION_INFO';
 const POST_UPGRADE_SCHEDULE = 'POST_UPGRADE_SCHEDULE';
 
-const getVersion = version => dispatch => dispatch({
-  type: GET_VERSION_INFO,
-  payload: getVersionInfo(`openshift-v${version}`),
-});
+const getVersion = (version, channel) => (dispatch) => {
+  const versionID = channel === 'stable' ? `openshift-v${version}` : `openshift-v${version}-${channel}`;
+  dispatch({
+    type: GET_VERSION_INFO,
+    payload: getVersionInfo(versionID),
+  });
+};
 
 const postSchedule = (clusterID, schedule) => dispatch => dispatch({
   type: POST_UPGRADE_SCHEDULE,

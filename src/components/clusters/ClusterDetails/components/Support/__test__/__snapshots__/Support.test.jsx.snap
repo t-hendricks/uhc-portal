@@ -1,104 +1,140 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Support /> should render with notification contacts 1`] = `
-<Card>
-  <CardTitle>
-    <Title
-      className="card-title"
-      headingLevel="h2"
-      size="lg"
-    >
-      Notification contacts
-    </Title>
-    <div
-      className="support-subtitle"
-    >
-      Add users to be contacted in the event of notifications about this cluster.
-    </div>
-  </CardTitle>
-  <CardBody>
-    <AddNotificationContactButton
-      canEdit={true}
-      openModal={[MockFunction]}
-    />
-    <Connect(NotificationContactsCard)
-      addContactResponse={Object {}}
-      addNotificationToaster={[MockFunction]}
-      canEdit={true}
-      clearDeleteNotificationContacts={[MockFunction]}
-      clearNotificationContacts={[MockFunction]}
-      deleteContactResponse={Object {}}
-      deleteNotificationContact={[MockFunction]}
-      getNotificationContacts={[MockFunction]}
-      hasContacts={false}
-      notificationContacts={
-        Object {
-          "contacts": Array [
-            Object {
-              "email": "***REMOVED***",
-              "firstName": "Liran",
-              "lastName": "Roitman",
-              "userID": "1VW00yfnFuhoybNRBqF86RyS2h6",
-              "username": "lroitman.openshift",
-            },
-            Object {
-              "email": "***REMOVED***",
-              "firstName": "Timothy",
-              "lastName": "Williams",
-              "userID": "1NjzrgHzgOHK0pGi6zxPfhC7PQV",
-              "username": "tiwillia.openshift",
-            },
-          ],
-          "pending": false,
-          "subscriptionID": "",
+<Fragment>
+  <Card>
+    <CardTitle>
+      <Title
+        className="card-title"
+        headingLevel="h2"
+        size="lg"
+      >
+        Notification contacts
+      </Title>
+      <div
+        className="support-subtitle"
+      >
+        Add users to be contacted in the event of notifications about this cluster.
+      </div>
+    </CardTitle>
+    <CardBody>
+      <AddNotificationContactButton
+        canEdit={true}
+        openModal={[MockFunction]}
+      />
+      <Connect(NotificationContactsCard)
+        addContactResponse={Object {}}
+        addNotificationToaster={[MockFunction]}
+        canEdit={true}
+        clearDeleteNotificationContacts={[MockFunction]}
+        clearNotificationContacts={[MockFunction]}
+        deleteContactResponse={Object {}}
+        deleteNotificationContact={[MockFunction]}
+        getNotificationContacts={[MockFunction]}
+        hasContacts={false}
+        notificationContacts={
+          Object {
+            "contacts": Array [
+              Object {
+                "email": "***REMOVED***",
+                "firstName": "Liran",
+                "lastName": "Roitman",
+                "userID": "1VW00yfnFuhoybNRBqF86RyS2h6",
+                "username": "lroitman.openshift",
+              },
+              Object {
+                "email": "***REMOVED***",
+                "firstName": "Timothy",
+                "lastName": "Williams",
+                "userID": "1NjzrgHzgOHK0pGi6zxPfhC7PQV",
+                "username": "tiwillia.openshift",
+              },
+            ],
+            "pending": false,
+            "subscriptionID": "",
+          }
         }
-      }
-      subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
-    />
-  </CardBody>
-</Card>
+        subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
+      />
+    </CardBody>
+  </Card>
+  <Card>
+    <CardTitle>
+      <Title
+        className="card-title"
+        headingLevel="h2"
+        size="lg"
+      >
+        Support cases
+      </Title>
+    </CardTitle>
+    <CardBody>
+      <Connect(SupportCasesCard)
+        subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
+      />
+    </CardBody>
+  </Card>
+</Fragment>
 `;
 
 exports[`<Support /> should render without notification contacts 1`] = `
-<Card>
-  <CardTitle>
-    <Title
-      className="card-title"
-      headingLevel="h2"
-      size="lg"
-    >
-      Notification contacts
-    </Title>
-    <div
-      className="support-subtitle"
-    >
-      Add users to be contacted in the event of notifications about this cluster.
-    </div>
-  </CardTitle>
-  <CardBody>
-    <AddNotificationContactButton
-      canEdit={true}
-      openModal={[MockFunction]}
-    />
-    <Connect(NotificationContactsCard)
-      addContactResponse={Object {}}
-      addNotificationToaster={[MockFunction]}
-      canEdit={true}
-      clearDeleteNotificationContacts={[MockFunction]}
-      clearNotificationContacts={[MockFunction]}
-      deleteContactResponse={Object {}}
-      deleteNotificationContact={[MockFunction]}
-      getNotificationContacts={[MockFunction]}
-      hasContacts={false}
-      notificationContacts={
-        Object {
-          "contacts": Array [],
-          "pending": false,
-          "subscriptionID": "",
+<Fragment>
+  <Card>
+    <CardTitle>
+      <Title
+        className="card-title"
+        headingLevel="h2"
+        size="lg"
+      >
+        Notification contacts
+      </Title>
+      <div
+        className="support-subtitle"
+      >
+        Add users to be contacted in the event of notifications about this cluster.
+      </div>
+    </CardTitle>
+    <CardBody>
+      <AddNotificationContactButton
+        canEdit={true}
+        openModal={[MockFunction]}
+      />
+      <Connect(NotificationContactsCard)
+        addContactResponse={Object {}}
+        addNotificationToaster={[MockFunction]}
+        canEdit={true}
+        clearDeleteNotificationContacts={[MockFunction]}
+        clearNotificationContacts={[MockFunction]}
+        deleteContactResponse={Object {}}
+        deleteNotificationContact={[MockFunction]}
+        getNotificationContacts={[MockFunction]}
+        hasContacts={false}
+        notificationContacts={
+          Object {
+            "contacts": Array [],
+            "pending": false,
+            "subscriptionID": "",
+          }
         }
-      }
-      subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
-    />
-  </CardBody>
-</Card>
+        subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
+      />
+    </CardBody>
+  </Card>
+  <Card>
+    <CardTitle>
+      <Title
+        className="card-title"
+        headingLevel="h2"
+        size="lg"
+      >
+        Support cases
+      </Title>
+    </CardTitle>
+    <CardBody>
+      <Connect(SupportCasesCard)
+        subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
+      />
+    </CardBody>
+  </Card>
+</Fragment>
 `;

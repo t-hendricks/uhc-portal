@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 import Timestamp from '../../../../common/Timestamp';
-import ClusterUpdateLink from '../../../common/ClusterUpdateLink';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
-import SupportStatusLabel from './SupportStatusLabel';
+import ClusterVersionInfo from './ClusterVersionInfo';
 
 
-function DetailsLeft({ cluster, cloudProviders, openModal }) {
+function DetailsLeft({ cluster, cloudProviders }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
   let cloudProvider;
   let region = get(cluster, 'region.id', 'N/A');
@@ -23,9 +22,6 @@ function DetailsLeft({ cluster, cloudProviders, openModal }) {
   } else {
     cloudProvider = cloudProviderId ? cloudProviderId.toUpperCase() : 'N/A';
   }
-  const clusterVersion = get(cluster, 'openshift_version', 'N/A');
-  const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
-  const channel = get(cluster, 'metrics.channel');
 
   return (
     <>
@@ -59,30 +55,7 @@ function DetailsLeft({ cluster, cloudProviders, openModal }) {
           )}
         <dt>Version</dt>
         <dd>
-          <dl className="cluster-details-item-list">
-            <dt>
-              OpenShift:
-              {' '}
-            </dt>
-            <dd>
-              {clusterVersion}
-              <ClusterUpdateLink cluster={cluster} openModal={openModal} />
-            </dd>
-            { !cluster.managed && !isUpgrading && (
-              <div>
-                <dt>Life cycle state: </dt>
-                <dd>
-                  <SupportStatusLabel clusterVersion={clusterVersion} />
-                </dd>
-              </div>
-            )}
-            { channel && (
-              <div>
-                <dt>Upgrade channel: </dt>
-                <dd>{channel}</dd>
-              </div>
-            )}
-          </dl>
+          <ClusterVersionInfo cluster={cluster} />
         </dd>
         <dt>Created at</dt>
         <dd>
@@ -110,7 +83,6 @@ function DetailsLeft({ cluster, cloudProviders, openModal }) {
 DetailsLeft.propTypes = {
   cluster: PropTypes.any,
   cloudProviders: PropTypes.object.isRequired,
-  openModal: PropTypes.func.isRequired,
 };
 
 export default DetailsLeft;

@@ -35,6 +35,7 @@
     "http-proxy-middleware": "^1.0.3",
     "humanize-plus": "^1.8.2",
     "immer": "^5.1.0",
+    "jsonschema": "^1.2.10",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "netmask": "^1.0.6",

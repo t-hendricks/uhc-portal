@@ -8166,6 +8166,11 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
+jsonschema@^1.2.10:
+  version "1.2.10"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/jsonschema/-/jsonschema-1.2.10.tgz#38dc18b63839e8f07580df015e37d959f20d1eda"
+  integrity sha512-CoRSun5gmvgSYMHx5msttse19SnQpaHoPzIqULwE7B9KtR4Od1g70sBqeUriq5r8b9R3ptDc0o7WKpUDjUgLgg==
+
 jsprim@^1.2.2:
   version "1.4.1"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/jsprim/-/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
