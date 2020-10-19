@@ -14,8 +14,9 @@ class UpgradeWizard extends React.Component {
   }
 
   close = () => {
-    const { closeModal } = this.props;
+    const { closeModal, clearPostedUpgradeScheduleResponse } = this.props;
     this.setState({ selectedVersion: undefined, upgradeTimestamp: undefined });
+    clearPostedUpgradeScheduleResponse();
     closeModal();
   }
 
@@ -137,6 +138,7 @@ UpgradeWizard.propTypes = {
   clusterChannel: PropTypes.string,
   upgradeScheduleRequest: PropTypes.object.isRequired,
   postSchedule: PropTypes.func.isRequired,
+  clearPostedUpgradeScheduleResponse: PropTypes.func.isRequired,
 };
 
 export default UpgradeWizard;

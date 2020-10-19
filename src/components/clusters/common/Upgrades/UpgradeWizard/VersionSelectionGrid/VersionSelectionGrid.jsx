@@ -14,6 +14,7 @@ import ErrorBox from '../../../../../common/ErrorBox';
 class VersionSelectionGrid extends React.Component {
   componentDidMount() {
     this.fetchVersionInfoIfNeeded();
+    this.selectDefault();
   }
 
   componentDidUpdate(prevProps) {
@@ -21,7 +22,9 @@ class VersionSelectionGrid extends React.Component {
     if (prevProps.clusterVersion !== clusterVersion) {
       this.fetchVersionInfoIfNeeded();
     }
+    this.selectDefault();
   }
+
 
   onKeyDown = (event) => {
     if (event.target !== event.currentTarget) {
@@ -37,6 +40,14 @@ class VersionSelectionGrid extends React.Component {
     const newSelected = event.currentTarget.id === selected ? null : event.currentTarget.id;
     onSelect(newSelected);
   };
+
+  selectDefault() {
+    const { versionInfo, selected, onSelect } = this.props;
+    if (versionInfo.fulfilled && versionInfo.availableUpgrades.length === 1 && !selected) {
+      // select the version if there's only one available
+      onSelect(versionInfo.availableUpgrades[0]);
+    }
+  }
 
   fetchVersionInfoIfNeeded() {
     const {

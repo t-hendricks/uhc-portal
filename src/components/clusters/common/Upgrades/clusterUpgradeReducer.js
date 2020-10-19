@@ -14,12 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import produce from 'immer';
+import moment from 'moment';
 
 import {
   REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../common/errors';
-import { GET_VERSION_INFO, POST_UPGRADE_SCHEDULE } from './clusterUpgradeActions';
+import {
+  GET_VERSION_INFO,
+  POST_UPGRADE_SCHEDULE,
+  GET_UPGRADE_SCHEDULES,
+  DELETE_UPGRADE_SCHEDULE,
+  CLEAR_DELETE_UPGRADE_SCHEDULE,
+  CLEAR_POST_UPGRADE_SCHEDULE,
+} from './clusterUpgradeActions';
 
 const initialState = {
   versionInfo: {
@@ -27,8 +35,15 @@ const initialState = {
     version: undefined,
     availableUpgrades: [],
   },
-  upgradeSchedule: {
+  postedUpgradeSchedule: {
     ...baseRequestState,
+  },
+  deleteScheduleRequest: {
+    ...baseRequestState,
+  },
+  schedules: {
+    ...baseRequestState,
+    items: [],
   },
 };
 
@@ -66,19 +81,62 @@ function UpgradesRecuder(state = initialState, action) {
         break;
 
       case PENDING_ACTION(POST_UPGRADE_SCHEDULE):
-        draft.upgradeSchedule.pending = true;
+        draft.postedUpgradeSchedule.pending = true;
         break;
       case FULFILLED_ACTION(POST_UPGRADE_SCHEDULE):
-        draft.upgradeSchedule = {
+        draft.postedUpgradeSchedule = {
           ...initialState.upgradeSchedule,
           fulfilled: true,
         };
         break;
       case REJECTED_ACTION(POST_UPGRADE_SCHEDULE):
-        draft.upgradeSchedule = {
+        draft.postedUpgradeSchedule = {
           ...initialState,
           ...getErrorState(action),
         };
+        break;
+      case CLEAR_POST_UPGRADE_SCHEDULE:
+        draft.postedUpgradeSchedule = { ...initialState };
+        break;
+
+      case PENDING_ACTION(GET_UPGRADE_SCHEDULES):
+        draft.schedules.pending = true;
+        break;
+      case FULFILLED_ACTION(GET_UPGRADE_SCHEDULES): {
+        const items = action.payload?.data?.items || [];
+        items.sort((a, b) => moment(a.next_run).unix() - moment(b.next_run).unix());
+        draft.schedules = {
+          ...initialState.schedules,
+          fulfilled: true,
+          items,
+        };
+        break;
+      }
+      case REJECTED_ACTION(GET_UPGRADE_SCHEDULES):
+        draft.schedules = {
+          ...initialState.schedules,
+          ...getErrorState(action),
+        };
+        break;
+
+      case PENDING_ACTION(DELETE_UPGRADE_SCHEDULE):
+        draft.deleteScheduleRequest.pending = true;
+        break;
+      case FULFILLED_ACTION(DELETE_UPGRADE_SCHEDULE):
+        draft.deleteScheduleRequest = {
+          ...initialState.deleteScheduleRequest,
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(DELETE_UPGRADE_SCHEDULE):
+        draft.deleteScheduleRequest = {
+          ...initialState.deleteScheduleRequest,
+          ...getErrorState(action),
+        };
+        break;
+
+      case CLEAR_DELETE_UPGRADE_SCHEDULE:
+        draft.deleteScheduleRequest = { ...initialState.deleteScheduleRequest };
         break;
     }
   });

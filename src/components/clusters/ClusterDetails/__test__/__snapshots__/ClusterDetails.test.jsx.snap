@@ -936,6 +936,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
     clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
   />
   <Connect(UpgradeWizard) />
+  <Connect(CancelUpgradeModal) />
 </PageSection>
 `;
 

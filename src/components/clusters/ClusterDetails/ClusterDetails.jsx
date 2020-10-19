@@ -41,6 +41,7 @@ import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDi
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 import UpgradeWizard from '../common/Upgrades/UpgradeWizard';
+import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
@@ -549,6 +550,7 @@ class ClusterDetails extends Component {
         <AddNotificationContactDialog />
         <AddGrantModal clusterID={cluster.id} />
         <UpgradeWizard />
+        <CancelUpgradeModal />
       </PageSection>
     );
   }
