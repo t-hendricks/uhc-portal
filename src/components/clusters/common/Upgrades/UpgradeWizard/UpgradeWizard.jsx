@@ -26,7 +26,7 @@ class UpgradeWizard extends React.Component {
   });
 
   onNext = (newStep) => {
-    const { clusterID, postSchedule, clusterChannel } = this.props;
+    const { clusterID, postSchedule } = this.props;
     const { selectedVersion } = this.state;
     const MINUTES_IN_MS = 1000 * 60;
     if (newStep.id === 'finish') {
@@ -34,7 +34,7 @@ class UpgradeWizard extends React.Component {
         schedule_type: 'manual',
         upgrade_type: 'OSD',
         next_run: new Date(new Date().getTime() + 6 * MINUTES_IN_MS).toISOString(),
-        version: clusterChannel === 'stable' ? selectedVersion : `${selectedVersion}-${clusterChannel}`,
+        version: selectedVersion,
       });
     }
   }
