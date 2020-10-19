@@ -22,9 +22,11 @@ class ClusterVersionInfo extends React.Component {
 
   fetchVersionInfoIfNeeded() {
     const { cluster, getVersion, versionInfo } = this.props;
-    if ((!versionInfo.fulfilled || versionInfo.version !== cluster.openshift_version)
+    if ((!versionInfo.fulfilled
+          || versionInfo.version !== cluster.openshift_version
+          || versionInfo.channelGroup !== cluster.version.channel_group)
         && !versionInfo.pending && cluster.openshift_version && cluster.managed) {
-      getVersion(cluster.openshift_version);
+      getVersion(cluster.openshift_version, cluster.version.channel_group);
     }
   }
 
@@ -75,12 +77,16 @@ ClusterVersionInfo.propTypes = {
     id: PropTypes.string.isRequired,
     openshift_version: PropTypes.string,
     managed: PropTypes.bool,
+    version: PropTypes.shape({
+      channel_group: PropTypes.string,
+    }),
   }),
   versionInfo: PropTypes.shape({
     fulfilled: PropTypes.bool,
     pending: PropTypes.bool,
     error: PropTypes.bool,
     version: PropTypes.string,
+    channelGroup: PropTypes.string,
     availableUpgrades: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   getVersion: PropTypes.func.isRequired,

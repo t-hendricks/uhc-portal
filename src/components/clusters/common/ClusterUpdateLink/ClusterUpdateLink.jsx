@@ -41,6 +41,7 @@ const ClusterUpdateLink = ({
           {
             clusterName: getClusterName(cluster),
             clusterVersion: cluster.openshift_version,
+            clusterChannel: cluster.version.channel_group,
             clusterID: cluster.id,
           })}
         icon={<OutlinedArrowAltCircleUpIcon />}

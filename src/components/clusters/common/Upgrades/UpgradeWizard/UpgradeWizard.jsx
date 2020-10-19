@@ -26,7 +26,7 @@ class UpgradeWizard extends React.Component {
   });
 
   onNext = (newStep) => {
-    const { clusterID, postSchedule } = this.props;
+    const { clusterID, postSchedule, clusterChannel } = this.props;
     const { selectedVersion } = this.state;
     const MINUTES_IN_MS = 1000 * 60;
     if (newStep.id === 'finish') {
@@ -34,7 +34,7 @@ class UpgradeWizard extends React.Component {
         schedule_type: 'manual',
         upgrade_type: 'OSD',
         next_run: new Date(new Date().getTime() + 6 * MINUTES_IN_MS).toISOString(),
-        version: selectedVersion,
+        version: clusterChannel === 'stable' ? selectedVersion : `${selectedVersion}-${clusterChannel}`,
       });
     }
   }
@@ -45,6 +45,7 @@ class UpgradeWizard extends React.Component {
       clusterName,
       clusterVersion,
       upgradeScheduleRequest,
+      clusterChannel,
     } = this.props;
     const {
       selectedVersion,
@@ -60,6 +61,7 @@ class UpgradeWizard extends React.Component {
         component: (
           <VersionSelectionGrid
             clusterVersion={clusterVersion}
+            clusterChannel={clusterChannel}
             selected={selectedVersion}
             onSelect={this.selectVersion}
           />
@@ -132,6 +134,7 @@ UpgradeWizard.propTypes = {
   clusterName: PropTypes.string,
   clusterID: PropTypes.string,
   clusterVersion: PropTypes.string,
+  clusterChannel: PropTypes.string,
   upgradeScheduleRequest: PropTypes.object.isRequired,
   postSchedule: PropTypes.func.isRequired,
 };
