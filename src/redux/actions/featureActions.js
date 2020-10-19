@@ -41,7 +41,7 @@ export const features = [
     name: GCP_CCS_FEATURE,
     action: organizationID => (organizationID
       ? accountsService.getFeature('gcp-ccs', organizationID)
-        .then(unleash => unleash.dasta.enabled)
+        .then(unleash => unleash.data.enabled)
       : Promise.reject(Error('No organization'))),
   },
 ];
