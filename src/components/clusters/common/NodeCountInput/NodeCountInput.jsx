@@ -59,11 +59,12 @@ class NodeCountInput extends React.Component {
     }
 
     if (isByoc) {
-      const available = get(quota, `${infraType}['${machineTypeResource.resource_name}']`, 0);
-      return floor(available / machineTypeResource.cpu.value);
+      const available = get(quota, `${infraType}['${machineTypeResource.resource_name}']['available']`, 0);
+      const cost = get(quota, `${infraType}['${machineTypeResource.resource_name}']['cost']`, 0);
+      return floor(available / cost);
     }
 
-    return get(quota, `${infraType}['${machineTypeResource.resource_name}']`, 0);
+    return get(quota, `${infraType}['${machineTypeResource.resource_name}']['available']`, 0);
   }
 
   render() {
