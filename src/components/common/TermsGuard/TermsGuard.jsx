@@ -12,7 +12,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import Modal from '../Modal/Modal';
 import Unavailable from '../Unavailable';
-import { buildUrlParams } from '../../../common/queryHelpers';
+import getTermsAppLink from '../../../common/getTermsAppLink';
 
 
 class TermsGuard extends Component {
@@ -29,14 +29,12 @@ class TermsGuard extends Component {
 
   getTncAppURL = (baseURL) => {
     const { history, gobackPath } = this.props;
-    const params = {
-      // as long as user performs some action, he should be redirected to the same page.
-      redirect: window.location.host + history.createHref(history.location),
-      // same as clicking "Cancel" in the dialog.
-      cancelRedirect: window.location.host + history.createHref({ pathname: gobackPath }),
-    };
-    // baseURL contains params already.
-    return `${baseURL}&${buildUrlParams(params)}`;
+    // as long as user performs some action, he should be redirected to the same page.
+    const redirectURL = window.location.host + history.createHref(history.location);
+    // same as clicking "Cancel" in the dialog.
+    const cancelURL = window.location.host + history.createHref({ pathname: gobackPath });
+
+    return getTermsAppLink(baseURL, redirectURL, cancelURL);
   };
 
   render() {

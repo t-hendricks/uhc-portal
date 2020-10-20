@@ -23,6 +23,8 @@ import { ConnectedRouter } from 'connected-react-router';
 import { FacetRouter } from 'facet-lib';
 
 import TermsGuardedRoute from './TermsGuardedRoute';
+import apiRequest from '../../services/apiRequest';
+import ApiError from './ApiError';
 import Overview from '../overview';
 import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
@@ -73,52 +75,54 @@ function Router({ history }) {
     <>
       <Insights history={history} />
       <ConnectedRouter history={history}>
-        <Switch>
-          {/*
-            IMPORTANT!
-            When adding new routes, make sure to add the route both here and in Router.test.jsx,
-            to ensure the route is tested.
-          */}
-          <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
-          <TermsGuardedRoute path="/token/moa" component={TokensMOA} history={history} />
-          <Route path="/token" component={Tokens} />
-          <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
-          <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
-          <Route path="/install/aws" component={InstallAWS} />
-          <Route path="/install/gcp/installer-provisioned" component={InstallGCPIPI} />
-          <Route path="/install/gcp/user-provisioned" component={InstallGCPUPI} />
-          <Route path="/install/gcp" component={InstallGCP} />
-          <Route path="/install/openstack/installer-provisioned" component={InstallOSPIPI} />
-          <Route path="/install/openstack/user-provisioned" component={InstallOSPUPI} />
-          <Route path="/install/openstack" component={InstallOSP} />
-          <Route path="/install/rhv/installer-provisioned" component={InstallRHV} />
-          <Route path="/install/azure/installer-provisioned" component={InstallAzureIPI} />
-          <Route path="/install/azure/user-provisioned" component={InstallAzureUPI} />
-          <Route path="/install/azure" exact component={InstallAzure} />
-          <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
-          <Route path="/install/metal" component={GatedMetalInstall} />
-          <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
-          <Route path="/install/crc/installer-provisioned" component={InstallCRC} />
-          <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
-          <Route path="/install/power/user-provisioned" component={InstallPower} />
-          <Route path="/install/pre-release" component={InstallPreRelease} />
-          <Route path="/install/pull-secret" component={InstallPullSecret} />
-          <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
-          <Route path="/install" component={InstallInfrastructure} />
-          <Route path="/details/:clusterId/insights/:reportId" component={InsightsRuleDetails} />
-          <Route path="/details/:id" component={ClusterDetails} />
-          <TermsGuardedRoute path="/create/osd/aws" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="aws" />} history={history} />
-          <TermsGuardedRoute path="/create/osd/gcp" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="gcp" />} history={history} />
-          <Route path="/create/osd" component={CloudProviderSelection} />
-          <Route path="/create" component={CreateClusterPage} />
-          <Route path="/register" component={RegisterCluster} />
-          <Route path="/subscriptions" component={Subscriptions} />
-          <Route path="/archived" component={ArchivedClusterList} />
-          <Route path="/overview" exact component={Overview} />
-          <Route path="/assisted-installer" component={GatedFacetRouter} />
-          <Route path="/" exact component={ClustersList} />
-          <Route component={NotFoundError} />
-        </Switch>
+        <ApiError history={history} apiRequest={apiRequest}>
+          <Switch>
+            {/*
+              IMPORTANT!
+              When adding new routes, make sure to add the route both here and in Router.test.jsx,
+              to ensure the route is tested.
+            */}
+            <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
+            <TermsGuardedRoute path="/token/moa" component={TokensMOA} history={history} />
+            <Route path="/token" component={Tokens} />
+            <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
+            <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
+            <Route path="/install/aws" component={InstallAWS} />
+            <Route path="/install/gcp/installer-provisioned" component={InstallGCPIPI} />
+            <Route path="/install/gcp/user-provisioned" component={InstallGCPUPI} />
+            <Route path="/install/gcp" component={InstallGCP} />
+            <Route path="/install/openstack/installer-provisioned" component={InstallOSPIPI} />
+            <Route path="/install/openstack/user-provisioned" component={InstallOSPUPI} />
+            <Route path="/install/openstack" component={InstallOSP} />
+            <Route path="/install/rhv/installer-provisioned" component={InstallRHV} />
+            <Route path="/install/azure/installer-provisioned" component={InstallAzureIPI} />
+            <Route path="/install/azure/user-provisioned" component={InstallAzureUPI} />
+            <Route path="/install/azure" exact component={InstallAzure} />
+            <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
+            <Route path="/install/metal" component={GatedMetalInstall} />
+            <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
+            <Route path="/install/crc/installer-provisioned" component={InstallCRC} />
+            <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
+            <Route path="/install/power/user-provisioned" component={InstallPower} />
+            <Route path="/install/pre-release" component={InstallPreRelease} />
+            <Route path="/install/pull-secret" component={InstallPullSecret} />
+            <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
+            <Route path="/install" component={InstallInfrastructure} />
+            <Route path="/details/:clusterId/insights/:reportId" component={InsightsRuleDetails} />
+            <Route path="/details/:id" component={ClusterDetails} />
+            <TermsGuardedRoute path="/create/osd/aws" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="aws" />} history={history} />
+            <TermsGuardedRoute path="/create/osd/gcp" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="gcp" />} history={history} />
+            <Route path="/create/osd" component={CloudProviderSelection} />
+            <Route path="/create" component={CreateClusterPage} />
+            <Route path="/register" component={RegisterCluster} />
+            <Route path="/subscriptions" component={Subscriptions} />
+            <Route path="/archived" component={ArchivedClusterList} />
+            <Route path="/overview" exact component={Overview} />
+            <Route path="/assisted-installer" component={GatedFacetRouter} />
+            <Route path="/" exact component={ClustersList} />
+            <Route component={NotFoundError} />
+          </Switch>
+        </ApiError>
       </ConnectedRouter>
     </>
   );
