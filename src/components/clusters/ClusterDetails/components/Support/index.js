@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
   } = state.clusterSupport;
 
   return ({
+    clusterCreator: cluster.subscription?.creator,
     subscriptionID: cluster.subscription?.id,
     canEdit: cluster.canEdit,
     hasContacts: notificationContacts.contacts.length > 0,
