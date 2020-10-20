@@ -53,6 +53,7 @@ test('User ID does not contain slash', () => {
   expect(checkUserID('.')).toBe('User ID cannot be \'.\'.');
   expect(checkUserID('..')).toBe('User ID cannot be \'..\'.');
   expect(checkUserID('')).toBe('User ID cannot be empty.');
+  expect(checkUserID('cluster-admin')).toBe('User ID cannot be \'cluster-admin\'.');
   expect(checkUserID('aaaa')).toBe(undefined);
 });
 

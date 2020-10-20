@@ -7,6 +7,7 @@ const IDPformValues = {
   OPENID: 'OpenIDIdentityProvider',
   LDAP: 'LDAPIdentityProvider',
   GITLAB: 'GitlabIdentityProvider',
+  HTPASSWD: 'HTPasswdIdentityProvider', // HTPasswd IdP is meant for internal use and is not exposed to users
 };
 
 const mappingMethodsformValues = {

@@ -218,6 +218,10 @@ const checkUser = (value) => {
   if (value === '..') {
     return 'cannot be \'..\'.';
   }
+  // User cluster-admin is reserved for internal use with the HTPasswd IdP
+  if (value === 'cluster-admin') {
+    return 'cannot be \'cluster-admin\'.';
+  }
   return undefined;
 };
 
