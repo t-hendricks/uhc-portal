@@ -31,7 +31,7 @@ function FinishedStep({ requestStatus, close }) {
         Scheduled cluster upgrade
       </Title>
       <EmptyStateBody>
-        Your upgrade was successfuly scheduled to start within the next hour.
+        Your upgrade was successfully scheduled to start within the next hour.
       </EmptyStateBody>
       <EmptyStateSecondaryActions>
         <Button onClick={close}>
