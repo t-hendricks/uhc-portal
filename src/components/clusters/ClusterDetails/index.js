@@ -58,6 +58,9 @@ const mapStateToProps = (state, { location }) => {
     notificationContacts = {
       pending: false,
     },
+    supportCases = {
+      pending: false,
+    },
   } = state.clusterSupport;
 
   return ({
@@ -79,6 +82,7 @@ const mapStateToProps = (state, { location }) => {
     initTabOpen: location.hash.replace('#', ''),
     supportTabFeature,
     notificationContacts,
+    supportCases,
   });
 };
 
@@ -113,6 +117,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   ) => getClusterHistory(externalClusterID, queryObj),
   toggleSubscriptionReleased,
   getNotificationContacts: supportActions.getNotificationContacts,
+  getSupportCases: supportActions.getSupportCases,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

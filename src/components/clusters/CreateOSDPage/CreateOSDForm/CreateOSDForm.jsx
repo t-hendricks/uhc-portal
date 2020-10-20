@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { GridItem } from '@patternfly/react-core';
+import { Field } from 'redux-form';
 import get from 'lodash/get';
 
 import CustomerCloudSubscriptionModal from './FormSections/BillingModelSection/CustomerCloudSubscriptionModal';
@@ -9,6 +10,9 @@ import BasicFieldsSection from './FormSections/BasicFieldsSection';
 import AWSAccountDetailsSection from './FormSections/AWSAccountDetailsSection';
 import NetworkingSection from './FormSections/NetworkingSection';
 import ScaleSection from './FormSections/ScaleSection/ScaleSection';
+import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
+import ExternalLink from '../../../common/ExternalLink';
+import { required } from '../../../../common/validators';
 
 class CreateOSDForm extends React.Component {
   state = {
@@ -67,19 +71,16 @@ class CreateOSDForm extends React.Component {
   isByocForm = () => {
     const {
       clustersQuota,
-      cloudProviderID,
     } = this.props;
 
     const {
       byocSelected,
     } = this.state;
 
-    const isAws = cloudProviderID === 'aws';
-
     const hasBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
     const hasAwsRhInfraQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
 
-    return isAws && hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
+    return hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
   }
 
   render() {
@@ -92,6 +93,7 @@ class CreateOSDForm extends React.Component {
       cloudProviderID,
       privateClusterSelected,
       product,
+      gcpCCSEnabled,
     } = this.props;
 
     const {
@@ -101,6 +103,7 @@ class CreateOSDForm extends React.Component {
     } = this.state;
 
     const isAws = cloudProviderID === 'aws';
+    const isGCP = cloudProviderID === 'gcp';
 
     const hasBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
     const hasAwsRhInfraQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
@@ -111,7 +114,7 @@ class CreateOSDForm extends React.Component {
     return (
       <>
         {/* Billing Model */}
-        { isAws && (
+        {(isAws || (isGCP && gcpCCSEnabled)) && (
           <>
             <GridItem span={12}>
               <h3 className="osd-page-header">Billing model</h3>
@@ -125,10 +128,12 @@ class CreateOSDForm extends React.Component {
             />
           </>
         )}
-
         {/* BYOC modal */}
-        { isAws && isBYOCModalOpen && (
-          <CustomerCloudSubscriptionModal closeModal={this.closeBYOCModal} />
+        { isBYOCModalOpen && (
+          <CustomerCloudSubscriptionModal
+            closeModal={this.closeBYOCModal}
+            cloudProviderID={cloudProviderID}
+          />
         )}
 
         {/* AWS account details */}
@@ -140,6 +145,45 @@ class CreateOSDForm extends React.Component {
             <AWSAccountDetailsSection pending={pending} />
           </>
         )}
+
+        {
+          isGCP && isBYOCForm && (
+            <>
+              <GridItem span={12}>
+                <h3 className="osd-page-header">GCP service account</h3>
+              </GridItem>
+              <GridItem span={12}>
+                <p>
+               In order to create a Customer Cloud Subscription cluster, you must have a Service
+                Account in GCP named
+                  {' '}
+                  <code>osd-ccs-admin</code>
+                  {' '}
+                that meets
+                  {' '}
+                  <ExternalLink href="tbd">these requirements.</ExternalLink>
+                  {' '}
+                Create a key for that service account, export to a file named
+                  {' '}
+                  <code>osServiceAccount.json</code>
+                  {' '}
+                and add it here.
+                </p>
+              </GridItem>
+              <GridItem span={4}>
+                <Field
+                  component={ReduxFileUpload}
+                  validate={required}
+                  name="gcp_service_account"
+                  type="file"
+                  disabled={pending}
+                  isRequired
+                  label="Service account JSON"
+                />
+              </GridItem>
+            </>
+          )
+        }
 
         {/* Basic fields - Cluster Details section */}
         <GridItem span={12}>
@@ -192,6 +236,7 @@ class CreateOSDForm extends React.Component {
 CreateOSDForm.defaultProps = {
   pending: false,
   isBYOCModalOpen: false,
+  gcpCCSEnabled: false,
 };
 
 CreateOSDForm.propTypes = {
@@ -225,6 +270,7 @@ CreateOSDForm.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   product: PropTypes.string.isRequired,
+  gcpCCSEnabled: PropTypes.bool,
 };
 
 export default CreateOSDForm;

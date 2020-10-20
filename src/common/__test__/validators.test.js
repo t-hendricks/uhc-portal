@@ -14,7 +14,9 @@ import validators, {
   validateARN,
   checkRouteSelectors,
   awsNumericAccountID,
+  validateServiceAccountObject,
 } from '../validators';
+import fixtures from './validators.fixtures';
 
 test('Field is required', () => {
   expect(required()).toBe('Field is required');
@@ -33,7 +35,7 @@ test('Field is a valid identity provider name', () => {
 test('Field is a valid cluster name', () => {
   expect(validators.checkClusterName()).toBe('Cluster name is required.');
   expect(validators.checkClusterName('foo.bar')).toBe('Cluster name \'foo.bar\' isn\'t valid, must consist of lower-case alphanumeric characters or \'-\', start with an alphabetic character, and end with an alphanumeric character. For example, \'my-name\', or \'abc-123\'.');
-  expect(validators.checkClusterName('foo'.repeat(34))).toBe('Cluster names may not exceed 50 characters.');
+  expect(validators.checkClusterName('foo'.repeat(34))).toBe('Cluster names may not exceed 15 characters.');
   expect(validators.checkClusterName('foo')).toBe(undefined);
 });
 
@@ -441,4 +443,20 @@ test('awsNumericAccountID', () => {
   expect(awsNumericAccountID('11111111122222222aaaaaaaaaa')).toBe(errStr);
   expect(awsNumericAccountID('-12345678901')).toBe(errStr);
   expect(awsNumericAccountID('123456789012')).toBe(undefined);
+});
+
+test('GCP service account JSON', () => {
+  fixtures.GCPServiceAccounts.forEach((item) => {
+    const { expectedError, testObj } = item;
+    if (expectedError) {
+      try {
+        validateServiceAccountObject(testObj);
+      } catch (e) {
+        expect(e.property).toBe(expectedError.property);
+        expect(e.message).toBe(expectedError.message);
+      }
+    } else {
+      expect(validateServiceAccountObject(testObj)).toBe(undefined);
+    }
+  });
 });

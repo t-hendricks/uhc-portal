@@ -39,10 +39,13 @@ class VersionSelectionGrid extends React.Component {
   };
 
   fetchVersionInfoIfNeeded() {
-    const { clusterVersion, getVersion, versionInfo } = this.props;
-    if ((!versionInfo.fulfilled || versionInfo.version !== clusterVersion)
+    const {
+      clusterVersion, clusterChannel, getVersion, versionInfo,
+    } = this.props;
+    if ((!versionInfo.fulfilled || versionInfo.version !== clusterVersion
+         || versionInfo.channelGroup !== clusterChannel)
         && !versionInfo.pending) {
-      getVersion(clusterVersion);
+      getVersion(clusterVersion, clusterChannel);
     }
   }
 
@@ -81,12 +84,14 @@ class VersionSelectionGrid extends React.Component {
 
 VersionSelectionGrid.propTypes = {
   clusterVersion: PropTypes.string.isRequired,
+  clusterChannel: PropTypes.string.isRequired,
   getVersion: PropTypes.func.isRequired,
   versionInfo: PropTypes.shape({
     fulfilled: PropTypes.bool,
     pending: PropTypes.bool,
     error: PropTypes.bool,
     version: PropTypes.string,
+    channelGroup: PropTypes.string,
     availableUpgrades: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   onSelect: PropTypes.func.isRequired,

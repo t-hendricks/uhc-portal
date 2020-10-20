@@ -40,15 +40,24 @@ function UpgradesRecuder(state = initialState, action) {
       case PENDING_ACTION(GET_VERSION_INFO):
         draft.versionInfo.pending = true;
         break;
-      case FULFILLED_ACTION(GET_VERSION_INFO):
+      case FULFILLED_ACTION(GET_VERSION_INFO): {
+        // eslint-disable-next-line camelcase
+        const channelGroup = action.payload.data?.channel_group;
+        let version = action.payload.data?.id?.replace('openshift-v', '');
+        if (channelGroup && version) {
+          // remove channel group from version, to match the version number format in Telemetry
+          version = version.replace(`-${channelGroup}`, '');
+        }
         draft.versionInfo = {
           ...initialState.versionInfo,
           fulfilled: true,
-          version: action.payload.data?.id?.replace('openshift-v', ''),
+          version,
+          channelGroup,
           // eslint-disable-next-line camelcase
           availableUpgrades: action.payload.data?.available_upgrades || [],
         };
         break;
+      }
       case REJECTED_ACTION(GET_VERSION_INFO):
         draft.versionInfo = {
           ...initialState,

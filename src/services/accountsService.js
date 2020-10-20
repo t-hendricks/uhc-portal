@@ -66,6 +66,11 @@ const getOrganizationQuota = organizationID => apiRequest({
   url: `/api/accounts_mgmt/v1/organizations/${organizationID}/quota_cost`,
 });
 
+const getSupportCases = subscriptionID => apiRequest({
+  method: 'get',
+  url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/support_cases`,
+});
+
 function getRequest(pathParams, params = {}) {
   const type = pathParams[0];
   let url;
@@ -97,6 +102,7 @@ const accountsService = {
   editSubscription,
   getRequest,
   getFeature,
+  getSupportCases,
 };
 
 export default accountsService;

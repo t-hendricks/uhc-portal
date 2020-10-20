@@ -18,6 +18,11 @@ const awsQuotaSelector = state => get(state, 'userProfile.organization.quotaList
 });
 
 const gcpQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.gcp', {
+  byoc: {
+    singleAz: {},
+    multiAz: {},
+    totalAvailable: 0,
+  },
   rhInfra: {
     singleAz: {},
     multiAz: {},
