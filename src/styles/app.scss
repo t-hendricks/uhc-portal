@@ -638,6 +638,9 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .ccsModal {
   ul {
   padding-bottom: 15px;
+  &.unpadded-ul {
+      padding-bottom: 0px;
+    }
   }
   h3 {
   padding-top: 10px;

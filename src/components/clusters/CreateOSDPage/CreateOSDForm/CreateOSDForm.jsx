@@ -11,7 +11,7 @@ import AWSAccountDetailsSection from './FormSections/AWSAccountDetailsSection';
 import NetworkingSection from './FormSections/NetworkingSection';
 import ScaleSection from './FormSections/ScaleSection/ScaleSection';
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
-import ExternalLink from '../../../common/ExternalLink';
+// import ExternalLink from '../../../common/ExternalLink';
 import { required } from '../../../../common/validators';
 
 class CreateOSDForm extends React.Component {
@@ -159,10 +159,10 @@ class CreateOSDForm extends React.Component {
                   {' '}
                   <code>osd-ccs-admin</code>
                   {' '}
-                that meets
+                that meets the requirements.
                   {' '}
-                  <ExternalLink href="tbd">these requirements.</ExternalLink>
-                  {' '}
+                  {/* <ExternalLink href="tbd">these requirements.</ExternalLink>
+                  {' '} */}
                 Create a key for that service account, export to a file named
                   {' '}
                   <code>osServiceAccount.json</code>
