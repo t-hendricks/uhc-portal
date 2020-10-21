@@ -23,10 +23,13 @@ class CreateOSDForm extends React.Component {
   };
 
   toggleBYOCFields = (_, value) => {
-    const { openModal } = this.props;
+    const { openModal, change } = this.props;
+    const { isMultiAz } = this.state;
+
     if (value === 'true') {
       openModal('customer-cloud-subscription');
     } else {
+      change('nodes_compute', isMultiAz ? '9' : '4');
       this.setState({ byocSelected: false });
     }
   };
