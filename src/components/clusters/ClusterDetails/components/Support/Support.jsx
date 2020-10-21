@@ -41,7 +41,7 @@ const Support = ({
   <>
     <Card>
       <CardTitle>
-        <Title headingLevel="h2" size="lg" className="card-title">Notification contacts</Title>
+        <Title headingLevel="h2" size="lg" className="space-bottom-md card-title">Notification contacts</Title>
         <div className="support-subtitle">
           Add users to be contacted in the event of notifications about this cluster.
           {clusterOwnerMsg(clusterCreator)}

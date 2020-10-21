@@ -5,7 +5,7 @@ exports[`<Support /> should render with notification contacts 1`] = `
   <Card>
     <CardTitle>
       <Title
-        className="card-title"
+        className="space-bottom-md card-title"
         headingLevel="h2"
         size="lg"
       >
@@ -82,7 +82,7 @@ exports[`<Support /> should render without notification contacts 1`] = `
   <Card>
     <CardTitle>
       <Title
-        className="card-title"
+        className="space-bottom-md card-title"
         headingLevel="h2"
         size="lg"
       >
