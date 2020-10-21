@@ -32,6 +32,7 @@ const funcs = () => ({
   getGrants: jest.fn(),
   getClusterHistory: jest.fn(),
   getClusterRouters: jest.fn(),
+  getMachinePools: jest.fn(),
 });
 
 const subscriptionInfo = {
