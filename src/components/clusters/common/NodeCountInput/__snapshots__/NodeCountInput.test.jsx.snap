@@ -5,32 +5,25 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
   fieldId="compute-nodes"
   label="compute nodes"
 >
-  <Tooltip
-    content="You do not have enough quota for this option. Contact sales to purchase additional quota."
-    position="right"
+  <FormSelect
+    aria-label="Compute nodes"
+    className="quota-dropdown"
+    isDisabled={false}
+    isRequired={false}
+    name="compute-nodes"
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
   >
-    <div>
-      <FormSelect
-        aria-label="Compute nodes"
-        className="quota-dropdown"
-        isDisabled={true}
-        isRequired={false}
-        name="compute-nodes"
-        onBlur={[Function]}
-        onChange={[MockFunction]}
-        onFocus={[Function]}
-        ouiaSafe={true}
-        validated="default"
-        value=""
-      >
-        <FormSelectOption
-          key="9"
-          label="3"
-          value={9}
-        />
-      </FormSelect>
-    </div>
-  </Tooltip>
+    <FormSelectOption
+      key="9"
+      label="3"
+      value={9}
+    />
+  </FormSelect>
   <span>
     × 3 zones =
      
@@ -990,32 +983,25 @@ exports[`<NodeCountInput> Single AZ renders with no quota 1`] = `
   fieldId="compute-nodes"
   label="compute nodes"
 >
-  <Tooltip
-    content="You do not have enough quota for this option. Contact sales to purchase additional quota."
-    position="right"
+  <FormSelect
+    aria-label="Compute nodes"
+    className="quota-dropdown"
+    isDisabled={false}
+    isRequired={false}
+    name="compute-nodes"
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
   >
-    <div>
-      <FormSelect
-        aria-label="Compute nodes"
-        className="quota-dropdown"
-        isDisabled={true}
-        isRequired={false}
-        name="compute-nodes"
-        onBlur={[Function]}
-        onChange={[MockFunction]}
-        onFocus={[Function]}
-        ouiaSafe={true}
-        validated="default"
-        value=""
-      >
-        <FormSelectOption
-          key="4"
-          label="4"
-          value={4}
-        />
-      </FormSelect>
-    </div>
-  </Tooltip>
+    <FormSelectOption
+      key="4"
+      label="4"
+      value={4}
+    />
+  </FormSelect>
 </FormGroup>
 `;
 

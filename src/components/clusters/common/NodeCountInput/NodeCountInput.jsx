@@ -86,7 +86,7 @@ class NodeCountInput extends React.Component {
 
     const options = optionsAvailable ? range(minimum, maxValue + 1, increment) : [minimum];
 
-    const notEnoughQuota = options.length <= 1;
+    const notEnoughQuota = options.length < 1;
     const disabled = isDisabled || notEnoughQuota;
 
     // Set up options for load balancers
