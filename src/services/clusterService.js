@@ -254,6 +254,22 @@ const postUpgradeSchedule = (clusterID, schedule) => apiRequest({
   data: schedule,
 });
 
+const getUpgradeSchedules = clusterID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies`,
+});
+
+const getUpgradeScheduleState = (clusterID, policyID) => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}/state`,
+});
+
+const deleteUpgradeSchedule = (clusterID, policyID) => apiRequest({
+  method: 'delete',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}`,
+});
+
+
 const clusterService = {
   getClusters,
   getUnhealthyClusters,
@@ -296,6 +312,12 @@ const clusterService = {
   editClusterIdentityProvider,
   getClusterStatus,
 };
-export { getVersionInfo, postUpgradeSchedule };
+export {
+  getVersionInfo,
+  postUpgradeSchedule,
+  getUpgradeSchedules,
+  getUpgradeScheduleState,
+  deleteUpgradeSchedule,
+};
 
 export default clusterService;

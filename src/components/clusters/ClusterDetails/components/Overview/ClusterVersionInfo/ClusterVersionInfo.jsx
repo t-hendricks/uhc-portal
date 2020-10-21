@@ -1,22 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import { Button } from '@patternfly/react-core';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
 
 
 class ClusterVersionInfo extends React.Component {
   componentDidMount() {
-    const { cluster } = this.props;
-    if (cluster && cluster.openshift_version) {
-      this.fetchVersionInfoIfNeeded();
+    const { cluster, getSchedules } = this.props;
+    if (cluster && cluster.id && cluster.managed) {
+      if (cluster.openshift_version) {
+        this.fetchVersionInfoIfNeeded();
+      }
+      getSchedules(cluster.id);
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { cluster } = this.props;
+    const { cluster, getSchedules } = this.props;
     if (prevProps.cluster.openshift_version !== cluster.openshift_version) {
       this.fetchVersionInfoIfNeeded();
+    }
+    if (prevProps.cluster.id !== cluster.id && cluster.managed) {
+      getSchedules(cluster.id);
     }
   }
 
@@ -31,13 +39,17 @@ class ClusterVersionInfo extends React.Component {
   }
 
   render() {
-    const { cluster, versionInfo, openModal } = this.props;
+    const {
+      cluster, versionInfo, openModal, schedules,
+    } = this.props;
     const clusterVersion = cluster.openshift_version || 'N/A';
     const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
     const channel = get(cluster, 'metrics.channel');
     const hasUpgrades = versionInfo.version === cluster.openshift_version
                         && versionInfo.availableUpgrades.length > 0
                         && cluster.managed;
+
+    const scheduledManualUpdate = schedules.items.find(schedule => schedule.schedule_type === 'manual' && schedule.version !== cluster.openshift_version);
 
     return (
       <dl className="cluster-details-item-list">
@@ -50,9 +62,30 @@ class ClusterVersionInfo extends React.Component {
           <ClusterUpdateLink
             cluster={cluster}
             openModal={openModal}
-            osdUpgradeAvailable={hasUpgrades}
+            osdUpgradeAvailable={hasUpgrades && !scheduledManualUpdate}
           />
         </dd>
+        { scheduledManualUpdate && (
+          <div>
+            <dt>Upgrade scheduled: </dt>
+            <dd>
+              <DateFormat type="exact" date={Date.parse(scheduledManualUpdate.next_run)} />
+              {' '}
+              {
+                scheduledManualUpdate.state?.value === 'started'
+                  ? '(Started)'
+                  : (
+                    <Button
+                      variant="link"
+                      onClick={() => openModal('cancel-upgrade', { clusterID: cluster.id, schedule: scheduledManualUpdate })}
+                    >
+                       Cancel this upgrade
+                    </Button>
+)
+              }
+            </dd>
+          </div>
+        )}
         { !cluster.managed && !isUpgrading && (
         <div>
           <dt>Life cycle state: </dt>
@@ -89,8 +122,16 @@ ClusterVersionInfo.propTypes = {
     channelGroup: PropTypes.string,
     availableUpgrades: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
+  schedules: PropTypes.shape({
+    fulfilled: PropTypes.bool,
+    pending: PropTypes.bool,
+    error: PropTypes.bool,
+    items: PropTypes.array,
+  }).isRequired,
+
   getVersion: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
+  getSchedules: PropTypes.func.isRequired,
 };
 
 export default ClusterVersionInfo;
