@@ -5,15 +5,15 @@ import {
   Form, Alert, Grid, GridItem,
 } from '@patternfly/react-core';
 
-import Modal from '../../../../../../common/Modal/Modal';
-
-import NodeCountInput from '../../../../../common/NodeCountInput';
-import ErrorBox from '../../../../../../common/ErrorBox';
-
-import { shouldRefetchQuota } from '../../../../../../../common/helpers';
+import NodeCountInput from '../NodeCountInput';
+import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
 
 
-class ScaleMachinePoolModal extends Component {
+import Modal from '../../../common/Modal/Modal';
+import ErrorBox from '../../../common/ErrorBox';
+import { shouldRefetchQuota } from '../../../../common/helpers';
+
+class EditNodeCountModal extends Component {
   componentDidMount() {
     const {
       organization,
@@ -21,6 +21,7 @@ class ScaleMachinePoolModal extends Component {
       machineTypes,
       getMachineTypes,
     } = this.props;
+
     if (!machineTypes.fulfilled && !machineTypes.pending) {
       getMachineTypes();
     }
@@ -29,57 +30,84 @@ class ScaleMachinePoolModal extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const {
-      scaleMachinePoolResponse,
-      closeModal,
       getOrganizationAndQuota,
+      onClose,
+      machinePoolsList,
+      getMachinePools,
+      clusterID,
+      editNodeCountResponse,
+      isOpen,
     } = this.props;
 
-    if (scaleMachinePoolResponse.fulfilled
-        && !scaleMachinePoolResponse.pending
-        && !scaleMachinePoolResponse.error) {
-      this.resetResponse();
-      closeModal();
+    if (!prevProps.isOpen && isOpen && clusterID && !machinePoolsList.pending) {
+      getMachinePools(clusterID);
+    }
+
+    if (editNodeCountResponse.fulfilled
+        && !editNodeCountResponse.pending
+        && !editNodeCountResponse.error) {
+      this.cancelEdit();
       getOrganizationAndQuota();
+      onClose();
     }
   }
+
+  getSelectedMachinePoolNodes(machinePoolId) {
+    const { machinePoolsList } = this.props;
+    return machinePoolsList.data.find(machinePool => machinePool.name === machinePoolId)?.nodes;
+  }
+
+
+  handleMachinePoolChange = (_, value) => {
+    const { change } = this.props;
+
+    change('nodes_compute', this.getSelectedMachinePoolNodes(value));
+  };
+
+  cancelEdit = () => {
+    const { closeModal, change } = this.props;
+    this.resetResponse();
+
+    closeModal();
+    change('machine_pool', '');
+    change('nodes_compute', '');
+  };
 
   resetResponse() {
     const {
       resetScaleDefaultMachinePoolResponse,
       resetScaleMachinePoolResponse,
-      isDefaultMachinePool,
+      machinePoolId,
+      resetGetMachinePoolsResponse,
     } = this.props;
-    if (isDefaultMachinePool) {
+
+    if (machinePoolId === 'Default') {
       resetScaleDefaultMachinePoolResponse();
     } else {
       resetScaleMachinePoolResponse();
     }
+    resetGetMachinePoolsResponse();
   }
 
   render() {
     const {
-      closeModal,
+      isOpen,
+      machinePoolsList,
       handleSubmit,
-      scaleMachinePoolResponse,
       isMultiAz,
       masterResizeAlertThreshold,
       initialValues,
       organization,
       isByoc,
-      machineType,
-      pristine,
       cloudProviderID,
+      editNodeCountResponse,
+      machineType,
     } = this.props;
 
-    const cancelEdit = () => {
-      this.resetResponse();
-      closeModal();
-    };
-
-    const error = scaleMachinePoolResponse.error ? (
-      <ErrorBox message="Error editing machine pool" response={scaleMachinePoolResponse} />
+    const error = editNodeCountResponse.error ? (
+      <ErrorBox message="Error editing machine pool" response={editNodeCountResponse} />
     ) : null;
 
     const resizingAlert = nodes => (
@@ -102,19 +130,19 @@ class ScaleMachinePoolModal extends Component {
       </Alert>
     );
 
-    const pending = scaleMachinePoolResponse.pending || organization.pending;
+    const pending = editNodeCountResponse.pending
+     || organization.pending
+     || machinePoolsList.pending;
 
-    const className = isByoc ? 'edit-cluster-modal' : 'edit-cluster-modal edit-cluster-modal-rhinfra';
-
-    return (
+    return isOpen && (
       <Modal
-        className={className}
+        className="edit-cluster-modal edit-cluster-modal-rhinfra"
         title="Edit node count"
-        onClose={cancelEdit}
+        onClose={this.cancelEdit}
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
-        onSecondaryClick={cancelEdit}
-        isPrimaryDisabled={pending || pristine}
+        onSecondaryClick={this.cancelEdit}
+        isPrimaryDisabled={pending}
         isPending={pending}
         isSmall
       >
@@ -122,6 +150,16 @@ class ScaleMachinePoolModal extends Component {
           {error}
           <Form onSubmit={handleSubmit}>
             <Grid hasGutter>
+              <GridItem span={8}>
+                <Field
+                  component={ReduxFormDropdown}
+                  name="machine_pool"
+                  label="Machine pool"
+                  options={machinePoolsList.data}
+                  onChange={this.handleMachinePoolChange}
+                />
+              </GridItem>
+              <GridItem span={4} />
               <GridItem span={8}>
                 <Field
                   component={NodeCountInput}
@@ -134,6 +172,7 @@ class ScaleMachinePoolModal extends Component {
                   isEditingCluster
                   currentNodeCount={initialValues.nodes_compute || 0}
                   cloudProviderID={cloudProviderID}
+                  minNodes={0}
                 />
               </GridItem>
               <GridItem span={4} />
@@ -146,18 +185,15 @@ class ScaleMachinePoolModal extends Component {
   }
 }
 
-ScaleMachinePoolModal.propTypes = {
+EditNodeCountModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   resetScaleDefaultMachinePoolResponse: PropTypes.func.isRequired,
   resetScaleMachinePoolResponse: PropTypes.func.isRequired,
-  scaleMachinePoolResponse: PropTypes.object,
-  min: PropTypes.shape({
-    value: PropTypes.number,
-    validationMsg: PropTypes.string,
-  }).isRequired,
+  resetGetMachinePoolsResponse: PropTypes.func.isRequired,
+  editNodeCountResponse: PropTypes.object,
   isMultiAz: PropTypes.bool,
-  isDefaultMachinePool: PropTypes.bool,
   initialValues: PropTypes.shape({
     id: PropTypes.string,
     nodes_compute: PropTypes.number,
@@ -167,14 +203,19 @@ ScaleMachinePoolModal.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
+  getMachinePools: PropTypes.func.isRequired,
+  machinePoolsList: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
   isByoc: PropTypes.bool,
+  machinePoolId: PropTypes.string,
   machineType: PropTypes.string,
+  clusterID: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
-  pristine: PropTypes.bool, // from redux-form
 };
 
-ScaleMachinePoolModal.defaultProps = {
-  scaleMachinePoolResponse: {},
+EditNodeCountModal.defaultProps = {
+  editNodeCountResponse: {},
 };
 
-export default ScaleMachinePoolModal;
+export default EditNodeCountModal;

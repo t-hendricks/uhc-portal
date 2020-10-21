@@ -68,6 +68,24 @@ function actionResolver(
     return isClusterReady ? managedEditProps : disabledManagedEditProps;
   };
 
+  const getEditNodeCountProps = () => {
+    const editNodeCountBaseProps = {
+      ...baseProps,
+      title: 'Edit node count',
+      key: getKey('editnodecount'),
+    };
+    const managedEditNodeCountProps = {
+      ...editNodeCountBaseProps,
+      onClick: () => openModal('edit-node-count', { cluster, isDefaultMachinePool: true }),
+    };
+    const disabledManagedEditProps = {
+      ...editNodeCountBaseProps,
+      isDisabled: true,
+      tooltip: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
+    };
+    return isClusterReady ? managedEditNodeCountProps : disabledManagedEditProps;
+  };
+
   const getEditDisplayNameProps = () => {
     const editDisplayNameBaseProps = {
       ...baseProps,
@@ -187,6 +205,7 @@ function actionResolver(
 
   const adminConsoleItemProps = getAdminConosleProps();
   const scaleClusterItemProps = getScaleClusterProps();
+  const editNodeCountItemProps = getEditNodeCountProps();
   const editDisplayNameItemProps = getEditDisplayNameProps();
   const editConsoleURLItemProps = getEditConsoleURLProps();
   const deleteClusterItemProps = getDeleteItemProps();
@@ -198,6 +217,7 @@ function actionResolver(
 
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
+  const showEditNodeCount = cluster.canEdit && cluster.managed;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && !isArchived;
@@ -214,6 +234,7 @@ function actionResolver(
     cluster.canEdit && editDisplayNameItemProps,
     showEditURL && editConsoleURLItemProps,
     showScale && scaleClusterItemProps,
+    showEditNodeCount && editNodeCountItemProps,
     showDelete && deleteClusterItemProps,
     showArchive && archiveClusterItemProps,
     showUnarchive && unarchiveClusterItemProps,

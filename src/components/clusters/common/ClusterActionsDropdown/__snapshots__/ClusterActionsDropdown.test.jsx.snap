@@ -82,6 +82,18 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
       </DropdownItem>,
       <DropdownItem
         component="button"
+        isDisabled={true}
+        title="Edit node count"
+        tooltip={
+          <span>
+            This cluster is not ready
+          </span>
+        }
+      >
+        Edit node count
+      </DropdownItem>,
+      <DropdownItem
+        component="button"
         onClick={[Function]}
         title="Delete cluster"
       >
@@ -128,6 +140,13 @@ exports[`<ClusterActionsDropdown /> cluster with state ready and console url sho
         title="Edit load balancers and persistent storage"
       >
         Edit load balancers and persistent storage
+      </DropdownItem>,
+      <DropdownItem
+        component="button"
+        onClick={[Function]}
+        title="Edit node count"
+      >
+        Edit node count
       </DropdownItem>,
       <DropdownItem
         component="button"
@@ -190,6 +209,18 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
         }
       >
         Edit load balancers and persistent storage
+      </DropdownItem>,
+      <DropdownItem
+        component="button"
+        isDisabled={true}
+        title="Edit node count"
+        tooltip={
+          <span>
+            The cluster is being uninstalled
+          </span>
+        }
+      >
+        Edit node count
       </DropdownItem>,
       <DropdownItem
         component="button"
