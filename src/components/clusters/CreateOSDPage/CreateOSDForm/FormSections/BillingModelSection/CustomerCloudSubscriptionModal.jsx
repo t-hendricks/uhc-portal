@@ -22,7 +22,6 @@ const contentByCloudProvider = (cloudProviderID) => {
         </TextContent>
         <TextContent>
           <ul>
-            <li>Your AWS account has no services deployed in it. </li>
             <li>
                   Your AWS account has the necessary limits to support the desired
                   cluster size.
