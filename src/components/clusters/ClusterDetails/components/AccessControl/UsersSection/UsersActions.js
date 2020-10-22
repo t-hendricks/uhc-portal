@@ -1,9 +1,24 @@
+import get from 'lodash/get';
+
 import UsersConstants from './UsersConstants';
 import { clusterService } from '../../../../../../services';
 
 const getUsers = clusterID => dispatch => dispatch({
   type: UsersConstants.GET_USERS,
-  payload: clusterService.getClusterGroupUsers(clusterID),
+  payload: clusterService
+    .getClusterGroupUsers(clusterID)
+    .then((response) => {
+      response.data.items = get(response, 'data.items', []).map((g) => {
+        const group = g;
+        if (group.users) {
+          // cluster-admin user is meant for internal use and is not exposed to users
+          group.users.items = get(group, 'users.items', [])
+            .filter(user => user.id !== 'cluster-admin');
+        }
+        return group;
+      });
+      return response;
+    }),
 });
 
 const addUser = (clusterID, groupID, userID) => dispatch => dispatch({
