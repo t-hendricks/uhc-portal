@@ -1,10 +1,12 @@
 import get from 'lodash/get';
 import has from 'lodash/has';
 
-// Add-ons with 0 resource cost are free for OSD/MOA clusters
+const supportsFreeAddOns = cluster => ['osd', 'moa', 'rosa'].includes(cluster.product.id);
+
+// Add-ons with 0 resource cost are free for OSD/ROSA clusters
 const isFreeAddOn = (addOn, cluster) => {
   if (addOn.resource_cost === 0) {
-    return ['osd', 'moa'].includes(cluster.product.id);
+    return supportsFreeAddOns(cluster);
   }
   return false;
 };
@@ -61,4 +63,5 @@ export {
   isInstalled,
   hasQuota,
   availableAddOns,
+  supportsFreeAddOns,
 };

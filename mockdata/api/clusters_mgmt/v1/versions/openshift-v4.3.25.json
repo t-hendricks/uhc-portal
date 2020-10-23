@@ -1,1 +1,1 @@
-{"kind":"Version","id":"openshift-v4.3.25","href":"/api/clusters_mgmt/v1/versions/openshift-v4.3.25","enabled":true,"default":false,"channel_group":"stable","available_upgrades":["4.4.11"],"moa_enabled":true}
+{"kind":"Version","id":"openshift-v4.3.25","href":"/api/clusters_mgmt/v1/versions/openshift-v4.3.25","enabled":true,"default":false,"channel_group":"stable","available_upgrades":["4.4.11"],"moa_enabled":true,"rosa_enabled":true}

@@ -76,6 +76,7 @@ const subscriptionPlans = {
   OCP: 'OCP',
   MOA: 'MOA',
   RHMI: 'RHMI',
+  ROSA: 'ROSA',
   ANY: 'ANY',
 };
 

@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import TokensMOA from '../TokensMOA';
+import TokensROSA from '../TokensROSA';
 
 const mockGetToken = jest.fn().mockResolvedValue({ data: { refresh_token: 'hello offline access token!' } });
 
@@ -29,14 +29,14 @@ window.insights = {
   },
 };
 
-describe('<TokensMOA />', () => {
+describe('<TokensROSA />', () => {
   let component;
   beforeAll(() => {
-    component = shallow(<TokensMOA />);
+    component = shallow(<TokensROSA />);
   });
 
   it('Renders loading screen', () => {
-    const loadingcomponent = shallow(<TokensMOA />);
+    const loadingcomponent = shallow(<TokensROSA />);
     expect(loadingcomponent).toMatchSnapshot();
   });
 

@@ -30,6 +30,7 @@ import Monitoring from './components/Monitoring';
 import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
+import { supportsFreeAddOns } from './components/AddOns/AddOnsHelper';
 import MachinePools from './components/MachinePools';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
@@ -285,7 +286,7 @@ class ClusterDetails extends Component {
     }
 
     // If there are compatible free add-ons available we can show the tab regardless of quota
-    if (['osd', 'moa'].includes(cluster.product.id) && get(addOns, 'freeAddOns.length', 0)) {
+    if (supportsFreeAddOns(cluster) && get(addOns, 'freeAddOns.length', 0)) {
       return true;
     }
 
