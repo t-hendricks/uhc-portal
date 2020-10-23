@@ -58,10 +58,13 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
                              || isInstalled(addOn, clusterAddOns));
 };
 
+const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;
+
 export {
   isAvailable,
   isInstalled,
   hasQuota,
   availableAddOns,
   supportsFreeAddOns,
+  hasParameters,
 };

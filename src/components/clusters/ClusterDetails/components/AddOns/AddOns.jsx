@@ -39,9 +39,11 @@ import {
   isInstalled,
   hasQuota,
   availableAddOns,
+  hasParameters,
 } from './AddOnsHelper';
 
 import AddOnsConstants from './AddOnsConstants';
+import AddOnsParametersModal from './AddOnsParametersModal';
 
 class AddOns extends React.Component {
   componentDidMount() {
@@ -141,7 +143,20 @@ class AddOns extends React.Component {
       addClusterAddOnResponse,
       organization,
       quota,
+      openModal,
     } = this.props;
+
+    const installAddOn = () => {
+      if (hasParameters(addOn)) {
+        openModal('add-ons-parameters-modal', { clusterID, addOn });
+      } else {
+        addClusterAddOn(clusterID, {
+          addon: {
+            id: addOn.id,
+          },
+        });
+      }
+    };
 
     // Show install button if not installed
     if (!isInstalled(addOn, clusterAddOns)) {
@@ -170,7 +185,7 @@ class AddOns extends React.Component {
               || cluster.state !== clusterStates.READY
               || !cluster.canEdit
           }
-          onClick={() => addClusterAddOn(clusterID, addOn.id)}
+          onClick={() => installAddOn()}
         >
           Install
         </Button>
@@ -285,6 +300,9 @@ class AddOns extends React.Component {
             </Card>
           ))}
         </Gallery>
+        <AddOnsParametersModal
+          clusterID={cluster.id}
+        />
       </div>
     );
   }
@@ -302,6 +320,7 @@ AddOns.propTypes = {
   addClusterAddOn: PropTypes.func.isRequired,
   addClusterAddOnResponse: PropTypes.object.isRequired,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default AddOns;

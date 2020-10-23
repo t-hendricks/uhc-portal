@@ -7,6 +7,7 @@ import {
   isInstalled,
   hasQuota,
   availableAddOns,
+  hasParameters,
 } from '../AddOnsHelper';
 
 const { cluster } = fixtures.clusterDetails;
@@ -105,5 +106,17 @@ describe('availableAddOns', () => {
       fulfilled: true,
     }, quotaSummary);
     expect(addOns).toEqual([mockAddOns.items[0], mockAddOns.items[2], mockAddOns.items[3]]);
+  });
+});
+
+describe('hasParameters', () => {
+  it('should determine that the add-on has parameters', () => {
+    const hasParams = hasParameters(mockAddOns.items[1]);
+    expect(hasParams).toBe(true);
+  });
+
+  it('should determine that the add-on has no parameters', () => {
+    const hasParams = hasParameters(mockAddOns.items[0]);
+    expect(hasParams).toBe(false);
   });
 });
