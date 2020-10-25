@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
-import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../common/units';
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
-import ClusterNetwork from './ClusterNetwork';
+import ClusterStateIcon from '../../../../common/ClusterStateIcon/ClusterStateIcon';
+import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
+import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
+import ClusterNetwork from '../ClusterNetwork';
 
-function DetailsRight({ cluster }) {
+function DetailsRight({ cluster, totalDesiredComputeNodes }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
     cluster.metrics.memory.total.value, cluster.metrics.memory.total.unit,
   );
@@ -115,7 +115,7 @@ function DetailsRight({ cluster }) {
                   {' '}
                 </dt>
                 <dd>
-                  {get(cluster, 'nodes.compute', 'N/A')}
+                  {totalDesiredComputeNodes || 'N/A'}
                 </dd>
               </dl>
             </dd>
@@ -164,6 +164,7 @@ function DetailsRight({ cluster }) {
 
 DetailsRight.propTypes = {
   cluster: PropTypes.any,
+  totalDesiredComputeNodes: PropTypes.number,
 };
 
 export default DetailsRight;

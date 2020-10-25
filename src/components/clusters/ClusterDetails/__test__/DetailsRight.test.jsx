@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import DetailsRight from '../components/Overview/DetailsRight';
+import DetailsRight from '../components/Overview/DetailsRight/DetailsRight';
 import fixtures from './ClusterDetails.fixtures';
 
 describe('<DetailsRight />', () => {
@@ -10,6 +10,7 @@ describe('<DetailsRight />', () => {
     const wrapper = shallow(
       <DetailsRight
         cluster={clusterDetails.cluster}
+        totalDesiredComputeNodes={clusterDetails.cluster.nodes.compute}
       />,
     );
     expect(wrapper).toMatchSnapshot();
