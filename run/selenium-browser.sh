@@ -20,4 +20,4 @@ set -x
                       --add-host prod.foo.redhat.com:127.0.0.1 \
                       --net=host -p 4444:4444 -p 5900:5900 \
                       --volume /dev/shm:/dev/shm \
-                      quay.io/app-sre/selenium/standalone-"$BROWSER"-debug
+                      quay.io/app-sre/selenium-standalone-"$BROWSER"-debug
