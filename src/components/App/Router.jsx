@@ -48,6 +48,8 @@ import InstallOSP from '../clusters/install/InstallOSP';
 import InstallOSPIPI from '../clusters/install/InstallOSPIPI';
 import InstallOSPUPI from '../clusters/install/InstallOSPUPI';
 import InstallRHV from '../clusters/install/InstallRHV';
+import InstallRHVIPI from '../clusters/install/InstallRHVIPI';
+import InstallRHVUPI from '../clusters/install/InstallRHVUPI';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallPullSecret from '../clusters/install/InstallPullSecret';
@@ -94,7 +96,9 @@ function Router({ history }) {
             <Route path="/install/openstack/installer-provisioned" component={InstallOSPIPI} />
             <Route path="/install/openstack/user-provisioned" component={InstallOSPUPI} />
             <Route path="/install/openstack" component={InstallOSP} />
-            <Route path="/install/rhv/installer-provisioned" component={InstallRHV} />
+            <Route path="/install/rhv/installer-provisioned" component={InstallRHVIPI} />
+            <Route path="/install/rhv/user-provisioned" component={InstallRHVUPI} />
+            <Route path="/install/rhv" component={InstallRHV} />
             <Route path="/install/azure/installer-provisioned" component={InstallAzureIPI} />
             <Route path="/install/azure/user-provisioned" component={InstallAzureUPI} />
             <Route path="/install/azure" exact component={InstallAzure} />
