@@ -26,6 +26,7 @@ function ScaleSection({
   cloudProviderID,
   showSotrageAndLoadBalancers = true,
   gridSpan = 9,
+  minNodes,
 }) {
   return (
     <>
@@ -62,6 +63,7 @@ function ScaleSection({
           isDisabled={pending}
           extendedHelpText={constants.computeNodeCountHint}
           cloudProviderID={cloudProviderID}
+          minNodes={minNodes}
         />
       </GridItem>
       <GridItem span={8} />
@@ -135,6 +137,7 @@ ScaleSection.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   handleMachineTypesChange: PropTypes.func.isRequired,
   gridSpan: PropTypes.number,
+  minNodes: PropTypes.number,
 };
 
 export default ScaleSection;
