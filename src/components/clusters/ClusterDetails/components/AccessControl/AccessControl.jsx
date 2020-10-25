@@ -11,7 +11,9 @@ function AccessControl({ cluster, clusterConsoleURL, cloudProvider }) {
     <div className="cluster-details-user-tab-contents">
       <IDPSection clusterID={get(cluster, 'id')} clusterConsoleURL={clusterConsoleURL} canEdit={cluster.canEdit} />
       <UsersSection cluster={cluster} />
-      {cloudProvider === 'aws' && (<NetworkSelfServiceSection clusterID={get(cluster, 'id')} canEdit={cluster.canEdit} />)}
+      {cloudProvider === 'aws' && get(cluster, 'ccs.enabled', false) && (
+        <NetworkSelfServiceSection clusterID={get(cluster, 'id')} canEdit={cluster.canEdit} />
+      )}
     </div>
   );
 }
