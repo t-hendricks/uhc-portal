@@ -29,7 +29,10 @@ class NodeCountInput extends React.Component {
   }
 
   getMinimumValue() {
-    const { isMultiAz, isByoc } = this.props;
+    const { isMultiAz, isByoc, minNodes } = this.props;
+    if (minNodes !== undefined) {
+      return minNodes;
+    }
     if (isByoc) {
       return isMultiAz ? 3 : 2;
     }
@@ -146,6 +149,7 @@ class NodeCountInput extends React.Component {
 NodeCountInput.propTypes = {
   isEditingCluster: PropTypes.bool,
   currentNodeCount: PropTypes.number,
+  minNodes: PropTypes.number,
   isDisabled: PropTypes.bool,
   label: PropTypes.string,
   helpText: PropTypes.string,

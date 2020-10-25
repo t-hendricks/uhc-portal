@@ -191,6 +191,7 @@ class MachinePools extends React.Component {
                 cells={columns}
                 rows={rows}
                 actionResolver={actionResolver}
+                areActionsDisabled={() => !cluster.canEdit}
               >
                 <TableHeader />
                 <TableBody />

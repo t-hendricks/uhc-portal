@@ -93,6 +93,7 @@ class AddMachinePoolModal extends Component {
                 cloudProviderID={cluster.cloud_provider.id}
                 showSotrageAndLoadBalancers={false}
                 gridSpan={12}
+                minNodes={0}
               />
               <GridItem span={4}>
                 <FormGroup label="Machine pool name" isRequired>
