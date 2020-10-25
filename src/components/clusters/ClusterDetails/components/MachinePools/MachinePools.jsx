@@ -17,7 +17,7 @@ import {
 import ErrorBox from '../../../../common/ErrorBox';
 
 import AddMachinePoolModal from './components/AddMachinePoolModal';
-import ScaleMachinePoolModal from './components/ScaleMachinePoolModal';
+
 
 class MachinePools extends React.Component {
   state = {
@@ -66,7 +66,6 @@ class MachinePools extends React.Component {
       machinePoolsList,
       openModal,
       isAddMachinePoolModalOpen,
-      isScaleMachinePoolModalOpen,
       deleteMachinePool,
       defaultMachinePool,
       deleteMachinePoolResponse,
@@ -87,7 +86,7 @@ class MachinePools extends React.Component {
     const columns = [
       { title: 'Machine pool', transforms: [cellWidth(25)] },
       { title: 'Instance type', transforms: [cellWidth(25)] },
-      { title: 'Availablity zone ID', transforms: [cellWidth(25)] },
+      { title: 'Availability zones', transforms: [cellWidth(25)] },
       { title: 'Node count', transforms: [cellWidth(25)] },
     ];
 
@@ -109,9 +108,10 @@ class MachinePools extends React.Component {
       deleteMachinePool(rowData.machinePool.id);
     };
 
-    const onClickScaleActions = (_, __, rowData) => openModal('scale-machine-pool', {
+    const onClickScaleActions = (_, __, rowData) => openModal('edit-node-count', {
       machinePool: rowData.machinePool,
       isDefaultMachinePool: rowData.machinePool.id === 'Default',
+      cluster,
     });
 
 
@@ -200,7 +200,6 @@ class MachinePools extends React.Component {
           </Card>
         )}
         {isAddMachinePoolModalOpen && <AddMachinePoolModal cluster={cluster} />}
-        {isScaleMachinePoolModalOpen && <ScaleMachinePoolModal cluster={cluster} />}
       </>
     );
   }
@@ -210,7 +209,6 @@ MachinePools.propTypes = {
   cluster: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   isAddMachinePoolModalOpen: PropTypes.bool.isRequired,
-  isScaleMachinePoolModalOpen: PropTypes.bool.isRequired,
   deleteMachinePoolResponse: PropTypes.object.isRequired,
   addMachinePoolResponse: PropTypes.object.isRequired,
   scaleMachinePoolResponse: PropTypes.object.isRequired,

@@ -19,7 +19,6 @@ const mapStateToProps = (state) => {
 
   return ({
     isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
-    isScaleMachinePoolModalOpen: shouldShowModal(state, 'scale-machine-pool'),
     defaultMachinePool: {
       id: 'Default',
       instance_type: nodes.compute_machine_type?.id,

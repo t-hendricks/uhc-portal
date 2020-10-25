@@ -45,6 +45,7 @@ import GlobalErrorBox from '../common/GlobalErrorBox';
 import Unavailable from '../../common/Unavailable';
 
 import ScaleClusterDialog from '../common/ScaleClusterDialog';
+import EditNodeCountModal from '../common/EditNodeCountModal';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
@@ -279,6 +280,7 @@ class ClusterList extends Component {
               <TransferClusterOwnershipDialog onClose={invalidateClusters} />
               <EditSubscriptionSettingsDialog onClose={invalidateClusters} isDialog />
               <ScaleClusterDialog onClose={invalidateClusters} />
+              <EditNodeCountModal onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
               <UnarchiveClusterDialog onClose={invalidateClusters} />
               <UpgradeWizard />

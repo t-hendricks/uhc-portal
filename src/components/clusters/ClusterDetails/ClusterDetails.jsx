@@ -35,6 +35,7 @@ import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 
 import ScaleClusterDialog from '../common/ScaleClusterDialog';
+import EditNodeCountModal from '../common/EditNodeCountModal';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
@@ -543,6 +544,7 @@ class ClusterDetails extends Component {
         </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
+        <EditNodeCountModal onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
         <EditConsoleURLDialog onClose={onDialogClose} />

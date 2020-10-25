@@ -1055,6 +1055,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   <Connect(ReduxForm)
     onClose={[Function]}
   />
+  <Connect(ReduxForm)
+    onClose={[Function]}
+  />
   <Connect(EditDisplayNameDialog)
     onClose={[Function]}
   />
