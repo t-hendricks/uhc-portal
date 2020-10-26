@@ -27,6 +27,7 @@ function ScaleSection({
   showSotrageAndLoadBalancers = true,
   gridSpan = 9,
   minNodes,
+  isMachinePool = false,
 }) {
   return (
     <>
@@ -47,6 +48,7 @@ function ScaleSection({
             isBYOC={isBYOC}
             onChange={handleMachineTypesChange}
             cloudProviderID={cloudProviderID}
+            isMachinePool={isMachinePool}
           />
         </FormGroup>
       </GridItem>
@@ -64,6 +66,7 @@ function ScaleSection({
           extendedHelpText={constants.computeNodeCountHint}
           cloudProviderID={cloudProviderID}
           minNodes={minNodes}
+          isMachinePool={isMachinePool}
         />
       </GridItem>
       <GridItem span={8} />
@@ -138,6 +141,7 @@ ScaleSection.propTypes = {
   handleMachineTypesChange: PropTypes.func.isRequired,
   gridSpan: PropTypes.number,
   minNodes: PropTypes.number,
+  isMachinePool: PropTypes.bool,
 };
 
 export default ScaleSection;

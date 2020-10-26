@@ -34,11 +34,12 @@ class AddMachinePoolModal extends Component {
 
   componentDidUpdate(prevProps) {
     const {
-      addMachinePoolResponse, clearAddMachinePoolResponse, closeModal,
+      addMachinePoolResponse, clearAddMachinePoolResponse, closeModal, getOrganizationAndQuota,
     } = this.props;
     if (!prevProps.addMachinePoolResponse.fulfilled && addMachinePoolResponse.fulfilled) {
       closeModal();
       clearAddMachinePoolResponse();
+      getOrganizationAndQuota();
     }
   }
 
@@ -87,13 +88,14 @@ class AddMachinePoolModal extends Component {
               <ScaleSection
                 pending={isPending}
                 isBYOC={cluster?.ccs?.enabled}
-                isMultiAz={cluster.multi_AZ}
+                isMultiAz={cluster.multi_az}
                 machineType={machineType}
                 handleMachineTypesChange={this.handleMachineTypesChange}
                 cloudProviderID={cluster.cloud_provider.id}
                 showSotrageAndLoadBalancers={false}
                 gridSpan={12}
                 minNodes={0}
+                isMachinePool
               />
               <GridItem span={4}>
                 <FormGroup label="Machine pool name" isRequired>
