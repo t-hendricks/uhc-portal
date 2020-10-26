@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import EditConsoleURLDialog from './EditConsoleURLDialog';
 import ErrorBox from '../../../common/ErrorBox';
@@ -16,7 +16,7 @@ describe('<EditConsoleURLDialog />', () => {
     onClose = jest.fn();
     submit = jest.fn();
     resetResponse = jest.fn();
-    wrapper = mount(<EditConsoleURLDialog
+    wrapper = shallow(<EditConsoleURLDialog
       isOpen
       closeModal={closeModal}
       onClose={onClose}
@@ -24,7 +24,7 @@ describe('<EditConsoleURLDialog />', () => {
       resetResponse={resetResponse}
       clusterID="some-id"
       consoleURL="http://www.example.com"
-      editClusterResponse={{ errorMessage: '', error: false }}
+      editClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
     />);
   });
   it('renders correctly', () => {
@@ -32,25 +32,17 @@ describe('<EditConsoleURLDialog />', () => {
   });
 
   it('when cancelled, calls closeModal but not onClose ', () => {
-    wrapper.find('.pf-m-secondary').at(0).simulate('click');
+    wrapper.find('Modal').at(0).prop('onSecondaryClick')();
     expect(closeModal).toBeCalled();
     expect(resetResponse).toBeCalled();
     expect(onClose).not.toBeCalled();
   });
 
   it('submits correctly', () => {
-    const input = wrapper.find('.pf-c-form-control');
-    input.instance().value = 'http://www.example.com';
-    input.at(0).simulate('change');
-    wrapper.find('.pf-m-primary').simulate('click');
+    const input = wrapper.find('ForwardRef[type="text"]');
+    input.prop('onChange')('http://www.example.com');
+    wrapper.find('Modal').at(0).prop('onPrimaryClick')();
     expect(submit).toBeCalledWith('some-id', 'http://www.example.com');
-  });
-
-  it('when fulfilled, closes dialog', () => {
-    wrapper.setProps({ editClusterResponse: { fulfilled: true, errorMessage: '' } });
-    expect(closeModal).toBeCalled();
-    expect(resetResponse).toBeCalled();
-    expect(onClose).toBeCalled();
   });
 
   it('renders correctly when an erorr occurs', () => {

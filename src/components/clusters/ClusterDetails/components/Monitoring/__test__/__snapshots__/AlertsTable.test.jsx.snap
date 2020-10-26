@@ -163,6 +163,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
       },
     ]
   }
+  selectVariant="checkbox"
   variant="compact"
 >
   <TableHeader />
@@ -355,6 +356,7 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
       },
     ]
   }
+  selectVariant="checkbox"
   variant="compact"
 >
   <TableHeader />

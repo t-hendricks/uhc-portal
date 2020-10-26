@@ -181,6 +181,7 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
           },
         ]
       }
+      selectVariant="checkbox"
       variant="compact"
     >
       <TableHeader />
