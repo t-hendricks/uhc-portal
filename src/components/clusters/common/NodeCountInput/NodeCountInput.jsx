@@ -40,8 +40,8 @@ class NodeCountInput extends React.Component {
   }
 
   getIncludedNodes() {
-    const { isByoc, isMultiAz } = this.props;
-    if (isByoc) {
+    const { isByoc, isMultiAz, isMachinePool } = this.props;
+    if (isByoc || isMachinePool) {
       return 0;
     }
     return isMultiAz ? 9 : 4;
@@ -53,6 +53,7 @@ class NodeCountInput extends React.Component {
       isByoc,
       machineType,
       machineTypesByID,
+      isMachinePool,
     } = this.props;
 
     const infraType = isByoc ? 'byoc' : 'rhInfra';
@@ -61,7 +62,7 @@ class NodeCountInput extends React.Component {
       return 0;
     }
 
-    if (isByoc) {
+    if (isByoc || isMachinePool) {
       const available = get(quota, `${infraType}['${machineTypeResource.resource_name}']['available']`, 0);
       const cost = get(quota, `${infraType}['${machineTypeResource.resource_name}']['cost']`, 0);
       return floor(available / cost);
@@ -159,6 +160,7 @@ NodeCountInput.propTypes = {
     rhInfra: PropTypes.object,
   }).isRequired,
   isByoc: PropTypes.bool,
+  isMachinePool: PropTypes.bool,
   isMultiAz: PropTypes.bool,
   machineType: PropTypes.string,
   machineTypesByID: PropTypes.object,

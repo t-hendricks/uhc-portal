@@ -174,6 +174,7 @@ class EditNodeCountModal extends Component {
                   currentNodeCount={initialValues.nodes_compute || 0}
                   cloudProviderID={cloudProviderID}
                   minNodes={machinePoolId !== 'Default' ? 0 : undefined}
+                  isMachinePool
                 />
               </GridItem>
               <GridItem span={4} />
