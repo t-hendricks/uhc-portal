@@ -170,6 +170,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
           },
         ]
       }
+      selectVariant="checkbox"
       variant="compact"
     >
       <TableHeader />
