@@ -395,7 +395,7 @@ exports[`<Overview /> should render 1`] = `
         <GridItem
           sm={6}
         >
-          <DetailsRight
+          <Connect(DetailsRight)
             cluster={
               Object {
                 "api": Object {

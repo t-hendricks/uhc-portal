@@ -157,10 +157,17 @@ class ClusterDetails extends Component {
   }
 
   componentWillUnmount() {
-    const { resetIdentityProvidersState, closeModal, resetClusterHistory } = this.props;
+    const {
+      resetIdentityProvidersState,
+      closeModal,
+      resetClusterHistory,
+      clearGetMachinePoolsResponse,
+      match,
+    } = this.props;
     resetIdentityProvidersState();
     closeModal();
     resetClusterHistory();
+    clearGetMachinePoolsResponse(match.params.id);
   }
 
   refresh(automatic = true) {
@@ -627,6 +634,7 @@ ClusterDetails.propTypes = {
   clusterLogsViewOptions: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
   getMachinePools: PropTypes.func.isRequired,
+  clearGetMachinePoolsResponse: PropTypes.func.isRequired,
   voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
