@@ -14,6 +14,7 @@ $pf-global--font-path: '~@patternfly/patternfly/assets/fonts/';
 @import '~@redhat-cloud-services/frontend-components/components/TableToolbar.css';
 @import '~@redhat-cloud-services/frontend-components/components/ConditionalFilter.css';
 @import '~facet-lib/dist/index.css';
+@import '~react-datepicker/dist/react-datepicker.css';
 
 body {
   margin: 0;
