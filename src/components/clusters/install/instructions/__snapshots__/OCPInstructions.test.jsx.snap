@@ -973,7 +973,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Red Hat Virutalization 1`] = `
+exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -1028,7 +1028,95 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization 1`] =
               </Title>
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
+                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-default.html"
+                pendoID="/"
+              />
+            </div>
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider
+        className="steps-divider"
+      />
+      <StackItem>
+        <Split>
+          <SplitItem>
+            <Title
+              className="step-number"
+              headingLevel="h1"
+            >
+              3
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <SubscriptionAndSupport />
+          </SplitItem>
+        </Split>
+      </StackItem>
+    </Stack>
+  </Card>
+</Fragment>
+`;
+
+exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1`] = `
+<Fragment>
+  <Card
+    className="ocp-downloads"
+  >
+    <Stack>
+      <StackItem>
+        <Split>
+          <SplitItem>
+            <Title
+              className="step-number"
+              headingLevel="h1"
+            >
+              1
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <DownloadsAndPullSecretSection
+              channel="stable"
+              pendoID="/"
+              token={Object {}}
+            />
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider
+        className="steps-divider"
+      />
+      <StackItem>
+        <Split>
+          <SplitItem>
+            <Title
+              className="step-number"
+              headingLevel="h1"
+            >
+              2
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <div
+              className="instructions-section"
+            >
+              <Title
+                headingLevel="h2"
+              >
+                Follow the instructions to configure your environment and install your cluster
+              </Title>
+              <GetStarted
+                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
+                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-user-infra.html"
                 pendoID="/"
               />
             </div>
