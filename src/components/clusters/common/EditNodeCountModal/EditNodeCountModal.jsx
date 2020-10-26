@@ -104,6 +104,7 @@ class EditNodeCountModal extends Component {
       cloudProviderID,
       editNodeCountResponse,
       machineType,
+      machinePoolId,
     } = this.props;
 
     const error = editNodeCountResponse.error ? (
@@ -172,7 +173,7 @@ class EditNodeCountModal extends Component {
                   isEditingCluster
                   currentNodeCount={initialValues.nodes_compute || 0}
                   cloudProviderID={cloudProviderID}
-                  minNodes={0}
+                  minNodes={machinePoolId !== 'Default' ? 0 : undefined}
                 />
               </GridItem>
               <GridItem span={4} />
