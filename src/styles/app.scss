@@ -1379,7 +1379,10 @@ h3#grant-role-select  {
   margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
   margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
   height: 418px;
-  background: url('./images/bg_teal-containers.svg');
+  background: url('./images/Headers-Red_Hat-ClusterManager-O2.svg');
+  background-position-x: right;
+  background-repeat: no-repeat;
+  background-color: black;
   h1 {
     top: 25%;
     position: relative;
