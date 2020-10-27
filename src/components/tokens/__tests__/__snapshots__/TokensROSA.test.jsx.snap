@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TokensMOA /> Renders loading screen 1`] = `
+exports[`<TokensROSA /> Renders loading screen 1`] = `
 <Fragment>
   <PageHeader>
     <PageHeaderTitle
-      title="Amazon Red Hat OpenShift"
+      title="Red Hat OpenShift Service on AWS"
     />
   </PageHeader>
   <PageSection>
@@ -34,11 +34,11 @@ exports[`<TokensMOA /> Renders loading screen 1`] = `
 </Fragment>
 `;
 
-exports[`<TokensMOA /> Renders token 1`] = `
+exports[`<TokensROSA /> Renders token 1`] = `
 <Fragment>
   <PageHeader>
     <PageHeaderTitle
-      title="Amazon Red Hat OpenShift"
+      title="Red Hat OpenShift Service on AWS"
     />
   </PageHeader>
   <PageSection>
@@ -50,14 +50,14 @@ exports[`<TokensMOA /> Renders token 1`] = `
       </CardTitle>
       <CardBody>
         <p>
-          Amazon Red Hat OpenShift is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
+          Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
         </p>
         <p>
           Download and install the 
           <a
             href="https://github.com/openshift/moactl/releases/latest"
           >
-            moactl
+            rosa
           </a>
            command-line utility and use the Offline Access Token to authenticate against your Red Hat OpenShift Cluster Manager account.
         </p>
@@ -89,7 +89,7 @@ exports[`<TokensMOA /> Renders token 1`] = `
           <a
             href="https://github.com/openshift/moactl/releases/latest"
           >
-            moactl
+            rosa
           </a>
            command-line utility:
         </p>
@@ -97,7 +97,7 @@ exports[`<TokensMOA /> Renders token 1`] = `
           className="token-snippet"
         >
           <pre>
-            moactl login --token="\\
+            rosa login --token="\\
 hello offline access token!\\
 "
           </pre>
@@ -105,7 +105,7 @@ hello offline access token!\\
         <p>
           Run 
           <code>
-            moactl login --help
+            rosa login --help
           </code>
            to get more information.
         </p>

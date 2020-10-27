@@ -18,8 +18,12 @@ function ClusterTypeLabel({ cluster }) {
       tooltip: 'Red Hat Managed Integration',
     },
     moa: {
-      name: 'MOA',
-      tooltip: 'Managed OpenShift on AWS',
+      name: 'ROSA',
+      tooltip: 'Red Hat OpenShift Service on AWS',
+    },
+    rosa: {
+      name: 'ROSA',
+      tooltip: 'Red Hat OpenShift Service on AWS',
     },
     UnknownClusterType: {
       name: 'N/A',

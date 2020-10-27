@@ -38,6 +38,7 @@ class TermsAlert extends Component {
       planID === subscriptionPlans.OSD
       || planID === subscriptionPlans.MOA
       || planID === subscriptionPlans.RHMI
+      || planID === subscriptionPlans.ROSA
     );
   }
 

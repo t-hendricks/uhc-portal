@@ -20,7 +20,7 @@ global.insights = {
 
 const routes = [
   '/',
-  '/token/moa',
+  '/token/rosa',
   '/token',
   '/install/aws/installer-provisioned',
   '/install/aws/user-provisioned',
