@@ -15,7 +15,7 @@ import NodeCountInput from '../../../../common/NodeCountInput';
 import { constants } from '../../CreateOSDFormConstants';
 
 import PopoverHint from '../../../../../common/PopoverHint';
-import { required } from '../../../../../../common/validators';
+import { required, checkMachinePoolLabels } from '../../../../../../common/validators';
 
 function ScaleSection({
   pending,
@@ -81,9 +81,10 @@ function ScaleSection({
               arid-label="Node labels"
               name="node_labels"
               type="text"
-              helpText="Comma separated pairs in key=value format"
+              helpText="Comma separated pairs in key=value format."
               key="node_label"
               disabled={pending}
+              validate={checkMachinePoolLabels}
             />
           </FormGroup>
         </ExpandableSection>
