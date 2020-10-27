@@ -58,6 +58,7 @@ const mapStateToProps = (state) => {
     organization: state.userProfile.organization,
     machineTypes: state.machineTypes,
     cloudProviderID: get(cluster, 'cloud_provider.id', ''),
+    isByoc: cluster?.ccs?.enabled,
   };
 
   // Cluster's default machine pool case
