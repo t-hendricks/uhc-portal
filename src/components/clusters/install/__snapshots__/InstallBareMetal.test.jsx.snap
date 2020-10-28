@@ -25,7 +25,7 @@ exports[`BareMetal install renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift on Bare Metal with user-provisioned infrastructure"
+    title="Install OpenShift Container Platform 4"
   />
   <PageSection>
     <InstructionsBareMetal />

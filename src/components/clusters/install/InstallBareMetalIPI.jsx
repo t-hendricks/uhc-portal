@@ -12,10 +12,10 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-export class InstallBareMetalUPI extends Component {
+export class InstallBareMetalIPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Bare Metal User-Provisioned Infrastructure';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Bare Metal Installer-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -29,20 +29,21 @@ export class InstallBareMetalUPI extends Component {
         { label: 'Create', path: '/create' },
         { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Bare Metal', path: '/install/metal' },
-        { label: 'User-provisioned infrastructure' },
+        { label: 'Installer-provisioned infrastructure' },
       ]}
       />
     );
 
     return (
       <>
-        <PageTitle title={instructionsMapping.bareMetal.upi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.bareMetal.ipi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="bareMetal"
-            {...instructionsMapping.bareMetal.upi}
+            {...instructionsMapping.bareMetal.ipi}
+            isBMIPI
           />
         </PageSection>
       </>
@@ -50,11 +51,11 @@ export class InstallBareMetalUPI extends Component {
   }
 }
 
-InstallBareMetalUPI.propTypes = {
+InstallBareMetalIPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallBareMetalUPI);
+export default connect(mapStateToProps)(InstallBareMetalIPI);

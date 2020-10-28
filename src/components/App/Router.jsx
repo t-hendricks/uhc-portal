@@ -66,10 +66,11 @@ import CloudProviderSelection from '../clusters/CreateOSDPage/CloudProviderSelec
 import withFeatureGate from '../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
+import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 
 const GatedFacetRouter = withFeatureGate(FacetRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
-  InstallBareMetal, ASSISTED_INSTALLER_FEATURE, InstallBMUPI,
+  InstallBareMetal, ASSISTED_INSTALLER_FEATURE, InstallBMUPI, InstallBMIPI,
 );
 
 function Router({ history }) {
@@ -104,6 +105,7 @@ function Router({ history }) {
             <Route path="/install/azure/user-provisioned" component={InstallAzureUPI} />
             <Route path="/install/azure" exact component={InstallAzure} />
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
+            <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
             <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
             <Route path="/install/crc/installer-provisioned" component={InstallCRC} />

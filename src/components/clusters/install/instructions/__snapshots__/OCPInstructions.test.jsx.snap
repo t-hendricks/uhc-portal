@@ -22,6 +22,7 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
               pendoID="/"
               token={Object {}}
             />
@@ -56,6 +57,7 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-account.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -110,6 +112,7 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
               pendoID="/"
               token={Object {}}
             />
@@ -144,6 +147,7 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-user-infra.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -198,6 +202,7 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
               pendoID="/"
               token={Object {}}
             />
@@ -232,6 +237,7 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-default.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -286,6 +292,7 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="preRelease"
+              isBMIPI={false}
               pendoID="/"
               token={Object {}}
             />
@@ -320,6 +327,7 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
                 docURL="https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -352,7 +360,7 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Bare Metal 1`] = `
+exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
 <Fragment>
   <Card
     className="ocp-downloads"
@@ -374,6 +382,97 @@ exports[`Every OCP instruction page should render:  Bare Metal 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
+              pendoID="/"
+              token={Object {}}
+            />
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider
+        className="steps-divider"
+      />
+      <StackItem>
+        <Split>
+          <SplitItem>
+            <Title
+              className="step-number"
+              headingLevel="h1"
+            >
+              2
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <div
+              className="instructions-section"
+            >
+              <Title
+                headingLevel="h2"
+              >
+                Follow the instructions to configure your environment and install your cluster
+              </Title>
+              <GetStarted
+                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
+                isBMIPI={false}
+                pendoID="/"
+              />
+            </div>
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider
+        className="steps-divider"
+      />
+      <StackItem>
+        <Split>
+          <SplitItem>
+            <Title
+              className="step-number"
+              headingLevel="h1"
+            >
+              3
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <SubscriptionAndSupport />
+          </SplitItem>
+        </Split>
+      </StackItem>
+    </Stack>
+  </Card>
+</Fragment>
+`;
+
+exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
+<Fragment>
+  <Card
+    className="ocp-downloads"
+  >
+    <Stack>
+      <StackItem>
+        <Split>
+          <SplitItem>
+            <Title
+              className="step-number"
+              headingLevel="h1"
+            >
+              1
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <DownloadsAndPullSecretSection
+              channel="stable"
+              isBMIPI={false}
               pendoID="/"
               rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal"
               token={Object {}}
@@ -409,6 +508,7 @@ exports[`Every OCP instruction page should render:  Bare Metal 1`] = `
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -463,6 +563,7 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
               pendoID="/"
               token={Object {}}
             />
@@ -497,6 +598,7 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-account.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -551,6 +653,7 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
               pendoID="/"
               rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra"
               token={Object {}}
@@ -586,6 +689,7 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -640,6 +744,7 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="ibmz"
+              isBMIPI={false}
               pendoID="/"
               rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z"
               token={Object {}}
@@ -675,6 +780,7 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
               <GetStarted
                 customizations=""
                 docURL="https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_z/installing-ibm-z.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -729,6 +835,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="ppc64le"
+              isBMIPI={false}
               pendoID="/"
               rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.4/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power"
               token={Object {}}
@@ -764,6 +871,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
               <GetStarted
                 customizations=""
                 docURL="https://docs.openshift.com/container-platform/4.4/installing/installing_ibm_power/installing-ibm-power.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -818,6 +926,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
               pendoID="/"
               token={Object {}}
             />
@@ -852,6 +961,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -906,6 +1016,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
               pendoID="/"
               rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user"
               token={Object {}}
@@ -941,6 +1052,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-user.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -995,6 +1107,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
               pendoID="/"
               token={Object {}}
             />
@@ -1029,6 +1142,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-default.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -1083,6 +1197,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
               pendoID="/"
               token={Object {}}
             />
@@ -1117,6 +1232,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-user-infra.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>
@@ -1171,6 +1287,7 @@ exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="stable"
+              isBMIPI={false}
               pendoID="/"
               rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere"
               token={Object {}}
@@ -1206,6 +1323,7 @@ exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
               <GetStarted
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html"
+                isBMIPI={false}
                 pendoID="/"
               />
             </div>

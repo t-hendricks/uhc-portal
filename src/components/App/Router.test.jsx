@@ -39,6 +39,7 @@ const routes = [
   '/install/azure',
   '/install/metal',
   '/install/metal/user-provisioned',
+  '/install/metal/installer-provisioned',
   '/install/vsphere/user-provisioned',
   '/install/crc/installer-provisioned',
   '/install/ibmz/user-provisioned',

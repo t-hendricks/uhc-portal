@@ -19,41 +19,45 @@ function DownloadsAndPullSecretSection({
   pendoID,
   channel,
   cloudProviderID,
+  isBMIPI,
 }) {
   return (
     <div className="ocp-downloads">
       {children}
       <div key="install" className="instructions-section">
         <Title headingLevel="h2">What you need to get started</Title>
-        <Title headingLevel="h3">OpenShift installer</Title>
-        <p>
+        {!isBMIPI && (
+          <>
+            <Title headingLevel="h3">OpenShift installer</Title>
+            <p>
           Download and extract the install program for your operating system and place the file
           in the directory where you will store the installation configuration files.
           Note: The OpenShift install program is only available for Linux and macOS at this
           time.
-        </p>
+            </p>
 
-        {showPreReleaseDocs && (
-          <p>
+            {showPreReleaseDocs && (
+            <p>
               For pre-release documentation, refer to the
-            {' '}
-            <a href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} rel="noreferrer noopener" target="_blank">
-                latest installer documentation
               {' '}
-              <ExternalLinkAltIcon color="#0066cc" size="sm" />
-            </a>
+              <a href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} rel="noreferrer noopener" target="_blank">
+                latest installer documentation
+                {' '}
+                <ExternalLinkAltIcon color="#0066cc" size="sm" />
+              </a>
               .
-          </p>
+            </p>
+            )}
+            <div>
+              <DownloadAndOSSelection
+                token={token}
+                channel={channel}
+                pendoID={pendoID}
+              />
+            </div>
+            {showPreReleasePageLink && <div><DeveloperPreviewSection /></div>}
+          </>
         )}
-        <div>
-          <DownloadAndOSSelection
-            token={token}
-            channel={channel}
-            pendoID={pendoID}
-          />
-        </div>
-
-        {showPreReleasePageLink && <div><DeveloperPreviewSection /></div>}
       </div>
       <div key="pull-secret" className="instructions-section">
         <Title headingLevel="h3">Pull secret</Title>
@@ -61,7 +65,12 @@ function DownloadsAndPullSecretSection({
       </div>
       <div key="cli" className="instructions-section">
         <Title headingLevel="h3">Command line interface</Title>
-        <CLISection token={token} pendoID={pendoID} channel={channel} />
+        <CLISection
+          token={token}
+          pendoID={pendoID}
+          channel={channel}
+          isBMIPI={isBMIPI}
+        />
       </div>
       {rhcosLearnMoreURL && (
         <div key="rhcos" className="instructions-section">
@@ -87,6 +96,11 @@ DownloadsAndPullSecretSection.propTypes = {
   pendoID: PropTypes.string,
   channel: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
+  isBMIPI: PropTypes.bool,
+};
+
+DownloadsAndPullSecretSection.defaultProps = {
+  isBMIPI: false,
 };
 
 export default DownloadsAndPullSecretSection;

@@ -24,6 +24,7 @@ const OCPInstructions = (props) => {
     docURL,
     customizations = '',
     showPreReleaseDocs,
+    isBMIPI,
   } = props;
   const pendoID = window.location.pathname;
   const cloudProviders = [
@@ -64,6 +65,7 @@ const OCPInstructions = (props) => {
                   cloudProviderID={cloudProviderID}
                   rhcosLearnMoreURL={rhcosLearnMoreURL}
                   channel={channel}
+                  isBMIPI={isBMIPI}
                 />
               </SplitItem>
             </Split>
@@ -82,6 +84,7 @@ const OCPInstructions = (props) => {
                     pendoID={pendoID}
                     cloudProviderID={cloudProviderID}
                     customizations={customizations}
+                    isBMIPI={isBMIPI}
                   />
                 </div>
               </SplitItem>
@@ -112,6 +115,11 @@ OCPInstructions.propTypes = {
   docURL: PropTypes.string.isRequired,
   showPreReleaseDocs: PropTypes.bool,
   customizations: PropTypes.string,
+  isBMIPI: PropTypes.bool,
+};
+
+OCPInstructions.defaultProps = {
+  isBMIPI: false,
 };
 
 export default OCPInstructions;
