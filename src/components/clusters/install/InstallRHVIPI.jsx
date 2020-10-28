@@ -15,7 +15,7 @@ import PageTitle from '../../common/PageTitle';
 class InstallRHVIPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Red Hat Virtualization';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | RHV Installer-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
