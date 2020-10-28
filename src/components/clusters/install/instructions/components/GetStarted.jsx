@@ -11,8 +11,12 @@ const GetStarted = ({
 }) => (
   <>
     <p>
-      The installer will take about 45 minutes to run.
-      {' '}
+      {!isBMIPI && (
+        <>
+          The installer will take about 45 minutes to run.
+          {' '}
+        </>
+      )}
       {
         get(instructionsMapping, `${cloudProviderID}.getStartedAdditional`, null) || ''
       }
