@@ -49,6 +49,7 @@ class TabsRow extends React.Component {
       displayNetworkingTab,
       displayInsightsTab,
       displaySupportTab,
+      displayMachinePoolsTab,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
@@ -56,6 +57,7 @@ class TabsRow extends React.Component {
       networkingTabRef,
       supportTabRef,
       insightsTabRef,
+      machinePoolsTabRef,
       hasIssues,
     } = this.props;
     return [
@@ -114,6 +116,14 @@ class TabsRow extends React.Component {
       },
       {
         key: 6,
+        title: 'Machine pools',
+        contentId: 'machinePoolsTabContent',
+        id: 'machinePools',
+        show: displayMachinePoolsTab,
+        ref: machinePoolsTabRef,
+      },
+      {
+        key: 7,
         title: 'Support',
         contentId: 'supportTabContent',
         id: 'support',
@@ -176,11 +186,13 @@ TabsRow.propTypes = {
   displayInsightsTab: PropTypes.bool,
   displayNetworkingTab: PropTypes.bool,
   displaySupportTab: PropTypes.bool,
+  displayMachinePoolsTab: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
   addOnsTabRef: PropTypes.object.isRequired,
   insightsTabRef: PropTypes.object.isRequired,
+  machinePoolsTabRef: PropTypes.object.isRequired,
   networkingTabRef: PropTypes.object.isRequired,
   supportTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
@@ -194,6 +206,7 @@ TabsRow.defaultProps = {
   displayAccessControlTab: false,
   displayAddOnsTab: false,
   displayNetworkingTab: false,
+  displayMachinePoolsTab: false,
   initTabOpen: '',
 };
 

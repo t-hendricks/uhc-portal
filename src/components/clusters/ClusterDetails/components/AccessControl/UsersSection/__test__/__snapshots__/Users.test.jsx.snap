@@ -190,6 +190,7 @@ exports[`<Users /> with users should render 1`] = `
           },
         ]
       }
+      selectVariant="checkbox"
       variant="compact"
     >
       <TableHeader />

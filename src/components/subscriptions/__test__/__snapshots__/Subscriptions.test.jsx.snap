@@ -247,6 +247,7 @@ exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
     role="grid"
     rowLabeledBy="simple-node"
     rows={Array []}
+    selectVariant="checkbox"
     variant={null}
   >
     <TableHeader />

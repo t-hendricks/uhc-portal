@@ -1,28 +1,19 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import {
-  PageSection,
-} from '@patternfly/react-core';
 
-import Breadcrumbs from '../common/Breadcrumbs';
-import { tollboothActions } from '../../../redux/actions';
-import { scrollToTop } from '../../../common/helpers';
-import instructionsMapping from './instructions/instructionsMapping';
-import OCPInstructions from './instructions/OCPInstructions';
+import { PageSection } from '@patternfly/react-core';
+
 import PageTitle from '../../common/PageTitle';
+import Breadcrumbs from '../common/Breadcrumbs';
+import InstructionsRHV from './instructions/InstructionsRHV';
+import { scrollToTop } from '../../../common/helpers';
 
 class InstallRHV extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Red Hat Virtualization';
-
-    const { dispatch } = this.props;
-    dispatch(tollboothActions.createAuthToken());
   }
 
   render() {
-    const { token } = this.props;
     const breadcrumbs = (
       <Breadcrumbs path={[
         { label: 'Clusters' },
@@ -35,24 +26,13 @@ class InstallRHV extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.rhv.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection>
-          <OCPInstructions
-            token={token}
-            cloudProviderID="rhv"
-            {...instructionsMapping.rhv}
-          />
+          <InstructionsRHV />
         </PageSection>
       </>
     );
   }
 }
 
-InstallRHV.propTypes = {
-  token: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => ({ token: state.tollbooth.token });
-
-export default connect(mapStateToProps)(InstallRHV);
+export default InstallRHV;

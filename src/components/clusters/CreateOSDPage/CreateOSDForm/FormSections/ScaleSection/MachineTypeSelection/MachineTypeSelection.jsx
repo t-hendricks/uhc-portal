@@ -74,7 +74,7 @@ class MachineTypeSelection extends React.Component {
 
   hasQuotaForType(machineTypeID) {
     const {
-      isMultiAz, organization, quota, isBYOC, cloudProviderID, machineTypesByID,
+      isMultiAz, organization, quota, isBYOC, cloudProviderID, machineTypesByID, isMachinePool,
     } = this.props;
     if (!organization.fulfilled) {
       return false;
@@ -87,9 +87,12 @@ class MachineTypeSelection extends React.Component {
     }
     const resourceName = machineType.resource_name;
     const available = quota.clustersQuota[cloudProviderID][infra][zoneType][resourceName] || 0;
-    if (isBYOC) {
-      const nodesAvailable = quota.nodesQuota[cloudProviderID][infra][resourceName] || 0;
-      return available > 0 && (nodesAvailable / machineType.cpu.value) >= 1;
+
+    if (isBYOC || isMachinePool) {
+      const nodesAvailable = quota.nodesQuota[cloudProviderID][infra][resourceName].available || 0;
+      const cost = quota.nodesQuota[cloudProviderID][infra][resourceName].cost || 0;
+
+      return available > 0 && (nodesAvailable / cost) >= 1;
     }
 
     return available > 0;
@@ -187,6 +190,7 @@ MachineTypeSelection.propTypes = {
   machineTypesByID: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   isBYOC: PropTypes.bool.isRequired,
+  isMachinePool: PropTypes.bool.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,

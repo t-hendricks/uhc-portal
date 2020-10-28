@@ -12,7 +12,8 @@ import validators, {
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
   validateARN,
-  checkRouteSelectors,
+  checkLabels,
+  checkMachinePoolLabels,
   awsNumericAccountID,
   validateServiceAccountObject,
 } from '../validators';
@@ -53,6 +54,7 @@ test('User ID does not contain slash', () => {
   expect(checkUserID('.')).toBe('User ID cannot be \'.\'.');
   expect(checkUserID('..')).toBe('User ID cannot be \'..\'.');
   expect(checkUserID('')).toBe('User ID cannot be empty.');
+  expect(checkUserID('cluster-admin')).toBe('User ID cannot be \'cluster-admin\'.');
   expect(checkUserID('aaaa')).toBe(undefined);
 });
 
@@ -409,30 +411,48 @@ test('Field is a valid ARN', () => {
 });
 
 test('Field is a valid key value pair', () => {
-  const validCharError = "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
-  const maxLenKeyError = 'Length of ingress route label selector key name must be less or equal to 63';
-  const maxLenValueError = 'Length of ingress route label selector value must be less or equal to 63';
+  const validKeyError = "A qualified key must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+  const validValueError = "A qualified value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+  const maxLenKeyError = 'Length of label key name must be less or equal to 63';
+  const maxLenValueError = 'Length of label value must be less or equal to 63';
   const longKeyStr = 'ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff=val';
   const longValStr = 'key=ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff';
+  const prefixError = 'Prefix must be a DNS subdomain: a series of DNS labels separated by dots (.)';
 
-  expect(checkRouteSelectors('foo=bar')).toBe(undefined);
-  expect(checkRouteSelectors('fOo=BAr')).toBe(undefined);
-  expect(checkRouteSelectors('foo=3')).toBe(undefined);
-  expect(checkRouteSelectors('foo=bar,foo=3')).toBe(undefined);
-  expect(checkRouteSelectors('fo_o=ba-r')).toBe(undefined);
-  expect(checkRouteSelectors('fo-o=ba_r')).toBe(undefined);
-  expect(checkRouteSelectors('键=值')).toBe(validCharError);
-  expect(checkRouteSelectors('foo:bar')).toBe(validCharError);
-  expect(checkRouteSelectors('foo')).toBe(validCharError);
-  expect(checkRouteSelectors('_foo=bar')).toBe(validCharError);
-  expect(checkRouteSelectors('foo-=bar')).toBe(validCharError);
-  expect(checkRouteSelectors('foo=-bar')).toBe(validCharError);
-  expect(checkRouteSelectors('foo=bar_')).toBe(validCharError);
-  expect(checkRouteSelectors('foo=bar_')).toBe(validCharError);
-  expect(checkRouteSelectors(longValStr)).toBe(maxLenValueError);
-  expect(checkRouteSelectors(longKeyStr)).toBe(maxLenKeyError);
-  expect(checkRouteSelectors(`someprefix/${longKeyStr}`)).toBe(maxLenKeyError);
+  expect(checkLabels('foo=bar')).toBe(undefined);
+  expect(checkLabels('fOo=BAr')).toBe(undefined);
+  expect(checkLabels('foo=3')).toBe(undefined);
+  expect(checkLabels('foo=bar,foo=3')).toBe(undefined);
+  expect(checkLabels('fo_o=ba-r')).toBe(undefined);
+  expect(checkLabels('fo-o=ba_r')).toBe(undefined);
+  expect(checkLabels('键=值')).toBe(validKeyError);
+  expect(checkLabels('foo:bar')).toBe(validKeyError);
+  expect(checkLabels('foo')).toBe(validValueError);
+  expect(checkLabels('_foo=bar')).toBe(validKeyError);
+  expect(checkLabels('foo-=bar')).toBe(validKeyError);
+  expect(checkLabels('foo=-bar')).toBe(validValueError);
+  expect(checkLabels('foo=bar_')).toBe(validValueError);
+  expect(checkLabels('foo=bar_')).toBe(validValueError);
+  expect(checkLabels(longValStr)).toBe(maxLenValueError);
+  expect(checkLabels(longKeyStr)).toBe(maxLenKeyError);
+  expect(checkLabels('prefixError/foo')).toBe(prefixError);
+  expect(checkLabels(`some.prefix/${longKeyStr}`)).toBe(maxLenKeyError);
 });
+
+test('Check machine pool labels', () => {
+  const blacklist = [
+    'machine.openshift.io/cluster-api-machine-role=master',
+    'machine.openshift.io/cluster-api-machine-role=infra',
+    'machine.openshift.io/cluster-api-machine-type=master',
+    'machine.openshift.io/cluster-api-machine-type=infra',
+  ];
+
+  expect(checkMachinePoolLabels(blacklist[0])).toBe(`${blacklist[0]} is not a valid label`);
+  expect(checkMachinePoolLabels(blacklist[1])).toBe(`${blacklist[1]} is not a valid label`);
+  expect(checkMachinePoolLabels(blacklist[2])).toBe(`${blacklist[2]} is not a valid label`);
+  expect(checkMachinePoolLabels(blacklist[3])).toBe(`${blacklist[3]} is not a valid label`);
+});
+
 
 test('awsNumericAccountID', () => {
   const errStr = 'AWS account ID must be a 12 digits positive number.';

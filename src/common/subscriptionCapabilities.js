@@ -7,6 +7,7 @@ import get from 'lodash/get';
  */
 const subscriptionCapabilities = {
   CREATE_MOA_CLUSTERS: 'capability.account.create_moa_clusters',
+  CREATE_ROSA_CLUSTERS: 'capability.account.create_rosa_clusters',
   MANAGE_CLUSTER_ADMIN: 'capability.cluster.manage_cluster_admin',
   ORGANIZATION_REGISTRATIONS_PER_HOUR: 'capability.organization.clusters_registrations_per_hour',
   SUBSCRIBED_OCP: 'capability.cluster.subscribed_ocp',

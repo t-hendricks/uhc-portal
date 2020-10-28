@@ -36,6 +36,8 @@ const CONSOLE_URL_REGEXP = /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 15;
 
+const MAX_MACHINE_POOL_NAME_LENGTH = 15;
+
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 
@@ -44,7 +46,9 @@ const MAX_NODE_COUNT = 180;
 
 const AWS_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
 
-const INGRESS_ROUTE_LABEL_MAX_LEN = 63;
+const LABEL_MAX_LEN = 63;
+
+const PREFIX_MAX_LEN = 253;
 
 const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}$/;
 
@@ -85,19 +89,24 @@ const checkOpenIDIssuer = (value) => {
   return undefined;
 };
 
-// Function to validate that the cluster name field contains a valid DNS label:
-const checkClusterName = (value) => {
+// Function to validate that the object name contains a valid DNS label:
+const checkObjectName = (value, objectName, maxLen) => {
   if (!value) {
-    return 'Cluster name is required.';
+    return `${objectName} name is required.`;
   }
   if (!DNS_LABEL_REGEXP.test(value)) {
-    return `Cluster name '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-name', or 'abc-123'.`;
+    return `${objectName} name '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-name', or 'abc-123'.`;
   }
-  if (value.length > MAX_CLUSTER_NAME_LENGTH) {
-    return `Cluster names may not exceed ${MAX_CLUSTER_NAME_LENGTH} characters.`;
+  if (value.length > maxLen) {
+    return `${objectName} names may not exceed ${MAX_CLUSTER_NAME_LENGTH} characters.`;
   }
   return undefined;
 };
+
+const checkClusterName = value => checkObjectName(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
+
+const checkMachinePoolName = value => checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
+
 
 // Function to validate that the github team is formatted: <org/team>
 const checkGithubTeams = (value) => {
@@ -130,35 +139,50 @@ const checkGithubTeams = (value) => {
   return undefined;
 };
 
-const checkRouteSelectors = (input) => {
-  if (!input) {
-    return undefined;
-  }
 
-  const selectors = input.split(',');
-
+const checkLabels = (input) => {
+  const labels = input.split(',');
 
   let error;
 
-  if (selectors.length) {
-    if (selectors.some((pair) => {
+  if (labels.length) {
+    if (labels.some((pair) => {
       const pairParts = pair.split('=');
       // check if prefix exists and get the label
       const value = pairParts[1];
       const keyParts = pairParts[0].split('/');
-      const key = keyParts.length > 1 ? keyParts[1] : keyParts[0];
+      const hasPrefix = keyParts.length > 1;
+      const key = hasPrefix ? keyParts[1] : keyParts[0];
+      const prefix = hasPrefix ? keyParts[0] : undefined;
 
-      if (value && value.length > INGRESS_ROUTE_LABEL_MAX_LEN) {
-        error = `Length of ingress route label selector value must be less or equal to ${INGRESS_ROUTE_LABEL_MAX_LEN}`;
+      if (value && value.length > LABEL_MAX_LEN) {
+        error = `Length of label value must be less or equal to ${LABEL_MAX_LEN}`;
         return true;
       }
 
-      if (key && key.length > INGRESS_ROUTE_LABEL_MAX_LEN) {
-        error = `Length of ingress route label selector key name must be less or equal to ${INGRESS_ROUTE_LABEL_MAX_LEN}`;
+      if (hasPrefix) {
+        if (!BASE_DOMAIN_REGEXP.test(prefix)) {
+          error = 'Prefix must be a DNS subdomain: a series of DNS labels separated by dots (.)';
+          return true;
+        }
+        if (prefix > PREFIX_MAX_LEN) {
+          error = `Length of key prefix must be less or equal to ${PREFIX_MAX_LEN}`;
+          return true;
+        }
+      }
+
+      if (key && key.length > LABEL_MAX_LEN) {
+        error = `Length of label key name must be less or equal to ${LABEL_MAX_LEN}`;
         return true;
       }
-      if ((!(/^([0-9a-z]+([-_][0-9a-z]+)*)=([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(pair))) {
-        error = "A qualified key or value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+
+      if (!key || (!(/^([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(key))) {
+        error = "A qualified key must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
+        return true;
+      }
+
+      if (!value || (!(/^([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(value))) {
+        error = "A qualified value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
         return true;
       }
 
@@ -167,9 +191,55 @@ const checkRouteSelectors = (input) => {
       return error;
     }
   }
+  return undefined;
+};
+
+
+const checkRouteSelectors = (input) => {
+  if (!input) {
+    return undefined;
+  }
+
+  return checkLabels(input);
+};
+
+
+const checkMachinePoolLabels = (input) => {
+  if (!input) {
+    return undefined;
+  }
+
+  const error = checkLabels(input);
+  if (error) {
+    return error;
+  }
+
+  const blacklist = [
+    'machine.openshift.io/cluster-api-machine-role=master',
+    'machine.openshift.io/cluster-api-machine-role=infra',
+    'machine.openshift.io/cluster-api-machine-type=master',
+    'machine.openshift.io/cluster-api-machine-type=infra',
+  ];
+
+  const labels = input.split(',');
+  if (labels.length) {
+    let blacklistedInput;
+
+    if (labels.some((label) => {
+      if (blacklist.includes(label)) {
+        blacklistedInput = label;
+        return true;
+      }
+      return false;
+    })
+    ) {
+      return `${blacklistedInput} is not a valid label`;
+    }
+  }
 
   return undefined;
 };
+
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value) => {
@@ -217,6 +287,10 @@ const checkUser = (value) => {
   }
   if (value === '..') {
     return 'cannot be \'..\'.';
+  }
+  // User cluster-admin is reserved for internal use with the HTPasswd IdP
+  if (value === 'cluster-admin') {
+    return 'cannot be \'cluster-admin\'.';
   }
   return undefined;
 };
@@ -788,6 +862,9 @@ export {
   awsNumericAccountID,
   validateGCPServiceAccount,
   validateServiceAccountObject,
+  checkMachinePoolName,
+  checkMachinePoolLabels,
+  checkLabels,
 };
 
 export default validators;

@@ -67,6 +67,7 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
           },
         ]
       }
+      selectVariant="checkbox"
       variant="compact"
     >
       <TableHeader />

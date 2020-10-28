@@ -7,12 +7,6 @@ $pf-global--enable-reset: false;
 $pf-global--disable-fontawesome: true;
 $pf-global--font-path: '~@patternfly/patternfly/assets/fonts/';
 
-@import "~@patternfly/patternfly/sass-utilities/_all";
-@import "~@patternfly/patternfly/patternfly.css";
-@import "~@patternfly/patternfly/patternfly-addons.css";
-@import '~@patternfly/patternfly/utilities/Accessibility/accessibility.scss';
-@import '~@patternfly/patternfly/utilities/Display/display.css';
-@import '~@patternfly/patternfly/utilities/Spacing/spacing.css';
 @import '~@redhat-cloud-services/frontend-components/components/Skeleton.css';
 @import '~@redhat-cloud-services/frontend-components/components/Spinner.css';
 @import '~@redhat-cloud-services/frontend-components/components/PageHeader.css';
@@ -20,6 +14,7 @@ $pf-global--font-path: '~@patternfly/patternfly/assets/fonts/';
 @import '~@redhat-cloud-services/frontend-components/components/TableToolbar.css';
 @import '~@redhat-cloud-services/frontend-components/components/ConditionalFilter.css';
 @import '~facet-lib/dist/index.css';
+@import '~react-datepicker/dist/react-datepicker.css';
 
 body {
   margin: 0;

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import ClusterStateIcon from '../../../common/ClusterStateIcon/ClusterStateIcon';
-import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../common/units';
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
-import ClusterNetwork from './ClusterNetwork';
+import ClusterStateIcon from '../../../../common/ClusterStateIcon/ClusterStateIcon';
+import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
+import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
+import ClusterNetwork from '../ClusterNetwork';
 
-function DetailsRight({ cluster }) {
+function DetailsRight({ cluster, totalDesiredComputeNodes }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
     cluster.metrics.memory.total.value, cluster.metrics.memory.total.unit,
   );
@@ -21,6 +21,16 @@ function DetailsRight({ cluster }) {
              && humanizeValueWithUnitGiB(cluster.storage_quota.value);
   const showVCPU = !hasSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+
+  const masterActualNodes = get(cluster, 'metrics.nodes.master', '-');
+  const masterDesiredNodes = get(cluster, 'nodes.master', '-');
+
+  const infraActualNodes = get(cluster, 'metrics.nodes.infra', '-');
+  const infraDesiredNodes = get(cluster, 'nodes.infra', '-');
+
+  const computeActualNodes = get(cluster, 'metrics.nodes.compute', '-');
+  const computeDesiredNodes = totalDesiredComputeNodes || '-';
+
   return (
     <>
       <dl className="cluster-details-item">
@@ -83,10 +93,11 @@ function DetailsRight({ cluster }) {
             </dd>
           </>
         )}
-        {showDesiredNodes && (
+        {showDesiredNodes ? (
           <>
             <dt>
-              Desired nodes
+              Nodes
+              <span className="font-weight-normal"> (actual/desired)</span>
             </dt>
             <dd>
               <dl className="cluster-details-item-list">
@@ -95,7 +106,9 @@ function DetailsRight({ cluster }) {
                   {' '}
                 </dt>
                 <dd>
-                  {get(cluster, 'nodes.master', 'N/A')}
+                  { masterActualNodes !== '-' || masterDesiredNodes !== '-'
+                    ? `${masterActualNodes}/${masterDesiredNodes}`
+                    : 'N/A'}
                 </dd>
               </dl>
               {showInfraNodes && (
@@ -105,7 +118,9 @@ function DetailsRight({ cluster }) {
                     {' '}
                   </dt>
                   <dd>
-                    {get(cluster, 'nodes.infra', 'N/A')}
+                    { infraActualNodes !== '-' || infraDesiredNodes !== '-'
+                      ? `${infraActualNodes}/${infraDesiredNodes}`
+                      : 'N/A'}
                   </dd>
                 </dl>
               )}
@@ -115,47 +130,52 @@ function DetailsRight({ cluster }) {
                   {' '}
                 </dt>
                 <dd>
-                  {get(cluster, 'nodes.compute', 'N/A')}
+                  { computeActualNodes !== '-' || computeDesiredNodes !== '-'
+                    ? `${computeActualNodes}/${computeDesiredNodes}`
+                    : 'N/A'}
                 </dd>
               </dl>
             </dd>
           </>
-        )}
-
-        <dt>
-          {showDesiredNodes ? 'Actual nodes' : 'Nodes'}
-        </dt>
-        <dd>
-          <dl className="cluster-details-item-list">
-            <dt>
-              Master:
-              {' '}
-            </dt>
-            <dd>
-              {get(cluster, 'metrics.nodes.master', 'N/A')}
-            </dd>
-          </dl>
-          {showInfraNodes && (
-            <dl className="cluster-details-item-list">
+        )
+          : (
+            <>
               <dt>
-                Infra:
-                {' '}
+             Nodes
               </dt>
               <dd>
-                {get(cluster, 'metrics.nodes.infra', 'N/A')}
+                <dl className="cluster-details-item-list">
+                  <dt>
+               Master:
+                    {' '}
+                  </dt>
+                  <dd>
+                    {get(cluster, 'metrics.nodes.master', 'N/A')}
+                  </dd>
+                </dl>
+                {showInfraNodes && (
+                <dl className="cluster-details-item-list">
+                  <dt>
+                 Infra:
+                    {' '}
+                  </dt>
+                  <dd>
+                    {get(cluster, 'metrics.nodes.infra', 'N/A')}
+                  </dd>
+                </dl>
+                )}
+                <dl className="cluster-details-item-list">
+                  <dt>
+               Compute:
+                    {' '}
+                  </dt>
+                  <dd>
+                    {get(cluster, 'metrics.nodes.compute', 'N/A')}
+                  </dd>
+                </dl>
               </dd>
-            </dl>
+            </>
           )}
-          <dl className="cluster-details-item-list">
-            <dt>
-              Compute:
-              {' '}
-            </dt>
-            <dd>
-              {get(cluster, 'metrics.nodes.compute', 'N/A')}
-            </dd>
-          </dl>
-        </dd>
         <ClusterNetwork cluster={cluster} />
       </dl>
     </>
@@ -164,6 +184,7 @@ function DetailsRight({ cluster }) {
 
 DetailsRight.propTypes = {
   cluster: PropTypes.any,
+  totalDesiredComputeNodes: PropTypes.number,
 };
 
 export default DetailsRight;

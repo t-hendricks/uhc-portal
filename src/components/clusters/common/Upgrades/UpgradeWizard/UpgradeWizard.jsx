@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Wizard, Title } from '@patternfly/react-core';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 
 import VersionSelectionGrid from './VersionSelectionGrid';
 import UpgradeTimeSelection from './UpgradeTimeSelection';
@@ -14,8 +15,9 @@ class UpgradeWizard extends React.Component {
   }
 
   close = () => {
-    const { closeModal } = this.props;
-    this.setState({ selectedVersion: undefined, upgradeTimestamp: undefined });
+    const { closeModal, clearPostedUpgradeScheduleResponse } = this.props;
+    this.setState({ selectedVersion: undefined, upgradeTimestamp: undefined, scheduleType: 'now' });
+    clearPostedUpgradeScheduleResponse();
     closeModal();
   }
 
@@ -27,13 +29,16 @@ class UpgradeWizard extends React.Component {
 
   onNext = (newStep) => {
     const { clusterID, postSchedule } = this.props;
-    const { selectedVersion } = this.state;
+    const { selectedVersion, scheduleType, upgradeTimestamp } = this.state;
     const MINUTES_IN_MS = 1000 * 60;
     if (newStep.id === 'finish') {
+      const nextRun = scheduleType === 'now'
+        ? new Date(new Date().getTime() + 6 * MINUTES_IN_MS).toISOString()
+        : upgradeTimestamp;
       postSchedule(clusterID, {
         schedule_type: 'manual',
         upgrade_type: 'OSD',
-        next_run: new Date(new Date().getTime() + 6 * MINUTES_IN_MS).toISOString(),
+        next_run: nextRun,
         version: selectedVersion,
       });
     }
@@ -86,17 +91,32 @@ class UpgradeWizard extends React.Component {
         component: (
           <>
             <Title size="lg" headingLevel="h3">Confirmation of your upgrade</Title>
-            <dl className="cluster-details-item">
-              <dt>Version</dt>
-              <dd>
-                {clusterVersion}
-                {' '}
-                &rarr;
-                {' '}
-                {selectedVersion}
-              </dd>
+            <dl className="cluster-upgrade-dl">
+              <div>
+                <dt>Version</dt>
+                <dd>
+                  {clusterVersion}
+                  {' '}
+                  &rarr;
+                  {' '}
+                  {selectedVersion}
+                </dd>
+              </div>
               <dt>Scheduled</dt>
-              <dd>Within the next hour</dd>
+              <dd>
+                {scheduleType === 'now'
+                  ? 'Within the next hour'
+                  : (
+                    <dl>
+                      <dt>UTC</dt>
+                      <dd><DateFormat type="exact" date={new Date(upgradeTimestamp)} /></dd>
+                      <div>
+                        <dt>Local time</dt>
+                        <dd>{new Date(upgradeTimestamp).toString()}</dd>
+                      </div>
+                    </dl>
+                  )}
+              </dd>
             </dl>
           </>
         ),
@@ -137,6 +157,7 @@ UpgradeWizard.propTypes = {
   clusterChannel: PropTypes.string,
   upgradeScheduleRequest: PropTypes.object.isRequired,
   postSchedule: PropTypes.func.isRequired,
+  clearPostedUpgradeScheduleResponse: PropTypes.func.isRequired,
 };
 
 export default UpgradeWizard;

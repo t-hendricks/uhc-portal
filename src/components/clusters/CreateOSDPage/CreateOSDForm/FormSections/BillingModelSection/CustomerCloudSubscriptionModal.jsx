@@ -22,7 +22,6 @@ const contentByCloudProvider = (cloudProviderID) => {
         </TextContent>
         <TextContent>
           <ul>
-            <li>Your AWS account has no services deployed in it. </li>
             <li>
                   Your AWS account has the necessary limits to support the desired
                   cluster size.
@@ -52,9 +51,44 @@ const contentByCloudProvider = (cloudProviderID) => {
       </>
     );
   } return (
-    <TextContent>
-    GCP modal - content TBD
-    </TextContent>
+    <>
+      <TextContent>
+      With this subscription option, the cluster will be provisioned in a Google Cloud account
+      owned by you or your company. This allows you to pay Google Cloud directly for public
+      cloud costs, leveraging your existing relationship.
+      </TextContent>
+      <Title headingLevel="h3" size="lg">Important</Title>
+      <TextContent>
+            In order for the cluster provisioning to succeed, you must ensure the following:
+      </TextContent>
+      <TextContent>
+        <ul>
+          <li>
+            Your Google Cloud account has the necessary resource quotas and limits to support
+            the desired cluster size. See resource requirements.
+          </li>
+          <li>
+            An IAM user called “osdCcsAdmin” exists with the following roles attached:
+            <ul className="unpadded-ul">
+              <li>DNS Administrator</li>
+              <li>Organization Policy Viewer</li>
+              <li>Owner</li>
+              <li>Project IAM Admin</li>
+              <li>Service Management Administrator</li>
+              <li>Service Usage Admin</li>
+              <li>Storage Admin</li>
+            </ul>
+          </li>
+        </ul>
+      </TextContent>
+      <TextContent>
+      It is also recommended that you have at least Production support from GCP.
+      To prevent potential conflicts, we also recommend that you have no other resources
+      provisioned in the project prior to provisioning OpenShift Dedicated.
+      Refer to the documentation for more detail around the requirements for
+      customer cloud subscription.
+      </TextContent>
+    </>
   );
 };
 

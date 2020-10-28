@@ -23,6 +23,15 @@ function DetailsLeft({ cluster, cloudProviders }) {
     cloudProvider = cloudProviderId ? cloudProviderId.toUpperCase() : 'N/A';
   }
 
+  let billingModel;
+  if (get(cluster, 'product.id') === 'moa') {
+    billingModel = 'Through AWS';
+  } else if (get(cluster, 'ccs.enabled')) {
+    billingModel = 'Customer cloud subscription';
+  } else {
+    billingModel = 'Standard';
+  }
+
   return (
     <>
       <dl className="cluster-details-item">
@@ -71,7 +80,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
               Billing model
             </dt>
             <dd>
-              {cluster.byoc ? 'Customer cloud subscription' : 'Standard'}
+              { billingModel }
             </dd>
           </>
         )}

@@ -4,24 +4,35 @@ import { Field } from 'redux-form';
 import {
   FormGroup,
   GridItem,
+  ExpandableSection,
 } from '@patternfly/react-core';
 
 import MachineTypeSelection from './MachineTypeSelection';
+import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
 import NodeCountInput from '../../../../common/NodeCountInput';
 import { constants } from '../../CreateOSDFormConstants';
 
 import PopoverHint from '../../../../../common/PopoverHint';
-import { required } from '../../../../../../common/validators';
+import { required, checkMachinePoolLabels } from '../../../../../../common/validators';
 
 function ScaleSection({
-  pending, isBYOC, isMultiAz, machineType, handleMachineTypesChange, cloudProviderID,
+  pending,
+  isBYOC,
+  isMultiAz,
+  machineType,
+  handleMachineTypesChange,
+  cloudProviderID,
+  showSotrageAndLoadBalancers = true,
+  gridSpan = 9,
+  minNodes,
+  isMachinePool = false,
 }) {
   return (
     <>
       {/* Instance type */}
-      <GridItem span={9}>
+      <GridItem span={gridSpan}>
         <FormGroup
           label="Compute node instance type"
           isRequired
@@ -37,10 +48,11 @@ function ScaleSection({
             isBYOC={isBYOC}
             onChange={handleMachineTypesChange}
             cloudProviderID={cloudProviderID}
+            isMachinePool={isMachinePool}
           />
         </FormGroup>
       </GridItem>
-      <GridItem span={3} />
+      {gridSpan === 9 && <GridItem span={3} />}
       {/* Compute nodes */}
       <GridItem span={4}>
         <Field
@@ -53,12 +65,33 @@ function ScaleSection({
           isDisabled={pending}
           extendedHelpText={constants.computeNodeCountHint}
           cloudProviderID={cloudProviderID}
+          minNodes={minNodes}
+          isMachinePool={isMachinePool}
         />
       </GridItem>
       <GridItem span={8} />
-
+      <GridItem span={4}>
+        <ExpandableSection
+          toggleTextCollapsed="Edit node labels"
+          toggleTextExpanded="Edit node labels"
+        >
+          <FormGroup label="Node labels">
+            <Field
+              component={ReduxVerticalFormGroup}
+              arid-label="Node labels"
+              name="node_labels"
+              type="text"
+              helpText="Comma separated pairs in key=value format."
+              key="node_label"
+              disabled={pending}
+              validate={checkMachinePoolLabels}
+            />
+          </FormGroup>
+        </ExpandableSection>
+      </GridItem>
+      <GridItem span={8} />
       {/* Persistent Storage & Load Balancers */}
-      { !isBYOC && (
+      { showSotrageAndLoadBalancers && !isBYOC && (
         <>
           <GridItem span={4}>
             <FormGroup
@@ -103,9 +136,13 @@ ScaleSection.propTypes = {
   pending: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
+  showSotrageAndLoadBalancers: PropTypes.bool,
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   handleMachineTypesChange: PropTypes.func.isRequired,
+  gridSpan: PropTypes.number,
+  minNodes: PropTypes.number,
+  isMachinePool: PropTypes.bool,
 };
 
 export default ScaleSection;

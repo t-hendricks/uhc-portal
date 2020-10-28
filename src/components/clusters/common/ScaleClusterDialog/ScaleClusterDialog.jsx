@@ -7,7 +7,6 @@ import {
 
 import Modal from '../../../common/Modal/Modal';
 
-import NodeCountInput from '../NodeCountInput';
 import ErrorBox from '../../../common/ErrorBox';
 import PersistentStorageDropdown from '../PersistentStorageDropdown';
 import LoadBalancersDropdown from '../LoadBalancersDropdown';
@@ -23,17 +22,12 @@ class ScaleClusterDialog extends Component {
       getPersistentStorage,
       organization,
       getOrganizationAndQuota,
-      machineTypes,
-      getMachineTypes,
     } = this.props;
     if (!persistentStorageValues.fulfilled && !persistentStorageValues.pending) {
       getPersistentStorage();
     }
     if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
       getLoadBalancers();
-    }
-    if (!machineTypes.fulfilled && !machineTypes.pending) {
-      getMachineTypes();
     }
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
@@ -74,7 +68,6 @@ class ScaleClusterDialog extends Component {
       handleSubmit,
       editClusterResponse,
       resetResponse,
-      isMultiAz,
       consoleURL,
       showLoadBalancerAlert,
       showPersistentStorageAlert,
@@ -84,7 +77,6 @@ class ScaleClusterDialog extends Component {
       initialValues,
       organization,
       isByoc,
-      machineType,
       pristine,
       cloudProviderID,
     } = this.props;
@@ -146,7 +138,7 @@ class ScaleClusterDialog extends Component {
     return isOpen && (
       <Modal
         className={className}
-        title="Scale cluster"
+        title="Edit load balancers and persistent storage"
         onClose={cancelEdit}
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
@@ -159,21 +151,6 @@ class ScaleClusterDialog extends Component {
           {error}
           <Form onSubmit={handleSubmit}>
             <Grid hasGutter>
-              <GridItem span={8}>
-                <Field
-                  component={NodeCountInput}
-                  name="nodes_compute"
-                  label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
-                  isMultiAz={isMultiAz}
-                  isByoc={isByoc}
-                  machineType={machineType}
-                  isDisabled={pending}
-                  isEditingCluster
-                  currentNodeCount={initialValues.nodes_compute || 0}
-                  cloudProviderID={cloudProviderID}
-                />
-              </GridItem>
-              <GridItem span={4} />
               {!!masterResizeAlertThreshold && resizingAlert(masterResizeAlertThreshold)}
               { !isByoc && (
                 <>
@@ -232,7 +209,6 @@ ScaleClusterDialog.propTypes = {
     value: PropTypes.number,
     validationMsg: PropTypes.string,
   }).isRequired,
-  isMultiAz: PropTypes.bool,
   consoleURL: PropTypes.string,
   initialValues: PropTypes.shape({
     id: PropTypes.string,
@@ -249,10 +225,7 @@ ScaleClusterDialog.propTypes = {
   loadBalancerValues: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
-  machineTypes: PropTypes.object.isRequired,
-  getMachineTypes: PropTypes.func.isRequired,
   isByoc: PropTypes.bool,
-  machineType: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
   pristine: PropTypes.bool, // from redux-form
 };
