@@ -29,6 +29,7 @@ import {
 import constants from './RegisterClusterHelper';
 
 import EditSubscriptionFields from '../common/EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
+import Unavailable from '../../common/Unavailable';
 
 class RegisterCluster extends React.Component {
   state = {
@@ -67,7 +68,6 @@ class RegisterCluster extends React.Component {
     resetForm();
   }
 
-
   render() {
     const {
       handleSubmit,
@@ -75,7 +75,7 @@ class RegisterCluster extends React.Component {
       isOpen,
       resetResponse,
       canSubscribeOCP,
-      quotaRequstFullfilled,
+      quotaResponse,
     } = this.props;
 
     const { supportLevel } = this.state;
@@ -96,6 +96,17 @@ class RegisterCluster extends React.Component {
 
     const topText = 'Use this form to register clusters that are not connected to OpenShift Cluster Manager. To edit subscription settings for clusters that are already connected to OpenShift Cluster Manager, the cluster owner or organization administrator should choose the "Edit subscription settings" action for that cluster.';
 
+    if (quotaResponse.error) {
+      return (
+        <PageSection>
+          <Unavailable
+            message="Error retrieving quota"
+            response={quotaResponse}
+          />
+        </PageSection>
+      );
+    }
+
     return (
       <>
         <PageHeader>
@@ -115,7 +126,7 @@ class RegisterCluster extends React.Component {
                   <TextContent id="register-cluster-top-text">
                     <Text component={TextVariants.p}>{topText}</Text>
                   </TextContent>
-                  { quotaRequstFullfilled
+                  { quotaResponse.fulfilled
                     ? (
                       <Form onSubmit={handleSubmit} className="subscription-settings form">
                         <Field
@@ -188,7 +199,7 @@ RegisterCluster.propTypes = {
   change: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
-  quotaRequstFullfilled: PropTypes.bool.isRequired,
+  quotaResponse: PropTypes.object.isRequired,
 };
 
 export default RegisterCluster;
