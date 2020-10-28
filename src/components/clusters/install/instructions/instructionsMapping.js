@@ -107,33 +107,40 @@ const instructionsMapping = {
   bareMetal: {
     cloudProvider: 'Bare Metal',
     customizations: links.INSTALL_BAREMETAL_CUSTOMIZATIONS,
-    title: 'Install OpenShift on Bare Metal with user-provisioned infrastructure',
-    rhcosLearnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
-    rhcosDownloads: [
-      [
-        {
-          buttonText: 'Download RHCOS ISO',
-          name: 'OCP-Download-RHCOS-ISO',
-          archURL: {
-            x86: links.RHCOS_BAREMETAL_ISO_X86,
-            s390x: links.RHCOS_BAREMETAL_ISO_S390X,
-            ppc: links.RHCOS_BAREMETAL_ISO_PPC,
+    ipi: {
+      title: 'Install OpenShift on Bare Metal with installer-provisioned infrastructure',
+      channel: channels.STABLE,
+      docURL: links.INSTALL_BAREMETAL_IPI_GETTING_STARTED,
+    },
+    upi: {
+      title: 'Install OpenShift on Bare Metal with user-provisioned infrastructure',
+      rhcosLearnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
+      rhcosDownloads: [
+        [
+          {
+            buttonText: 'Download RHCOS ISO',
+            name: 'OCP-Download-RHCOS-ISO',
+            archURL: {
+              x86: links.RHCOS_BAREMETAL_ISO_X86,
+              s390x: links.RHCOS_BAREMETAL_ISO_S390X,
+              ppc: links.RHCOS_BAREMETAL_ISO_PPC,
+            },
           },
-        },
-        {
-          buttonText: 'Download RHCOS RAW',
-          name: 'OCP-Download-RHCOS-RAW',
-          archURL: {
-            x86: links.RHCOS_BAREMETAL_RAW_X86,
-            s390x: links.RHCOS_BAREMETAL_RAW_S390X,
-            ppc: links.RHCOS_BAREMETAL_RAW_PPC,
+          {
+            buttonText: 'Download RHCOS RAW',
+            name: 'OCP-Download-RHCOS-RAW',
+            archURL: {
+              x86: links.RHCOS_BAREMETAL_RAW_X86,
+              s390x: links.RHCOS_BAREMETAL_RAW_S390X,
+              ppc: links.RHCOS_BAREMETAL_RAW_PPC,
+            },
           },
-        },
+        ],
       ],
-    ],
-    rhcosAdditionalInstructions: 'Download the installer ISO image and the compressed metal RAW.',
-    channel: channels.STABLE,
-    docURL: links.INSTALL_BAREMETAL_GETTING_STARTED,
+      rhcosAdditionalInstructions: 'Download the installer ISO image and the compressed metal RAW.',
+      channel: channels.STABLE,
+      docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
+    },
   },
   vmware: {
     cloudProvider: 'VMWare vSphere',

@@ -12,10 +12,10 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-class InstallRHVIPI extends Component {
+export class InstallBareMetalIPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | RHV Installer-Provisioned Infrastructure';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Bare Metal Installer-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -28,7 +28,7 @@ class InstallRHVIPI extends Component {
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
         { label: 'OpenShift Container Platform', path: '/install' },
-        { label: 'Red Hat Virtualization', path: '/install/rhv' },
+        { label: 'Bare Metal', path: '/install/metal' },
         { label: 'Installer-provisioned infrastructure' },
       ]}
       />
@@ -36,13 +36,14 @@ class InstallRHVIPI extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.rhv.ipi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.bareMetal.ipi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProviderID="rhv"
-            customizations={instructionsMapping.rhv.customizations}
-            {...instructionsMapping.rhv.ipi}
+            breadcrumbs={breadcrumbs}
+            cloudProviderID="bareMetal"
+            {...instructionsMapping.bareMetal.ipi}
+            isBMIPI
           />
         </PageSection>
       </>
@@ -50,11 +51,11 @@ class InstallRHVIPI extends Component {
   }
 }
 
-InstallRHVIPI.propTypes = {
+InstallBareMetalIPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallRHVIPI);
+export default connect(mapStateToProps)(InstallBareMetalIPI);

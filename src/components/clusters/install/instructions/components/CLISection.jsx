@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
 import { downloadButtonModes } from './DownloadButton';
 
-const CLISection = ({ token, pendoID, channel }) => (
+const CLISection = ({
+  token, pendoID, channel, isBMIPI,
+}) => (
   <>
     <p>
       Download the OpenShift command-line tools and add them to your
@@ -20,6 +22,7 @@ const CLISection = ({ token, pendoID, channel }) => (
       />
     </div>
     <p />
+    {!isBMIPI && (
     <p>
       When the installer is complete you will see the console URL and credentials for
       accessing your new cluster. A
@@ -32,12 +35,18 @@ const CLISection = ({ token, pendoID, channel }) => (
       {' '}
       CLI tools you downloaded.
     </p>
+    )}
   </>
 );
 CLISection.propTypes = {
   pendoID: PropTypes.string,
   token: PropTypes.object.isRequired,
   channel: PropTypes.string.isRequired,
+  isBMIPI: PropTypes.bool,
+};
+
+CLISection.propTypes = {
+  isBMIPI: false,
 };
 
 export default CLISection;

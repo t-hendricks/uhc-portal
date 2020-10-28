@@ -36,13 +36,13 @@ export class InstallBareMetalUPI extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.bareMetal.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.bareMetal.upi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="bareMetal"
-            {...instructionsMapping.bareMetal}
+            {...instructionsMapping.bareMetal.upi}
           />
         </PageSection>
       </>
