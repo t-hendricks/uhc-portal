@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
     canSubscribeOCP,
     registerClusterResponse: state.clusters.createdCluster,
     isOpen: shouldShowModal(state, 'register-cluster-error'),
-    quotaRequstFullfilled: get(state, 'userProfile.organization.fulfilled', false),
+    quotaResponse: get(state, 'userProfile.organization', null),
     initialValues: {
       cluster_id: '',
       display_name: '',

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // This component shows to the user the OpenID refresh token, so that
-// they can copy it and use it with the moactl command line utitility.
+// they can copy it and use it with the rosa command line utitility.
 
 import React from 'react';
 import { Skeleton, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
@@ -28,10 +28,10 @@ import {
 } from '@patternfly/react-core';
 import Tokens, { splitToken, snippetBox, tokenBox } from './Tokens';
 
-// The <TokensMOA> component inherits from the <Tokens> component. This may
+// The <TokensROSA> component inherits from the <Tokens> component. This may
 // cause breakage if ever we change the <Tokens> component heavily, but in the
 // meantime prevents unnecessary code duplication with minimal effort.
-class TokensMOA extends Tokens {
+class TokensROSA extends Tokens {
   componentDidMount() {
     const { blockedByTerms = false } = this.props;
     if (!blockedByTerms) {
@@ -46,7 +46,7 @@ class TokensMOA extends Tokens {
 
     const title = (
       <PageHeader>
-        <PageHeaderTitle title="Amazon Red Hat OpenShift" />
+        <PageHeaderTitle title="Red Hat OpenShift Service on AWS" />
       </PageHeader>
     );
 
@@ -73,13 +73,13 @@ class TokensMOA extends Tokens {
 
     // Prepare the snippet of code that shows how to use the offline access token:
     const offlineAccessTokenSnippet = [
-      'moactl login --token="\\',
+      'rosa login --token="\\',
       splitToken(offlineAccessToken),
       '"',
     ];
 
-    const moactlURL = 'https://github.com/openshift/moactl/releases/latest';
-    const moactlLink = <a href={moactlURL}>moactl</a>;
+    const rosaURL = 'https://github.com/openshift/moactl/releases/latest';
+    const rosaLink = <a href={rosaURL}>rosa</a>;
 
     /* eslint-disable react/jsx-one-expression-per-line */
     return (
@@ -92,21 +92,21 @@ class TokensMOA extends Tokens {
             </CardTitle>
             <CardBody>
               <p>
-                Amazon Red Hat OpenShift is a managed service that makes it easy for you to
-                use OpenShift on AWS without needing to install, operate or upgrade your own
+                Red Hat OpenShift Service on AWS is a managed service that makes it easy for you
+                to use OpenShift on AWS without needing to install, operate or upgrade your own
                 OpenShift (Kubernetes) cluster.
               </p>
               <p>
-                Download and install the {moactlLink} command-line utility and use the Offline
+                Download and install the {rosaLink} command-line utility and use the Offline
                 Access Token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </p>
               {tokenBox(offlineAccessToken)}
               <p>
-                Copy it, and then use it to authenticate with the {moactlLink} command-line utility:
+                Copy it, and then use it to authenticate with the {rosaLink} command-line utility:
               </p>
               {snippetBox(offlineAccessTokenSnippet)}
               <p>
-                Run <code>moactl login --help</code> to get more information.
+                Run <code>rosa login --help</code> to get more information.
               </p>
             </CardBody>
           </Card>
@@ -117,4 +117,4 @@ class TokensMOA extends Tokens {
   }
 }
 
-export default TokensMOA;
+export default TokensROSA;

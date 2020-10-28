@@ -431,7 +431,12 @@ exports[`<DetailsRight /> should render 1`] = `
       GiB
     </dd>
     <dt>
-      Desired nodes
+      Nodes
+      <span
+        className="font-weight-normal"
+      >
+         (actual/desired)
+      </span>
     </dt>
     <dd>
       <dl
@@ -442,7 +447,7 @@ exports[`<DetailsRight /> should render 1`] = `
            
         </dt>
         <dd>
-          3
+          3/3
         </dd>
       </dl>
       <dl
@@ -453,34 +458,7 @@ exports[`<DetailsRight /> should render 1`] = `
            
         </dt>
         <dd>
-          2
-        </dd>
-      </dl>
-    </dd>
-    <dt>
-      Actual nodes
-    </dt>
-    <dd>
-      <dl
-        className="cluster-details-item-list"
-      >
-        <dt>
-          Master:
-           
-        </dt>
-        <dd>
-          3
-        </dd>
-      </dl>
-      <dl
-        className="cluster-details-item-list"
-      >
-        <dt>
-          Compute:
-           
-        </dt>
-        <dd>
-          4
+          4/2
         </dd>
       </dl>
     </dd>

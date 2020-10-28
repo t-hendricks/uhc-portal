@@ -32,6 +32,7 @@ import {
   fetchGroups,
   voteOnRuleInsights,
 } from './components/Insights/InsightsActions';
+import { getMachinePools, clearGetMachinePoolsResponse } from './components/MachinePools/MachinePoolsActions';
 import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
 import canSubscribeOCPSelector
   from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
@@ -111,6 +112,8 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   getClusterAddOns,
   getGrants,
   getClusterRouters,
+  getMachinePools,
+  clearGetMachinePoolsResponse,
   setOpenedTab: tabKey => push(`${getBaseName()}${location.pathname}#${tabKey}`),
   getClusterHistory: (
     externalClusterID, queryObj,

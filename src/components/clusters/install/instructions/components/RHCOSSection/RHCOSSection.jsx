@@ -48,7 +48,7 @@ const RHCOSSection = (props) => {
         }
         if (url && !archURL) {
           return (
-            <StackItem key="download">
+            <StackItem key={name}>
               <DownloadButton
                 token={token}
                 url={url}

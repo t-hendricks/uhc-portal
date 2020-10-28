@@ -41,9 +41,9 @@ describe('isAvailable', () => {
     expect(available).toBe(true);
   });
 
-  it('should determine that add-on is available for MOA cluster', () => {
+  it('should determine that add-on is available for ROSA cluster', () => {
     const available = isAvailable(mockAddOns.items[0], {
-      product: { id: 'moa' },
+      product: { id: 'rosa' },
     }, { fulfilled: true }, quotaSummary);
     expect(available).toBe(true);
   });
@@ -84,9 +84,9 @@ describe('hasQuota', () => {
     expect(quota).toBe(true);
   });
 
-  it('should determine that the org does not need quota for the add-on on a MOA cluster', () => {
+  it('should determine that the org does not need quota for the add-on on a ROSA cluster', () => {
     const quota = hasQuota(mockAddOns.items[0], {
-      product: { id: 'moa' },
+      product: { id: 'rosa' },
     }, { fulfilled: true }, quotaSummary);
     expect(quota).toBe(true);
   });

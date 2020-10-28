@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { closeModal } from '../../../../common/Modal/ModalActions';
-import { postSchedule } from '../clusterUpgradeActions';
+import { postSchedule, clearPostedUpgradeScheduleResponse } from '../clusterUpgradeActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 import UpgradeWizard from './UpgradeWizard';
 
@@ -12,12 +12,13 @@ const mapStateToProps = state => ({
   clusterChannel: state.modal.data.clusterChannel,
   clusterName: state.modal.data.clusterName,
   clusterVersion: state.modal.data.clusterVersion,
-  upgradeScheduleRequest: state.clusterUpgrades.upgradeSchedule,
+  upgradeScheduleRequest: state.clusterUpgrades.postedUpgradeSchedule,
 });
 
 const mapDispatchToProps = {
   closeModal,
   postSchedule,
+  clearPostedUpgradeScheduleResponse,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpgradeWizard);

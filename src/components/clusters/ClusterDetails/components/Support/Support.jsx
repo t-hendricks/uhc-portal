@@ -8,7 +8,21 @@ import NotificationContactsCard from './components/NotificationContactsSection';
 import SupportCasesCard from './components/SupportCasesSection';
 import AddNotificationContactSection from './components/AddNotificationContactButton';
 
+const clusterOwnerMsg = (clusterCreator) => {
+  const clusterOwner = clusterCreator?.email;
+  return clusterOwner ? (
+    /* eslint-disable react/jsx-one-expression-per-line */
+    <>
+      <br />
+      The cluster owner will always receive notifications, at email address
+      &lt;{clusterOwner}&gt;
+      , in addition to this list of notification contacts.
+    </>
+  ) : null;
+};
+
 const Support = ({
+  clusterCreator,
   subscriptionID,
   canEdit,
   openModal,
@@ -27,9 +41,10 @@ const Support = ({
   <>
     <Card>
       <CardTitle>
-        <Title headingLevel="h2" size="lg" className="card-title">Notification contacts</Title>
+        <Title headingLevel="h2" size="lg" className="space-bottom-md card-title">Notification contacts</Title>
         <div className="support-subtitle">
-        Add users to be contacted in the event of notifications about this cluster.
+          Add users to be contacted in the event of notifications about this cluster.
+          {clusterOwnerMsg(clusterCreator)}
         </div>
       </CardTitle>
       <CardBody>
@@ -70,6 +85,7 @@ const Support = ({
 Support.propTypes = {
   subscriptionID: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  clusterCreator: PropTypes.object.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   deleteContactResponse: PropTypes.object.isRequired,
   addContactResponse: PropTypes.object.isRequired,

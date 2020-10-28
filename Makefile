@@ -68,7 +68,7 @@ node_modules:
 
 .PHONY: app
 app: node_modules
-	yarn build --no-progress --mode=production
+	yarn build --mode=production
 
 # Marking git clones .PHONY so we can git pull even if they already exist.
 
@@ -93,7 +93,7 @@ insights-proxy-check: run/insights-proxy
 .PHONY: insights-proxy-setup
 insights-proxy-setup: run/insights-proxy
 	sudo bash -x run/insights-proxy/scripts/patch-etc-hosts.sh
-	bash run/insights-proxy/scripts/update.sh
+	run/podman-or-docker.sh pull quay.io/redhat-sd-devel/insights-proxy:pull-33
 
 .PHONY: run/verification-tests
 run/verification-tests:

@@ -1,9 +1,19 @@
+import get from 'lodash/get';
+
 import { identityProvidersConstants } from './IdentityProvidersConstants';
+import { IDPformValues } from './IdentityProvidersHelper';
 import { clusterService } from '../../../../../services';
 
 const getClusterIdentityProviders = clusterID => dispatch => dispatch({
   type: identityProvidersConstants.GET_CLUSTER_IDENTITY_PROVIDERS,
-  payload: clusterService.getIdentityProviders(clusterID),
+  payload: clusterService
+    .getIdentityProviders(clusterID)
+    .then((response) => {
+      // HTPasswd IdP is meant for internal use and is not exposed to users
+      response.data.items = get(response.data, 'items', [])
+        .filter(i => i.type !== IDPformValues.HTPASSWD);
+      return response;
+    }),
 });
 
 const createClusterIdentityProvider = (clusterID, params) => dispatch => dispatch({

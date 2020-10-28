@@ -61,7 +61,10 @@ const processNodeQuota = (nodesQuota, item, resources) => {
       if (cloudProvider === provider || cloudProvider === 'any') {
         Object.keys(quota[provider]).forEach((category) => {
           if (infraCategory === category || infraCategory === 'any') {
-            quota[provider][category][machineType] = available;
+            quota[provider][category][machineType] = {
+              available,
+              cost: resource.cost,
+            };
           }
         });
       }
@@ -158,14 +161,14 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
       nodesQuota: {
         // AWS
         aws: {
-          byoc: {},
-          rhInfra: {},
+          byoc: { available: 0 },
+          rhInfra: { available: 0 },
         },
 
         // GCP
         gcp: {
-          byoc: {},
-          rhInfra: {},
+          byoc: { available: 0 },
+          rhInfra: { available: 0 },
         },
       },
 

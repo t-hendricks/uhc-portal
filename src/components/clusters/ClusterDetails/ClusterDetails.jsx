@@ -30,10 +30,13 @@ import Monitoring from './components/Monitoring';
 import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
+import { supportsFreeAddOns } from './components/AddOns/AddOnsHelper';
+import MachinePools from './components/MachinePools';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 
 import ScaleClusterDialog from '../common/ScaleClusterDialog';
+import EditNodeCountModal from '../common/EditNodeCountModal';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
@@ -41,6 +44,7 @@ import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDi
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 import UpgradeWizard from '../common/Upgrades/UpgradeWizard';
+import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
@@ -69,6 +73,7 @@ class ClusterDetails extends Component {
     this.addOnsTabRef = React.createRef();
     this.networkingTabRef = React.createRef();
     this.supportTabRef = React.createRef();
+    this.machinePoolsTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -153,10 +158,17 @@ class ClusterDetails extends Component {
   }
 
   componentWillUnmount() {
-    const { resetIdentityProvidersState, closeModal, resetClusterHistory } = this.props;
+    const {
+      resetIdentityProvidersState,
+      closeModal,
+      resetClusterHistory,
+      clearGetMachinePoolsResponse,
+      match,
+    } = this.props;
     resetIdentityProvidersState();
     closeModal();
     resetClusterHistory();
+    clearGetMachinePoolsResponse(match.params.id);
   }
 
   refresh(automatic = true) {
@@ -174,6 +186,7 @@ class ClusterDetails extends Component {
       getClusterHistory,
       getClusterRouters,
       organization,
+      getMachinePools,
     } = this.props;
     const clusterID = match.params.id;
     if (isValid(clusterID)) {
@@ -198,6 +211,7 @@ class ClusterDetails extends Component {
         if (get(clusterDetails, 'cluster.managed')) {
           getClusterAddOns(clusterID);
           this.refreshIDP();
+          getMachinePools(clusterID);
         }
         // don't fetch grants if cloud provider is known to be gcp
         if (get(clusterDetails, 'cluster.cloud_provider.id') !== 'gcp') {
@@ -272,7 +286,7 @@ class ClusterDetails extends Component {
     }
 
     // If there are compatible free add-ons available we can show the tab regardless of quota
-    if (['osd', 'moa'].includes(cluster.product.id) && get(addOns, 'freeAddOns.length', 0)) {
+    if (supportsFreeAddOns(cluster) && get(addOns, 'freeAddOns.length', 0)) {
       return true;
     }
 
@@ -385,6 +399,7 @@ class ClusterDetails extends Component {
       || cluster.state === clusterStates.UPDATING)
       && cluster.managed && !!get(cluster, 'api.url')
       && get(cluster, 'cloud_provider.id') === 'aws';
+    const displayMachinePoolsTab = cluster.managed && cluster.state === clusterStates.READY;
     const clusterName = getClusterName(cluster);
     const displaySupportTab = supportTabFeature
       && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING);
@@ -413,6 +428,7 @@ class ClusterDetails extends Component {
             displayNetworkingTab={displayNetworkingTab}
             displayInsightsTab={displayInsightsTab}
             displaySupportTab={displaySupportTab}
+            displayMachinePoolsTab={displayMachinePoolsTab}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
@@ -420,6 +436,7 @@ class ClusterDetails extends Component {
             networkingTabRef={this.networkingTabRef}
             insightsTabRef={this.insightsTabRef}
             supportTabRef={this.supportTabRef}
+            machinePoolsTabRef={this.machinePoolsTabRef}
             hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
             initTabOpen={initTabOpen}
             setOpenedTab={setOpenedTab}
@@ -524,7 +541,18 @@ class ClusterDetails extends Component {
             <Support />
           </TabContent>
         }
+        {displayMachinePoolsTab && (
+        <TabContent
+          eventKey={6}
+          id="machinePoolsContent"
+          ref={this.machinePoolsTabRef}
+          aria-label="Machine pools"
+        >
+          <MachinePools cluster={cluster} />
+        </TabContent>
+        )}
         <ScaleClusterDialog onClose={onDialogClose} />
+        <EditNodeCountModal onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
         <EditConsoleURLDialog onClose={onDialogClose} />
@@ -549,6 +577,7 @@ class ClusterDetails extends Component {
         <AddNotificationContactDialog />
         <AddGrantModal clusterID={cluster.id} />
         <UpgradeWizard />
+        <CancelUpgradeModal />
       </PageSection>
     );
   }
@@ -605,6 +634,8 @@ ClusterDetails.propTypes = {
   getGrants: PropTypes.func.isRequired,
   clusterLogsViewOptions: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
+  getMachinePools: PropTypes.func.isRequired,
+  clearGetMachinePoolsResponse: PropTypes.func.isRequired,
   voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,

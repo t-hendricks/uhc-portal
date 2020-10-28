@@ -98,8 +98,9 @@ const links = {
   RHCOS_IBMZ_DASD: `${MIROR_RHCOS_LATEST_S390X}/rhcos-dasd.s390x.raw.gz`,
   RHCOS_IBMZ_FCP: `${MIROR_RHCOS_LATEST_S390X}/rhcos-metal.s390x.raw.gz`,
 
-  INSTALL_RHV_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-default.html`,
+  INSTALL_RHVIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-default.html`,
   INSTALL_RHV_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-customizations.html`,
+  INSTALL_RHVUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-user-infra.html`,
 
   INSTALL_PRE_RELEASE_BUG_LIST_45: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.5.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',

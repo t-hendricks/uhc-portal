@@ -148,6 +148,10 @@ limitations under the License.
   font-size: 14px;
 }
 
+.font-weight-normal{
+  font-weight: normal;
+}
+
 .cluster-details-item-list {
   margin-bottom: 0px;
   dt {
@@ -638,6 +642,9 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .ccsModal {
   ul {
   padding-bottom: 15px;
+  &.unpadded-ul {
+      padding-bottom: 0px;
+    }
   }
   h3 {
   padding-top: 10px;
@@ -1297,7 +1304,7 @@ h3#grant-role-select  {
   .pf-c-card {
     margin: 24px 0;
   }
-  .step-number {
+  .pf-c-title.pf-m-2xl.step-number {
     font-weight: 400;
     font-size: 36px;
     border-radius: 50%;
@@ -1376,7 +1383,10 @@ h3#grant-role-select  {
   margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
   margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
   height: 418px;
-  background: url('./images/bg_teal-containers.svg');
+  background: url('./images/Headers-Red_Hat-ClusterManager-O2.svg');
+  background-position-x: right;
+  background-repeat: no-repeat;
+  background-color: black;
   h1 {
     top: 25%;
     position: relative;
@@ -1593,4 +1603,43 @@ div.pf-c-alert div.pf-c-alert__icon {
 .support-subtitle {
   font-size: var(--pf-global--FontSize--md);
   font-weight: var(--pf-global--FontWeight--light);
+}
+
+.upgrade-schedule-datepicker {
+  .react-datepicker-wrapper, .react-datepicker__tab-loop, .pf-c-select {
+    display: inline-block;
+  }
+  .react-datepicker-wrapper, .pf-c-select {
+    width: 20%;
+  }
+  .pf-c-select {
+    margin-left: var(--pf-global--spacer--xl);
+    > ul {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .pf-c-select__toggle-icon {
+      position: absolute;
+      right: 34px;
+    }
+  }
+}
+
+.cluster-upgrade-dl {
+  padding: 20px 0;
+  dt {
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 14px;
+  }
+  dd {
+    margin-bottom: 24px;
+    font-size: 16px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  dd > dl > dd {
+    margin-bottom: var(--pf-global--spacer--sm);
+  }
 }

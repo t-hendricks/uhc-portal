@@ -24,7 +24,7 @@ describe('<RegisterCluster />', () => {
       getOrganizationAndQuota={getOrganizationAndQuota}
       registerClusterResponse={registerClusterResponse}
       canSubscribeOCP
-      quotaRequstFullfilled
+      quotaResponse={{ fulfilled: true }}
     />);
 
     expect(wrapper).toMatchSnapshot();
@@ -38,7 +38,7 @@ describe('<RegisterCluster />', () => {
       getOrganizationAndQuota={getOrganizationAndQuota}
       registerClusterResponse={registerClusterResponse}
       canSubscribeOCP={false}
-      quotaRequstFullfilled
+      quotaResponse={{ fulfilled: true }}
     />);
 
     expect(wrapper).toMatchSnapshot();

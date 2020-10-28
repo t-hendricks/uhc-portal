@@ -3,6 +3,10 @@
 exports[`<MonitoringList /> should render 1`] = `
 <DataList
   aria-label="monitoring-table"
+  className=""
+  isCompact={false}
+  selectedDataListItemId=""
+  wrapModifier={null}
 >
   <MonitoringListItem
     expanded={Array []}

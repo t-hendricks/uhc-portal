@@ -72,7 +72,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                   aria-labelledby="pf-modal-part-1"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
-                  data-ouia-component-id="0"
+                  data-ouia-component-id="OUIA-Generated-Modal-small-1"
                   data-ouia-component-type="PF4/ModalContent"
                   data-ouia-safe="true"
                   id="pf-modal-part-0"
@@ -82,7 +82,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                     aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
-                    data-ouia-component-id="1"
+                    data-ouia-component-id="OUIA-Generated-Button-plain-1"
                     data-ouia-component-type="PF4/Button"
                     data-ouia-safe="true"
                     type="button"
@@ -98,7 +98,6 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                     >
                       <path
                         d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                        transform=""
                       />
                     </svg>
                   </button>
@@ -146,7 +145,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                     <button
                       aria-disabled="false"
                       class="pf-c-button pf-m-primary"
-                      data-ouia-component-id="2"
+                      data-ouia-component-id="OUIA-Generated-Button-primary-1"
                       data-ouia-component-type="PF4/Button"
                       data-ouia-safe="true"
                       type="submit"
@@ -156,7 +155,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                     <button
                       aria-disabled="false"
                       class="pf-c-button pf-m-secondary"
-                      data-ouia-component-id="3"
+                      data-ouia-component-id="OUIA-Generated-Button-secondary-1"
                       data-ouia-component-type="PF4/Button"
                       data-ouia-safe="true"
                       type="button"
@@ -199,6 +198,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
           isOpen={true}
           labelId="pf-modal-part-1"
           onClose={[Function]}
+          ouiaId="OUIA-Generated-Modal-small-1"
           ouiaSafe={true}
           showClose={true}
           title="Edit display name"
@@ -226,7 +226,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                     aria-label=""
                     aria-labelledby="pf-modal-part-1"
                     className={null}
-                    data-ouia-component-id={0}
+                    data-ouia-component-id="OUIA-Generated-Modal-small-1"
                     data-ouia-component-type="PF4/ModalContent"
                     data-ouia-safe={true}
                     id="pf-modal-part-0"
@@ -239,7 +239,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                       aria-labelledby="pf-modal-part-1"
                       aria-modal="true"
                       className="pf-c-modal-box pf-m-sm"
-                      data-ouia-component-id={0}
+                      data-ouia-component-id="OUIA-Generated-Modal-small-1"
                       data-ouia-component-type="PF4/ModalContent"
                       data-ouia-safe={true}
                       id="pf-modal-part-0"
@@ -259,11 +259,12 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                             aria-disabled={false}
                             aria-label="Close"
                             className="pf-c-button pf-m-plain"
-                            data-ouia-component-id={1}
+                            data-ouia-component-id="OUIA-Generated-Button-plain-1"
                             data-ouia-component-type="PF4/Button"
                             data-ouia-safe={true}
                             disabled={false}
                             onClick={[Function]}
+                            role={null}
                             type="button"
                           >
                             <TimesIcon
@@ -287,7 +288,6 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                               >
                                 <path
                                   d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                  transform=""
                                 />
                               </svg>
                             </TimesIcon>
@@ -400,11 +400,12 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                               aria-disabled={false}
                               aria-label={null}
                               className="pf-c-button pf-m-primary"
-                              data-ouia-component-id={2}
+                              data-ouia-component-id="OUIA-Generated-Button-primary-1"
                               data-ouia-component-type="PF4/Button"
                               data-ouia-safe={true}
                               disabled={false}
                               onClick={[Function]}
+                              role={null}
                               type="submit"
                             >
                               Edit
@@ -419,11 +420,12 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
                               aria-disabled={false}
                               aria-label={null}
                               className="pf-c-button pf-m-secondary"
-                              data-ouia-component-id={3}
+                              data-ouia-component-id="OUIA-Generated-Button-secondary-1"
                               data-ouia-component-type="PF4/Button"
                               data-ouia-safe={true}
                               disabled={false}
                               onClick={[Function]}
+                              role={null}
                               type="button"
                             >
                               Cancel
@@ -516,7 +518,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                   aria-labelledby="pf-modal-part-5"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
-                  data-ouia-component-id="28"
+                  data-ouia-component-id="OUIA-Generated-Modal-small-5"
                   data-ouia-component-type="PF4/ModalContent"
                   data-ouia-safe="true"
                   id="pf-modal-part-4"
@@ -526,7 +528,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                     aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
-                    data-ouia-component-id="29"
+                    data-ouia-component-id="OUIA-Generated-Button-plain-5"
                     data-ouia-component-type="PF4/Button"
                     data-ouia-safe="true"
                     type="button"
@@ -542,7 +544,6 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                     >
                       <path
                         d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                        transform=""
                       />
                     </svg>
                   </button>
@@ -563,7 +564,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                     <div
                       aria-label="Danger Alert"
                       class="pf-c-alert pf-m-inline pf-m-danger error-box"
-                      data-ouia-component-id="30"
+                      data-ouia-component-id="OUIA-Generated-Alert-danger-1"
                       data-ouia-component-type="PF4/Alert"
                       data-ouia-safe="true"
                     >
@@ -581,7 +582,6 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                         >
                           <path
                             d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
-                            transform=""
                           />
                         </svg>
                       </div>
@@ -637,7 +637,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                     <button
                       aria-disabled="false"
                       class="pf-c-button pf-m-primary"
-                      data-ouia-component-id="31"
+                      data-ouia-component-id="OUIA-Generated-Button-primary-5"
                       data-ouia-component-type="PF4/Button"
                       data-ouia-safe="true"
                       type="submit"
@@ -647,7 +647,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                     <button
                       aria-disabled="false"
                       class="pf-c-button pf-m-secondary"
-                      data-ouia-component-id="32"
+                      data-ouia-component-id="OUIA-Generated-Button-secondary-5"
                       data-ouia-component-type="PF4/Button"
                       data-ouia-safe="true"
                       type="button"
@@ -690,6 +690,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
           isOpen={true}
           labelId="pf-modal-part-5"
           onClose={[Function]}
+          ouiaId="OUIA-Generated-Modal-small-5"
           ouiaSafe={true}
           showClose={true}
           title="Edit display name"
@@ -717,7 +718,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                     aria-label=""
                     aria-labelledby="pf-modal-part-5"
                     className={null}
-                    data-ouia-component-id={28}
+                    data-ouia-component-id="OUIA-Generated-Modal-small-5"
                     data-ouia-component-type="PF4/ModalContent"
                     data-ouia-safe={true}
                     id="pf-modal-part-4"
@@ -730,7 +731,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                       aria-labelledby="pf-modal-part-5"
                       aria-modal="true"
                       className="pf-c-modal-box pf-m-sm"
-                      data-ouia-component-id={28}
+                      data-ouia-component-id="OUIA-Generated-Modal-small-5"
                       data-ouia-component-type="PF4/ModalContent"
                       data-ouia-safe={true}
                       id="pf-modal-part-4"
@@ -750,11 +751,12 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                             aria-disabled={false}
                             aria-label="Close"
                             className="pf-c-button pf-m-plain"
-                            data-ouia-component-id={29}
+                            data-ouia-component-id="OUIA-Generated-Button-plain-5"
                             data-ouia-component-type="PF4/Button"
                             data-ouia-safe={true}
                             disabled={false}
                             onClick={[Function]}
+                            role={null}
                             type="button"
                           >
                             <TimesIcon
@@ -778,7 +780,6 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                               >
                                 <path
                                   d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                  transform=""
                                 />
                               </svg>
                             </TimesIcon>
@@ -828,7 +829,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                               <div
                                 aria-label="Danger Alert"
                                 className="pf-c-alert pf-m-inline pf-m-danger error-box"
-                                data-ouia-component-id={30}
+                                data-ouia-component-id="OUIA-Generated-Alert-danger-1"
                                 data-ouia-component-type="PF4/Alert"
                                 data-ouia-safe={true}
                               >
@@ -859,7 +860,6 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                                       >
                                         <path
                                           d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
-                                          transform=""
                                         />
                                       </svg>
                                     </ExclamationCircleIcon>
@@ -970,11 +970,12 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                               aria-disabled={false}
                               aria-label={null}
                               className="pf-c-button pf-m-primary"
-                              data-ouia-component-id={31}
+                              data-ouia-component-id="OUIA-Generated-Button-primary-5"
                               data-ouia-component-type="PF4/Button"
                               data-ouia-safe={true}
                               disabled={false}
                               onClick={[Function]}
+                              role={null}
                               type="submit"
                             >
                               Edit
@@ -989,11 +990,12 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
                               aria-disabled={false}
                               aria-label={null}
                               className="pf-c-button pf-m-secondary"
-                              data-ouia-component-id={32}
+                              data-ouia-component-id="OUIA-Generated-Button-secondary-5"
                               data-ouia-component-type="PF4/Button"
                               data-ouia-safe={true}
                               disabled={false}
                               onClick={[Function]}
+                              role={null}
                               type="button"
                             >
                               Cancel
@@ -1071,7 +1073,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when pending 1`] = `
                   aria-labelledby="pf-modal-part-6"
                   aria-modal="true"
                   class="pf-c-modal-box pending-modal pf-m-sm"
-                  data-ouia-component-id="37"
+                  data-ouia-component-id="OUIA-Generated-Modal-small-6"
                   data-ouia-component-type="PF4/ModalContent"
                   data-ouia-safe="true"
                   id="pf-modal-part-5"
@@ -1081,7 +1083,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when pending 1`] = `
                     aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
-                    data-ouia-component-id="38"
+                    data-ouia-component-id="OUIA-Generated-Button-plain-6"
                     data-ouia-component-type="PF4/Button"
                     data-ouia-safe="true"
                     type="button"
@@ -1097,7 +1099,6 @@ exports[`<EditDisplayNameDialog /> renders correctly when pending 1`] = `
                     >
                       <path
                         d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                        transform=""
                       />
                     </svg>
                   </button>
@@ -1144,6 +1145,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when pending 1`] = `
           isOpen={true}
           labelId="pf-modal-part-6"
           onClose={[Function]}
+          ouiaId="OUIA-Generated-Modal-small-6"
           ouiaSafe={true}
           showClose={true}
           title="Edit display name"
@@ -1171,7 +1173,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when pending 1`] = `
                     aria-label=""
                     aria-labelledby="pf-modal-part-6"
                     className="pending-modal"
-                    data-ouia-component-id={37}
+                    data-ouia-component-id="OUIA-Generated-Modal-small-6"
                     data-ouia-component-type="PF4/ModalContent"
                     data-ouia-safe={true}
                     id="pf-modal-part-5"
@@ -1184,7 +1186,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when pending 1`] = `
                       aria-labelledby="pf-modal-part-6"
                       aria-modal="true"
                       className="pf-c-modal-box pending-modal pf-m-sm"
-                      data-ouia-component-id={37}
+                      data-ouia-component-id="OUIA-Generated-Modal-small-6"
                       data-ouia-component-type="PF4/ModalContent"
                       data-ouia-safe={true}
                       id="pf-modal-part-5"
@@ -1204,11 +1206,12 @@ exports[`<EditDisplayNameDialog /> renders correctly when pending 1`] = `
                             aria-disabled={false}
                             aria-label="Close"
                             className="pf-c-button pf-m-plain"
-                            data-ouia-component-id={38}
+                            data-ouia-component-id="OUIA-Generated-Button-plain-6"
                             data-ouia-component-type="PF4/Button"
                             data-ouia-safe={true}
                             disabled={false}
                             onClick={[Function]}
+                            role={null}
                             type="button"
                           >
                             <TimesIcon
@@ -1232,7 +1235,6 @@ exports[`<EditDisplayNameDialog /> renders correctly when pending 1`] = `
                               >
                                 <path
                                   d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                  transform=""
                                 />
                               </svg>
                             </TimesIcon>
