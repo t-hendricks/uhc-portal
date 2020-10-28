@@ -89,8 +89,15 @@ class MachineTypeSelection extends React.Component {
     const available = quota.clustersQuota[cloudProviderID][infra][zoneType][resourceName] || 0;
 
     if (isBYOC || isMachinePool) {
-      const nodesAvailable = quota.nodesQuota[cloudProviderID][infra][resourceName].available || 0;
-      const cost = quota.nodesQuota[cloudProviderID][infra][resourceName].cost || 0;
+      const nodeQuota = quota.nodesQuota[cloudProviderID][infra][resourceName] || {};
+      const nodesAvailable = nodeQuota?.available || 0;
+      const { cost } = nodeQuota;
+      if (cost === 0 && available > 0) {
+        return true;
+      }
+      if (cost === undefined) {
+        return false;
+      }
 
       return available > 0 && (nodesAvailable / cost) >= 1;
     }
