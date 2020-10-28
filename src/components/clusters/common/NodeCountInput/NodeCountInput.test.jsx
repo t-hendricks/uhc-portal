@@ -22,7 +22,7 @@ describe('<NodeCountInput>', () => {
       const wrapper = shallow(<NodeCountInput {...baseProps} />);
       expect(wrapper).toMatchSnapshot();
       const formSelectProps = wrapper.find('FormSelect').props();
-      expect(formSelectProps.isDisabled).toBeTruthy();
+      expect(formSelectProps.isDisabled).toBeFalsy();
     });
 
     it('renders with some quota', () => {
@@ -89,7 +89,7 @@ describe('<NodeCountInput>', () => {
       const wrapper = shallow(<NodeCountInput {...baseProps} isMultiAz />);
       expect(wrapper).toMatchSnapshot();
       const formSelectProps = wrapper.find('FormSelect').props();
-      expect(formSelectProps.isDisabled).toBeTruthy();
+      expect(formSelectProps.isDisabled).toBeFalsy();
     });
 
     it('renders with some quota', () => {
