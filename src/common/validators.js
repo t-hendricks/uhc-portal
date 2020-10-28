@@ -300,9 +300,10 @@ const checkUserID = (value) => {
   return invalid ? `User ID ${invalid}` : undefined;
 };
 
-const checkUserName = (value) => {
-  const invalid = checkUser(value);
-  return invalid ? `Username ${invalid}` : undefined;
+const RHIT_PRINCIPAL_PATTERN = /^[^"$<> ^|%\\(),=;~:/*\r\n]*$/;
+const validateRHITUsername = (username) => {
+  const valid = RHIT_PRINCIPAL_PATTERN.test(username);
+  return valid ? undefined : 'Username includes illegal symbols';
 };
 
 // Function to validate the cluster console URL
@@ -807,7 +808,7 @@ const validators = {
   checkClusterUUID,
   checkClusterDisplayName,
   checkUserID,
-  checkUserName,
+  validateRHITUsername,
   checkBaseDNSDomain,
   cidr,
   awsMachineCidr,
@@ -848,7 +849,7 @@ export {
   checkIdentityProviderName,
   checkClusterDisplayName,
   checkUserID,
-  checkUserName,
+  validateRHITUsername,
   checkClusterConsoleURL,
   checkOpenIDIssuer,
   checkGithubTeams,

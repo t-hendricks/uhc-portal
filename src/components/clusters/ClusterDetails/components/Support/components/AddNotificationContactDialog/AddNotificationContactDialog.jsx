@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Form, FormGroup, TextInput } from '@patternfly/react-core';
 
 import Modal from '../../../../../../common/Modal/Modal';
-import { checkUserName } from '../../../../../../../common/validators';
+import { validateRHITUsername } from '../../../../../../../common/validators';
 
 const initialState = {
   userName: '',
@@ -52,7 +52,7 @@ class AddNotificationContactDialog extends Component {
     }
 
     const validationMessage = userNameTouched
-      ? checkUserName(userName)
+      ? validateRHITUsername(userName)
       : addContactResponse.errorMessage;
 
     const handleSubmit = () => {

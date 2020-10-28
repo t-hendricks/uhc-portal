@@ -4,6 +4,7 @@ import validators, {
   checkClusterUUID,
   checkClusterConsoleURL,
   checkUserID,
+  validateRHITUsername,
   checkOpenIDIssuer,
   checkGithubTeams,
   checkDisconnectedConsoleURL,
@@ -56,6 +57,31 @@ test('User ID does not contain slash', () => {
   expect(checkUserID('')).toBe('User ID cannot be empty.');
   expect(checkUserID('cluster-admin')).toBe('User ID cannot be \'cluster-admin\'.');
   expect(checkUserID('aaaa')).toBe(undefined);
+});
+
+test('Username conforms RHIT pattern', () => {
+  expect(validateRHITUsername('aaaa')).toBe(undefined);
+  expect(validateRHITUsername('aaaaa$bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa"bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa<bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa>bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa^bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa|bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa%bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa\\bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa(bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa)bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa,bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa=bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa;bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa~bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa:bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa/bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa*bbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa\rbbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('aaaaa\nbbbbb')).toBe('Username includes illegal symbols');
+  expect(validateRHITUsername('$$$')).toBe('Username includes illegal symbols');
 });
 
 test('Field is a valid DNS domain', () => {
