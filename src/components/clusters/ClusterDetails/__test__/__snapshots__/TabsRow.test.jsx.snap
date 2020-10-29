@@ -19,6 +19,7 @@ exports[`<TabsRow /> should hide monitoring and add-ons tabs if needed (eg. when
   <Tab
     eventKey={0}
     key="0"
+    ouiaId="Overview"
     tabContentId="overviewTabContent"
     title={
       <TabTitleText>
@@ -48,6 +49,7 @@ exports[`<TabsRow /> should render 1`] = `
   <Tab
     eventKey={0}
     key="0"
+    ouiaId="Overview"
     tabContentId="overviewTabContent"
     title={
       <TabTitleText>
@@ -58,6 +60,13 @@ exports[`<TabsRow /> should render 1`] = `
   <Tab
     eventKey={1}
     key="1"
+    ouiaId={
+      <React.Fragment>
+        <TabTitleText>
+          Monitoring
+        </TabTitleText>
+      </React.Fragment>
+    }
     tabContentId="monitoringTabContent"
     title={
       <TabTitleText>
@@ -91,6 +100,7 @@ exports[`<TabsRow /> should render monitoring tab with issues icon 1`] = `
   <Tab
     eventKey={0}
     key="0"
+    ouiaId="Overview"
     tabContentId="overviewTabContent"
     title={
       <TabTitleText>
@@ -101,6 +111,22 @@ exports[`<TabsRow /> should render monitoring tab with issues icon 1`] = `
   <Tab
     eventKey={1}
     key="1"
+    ouiaId={
+      <React.Fragment>
+        <TabTitleText>
+          Monitoring
+        </TabTitleText>
+        <TabTitleIcon
+          id="monitoring-issues-icon"
+        >
+          <ExclamationCircleIcon
+            color="#c9190b"
+            noVerticalAlign={false}
+            size="sm"
+          />
+        </TabTitleIcon>
+      </React.Fragment>
+    }
     tabContentId="monitoringTabContent"
     title={
       <TabTitleText>

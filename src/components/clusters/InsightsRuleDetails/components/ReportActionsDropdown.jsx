@@ -51,7 +51,7 @@ class ReportActionsDropdown extends React.Component {
     }];
 
     const menuItems = actions.map(
-      action => (<DropdownItem {...action}>{action.title}</DropdownItem>),
+      action => (<DropdownItem ouiaId={action.title} {...action}>{action.title}</DropdownItem>),
     );
     return (
       <Dropdown
@@ -60,6 +60,7 @@ class ReportActionsDropdown extends React.Component {
         dropdownItems={menuItems}
         toggle={toggleComponent}
         isOpen={isOpen}
+        ouiaId="actions"
       />
     );
   }

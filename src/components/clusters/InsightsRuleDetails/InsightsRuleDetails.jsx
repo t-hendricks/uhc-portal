@@ -276,6 +276,7 @@ class InsightsRuleDetails extends Component {
                   id="reasonTabContent"
                   ref={this.reasonTabRef}
                   aria-label="Reason"
+                  ouiaId="reasonTabContent"
                 >
                   <Card>
                     <CardBody>
@@ -300,6 +301,7 @@ class InsightsRuleDetails extends Component {
                   id="resolutionTabContent"
                   ref={this.resolutionTabRef}
                   aria-label="How to remediate"
+                  ouiaId="resolutionTabContent"
                   hidden
                 >
                   <Card>
