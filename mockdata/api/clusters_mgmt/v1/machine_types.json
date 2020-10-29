@@ -8,6 +8,7 @@
       "kind": "MachineType",
       "name": "c5.2xlarge - Compute Optimized",
       "category": "compute_optimized",
+      "size": "medium",
       "id": "c5.2xlarge",
       "href": "/api/clusters_mgmt/v1/machine_types/c5.2xlarge",
       "memory": {
@@ -28,6 +29,7 @@
       "kind": "MachineType",
       "name": "c5.4xlarge - Compute Optimized",
       "category": "compute_optimized",
+      "size": "large",
       "id": "c5.4xlarge",
       "href": "/api/clusters_mgmt/v1/machine_types/c5.4xlarge",
       "memory": {
@@ -48,6 +50,7 @@
       "kind": "MachineType",
       "name": "custom-16-131072-ext - Memory Optimized",
       "category": "memory_optimized",
+      "size": "large",
       "id": "custom-16-131072-ext",
       "href": "/api/clusters_mgmt/v1/machine_types/custom-16-131072-ext",
       "memory": {
@@ -68,6 +71,7 @@
       "kind": "MachineType",
       "name": "custom-16-32768 - Compute Optimized",
       "category": "compute_optimized",
+      "size": "large",
       "id": "custom-16-32768",
       "href": "/api/clusters_mgmt/v1/machine_types/custom-16-32768",
       "memory": {
@@ -88,6 +92,7 @@
       "kind": "MachineType",
       "name": "custom-16-65536 - General Purpose",
       "category": "general_purpose",
+      "size": "large",
       "id": "custom-16-65536",
       "href": "/api/clusters_mgmt/v1/machine_types/custom-16-65536",
       "memory": {
@@ -108,6 +113,7 @@
       "kind": "MachineType",
       "name": "custom-4-16384 - General Purpose",
       "category": "general_purpose",
+      "size": "small",
       "id": "custom-4-16384",
       "href": "/api/clusters_mgmt/v1/machine_types/custom-4-16384",
       "memory": {
@@ -128,6 +134,7 @@
       "kind": "MachineType",
       "name": "custom-4-32768-ext - Memory Optimized",
       "category": "memory_optimized",
+      "size": "small",
       "id": "custom-4-32768-ext",
       "href": "/api/clusters_mgmt/v1/machine_types/custom-4-32768-ext",
       "memory": {
@@ -148,6 +155,7 @@
       "kind": "MachineType",
       "name": "custom-8-16384 - Compute Optimized",
       "category": "compute_optimized",
+      "size": "medium",
       "id": "custom-8-16384",
       "href": "/api/clusters_mgmt/v1/machine_types/custom-8-16384",
       "memory": {
@@ -168,6 +176,7 @@
       "kind": "MachineType",
       "name": "custom-8-32768 - General Purpose",
       "category": "general_purpose",
+      "size": "medium",
       "id": "custom-8-32768",
       "href": "/api/clusters_mgmt/v1/machine_types/custom-8-32768",
       "memory": {
@@ -188,6 +197,7 @@
       "kind": "MachineType",
       "name": "custom-8-65536-ext - Memory Optimized",
       "category": "memory_optimized",
+      "size": "medium",
       "id": "custom-8-65536-ext",
       "href": "/api/clusters_mgmt/v1/machine_types/custom-8-65536-ext",
       "memory": {
@@ -208,6 +218,7 @@
       "kind": "MachineType",
       "name": "m5.2xlarge - General Purpose",
       "category": "general_purpose",
+      "size": "medium",
       "id": "m5.2xlarge",
       "href": "/api/clusters_mgmt/v1/machine_types/m5.2xlarge",
       "memory": {
@@ -228,6 +239,7 @@
       "kind": "MachineType",
       "name": "m5.4xlarge - General Purpose",
       "category": "general_purpose",
+      "size": "large",
       "id": "m5.4xlarge",
       "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
       "memory": {
@@ -248,6 +260,7 @@
       "kind": "MachineType",
       "name": "m5.xlarge - General Purpose",
       "category": "general_purpose",
+      "size": "small",
       "id": "m5.xlarge",
       "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
       "memory": {
@@ -268,6 +281,7 @@
       "kind": "MachineType",
       "name": "r5.2xlarge - Memory Optimized",
       "category": "memory_optimized",
+      "size": "medium",
       "id": "r5.2xlarge",
       "href": "/api/clusters_mgmt/v1/machine_types/r5.2xlarge",
       "memory": {
@@ -288,6 +302,7 @@
       "kind": "MachineType",
       "name": "r5.4xlarge - Memory Optimized",
       "category": "memory_optimized",
+      "size": "large",
       "id": "r5.4xlarge",
       "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
       "memory": {
@@ -308,6 +323,7 @@
       "kind": "MachineType",
       "name": "r5.xlarge - Memory Optimized",
       "category": "memory_optimized",
+      "size": "small",
       "id": "r5.xlarge",
       "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
       "memory": {
