@@ -86,23 +86,26 @@ class MachineTypeSelection extends React.Component {
       return false;
     }
     const resourceName = machineType.resource_name;
-    const available = quota.clustersQuota[cloudProviderID][infra][zoneType][resourceName] || 0;
+    const clustersAvailable = quota.clustersQuota[cloudProviderID][infra][zoneType][resourceName]
+                              || 0;
 
     if (isBYOC || isMachinePool) {
       const nodeQuota = quota.nodesQuota[cloudProviderID][infra][resourceName] || {};
       const nodesAvailable = nodeQuota?.available || 0;
       const { cost } = nodeQuota;
-      if (cost === 0 && available > 0) {
+
+      if (cost === 0 && clustersAvailable > 0) {
         return true;
       }
       if (cost === undefined) {
         return false;
       }
 
-      return available > 0 && (nodesAvailable / cost) >= 1;
+      const hasNodeQuota = (nodesAvailable / cost) >= 1;
+      return isMachinePool ? hasNodeQuota : clustersAvailable > 0 && hasNodeQuota;
     }
 
-    return available > 0;
+    return clustersAvailable > 0;
   }
 
   render() {
@@ -120,6 +123,7 @@ class MachineTypeSelection extends React.Component {
       input,
       meta: { error, touched },
       cloudProviderID,
+      isMachinePool,
       ...extraProps
     } = this.props;
 
@@ -152,7 +156,7 @@ class MachineTypeSelection extends React.Component {
           id={`machineTypeRadio.${machineType.id}`}
           value={machineType.id}
           isDisabled={!hasQuota}
-          tooltip={!hasQuota && 'You do not have quota for this node type. Contact sales to purchase additional quota.'}
+          tooltip={!hasQuota && !isMachinePool && !isBYOC && 'You do not have quota for this node type. Contact sales to purchase additional quota.'}
           isSelected={hasQuota && input.value === machineType.id}
           titleText={labelTitle}
           secondaryText={name}
