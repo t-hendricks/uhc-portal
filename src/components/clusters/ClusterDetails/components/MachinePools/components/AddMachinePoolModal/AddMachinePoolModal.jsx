@@ -87,7 +87,7 @@ class AddMachinePoolModal extends Component {
             <Grid>
               <ScaleSection
                 pending={isPending}
-                isBYOC={cluster?.ccs?.enabled}
+                isBYOC={!!cluster?.ccs?.enabled}
                 isMultiAz={cluster.multi_az}
                 machineType={machineType}
                 handleMachineTypesChange={this.handleMachineTypesChange}
