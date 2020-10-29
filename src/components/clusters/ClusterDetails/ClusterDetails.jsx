@@ -451,6 +451,7 @@ class ClusterDetails extends Component {
           id="overviewTabContent"
           ref={this.overviewTabRef}
           aria-label="Overview"
+          ouiaId="overviewTabContent"
         >
           <Overview
             cluster={cluster}
@@ -515,6 +516,7 @@ class ClusterDetails extends Component {
             id="insightsTabContent"
             ref={this.insightsTabRef}
             aria-label="Insights"
+            ouiaId="insightsTabContent"
             hidden
           >
             <Insights

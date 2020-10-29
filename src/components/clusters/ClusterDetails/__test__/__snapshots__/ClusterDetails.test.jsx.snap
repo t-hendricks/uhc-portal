@@ -234,6 +234,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
     aria-label="Overview"
     eventKey={0}
     id="overviewTabContent"
+    ouiaId="overviewTabContent"
   >
     <Overview
       cloudProviders={
@@ -897,6 +898,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
     eventKey={5}
     hidden={true}
     id="insightsTabContent"
+    ouiaId="insightsTabContent"
   >
     <Insights
       cluster={
