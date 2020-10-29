@@ -31,9 +31,9 @@ export const setReportDetails = report => ({
   payload: report,
 });
 
-const fetchSingleClusterInsights = async (clusterId, orgId) => {
+const fetchSingleClusterInsights = async (clusterId, isOSD) => {
   try {
-    const insightsResponse = await insightsService.getClusterInsights(clusterId, orgId);
+    const insightsResponse = await insightsService.getClusterInsights(clusterId, isOSD);
     return {
       insightsData: get(insightsResponse, 'data.report', {}),
       clusterId,
@@ -47,9 +47,9 @@ const fetchSingleClusterInsights = async (clusterId, orgId) => {
   }
 };
 
-export const fetchClusterInsights = clusterID => dispatch => dispatch({
+export const fetchClusterInsights = (clusterID, isOSD) => dispatch => dispatch({
   type: GET_CLUSTER_INSIGHTS,
-  payload: fetchSingleClusterInsights(clusterID),
+  payload: fetchSingleClusterInsights(clusterID, isOSD),
 });
 
 // clusterId is id of the cluster
@@ -144,7 +144,7 @@ export const fetchGroups = () => dispatch => dispatch({
   payload: insightsService.getGroupsInsights(),
 });
 
-export const fetchReportDetails = (clusterId, ruleId) => dispatch => dispatch({
+export const fetchReportDetails = (clusterId, ruleId, isOSD) => dispatch => dispatch({
   type: GET_REPORT_DETAILS,
-  payload: insightsService.getReportDetails(clusterId, ruleId),
+  payload: insightsService.getReportDetails(clusterId, ruleId, isOSD),
 });
