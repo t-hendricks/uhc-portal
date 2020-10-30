@@ -87,21 +87,6 @@ limitations under the License.
   height: 33px;
 }
 
-.coc-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  .list-view-pf {
-    flex: 1;
-    overflow-y: auto;
-  }
-}
-
-.icon-space-right{
-  margin-right: 5px;
-}
-
 .metrics-chart {
   text-align: center;
 }
@@ -117,10 +102,6 @@ limitations under the License.
 .cluster-list .table-grid-pf-row > div {
   white-space: normal;
   word-wrap: break-word;
-}
-
-.cluster-list .table-grid-pf-row .cluster-list-table-owner-name {
-  word-wrap: normal;
 }
 
 #cluster-list-toolbar {
@@ -159,13 +140,6 @@ limitations under the License.
     display: inline;
     font-weight: bold;
     color: var(--pf-global--Color--400);
-
-    &.ellipsize {
-      display: block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
   }
   dd {
     display: inline;
@@ -253,26 +227,6 @@ limitations under the License.
   margin-left: 16px;
 }
 
-.displayNameForm {
-  .control-label, .name-label {
-    text-transform: uppercase;
-    color: var(--pf-global--Color--400);
-    font-weight: normal;
-  }
-  .form-group {
-    margin-top: 5%;
-  }
-}
-
-.create-cluster-hint {
-  margin-bottom: 15px;
-}
-
-.cluster-install-step {
-  margin-top: 40px;
-  font-weight: 600;
-}
-
 .footer {
   margin-bottom: 40px;
 }
@@ -345,38 +299,12 @@ limitations under the License.
   font-weight: 700;
 }
 
-#deleteClusterBtn{
-  width: 59px;
-}
-
-#deleteClusterBtn .spinner {
-  top: 3px;
-  left: 1px;
-  width: 14px;
-  height: 14px;
-}
-
 .pf-c-modal-box .error-box {
   margin-bottom: 15px;
 }
 
 .pf-c-modal-box__footer {
   display: block;
-}
-
-.noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
-}
-
-/* This is a browser default that does not get applied while embedded */
-ol.embedded-indent {
-  padding-inline-start: 40px;
 }
 
 .form-loading-spinner {
@@ -428,34 +356,11 @@ p.notfound {
   margin-top: 20px;
 }
 
-#idp-advanced-options {
-  padding-top: 10px;
-}
-
 .ca-textarea {
   min-height: 442px;
   min-width: 497px;
   font-family: var(--pf-global--FontFamily--monospace);
   white-space: pre;
-}
-
-// make <Button> look like <a href= ...>
-.buttonHref {
-  background: none !important;
-  color: var(--pf-c-content--a--Color);
-  border: none;
-  padding: 0 !important;
-  font: inherit;
-  font-weight: var(--pf-global--link--FontWeight);
-  cursor: pointer;
-  box-shadow: none;
-  border-bottom: none;
-  text-decoration: var(--pf-c-content--a--TextDecoration);
-}
-
-.buttonHref:hover {
-  --pf-c-content--a--Color: var(--pf-c-content--a--hover--Color);
-  --pf-c-content--a--TextDecoration: var(--pf-c-content--a--hover--TextDecoration);
 }
 
 .pf-c-button.cluster-update-link {
@@ -565,58 +470,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   padding-left: 22px;
 }
 
-.infra-logo {
-  height: 54px;
-  margin: 10px;
-}
-
-.infra-logo-vsphere {
-  height: 54px;
-  margin: 10px;
-}
-
-.infra-logo-google-cloud {
-  height: 54px;
-  margin-left: -10px;
-  margin-right: -10px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-.infra-logo-crc {
-  height: 54px;
-}
-
-.infra-logo-osp, .infra-logo-rhv {
-  height: 54px;
-  margin: 10px;
-}
-
-.infra-card.infra-card-cloud-provider.ibm-or-power {
-  img {
-    height: 95px;
-    position: relative;
-  }
-  .card-badge-container{
-    position: relative;
-    z-index: 2;
-    top: 11px;
-  }
-  h5{
-    position: relative;
-    bottom: 11px;
-  }
-}
-
-.infra-card.infra-card-cloud-provider h5.infra-crc-title {
-  margin-bottom: var(--pf-global--spacer--xs);
-}
-
-.infra-crc-icon-text {
-  display: block;
-  font-size: var(--pf-global--FontSize--xs);
-}
-
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -665,11 +518,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-.ocp-infra-gallery {
-  --pf-l-gallery--GridTemplateColumns: repeat(auto-fill, minmax(380px, 1fr));
-}
-
-.ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .aws-ipi-upi-infra-card {
+.ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .ipi-upi-infra-card {
   flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
   margin: 20px;
 }
@@ -710,15 +559,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 }
 
-.infra-card-cloud-provider {
-  height: 212px;
-}
-
-.pf-c-card__body.gcp-card-body {
-  padding-left: 0 !important; /* important is hacking around a difference in insights chrome in dev vs prod */
-  padding-right: 0 !important; /* important is hacking around a difference in insights chrome in dev vs prod */
-}
-
 .pf-c-card__body.infra-card-placeholder {
   flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
   margin: 20px;
@@ -726,21 +566,16 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   display: flex;
 }
 
-.aws-ipi-upi-infra-logo {
-  height: 160px;
-  margin: 10px;
-  transform: scale(2);
-}
-
-.aws-ipi-upi-infra-card {
-  align-items: initial;
+.ipi-upi-infra-card {
   .create-cluster-favorite-btn-container {
     height: 22px;
   }
-}
-
-.pf-c-button.popover-hover {
-  padding-left: 0;
+  .ipi-upi-infra-logo {
+    color: var(--pf-global--primary-color--100);
+    font-size: 6em; // --pf-global--icon--FontSize—xl (x2)
+    height: 160px;
+    margin: 10px;
+  }
 }
 
 .pf-c-popover__content {
@@ -756,26 +591,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   pointer-events: all !important;
 }
 
-.azure-dev-preview-card, .gcp-dev-preview-card, .crc-dev-preview-card, .osp-dev-preview-card, .ibmz-dev-preview-card {
-  color: var(--pf-global--link--Color);
-}
-
-.openshift-logo-page-title {
-  float: left;
-  width: 100px;
-  border-right-color: var(--pf-global--BorderColor--200);
-  border-right-width: var(--pf-global--BorderWidth--sm);
-  border-right-style: solid;
-  padding-right: 10px;
-  margin-right: 10px;
-}
-
 .ocm-page-title {
   padding-top: 2px;
-}
-
-.ocm-page.with-helptext {
-  padding-bottom: 6px;
 }
 
 .bottom-alert {
@@ -814,10 +631,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-top: -20px;
 }
 
-.infra-card-cloud-provider .card-badge-container {
-  margin-top: -15px;
-}
-
 .create-cluster-logo {
   height: 75px;
 }
@@ -826,10 +639,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   color: var(--pf-global--disabled-color--100) !important;
   box-shadow: none;
   border: none;
-  .create-cluster-favorite-btn-container {
-    background: var(--pf-global--disabled-color--200);
-  }
-  .create-cluster-logo, .create-cluster-favorite-btn-container {
+  .create-cluster-logo {
     -webkit-filter: grayscale(1);
     filter: grayscale(1);
   }
@@ -848,45 +658,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-
-// Temporary hacks to make PF4 components look okay in a PF3 form
-// TODO: REMOVE THIS when we move the rest of the cluster creation form to PF4
-.node-type-input {
-  margin-top: 25px;
-  .error {
-    color: #cc0000;
-  }
-  .node-type-label {
-    // emulating HTML <label> styles to match the rest of the form
-    font-weight: 600;
-    max-width: 100%;
-    margin-bottom: 5px;
-  }
-}
-
-// Make sure modal has scrollbar if it overflows, otherwise it'll look weird
-// https://jira.coreos.com/browse/SDA-382
-.right-side-modal-pf .modal-content {
-  overflow-y: auto;
-}
-
 .create-osd-form-button-split {
   margin-top: 20px;
-}
-
-.osd-configuration-form {
-  margin-top: 20px;
-}
-
-.pf-c-content > nav.breadcrumbs-in-card > ol {
-  padding-left: 0;
-  margin-left: 0;
-  padding-top: 0;
-  margin-top: 0;
-  padding-bottom: 15px;
-  li {
-    margin-top: 0;
-  }
 }
 
 // Custom component FlatRadioButton
@@ -937,25 +710,12 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   overflow-wrap: break-word;
 }
 
-.delete-idp-spinner-container {
-  height: 20px;
-  width: 36px;
-  .ins-c-spinner {
-    margin-top: -5px;
-  }
-}
-
 .spinner-fit-container {
   height: 0;
 }
 
 .os-based-download {
   margin-bottom: 5px;
-}
-
-.cluster-list-spinner, .cluster-user-form-spinner {
-  padding-top: 3px;
-  margin-left: 16px;
 }
 
 .cluster-list .clusterstate {
@@ -1071,31 +831,6 @@ span.dev-preview-label svg {
   width: 100px;
 }
 
-div.pf-c-alert.archived-cluster-toast {
-  position: absolute;
-  z-index: 1;
-
-  width: 67%;
-  right: 9%;
-  top: 15%;
-
-  @media (min-width: 768px) {
-    width: 29%;
-    right: 3%;
-    top: 8%;
-  }
-  @media (min-width: 992px) {
-    width: 22%;
-    right: 3%;
-    top: 13%;
-  }
-  @media (min-width: 1200px) {
-    width: 20%;
-    right: 4%;
-    top: 20%;
-  }
-}
-
 .show-active-clusters-link {
   margin-top: 6px;
 }
@@ -1187,8 +922,6 @@ div.pf-c-alert.archived-cluster-toast {
     fill: var(--pf-global--danger-color--100);
   }
 }
-
-
 
 button:focus {
   &.install--copy-pull-secret::after {
@@ -1290,7 +1023,6 @@ h3#grant-role-select  {
 .privacy-heading {
   margin-bottom: -15px;
 }
-
 
 .ocp-downloads {
    .pf-c-alert{
@@ -1584,12 +1316,6 @@ div.pf-c-alert div.pf-c-alert__icon {
 
   svg {
     vertical-align: -0.5em !important;
-  }
-}
-
-.ocp-infrastructure {
-  .pf-l-stack__item:not(:last-child) {
-    margin-bottom: 24px;
   }
 }
 

@@ -57,12 +57,12 @@ class CloudProviderSelection extends Component {
     );
 
     const gcpCard = hasGcpQuota ? (
-      <Link to="/create/osd/gcp" className="aws-ipi-upi-infra-card infra-card pf-c-card">
+      <Link to="/create/osd/gcp" className="ipi-upi-infra-card infra-card pf-c-card">
         {gcpCardBody}
       </Link>
     ) : (
       <Tooltip content={noQuotaTooltip}>
-        <Card className="infra-card aws-ipi-upi-infra-card create-cluster-card card-disabled">
+        <Card className="infra-card ipi-upi-infra-card create-cluster-card card-disabled">
           {gcpCardBody}
         </Card>
       </Tooltip>
@@ -76,13 +76,13 @@ class CloudProviderSelection extends Component {
     );
 
     const awsCard = hasAwsQuota ? (
-      <Link to="/create/osd/aws" className="aws-ipi-upi-infra-card infra-card pf-c-card">
+      <Link to="/create/osd/aws" className="ipi-upi-infra-card infra-card pf-c-card">
         <CardBadge isHidden />
         {awsCardBody}
       </Link>
     ) : (
       <Tooltip content={noQuotaTooltip}>
-        <Card className="infra-card aws-ipi-upi-infra-card create-cluster-card card-disabled">
+        <Card className="infra-card ipi-upi-infra-card create-cluster-card card-disabled">
           {awsCardBody}
         </Card>
       </Tooltip>
