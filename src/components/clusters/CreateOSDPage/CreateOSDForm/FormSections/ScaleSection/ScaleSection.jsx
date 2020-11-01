@@ -63,7 +63,9 @@ function ScaleSection({
           isByoc={isBYOC}
           machineType={machineType}
           isDisabled={pending}
-          extendedHelpText={constants.computeNodeCountHint}
+          extendedHelpText={isBYOC
+            ? constants.computeNodeCountHintCCS
+            : constants.computeNodeCountHint}
           cloudProviderID={cloudProviderID}
           minNodes={minNodes}
           isMachinePool={isMachinePool}
