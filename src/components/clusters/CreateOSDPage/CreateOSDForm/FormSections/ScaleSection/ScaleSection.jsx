@@ -84,6 +84,7 @@ function ScaleSection({
               helpText="Comma separated pairs in key=value format."
               key="node_label"
               disabled={pending}
+              showHelpTextOnError={false}
               validate={checkMachinePoolLabels}
             />
           </FormGroup>
