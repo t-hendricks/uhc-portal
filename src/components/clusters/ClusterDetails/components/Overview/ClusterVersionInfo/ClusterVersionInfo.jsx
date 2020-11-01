@@ -74,14 +74,14 @@ class ClusterVersionInfo extends React.Component {
               {
                 scheduledManualUpdate.state?.value === 'started'
                   ? '(Started)'
-                  : (
+                  : cluster.canEdit && (
                     <Button
                       variant="link"
                       onClick={() => openModal('cancel-upgrade', { clusterID: cluster.id, schedule: scheduledManualUpdate })}
                     >
                        Cancel this upgrade
                     </Button>
-)
+                  )
               }
             </dd>
           </div>
@@ -113,6 +113,7 @@ ClusterVersionInfo.propTypes = {
     version: PropTypes.shape({
       channel_group: PropTypes.string,
     }),
+    canEdit: PropTypes.bool,
   }),
   versionInfo: PropTypes.shape({
     fulfilled: PropTypes.bool,

@@ -10,9 +10,10 @@ describe('<AddOns />', () => {
   const getAddOns = jest.fn();
   const getClusterAddOns = jest.fn();
   const addClusterAddOn = jest.fn();
-  const clearAddOnsResponses = jest.fn();
-  const addClusterAddOnResponse = jest.fn();
+  const clearClusterAddOnsResponses = jest.fn();
+  const addClusterAddOnResponse = {};
   const getOrganizationAndQuota = jest.fn();
+  const openModal = jest.fn();
 
   const { clusterDetails, organization } = fixtures;
 
@@ -29,7 +30,8 @@ describe('<AddOns />', () => {
       getClusterAddOns={getClusterAddOns}
       addClusterAddOn={addClusterAddOn}
       addClusterAddOnResponse={addClusterAddOnResponse}
-      clearAddOnsResponses={clearAddOnsResponses}
+      clearClusterAddOnsResponses={clearClusterAddOnsResponses}
+      openModal={openModal}
     />);
   });
 

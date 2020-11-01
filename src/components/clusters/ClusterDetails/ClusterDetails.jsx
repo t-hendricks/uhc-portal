@@ -190,7 +190,11 @@ class ClusterDetails extends Component {
     } = this.props;
     const clusterID = match.params.id;
     if (isValid(clusterID)) {
-      this.fetchDetailsAndInsightsData(clusterID, get(clusterDetails, 'cluster.external_id'));
+      this.fetchDetailsAndInsightsData(
+        clusterID,
+        get(clusterDetails, 'cluster.external_id'),
+        get(clusterDetails, 'cluster.managed', false),
+      );
       if (shouldRefetchQuota(organization)) {
         getOrganizationAndQuota();
       }
@@ -233,14 +237,14 @@ class ClusterDetails extends Component {
     }
   }
 
-  fetchDetailsAndInsightsData(id, externalId) {
+  fetchDetailsAndInsightsData(id, externalId, isOSD) {
     const {
       fetchDetails,
       fetchInsightsData,
     } = this.props;
     fetchDetails(id);
     if (externalId) {
-      fetchInsightsData(externalId);
+      fetchInsightsData(externalId, isOSD);
     }
   }
 
@@ -386,7 +390,7 @@ class ClusterDetails extends Component {
 
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
-    const displayInsightsTab = !cluster.managed && !isArchived && (
+    const displayInsightsTab = !isArchived && (
       !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
       || insightsData[cluster.external_id].status === 404
       || insightsData[cluster.external_id].status === 500
@@ -447,6 +451,7 @@ class ClusterDetails extends Component {
           id="overviewTabContent"
           ref={this.overviewTabRef}
           aria-label="Overview"
+          ouiaId="overviewTabContent"
         >
           <Overview
             cluster={cluster}
@@ -511,6 +516,7 @@ class ClusterDetails extends Component {
             id="insightsTabContent"
             ref={this.insightsTabRef}
             aria-label="Insights"
+            ouiaId="insightsTabContent"
             hidden
           >
             <Insights

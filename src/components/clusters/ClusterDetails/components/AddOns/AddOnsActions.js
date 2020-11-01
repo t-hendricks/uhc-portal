@@ -25,9 +25,9 @@ const getClusterAddOns = clusterID => dispatch => dispatch({
   }),
 });
 
-const addClusterAddOn = (clusterID, addOnID) => dispatch => dispatch({
+const addClusterAddOn = (clusterID, addOnData) => dispatch => dispatch({
   type: AddOnsConstants.ADD_CLUSTER_ADDON,
-  payload: clusterService.addClusterAddOn(clusterID, addOnID),
+  payload: clusterService.addClusterAddOn(clusterID, addOnData),
 });
 
 const clearClusterAddOnsResponses = () => ({
