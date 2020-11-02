@@ -1342,11 +1342,11 @@ div.pf-c-alert div.pf-c-alert__icon {
       max-height: 300px;
       overflow-y: auto;
     }
-    .pf-c-select__toggle-icon {
-      position: absolute;
-      right: 34px;
-    }
   }
+}
+
+.cluster-upgrade-version-selection-grid {
+  margin-top: var(--pf-global--gutter--md);
 }
 
 .cluster-upgrade-dl {
