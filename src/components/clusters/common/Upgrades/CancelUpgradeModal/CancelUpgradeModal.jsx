@@ -20,8 +20,8 @@ class CancelUpgradeModal extends React.Component {
     const {
       clearDeleteScheduleResponse, closeModal,
     } = this.props;
-    closeModal();
     clearDeleteScheduleResponse();
+    closeModal();
   }
 
   deleteSchedule = () => {
