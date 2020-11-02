@@ -27,7 +27,7 @@ function actionResolver(
   const isClusterReady = cluster.state === clusterStates.READY;
   const isClusterErrorInAccountClaimPhase = cluster.state === clusterStates.ERROR
   && !cluster.status.dns_ready;
-
+  const hasAccountId = cluster.managed && cluster.aws && cluster.aws.account_id;
   const isUninstallingProps = isClusterUninstalling
     ? { isDisabled: true, tooltip: uninstallingMessage } : {};
   const getKey = item => `${cluster.id}.menu.${item}`;
@@ -104,7 +104,7 @@ function actionResolver(
       isDisabled: true,
       tooltip: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
     };
-    return !isClusterErrorInAccountClaimPhase && !isClusterUninstalling
+    return !isClusterErrorInAccountClaimPhase && !isClusterUninstalling && hasAccountId
       ? managedEditProps : disabledManagedEditProps;
   };
 
