@@ -25,6 +25,9 @@ function actionResolver(
   const notReadyMessage = <span>This cluster is not ready</span>;
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
   const isClusterReady = cluster.state === clusterStates.READY;
+  const isClusterErrorInAccountClaimPhase = cluster.state === clusterStates.ERROR
+  && !cluster.status.dns_ready;
+
   const isUninstallingProps = isClusterUninstalling
     ? { isDisabled: true, tooltip: uninstallingMessage } : {};
   const getKey = item => `${cluster.id}.menu.${item}`;
@@ -84,6 +87,25 @@ function actionResolver(
       tooltip: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
     };
     return isClusterReady ? managedEditNodeCountProps : disabledManagedEditProps;
+  };
+
+  const getEditCCSCredentialsProps = () => {
+    const editCCSCredentialsBaseProps = {
+      ...baseProps,
+      title: 'Edit AWS credentials',
+      key: getKey('editccscredentials'),
+    };
+    const managedEditProps = {
+      ...editCCSCredentialsBaseProps,
+      onClick: () => openModal('edit-ccs-credentials', cluster),
+    };
+    const disabledManagedEditProps = {
+      ...editCCSCredentialsBaseProps,
+      isDisabled: true,
+      tooltip: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
+    };
+    return !isClusterErrorInAccountClaimPhase && !isClusterUninstalling
+      ? managedEditProps : disabledManagedEditProps;
   };
 
   const getEditDisplayNameProps = () => {
@@ -214,7 +236,7 @@ function actionResolver(
   const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
   const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
   const ToggleClusterAdminAccessDialogProps = getToggleClusterAdminAccessDialogProps();
-
+  const editccscredentialsProps = getEditCCSCredentialsProps();
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
   const showEditNodeCount = cluster.canEdit && cluster.managed;
@@ -228,7 +250,7 @@ function actionResolver(
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership && get(cluster, 'subscription.plan.id', false) === subscriptionPlans.OCP
     && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   const showToggleClusterAdmin = cluster.managed && canAllowClusterAdmin;
-
+  const showccscredentials = cluster.ccs?.enabled;
   return [
     showConsoleButton && adminConsoleItemProps,
     cluster.canEdit && editDisplayNameItemProps,
@@ -241,6 +263,7 @@ function actionResolver(
     showEditSubscriptionSettings && editSubscriptionSettingsProps,
     showTransferClusterOwnership && transferClusterOwnershipProps,
     showToggleClusterAdmin && ToggleClusterAdminAccessDialogProps,
+    showccscredentials && editccscredentialsProps,
   ].filter(Boolean);
 }
 
