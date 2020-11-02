@@ -101,18 +101,23 @@ class InsightsRuleDetails extends Component {
     const clusterID = match.params.clusterId;
     const reportID = match.params.reportId.replace(/\|/g, '.');
     if (isValid(clusterID)) {
-      this.fetchDetailsAndInsightsData(clusterID, get(clusterDetails, 'cluster.external_id'), reportID);
+      this.fetchDetailsAndInsightsData(
+        clusterID,
+        get(clusterDetails, 'cluster.external_id'),
+        reportID,
+        get(clusterDetails, 'cluster.managed', false),
+      );
     }
   }
 
-  fetchDetailsAndInsightsData(clusterId, externalId, reportId) {
+  fetchDetailsAndInsightsData(clusterId, externalId, reportId, isOSD) {
     const {
       fetchClusterDetails,
       fetchReportData,
     } = this.props;
     fetchClusterDetails(clusterId);
     if (externalId) {
-      fetchReportData(externalId, reportId);
+      fetchReportData(externalId, reportId, isOSD);
     }
   }
 
@@ -271,6 +276,7 @@ class InsightsRuleDetails extends Component {
                   id="reasonTabContent"
                   ref={this.reasonTabRef}
                   aria-label="Reason"
+                  ouiaId="reasonTabContent"
                 >
                   <Card>
                     <CardBody>
@@ -295,6 +301,7 @@ class InsightsRuleDetails extends Component {
                   id="resolutionTabContent"
                   ref={this.resolutionTabRef}
                   aria-label="How to remediate"
+                  ouiaId="resolutionTabContent"
                   hidden
                 >
                   <Card>

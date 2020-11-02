@@ -82,11 +82,11 @@ class CreateOSDPage extends React.Component {
       openModal('osd-create-error');
     }
 
-    const hasAwsBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
-    const hasAwsRhInfradQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
+    const hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
+    const hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
 
     // if user has only BYOC quota
-    if (cloudProviderID === 'aws' && !prevProps.isBYOCModalOpen && !hasAwsRhInfradQuota && hasAwsBYOCQuota && !hasShownBYOCModal) {
+    if (!prevProps.isBYOCModalOpen && !hasRhInfraQuota && hasBYOCQuota && !hasShownBYOCModal) {
       // open BYOC modal
       openModal('customer-cloud-subscription');
       // set byoc field value to true

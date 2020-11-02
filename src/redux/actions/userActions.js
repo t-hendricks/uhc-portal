@@ -232,8 +232,8 @@ const fetchQuota = organizationID => accountsService.getOrganizationQuota(organi
       || allQuotas.clustersQuota.aws.rhInfra.totalAvailable > 0;
 
     // check if any quota available for gcp clusters
-    allQuotas.clustersQuota.gcp.isAvailable = allQuotas.clustersQuota
-      .gcp.rhInfra.totalAvailable > 0;
+    allQuotas.clustersQuota.gcp.isAvailable = allQuotas.clustersQuota.gcp.byoc.totalAvailable > 0
+      || allQuotas.clustersQuota.gcp.rhInfra.totalAvailable > 0;
 
     return allQuotas;
   },
