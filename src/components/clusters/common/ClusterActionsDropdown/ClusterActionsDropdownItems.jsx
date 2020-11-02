@@ -250,7 +250,7 @@ function actionResolver(
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership && get(cluster, 'subscription.plan.id', false) === subscriptionPlans.OCP
     && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   const showToggleClusterAdmin = cluster.managed && canAllowClusterAdmin;
-  const showccscredentials = cluster.ccs?.enabled;
+  const showccscredentials = cluster.ccs?.enabled && cluster.cloud_provider && cluster.cloud_provider.id !== 'gcp';
   return [
     showConsoleButton && adminConsoleItemProps,
     cluster.canEdit && editDisplayNameItemProps,
