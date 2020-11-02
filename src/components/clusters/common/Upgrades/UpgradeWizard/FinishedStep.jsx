@@ -34,11 +34,11 @@ function FinishedStep({
         Scheduled cluster upgrade
       </Title>
       <EmptyStateBody>
-        Your upgrade was successfully scheduled to start
+        Your upgrade was successfully scheduled to start within
         {' '}
-        { scheduleType === 'now' ? 'within the next hour' : (
+        { scheduleType === 'now' ? 'the next hour' : (
           <>
-          at
+          one hour of
             {' '}
             <DateFormat type="exact" date={new Date(upgradeTimestamp)} />
           </>
