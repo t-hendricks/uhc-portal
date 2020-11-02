@@ -9,6 +9,10 @@ const cluster = {
   managed: true,
   canEdit: true,
   canDelete: true,
+  status: {
+    state: clusterStates.READY,
+    dns_ready: true,
+  },
 };
 
 const props = {
@@ -32,6 +36,10 @@ const clusterUninstallingProps = {
     managed: true,
     canEdit: true,
     canDelete: true,
+    status: {
+      state: clusterStates.READY,
+      dns_ready: true,
+    },
   },
   ...props,
 };
@@ -42,6 +50,10 @@ const clusterNotReadyProps = {
     managed: true,
     canEdit: true,
     canDelete: true,
+    status: {
+      state: clusterStates.READY,
+      dns_ready: true,
+    },
   },
   ...props,
 };

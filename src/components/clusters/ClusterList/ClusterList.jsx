@@ -54,13 +54,13 @@ import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDi
 import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDialog';
 import DeleteClusterDialog from '../common/DeleteClusterDialog';
 import UpgradeWizard from '../common/Upgrades/UpgradeWizard';
+import EditCCSCredentialsDialog from '../common/EditCCSCredentialsDialog';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
 import helpers, { scrollToTop } from '../../../common/helpers';
 import { viewPropsChanged, createViewQueryObject, getQueryParam } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
-
 
 class ClusterList extends Component {
   state = {
@@ -283,6 +283,7 @@ class ClusterList extends Component {
               <EditNodeCountModal onClose={invalidateClusters} />
               <ArchiveClusterDialog onClose={invalidateClusters} />
               <UnarchiveClusterDialog onClose={invalidateClusters} />
+              <EditCCSCredentialsDialog onClose={invalidateClusters} />
               <UpgradeWizard />
               <DeleteClusterDialog onClose={(shouldRefresh) => {
                 if (shouldRefresh) {
