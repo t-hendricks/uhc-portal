@@ -129,6 +129,8 @@ class UpgradeWizard extends React.Component {
         component: (
           <FinishedStep
             onClose={this.closeWizard}
+            scheduleType={scheduleType}
+            upgradeTimestamp={upgradeTimestamp}
             requestStatus={upgradeScheduleRequest}
             close={this.close}
           />),
