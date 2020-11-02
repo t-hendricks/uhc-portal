@@ -9,6 +9,7 @@ import {
   Title,
   Button,
 } from '@patternfly/react-core';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { CheckCircleIcon } from '@patternfly/react-icons';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 // eslint-disable-next-line camelcase
@@ -17,7 +18,9 @@ import { global_success_color_100 } from '@patternfly/react-tokens';
 import ErrorBox from '../../../../common/ErrorBox';
 
 
-function FinishedStep({ requestStatus, close }) {
+function FinishedStep({
+  requestStatus, close, scheduleType, upgradeTimestamp,
+}) {
   if (requestStatus.error) {
     return <Bullseye><ErrorBox message="Failed to schedule upgrade" response={requestStatus} /></Bullseye>;
   }
@@ -31,7 +34,16 @@ function FinishedStep({ requestStatus, close }) {
         Scheduled cluster upgrade
       </Title>
       <EmptyStateBody>
-        Your upgrade was successfully scheduled to start within the next hour.
+        Your upgrade was successfully scheduled to start
+        {' '}
+        { scheduleType === 'now' ? 'within the next hour' : (
+          <>
+          at
+            {' '}
+            <DateFormat type="exact" date={new Date(upgradeTimestamp)} />
+          </>
+        )}
+        .
       </EmptyStateBody>
       <EmptyStateSecondaryActions>
         <Button onClick={close}>
@@ -49,6 +61,8 @@ FinishedStep.propTypes = {
     pending: PropTypes.bool,
   }).isRequired,
   close: PropTypes.func.isRequired,
+  scheduleType: PropTypes.string,
+  upgradeTimestamp: PropTypes.string,
 };
 
 export default FinishedStep;
