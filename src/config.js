@@ -10,6 +10,7 @@ configs.stageSSO = import(/* webpackMode: "eager" */ './config/ci.json');
 if (APP_BETA || APP_DEVMODE || APP_API_ENV !== 'production') {
   configs.staging = import(/* webpackMode: "eager" */ './config/staging.json');
   configs.integration = import(/* webpackMode: "eager" */ './config/integration.json');
+  configs.integrationV3 = import(/* webpackMode: "eager" */ './config/integrationV3.json');
 }
 
 if (APP_DEV_SERVER) {
