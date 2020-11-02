@@ -9,6 +9,12 @@ const mapStateToProps = feature => state => ({
   enabled: state.features[feature],
 });
 
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+  ...stateProps,
+  ...dispatchProps,
+  ...ownProps,
+});
+
 export const withFeatureGateCallback = (callback, feature, fallback = () => false) => {
   if (mapStateToProps(feature)(store.getState()).enabled) {
     return callback;
@@ -16,9 +22,13 @@ export const withFeatureGateCallback = (callback, feature, fallback = () => fals
   return fallback;
 };
 
-const withFeatureGate = (WrappedComponent, feature, FallbackComponent = NotFoundError) => connect(
+const withFeatureGate = (
+  WrappedComponent, feature, FallbackComponent = NotFoundError,
+) => connect(
   mapStateToProps(feature),
-)(({ enabled, location }) => {
+  undefined,
+  mergeProps,
+)(({ enabled, location, ...componentProps }) => {
   if (enabled === undefined) {
     return (
       <PageSection>
@@ -29,7 +39,7 @@ const withFeatureGate = (WrappedComponent, feature, FallbackComponent = NotFound
   if (!enabled) {
     return <FallbackComponent location={location} />;
   }
-  return <WrappedComponent />;
+  return <WrappedComponent {...componentProps} />;
 });
 
 export default withFeatureGate;
