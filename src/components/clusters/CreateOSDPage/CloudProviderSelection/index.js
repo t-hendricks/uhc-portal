@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import CloudProviderSelection from './CloudProviderSelection';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
-import { hasOSDQuotaSelector, hasAwsQuotaSelector, hasGcpQuotaSelector } from '../../CreateClusterPage/quotaSelector';
+import { hasOSDQuotaSelector, hasAwsQuotaSelector, hasGcpQuotaSelector } from '../../common/quotaSelectors';
 
 const mapStateToProps = state => ({
   hasOSDQuota: hasOSDQuotaSelector(state),
