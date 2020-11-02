@@ -14,7 +14,7 @@ import {
   FlexItem,
 } from '@patternfly/react-core';
 import { ArrowRightIcon } from '@patternfly/react-icons';
-
+import './OverviewEmptyState.scss';
 
 const VIDEO_URL = 'https://www.youtube.com/embed/D_Lj0rObunI';
 

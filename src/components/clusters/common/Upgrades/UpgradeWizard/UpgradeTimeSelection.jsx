@@ -5,6 +5,7 @@ import {
 } from '@patternfly/react-core';
 import { OutlinedClockIcon } from '@patternfly/react-icons';
 import DatePicker from 'react-datepicker';
+import './UpgradeWizard.scss';
 
 class UpgradeTimeSelection extends React.Component {
   state = { timeSelectionOpen: false };
