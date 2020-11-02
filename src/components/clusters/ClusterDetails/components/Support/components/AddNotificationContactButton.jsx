@@ -10,7 +10,7 @@ const addBtn = (canEdit, openModal) => (
     className="access-control-add"
     isDisabled={!canEdit}
   >
-    Add notification contacts
+    Add notification contact
   </Button>
 );
 
