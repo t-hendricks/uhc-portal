@@ -3,76 +3,94 @@ import PropTypes from 'prop-types';
 import {
   Radio, Title, FormGroup, Form, TextInput, Select, SelectOption,
 } from '@patternfly/react-core';
-import { OutlinedClockIcon } from '@patternfly/react-icons';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import DatePicker from 'react-datepicker';
 
 class UpgradeTimeSelection extends React.Component {
   state = { timeSelectionOpen: false };
+
+  getDefaultTimestamp = () => {
+    const HOUR_IN_MS = 60 * 60 * 1000;
+    const atLeastOneHourFromNow = new Date(new Date().getTime() + HOUR_IN_MS);
+    if (atLeastOneHourFromNow.getMinutes() > 5) {
+      atLeastOneHourFromNow.setHours(atLeastOneHourFromNow.getHours() + 1);
+    }
+    atLeastOneHourFromNow.setSeconds(0);
+    atLeastOneHourFromNow.setMilliseconds(0);
+    atLeastOneHourFromNow.setMinutes(0);
+
+    return atLeastOneHourFromNow;
+  }
 
   modeChange = (_, event) => {
     const { onSet, timestamp } = this.props;
     if (event.target.value === 'now') {
       onSet({ type: 'now' }); // empty timestamp = now
     } else {
-      let defaultTimeStamp = timestamp;
-      if (!defaultTimeStamp) {
-        const HOUR_IN_MS = 60 * 60 * 1000;
-        defaultTimeStamp = new Date(new Date().getTime() + HOUR_IN_MS);
-        defaultTimeStamp.setMinutes(0);
-        defaultTimeStamp.setSeconds(0);
-        defaultTimeStamp.setMilliseconds(0);
-      }
-      onSet({ type: 'time', timestamp: defaultTimeStamp.toISOString() });
+      const defaultTimeStamp = timestamp || this.getDefaultTimestamp().toISOString();
+      onSet({ type: 'time', timestamp: defaultTimeStamp });
     }
   }
 
   setDate = (selectedDate) => {
-    const { onSet, timestamp } = this.props;
-    // Take the date from the datepicker, combine it with the time in the current timestamp
-    const day = selectedDate.getDate().toString().padStart(2, 0);
-    // +1 in month because getMonth() thinks January is the 0th mounth
-    const month = (selectedDate.getMonth() + 1).toString().padStart(2, 0);
-    const year = selectedDate.getFullYear();
-    const time = timestamp.split('T')[1];
-    onSet({ type: 'time', timestamp: `${year}-${month}-${day}T${time}` });
+    const { onSet } = this.props;
+    const minimum = this.getDefaultTimestamp();
+    /* set the selected date. If the date + time is lower tha minimum,
+      set it to the minimum instead */
+    const selected = selectedDate < minimum ? minimum : selectedDate;
+    onSet({ type: 'time', timestamp: selected });
   }
 
   setTime = (_, selectedTime) => {
     const { onSet, timestamp } = this.props;
     // Take the time from the time picker, combine it with the date in the current timestamp
-    const date = timestamp.split('T')[0];
-    onSet({ type: 'time', timestamp: `${date}T${selectedTime}:00.0Z` });
+    const date = new Date(timestamp);
+    const [hour, minute] = selectedTime.split(':');
+    date.setHours(hour);
+    date.setMinutes(minute);
+    onSet({ type: 'time', timestamp: date.toISOString() });
     this.setState({ timeSelectionOpen: false });
+  }
+
+  onSelectToggle = () => {
+
   }
 
   render() {
     const { type, timestamp } = this.props;
     const { timeSelectionOpen } = this.state;
+    if (timeSelectionOpen) {
+      // scroll to the selected item when the Select is opened
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          const selected = document.querySelector('#upgrade-time-select-dropdown .pf-c-select__menu-item.pf-m-selected');
+          if (selected) {
+            selected.scrollIntoView({ block: 'center' });
+          }
+        });
+      }, 1);
+    }
 
     const makeSelectOptions = () => {
       const ret = [];
       for (let hour = 0; hour < 24; hour += 1) {
-        ['00', '15', '30', '45'].forEach((minute) => {
-          const value = `${hour.toString().padStart(2, 0)}:${minute}`;
-          const date = new Date(timestamp);
-          date.setUTCHours(hour);
-          date.setUTCMinutes(minute);
-          ret.push(
-            <SelectOption value={value} key={value} isDisabled={new Date() > date}>
-              {value}
-              {' '}
-              (UTC)
-            </SelectOption>,
-          );
-        });
+        const value = `${hour.toString().padStart(2, 0)}:00`;
+        const date = new Date(timestamp);
+        date.setHours(hour);
+        date.setMinutes(0);
+        ret.push(
+          <SelectOption value={value} key={value} isDisabled={this.getDefaultTimestamp() > date}>
+            {value}
+          </SelectOption>,
+        );
       }
       return ret;
     };
 
     const getSelectedTime = () => {
       const date = new Date(timestamp);
-      const hour = date.getUTCHours().toString().padStart(2, 0);
-      const minute = date.getUTCMinutes().toString().padStart(2, 0);
+      const hour = date.getHours().toString().padStart(2, 0);
+      const minute = date.getMinutes().toString().padStart(2, 0);
       return `${hour}:${minute}`;
     };
 
@@ -104,28 +122,28 @@ class UpgradeTimeSelection extends React.Component {
             <FormGroup fieldId="upgrade-schedule-datepicker" className="upgrade-schedule-datepicker">
               <DatePicker
                 id="upgrade-schedule-datepicker"
-                selected={timestamp && new Date(timestamp.split('T')[0])}
+                selected={timestamp && new Date(timestamp)}
                 onChange={this.setDate}
                 dateFormat="yyyy-MM-dd"
                 customInput={<TextInput iconVariant="calendar" />}
                 minDate={new Date()}
               />
               <Select
-                toggleIcon={<OutlinedClockIcon />}
                 selections={getSelectedTime()}
                 onSelect={this.setTime}
                 onToggle={() => this.setState(state => (
                   { timeSelectionOpen: !state.timeSelectionOpen }
                 ))}
                 isOpen={timeSelectionOpen}
+                id="upgrade-time-select-dropdown"
               >
                 {makeSelectOptions()}
               </Select>
             </FormGroup>
             <dl className="cluster-upgrade-dl">
-              <dt>Local Time</dt>
+              <dt>UTC </dt>
               <dd>
-                {new Date(timestamp).toString()}
+                <DateFormat type="exact" date={new Date(timestamp)} />
               </dd>
             </dl>
           </>
