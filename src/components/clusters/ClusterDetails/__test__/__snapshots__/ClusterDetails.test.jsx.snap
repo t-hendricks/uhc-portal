@@ -1221,6 +1221,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   <Connect(EditDisplayNameDialog)
     onClose={[Function]}
   />
+  <Connect(EditCCSCredentialsDialog)
+    onClose={[Function]}
+  />
   <Connect(UnarchiveClusterDialog)
     onClose={[Function]}
   />
