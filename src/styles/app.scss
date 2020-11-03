@@ -470,58 +470,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   padding-left: 22px;
 }
 
-.infra-logo {
-  height: 54px;
-  margin: 10px;
-}
-
-.infra-logo-vsphere {
-  height: 54px;
-  margin: 10px;
-}
-
-.infra-logo-google-cloud {
-  height: 54px;
-  margin-left: -10px;
-  margin-right: -10px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-.infra-logo-crc {
-  height: 54px;
-}
-
-.infra-logo-osp, .infra-logo-rhv {
-  height: 54px;
-  margin: 10px;
-}
-
-.infra-card.infra-card-cloud-provider.ibm-or-power {
-  img {
-    height: 95px;
-    position: relative;
-  }
-  .card-badge-container{
-    position: relative;
-    z-index: 2;
-    top: 11px;
-  }
-  h5{
-    position: relative;
-    bottom: 11px;
-  }
-}
-
-.infra-card.infra-card-cloud-provider h5.infra-crc-title {
-  margin-bottom: var(--pf-global--spacer--xs);
-}
-
-.infra-crc-icon-text {
-  display: block;
-  font-size: var(--pf-global--FontSize--xs);
-}
-
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -570,10 +518,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-.ocp-infra-gallery {
-  --pf-l-gallery--GridTemplateColumns: repeat(auto-fill, minmax(380px, 1fr));
-}
-
 .ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .aws-ipi-upi-infra-card {
   flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
   margin: 20px;
@@ -615,10 +559,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 }
 
-.infra-card-cloud-provider {
-  height: 212px;
-}
-
 .pf-c-card__body.infra-card-placeholder {
   flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
   margin: 20px;
@@ -651,10 +591,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .ocm-page-title {
   padding-top: 2px;
-}
-
-.ocm-page.with-helptext {
-  padding-bottom: 6px;
 }
 
 .bottom-alert {
@@ -691,10 +627,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: -7%;
   margin-right: -7%;
   margin-top: -20px;
-}
-
-.infra-card-cloud-provider .card-badge-container {
-  margin-top: -15px;
 }
 
 .create-cluster-logo {
@@ -1149,12 +1081,6 @@ div.pf-c-alert div.pf-c-alert__icon {
   }
   .pf-c-expandable-section__content {
     text-align: center;
-  }
-}
-
-.ocp-infrastructure {
-  .pf-l-stack__item:not(:last-child) {
-    margin-bottom: 24px;
   }
 }
 

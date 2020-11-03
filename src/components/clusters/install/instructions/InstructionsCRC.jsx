@@ -49,7 +49,7 @@ function InstructionsCRC({ token }) {
                     <Title headingLevel="h3">CodeReady Containers archive</Title>
                     <p>
                       Download and extract the CodeReady Containers archive for your
-                      operating system and place the binary in your
+                      operating system and place the executable in your
                       {' '}
                       <code>$PATH</code>
                       {' '}
