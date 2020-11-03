@@ -89,7 +89,24 @@ class MachineTypeSelection extends React.Component {
     const clustersAvailable = quota.clustersQuota[cloudProviderID][infra][zoneType][resourceName]
                               || 0;
 
-    if (isBYOC || isMachinePool) {
+    if (isMachinePool) {
+      const nodeQuota = quota.nodesQuota[cloudProviderID][infra][resourceName] || {};
+      const nodesAvailable = nodeQuota?.available || 0;
+      const { cost } = nodeQuota;
+
+      if (cost === 0) {
+        return true;
+      }
+
+      if (cost === undefined) {
+        return false;
+      }
+
+      return (nodesAvailable / cost) >= 1;
+    }
+
+    if (isBYOC) {
+      const minimumNodes = isMultiAz ? 3 : 2;
       const nodeQuota = quota.nodesQuota[cloudProviderID][infra][resourceName] || {};
       const nodesAvailable = nodeQuota?.available || 0;
       const { cost } = nodeQuota;
@@ -101,8 +118,8 @@ class MachineTypeSelection extends React.Component {
         return false;
       }
 
-      const hasNodeQuota = (nodesAvailable / cost) >= 1;
-      return isMachinePool ? hasNodeQuota : clustersAvailable > 0 && hasNodeQuota;
+      const hasNodeQuota = (nodesAvailable / cost) >= minimumNodes;
+      return clustersAvailable > 0 && hasNodeQuota;
     }
 
     return clustersAvailable > 0;
