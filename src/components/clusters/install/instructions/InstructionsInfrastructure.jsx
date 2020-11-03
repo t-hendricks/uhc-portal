@@ -15,6 +15,7 @@ import IBMZLogo from '../../../../styles/images/ibmz-logo.svg';
 import PowerLogo from '../../../../styles/images/power-logo.png';
 import CardBadge from '../../common/CardBadge';
 import TitleWithLink from '../../../common/TitleWithLink';
+import './InstructionsInfrastructure.scss';
 
 const pathname = '/install';
 
@@ -32,30 +33,30 @@ const InstructionsInfrastructure = () => (
           />
         </CardTitle>
         <CardBody className="pf-c-content ocm-page">
-          <Gallery hasGutter className="ocp-infra-gallery">
+          <Gallery hasGutter>
             <GalleryItem>
-              <Link to="/install/aws" className="infra-card infra-card-cloud-provider">
+              <Link to="/install/aws" className="infra-card">
                 <CardBadge isHidden />
                 <CardBody>
-                  <img src={AWSLogo} alt="AWS" className="infra-logo" />
+                  <img src={AWSLogo} alt="AWS" className="logo-default" />
                   <Title headingLevel="h5" size="lg">Run on Amazon Web Services</Title>
                 </CardBody>
               </Link>
             </GalleryItem>
             <GalleryItem>
-              <Link to="/install/azure" className="infra-card infra-card-cloud-provider">
+              <Link to="/install/azure" className="infra-card">
                 <CardBadge isHidden />
                 <CardBody>
-                  <img src={AzureLogo} alt="Azure" className="infra-logo" />
+                  <img src={AzureLogo} alt="Azure" className="logo-default" />
                   <Title headingLevel="h5" size="lg">Run on Microsoft Azure</Title>
                 </CardBody>
               </Link>
             </GalleryItem>
             <GalleryItem>
-              <Link to="/install/gcp" className="infra-card infra-card-cloud-provider">
+              <Link to="/install/gcp" className="infra-card">
                 <CardBadge isHidden />
                 <CardBody>
-                  <img src={GCPLogo} alt="GCP" className="infra-logo-google-cloud" />
+                  <img src={GCPLogo} alt="GCP" className="logo-default" />
                   <Title headingLevel="h5" size="lg">Run on Google Cloud Platform</Title>
                 </CardBody>
               </Link>
@@ -76,57 +77,57 @@ const InstructionsInfrastructure = () => (
           />
         </CardTitle>
         <CardBody className="pf-c-content ocm-page">
-          <Gallery hasGutter className="ocp-infra-gallery">
+          <Gallery hasGutter>
             <GalleryItem>
-              <Link to="/install/metal" className="infra-card infra-card-cloud-provider">
+              <Link to="/install/metal" className="infra-card">
                 <CardBadge isHidden />
                 <CardBody>
-                  <img src={bareMetalIcon} alt="Bare Metal" className="infra-logo" />
+                  <img src={bareMetalIcon} alt="Bare Metal" className="logo-default" />
                   <Title headingLevel="h5" size="lg">Run on Bare Metal</Title>
                 </CardBody>
               </Link>
             </GalleryItem>
             <GalleryItem>
-              <Link to="/install/openstack" className="infra-card infra-card-cloud-provider">
+              <Link to="/install/openstack" className="infra-card">
                 <CardBadge isHidden />
                 <CardBody>
-                  <img src={OSPLogo} alt="OpenStack" className="infra-logo-osp" />
+                  <img src={OSPLogo} alt="OpenStack" className="logo-default" />
                   <Title headingLevel="h5" size="lg">Run on Red Hat OpenStack</Title>
                 </CardBody>
               </Link>
             </GalleryItem>
             <GalleryItem>
-              <Link to="/install/rhv" className="infra-card infra-card-cloud-provider">
+              <Link to="/install/rhv" className="infra-card">
                 <CardBadge isHidden />
                 <CardBody>
-                  <img src={RHVLogo} alt="Red Hat Virtualization" className="infra-logo-rhv" />
+                  <img src={RHVLogo} alt="Red Hat Virtualization" className="logo-default" />
                   <Title headingLevel="h5" size="lg">Run on Red Hat Virtualization</Title>
                 </CardBody>
               </Link>
             </GalleryItem>
             <GalleryItem>
-              <Link to="/install/vsphere/user-provisioned" className="infra-card infra-card-cloud-provider">
+              <Link to="/install/vsphere/user-provisioned" className="infra-card">
                 <CardBadge isHidden />
                 <CardBody>
-                  <img src={vSphereLogo} alt="vSphere" className="infra-logo-vsphere" />
+                  <img src={vSphereLogo} alt="vSphere" className="logo-default" />
                   <Title headingLevel="h5" size="lg">Run on VMware vSphere</Title>
                 </CardBody>
               </Link>
             </GalleryItem>
             <GalleryItem>
-              <Link to="/install/power/user-provisioned" className="infra-card infra-card-cloud-provider ibm-or-power">
+              <Link to="/install/power/user-provisioned" className="infra-card ibm-or-power">
                 <CardBadge isHidden />
                 <CardBody>
-                  <img src={PowerLogo} alt="Power Systems" className="infra-logo-power" />
+                  <img src={PowerLogo} alt="Power Systems" />
                   <Title headingLevel="h5" size="lg">Run on Power</Title>
                 </CardBody>
               </Link>
             </GalleryItem>
             <GalleryItem>
-              <Link to="/install/ibmz/user-provisioned" className="infra-card infra-card-cloud-provider ibm-or-power">
+              <Link to="/install/ibmz/user-provisioned" className="infra-card ibm-or-power">
                 <CardBadge isHidden />
                 <CardBody>
-                  <img src={IBMZLogo} alt="IBM" className="infra-logo-ibm" />
+                  <img src={IBMZLogo} alt="IBM" />
                   <Title headingLevel="h5" size="lg">Run on IBM Z</Title>
                 </CardBody>
               </Link>
@@ -137,7 +138,7 @@ const InstructionsInfrastructure = () => (
     </StackItem>
     <StackItem>
       <Card>
-        <CardTitle className="ocm-page with-helptext">
+        <CardTitle>
           <TitleWithLink
             id="laptop"
             headingLevel="h3"
@@ -147,17 +148,17 @@ const InstructionsInfrastructure = () => (
           />
         </CardTitle>
         <CardBody>
-        Create a minimal OpenShift developement cluster on your local machine
+          Create a minimal OpenShift developement cluster on your local machine
         </CardBody>
         <CardBody className="pf-c-content ocm-page">
-          <Gallery hasGutter className="ocp-infra-gallery">
+          <Gallery hasGutter>
             <GalleryItem>
-              <Link to="/install/crc/installer-provisioned" className="infra-card infra-card-cloud-provider">
+              <Link to="/install/crc/installer-provisioned" className="infra-card crc">
                 <CardBadge isHidden />
                 <CardBody>
-                  <img src={CRCLogo} alt="CRC" className="infra-logo-crc" />
-                  <Title headingLevel="h5" size="lg" className="infra-crc-title">Run on Laptop</Title>
-                  <span className="infra-crc-icon-text">Powered by Red Hat CodeReady Containers</span>
+                  <img src={CRCLogo} alt="CRC" />
+                  <Title headingLevel="h5" size="lg">Run on Laptop</Title>
+                  <span>Powered by Red Hat CodeReady Containers</span>
                 </CardBody>
               </Link>
             </GalleryItem>

@@ -1,0 +1,57 @@
+.ocp-infrastructure {
+  .pf-l-stack__item:not(:last-child) {
+    margin-bottom: 24px;
+  }
+  .pf-l-gallery {
+    a {
+      height: 212px;
+      &.card-badge-container {
+        margin-top: -15px;
+      }
+      img.logo-default {
+        height: 54px;
+        margin: 10px;
+      }
+      &.ibm-or-power {
+        &.card-badge-container{
+          position: relative;
+          z-index: 2;
+          top: 11px;
+        }
+        img {
+          height: 95px;
+          position: relative;
+        }
+        h5 {
+          bottom: 11px;
+          position: relative;
+        }
+      }
+      &.crc {
+        img {
+          height: 54px;
+        }
+        h5 {
+          margin-bottom: var(--pf-global--spacer--xs);
+        }
+        span {
+          display: block;
+          font-size: var(--pf-global--FontSize--xs);
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 769px) {
+    .pf-l-gallery {
+       --pf-l-gallery--GridTemplateColumns: repeat(auto-fill, minmax(380px, 1fr));
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .ocm-page {
+      margin: 0 !important;
+    }
+  } 
+  
+}
