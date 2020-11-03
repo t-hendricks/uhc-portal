@@ -72,7 +72,7 @@ class VersionSelectionGrid extends React.Component {
     return (
       <>
         <Title size="lg" headingLevel="h3">Select version</Title>
-        <Grid hasGutter>
+        <Grid hasGutter className="cluster-upgrade-version-selection-grid">
           {versionInfo.availableUpgrades.map(upgradeVersion => (
             <GridItem span={4} key={upgradeVersion}>
               <Card
