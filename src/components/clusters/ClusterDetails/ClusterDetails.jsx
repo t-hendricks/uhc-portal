@@ -38,6 +38,7 @@ import DeleteIDPDialog from './components/DeleteIDPDialog';
 import ScaleClusterDialog from '../common/ScaleClusterDialog';
 import EditNodeCountModal from '../common/EditNodeCountModal';
 import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
+import EditCCSCredentialsDialog from '../common/EditCCSCredentialsDialog';
 import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
 import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDialog';
@@ -560,6 +561,7 @@ class ClusterDetails extends Component {
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditNodeCountModal onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
+        <EditCCSCredentialsDialog onClose={onDialogClose} />
         <UnarchiveClusterDialog onClose={onDialogClose} />
         <EditConsoleURLDialog onClose={onDialogClose} />
         <TransferClusterOwnershipDialog onClose={onDialogClose} />

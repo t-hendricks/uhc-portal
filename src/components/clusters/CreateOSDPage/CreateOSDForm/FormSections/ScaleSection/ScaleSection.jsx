@@ -24,7 +24,7 @@ function ScaleSection({
   machineType,
   handleMachineTypesChange,
   cloudProviderID,
-  showSotrageAndLoadBalancers = true,
+  showStorageAndLoadBalancers = true,
   gridSpan = 9,
   minNodes,
   isMachinePool = false,
@@ -63,7 +63,9 @@ function ScaleSection({
           isByoc={isBYOC}
           machineType={machineType}
           isDisabled={pending}
-          extendedHelpText={constants.computeNodeCountHint}
+          extendedHelpText={isBYOC
+            ? constants.computeNodeCountHintCCS
+            : constants.computeNodeCountHint}
           cloudProviderID={cloudProviderID}
           minNodes={minNodes}
           isMachinePool={isMachinePool}
@@ -84,6 +86,7 @@ function ScaleSection({
               helpText="Comma separated pairs in key=value format."
               key="node_label"
               disabled={pending}
+              showHelpTextOnError={false}
               validate={checkMachinePoolLabels}
             />
           </FormGroup>
@@ -91,7 +94,7 @@ function ScaleSection({
       </GridItem>
       <GridItem span={8} />
       {/* Persistent Storage & Load Balancers */}
-      { showSotrageAndLoadBalancers && !isBYOC && (
+      { showStorageAndLoadBalancers && !isBYOC && (
         <>
           <GridItem span={4}>
             <FormGroup
@@ -136,7 +139,7 @@ ScaleSection.propTypes = {
   pending: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
-  showSotrageAndLoadBalancers: PropTypes.bool,
+  showStorageAndLoadBalancers: PropTypes.bool,
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   handleMachineTypesChange: PropTypes.func.isRequired,

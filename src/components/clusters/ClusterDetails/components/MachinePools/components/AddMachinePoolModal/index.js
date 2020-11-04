@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
   organization: state.userProfile.organization,
   initialValues: {
     name: '',
-    nodes_compute: '4',
+    nodes_compute: '0',
   },
 });
 
