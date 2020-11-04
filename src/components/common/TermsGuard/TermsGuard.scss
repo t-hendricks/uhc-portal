@@ -1,0 +1,6 @@
+.terms-and-conditions-guard-modal {
+  footer > a:hover, a:focus, a:visited {
+    // the modal uses an <a> for primary button so override the conflicting css.
+    margin-left: 0px;
+  }
+}

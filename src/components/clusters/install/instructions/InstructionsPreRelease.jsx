@@ -14,6 +14,7 @@ import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
+import './InstructionsPreRelease.scss';
 
 function InstructionsPreRelease({ token }) {
   return (

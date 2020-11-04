@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Alert } from '@patternfly/react-core';
+import './ExpirationAlert.scss';
+
 
 function ExpirationAlert({ expirationTimestamp }) {
   const now = moment.utc();

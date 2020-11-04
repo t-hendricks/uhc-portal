@@ -7,6 +7,7 @@ import Download from '@axetroy/react-download';
 import isEmpty from 'lodash/isEmpty';
 
 import { trackPendo } from '../../../../../common/helpers';
+import './PullSecretSection.scss';
 
 class PullSecretSection extends React.Component {
   constructor(props) {

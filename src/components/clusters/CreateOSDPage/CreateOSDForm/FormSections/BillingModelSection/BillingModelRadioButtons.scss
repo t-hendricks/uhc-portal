@@ -1,0 +1,11 @@
+#billing-model.flat-radio-buttons-flex-container {
+  button, div.ocm-flat-radio-button-disabled {
+    height: 85px;
+    min-width: 460px;
+    margin-left: 0;
+    margin-right: 2em;
+    div {
+      min-width: 444px;
+    }
+  }
+}

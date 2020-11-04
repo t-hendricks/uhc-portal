@@ -1,0 +1,16 @@
+.cluster-support-status-popover footer a {
+  // something in PF or Insights overrides link styling for <a> in <footer>, breaking the intened style of this popover
+  // to avoid that, I'm copying here the default <a> styles so it'll look right
+  font-weight: var(--pf-global--link--FontWeight);
+  color: var(--pf-global--link--Color);
+  text-decoration: var(--pf-global--link--TextDecoration);
+  margin: 0;
+}
+
+.cluster-support-label-clickable {
+  cursor: pointer;
+}
+
+.inline-skeleton {
+  display: inline-block;
+}
