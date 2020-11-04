@@ -31,6 +31,28 @@ export const mockAddOns = {
       target_namespace: 'redhat-rhmi-operator',
       install_mode: 'single_namespace',
       operator_name: 'integreatly-operator',
+      parameters: {
+        items: [
+          {
+            id: 'cidr-range',
+            name: 'CIDR Range',
+            description: 'A block of IP addresses used by the RHMI installation program while installing the cluster',
+            value_type: 'string',
+            validation: '/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(/(1[6-9]|2[0-6]))$/',
+            required: true,
+            editable: false,
+          },
+          {
+            id: 'notification-email',
+            name: 'Notification Email',
+            description: 'Notification email address',
+            value_type: 'string',
+            validation: "/^w+([-+.']w+)*@w+([-.]w+)*.w+([-.]w+)*$/",
+            required: false,
+            editable: true,
+          },
+        ],
+      },
     },
     {
       kind: 'AddOn',

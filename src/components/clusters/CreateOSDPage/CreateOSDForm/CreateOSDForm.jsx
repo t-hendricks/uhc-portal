@@ -74,16 +74,17 @@ class CreateOSDForm extends React.Component {
   isByocForm = () => {
     const {
       clustersQuota,
+      cloudProviderID,
     } = this.props;
 
     const {
       byocSelected,
     } = this.state;
 
-    const hasBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
-    const hasAwsRhInfraQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
+    const hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
+    const hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
 
-    return hasBYOCQuota && (!hasAwsRhInfraQuota || byocSelected);
+    return hasBYOCQuota && (!hasRhInfraQuota || byocSelected);
   }
 
   render() {
@@ -108,8 +109,8 @@ class CreateOSDForm extends React.Component {
     const isAws = cloudProviderID === 'aws';
     const isGCP = cloudProviderID === 'gcp';
 
-    const hasBYOCQuota = !!get(clustersQuota, 'aws.byoc.totalAvailable');
-    const hasAwsRhInfraQuota = !!get(clustersQuota, 'aws.rhInfra.totalAvailable');
+    const hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
+    const hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
 
     const isBYOCForm = this.isByocForm();
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
@@ -126,7 +127,7 @@ class CreateOSDForm extends React.Component {
               openModal={openModal}
               toggleBYOCFields={this.toggleBYOCFields}
               hasBYOCquota={hasBYOCQuota}
-              hasStandardQuota={hasAwsRhInfraQuota}
+              hasStandardQuota={hasRhInfraQuota}
               byocSelected={isBYOCForm}
             />
           </>

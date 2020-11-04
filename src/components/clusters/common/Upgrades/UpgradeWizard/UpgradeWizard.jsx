@@ -6,6 +6,7 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/component
 import VersionSelectionGrid from './VersionSelectionGrid';
 import UpgradeTimeSelection from './UpgradeTimeSelection';
 import FinishedStep from './FinishedStep';
+import './UpgradeWizard.scss';
 
 class UpgradeWizard extends React.Component {
   state = {
@@ -129,6 +130,8 @@ class UpgradeWizard extends React.Component {
         component: (
           <FinishedStep
             onClose={this.closeWizard}
+            scheduleType={scheduleType}
+            upgradeTimestamp={upgradeTimestamp}
             requestStatus={upgradeScheduleRequest}
             close={this.close}
           />),

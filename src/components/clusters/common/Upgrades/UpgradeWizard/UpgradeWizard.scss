@@ -1,0 +1,38 @@
+.cluster-upgrade-dl {
+  padding: 20px 0;
+  dt {
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
+    margin-right: 14px;
+  }
+  dd {
+    margin-bottom: 24px;
+    font-size: 16px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  dd > dl > dd {
+    margin-bottom: var(--pf-global--spacer--sm);
+  }
+}
+
+.upgrade-schedule-datepicker {
+  .react-datepicker-wrapper, .react-datepicker__tab-loop, .pf-c-select {
+    display: inline-block;
+  }
+  .react-datepicker-wrapper, .pf-c-select {
+    width: 20%;
+  }
+  .pf-c-select {
+    margin-left: var(--pf-global--spacer--xl);
+    > ul {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+  }
+}
+
+.cluster-upgrade-version-selection-grid {
+  margin-top: var(--pf-global--gutter--md);
+}

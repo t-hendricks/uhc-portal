@@ -567,9 +567,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .ipi-upi-infra-card {
-  .create-cluster-favorite-btn-container {
-    height: 22px;
-  }
+  align-items: initial;
   .ipi-upi-infra-logo {
     color: var(--pf-global--primary-color--100);
     font-size: 6em; // --pf-global--icon--FontSize—xl (x2)
@@ -661,48 +659,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .create-osd-form-button-split {
   margin-top: 20px;
 }
-
-// Custom component FlatRadioButton
-.pf-c-button.ocm-flat-radio-button {
-  &.pf-m-tertiary::after { // specific selector to override PF4 button
-    border-width: var(--pf-global--BorderWidth--sm);
-    border-color: var(--pf-global--Color--100);
-  }
-  text-align: left;
-  width: 100%;
-  color: var(--pf-global--Color--100);
-  h4 {
-    margin-bottom: 0;
-  }
-
-  &:hover, &.selected {
-    // hover+selected colors
-    &.pf-m-tertiary::after {
-      border-color: var(--pf-global--active-color--100);
-      border-width: var(--pf-global--BorderWidth--md);
-    }
-    .ocm-flat-button-icon svg, h4 {
-      color: var(--pf-global--active-color--100);
-    }
-  }
-
-  &.selected.pf-m-tertiary::after {
-    // wider border for selected
-    border-width: var(--pf-global--BorderWidth--lg);
-  }
-
-  &:disabled {
-    // disabled styles
-    .pf-l-split, .ocm-flat-button-icon svg, h4.pf-c-title {
-      color: var(--pf-global--disabled-color--100);
-    }
-    &.pf-m-tertiary::after {
-      border-width: 0;
-    }
-    background-color: var(--pf-global--disabled-color--200);
-  }
-}
-// end FlatRadioButton related styles
 
 // Enable word wrapping in tooltips, this is useful in case of extremely long cluster names
 .pf-c-tooltip__content {
@@ -834,46 +790,6 @@ span.dev-preview-label svg {
 .show-active-clusters-link {
   margin-top: 6px;
 }
-#subscriptions-content {
-  .pf-c-card {
-    margin-bottom: var(--pf-global--spacer--lg);
-  }
-  .osd-table-container {
-    overflow-x: auto;
-  }
-  table {
-    margin-top: var(--pf-global--spacer--md);
-  }
-  .warn-icon {
-    fill: var(--pf-global--warning-color--100);
-  }
-  .section-header {
-    font-size: var(--pf-global--FontSize--lg);
-    font-weight: 400;
-    padding-bottom: 0;
-  }
-  .section-text {
-    margin-top: var(--pf-global--spacer--sm);
-    padding-bottom: 0;
-  }
-  .content-header {
-    font-size: var(--pf-global--FontSize--md);
-    font-weight: 700;
-    margin-top: var(--pf-global--spacer--lg);
-    margin-bottom: 0;
-  }
-  .quota-table-used, .quota-table-max {
-    word-break: normal;
-  }
-  .ocp-list {
-    padding-left: 50px;
-    margin: 16px 0 16px 0;
-    li { padding-left: 10px; }
-  }
-  .subscriptions-empty-state {
-    background-color: white;
-  }
-}
 
 .subscription-settings {
   &.form {
@@ -976,29 +892,6 @@ h3#grant-role-select  {
 
 .idp-oauth-url-label {
   padding-bottom: var(--pf-global--spacer--sm);
-}
-
-.co-btn-file {
-  // from https://github.com/openshift/console/blob/master/frontend/public/components/utils/_file-input.scss
-  // allows hiding the file input in such a way that it'd be visually hidden, but accessible to screen readers / assistive technologies
-  overflow: hidden;
-  position: relative;
-  input[type=file] {
-    background: white;
-    cursor: inherit;
-    display: block;
-    filter: alpha(opacity=0);
-    font-size: 100px;
-    min-height: 100%;
-    min-width: 100%;
-    opacity: 0;
-    outline: none;
-    position: absolute;
-    right: 0;
-    text-align: right;
-    top: 0;
-    z-index: 2;
-  }
 }
 
 .idp-helptext-heading {
@@ -1110,90 +1003,6 @@ h3#grant-role-select  {
   }
 }
 
-#overview-emptystate-bg-img-container {
-  margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
-  margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
-  margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
-  height: 418px;
-  background: url('./images/Headers-Red_Hat-ClusterManager-O2.svg');
-  background-position-x: right;
-  background-repeat: no-repeat;
-  background-color: black;
-  h1 {
-    top: 25%;
-    position: relative;
-    color: #fff;
-  }
-  h2 {
-    top: 35%;
-    position: relative;
-    color: #f0f0f0;
-  }
-  a {
-    top: 45%;
-    position: relative;
-    display: block;
-    text-decoration: none;
-  }
-  span {
-    background-color: #fff;
-    color: #000000;
-    font-size: var(--pf-global--FontSize--md);
-    font-weight: 700;
-    width: 250px;
-    height: 72px;
-    padding-top: var(--pf-global--spacer--md);
-    padding-bottom: var(--pf-global--spacer--md);
-    padding-right: var(--pf-global--spacer--lg);
-    padding-left: var(--pf-global--spacer--lg);
-    border-radius: 4px;
-  }
-}
-
-.dashboard-emptystate-card{
-  max-width: 570px;
-}
-
-#dashboard-emptystate-osd{
-  padding-bottom: var(--pf-global--spacer--lg);
-}
-
-#overview-emptystate-get-productive .flex-pair{
-  div{
-    margin-bottom: var(--pf-global--spacer--lg);
-    @media (max-width: 480px) {
-      width: 338px;
-    }
-    @media (min-width: 481px) and (max-width: 768px) {
-      width: 520px;
-    }
-    @media (min-width: 779px) and (max-width: 1199px){
-      width: 463px;
-    }
-  }
-  div:first-child{
-      @media (min-width: 1023px) {
-      margin-right: var(--pf-global--spacer--lg);
-    }
-  }
-}
-
-.dashboard-emptystate-card .pf-c-card__body {
-  a {
-    display: block;
-    margin-top: 16px;
-  }
-
-  .pf-c-button {
-    padding-left: 0;
-  }
-
-  .pf-c-button > .pf-c-button__icon {
-    float: right;
-    margin-left: 5px;
-  }
-}
-
 .space-top-lg {
   margin-top: var(--pf-global--spacer--lg);
  }
@@ -1213,36 +1022,6 @@ h3#grant-role-select  {
  .space-bottom-md {
   margin-bottom: var(--pf-global--spacer--md);
  }
-
-#emptystate-learn-more {
-  display: flex;
-  flex-wrap: wrap;
-
-  iframe {
-    min-height: 375px;
-  }
-
-  .pf-c-list{
-   list-style: none;
-  }
-
-  div:first-child{
-    @media (max-width: 769px) {
-      margin-bottom: var(--pf-global--spacer--lg);
-    }
-    @media (min-width: 737px) {
-      margin-right: var(--pf-global--spacer--lg);
-    }
-  }
-}
-
-#request-information-btn {
-  text-decoration: none;
-  button {
-    display: block;
-    margin-top: var(--pf-global--spacer--md);
-  }
-}
 
 .small-donut-chart-container {
   max-height: 205px;
@@ -1305,20 +1084,6 @@ div.pf-c-alert div.pf-c-alert__icon {
   }
 }
 
-.title-with-link {
-  .show-on-hover {
-    display: none;
-  }
-
-  &:hover .show-on-hover {
-    display: block;
-  }
-
-  svg {
-    vertical-align: -0.5em !important;
-  }
-}
-
 .terms-and-conditions-guard-modal {
   footer > a:hover, a:focus, a:visited {
     // the modal uses an <a> for primary button so override the conflicting css.
@@ -1329,43 +1094,4 @@ div.pf-c-alert div.pf-c-alert__icon {
 .support-subtitle {
   font-size: var(--pf-global--FontSize--md);
   font-weight: var(--pf-global--FontWeight--light);
-}
-
-.upgrade-schedule-datepicker {
-  .react-datepicker-wrapper, .react-datepicker__tab-loop, .pf-c-select {
-    display: inline-block;
-  }
-  .react-datepicker-wrapper, .pf-c-select {
-    width: 20%;
-  }
-  .pf-c-select {
-    margin-left: var(--pf-global--spacer--xl);
-    > ul {
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    .pf-c-select__toggle-icon {
-      position: absolute;
-      right: 34px;
-    }
-  }
-}
-
-.cluster-upgrade-dl {
-  padding: 20px 0;
-  dt {
-    font-weight: bold;
-    font-size: 14px;
-    display: inline-block;
-    margin-right: 14px;
-  }
-  dd {
-    margin-bottom: 24px;
-    font-size: 16px;
-    display: inline-block;
-    vertical-align: top;
-  }
-  dd > dl > dd {
-    margin-bottom: var(--pf-global--spacer--sm);
-  }
 }

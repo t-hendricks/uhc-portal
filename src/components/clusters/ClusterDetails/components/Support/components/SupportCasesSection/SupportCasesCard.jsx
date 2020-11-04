@@ -35,7 +35,7 @@ class SupportCasesCard extends React.Component {
       { title: 'Status' },
     ];
 
-    const url = `https://access.redhat.com/support/cases/#/case/new/open-case?clusterId=${clusterUUID}&caseCreate=true`;
+    const url = `https://access.redhat.com/support/cases/#/case/new?clusterId=${clusterUUID}&caseCreate=true`;
 
     const supportCaseRow = (supportCase) => {
       const caseIdURL = `https://access.redhat.com/support/cases/#/case/${supportCase.caseID}`;

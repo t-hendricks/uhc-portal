@@ -1,0 +1,39 @@
+.pf-c-button.ocm-flat-radio-button {
+  &.pf-m-tertiary::after { // specific selector to override PF4 button
+    border-width: var(--pf-global--BorderWidth--sm);
+    border-color: var(--pf-global--Color--100);
+  }
+  text-align: left;
+  width: 100%;
+  color: var(--pf-global--Color--100);
+  h4 {
+    margin-bottom: 0;
+  }
+
+  &:hover, &.selected {
+    // hover+selected colors
+    &.pf-m-tertiary::after {
+      border-color: var(--pf-global--active-color--100);
+      border-width: var(--pf-global--BorderWidth--md);
+    }
+    .ocm-flat-button-icon svg, h4 {
+      color: var(--pf-global--active-color--100);
+    }
+  }
+
+  &.selected.pf-m-tertiary::after {
+    // wider border for selected
+    border-width: var(--pf-global--BorderWidth--lg);
+  }
+
+  &:disabled {
+    // disabled styles
+    .pf-l-split, .ocm-flat-button-icon svg, h4.pf-c-title {
+      color: var(--pf-global--disabled-color--100);
+    }
+    &.pf-m-tertiary::after {
+      border-width: 0;
+    }
+    background-color: var(--pf-global--disabled-color--200);
+  }
+}

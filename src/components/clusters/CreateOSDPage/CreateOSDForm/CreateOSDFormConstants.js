@@ -10,6 +10,9 @@ const constants = {
   computeNodeCountHint: `The number of compute, or worker, nodes to provision per zone.
     Single zone clusters require a minimum of 4 nodes, while multizone clusters require
     a minimum of 3 compute nodes per zone (9 total) for resiliency.`,
+  computeNodeCountHintCCS: `The number of compute, or worker, nodes to provision per zone.
+    Single zone clusters require a minimum of 2 nodes, while multizone clusters require
+    a minimum of 1 compute node per zone (3 total) for resiliency.`,
   machineCIDRHint: `A block of IP addresses used by the OpenShift Container Platform installation
     program while installing the cluster. The address block must not overlap with any other network
     block.`,

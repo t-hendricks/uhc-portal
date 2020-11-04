@@ -5,6 +5,8 @@ import {
 } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 
+import './FlatRadioButton.scss';
+
 const BASE_CLASS_NAME = 'ocm-flat-radio-button';
 
 function FlatRadioButton({

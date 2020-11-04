@@ -4,6 +4,7 @@ import { Button, Tooltip } from '@patternfly/react-core';
 import { PasteIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Download from '@axetroy/react-download';
+import isEmpty from 'lodash/isEmpty';
 
 import { trackPendo } from '../../../../../common/helpers';
 
@@ -29,7 +30,7 @@ class PullSecretSection extends React.Component {
 
   render() {
     const { token, pendoID, text } = this.props;
-    const isDisabled = (!token || !!token.error);
+    const isDisabled = (!token || !!token.error || isEmpty(token));
     const { clicked } = this.state;
     const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
     const downloadButton = (

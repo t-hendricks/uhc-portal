@@ -59,9 +59,16 @@ class TabsRow extends React.Component {
         className={isDisabled ? 'disabled-tabs' : ''}
         activeKey={activeTabKey}
         onSelect={this.handleTabClick}
+        ouiaId="rule_details_tab"
       >
         {this.getTabs().map(tab => (
-          <Tab key={tab.key} eventKey={tab.key} title={tab.title} tabContentId={tab.contentId} />
+          <Tab
+            key={tab.key}
+            eventKey={tab.key}
+            title={tab.title}
+            ouiaId={tab.title}
+            tabContentId={tab.contentId}
+          />
         ))}
       </Tabs>
     );

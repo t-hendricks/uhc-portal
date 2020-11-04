@@ -8,6 +8,7 @@ import {
   Button,
 } from '@patternfly/react-core';
 import PopoverHint from '../../../../../common/PopoverHint';
+import './CAUpload.scss';
 
 const MAX_FILE_SIZE = 4000000; // 4MB
 

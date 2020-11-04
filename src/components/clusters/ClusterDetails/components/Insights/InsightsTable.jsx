@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Card, CardBody, EmptyStateIcon,
 } from '@patternfly/react-core';
-import { cellWidth } from '@patternfly/react-table';
+import { cellWidth, RowWrapper } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import RuleTable from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
 import ReportDetails from '@redhat-cloud-services/rule-components/dist/cjs/ReportDetails';
@@ -245,6 +245,26 @@ class InsightsTable extends React.Component {
       sortBy,
     } = this.state;
 
+
+    function getShownDataForRow(rowIndex) {
+      if (rowIndex % 2 !== 0) {
+        return null;
+      }
+
+      const realRowIndex = rowIndex / 2;
+
+      if (typeof shownData[realRowIndex] === 'undefined') {
+        return null;
+      }
+
+      return shownData[realRowIndex];
+    }
+
+    const customRowWrapper = ({ ...props }) => (
+      /* eslint-disable-next-line camelcase */
+      <RowWrapper {...props} ouiaId={getShownDataForRow(props.rowProps.rowIndex)?.rule_id} />
+    );
+
     return (
       <div id="cluster-insights-table">
         <AnalysisSummary
@@ -256,6 +276,8 @@ class InsightsTable extends React.Component {
         <Card>
           <CardBody className="no-padding">
             <RuleTable
+              ouiaId="rules"
+              rowWrapper={customRowWrapper}
               rules={{
                 meta,
                 data: shownData,
@@ -321,19 +343,13 @@ class InsightsTable extends React.Component {
                 />
               )}
               actionResolver={(rowData, { rowIndex }) => {
-                // we gotta do this trick
-                // since Patternfly considers row details as another row
-                if (rowIndex % 2 !== 0) {
+                const shownDataForRow = getShownDataForRow(rowIndex);
+
+                if (shownDataForRow === null) {
                   return null;
                 }
 
-                const realRowIndex = rowIndex / 2;
-
-                if (typeof shownData[realRowIndex] === 'undefined') {
-                  return null;
-                }
-
-                const { rule_id: ruleId, disabled } = shownData[realRowIndex];
+                const { rule_id: ruleId, disabled } = shownDataForRow;
 
                 return [{
                   title: `${disabled ? 'Enable' : 'Disable'} health check`,

@@ -210,5 +210,8 @@ exports[`<AddOns /> should render 1`] = `
       </CardFooter>
     </Card>
   </Gallery>
+  <Connect(ReduxForm)
+    clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
+  />
 </div>
 `;
