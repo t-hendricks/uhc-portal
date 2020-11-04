@@ -22,7 +22,7 @@ import get from 'lodash/get';
 import OCPSubscriptionCard from './OCPSubscriptionCard';
 import OSDSubscriptionCard from './OSDSubscriptionCard';
 import SubscriptionNotFulfilled from './SubscriptionNotFulfilled';
-
+import './Subscriptions.scss';
 
 class Subscriptions extends Component {
   componentDidMount() {
