@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { Button } from '@patternfly/react-core';
+import { Button, Popover } from '@patternfly/react-core';
+import { OutlinedQuestionCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import './ClusterVersionInfo.scss';
 import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
-
+import UpdateGraph from './UpdateGraph/UpdateGraph';
 
 class ClusterVersionInfo extends React.Component {
+  state = {
+    popoverOpen: false,
+  };
+
   componentDidMount() {
     const { cluster, getSchedules } = this.props;
     if (cluster && cluster.id && cluster.managed) {
@@ -42,6 +48,7 @@ class ClusterVersionInfo extends React.Component {
     const {
       cluster, versionInfo, openModal, schedules,
     } = this.props;
+    const { popoverOpen } = this.state;
     const clusterVersion = cluster.openshift_version || 'N/A';
     const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
     const channel = get(cluster, 'metrics.channel');
@@ -69,20 +76,52 @@ class ClusterVersionInfo extends React.Component {
           <div>
             <dt>Upgrade scheduled: </dt>
             <dd>
-              <DateFormat type="exact" date={Date.parse(scheduledManualUpdate.next_run)} />
-              {' '}
-              {
-                scheduledManualUpdate.state?.value === 'started'
-                  ? '(Started)'
-                  : cluster.canEdit && (
-                    <Button
-                      variant="link"
-                      onClick={() => openModal('cancel-upgrade', { clusterID: cluster.id, schedule: scheduledManualUpdate })}
-                    >
-                       Cancel this upgrade
-                    </Button>
-                  )
-              }
+              <Popover
+                headerContent="Update status"
+                isVisible={popoverOpen}
+                shouldOpen={() => this.setState({ popoverOpen: true })}
+                shouldClose={() => this.setState({ popoverOpen: false })}
+                bodyContent={(
+                  <>
+                    <div>
+                      <OutlinedArrowAltCircleUpIcon className="update-available" />
+                      {' '}
+                    Update available
+                      <UpdateGraph
+                        currentVersion={cluster.openshift_version}
+                        updateVersion={scheduledManualUpdate.version}
+                      />
+                      <div className="title">Update scheduled</div>
+                      <DateFormat type="exact" date={Date.parse(scheduledManualUpdate.next_run)} />
+                      {' '}
+                      {
+                        scheduledManualUpdate.state?.value === 'started'
+                          ? '(Started)' : ''
+                      }
+                    </div>
+                    {
+                      cluster.canEdit && (
+                        <Button
+                          id="scheduled-update-popover-cancel"
+                          variant="link"
+                          onClick={() => {
+                            this.setState({ popoverOpen: false });
+                            openModal('cancel-upgrade', { clusterID: cluster.id, schedule: scheduledManualUpdate });
+                          }}
+                        >
+                           Cancel this upgrade
+                        </Button>
+                      )
+                    }
+                  </>
+                )}
+              >
+                <Button variant="link">
+                View details
+                  {' '}
+                  <OutlinedQuestionCircleIcon />
+                </Button>
+              </Popover>
             </dd>
           </div>
         )}
