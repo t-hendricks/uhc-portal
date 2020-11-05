@@ -122,68 +122,46 @@ const processQuota = (response) => {
      This is done here to ensure the calculation is done every time we get the quota,
      and that we won't have to replicate it across different components
      which might need to query this data. */
+
+  const clustersQuotaByAz = () => ({
+    singleAz: { available: 0 },
+    multiAz: { available: 0 },
+    totalAvailable: 0,
+  });
+  const clustersQuotaByInfraAz = () => ({
+    byoc: clustersQuotaByAz(),
+    rhInfra: clustersQuotaByAz(),
+    isAvailable: false,
+  });
+  const clustersQuotaByProviderInfraAz = () => ({
+    aws: clustersQuotaByInfraAz(),
+    gcp: clustersQuotaByInfraAz(),
+  });
+
+  const nodesQuotaByInfra = () => ({
+    byoc: { available: 0 },
+    rhInfra: { available: 0 },
+  });
+  const nodesQuotaByProviderInfra = () => ({
+    aws: nodesQuotaByInfra(),
+    gcp: nodesQuotaByInfra(),
+  });
+
+  const storageQuotaByProvider = () => ({
+    aws: { available: 0 },
+    gcp: { available: 0 },
+  });
+
+  const loadBalancerQuotaByProvider = () => ({
+    aws: { available: 0 },
+    gcp: { available: 0 },
+  });
+
   const allQuotas = {
-    // Cluster quota
-    clustersQuota: {
-      // AWS
-      aws: {
-        byoc: {
-          singleAz: { available: 0 },
-          multiAz: { available: 0 },
-          totalAvailable: 0,
-        },
-        rhInfra: {
-          singleAz: { available: 0 },
-          multiAz: { available: 0 },
-          totalAvailable: 0,
-        },
-        isAvailable: false,
-      },
-
-      // GCP
-      gcp: {
-        rhInfra: {
-          singleAz: { available: 0 },
-          multiAz: { available: 0 },
-          totalAvailable: 0,
-        },
-        byoc: {
-          singleAz: { available: 0 },
-          multiAz: { available: 0 },
-          totalAvailable: 0,
-        },
-        isAvailable: false,
-      },
-    },
-
-    // Node quota
-    nodesQuota: {
-      // AWS
-      aws: {
-        byoc: { available: 0 },
-        rhInfra: { available: 0 },
-      },
-
-      // GCP
-      gcp: {
-        byoc: { available: 0 },
-        rhInfra: { available: 0 },
-      },
-    },
-
-    // Storage
-    storageQuota: {
-      aws: { available: 0 },
-      gcp: { available: 0 },
-    },
-
-    // Load balancers
-    loadBalancerQuota: {
-      aws: { available: 0 },
-      gcp: { available: 0 },
-    },
-
-    // Add ons
+    clustersQuota: clustersQuotaByProviderInfraAz(),
+    nodesQuota: nodesQuotaByProviderInfra(),
+    storageQuota: storageQuotaByProvider(),
+    loadBalancerQuota: loadBalancerQuotaByProvider(),
     addOnsQuota: {},
   };
 
