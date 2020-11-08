@@ -24,6 +24,7 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
       "pending": false,
     }
   }
+  product="OSD"
   quota={Object {}}
 >
   <div
@@ -122,6 +123,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       "pending": false,
     }
   }
+  product="OSD"
   quota={
     Object {
       "clustersQuota": Object {
@@ -222,6 +224,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       isSelected={false}
       key="r5.xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -241,6 +244,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         id="machineTypeRadio.r5.xlarge"
         isDisabled={true}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
@@ -253,6 +257,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           disabled={true}
           id="machineTypeRadio.r5.xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           tabIndex={null}
           type="button"
@@ -337,6 +342,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       isSelected={false}
       key="r5.4xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -356,6 +362,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         id="machineTypeRadio.r5.4xlarge"
         isDisabled={true}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
@@ -368,6 +375,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           disabled={true}
           id="machineTypeRadio.r5.4xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           tabIndex={null}
           type="button"
@@ -527,6 +535,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       "pending": false,
     }
   }
+  product="OSD"
   quota={
     Object {
       "clustersQuota": Object {
@@ -627,6 +636,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       isSelected={false}
       key="r5.xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -646,6 +656,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         id="machineTypeRadio.r5.xlarge"
         isDisabled={false}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
@@ -658,6 +669,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           disabled={false}
           id="machineTypeRadio.r5.xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           type="button"
         >
@@ -741,6 +753,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       isSelected={false}
       key="r5.4xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -760,6 +773,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         id="machineTypeRadio.r5.4xlarge"
         isDisabled={true}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
@@ -772,6 +786,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           disabled={true}
           id="machineTypeRadio.r5.4xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           tabIndex={null}
           type="button"
@@ -930,6 +945,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       "pending": false,
     }
   }
+  product="OSD"
   quota={
     Object {
       "clustersQuota": Object {
@@ -1009,6 +1025,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       isSelected={false}
       key="r5.xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -1028,6 +1045,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
         id="machineTypeRadio.r5.xlarge"
         isDisabled={false}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
@@ -1040,6 +1058,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           disabled={false}
           id="machineTypeRadio.r5.xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           type="button"
         >
@@ -1123,6 +1142,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       isSelected={false}
       key="r5.4xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -1204,6 +1224,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                 id="machineTypeRadio.r5.4xlarge"
                 isDisabled={true}
                 onClick={[Function]}
+                product="OSD"
                 variant="tertiary"
               >
                 <Split
@@ -1254,6 +1275,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                 id="machineTypeRadio.r5.4xlarge"
                 isDisabled={true}
                 onClick={[Function]}
+                product="OSD"
                 variant="tertiary"
               >
                 <button
@@ -1266,6 +1288,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                   disabled={true}
                   id="machineTypeRadio.r5.4xlarge"
                   onClick={[Function]}
+                  product="OSD"
                   role={null}
                   tabIndex={null}
                   type="button"
@@ -1369,6 +1392,7 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
       "pending": false,
     }
   }
+  product="OSD"
   quota={Object {}}
 >
   <div
@@ -1419,6 +1443,7 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
       "pending": false,
     }
   }
+  product="OSD"
   quota={Object {}}
 >
   <ErrorBox

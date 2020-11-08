@@ -30,6 +30,7 @@ describe('<MachineTypeSelection />', () => {
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          product="OSD"
         />,
       );
     });
@@ -58,6 +59,7 @@ describe('<MachineTypeSelection />', () => {
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          product="OSD"
         />,
       );
     });
@@ -87,6 +89,7 @@ describe('<MachineTypeSelection />', () => {
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          product="OSD"
         />,
       );
     });
@@ -226,6 +229,7 @@ describe('<MachineTypeSelection />', () => {
             organization={organizationState}
             isMultiAz
             cloudProviderID="aws"
+            product="OSD"
           />,
         );
       });
@@ -288,6 +292,7 @@ describe('<MachineTypeSelection />', () => {
             isMultiAz
             isBYOC
             cloudProviderID="aws"
+            product="OSD"
           />,
         );
       });
@@ -350,6 +355,7 @@ describe('<MachineTypeSelection />', () => {
             isMultiAz
             isBYOC
             cloudProviderID="aws"
+            product="OSD"
           />,
         );
       });

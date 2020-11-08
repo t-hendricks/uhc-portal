@@ -13,10 +13,20 @@ const processClusterQuota = (clustersQuota, item, resources) => {
   const available = item.allowed - item.consumed;
 
   resources.forEach((resource) => {
-    const cloudProvider = resource.cloud_provider;
+    const {
+      availability_zone_type: availabilityZoneType,
+      cloud_provider: cloudProvider,
+      resource_name: machineType,
+      product,
+    } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
-    const availabilityZoneType = resource.availability_zone_type;
-    const machineType = resource.resource_name;
+
+    // TODO: Honor cost field, specifically cost=0.
+    // TODO: Split data structure by product (https://issues.redhat.com/browse/SDA-3231).
+    //       Until then, ignore ROSA to avoid collision with OSD CCS.
+    if (['MOA', 'ROSA'].includes(product)) {
+      return;
+    }
 
     // Since quota can apply to either AWS or GCP, or "any", we compare an exact match or an
     // "any" match. If the quota applies to a specific cloud provider, we add it there. If it
@@ -53,9 +63,18 @@ const processNodeQuota = (nodesQuota, item, resources) => {
   const available = item.allowed - item.consumed;
 
   resources.forEach((resource) => {
-    const cloudProvider = resource.cloud_provider;
+    const {
+      cloud_provider: cloudProvider,
+      resource_name: machineType,
+      product,
+    } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
-    const machineType = resource.resource_name;
+
+    // TODO: split data structure by product (https://issues.redhat.com/browse/SDA-3231).
+    //       Until then, ignore ROSA to avoid collision with OSD CCS.
+    if (['MOA', 'ROSA'].includes(product)) {
+      return;
+    }
 
     Object.keys(quota).forEach((provider) => {
       if (cloudProvider === provider || cloudProvider === 'any') {

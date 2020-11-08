@@ -6,12 +6,11 @@ import {
   FormGroup,
   Tooltip,
 } from '@patternfly/react-core';
-import get from 'lodash/get';
 import range from 'lodash/range';
-import floor from 'lodash/floor';
 
 import PopoverHint from '../../../common/PopoverHint';
 import { noQuotaTooltip } from '../../../../common/helpers';
+import { availableNodesFromQuota } from '../quotaSelectors';
 
 const MAX_NODES = 180;
 
@@ -53,22 +52,23 @@ class NodeCountInput extends React.Component {
       isByoc,
       machineType,
       machineTypesByID,
-      isMachinePool,
+      cloudProviderID,
+      product,
     } = this.props;
 
-    const infraType = isByoc ? 'byoc' : 'rhInfra';
     const machineTypeResource = machineTypesByID[machineType];
     if (!machineTypeResource) {
       return 0;
     }
+    const resourceName = machineTypeResource.resource_name;
 
-    if (isByoc || isMachinePool) {
-      const available = get(quota, `${infraType}['${machineTypeResource.resource_name}']['available']`, 0);
-      const cost = get(quota, `${infraType}['${machineTypeResource.resource_name}']['cost']`, 0);
-      return floor(available / cost);
-    }
-
-    return get(quota, `${infraType}['${machineTypeResource.resource_name}']['available']`, 0);
+    const quotaParams = {
+      product,
+      cloudProviderID,
+      isBYOC: isByoc,
+      resourceName,
+    };
+    return availableNodesFromQuota(quota, quotaParams);
   }
 
   render() {
@@ -161,8 +161,7 @@ NodeCountInput.propTypes = {
   helpText: PropTypes.string,
   extendedHelpText: PropTypes.string,
   quota: PropTypes.shape({
-    byoc: PropTypes.object,
-    rhInfra: PropTypes.object,
+    nodesQuota: PropTypes.object,
   }).isRequired,
   isByoc: PropTypes.bool,
   isMachinePool: PropTypes.bool,
@@ -175,6 +174,8 @@ NodeCountInput.propTypes = {
     onChange: PropTypes.func.isRequired,
   }),
   cloudProviderID: PropTypes.string.isRequired,
+  // For quota purposes, product is subscription.plan.id, not cluster.product.id.
+  product: PropTypes.string.isRequired,
 };
 
 export default NodeCountInput;
