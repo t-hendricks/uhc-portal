@@ -4,7 +4,10 @@ import get from 'lodash/get';
 import startCase from 'lodash/startCase';
 import {
   Card,
-  CardBody, CardTitle,
+  CardBody,
+  CardTitle,
+  Stack,
+  StackItem,
 } from '@patternfly/react-core';
 import {
   ExclamationTriangleIcon,
@@ -16,7 +19,6 @@ import {
 
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 import OSDSubscriptionTable from './OSDSubscriptionTable';
-
 
 class OSDSubscriptionCard extends Component {
   componentDidMount() {
@@ -70,8 +72,12 @@ class OSDSubscriptionCard extends Component {
       ]);
       content = (
         <>
-          <h4 className="content-header">Quota</h4>
-          <OSDSubscriptionTable rows={rows} />
+          <StackItem className="content-header">
+            Quota
+          </StackItem>
+          <StackItem className="table-container">
+            <OSDSubscriptionTable rows={rows} />
+          </StackItem>
         </>
       );
     } else {
@@ -86,13 +92,15 @@ class OSDSubscriptionCard extends Component {
 
     return (
       <Card>
-        <CardTitle className="section-header">OpenShift Dedicated</CardTitle>
-        <CardBody className="section-text">
-        The summary of all subscriptions for OpenShift Dedicated
-        purchased by your organization or granted by Red Hat.
-        </CardBody>
-        <CardBody className="osd-table-container">
-          {content}
+        <CardTitle>OpenShift Dedicated</CardTitle>
+        <CardBody>
+          <Stack hasGutter>
+            <StackItem>
+              The summary of all subscriptions for OpenShift Dedicated purchased
+              by your organization or granted by Red Hat.
+            </StackItem>
+            {content}
+          </Stack>
         </CardBody>
       </Card>
     );

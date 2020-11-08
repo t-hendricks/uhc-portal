@@ -9,16 +9,15 @@ import orderBy from 'lodash/orderBy';
 
 import PopoverHint from '../../common/PopoverHint';
 
-
 function OSDSubscriptionTable({ rows, children }) {
   const sortedRows = orderBy(rows, [0, 1]).map(cells => ({ cells }));
   const tipText = (
     <>
       <p>
-      Standard: Cluster infrastructure costs paid by Red Hat
+        Standard: Cluster infrastructure costs paid by Red Hat
       </p>
       <p>
-      CCS: Cluster infrastructure costs paid by the customer
+        CCS: Cluster infrastructure costs paid by the customer
       </p>
     </>
   );
