@@ -460,7 +460,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 };
 
 .ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .aws-ipi-upi-infra-card {
-  flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
+  flex: 0 0 380px;
   margin: 20px;
 }
 
@@ -501,7 +501,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .pf-c-card__body.infra-card-placeholder {
-  flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
+  flex: 0 0 380px;
   margin: 20px;
   padding: 20px;
   display: flex;
@@ -897,18 +897,6 @@ button:focus {
 a.overview-clusters-link:hover {
   text-decoration: none;
 }
-
-/* TEMPORARY WORKAROUND for PatternFly 4 upgrade
-
-styles from the Chrome (which wasn't updated yet) were overriding the padding on the new alert.
-
-Once the Insights Chrome updates, this won't be needed.
-*/
-div.pf-c-alert div.pf-c-alert__icon {
-  padding: 0 !important;
-}
-
-/* END TEMPORARY WORKAROUND */
 
 .ins-c-empty-state__unavailable .pf-c-empty-state__icon {
   color: var(--pf-global--danger-color--100);
