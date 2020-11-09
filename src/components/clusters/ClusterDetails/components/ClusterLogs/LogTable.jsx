@@ -23,6 +23,7 @@ import {
   TableVariant,
 } from '@patternfly/react-table';
 import { SearchIcon } from '@patternfly/react-icons';
+import './LogTable.scss';
 
 const columns = [
   {

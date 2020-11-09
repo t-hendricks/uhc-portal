@@ -6,6 +6,7 @@ import {
 import { Unavailable as FcUnavailable } from '@redhat-cloud-services/frontend-components';
 import * as Sentry from '@sentry/browser';
 import { formatErrorDetails } from '../../common/errors';
+import './Unavailable.scss';
 
 class Unavailable extends React.Component {
   componentDidMount() {

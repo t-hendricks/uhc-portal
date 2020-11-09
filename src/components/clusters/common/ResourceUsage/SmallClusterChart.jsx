@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { ChartDonut } from '@patternfly/react-charts';
 
 import { humanizeValueWithUnit, roundValueWithUnit } from '../../../../common/units';
+import './SmallClusterChart.scss';
 
 function SmallClusterChart(props) {
   const {

@@ -13,6 +13,7 @@ import ScaleSection from './FormSections/ScaleSection/ScaleSection';
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
 // import ExternalLink from '../../../common/ExternalLink';
 import { required } from '../../../../common/validators';
+import './CreateOSDForm.scss';
 
 class CreateOSDForm extends React.Component {
   state = {

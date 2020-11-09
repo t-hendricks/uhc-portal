@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FlatRadioButton from '../../../../../common/FlatRadioButton';
 import { billingModelConstants } from '../../CreateOSDFormConstants';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
+import './BillingModelRadioButtons.scss';
 
 function BillingModelRadioButtons({
   hasBYOCquota, hasStandardQuota, input: { onChange }, byocSelected,

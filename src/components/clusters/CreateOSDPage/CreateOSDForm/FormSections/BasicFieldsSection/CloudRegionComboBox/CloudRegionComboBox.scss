@@ -1,0 +1,6 @@
+// .pf-c-content puts bullets and padding on the uls in select -- override that
+.cloud-region-combo-box ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
