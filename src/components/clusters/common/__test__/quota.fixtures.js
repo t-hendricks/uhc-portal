@@ -41,7 +41,7 @@ const dedicatedRhInfra = [
   },
 ];
 
-const dedicatedBYOC = [
+const dedicatedCCS = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
@@ -125,6 +125,6 @@ const unlimitedROSA = [
 
 export {
   dedicatedRhInfra,
-  dedicatedBYOC,
+  dedicatedCCS,
   unlimitedROSA,
 };
