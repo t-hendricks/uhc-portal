@@ -82,7 +82,7 @@ const dedicatedBYOC = [
   },
 ];
 
-const unlimitedMOA = [
+const unlimitedROSA = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1H1PQMDtwzAUsjPxgoWRjhSpNGD/quota_cost',
@@ -126,5 +126,5 @@ const unlimitedMOA = [
 export {
   dedicatedRhInfra,
   dedicatedBYOC,
-  unlimitedMOA,
+  unlimitedROSA,
 };
