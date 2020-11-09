@@ -56,7 +56,9 @@ class ClusterVersionInfo extends React.Component {
                         && versionInfo.availableUpgrades.length > 0
                         && cluster.managed;
 
-    const scheduledManualUpdate = schedules.items.find(schedule => schedule.schedule_type === 'manual' && schedule.version !== cluster.openshift_version);
+    const scheduledUpdate = schedules.items.find(
+      schedule => schedule.version !== cluster.openshift_version,
+    );
 
     return (
       <dl className="cluster-details-item-list">
@@ -69,10 +71,10 @@ class ClusterVersionInfo extends React.Component {
           <ClusterUpdateLink
             cluster={cluster}
             openModal={openModal}
-            osdUpgradeAvailable={hasUpgrades && !scheduledManualUpdate && schedules.fulfilled}
+            osdUpgradeAvailable={hasUpgrades && !scheduledUpdate && schedules.fulfilled}
           />
         </dd>
-        { scheduledManualUpdate && (
+        { scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (
           <div>
             <dt>Upgrade scheduled: </dt>
             <dd>
@@ -89,13 +91,13 @@ class ClusterVersionInfo extends React.Component {
                     Update available
                       <UpdateGraph
                         currentVersion={cluster.openshift_version}
-                        updateVersion={scheduledManualUpdate.version}
+                        updateVersion={scheduledUpdate.version}
                       />
                       <div className="title">Update scheduled</div>
-                      <DateFormat type="exact" date={Date.parse(scheduledManualUpdate.next_run)} />
+                      <DateFormat type="exact" date={Date.parse(scheduledUpdate.next_run)} />
                       {' '}
                       {
-                        scheduledManualUpdate.state?.value === 'started'
+                        scheduledUpdate.state?.value === 'started'
                           ? '(Started)' : ''
                       }
                     </div>
@@ -106,7 +108,7 @@ class ClusterVersionInfo extends React.Component {
                           variant="link"
                           onClick={() => {
                             this.setState({ popoverOpen: false });
-                            openModal('cancel-upgrade', { clusterID: cluster.id, schedule: scheduledManualUpdate });
+                            openModal('cancel-upgrade', { clusterID: cluster.id, schedule: scheduledUpdate });
                           }}
                         >
                            Cancel this upgrade
