@@ -30,6 +30,9 @@ const gcpQuotaSelector = state => get(state, 'userProfile.organization.quotaList
   },
 });
 
+// TODO: all uses of isROSA should go away.
+const isROSA = product => ['MOA', 'ROSA'].includes(product);
+
 /**
  * Returns number of clusters of specific type that can be created/added, from 0 to `Infinity`.
  * Returns 0 if necessary data not fulfilled yet.
@@ -45,7 +48,7 @@ const availableClustersFromQuota = (
     isMultiAz,
   },
 ) => {
-  if (['MOA', 'ROSA'].includes(product)) {
+  if (isROSA(product)) {
     // ROSA has zero cost (as far as Red Hat is concerned, billed by Amazon).
     // TODO look up by product (https://issues.redhat.com/browse/SDA-3231) and check cost.
     return Infinity;
@@ -77,7 +80,7 @@ const availableNodesFromQuota = (
 
   // ROSA has zero cost (as far as Red Hat is concerned, billed by Amazon).
   // TODO don't hardcode, look up by product (https://issues.redhat.com/browse/SDA-3231).
-  const cost = ['MOA', 'ROSA'].includes(product) ? 0
+  const cost = isROSA(product) ? 0
     : get(quotaList.nodesQuota, [cloudProviderID, infra, resourceName, 'cost'], Infinity);
 
   if (cost === 0) {
@@ -95,4 +98,5 @@ export {
   gcpQuotaSelector,
   availableClustersFromQuota,
   availableNodesFromQuota,
+  isROSA,
 };

@@ -2,6 +2,7 @@ import get from 'lodash/get';
 
 import { userConstants } from '../constants';
 import { accountsService, authorizationsService } from '../../services';
+import { isROSA } from '../../components/clusters/common/quotaSelectors';
 
 const userInfoResponse = payload => ({
   payload,
@@ -24,7 +25,7 @@ const processClusterQuota = (clustersQuota, item, resources) => {
     // TODO: Honor cost field, specifically cost=0.
     // TODO: Split data structure by product (https://issues.redhat.com/browse/SDA-3231).
     //       Until then, ignore ROSA to avoid collision with OSD CCS.
-    if (['MOA', 'ROSA'].includes(product)) {
+    if (isROSA(product)) {
       return;
     }
 
@@ -72,7 +73,7 @@ const processNodeQuota = (nodesQuota, item, resources) => {
 
     // TODO: split data structure by product (https://issues.redhat.com/browse/SDA-3231).
     //       Until then, ignore ROSA to avoid collision with OSD CCS.
-    if (['MOA', 'ROSA'].includes(product)) {
+    if (isROSA(product)) {
       return;
     }
 
