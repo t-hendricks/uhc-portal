@@ -16,13 +16,13 @@ limitations under the License.
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
-import { PageSection } from '@patternfly/react-core';
+import { PageSection, Stack, StackItem } from '@patternfly/react-core';
 import get from 'lodash/get';
 
 import OCPSubscriptionCard from './OCPSubscriptionCard';
 import OSDSubscriptionCard from './OSDSubscriptionCard';
 import SubscriptionNotFulfilled from './SubscriptionNotFulfilled';
-
+import './Subscriptions.scss';
 
 class Subscriptions extends Component {
   componentDidMount() {
@@ -57,9 +57,15 @@ class Subscriptions extends Component {
           <PageHeader>
             <PageHeaderTitle title="Subscriptions" className="page-title" />
           </PageHeader>
-          <PageSection id="subscriptions-content">
-            <OCPSubscriptionCard organizationID={organizationID} />
-            <OSDSubscriptionCard organizationID={organizationID} />
+          <PageSection className="ins-p-subscriptions">
+            <Stack hasGutter>
+              <StackItem className="ins-l-ocp-subscription__section">
+                <OCPSubscriptionCard organizationID={organizationID} />
+              </StackItem>
+              <StackItem className="ins-l-osd-subscription__section">
+                <OSDSubscriptionCard organizationID={organizationID} />
+              </StackItem>
+            </Stack>
           </PageSection>
         </>
       );

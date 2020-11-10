@@ -51,7 +51,15 @@ class ReportActionsDropdown extends React.Component {
     }];
 
     const menuItems = actions.map(
-      action => (<DropdownItem ouiaId={action.title} {...action}>{action.title}</DropdownItem>),
+      action => (
+        <DropdownItem
+          key={action.title}
+          ouiaId={action.title}
+          {...action}
+        >
+          {action.title}
+        </DropdownItem>
+      ),
     );
     return (
       <Dropdown

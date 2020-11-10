@@ -1,0 +1,113 @@
+.dashboard-emptystate-card .pf-c-card__body {
+  a {
+    display: block;
+    margin-top: 16px;
+  }
+
+  .pf-c-button {
+    padding-left: 0;
+  }
+
+  .pf-c-button > .pf-c-button__icon {
+    float: right;
+    margin-left: 5px;
+  }
+}
+
+.dashboard-emptystate-card{
+  max-width: 570px;
+}
+
+#dashboard-emptystate-osd {
+  padding-bottom: var(--pf-global--spacer--lg);
+}
+
+#overview-emptystate-get-productive .flex-pair{
+  div{
+    margin-bottom: var(--pf-global--spacer--lg);
+    @media (max-width: 480px) {
+      width: 338px;
+    }
+    @media (min-width: 481px) and (max-width: 768px) {
+      width: 520px;
+    }
+    @media (min-width: 779px) and (max-width: 1199px){
+      width: 463px;
+    }
+  }
+  div:first-child{
+      @media (min-width: 1023px) {
+      margin-right: var(--pf-global--spacer--lg);
+    }
+  }
+}
+
+#overview-emptystate-bg-img-container {
+  margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
+  margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
+  margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
+  height: 418px;
+  background: url('../../styles/images/Headers-Red_Hat-ClusterManager-O2.svg');
+  background-position-x: right;
+  background-repeat: no-repeat;
+  background-color: black;
+  h1 {
+    top: 25%;
+    position: relative;
+    color: #fff;
+  }
+  h2 {
+    top: 35%;
+    position: relative;
+    color: #f0f0f0;
+  }
+  a {
+    top: 45%;
+    position: relative;
+    display: block;
+    text-decoration: none;
+  }
+  span {
+    background-color: #fff;
+    color: #000000;
+    font-size: var(--pf-global--FontSize--md);
+    font-weight: 700;
+    width: 250px;
+    height: 72px;
+    padding-top: var(--pf-global--spacer--md);
+    padding-bottom: var(--pf-global--spacer--md);
+    padding-right: var(--pf-global--spacer--lg);
+    padding-left: var(--pf-global--spacer--lg);
+    border-radius: 4px;
+  }
+}
+
+#emptystate-learn-more {
+  display: flex;
+  flex-wrap: wrap;
+
+  iframe {
+    min-height: 375px;
+  }
+
+  .pf-c-list{
+   list-style: none;
+  }
+
+  div:first-child{
+    @media (max-width: 769px) {
+      margin-bottom: var(--pf-global--spacer--lg);
+    }
+    @media (min-width: 737px) {
+      margin-right: var(--pf-global--spacer--lg);
+    }
+  }
+}
+
+#request-information-btn {
+  text-decoration: none;
+  button {
+    display: block;
+    margin-top: var(--pf-global--spacer--md);
+  }
+}

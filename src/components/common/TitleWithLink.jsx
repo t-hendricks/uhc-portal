@@ -4,6 +4,7 @@ import { LinkIcon } from '@patternfly/react-icons';
 import { Title, Split, SplitItem } from '@patternfly/react-core';
 import { HashLink as Link } from 'react-router-hash-link';
 import { withRouter } from 'react-router';
+import './TitleWithLink.scss';
 
 class TitleWithLink extends React.Component {
   constructor(props) {

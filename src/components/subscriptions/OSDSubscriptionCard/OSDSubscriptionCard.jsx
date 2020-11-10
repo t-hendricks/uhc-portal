@@ -4,7 +4,10 @@ import get from 'lodash/get';
 import startCase from 'lodash/startCase';
 import {
   Card,
-  CardBody, CardTitle,
+  CardBody,
+  CardTitle,
+  Stack,
+  StackItem,
 } from '@patternfly/react-core';
 import {
   ExclamationTriangleIcon,
@@ -16,7 +19,6 @@ import {
 
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 import OSDSubscriptionTable from './OSDSubscriptionTable';
-
 
 class OSDSubscriptionCard extends Component {
   componentDidMount() {
@@ -59,19 +61,37 @@ class OSDSubscriptionCard extends Component {
     const { quotaCost } = this.props;
     let content;
     if (quotaCost.fulfilled) {
-      const rows = quotaCost.items.map(quotaItem => [
-        get(quotaItem, 'related_resources[0].resource_type'),
-        get(quotaItem, 'related_resources[0].resource_name'),
-        { title: this.getZoneType(get(quotaItem, 'related_resources[0].availability_zone_type')) },
-        this.getPlanType(get(quotaItem, 'related_resources[0].byoc')),
-        startCase(get(quotaItem, 'related_resources[0].product')),
-        `${quotaItem.consumed} of ${quotaItem.allowed}`,
-        { title: this.getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
-      ]);
+      const rows = quotaCost.items.flatMap((quotaItem) => {
+        // filter out quota you neither have nor consume
+        if (quotaItem.consumed === 0 && quotaItem.allowed === 0) {
+          return [];
+        }
+
+        // filter out zero cost related resources
+        const relatedResources = get(quotaItem, 'related_resources', []).filter(resource => resource.cost !== 0);
+        if (relatedResources.length === 0) {
+          return [];
+        }
+
+        return [[
+          get(relatedResources[0], 'resource_type'),
+          get(relatedResources[0], 'resource_name'),
+          { title: this.getZoneType(get(relatedResources[0], 'availability_zone_type')) },
+          this.getPlanType(get(relatedResources[0], 'byoc')),
+          startCase(get(relatedResources[0], 'product')),
+          `${quotaItem.consumed} of ${quotaItem.allowed}`,
+          { title: this.getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
+        ]];
+      });
+
       content = (
         <>
-          <h4 className="content-header">Quota</h4>
-          <OSDSubscriptionTable rows={rows} />
+          <StackItem className="content-header">
+            Quota
+          </StackItem>
+          <StackItem className="table-container">
+            <OSDSubscriptionTable rows={rows} />
+          </StackItem>
         </>
       );
     } else {
@@ -86,13 +106,15 @@ class OSDSubscriptionCard extends Component {
 
     return (
       <Card>
-        <CardTitle className="section-header">OpenShift Dedicated</CardTitle>
-        <CardBody className="section-text">
-        The summary of all subscriptions for OpenShift Dedicated
-        purchased by your organization or granted by Red Hat.
-        </CardBody>
-        <CardBody className="osd-table-container">
-          {content}
+        <CardTitle>OpenShift Dedicated</CardTitle>
+        <CardBody>
+          <Stack hasGutter>
+            <StackItem>
+              The summary of all subscriptions for OpenShift Dedicated purchased
+              by your organization or granted by Red Hat.
+            </StackItem>
+            {content}
+          </Stack>
         </CardBody>
       </Card>
     );

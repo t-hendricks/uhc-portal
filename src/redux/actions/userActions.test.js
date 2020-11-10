@@ -3,6 +3,8 @@ import { accountsService } from '../../services';
 
 jest.mock('../../services/accountsService.js');
 
+// See also quotaSelectors.test.js checking processQuota -> selectors together.
+
 describe('clustersActions', () => {
   let item;
   beforeEach(() => {

@@ -14,6 +14,7 @@ import {
 } from '@patternfly/react-icons';
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { getRandomID } from '../../../common/helpers';
+import './ReduxFieldArray.scss';
 
 class RenderFields extends React.Component {
   state = { areFieldsFilled: [], touched: false };

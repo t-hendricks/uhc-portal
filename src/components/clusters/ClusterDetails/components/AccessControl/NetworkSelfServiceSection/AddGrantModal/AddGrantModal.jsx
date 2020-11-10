@@ -9,6 +9,7 @@ import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import PopoverHint from '../../../../../../common/PopoverHint';
 import { validateARN } from '../../../../../../../common/validators';
+import './AddGrantModal.scss';
 
 const initialState = {
   selectedRole: '',

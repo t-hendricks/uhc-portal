@@ -1,0 +1,35 @@
+.ins-p-subscriptions {
+  .pf-c-card__title {
+    font-size: var(--pf-global--FontSize--lg);
+    font-weight: var(--pf-global--FontWeight--normal);
+  }
+
+  .ins-l-ocp-subscription__section {
+    .osp-list {
+      padding-left: var(--pf-global--spacer--2xl);
+      li { 
+        padding-left: var(--pf-global--spacer--sm);
+      }
+    }
+  }
+  
+  .ins-l-osd-subscription__section {
+    .content-header {
+      font-size: var(--pf-global--FontSize--md);
+      font-weight: var(--pf-global--FontWeight--semi-bold);
+    }
+    .table-container {
+      overflow-x: auto;
+      .quota-table-used, .quota-table-max {
+        word-break: normal;
+      }
+      .warn-icon {
+        fill: var(--pf-global--warning-color--100);
+      }
+    }
+  }
+
+  .subscriptions-empty-state {
+    background-color: var(--pf-global--BackgroundColor--100);
+  } 
+}
