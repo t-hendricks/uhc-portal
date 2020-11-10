@@ -61,15 +61,29 @@ class OSDSubscriptionCard extends Component {
     const { quotaCost } = this.props;
     let content;
     if (quotaCost.fulfilled) {
-      const rows = quotaCost.items.map(quotaItem => [
-        get(quotaItem, 'related_resources[0].resource_type'),
-        get(quotaItem, 'related_resources[0].resource_name'),
-        { title: this.getZoneType(get(quotaItem, 'related_resources[0].availability_zone_type')) },
-        this.getPlanType(get(quotaItem, 'related_resources[0].byoc')),
-        startCase(get(quotaItem, 'related_resources[0].product')),
-        `${quotaItem.consumed} of ${quotaItem.allowed}`,
-        { title: this.getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
-      ]);
+      const rows = quotaCost.items.flatMap((quotaItem) => {
+        // filter out quota you neither have nor consume
+        if (quotaItem.consumed === 0 && quotaItem.allowed === 0) {
+          return [];
+        }
+
+        // filter out zero cost related resources
+        const relatedResources = get(quotaItem, 'related_resources', []).filter(resource => resource.cost !== 0);
+        if (relatedResources.length === 0) {
+          return [];
+        }
+
+        return [[
+          get(relatedResources[0], 'resource_type'),
+          get(relatedResources[0], 'resource_name'),
+          { title: this.getZoneType(get(relatedResources[0], 'availability_zone_type')) },
+          this.getPlanType(get(relatedResources[0], 'byoc')),
+          startCase(get(relatedResources[0], 'product')),
+          `${quotaItem.consumed} of ${quotaItem.allowed}`,
+          { title: this.getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
+        ]];
+      });
+
       content = (
         <>
           <StackItem className="content-header">
