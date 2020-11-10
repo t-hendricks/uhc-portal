@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Button, Popover } from '@patternfly/react-core';
-import { OutlinedQuestionCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
-import './ClusterVersionInfo.scss';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
-import UpdateGraph from './UpdateGraph/UpdateGraph';
+import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
 
 class ClusterVersionInfo extends React.Component {
   state = {
@@ -84,38 +82,14 @@ class ClusterVersionInfo extends React.Component {
                 shouldOpen={() => this.setState({ popoverOpen: true })}
                 shouldClose={() => this.setState({ popoverOpen: false })}
                 bodyContent={(
-                  <>
-                    <div>
-                      <OutlinedArrowAltCircleUpIcon className="update-available" />
-                      {' '}
-                    Update available
-                      <UpdateGraph
-                        currentVersion={cluster.openshift_version}
-                        updateVersion={scheduledUpdate.version}
-                      />
-                      <div className="title">Update scheduled</div>
-                      <DateFormat type="exact" date={Date.parse(scheduledUpdate.next_run)} />
-                      {' '}
-                      {
-                        scheduledUpdate.state?.value === 'started'
-                          ? '(Started)' : ''
-                      }
-                    </div>
-                    {
-                      cluster.canEdit && (
-                        <Button
-                          id="scheduled-update-popover-cancel"
-                          variant="link"
-                          onClick={() => {
-                            this.setState({ popoverOpen: false });
-                            openModal('cancel-upgrade', { clusterID: cluster.id, schedule: scheduledUpdate });
-                          }}
-                        >
-                           Cancel this upgrade
-                        </Button>
-                      )
-                    }
-                  </>
+                  <UpgradeStatus
+                    clusterID={cluster.id}
+                    canEdit={cluster.canEdit}
+                    clusterVersion={cluster.openshift_version}
+                    scheduledUpgrade={scheduledUpdate}
+                    openModal={openModal}
+                    onCancelClick={() => this.setState({ popoverOpen: false })}
+                  />
                 )}
               >
                 <Button variant="link">

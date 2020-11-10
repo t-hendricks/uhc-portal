@@ -2,7 +2,7 @@
 
 exports[`<Update graph /> should render 1`] = `
 <div
-  className="updates-graph"
+  className="ocm-upgrade-graph"
 >
   <GraphContainer>
     <GraphPath
