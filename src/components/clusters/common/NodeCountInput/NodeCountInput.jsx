@@ -74,7 +74,7 @@ class NodeCountInput extends React.Component {
   render() {
     const {
       input, isMultiAz, isDisabled, isEditingCluster, currentNodeCount,
-      label, helpText, extendedHelpText,
+      label, helpText, extendedHelpText, machineType, isByoc, isMachinePool,
     } = this.props;
 
     const included = this.getIncludedNodes();
@@ -90,7 +90,12 @@ class NodeCountInput extends React.Component {
 
     const options = optionsAvailable ? range(minimum, maxValue + 1, increment) : [minimum];
 
-    const notEnoughQuota = options.length < 1;
+    let notEnoughQuota = options.length < 1;
+
+    // for BYOC lacking node quota machineType will be undefined
+    if (isByoc && !isEditingCluster && !isMachinePool) {
+      notEnoughQuota = !machineType || options.length < 1;
+    }
     const disabled = isDisabled || notEnoughQuota;
 
     // Set up options for load balancers
