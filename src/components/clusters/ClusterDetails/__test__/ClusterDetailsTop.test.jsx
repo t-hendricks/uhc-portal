@@ -12,7 +12,7 @@ describe('<ClusterDetailsTop />', () => {
   let wrapper;
   const functions = funcs();
 
-  beforeEach(() => {
+  beforeAll(() => {
     const props = {
       cluster: fixtures.clusterDetails.cluster,
       openModal: functions.openModal,
