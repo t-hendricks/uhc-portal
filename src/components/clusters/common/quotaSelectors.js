@@ -30,32 +30,45 @@ const gcpQuotaSelector = state => get(state, 'userProfile.organization.quotaList
   },
 });
 
-// Returns number of clusters of specific type that can be created/added, from 0 to `Infinity`.
-// Returns 0 if necessary data not fulfilled yet.
-// NOTE: this receives `state.userProfile.organization.quotaList`, not top-level state.
+// TODO: all uses of isROSA should go away.
+const isROSA = product => ['MOA', 'ROSA'].includes(product);
+
+/**
+ * Returns number of clusters of specific type that can be created/added, from 0 to `Infinity`.
+ * Returns 0 if necessary data not fulfilled yet.
+ * @param quotaList - `state.userProfile.organization.quotaList`
+ */
 const availableClustersFromQuota = (
   quotaList,
   {
-    // TODO: this should also take a `product` param?
+    product,
     cloudProviderID,
     resourceName,
     isBYOC,
     isMultiAz,
   },
 ) => {
+  if (isROSA(product)) {
+    // ROSA has zero cost (as far as Red Hat is concerned, billed by Amazon).
+    // TODO look up by product (https://issues.redhat.com/browse/SDA-3231) and check cost.
+    return Infinity;
+  }
+
   const infra = isBYOC ? 'byoc' : 'rhInfra';
   const zoneType = isMultiAz ? 'multiAz' : 'singleAz';
 
   return get(quotaList.clustersQuota, [cloudProviderID, infra, zoneType, resourceName], 0);
 };
 
-// Returns number of nodes of specific type that can be created/added, from 0 to `Infinity`.
-// Returns 0 if necessary data not fulfilled yet.
-// NOTE: this receives `state.userProfile.organization.quotaList`, not top-level state.
+/**
+ * Returns number of nodes of specific type that can be created/added, from 0 to `Infinity`.
+ * Returns 0 if necessary data not fulfilled yet.
+ * @param quotaList - `state.userProfile.organization.quotaList`
+ */
 const availableNodesFromQuota = (
   quotaList,
   {
-    // TODO: this should also take a `product` param?
+    product,
     cloudProviderID,
     resourceName,
     isBYOC,
@@ -63,9 +76,13 @@ const availableNodesFromQuota = (
   },
 ) => {
   const infra = isBYOC ? 'byoc' : 'rhInfra';
-
   const available = get(quotaList.nodesQuota, [cloudProviderID, infra, resourceName, 'available'], 0);
-  const cost = get(quotaList.nodesQuota, [cloudProviderID, infra, resourceName, 'cost'], Infinity);
+
+  // ROSA has zero cost (as far as Red Hat is concerned, billed by Amazon).
+  // TODO don't hardcode, look up by product (https://issues.redhat.com/browse/SDA-3231).
+  const cost = isROSA(product) ? 0
+    : get(quotaList.nodesQuota, [cloudProviderID, infra, resourceName, 'cost'], Infinity);
+
   if (cost === 0) {
     return Infinity;
   }
@@ -81,4 +98,5 @@ export {
   gcpQuotaSelector,
   availableClustersFromQuota,
   availableNodesFromQuota,
+  isROSA,
 };
