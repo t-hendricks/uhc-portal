@@ -13,6 +13,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import Modal from '../Modal/Modal';
 import Unavailable from '../Unavailable';
 import getTermsAppLink from '../../../common/getTermsAppLink';
+import './TermsGuard.scss';
 
 
 class TermsGuard extends Component {

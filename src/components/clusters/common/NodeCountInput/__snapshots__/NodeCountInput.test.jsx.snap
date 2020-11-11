@@ -71,6 +71,104 @@ exports[`<NodeCountInput> Multi AZ renders with some quota 1`] = `
 </FormGroup>
 `;
 
+exports[`<NodeCountInput> Single AZ BYOC and is editing a machine pool renders enabled 1`] = `
+<FormGroup
+  fieldId="compute-nodes"
+  label="compute nodes"
+>
+  <FormSelect
+    aria-label="Compute nodes"
+    className="quota-dropdown"
+    isDisabled={false}
+    isRequired={false}
+    name="compute-nodes"
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      key="2"
+      label="2"
+      value={2}
+    />
+  </FormSelect>
+</FormGroup>
+`;
+
+exports[`<NodeCountInput> Single AZ BYOC and is editing cluster renders enabled 1`] = `
+<FormGroup
+  fieldId="compute-nodes"
+  label="compute nodes"
+>
+  <FormSelect
+    aria-label="Compute nodes"
+    className="quota-dropdown"
+    isDisabled={false}
+    isRequired={false}
+    name="compute-nodes"
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      key="2"
+      label="2"
+      value={2}
+    />
+    <FormSelectOption
+      key="3"
+      label="3"
+      value={3}
+    />
+    <FormSelectOption
+      key="4"
+      label="4"
+      value={4}
+    />
+  </FormSelect>
+</FormGroup>
+`;
+
+exports[`<NodeCountInput> Single AZ BYOC renders with quota granted but insufficient amount 1`] = `
+<FormGroup
+  fieldId="compute-nodes"
+  label="compute nodes"
+>
+  <Tooltip
+    content="You do not have enough quota for this option. Contact sales to purchase additional quota."
+    position="right"
+  >
+    <div>
+      <FormSelect
+        aria-label="Compute nodes"
+        className="quota-dropdown"
+        isDisabled={true}
+        isRequired={false}
+        name="compute-nodes"
+        onBlur={[Function]}
+        onChange={[MockFunction]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value=""
+      >
+        <FormSelectOption
+          key="2"
+          label="2"
+          value={2}
+        />
+      </FormSelect>
+    </div>
+  </Tooltip>
+</FormGroup>
+`;
+
 exports[`<NodeCountInput> Single AZ renders with extremely high quota (should only allow up to MAX_NODES) 1`] = `
 <FormGroup
   fieldId="compute-nodes"

@@ -25,6 +25,7 @@ import ErrorModal from '../../common/ErrorModal';
 import ErrorBox from '../../common/ErrorBox';
 import Breadcrumbs from '../common/Breadcrumbs';
 import CreateOSDForm from './CreateOSDForm';
+import './CreateOSDPage.scss';
 
 class CreateOSDPage extends React.Component {
   state = {

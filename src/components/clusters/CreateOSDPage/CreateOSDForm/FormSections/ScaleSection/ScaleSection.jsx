@@ -24,6 +24,7 @@ function ScaleSection({
   machineType,
   handleMachineTypesChange,
   cloudProviderID,
+  product,
   showStorageAndLoadBalancers = true,
   gridSpan = 9,
   minNodes,
@@ -48,6 +49,7 @@ function ScaleSection({
             isBYOC={isBYOC}
             onChange={handleMachineTypesChange}
             cloudProviderID={cloudProviderID}
+            product={product}
             isMachinePool={isMachinePool}
           />
         </FormGroup>
@@ -67,6 +69,7 @@ function ScaleSection({
             ? constants.computeNodeCountHintCCS
             : constants.computeNodeCountHint}
           cloudProviderID={cloudProviderID}
+          product={product}
           minNodes={minNodes}
           isMachinePool={isMachinePool}
         />
@@ -142,6 +145,8 @@ ScaleSection.propTypes = {
   showStorageAndLoadBalancers: PropTypes.bool,
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
+  // For quota purposes, product is subscription.plan.id, not cluster.product.id.
+  product: PropTypes.string.isRequired,
   handleMachineTypesChange: PropTypes.func.isRequired,
   gridSpan: PropTypes.number,
   minNodes: PropTypes.number,

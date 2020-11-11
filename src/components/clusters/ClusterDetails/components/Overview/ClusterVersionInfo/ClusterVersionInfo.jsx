@@ -62,7 +62,7 @@ class ClusterVersionInfo extends React.Component {
           <ClusterUpdateLink
             cluster={cluster}
             openModal={openModal}
-            osdUpgradeAvailable={hasUpgrades && !scheduledManualUpdate}
+            osdUpgradeAvailable={hasUpgrades && !scheduledManualUpdate && schedules.fulfilled}
           />
         </dd>
         { scheduledManualUpdate && (

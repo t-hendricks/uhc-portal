@@ -8,6 +8,7 @@
   "activity_timestamp": "2019-02-11T09:28:16.000143Z",
   "creation_timestamp": "2019-02-11T09:28:16.000143Z",
   "openshift_version": "4.3.25",
+  "status": {},
   "cloud_provider": {
     "kind": "CloudProviderLink",
     "id": "aws",
@@ -135,5 +136,7 @@
     "kind": "ProductLink",
     "id": "osd",
     "href": "/api/clusters_mgmt/v1/products/osd"
+  },
+  "version": {
   }
 }

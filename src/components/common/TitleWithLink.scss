@@ -1,0 +1,13 @@
+.title-with-link {
+  .show-on-hover {
+    display: none;
+  }
+
+  &:hover .show-on-hover {
+    display: block;
+  }
+
+  svg {
+    vertical-align: -0.5em !important;
+  }
+}

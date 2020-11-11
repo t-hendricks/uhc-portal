@@ -19,7 +19,7 @@ import {
   hasGcpQuotaSelector,
   awsQuotaSelector,
   gcpQuotaSelector,
-} from '../CreateClusterPage/quotaSelector';
+} from '../common/quotaSelectors';
 import { validateGCPServiceAccount } from '../../../common/validators';
 import { GCP_CCS_FEATURE } from '../../../redux/constants/featureConstants';
 

@@ -30,6 +30,7 @@ describe('<MachineTypeSelection />', () => {
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          product="OSD"
         />,
       );
     });
@@ -58,6 +59,7 @@ describe('<MachineTypeSelection />', () => {
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          product="OSD"
         />,
       );
     });
@@ -87,6 +89,7 @@ describe('<MachineTypeSelection />', () => {
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          product="OSD"
         />,
       );
     });
@@ -99,13 +102,10 @@ describe('<MachineTypeSelection />', () => {
   describe('when the machine types list is available', () => {
     let onChange;
     let wrapper;
+    let sortedMachineTypes;
+    let machineTypesByID;
     beforeAll(() => {
-      const state = {
-        ...baseState,
-        fulfilled: true,
-      };
-
-      const sortedMachineTypes = [
+      sortedMachineTypes = [
         {
           kind: 'MachineType',
           name: 'Memory optimized - R5.XLarge',
@@ -150,7 +150,7 @@ describe('<MachineTypeSelection />', () => {
         },
       ];
 
-      const machineTypesByID = {
+      machineTypesByID = {
         'r5.xlarge': {
           kind: 'MachineType',
           name: 'Memory optimized - R5.XLarge',
@@ -194,44 +194,179 @@ describe('<MachineTypeSelection />', () => {
           },
         },
       };
+    });
 
-      const quota = {
-        clustersQuota: {
-          aws: {
-            rhInfra: {
-              multiAz: {
-                'mem.small': 5,
-              },
-              singleAz: {
-                'mem.small': 0,
+    describe('with rhinfra quota available', () => {
+      beforeAll(() => {
+        const state = {
+          ...baseState,
+          fulfilled: true,
+        };
+        const quota = {
+          clustersQuota: {
+            aws: {
+              rhInfra: {
+                multiAz: {
+                  'mem.small': 5,
+                },
+                singleAz: {
+                  'mem.small': 0,
+                },
               },
             },
           },
-        },
-      };
+        };
 
-      onChange = jest.fn();
-      wrapper = mount(
-        <MachineTypeSelection
-          machineTypes={state}
-          sortedMachineTypes={sortedMachineTypes}
-          machineTypesByID={machineTypesByID}
-          input={{ onChange }}
-          meta={{}}
-          quota={quota}
-          organization={organizationState}
-          isMultiAz
-          cloudProviderID="aws"
-        />,
-      );
+        onChange = jest.fn();
+        wrapper = mount(
+          <MachineTypeSelection
+            machineTypes={state}
+            sortedMachineTypes={sortedMachineTypes}
+            machineTypesByID={machineTypesByID}
+            input={{ onChange }}
+            meta={{}}
+            quota={quota}
+            organization={organizationState}
+            isMultiAz
+            cloudProviderID="aws"
+            product="OSD"
+          />,
+        );
+      });
+
+      it('renders correctly', () => {
+        expect(wrapper).toMatchSnapshot();
+      });
+
+      it('calls onChange with the first item that has quota', () => {
+        expect(onChange).toBeCalledWith('r5.xlarge');
+      });
     });
 
-    it('renders correctly', () => {
-      expect(wrapper).toMatchSnapshot();
+    describe('byoc with sufficient byoc quota available', () => {
+      beforeAll(() => {
+        const state = {
+          ...baseState,
+          fulfilled: true,
+        };
+        const quota = {
+          clustersQuota: {
+            aws: {
+              rhInfra: {
+                singleAz: { available: 0 },
+                multiAz: { available: 0 },
+                totalAvailable: 0,
+              },
+              byoc: {
+                singleAz: { available: 0 },
+                multiAz: {
+                  'mem.small': 5,
+                  available: 5,
+                },
+                totalAvailable: 5,
+              },
+            },
+          },
+          nodesQuota: {
+            aws: {
+              byoc: {
+                'mem.small': {
+                  available: 12,
+                  cost: 4,
+                },
+              },
+            },
+          },
+        };
+
+        onChange = jest.fn();
+        wrapper = mount(
+          <MachineTypeSelection
+            machineTypes={state}
+            sortedMachineTypes={sortedMachineTypes}
+            machineTypesByID={machineTypesByID}
+            input={{ onChange }}
+            meta={{}}
+            quota={quota}
+            organization={organizationState}
+            isMultiAz
+            isBYOC
+            cloudProviderID="aws"
+            product="OSD"
+          />,
+        );
+      });
+
+      it('renders correctly', () => {
+        expect(wrapper).toMatchSnapshot();
+      });
+
+      it('calls onChange with the first item that has quota', () => {
+        expect(onChange).toBeCalledWith('r5.xlarge');
+      });
     });
 
-    it('calls onChange with the first item that has quota', () => {
-      expect(onChange).toBeCalledWith('r5.xlarge');
+    describe('byoc lacking enough byoc node quota', () => {
+      beforeAll(() => {
+        const state = {
+          ...baseState,
+          fulfilled: true,
+        };
+        const quota = {
+          clustersQuota: {
+            aws: {
+              rhInfra: {
+                singleAz: { available: 0 },
+                multiAz: { available: 0 },
+                totalAvailable: 0,
+              },
+              byoc: {
+                singleAz: { available: 0 },
+                multiAz: {
+                  'mem.small': 5,
+                  available: 5,
+                },
+                totalAvailable: 5,
+              },
+            },
+          },
+          nodesQuota: {
+            aws: {
+              byoc: {
+                'mem.small': {
+                  available: 4,
+                  cost: 4,
+                },
+              },
+            },
+          },
+        };
+
+        onChange = jest.fn();
+        wrapper = mount(
+          <MachineTypeSelection
+            machineTypes={state}
+            sortedMachineTypes={sortedMachineTypes}
+            machineTypesByID={machineTypesByID}
+            input={{ onChange }}
+            meta={{}}
+            quota={quota}
+            organization={organizationState}
+            isMultiAz
+            isBYOC
+            cloudProviderID="aws"
+            product="OSD"
+          />,
+        );
+      });
+
+      it('renders correctly', () => {
+        expect(wrapper).toMatchSnapshot();
+      });
+
+      it('does not call onChange', () => {
+        expect(onChange).not.toHaveBeenCalled();
+      });
     });
   });
 });

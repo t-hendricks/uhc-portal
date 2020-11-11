@@ -6,6 +6,7 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/component
 import VersionSelectionGrid from './VersionSelectionGrid';
 import UpgradeTimeSelection from './UpgradeTimeSelection';
 import FinishedStep from './FinishedStep';
+import './UpgradeWizard.scss';
 
 class UpgradeWizard extends React.Component {
   state = {

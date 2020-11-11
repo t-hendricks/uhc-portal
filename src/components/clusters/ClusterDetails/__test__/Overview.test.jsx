@@ -17,3 +17,18 @@ describe('<Overview />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
+
+describe('Overview Cluster Not Managed', () => {
+  const props = {
+    cluster: fixtures.clusterDetailsNotManaged.cluster,
+    cloudProviders: fixtures.cloudProviders,
+    displayClusterLogs: true,
+  };
+  const wrapper = shallow(
+    <Overview {...props} />,
+  );
+
+  it('should render', () => {
+    expect(wrapper).toMatchSnapshot();
+  });
+});

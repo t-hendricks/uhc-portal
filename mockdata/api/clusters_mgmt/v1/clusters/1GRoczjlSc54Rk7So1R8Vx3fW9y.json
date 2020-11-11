@@ -8,6 +8,7 @@
   "display_name": "fake-selfmanaged-cluster",
   "creation_timestamp": "2019-01-29T16:04:15.281411Z",
   "activity_timestamp": "2020-01-01T00:00:00.000000Z",
+  "status": {},
   "cloud_provider": {
     "kind": "CloudProviderLink",
     "id": "aws",

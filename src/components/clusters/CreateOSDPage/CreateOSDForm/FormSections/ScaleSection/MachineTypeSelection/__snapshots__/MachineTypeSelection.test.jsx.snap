@@ -24,6 +24,7 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
       "pending": false,
     }
   }
+  product="OSD"
   quota={Object {}}
 >
   <div
@@ -50,26 +51,15 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
 </MachineTypeSelection>
 `;
 
-exports[`<MachineTypeSelection /> when the machine types list is available renders correctly 1`] = `
+exports[`<MachineTypeSelection /> when the machine types list is available byoc lacking enough byoc node quota renders correctly 1`] = `
 <MachineTypeSelection
   cloudProviderID="aws"
   input={
     Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "r5.xlarge",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
+      "onChange": [MockFunction],
     }
   }
+  isBYOC={true}
   isMultiAz={true}
   machineTypes={
     Object {
@@ -133,16 +123,450 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
       "pending": false,
     }
   }
+  product="OSD"
   quota={
     Object {
       "clustersQuota": Object {
         "aws": Object {
-          "rhInfra": Object {
+          "byoc": Object {
             "multiAz": Object {
+              "available": 5,
               "mem.small": 5,
             },
             "singleAz": Object {
-              "mem.small": 0,
+              "available": 0,
+            },
+            "totalAvailable": 5,
+          },
+          "rhInfra": Object {
+            "multiAz": Object {
+              "available": 0,
+            },
+            "singleAz": Object {
+              "available": 0,
+            },
+            "totalAvailable": 0,
+          },
+        },
+      },
+      "nodesQuota": Object {
+        "aws": Object {
+          "byoc": Object {
+            "mem.small": Object {
+              "available": 4,
+              "cost": 4,
+            },
+          },
+        },
+      },
+    }
+  }
+  sortedMachineTypes={
+    Array [
+      Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+        "id": "r5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "Memory optimized - R5.XLarge",
+        "resource_name": "mem.small",
+      },
+      Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+        "id": "r5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 137438953472,
+        },
+        "name": "Memory optimized - R5.4XLarge",
+        "resource_name": "mem.large",
+      },
+    ]
+  }
+>
+  <div
+    className="flat-radio-buttons-flex-container"
+  >
+    <FlatRadioButton
+      icon={
+        <MemoryIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.r5.xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="r5.xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            Memory optimized
+          </div>
+          <div>
+            R5.xlarge
+          </div>
+        </React.Fragment>
+      }
+      titleText="4 vCPU 32 GiB RAM"
+      tooltip={false}
+      value="r5.xlarge"
+    >
+      <Button
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.r5.xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-5"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.r5.xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <MemoryIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 640 512"
+                      width="2em"
+                    >
+                      <path
+                        d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z"
+                      />
+                    </svg>
+                  </MemoryIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      4 vCPU 32 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    Memory optimized
+                  </div>
+                  <div>
+                    R5.xlarge
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+    <FlatRadioButton
+      icon={
+        <MemoryIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.r5.4xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="r5.4xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            Memory optimized
+          </div>
+          <div>
+            R5.4xlarge
+          </div>
+        </React.Fragment>
+      }
+      titleText="16 vCPU 128 GiB RAM"
+      tooltip={false}
+      value="r5.4xlarge"
+    >
+      <Button
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.r5.4xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-6"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.r5.4xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <MemoryIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 640 512"
+                      width="2em"
+                    >
+                      <path
+                        d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z"
+                      />
+                    </svg>
+                  </MemoryIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      16 vCPU 128 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    Memory optimized
+                  </div>
+                  <div>
+                    R5.4xlarge
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+  </div>
+</MachineTypeSelection>
+`;
+
+exports[`<MachineTypeSelection /> when the machine types list is available byoc with sufficient byoc quota available renders correctly 1`] = `
+<MachineTypeSelection
+  cloudProviderID="aws"
+  input={
+    Object {
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "r5.xlarge",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+    }
+  }
+  isBYOC={true}
+  isMultiAz={true}
+  machineTypes={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": true,
+      "machineTypes": Object {},
+      "pending": false,
+    }
+  }
+  machineTypesByID={
+    Object {
+      "r5.4xlarge": Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+        "id": "r5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 137438953472,
+        },
+        "name": "Memory optimized - R5.4XLarge",
+        "resource_name": "mem.large",
+      },
+      "r5.xlarge": Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+        "id": "r5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "Memory optimized - R5.XLarge",
+        "resource_name": "mem.small",
+      },
+    }
+  }
+  meta={Object {}}
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
+  product="OSD"
+  quota={
+    Object {
+      "clustersQuota": Object {
+        "aws": Object {
+          "byoc": Object {
+            "multiAz": Object {
+              "available": 5,
+              "mem.small": 5,
+            },
+            "singleAz": Object {
+              "available": 0,
+            },
+            "totalAvailable": 5,
+          },
+          "rhInfra": Object {
+            "multiAz": Object {
+              "available": 0,
+            },
+            "singleAz": Object {
+              "available": 0,
+            },
+            "totalAvailable": 0,
+          },
+        },
+      },
+      "nodesQuota": Object {
+        "aws": Object {
+          "byoc": Object {
+            "mem.small": Object {
+              "available": 12,
+              "cost": 4,
             },
           },
         },
@@ -212,6 +636,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
       isSelected={false}
       key="r5.xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -231,18 +656,20 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
         id="machineTypeRadio.r5.xlarge"
         isDisabled={false}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
           aria-disabled={false}
           aria-label={null}
           className="pf-c-button pf-m-tertiary ocm-flat-radio-button"
-          data-ouia-component-id="OUIA-Generated-Button-tertiary-1"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-3"
           data-ouia-component-type="PF4/Button"
           data-ouia-safe={true}
           disabled={false}
           id="machineTypeRadio.r5.xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           type="button"
         >
@@ -326,6 +753,396 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
       isSelected={false}
       key="r5.4xlarge"
       onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            Memory optimized
+          </div>
+          <div>
+            R5.4xlarge
+          </div>
+        </React.Fragment>
+      }
+      titleText="16 vCPU 128 GiB RAM"
+      tooltip={false}
+      value="r5.4xlarge"
+    >
+      <Button
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.r5.4xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-4"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.r5.4xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <MemoryIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 640 512"
+                      width="2em"
+                    >
+                      <path
+                        d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z"
+                      />
+                    </svg>
+                  </MemoryIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      16 vCPU 128 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    Memory optimized
+                  </div>
+                  <div>
+                    R5.4xlarge
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+  </div>
+</MachineTypeSelection>
+`;
+
+exports[`<MachineTypeSelection /> when the machine types list is available with rhinfra quota available renders correctly 1`] = `
+<MachineTypeSelection
+  cloudProviderID="aws"
+  input={
+    Object {
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "r5.xlarge",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+    }
+  }
+  isMultiAz={true}
+  machineTypes={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": true,
+      "machineTypes": Object {},
+      "pending": false,
+    }
+  }
+  machineTypesByID={
+    Object {
+      "r5.4xlarge": Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+        "id": "r5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 137438953472,
+        },
+        "name": "Memory optimized - R5.4XLarge",
+        "resource_name": "mem.large",
+      },
+      "r5.xlarge": Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+        "id": "r5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "Memory optimized - R5.XLarge",
+        "resource_name": "mem.small",
+      },
+    }
+  }
+  meta={Object {}}
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
+  product="OSD"
+  quota={
+    Object {
+      "clustersQuota": Object {
+        "aws": Object {
+          "rhInfra": Object {
+            "multiAz": Object {
+              "mem.small": 5,
+            },
+            "singleAz": Object {
+              "mem.small": 0,
+            },
+          },
+        },
+      },
+    }
+  }
+  sortedMachineTypes={
+    Array [
+      Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+        "id": "r5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "Memory optimized - R5.XLarge",
+        "resource_name": "mem.small",
+      },
+      Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+        "id": "r5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 137438953472,
+        },
+        "name": "Memory optimized - R5.4XLarge",
+        "resource_name": "mem.large",
+      },
+    ]
+  }
+>
+  <div
+    className="flat-radio-buttons-flex-container"
+  >
+    <FlatRadioButton
+      icon={
+        <MemoryIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.r5.xlarge"
+      isDisabled={false}
+      isSelected={false}
+      key="r5.xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            Memory optimized
+          </div>
+          <div>
+            R5.xlarge
+          </div>
+        </React.Fragment>
+      }
+      titleText="4 vCPU 32 GiB RAM"
+      tooltip={false}
+      value="r5.xlarge"
+    >
+      <Button
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.r5.xlarge"
+        isDisabled={false}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={false}
+          aria-label={null}
+          className="pf-c-button pf-m-tertiary ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-1"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={false}
+          id="machineTypeRadio.r5.xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <MemoryIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 640 512"
+                      width="2em"
+                    >
+                      <path
+                        d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z"
+                      />
+                    </svg>
+                  </MemoryIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      4 vCPU 32 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    Memory optimized
+                  </div>
+                  <div>
+                    R5.xlarge
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+    <FlatRadioButton
+      icon={
+        <MemoryIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.r5.4xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="r5.4xlarge"
+      onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -407,6 +1224,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                 id="machineTypeRadio.r5.4xlarge"
                 isDisabled={true}
                 onClick={[Function]}
+                product="OSD"
                 variant="tertiary"
               >
                 <Split
@@ -457,6 +1275,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                 id="machineTypeRadio.r5.4xlarge"
                 isDisabled={true}
                 onClick={[Function]}
+                product="OSD"
                 variant="tertiary"
               >
                 <button
@@ -469,6 +1288,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available rende
                   disabled={true}
                   id="machineTypeRadio.r5.4xlarge"
                   onClick={[Function]}
+                  product="OSD"
                   role={null}
                   tabIndex={null}
                   type="button"
@@ -572,6 +1392,7 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
       "pending": false,
     }
   }
+  product="OSD"
   quota={Object {}}
 >
   <div
@@ -622,6 +1443,7 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
       "pending": false,
     }
   }
+  product="OSD"
   quota={Object {}}
 >
   <ErrorBox

@@ -7,6 +7,8 @@ import {
 import NotificationContactsCard from './components/NotificationContactsSection';
 import SupportCasesCard from './components/SupportCasesSection';
 import AddNotificationContactSection from './components/AddNotificationContactButton';
+import './Support.scss';
+
 
 const clusterOwnerMsg = (clusterCreator) => {
   const clusterOwner = clusterCreator?.email;

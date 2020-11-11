@@ -8,6 +8,7 @@
   "creation_timestamp":"2019-05-02T13:18:58.077019Z",
   "activity_timestamp":"2019-05-02T13:18:58.077019Z",
   "openshift_version":"4.1.0-rc.0",
+  "status": {},
   "subscription":{
     "kind":"SubscriptionLink",
     "id":"1KgB0WcVBZBdRGAreuve29yoxUB",

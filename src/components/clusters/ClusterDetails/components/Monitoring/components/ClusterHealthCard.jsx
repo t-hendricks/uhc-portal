@@ -18,10 +18,9 @@ import {
 
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_success_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
-
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
-
 import { monitoringStatuses } from '../monitoringHelper';
+import './ClusterHealthCard.scss';
 
 function ClusterHealthCard({
   status = monitoringStatuses.NO_METRICS,

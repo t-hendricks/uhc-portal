@@ -24,7 +24,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
   }
 
   let billingModel;
-  if (get(cluster, 'product.id') === 'moa') {
+  if (['moa', 'rosa'].includes(get(cluster, 'product.id'))) {
     billingModel = 'Through AWS';
   } else if (get(cluster, 'ccs.enabled')) {
     billingModel = 'Customer cloud subscription';
