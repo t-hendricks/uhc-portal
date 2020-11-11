@@ -3,9 +3,18 @@ import { shallow } from 'enzyme';
 
 import DetailsRight from '../components/Overview/DetailsRight/DetailsRight';
 import fixtures from './ClusterDetails.fixtures';
+import { getClusterStateAndDescription } from '../../common/clusterStates';
 
 describe('<DetailsRight />', () => {
-  const { clusterDetails } = fixtures;
+  let { clusterDetails } = fixtures;
+  clusterDetails = {
+    ...clusterDetails,
+    cluster: {
+      ...clusterDetails.cluster,
+      state: getClusterStateAndDescription(clusterDetails.cluster),
+    },
+  };
+
   it('should render', () => {
     const wrapper = shallow(
       <DetailsRight

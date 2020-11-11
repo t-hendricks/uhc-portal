@@ -74,6 +74,8 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             hasGutter={true}
           >
             <CreateOSDForm
+              change={[MockFunction]}
+              closeModal={[MockFunction]}
               cloudProviderID="aws"
               clustersQuota={
                 Object {
@@ -115,7 +117,9 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
               }
               gcpCCSEnabled={false}
               isBYOCModalOpen={false}
+              openModal={[MockFunction]}
               pending={false}
+              privateClusterSelected={false}
               product="osd"
             />
             <GridItem>

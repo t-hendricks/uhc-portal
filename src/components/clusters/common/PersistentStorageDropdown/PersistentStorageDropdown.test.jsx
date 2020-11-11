@@ -31,6 +31,8 @@ describe('<PersistentStorageDropdown />', () => {
           getPersistentStorage={getPersistentStorage}
           quota={{}}
           organization={organizationState}
+          disabled={false}
+          storageQuota={0}
         />,
       );
     });
@@ -62,8 +64,9 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quota={{}}
+          storageQuota={0}
           organization={organizationState}
+          disabled={false}
         />,
       );
     });
@@ -92,8 +95,9 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quota={{}}
+          storageQuota={0}
           organization={organizationState}
+          disabled={false}
         />,
       );
     });
@@ -122,9 +126,7 @@ describe('<PersistentStorageDropdown />', () => {
         values: [{ unit: 'B', value: 107374182400 }, { unit: 'B', value: 644245094400 }, { unit: 'B', value: 1181116006400 }],
       };
 
-      const quota = {
-        persistentStorageQuota: 600,
-      };
+      const quota = 600;
 
       getPersistentStorage = jest.fn();
       onChange = jest.fn();
@@ -133,8 +135,9 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quota={quota}
+          storageQuota={quota}
           organization={organizationState}
+          disabled={false}
         />,
       );
     });

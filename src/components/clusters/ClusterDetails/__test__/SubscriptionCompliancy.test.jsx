@@ -15,9 +15,15 @@ const { EVAL, STANDARD, NONE } = subscriptionSupportLevels;
 
 describe('<SubscriptionCompliancy />', () => {
   const { clusterDetails, organization } = fixtures;
+  const openModal = jest.fn();
   let wrapper;
-  beforeEach(() => {
-    const props = { cluster: clusterDetails.cluster, organization };
+  beforeAll(() => {
+    const props = {
+      cluster: clusterDetails.cluster,
+      canSubscribeOCP: false,
+      organization,
+      openModal,
+    };
     wrapper = shallow(
       <SubscriptionCompliancy {...props} />,
     );

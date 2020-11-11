@@ -17,7 +17,11 @@ const cluster = {
 
 const props = {
   showConsoleButton: true,
+  canAllowClusterAdmin: false,
+  canSubscribeOCP: false,
+  canTransferClusterOwnership: false,
   openModal: jest.fn(),
+  toggleSubscriptionReleased: jest.fn(),
 };
 
 const managedReadyProps = {

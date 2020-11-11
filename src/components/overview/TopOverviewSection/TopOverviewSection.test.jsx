@@ -24,6 +24,7 @@ describe('<TopOverviewSection />', () => {
         usedCPU={usedCPU}
         totalMem={totalMem}
         usedMem={usedMem}
+        isError={false}
       />,
     );
   });

@@ -20,12 +20,14 @@ describe('<ClusterStatusMonitor />', () => {
   let wrapper;
   const getClusterStatus = jest.fn();
   const refresh = jest.fn();
+  const history = { push: jest.fn() };
   beforeAll(() => {
     wrapper = shallow(<ClusterStatusMonitor
       cluster={{ ...clusterDetails.cluster, state: 'installing' }}
       getClusterStatus={getClusterStatus}
       status={status}
       refresh={refresh}
+      history={history}
     />);
   });
 

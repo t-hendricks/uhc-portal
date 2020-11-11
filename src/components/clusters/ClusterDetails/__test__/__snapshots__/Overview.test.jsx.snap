@@ -1120,6 +1120,7 @@ exports[`Overview Cluster Not Managed should render 1`] = `
     <CardBody>
       <Connect(ClusterLogs)
         externalClusterID="9f50940b-fba8-4c59-9c6c-d64284b2026d"
+        history={Object {}}
       />
     </CardBody>
   </Card>

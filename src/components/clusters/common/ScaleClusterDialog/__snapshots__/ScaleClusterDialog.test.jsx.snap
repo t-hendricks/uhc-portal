@@ -4,6 +4,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
 <Modal
   className="edit-cluster-modal edit-cluster-modal-rhinfra"
   isPending={false}
+  isPrimaryDisabled={false}
   isSmall={true}
   onClose={[Function]}
   onPrimaryClick={[MockFunction]}
@@ -25,6 +26,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
           label="Load balancers"
         >
           <Field
+            cloudProviderID="aws"
             component={
               Object {
                 "$$typeof": Symbol(react.memo),
@@ -34,7 +36,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
                 "type": [Function],
               }
             }
-            currentValue="4"
+            currentValue={4}
             disabled={false}
             label="Load balancers"
             name="load_balancers"
@@ -52,6 +54,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
           label="Persistent storage"
         >
           <Field
+            cloudProviderID="aws"
             component={
               Object {
                 "$$typeof": Symbol(react.memo),
@@ -61,7 +64,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
                 "type": [Function],
               }
             }
-            currentValue="107374182400"
+            currentValue={107374182400}
             disabled={false}
             label="Persistent storage"
             name="persistent_storage"
@@ -76,10 +79,11 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
 </Modal>
 `;
 
-exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
+exports[`<ScaleClusterDialog /> renders correctly when an error occurs 1`] = `
 <Modal
   className="edit-cluster-modal edit-cluster-modal-rhinfra"
   isPending={false}
+  isPrimaryDisabled={false}
   isSmall={true}
   onClose={[Function]}
   onPrimaryClick={[MockFunction]}
@@ -91,8 +95,8 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
     message="Error editing cluster"
     response={
       Object {
-        "erorMessage": "this is an error",
         "error": true,
+        "errorMessage": "this is an error",
       }
     }
   />
@@ -110,6 +114,7 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
           label="Load balancers"
         >
           <Field
+            cloudProviderID="aws"
             component={
               Object {
                 "$$typeof": Symbol(react.memo),
@@ -119,7 +124,7 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
                 "type": [Function],
               }
             }
-            currentValue="4"
+            currentValue={4}
             disabled={false}
             label="Load balancers"
             name="load_balancers"
@@ -137,6 +142,7 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
           label="Persistent storage"
         >
           <Field
+            cloudProviderID="aws"
             component={
               Object {
                 "$$typeof": Symbol(react.memo),
@@ -146,7 +152,7 @@ exports[`<ScaleClusterDialog /> renders correctly when an erorr occurs 1`] = `
                 "type": [Function],
               }
             }
-            currentValue="107374182400"
+            currentValue={107374182400}
             disabled={false}
             label="Persistent storage"
             name="persistent_storage"

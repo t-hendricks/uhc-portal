@@ -9,6 +9,11 @@ describe('CreateOSDCluster', () => {
   let resetForm;
   let getOrganizationAndQuota;
   let handleSubmit;
+  let openModal;
+  let closeModal;
+  let isBYOCModalOpen;
+  let change;
+  let privateClusterSelected;
   let createClusterResponse;
   let managedWrapper;
 
@@ -17,6 +22,11 @@ describe('CreateOSDCluster', () => {
     getOrganizationAndQuota = jest.fn();
     resetForm = jest.fn();
     handleSubmit = jest.fn();
+    openModal = jest.fn();
+    closeModal = jest.fn();
+    isBYOCModalOpen = false;
+    change = jest.fn();
+    privateClusterSelected = false;
     createClusterResponse = {
       error: false,
       errorMessage: '',
@@ -34,6 +44,11 @@ describe('CreateOSDCluster', () => {
       resetResponse={resetResponse}
       resetForm={resetForm}
       handleSubmit={handleSubmit}
+      openModal={openModal}
+      closeModal={closeModal}
+      isBYOCModalOpen={isBYOCModalOpen}
+      change={change}
+      privateClusterSelected={privateClusterSelected}
       createClusterResponse={createClusterResponse}
       getOrganizationAndQuota={getOrganizationAndQuota}
       getMachineTypes={jest.fn()}
@@ -105,6 +120,11 @@ describe('CreateOSDCluster', () => {
         resetResponse={resetResponse}
         resetForm={resetForm}
         handleSubmit={handleSubmit}
+        openModal={openModal}
+        closeModal={closeModal}
+        isBYOCModalOpen={isBYOCModalOpen}
+        change={change}
+        privateClusterSelected={privateClusterSelected}
         createClusterResponse={createClusterResponse}
         getOrganizationAndQuota={getOrganizationAndQuota}
         getMachineTypes={getMachineTypes}
@@ -120,23 +140,29 @@ describe('CreateOSDCluster', () => {
         clustersQuota={{
           aws: {
             byoc: {
-              multiAz: false,
-              singleAz: false,
+              multiAz: { available: 0 },
+              singleAz: { available: 0 },
               hasQuota: false,
+              totalAvailable: 0,
             },
             rhInfra: {
               hasQuota: true,
-              singleAz: true,
-              multiAz: true,
+              multiAz: { available: 1 },
+              singleAz: { available: 1 },
+              totalAvailable: 1,
             },
           },
           gcp: {
             rhInfra: {
               hasQuota: true,
-              singleAz: true,
-              multiAz: true,
+              multiAz: { available: 1 },
+              singleAz: { available: 1 },
+              totalAvailable: 1,
             },
           },
+          hasOsdQuota: true,
+          hasAwsQuota: true,
+          hasGcpQuota: true,
         }}
       />);
       expect(getOrganizationAndQuota).toBeCalled();
