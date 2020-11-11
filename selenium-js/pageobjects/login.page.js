@@ -28,7 +28,9 @@ class LoginPage extends Page {
     await browser.waitUntil(this.isLoginPage, { timeoutMsg: 'Login failed: did not redirect to login page after timeout' });
     await (await this.inputUsername).setValue(username);
     await (await this.btnNext).click();
-    await (await this.inputPassword).setValue(password);
+    const pw = await this.inputPassword;
+    await pw.waitForDisplayed({ timeout: 10000 });
+    await pw.setValue(password);
     await (await this.btnSubmit).click();
     await browser.waitUntil(async () => !await this.isLoginPage(), { timeoutMsg: 'Login failed: did not redirect after timeout' });
   }
@@ -37,5 +39,4 @@ class LoginPage extends Page {
     return super.open('/openshift');
   }
 }
-
 export default new LoginPage();
