@@ -14,6 +14,7 @@ import ErrorBox from '../../../../common/ErrorBox';
 import { availableAddOns, getInstalled, hasQuota } from './AddOnsHelper';
 import AddOnsCard from './AddOnsCard';
 import AddOnsParametersModal from './AddOnsParametersModal';
+import AddOnsDeleteModal from './AddOnsDeleteModal';
 
 class AddOns extends React.Component {
   componentDidMount() {
@@ -34,12 +35,14 @@ class AddOns extends React.Component {
       clusterAddOns,
       addClusterAddOnResponse,
       getOrganizationAndQuota,
+      deleteClusterAddOnResponse,
     } = this.props;
-    if ((addClusterAddOnResponse.fulfilled && prevProps.addClusterAddOnResponse.pending)
+    if (((addClusterAddOnResponse.fulfilled && prevProps.addClusterAddOnResponse.pending)
+    || (deleteClusterAddOnResponse.fulfilled && prevProps.deleteClusterAddOnResponse.pending))
         && !clusterAddOns.pending) {
-      // Fetch cluster add-ons again if we just added a cluster add-on
+      // Fetch cluster add-ons again if we just added or deleted a cluster add-on
       getClusterAddOns(clusterID);
-      // Refresh quota after installing add-ons
+      // Refresh quota after installing or deleting add-ons
       getOrganizationAndQuota();
     }
   }
@@ -112,6 +115,7 @@ class AddOns extends React.Component {
         <AddOnsParametersModal
           clusterID={cluster.id}
         />
+        <AddOnsDeleteModal />
       </div>
     );
   }
@@ -127,6 +131,7 @@ AddOns.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getClusterAddOns: PropTypes.func.isRequired,
   addClusterAddOnResponse: PropTypes.object.isRequired,
+  deleteClusterAddOnResponse: PropTypes.object.isRequired,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
 };
 
