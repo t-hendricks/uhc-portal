@@ -92,6 +92,7 @@ class AddMachinePoolModal extends Component {
                 machineType={machineType}
                 handleMachineTypesChange={this.handleMachineTypesChange}
                 cloudProviderID={cluster.cloud_provider.id}
+                product={cluster?.subscription?.plan?.id}
                 showStorageAndLoadBalancers={false}
                 gridSpan={12}
                 minNodes={0}

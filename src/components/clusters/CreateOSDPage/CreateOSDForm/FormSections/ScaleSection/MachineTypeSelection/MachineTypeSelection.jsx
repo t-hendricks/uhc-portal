@@ -10,6 +10,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import FlatRadioButton from '../../../../../../common/FlatRadioButton';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
+import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
 
 const machineTypeIcon = (machineTypeCategory) => {
   switch (machineTypeCategory) {
@@ -72,57 +73,44 @@ class MachineTypeSelection extends React.Component {
     input.onChange('');
   }
 
+  // Returns false if necessary data not fulfilled yet.
   hasQuotaForType(machineTypeID) {
     const {
-      isMultiAz, organization, quota, isBYOC, cloudProviderID, machineTypesByID, isMachinePool,
+      machineTypesByID, organization, quota,
+      cloudProviderID, isBYOC, isMultiAz, isMachinePool, product,
     } = this.props;
+
+    // Wait for quota_cost.  Presently, it's fetched together with organization.
     if (!organization.fulfilled) {
       return false;
     }
-    const infra = isBYOC ? 'byoc' : 'rhInfra';
-    const zoneType = isMultiAz ? 'multiAz' : 'singleAz';
+
     const machineType = machineTypesByID[machineTypeID];
     if (!machineType) {
       return false;
     }
     const resourceName = machineType.resource_name;
-    const clustersAvailable = quota.clustersQuota[cloudProviderID][infra][zoneType][resourceName]
-                              || 0;
+
+    const quotaParams = {
+      product, cloudProviderID, isBYOC, isMultiAz, resourceName,
+    };
+    const clustersAvailable = availableClustersFromQuota(quota, quotaParams);
+    const nodesAvailable = availableNodesFromQuota(quota, quotaParams);
 
     if (isMachinePool) {
-      const nodeQuota = quota.nodesQuota[cloudProviderID][infra][resourceName] || {};
-      const nodesAvailable = nodeQuota?.available || 0;
-      const { cost } = nodeQuota;
-
-      if (cost === 0) {
-        return true;
-      }
-
-      if (cost === undefined) {
-        return false;
-      }
-
-      return (nodesAvailable / cost) >= 1;
+      // TODO: backend does allow creating machine pool with 0 nodes!
+      // But in most cases you want a machine type you do have quota for,
+      // and if we allow >= 0, the highlight of available types becomes useless.
+      // Can we improve the experience without blocking 0-node pool creation?
+      return nodesAvailable >= 1;
     }
 
     if (isBYOC) {
       const minimumNodes = isMultiAz ? 3 : 2;
-      const nodeQuota = quota.nodesQuota[cloudProviderID][infra][resourceName] || {};
-      const nodesAvailable = nodeQuota?.available || 0;
-      const { cost } = nodeQuota;
-
-      if (cost === 0 && clustersAvailable > 0) {
-        return true;
-      }
-      if (cost === undefined) {
-        return false;
-      }
-
-      const hasNodeQuota = (nodesAvailable / cost) >= minimumNodes;
-      return clustersAvailable > 0 && hasNodeQuota;
+      return clustersAvailable > 0 && nodesAvailable >= minimumNodes;
     }
 
-    return clustersAvailable > 0;
+    return clustersAvailable >= 1;
   }
 
   render() {
@@ -220,6 +208,8 @@ MachineTypeSelection.propTypes = {
   isBYOC: PropTypes.bool.isRequired,
   isMachinePool: PropTypes.bool.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
+  // For quota purposes, product is subscription.plan.id, not cluster.product.id.
+  product: PropTypes.string.isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   meta: PropTypes.shape({

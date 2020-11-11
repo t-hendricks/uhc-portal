@@ -13,6 +13,8 @@ import ScaleSection from './FormSections/ScaleSection/ScaleSection';
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
 // import ExternalLink from '../../../common/ExternalLink';
 import { required } from '../../../../common/validators';
+import { subscriptionPlans } from '../../../../common/subscriptionTypes';
+
 import './CreateOSDForm.scss';
 
 class CreateOSDForm extends React.Component {
@@ -222,6 +224,7 @@ class CreateOSDForm extends React.Component {
           machineType={machineType}
           handleMachineTypesChange={this.handleMachineTypesChange}
           cloudProviderID={cloudProviderID}
+          product={subscriptionPlans.OSD}
         />
 
         {/* Networking section */}

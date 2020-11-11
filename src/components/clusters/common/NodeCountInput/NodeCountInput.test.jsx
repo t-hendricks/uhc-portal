@@ -6,7 +6,8 @@ import NodeCountInput from './NodeCountInput';
 const baseProps = {
   isDisabled: false,
   label: 'compute nodes',
-  quota: { },
+  currentNodeCount: 4,
+  quota: {},
   machineTypesByID: {
     fake: { id: 'fake', resource_name: 'fake' },
   },
@@ -14,7 +15,22 @@ const baseProps = {
     name: 'compute-nodes',
     onChange: jest.fn(),
   },
+  cloudProviderID: 'aws',
+  product: 'OSD',
 };
+
+const fakeQuota = nodes => ({
+  nodesQuota: {
+    aws: {
+      rhInfra: {
+        fake: {
+          available: nodes,
+          cost: 1,
+        },
+      },
+    },
+  },
+});
 
 describe('<NodeCountInput>', () => {
   describe('Single AZ', () => {
@@ -29,14 +45,7 @@ describe('<NodeCountInput>', () => {
       const wrapper = shallow(<NodeCountInput
         {...baseProps}
         machineType="fake"
-        quota={{
-          rhInfra: {
-            fake: {
-              available: 10,
-              cost: 1,
-            },
-          },
-        }}
+        quota={fakeQuota(10)}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
@@ -46,31 +55,20 @@ describe('<NodeCountInput>', () => {
       const wrapper = shallow(<NodeCountInput
         {...baseProps}
         machineType="fake"
-        quota={{
-          rhInfra: {
-            fake: {
-              available: 10000,
-              cost: 1,
-            },
-          },
-        }}
+        quota={fakeQuota(10000)}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
     });
 
-    it('correctly handle machineType swithcing & default value', () => {
+    it('correctly handle machineType switching & default value', () => {
       const onChange = jest.fn();
       const inputProps = { ...baseProps.input, onChange };
       const wrapper = shallow(<NodeCountInput
         {...baseProps}
         input={inputProps}
         machineType="fake"
-        quota={{
-          rhInfra: {
-            fake: 10,
-          },
-        }}
+        quota={fakeQuota(10)}
       />);
       // now let's set a higher value and make sure it works...
       wrapper.setProps({ input: { ...inputProps, value: 10 } }, () => {
@@ -80,6 +78,68 @@ describe('<NodeCountInput>', () => {
         wrapper.setProps({ machineType: 'fake2' }, () => {
           // we have no quota for fake2 - value should reset to default
           expect(onChange).toBeCalledWith(4);
+        });
+      });
+    });
+
+    describe('BYOC', () => {
+      it('renders with quota granted but insufficient amount', () => {
+        const wrapper = shallow(<NodeCountInput
+          {...baseProps}
+          isByoc
+          machineType=""
+          quota={{
+            rhinfra: {
+              fake: {
+                available: 1,
+                cost: 4,
+              },
+            },
+          }}
+        />);
+        expect(wrapper).toMatchSnapshot();
+        expect(wrapper.find('FormSelect').props().isDisabled).toBeTruthy();
+      });
+
+      describe('and is editing cluster', () => {
+        it('renders enabled', () => {
+          const wrapper = shallow(<NodeCountInput
+            {...baseProps}
+            isByoc
+            machineType="fake"
+            isEditingCluster
+            quota={{
+              byoc: {
+                fake: {
+                  available: 2,
+                  cost: 4,
+                },
+              },
+            }}
+          />);
+          expect(wrapper).toMatchSnapshot();
+          expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
+        });
+      });
+
+      describe('and is editing a machine pool', () => {
+        it('renders enabled', () => {
+          const wrapper = shallow(<NodeCountInput
+            {...baseProps}
+            isByoc
+            machineType="fake"
+            isMachinePool
+            quota={{
+              byoc: {
+                fake: {
+                  available: 2,
+                  cost: 4,
+                },
+              },
+            }}
+          />);
+          expect(wrapper).toMatchSnapshot();
+          expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
         });
       });
     });
@@ -97,21 +157,14 @@ describe('<NodeCountInput>', () => {
         {...baseProps}
         machineType="fake"
         isMultiAz
-        quota={{
-          rhInfra: {
-            fake: {
-              available: 3,
-              cost: 1,
-            },
-          },
-        }}
+        quota={fakeQuota(3)}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
     });
   });
 
-  it('correctly handle machineType swithcing & default value', () => {
+  it('correctly handle machineType switching & default value', () => {
     const onChange = jest.fn();
     const inputProps = { ...baseProps.input, onChange };
     const wrapper = shallow(<NodeCountInput
@@ -119,11 +172,7 @@ describe('<NodeCountInput>', () => {
       input={{ ...baseProps.input, onChange }}
       machineType="fake"
       isMultiAz
-      quota={{
-        rhInfra: {
-          fake: 3,
-        },
-      }}
+      quota={fakeQuota(3)}
     />);
     // now let's set a higher value and make sure it works...
     wrapper.setProps({ input: { ...inputProps, value: 15 } }, () => {
