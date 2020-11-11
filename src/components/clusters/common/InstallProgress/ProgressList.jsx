@@ -12,6 +12,7 @@ import PedningIcon from '@patternfly/react-icons/dist/js/icons/pending-icon';
 import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
 // eslint-disable-next-line camelcase
 import { global_success_color_100 } from '@patternfly/react-tokens';
+import './ProgressList.scss';
 import clusterStates from '../clusterStates';
 
 function ProgressList({ cluster }) {
