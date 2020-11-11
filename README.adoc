@@ -222,3 +222,6 @@ Most of these tests won't work yet for us, WIP...
 The staging and production OCM sites are deployed into the Insights enviroments
 using the `push_to_insights.sh` script. This script is called via git hooks. See
 the script for more details.
+
+Use `./deploy_info.js` script to check which versions are now deployed.
+If you want to monitor/debug the deploy jobs, `./deploy_info.js --json` output has all the info you'll need.
