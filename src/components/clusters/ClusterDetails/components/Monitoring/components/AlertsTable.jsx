@@ -36,13 +36,13 @@ function AlertsTable({ alerts = [], clusterConsole }) {
   const warningIcon = (
     <>
       <ExclamationTriangleIcon className="status-icon warning" />
-       <span>Warning</span>
+      <span>Warning</span>
     </>
   );
 
   const infoIcon = (
     <>
-      <InfoCircleIcon className="status-icon info" /> 
+      <InfoCircleIcon className="status-icon info" />
       <span>Info</span>
     </>
   );

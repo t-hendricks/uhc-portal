@@ -2,30 +2,31 @@
 
 exports[`<ClusterHealthCard /> should render 1`] = `
 <Card
-  id="cluster-health"
+  className="ocm-c-monitoring-health__card"
 >
-  <CardTitle>
+  <CardTitle
+    className="ocm-c-monitoring-health__card--header"
+  >
     <Split>
       <SplitItem>
         <ExclamationTriangleIcon
-          color="#f0ab00"
+          className="warning"
+          color="currentColor"
           noVerticalAlign={false}
-          size="md"
+          size="sm"
         />
       </SplitItem>
       <SplitItem
         isFilled={true}
       >
         <Title
-          className="card-title"
           headingLevel="h2"
-          size="lg"
         >
           Cluster has no metrics
         </Title>
       </SplitItem>
       <SplitItem
-        id="last-checkin"
+        className="last-checkin"
       />
     </Split>
   </CardTitle>

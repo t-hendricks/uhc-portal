@@ -19,22 +19,21 @@ exports[`<MonitoringListItem /> should render 1`] = `
         Array [
           <DataListCell>
             <Title
-              className="monitoring-item-title"
+              className="item-title"
               headingLevel="h4"
-              size="lg"
             >
               
             </Title>
           </DataListCell>,
           <DataListCell
-            className="summary"
+            className="item-summary"
           >
             <React.Fragment>
               <ExclamationTriangleIcon
-                className="status-icon"
-                color="#f0ab00"
+                className="status-icon warning"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Metrics not available
