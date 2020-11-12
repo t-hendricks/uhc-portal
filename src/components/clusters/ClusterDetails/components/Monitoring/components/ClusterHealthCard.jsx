@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Card,
-  Title,
+  CardTitle,
   Split,
-  SplitItem, CardTitle,
+  SplitItem,
+  Title,
 } from '@patternfly/react-core';
 
 import {
@@ -17,10 +18,8 @@ import {
 } from '@patternfly/react-icons';
 
 // eslint-disable-next-line camelcase
-import { global_danger_color_100, global_success_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { monitoringStatuses } from '../monitoringHelper';
-import './ClusterHealthCard.scss';
 
 function ClusterHealthCard({
   status = monitoringStatuses.NO_METRICS,
@@ -31,29 +30,29 @@ function ClusterHealthCard({
   let title;
   switch (status) {
     case monitoringStatuses.DISCONNECTED:
-      icon = <DisconnectedIcon size="md" />;
-      title = <Title headingLevel="h2" size="lg" className="card-title">Disconnected cluster</Title>;
+      icon = <DisconnectedIcon />;
+      title = <Title headingLevel="h2">Disconnected cluster</Title>;
       break;
     case monitoringStatuses.UPGRADING:
-      icon = <InProgressIcon size="md" />;
-      title = <Title headingLevel="h2" size="lg" className="card-title">Cluster is updating</Title>;
+      icon = <InProgressIcon />;
+      title = <Title headingLevel="h2">Cluster is updating</Title>;
       break;
     case monitoringStatuses.INSTALLING:
-      icon = <InProgressIcon size="md" />;
-      title = <Title headingLevel="h2" size="lg" className="card-title">Installation in progress</Title>;
+      icon = <InProgressIcon />;
+      title = <Title headingLevel="h2">Installation in progress</Title>;
       break;
     case monitoringStatuses.NO_METRICS:
-      icon = <ExclamationTriangleIcon size="md" color={global_warning_color_100.value} />;
-      title = <Title headingLevel="h2" size="lg" className="card-title">Cluster has no metrics</Title>;
+      icon = <ExclamationTriangleIcon className="warning" />;
+      title = <Title headingLevel="h2">Cluster has no metrics</Title>;
       break;
     case monitoringStatuses.HEALTHY:
-      icon = <CheckCircleIcon color={global_success_color_100.value} size="md" />;
-      title = <Title headingLevel="h2" size="lg" className="card-title">No issues detected</Title>;
+      icon = <CheckCircleIcon className="success" />;
+      title = <Title headingLevel="h2">No issues detected</Title>;
       break;
     case monitoringStatuses.HAS_ISSUES:
-      icon = <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />;
+      icon = <ExclamationCircleIcon className="status-icon danger" />;
       title = (
-        <Title headingLevel="h2" size="lg" className="card-title">
+        <Title headingLevel="h2">
           {discoveredIssues}
           {' '}
           {discoveredIssues === 1 ? 'issue' : 'issues'}
@@ -63,13 +62,13 @@ function ClusterHealthCard({
       );
       break;
     default:
-      icon = <UnknownIcon size="md" />;
-      title = <Title headingLevel="h2" size="lg" className="card-title">Cluster health is unknown</Title>;
+      icon = <UnknownIcon />;
+      title = <Title headingLevel="h2">Cluster health is unknown</Title>;
   }
 
   return (
-    <Card id="cluster-health">
-      <CardTitle>
+    <Card className="ocm-c-monitoring-health__card">
+      <CardTitle className="ocm-c-monitoring-health__card--header">
         <Split>
           <SplitItem>
             {icon}
@@ -77,7 +76,7 @@ function ClusterHealthCard({
           <SplitItem isFilled>
             {title}
           </SplitItem>
-          <SplitItem id="last-checkin">
+          <SplitItem className="last-checkin">
             {status === monitoringStatuses.UNKNOWN && <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />}
             {lastCheckIn !== undefined && (
               <>

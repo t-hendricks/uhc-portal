@@ -8,9 +8,6 @@ import {
 } from '@patternfly/react-table';
 
 import { CheckCircleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
-// eslint-disable-next-line camelcase
-import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
-
 import { monitoringItemLinkProps, monitoringItemTypes } from '../monitoringHelper';
 
 function NodesTable({ nodes = [], clusterConsole }) {
@@ -24,14 +21,14 @@ function NodesTable({ nodes = [], clusterConsole }) {
     if (isUp) {
       return (
         <>
-          <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />
+          <CheckCircleIcon className="status-icon success" />
           <span>Ready</span>
         </>
       );
     }
     return (
       <>
-        <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />
+        <ExclamationCircleIcon className="status-icon danger" />
         <span>Not Ready</span>
         {' '}
       </>
