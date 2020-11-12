@@ -75,6 +75,7 @@ class InsightsRuleDetails extends Component {
     const oldClusterID = prevProps.match.params.clusterId;
     const externalId = get(clusterDetails, 'cluster.external_id');
     const reportID = match.params.reportId.replace(/\|/g, '.');
+    const { errorKey } = match.params;
 
     if (get(clusterDetails, 'cluster.id') === clusterID) {
       const clusterName = getClusterName(clusterDetails.cluster);
@@ -89,7 +90,12 @@ class InsightsRuleDetails extends Component {
       get(clusterDetails, 'cluster.external_id')
       && get(prevProps.clusterDetails, 'cluster.external_id') !== externalId
     ) {
-      fetchReportData(get(clusterDetails, 'cluster.external_id'), reportID);
+      fetchReportData(
+        get(clusterDetails, 'cluster.external_id'),
+        reportID,
+        errorKey,
+        get(clusterDetails, 'cluster.managed', false),
+      );
     }
   }
 
@@ -98,26 +104,27 @@ class InsightsRuleDetails extends Component {
       match,
       clusterDetails,
     } = this.props;
-    const clusterID = match.params.clusterId;
+    const { clusterId, errorKey } = match.params;
     const reportID = match.params.reportId.replace(/\|/g, '.');
-    if (isValid(clusterID)) {
+    if (isValid(clusterId)) {
       this.fetchDetailsAndInsightsData(
-        clusterID,
+        clusterId,
         get(clusterDetails, 'cluster.external_id'),
         reportID,
+        errorKey,
         get(clusterDetails, 'cluster.managed', false),
       );
     }
   }
 
-  fetchDetailsAndInsightsData(clusterId, externalId, reportId, isOSD) {
+  fetchDetailsAndInsightsData(clusterId, externalId, reportId, errorKey, isOSD) {
     const {
       fetchClusterDetails,
       fetchReportData,
     } = this.props;
     fetchClusterDetails(clusterId);
     if (externalId) {
-      fetchReportData(externalId, reportId, isOSD);
+      fetchReportData(externalId, reportId, errorKey, isOSD);
     }
   }
 

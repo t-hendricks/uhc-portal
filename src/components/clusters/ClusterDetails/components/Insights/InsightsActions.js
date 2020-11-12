@@ -144,7 +144,7 @@ export const fetchGroups = () => dispatch => dispatch({
   payload: insightsService.getGroupsInsights(),
 });
 
-export const fetchReportDetails = (clusterId, ruleId, isOSD) => dispatch => dispatch({
+export const fetchReportDetails = (clusterId, ruleId, errorKey, isOSD) => dispatch => dispatch({
   type: GET_REPORT_DETAILS,
-  payload: insightsService.getReportDetails(clusterId, ruleId, isOSD),
+  payload: insightsService.getReportDetails(clusterId, ruleId, errorKey, isOSD),
 });

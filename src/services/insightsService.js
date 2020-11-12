@@ -31,9 +31,9 @@ const disableRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
   url: `/clusters/${clusterID}/rules/${ruleID}/disable`,
 });
 
-const getReportDetails = (clusterID, ruleID, isOSD) => insightsAPIRequest({
+const getReportDetails = (clusterID, ruleID, errorKey, isOSD) => insightsAPIRequest({
   method: 'get',
-  url: `/clusters/${clusterID}/rules/${ruleID}/report?osd_eligible=${isOSD}`,
+  url: `/clusters/${clusterID}/rules/${ruleID.replace('.', '%2E')}|${errorKey}/report?osd_eligible=${isOSD}`,
 });
 
 const enableRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
