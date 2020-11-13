@@ -184,6 +184,12 @@ const addClusterAddOn = (clusterID, data) => apiRequest({
   data,
 });
 
+const updateClusterAddOn = (clusterID, addOnID, data) => apiRequest({
+  method: 'patch',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`,
+  data,
+});
+
 const deleteClusterAddOn = (clusterID, addOnID) => apiRequest({
   method: 'delete',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`,
@@ -326,6 +332,7 @@ const clusterService = {
   getDashboard,
   getClusterAddOns,
   addClusterAddOn,
+  updateClusterAddOn,
   deleteClusterAddOn,
   getStorageQuotaValues,
   getLoadBalancerQuotaValues,

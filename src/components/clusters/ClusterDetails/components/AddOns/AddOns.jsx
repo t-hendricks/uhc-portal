@@ -12,6 +12,8 @@ import {
   EmptyState,
   EmptyStateBody,
   EmptyStateIcon,
+  Flex,
+  FlexItem,
   Gallery,
   Title,
   Tooltip,
@@ -25,7 +27,7 @@ import {
   UnknownIcon,
 } from '@patternfly/react-icons';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+// import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 // eslint-disable-next-line camelcase
 import { global_success_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
@@ -148,7 +150,11 @@ class AddOns extends React.Component {
 
     const installAddOn = () => {
       if (hasParameters(addOn)) {
-        openModal('add-ons-parameters-modal', { clusterID, addOn });
+        openModal('add-ons-parameters-modal', {
+          clusterID,
+          addOn,
+          isUpdateForm: false,
+        });
       } else {
         addClusterAddOn(clusterID, {
           addon: {
@@ -156,6 +162,15 @@ class AddOns extends React.Component {
           },
         });
       }
+    };
+
+    const configureAddOn = (addOnInstallation) => {
+      openModal('add-ons-parameters-modal', {
+        clusterID,
+        addOn,
+        addOnInstallation,
+        isUpdateForm: true,
+      });
     };
 
     // Show install button if not installed
@@ -213,9 +228,29 @@ class AddOns extends React.Component {
       case AddOnsConstants.INSTALLATION_STATE.READY:
         url = `${cluster.console.url}/k8s/ns/${addOn.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${addOn.operator_name}.v${installedAddOn.operator_version}`;
         return (
-          <a href={url} target="_blank" rel="noopener noreferrer">
-            <Button variant="secondary" size="sm">View in console</Button>
-          </a>
+          <Flex grow={{ default: 'grow' }}>
+            <FlexItem>
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                <Button variant="secondary" size="sm">Console</Button>
+              </a>
+            </FlexItem>
+            {hasParameters(addOn) && (
+              <FlexItem>
+                <Button
+                  variant="secondary"
+                  aria-label="Configure"
+                  isDisabled={
+                    addClusterAddOnResponse.pending
+                    || cluster.state !== clusterStates.READY
+                    || !cluster.canEdit
+                  }
+                  onClick={() => configureAddOn(installedAddOn)}
+                >
+                  Configure
+                </Button>
+              </FlexItem>
+            )}
+          </Flex>
         );
       default:
         return '';
@@ -232,15 +267,16 @@ class AddOns extends React.Component {
       quota,
     } = this.props;
 
-    if (clusterAddOns.pending || addClusterAddOnResponse.pending) {
-      return (
-        <EmptyState>
-          <EmptyStateBody>
-            <Spinner centered />
-          </EmptyStateBody>
-        </EmptyState>
-      );
-    }
+    // ToDo Do we need this spinner, causes issues with when displaying errors in the Modal
+    // if (clusterAddOns.pending || addClusterAddOnResponse.pending) {
+    //   return (
+    //     <EmptyState>
+    //       <EmptyStateBody>
+    //         <Spinner centered />
+    //       </EmptyStateBody>
+    //     </EmptyState>
+    //   );
+    // }
 
     const addOnsList = availableAddOns(addOns, cluster, clusterAddOns, organization, quota);
     const hasAddOns = addOnsList.length > 0;

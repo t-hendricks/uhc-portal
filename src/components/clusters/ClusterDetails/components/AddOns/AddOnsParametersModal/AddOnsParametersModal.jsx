@@ -7,8 +7,16 @@ import Modal from '../../../../../common/Modal/Modal';
 import { hasParameters } from '../AddOnsHelper';
 import { ReduxVerticalFormGroup } from '../../../../../common/ReduxFormComponents';
 import { required } from '../../../../../../common/validators';
+import ErrorBox from '../../../../../common/ErrorBox';
 
 class AddOnsParametersModal extends Component {
+  componentDidUpdate() {
+    const { submitClusterAddOnResponse } = this.props;
+    if (submitClusterAddOnResponse.fulfilled) {
+      this.handleClose();
+    }
+  }
+
   handleClose = () => {
     const { closeModal, resetForm, clearClusterAddOnsResponses } = this.props;
     clearClusterAddOnsResponses();
@@ -24,12 +32,24 @@ class AddOnsParametersModal extends Component {
     return validations;
   };
 
+  disableField = (param) => {
+    const { isUpdateForm, addOnInstallation } = this.props;
+    return isUpdateForm
+      && !param.editable
+      && addOnInstallation.parameters !== undefined
+      && addOnInstallation.parameters.items.find(x => x.id === param.id) !== undefined;
+  };
+
   render() {
     const {
       isOpen,
       handleSubmit,
       addOn,
+      isUpdateForm,
+      submitClusterAddOnResponse,
     } = this.props;
+
+    const isPending = submitClusterAddOnResponse.pending;
 
     return isOpen && (
     <Modal
@@ -37,12 +57,18 @@ class AddOnsParametersModal extends Component {
       width={810}
       variant="large"
       onClose={this.handleClose}
-      primaryText="Install"
+      primaryText={isUpdateForm ? 'Update' : 'Install'}
       secondaryText="Cancel"
       onPrimaryClick={handleSubmit}
       onSecondaryClick={this.handleClose}
       isPrimaryDisabled={false}
+      isPending={isPending}
     >
+
+      { submitClusterAddOnResponse.error && (
+        <ErrorBox message="Error adding add-ons" response={submitClusterAddOnResponse} />
+      )}
+
       <Form>
         {hasParameters(addOn) && addOn.parameters.items.map(param => (
           <Field
@@ -53,6 +79,7 @@ class AddOnsParametersModal extends Component {
             type="text"
             validate={this.validationsForParameterField(param)}
             isRequired={param.required}
+            disabled={this.disableField(param)}
             helpText={param.description}
           />
         ))}
@@ -68,6 +95,9 @@ AddOnsParametersModal.propTypes = {
   resetForm: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   addOn: PropTypes.object,
+  addOnInstallation: PropTypes.object,
+  isUpdateForm: PropTypes.bool,
+  submitClusterAddOnResponse: PropTypes.object,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
 };
 

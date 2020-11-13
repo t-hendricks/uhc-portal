@@ -30,6 +30,14 @@ const addClusterAddOn = (clusterID, addOnData) => dispatch => dispatch({
   payload: clusterService.addClusterAddOn(clusterID, addOnData),
 });
 
+const updateClusterAddOn = (clusterID, addOnID, addOnData) => dispatch => dispatch({
+  type: AddOnsConstants.UPDATE_CLUSTER_ADDON,
+  payload: clusterService.updateClusterAddOn(clusterID, addOnID, addOnData).then((response) => {
+    dispatch(getClusterAddOns(clusterID));
+    return response;
+  }),
+});
+
 const clearClusterAddOnsResponses = () => ({
   type: AddOnsConstants.CLEAR_CLUSTER_ADDON_RESPONSES,
 });
@@ -39,6 +47,7 @@ const addOnsActions = {
   getAddOns,
   getClusterAddOns,
   addClusterAddOn,
+  updateClusterAddOn,
   clearClusterAddOnsResponses,
 };
 
@@ -47,5 +56,6 @@ export {
   getAddOns,
   getClusterAddOns,
   addClusterAddOn,
+  updateClusterAddOn,
   clearClusterAddOnsResponses,
 };

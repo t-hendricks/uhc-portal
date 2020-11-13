@@ -98,18 +98,28 @@ exports[`<AddOns /> should render 1`] = `
          
       </CardBody>
       <CardFooter>
-        <a
-          href="https://console-openshift-console.apps.test-liza.sdev.devshift.net/k8s/ns/redhat-service-mesh-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/service-mesh-operator.vundefined"
-          rel="noopener noreferrer"
-          target="_blank"
+        <Flex
+          grow={
+            Object {
+              "default": "grow",
+            }
+          }
         >
-          <Button
-            size="sm"
-            variant="secondary"
-          >
-            View in console
-          </Button>
-        </a>
+          <FlexItem>
+            <a
+              href="https://console-openshift-console.apps.test-liza.sdev.devshift.net/k8s/ns/redhat-service-mesh-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/service-mesh-operator.vundefined"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <Button
+                size="sm"
+                variant="secondary"
+              >
+                Console
+              </Button>
+            </a>
+          </FlexItem>
+        </Flex>
       </CardFooter>
     </Card>
     <Card
