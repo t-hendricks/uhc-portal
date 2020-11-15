@@ -91,8 +91,8 @@ class UpgradeWizard extends React.Component {
         name: 'Confirmation',
         component: (
           <>
-            <Title size="lg" headingLevel="h3">Confirmation of your upgrade</Title>
-            <dl className="cluster-upgrade-dl">
+            <Title className="wizard-step-title" size="lg" headingLevel="h3">Confirmation of your upgrade</Title>
+            <dl className="wizard-step-body cluster-upgrade-dl">
               <div>
                 <dt>Version</dt>
                 <dd>
@@ -141,6 +141,7 @@ class UpgradeWizard extends React.Component {
     return isOpen && (
       <Wizard
         title="Upgrade cluster"
+        className="ocm-upgrade-wizard"
         description={clusterName}
         isOpen={isOpen}
         steps={steps}

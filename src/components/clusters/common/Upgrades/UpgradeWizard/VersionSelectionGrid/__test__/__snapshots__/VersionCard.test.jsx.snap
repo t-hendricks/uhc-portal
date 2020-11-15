@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<VersionCard> should render correctly when recommended 1`] = `
+<Card
+  className="version-card"
+  id="4.5.20"
+  isCompact={true}
+  isSelectable={true}
+  onClick={[MockFunction]}
+  onKeyDown={[MockFunction]}
+>
+  <CardTitle>
+    <Split>
+      <SplitItem>
+        4.5.20
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      />
+      <SplitItem>
+        <Label
+          color="blue"
+          icon={
+            <StarIcon
+              color="currentColor"
+              noVerticalAlign={false}
+              size="sm"
+            />
+          }
+        >
+          Recommended
+        </Label>
+      </SplitItem>
+    </Split>
+  </CardTitle>
+  <CardBody>
+    The latest on your current minor version.
+  </CardBody>
+  <CardFooter>
+    <Button
+      className="card-footer-button"
+      variant="link"
+    >
+      <ExternalLink
+        href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html#ocp-4-5-20"
+      >
+        View release notes
+      </ExternalLink>
+    </Button>
+  </CardFooter>
+</Card>
+`;
+
+exports[`<VersionCard> should render correctly when selected & not recommended 1`] = `
+<Card
+  className="version-card"
+  id="4.5.16"
+  isCompact={true}
+  isSelectable={true}
+  isSelected={true}
+  onClick={[MockFunction]}
+  onKeyDown={[MockFunction]}
+>
+  <CardTitle>
+    <Split>
+      <SplitItem>
+        4.5.16
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      />
+    </Split>
+  </CardTitle>
+  <CardBody>
+    The latest on your current minor version.
+  </CardBody>
+  <CardFooter>
+    <Button
+      className="card-footer-button"
+      variant="link"
+    >
+      <ExternalLink
+        href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html#ocp-4-5-16"
+      >
+        View release notes
+      </ExternalLink>
+    </Button>
+  </CardFooter>
+</Card>
+`;
