@@ -1,3 +1,8 @@
+const path = require('path');
+const fs = require('fs');
+const util = require('util');
+const logger = require('@wdio/logger').default;
+
 const { getAuthConfig } = require('./selenium-js/authConfig');
 
 exports.config = {
@@ -142,7 +147,7 @@ exports.config = {
     // Babel setup
     require: ['@babel/register'],
     ui: 'bdd',
-    timeout: 60000,
+    timeout: Infinity, //60000,
     bail: true,
   },
   //
@@ -221,9 +226,20 @@ exports.config = {
   /**
      * Function to be executed after a test (in Mocha/Jasmine).
      */
-  // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-  // },
-
+  afterTest: async (test, context, { error, result, duration, passed, retries }) => {
+    // if test passed, ignore, else take and save screenshot.
+    if (test.passed) {
+      return;
+    }
+    const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
+    const timestamp = new Date().toISOString();
+    const dir = 'run/output/embedded_files/';
+    const filepath = path.join(dir, `${timestamp}.${testName}.png`);
+    await util.promisify(fs.mkdir)(dir, { recursive: true });
+    await browser.saveScreenshot(filepath);
+    process.emit('test:screenshot', filepath);
+    logger('afterTest screenshot').error(`\n  ${filepath}\n`);
+  },
 
   /**
      * Hook that gets executed after the suite has ended

@@ -2222,6 +2222,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
+"@wdio/logger@^6.7.3":
+  version "6.7.3"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@wdio/logger/-/logger-6.7.3.tgz#d8b2c2d51e3413b3c9536e679bbd0f4dfbfc1f3f"
+  integrity sha512-wBQ7KXHWXDRKHQUqoR68mpcailW2xeH2LiWrYZh7jdyuN2DaYdxKW1RAuXbalJ9c9zEbQmwmGTGIOUELiCB8Ug==
+  dependencies:
+    chalk "^4.0.0"
+    loglevel "^1.6.0"
+    loglevel-plugin-prefix "^0.8.4"
+    strip-ansi "^6.0.0"
+
 "@wdio/mocha-framework@^6.3.0":
   version "6.4.0"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@wdio/mocha-framework/-/mocha-framework-6.4.0.tgz#2f52cfdeabd3cde7722b9a703f525e646795ecc5"
