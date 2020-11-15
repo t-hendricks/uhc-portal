@@ -5,6 +5,7 @@
 #field-array-help-text {
   font-size: var(--pf-c-form__helper-text--FontSize);
   margin-top: var(--pf-c-form__helper-text--MarginTop);
+  margin-bottom: 8px;
 }
 
 #field-array-title {
@@ -13,6 +14,7 @@
 
 .field-grid-item {
   margin-top: -16px;
+  margin-bottom: 8px;
   &.minus-button {
     width: min-content;
   }
