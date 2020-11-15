@@ -101,8 +101,17 @@ const mockGetNotificationContactsList = [
   },
 ];
 
+const clusterCreator = {
+  id: '1VW00yfnFuhoybNRBqF86RyS2h6',
+  kind: 'Account',
+  href: '/api/accounts_mgmt/v1/accounts/1VW00yfnFuhoybNRBqF86RyS2h6',
+  name: 'Liran Roitman',
+  username: 'lroitman.openshift',
+};
+
 export {
   notificationContactsWithContacts,
   mockGetNotificationContactsPayload,
   mockGetNotificationContactsList,
+  clusterCreator,
 };

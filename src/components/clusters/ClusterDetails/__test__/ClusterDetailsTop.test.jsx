@@ -20,6 +20,10 @@ describe('<ClusterDetailsTop />', () => {
       refreshFunc: functions.refreshFunc,
       clusterIdentityProviders: fixtures.clusterIdentityProviders,
       organization: fixtures.organization,
+      canAllowClusterAdmin: fixtures.canAllowClusterAdmin,
+      canSubscribeOCP: fixtures.canSubscribeOCP,
+      canTransferClusterOwnership: fixtures.canTransferClusterOwnership,
+      toggleSubscriptionReleased: functions.toggleSubscriptionReleased,
     };
     wrapper = shallow(
       <ClusterDetailsTop {...props} />,

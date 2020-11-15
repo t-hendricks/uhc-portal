@@ -15,6 +15,11 @@ describe('<TabsRow />', () => {
       accessControlTabRef: mockRef,
       monitoringTabRef: mockRef,
       addOnsTabRef: mockRef,
+      insightsTabRef: mockRef,
+      machinePoolsTabRef: mockRef,
+      networkingTabRef: mockRef,
+      supportTabRef: mockRef,
+      hasIssues: false,
       setOpenedTab: jest.fn(),
     };
 

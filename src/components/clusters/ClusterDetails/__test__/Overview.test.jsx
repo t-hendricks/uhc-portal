@@ -8,6 +8,8 @@ describe('<Overview />', () => {
   const props = {
     cluster: fixtures.clusterDetails.cluster,
     cloudProviders: fixtures.cloudProviders,
+    history: {},
+    displayClusterLogs: false,
   };
   const wrapper = shallow(
     <Overview {...props} />,
@@ -22,6 +24,7 @@ describe('Overview Cluster Not Managed', () => {
   const props = {
     cluster: fixtures.clusterDetailsNotManaged.cluster,
     cloudProviders: fixtures.cloudProviders,
+    history: {},
     displayClusterLogs: true,
   };
   const wrapper = shallow(

@@ -2,6 +2,7 @@
 
 exports[`<LoadBalancersDropdown /> when load balancer list needs to be fetched renders correctly 1`] = `
 <LoadBalancersDropdown
+  disabled={false}
   getLoadBalancers={
     [MockFunction] {
       "calls": Array [
@@ -35,7 +36,7 @@ exports[`<LoadBalancersDropdown /> when load balancer list needs to be fetched r
       "pending": false,
     }
   }
-  quota={Object {}}
+  quota={0}
 >
   <div
     className="spinner-fit-container"
@@ -63,6 +64,7 @@ exports[`<LoadBalancersDropdown /> when load balancer list needs to be fetched r
 
 exports[`<LoadBalancersDropdown /> when the load balancer list is available renders correctly 1`] = `
 <LoadBalancersDropdown
+  disabled={false}
   getLoadBalancers={[MockFunction]}
   input={
     Object {
@@ -88,132 +90,68 @@ exports[`<LoadBalancersDropdown /> when the load balancer list is available rend
       "pending": false,
     }
   }
-  quota={
-    Object {
-      "loadBalancerQuota": 4,
-    }
-  }
+  quota={4}
 >
-  <Tooltip
-    content="You do not have enough quota for this option. Contact sales to purchase additional quota."
-    position="right"
+  <FormSelect
+    aria-label="Load Balancers"
+    className="quota-dropdown"
+    isDisabled={false}
+    isRequired={false}
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
   >
-    <Popper
-      appendTo={[Function]}
-      distance={15}
-      enableFlip={true}
-      flipBehavior={
-        Array [
-          "top",
-          "right",
-          "bottom",
-          "left",
-          "top",
-          "right",
-          "bottom",
-        ]
-      }
-      isVisible={false}
+    <select
+      aria-invalid={false}
+      aria-label="Load Balancers"
+      className="pf-c-form-control quota-dropdown"
+      data-ouia-component-id="OUIA-Generated-FormSelect-default-1"
+      data-ouia-component-type="PF4/FormSelect"
+      data-ouia-safe={true}
+      disabled={false}
       onBlur={[Function]}
-      onDocumentClick={false}
-      onDocumentKeyDown={[Function]}
+      onChange={[Function]}
       onFocus={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-      onTriggerEnter={[Function]}
-      placement="right"
-      popper={
-        <div
-          className="pf-c-tooltip"
-          id="pf-tooltip-1"
-          role="tooltip"
-          style={
-            Object {
-              "maxWidth": null,
-              "opacity": 0,
-              "transition": "opacity 300ms cubic-bezier(.54, 1.5, .38, 1.11)",
-            }
-          }
-        >
-          <TooltipArrow />
-          <TooltipContent
-            isLeftAligned={false}
-          >
-            You do not have enough quota for this option. Contact sales to purchase additional quota.
-          </TooltipContent>
-        </div>
-      }
-      popperMatchesTriggerWidth={false}
-      positionModifiers={
-        Object {
-          "bottom": "pf-m-bottom",
-          "left": "pf-m-left",
-          "right": "pf-m-right",
-          "top": "pf-m-top",
-        }
-      }
-      trigger={
-        <div
-          aria-describedby="pf-tooltip-1"
-        >
-          <FormSelect
-            aria-label="Load Balancers"
-            className="quota-dropdown"
-            isDisabled={true}
-            isRequired={false}
-            onBlur={[Function]}
-            onChange={[MockFunction]}
-            onFocus={[Function]}
-            ouiaSafe={true}
-            validated="default"
-            value=""
-          />
-        </div>
-      }
-      zIndex={9999}
+      required={false}
+      value=""
     >
-      <FindRefWrapper
-        onFoundRef={[Function]}
+      <FormSelectOption
+        key="0"
+        label="0"
+        value="0"
       >
-        <div
-          aria-describedby="pf-tooltip-1"
+        <option
+          className=""
+          disabled={false}
+          value="0"
         >
-          <FormSelect
-            aria-label="Load Balancers"
-            className="quota-dropdown"
-            isDisabled={true}
-            isRequired={false}
-            onBlur={[Function]}
-            onChange={[MockFunction]}
-            onFocus={[Function]}
-            ouiaSafe={true}
-            validated="default"
-            value=""
-          >
-            <select
-              aria-invalid={false}
-              aria-label="Load Balancers"
-              className="pf-c-form-control quota-dropdown"
-              data-ouia-component-id="OUIA-Generated-FormSelect-default-1"
-              data-ouia-component-type="PF4/FormSelect"
-              data-ouia-safe={true}
-              disabled={true}
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              required={false}
-              value=""
-            />
-          </FormSelect>
-        </div>
-      </FindRefWrapper>
-    </Popper>
-  </Tooltip>
+          0
+        </option>
+      </FormSelectOption>
+      <FormSelectOption
+        key="4"
+        label="4"
+        value="4"
+      >
+        <option
+          className=""
+          disabled={false}
+          value="4"
+        >
+          4
+        </option>
+      </FormSelectOption>
+    </select>
+  </FormSelect>
 </LoadBalancersDropdown>
 `;
 
 exports[`<LoadBalancersDropdown /> when the request is pending renders correctly 1`] = `
 <LoadBalancersDropdown
+  disabled={false}
   getLoadBalancers={[MockFunction]}
   input={
     Object {
@@ -235,7 +173,7 @@ exports[`<LoadBalancersDropdown /> when the request is pending renders correctly
       "pending": false,
     }
   }
-  quota={Object {}}
+  quota={0}
 >
   <div
     className="spinner-fit-container"
@@ -263,6 +201,7 @@ exports[`<LoadBalancersDropdown /> when the request is pending renders correctly
 
 exports[`<LoadBalancersDropdown /> when there was an error renders correctly 1`] = `
 <LoadBalancersDropdown
+  disabled={false}
   getLoadBalancers={[MockFunction]}
   input={
     Object {
@@ -284,7 +223,7 @@ exports[`<LoadBalancersDropdown /> when there was an error renders correctly 1`]
       "pending": false,
     }
   }
-  quota={Object {}}
+  quota={0}
 >
   <ErrorBox
     message="Error loading load balancers list"

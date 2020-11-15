@@ -90,6 +90,7 @@ exports[`BareMetal UPI install renders correctly 1`] = `
       }
       rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal"
       title="Install OpenShift on Bare Metal with user-provisioned infrastructure"
+      token={Object {}}
     />
   </PageSection>
 </Fragment>

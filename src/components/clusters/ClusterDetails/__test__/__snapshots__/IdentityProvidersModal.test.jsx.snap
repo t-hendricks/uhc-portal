@@ -11,6 +11,8 @@ exports[`<IdentityProvidersModal /> renders correctly 1`] = `
   variant="large"
 >
   <IDPForm
+    IDPList={Array []}
+    change={[MockFunction]}
     clusterConsoleURL=""
     selectedIDP="GithubIdentityProvider"
     submitIDPResponse={Object {}}

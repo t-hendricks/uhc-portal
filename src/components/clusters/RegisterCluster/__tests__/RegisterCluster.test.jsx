@@ -8,6 +8,7 @@ describe('<RegisterCluster />', () => {
   const resetResponse = jest.fn();
   const resetForm = jest.fn();
   const getOrganizationAndQuota = jest.fn();
+  const change = jest.fn();
   const registerClusterResponse = {
     error: false,
     errorMessage: '',
@@ -15,16 +16,20 @@ describe('<RegisterCluster />', () => {
     fulfilled: false,
     cluster: null,
   };
+  const baseProps = {
+    resetResponse,
+    handleSubmit,
+    resetForm,
+    getOrganizationAndQuota,
+    change,
+    registerClusterResponse,
+    quotaResponse: { fulfilled: true },
+  };
 
   it('renders correctly', () => {
     const wrapper = shallow(<RegisterCluster
-      resetResponse={resetResponse}
-      handleSubmit={handleSubmit}
-      resetForm={resetForm}
-      getOrganizationAndQuota={getOrganizationAndQuota}
-      registerClusterResponse={registerClusterResponse}
+      {...baseProps}
       canSubscribeOCP
-      quotaResponse={{ fulfilled: true }}
     />);
 
     expect(wrapper).toMatchSnapshot();
@@ -32,13 +37,8 @@ describe('<RegisterCluster />', () => {
 
   it('renders correctly when user can\'t subscribe ocp', () => {
     const wrapper = shallow(<RegisterCluster
-      resetResponse={resetResponse}
-      handleSubmit={handleSubmit}
-      resetForm={resetForm}
-      getOrganizationAndQuota={getOrganizationAndQuota}
-      registerClusterResponse={registerClusterResponse}
+      {...baseProps}
       canSubscribeOCP={false}
-      quotaResponse={{ fulfilled: true }}
     />);
 
     expect(wrapper).toMatchSnapshot();

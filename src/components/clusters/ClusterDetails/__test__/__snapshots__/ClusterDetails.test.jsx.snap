@@ -6,6 +6,9 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
 >
   <ClusterDetailsTop
     autoRefreshEnabled={true}
+    canAllowClusterAdmin={false}
+    canSubscribeOCP={false}
+    canTransferClusterOwnership={false}
     cluster={
       Object {
         "api": Object {
@@ -177,6 +180,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
     }
     pending={false}
     refreshFunc={[Function]}
+    toggleSubscriptionReleased={[MockFunction]}
   >
     <TabsRow
       accessControlTabRef={
@@ -195,6 +199,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       displayMachinePoolsTab={true}
       displayMonitoringTab={true}
       displayNetworkingTab={true}
+      displaySupportTab={false}
       hasIssues={true}
       initTabOpen=""
       insightsTabRef={
@@ -565,6 +570,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           },
         }
       }
+      displayClusterLogs={false}
       history={
         Object {
           "push": [MockFunction],
