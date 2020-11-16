@@ -48,18 +48,22 @@ class RadioButtons extends React.Component {
     return (
       options.map((option) => {
         const button = (
-          <Radio
-            className={className}
-            isChecked={input.value === option.value}
-            key={`${input.name}-${option.value}`}
-            value={option.value}
-            name={input.name}
-            id={`${input.name}-${option.value}`}
-            aria-label={option.ariaLabel || option.label}
-            label={option.label}
-            onChange={this.changeHandler}
-            isDisabled={option.disabled || isDisabled}
-          />
+          <>
+            <Radio
+              className={className}
+              isChecked={input.value === option.value}
+              key={`${input.name}-${option.value}`}
+              value={option.value}
+              name={input.name}
+              id={`${input.name}-${option.value}`}
+              aria-label={option.ariaLabel || option.label}
+              label={option.label}
+              onChange={this.changeHandler}
+              isDisabled={option.disabled || isDisabled}
+              description={option.description}
+            />
+            {option.extraField ? option.extraField : null}
+          </>
         );
         if (option.tooltipText) {
           return (
@@ -90,6 +94,8 @@ RadioButtons.propTypes = {
         ariaLabel: PropTypes.string,
         value: PropTypes.string.isRequired,
         disabled: PropTypes.bool,
+        description: PropTypes.node,
+        extraField: PropTypes.node,
       },
     ),
   ).isRequired,

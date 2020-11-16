@@ -233,6 +233,11 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "current": null,
         }
       }
+      upgradeSettingsTabRef={
+        Object {
+          "current": null,
+        }
+      }
     />
   </ClusterDetailsTop>
   <ForwardRef
@@ -901,7 +906,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   </ForwardRef>
   <ForwardRef
     aria-label="Support"
-    eventKey={6}
+    eventKey={7}
     hidden={true}
     id="supportTabContent"
   >

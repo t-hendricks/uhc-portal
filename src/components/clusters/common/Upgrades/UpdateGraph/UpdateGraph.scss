@@ -1,4 +1,4 @@
-.updates-graph {
+.ocm-upgrade-graph {
   border-width: 1px;
   max-width: 800px;
   @media(max-width: 400px) {
@@ -7,13 +7,13 @@
   }
 }
 
-.graph {
+.ocm-upgrade-graph-container {
   align-items: center;
   display: flex;
   font-size: var(--pf-global--FontSize--sm);
 }
 
-.graph-path {
+.ocm-upgrade-graph-path {
   display: flex;
   list-style: none;
   margin: 0;
@@ -23,7 +23,7 @@
   margin-top: 20px;
 }
 
-.graph-line {
+.ocm-upgrade-graph-line {
   align-items: center;
   display: flex;
   height: 60px;
@@ -52,7 +52,7 @@
   }
 }
 
-.graph-version {
+.ocm-upgrade-graph-version {
   color: initial;
   display: flex;
   flex-direction: column;
@@ -65,7 +65,7 @@
   font-weight: var(--pf-global--FontWeight--bold);
 }
 
-.graph-version-dot {
+.ocm-upgrade-graph-version-dot {
   background: var(--pf-global--primary-color--100);
   border-radius: 16px;
   content: '';
@@ -74,7 +74,7 @@
   width: 16px;
   z-index: 2;
 
-  &.current::after {
+  &.ocm-upgrade-current::after {
     background: transparent !important;
   }
 
@@ -88,5 +88,22 @@
     position: absolute;
     top: 2px;
     width: 12px;
+  }
+}
+
+.ocm-upgrade-graph-more-versions {
+  border: 1px solid;
+  border-radius: 15px;
+  border-color: #06c;
+  color: #06c;
+  background: white;
+  display: inline-block;
+  font-size: var(--pf-global--FontSize--xs);
+  justify-content: center;
+  padding: 0 8px;
+  position: absolute;
+
+  &::after {
+    display: none;
   }
 }

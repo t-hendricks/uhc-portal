@@ -4,6 +4,7 @@ import {
   getUpgradeSchedules,
   getUpgradeScheduleState,
   deleteUpgradeSchedule,
+  patchUpgradeSchedule,
 } from '../../../../services/clusterService';
 
 const GET_VERSION_INFO = 'GET_VERSION_INFO';
@@ -48,6 +49,25 @@ const postSchedule = (clusterID, schedule) => dispatch => dispatch({
   }),
 });
 
+const replaceSchedule = (clusterID, oldScheduleID, newSchedule) => dispatch => dispatch({
+  type: POST_UPGRADE_SCHEDULE,
+  payload: deleteUpgradeSchedule(clusterID, oldScheduleID).then(
+    () => postUpgradeSchedule(clusterID, newSchedule),
+  ).then((response) => {
+    dispatch(getSchedules(clusterID)); // refresh schedules after replacing
+    return response;
+  }),
+});
+
+const editSchedule = (clusterID, policyID, schedule) => dispatch => dispatch({
+  type: POST_UPGRADE_SCHEDULE,
+  payload: patchUpgradeSchedule(clusterID, policyID, schedule).then((response) => {
+    dispatch(getSchedules(clusterID)); // refresh schedules after posting
+    return response;
+  }),
+});
+
+
 const deleteSchedule = (clusterID, scheduleID) => dispatch => dispatch({
   type: DELETE_UPGRADE_SCHEDULE,
   payload: deleteUpgradeSchedule(clusterID, scheduleID).then((response) => {
@@ -73,8 +93,10 @@ export {
   CLEAR_DELETE_UPGRADE_SCHEDULE,
   getVersion,
   postSchedule,
+  editSchedule,
   getSchedules,
   deleteSchedule,
+  replaceSchedule,
   clearDeleteScheduleResponse,
   clearPostedUpgradeScheduleResponse,
 };

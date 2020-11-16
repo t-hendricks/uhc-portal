@@ -19,6 +19,7 @@ describe('<TabsRow />', () => {
       machinePoolsTabRef: mockRef,
       networkingTabRef: mockRef,
       supportTabRef: mockRef,
+      upgradeSettingsTabRef: mockRef,
       hasIssues: false,
       setOpenedTab: jest.fn(),
     };

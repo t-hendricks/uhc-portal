@@ -254,6 +254,13 @@ const postUpgradeSchedule = (clusterID, schedule) => apiRequest({
   data: schedule,
 });
 
+const patchUpgradeSchedule = (clusterID, policyID, schedule) => apiRequest({
+  method: 'patch',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}`,
+  data: schedule,
+});
+
+
 const getUpgradeSchedules = clusterID => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies`,
@@ -344,6 +351,7 @@ export {
   getUpgradeSchedules,
   getUpgradeScheduleState,
   deleteUpgradeSchedule,
+  patchUpgradeSchedule,
 };
 
 export default clusterService;
