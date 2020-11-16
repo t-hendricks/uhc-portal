@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddMachinePoolModal /> renders correctly 1`] = `
+<Modal
+  isPrimaryDisabled={false}
+  onClose={[Function]}
+  onPrimaryClick={[MockFunction]}
+  onSecondaryClick={[Function]}
+  primaryText="Add machine pool"
+  secondaryText="Cancel"
+  title="Add machine pool"
+  variant="large"
+>
+  <Form
+    className="control-form-cursor"
+    onSubmit={[Function]}
+  >
+    <Grid>
+      <ScaleSection
+        cloudProviderID="aws"
+        gridSpan={12}
+        handleMachineTypesChange={[Function]}
+        isBYOC={false}
+        isMachinePool={true}
+        isMultiAz={false}
+        machineType=""
+        minNodes={0}
+        product="OSD"
+        showStorageAndLoadBalancers={false}
+      />
+      <GridItem
+        span={4}
+      >
+        <FormGroup
+          isRequired={true}
+          label="Machine pool name"
+        >
+          <Field
+            component={[Function]}
+            name="name"
+            type="text"
+            validate={[Function]}
+          />
+        </FormGroup>
+      </GridItem>
+    </Grid>
+  </Form>
+</Modal>
+`;
