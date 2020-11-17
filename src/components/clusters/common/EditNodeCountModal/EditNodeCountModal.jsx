@@ -102,6 +102,7 @@ class EditNodeCountModal extends Component {
       organization,
       isByoc,
       cloudProviderID,
+      product,
       editNodeCountResponse,
       machineType,
       machinePoolId,
@@ -173,6 +174,7 @@ class EditNodeCountModal extends Component {
                   isEditingCluster
                   currentNodeCount={initialValues.nodes_compute || 0}
                   cloudProviderID={cloudProviderID}
+                  product={product}
                   minNodes={machinePoolId !== 'Default' ? 0 : undefined}
                   isMachinePool
                 />
@@ -214,6 +216,8 @@ EditNodeCountModal.propTypes = {
   machineType: PropTypes.string,
   clusterID: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
+  // For quota purposes, product is subscription.plan.id, not cluster.product.id.
+  product: PropTypes.string.isRequired,
 };
 
 EditNodeCountModal.defaultProps = {

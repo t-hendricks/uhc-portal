@@ -1,0 +1,76 @@
+#!/bin/bash
+if [ $# != 1 ]; then
+  cat >&2 <<'END-OF-USAGE'
+Usage: mockdata/record-real-cluster.sh CLUSTER-ID
+
+Fetches cluster info from API into mockdata/ files.
+Happily overwrites any existing file!  Use git to undo :-P
+
+The set of paths requested is likely to get outdated with time.
+Please open in UI afterwards, look for 404 errors, and update this script.
+END-OF-USAGE
+  exit 2
+fi
+
+# https://disconnected.systems/blog/another-bash-strict-mode/
+set -u -o pipefail
+trap 's=$?; echo; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
+
+cd "$(dirname "$0")"  # directory of this script
+cd "$(git rev-parse --show-toplevel)"
+
+cluster_id="$1"
+cluster_href="/api/clusters_mgmt/v1/clusters/$cluster_id"
+
+# request LOG_PREFIX PATH [EXTRA ocm FLAGS]
+function request {
+  log_prefix="$1"
+  path="$2"
+  shift 2
+  mkdir --parents mockdata/"$(dirname "$path")"
+  echo "${log_prefix}ocm get $path $@"
+  ocm get "$path" "$@" > mockdata/"$path".json || true
+
+  #echo "${log_prefix}  Found links:"
+  #jq ".. | select(try .kind | test(\".*Link\")).href | \"${log_prefix}  - \" + ." mockdata/"$path".json --raw-output
+}
+
+request "" "$cluster_href"
+
+# Crawl all FooLink, depth 1.
+# TODO: recursive with memoization?  Time to rewrite in JS / Python?
+cat "mockdata/$cluster_href.json" |
+  jq '.. | select(try .kind | test(".*Link")).href' --raw-output |
+  sort --unique |
+  while read href; do
+    request "  " "$href"
+  done
+
+request "" "$cluster_href/metric_queries/alerts"
+request "" "$cluster_href/metric_queries/nodes"
+request "" "$cluster_href/metric_queries/cluster_operators"
+
+subscription_href="$(jq .subscription.href "mockdata/$cluster_href".json --raw-output)"
+request "" "$subscription_href" --parameter=fetchAccounts=true --parameter=fetchCpuAndSocket=true --parameter=fetchCapabilities=true
+request "" "$subscription_href/notification_contacts"
+request "" "$subscription_href/support_cases"
+
+request "" "/api/accounts_mgmt/v1/current_account"
+
+org_href=$(jq .organization.href  "mockdata/api/accounts_mgmt/v1/current_account".json --raw-output)
+request "" "$org_href"
+request "" "$org_href/quota_cost" --parameter=fetchRelatedResources=true
+
+# Overwrite with more details.
+request "" "/api/clusters_mgmt/v1/cloud_providers" --parameter=size=-1 --parameter=fetchRegions=true
+
+# TODO in dev this is requested as /api/aggregator/... ?
+request "" "/api/insights-results-aggregator/v1/clusters/$cluster_id/report" --parameter=osd_eligible=true
+
+mockdata/regenerate-clusters.json.sh || true
+
+git status --short --untracked-files=all mockdata/
+
+echo
+echo "NOTE: Overwrote current_account.json to let you see fetched org & quota."
+echo "      Normally you DO NOT want to commit it."

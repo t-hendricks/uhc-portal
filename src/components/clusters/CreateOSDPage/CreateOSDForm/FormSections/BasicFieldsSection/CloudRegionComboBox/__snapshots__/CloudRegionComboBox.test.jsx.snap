@@ -12,6 +12,7 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
       "providers": Object {},
     }
   }
+  disabled={false}
   enabledRegions={
     Array [
       Object {
@@ -78,6 +79,7 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
       },
     }
   }
+  disabled={false}
   enabledRegions={
     Array [
       Object {
@@ -149,6 +151,7 @@ exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1
       "providers": Object {},
     }
   }
+  disabled={false}
   enabledRegions={
     Array [
       Object {
@@ -200,6 +203,7 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
       "providers": Object {},
     }
   }
+  disabled={false}
   enabledRegions={
     Array [
       Object {

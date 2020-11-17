@@ -2,47 +2,48 @@
 
 exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
 <Card>
-  <CardTitle
-    className="section-header"
-  >
+  <CardTitle>
     OpenShift Container Platform now uses Subscription Watch to manage subscriptions.
   </CardTitle>
-  <CardBody
-    className="section-text"
-  >
-    To get started, cluster owners or organization administrators should:
-    <List
-      className="ocp-list"
-      component="ol"
-      type="1"
+  <CardBody>
+    <Stack
+      hasGutter={true}
     >
-      <ListItem>
-        View a cluster in OpenShift Cluster Manager.
-      </ListItem>
-      <ListItem>
-        Choose “Edit subscription settings” from either the actions menu in the upper right, or in the Subscriptions settings section of the Overview.
-      </ListItem>
-      <ListItem>
-        Select the options that apply to your cluster in the dialog and save.
-      </ListItem>
-      <ListItem>
-        Subscription Watch should handle the rest. There’s no more attaching subscriptions to clusters.
-      </ListItem>
-    </List>
+      <StackItem>
+        To get started, cluster owners or organization administrators should:
+      </StackItem>
+      <StackItem>
+        <List
+          className="osp-list"
+          component="ol"
+          type="1"
+        >
+          <ListItem>
+            View a cluster in OpenShift Cluster Manager.
+          </ListItem>
+          <ListItem>
+            Choose “Edit subscription settings” from either the actions menu in the upper right, or in the Subscriptions settings section of the Overview.
+          </ListItem>
+          <ListItem>
+            Select the options that apply to your cluster in the dialog and save.
+          </ListItem>
+          <ListItem>
+            Subscription Watch should handle the rest. There’s no more attaching subscriptions to clusters.
+          </ListItem>
+        </List>
+      </StackItem>
+      <StackItem>
+        <Button
+          component="a"
+          href="https://cloud.redhat.com/subscriptions/openshift-sw"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Open Subscription Watch
+        </Button>
+      </StackItem>
+    </Stack>
   </CardBody>
-  <CardBody
-    className="section-text"
-  >
-    <Button
-      component="a"
-      href="https://cloud.redhat.com/subscriptions/openshift-sw"
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      Open Subscription Watch
-    </Button>
-  </CardBody>
-  <CardBody />
 </Card>
 `;
 
@@ -113,98 +114,100 @@ exports[`<Subscriptions /> OSDSubscriptionCard Loading should render loading OSD
 
 exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
 <Card>
-  <CardTitle
-    className="section-header"
-  >
+  <CardTitle>
     OpenShift Dedicated
   </CardTitle>
-  <CardBody
-    className="section-text"
-  >
-    The summary of all subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat.
-  </CardBody>
-  <CardBody
-    className="osd-table-container"
-  >
-    <h4
-      className="content-header"
+  <CardBody>
+    <Stack
+      hasGutter={true}
     >
-      Quota
-    </h4>
-    <OSDSubscriptionTable
-      rows={
-        Array [
-          Array [
-            "compute.node",
-            "cpu.large",
-            Object {
-              "title": "N/A",
-            },
-            "Standard",
-            "",
-            "10 of 15",
-            Object {
-              "title": <ResourcesAlmostFullIcon
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />,
-            },
-          ],
-          Array [
-            "compute.node",
-            "cpu.large",
-            Object {
-              "title": "N/A",
-            },
-            "Standard",
-            "",
-            "15 of 15",
-            Object {
-              "title": <ResourcesFullIcon
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />,
-            },
-          ],
-          Array [
-            "compute.node",
-            "cpu.large",
-            Object {
-              "title": "N/A",
-            },
-            "Standard",
-            "",
-            "0 of 4",
-            Object {
-              "title": <OutlinedCircleIcon
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />,
-            },
-          ],
-          Array [
-            "add-on",
-            "addon-dba-operator",
-            Object {
-              "title": "N/A",
-            },
-            "Any",
-            "",
-            "0 of 5",
-            Object {
-              "title": <OutlinedCircleIcon
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />,
-            },
-          ],
-        ]
-      }
-    />
+      <StackItem>
+        The summary of all subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat.
+      </StackItem>
+      <StackItem
+        className="content-header"
+      >
+        Quota
+      </StackItem>
+      <StackItem
+        className="table-container"
+      >
+        <OSDSubscriptionTable
+          rows={
+            Array [
+              Array [
+                "compute.node",
+                "cpu.large",
+                Object {
+                  "title": "N/A",
+                },
+                "Standard",
+                "",
+                "10 of 15",
+                Object {
+                  "title": <ResourcesAlmostFullIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                  />,
+                },
+              ],
+              Array [
+                "compute.node",
+                "cpu.large",
+                Object {
+                  "title": "N/A",
+                },
+                "Standard",
+                "",
+                "15 of 15",
+                Object {
+                  "title": <ResourcesFullIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                  />,
+                },
+              ],
+              Array [
+                "compute.node",
+                "cpu.large",
+                Object {
+                  "title": "N/A",
+                },
+                "Standard",
+                "",
+                "0 of 4",
+                Object {
+                  "title": <OutlinedCircleIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                  />,
+                },
+              ],
+              Array [
+                "add-on",
+                "addon-dba-operator",
+                Object {
+                  "title": "N/A",
+                },
+                "Any",
+                "",
+                "0 of 5",
+                Object {
+                  "title": <OutlinedCircleIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                  />,
+                },
+              ],
+            ]
+          }
+        />
+      </StackItem>
+    </Stack>
   </CardBody>
 </Card>
 `;
@@ -265,14 +268,26 @@ exports[`<Subscriptions /> Subscriptions should render 1`] = `
     />
   </PageHeader>
   <PageSection
-    id="subscriptions-content"
+    className="ocm-p-subscriptions"
   >
-    <OCPSubscriptionCard
-      organizationID="org-1"
-    />
-    <Connect(OSDSubscriptionCard)
-      organizationID="org-1"
-    />
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem
+        className="ocm-l-ocp-subscription__section"
+      >
+        <OCPSubscriptionCard
+          organizationID="org-1"
+        />
+      </StackItem>
+      <StackItem
+        className="ocm-l-osd-subscription__section"
+      >
+        <Connect(OSDSubscriptionCard)
+          organizationID="org-1"
+        />
+      </StackItem>
+    </Stack>
   </PageSection>
 </Fragment>
 `;

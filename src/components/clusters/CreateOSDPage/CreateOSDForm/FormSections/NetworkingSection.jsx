@@ -9,6 +9,7 @@ import { constants } from '../CreateOSDFormConstants';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import validators from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import './NetworkingSection.scss';
 
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
 const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr');

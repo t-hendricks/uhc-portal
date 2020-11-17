@@ -130,7 +130,7 @@ function push_build {
     \"app_name\": \"OCM\",
     \"src_hash\": \"$VERSION\",
     \"src_branch\": \"$branch\",
-    \"commit_date\": \"$COMMIT_DATE\",
+    \"commit_date\": \"$COMMIT_DATE\"
   }" > target/app.info.json
 
   # Create a commit for the new build and push it:

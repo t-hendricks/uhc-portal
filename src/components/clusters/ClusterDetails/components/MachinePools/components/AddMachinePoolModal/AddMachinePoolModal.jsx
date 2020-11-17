@@ -10,7 +10,6 @@ import ErrorBox from '../../../../../../common/ErrorBox';
 import ScaleSection from '../../../../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/ScaleSection';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { checkMachinePoolName } from '../../../../../../../common/validators';
-import { shouldRefetchQuota } from '../../../../../../../common/helpers';
 
 class AddMachinePoolModal extends Component {
   state = {
@@ -19,7 +18,6 @@ class AddMachinePoolModal extends Component {
 
   componentDidMount() {
     const {
-      organization,
       getOrganizationAndQuota,
       machineTypes,
       getMachineTypes,
@@ -27,9 +25,7 @@ class AddMachinePoolModal extends Component {
     if (!machineTypes.fulfilled && !machineTypes.pending) {
       getMachineTypes();
     }
-    if (shouldRefetchQuota(organization)) {
-      getOrganizationAndQuota();
-    }
+    getOrganizationAndQuota();
   }
 
   componentDidUpdate(prevProps) {
@@ -92,6 +88,7 @@ class AddMachinePoolModal extends Component {
                 machineType={machineType}
                 handleMachineTypesChange={this.handleMachineTypesChange}
                 cloudProviderID={cluster.cloud_provider.id}
+                product={cluster?.subscription?.plan?.id}
                 showStorageAndLoadBalancers={false}
                 gridSpan={12}
                 minNodes={0}
@@ -122,7 +119,6 @@ AddMachinePoolModal.propTypes = {
   clearAddMachinePoolResponse: PropTypes.func.isRequired,
   addMachinePoolResponse: PropTypes.object,
   cluster: PropTypes.object.isRequired,
-  organization: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,

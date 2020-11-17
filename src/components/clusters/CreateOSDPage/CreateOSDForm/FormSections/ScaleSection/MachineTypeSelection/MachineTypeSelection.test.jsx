@@ -17,19 +17,78 @@ const organizationState = {
 };
 
 describe('<MachineTypeSelection />', () => {
+  let sortedMachineTypes;
+  let machineTypesByID = {};
+
+  beforeAll(() => {
+    sortedMachineTypes = [
+      {
+        kind: 'MachineType',
+        name: 'Memory optimized - R5.XLarge',
+        category: 'memory_optimized',
+        id: 'r5.xlarge',
+        resource_name: 'mem.small',
+        href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
+        memory: {
+          value: 34359738368,
+          unit: 'B',
+        },
+        cpu: {
+          value: 4,
+          unit: 'vCPU',
+        },
+        cloud_provider: {
+          kind: 'CloudProviderLink',
+          id: 'aws',
+          href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+        },
+      },
+      {
+        kind: 'MachineType',
+        name: 'Memory optimized - R5.4XLarge',
+        category: 'memory_optimized',
+        id: 'r5.4xlarge',
+        resource_name: 'mem.large',
+        href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
+        memory: {
+          value: 137438953472,
+          unit: 'B',
+        },
+        cpu: {
+          value: 16,
+          unit: 'vCPU',
+        },
+        cloud_provider: {
+          kind: 'CloudProviderLink',
+          id: 'aws',
+          href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+        },
+      },
+    ];
+  });
+
   describe('when machine type list needs to be fetched', () => {
     let onChange;
+    let getMachineTypes;
     let wrapper;
     beforeAll(() => {
       onChange = jest.fn();
+      getMachineTypes = jest.fn();
       wrapper = mount(
         <MachineTypeSelection
           machineTypes={baseState}
+          sortedMachineTypes={sortedMachineTypes}
+          machineTypesByID={machineTypesByID}
           input={{ onChange }}
           meta={{}}
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          getMachineTypes={getMachineTypes}
+          isBYOC={false}
+          cloudProviderID="aws"
+          isMachinePool={false}
+          product="OSD"
         />,
       );
     });
@@ -41,6 +100,7 @@ describe('<MachineTypeSelection />', () => {
 
   describe('when there was an error', () => {
     let onChange;
+    let getMachineTypes;
     let wrapper;
     beforeAll(() => {
       const state = {
@@ -50,14 +110,22 @@ describe('<MachineTypeSelection />', () => {
       };
 
       onChange = jest.fn();
+      getMachineTypes = jest.fn();
       wrapper = mount(
         <MachineTypeSelection
           machineTypes={state}
+          sortedMachineTypes={sortedMachineTypes}
+          machineTypesByID={machineTypesByID}
           input={{ onChange }}
           meta={{}}
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          getMachineTypes={getMachineTypes}
+          isBYOC={false}
+          cloudProviderID="aws"
+          isMachinePool={false}
+          product="OSD"
         />,
       );
     });
@@ -69,6 +137,7 @@ describe('<MachineTypeSelection />', () => {
 
   describe('when the request is pending', () => {
     let onChange;
+    let getMachineTypes;
     let wrapper;
     const state = {
       error: false,
@@ -79,14 +148,22 @@ describe('<MachineTypeSelection />', () => {
     };
     beforeAll(() => {
       onChange = jest.fn();
+      getMachineTypes = jest.fn();
       wrapper = mount(
         <MachineTypeSelection
           machineTypes={state}
+          sortedMachineTypes={sortedMachineTypes}
+          machineTypesByID={machineTypesByID}
           input={{ onChange }}
           meta={{}}
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          getMachineTypes={getMachineTypes}
+          isBYOC={false}
+          cloudProviderID="aws"
+          isMachinePool={false}
+          product="OSD"
         />,
       );
     });
@@ -98,55 +175,9 @@ describe('<MachineTypeSelection />', () => {
 
   describe('when the machine types list is available', () => {
     let onChange;
+    let getMachineTypes;
     let wrapper;
-    let sortedMachineTypes;
-    let machineTypesByID;
     beforeAll(() => {
-      sortedMachineTypes = [
-        {
-          kind: 'MachineType',
-          name: 'Memory optimized - R5.XLarge',
-          category: 'memory_optimized',
-          id: 'r5.xlarge',
-          resource_name: 'mem.small',
-          href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
-          memory: {
-            value: 34359738368,
-            unit: 'B',
-          },
-          cpu: {
-            value: 4,
-            unit: 'vCPU',
-          },
-          cloud_provider: {
-            kind: 'CloudProviderLink',
-            id: 'aws',
-            href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-          },
-        },
-        {
-          kind: 'MachineType',
-          name: 'Memory optimized - R5.4XLarge',
-          category: 'memory_optimized',
-          id: 'r5.4xlarge',
-          resource_name: 'mem.large',
-          href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
-          memory: {
-            value: 137438953472,
-            unit: 'B',
-          },
-          cpu: {
-            value: 16,
-            unit: 'vCPU',
-          },
-          cloud_provider: {
-            kind: 'CloudProviderLink',
-            id: 'aws',
-            href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-          },
-        },
-      ];
-
       machineTypesByID = {
         'r5.xlarge': {
           kind: 'MachineType',
@@ -215,6 +246,7 @@ describe('<MachineTypeSelection />', () => {
         };
 
         onChange = jest.fn();
+        getMachineTypes = jest.fn();
         wrapper = mount(
           <MachineTypeSelection
             machineTypes={state}
@@ -224,8 +256,12 @@ describe('<MachineTypeSelection />', () => {
             meta={{}}
             quota={quota}
             organization={organizationState}
+            getMachineTypes={getMachineTypes}
             isMultiAz
+            isBYOC={false}
+            isMachinePool={false}
             cloudProviderID="aws"
+            product="OSD"
           />,
         );
       });
@@ -276,6 +312,7 @@ describe('<MachineTypeSelection />', () => {
         };
 
         onChange = jest.fn();
+        getMachineTypes = jest.fn();
         wrapper = mount(
           <MachineTypeSelection
             machineTypes={state}
@@ -285,9 +322,12 @@ describe('<MachineTypeSelection />', () => {
             meta={{}}
             quota={quota}
             organization={organizationState}
+            getMachineTypes={getMachineTypes}
             isMultiAz
             isBYOC
+            isMachinePool={false}
             cloudProviderID="aws"
+            product="OSD"
           />,
         );
       });
@@ -338,6 +378,7 @@ describe('<MachineTypeSelection />', () => {
         };
 
         onChange = jest.fn();
+        getMachineTypes = jest.fn();
         wrapper = mount(
           <MachineTypeSelection
             machineTypes={state}
@@ -347,9 +388,12 @@ describe('<MachineTypeSelection />', () => {
             meta={{}}
             quota={quota}
             organization={organizationState}
+            getMachineTypes={getMachineTypes}
+            isMachinePool={false}
             isMultiAz
             isBYOC
             cloudProviderID="aws"
+            product="OSD"
           />,
         );
       });

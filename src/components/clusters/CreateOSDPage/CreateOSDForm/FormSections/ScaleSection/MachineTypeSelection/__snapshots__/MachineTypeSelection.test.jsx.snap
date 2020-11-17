@@ -2,11 +2,15 @@
 
 exports[`<MachineTypeSelection /> when machine type list needs to be fetched renders correctly 1`] = `
 <MachineTypeSelection
+  cloudProviderID="aws"
+  getMachineTypes={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction],
     }
   }
+  isBYOC={false}
+  isMachinePool={false}
   isMultiAz={false}
   machineTypes={
     Object {
@@ -17,6 +21,7 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
       "pending": false,
     }
   }
+  machineTypesByID={Object {}}
   meta={Object {}}
   organization={
     Object {
@@ -24,7 +29,54 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
       "pending": false,
     }
   }
+  product="OSD"
   quota={Object {}}
+  sortedMachineTypes={
+    Array [
+      Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+        "id": "r5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "Memory optimized - R5.XLarge",
+        "resource_name": "mem.small",
+      },
+      Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+        "id": "r5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 137438953472,
+        },
+        "name": "Memory optimized - R5.4XLarge",
+        "resource_name": "mem.large",
+      },
+    ]
+  }
 >
   <div
     className="spinner-fit-container"
@@ -53,12 +105,14 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
 exports[`<MachineTypeSelection /> when the machine types list is available byoc lacking enough byoc node quota renders correctly 1`] = `
 <MachineTypeSelection
   cloudProviderID="aws"
+  getMachineTypes={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction],
     }
   }
   isBYOC={true}
+  isMachinePool={false}
   isMultiAz={true}
   machineTypes={
     Object {
@@ -122,6 +176,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       "pending": false,
     }
   }
+  product="OSD"
   quota={
     Object {
       "clustersQuota": Object {
@@ -222,6 +277,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       isSelected={false}
       key="r5.xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -241,6 +297,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         id="machineTypeRadio.r5.xlarge"
         isDisabled={true}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
@@ -253,6 +310,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           disabled={true}
           id="machineTypeRadio.r5.xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           tabIndex={null}
           type="button"
@@ -337,6 +395,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       isSelected={false}
       key="r5.4xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -356,6 +415,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         id="machineTypeRadio.r5.4xlarge"
         isDisabled={true}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
@@ -368,6 +428,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           disabled={true}
           id="machineTypeRadio.r5.4xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           tabIndex={null}
           type="button"
@@ -446,6 +507,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
 exports[`<MachineTypeSelection /> when the machine types list is available byoc with sufficient byoc quota available renders correctly 1`] = `
 <MachineTypeSelection
   cloudProviderID="aws"
+  getMachineTypes={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction] {
@@ -464,6 +526,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     }
   }
   isBYOC={true}
+  isMachinePool={false}
   isMultiAz={true}
   machineTypes={
     Object {
@@ -527,6 +590,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       "pending": false,
     }
   }
+  product="OSD"
   quota={
     Object {
       "clustersQuota": Object {
@@ -627,6 +691,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       isSelected={false}
       key="r5.xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -646,6 +711,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         id="machineTypeRadio.r5.xlarge"
         isDisabled={false}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
@@ -658,6 +724,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           disabled={false}
           id="machineTypeRadio.r5.xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           type="button"
         >
@@ -741,6 +808,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       isSelected={false}
       key="r5.4xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -760,6 +828,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         id="machineTypeRadio.r5.4xlarge"
         isDisabled={true}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
@@ -772,6 +841,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           disabled={true}
           id="machineTypeRadio.r5.4xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           tabIndex={null}
           type="button"
@@ -850,6 +920,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
 exports[`<MachineTypeSelection /> when the machine types list is available with rhinfra quota available renders correctly 1`] = `
 <MachineTypeSelection
   cloudProviderID="aws"
+  getMachineTypes={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction] {
@@ -867,6 +938,8 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       },
     }
   }
+  isBYOC={false}
+  isMachinePool={false}
   isMultiAz={true}
   machineTypes={
     Object {
@@ -930,6 +1003,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       "pending": false,
     }
   }
+  product="OSD"
   quota={
     Object {
       "clustersQuota": Object {
@@ -1009,6 +1083,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       isSelected={false}
       key="r5.xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -1028,6 +1103,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
         id="machineTypeRadio.r5.xlarge"
         isDisabled={false}
         onClick={[Function]}
+        product="OSD"
         variant="tertiary"
       >
         <button
@@ -1040,6 +1116,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           disabled={false}
           id="machineTypeRadio.r5.xlarge"
           onClick={[Function]}
+          product="OSD"
           role={null}
           type="button"
         >
@@ -1123,6 +1200,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       isSelected={false}
       key="r5.4xlarge"
       onChange={[Function]}
+      product="OSD"
       secondaryText={
         <React.Fragment>
           <div>
@@ -1204,6 +1282,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                 id="machineTypeRadio.r5.4xlarge"
                 isDisabled={true}
                 onClick={[Function]}
+                product="OSD"
                 variant="tertiary"
               >
                 <Split
@@ -1254,6 +1333,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                 id="machineTypeRadio.r5.4xlarge"
                 isDisabled={true}
                 onClick={[Function]}
+                product="OSD"
                 variant="tertiary"
               >
                 <button
@@ -1266,6 +1346,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                   disabled={true}
                   id="machineTypeRadio.r5.4xlarge"
                   onClick={[Function]}
+                  product="OSD"
                   role={null}
                   tabIndex={null}
                   type="button"
@@ -1347,11 +1428,15 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
 
 exports[`<MachineTypeSelection /> when the request is pending renders correctly 1`] = `
 <MachineTypeSelection
+  cloudProviderID="aws"
+  getMachineTypes={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction],
     }
   }
+  isBYOC={false}
+  isMachinePool={false}
   isMultiAz={false}
   machineTypes={
     Object {
@@ -1362,6 +1447,7 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
       "types": Array [],
     }
   }
+  machineTypesByID={Object {}}
   meta={Object {}}
   organization={
     Object {
@@ -1369,7 +1455,54 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
       "pending": false,
     }
   }
+  product="OSD"
   quota={Object {}}
+  sortedMachineTypes={
+    Array [
+      Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+        "id": "r5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "Memory optimized - R5.XLarge",
+        "resource_name": "mem.small",
+      },
+      Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+        "id": "r5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 137438953472,
+        },
+        "name": "Memory optimized - R5.4XLarge",
+        "resource_name": "mem.large",
+      },
+    ]
+  }
 >
   <div
     className="spinner-fit-container"
@@ -1397,11 +1530,15 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
 
 exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] = `
 <MachineTypeSelection
+  cloudProviderID="aws"
+  getMachineTypes={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction],
     }
   }
+  isBYOC={false}
+  isMachinePool={false}
   isMultiAz={false}
   machineTypes={
     Object {
@@ -1412,6 +1549,7 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
       "pending": false,
     }
   }
+  machineTypesByID={Object {}}
   meta={Object {}}
   organization={
     Object {
@@ -1419,7 +1557,54 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
       "pending": false,
     }
   }
+  product="OSD"
   quota={Object {}}
+  sortedMachineTypes={
+    Array [
+      Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+        "id": "r5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "Memory optimized - R5.XLarge",
+        "resource_name": "mem.small",
+      },
+      Object {
+        "category": "memory_optimized",
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+        "id": "r5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 137438953472,
+        },
+        "name": "Memory optimized - R5.4XLarge",
+        "resource_name": "mem.large",
+      },
+    ]
+  }
 >
   <ErrorBox
     message="Error loading node types"

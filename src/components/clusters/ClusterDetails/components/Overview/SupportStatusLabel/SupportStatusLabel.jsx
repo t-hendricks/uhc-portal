@@ -2,6 +2,7 @@ import React from 'react';
 import { Label, Popover } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 import { Skeleton } from '@redhat-cloud-services/frontend-components';
+import './SupportStatusLabel.scss';
 
 class SupportStatusLabel extends React.Component {
   componentDidMount() {

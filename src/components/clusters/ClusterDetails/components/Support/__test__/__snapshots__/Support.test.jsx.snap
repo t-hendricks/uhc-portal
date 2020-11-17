@@ -70,7 +70,15 @@ exports[`<Support /> should render with notification contacts 1`] = `
     </CardTitle>
     <CardBody>
       <Connect(SupportCasesCard)
+        getSupportCases={[MockFunction]}
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
+        supportCases={
+          Object {
+            "cases": Array [],
+            "pending": false,
+            "subscriptionID": "1iGW3xYbKZAEdZLi207rcA1l0ob",
+          }
+        }
       />
     </CardBody>
   </Card>
@@ -113,7 +121,7 @@ exports[`<Support /> should render without notification contacts 1`] = `
           Object {
             "contacts": Array [],
             "pending": false,
-            "subscriptionID": "",
+            "subscriptionID": "1iGW3xYbKZAEdZLi207rcA1l0ob",
           }
         }
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
@@ -132,7 +140,15 @@ exports[`<Support /> should render without notification contacts 1`] = `
     </CardTitle>
     <CardBody>
       <Connect(SupportCasesCard)
+        getSupportCases={[MockFunction]}
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
+        supportCases={
+          Object {
+            "cases": Array [],
+            "pending": false,
+            "subscriptionID": "1iGW3xYbKZAEdZLi207rcA1l0ob",
+          }
+        }
       />
     </CardBody>
   </Card>

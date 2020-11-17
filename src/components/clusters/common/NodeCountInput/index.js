@@ -3,9 +3,9 @@ import get from 'lodash/get';
 
 import NodeCountInput from './NodeCountInput';
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   machineTypesByID: state.machineTypes.typesByID,
-  quota: get(state, `userProfile.organization.quotaList.nodesQuota.${ownProps.cloudProviderID}`, {}),
+  quota: get(state, 'userProfile.organization.quotaList', {}),
 });
 
 export default connect(mapStateToProps)(NodeCountInput);

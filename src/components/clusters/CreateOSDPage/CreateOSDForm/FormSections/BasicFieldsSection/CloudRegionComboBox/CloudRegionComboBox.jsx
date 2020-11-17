@@ -11,6 +11,7 @@ import get from 'lodash/get';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../../../../common/ErrorBox';
+import './CloudRegionComboBox.scss';
 
 class CloudRegionComboBox extends React.Component {
   componentDidUpdate(prevProps) {

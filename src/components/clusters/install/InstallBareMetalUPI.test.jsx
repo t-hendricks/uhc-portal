@@ -5,7 +5,7 @@ import { InstallBareMetalUPI } from './InstallBareMetalUPI';
 
 describe('BareMetal UPI install', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<InstallBareMetalUPI dispatch={() => {}} />);
+    const wrapper = shallow(<InstallBareMetalUPI token={{}} dispatch={() => {}} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

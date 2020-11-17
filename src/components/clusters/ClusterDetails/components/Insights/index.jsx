@@ -61,7 +61,7 @@ const Insights = ({
 
 Insights.propTypes = {
   cluster: PropTypes.object.isRequired,
-  insightsData: PropTypes.object.isRequired,
+  insightsData: PropTypes.object,
   groups: PropTypes.array.isRequired,
   voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,

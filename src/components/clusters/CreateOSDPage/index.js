@@ -19,7 +19,7 @@ import {
   hasGcpQuotaSelector,
   awsQuotaSelector,
   gcpQuotaSelector,
-} from '../CreateClusterPage/quotaSelector';
+} from '../common/quotaSelectors';
 import { validateGCPServiceAccount } from '../../../common/validators';
 import { GCP_CCS_FEATURE } from '../../../redux/constants/featureConstants';
 
@@ -140,7 +140,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           account_id: formData.account_id,
           secret_access_key: formData.secret_access_key,
         };
-        clusterRequest.ccs.disable_scp_check = formData.disable_scp_checks;
+        clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
       } else if (ownProps.cloudProviderID === 'gcp') {
         const text = await readFile(formData.gcp_service_account[0]);
         const parsed = JSON.parse(text);

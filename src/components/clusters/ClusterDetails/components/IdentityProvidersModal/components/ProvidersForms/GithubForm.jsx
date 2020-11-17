@@ -10,6 +10,7 @@ import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents
 import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
 import RadioButtons from '../../../../../../common/ReduxFormComponents/RadioButtons';
 import CAUpload from '../CAUpload';
+import './GithubForm.scss';
 
 class GithubFormRequired extends React.Component {
     state = {

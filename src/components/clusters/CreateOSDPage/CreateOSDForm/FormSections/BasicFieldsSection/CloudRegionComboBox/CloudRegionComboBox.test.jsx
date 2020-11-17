@@ -25,6 +25,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviders={state}
           input={{ onChange }}
           enabledRegions={enabledRegions}
+          disabled={false}
         />,
       );
     });
@@ -53,6 +54,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviders={state}
           input={{ onChange }}
           enabledRegions={enabledRegions}
+          disabled={false}
         />,
       );
     });
@@ -80,6 +82,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviders={state}
           input={{ onChange }}
           enabledRegions={enabledRegions}
+          disabled={false}
         />,
       );
     });
@@ -115,6 +118,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviders={state}
           input={{ onChange }}
           enabledRegions={enabledRegions}
+          disabled={false}
         />,
       );
     });

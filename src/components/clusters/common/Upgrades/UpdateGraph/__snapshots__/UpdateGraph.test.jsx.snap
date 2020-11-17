@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Update graph /> should render 1`] = `
+<div
+  className="ocm-upgrade-graph"
+>
+  <GraphContainer>
+    <GraphPath
+      current={true}
+    >
+      <GraphLine>
+        <VersionLabel>
+          current version
+        </VersionLabel>
+        <VersionDot
+          current={true}
+        />
+      </GraphLine>
+      <GraphLine />
+      <GraphLine>
+        <VersionLabel>
+          next version
+        </VersionLabel>
+        <VersionDot />
+      </GraphLine>
+    </GraphPath>
+  </GraphContainer>
+</div>
+`;

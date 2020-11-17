@@ -75,6 +75,7 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
     sm={12}
   >
     <ClustersWithIssuesCard
+      isError={false}
       totalConnectedClusters={10}
       totalUnhealthyClusters={4}
     />

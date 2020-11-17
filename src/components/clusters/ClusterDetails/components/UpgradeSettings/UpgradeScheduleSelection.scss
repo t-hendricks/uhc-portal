@@ -1,0 +1,8 @@
+.ocm-upgrade-schedule-selection {
+  padding-left: var(--pf-global--spacer--lg);
+  margin-top: calc(-1 * var(--pf-global--spacer--lg));
+  .pf-c-select > ul {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}

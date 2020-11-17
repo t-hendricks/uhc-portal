@@ -58,6 +58,7 @@ import Unavailable from '../../common/Unavailable';
 import Support from './components/Support';
 import AddNotificationContactDialog
   from './components/Support/components/AddNotificationContactDialog';
+import UpgradeSettingsTab from './components/UpgradeSettings';
 
 class ClusterDetails extends Component {
   constructor(props) {
@@ -75,6 +76,7 @@ class ClusterDetails extends Component {
     this.networkingTabRef = React.createRef();
     this.supportTabRef = React.createRef();
     this.machinePoolsTabRef = React.createRef();
+    this.upgradeSettingsTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -330,6 +332,7 @@ class ClusterDetails extends Component {
       setOpenedTab,
       initTabOpen,
       supportTabFeature,
+      upgradesEnabled,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -391,7 +394,7 @@ class ClusterDetails extends Component {
 
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
-    const displayInsightsTab = !isArchived && (
+    const displayInsightsTab = !cluster.managed && !isArchived && (
       !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
       || insightsData[cluster.external_id].status === 404
       || insightsData[cluster.external_id].status === 500
@@ -408,6 +411,7 @@ class ClusterDetails extends Component {
     const clusterName = getClusterName(cluster);
     const displaySupportTab = supportTabFeature
       && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING);
+    const displayUpgradeSettingsTab = upgradesEnabled && cluster.managed && cluster.canEdit;
 
     return (
       <PageSection id="clusterdetails-content">
@@ -434,6 +438,7 @@ class ClusterDetails extends Component {
             displayInsightsTab={displayInsightsTab}
             displaySupportTab={displaySupportTab}
             displayMachinePoolsTab={displayMachinePoolsTab}
+            displayUpgradeSettingsTab={displayUpgradeSettingsTab}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
@@ -442,6 +447,7 @@ class ClusterDetails extends Component {
             insightsTabRef={this.insightsTabRef}
             supportTabRef={this.supportTabRef}
             machinePoolsTabRef={this.machinePoolsTabRef}
+            upgradeSettingsTabRef={this.upgradeSettingsTabRef}
             hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
             initTabOpen={initTabOpen}
             setOpenedTab={setOpenedTab}
@@ -539,7 +545,7 @@ class ClusterDetails extends Component {
         )}
         {
           <TabContent
-            eventKey={6}
+            eventKey={7}
             id="supportTabContent"
             ref={this.supportTabRef}
             aria-label="Support"
@@ -557,6 +563,16 @@ class ClusterDetails extends Component {
         >
           <MachinePools cluster={cluster} />
         </TabContent>
+        )}
+        {displayUpgradeSettingsTab && (
+          <TabContent
+            eventKey={8}
+            id="upgradeSettingsContent"
+            ref={this.upgradeSettingsTabRef}
+            aria-label="Upgrade settings"
+          >
+            <UpgradeSettingsTab />
+          </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditNodeCountModal onClose={onDialogClose} />
@@ -661,6 +677,7 @@ ClusterDetails.propTypes = {
   getNotificationContacts: PropTypes.func.isRequired,
   getSupportCases: PropTypes.func.isRequired,
   supportCases: PropTypes.object.isRequired,
+  upgradesEnabled: PropTypes.bool,
 };
 
 ClusterDetails.defaultProps = {

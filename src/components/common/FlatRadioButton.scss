@@ -1,3 +1,17 @@
+.flat-radio-buttons-flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  flex-direction: row;
+  >button, >div {
+    max-width: 320px;
+    margin: 1em;
+  }
+  >div {
+    width: 100%;
+  }
+}
+
 .pf-c-button.ocm-flat-radio-button {
   &.pf-m-tertiary::after { // specific selector to override PF4 button
     border-width: var(--pf-global--BorderWidth--sm);

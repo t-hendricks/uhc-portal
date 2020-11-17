@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody, Title } from '@patternfly/react-core';
 import { UserIcon, ConnectedIcon, SyncAltIcon } from '@patternfly/react-icons';
-// eslint-disable-next-line camelcase
 import CardBadge from '../../common/CardBadge';
 
 export const InstructionsBareMetal = () => (
@@ -12,12 +11,11 @@ export const InstructionsBareMetal = () => (
         Bare Metal: Select an installation type
       </Title>
       <div className="flex-container">
-        <Link to="/assisted-installer/clusters/~new" className="ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/assisted-installer/clusters/~new" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isDevPreview />
-          <CardBody>
+          <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <ConnectedIcon
               alt="Installer-Provisioned Infrastructure"
-              className="ipi-upi-infra-logo"
             />
             <Title headingLevel="h3" size="lg">Assisted Bare Metal Installer</Title>
             {' '}
@@ -25,12 +23,11 @@ export const InstructionsBareMetal = () => (
             that makes it easy to connect discovered hardware.
           </CardBody>
         </Link>
-        <Link to="/install/metal/installer-provisioned" className="ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/metal/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isRecommened />
-          <CardBody>
+          <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <SyncAltIcon
               alt="Installer-Provisioned Infrastructure"
-              className="ipi-upi-infra-logo"
             />
             <Title headingLevel="h3" size="lg">Installer-provisioned infrastructure</Title>
             {' '}
@@ -38,12 +35,11 @@ export const InstructionsBareMetal = () => (
             provisions and the cluster maintains.
           </CardBody>
         </Link>
-        <Link to="/install/metal/user-provisioned" className="ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/metal/user-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isHidden />
-          <CardBody>
+          <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <UserIcon
               alt="User-Provisioned Infrastructure"
-              className="ipi-upi-infra-logo"
             />
             <Title headingLevel="h3" size="lg">User-provisioned infrastructure</Title>
             Deploy an OpenShift cluster on infrastructure that you prepare and maintain.

@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import { Button } from '@patternfly/react-core';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { Button, Popover } from '@patternfly/react-core';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
-
+import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
 
 class ClusterVersionInfo extends React.Component {
+  state = {
+    popoverOpen: false,
+  };
+
   componentDidMount() {
     const { cluster, getSchedules } = this.props;
     if (cluster && cluster.id && cluster.managed) {
@@ -42,6 +46,7 @@ class ClusterVersionInfo extends React.Component {
     const {
       cluster, versionInfo, openModal, schedules,
     } = this.props;
+    const { popoverOpen } = this.state;
     const clusterVersion = cluster.openshift_version || 'N/A';
     const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
     const channel = get(cluster, 'metrics.channel');
@@ -49,7 +54,9 @@ class ClusterVersionInfo extends React.Component {
                         && versionInfo.availableUpgrades.length > 0
                         && cluster.managed;
 
-    const scheduledManualUpdate = schedules.items.find(schedule => schedule.schedule_type === 'manual' && schedule.version !== cluster.openshift_version);
+    const scheduledUpdate = schedules.items.find(
+      schedule => schedule.version !== cluster.openshift_version,
+    );
 
     return (
       <dl className="cluster-details-item-list">
@@ -62,27 +69,35 @@ class ClusterVersionInfo extends React.Component {
           <ClusterUpdateLink
             cluster={cluster}
             openModal={openModal}
-            osdUpgradeAvailable={hasUpgrades && !scheduledManualUpdate}
+            osdUpgradeAvailable={hasUpgrades && !scheduledUpdate && schedules.fulfilled}
           />
         </dd>
-        { scheduledManualUpdate && (
+        { scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (
           <div>
             <dt>Upgrade scheduled: </dt>
             <dd>
-              <DateFormat type="exact" date={Date.parse(scheduledManualUpdate.next_run)} />
-              {' '}
-              {
-                scheduledManualUpdate.state?.value === 'started'
-                  ? '(Started)'
-                  : cluster.canEdit && (
-                    <Button
-                      variant="link"
-                      onClick={() => openModal('cancel-upgrade', { clusterID: cluster.id, schedule: scheduledManualUpdate })}
-                    >
-                       Cancel this upgrade
-                    </Button>
-                  )
-              }
+              <Popover
+                headerContent="Update status"
+                isVisible={popoverOpen}
+                shouldOpen={() => this.setState({ popoverOpen: true })}
+                shouldClose={() => this.setState({ popoverOpen: false })}
+                bodyContent={(
+                  <UpgradeStatus
+                    clusterID={cluster.id}
+                    canEdit={cluster.canEdit}
+                    clusterVersion={cluster.openshift_version}
+                    scheduledUpgrade={scheduledUpdate}
+                    openModal={openModal}
+                    onCancelClick={() => this.setState({ popoverOpen: false })}
+                  />
+                )}
+              >
+                <Button variant="link">
+                View details
+                  {' '}
+                  <OutlinedQuestionCircleIcon />
+                </Button>
+              </Popover>
             </dd>
           </div>
         )}

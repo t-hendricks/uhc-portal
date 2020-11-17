@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody, Title } from '@patternfly/react-core';
 import { UserIcon, SyncAltIcon } from '@patternfly/react-icons';
-// eslint-disable-next-line camelcase
 import CardBadge from '../../common/CardBadge';
 
 const InstructionsAWS = () => (
@@ -12,12 +11,11 @@ const InstructionsAWS = () => (
         AWS: Select an installation type
       </Title>
       <div className="flex-container">
-        <Link to="/install/aws/installer-provisioned" className="ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/aws/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isRecommened />
-          <CardBody>
+          <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <SyncAltIcon
               alt="Installer-Provisioned Infrastructure"
-              className="ipi-upi-infra-logo"
             />
             <Title headingLevel="h3" size="lg">Installer-provisioned infrastructure</Title>
             {' '}
@@ -25,12 +23,11 @@ const InstructionsAWS = () => (
             provisions and the cluster maintains.
           </CardBody>
         </Link>
-        <Link to="/install/aws/user-provisioned" className="ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/aws/user-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isHidden />
-          <CardBody>
+          <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <UserIcon
               alt="User-Provisioned Infrastructure"
-              className="ipi-upi-infra-logo"
             />
             <Title headingLevel="h3" size="lg">User-provisioned infrastructure</Title>
             Deploy an OpenShift cluster on infrastructure that you prepare and maintain.

@@ -89,7 +89,7 @@ class AddNotificationContactDialog extends Component {
           <FormGroup
             helperTextInvalid={validationMessage}
             validated={!validationMessage ? 'default' : 'error'}
-            label="Red Hat username"
+            label="Red Hat username or email"
             isRequired
             fieldId="username"
           >

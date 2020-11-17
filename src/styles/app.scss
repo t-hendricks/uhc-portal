@@ -291,25 +291,12 @@ limitations under the License.
   min-height: 300px;
 }
 
-#deleteClusterHint {
-  margin-top: 20px
-}
-
-#deleteCluster span {
-  font-weight: 700;
-}
-
 .pf-c-modal-box .error-box {
   margin-bottom: 15px;
 }
 
 .pf-c-modal-box__footer {
   display: block;
-}
-
-.form-loading-spinner {
-  padding-top: 20px;
-  padding-bottom: 10px;
 }
 
 footer {
@@ -433,16 +420,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: 5px;
 }
 
-#cluster-health {
-  svg {
-    margin-right: 10px;
-    margin-top: 2px;
-  }
-  #last-checkin {
-    font-weight: 400;
-  }
-}
-
 #monitoring .status-icon, #networkSelfService .status-icon {
   margin-right: 5px;
 }
@@ -460,16 +437,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   width: 120px;
 }
 
-.developer-preview {
-  background-color: var(--pf-global--warning-color--100);
-  padding-top: 10px;
-  padding-bottom: 8px;
-  margin-left: -24px;
-  margin-top: -24px;
-  margin-right: -24px;
-  padding-left: 22px;
-}
-
 .flex-container {
   display: flex;
   flex-wrap: wrap;
@@ -478,18 +445,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 #billing-model #standard {
   margin-left: 0;
-}
-
-#billing-model.flat-radio-buttons-flex-container {
-  button, div.ocm-flat-radio-button-disabled {
-    height: 85px;
-    min-width: 460px;
-    margin-left: 0;
-    margin-right: 2em;
-    div {
-      min-width: 444px;
-    }
-  }
 }
 
 .ccsModal {
@@ -504,22 +459,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 };
 
-.flat-radio-buttons-flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
-  flex-direction: row;
-  >button, >div {
-    max-width: 320px;
-    margin: 1em;
-  }
-  >div {
-    width: 100%;
-  }
-}
-
-.ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .ipi-upi-infra-card {
-  flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
+.ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .ocm-c-ipi-upi-infra-card {
+  flex: 0 0 380px;
   margin: 20px;
 }
 
@@ -560,19 +501,20 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .pf-c-card__body.infra-card-placeholder {
-  flex: 0 0 380px !important; /* important is hacking around a difference in insights chrome in dev vs prod */
+  flex: 0 0 380px;
   margin: 20px;
   padding: 20px;
   display: flex;
 }
 
-.ipi-upi-infra-card {
-  align-items: initial;
-  .ipi-upi-infra-logo {
-    color: var(--pf-global--primary-color--100);
-    font-size: 6em; // --pf-global--icon--FontSize—xl (x2)
-    height: 160px;
-    margin: 10px;
+.ocm-c-ipi-upi-infra-card {
+  &--body {
+    svg {
+      color: var(--pf-global--primary-color--100);
+      font-size: 6em; // --pf-global--icon--FontSize—xl (x2)
+      height: 160px;
+      margin: 10px;
+    }
   }
 }
 
@@ -656,10 +598,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-.create-osd-form-button-split {
-  margin-top: 20px;
-}
-
 // Enable word wrapping in tooltips, this is useful in case of extremely long cluster names
 .pf-c-tooltip__content {
   word-wrap: break-word;
@@ -707,15 +645,6 @@ ul.dev-preview-warnings li {
   font-weight: var(--pf-global--FontWeight--bold);
 }
 
-span.dev-preview-label {
-  background: var(--pf-global--BackgroundColor--150);
-  color: var(--pf-global--Color--100);
-}
-
-span.dev-preview-label svg {
-  color: var(--ins-color--orange);
-}
-
 .cluster-list .pf-c-chip-group .pf-c-chip-group__label {
   margin-right: 10px;
   overflow: visible;
@@ -723,38 +652,6 @@ span.dev-preview-label svg {
 
 .pf-c-form__group .pf-c-radio__input {
   margin-top: -3px;
-}
-
-#field-array-label {
-  font-size: var(--pf-c-form__label--FontSize);
-}
-
-#field-array-help-text {
-  font-size: var(--pf-c-form__helper-text--FontSize);
-  margin-top: var(--pf-c-form__helper-text--MarginTop);
-}
-
-#field-array-title {
-  margin-bottom: 8px !important;
-}
-
-.field-grid-item {
-  margin-top: -16px;
-  &.minus-button {
-    width: min-content;
-  }
-}
-
-.pf-c-content h3.osd-page-header {
-  margin-top: 20px;
-  margin-bottom: -10px;
-}
-
-// .pf-c-content puts bullets and padding on the uls in select -- override that
-.cloud-region-combo-box ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
 }
 
 .quota-dropdown {
@@ -880,12 +777,6 @@ button:focus {
   }
 }
 
-h3#grant-role-select  {
-  margin-bottom: -20px;
-  font-weight: var(--pf-c-form__label-text--FontWeight);
-  font-size: var(--pf-c-form__label--FontSize);
-}
-
 .access-control-tables-copy {
   padding-left: 0;
 }
@@ -896,25 +787,6 @@ h3#grant-role-select  {
 
 .idp-helptext-heading {
   margin-top: var(--pf-global--spacer--lg);
-}
-
-.idp-github-auth-mode-selection-question {
-  margin-top: var(--pf-global--spacer--xs);
-  margin-bottom: var(--pf-global--spacer--md);
-}
-
-.cluster-log {
-  .markdown {
-    a[target="_blank"]::after {
-      font-family: "Font Awesome 5 Free", serif;
-      font-weight: 900;
-      content: ' \f35d'
-    }
-  }
-}
-
-.privacy-heading {
-  margin-bottom: -15px;
 }
 
 .ocp-downloads {
@@ -1023,75 +895,10 @@ h3#grant-role-select  {
   margin-bottom: var(--pf-global--spacer--md);
  }
 
-.small-donut-chart-container {
-  max-height: 205px;
-  max-width: 410px;
-}
-
 a.overview-clusters-link:hover {
   text-decoration: none;
 }
 
-/* TEMPORARY WORKAROUND for PatternFly 4 upgrade
-
-styles from the Chrome (which wasn't updated yet) were overriding the padding on the new alert.
-
-Once the Insights Chrome updates, this won't be needed.
-*/
-div.pf-c-alert div.pf-c-alert__icon {
-  padding: 0 !important;
-}
-
-/* END TEMPORARY WORKAROUND */
-
-.inline-skeleton {
-  display: inline-block;
-}
-
-.cluster-support-label-clickable {
-  cursor: pointer;
-}
-
-.cluster-support-status-popover footer a {
-  // something in PF or Insights overrides link styling for <a> in <footer>, breaking the intened style of this popover
-  // to avoid that, I'm copying here the default <a> styles so it'll look right
-  font-weight: var(--pf-global--link--FontWeight);
-  color: var(--pf-global--link--Color);
-  text-decoration: var(--pf-global--link--TextDecoration);
-  margin: 0;
-}
-
-#copyPullSecret {
-  margin: 10px;
-}
-
-#not-found {
-  #Icon404 {
-    height: 10vh;
-  }
-}
-
 .ins-c-empty-state__unavailable .pf-c-empty-state__icon {
   color: var(--pf-global--danger-color--100);
-}
-
-#error-expand {
-  .pf-c-expandable-section__toggle {
-    margin: auto;
-  }
-  .pf-c-expandable-section__content {
-    text-align: center;
-  }
-}
-
-.terms-and-conditions-guard-modal {
-  footer > a:hover, a:focus, a:visited {
-    // the modal uses an <a> for primary button so override the conflicting css.
-    margin-left: 0px;
-  }
-}
-
-.support-subtitle {
-  font-size: var(--pf-global--FontSize--md);
-  font-weight: var(--pf-global--FontWeight--light);
 }

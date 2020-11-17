@@ -15,6 +15,7 @@ describe('<IDPSection />', () => {
   it('should render (no IDPs)', () => {
     const openModal = jest.fn();
     const wrapper = shallow(<IDPSection
+      canEdit={false}
       clusterID="fake id"
       identityProviders={baseIDPs}
       openModal={openModal}
@@ -33,6 +34,7 @@ describe('<IDPSection />', () => {
     };
 
     const wrapper = shallow(<IDPSection
+      canEdit={false}
       clusterID="fake id"
       identityProviders={IDPs}
       openModal={jest.fn()}
@@ -61,6 +63,7 @@ describe('<IDPSection />', () => {
 
     const openModal = jest.fn();
     const wrapper = shallow(<IDPSection
+      canEdit={false}
       clusterID="fake id"
       identityProviders={IDPs}
       openModal={openModal}

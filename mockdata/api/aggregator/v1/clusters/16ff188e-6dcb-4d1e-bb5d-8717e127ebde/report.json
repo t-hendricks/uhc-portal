@@ -45,6 +45,10 @@
         "risk_of_change": 2,
         "user_vote": 1,
         "disabled": true,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag2",
           "tag3"
@@ -59,6 +63,10 @@
         "risk_of_change": 3,
         "user_vote": -1,
         "disabled": true,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag2",
           "tag3"
@@ -73,6 +81,10 @@
         "risk_of_change": 1,
         "user_vote": 1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag3"
         ]
@@ -86,6 +98,10 @@
         "risk_of_change": 2,
         "user_vote": 1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag3"
         ]
@@ -99,6 +115,10 @@
         "risk_of_change": 3,
         "user_vote": -1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag3"
         ]
@@ -112,6 +132,10 @@
         "risk_of_change": 1,
         "user_vote": 1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag3"
         ]
@@ -125,6 +149,10 @@
         "risk_of_change": 2,
         "user_vote": 1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag3"
         ]
@@ -138,6 +166,10 @@
         "risk_of_change": 3,
         "user_vote": -1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag3",
           "tag4"
@@ -152,6 +184,10 @@
         "risk_of_change": 1,
         "user_vote": 1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag3",
           "tag4"
@@ -166,6 +202,10 @@
         "risk_of_change": 0,
         "user_vote": 0,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag3",
           "tag4"
@@ -180,6 +220,10 @@
         "risk_of_change": 3,
         "user_vote": -1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag3",
           "tag4"
@@ -194,6 +238,10 @@
         "risk_of_change": 1,
         "user_vote": 1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag3",
           "tag4"
@@ -208,6 +256,10 @@
         "risk_of_change": 2,
         "user_vote": 1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag4"
         ]
@@ -221,6 +273,10 @@
         "risk_of_change": 3,
         "user_vote": -1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag4"
         ]
@@ -234,6 +290,10 @@
         "risk_of_change": 1,
         "user_vote": 1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag4"
         ]
@@ -247,6 +307,10 @@
         "risk_of_change": 2,
         "user_vote": 1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag4"
         ]
@@ -260,6 +324,10 @@
         "risk_of_change": 3,
         "user_vote": -1,
         "disabled": false,
+        "extra_data": {
+          "error_key":"NODES_MINIMUM_REQUIREMENTS_NOT_MET",
+          "type":"rule"
+        },
         "tags": [
           "tag4"
         ]

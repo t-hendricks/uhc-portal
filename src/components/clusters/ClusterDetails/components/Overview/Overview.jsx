@@ -116,7 +116,7 @@ class Overview extends React.Component {
           </CardBody>
         </Card>
         <SubscriptionSettings />
-        {displayClusterLogs && cluster.managed && (
+        {displayClusterLogs && (
         <Card>
           <CardTitle>
             <Title headingLevel="h2" size="lg" className="card-title">Cluster history</Title>

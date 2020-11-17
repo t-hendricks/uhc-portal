@@ -54,6 +54,9 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           </Button>
         </a>
         <Connect(ClusterActionsDropdown)
+          canAllowClusterAdmin={false}
+          canSubscribeOCP={false}
+          canTransferClusterOwnership={false}
           cluster={
             Object {
               "api": Object {
@@ -211,6 +214,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
             }
           }
           showConsoleButton={false}
+          toggleSubscriptionReleased={[MockFunction]}
         />
         <RefreshBtn
           classOptions=""
@@ -221,6 +225,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
     </SplitItem>
   </Split>
   <SubscriptionCompliancy
+    canSubscribeOCP={false}
     cluster={
       Object {
         "api": Object {

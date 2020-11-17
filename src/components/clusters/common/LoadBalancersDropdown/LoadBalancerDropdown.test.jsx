@@ -29,8 +29,9 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={baseState}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={{}}
+          quota={0}
           organization={organizationState}
+          disabled={false}
         />,
       );
     });
@@ -62,8 +63,9 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={{}}
+          quota={0}
           organization={organizationState}
+          disabled={false}
         />,
       );
     });
@@ -92,8 +94,9 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={{}}
+          quota={0}
           organization={organizationState}
+          disabled={false}
         />,
       );
     });
@@ -122,9 +125,7 @@ describe('<LoadBalancersDropdown />', () => {
         values: [0, 4, 8],
       };
 
-      const quota = {
-        loadBalancerQuota: 4,
-      };
+      const quota = 4;
 
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
@@ -135,6 +136,7 @@ describe('<LoadBalancersDropdown />', () => {
           getLoadBalancers={getLoadBalancers}
           quota={quota}
           organization={organizationState}
+          disabled={false}
         />,
       );
     });
