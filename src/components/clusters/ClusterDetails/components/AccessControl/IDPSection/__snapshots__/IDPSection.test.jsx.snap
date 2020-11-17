@@ -117,7 +117,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
             ],
           },
           Object {
-            "title": "Auth Callback URL",
+            "title": "Auth callback URL",
             "transforms": Array [
               [Function],
             ],

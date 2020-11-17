@@ -216,8 +216,8 @@ class IDPForm extends React.Component {
           && (
             <GridItem span={8}>
               <ExpandableSection
-                toggleTextCollapsed="Show advanced Options"
-                toggleTextExpanded="Hide advanced Options"
+                toggleTextCollapsed="Show advanced options"
+                toggleTextExpanded="Hide advanced options"
                 isExpanded={isExpanded}
                 onToggle={() => this.updateIsExpanded()}
               >
