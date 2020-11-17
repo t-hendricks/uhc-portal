@@ -57,12 +57,12 @@ class Subscriptions extends Component {
           <PageHeader>
             <PageHeaderTitle title="Subscriptions" className="page-title" />
           </PageHeader>
-          <PageSection className="ins-p-subscriptions">
+          <PageSection className="ocm-p-subscriptions">
             <Stack hasGutter>
-              <StackItem className="ins-l-ocp-subscription__section">
+              <StackItem className="ocm-l-ocp-subscription__section">
                 <OCPSubscriptionCard organizationID={organizationID} />
               </StackItem>
-              <StackItem className="ins-l-osd-subscription__section">
+              <StackItem className="ocm-l-osd-subscription__section">
                 <OSDSubscriptionCard organizationID={organizationID} />
               </StackItem>
             </Stack>

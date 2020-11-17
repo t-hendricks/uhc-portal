@@ -1,10 +1,10 @@
-.ins-p-subscriptions {
+.ocm-p-subscriptions {
   .pf-c-card__title {
     font-size: var(--pf-global--FontSize--lg);
     font-weight: var(--pf-global--FontWeight--normal);
   }
 
-  .ins-l-ocp-subscription__section {
+  .ocm-l-ocp-subscription__section {
     .osp-list {
       padding-left: var(--pf-global--spacer--2xl);
       li { 
@@ -13,7 +13,7 @@
     }
   }
   
-  .ins-l-osd-subscription__section {
+  .ocm-l-osd-subscription__section {
     .content-header {
       font-size: var(--pf-global--FontSize--md);
       font-weight: var(--pf-global--FontWeight--semi-bold);
