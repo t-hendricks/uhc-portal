@@ -20,6 +20,9 @@ import { clustersConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
 import { normalizeCluster } from '../../common/normalize';
+import {
+  postSchedule,
+} from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
 
 import { editSubscriptionSettings } from './subscriptionSettingsActions';
 
@@ -27,14 +30,22 @@ const invalidateClusters = () => dispatch => dispatch({
   type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
 });
 
-const createCluster = params => dispatch => dispatch({
+const createClusterAndUpgradeSchedule = async (cluster, upgradeSettings, dispatch) => {
+  const clusterResponse = await clusterService.postNewCluster(cluster);
+  if (upgradeSettings && upgradeSettings.upgrade_policy === 'automatic') {
+    const clusterID = clusterResponse.data.id;
+    dispatch(postSchedule(clusterID, {
+      schedule_type: 'automatic',
+      schedule: upgradeSettings.automatic_upgrade_schedule,
+    }));
+  }
+  invalidateClusters()(dispatch);
+  return clusterResponse;
+};
+
+const createCluster = (params, upgradeSettings) => dispatch => dispatch({
   type: clustersConstants.CREATE_CLUSTER,
-  payload: clusterService.postNewCluster(params).then((response) => {
-    // TODO: this artificially delays CREATE_CLUSTER_FULLFILLED action
-    // until after the INVALIDATE action.
-    invalidateClusters()(dispatch);
-    return response;
-  }),
+  payload: createClusterAndUpgradeSchedule(params, upgradeSettings, dispatch),
 });
 
 const registerClusterAndUpdateSubscription = async (
