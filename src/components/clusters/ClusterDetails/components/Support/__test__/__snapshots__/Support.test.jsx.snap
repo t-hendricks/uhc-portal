@@ -2,12 +2,15 @@
 
 exports[`<Support /> should render with notification contacts 1`] = `
 <Fragment>
-  <Card>
-    <CardTitle>
+  <Card
+    className="ocm-c-support-notification-contacts__card"
+  >
+    <CardTitle
+      className="ocm-c-support-notification-contacts__card--header"
+    >
       <Title
-        className="space-bottom-md card-title"
+        className="card-title"
         headingLevel="h2"
-        size="lg"
       >
         Notification contacts
       </Title>
@@ -17,7 +20,9 @@ exports[`<Support /> should render with notification contacts 1`] = `
         Add users to be contacted in the event of notifications about this cluster.
       </div>
     </CardTitle>
-    <CardBody>
+    <CardBody
+      className="ocm-c-support-notification-contacts__card--body"
+    >
       <AddNotificationContactButton
         canEdit={true}
         openModal={[MockFunction]}
@@ -58,17 +63,22 @@ exports[`<Support /> should render with notification contacts 1`] = `
       />
     </CardBody>
   </Card>
-  <Card>
-    <CardTitle>
+  <Card
+    className="ocm-c-support-support-cases__card"
+  >
+    <CardTitle
+      className="ocm-c-support-support-cases__card--header"
+    >
       <Title
         className="card-title"
         headingLevel="h2"
-        size="lg"
       >
         Support cases
       </Title>
     </CardTitle>
-    <CardBody>
+    <CardBody
+      className="ocm-c-support-support-cases__card--body"
+    >
       <Connect(SupportCasesCard)
         getSupportCases={[MockFunction]}
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
@@ -87,12 +97,15 @@ exports[`<Support /> should render with notification contacts 1`] = `
 
 exports[`<Support /> should render without notification contacts 1`] = `
 <Fragment>
-  <Card>
-    <CardTitle>
+  <Card
+    className="ocm-c-support-notification-contacts__card"
+  >
+    <CardTitle
+      className="ocm-c-support-notification-contacts__card--header"
+    >
       <Title
-        className="space-bottom-md card-title"
+        className="card-title"
         headingLevel="h2"
-        size="lg"
       >
         Notification contacts
       </Title>
@@ -102,7 +115,9 @@ exports[`<Support /> should render without notification contacts 1`] = `
         Add users to be contacted in the event of notifications about this cluster.
       </div>
     </CardTitle>
-    <CardBody>
+    <CardBody
+      className="ocm-c-support-notification-contacts__card--body"
+    >
       <AddNotificationContactButton
         canEdit={true}
         openModal={[MockFunction]}
@@ -128,17 +143,22 @@ exports[`<Support /> should render without notification contacts 1`] = `
       />
     </CardBody>
   </Card>
-  <Card>
-    <CardTitle>
+  <Card
+    className="ocm-c-support-support-cases__card"
+  >
+    <CardTitle
+      className="ocm-c-support-support-cases__card--header"
+    >
       <Title
         className="card-title"
         headingLevel="h2"
-        size="lg"
       >
         Support cases
       </Title>
     </CardTitle>
-    <CardBody>
+    <CardBody
+      className="ocm-c-support-support-cases__card--body"
+    >
       <Connect(SupportCasesCard)
         getSupportCases={[MockFunction]}
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"

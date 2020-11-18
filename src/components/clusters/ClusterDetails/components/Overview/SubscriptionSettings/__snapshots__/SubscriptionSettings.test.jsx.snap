@@ -1,17 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SubscriptionSettings /> should render for OCP 1`] = `
-<Card>
-  <CardTitle>
+<Card
+  className="ocm-c-overview-subscription-settings__card"
+>
+  <CardTitle
+    className="ocm-c-overview-subscription-settings__card--header"
+  >
     <Title
       className="card-title"
       headingLevel="h2"
-      size="lg"
     >
       Subscription settings
     </Title>
   </CardTitle>
-  <CardBody>
+  <CardBody
+    className="ocm-c-overview-subscription-settings__card--body"
+  >
     <Grid>
       <GridItem
         sm={6}

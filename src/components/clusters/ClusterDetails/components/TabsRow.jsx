@@ -5,9 +5,6 @@ import {
   Tabs, Tab, TabTitleText, TabTitleIcon,
 } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
-// eslint-disable-next-line camelcase
-import { global_danger_color_100 } from '@patternfly/react-tokens';
-
 
 class TabsRow extends React.Component {
   state = {
@@ -77,7 +74,7 @@ class TabsRow extends React.Component {
   <>
     <TabTitleText>Monitoring</TabTitleText>
     {hasIssues
-    && <TabTitleIcon id="monitoring-issues-icon"><ExclamationCircleIcon color={global_danger_color_100.value} /></TabTitleIcon>}
+    && <TabTitleIcon id="monitoring-issues-icon"><ExclamationCircleIcon className="danger" /></TabTitleIcon>}
   </>,
         contentId: 'monitoringTabContent',
         id: 'monitoring',

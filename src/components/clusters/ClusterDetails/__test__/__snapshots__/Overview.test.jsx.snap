@@ -3,18 +3,21 @@
 exports[`<Overview /> should render 1`] = `
 <Fragment>
   <Card
-    id="metrics-charts"
+    className="ocm-c-overview-resource-usage__card"
   >
-    <CardTitle>
+    <CardTitle
+      className="ocm-c-overview-resource-usage__card--header"
+    >
       <Title
         className="card-title"
         headingLevel="h2"
-        size="lg"
       >
         Resource usage
       </Title>
     </CardTitle>
-    <CardBody>
+    <CardBody
+      className="ocm-c-overview-resource-usage__card--body"
+    >
       <ResourceUsage
         cpu={
           Object {
@@ -46,17 +49,22 @@ exports[`<Overview /> should render 1`] = `
       />
     </CardBody>
   </Card>
-  <Card>
-    <CardTitle>
+  <Card
+    className="ocm-c-overview-details__card"
+  >
+    <CardTitle
+      className="ocm-c-overview-details__card--header"
+    >
       <Title
         className="card-title"
         headingLevel="h2"
-        size="lg"
       >
         Details
       </Title>
     </CardTitle>
-    <CardBody>
+    <CardBody
+      className="ocm-c-overview-details__card--body"
+    >
       <Grid>
         <GridItem
           sm={6}
@@ -558,18 +566,21 @@ exports[`<Overview /> should render 1`] = `
 exports[`Overview Cluster Not Managed should render 1`] = `
 <Fragment>
   <Card
-    id="metrics-charts"
+    className="ocm-c-overview-resource-usage__card"
   >
-    <CardTitle>
+    <CardTitle
+      className="ocm-c-overview-resource-usage__card--header"
+    >
       <Title
         className="card-title"
         headingLevel="h2"
-        size="lg"
       >
         Resource usage
       </Title>
     </CardTitle>
-    <CardBody>
+    <CardBody
+      className="ocm-c-overview-resource-usage__card--body"
+    >
       <ResourceUsage
         cpu={
           Object {
@@ -601,17 +612,22 @@ exports[`Overview Cluster Not Managed should render 1`] = `
       />
     </CardBody>
   </Card>
-  <Card>
-    <CardTitle>
+  <Card
+    className="ocm-c-overview-details__card"
+  >
+    <CardTitle
+      className="ocm-c-overview-details__card--header"
+    >
       <Title
         className="card-title"
         headingLevel="h2"
-        size="lg"
       >
         Details
       </Title>
     </CardTitle>
-    <CardBody>
+    <CardBody
+      className="ocm-c-overview-details__card--body"
+    >
       <Grid>
         <GridItem
           sm={6}
@@ -1107,17 +1123,22 @@ exports[`Overview Cluster Not Managed should render 1`] = `
     </CardBody>
   </Card>
   <Connect(SubscriptionSettings) />
-  <Card>
-    <CardTitle>
+  <Card
+    className="ocm-c-overview-cluster-history__card"
+  >
+    <CardTitle
+      className="ocm-c-overview-cluster-history__card--header"
+    >
       <Title
         className="card-title"
         headingLevel="h2"
-        size="lg"
       >
         Cluster history
       </Title>
     </CardTitle>
-    <CardBody>
+    <CardBody
+      className="ocm-c-overview-cluster-history__card--body"
+    >
       <Connect(ClusterLogs)
         externalClusterID="9f50940b-fba8-4c59-9c6c-d64284b2026d"
         history={Object {}}

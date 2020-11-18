@@ -49,10 +49,10 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
           Object {
             "title": <React.Fragment>
               <ExclamationTriangleIcon
-                className="status-icon"
-                color="#f0ab00"
+                className="status-icon warning"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Warning
@@ -69,10 +69,10 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
           Object {
             "title": <React.Fragment>
               <ExclamationCircleIcon
-                className="status-icon"
-                color="#c9190b"
+                className="status-icon danger"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Critical
@@ -89,10 +89,10 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
           Object {
             "title": <React.Fragment>
               <ExclamationCircleIcon
-                className="status-icon"
-                color="#c9190b"
+                className="status-icon danger"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Critical
@@ -109,10 +109,10 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
           Object {
             "title": <React.Fragment>
               <ExclamationTriangleIcon
-                className="status-icon"
-                color="#f0ab00"
+                className="status-icon warning"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Warning
@@ -129,10 +129,10 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
           Object {
             "title": <React.Fragment>
               <ExclamationTriangleIcon
-                className="status-icon"
-                color="#f0ab00"
+                className="status-icon warning"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Warning
@@ -149,10 +149,10 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
           Object {
             "title": <React.Fragment>
               <InfoCircleIcon
-                className="status-icon"
-                color="#2b9af3"
+                className="status-icon info"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Info
@@ -212,10 +212,10 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
           Object {
             "title": <React.Fragment>
               <ExclamationTriangleIcon
-                className="status-icon"
-                color="#f0ab00"
+                className="status-icon warning"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Warning
@@ -238,10 +238,10 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
           Object {
             "title": <React.Fragment>
               <ExclamationCircleIcon
-                className="status-icon"
-                color="#c9190b"
+                className="status-icon danger"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Critical
@@ -264,10 +264,10 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
           Object {
             "title": <React.Fragment>
               <ExclamationCircleIcon
-                className="status-icon"
-                color="#c9190b"
+                className="status-icon danger"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Critical
@@ -290,10 +290,10 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
           Object {
             "title": <React.Fragment>
               <ExclamationTriangleIcon
-                className="status-icon"
-                color="#f0ab00"
+                className="status-icon warning"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Warning
@@ -316,10 +316,10 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
           Object {
             "title": <React.Fragment>
               <ExclamationTriangleIcon
-                className="status-icon"
-                color="#f0ab00"
+                className="status-icon warning"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Warning
@@ -342,10 +342,10 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
           Object {
             "title": <React.Fragment>
               <InfoCircleIcon
-                className="status-icon"
-                color="#2b9af3"
+                className="status-icon info"
+                color="currentColor"
                 noVerticalAlign={false}
-                size="md"
+                size="sm"
               />
               <span>
                 Info

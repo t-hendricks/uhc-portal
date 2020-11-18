@@ -5,13 +5,12 @@ import {
   CardBody,
   Title, CardTitle,
 } from '@patternfly/react-core';
-
 import ClusterHealthCard from './components/ClusterHealthCard';
 import MonitoringList from './components/MonitoringList';
 import MonitoringEmptyState from './components/MonitoringEmptyState';
 import { monitoringStatuses } from './monitoringHelper';
-
 import { noop } from '../../../../../common/helpers';
+import './Monitoring.scss';
 
 class Monitoring extends React.Component {
   componentWillUnmount() {
@@ -71,11 +70,11 @@ class Monitoring extends React.Component {
           status={healthStatus}
           discoveredIssues={discoveredIssues}
         />
-        <Card id="monitoring">
-          <CardTitle>
-            <Title headingLevel="h2" className="card-title" size="md">Status</Title>
+        <Card className="ocm-c-monitoring-status__card">
+          <CardTitle className="ocm-c-monitoring-status__card--header">
+            <Title headingLevel="h2" className="card-title">Status</Title>
           </CardTitle>
-          <CardBody>
+          <CardBody className="ocm-c-monitoring-status__card--body">
             <MonitoringList
               cluster={cluster}
               alerts={alerts}

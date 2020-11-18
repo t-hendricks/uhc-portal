@@ -120,7 +120,8 @@ exports[`<TabsRow /> should render monitoring tab with issues icon 1`] = `
           id="monitoring-issues-icon"
         >
           <ExclamationCircleIcon
-            color="#c9190b"
+            className="danger"
+            color="currentColor"
             noVerticalAlign={false}
             size="sm"
           />
@@ -138,7 +139,8 @@ exports[`<TabsRow /> should render monitoring tab with issues icon 1`] = `
             id="monitoring-issues-icon"
           >
             <ExclamationCircleIcon
-              color="#c9190b"
+              className="danger"
+              color="currentColor"
               noVerticalAlign={false}
               size="sm"
             />

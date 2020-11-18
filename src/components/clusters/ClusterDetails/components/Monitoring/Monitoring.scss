@@ -1,0 +1,42 @@
+.ocm-c-monitoring-health__card {
+  &--header { 
+    h2.pf-c-title {
+      font-size: var(--pf-c-title--m-md--FontSize);
+    }
+    svg {
+      margin-right: 10px;
+      margin-top: 2px;
+    }
+    .last-checkin {
+      font-weight: 400;
+    }
+  }
+}
+
+.ocm-c-monitoring-status__card {
+  &--body {
+    h4.pf-c-title {
+      font-size: var(--pf-c-title--m-lg--FontSize);
+      margin-left: -30px;
+    }
+    .item-summary {
+      max-width: 185px;
+    }
+  }
+}
+
+// all tabs
+
+h2.pf-c-title.card-title {
+  font-size: var(--pf-c-title--m-md--FontSize);
+}
+
+.status-icon {
+  font-size: var(--pf-global--icon--FontSize--md);
+  margin-right: 5px;
+}
+
+.danger {color: var(--pf-global--danger-color--100);}
+.info {color: var(--pf-global--info-color--100);}
+.success {color: var(--pf-global--success-color--100);}
+.warning {color: var(--pf-global--warning-color--100);}

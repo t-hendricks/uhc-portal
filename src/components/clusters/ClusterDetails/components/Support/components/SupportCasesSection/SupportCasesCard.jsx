@@ -75,7 +75,6 @@ class SupportCasesCard extends React.Component {
         <a href={url} target="_blank" rel="noopener noreferrer">
           <Button
             variant="secondary"
-            className="support-cases-add"
           >
              Open support case
           </Button>

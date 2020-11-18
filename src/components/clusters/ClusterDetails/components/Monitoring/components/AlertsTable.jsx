@@ -18,7 +18,6 @@ import {
   InfoCircleIcon,
 } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
-import { global_danger_color_100, global_warning_color_100, global_info_color_100 } from '@patternfly/react-tokens';
 
 import {
   alertsSeverity,
@@ -30,20 +29,20 @@ import {
 function AlertsTable({ alerts = [], clusterConsole }) {
   const errorIcon = (
     <>
-      <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />
+      <ExclamationCircleIcon className="status-icon danger" />
       <span>Critical</span>
     </>
   );
   const warningIcon = (
     <>
-      <ExclamationTriangleIcon className="status-icon" color={global_warning_color_100.value} size="md" />
+      <ExclamationTriangleIcon className="status-icon warning" />
       <span>Warning</span>
     </>
   );
 
   const infoIcon = (
     <>
-      <InfoCircleIcon className="status-icon" color={global_info_color_100.value} size="md" />
+      <InfoCircleIcon className="status-icon info" />
       <span>Info</span>
     </>
   );

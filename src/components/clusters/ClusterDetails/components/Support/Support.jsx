@@ -41,15 +41,15 @@ const Support = ({
   getSupportCases,
 }) => (
   <>
-    <Card>
-      <CardTitle>
-        <Title headingLevel="h2" size="lg" className="space-bottom-md card-title">Notification contacts</Title>
+    <Card className="ocm-c-support-notification-contacts__card">
+      <CardTitle className="ocm-c-support-notification-contacts__card--header">
+        <Title headingLevel="h2" className="card-title">Notification contacts</Title>
         <div className="support-subtitle">
           Add users to be contacted in the event of notifications about this cluster.
           {clusterOwnerMsg(clusterCreator)}
         </div>
       </CardTitle>
-      <CardBody>
+      <CardBody className="ocm-c-support-notification-contacts__card--body">
         <AddNotificationContactSection
           canEdit={canEdit}
           openModal={openModal}
@@ -69,11 +69,11 @@ const Support = ({
         />
       </CardBody>
     </Card>
-    <Card>
-      <CardTitle>
-        <Title headingLevel="h2" size="lg" className="card-title">Support cases</Title>
+    <Card className="ocm-c-support-support-cases__card">
+      <CardTitle className="ocm-c-support-support-cases__card--header">
+        <Title headingLevel="h2" className="card-title">Support cases</Title>
       </CardTitle>
-      <CardBody>
+      <CardBody className="ocm-c-support-support-cases__card--body">
         <SupportCasesCard
           subscriptionID={subscriptionID}
           supportCases={supportCases}
