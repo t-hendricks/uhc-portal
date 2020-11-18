@@ -15,19 +15,20 @@ exports[`BareMetal instructions renders correctly 1`] = `
       className="flex-container"
     >
       <Link
-        className="aws-ipi-upi-infra-card infra-card pf-c-card"
+        className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
         to="/assisted-installer/clusters/~new"
       >
         <CardBadge
           isDevPreview={true}
         />
-        <CardBody>
+        <CardBody
+          className="ocm-c-ipi-upi-infra-card--body"
+        >
           <ConnectedIcon
             alt="Installer-Provisioned Infrastructure"
-            className="aws-ipi-upi-infra-logo"
-            color="#73bcf7"
+            color="currentColor"
             noVerticalAlign={false}
-            size="xl"
+            size="sm"
           />
           <Title
             headingLevel="h3"
@@ -40,19 +41,20 @@ exports[`BareMetal instructions renders correctly 1`] = `
         </CardBody>
       </Link>
       <Link
-        className="aws-ipi-upi-infra-card infra-card pf-c-card"
+        className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
         to="/install/metal/installer-provisioned"
       >
         <CardBadge
           isRecommened={true}
         />
-        <CardBody>
+        <CardBody
+          className="ocm-c-ipi-upi-infra-card--body"
+        >
           <SyncAltIcon
             alt="Installer-Provisioned Infrastructure"
-            className="aws-ipi-upi-infra-logo"
-            color="#73bcf7"
+            color="currentColor"
             noVerticalAlign={false}
-            size="xl"
+            size="sm"
           />
           <Title
             headingLevel="h3"
@@ -65,19 +67,20 @@ exports[`BareMetal instructions renders correctly 1`] = `
         </CardBody>
       </Link>
       <Link
-        className="aws-ipi-upi-infra-card infra-card pf-c-card"
+        className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
         to="/install/metal/user-provisioned"
       >
         <CardBadge
           isHidden={true}
         />
-        <CardBody>
+        <CardBody
+          className="ocm-c-ipi-upi-infra-card--body"
+        >
           <UserIcon
             alt="User-Provisioned Infrastructure"
-            className="aws-ipi-upi-infra-logo"
-            color="#73bcf7"
+            color="currentColor"
             noVerticalAlign={false}
-            size="xl"
+            size="sm"
           />
           <Title
             headingLevel="h3"
