@@ -47,9 +47,9 @@ const getNotificationContacts = subscriptionID => apiRequest({
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/notification_contacts`,
 });
 
-const addNotificationContact = (subscriptionID, username) => apiRequest({
+const addNotificationContact = (subscriptionID, accountIdentifier) => apiRequest({
   method: 'post',
-  data: { account_username: username },
+  data: { account_identifier: accountIdentifier },
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/notification_contacts`,
 });
 

@@ -33,6 +33,14 @@ const funcs = () => ({
   getClusterHistory: jest.fn(),
   getClusterRouters: jest.fn(),
   getMachinePools: jest.fn(),
+  resetClusterHistory: jest.fn(),
+  enableRule: jest.fn(),
+  disableRule: jest.fn(),
+  voteOnRule: jest.fn(),
+  toggleSubscriptionReleased: jest.fn(),
+  clearGetMachinePoolsResponse: jest.fn(),
+  getNotificationContacts: jest.fn(),
+  getSupportCases: jest.fn(),
 });
 
 const subscriptionInfo = {
@@ -533,6 +541,17 @@ const fixtures = {
   clusterIdentityProviders,
   organization,
   clusterRouters,
+  clusterLogsViewOptions: {},
+  addOns: {},
+  supportCases: {},
+  notificationContacts: {},
+  initTabOpen: '',
+  supportTabFeature: false,
+  displayClusterLogs: false,
+  canTransferClusterOwnership: false,
+  canSubscribeOCP: false,
+  hasIssues: false,
+  canAllowClusterAdmin: false,
 };
 
 export { funcs };

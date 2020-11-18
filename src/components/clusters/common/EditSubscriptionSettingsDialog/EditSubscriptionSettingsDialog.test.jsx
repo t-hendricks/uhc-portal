@@ -61,7 +61,7 @@ describe('<EditSubscriptionSettingsDialog />', () => {
   const buttonSelector = variant => (`Button[variant="${variant}"]`);
   const disabledButtonSelector = variant => (`Button[variant="${variant}"][isDisabled=true]`);
 
-  beforeEach(() => {
+  beforeAll(() => {
     closeModal = jest.fn();
     onClose = jest.fn();
     submit = jest.fn();

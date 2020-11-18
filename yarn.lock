@@ -2222,6 +2222,16 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
+"@wdio/logger@^6.7.3":
+  version "6.7.3"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@wdio/logger/-/logger-6.7.3.tgz#d8b2c2d51e3413b3c9536e679bbd0f4dfbfc1f3f"
+  integrity sha512-wBQ7KXHWXDRKHQUqoR68mpcailW2xeH2LiWrYZh7jdyuN2DaYdxKW1RAuXbalJ9c9zEbQmwmGTGIOUELiCB8Ug==
+  dependencies:
+    chalk "^4.0.0"
+    loglevel "^1.6.0"
+    loglevel-plugin-prefix "^0.8.4"
+    strip-ansi "^6.0.0"
+
 "@wdio/mocha-framework@^6.3.0":
   version "6.4.0"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@wdio/mocha-framework/-/mocha-framework-6.4.0.tgz#2f52cfdeabd3cde7722b9a703f525e646795ecc5"
@@ -5785,10 +5795,10 @@ extsprintf@^1.2.0:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-facet-lib@1.4.1-2:
-  version "1.4.1-2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/facet-lib/-/facet-lib-1.4.1-2.tgz#1115f9ed406b4ba663d9e89dcb4cec6841807d2b"
-  integrity sha512-NdcEMYFJDoSBJvoTehbnxrofgsL///VCMKtW5f87yq5nZMxC9SVX1GENcnO8DhGHyIrvfG5hNyBom+7863eSdg==
+facet-lib@1.4.3:
+  version "1.4.3"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/facet-lib/-/facet-lib-1.4.3.tgz#a3137d9383781e56b454bd10980f7d0eb5f4f44d"
+  integrity sha512-iBQnIYRc1m9sZoeN0MwlCuv4puZENns0vQYCfQwV8T+ONXyAK447E8UfOMc7trT3YX26Oy8ptcKpiUZNjRr7tA==
   dependencies:
     axios-case-converter "^0.6.0"
     unique-names-generator "^4.2.0"

@@ -30,6 +30,7 @@ describe('<ResourceUsage />', () => {
     const wrapper = shallow(<ResourceUsage
       cpu={cpu}
       memory={memory}
+      type=""
       metricsAvailable
       metricsStatusMessage={metricsStatusMessages.default}
     />);

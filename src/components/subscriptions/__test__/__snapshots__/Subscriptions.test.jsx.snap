@@ -268,20 +268,20 @@ exports[`<Subscriptions /> Subscriptions should render 1`] = `
     />
   </PageHeader>
   <PageSection
-    className="ins-p-subscriptions"
+    className="ocm-p-subscriptions"
   >
     <Stack
       hasGutter={true}
     >
       <StackItem
-        className="ins-l-ocp-subscription__section"
+        className="ocm-l-ocp-subscription__section"
       >
         <OCPSubscriptionCard
           organizationID="org-1"
         />
       </StackItem>
       <StackItem
-        className="ins-l-osd-subscription__section"
+        className="ocm-l-osd-subscription__section"
       >
         <Connect(OSDSubscriptionCard)
           organizationID="org-1"

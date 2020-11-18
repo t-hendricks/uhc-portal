@@ -36,6 +36,7 @@ const dashboardState = {
         { value: 1 },
       ],
     },
+    error: false,
   },
   unhealthyClusters: {
     error: false,
@@ -51,9 +52,16 @@ describe('<Overview />', () => {
   let getSummaryDashboard;
   let getUnhealthyClusters;
   let wrapper;
+  let viewOptions;
   beforeAll(() => {
     getSummaryDashboard = jest.fn();
     getUnhealthyClusters = jest.fn();
+    viewOptions = {
+      currentPage: 1,
+      pageSize: 1,
+      totalCount: 1,
+      totalPages: 1,
+    };
     wrapper = shallow(
       <Overview
         getSummaryDashboard={getSummaryDashboard}
@@ -70,6 +78,7 @@ describe('<Overview />', () => {
         usedMem={dashboardState.summary.metrics.sum_used_memory[0]}
         upToDate={dashboardState.summary.metrics.clusters_up_to_date_total[0]}
         upgradeAvailable={dashboardState.summary.metrics.clusters_upgrade_available_total[0]}
+        viewOptions={viewOptions}
       />,
     );
   });

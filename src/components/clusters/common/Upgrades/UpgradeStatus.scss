@@ -1,0 +1,16 @@
+#ocm-upgrade-status-cancel {
+  padding-left: 0px;
+}
+
+.ocm-upgrade-available-icon {
+  color: var(--pf-global--default-color--200);
+}
+
+.ocm-cluster-up-to-date-icon {
+  color: var(--pf-global--success-color--100);
+}
+
+.ocm-upgrade-status-scheduled-title {
+  font-size: var(--pf-global--FontSize--sm);
+  font-weight: var(--pf-global--FontWeight--bold);
+}

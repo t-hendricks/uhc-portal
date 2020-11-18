@@ -50,6 +50,7 @@ class TabsRow extends React.Component {
       displayInsightsTab,
       displaySupportTab,
       displayMachinePoolsTab,
+      displayUpgradeSettingsTab,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
@@ -58,6 +59,7 @@ class TabsRow extends React.Component {
       supportTabRef,
       insightsTabRef,
       machinePoolsTabRef,
+      upgradeSettingsTabRef,
       hasIssues,
     } = this.props;
     return [
@@ -130,6 +132,14 @@ class TabsRow extends React.Component {
         show: displaySupportTab,
         ref: supportTabRef,
       },
+      {
+        key: 8,
+        title: 'Upgrade settings',
+        contentId: 'upgradeSettingsTabContent',
+        id: 'upgradeSettings',
+        show: displayUpgradeSettingsTab,
+        ref: upgradeSettingsTabRef,
+      },
     ];
   }
 
@@ -188,6 +198,7 @@ TabsRow.propTypes = {
   displayNetworkingTab: PropTypes.bool,
   displaySupportTab: PropTypes.bool,
   displayMachinePoolsTab: PropTypes.bool,
+  displayUpgradeSettingsTab: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
@@ -196,6 +207,7 @@ TabsRow.propTypes = {
   machinePoolsTabRef: PropTypes.object.isRequired,
   networkingTabRef: PropTypes.object.isRequired,
   supportTabRef: PropTypes.object.isRequired,
+  upgradeSettingsTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
   initTabOpen: PropTypes.string,
   setOpenedTab: PropTypes.func.isRequired,

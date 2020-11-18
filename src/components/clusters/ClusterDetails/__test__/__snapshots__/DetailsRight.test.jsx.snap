@@ -8,9 +8,18 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
     <dt>
       Status
     </dt>
-    <dd>
-      <ClusterStateIcon />
+    <dd
+      style={
+        Object {
+          "textTransform": "capitalize",
+        }
+      }
+    >
+      <ClusterStateIcon
+        clusterState="ready"
+      />
        
+      ready
     </dd>
     <dt>
       Total vCPU
@@ -160,7 +169,13 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
             "id": "us-east-1",
             "kind": "CloudRegionLink",
           },
-          "state": "ready",
+          "state": Object {
+            "description": "ready",
+            "state": "ready",
+            "style": Object {
+              "textTransform": "capitalize",
+            },
+          },
           "status": Object {
             "dns_ready": true,
             "state": "ready",
@@ -364,7 +379,13 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
             "id": "us-east-1",
             "kind": "CloudRegionLink",
           },
-          "state": "ready",
+          "state": Object {
+            "description": "ready",
+            "state": "ready",
+            "style": Object {
+              "textTransform": "capitalize",
+            },
+          },
           "status": Object {
             "dns_ready": true,
             "state": "ready",
@@ -396,9 +417,18 @@ exports[`<DetailsRight /> should render 1`] = `
     <dt>
       Status
     </dt>
-    <dd>
-      <ClusterStateIcon />
+    <dd
+      style={
+        Object {
+          "textTransform": "capitalize",
+        }
+      }
+    >
+      <ClusterStateIcon
+        clusterState="ready"
+      />
        
+      ready
     </dd>
     <dt>
       Total vCPU
@@ -571,7 +601,13 @@ exports[`<DetailsRight /> should render 1`] = `
             "id": "us-east-1",
             "kind": "CloudRegionLink",
           },
-          "state": "ready",
+          "state": Object {
+            "description": "ready",
+            "state": "ready",
+            "style": Object {
+              "textTransform": "capitalize",
+            },
+          },
           "status": Object {
             "dns_ready": true,
             "state": "ready",

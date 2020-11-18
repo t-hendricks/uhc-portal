@@ -26,7 +26,7 @@ function IDPSection({
   const columns = [
     { title: 'Name', transforms: [cellWidth(30)] },
     { title: 'Type', transforms: [cellWidth(30)] },
-    { title: 'Auth Callback URL', transforms: [cellWidth(30)] },
+    { title: 'Auth callback URL', transforms: [cellWidth(30)] },
   ];
 
   const actions = [

@@ -94,6 +94,9 @@ class UpgradeTimeSelection extends React.Component {
       return `${hour}:${minute}`;
     };
 
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 6);
+
     return (
       <Form>
         <Title size="lg" headingLevel="h3">Schedule upgrade</Title>
@@ -127,6 +130,7 @@ class UpgradeTimeSelection extends React.Component {
                 dateFormat="yyyy-MM-dd"
                 customInput={<TextInput iconVariant="calendar" />}
                 minDate={new Date()}
+                maxDate={maxDate}
               />
               <Select
                 selections={getSelectedTime()}

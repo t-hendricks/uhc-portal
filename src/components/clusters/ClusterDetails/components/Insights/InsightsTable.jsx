@@ -298,7 +298,7 @@ class InsightsTable extends React.Component {
                     <>
                       { report.disabled ? <DisabledTooltip /> : null }
                       <Link
-                        to={`/details/${cluster.id}/insights/${report.rule_id.replace(/\./g, '|')}`}
+                        to={`/details/${cluster.id}/insights/${report.rule_id.replace(/\./g, '|')}/${report.extra_data.error_key}`}
                         onClick={() => setReportDetails(report)}
                       >
                         { report.description }

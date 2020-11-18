@@ -10,12 +10,14 @@ describe('<IdentityProvidersModal />', () => {
   let handleSubmit;
   let wrapper;
   let submitIDPResponse;
+  let change;
 
-  beforeEach(() => {
+  beforeAll(() => {
     closeModal = jest.fn();
     resetResponse = jest.fn();
     resetForm = jest.fn();
     handleSubmit = jest.fn();
+    change = jest.fn();
     submitIDPResponse = {};
 
     wrapper = shallow(<IdentityProvidersModal
@@ -24,6 +26,8 @@ describe('<IdentityProvidersModal />', () => {
       resetForm={resetForm}
       handleSubmit={handleSubmit}
       submitIDPResponse={submitIDPResponse}
+      IDPList={[]}
+      change={change}
       isOpen
       initialValues={{
         isEditForm: false,
@@ -42,6 +46,8 @@ describe('<IdentityProvidersModal />', () => {
       resetForm={resetForm}
       handleSubmit={handleSubmit}
       submitIDPResponse={submitIDPResponse}
+      IDPList={[]}
+      change={change}
       isOpen={false}
       initialValues={{
         isEditForm: false,

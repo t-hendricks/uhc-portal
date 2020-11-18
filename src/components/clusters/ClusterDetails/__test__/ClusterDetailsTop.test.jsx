@@ -12,7 +12,7 @@ describe('<ClusterDetailsTop />', () => {
   let wrapper;
   const functions = funcs();
 
-  beforeEach(() => {
+  beforeAll(() => {
     const props = {
       cluster: fixtures.clusterDetails.cluster,
       openModal: functions.openModal,
@@ -20,6 +20,10 @@ describe('<ClusterDetailsTop />', () => {
       refreshFunc: functions.refreshFunc,
       clusterIdentityProviders: fixtures.clusterIdentityProviders,
       organization: fixtures.organization,
+      canAllowClusterAdmin: fixtures.canAllowClusterAdmin,
+      canSubscribeOCP: fixtures.canSubscribeOCP,
+      canTransferClusterOwnership: fixtures.canTransferClusterOwnership,
+      toggleSubscriptionReleased: functions.toggleSubscriptionReleased,
     };
     wrapper = shallow(
       <ClusterDetailsTop {...props} />,

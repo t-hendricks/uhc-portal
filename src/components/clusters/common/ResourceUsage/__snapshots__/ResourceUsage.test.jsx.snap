@@ -15,6 +15,7 @@ exports[`<ResourceUsage /> should render no type 1`] = `
     humanize={false}
     title="vCPU"
     total={16}
+    type=""
     unit="Cores"
     used={3.995410922987096}
   />
@@ -23,6 +24,7 @@ exports[`<ResourceUsage /> should render no type 1`] = `
     humanize={true}
     title="Memory"
     total={82293346304}
+    type=""
     unit="B"
     used={16546058240}
   />
