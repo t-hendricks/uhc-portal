@@ -21,7 +21,6 @@ import {
   gcpQuotaSelector,
 } from '../common/quotaSelectors';
 import { validateGCPServiceAccount } from '../../../common/validators';
-import { GCP_CCS_FEATURE } from '../../../redux/constants/featureConstants';
 
 const AWS_DEFAULT_REGION = 'us-east-1';
 const GCP_DEFAULT_REGION = 'us-east1';
@@ -60,7 +59,6 @@ const mapStateToProps = (state, ownProps) => {
 
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
-    gcpCCSEnabled: state.features[GCP_CCS_FEATURE],
 
     cloudProviders: state.cloudProviders,
     persistentStorageValues: state.persistentStorageValues,
