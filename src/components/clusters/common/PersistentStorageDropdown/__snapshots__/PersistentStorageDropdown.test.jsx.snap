@@ -2,6 +2,7 @@
 
 exports[`<PersistentStorageDropdown /> when persistent storage list needs to be fetched renders correctly 1`] = `
 <PersistentStorageDropdown
+  disabled={false}
   getPersistentStorage={
     [MockFunction] {
       "calls": Array [
@@ -36,6 +37,7 @@ exports[`<PersistentStorageDropdown /> when persistent storage list needs to be 
     }
   }
   quota={Object {}}
+  storageQuota={0}
 >
   <div
     className="spinner-fit-container"
@@ -63,6 +65,7 @@ exports[`<PersistentStorageDropdown /> when persistent storage list needs to be 
 
 exports[`<PersistentStorageDropdown /> when the request is pending renders correctly 1`] = `
 <PersistentStorageDropdown
+  disabled={false}
   getPersistentStorage={[MockFunction]}
   input={
     Object {
@@ -84,7 +87,7 @@ exports[`<PersistentStorageDropdown /> when the request is pending renders corre
       "values": Array [],
     }
   }
-  quota={Object {}}
+  storageQuota={0}
 >
   <div
     className="spinner-fit-container"
@@ -112,6 +115,7 @@ exports[`<PersistentStorageDropdown /> when the request is pending renders corre
 
 exports[`<PersistentStorageDropdown /> when the storage list is available renders correctly 1`] = `
 <PersistentStorageDropdown
+  disabled={false}
   getPersistentStorage={[MockFunction]}
   input={
     Object {
@@ -146,132 +150,68 @@ exports[`<PersistentStorageDropdown /> when the storage list is available render
       ],
     }
   }
-  quota={
-    Object {
-      "persistentStorageQuota": 600,
-    }
-  }
+  storageQuota={600}
 >
-  <Tooltip
-    content="You do not have enough quota for this option. Contact sales to purchase additional quota."
-    position="right"
+  <FormSelect
+    aria-label="Persistent Storage"
+    className="quota-dropdown"
+    isDisabled={false}
+    isRequired={false}
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
   >
-    <Popper
-      appendTo={[Function]}
-      distance={15}
-      enableFlip={true}
-      flipBehavior={
-        Array [
-          "top",
-          "right",
-          "bottom",
-          "left",
-          "top",
-          "right",
-          "bottom",
-        ]
-      }
-      isVisible={false}
+    <select
+      aria-invalid={false}
+      aria-label="Persistent Storage"
+      className="pf-c-form-control quota-dropdown"
+      data-ouia-component-id="OUIA-Generated-FormSelect-default-1"
+      data-ouia-component-type="PF4/FormSelect"
+      data-ouia-safe={true}
+      disabled={false}
       onBlur={[Function]}
-      onDocumentClick={false}
-      onDocumentKeyDown={[Function]}
+      onChange={[Function]}
       onFocus={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-      onTriggerEnter={[Function]}
-      placement="right"
-      popper={
-        <div
-          className="pf-c-tooltip"
-          id="pf-tooltip-1"
-          role="tooltip"
-          style={
-            Object {
-              "maxWidth": null,
-              "opacity": 0,
-              "transition": "opacity 300ms cubic-bezier(.54, 1.5, .38, 1.11)",
-            }
-          }
-        >
-          <TooltipArrow />
-          <TooltipContent
-            isLeftAligned={false}
-          >
-            You do not have enough quota for this option. Contact sales to purchase additional quota.
-          </TooltipContent>
-        </div>
-      }
-      popperMatchesTriggerWidth={false}
-      positionModifiers={
-        Object {
-          "bottom": "pf-m-bottom",
-          "left": "pf-m-left",
-          "right": "pf-m-right",
-          "top": "pf-m-top",
-        }
-      }
-      trigger={
-        <div
-          aria-describedby="pf-tooltip-1"
-        >
-          <FormSelect
-            aria-label="Persistent Storage"
-            className="quota-dropdown"
-            isDisabled={true}
-            isRequired={false}
-            onBlur={[Function]}
-            onChange={[MockFunction]}
-            onFocus={[Function]}
-            ouiaSafe={true}
-            validated="default"
-            value=""
-          />
-        </div>
-      }
-      zIndex={9999}
+      required={false}
+      value=""
     >
-      <FindRefWrapper
-        onFoundRef={[Function]}
+      <FormSelectOption
+        key="107374182400"
+        label="100 GiB"
+        value="107374182400"
       >
-        <div
-          aria-describedby="pf-tooltip-1"
+        <option
+          className=""
+          disabled={false}
+          value="107374182400"
         >
-          <FormSelect
-            aria-label="Persistent Storage"
-            className="quota-dropdown"
-            isDisabled={true}
-            isRequired={false}
-            onBlur={[Function]}
-            onChange={[MockFunction]}
-            onFocus={[Function]}
-            ouiaSafe={true}
-            validated="default"
-            value=""
-          >
-            <select
-              aria-invalid={false}
-              aria-label="Persistent Storage"
-              className="pf-c-form-control quota-dropdown"
-              data-ouia-component-id="OUIA-Generated-FormSelect-default-1"
-              data-ouia-component-type="PF4/FormSelect"
-              data-ouia-safe={true}
-              disabled={true}
-              onBlur={[Function]}
-              onChange={[Function]}
-              onFocus={[Function]}
-              required={false}
-              value=""
-            />
-          </FormSelect>
-        </div>
-      </FindRefWrapper>
-    </Popper>
-  </Tooltip>
+          100 GiB
+        </option>
+      </FormSelectOption>
+      <FormSelectOption
+        key="644245094400"
+        label="600 GiB"
+        value="644245094400"
+      >
+        <option
+          className=""
+          disabled={false}
+          value="644245094400"
+        >
+          600 GiB
+        </option>
+      </FormSelectOption>
+    </select>
+  </FormSelect>
 </PersistentStorageDropdown>
 `;
 
 exports[`<PersistentStorageDropdown /> when there was an error renders correctly 1`] = `
 <PersistentStorageDropdown
+  disabled={false}
   getPersistentStorage={[MockFunction]}
   input={
     Object {
@@ -293,7 +233,7 @@ exports[`<PersistentStorageDropdown /> when there was an error renders correctly
       "values": Array [],
     }
   }
-  quota={Object {}}
+  storageQuota={0}
 >
   <ErrorBox
     message="Error loading persistent storage list"

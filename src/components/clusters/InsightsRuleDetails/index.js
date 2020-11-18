@@ -27,7 +27,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchClusterDetails: clusterId => fetchClusterDetails(clusterId),
-  fetchReportData: (clusterId, ruleId, isOSD) => fetchReportDetails(clusterId, ruleId, isOSD),
+  fetchReportData: (clusterId, ruleId, errorKey, isOSD) => (
+    fetchReportDetails(clusterId, ruleId, errorKey, isOSD)
+  ),
   disableRule: (clusterId, ruleId) => disableRuleInsights(clusterId, ruleId),
   enableRule: (clusterId, ruleId) => enableRuleInsights(clusterId, ruleId),
   clearGlobalError,

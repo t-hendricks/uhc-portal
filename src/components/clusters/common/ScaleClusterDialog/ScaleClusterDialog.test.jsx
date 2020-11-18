@@ -49,11 +49,12 @@ describe('<ScaleClusterDialog />', () => {
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
       organization={fulfilledRequest}
+      cloudProviderID="aws"
       initialValues={{
-        id: 'test-id', nodes_compute: 4, load_balancers: '4', persistent_storage: '107374182400',
+        id: 'test-id', nodes_compute: 4, load_balancers: 4, persistent_storage: 107374182400,
       }}
       min={{ value: 4, validationMsg: 'error' }}
-      prestine={false}
+      pristine={false}
     />);
   });
   it('renders correctly', () => {
@@ -67,8 +68,8 @@ describe('<ScaleClusterDialog />', () => {
     expect(onClose).toBeCalled();
   });
 
-  it('renders correctly when an erorr occurs', () => {
-    wrapper.setProps({ editClusterResponse: { error: true, erorMessage: 'this is an error' } });
+  it('renders correctly when an error occurs', () => {
+    wrapper.setProps({ editClusterResponse: { error: true, errorMessage: 'this is an error' } });
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(ErrorBox).length).toEqual(1);
   });
@@ -89,11 +90,12 @@ describe('<ScaleClusterDialog />', () => {
         loadBalancerValues={requestInitialState}
         persistentStorageValues={requestInitialState}
         organization={fulfilledRequest}
+        cloudProviderID="aws"
         initialValues={{
-          id: 'test-id', nodes_compute: 4, load_balancers: '4', persistent_storage: '107374182400',
+          id: 'test-id', nodes_compute: 4, load_balancers: 4, persistent_storage: 107374182400,
         }}
         min={{ value: 4, validationMsg: 'error' }}
-        prestine={false}
+        pristine={false}
       />);
       expect(getLoadBalancers).toBeCalled();
       expect(getPersistentStorage).toBeCalled();

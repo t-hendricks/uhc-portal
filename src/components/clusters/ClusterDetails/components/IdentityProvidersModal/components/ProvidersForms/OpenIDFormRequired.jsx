@@ -32,7 +32,7 @@ function OpenIDFormRequired({ isPending }) {
           disabled={isPending}
           validate={checkOpenIDIssuer}
           isRequired
-          helpText="The URL that the OpenID provider asserts as the Issuer Identifier. It must use the https scheme with no URL query parameters or fragment."
+          helpText="The URL that the OpenID provider asserts as the issuer identifier. It must use the https scheme with no URL query parameters or fragment."
         />
       </GridItem>
       <GridItem span={8}>

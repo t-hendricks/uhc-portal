@@ -15,7 +15,7 @@ describe('<CreateClusterPage />', () => {
 
   it('renders correctly', () => {
     const wrapper = shallow(<CreateClusterPage
-      hasQuota
+      hasOSDQuota
       getOrganizationAndQuota={getOrganizationAndQuota}
       organization={{ ...organization, fulfilled: true }}
     />);
@@ -26,7 +26,7 @@ describe('<CreateClusterPage />', () => {
     it('should render', () => {
       const wrapper = shallow(
         <CreateClusterPage
-          hasQuota={false}
+          hasOSDQuota={false}
           getOrganizationAndQuota={getOrganizationAndQuota}
           organization={{ ...organization, fulfilled: true }}
         />,
@@ -39,6 +39,7 @@ describe('<CreateClusterPage />', () => {
     let wrapper;
     beforeAll(() => {
       wrapper = shallow(<CreateClusterPage
+        hasOSDQuota={false}
         getOrganizationAndQuota={getOrganizationAndQuota}
         organization={organization}
       />);

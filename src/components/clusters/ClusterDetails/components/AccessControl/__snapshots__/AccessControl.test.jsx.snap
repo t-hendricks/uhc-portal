@@ -6,6 +6,7 @@ exports[`<AccessControl /> should render 1`] = `
 >
   <Connect(IDPSection)
     canEdit={true}
+    clusterConsoleURL="https://console-openshift-console.apps.example.com"
     clusterID="fake id"
   />
   <Connect(UsersSection)
@@ -15,6 +16,10 @@ exports[`<AccessControl /> should render 1`] = `
         "id": "fake id",
       }
     }
+  />
+  <Connect(NetworkSelfServiceSection)
+    canEdit={true}
+    clusterID="fake id"
   />
 </div>
 `;

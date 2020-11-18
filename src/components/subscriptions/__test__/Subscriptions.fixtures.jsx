@@ -1,6 +1,7 @@
 const fetchAccount = jest.fn();
 const fetchQuotaSummary = jest.fn();
 const fetchQuotaCost = jest.fn();
+const invalidateClusters = jest.fn();
 
 const organizationID = 'org-1';
 
@@ -147,4 +148,5 @@ export {
   quotaSummary,
   quotaCost,
   rows,
+  invalidateClusters,
 };

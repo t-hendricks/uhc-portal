@@ -42,6 +42,7 @@ describe('ApiError', () => {
         { fixtures.children }
       </ApiError>,
     );
-    expect(wrapper.matchesElement(<TermsError />)).toBe(true);
+    expect(wrapper.matchesElement(<TermsError error={apiError} restore={fixtures.clearApiError} />))
+      .toBe(true);
   });
 });

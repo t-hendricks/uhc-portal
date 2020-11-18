@@ -8,16 +8,17 @@ const ocpOptions = {};
 const providers = [];
 Object.values(instructionsMapping).forEach((value) => {
   const { cloudProvider, customizations } = value;
+  const cloudProviderID = cloudProvider;
   const ipi = get(value, 'ipi', null);
   const upi = get(value, 'upi', null);
   if (ipi && upi) {
-    ocpOptions[`${cloudProvider}-ipi`] = ({ cloudProvider, customizations, ...ipi });
-    providers.push(`${cloudProvider}-ipi`);
-    ocpOptions[`${cloudProvider}-upi`] = ({ cloudProvider, customizations, ...upi });
-    providers.push(`${cloudProvider}-upi`);
+    ocpOptions[`${cloudProviderID}-ipi`] = ({ cloudProviderID, customizations, ...ipi });
+    providers.push(`${cloudProviderID}-ipi`);
+    ocpOptions[`${cloudProviderID}-upi`] = ({ cloudProviderID, customizations, ...upi });
+    providers.push(`${cloudProviderID}-upi`);
   } else {
-    ocpOptions[cloudProvider] = { ...value };
-    providers.push(cloudProvider);
+    ocpOptions[cloudProviderID] = { ...value, cloudProviderID };
+    providers.push(cloudProviderID);
   }
 });
 providers.sort();

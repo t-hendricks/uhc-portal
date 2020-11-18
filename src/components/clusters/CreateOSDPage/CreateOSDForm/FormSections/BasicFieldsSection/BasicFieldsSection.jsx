@@ -21,6 +21,7 @@ function BasicFieldsSection({
   cloudProviderID,
   handleMultiAZChange,
   isMultiAz,
+  isBYOC,
 }) {
   const hasSingleAzQuota = quota.singleAz.available > 0;
   const hasMultiAzQuota = quota.multiAz.available > 0;
@@ -77,6 +78,7 @@ function BasicFieldsSection({
             disabled={pending}
             isRequired
             isMultiAz={isMultiAz}
+            isBYOC={isBYOC}
           />
         </FormGroup>
       </GridItem>
@@ -130,6 +132,7 @@ BasicFieldsSection.propTypes = {
   showAvailability: PropTypes.bool,
   handleMultiAZChange: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
+  isBYOC: PropTypes.bool.isRequired,
   quota: PropTypes.shape({
     singleAz: PropTypes.shape({ available: PropTypes.number.isRequired }),
     multiAz: PropTypes.shape({ available: PropTypes.number.isRequired }),

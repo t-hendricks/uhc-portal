@@ -115,7 +115,7 @@ function Router({ history }) {
             <Route path="/install/pull-secret" component={InstallPullSecret} />
             <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
             <Route path="/install" component={InstallInfrastructure} />
-            <Route path="/details/:clusterId/insights/:reportId" component={InsightsRuleDetails} />
+            <Route path="/details/:clusterId/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
             <Route path="/details/:id" component={ClusterDetails} />
             <TermsGuardedRoute path="/create/osd/aws" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="aws" />} history={history} />
             <TermsGuardedRoute path="/create/osd/gcp" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="gcp" />} history={history} />
