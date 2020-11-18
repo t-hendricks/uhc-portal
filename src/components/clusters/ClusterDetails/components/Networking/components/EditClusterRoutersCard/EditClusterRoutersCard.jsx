@@ -11,6 +11,8 @@ import {
   ClipboardCopy,
   Split,
   SplitItem,
+  Stack,
+  StackItem,
   ActionGroup,
   Button,
   Tooltip,
@@ -19,6 +21,7 @@ import {
 import { ReduxCheckbox, ReduxVerticalFormGroup } from '../../../../../../common/ReduxFormComponents';
 import { checkRouteSelectors } from '../../../../../../../common/validators';
 import ChangePrivacySettingsDialog from '../ChangePrivacySettingsDialog';
+import './EditClusterRoutersCard.scss';
 
 class EditClusterRoutersCard extends React.Component {
   handleSaveChanges = () => {
@@ -52,113 +55,117 @@ class EditClusterRoutersCard extends React.Component {
 
     return (
       <>
-        <Card id="edit-cluster-routers">
-          <CardBody>
+        <Card className="ocm-c-networking-edit-cluster-routers__card">
+          <CardBody className="ocm-c-networking-edit-cluster-routers__card--body">
             <Form>
-              <Grid hasGutter>
-                <GridItem span={9}>
-                  <Title headingLevel="h1" size="md" className="card-title networking-tab">Master API endpoint</Title>
-                  <div className="networking-tab">
-                    <ClipboardCopy isReadOnly>
-                      {masterAPIEndpoint}
-                    </ClipboardCopy>
-                  </div>
-                  <div className="networking-tab">
-                    <Field
-                      component={ReduxCheckbox}
-                      name="private_api"
-                      label="Make API private"
-                      isDisabled={!canEdit}
-                    />
-                  </div>
-                </GridItem>
-                <GridItem span={9}>
-                  <Title headingLevel="h2" size="md" className="card-title networking-tab">Default application router</Title>
-                  <div className="networking-tab">
-                    <ClipboardCopy isReadOnly>
-                      {`https://${defaultRouterAddress}`}
-                    </ClipboardCopy>
-                  </div>
-                  <div className="networking-tab">
-                    <Field
-                      component={ReduxCheckbox}
-                      name="private_default_router"
-                      label="Make router private"
-                      isDisabled={!canEdit}
-                    />
-                  </div>
-                </GridItem>
-                <GridItem span={9}>
-                  <Split hasGutter>
-                    <SplitItem>
-                      <Title headingLevel="h2" size="md" className="card-title networking-tab">Additional application router</Title>
-                    </SplitItem>
-                    <SplitItem>
+              <Grid>
+                <GridItem md={9}>
+                  <Stack hasGutter>
+                    <StackItem>
+                      <Title headingLevel="h1" size="md" className="card-title">Master API endpoint</Title>
+                    </StackItem>
+                    <StackItem>
+                      <ClipboardCopy isReadOnly>
+                        {masterAPIEndpoint}
+                      </ClipboardCopy>
+                    </StackItem>
+                    <StackItem>
                       <Field
                         component={ReduxCheckbox}
-                        isSwitch
-                        name="enable_additional_router"
-                        labelOff="Not enabled"
-                        label="Enabled"
+                        name="private_api"
+                        label="Make API private"
                         isDisabled={!canEdit}
                       />
-                    </SplitItem>
-                  </Split>
-                  {
-                  additionalRouterEnabled && (
-                    <>
-                      <div className="networking-tab">
-                        <ClipboardCopy isReadOnly>
-                          {`https://${additionalRouterAddress}`}
-                        </ClipboardCopy>
-                      </div>
-                      <div className="networking-tab">
-                        <Field
-                          component={ReduxCheckbox}
-                          name="private_additional_router"
-                          label="Make router private"
-                          disabled={!canEdit}
-                        />
-                      </div>
-                    </>
-                  )
-                }
-                </GridItem>
-                {
-                additionalRouterEnabled && (
-                  <GridItem span={9}>
-                    <Field
-                      component={ReduxVerticalFormGroup}
-                      arid-label="Additional Router Labels"
-                      name="labels_additional_router"
-                      label="Label match for additional router (optional)"
-                      type="text"
-                      helpText="Comma separated pairs in key=value format. If no label is specified, all routes will be exposed on both routers."
-                      validate={checkRouteSelectors}
-                      key="route_selectors"
-                      onChange={this.handleChangeRouteSelectors}
-                      isReadOnly={!canEdit}
-                    />
-                  </GridItem>
-                )
-              }
-                <GridItem span={9}>
-                  <ActionGroup>
-                    { !canEdit ? (
-                      <Tooltip content="You do not have permission to edit routers. Only cluster owners and organization administrators can edit routers.">
-                        <span>
-                          {changeSettingsBtn}
-                        </span>
-                      </Tooltip>
-                    ) : changeSettingsBtn }
-                    <Button
-                      variant="secondary"
-                      isDisabled={pristine}
-                      onClick={() => reset()}
-                    >
-                      Cancel
-                    </Button>
-                  </ActionGroup>
+                    </StackItem>
+                    <StackItem>
+                      <Title headingLevel="h2" size="md" className="card-title">Default application router</Title>
+                    </StackItem>
+                    <StackItem>
+                      <ClipboardCopy isReadOnly>
+                        {`https://${defaultRouterAddress}`}
+                      </ClipboardCopy>
+                    </StackItem>
+                    <StackItem>
+                      <Field
+                        component={ReduxCheckbox}
+                        name="private_default_router"
+                        label="Make router private"
+                        isDisabled={!canEdit}
+                      />
+                    </StackItem>
+                    <StackItem>
+                      <Split hasGutter>
+                        <SplitItem>
+                          <Title headingLevel="h2" size="md" className="card-title">Additional application router</Title>
+                        </SplitItem>
+                        <SplitItem>
+                          <Field
+                            component={ReduxCheckbox}
+                            isSwitch
+                            name="enable_additional_router"
+                            labelOff="Not enabled"
+                            label="Enabled"
+                            isDisabled={!canEdit}
+                          />
+                        </SplitItem>
+                      </Split>
+                    </StackItem>
+                    {
+                      additionalRouterEnabled && (
+                        <>
+                          <StackItem>
+                            <ClipboardCopy isReadOnly>
+                              {`https://${additionalRouterAddress}`}
+                            </ClipboardCopy>
+                          </StackItem>
+                          <StackItem>
+                            <Field
+                              component={ReduxCheckbox}
+                              name="private_additional_router"
+                              label="Make router private"
+                              disabled={!canEdit}
+                            />
+                          </StackItem>
+                        </>
+                      )
+                    }
+                    {
+                      additionalRouterEnabled && (
+                        <StackItem>
+                          <Field
+                            component={ReduxVerticalFormGroup}
+                            arid-label="Additional Router Labels"
+                            name="labels_additional_router"
+                            label="Label match for additional router (optional)"
+                            type="text"
+                            helpText="Comma separated pairs in key=value format. If no label is specified, all routes will be exposed on both routers."
+                            validate={checkRouteSelectors}
+                            key="route_selectors"
+                            onChange={this.handleChangeRouteSelectors}
+                            isReadOnly={!canEdit}
+                          />
+                        </StackItem>
+                      )
+                    }
+                    <StackItem>
+                      <ActionGroup>
+                        { !canEdit ? (
+                          <Tooltip content="You do not have permission to edit routers. Only cluster owners and organization administrators can edit routers.">
+                            <span>
+                              {changeSettingsBtn}
+                            </span>
+                          </Tooltip>
+                        ) : changeSettingsBtn }
+                        <Button
+                          variant="secondary"
+                          isDisabled={pristine}
+                          onClick={() => reset()}
+                        >
+                          Cancel
+                        </Button>
+                      </ActionGroup>
+                    </StackItem>
+                  </Stack>
                 </GridItem>
               </Grid>
               <ChangePrivacySettingsDialog
