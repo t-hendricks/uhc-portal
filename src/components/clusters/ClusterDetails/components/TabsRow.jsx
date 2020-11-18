@@ -48,6 +48,7 @@ class TabsRow extends React.Component {
       displaySupportTab,
       displayMachinePoolsTab,
       displayUpgradeSettingsTab,
+      displayAddBareMetalHosts,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
@@ -57,6 +58,7 @@ class TabsRow extends React.Component {
       insightsTabRef,
       machinePoolsTabRef,
       upgradeSettingsTabRef,
+      addBareMetalTabRef,
       hasIssues,
     } = this.props;
     return [
@@ -137,13 +139,20 @@ class TabsRow extends React.Component {
         show: displayUpgradeSettingsTab,
         ref: upgradeSettingsTabRef,
       },
+      {
+        key: 9,
+        title: 'Bare Metal',
+        contentId: 'addBareMetalHostsContent',
+        id: 'addBareMetalHosts',
+        show: displayAddBareMetalHosts,
+        ref: addBareMetalTabRef,
+      },
     ];
   }
 
   handleTabClick = (event, tabIndex) => {
-    const { setOpenedTab } = this.props;
+    const { setOpenedTab, onTabSelected } = this.props;
     const tabs = this.getTabs();
-
     this.setState(state => ({
       activeTabKey: tabIndex,
       initialTabKey: state.initialTabKey === tabIndex ? null : state.initialTabKey,
@@ -161,6 +170,7 @@ class TabsRow extends React.Component {
         } else {
           // eslint-disable-next-line no-param-reassign
           tab.ref.current.hidden = false;
+          onTabSelected(tab.id);
         }
       }
     });
@@ -196,6 +206,7 @@ TabsRow.propTypes = {
   displaySupportTab: PropTypes.bool,
   displayMachinePoolsTab: PropTypes.bool,
   displayUpgradeSettingsTab: PropTypes.bool,
+  displayAddBareMetalHosts: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
@@ -205,9 +216,11 @@ TabsRow.propTypes = {
   networkingTabRef: PropTypes.object.isRequired,
   supportTabRef: PropTypes.object.isRequired,
   upgradeSettingsTabRef: PropTypes.object.isRequired,
+  addBareMetalTabRef: PropTypes.object,
   hasIssues: PropTypes.bool.isRequired,
   initTabOpen: PropTypes.string,
   setOpenedTab: PropTypes.func.isRequired,
+  onTabSelected: PropTypes.func.isRequired,
 };
 
 TabsRow.defaultProps = {
@@ -217,6 +230,7 @@ TabsRow.defaultProps = {
   displayAddOnsTab: false,
   displayNetworkingTab: false,
   displayMachinePoolsTab: false,
+  displayAddBareMetalHosts: false,
   initTabOpen: '',
 };
 
