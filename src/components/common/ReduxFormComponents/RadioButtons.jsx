@@ -46,34 +46,37 @@ class RadioButtons extends React.Component {
     } = this.props;
 
     return (
-      options.map((option) => {
-        const button = (
-          <>
-            <Radio
-              className={className}
-              isChecked={input.value === option.value}
-              key={`${input.name}-${option.value}`}
-              value={option.value}
-              name={input.name}
-              id={`${input.name}-${option.value}`}
-              aria-label={option.ariaLabel || option.label}
-              label={option.label}
-              onChange={this.changeHandler}
-              isDisabled={option.disabled || isDisabled}
-              description={option.description}
-            />
-            {option.extraField ? option.extraField : null}
-          </>
-        );
-        if (option.tooltipText) {
-          return (
-            <Tooltip content={option.tooltipText} position="right" key={`${input.name}-${option.value}-tooltip`}>
-              {button}
-            </Tooltip>
+      <>
+        {options.map((option) => {
+          const button = (
+            <React.Fragment key={`${input.name}-${option.value}-fragment`}>
+              <Radio
+                className={className}
+                isChecked={input.value === option.value}
+                key={`${input.name}-${option.value}`}
+                value={option.value}
+                name={input.name}
+                id={`${input.name}-${option.value}`}
+                aria-label={option.ariaLabel || option.label}
+                label={option.label}
+                onChange={this.changeHandler}
+                isDisabled={option.disabled || isDisabled}
+                description={option.description}
+              />
+              {option.extraField ? option.extraField : null}
+            </React.Fragment>
           );
-        }
-        return button;
-      }));
+          if (option.tooltipText) {
+            return (
+              <Tooltip content={option.tooltipText} position="right" key={`${input.name}-${option.value}-tooltip`}>
+                {button}
+              </Tooltip>
+            );
+          }
+          return button;
+        })}
+      </>
+    );
   }
 }
 
