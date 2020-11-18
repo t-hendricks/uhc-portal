@@ -17,6 +17,7 @@ import PageTitle from '../../../common/PageTitle';
 import { noQuotaTooltip, shouldRefetchQuota } from '../../../../common/helpers';
 import AWSLogo from '../../../../styles/images/AWS.png';
 import GCPLogo from '../../../../styles/images/google-cloud-logo.svg';
+import './CloudProviderSelection.scss';
 
 class CloudProviderSelection extends Component {
   componentDidMount() {
@@ -57,7 +58,7 @@ class CloudProviderSelection extends Component {
     );
 
     const gcpCard = hasGcpQuota ? (
-      <Link to="/create/osd/gcp" className="infra-card pf-c-card">
+      <Link to="/create/osd/gcp" className="infra-card create-cluster-card pf-c-card">
         {gcpCardBody}
       </Link>
     ) : (
@@ -76,7 +77,7 @@ class CloudProviderSelection extends Component {
     );
 
     const awsCard = hasAwsQuota ? (
-      <Link to="/create/osd/aws" className="infra-card pf-c-card">
+      <Link to="/create/osd/aws" className="infra-card create-cluster-card pf-c-card">
         <CardBadge isHidden />
         {awsCardBody}
       </Link>
