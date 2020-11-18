@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EditNodeCountModal /> renders correctly 1`] = `
+<Modal
+  className="edit-cluster-modal edit-cluster-modal-rhinfra"
+  isSmall={true}
+  onClose={[Function]}
+  onPrimaryClick={[MockFunction]}
+  onSecondaryClick={[Function]}
+  primaryText="Apply"
+  title="Edit node count"
+>
+  <Form
+    onSubmit={[MockFunction]}
+  >
+    <Grid
+      hasGutter={true}
+    >
+      <GridItem
+        span={8}
+      >
+        <Field
+          component={[Function]}
+          label="Machine pool"
+          name="machine_pool"
+          onChange={[Function]}
+          options={Array []}
+        />
+      </GridItem>
+      <GridItem
+        span={4}
+      />
+      <GridItem
+        span={8}
+      >
+        <Field
+          cloudProviderID="gcp"
+          component={
+            Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(NodeCountInput)",
+              "type": [Function],
+            }
+          }
+          currentNodeCount={0}
+          isEditingCluster={true}
+          isMachinePool={true}
+          label="Node count"
+          minNodes={0}
+          name="nodes_compute"
+          product="OSD"
+        />
+      </GridItem>
+      <GridItem
+        span={4}
+      />
+    </Grid>
+  </Form>
+</Modal>
+`;

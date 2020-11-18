@@ -49,13 +49,6 @@ const invalidateSubscriptions = () => dispatch => dispatch({
   type: INVALIDATE_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS),
 });
 
-function fetchQuotaSummary(organizationID, params) {
-  return dispatch => dispatch({
-    type: subscriptionsConstants.GET_QUOTA_SUMMARY,
-    payload: accountsService.getRequest(['quota_summary', organizationID], params),
-  });
-}
-
 function fetchQuotaCost(organizationID) {
   return dispatch => dispatch({
     type: subscriptionsConstants.GET_QUOTA_COST,
@@ -66,7 +59,6 @@ function fetchQuotaCost(organizationID) {
 
 const subscriptionsActions = {
   fetchAccount,
-  fetchQuotaSummary,
   fetchQuotaCost,
   getSubscriptions,
   invalidateSubscriptions,
@@ -75,7 +67,6 @@ const subscriptionsActions = {
 export {
   subscriptionsActions,
   fetchAccount,
-  fetchQuotaSummary,
   fetchQuotaCost,
   getSubscriptions,
   invalidateSubscriptions,

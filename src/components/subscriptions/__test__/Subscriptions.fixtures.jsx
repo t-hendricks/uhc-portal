@@ -1,5 +1,4 @@
 const fetchAccount = jest.fn();
-const fetchQuotaSummary = jest.fn();
 const fetchQuotaCost = jest.fn();
 const invalidateClusters = jest.fn();
 
@@ -85,7 +84,7 @@ const quotaCost = {
           resource_type: 'compute.node',
           byoc: 'rhinfra',
           availability_zone_type: 'any',
-          product: '',
+          product: 'OSD',
         },
       ],
     },
@@ -99,7 +98,7 @@ const quotaCost = {
           resource_type: 'compute.node',
           byoc: 'rhinfra',
           availability_zone_type: 'any',
-          product: '',
+          product: 'OSD',
         },
       ],
     },
@@ -113,7 +112,7 @@ const quotaCost = {
           resource_type: 'compute.node',
           byoc: 'rhinfra',
           availability_zone_type: 'any',
-          product: '',
+          product: 'OSD',
         },
       ],
     },
@@ -127,7 +126,7 @@ const quotaCost = {
           resource_type: 'add-on',
           byoc: 'any',
           availability_zone_type: 'any',
-          product: '',
+          product: 'OSD',
         },
       ],
     },
@@ -141,7 +140,6 @@ const rows = [];
 
 export {
   fetchAccount,
-  fetchQuotaSummary,
   fetchQuotaCost,
   organizationID,
   account,

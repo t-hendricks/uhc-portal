@@ -1,6 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import {
+  awsByocRhInfraGcpRhInfraClustersQuota,
+  awsRhInfraGcpRhInfraClustersQuota,
+} from '../../common/__test__/quota.fixtures';
+
 import CreateOSDCluster from '../CreateOSDPage';
 import CreateOSDForm from '../CreateOSDForm/CreateOSDForm';
 
@@ -61,30 +66,7 @@ describe('CreateOSDCluster', () => {
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
       cloudProviderID="aws"
-      clustersQuota={{
-        hasOsdQuota: true,
-        hasAwsQuota: true,
-        hasGcpQuota: true,
-        aws: {
-          byoc: {
-            singleAz: { available: 5 },
-            multiAz: { available: 5 },
-            totalAvailable: 10,
-          },
-          rhInfra: {
-            singleAz: { available: 5 },
-            multiAz: { available: 5 },
-            totalAvailable: 10,
-          },
-        },
-        gcp: {
-          rhInfra: {
-            singleAz: { available: 5 },
-            multiAz: { available: 5 },
-            totalAvailable: 10,
-          },
-        },
-      }}
+      clustersQuota={awsByocRhInfraGcpRhInfraClustersQuota}
     />);
   });
 
@@ -137,33 +119,7 @@ describe('CreateOSDCluster', () => {
         persistentStorageValues={initialRequestStatus}
         loadBalancerValues={initialRequestStatus}
         cloudProviderID="aws"
-        clustersQuota={{
-          aws: {
-            byoc: {
-              multiAz: { available: 0 },
-              singleAz: { available: 0 },
-              hasQuota: false,
-              totalAvailable: 0,
-            },
-            rhInfra: {
-              hasQuota: true,
-              multiAz: { available: 1 },
-              singleAz: { available: 1 },
-              totalAvailable: 1,
-            },
-          },
-          gcp: {
-            rhInfra: {
-              hasQuota: true,
-              multiAz: { available: 1 },
-              singleAz: { available: 1 },
-              totalAvailable: 1,
-            },
-          },
-          hasOsdQuota: true,
-          hasAwsQuota: true,
-          hasGcpQuota: true,
-        }}
+        clustersQuota={awsRhInfraGcpRhInfraClustersQuota}
       />);
       expect(getOrganizationAndQuota).toBeCalled();
       expect(getMachineTypes).toBeCalled();
