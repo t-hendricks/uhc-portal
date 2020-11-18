@@ -60,8 +60,6 @@ import Support from './components/Support';
 import AddNotificationContactDialog
   from './components/Support/components/AddNotificationContactDialog';
 import UpgradeSettingsTab from './components/UpgradeSettings';
-import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
-import { withFeatureGateCallback } from '../../features/with-feature-gate';
 
 class ClusterDetails extends Component {
   state = {
@@ -342,6 +340,7 @@ class ClusterDetails extends Component {
       initTabOpen,
       supportTabFeature,
       upgradesEnabled,
+      assistedInstallerEnabled,
     } = this.props;
     const { selectedTab } = this.state;
 
@@ -425,10 +424,7 @@ class ClusterDetails extends Component {
     const displaySupportTab = supportTabFeature
       && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING);
     const displayUpgradeSettingsTab = upgradesEnabled && cluster.managed && cluster.canEdit;
-    const displayAddBareMetalHosts = withFeatureGateCallback(
-      () => canAddBareMetalHost({ cluster }),
-      ASSISTED_INSTALLER_FEATURE,
-    )();
+    const displayAddBareMetalHosts = assistedInstallerEnabled && canAddBareMetalHost({ cluster });
 
     return (
       <PageSection id="clusterdetails-content">
@@ -712,6 +708,7 @@ ClusterDetails.propTypes = {
   getSupportCases: PropTypes.func.isRequired,
   supportCases: PropTypes.object.isRequired,
   upgradesEnabled: PropTypes.bool,
+  assistedInstallerEnabled: PropTypes.bool,
 };
 
 ClusterDetails.defaultProps = {
