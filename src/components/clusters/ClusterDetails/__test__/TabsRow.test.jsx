@@ -20,8 +20,10 @@ describe('<TabsRow />', () => {
       networkingTabRef: mockRef,
       supportTabRef: mockRef,
       upgradeSettingsTabRef: mockRef,
+      addBareMetalTabRef: mockRef,
       hasIssues: false,
       setOpenedTab: jest.fn(),
+      onTabSelected: jest.fn(),
     };
 
     wrapper = shallow(
