@@ -329,6 +329,7 @@ test('Field is a valid issuer', () => {
   expect(checkOpenIDIssuer('255.255.255.255')).toBe('Invalid URL. Issuer must use https scheme without a query string (?) or fragment (#)');
   expect(checkOpenIDIssuer('https://invalid.com/perl.cgi?key=')).toBe('The URL must not include a query string (?) or fragment (#)');
   expect(checkOpenIDIssuer('https://login.openidprovider.com/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/v2.0/')).toBe(undefined);
+  expect(checkOpenIDIssuer('https://www.example.com#')).toBe('The URL must not include a query string (?) or fragment (#)');
 });
 
 test('Field contains a numeric string', () => {
