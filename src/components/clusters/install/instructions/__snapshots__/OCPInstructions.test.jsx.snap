@@ -763,7 +763,7 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
               cloudProviderID="IBM-Z"
               isBMIPI={false}
               pendoID="/"
-              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z"
+              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z"
               token={Object {}}
             />
           </SplitItem>
@@ -797,7 +797,7 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
               <GetStarted
                 cloudProviderID="IBM-Z"
                 customizations=""
-                docURL="https://docs.openshift.com/container-platform/4.3/installing/installing_ibm_z/installing-ibm-z.html"
+                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_z/installing-ibm-z.html"
                 isBMIPI={false}
                 pendoID="/"
               />
@@ -856,7 +856,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
               cloudProviderID="Power"
               isBMIPI={false}
               pendoID="/"
-              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.4/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power"
+              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power"
               token={Object {}}
             />
           </SplitItem>
@@ -890,7 +890,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
               <GetStarted
                 cloudProviderID="Power"
                 customizations=""
-                docURL="https://docs.openshift.com/container-platform/4.4/installing/installing_ibm_power/installing-ibm-power.html"
+                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_power/installing-ibm-power.html"
                 isBMIPI={false}
                 pendoID="/"
               />
