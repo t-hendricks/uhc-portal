@@ -100,7 +100,6 @@ class CreateOSDForm extends React.Component {
       cloudProviderID,
       privateClusterSelected,
       product,
-      gcpCCSEnabled,
     } = this.props;
 
     const {
@@ -121,20 +120,18 @@ class CreateOSDForm extends React.Component {
     return (
       <>
         {/* Billing Model */}
-        {(isAws || (isGCP && gcpCCSEnabled)) && (
-          <>
-            <GridItem span={12}>
-              <h3 className="osd-page-header">Billing model</h3>
-            </GridItem>
-            <BillingModelSection
-              openModal={openModal}
-              toggleBYOCFields={this.toggleBYOCFields}
-              hasBYOCquota={hasBYOCQuota}
-              hasStandardQuota={hasRhInfraQuota}
-              byocSelected={isBYOCForm}
-            />
-          </>
-        )}
+
+        <GridItem span={12}>
+          <h3 className="osd-page-header">Billing model</h3>
+        </GridItem>
+        <BillingModelSection
+          openModal={openModal}
+          toggleBYOCFields={this.toggleBYOCFields}
+          hasBYOCquota={hasBYOCQuota}
+          hasStandardQuota={hasRhInfraQuota}
+          byocSelected={isBYOCForm}
+        />
+
         {/* BYOC modal */}
         { isBYOCModalOpen && (
           <CustomerCloudSubscriptionModal
@@ -244,7 +241,6 @@ class CreateOSDForm extends React.Component {
 CreateOSDForm.defaultProps = {
   pending: false,
   isBYOCModalOpen: false,
-  gcpCCSEnabled: false,
 };
 
 CreateOSDForm.propTypes = {
@@ -278,7 +274,6 @@ CreateOSDForm.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   product: PropTypes.string.isRequired,
-  gcpCCSEnabled: PropTypes.bool,
 };
 
 export default CreateOSDForm;
