@@ -216,7 +216,7 @@ TabsRow.propTypes = {
   networkingTabRef: PropTypes.object.isRequired,
   supportTabRef: PropTypes.object.isRequired,
   upgradeSettingsTabRef: PropTypes.object.isRequired,
-  addBareMetalTabRef: PropTypes.object,
+  addBareMetalTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
   initTabOpen: PropTypes.string,
   setOpenedTab: PropTypes.func.isRequired,
