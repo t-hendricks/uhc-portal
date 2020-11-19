@@ -36,7 +36,6 @@ exports[`<PersistentStorageDropdown /> when persistent storage list needs to be 
       "values": Array [],
     }
   }
-  quota={Object {}}
   storageQuota={0}
 >
   <div

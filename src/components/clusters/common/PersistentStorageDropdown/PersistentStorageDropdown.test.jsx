@@ -29,7 +29,6 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={baseState}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quota={{}}
           organization={organizationState}
           disabled={false}
           storageQuota={0}

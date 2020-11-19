@@ -1,5 +1,5 @@
 import * as quotaSelectors from './quotaSelectors';
-import { dedicatedRhInfra, dedicatedCCS, unlimitedROSA } from './__test__/quota.fixtures';
+import { dedicatedRhInfra, dedicatedCCS, unlimitedROSA } from './__test__/quota_cost.fixtures';
 import { userActions } from '../../../redux/actions/userActions';
 // This is the quota we use in mockdata mode, pretty much everything is allowed.
 import * as mockQuotaCost from '../../../../mockdata/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost.json';
