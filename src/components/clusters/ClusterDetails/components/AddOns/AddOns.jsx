@@ -2,49 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Button,
-  Card,
-  CardActions,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  CardHeader,
   EmptyState,
   EmptyStateBody,
   EmptyStateIcon,
-  Flex,
-  FlexItem,
   Gallery,
   Title,
-  Tooltip,
 } from '@patternfly/react-core';
-
-import {
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-  InProgressIcon,
-  IntegrationIcon,
-  UnknownIcon,
-} from '@patternfly/react-icons';
-
-// import { Spinner } from '@redhat-cloud-services/frontend-components';
-
-// eslint-disable-next-line camelcase
-import { global_success_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
-import get from 'lodash/get';
-
-import clusterStates from '../../../common/clusterStates';
+import { IntegrationIcon } from '@patternfly/react-icons';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../../common/ErrorBox';
-import { noQuotaTooltip } from '../../../../../common/helpers';
-
-import {
-  isInstalled,
-  hasQuota,
-  availableAddOns,
-  hasParameters,
-} from './AddOnsHelper';
-
-import AddOnsConstants from './AddOnsConstants';
+import { availableAddOns, getInstalled, hasQuota } from './AddOnsHelper';
+import AddOnsCard from './AddOnsCard';
 import AddOnsParametersModal from './AddOnsParametersModal';
 
 class AddOns extends React.Component {
@@ -81,182 +49,6 @@ class AddOns extends React.Component {
     clearClusterAddOnsResponses();
   }
 
-  getInstallState(addOn) {
-    const { clusterAddOns } = this.props;
-
-    if (!get(clusterAddOns, 'items.length', false)) {
-      return '';
-    }
-
-    const installedAddOn = clusterAddOns.items.find(item => item.addon.id === addOn.id);
-    if (!installedAddOn) {
-      return '';
-    }
-
-    switch (installedAddOn.state) {
-      case AddOnsConstants.INSTALLATION_STATE.PENDING:
-      case AddOnsConstants.INSTALLATION_STATE.INSTALLING:
-      case undefined:
-        // undefined state implies that the user just started
-        // the installation and there is no state available yet
-        return (
-          <>
-            <InProgressIcon size="md" />
-            <span>Installing</span>
-          </>
-        );
-      case AddOnsConstants.INSTALLATION_STATE.DELETING:
-        return (
-          <>
-            <InProgressIcon size="md" />
-            <span>Deleting</span>
-          </>
-        );
-      case AddOnsConstants.INSTALLATION_STATE.FAILED:
-        return (
-          <>
-            <ExclamationCircleIcon color={global_danger_color_100.value} size="md" />
-            <span>Install failed</span>
-          </>
-        );
-      case AddOnsConstants.INSTALLATION_STATE.READY:
-        return (
-          <>
-            <CheckCircleIcon color={global_success_color_100.value} size="md" />
-            <span>Installed</span>
-          </>
-        );
-      default:
-        return (
-          <>
-            <UnknownIcon size="md" />
-            <span>Unknown</span>
-          </>
-        );
-    }
-  }
-
-  getActions(addOn) {
-    const {
-      cluster,
-      clusterAddOns,
-      clusterID,
-      addClusterAddOn,
-      addClusterAddOnResponse,
-      organization,
-      quota,
-      openModal,
-    } = this.props;
-
-    const installAddOn = () => {
-      if (hasParameters(addOn)) {
-        openModal('add-ons-parameters-modal', {
-          clusterID,
-          addOn,
-          isUpdateForm: false,
-        });
-      } else {
-        addClusterAddOn(clusterID, {
-          addon: {
-            id: addOn.id,
-          },
-        });
-      }
-    };
-
-    const configureAddOn = (addOnInstallation) => {
-      openModal('add-ons-parameters-modal', {
-        clusterID,
-        addOn,
-        addOnInstallation,
-        isUpdateForm: true,
-      });
-    };
-
-    // Show install button if not installed
-    if (!isInstalled(addOn, clusterAddOns)) {
-      if (!hasQuota(addOn, cluster, organization, quota) || !cluster.canEdit) {
-        return (
-          <Tooltip
-            content={!cluster.canEdit
-              ? 'You do not have permission to install add ons. Only cluster owners and organization administrators can install add ons.'
-              : noQuotaTooltip}
-          >
-            <div className="pf-u-display-inline-block">
-              <Button isDisabled>
-                Install
-              </Button>
-            </div>
-          </Tooltip>
-        );
-      }
-
-      return (
-        <Button
-          variant="secondary"
-          aria-label="Install"
-          isDisabled={
-            addClusterAddOnResponse.pending
-              || cluster.state !== clusterStates.READY
-              || !cluster.canEdit
-          }
-          onClick={() => installAddOn()}
-        >
-          Install
-        </Button>
-      );
-    }
-
-    if (!get(clusterAddOns, 'items.length', false)) {
-      return '';
-    }
-
-    const installedAddOn = clusterAddOns.items.find(item => item.addon.id === addOn.id);
-    if (!installedAddOn) {
-      return '';
-    }
-
-    let url;
-    switch (installedAddOn.state) {
-      case AddOnsConstants.INSTALLATION_STATE.FAILED:
-        url = 'https://access.redhat.com/support/cases/#/case/new';
-        return (
-          <a href={url} rel="noreferrer noopener" target="_blank">
-            <Button variant="secondary" size="sm">Contact support</Button>
-          </a>
-        );
-      case AddOnsConstants.INSTALLATION_STATE.READY:
-        url = `${cluster.console.url}/k8s/ns/${addOn.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${addOn.operator_name}.v${installedAddOn.operator_version}`;
-        return (
-          <Flex grow={{ default: 'grow' }}>
-            <FlexItem>
-              <a href={url} target="_blank" rel="noopener noreferrer">
-                <Button variant="secondary" size="sm">Console</Button>
-              </a>
-            </FlexItem>
-            {hasParameters(addOn) && (
-              <FlexItem>
-                <Button
-                  variant="secondary"
-                  aria-label="Configure"
-                  isDisabled={
-                    addClusterAddOnResponse.pending
-                    || cluster.state !== clusterStates.READY
-                    || !cluster.canEdit
-                  }
-                  onClick={() => configureAddOn(installedAddOn)}
-                >
-                  Configure
-                </Button>
-              </FlexItem>
-            )}
-          </Flex>
-        );
-      default:
-        return '';
-    }
-  }
-
   render() {
     const {
       addOns,
@@ -267,16 +59,15 @@ class AddOns extends React.Component {
       quota,
     } = this.props;
 
-    // ToDo Do we need this spinner, causes issues with when displaying errors in the Modal
-    // if (clusterAddOns.pending || addClusterAddOnResponse.pending) {
-    //   return (
-    //     <EmptyState>
-    //       <EmptyStateBody>
-    //         <Spinner centered />
-    //       </EmptyStateBody>
-    //     </EmptyState>
-    //   );
-    // }
+    if (clusterAddOns.pending && clusterAddOns.items.length === 0) {
+      return (
+        <EmptyState>
+          <EmptyStateBody>
+            <Spinner centered />
+          </EmptyStateBody>
+        </EmptyState>
+      );
+    }
 
     const addOnsList = availableAddOns(addOns, cluster, clusterAddOns, organization, quota);
     const hasAddOns = addOnsList.length > 0;
@@ -311,29 +102,11 @@ class AddOns extends React.Component {
         )}
         <Gallery hasGutter>
           { addOnsList.map(addOn => (
-            <Card key={addOn.id}>
-              <CardHeader className="addon-card-head">
-                { addOn.icon && (
-                  <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />
-                )}
-                <CardActions>
-                  { this.getInstallState(addOn) }
-                </CardActions>
-              </CardHeader>
-              <CardTitle>
-                { addOn.name }
-              </CardTitle>
-              <CardBody>
-                { addOn.description }
-                { ' ' }
-                { addOn.docs_link && (
-                  <a href={addOn.docs_link} rel="noreferrer noopener" target="_blank">View documentation</a>
-                )}
-              </CardBody>
-              <CardFooter>
-                { this.getActions(addOn) }
-              </CardFooter>
-            </Card>
+            <AddOnsCard
+              addOn={addOn}
+              installedAddOn={getInstalled(addOn, clusterAddOns)}
+              hasQuota={hasQuota(addOn, cluster, organization, quota)}
+            />
           ))}
         </Gallery>
         <AddOnsParametersModal
@@ -353,10 +126,8 @@ AddOns.propTypes = {
   quota: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getClusterAddOns: PropTypes.func.isRequired,
-  addClusterAddOn: PropTypes.func.isRequired,
   addClusterAddOnResponse: PropTypes.object.isRequired,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired,
 };
 
 export default AddOns;

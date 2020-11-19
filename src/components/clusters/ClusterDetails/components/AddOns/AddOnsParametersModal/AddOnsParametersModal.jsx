@@ -32,7 +32,7 @@ class AddOnsParametersModal extends Component {
     return validations;
   };
 
-  disableField = (param) => {
+  isFieldDisabled = (param) => {
     const { isUpdateForm, addOnInstallation } = this.props;
     return isUpdateForm
       && !param.editable
@@ -79,7 +79,7 @@ class AddOnsParametersModal extends Component {
             type="text"
             validate={this.validationsForParameterField(param)}
             isRequired={param.required}
-            disabled={this.disableField(param)}
+            disabled={this.isFieldDisabled(param)}
             helpText={param.description}
           />
         ))}
