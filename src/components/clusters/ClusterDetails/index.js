@@ -43,7 +43,7 @@ import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSel
 import issuesCountSelector from './components/Insights/InsightsSelectors';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import getBaseName from '../../../common/getBaseName';
-import { SUPPORT_TAB_FEATURE, OSD_UPGRADES_FEATURE, ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
+import { SUPPORT_TAB_FEATURE, OSD_UPGRADES_FEATURE } from '../../../redux/constants/featureConstants';
 import supportActions from './components/Support/SupportActions';
 
 const mapStateToProps = (state, { location }) => {
@@ -92,7 +92,12 @@ const mapStateToProps = (state, { location }) => {
     notificationContacts,
     supportCases,
     upgradesEnabled: state.features[OSD_UPGRADES_FEATURE],
-    assistedInstallerEnabled: state.features[ASSISTED_INSTALLER_FEATURE],
+    /* TODO(mlibra):
+       Temporarily disable Bare Metal Add Host feature till
+       initially tested by QE and approved for production.
+       assistedInstallerEnabled: state.features[ASSISTED_INSTALLER_FEATURE]
+    */
+    assistedInstallerEnabled: false,
   });
 };
 
