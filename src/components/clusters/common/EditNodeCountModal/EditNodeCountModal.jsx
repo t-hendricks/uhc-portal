@@ -37,12 +37,17 @@ class EditNodeCountModal extends Component {
       machinePoolsList,
       getMachinePools,
       clusterID,
+      organization,
       editNodeCountResponse,
       isOpen,
     } = this.props;
 
     if (!prevProps.isOpen && isOpen && clusterID && !machinePoolsList.pending) {
       getMachinePools(clusterID);
+    }
+
+    if (!prevProps.isOpen && isOpen && clusterID && !organization.pending) {
+      getOrganizationAndQuota();
     }
 
     if (editNodeCountResponse.fulfilled
