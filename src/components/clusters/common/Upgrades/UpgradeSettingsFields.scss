@@ -1,0 +1,23 @@
+.ocm-upgrade-schedule-selection {
+  padding-left: var(--pf-global--spacer--lg);
+  margin-bottom: var(--pf-global--spacer--sm);
+  .pf-c-select > ul {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}
+.ocm-c-upgrade-policy-radios {
+  padding-bottom: var(--pf-global--spacer--sm);
+}
+.ocm-c-upgrade-node-draining-title {
+  margin-bottom: var(--pf-global--spacer--sm);
+}
+
+.ocm-c-upgrades-pdb-select .pf-c-select { 
+    width: auto;
+    min-width: 150px;
+  > ul {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}

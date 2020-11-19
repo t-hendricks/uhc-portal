@@ -4,12 +4,9 @@ import {
   Button, Card, CardBody, CardFooter, CardTitle,
   Form, Flex, FlexItem, Grid, GridItem, Modal,
 } from '@patternfly/react-core';
-import { Field } from 'redux-form';
-import ExternalLink from '../../../../common/ExternalLink';
-import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
-import UpgradeScheduleSelection from './UpgradeScheduleSelection';
 import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
 import getClusterName from '../../../../../common/getClusterName';
+import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
 import ErrorBox from '../../../../common/ErrorBox';
 
 class UpgradeSettingsTab extends React.Component {
@@ -48,6 +45,8 @@ class UpgradeSettingsTab extends React.Component {
       pristine,
       schedules,
       upgradeScheduleRequest,
+      deleteScheduleRequest,
+      editClusterRequest,
       reset,
       cluster,
       openModal,
@@ -64,6 +63,10 @@ class UpgradeSettingsTab extends React.Component {
     const scheduledUpgrade = schedules.items.find(schedule => ['manual', 'automatic'].includes(schedule.schedule_type));
     const availableUpgrades = versionInfo.version === cluster.openshift_version
       ? versionInfo.availableUpgrades : [];
+
+    const isPending = upgradeScheduleRequest.pending
+                   || deleteScheduleRequest.pending
+                   || editClusterRequest.pending;
 
     return (
       <Grid hasGutter>
@@ -94,54 +97,31 @@ class UpgradeSettingsTab extends React.Component {
               {upgradeScheduleRequest.error && (
                 <ErrorBox response={upgradeScheduleRequest} message="Can't schedule upgrade" />
               )}
+              {deleteScheduleRequest.error && (
+                <ErrorBox response={deleteScheduleRequest} message="Can't unschedule upgrade" />
+              )}
+              {editClusterRequest.error && (
+                <ErrorBox response={editClusterRequest} message="Can't set grace period" />
+              )}
               <Form>
-                <Field
-                  component={RadioButtons}
-                  name="upgrade_policy"
-                  isDisabled={isDisabled}
-                  options={[
-                    {
-                      value: 'automatic',
-                      label: 'Automatic',
-                      description: 'Clusters will be automatically upgraded based on your defined day and start time when new versions are available',
-                      extraField: isAutomatic && (
-                        <Field
-                          component={UpgradeScheduleSelection}
-                          name="automatic_upgrade_schedule"
-                          isDisabled={isDisabled}
-                        />
-                      ),
-                    },
-                    {
-                      value: 'manual',
-                      label: 'Manual',
-                      description: (
-                        <>
-                      You are responsible for updating your cluster.
-                          {' '}
-                      Note that if your cluster version falls too far behind,
-                          {' '}
-                      it will be automatically updated. See the
-                          {' '}
-                          <ExternalLink href="https://docs.openshift.com/container-platform/4.6/updating/updating-cluster-between-minor.html#understanding-upgrade-channels_updating-cluster-between-minor">version support information</ExternalLink>
-                      .
-                          <p>
-                      Note: High and Cretical security concerns (CVEs) will be patched automatically
-                            {' '}
-                        within 48 hours, regardless of your chosen upgrade strategy.
-                          </p>
-                        </>
-                      ),
-                    },
-                  ]}
-                  defaultValue="manual"
-                />
+                <Grid hasGutter>
+                  <UpgradeSettingsFields
+                    isAutomatic={isAutomatic}
+                    isDisabled={isDisabled}
+                    showDivider
+                  />
+                </Grid>
               </Form>
             </CardBody>
             <CardFooter>
               <Flex>
                 <FlexItem>
-                  <Button variant="primary" onClick={handleSubmit} isDisabled={actionsDisabled} isLoading={upgradeScheduleRequest.pending}>
+                  <Button
+                    variant="primary"
+                    onClick={handleSubmit}
+                    isDisabled={actionsDisabled}
+                    isLoading={isPending}
+                  >
                   Save
                   </Button>
                 </FlexItem>
@@ -217,6 +197,14 @@ UpgradeSettingsTab.propTypes = {
     version: PropTypes.string,
     availableUpgrades: PropTypes.arrayOf(PropTypes.string),
     pending: PropTypes.bool,
+  }),
+  deleteScheduleRequest: PropTypes.shape({
+    pending: PropTypes.bool,
+    error: PropTypes.bool,
+  }),
+  editClusterRequest: PropTypes.shape({
+    pending: PropTypes.bool,
+    error: PropTypes.bool,
   }),
   reset: PropTypes.func,
   openModal: PropTypes.func,

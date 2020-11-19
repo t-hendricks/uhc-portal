@@ -21,6 +21,7 @@ import {
   gcpQuotaSelector,
 } from '../common/quotaSelectors';
 import { validateGCPServiceAccount } from '../../../common/validators';
+import { OSD_UPGRADES_FEATURE } from '../../../redux/constants/featureConstants';
 
 const AWS_DEFAULT_REGION = 'us-east-1';
 const GCP_DEFAULT_REGION = 'us-east1';
@@ -46,9 +47,9 @@ const mapStateToProps = (state, ownProps) => {
   const defaultRegion = isAwsForm ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
 
   let privateClusterSelected = false;
+  const valueSelector = formValueSelector('CreateCluster');
 
   if (isAwsForm) {
-    const valueSelector = formValueSelector('CreateCluster');
     privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
   }
 
@@ -59,6 +60,8 @@ const mapStateToProps = (state, ownProps) => {
 
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
+    upgradesEnabled: state.features[OSD_UPGRADES_FEATURE],
+    isAutomaticUpgrade: valueSelector(state, 'upgrade_policy') === 'automatic',
 
     cloudProviders: state.cloudProviders,
     persistentStorageValues: state.persistentStorageValues,
@@ -88,6 +91,9 @@ const mapStateToProps = (state, ownProps) => {
       load_balancers: '0',
       network_configuration_toggle: 'basic',
       disable_scp_checks: false,
+      node_drain_grace_period: 60,
+      upgrade_policy: 'manual',
+      automatic_upgrade_schedule: '0 0 * * 0',
     },
   });
 };
@@ -111,6 +117,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         id: ownProps.cloudProviderID,
       },
       multi_az: formData.multi_az === 'true',
+      node_drain_grace_period: {
+        value: formData.node_drain_grace_period,
+        unit: 'minutes',
+      },
     };
     if (ownProps.product) {
       clusterRequest.product = {
@@ -172,7 +182,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         value: parseFloat(formData.persistent_storage),
       };
     }
-    dispatch(createCluster(clusterRequest));
+    dispatch(createCluster(clusterRequest,
+      {
+        upgrade_policy: formData.upgrade_policy,
+        automatic_upgrade_schedule: formData.automatic_upgrade_schedule,
+      }));
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),

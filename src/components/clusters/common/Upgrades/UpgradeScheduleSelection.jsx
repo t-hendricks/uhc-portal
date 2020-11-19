@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   Select, SelectOption, FormGroup, Grid, GridItem, Button,
 } from '@patternfly/react-core';
-import './UpgradeScheduleSelection.scss';
 
 const VALID_SCHEDULE_REGEX = /00? [0-9][0-9]? \* \* ([0-6]|SUN|MON|TUE|WED|THU|FRI|SAT)/i;
 

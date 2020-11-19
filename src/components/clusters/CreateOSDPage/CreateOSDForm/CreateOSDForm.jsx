@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { GridItem } from '@patternfly/react-core';
+import { GridItem, Title, Divider } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import get from 'lodash/get';
 
@@ -11,7 +11,7 @@ import AWSAccountDetailsSection from './FormSections/AWSAccountDetailsSection';
 import NetworkingSection from './FormSections/NetworkingSection';
 import ScaleSection from './FormSections/ScaleSection/ScaleSection';
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
-// import ExternalLink from '../../../common/ExternalLink';
+import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
 import { required } from '../../../../common/validators';
 import { subscriptionPlans } from '../../../../common/subscriptionTypes';
 
@@ -100,6 +100,8 @@ class CreateOSDForm extends React.Component {
       cloudProviderID,
       privateClusterSelected,
       product,
+      upgradesEnabled,
+      isAutomaticUpgrade,
     } = this.props;
 
     const {
@@ -224,15 +226,29 @@ class CreateOSDForm extends React.Component {
           product={subscriptionPlans.OSD}
         />
 
-        {/* Networking section */}
-        {<NetworkingSection
+        <NetworkingSection
           mode={mode}
           toggleNetwork={this.toggleNetwork}
           showClusterPrivacy={isAws}
           privateClusterSelected={privateClusterSelected}
           cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}
-        />}
+        />
+        { upgradesEnabled
+        && (
+          <>
+            <GridItem span={12}>
+              <Divider />
+            </GridItem>
+            <GridItem span={12}>
+              <Title headingLevel="h3">Cluster updates</Title>
+              <UpgradeSettingsFields
+                isAutomatic={isAutomaticUpgrade}
+                isDisabled={pending}
+              />
+            </GridItem>
+          </>
+        )}
       </>
     );
   }
@@ -274,6 +290,8 @@ CreateOSDForm.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   product: PropTypes.string.isRequired,
+  upgradesEnabled: PropTypes.bool,
+  isAutomaticUpgrade: PropTypes.bool,
 };
 
 export default CreateOSDForm;
