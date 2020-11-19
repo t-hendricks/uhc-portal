@@ -86,6 +86,13 @@ const checkOpenIDIssuer = (value) => {
   if (url.hash !== '' || url.search !== '') {
     return 'The URL must not include a query string (?) or fragment (#)';
   }
+
+  // url.hash doesnt work for https://issuer.com# and it succeeds.
+  // added explicit validation for that scenario
+  if (url.href.includes('#')) {
+    return 'The URL must not include a query string (?) or fragment (#)';
+  }
+
   return undefined;
 };
 
