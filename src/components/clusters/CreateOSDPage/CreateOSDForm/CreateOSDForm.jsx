@@ -12,7 +12,7 @@ import NetworkingSection from './FormSections/NetworkingSection';
 import ScaleSection from './FormSections/ScaleSection/ScaleSection';
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
 import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
-import { required } from '../../../../common/validators';
+import { required, validateGCPServiceAccount } from '../../../../common/validators';
 import { subscriptionPlans } from '../../../../common/subscriptionTypes';
 
 import './CreateOSDForm.scss';
@@ -179,9 +179,8 @@ class CreateOSDForm extends React.Component {
               <GridItem span={4}>
                 <Field
                   component={ReduxFileUpload}
-                  validate={required}
+                  validate={[required, validateGCPServiceAccount]}
                   name="gcp_service_account"
-                  type="file"
                   disabled={pending}
                   isRequired
                   label="Service account JSON"
