@@ -218,7 +218,7 @@ EditNodeCountModal.propTypes = {
   clusterID: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
   // For quota purposes, product is subscription.plan.id, not cluster.product.id.
-  product: PropTypes.string.isRequired,
+  product: PropTypes.string,
   pristine: PropTypes.bool,
 };
 
