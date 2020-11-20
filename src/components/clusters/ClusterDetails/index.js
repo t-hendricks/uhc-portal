@@ -39,7 +39,7 @@ import canSubscribeOCPSelector
   from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
-import { issuesCountSelector } from './components/Insights/InsightsSelectors';
+import issuesCountSelector from './components/Insights/InsightsSelectors';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import getBaseName from '../../../common/getBaseName';
 import { SUPPORT_TAB_FEATURE, OSD_UPGRADES_FEATURE, ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';

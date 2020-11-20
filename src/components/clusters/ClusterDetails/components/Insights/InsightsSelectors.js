@@ -21,4 +21,4 @@ const issuesCountSelector = (state, externalId) => {
   return groupRulesByRisk(filteredData);
 };
 
-export { issuesCountSelector };
+export default issuesCountSelector;
