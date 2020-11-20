@@ -32,6 +32,7 @@
     "formik": "^2.1.4",
     "history": "^4.7.2",
     "http-proxy-middleware": "^1.0.3",
+    "human-date": "^1.4.0",
     "humanize-plus": "^1.8.2",
     "immer": "^5.1.0",
     "jsonschema": "^1.2.10",

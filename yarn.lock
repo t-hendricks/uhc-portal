@@ -6879,6 +6879,11 @@ https-proxy-agent@^4.0.0:
     agent-base "5"
     debug "4"
 
+human-date@^1.4.0:
+  version "1.4.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/human-date/-/human-date-1.4.0.tgz#88bb62bd804d00fd12ee2f47dc3c3bbb1e55f99a"
+  integrity sha1-iLtivYBNAP0S7i9H3Dw7ux5V+Zo=
+
 human-signals@^1.1.1:
   version "1.1.1"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
