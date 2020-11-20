@@ -148,7 +148,7 @@ As all apps under cloud.redhat.com, our app uses https://github.com/RedHatInsigh
 
 It's not a regular build dependency but is injected by CDN using https://en.wikipedia.org/wiki/Edge_Side_Includes[Edge Side Includes] tags.  To mimic this, as well as resulting URL structure, in development we have to use https://github.com/RedHatInsights/insights-proxy[insights-proxy].
 
-`make insight-proxy-setup` will autimatically clone/pull insights-proxy under `run/insights-proxy` subdirectory and perform its setup instructions (`patch-etc-hosts.sh`, `update.sh`).
+`make insights-proxy-setup` will autimatically clone/pull insights-proxy under `run/insights-proxy` subdirectory and perform its setup instructions (`patch-etc-hosts.sh`, `update.sh`).
 .  Note that this includes using `sudo` to patch you /etc/hosts.
 
 This is a one-time setup process but safe to repeat if you want to update the proxy.
