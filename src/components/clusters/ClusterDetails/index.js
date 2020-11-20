@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import get from 'lodash/get';
 
 import { push } from 'connected-react-router';
 
@@ -38,6 +39,7 @@ import canSubscribeOCPSelector
   from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
+import { issuesCountSelector } from './components/Insights/InsightsSelectors';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import getBaseName from '../../../common/getBaseName';
 import { SUPPORT_TAB_FEATURE, OSD_UPGRADES_FEATURE, ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
@@ -63,6 +65,8 @@ const mapStateToProps = (state, { location }) => {
       pending: false,
     },
   } = state.clusterSupport;
+  const clusterId = get(details, 'cluster.external_id');
+  const insightsIssuesCount = issuesCountSelector(state, clusterId);
 
   return ({
     cloudProviders,
@@ -80,6 +84,8 @@ const mapStateToProps = (state, { location }) => {
     canTransferClusterOwnership: canTransferClusterOwnershipSelector(state),
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
+    // check whether there are Critical (4) or Important (3) issues
+    hasIssuesInsights: insightsIssuesCount[4] || insightsIssuesCount[3],
     initTabOpen: location.hash.replace('#', ''),
     supportTabFeature,
     notificationContacts,

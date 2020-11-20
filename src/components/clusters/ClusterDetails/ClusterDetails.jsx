@@ -335,6 +335,7 @@ class ClusterDetails extends Component {
       canTransferClusterOwnership,
       anyModalOpen,
       hasIssues,
+      hasIssuesInsights,
       toggleSubscriptionReleased,
       setOpenedTab,
       initTabOpen,
@@ -464,6 +465,7 @@ class ClusterDetails extends Component {
             upgradeSettingsTabRef={this.upgradeSettingsTabRef}
             addBareMetalTabRef={this.addBareMetalTabRef}
             hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
+            hasIssuesInsights={hasIssuesInsights}
             initTabOpen={initTabOpen}
             setOpenedTab={setOpenedTab}
             onTabSelected={onTabSelected}
@@ -571,14 +573,14 @@ class ClusterDetails extends Component {
           </TabContent>
         }
         {displayMachinePoolsTab && (
-        <TabContent
-          eventKey={6}
-          id="machinePoolsContent"
-          ref={this.machinePoolsTabRef}
-          aria-label="Machine pools"
-        >
-          <MachinePools cluster={cluster} />
-        </TabContent>
+          <TabContent
+            eventKey={6}
+            id="machinePoolsContent"
+            ref={this.machinePoolsTabRef}
+            aria-label="Machine pools"
+          >
+            <MachinePools cluster={cluster} />
+          </TabContent>
         )}
         {displayUpgradeSettingsTab && (
           <TabContent
@@ -700,6 +702,7 @@ ClusterDetails.propTypes = {
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
+  hasIssuesInsights: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   initTabOpen: PropTypes.string.isRequired,
   supportTabFeature: PropTypes.bool.isRequired,
