@@ -593,18 +593,18 @@ class ClusterDetails extends Component {
           </TabContent>
         )}
         {displayAddBareMetalHosts && (
-        <TabContent
-          eventKey={9}
-          id="addBareMetalHostsContent"
-          ref={this.addBareMetalTabRef}
-          aria-label="Add Bare Metal Hosts"
-          hidden
-        >
-          <BareMetalHostsClusterDetailTab
-            cluster={cluster}
-            isVisible={selectedTab === 'addBareMetalHosts'}
-          />
-        </TabContent>
+          <TabContent
+            eventKey={9}
+            id="addBareMetalHostsContent"
+            ref={this.addBareMetalTabRef}
+            aria-label="Add Bare Metal Hosts"
+            hidden
+          >
+            <BareMetalHostsClusterDetailTab
+              cluster={cluster}
+              isVisible={selectedTab === 'addBareMetalHosts'}
+            />
+          </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditNodeCountModal onClose={onDialogClose} />
