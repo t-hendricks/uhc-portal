@@ -5795,10 +5795,10 @@ extsprintf@^1.2.0:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-facet-lib@1.4.3:
-  version "1.4.3"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/facet-lib/-/facet-lib-1.4.3.tgz#a3137d9383781e56b454bd10980f7d0eb5f4f44d"
-  integrity sha512-iBQnIYRc1m9sZoeN0MwlCuv4puZENns0vQYCfQwV8T+ONXyAK447E8UfOMc7trT3YX26Oy8ptcKpiUZNjRr7tA==
+facet-lib@1.4.5:
+  version "1.4.5"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/facet-lib/-/facet-lib-1.4.5.tgz#5530eb087876ad8cc59765618faf5c6b7d3d45e4"
+  integrity sha512-78wxB1qUuYs29t8/a1EkWdTofuGj0lLxpzuL3vXYNvDnn4Rrvlp/atnxUl8l64/pmlCWM7mFbElZVl8xtAKpjw==
   dependencies:
     axios-case-converter "^0.6.0"
     unique-names-generator "^4.2.0"
@@ -6878,6 +6878,11 @@ https-proxy-agent@^4.0.0:
   dependencies:
     agent-base "5"
     debug "4"
+
+human-date@^1.4.0:
+  version "1.4.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/human-date/-/human-date-1.4.0.tgz#88bb62bd804d00fd12ee2f47dc3c3bbb1e55f99a"
+  integrity sha1-iLtivYBNAP0S7i9H3Dw7ux5V+Zo=
 
 human-signals@^1.1.1:
   version "1.1.1"
