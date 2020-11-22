@@ -4,12 +4,10 @@ import get from 'lodash/get';
 import { clearClusterResponse, editClusterConsoleURL } from '../../../../redux/actions/clustersActions';
 import EditConsoleURLDialog from './EditConsoleURLDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
-import shouldShowModal from '../../../common/Modal/ModalSelectors';
 
 const mapStateToProps = (state) => {
   const cluster = state.modal.data;
   return ({
-    isOpen: shouldShowModal(state, 'edit-console-url'),
     editClusterResponse: state.clusters.editedCluster,
     clusterID: cluster.id,
     subscriptionID: get(cluster, 'subscription.id'),

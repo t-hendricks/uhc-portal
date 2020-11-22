@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Form, TextInput, FormGroup } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
+import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
 import { checkClusterConsoleURL } from '../../../../common/validators';
 
@@ -11,22 +12,13 @@ import { checkClusterConsoleURL } from '../../../../common/validators';
 class EditConsoleURLDialog extends Component {
   state = {
     beenSet: false,
-    validFor: null,
     currentValue: '',
   }
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { validFor } = this.state;
-    if (nextProps.clusterID !== validFor) {
-      this.setState((state, props) => ({
-        validFor: nextProps.clusterID,
-        currentValue: props.consoleURL,
-        beenSet: false,
-      }));
-    }
+  componentDidMount() {
+    const { consoleURL } = this.props;
+    this.setState({ currentValue: consoleURL });
   }
-
 
   componentDidUpdate() {
     const {
@@ -50,8 +42,7 @@ class EditConsoleURLDialog extends Component {
 
   render() {
     const {
-      isOpen, closeModal, submit, editClusterResponse, resetResponse, clusterID, subscriptionID,
-      consoleURL,
+      closeModal, submit, editClusterResponse, resetResponse, clusterID, subscriptionID, consoleURL,
     } = this.props;
     const { currentValue, beenSet } = this.state;
 
@@ -72,7 +63,7 @@ class EditConsoleURLDialog extends Component {
       }
     };
 
-    return isOpen && (
+    return (
 
       <Modal
         title={consoleURL ? 'Edit console URL' : 'Add console URL'}
@@ -116,7 +107,6 @@ class EditConsoleURLDialog extends Component {
 }
 
 EditConsoleURLDialog.propTypes = {
-  isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
@@ -128,8 +118,9 @@ EditConsoleURLDialog.propTypes = {
 };
 
 EditConsoleURLDialog.defaultProps = {
-  isOpen: false,
   editClusterResponse: {},
 };
+
+EditConsoleURLDialog.modalName = modals.EDIT_CONSOLE_URL;
 
 export default EditConsoleURLDialog;

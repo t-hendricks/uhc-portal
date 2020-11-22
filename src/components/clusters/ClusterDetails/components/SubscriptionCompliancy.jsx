@@ -8,6 +8,7 @@ import getClusterEvaluationExpiresInDays from '../../../../common/getClusterEval
 import {
   getSubscriptionLastReconciledDate,
 } from '../clusterDetailsHelper';
+import modals from '../../../common/Modal/modals';
 
 function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false }) {
   const subscription = get(cluster, 'subscription');
@@ -51,7 +52,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
       subscriptionID: get(subscription, 'id'),
       name: clusterName,
     };
-    openModal('archive-cluster', data);
+    openModal(modals.ARCHIVE_CLUSTER, data);
   };
 
   const textForUsersCanEdit = canSubscribeOCP ? (

@@ -85,7 +85,6 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
               <EditSubscriptionSettingsDialog
                 hideSubscriptionSettings={false}
                 isDialog={false}
-                isOpen={false}
                 onChangeNumericInputCallback={[Function]}
                 onChangeSupportLevelCallback={[Function]}
                 subscription={
@@ -208,7 +207,6 @@ exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`]
               <EditSubscriptionSettingsDialog
                 hideSubscriptionSettings={true}
                 isDialog={false}
-                isOpen={false}
                 onChangeNumericInputCallback={[Function]}
                 onChangeSupportLevelCallback={[Function]}
                 subscription={

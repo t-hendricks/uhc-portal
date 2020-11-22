@@ -16,7 +16,6 @@ import {
   clearScaleMachinePoolResponse,
   clearGetMachinePoolsResponse,
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
-import shouldShowModal from '../../../common/Modal/ModalSelectors';
 
 const reduxFormConfig = {
   form: 'EditNodeCount',
@@ -35,7 +34,6 @@ const mapStateToProps = (state) => {
 
   const commonProps = {
     clusterID: get(cluster, 'id', ''),
-    isOpen: shouldShowModal(state, 'edit-node-count'),
     machinePoolsList: {
       ...state.machinePools.getMachinePools,
       data: [

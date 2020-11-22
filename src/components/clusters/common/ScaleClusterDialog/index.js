@@ -5,7 +5,6 @@ import get from 'lodash/get';
 import { clearClusterResponse, editCluster } from '../../../../redux/actions/clustersActions';
 import ScaleClusterDialog from './ScaleClusterDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
-import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import getLoadBalancerValues from '../../../../redux/actions/loadBalancerActions';
 import getPersistentStorageValues from '../../../../redux/actions/persistentStorageActions';
 import {
@@ -25,7 +24,6 @@ const mapStateToProps = (state) => {
   const modalData = state.modal.data;
 
   return ({
-    isOpen: shouldShowModal(state, 'edit-cluster'),
     editClusterResponse: state.clusters.editedCluster,
     min: minValueSelector(modalData.multi_az, modalData.byoc),
     consoleURL: get(modalData, 'console.url', null),

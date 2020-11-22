@@ -22,6 +22,7 @@ import {
 import ViewPaginationRow from '../../clusters/common/ViewPaginationRow/viewPaginationRow';
 import { viewConstants } from '../../../redux/constants';
 import { viewPropsChanged, createOverviewQueryObject } from '../../../common/queryHelpers';
+import modals from '../../common/Modal/modals';
 
 import skeletonRows from '../../common/SkeletonRows';
 import { expiredTrialsFilter } from './expiredTrialsHelpers';
@@ -96,7 +97,7 @@ class ExpiredTrialsCard extends React.Component {
       },
       {
         title: 'Archive cluster',
-        onClick: () => openModal('archive-cluster', {
+        onClick: () => openModal(modals.ARCHIVE_CLUSTER, {
           subscriptionID: subscription.id,
           name: subscription.display_name || subscription.external_cluster_id,
         }),

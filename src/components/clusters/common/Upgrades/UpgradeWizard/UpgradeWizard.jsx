@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Wizard, Title } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 
+import modals from '../../../../common/Modal/modals';
 import VersionSelectionGrid from './VersionSelectionGrid';
 import UpgradeTimeSelection from './UpgradeTimeSelection';
 import FinishedStep from './FinishedStep';
@@ -47,7 +48,6 @@ class UpgradeWizard extends React.Component {
 
   render() {
     const {
-      isOpen,
       clusterName,
       clusterVersion,
       upgradeScheduleRequest,
@@ -138,12 +138,12 @@ class UpgradeWizard extends React.Component {
         isFinishedStep: true,
       },
     ];
-    return isOpen && (
+    return (
       <Wizard
         title="Update cluster"
         className="ocm-upgrade-wizard"
         description={clusterName}
-        isOpen={isOpen}
+        isOpen
         steps={steps}
         onNext={this.onNext}
         onClose={this.close}
@@ -153,7 +153,6 @@ class UpgradeWizard extends React.Component {
 }
 
 UpgradeWizard.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   clusterName: PropTypes.string,
   clusterID: PropTypes.string,
@@ -163,5 +162,7 @@ UpgradeWizard.propTypes = {
   postSchedule: PropTypes.func.isRequired,
   clearPostedUpgradeScheduleResponse: PropTypes.func.isRequired,
 };
+
+UpgradeWizard.modalName = modals.UPGRADE_WIZARD;
 
 export default UpgradeWizard;
