@@ -136,23 +136,6 @@ function scrollToFirstError(errors) {
   setTimeout(() => firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }), 0);
 }
 
-/**
- * Reads a file given its file handle. Throws an error on fail.
- */
-
-function readFile(fileHandle) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = (res) => {
-      resolve(res.target.result);
-    };
-    reader.onerror = err => reject(err);
-
-    reader.readAsText(fileHandle);
-  });
-}
-
 export {
   noop,
   isValid,
@@ -166,7 +149,6 @@ export {
   strToCleanObject,
   shouldRefetchQuota,
   scrollToFirstError,
-  readFile,
 };
 
 export default helpers;

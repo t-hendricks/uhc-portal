@@ -11,7 +11,7 @@ import getPersistentStorageValues from '../../../redux/actions/persistentStorage
 import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
-import { scrollToFirstError, readFile, strToCleanObject } from '../../../common/helpers';
+import { scrollToFirstError, strToCleanObject } from '../../../common/helpers';
 
 import {
   hasOSDQuotaSelector,
@@ -20,7 +20,6 @@ import {
   awsQuotaSelector,
   gcpQuotaSelector,
 } from '../common/quotaSelectors';
-import { validateGCPServiceAccount } from '../../../common/validators';
 import { OSD_UPGRADES_FEATURE } from '../../../redux/constants/featureConstants';
 
 const AWS_DEFAULT_REGION = 'us-east-1';
@@ -29,13 +28,6 @@ const GCP_DEFAULT_REGION = 'us-east1';
 const reduxFormConfig = {
   form: 'CreateCluster',
   onSubmitFail: scrollToFirstError,
-  asyncValidate: (values) => {
-    if (values.gcp_service_account) {
-      return validateGCPServiceAccount(values.gcp_service_account);
-    }
-    return Promise.resolve(); // RF API requires to return a promise
-  },
-  asyncChangeFields: ['gcp_service_account'],
 };
 
 const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
@@ -150,8 +142,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         };
         clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
       } else if (ownProps.cloudProviderID === 'gcp') {
-        const text = await readFile(formData.gcp_service_account[0]);
-        const parsed = JSON.parse(text);
+        const parsed = JSON.parse(formData.gcp_service_account);
         clusterRequest.gcp = pick(parsed, [
           'type',
           'project_id',
