@@ -197,6 +197,7 @@ class ClusterDetails extends Component {
       getClusterRouters,
       organization,
       getMachinePools,
+      getSchedules,
     } = this.props;
     const clusterID = match.params.id;
     if (isValid(clusterID)) {
@@ -226,6 +227,7 @@ class ClusterDetails extends Component {
           getClusterAddOns(clusterID);
           this.refreshIDP();
           getMachinePools(clusterID);
+          getSchedules(clusterID);
         }
         // don't fetch grants if cloud provider is known to be gcp
         if (get(clusterDetails, 'cluster.cloud_provider.id') !== 'gcp') {
@@ -709,6 +711,7 @@ ClusterDetails.propTypes = {
   supportCases: PropTypes.object.isRequired,
   upgradesEnabled: PropTypes.bool,
   assistedInstallerEnabled: PropTypes.bool,
+  getSchedules: PropTypes.func,
 };
 
 ClusterDetails.defaultProps = {

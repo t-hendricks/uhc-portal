@@ -17,7 +17,7 @@ function getClusterStateAndDescription(cluster) {
   if ((cluster.state === clusterStates.INSTALLING
       || cluster.state === clusterStates.PENDING)) {
     state = clusterStates.INSTALLING;
-  } else if (get(cluster, 'metrics.upgrade.state') === 'running') {
+  } else if (get(cluster, 'metrics.upgrade.state') === 'running' && !cluster.managed) {
     state = clusterStates.UPDATING;
   } else if (cluster.state === clusterStates.READY) {
     if (!cluster.managed

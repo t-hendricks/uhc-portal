@@ -13,6 +13,7 @@ class PodDistruptionBudgetGraceSelect extends React.Component {
 
   onSelect = (_, selection) => {
     const { input } = this.props;
+    this.setState({ isOpen: false });
     input.onChange(selection);
   }
 

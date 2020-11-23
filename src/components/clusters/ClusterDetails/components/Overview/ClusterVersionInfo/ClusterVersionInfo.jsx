@@ -88,6 +88,7 @@ class ClusterVersionInfo extends React.Component {
                     clusterVersion={cluster.openshift_version}
                     scheduledUpgrade={scheduledUpdate}
                     openModal={openModal}
+                    availableUpgrades={versionInfo.availableUpgrades}
                     onCancelClick={() => this.setState({ popoverOpen: false })}
                   />
                 )}
