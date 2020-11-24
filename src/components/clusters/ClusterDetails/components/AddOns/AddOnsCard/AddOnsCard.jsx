@@ -247,7 +247,7 @@ class AddOnsCard extends Component {
             <a href={addOn.docs_link} rel="noreferrer noopener" target="_blank">View documentation</a>
           )}
         </CardBody>
-        <CardFooter  className="ocm-c-addons__card--footer">
+        <CardFooter className="ocm-c-addons__card--footer">
           { this.getPrimaryAction(addOn) }
         </CardFooter>
       </Card>
