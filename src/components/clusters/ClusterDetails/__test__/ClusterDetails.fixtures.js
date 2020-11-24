@@ -551,6 +551,7 @@ const fixtures = {
   canTransferClusterOwnership: false,
   canSubscribeOCP: false,
   hasIssues: false,
+  hasIssuesInsights: false,
   canAllowClusterAdmin: false,
 };
 
