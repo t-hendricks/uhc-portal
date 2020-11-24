@@ -136,6 +136,26 @@ function scrollToFirstError(errors) {
   setTimeout(() => firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }), 0);
 }
 
+
+/**
+ * Converts redux form structure to the structure expected by ocm api
+ * [{ key: "foo", value: "bar" },{ key: "hello", value: "world" }]
+ *   => { foo: "bar", hello: "world" }
+ * @param {Array} labelsFormData Array of key value parirs
+ */
+const parseReduxFormKeyValueList = labelsFormData => Object.assign(
+  {},
+  ...(labelsFormData.map(label => label.key && label.value
+    && ({ [label.key]: label.value }))),
+);
+
+/**
+ * check if there is any user input in the key-value list
+ * @param {Array} labelsFormData Array of key value parirs
+ */
+const hasLabelsInput = labelsFormData => !(labelsFormData.length === 1
+  && isEmpty(labelsFormData[0]));
+
 export {
   noop,
   isValid,
@@ -149,6 +169,8 @@ export {
   strToCleanObject,
   shouldRefetchQuota,
   scrollToFirstError,
+  parseReduxFormKeyValueList,
+  hasLabelsInput,
 };
 
 export default helpers;
