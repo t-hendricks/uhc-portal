@@ -43,7 +43,7 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
           </dd>
         ) : (
           <dd style={cluster.state.style}>
-            <ClusterStateIcon clusterState={cluster.state.state} />
+            <ClusterStateIcon clusterState={cluster.state.state} animated />
             {' '}
             {cluster.state.description}
           </dd>

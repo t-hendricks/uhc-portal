@@ -35,10 +35,8 @@ exports[`<ProgressList /> should render when first step completed 1`] = `
       Cluster installation
     </DescriptionListTerm>
     <DescriptionListDescription>
-      <InProgressIcon
+      <Spinner
         className="icon-space-right"
-        color="currentColor"
-        noVerticalAlign={false}
         size="sm"
       />
       Installing cluster
@@ -54,10 +52,8 @@ exports[`<ProgressList /> should render when first step in progress 1`] = `
       Account setup
     </DescriptionListTerm>
     <DescriptionListDescription>
-      <InProgressIcon
+      <Spinner
         className="icon-space-right"
-        color="currentColor"
-        noVerticalAlign={false}
         size="sm"
       />
       Preparing account
@@ -129,10 +125,8 @@ exports[`<ProgressList /> should render when second step completed 1`] = `
       Cluster installation
     </DescriptionListTerm>
     <DescriptionListDescription>
-      <InProgressIcon
+      <Spinner
         className="icon-space-right"
-        color="currentColor"
-        noVerticalAlign={false}
         size="sm"
       />
       Installing cluster
