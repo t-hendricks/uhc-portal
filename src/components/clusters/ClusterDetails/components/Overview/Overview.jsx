@@ -19,6 +19,7 @@ import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsa
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import InstallProgress from '../../../common/InstallProgress/InstallProgress';
+import './Overview.scss';
 
 class Overview extends React.Component {
   state = {

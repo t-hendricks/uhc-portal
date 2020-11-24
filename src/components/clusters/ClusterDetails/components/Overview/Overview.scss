@@ -1,0 +1,23 @@
+.ocm-c-overview-details__card {
+  &--body {
+    .pf-c-description-list {
+      margin-top: var(--pf-global--spacer--md);
+      --pf-c-description-list__group--RowGap: var(--pf-global--gutter--sm);
+    }
+    .ocm-c-description-list-secondary {
+      display: inline;
+      margin-bottom: var(--pf-global--spacer--0);
+      margin-top: var(--pf-global--spacer--0);
+      .pf-c-description-list__group {
+        display: inline;
+        .pf-c-description-list__term {
+          color: var(--pf-global--Color--400);
+          float: left;
+          font-weight: bold;
+          margin-right: var(--pf-global--spacer--sm);
+          text-transform: none;
+        }
+      }
+    }
+  }
+}

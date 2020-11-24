@@ -1,41 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  DescriptionList,
+  DescriptionListTerm,
+  DescriptionListGroup,
+  DescriptionListDescription,
+} from '@patternfly/react-core';
 
 function ClusterNetwork({ cluster }) {
   return (
     cluster.managed && cluster.network && (
       <>
-        <dt>Network</dt>
-        <dd>
-          { cluster.network.machine_cidr
-         && (
-         <dl className="cluster-details-item-list">
-           <dt>Machine CIDR: </dt>
-           <dd>{cluster.network.machine_cidr}</dd>
-         </dl>
-         )}
-          { cluster.network.service_cidr
-          && (
-          <dl className="cluster-details-item-list">
-            <dt>Service CIDR: </dt>
-            <dd>{cluster.network.service_cidr}</dd>
-          </dl>
-          )}
-          { cluster.network.pod_cidr
-          && (
-          <dl className="cluster-details-item-list">
-            <dt>Pod CIDR: </dt>
-            <dd>{cluster.network.pod_cidr}</dd>
-          </dl>
-          )}
-          { cluster.network.host_prefix
-          && (
-          <dl className="cluster-details-item-list left">
-            <dt>Host prefix: </dt>
-            <dd>{cluster.network.host_prefix}</dd>
-          </dl>
-          )}
-        </dd>
+
+        <DescriptionListGroup>
+          <DescriptionListTerm>
+            Network
+          </DescriptionListTerm>
+            <DescriptionList isHorizontal className="ocm-c-description-list-secondary">
+              { cluster.network.machine_cidr
+             && (
+             <DescriptionListGroup>
+               <DescriptionListTerm>Machine CIDR: </DescriptionListTerm>
+               <DescriptionListDescription>{cluster.network.machine_cidr}</DescriptionListDescription>
+             </DescriptionListGroup>
+             )}
+              { cluster.network.service_cidr
+              && (
+              <DescriptionListGroup>
+                <DescriptionListTerm>Service CIDR: </DescriptionListTerm>
+                <DescriptionListDescription>{cluster.network.service_cidr}</DescriptionListDescription>
+              </DescriptionListGroup>
+              )}
+              { cluster.network.pod_cidr
+              && (
+              <DescriptionListGroup>
+                <DescriptionListTerm>Pod CIDR: </DescriptionListTerm>
+                <DescriptionListDescription>{cluster.network.pod_cidr}</DescriptionListDescription>
+              </DescriptionListGroup>
+              )}
+              { cluster.network.host_prefix
+              && (
+              <DescriptionListGroup>
+                <DescriptionListTerm>Host prefix: </DescriptionListTerm>
+                <DescriptionListDescription>{cluster.network.host_prefix}</DescriptionListDescription>
+              </DescriptionListGroup>
+              )}
+            </DescriptionList>
+        </DescriptionListGroup>
       </>
     )
   );

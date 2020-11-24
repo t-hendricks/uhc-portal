@@ -2,68 +2,71 @@
 
 exports[`<DetailsRight /> Self Managed cluster should not render desired nodes when they don't exist 1`] = `
 <Fragment>
-  <dl
-    className="cluster-details-item"
-  >
-    <dt>
-      Status
-    </dt>
-    <dd
-      style={
-        Object {
-          "textTransform": "capitalize",
+  <DescriptionList>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Status
+      </DescriptionListTerm>
+      <DescriptionListDescription
+        style={
+          Object {
+            "textTransform": "capitalize",
+          }
         }
-      }
-    >
-      <ClusterStateIcon
-        clusterState="ready"
-      />
-       
-      ready
-    </dd>
-    <dt>
-      Total vCPU
-    </dt>
-    <dd>
-      16
-       
-      vCPU
-    </dd>
-    <dt>
-      Total memory
-    </dt>
-    <dd>
-      76.64
-       
-      GiB
-    </dd>
-    <dt>
-      Nodes
-    </dt>
-    <dd>
-      <dl
-        className="cluster-details-item-list"
       >
-        <dt>
-          Master:
-           
-        </dt>
-        <dd>
-          3
-        </dd>
-      </dl>
-      <dl
-        className="cluster-details-item-list"
+        <ClusterStateIcon
+          clusterState="ready"
+        />
+         
+        ready
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Total vCPU
+      </DescriptionListTerm>
+      <DescriptionListDescription>
+        16
+         
+        vCPU
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Total memory
+      </DescriptionListTerm>
+      <DescriptionListDescription>
+        76.64
+         
+        GiB
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Nodes
+      </DescriptionListTerm>
+      <DescriptionList
+        className="ocm-c-description-list-secondary"
+        isHorizontal={true}
       >
-        <dt>
-          Compute:
-           
-        </dt>
-        <dd>
-          4
-        </dd>
-      </dl>
-    </dd>
+        <DescriptionListGroup>
+          <DescriptionListTerm>
+            Master:
+             
+          </DescriptionListTerm>
+          <DescriptionListDescription>
+            3
+          </DescriptionListDescription>
+          <DescriptionListTerm>
+            Compute:
+             
+          </DescriptionListTerm>
+          <DescriptionListDescription>
+            4
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      </DescriptionList>
+    </DescriptionListGroup>
     <ClusterNetwork
       cluster={
         Object {
@@ -212,64 +215,67 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
         }
       }
     />
-  </dl>
+  </DescriptionList>
 </Fragment>
 `;
 
 exports[`<DetailsRight /> Self Managed cluster should render status correctly for archived cluster 1`] = `
 <Fragment>
-  <dl
-    className="cluster-details-item"
-  >
-    <dt>
-      Status
-    </dt>
-    <dd>
-      Archived
-    </dd>
-    <dt>
-      Total vCPU
-    </dt>
-    <dd>
-      16
-       
-      vCPU
-    </dd>
-    <dt>
-      Total memory
-    </dt>
-    <dd>
-      76.64
-       
-      GiB
-    </dd>
-    <dt>
-      Nodes
-    </dt>
-    <dd>
-      <dl
-        className="cluster-details-item-list"
+  <DescriptionList>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Status
+      </DescriptionListTerm>
+      <DescriptionListDescription>
+        Archived
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Total vCPU
+      </DescriptionListTerm>
+      <DescriptionListDescription>
+        16
+         
+        vCPU
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Total memory
+      </DescriptionListTerm>
+      <DescriptionListDescription>
+        76.64
+         
+        GiB
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Nodes
+      </DescriptionListTerm>
+      <DescriptionList
+        className="ocm-c-description-list-secondary"
+        isHorizontal={true}
       >
-        <dt>
-          Master:
-           
-        </dt>
-        <dd>
-          3
-        </dd>
-      </dl>
-      <dl
-        className="cluster-details-item-list"
-      >
-        <dt>
-          Compute:
-           
-        </dt>
-        <dd>
-          4
-        </dd>
-      </dl>
-    </dd>
+        <DescriptionListGroup>
+          <DescriptionListTerm>
+            Master:
+             
+          </DescriptionListTerm>
+          <DescriptionListDescription>
+            3
+          </DescriptionListDescription>
+          <DescriptionListTerm>
+            Compute:
+             
+          </DescriptionListTerm>
+          <DescriptionListDescription>
+            4
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      </DescriptionList>
+    </DescriptionListGroup>
     <ClusterNetwork
       cluster={
         Object {
@@ -405,93 +411,100 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         }
       }
     />
-  </dl>
+  </DescriptionList>
 </Fragment>
 `;
 
 exports[`<DetailsRight /> should render 1`] = `
 <Fragment>
-  <dl
-    className="cluster-details-item"
-  >
-    <dt>
-      Status
-    </dt>
-    <dd
-      style={
-        Object {
-          "textTransform": "capitalize",
+  <DescriptionList>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Status
+      </DescriptionListTerm>
+      <DescriptionListDescription
+        style={
+          Object {
+            "textTransform": "capitalize",
+          }
         }
-      }
-    >
-      <ClusterStateIcon
-        clusterState="ready"
-      />
-       
-      ready
-    </dd>
-    <dt>
-      Total vCPU
-    </dt>
-    <dd>
-      16
-       
-      vCPU
-    </dd>
-    <dt>
-      Total memory
-    </dt>
-    <dd>
-      76.64
-       
-      GiB
-    </dd>
-    <dt>
-      Load balancers
-    </dt>
-    <dd>
-      0
-    </dd>
-    <dt>
-      Persistent storage
-    </dt>
-    <dd>
-      100
-       
-      GiB
-    </dd>
-    <dt>
-      Nodes
-      <span
-        className="font-weight-normal"
       >
-         (actual/desired)
-      </span>
-    </dt>
-    <dd>
-      <dl
-        className="cluster-details-item-list"
+        <ClusterStateIcon
+          clusterState="ready"
+        />
+         
+        ready
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Total vCPU
+      </DescriptionListTerm>
+      <DescriptionListDescription>
+        16
+         
+        vCPU
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Total memory
+      </DescriptionListTerm>
+      <DescriptionListDescription>
+        76.64
+         
+        GiB
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Load balancers
+      </DescriptionListTerm>
+      <DescriptionListDescription>
+        0
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Persistent storage
+      </DescriptionListTerm>
+      <DescriptionListDescription>
+        100
+         
+        GiB
+      </DescriptionListDescription>
+    </DescriptionListGroup>
+    <DescriptionListGroup>
+      <DescriptionListTerm>
+        Nodes
+        <span
+          className="font-weight-normal"
+        >
+           (actual/desired)
+        </span>
+      </DescriptionListTerm>
+      <DescriptionList
+        className="ocm-c-description-list-secondary"
+        isHorizontal={true}
       >
-        <dt>
-          Master:
-           
-        </dt>
-        <dd>
-          3/3
-        </dd>
-      </dl>
-      <dl
-        className="cluster-details-item-list"
-      >
-        <dt>
-          Compute:
-           
-        </dt>
-        <dd>
-          4/2
-        </dd>
-      </dl>
-    </dd>
+        <DescriptionListGroup>
+          <DescriptionListTerm>
+            Master:
+             
+          </DescriptionListTerm>
+          <DescriptionListDescription>
+            3/3
+          </DescriptionListDescription>
+          <DescriptionListTerm>
+            Compute:
+             
+          </DescriptionListTerm>
+          <DescriptionListDescription>
+            4/2
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+      </DescriptionList>
+    </DescriptionListGroup>
     <ClusterNetwork
       cluster={
         Object {
@@ -644,6 +657,6 @@ exports[`<DetailsRight /> should render 1`] = `
         }
       }
     />
-  </dl>
+  </DescriptionList>
 </Fragment>
 `;

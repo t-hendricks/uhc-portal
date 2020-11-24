@@ -2,40 +2,39 @@
 
 exports[`<ClusterNetwork /> should render 1`] = `
 <Fragment>
-  <dt>
-    Network
-  </dt>
-  <dd>
-    <dl
-      className="cluster-details-item-list"
+  <DescriptionListGroup>
+    <DescriptionListTerm>
+      Network
+    </DescriptionListTerm>
+    <DescriptionList
+      className="ocm-c-description-list-secondary"
+      isHorizontal={true}
     >
-      <dt>
-        Machine CIDR: 
-      </dt>
-      <dd>
-        10.0.0.0/16
-      </dd>
-    </dl>
-    <dl
-      className="cluster-details-item-list"
-    >
-      <dt>
-        Service CIDR: 
-      </dt>
-      <dd>
-        172.30.0.0/16
-      </dd>
-    </dl>
-    <dl
-      className="cluster-details-item-list"
-    >
-      <dt>
-        Pod CIDR: 
-      </dt>
-      <dd>
-        10.128.0.0/14
-      </dd>
-    </dl>
-  </dd>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          Machine CIDR: 
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          10.0.0.0/16
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          Service CIDR: 
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          172.30.0.0/16
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          Pod CIDR: 
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          10.128.0.0/14
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+    </DescriptionList>
+  </DescriptionListGroup>
 </Fragment>
 `;
