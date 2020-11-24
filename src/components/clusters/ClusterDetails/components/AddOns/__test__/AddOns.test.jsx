@@ -12,6 +12,7 @@ describe('<AddOns />', () => {
   const addClusterAddOn = jest.fn();
   const clearClusterAddOnsResponses = jest.fn();
   const addClusterAddOnResponse = {};
+  const deleteClusterAddOnResponse = {};
   const getOrganizationAndQuota = jest.fn();
   const openModal = jest.fn();
 
@@ -30,6 +31,7 @@ describe('<AddOns />', () => {
       getClusterAddOns={getClusterAddOns}
       addClusterAddOn={addClusterAddOn}
       addClusterAddOnResponse={addClusterAddOnResponse}
+      deleteClusterAddOnResponse={deleteClusterAddOnResponse}
       clearClusterAddOnsResponses={clearClusterAddOnsResponses}
       openModal={openModal}
     />);

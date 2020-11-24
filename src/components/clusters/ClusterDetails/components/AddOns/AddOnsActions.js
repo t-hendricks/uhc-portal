@@ -38,6 +38,11 @@ const updateClusterAddOn = (clusterID, addOnID, addOnData) => dispatch => dispat
   }),
 });
 
+const deleteClusterAddOn = (clusterID, addOnData) => dispatch => dispatch({
+  type: AddOnsConstants.DELETE_CLUSTER_ADDON,
+  payload: clusterService.deleteClusterAddOn(clusterID, addOnData),
+});
+
 const clearClusterAddOnsResponses = () => ({
   type: AddOnsConstants.CLEAR_CLUSTER_ADDON_RESPONSES,
 });
@@ -48,6 +53,7 @@ const addOnsActions = {
   getClusterAddOns,
   addClusterAddOn,
   updateClusterAddOn,
+  deleteClusterAddOn,
   clearClusterAddOnsResponses,
 };
 
@@ -57,5 +63,6 @@ export {
   getClusterAddOns,
   addClusterAddOn,
   updateClusterAddOn,
+  deleteClusterAddOn,
   clearClusterAddOnsResponses,
 };

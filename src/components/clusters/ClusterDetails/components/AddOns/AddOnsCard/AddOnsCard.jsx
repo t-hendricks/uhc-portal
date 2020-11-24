@@ -52,16 +52,17 @@ class AddOnsCard extends Component {
             Installing
           </Label>
         );
+      case AddOnsConstants.INSTALLATION_STATE.DELETED:
       case AddOnsConstants.INSTALLATION_STATE.DELETING:
         return (
           <Label variant="outline" icon={<InProgressIcon />}>
-            Deleting
+            Uninstalling
           </Label>
         );
       case AddOnsConstants.INSTALLATION_STATE.FAILED:
         return (
           <Label variant="outline" color="red" icon={<ExclamationCircleIcon />}>
-            Install failed
+            Add-on failed
           </Label>
         );
       case AddOnsConstants.INSTALLATION_STATE.READY:
@@ -206,6 +207,17 @@ class AddOnsCard extends Component {
         onClick={() => configureAddOn(installedAddOn)}
       >
         Configure
+      </DropdownItem>,
+      <DropdownItem
+        key="action"
+        component="button"
+        onClick={() => openModal('add-ons-delete-modal', {
+          addOnName: addOn.name,
+          addOnID: addOn.id,
+          clusterID: cluster.id,
+        })}
+      >
+        Uninstall add-on
       </DropdownItem>,
     ];
 
