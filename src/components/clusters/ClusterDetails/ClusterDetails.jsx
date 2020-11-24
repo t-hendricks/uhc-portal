@@ -335,6 +335,7 @@ class ClusterDetails extends Component {
       canTransferClusterOwnership,
       anyModalOpen,
       hasIssues,
+      hasIssuesInsights,
       toggleSubscriptionReleased,
       setOpenedTab,
       initTabOpen,
@@ -464,6 +465,7 @@ class ClusterDetails extends Component {
             upgradeSettingsTabRef={this.upgradeSettingsTabRef}
             addBareMetalTabRef={this.addBareMetalTabRef}
             hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
+            hasIssuesInsights={hasIssuesInsights}
             initTabOpen={initTabOpen}
             setOpenedTab={setOpenedTab}
             onTabSelected={onTabSelected}
@@ -571,14 +573,14 @@ class ClusterDetails extends Component {
           </TabContent>
         }
         {displayMachinePoolsTab && (
-        <TabContent
-          eventKey={6}
-          id="machinePoolsContent"
-          ref={this.machinePoolsTabRef}
-          aria-label="Machine pools"
-        >
-          <MachinePools cluster={cluster} />
-        </TabContent>
+          <TabContent
+            eventKey={6}
+            id="machinePoolsContent"
+            ref={this.machinePoolsTabRef}
+            aria-label="Machine pools"
+          >
+            <MachinePools cluster={cluster} />
+          </TabContent>
         )}
         {displayUpgradeSettingsTab && (
           <TabContent
@@ -591,18 +593,18 @@ class ClusterDetails extends Component {
           </TabContent>
         )}
         {displayAddBareMetalHosts && (
-        <TabContent
-          eventKey={9}
-          id="addBareMetalHostsContent"
-          ref={this.addBareMetalTabRef}
-          aria-label="Add Bare Metal Hosts"
-          hidden
-        >
-          <BareMetalHostsClusterDetailTab
-            cluster={cluster}
-            isVisible={selectedTab === 'addBareMetalHosts'}
-          />
-        </TabContent>
+          <TabContent
+            eventKey={9}
+            id="addBareMetalHostsContent"
+            ref={this.addBareMetalTabRef}
+            aria-label="Add Bare Metal Hosts"
+            hidden
+          >
+            <BareMetalHostsClusterDetailTab
+              cluster={cluster}
+              isVisible={selectedTab === 'addBareMetalHosts'}
+            />
+          </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditNodeCountModal onClose={onDialogClose} />
@@ -700,6 +702,7 @@ ClusterDetails.propTypes = {
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
+  hasIssuesInsights: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   initTabOpen: PropTypes.string.isRequired,
   supportTabFeature: PropTypes.bool.isRequired,

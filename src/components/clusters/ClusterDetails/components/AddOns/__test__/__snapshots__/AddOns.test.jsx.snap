@@ -165,5 +165,6 @@ exports[`<AddOns /> should render 1`] = `
   <Connect(ReduxForm)
     clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
   />
+  <Connect(AddOnsDeleteModal) />
 </div>
 `;

@@ -207,6 +207,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       displayNetworkingTab={true}
       displaySupportTab={false}
       hasIssues={true}
+      hasIssuesInsights={false}
       initTabOpen=""
       insightsTabRef={
         Object {
