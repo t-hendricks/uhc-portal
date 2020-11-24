@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   cluster: state.clusters.details.cluster,
   clusterAddOns: state.addOns.clusterAddOns,
   addClusterAddOnResponse: state.addOns.addClusterAddOnResponse,
+  deleteClusterAddOnResponse: state.addOns.deleteClusterAddOnResponse,
   organization: state.userProfile.organization,
   quota: state.userProfile.organization.quotaList,
 });

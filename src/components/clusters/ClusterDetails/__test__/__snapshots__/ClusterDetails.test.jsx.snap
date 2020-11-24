@@ -188,12 +188,18 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "current": null,
         }
       }
+      addBareMetalTabRef={
+        Object {
+          "current": null,
+        }
+      }
       addOnsTabRef={
         Object {
           "current": null,
         }
       }
       displayAccessControlTab={true}
+      displayAddBareMetalHosts={false}
       displayAddOnsTab={false}
       displayInsightsTab={false}
       displayMachinePoolsTab={true}
@@ -222,6 +228,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
           "current": null,
         }
       }
+      onTabSelected={[Function]}
       overviewTabRef={
         Object {
           "current": null,

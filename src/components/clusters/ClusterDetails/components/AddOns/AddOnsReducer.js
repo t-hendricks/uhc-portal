@@ -20,6 +20,9 @@ const initialState = {
   addClusterAddOnResponse: {
     ...baseRequestState,
   },
+  updateClusterAddOnResponse: {
+    ...baseRequestState,
+  },
   deleteClusterAddOnResponse: {
     ...baseRequestState,
   },
@@ -34,6 +37,7 @@ function AddOnsReducer(state = initialState, action) {
         return {
           ...initialState,
           addOns: state.addOns,
+          clusterAddOns: state.clusterAddOns,
         };
 
       // GET_ADDONS
@@ -89,6 +93,23 @@ function AddOnsReducer(state = initialState, action) {
       case FULFILLED_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON):
         draft.addClusterAddOnResponse = {
           ...initialState.addClusterAddOnResponse,
+          fulfilled: true,
+        };
+        break;
+
+      // UPDATE_CLUSTER_ADDON
+      case REJECTED_ACTION(AddOnsConstants.UPDATE_CLUSTER_ADDON):
+        draft.updateClusterAddOnResponse = {
+          ...initialState.updateClusterAddOnResponse,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(AddOnsConstants.UPDATE_CLUSTER_ADDON):
+        draft.updateClusterAddOnResponse.pending = true;
+        break;
+      case FULFILLED_ACTION(AddOnsConstants.UPDATE_CLUSTER_ADDON):
+        draft.updateClusterAddOnResponse = {
+          ...initialState.updateClusterAddOnResponse,
           fulfilled: true,
         };
         break;

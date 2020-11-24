@@ -237,6 +237,7 @@ function actionResolver(
   const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
   const ToggleClusterAdminAccessDialogProps = getToggleClusterAdminAccessDialogProps();
   const editccscredentialsProps = getEditCCSCredentialsProps();
+
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
   const showEditNodeCount = cluster.canEdit && cluster.managed;
@@ -253,6 +254,7 @@ function actionResolver(
   // eslint-disable-next-line max-len
   // const showccscredentials = cluster.ccs?.enabled && cluster.cloud_provider && cluster.cloud_provider.id !== 'gcp';
   const showccscredentials = false; // Temporary until backend is fixed
+
   return [
     showConsoleButton && adminConsoleItemProps,
     cluster.canEdit && editDisplayNameItemProps,

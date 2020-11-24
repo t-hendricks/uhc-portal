@@ -4,14 +4,25 @@ import { FileUpload, FormGroup } from '@patternfly/react-core';
 
 class ReduxFileUpload extends React.Component {
   state = {
-    value: null,
     filename: '',
   };
 
   handleFileChange = (value, filename, e) => {
     const { input } = this.props;
-    this.setState({ value, filename });
-    input.onChange(e, value);
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.setState({
+          filename: file.name,
+        });
+        input.onChange(reader.result);
+      };
+      reader.readAsText(file, 'UTF-8');
+    } else {
+      this.setState({ filename });
+      input.onChange(value);
+    }
   }
 
   render() {
@@ -23,7 +34,6 @@ class ReduxFileUpload extends React.Component {
       label,
     } = this.props;
     const {
-      value,
       filename,
     } = this.state;
 
@@ -44,8 +54,11 @@ class ReduxFileUpload extends React.Component {
         isRequired={isRequired}
       >
         <FileUpload
+          allowEditingUploadedText
+          isDragActive
           id={input.name}
-          value={value}
+          type="text"
+          value={input.value}
           filename={filename}
           onChange={this.handleFileChange}
           validated={(dirty || touched) && error ? 'error' : 'default'}

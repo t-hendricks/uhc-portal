@@ -11,7 +11,7 @@ import getPersistentStorageValues from '../../../redux/actions/persistentStorage
 import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
-import { scrollToFirstError, readFile, strToCleanObject } from '../../../common/helpers';
+import { scrollToFirstError, strToCleanObject } from '../../../common/helpers';
 
 import {
   hasOSDQuotaSelector,
@@ -20,8 +20,7 @@ import {
   awsQuotaSelector,
   gcpQuotaSelector,
 } from '../common/quotaSelectors';
-import { validateGCPServiceAccount } from '../../../common/validators';
-import { GCP_CCS_FEATURE } from '../../../redux/constants/featureConstants';
+import { OSD_UPGRADES_FEATURE } from '../../../redux/constants/featureConstants';
 
 const AWS_DEFAULT_REGION = 'us-east-1';
 const GCP_DEFAULT_REGION = 'us-east1';
@@ -29,13 +28,6 @@ const GCP_DEFAULT_REGION = 'us-east1';
 const reduxFormConfig = {
   form: 'CreateCluster',
   onSubmitFail: scrollToFirstError,
-  asyncValidate: (values) => {
-    if (values.gcp_service_account) {
-      return validateGCPServiceAccount(values.gcp_service_account);
-    }
-    return Promise.resolve(); // RF API requires to return a promise
-  },
-  asyncChangeFields: ['gcp_service_account'],
 };
 
 const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
@@ -47,9 +39,9 @@ const mapStateToProps = (state, ownProps) => {
   const defaultRegion = isAwsForm ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
 
   let privateClusterSelected = false;
+  const valueSelector = formValueSelector('CreateCluster');
 
   if (isAwsForm) {
-    const valueSelector = formValueSelector('CreateCluster');
     privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
   }
 
@@ -60,7 +52,8 @@ const mapStateToProps = (state, ownProps) => {
 
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
-    gcpCCSEnabled: state.features[GCP_CCS_FEATURE],
+    upgradesEnabled: state.features[OSD_UPGRADES_FEATURE],
+    isAutomaticUpgrade: valueSelector(state, 'upgrade_policy') === 'automatic',
 
     cloudProviders: state.cloudProviders,
     persistentStorageValues: state.persistentStorageValues,
@@ -90,6 +83,9 @@ const mapStateToProps = (state, ownProps) => {
       load_balancers: '0',
       network_configuration_toggle: 'basic',
       disable_scp_checks: false,
+      node_drain_grace_period: 60,
+      upgrade_policy: 'manual',
+      automatic_upgrade_schedule: '0 0 * * 0',
     },
   });
 };
@@ -113,6 +109,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         id: ownProps.cloudProviderID,
       },
       multi_az: formData.multi_az === 'true',
+      node_drain_grace_period: {
+        value: formData.node_drain_grace_period,
+        unit: 'minutes',
+      },
     };
     if (ownProps.product) {
       clusterRequest.product = {
@@ -142,8 +142,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         };
         clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
       } else if (ownProps.cloudProviderID === 'gcp') {
-        const text = await readFile(formData.gcp_service_account[0]);
-        const parsed = JSON.parse(text);
+        const parsed = JSON.parse(formData.gcp_service_account);
         clusterRequest.gcp = pick(parsed, [
           'type',
           'project_id',
@@ -174,7 +173,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         value: parseFloat(formData.persistent_storage),
       };
     }
-    dispatch(createCluster(clusterRequest));
+    dispatch(createCluster(clusterRequest,
+      {
+        upgrade_policy: formData.upgrade_policy,
+        automatic_upgrade_schedule: formData.automatic_upgrade_schedule,
+      }));
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),

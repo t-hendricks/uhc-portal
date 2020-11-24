@@ -8,18 +8,21 @@ exports[`<Monitoring /> should render 1`] = `
     status="HEALTHY"
   />
   <Card
-    id="monitoring"
+    className="ocm-c-monitoring-status__card"
   >
-    <CardTitle>
+    <CardTitle
+      className="ocm-c-monitoring-status__card--header"
+    >
       <Title
         className="card-title"
         headingLevel="h2"
-        size="md"
       >
         Status
       </Title>
     </CardTitle>
-    <CardBody>
+    <CardBody
+      className="ocm-c-monitoring-status__card--body"
+    >
       <MonitoringList
         alerts={Object {}}
         cluster={Object {}}

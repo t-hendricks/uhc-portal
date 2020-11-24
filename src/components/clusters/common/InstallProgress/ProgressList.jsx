@@ -5,11 +5,12 @@ import {
   DescriptionListTerm,
   DescriptionListGroup,
   DescriptionListDescription,
+  Spinner,
 } from '@patternfly/react-core';
 import CheckCircleIcon from '@patternfly/react-icons/dist/js/icons/check-circle-icon';
-import InProgressIcon from '@patternfly/react-icons/dist/js/icons/in-progress-icon';
 import PedningIcon from '@patternfly/react-icons/dist/js/icons/pending-icon';
 import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
+
 // eslint-disable-next-line camelcase
 import { global_success_color_100 } from '@patternfly/react-tokens';
 import './ProgressList.scss';
@@ -20,7 +21,7 @@ function ProgressList({ cluster }) {
     const pending = { icon: <PedningIcon className="icon-space-right" />, text: 'Pending' };
     const completed = { icon: <CheckCircleIcon className="icon-space-right" color={global_success_color_100.value} />, text: 'Completed' };
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
-    const inProgressIcon = <InProgressIcon className="icon-space-right" />;
+    const inProgressIcon = <Spinner className="icon-space-right" size="sm" />;
 
     // first step in progress
     if (cluster.state === clusterStates.PENDING) {

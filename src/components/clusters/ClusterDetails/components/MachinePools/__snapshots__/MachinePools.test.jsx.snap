@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MachinePools /> renders correctly 1`] = `
+<Fragment>
+  <Card
+    className="ocm-c-machine-pools__card"
+  >
+    <CardBody
+      className="ocm-c-machine-pools__card--body"
+    >
+      <Tooltip
+        content="You do not have permission to add a machine pool. Only cluster owners and organization administrators can add machine pools."
+      >
+        <span>
+          <Button
+            className="space-bottom-lg"
+            isDisabled={true}
+            onClick={[Function]}
+            variant="secondary"
+          >
+            Add machine pool
+          </Button>
+        </span>
+      </Tooltip>
+      <Divider />
+      <Table
+        actionResolver={[Function]}
+        areActionsDisabled={[Function]}
+        aria-label="Machine pools"
+        borders={true}
+        canSelectAll={true}
+        cells={
+          Array [
+            Object {
+              "title": "Machine pool",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Instance type",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Availability zones",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Node count",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+          ]
+        }
+        className=""
+        contentId="expanded-content"
+        dropdownDirection="down"
+        dropdownPosition="right"
+        expandId="expandable-toggle"
+        gridBreakPoint="grid-md"
+        isStickyHeader={false}
+        ouiaSafe={true}
+        role="grid"
+        rowLabeledBy="simple-node"
+        rows={
+          Array [
+            Object {
+              "cells": Array [
+                undefined,
+                undefined,
+                undefined,
+                "undefined",
+              ],
+              "machinePool": Object {},
+            },
+          ]
+        }
+        selectVariant="checkbox"
+        variant={null}
+      >
+        <TableHeader />
+        <Component />
+      </Table>
+    </CardBody>
+  </Card>
+</Fragment>
+`;

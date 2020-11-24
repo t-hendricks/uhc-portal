@@ -65,14 +65,14 @@ function SubscriptionSettings({
   const salesURL = 'https://www.redhat.com/en/contact';
 
   return (
-    <Card>
-      <CardTitle>
-        <Title headingLevel="h2" size="lg" className="card-title">
+    <Card className="ocm-c-overview-subscription-settings__card">
+      <CardTitle className="ocm-c-overview-subscription-settings__card--header">
+        <Title headingLevel="h2" className="card-title">
           Subscription settings
           {titleIcon}
         </Title>
       </CardTitle>
-      <CardBody>
+      <CardBody className="ocm-c-overview-subscription-settings__card--body">
         <Grid>
           <GridItem sm={6}>
             <dl className="cluster-details-item left">

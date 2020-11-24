@@ -3,6 +3,12 @@ import { mount } from 'enzyme';
 
 import MachineTypeSelection from './MachineTypeSelection';
 
+import {
+  rhInfraClusterQuota,
+  awsCCSClustersWithNodesQuota,
+  awsCCSClustersWithSingleNodeQuota,
+} from '../../../../../common/__test__/quota.fixtures';
+
 const baseState = {
   error: false,
   errorMessage: '',
@@ -230,21 +236,7 @@ describe('<MachineTypeSelection />', () => {
           ...baseState,
           fulfilled: true,
         };
-        const quota = {
-          clustersQuota: {
-            aws: {
-              rhInfra: {
-                multiAz: {
-                  'mem.small': 5,
-                },
-                singleAz: {
-                  'mem.small': 0,
-                },
-              },
-            },
-          },
-        };
-
+        const quota = rhInfraClusterQuota;
         onChange = jest.fn();
         getMachineTypes = jest.fn();
         wrapper = mount(
@@ -281,36 +273,7 @@ describe('<MachineTypeSelection />', () => {
           ...baseState,
           fulfilled: true,
         };
-        const quota = {
-          clustersQuota: {
-            aws: {
-              rhInfra: {
-                singleAz: { available: 0 },
-                multiAz: { available: 0 },
-                totalAvailable: 0,
-              },
-              byoc: {
-                singleAz: { available: 0 },
-                multiAz: {
-                  'mem.small': 5,
-                  available: 5,
-                },
-                totalAvailable: 5,
-              },
-            },
-          },
-          nodesQuota: {
-            aws: {
-              byoc: {
-                'mem.small': {
-                  available: 12,
-                  cost: 4,
-                },
-              },
-            },
-          },
-        };
-
+        const quota = awsCCSClustersWithNodesQuota;
         onChange = jest.fn();
         getMachineTypes = jest.fn();
         wrapper = mount(
@@ -347,36 +310,7 @@ describe('<MachineTypeSelection />', () => {
           ...baseState,
           fulfilled: true,
         };
-        const quota = {
-          clustersQuota: {
-            aws: {
-              rhInfra: {
-                singleAz: { available: 0 },
-                multiAz: { available: 0 },
-                totalAvailable: 0,
-              },
-              byoc: {
-                singleAz: { available: 0 },
-                multiAz: {
-                  'mem.small': 5,
-                  available: 5,
-                },
-                totalAvailable: 5,
-              },
-            },
-          },
-          nodesQuota: {
-            aws: {
-              byoc: {
-                'mem.small': {
-                  available: 4,
-                  cost: 4,
-                },
-              },
-            },
-          },
-        };
-
+        const quota = awsCCSClustersWithSingleNodeQuota;
         onChange = jest.fn();
         getMachineTypes = jest.fn();
         wrapper = mount(

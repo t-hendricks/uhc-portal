@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { GridItem } from '@patternfly/react-core';
+import { GridItem, Title, Divider } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import get from 'lodash/get';
 
@@ -11,8 +11,8 @@ import AWSAccountDetailsSection from './FormSections/AWSAccountDetailsSection';
 import NetworkingSection from './FormSections/NetworkingSection';
 import ScaleSection from './FormSections/ScaleSection/ScaleSection';
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
-// import ExternalLink from '../../../common/ExternalLink';
-import { required } from '../../../../common/validators';
+import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
+import { required, validateGCPServiceAccount } from '../../../../common/validators';
 import { subscriptionPlans } from '../../../../common/subscriptionTypes';
 
 import './CreateOSDForm.scss';
@@ -100,7 +100,8 @@ class CreateOSDForm extends React.Component {
       cloudProviderID,
       privateClusterSelected,
       product,
-      gcpCCSEnabled,
+      upgradesEnabled,
+      isAutomaticUpgrade,
     } = this.props;
 
     const {
@@ -121,20 +122,18 @@ class CreateOSDForm extends React.Component {
     return (
       <>
         {/* Billing Model */}
-        {(isAws || (isGCP && gcpCCSEnabled)) && (
-          <>
-            <GridItem span={12}>
-              <h3 className="osd-page-header">Billing model</h3>
-            </GridItem>
-            <BillingModelSection
-              openModal={openModal}
-              toggleBYOCFields={this.toggleBYOCFields}
-              hasBYOCquota={hasBYOCQuota}
-              hasStandardQuota={hasRhInfraQuota}
-              byocSelected={isBYOCForm}
-            />
-          </>
-        )}
+
+        <GridItem span={12}>
+          <h3 className="osd-page-header">Billing model</h3>
+        </GridItem>
+        <BillingModelSection
+          openModal={openModal}
+          toggleBYOCFields={this.toggleBYOCFields}
+          hasBYOCquota={hasBYOCQuota}
+          hasStandardQuota={hasRhInfraQuota}
+          byocSelected={isBYOCForm}
+        />
+
         {/* BYOC modal */}
         { isBYOCModalOpen && (
           <CustomerCloudSubscriptionModal
@@ -180,12 +179,12 @@ class CreateOSDForm extends React.Component {
               <GridItem span={4}>
                 <Field
                   component={ReduxFileUpload}
-                  validate={required}
+                  validate={[required, validateGCPServiceAccount]}
                   name="gcp_service_account"
-                  type="file"
                   disabled={pending}
                   isRequired
                   label="Service account JSON"
+                  helpText="Upload a JSON file or type to add"
                 />
               </GridItem>
             </>
@@ -227,15 +226,29 @@ class CreateOSDForm extends React.Component {
           product={subscriptionPlans.OSD}
         />
 
-        {/* Networking section */}
-        {<NetworkingSection
+        <NetworkingSection
           mode={mode}
           toggleNetwork={this.toggleNetwork}
           showClusterPrivacy={isAws}
           privateClusterSelected={privateClusterSelected}
           cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}
-        />}
+        />
+        { upgradesEnabled
+        && (
+          <>
+            <GridItem span={12}>
+              <Divider />
+            </GridItem>
+            <GridItem span={12}>
+              <Title headingLevel="h3">Cluster updates</Title>
+              <UpgradeSettingsFields
+                isAutomatic={isAutomaticUpgrade}
+                isDisabled={pending}
+              />
+            </GridItem>
+          </>
+        )}
       </>
     );
   }
@@ -244,7 +257,6 @@ class CreateOSDForm extends React.Component {
 CreateOSDForm.defaultProps = {
   pending: false,
   isBYOCModalOpen: false,
-  gcpCCSEnabled: false,
 };
 
 CreateOSDForm.propTypes = {
@@ -278,7 +290,8 @@ CreateOSDForm.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   product: PropTypes.string.isRequired,
-  gcpCCSEnabled: PropTypes.bool,
+  upgradesEnabled: PropTypes.bool,
+  isAutomaticUpgrade: PropTypes.bool,
 };
 
 export default CreateOSDForm;

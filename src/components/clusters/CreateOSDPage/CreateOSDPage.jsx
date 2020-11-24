@@ -130,7 +130,8 @@ class CreateOSDPage extends React.Component {
       clustersQuota,
       cloudProviderID,
       privateClusterSelected,
-      gcpCCSEnabled,
+      upgradesEnabled,
+      isAutomaticUpgrade,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -263,7 +264,8 @@ class CreateOSDPage extends React.Component {
                     cloudProviderID={cloudProviderID}
                     privateClusterSelected={privateClusterSelected}
                     product={product}
-                    gcpCCSEnabled={gcpCCSEnabled}
+                    upgradesEnabled={upgradesEnabled}
+                    isAutomaticUpgrade={isAutomaticUpgrade}
                   />
                   {/* Form footer */}
                   <GridItem>
@@ -297,7 +299,6 @@ class CreateOSDPage extends React.Component {
 
 CreateOSDPage.defaultProps = {
   product: 'osd',
-  gcpCCSEnabled: false,
 };
 
 CreateOSDPage.propTypes = {
@@ -347,7 +348,8 @@ CreateOSDPage.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.string,
   privateClusterSelected: PropTypes.bool.isRequired,
-  gcpCCSEnabled: PropTypes.bool,
+  upgradesEnabled: PropTypes.bool,
+  isAutomaticUpgrade: PropTypes.bool,
 };
 
 export default CreateOSDPage;

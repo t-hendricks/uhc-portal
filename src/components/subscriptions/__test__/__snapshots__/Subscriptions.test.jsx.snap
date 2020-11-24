@@ -142,7 +142,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
                   "title": "N/A",
                 },
                 "Standard",
-                "",
+                "OSD",
                 "10 of 15",
                 Object {
                   "title": <ResourcesAlmostFullIcon
@@ -159,7 +159,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
                   "title": "N/A",
                 },
                 "Standard",
-                "",
+                "OSD",
                 "15 of 15",
                 Object {
                   "title": <ResourcesFullIcon
@@ -176,7 +176,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
                   "title": "N/A",
                 },
                 "Standard",
-                "",
+                "OSD",
                 "0 of 4",
                 Object {
                   "title": <OutlinedCircleIcon
@@ -193,7 +193,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
                   "title": "N/A",
                 },
                 "Any",
-                "",
+                "OSD",
                 "0 of 5",
                 Object {
                   "title": <OutlinedCircleIcon

@@ -2,7 +2,6 @@ import get from 'lodash/get';
 import inRange from 'lodash/inRange';
 import cidrTools from 'cidr-tools';
 import { Validator, ValidationError } from 'jsonschema';
-import { readFile } from './helpers';
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
@@ -86,6 +85,13 @@ const checkOpenIDIssuer = (value) => {
   if (url.hash !== '' || url.search !== '') {
     return 'The URL must not include a query string (?) or fragment (#)';
   }
+
+  // url.hash doesnt work for https://issuer.com# and it succeeds.
+  // added explicit validation for that scenario
+  if (url.href.includes('#')) {
+    return 'The URL must not include a query string (?) or fragment (#)';
+  }
+
   return undefined;
 };
 
@@ -766,20 +772,13 @@ const validateServiceAccountObject = (obj) => {
   return undefined;
 };
 
-const validateGCPServiceAccount = async (fileList) => {
-  if (!fileList) {
-    return undefined;
-  }
-  const file = fileList[0];
-
+const validateGCPServiceAccount = (content) => {
   try {
-    const fileContent = await readFile(file);
-    const contentObj = JSON.parse(fileContent);
+    const contentObj = JSON.parse(content);
     return validateServiceAccountObject(contentObj);
   } catch (e) {
     if (e instanceof SyntaxError) {
-      // eslint-disable-next-line no-throw-literal
-      throw { gcp_service_account: 'Invalid JSON format.' };
+      return 'Invalid JSON format.';
     }
     if (e instanceof ValidationError) {
       let errorMessage;
@@ -793,11 +792,9 @@ const validateGCPServiceAccount = async (fileList) => {
       } else {
         errorMessage = e.message;
       }
-      // eslint-disable-next-line no-throw-literal
-      throw { gcp_service_account: `The provided JSON does not meet the requirements: ${errorMessage}` };
+      return `The provided JSON does not meet the requirements: ${errorMessage}`;
     }
-    // eslint-disable-next-line no-throw-literal
-    throw { gcp_service_account: 'Error reading file.' };
+    return undefined;
   }
 };
 

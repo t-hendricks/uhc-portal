@@ -70,15 +70,15 @@ class Overview extends React.Component {
               />
             </InstallProgress>
           ) : (
-            <Card id="metrics-charts">
-              <CardTitle>
-                <Title headingLevel="h2" size="lg" className="card-title">Resource usage</Title>
+            <Card className="ocm-c-overview-resource-usage__card">
+              <CardTitle className="ocm-c-overview-resource-usage__card--header">
+                <Title headingLevel="h2" className="card-title">Resource usage</Title>
                 { showInstallSuccessAlert && <Alert variant="success" isInline title="Cluster installed successfully" />}
                 { shouldMonitorStatus && (
                   <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
                 )}
               </CardTitle>
-              <CardBody>
+              <CardBody className="ocm-c-overview-resource-usage__card--body">
                 <ResourceUsage
                   metricsAvailable={metricsAvailable}
                   metricsStatusMessage={metricsStatusMessage}
@@ -95,11 +95,11 @@ class Overview extends React.Component {
               </CardBody>
             </Card>
           )}
-        <Card>
-          <CardTitle>
-            <Title headingLevel="h2" size="lg" className="card-title">Details</Title>
+        <Card className="ocm-c-overview-details__card">
+          <CardTitle className="ocm-c-overview-details__card--header">
+            <Title headingLevel="h2" className="card-title">Details</Title>
           </CardTitle>
-          <CardBody>
+          <CardBody className="ocm-c-overview-details__card--body">
             <Grid>
               <GridItem sm={6}>
                 <DetailsLeft
@@ -117,11 +117,11 @@ class Overview extends React.Component {
         </Card>
         <SubscriptionSettings />
         {displayClusterLogs && (
-        <Card>
-          <CardTitle>
-            <Title headingLevel="h2" size="lg" className="card-title">Cluster history</Title>
+        <Card className="ocm-c-overview-cluster-history__card">
+          <CardTitle className="ocm-c-overview-cluster-history__card--header">
+            <Title headingLevel="h2" className="card-title">Cluster history</Title>
           </CardTitle>
-          <CardBody>
+          <CardBody className="ocm-c-overview-cluster-history__card--body">
             <ClusterLogs externalClusterID={cluster.external_id} history={history} />
           </CardBody>
         </Card>
