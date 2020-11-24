@@ -403,7 +403,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-.pf-c-tabs__item-text > #monitoring-issues-icon {
+.pf-c-tabs__item-text > #monitoring-issues-icon, 
+.pf-c-tabs__item-text > #insights-issues-icon  {
   margin-left: 5px;
 }
 
