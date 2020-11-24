@@ -184,6 +184,7 @@ class CreateOSDForm extends React.Component {
                   disabled={pending}
                   isRequired
                   label="Service account JSON"
+                  helpText="Upload a JSON file or type to add"
                 />
               </GridItem>
             </>
