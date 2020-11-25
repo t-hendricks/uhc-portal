@@ -132,6 +132,7 @@ class CreateOSDPage extends React.Component {
       privateClusterSelected,
       upgradesEnabled,
       isAutomaticUpgrade,
+      canEnableEtcdEncryption,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -266,6 +267,7 @@ class CreateOSDPage extends React.Component {
                     product={product}
                     upgradesEnabled={upgradesEnabled}
                     isAutomaticUpgrade={isAutomaticUpgrade}
+                    canEnableEtcdEncryption={canEnableEtcdEncryption}
                   />
                   {/* Form footer */}
                   <GridItem>
@@ -350,6 +352,7 @@ CreateOSDPage.propTypes = {
   privateClusterSelected: PropTypes.bool.isRequired,
   upgradesEnabled: PropTypes.bool,
   isAutomaticUpgrade: PropTypes.bool,
+  canEnableEtcdEncryption: PropTypes.bool,
 };
 
 export default CreateOSDPage;
