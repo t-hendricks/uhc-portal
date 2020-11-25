@@ -27,10 +27,7 @@ import {
   CheckCircleIcon,
 } from '@patternfly/react-icons';
 
-// eslint-disable-next-line camelcase
-import { global_success_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 import { Skeleton } from '@redhat-cloud-services/frontend-components';
-
 import ErrorBox from '../../../../../common/ErrorBox';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
@@ -94,27 +91,27 @@ class NetworkSelfServiceSection extends React.Component {
       let statusStr;
       switch (status) {
         case 'ready':
-          icon = <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />;
+          icon = <CheckCircleIcon className="status-icon success" />;
           statusStr = 'Ready';
           break;
         case 'failed':
-          icon = <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />;
+          icon = <ExclamationCircleIcon className="status-icon danger" />;
           statusStr = 'Failed';
           break;
         case 'pending':
-          icon = <InProgressIcon className="status-icon" size="md" />;
+          icon = <InProgressIcon className="status-icon" />;
           statusStr = 'Pending';
           break;
         case 'deleting':
-          icon = <InProgressIcon className="status-icon" size="md" />;
+          icon = <InProgressIcon className="status-icon" />;
           statusStr = 'Deleting';
           break;
         case 'removed':
-          icon = <UnknownIcon className="status-icon" size="md" />;
+          icon = <UnknownIcon className="status-icon" />;
           statusStr = 'Removed';
           break;
         default:
-          icon = <UnknownIcon className="status-icon" size="md" />;
+          icon = <UnknownIcon className="status-icon" />;
           statusStr = 'Unknown';
       }
       if (status === 'failed') {

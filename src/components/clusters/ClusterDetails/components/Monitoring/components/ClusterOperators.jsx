@@ -10,8 +10,6 @@ import {
 import {
   ExclamationCircleIcon, InProgressIcon, UnknownIcon, CheckCircleIcon, ExclamationTriangleIcon,
 } from '@patternfly/react-icons';
-// eslint-disable-next-line camelcase
-import { global_success_color_100, global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 
 import {
   operatorsStatuses,
@@ -31,23 +29,23 @@ function ClusterOperatorsTable({ operators = [], clusterConsole }) {
     let statusStr;
     switch (status) {
       case operatorsStatuses.AVAILABLE:
-        icon = <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />;
+        icon = <CheckCircleIcon className="status-icon success" />;
         statusStr = 'Available';
         break;
       case operatorsStatuses.FAILING:
-        icon = <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />;
+        icon = <ExclamationCircleIcon className="status-icon danger" />;
         statusStr = 'Failing';
         break;
       case operatorsStatuses.UPGRADING:
-        icon = <InProgressIcon className="status-icon" size="md" />;
+        icon = <InProgressIcon className="status-icon" />;
         statusStr = 'Updating';
         break;
       case operatorsStatuses.DEGRADED:
-        icon = <ExclamationTriangleIcon className="status-icon" size="md" color={global_warning_color_100.value} />;
+        icon = <ExclamationTriangleIcon className="status-icon warning" />;
         statusStr = 'Degraded';
         break;
       default:
-        icon = <UnknownIcon className="status-icon" size="md" />;
+        icon = <UnknownIcon className="status-icon" />;
         statusStr = 'Unknown';
     }
     return (

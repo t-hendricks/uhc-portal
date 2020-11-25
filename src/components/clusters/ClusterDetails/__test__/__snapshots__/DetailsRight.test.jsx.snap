@@ -16,6 +16,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
       }
     >
       <ClusterStateIcon
+        animated={true}
         clusterState="ready"
       />
        
@@ -425,6 +426,7 @@ exports[`<DetailsRight /> should render 1`] = `
       }
     >
       <ClusterStateIcon
+        animated={true}
         clusterState="ready"
       />
        

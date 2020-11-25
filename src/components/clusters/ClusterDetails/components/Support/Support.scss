@@ -1,4 +1,17 @@
-.support-subtitle {
-  font-size: var(--pf-global--FontSize--md);
-  font-weight: var(--pf-global--FontWeight--light);
+.ocm-c-support-notification-contacts__card,
+.ocm-c-support-support-cases__card {
+  &--header {
+    .pf-c-title {
+      margin-bottom: var(--pf-global--spacer--md);
+    }
+    .support-subtitle {
+      font-size: var(--pf-global--FontSize--md);
+      font-weight: var(--pf-global--FontWeight--light);
+    }
+  }
+  &--body {
+   	.pf-c-button {
+   	  margin-top: var(--pf-global--spacer--md);
+    }
+  }
 }

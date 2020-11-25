@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddOnsDeleteModal /> renders correctly 1`] = `
+<Modal
+  isPrimaryDisabled={true}
+  onClose={[Function]}
+  onPrimaryClick={[Function]}
+  onSecondaryClick={[Function]}
+  primaryText="Uninstall"
+  primaryVariant="danger"
+  title="Uninstall fake-addon-name"
+>
+  <p>
+    This action will uninstall the add-on, removing add-on data from cluster can not be undone.
+  </p>
+  <Form
+    onSubmit={[Function]}
+  >
+    <p>
+      Confirm deletion by typing
+       
+      <span
+        className="addon-delete-modal-textinput"
+      >
+        fake-addon-name
+      </span>
+       
+      below:
+    </p>
+    <ForwardRef
+      aria-label="addon name"
+      onChange={[Function]}
+      placeholder="Enter name"
+      type="text"
+      value=""
+    />
+  </Form>
+</Modal>
+`;

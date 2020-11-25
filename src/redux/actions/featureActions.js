@@ -3,7 +3,6 @@ import {
   ASSISTED_INSTALLER_FEATURE,
   OSD_UPGRADES_FEATURE,
   SUPPORT_TAB_FEATURE,
-  GCP_CCS_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -34,13 +33,6 @@ export const features = [
     name: SUPPORT_TAB_FEATURE,
     action: organizationID => (organizationID
       ? accountsService.getFeature('support-tab', organizationID)
-        .then(unleash => unleash.data.enabled)
-      : Promise.reject(Error('No organization'))),
-  },
-  {
-    name: GCP_CCS_FEATURE,
-    action: organizationID => (organizationID
-      ? accountsService.getFeature('gcp-ccs', organizationID)
         .then(unleash => unleash.data.enabled)
       : Promise.reject(Error('No organization'))),
   },

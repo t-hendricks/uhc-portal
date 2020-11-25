@@ -55,6 +55,7 @@ class AddMachinePoolModal extends Component {
       addMachinePoolResponse,
       cluster,
       pristine,
+      organization,
     } = this.props;
 
     const { machineType } = this.state;
@@ -63,7 +64,7 @@ class AddMachinePoolModal extends Component {
       <ErrorBox message="Error adding machine pool" response={addMachinePoolResponse} />
     );
 
-    const isPending = addMachinePoolResponse.pending;
+    const isPending = addMachinePoolResponse.pending || (organization && organization.pending);
 
     return (
       <Modal
@@ -123,6 +124,7 @@ AddMachinePoolModal.propTypes = {
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
+  organization: PropTypes.object,
 };
 
 AddMachinePoolModal.defaultProps = {

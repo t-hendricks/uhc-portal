@@ -108,10 +108,10 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
                         className="self-service-failed"
                         icon={
                           <ExclamationCircleIcon
-                            className="status-icon"
-                            color="#c9190b"
+                            className="status-icon danger"
+                            color="currentColor"
                             noVerticalAlign={false}
-                            size="md"
+                            size="sm"
                           />
                         }
                         isInline={true}
@@ -147,7 +147,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
                       className="status-icon"
                       color="currentColor"
                       noVerticalAlign={false}
-                      size="md"
+                      size="sm"
                     />
                      
                     <span>
@@ -295,7 +295,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] =
                       className="status-icon"
                       color="currentColor"
                       noVerticalAlign={false}
-                      size="md"
+                      size="sm"
                     />
                      
                     <span>
@@ -326,10 +326,10 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] =
                 Object {
                   "title": <React.Fragment>
                     <CheckCircleIcon
-                      className="status-icon"
-                      color="#3e8635"
+                      className="status-icon success"
+                      color="currentColor"
                       noVerticalAlign={false}
-                      size="md"
+                      size="sm"
                     />
                      
                     <span>
@@ -500,7 +500,7 @@ exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
                       className="status-icon"
                       color="currentColor"
                       noVerticalAlign={false}
-                      size="md"
+                      size="sm"
                     />
                      
                     <span>
@@ -534,7 +534,7 @@ exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
                       className="status-icon"
                       color="currentColor"
                       noVerticalAlign={false}
-                      size="md"
+                      size="sm"
                     />
                      
                     <span>

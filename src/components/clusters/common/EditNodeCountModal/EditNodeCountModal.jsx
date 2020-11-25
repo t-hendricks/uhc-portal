@@ -37,12 +37,17 @@ class EditNodeCountModal extends Component {
       machinePoolsList,
       getMachinePools,
       clusterID,
+      organization,
       editNodeCountResponse,
       isOpen,
     } = this.props;
 
     if (!prevProps.isOpen && isOpen && clusterID && !machinePoolsList.pending) {
       getMachinePools(clusterID);
+    }
+
+    if (!prevProps.isOpen && isOpen && clusterID && !organization.pending) {
+      getOrganizationAndQuota();
     }
 
     if (editNodeCountResponse.fulfilled
@@ -106,6 +111,7 @@ class EditNodeCountModal extends Component {
       editNodeCountResponse,
       machineType,
       machinePoolId,
+      pristine,
     } = this.props;
 
     const error = editNodeCountResponse.error ? (
@@ -144,7 +150,7 @@ class EditNodeCountModal extends Component {
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={this.cancelEdit}
-        isPrimaryDisabled={pending}
+        isPrimaryDisabled={pending || pristine}
         isPending={pending}
         isSmall
       >
@@ -217,7 +223,8 @@ EditNodeCountModal.propTypes = {
   clusterID: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
   // For quota purposes, product is subscription.plan.id, not cluster.product.id.
-  product: PropTypes.string.isRequired,
+  product: PropTypes.string,
+  pristine: PropTypes.bool,
 };
 
 EditNodeCountModal.defaultProps = {

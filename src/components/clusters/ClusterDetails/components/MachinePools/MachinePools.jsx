@@ -13,10 +13,9 @@ import {
 import {
   Skeleton,
 } from '@redhat-cloud-services/frontend-components';
-
 import ErrorBox from '../../../../common/ErrorBox';
-
 import AddMachinePoolModal from './components/AddMachinePoolModal';
+import './MachinePools.scss';
 
 
 class MachinePools extends React.Component {
@@ -169,8 +168,8 @@ class MachinePools extends React.Component {
             </CardFooter>
           </Card>
         ) : (
-          <Card>
-            <CardBody>
+          <Card className="ocm-c-machine-pools__card">
+            <CardBody className="ocm-c-machine-pools__card--body">
               { machinePoolsList.error && (
               <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
               )}

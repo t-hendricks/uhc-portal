@@ -19,18 +19,32 @@ const baseProps = {
   product: 'OSD',
 };
 
-const fakeQuota = nodes => ({
+const fakeRhInfraQuota = (nodes, cost = 1) => ({
   nodesQuota: {
     aws: {
       rhInfra: {
         fake: {
           available: nodes,
-          cost: 1,
+          cost,
         },
       },
     },
   },
 });
+
+const fakeByocQuota = (nodes, cost = 1) => ({
+  nodesQuota: {
+    aws: {
+      rhInfra: {
+        fake: {
+          available: nodes,
+          cost,
+        },
+      },
+    },
+  },
+});
+
 
 describe('<NodeCountInput>', () => {
   describe('Single AZ', () => {
@@ -45,7 +59,7 @@ describe('<NodeCountInput>', () => {
       const wrapper = shallow(<NodeCountInput
         {...baseProps}
         machineType="fake"
-        quota={fakeQuota(10)}
+        quota={fakeRhInfraQuota(10)}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
@@ -55,7 +69,7 @@ describe('<NodeCountInput>', () => {
       const wrapper = shallow(<NodeCountInput
         {...baseProps}
         machineType="fake"
-        quota={fakeQuota(10000)}
+        quota={fakeRhInfraQuota(10000)}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
@@ -68,7 +82,7 @@ describe('<NodeCountInput>', () => {
         {...baseProps}
         input={inputProps}
         machineType="fake"
-        quota={fakeQuota(10)}
+        quota={fakeRhInfraQuota(10)}
       />);
       // now let's set a higher value and make sure it works...
       wrapper.setProps({ input: { ...inputProps, value: 10 } }, () => {
@@ -88,14 +102,7 @@ describe('<NodeCountInput>', () => {
           {...baseProps}
           isByoc
           machineType=""
-          quota={{
-            rhinfra: {
-              fake: {
-                available: 1,
-                cost: 4,
-              },
-            },
-          }}
+          quota={fakeRhInfraQuota(1, 4)}
         />);
         expect(wrapper).toMatchSnapshot();
         expect(wrapper.find('FormSelect').props().isDisabled).toBeTruthy();
@@ -108,14 +115,7 @@ describe('<NodeCountInput>', () => {
             isByoc
             machineType="fake"
             isEditingCluster
-            quota={{
-              byoc: {
-                fake: {
-                  available: 2,
-                  cost: 4,
-                },
-              },
-            }}
+            quota={fakeByocQuota(2, 4)}
           />);
           expect(wrapper).toMatchSnapshot();
           expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
@@ -129,14 +129,7 @@ describe('<NodeCountInput>', () => {
             isByoc
             machineType="fake"
             isMachinePool
-            quota={{
-              byoc: {
-                fake: {
-                  available: 2,
-                  cost: 4,
-                },
-              },
-            }}
+            quota={fakeByocQuota(2, 4)}
           />);
           expect(wrapper).toMatchSnapshot();
           expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
@@ -157,7 +150,7 @@ describe('<NodeCountInput>', () => {
         {...baseProps}
         machineType="fake"
         isMultiAz
-        quota={fakeQuota(3)}
+        quota={fakeRhInfraQuota(3)}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
@@ -172,7 +165,7 @@ describe('<NodeCountInput>', () => {
       input={{ ...baseProps.input, onChange }}
       machineType="fake"
       isMultiAz
-      quota={fakeQuota(3)}
+      quota={fakeRhInfraQuota(3)}
     />);
     // now let's set a higher value and make sure it works...
     wrapper.setProps({ input: { ...inputProps, value: 15 } }, () => {

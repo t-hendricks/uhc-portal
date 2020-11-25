@@ -85,6 +85,12 @@ const mapStateToProps = (state, { location }) => {
     notificationContacts,
     supportCases,
     upgradesEnabled: state.features[OSD_UPGRADES_FEATURE],
+    /* TODO(mlibra):
+       Temporarily disable Bare Metal Add Host feature till
+       initially tested by QE and approved for production.
+       assistedInstallerEnabled: state.features[ASSISTED_INSTALLER_FEATURE]
+    */
+    assistedInstallerEnabled: false,
   });
 };
 

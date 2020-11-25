@@ -21,6 +21,7 @@ import intersection from 'lodash/intersection';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { BareMetalHostsClusterDetailTab, canAddBareMetalHost } from 'facet-lib';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
@@ -61,6 +62,10 @@ import AddNotificationContactDialog
 import UpgradeSettingsTab from './components/UpgradeSettings';
 
 class ClusterDetails extends Component {
+  state = {
+    selectedTab: '',
+  };
+
   constructor(props) {
     super(props);
     this.refresh = this.refresh.bind(this);
@@ -77,6 +82,8 @@ class ClusterDetails extends Component {
     this.supportTabRef = React.createRef();
     this.machinePoolsTabRef = React.createRef();
     this.upgradeSettingsTabRef = React.createRef();
+
+    this.addBareMetalTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -333,7 +340,9 @@ class ClusterDetails extends Component {
       initTabOpen,
       supportTabFeature,
       upgradesEnabled,
+      assistedInstallerEnabled,
     } = this.props;
+    const { selectedTab } = this.state;
 
     const { cluster } = clusterDetails;
 
@@ -391,6 +400,9 @@ class ClusterDetails extends Component {
       invalidateClusters();
       this.fetchDetailsAndInsightsData(cluster.id);
     };
+    const onTabSelected = (tabId) => {
+      this.setState({ selectedTab: tabId });
+    };
 
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
@@ -412,6 +424,7 @@ class ClusterDetails extends Component {
     const displaySupportTab = supportTabFeature
       && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING);
     const displayUpgradeSettingsTab = upgradesEnabled && cluster.managed && cluster.canEdit;
+    const displayAddBareMetalHosts = assistedInstallerEnabled && canAddBareMetalHost({ cluster });
 
     return (
       <PageSection id="clusterdetails-content">
@@ -439,6 +452,7 @@ class ClusterDetails extends Component {
             displaySupportTab={displaySupportTab}
             displayMachinePoolsTab={displayMachinePoolsTab}
             displayUpgradeSettingsTab={displayUpgradeSettingsTab}
+            displayAddBareMetalHosts={displayAddBareMetalHosts}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
@@ -448,9 +462,11 @@ class ClusterDetails extends Component {
             supportTabRef={this.supportTabRef}
             machinePoolsTabRef={this.machinePoolsTabRef}
             upgradeSettingsTabRef={this.upgradeSettingsTabRef}
+            addBareMetalTabRef={this.addBareMetalTabRef}
             hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
             initTabOpen={initTabOpen}
             setOpenedTab={setOpenedTab}
+            onTabSelected={onTabSelected}
           />
         </ClusterDetailsTop>
         <TabContent
@@ -574,6 +590,20 @@ class ClusterDetails extends Component {
             <UpgradeSettingsTab />
           </TabContent>
         )}
+        {displayAddBareMetalHosts && (
+        <TabContent
+          eventKey={9}
+          id="addBareMetalHostsContent"
+          ref={this.addBareMetalTabRef}
+          aria-label="Add Bare Metal Hosts"
+          hidden
+        >
+          <BareMetalHostsClusterDetailTab
+            cluster={cluster}
+            isVisible={selectedTab === 'addBareMetalHosts'}
+          />
+        </TabContent>
+        )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditNodeCountModal onClose={onDialogClose} />
         <EditDisplayNameDialog onClose={onDialogClose} />
@@ -678,6 +708,7 @@ ClusterDetails.propTypes = {
   getSupportCases: PropTypes.func.isRequired,
   supportCases: PropTypes.object.isRequired,
   upgradesEnabled: PropTypes.bool,
+  assistedInstallerEnabled: PropTypes.bool,
 };
 
 ClusterDetails.defaultProps = {

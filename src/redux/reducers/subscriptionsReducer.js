@@ -100,32 +100,6 @@ function subscriptionsReducer(state = initialState, action) {
           items: action.payload.data.items,
         };
         break;
-      // GET_QUOTA_SUMMARY
-      case INVALIDATE_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-        draft.quotaSummary = {
-          ...initialState.quotaSummary,
-          valid: false,
-        };
-        break;
-      case REJECTED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-        draft.quotaSummary = {
-          ...initialState.quotaSummary,
-          ...getErrorState(action),
-          valid: true,
-          items: state.quotaSummary.items,
-        };
-        break;
-      case PENDING_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-        draft.quotaSummary.pending = true;
-        break;
-      case FULFILLED_ACTION(subscriptionsConstants.GET_QUOTA_SUMMARY):
-        draft.quotaSummary = {
-          ...initialState.quotaSummary,
-          fulfilled: action.payload.data.items && action.payload.data.items.length > 0,
-          valid: true,
-          items: action.payload.data.items,
-        };
-        break;
       // GET_QUOTA_COST
       case INVALIDATE_ACTION(subscriptionsConstants.GET_QUOTA_COST):
         draft.quotaCost = {

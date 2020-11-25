@@ -9,10 +9,7 @@ import {
   DataListItemCells,
   Title,
 } from '@patternfly/react-core';
-
 import { CheckCircleIcon, ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
-// eslint-disable-next-line camelcase
-import { global_success_color_100, global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 
 function MonitoringListItem({
   title = '', numOfIssues = null, numOfWarnings = null, toggle, expanded, hasData, children,
@@ -24,7 +21,7 @@ function MonitoringListItem({
     if (!hasData) {
       return (
         <>
-          <ExclamationTriangleIcon className="status-icon" color={global_warning_color_100.value} size="md" />
+          <ExclamationTriangleIcon className="status-icon warning" />
           <span>Metrics not available</span>
         </>
       );
@@ -34,7 +31,7 @@ function MonitoringListItem({
     if (numOfIssues > 0) {
       return (
         <>
-          <ExclamationCircleIcon className="status-icon" color={global_danger_color_100.value} size="md" />
+          <ExclamationCircleIcon className="status-icon danger" />
           <span>
             {numOfIssues}
             {' '}
@@ -50,7 +47,7 @@ function MonitoringListItem({
     if (numOfWarnings > 0) {
       return (
         <>
-          <ExclamationTriangleIcon className="status-icon" color={global_warning_color_100.value} size="md" />
+          <ExclamationTriangleIcon className="status-icon warning" />
           <span>
             {numOfWarnings}
             {' '}
@@ -63,7 +60,7 @@ function MonitoringListItem({
     // no issues
     return (
       <>
-        <CheckCircleIcon className="status-icon" color={global_success_color_100.value} size="md" />
+        <CheckCircleIcon className="status-icon success" />
         <span>
           {numOfIssues}
           {' '}
@@ -85,9 +82,9 @@ function MonitoringListItem({
         <DataListItemCells
           dataListCells={[
             <DataListCell key={`title-${id}`}>
-              <Title headingLevel="h4" size="lg" className="monitoring-item-title">{title}</Title>
+              <Title headingLevel="h4" className="item-title">{title}</Title>
             </DataListCell>,
-            <DataListCell key={`summary-${id}`} className="summary">
+            <DataListCell key={`summary-${id}`} className="item-summary">
               {getSummary()}
             </DataListCell>,
           ]}

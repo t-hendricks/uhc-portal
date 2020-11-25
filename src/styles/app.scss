@@ -187,11 +187,6 @@ limitations under the License.
   font-size: var(--pf-global--FontSize--lg);
 }
 
-.monitoring-item-title {
-  font-size: var(--pf-global--FontSize--md);
-  margin-left: -30px;
-}
-
 #cl-details-btns > * {
   margin-left: 10px;
 }
@@ -262,6 +257,7 @@ limitations under the License.
   margin-top: 40px;
 }
 
+.ocm-c-overview-resource-usage__card--body,
 #metrics-charts .pf-c-card__body, .metrics-chart{
   display: flex;
   justify-content: space-evenly;
@@ -420,17 +416,13 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: 5px;
 }
 
-#monitoring .status-icon, #networkSelfService .status-icon {
+#networkSelfService .status-icon {
   margin-right: 5px;
 }
 
 #monitoring-spinner {
   padding-top: 24px;
   margin-left: 16px;
-}
-
-#monitoring .summary {
-  max-width: 185px;
 }
 
 .pf-c-radio.radio-az-disabled {
@@ -459,7 +451,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 };
 
-.ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .aws-ipi-upi-infra-card {
+.ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .ocm-c-ipi-upi-infra-card {
   flex: 0 0 380px;
   margin: 20px;
 }
@@ -507,14 +499,15 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   display: flex;
 }
 
-.aws-ipi-upi-infra-logo {
-  height: 160px;
-  margin: 10px;
-  transform: scale(2);
-}
-
-.aws-ipi-upi-infra-card {
-  align-items: initial;
+.ocm-c-ipi-upi-infra-card {
+  &--body {
+    svg {
+      color: var(--pf-global--primary-color--100);
+      font-size: 6em; // --pf-global--icon--FontSize—xl (x2)
+      height: 160px;
+      margin: 10px;
+    }
+  }
 }
 
 .pf-c-popover__content {
@@ -758,10 +751,6 @@ button:focus {
 
 .access-control-add {
   margin-top: var(--pf-global--spacer--lg);
-}
-
-.support-cases-add {
-  margin-top: var(--pf-global--spacer--md);
 }
 
 .radio-button.pf-c-radio {

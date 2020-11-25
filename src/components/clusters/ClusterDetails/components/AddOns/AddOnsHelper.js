@@ -35,6 +35,10 @@ const isInstalled = (addOn, clusterAddOns) => {
   return clusterAddOns.items.some(clusterAddOn => clusterAddOn.addon.id === addOn.id);
 };
 
+const getInstalled = (addOn, clusterAddOns) => clusterAddOns.items.find(
+  item => item.addon.id === addOn.id,
+);
+
 // An add-on can only be installed if the org has quota for this particular add-on
 const hasQuota = (addOn, cluster, organization, quota) => {
   if (!isAvailable(addOn, cluster, organization, quota)) {
@@ -63,6 +67,7 @@ const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;
 export {
   isAvailable,
   isInstalled,
+  getInstalled,
   hasQuota,
   availableAddOns,
   supportsFreeAddOns,
