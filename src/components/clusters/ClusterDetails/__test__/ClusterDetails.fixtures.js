@@ -41,6 +41,7 @@ const funcs = () => ({
   clearGetMachinePoolsResponse: jest.fn(),
   getNotificationContacts: jest.fn(),
   getSupportCases: jest.fn(),
+  getSchedules: jest.fn(),
 });
 
 const subscriptionInfo = {

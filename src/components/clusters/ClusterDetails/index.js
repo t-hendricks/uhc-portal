@@ -25,6 +25,7 @@ import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import { clusterLogActions, getClusterHistory } from './components/ClusterLogs/clusterLogActions';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
+import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import { viewConstants } from '../../../redux/constants';
 import {
   disableRuleInsights,
@@ -134,6 +135,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   toggleSubscriptionReleased,
   getNotificationContacts: supportActions.getNotificationContacts,
   getSupportCases: supportActions.getSupportCases,
+  getSchedules,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
