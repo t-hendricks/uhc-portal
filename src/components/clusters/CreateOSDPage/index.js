@@ -20,6 +20,8 @@ import {
   awsQuotaSelector,
   gcpQuotaSelector,
 } from '../common/quotaSelectors';
+import canEnableEtcdSelector from './CreateOsdPageSelectors';
+
 import { OSD_UPGRADES_FEATURE } from '../../../redux/constants/featureConstants';
 
 const AWS_DEFAULT_REGION = 'us-east-1';
@@ -67,6 +69,8 @@ const mapStateToProps = (state, ownProps) => {
       gcp: gcpQuotaSelector(state),
     },
 
+    canEnableEtcdEncryption: canEnableEtcdSelector(state),
+
     privateClusterSelected,
     product,
 
@@ -113,6 +117,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         value: formData.node_drain_grace_period,
         unit: 'minutes',
       },
+      etcd_encryption: formData.etcd_encryption,
     };
     if (ownProps.product) {
       clusterRequest.product = {

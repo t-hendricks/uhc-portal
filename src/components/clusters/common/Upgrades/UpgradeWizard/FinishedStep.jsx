@@ -25,10 +25,10 @@ function FinishedStep({
     return <Bullseye><ErrorBox message="Failed to schedule upgrade" response={requestStatus} /></Bullseye>;
   }
   if (requestStatus.pending || !requestStatus.fulfilled) {
-    return <Spinner centered />;
+    return <Spinner className="wizard-step-body" centered />;
   }
   return (
-    <EmptyState variant="large">
+    <EmptyState variant="large" className="wizard-step-body">
       <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
       <Title headingLevel="h4" size="lg">
         Scheduled cluster upgrade

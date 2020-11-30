@@ -22,6 +22,7 @@ describe('<TabsRow />', () => {
       upgradeSettingsTabRef: mockRef,
       addBareMetalTabRef: mockRef,
       hasIssues: false,
+      hasIssuesInsights: false,
       setOpenedTab: jest.fn(),
       onTabSelected: jest.fn(),
     };
@@ -58,6 +59,14 @@ describe('<TabsRow />', () => {
   it('should render monitoring tab with issues icon', () => {
     wrapper.setProps({
       hasIssues: true,
+    }, () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  it('should render insights tab with issues icon', () => {
+    wrapper.setProps({
+      hasIssuesInsights: true,
     }, () => {
       expect(wrapper).toMatchSnapshot();
     });

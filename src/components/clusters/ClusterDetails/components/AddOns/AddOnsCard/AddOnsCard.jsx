@@ -24,6 +24,7 @@ import AddOnsConstants from '../AddOnsConstants';
 import { hasParameters } from '../AddOnsHelper';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
 import clusterStates from '../../../../common/clusterStates';
+import './AddOnsCard.scss';
 
 class AddOnsCard extends Component {
   state = {
@@ -236,8 +237,8 @@ class AddOnsCard extends Component {
   render() {
     const { addOn } = this.props;
     return (
-      <Card key={addOn.id}>
-        <CardHeader className="addon-card-head">
+      <Card key={addOn.id} className="ocm-c-addons__card">
+        <CardHeader className="ocm-c-addons__card--header">
           { addOn.icon && (
             <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />
           )}
@@ -248,17 +249,17 @@ class AddOnsCard extends Component {
         <CardTitle>
           { addOn.name }
         </CardTitle>
-        <CardBody isFilled={false}>
+        <CardBody isFilled={false} className="ocm-c-addons__card--body">
           { this.getInstallState() }
         </CardBody>
-        <CardBody>
+        <CardBody className="ocm-c-addons__card--body">
           { addOn.description }
           { ' ' }
           { addOn.docs_link && (
             <a href={addOn.docs_link} rel="noreferrer noopener" target="_blank">View documentation</a>
           )}
         </CardBody>
-        <CardFooter>
+        <CardFooter className="ocm-c-addons__card--footer">
           { this.getPrimaryAction(addOn) }
         </CardFooter>
       </Card>

@@ -55,7 +55,7 @@ class UpgradeSettingsTab extends React.Component {
     const { confirmationModalOpen } = this.state;
 
     const isDisabled = !schedules.fulfilled
-                      || schedules.pending || upgradeScheduleRequest.pending || versionInfo.pending;
+                      || upgradeScheduleRequest.pending || versionInfo.pending;
 
     const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual');
     const actionsDisabled = isDisabled || pristine;

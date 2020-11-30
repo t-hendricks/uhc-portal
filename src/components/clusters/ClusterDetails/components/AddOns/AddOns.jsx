@@ -99,7 +99,7 @@ class AddOns extends React.Component {
     }
 
     return (
-      <div className="cluster-details-addons-tab-contents">
+      <div>
         { addClusterAddOnResponse.error && (
           <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
         )}

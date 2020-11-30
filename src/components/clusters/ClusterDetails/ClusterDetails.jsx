@@ -197,6 +197,7 @@ class ClusterDetails extends Component {
       getClusterRouters,
       organization,
       getMachinePools,
+      getSchedules,
     } = this.props;
     const clusterID = match.params.id;
     if (isValid(clusterID)) {
@@ -226,6 +227,7 @@ class ClusterDetails extends Component {
           getClusterAddOns(clusterID);
           this.refreshIDP();
           getMachinePools(clusterID);
+          getSchedules(clusterID);
         }
         // don't fetch grants if cloud provider is known to be gcp
         if (get(clusterDetails, 'cluster.cloud_provider.id') !== 'gcp') {
@@ -335,6 +337,7 @@ class ClusterDetails extends Component {
       canTransferClusterOwnership,
       anyModalOpen,
       hasIssues,
+      hasIssuesInsights,
       toggleSubscriptionReleased,
       setOpenedTab,
       initTabOpen,
@@ -464,6 +467,7 @@ class ClusterDetails extends Component {
             upgradeSettingsTabRef={this.upgradeSettingsTabRef}
             addBareMetalTabRef={this.addBareMetalTabRef}
             hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
+            hasIssuesInsights={hasIssuesInsights}
             initTabOpen={initTabOpen}
             setOpenedTab={setOpenedTab}
             onTabSelected={onTabSelected}
@@ -571,14 +575,14 @@ class ClusterDetails extends Component {
           </TabContent>
         }
         {displayMachinePoolsTab && (
-        <TabContent
-          eventKey={6}
-          id="machinePoolsContent"
-          ref={this.machinePoolsTabRef}
-          aria-label="Machine pools"
-        >
-          <MachinePools cluster={cluster} />
-        </TabContent>
+          <TabContent
+            eventKey={6}
+            id="machinePoolsContent"
+            ref={this.machinePoolsTabRef}
+            aria-label="Machine pools"
+          >
+            <MachinePools cluster={cluster} />
+          </TabContent>
         )}
         {displayUpgradeSettingsTab && (
           <TabContent
@@ -591,18 +595,18 @@ class ClusterDetails extends Component {
           </TabContent>
         )}
         {displayAddBareMetalHosts && (
-        <TabContent
-          eventKey={9}
-          id="addBareMetalHostsContent"
-          ref={this.addBareMetalTabRef}
-          aria-label="Add Bare Metal Hosts"
-          hidden
-        >
-          <BareMetalHostsClusterDetailTab
-            cluster={cluster}
-            isVisible={selectedTab === 'addBareMetalHosts'}
-          />
-        </TabContent>
+          <TabContent
+            eventKey={9}
+            id="addBareMetalHostsContent"
+            ref={this.addBareMetalTabRef}
+            aria-label="Add Bare Metal Hosts"
+            hidden
+          >
+            <BareMetalHostsClusterDetailTab
+              cluster={cluster}
+              isVisible={selectedTab === 'addBareMetalHosts'}
+            />
+          </TabContent>
         )}
         <ScaleClusterDialog onClose={onDialogClose} />
         <EditNodeCountModal onClose={onDialogClose} />
@@ -700,6 +704,7 @@ ClusterDetails.propTypes = {
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
+  hasIssuesInsights: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   initTabOpen: PropTypes.string.isRequired,
   supportTabFeature: PropTypes.bool.isRequired,
@@ -709,6 +714,7 @@ ClusterDetails.propTypes = {
   supportCases: PropTypes.object.isRequired,
   upgradesEnabled: PropTypes.bool,
   assistedInstallerEnabled: PropTypes.bool,
+  getSchedules: PropTypes.func,
 };
 
 ClusterDetails.defaultProps = {
