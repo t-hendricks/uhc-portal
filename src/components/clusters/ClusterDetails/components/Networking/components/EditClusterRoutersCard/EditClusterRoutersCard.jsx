@@ -38,6 +38,7 @@ class EditClusterRoutersCard extends React.Component {
       defaultRouterAddress,
       additionalRouterAddress,
       canEdit,
+      provider,
     } = this.props;
 
     const changeSettingsBtn = (
@@ -164,6 +165,7 @@ class EditClusterRoutersCard extends React.Component {
               <ChangePrivacySettingsDialog
                 onConfirm={handleSubmit}
                 refreshCluster={refreshCluster}
+                provider={provider}
               />
             </Form>
           </CardBody>
@@ -193,6 +195,7 @@ EditClusterRoutersCard.propTypes = {
   defaultRouterAddress: PropTypes.string.isRequired,
   additionalRouterAddress: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  provider: PropTypes.string,
 };
 
 export default EditClusterRoutersCard;

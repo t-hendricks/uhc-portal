@@ -30,8 +30,18 @@ class ChangePrivacySettingsDialog extends React.Component {
       shouldShowAlert,
       onConfirm,
       editClusterRoutersResponse,
+      provider,
     } = this.props;
-    const text = "Changing the cluster's privacy settings may cause you to lose access to the cluster. Changes may be required in AWS to maintain access. It may take up to one hour for the settings to become effective.";
+    let cloudProvider;
+    if (provider === 'gcp') {
+      cloudProvider = 'GCP';
+    } else if (provider === 'aws') {
+      cloudProvider = 'AWS';
+    } else {
+      cloudProvider = 'cloud provider';
+    }
+    const text = `Changing the cluster's privacy settings may cause you to lose access to the cluster. Changes may be required in ${cloudProvider} to maintain access. 
+                  It may take up to one hour for the settings to become effective.`;
     const learnMore = (
       <a
         href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-aws-private-cluster.html"
@@ -97,6 +107,7 @@ ChangePrivacySettingsDialog.propTypes = {
     pending: PropTypes.bool,
   }).isRequired,
   refreshCluster: PropTypes.func.isRequired,
+  provider: PropTypes.string,
 };
 
 export default ChangePrivacySettingsDialog;

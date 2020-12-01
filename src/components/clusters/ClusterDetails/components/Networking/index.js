@@ -7,9 +7,10 @@ const mapStateToProps = (state) => {
   const { clusterRouters } = state;
   const { cluster } = state.clusters.details;
   const network = cluster.network || {};
-
+  const provider = get(cluster, 'cloud_provider.id', 'N/A');
   return ({
     network,
+    provider,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
   });
 };
