@@ -7,8 +7,9 @@ export const appendQueryParameter = (url, parameter, value) => {
   const u = new URL(url);
   const params = new URLSearchParams(u.search);
   params.set(parameter, value);
+  u.search = params.toString();
 
-  return `${u.href}?${params}`;
+  return u.href;
 };
 
 // for statistics purposes (CCXDEV-3552)

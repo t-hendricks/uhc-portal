@@ -195,6 +195,46 @@ const clusterDetails = {
   },
 };
 
+const insightsData = {
+  meta: {
+    count: 1,
+    last_checked_at: '2020-01-23T16:15:59.478901889Z',
+  },
+  data: [
+    {
+      rule_id: 'ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report',
+      description: 'Some rule description',
+      details: 'Minimum resource requirements...\n\n[Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=qwerty#minimum-resource-requirements_installing-bare-metal). Anything else here... [Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=42), not doc link: https://access.redhat.com/test',
+      reason: '',
+      resolution: '',
+      created_at: '2020-02-03T08:25:00Z',
+      total_risk: 3,
+      risk_of_change: 0,
+      user_vote: 0,
+      extra_data: {
+        error_key: 'NODES_MINIMUM_REQUIREMENTS_NOT_MET',
+        link: '',
+        nodes: [
+          {
+            memory: 15.95,
+            memory_req: 16,
+            name: 'ip-10-0-131-206.eu-west-2.compute.internal',
+            role: 'master',
+          },
+          {
+            memory: 15.95,
+            memory_req: 16,
+            name: 'ip-10-0-175-135.eu-west-2.compute.internal',
+            role: 'master',
+          },
+        ],
+        type: 'rule',
+      },
+      tags: ['tag1'],
+    },
+  ],
+};
+
 const clusterDetailsNotManaged = {
   error: false,
   errorMessage: '',
@@ -537,6 +577,7 @@ const clusterRouters = {
 const fixtures = {
   match,
   clusterDetails,
+  insightsData,
   clusterDetailsNotManaged,
   cloudProviders,
   clusterIdentityProviders,
