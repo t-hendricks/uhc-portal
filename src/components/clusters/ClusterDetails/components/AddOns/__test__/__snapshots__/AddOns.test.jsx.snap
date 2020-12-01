@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<AddOns /> should render 1`] = `
-<div
-  className="cluster-details-addons-tab-contents"
->
+<div>
   <Gallery
     hasGutter={true}
   >
@@ -167,5 +165,6 @@ exports[`<AddOns /> should render 1`] = `
   <Connect(ReduxForm)
     clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
   />
+  <Connect(AddOnsDeleteModal) />
 </div>
 `;

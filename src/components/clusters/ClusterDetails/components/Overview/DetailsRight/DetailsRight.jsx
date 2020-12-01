@@ -51,7 +51,7 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
             </DescriptionListDescription>
           ) : (
             <DescriptionListDescription style={cluster.state.style}>
-              <ClusterStateIcon clusterState={cluster.state.state} />
+              <ClusterStateIcon clusterState={cluster.state.state} animated />
               {' '}
               {cluster.state.description}
             </DescriptionListDescription>
@@ -132,19 +132,19 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
                       ? `${masterActualNodes}/${masterDesiredNodes}`
                       : 'N/A'}
                   </DescriptionListDescription>
-                  {showInfraNodes && (    
-                  <>   
-                    <DescriptionListTerm>
-                      Infra:
-                      {' '}
-                    </DescriptionListTerm>
+                  {showInfraNodes && (
+                    <>
+                      <DescriptionListTerm>
+                        Infra:
+                        {' '}
+                      </DescriptionListTerm>
 
-                    <DescriptionListDescription>
-                      { infraActualNodes !== '-' || infraDesiredNodes !== '-'
-                        ? `${infraActualNodes}/${infraDesiredNodes}`
-                        : 'N/A'}
-                    </DescriptionListDescription>
-                  </>
+                      <DescriptionListDescription>
+                        { infraActualNodes !== '-' || infraDesiredNodes !== '-'
+                          ? `${infraActualNodes}/${infraDesiredNodes}`
+                          : 'N/A'}
+                      </DescriptionListDescription>
+                    </>
                   )}
                   <DescriptionListTerm>
                     Compute:
@@ -176,8 +176,8 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
                     <DescriptionListDescription>
                       {get(cluster, 'metrics.nodes.master', 'N/A')}
                     </DescriptionListDescription>
-                    {showInfraNodes && (    
-                      <>   
+                    {showInfraNodes && (
+                      <>
                         <DescriptionListTerm>
                           Infra:
                           {' '}

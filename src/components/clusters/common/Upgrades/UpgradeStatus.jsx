@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Button, EmptyState, EmptyStateBody, EmptyStateVariant, Title,
 } from '@patternfly/react-core';
-import { OutlinedArrowAltCircleUpIcon, CheckCircleIcon } from '@patternfly/react-icons';
+import { OutlinedArrowAltCircleUpIcon, CheckCircleIcon, InProgressIcon } from '@patternfly/react-icons';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import './UpgradeStatus.scss';
 import UpdateGraph from './UpdateGraph/UpdateGraph';
@@ -21,6 +21,37 @@ function UpgradeStatus({
   const latestAvailable = hasAvailableUpgrades
     ? availableUpgrades[availableUpgrades.length - 1] : undefined;
   const isManualUpgradeScheduled = scheduledUpgrade && scheduledUpgrade.schedule_type === 'manual';
+  const upgradeState = scheduledUpgrade && scheduledUpgrade.state?.value;
+  const canCancel = isManualUpgradeScheduled
+                    && canEdit
+                    && upgradeState !== 'started'
+                    && upgradeState !== 'delayed';
+
+  const upgradeStateIcon = () => {
+    let icon;
+    let text;
+    if (upgradeState === 'started' || upgradeState === 'delayed') {
+      icon = <InProgressIcon />;
+      if (upgradeState === 'delayed') {
+        text = 'Update in progress (delayed)';
+      } else {
+        text = 'Update in progress';
+      }
+    } else if (hasAvailableUpgrades) {
+      icon = <OutlinedArrowAltCircleUpIcon className="ocm-upgrade-available-icon" />;
+      text = 'Update available';
+    } else {
+      icon = <CheckCircleIcon className="ocm-cluster-up-to-date-icon" />;
+      text = 'Up to date';
+    }
+    return (
+      <>
+        {icon}
+        {' '}
+        {text}
+      </>
+    );
+  };
 
   if (!clusterVersion) {
     return (
@@ -38,37 +69,22 @@ function UpgradeStatus({
   return (
     <>
       <div>
-        {hasAvailableUpgrades > 0 ? (
-          <>
-            <OutlinedArrowAltCircleUpIcon className="ocm-upgrade-available-icon" />
-            {' '}
-            Upgrade available
-          </>
-        ) : (
-          <>
-            <CheckCircleIcon className="ocm-cluster-up-to-date-icon" />
-            {' '}
-            Up to date
-          </>
-        )}
+        {upgradeStateIcon()}
         <UpdateGraph
           currentVersion={clusterVersion}
           updateVersion={isManualUpgradeScheduled ? scheduledUpgrade.version : latestAvailable}
           hasMore={!isManualUpgradeScheduled && availableUpgrades.length > 1}
         />
 
-        {scheduledUpgrade && (
+        {scheduledUpgrade && upgradeState !== 'started' && (
           <>
             <div className="ocm-upgrade-status-scheduled-title">Upgrade scheduled</div>
             <DateFormat type="exact" date={Date.parse(scheduledUpgrade.next_run)} />
-            {' '}
-            {scheduledUpgrade.state?.value === 'started' ? '(Started)' : ''}
-            {scheduledUpgrade.state?.value === 'delayed' ? '(Delayed)' : ''}
           </>
         )}
       </div>
       {
-    canEdit && scheduledUpgrade && scheduledUpgrade.schedule_type === 'manual' && (
+    canCancel && (
       <Button
         id="ocm-upgrade-status-cancel"
         variant="link"

@@ -27,6 +27,7 @@ const constants = {
   bypassSCPChecksHint: `Some AWS Service Control Policies will cause installation to fail even if
     the credentials have the correct permissions. Disabling SCP checks allows installation to proceed.
     The SCP will still be enforced even if the checks are bypassed.`,
+  enableEtcdHint: 'When you enable etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.',
 };
 
 const billingModelConstants = {

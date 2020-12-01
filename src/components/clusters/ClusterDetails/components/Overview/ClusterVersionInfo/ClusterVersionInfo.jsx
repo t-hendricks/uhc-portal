@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import {
   Button,
-  DescriptionList,
   DescriptionListTerm,
   DescriptionListGroup,
   DescriptionListDescription,
@@ -100,6 +99,7 @@ class ClusterVersionInfo extends React.Component {
                       clusterVersion={cluster.openshift_version}
                       scheduledUpgrade={scheduledUpdate}
                       openModal={openModal}
+                      availableUpgrades={versionInfo.availableUpgrades}
                       onCancelClick={() => this.setState({ popoverOpen: false })}
                     />
                   )}
@@ -111,7 +111,7 @@ class ClusterVersionInfo extends React.Component {
                   </Button>
                 </Popover>
               </DescriptionListDescription>
-              </DescriptionListGroup>
+            </DescriptionListGroup>
           </div>
         )}
         { !cluster.managed && !isUpgrading && (
@@ -128,7 +128,7 @@ class ClusterVersionInfo extends React.Component {
         { channel && (
         <div>
           <DescriptionListGroup>
-            <DescriptionListGroup>>Upgrade channel: </DescriptionListGroup>
+            <DescriptionListGroup>Upgrade channel: </DescriptionListGroup>
             <DescriptionListDescription>{channel}</DescriptionListDescription>
           </DescriptionListGroup>
         </div>

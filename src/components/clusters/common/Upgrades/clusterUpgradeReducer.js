@@ -28,6 +28,7 @@ import {
   CLEAR_DELETE_UPGRADE_SCHEDULE,
   CLEAR_POST_UPGRADE_SCHEDULE,
 } from './clusterUpgradeActions';
+import { versionComparator } from './clusterUpgardeHelpers';
 
 const initialState = {
   versionInfo: {
@@ -63,13 +64,17 @@ function UpgradesRecuder(state = initialState, action) {
           // remove channel group from version, to match the version number format in Telemetry
           version = version.replace(`-${channelGroup}`, '');
         }
+        // eslint-disable-next-line camelcase
+        let availableUpgrades = action.payload.data?.available_upgrades;
+        if (availableUpgrades) {
+          availableUpgrades = availableUpgrades.sort(versionComparator);
+        }
         draft.versionInfo = {
           ...initialState.versionInfo,
           fulfilled: true,
           version,
           channelGroup,
-          // eslint-disable-next-line camelcase
-          availableUpgrades: action.payload.data?.available_upgrades || [],
+          availableUpgrades: availableUpgrades || [],
         };
         break;
       }

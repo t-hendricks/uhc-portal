@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { GridItem, Title, Divider } from '@patternfly/react-core';
+import {
+  GridItem, Title, Divider, FormGroup,
+} from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import get from 'lodash/get';
 
@@ -10,10 +12,15 @@ import BasicFieldsSection from './FormSections/BasicFieldsSection';
 import AWSAccountDetailsSection from './FormSections/AWSAccountDetailsSection';
 import NetworkingSection from './FormSections/NetworkingSection';
 import ScaleSection from './FormSections/ScaleSection/ScaleSection';
-import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
+import { constants } from './CreateOSDFormConstants';
+
 import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
-import { required, validateGCPServiceAccount } from '../../../../common/validators';
 import { subscriptionPlans } from '../../../../common/subscriptionTypes';
+import { required, validateGCPServiceAccount } from '../../../../common/validators';
+
+import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
+import ReduxCheckbox from '../../../common/ReduxFormComponents/ReduxCheckbox';
+import ExternalLink from '../../../common/ExternalLink';
 
 import './CreateOSDForm.scss';
 
@@ -102,6 +109,7 @@ class CreateOSDForm extends React.Component {
       product,
       upgradesEnabled,
       isAutomaticUpgrade,
+      canEnableEtcdEncryption,
     } = this.props;
 
     const {
@@ -122,7 +130,6 @@ class CreateOSDForm extends React.Component {
     return (
       <>
         {/* Billing Model */}
-
         <GridItem span={12}>
           <h3 className="osd-page-header">Billing model</h3>
         </GridItem>
@@ -184,6 +191,7 @@ class CreateOSDForm extends React.Component {
                   disabled={pending}
                   isRequired
                   label="Service account JSON"
+                  helpText="Upload a JSON file or type to add"
                 />
               </GridItem>
             </>
@@ -224,7 +232,7 @@ class CreateOSDForm extends React.Component {
           cloudProviderID={cloudProviderID}
           product={subscriptionPlans.OSD}
         />
-
+        {/* Networking section */}
         <NetworkingSection
           mode={mode}
           toggleNetwork={this.toggleNetwork}
@@ -233,6 +241,32 @@ class CreateOSDForm extends React.Component {
           cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}
         />
+        {/* Encryption */}
+        {canEnableEtcdEncryption && (
+          <>
+            <GridItem span={4}>
+              <Title headingLevel="h4" size="xl">Encryption</Title>
+            </GridItem>
+            <FormGroup
+              fieldId="etcd_encryption"
+              id="etcdEncryption"
+            >
+              <Field
+                component={ReduxCheckbox}
+                name="etcd_encryption"
+                label="Enable etcd encryption"
+                extendedHelpText={(
+                  <>
+                    {constants.enableEtcdHint}
+                    {' '}
+                    <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
+                  </>
+              )}
+              />
+              <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
+            </FormGroup>
+          </>
+        )}
         { upgradesEnabled
         && (
           <>
@@ -291,6 +325,7 @@ CreateOSDForm.propTypes = {
   product: PropTypes.string.isRequired,
   upgradesEnabled: PropTypes.bool,
   isAutomaticUpgrade: PropTypes.bool,
+  canEnableEtcdEncryption: PropTypes.bool,
 };
 
 export default CreateOSDForm;

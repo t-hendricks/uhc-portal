@@ -33,6 +33,45 @@
   }
 }
 
-.cluster-upgrade-version-selection-grid {
-  margin-top: var(--pf-global--gutter--md);
+.ocm-upgrade-wizard {
+   .pf-c-wizard__main-body {
+    padding: 0;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+  }
+
+  .version-selection-grid {
+    padding: 24px;
+  }
+
+  .wizard-step-body {
+    padding: 24px;
+  }
+
+  .wizard-step-title {
+    padding: 24px 24px 0 24px;
+  }
+
+  #version-grid-wrapper {
+    height: 100%;
+    background-color: var(--pf-global--BackgroundColor--200);
+  }
+
+  .version-select-step-title {
+    padding: 24px;
+    background-color: #ffffff;
+  }
+
+  .card-footer-button {
+    padding-left: 0px !important;
+  }
+
+  .version-card {
+    height: 100%;
+    
+    .pf-c-label__content {
+      font-weight: 400;
+    }
+  }
 }

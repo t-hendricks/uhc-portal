@@ -83,12 +83,12 @@ function DetailsLeft({ cluster, cloudProviders }) {
               </DescriptionListGroup>
             </>
           )}
-       
+
         <DescriptionListGroup>
           <DescriptionListTerm>Version</DescriptionListTerm>
-            <DescriptionList isHorizontal className="ocm-c-description-list-secondary">
-              <ClusterVersionInfo cluster={cluster} />
-            </DescriptionList>
+          <DescriptionList isHorizontal className="ocm-c-description-list-secondary">
+            <ClusterVersionInfo cluster={cluster} />
+          </DescriptionList>
         </DescriptionListGroup>
 
         <DescriptionListGroup>

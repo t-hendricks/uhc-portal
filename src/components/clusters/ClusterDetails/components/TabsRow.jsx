@@ -60,6 +60,7 @@ class TabsRow extends React.Component {
       upgradeSettingsTabRef,
       addBareMetalTabRef,
       hasIssues,
+      hasIssuesInsights,
     } = this.props;
     return [
       {
@@ -109,7 +110,12 @@ class TabsRow extends React.Component {
       },
       {
         key: 5,
-        title: 'Insights',
+        title:
+  <>
+    <TabTitleText>Insights</TabTitleText>
+    {hasIssuesInsights
+    && <TabTitleIcon id="insights-issues-icon"><ExclamationCircleIcon className="danger" /></TabTitleIcon>}
+  </>,
         contentId: 'insightsTabContent',
         id: 'insights',
         show: displayInsightsTab,
@@ -218,6 +224,7 @@ TabsRow.propTypes = {
   upgradeSettingsTabRef: PropTypes.object.isRequired,
   addBareMetalTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
+  hasIssuesInsights: PropTypes.bool.isRequired,
   initTabOpen: PropTypes.string,
   setOpenedTab: PropTypes.func.isRequired,
   onTabSelected: PropTypes.func.isRequired,

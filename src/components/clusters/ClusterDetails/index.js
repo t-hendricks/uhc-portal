@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import get from 'lodash/get';
 
 import { push } from 'connected-react-router';
 
@@ -24,6 +25,7 @@ import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import { clusterLogActions, getClusterHistory } from './components/ClusterLogs/clusterLogActions';
 import { getClusterRouters } from './components/Networking/NetworkingActions';
+import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import { viewConstants } from '../../../redux/constants';
 import {
   disableRuleInsights,
@@ -38,6 +40,7 @@ import canSubscribeOCPSelector
   from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
+import issuesCountSelector from './components/Insights/InsightsSelectors';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import getBaseName from '../../../common/getBaseName';
 import { SUPPORT_TAB_FEATURE, OSD_UPGRADES_FEATURE, ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
@@ -63,6 +66,8 @@ const mapStateToProps = (state, { location }) => {
       pending: false,
     },
   } = state.clusterSupport;
+  const clusterId = get(details, 'cluster.external_id');
+  const insightsIssuesCount = issuesCountSelector(state, clusterId);
 
   return ({
     cloudProviders,
@@ -80,6 +85,8 @@ const mapStateToProps = (state, { location }) => {
     canTransferClusterOwnership: canTransferClusterOwnershipSelector(state),
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
+    // check whether there are Critical (4) or Important (3) issues
+    hasIssuesInsights: insightsIssuesCount[4] || insightsIssuesCount[3],
     initTabOpen: location.hash.replace('#', ''),
     supportTabFeature,
     notificationContacts,
@@ -123,6 +130,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   toggleSubscriptionReleased,
   getNotificationContacts: supportActions.getNotificationContacts,
   getSupportCases: supportActions.getSupportCases,
+  getSchedules,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

@@ -64,7 +64,7 @@ function ClusterListTable(props) {
     );
 
     const clusterState = getClusterStateAndDescription(cluster);
-    const icon = <ClusterStateIcon clusterState={clusterState.state || ''} />;
+    const icon = <ClusterStateIcon clusterState={clusterState.state || ''} animated={false} />;
     const clusterStatus = (state) => {
       if (state === clusterStates.ERROR) {
         return (
