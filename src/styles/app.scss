@@ -146,28 +146,6 @@ limitations under the License.
   }
 }
 
-.networking-tab {
-  margin-bottom: 15px;
-  dt {
-    font-weight: bold;
-    font-size: 14px;
-  }
-  dd {
-    margin-bottom: 24px;
-    font-size: 16px;
-  }
-}
-
-#networking-tab-last {
-  margin-bottom: 0px;
-}
-
-#edit-cluster-routers {
-  @media (min-width: 992px) {
-    margin-right: 24px;
-  }
-}
-
 .radio-tooltip {
   left: -70px
 }

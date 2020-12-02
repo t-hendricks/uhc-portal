@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import {
   Button,
-  DescriptionListTerm,
-  DescriptionListGroup,
-  DescriptionListDescription,
+  Flex,
   Popover,
 } from '@patternfly/react-core';
 
@@ -67,72 +65,72 @@ class ClusterVersionInfo extends React.Component {
 
     return (
       <div>
-        <DescriptionListGroup>
-          <DescriptionListTerm>
-            OpenShift:
-            {' '}
-          </DescriptionListTerm>
-          <DescriptionListDescription>
-            {clusterVersion}
-            <ClusterUpdateLink
-              cluster={cluster}
-              openModal={openModal}
-              osdUpgradeAvailable={hasUpgrades && !scheduledUpdate && schedules.fulfilled}
-            />
-          </DescriptionListDescription>
-        </DescriptionListGroup>
-
-        { scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (
+        <dl className="pf-l-stack">
+          <Flex>
+            <dt>
+              OpenShift:
+              {' '}
+            </dt>
+            <dd>
+              {clusterVersion}
+              <ClusterUpdateLink
+                cluster={cluster}
+                openModal={openModal}
+                osdUpgradeAvailable={hasUpgrades && !scheduledUpdate && schedules.fulfilled}
+              />
+            </dd>
+          </Flex>
+          { scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (
+            <div>
+              <Flex>
+                <dt>Upgrade scheduled: </dt>
+                <dd>
+                  <Popover
+                    headerContent="Update status"
+                    isVisible={popoverOpen}
+                    shouldOpen={() => this.setState({ popoverOpen: true })}
+                    shouldClose={() => this.setState({ popoverOpen: false })}
+                    bodyContent={(
+                      <UpgradeStatus
+                        clusterID={cluster.id}
+                        canEdit={cluster.canEdit}
+                        clusterVersion={cluster.openshift_version}
+                        scheduledUpgrade={scheduledUpdate}
+                        openModal={openModal}
+                        availableUpgrades={versionInfo.availableUpgrades}
+                        onCancelClick={() => this.setState({ popoverOpen: false })}
+                      />
+                    )}
+                  >
+                    <Button variant="link">
+                    View details
+                      {' '}
+                      <OutlinedQuestionCircleIcon />
+                    </Button>
+                  </Popover>
+                </dd>
+              </Flex>
+            </div>
+          )}
+          { !cluster.managed && !isUpgrading && (
           <div>
-            <DescriptionListGroup>
-              <DescriptionListTerm>Upgrade scheduled: </DescriptionListTerm>
-              <DescriptionListDescription>
-                <Popover
-                  headerContent="Update status"
-                  isVisible={popoverOpen}
-                  shouldOpen={() => this.setState({ popoverOpen: true })}
-                  shouldClose={() => this.setState({ popoverOpen: false })}
-                  bodyContent={(
-                    <UpgradeStatus
-                      clusterID={cluster.id}
-                      canEdit={cluster.canEdit}
-                      clusterVersion={cluster.openshift_version}
-                      scheduledUpgrade={scheduledUpdate}
-                      openModal={openModal}
-                      availableUpgrades={versionInfo.availableUpgrades}
-                      onCancelClick={() => this.setState({ popoverOpen: false })}
-                    />
-                  )}
-                >
-                  <Button variant="link">
-                  View details
-                    {' '}
-                    <OutlinedQuestionCircleIcon />
-                  </Button>
-                </Popover>
-              </DescriptionListDescription>
-            </DescriptionListGroup>
+            <Flex>
+              <dt>Life cycle state: </dt>
+              <dd>
+                <SupportStatusLabel clusterVersion={clusterVersion} />
+              </dd>
+            </Flex>
           </div>
-        )}
-        { !cluster.managed && !isUpgrading && (
-        <div>
-          <DescriptionListGroup>
-            <DescriptionListTerm>Life cycle state: </DescriptionListTerm>
-            <DescriptionListDescription>
-              <SupportStatusLabel clusterVersion={clusterVersion} />
-            </DescriptionListDescription>
-          </DescriptionListGroup>
-
-        </div>
-        )}
-        { channel && (
-        <div>
-          <DescriptionListGroup>
-            <DescriptionListGroup>Upgrade channel: </DescriptionListGroup>
-            <DescriptionListDescription>{channel}</DescriptionListDescription>
-          </DescriptionListGroup>
-        </div>
-        )}
+          )}
+          { channel && (
+          <div>
+            <Flex>
+              <dt>Upgrade channel: </dt>
+              <dd>{channel}</dd>
+            </Flex>
+          </div>
+          )}
+        </dl>
       </div>
     );
   }

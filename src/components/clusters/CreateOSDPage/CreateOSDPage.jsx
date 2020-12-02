@@ -133,6 +133,8 @@ class CreateOSDPage extends React.Component {
       upgradesEnabled,
       isAutomaticUpgrade,
       canEnableEtcdEncryption,
+      selectedRegion,
+      installToVPCSelected,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -268,6 +270,8 @@ class CreateOSDPage extends React.Component {
                     upgradesEnabled={upgradesEnabled}
                     isAutomaticUpgrade={isAutomaticUpgrade}
                     canEnableEtcdEncryption={canEnableEtcdEncryption}
+                    selectedRegion={selectedRegion}
+                    installToVPCSelected={installToVPCSelected}
                   />
                   {/* Form footer */}
                   <GridItem>
@@ -353,6 +357,8 @@ CreateOSDPage.propTypes = {
   upgradesEnabled: PropTypes.bool,
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
+  selectedRegion: PropTypes.string,
+  installToVPCSelected: PropTypes.bool,
 };
 
 export default CreateOSDPage;

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-
 import {
   DescriptionList,
   DescriptionListTerm,
   DescriptionListGroup,
   DescriptionListDescription,
+  Flex,
 } from '@patternfly/react-core';
 
 import ClusterStateIcon from '../../../../common/ClusterStateIcon/ClusterStateIcon';
@@ -91,7 +91,6 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
         </DescriptionListGroup>
         { cluster.managed && !cluster.byoc && (
           <>
-
             <DescriptionListGroup>
               <DescriptionListTerm>
                 Load balancers
@@ -100,7 +99,6 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
                 {cluster.load_balancer_quota}
               </DescriptionListDescription>
             </DescriptionListGroup>
-
             <DescriptionListGroup>
               <DescriptionListTerm>
                 Persistent storage
@@ -111,7 +109,6 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
                 {humanizedPersistentStorage.unit}
               </DescriptionListDescription>
             </DescriptionListGroup>
-
           </>
         )}
         {showDesiredNodes ? (
@@ -121,43 +118,47 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
                 Nodes
                 <span className="font-weight-normal"> (actual/desired)</span>
               </DescriptionListTerm>
-              <DescriptionList isHorizontal className="ocm-c-description-list-secondary">
-                <DescriptionListGroup>
-                  <DescriptionListTerm>
-                    Master:
-                    {' '}
-                  </DescriptionListTerm>
-                  <DescriptionListDescription>
-                    { masterActualNodes !== '-' || masterDesiredNodes !== '-'
-                      ? `${masterActualNodes}/${masterDesiredNodes}`
-                      : 'N/A'}
-                  </DescriptionListDescription>
+              <DescriptionListDescription>
+                <dl className="pf-l-stack">
+                  <Flex>
+                    <dt>
+                      Master:
+                      {' '}
+                    </dt>
+                    <dd>
+                      { masterActualNodes !== '-' || masterDesiredNodes !== '-'
+                        ? `${masterActualNodes}/${masterDesiredNodes}`
+                        : 'N/A'}
+                    </dd>
+                  </Flex>
                   {showInfraNodes && (
                     <>
-                      <DescriptionListTerm>
-                        Infra:
-                        {' '}
-                      </DescriptionListTerm>
-
-                      <DescriptionListDescription>
-                        { infraActualNodes !== '-' || infraDesiredNodes !== '-'
-                          ? `${infraActualNodes}/${infraDesiredNodes}`
-                          : 'N/A'}
-                      </DescriptionListDescription>
+                      <Flex>
+                        <dt>
+                          Infra:
+                          {' '}
+                        </dt>
+                        <dd>
+                          { infraActualNodes !== '-' || infraDesiredNodes !== '-'
+                            ? `${infraActualNodes}/${infraDesiredNodes}`
+                            : 'N/A'}
+                        </dd>
+                      </Flex>
                     </>
                   )}
-                  <DescriptionListTerm>
-                    Compute:
-                    {' '}
-                  </DescriptionListTerm>
-
-                  <DescriptionListDescription>
-                    { computeActualNodes !== '-' || computeDesiredNodes !== '-'
-                      ? `${computeActualNodes}/${computeDesiredNodes}`
-                      : 'N/A'}
-                  </DescriptionListDescription>
-                </DescriptionListGroup>
-              </DescriptionList>
+                  <Flex>
+                    <dt>
+                      Compute:
+                      {' '}
+                    </dt>
+                    <dd>
+                      { computeActualNodes !== '-' || computeDesiredNodes !== '-'
+                        ? `${computeActualNodes}/${computeDesiredNodes}`
+                        : 'N/A'}
+                    </dd>
+                  </Flex>
+                </dl>
+              </DescriptionListDescription>
             </DescriptionListGroup>
           </>
         )
@@ -167,36 +168,41 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
                 <DescriptionListTerm>
                   Nodes
                 </DescriptionListTerm>
-                <DescriptionList isHorizontal className="ocm-c-description-list-secondary">
-                  <DescriptionListGroup>
-                    <DescriptionListTerm>
-                      Master:
-                      {' '}
-                    </DescriptionListTerm>
-                    <DescriptionListDescription>
-                      {get(cluster, 'metrics.nodes.master', 'N/A')}
-                    </DescriptionListDescription>
+                <DescriptionListDescription>
+                  <dl className="pf-l-stack">
+                    <Flex>
+                      <dt>
+                        Master:
+                        {' '}
+                      </dt>
+                      <dd>
+                        {get(cluster, 'metrics.nodes.master', 'N/A')}
+                      </dd>
+                    </Flex>
                     {showInfraNodes && (
                       <>
-                        <DescriptionListTerm>
-                          Infra:
-                          {' '}
-                        </DescriptionListTerm>
-
-                        <DescriptionListDescription>
-                          {get(cluster, 'metrics.nodes.infra', 'N/A')}
-                        </DescriptionListDescription>
+                        <Flex>
+                          <dt>
+                            Infra:
+                            {' '}
+                          </dt>
+                          <dd>
+                            {get(cluster, 'metrics.nodes.infra', 'N/A')}
+                          </dd>
+                        </Flex>
                       </>
                     )}
-                    <DescriptionListTerm>
-                      Compute:
-                      {' '}
-                    </DescriptionListTerm>
-                    <DescriptionListDescription>
-                      {get(cluster, 'metrics.nodes.compute', 'N/A')}
-                    </DescriptionListDescription>
-                  </DescriptionListGroup>
-                </DescriptionList>
+                    <Flex>
+                      <dt>
+                        Compute:
+                        {' '}
+                      </dt>
+                      <dd>
+                        {get(cluster, 'metrics.nodes.compute', 'N/A')}
+                      </dd>
+                    </Flex>
+                  </dl>
+                </DescriptionListDescription>
               </DescriptionListGroup>
             </>
           )}

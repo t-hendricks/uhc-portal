@@ -192,10 +192,7 @@ exports[`<DetailsLeft /> should render 1`] = `
       <DescriptionListTerm>
         Version
       </DescriptionListTerm>
-      <DescriptionList
-        className="ocm-c-description-list-secondary"
-        isHorizontal={true}
-      >
+      <DescriptionListDescription>
         <Connect(ClusterVersionInfo)
           cluster={
             Object {
@@ -342,7 +339,7 @@ exports[`<DetailsLeft /> should render 1`] = `
             }
           }
         />
-      </DescriptionList>
+      </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
       <DescriptionListTerm>

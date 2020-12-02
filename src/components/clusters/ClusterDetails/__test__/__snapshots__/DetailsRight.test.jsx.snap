@@ -46,27 +46,30 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
       <DescriptionListTerm>
         Nodes
       </DescriptionListTerm>
-      <DescriptionList
-        className="ocm-c-description-list-secondary"
-        isHorizontal={true}
-      >
-        <DescriptionListGroup>
-          <DescriptionListTerm>
-            Master:
-             
-          </DescriptionListTerm>
-          <DescriptionListDescription>
-            3
-          </DescriptionListDescription>
-          <DescriptionListTerm>
-            Compute:
-             
-          </DescriptionListTerm>
-          <DescriptionListDescription>
-            4
-          </DescriptionListDescription>
-        </DescriptionListGroup>
-      </DescriptionList>
+      <DescriptionListDescription>
+        <dl
+          className="pf-l-stack"
+        >
+          <Flex>
+            <dt>
+              Master:
+               
+            </dt>
+            <dd>
+              3
+            </dd>
+          </Flex>
+          <Flex>
+            <dt>
+              Compute:
+               
+            </dt>
+            <dd>
+              4
+            </dd>
+          </Flex>
+        </dl>
+      </DescriptionListDescription>
     </DescriptionListGroup>
     <ClusterNetwork
       cluster={
@@ -255,27 +258,30 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
       <DescriptionListTerm>
         Nodes
       </DescriptionListTerm>
-      <DescriptionList
-        className="ocm-c-description-list-secondary"
-        isHorizontal={true}
-      >
-        <DescriptionListGroup>
-          <DescriptionListTerm>
-            Master:
-             
-          </DescriptionListTerm>
-          <DescriptionListDescription>
-            3
-          </DescriptionListDescription>
-          <DescriptionListTerm>
-            Compute:
-             
-          </DescriptionListTerm>
-          <DescriptionListDescription>
-            4
-          </DescriptionListDescription>
-        </DescriptionListGroup>
-      </DescriptionList>
+      <DescriptionListDescription>
+        <dl
+          className="pf-l-stack"
+        >
+          <Flex>
+            <dt>
+              Master:
+               
+            </dt>
+            <dd>
+              3
+            </dd>
+          </Flex>
+          <Flex>
+            <dt>
+              Compute:
+               
+            </dt>
+            <dd>
+              4
+            </dd>
+          </Flex>
+        </dl>
+      </DescriptionListDescription>
     </DescriptionListGroup>
     <ClusterNetwork
       cluster={
@@ -485,27 +491,30 @@ exports[`<DetailsRight /> should render 1`] = `
            (actual/desired)
         </span>
       </DescriptionListTerm>
-      <DescriptionList
-        className="ocm-c-description-list-secondary"
-        isHorizontal={true}
-      >
-        <DescriptionListGroup>
-          <DescriptionListTerm>
-            Master:
-             
-          </DescriptionListTerm>
-          <DescriptionListDescription>
-            3/3
-          </DescriptionListDescription>
-          <DescriptionListTerm>
-            Compute:
-             
-          </DescriptionListTerm>
-          <DescriptionListDescription>
-            4/2
-          </DescriptionListDescription>
-        </DescriptionListGroup>
-      </DescriptionList>
+      <DescriptionListDescription>
+        <dl
+          className="pf-l-stack"
+        >
+          <Flex>
+            <dt>
+              Master:
+               
+            </dt>
+            <dd>
+              3/3
+            </dd>
+          </Flex>
+          <Flex>
+            <dt>
+              Compute:
+               
+            </dt>
+            <dd>
+              4/2
+            </dd>
+          </Flex>
+        </dl>
+      </DescriptionListDescription>
     </DescriptionListGroup>
     <ClusterNetwork
       cluster={

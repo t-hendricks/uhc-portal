@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-
 import {
   DescriptionList,
   DescriptionListTerm,
@@ -48,7 +47,6 @@ function DetailsLeft({ cluster, cloudProviders }) {
             {get(cluster, 'external_id', 'N/A')}
           </DescriptionListDescription>
         </DescriptionListGroup>
-
         <DescriptionListGroup>
           <DescriptionListTerm>
             Type
@@ -57,21 +55,18 @@ function DetailsLeft({ cluster, cloudProviders }) {
             <ClusterTypeLabel cluster={cluster} />
           </DescriptionListDescription>
         </DescriptionListGroup>
-
         <DescriptionListGroup>
           <DescriptionListTerm>Location</DescriptionListTerm>
           <DescriptionListDescription>
             {region}
           </DescriptionListDescription>
         </DescriptionListGroup>
-
         <DescriptionListGroup>
           <DescriptionListTerm>Provider</DescriptionListTerm>
           <DescriptionListDescription>
             {cloudProvider}
           </DescriptionListDescription>
         </DescriptionListGroup>
-
         { cluster.managed
           && (
             <>
@@ -83,28 +78,24 @@ function DetailsLeft({ cluster, cloudProviders }) {
               </DescriptionListGroup>
             </>
           )}
-
         <DescriptionListGroup>
           <DescriptionListTerm>Version</DescriptionListTerm>
-          <DescriptionList isHorizontal className="ocm-c-description-list-secondary">
+          <DescriptionListDescription>
             <ClusterVersionInfo cluster={cluster} />
-          </DescriptionList>
+          </DescriptionListDescription>
         </DescriptionListGroup>
-
         <DescriptionListGroup>
           <DescriptionListTerm>Created at</DescriptionListTerm>
           <DescriptionListDescription>
             <Timestamp value={get(cluster, 'creation_timestamp', 'N/A')} />
           </DescriptionListDescription>
         </DescriptionListGroup>
-
         <DescriptionListGroup>
           <DescriptionListTerm>Owner</DescriptionListTerm>
           <DescriptionListDescription>
             {get(cluster, 'subscription.creator.name') || get(cluster, 'subscription.creator.username', 'N/A')}
           </DescriptionListDescription>
         </DescriptionListGroup>
-
         {cluster.managed && (
           <>
             <DescriptionListGroup>
