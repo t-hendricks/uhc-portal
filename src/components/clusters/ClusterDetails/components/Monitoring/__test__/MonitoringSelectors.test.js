@@ -134,6 +134,13 @@ describe('clusterHealthSelector', () => {
       expect(clusterHealthSelector(stateWithOsdCluster, makeFreshCheckIn(), 0))
         .toBe(monitoringStatuses.HEALTHY);
     });
+
+    it('return status UNINSTALLING', () => {
+      const stateWithUninstallingCluster = { ...stateWithOsdCluster };
+      stateWithUninstallingCluster.clusters.details.cluster.state = clusterStates.UNINSTALLING;
+      expect(clusterHealthSelector(stateWithUninstallingCluster, makeFreshCheckIn(), 0))
+        .toBe(monitoringStatuses.UNINSTALLING);
+    });
   });
 
 
