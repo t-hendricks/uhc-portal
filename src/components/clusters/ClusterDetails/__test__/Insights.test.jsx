@@ -32,8 +32,12 @@ describe('<InsightsTable />', () => {
     expect(wrapper.contains('https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=42&cr=OCM'));
   });
 
+  it("should add 'cr' query parameter to the third doc url", () => {
+    expect(wrapper.contains('https://access.redhat.com/solutions/4972291?test=qwerty&cr=OCM#amazing'));
+  });
+
   it("should not add 'cr' query parameter to non-doc url", () => {
-    expect(wrapper.contains('https://access.redhat.com/test'));
-    expect(!wrapper.contains('https://access.redhat.com/test?cr=OCM'));
+    expect(wrapper.contains('https://google.com/test'));
+    expect(!wrapper.contains('https://google.com/test?cr=OCM'));
   });
 });

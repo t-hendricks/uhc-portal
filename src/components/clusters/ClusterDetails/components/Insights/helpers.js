@@ -14,6 +14,6 @@ export const appendQueryParameter = (url, parameter, value) => {
 
 // for statistics purposes (CCXDEV-3552)
 export const appendCrParamToDocLinks = (details) => {
-  const re = /https:\/\/docs\.openshift.com\/[^ )"]+/g;
+  const re = /https:\/\/(docs.openshift.com|access.redhat.com)\/[^ )([\]"]+/g;
   return details.replaceAll(re, match => (appendQueryParameter(match, 'cr', 'OCM')));
 };
