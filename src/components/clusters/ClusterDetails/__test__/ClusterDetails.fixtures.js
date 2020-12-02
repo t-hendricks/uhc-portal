@@ -41,6 +41,7 @@ const funcs = () => ({
   clearGetMachinePoolsResponse: jest.fn(),
   getNotificationContacts: jest.fn(),
   getSupportCases: jest.fn(),
+  getSchedules: jest.fn(),
 });
 
 const subscriptionInfo = {
@@ -551,6 +552,7 @@ const fixtures = {
   canTransferClusterOwnership: false,
   canSubscribeOCP: false,
   hasIssues: false,
+  hasIssuesInsights: false,
   canAllowClusterAdmin: false,
 };
 

@@ -2,3 +2,14 @@
   margin-top: 20px;
   margin-bottom: -10px;
 }
+
+.ocm-c--reduxcheckbox-description {
+  padding-left: 22px;
+  color: var(--pf-global--Color--200);
+  font-size: var(--pf-global--FontSize--sm);
+}
+
+#etcdEncryption .pf-l-split__item span {
+  position: relative;
+  right: 10px;
+}

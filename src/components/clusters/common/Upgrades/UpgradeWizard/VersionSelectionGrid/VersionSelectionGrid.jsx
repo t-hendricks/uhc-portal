@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import {
   Grid,
   GridItem,
-  Card,
-  CardTitle,
   Title,
+  Divider,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-
+import last from 'lodash/last';
 import ErrorBox from '../../../../../common/ErrorBox';
+import { versionRegEx } from '../../clusterUpgardeHelpers';
+import VersionCard from './VersionCard';
 
 class VersionSelectionGrid extends React.Component {
   componentDidMount() {
@@ -60,6 +61,48 @@ class VersionSelectionGrid extends React.Component {
     }
   }
 
+  recommendedCards(latestInCurrMinor, latestVersion) {
+    const { selected } = this.props;
+    const latestVersionParts = versionRegEx.exec(latestVersion).groups;
+    return (
+      <>
+        {
+              latestInCurrMinor ? (
+                <GridItem span={6}>
+                  <VersionCard
+                    isRecommended
+                    isSelected={selected === latestInCurrMinor}
+                    version={latestInCurrMinor}
+                    onKeyDown={this.onKeyDown}
+                    onClick={this.onClick}
+                  >
+                      The latest on your current minor version.
+                  </VersionCard>
+                </GridItem>
+              ) : null
+            }
+        {
+              latestVersion !== latestInCurrMinor ? (
+                <GridItem span={6}>
+                  <VersionCard
+                    isRecommended
+                    isSelected={selected === latestVersion}
+                    version={latestVersion}
+                    onKeyDown={this.onKeyDown}
+                    onClick={this.onClick}
+                  >
+                    Start taking advantage of the new features
+                    {' '}
+                    {`${latestVersionParts.major}.${latestVersionParts.minor}`}
+                    {' '}
+                      has to offer.
+                  </VersionCard>
+                </GridItem>
+              ) : null
+            }
+      </>
+    );
+  }
 
   render() {
     const { versionInfo, clusterVersion, selected } = this.props;
@@ -69,25 +112,49 @@ class VersionSelectionGrid extends React.Component {
     if (!versionInfo.fulfilled || versionInfo.pending || clusterVersion !== versionInfo.version) {
       return <Spinner centered />;
     }
+
+    const { availableUpgrades } = versionInfo;
+    const latestVersion = last(availableUpgrades);
+    const clusterVersionParts = versionRegEx.exec(clusterVersion).groups;
+    const versionsInCurrMinor = availableUpgrades.filter((v) => {
+      const currVersionParts = versionRegEx.exec(v).groups;
+      if (
+        currVersionParts.major === clusterVersionParts.major
+        && currVersionParts.minor === clusterVersionParts.minor
+      ) {
+        return true;
+      }
+      return false;
+    });
+    const latestInCurrMinor = last(versionsInCurrMinor);
+    const otherVersions = availableUpgrades.filter(v => v !== latestVersion
+      && v !== latestInCurrMinor);
     return (
       <>
-        <Title size="lg" headingLevel="h3">Select version</Title>
-        <Grid hasGutter className="cluster-upgrade-version-selection-grid">
-          {versionInfo.availableUpgrades.map(upgradeVersion => (
-            <GridItem span={4} key={upgradeVersion}>
-              <Card
-                id={upgradeVersion}
-                onKeyDown={this.onKeyDown}
-                onClick={this.onClick}
-                isSelectable
-                isCompact
-                isSelected={selected === upgradeVersion}
-              >
-                <CardTitle>{upgradeVersion}</CardTitle>
-              </Card>
+        <Title className="version-select-step-title" size="lg" headingLevel="h3">Select version</Title>
+        <div id="version-grid-wrapper">
+          <Grid hasGutter className="version-selection-grid">
+            {
+              this.recommendedCards(latestInCurrMinor, latestVersion)
+            }
+            {otherVersions.length > 0 && (
+            <GridItem span={12}>
+              <Divider />
             </GridItem>
-          ))}
-        </Grid>
+            )}
+            {otherVersions.map(upgradeVersion => (
+              <GridItem span={4} key={upgradeVersion}>
+                <VersionCard
+                  version={upgradeVersion}
+                  onKeyDown={this.onKeyDown}
+                  onClick={this.onClick}
+                  isSelected={selected === upgradeVersion}
+                />
+              </GridItem>
+            ))}
+          </Grid>
+        </div>
+
       </>
     );
   }

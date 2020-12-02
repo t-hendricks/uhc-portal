@@ -98,61 +98,62 @@ class UpgradeTimeSelection extends React.Component {
     maxDate.setMonth(maxDate.getMonth() + 6);
 
     return (
-      <Form>
-        <Title size="lg" headingLevel="h3">Schedule upgrade</Title>
-        <FormGroup fieldId="upgrade-schedule-now">
-          <Radio
-            isChecked={type === 'now'}
-            name="upgrade-schedule-type"
-            id="upgrade-schedule-now"
-            value="now"
-            label="Upgrade now (upgrade will begin within the next hour)"
-            onChange={this.modeChange}
-          />
-        </FormGroup>
-        <FormGroup fieldId="upgrade-schedule-time">
-          <Radio
-            isChecked={type === 'time'}
-            name="upgrade-schedule-type"
-            id="upgrade-schedule-time"
-            value="time"
-            label="Schedule a different time"
-            onChange={this.modeChange}
-          />
-        </FormGroup>
-        { type === 'time' && (
-          <>
-            <FormGroup fieldId="upgrade-schedule-datepicker" className="upgrade-schedule-datepicker">
-              <DatePicker
-                id="upgrade-schedule-datepicker"
-                selected={timestamp && new Date(timestamp)}
-                onChange={this.setDate}
-                dateFormat="yyyy-MM-dd"
-                customInput={<TextInput iconVariant="calendar" />}
-                minDate={new Date()}
-                maxDate={maxDate}
-              />
-              <Select
-                selections={getSelectedTime()}
-                onSelect={this.setTime}
-                onToggle={() => this.setState(state => (
-                  { timeSelectionOpen: !state.timeSelectionOpen }
-                ))}
-                isOpen={timeSelectionOpen}
-                id="upgrade-time-select-dropdown"
-              >
-                {makeSelectOptions()}
-              </Select>
-            </FormGroup>
-            <dl className="cluster-upgrade-dl">
-              <dt>UTC </dt>
-              <dd>
-                <DateFormat type="exact" date={new Date(timestamp)} />
-              </dd>
-            </dl>
-          </>
-        )}
-      </Form>
+      <>
+        <Title className="wizard-step-title" size="lg" headingLevel="h3">Schedule upgrade</Title>
+        <Form className="wizard-step-body">
+          <FormGroup fieldId="upgrade-schedule-now">
+            <Radio
+              isChecked={type === 'now'}
+              name="upgrade-schedule-type"
+              id="upgrade-schedule-now"
+              value="now"
+              label="Upgrade now (upgrade will begin within the next hour)"
+              onChange={this.modeChange}
+            />
+          </FormGroup>
+          <FormGroup fieldId="upgrade-schedule-time">
+            <Radio
+              isChecked={type === 'time'}
+              name="upgrade-schedule-type"
+              id="upgrade-schedule-time"
+              value="time"
+              label="Schedule a different time"
+              onChange={this.modeChange}
+            />
+          </FormGroup>
+          { type === 'time' && (
+            <>
+              <FormGroup fieldId="upgrade-schedule-datepicker" className="upgrade-schedule-datepicker">
+                <DatePicker
+                  id="upgrade-schedule-datepicker"
+                  selected={timestamp && new Date(timestamp)}
+                  onChange={this.setDate}
+                  dateFormat="yyyy-MM-dd"
+                  customInput={<TextInput iconVariant="calendar" />}
+                  minDate={new Date()}
+                />
+                <Select
+                  selections={getSelectedTime()}
+                  onSelect={this.setTime}
+                  onToggle={() => this.setState(state => (
+                    { timeSelectionOpen: !state.timeSelectionOpen }
+                  ))}
+                  isOpen={timeSelectionOpen}
+                  id="upgrade-time-select-dropdown"
+                >
+                  {makeSelectOptions()}
+                </Select>
+              </FormGroup>
+              <dl className="cluster-upgrade-dl">
+                <dt>UTC </dt>
+                <dd>
+                  <DateFormat type="exact" date={new Date(timestamp)} />
+                </dd>
+              </dl>
+            </>
+          )}
+        </Form>
+      </>
     );
   }
 }
