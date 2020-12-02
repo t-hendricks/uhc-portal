@@ -17,6 +17,7 @@ import validators, {
   checkMachinePoolLabels,
   awsNumericAccountID,
   validateServiceAccountObject,
+  validateAzIndex,
 } from '../validators';
 import fixtures from './validators.fixtures';
 
@@ -506,4 +507,12 @@ test('GCP service account JSON', () => {
       expect(validateServiceAccountObject(testObj)).toBe(undefined);
     }
   });
+});
+
+test('Validate AZ index', () => {
+  expect(validateAzIndex('a')).toBe(undefined);
+  expect(validateAzIndex('e')).toBe(undefined);
+  expect(validateAzIndex('g')).toBe('Availability zone indices are a-f.');
+  expect(validateAzIndex('bb')).toBe('Availability zone indices are a-f.');
+  expect(validateAzIndex('asdf')).toBe('Availability zone indices are a-f.');
 });

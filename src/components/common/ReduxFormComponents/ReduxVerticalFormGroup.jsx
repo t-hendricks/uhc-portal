@@ -5,6 +5,8 @@ import {
   FormGroup,
   TextInput,
   TextArea,
+  InputGroup,
+  InputGroupText,
 } from '@patternfly/react-core';
 import PopoverHint from '../PopoverHint';
 
@@ -20,6 +22,7 @@ function ReduxVerticalFormGroup(props) {
     disabled,
     isTextArea,
     showHelpTextOnError,
+    inputPrefix,
     ...extraProps // any extra props not specified above
   } = props;
 
@@ -53,16 +56,26 @@ function ReduxVerticalFormGroup(props) {
       isRequired={isRequired}
       labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
     >
-      <InputComponent
-        value={input.value}
-        isRequired={isRequired}
-        id={input.name}
-        name={input.name}
-        validated={isValid ? 'default' : 'error'}
-        {...disabledProp}
-        {...input}
-        {...extraProps}
-      />
+      <InputGroup className={isValid && 'valid-field'}>
+        {
+          inputPrefix
+            ? (
+              <InputGroupText>
+                {inputPrefix}
+              </InputGroupText>
+            ) : null
+        }
+        <InputComponent
+          value={input.value}
+          isRequired={isRequired}
+          id={input.name}
+          name={input.name}
+          validated={isValid ? 'default' : 'error'}
+          {...disabledProp}
+          {...input}
+          {...extraProps}
+        />
+      </InputGroup>
     </FormGroup>
   );
 }
@@ -70,6 +83,7 @@ ReduxVerticalFormGroup.defaultProps = {
   helpText: '',
   isRequired: false,
   showHelpTextOnError: true,
+  inputPrefix: '',
 };
 ReduxVerticalFormGroup.propTypes = {
   label: PropTypes.string,
@@ -88,6 +102,7 @@ ReduxVerticalFormGroup.propTypes = {
   // plus other props passed from the <Field> component to the control (extraProps,
   // incl. children)...
   showHelpTextOnError: PropTypes.bool,
+  inputPrefix: PropTypes.string,
 };
 
 export default ReduxVerticalFormGroup;
