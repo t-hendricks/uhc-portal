@@ -204,7 +204,7 @@ const insightsData = {
     {
       rule_id: 'ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report',
       description: 'Some rule description',
-      details: 'Minimum resource requirements...\n\n[Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=qwerty#minimum-resource-requirements_installing-bare-metal). Anything else here... [Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=42), not doc link: https://access.redhat.com/test',
+      details: 'Minimum resource requirements...\n\n[Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=qwerty#minimum-resource-requirements_installing-bare-metal). Anything else here... [Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=42), [Knowledge Article](https://access.redhat.com/solutions/4972291?test=qwerty#amazing), [not doc link](https://google.com/test)',
       reason: '',
       resolution: '',
       created_at: '2020-02-03T08:25:00Z',
