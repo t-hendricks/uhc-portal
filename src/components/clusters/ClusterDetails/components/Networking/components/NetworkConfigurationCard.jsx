@@ -3,36 +3,54 @@ import PropTypes from 'prop-types';
 
 import {
   Card,
+  DescriptionList,
+  DescriptionListTerm,
+  DescriptionListGroup,
+  DescriptionListDescription,
   Title,
-  CardBody, CardTitle,
+  CardBody,
+  CardHeader,
+  CardTitle,
 } from '@patternfly/react-core';
+
+import './NetworkConfigurationCard.scss';
 
 function NetworkConfigurationCard({ network }) {
   return (
-    <Card>
-      <CardTitle>
-        <Title headingLevel="h2" size="md" className="card-title">Network configuration</Title>
-      </CardTitle>
-      <CardBody>
+    <Card className="ocm-c-networking-network-configuration__card">
+      <CardHeader className="ocm-c-networking-network-configuration__card--header">
+        <CardTitle>
+          <Title headingLevel="h2" size="md" className="card-title">Network configuration</Title>
+        </CardTitle>
+      </CardHeader>
+      <CardBody className="ocm-c-networking-network-configuration__card--body">
         <>
-          <dl className="networking-tab">
-            <dt>Machine CIDR</dt>
-            <dd>
-              {network.machine_cidr || 'N/A'}
-            </dd>
-            <dt>Service CIDR</dt>
-            <dd>
-              {network.service_cidr || 'N/A'}
-            </dd>
-            <dt>Pod CIDR</dt>
-            <dd>
-              {network.pod_cidr || 'N/A'}
-            </dd>
-            <dt>Host prefix</dt>
-            <dd id="networking-tab-last">
-              {`/${network.host_prefix}` || 'N/A'}
-            </dd>
-          </dl>
+          <DescriptionList>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Machine CIDR</DescriptionListTerm>
+              <DescriptionListDescription>
+                {network.machine_cidr || 'N/A'}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Service CIDR</DescriptionListTerm>
+              <DescriptionListDescription>
+                {network.service_cidr || 'N/A'}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Pod CIDR</DescriptionListTerm>
+              <DescriptionListDescription>
+                {network.pod_cidr || 'N/A'}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Host prefix</DescriptionListTerm>
+              <DescriptionListDescription>
+                {`/${network.host_prefix}` || 'N/A'}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+          </DescriptionList>
         </>
       </CardBody>
     </Card>
