@@ -7,7 +7,7 @@ const schedule = {
   version: '1.2.4',
   next_run: '2020-12-01T00:00:00.00Z',
   state: {
-    value: 'pending',
+    value: 'scheduled',
   },
   schedule_type: 'manual',
 };
@@ -116,6 +116,22 @@ describe('<UpgradeStatus />', () => {
 
     it('should not have a cancel button', () => {
       expect(wrapper.find('Button#ocm-upgrade-status-cancel').length).toEqual(0);
+    });
+
+    it('should show upgrade time when the schedule is "scheduled"', () => {
+      expect(wrapper.find('DateFormat').length).toEqual(1);
+    });
+
+    it('should not show upgrade time when the schedule is "pending"', () => {
+      wrapper.setProps({
+        scheduledUpgrade: {
+          ...schedule,
+          schedule_type: 'automatic',
+          state: { value: 'pending' },
+        },
+      });
+      expect(wrapper.find('DateFormat').length).toEqual(0);
+      expect(wrapper).toMatchSnapshot();
     });
   });
 
