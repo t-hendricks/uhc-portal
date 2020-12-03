@@ -80,6 +80,11 @@ describe('clusterHealthSelector', () => {
           },
         },
       },
+      clusterUpgrades: {
+        schedules: {
+          items: [],
+        },
+      },
     };
 
     it('should not return status DISCONNECTED for OSD cluster', () => {
@@ -99,6 +104,15 @@ describe('clusterHealthSelector', () => {
             },
           },
         },
+        clusterUpgrades: {
+          schedules: {
+            items: [
+              {
+                state: { value: 'running' },
+              },
+            ],
+          },
+        },
       };
       expect(clusterHealthSelector(state, makeFreshCheckIn(), 1))
         .toBe(monitoringStatuses.UPGRADING);
@@ -113,6 +127,11 @@ describe('clusterHealthSelector', () => {
               ...mockOSDCluserDetails,
               state: clusterStates.INSTALLING,
             },
+          },
+        },
+        clusterUpgrades: {
+          schedules: {
+            items: [],
           },
         },
       };

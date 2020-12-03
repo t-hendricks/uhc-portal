@@ -28,6 +28,7 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
   const diff = new Date().getTime() - lastCheckIn.getTime();
   const hours = diff / 1000 / 60 / 60;
   const freshActivity = OCM_SHOW_OLD_METRICS || hours < maxMetricsTimeDelta;
+  const isOSDUpgrading = cluster.managed && state.clusterUpgrades.schedules.items.some(schedule => schedule.state?.value === 'started');
 
   if (!cluster.managed && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED)) {
     return monitoringStatuses.DISCONNECTED;
@@ -37,7 +38,7 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
     return monitoringStatuses.NO_METRICS;
   }
 
-  if (cluster.metrics.upgrade.state === 'running') {
+  if (cluster.metrics.upgrade.state === 'running' || isOSDUpgrading) {
     return monitoringStatuses.UPGRADING;
   }
 
