@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  FormSelect, FormSelectOption,
-  Split,
-  SplitItem,
+  FormSelect,
+  FormSelectOption,
+  Grid,
+  GridItem,
 } from '@patternfly/react-core';
 import DownloadButton, { downloadButtonModes } from './DownloadButton';
 import { urls } from '../../../../../common/installLinks';
@@ -85,18 +86,18 @@ class DownloadAndOSSelection extends React.Component {
     }
 
     return (
-      <Split hasGutter className="os-based-download">
-        <SplitItem>
+      <Grid hasGutter className="os-based-download">
+        <GridItem sm={12} md={6}>
           <FormSelect value={OS} onChange={this.onChange} aria-label="select-os-dropdown">
             {options.map(option => (
               <FormSelectOption isDisabled={option.disabled} key={`OS.${option.value}`} value={option.value} label={option.label} />
             ))}
           </FormSelect>
-        </SplitItem>
-        <SplitItem>
+        </GridItem>
+        <GridItem sm={12} md={6}>
           {this.downloadButton()}
-        </SplitItem>
-      </Split>
+        </GridItem>
+      </Grid>
     );
   }
 }

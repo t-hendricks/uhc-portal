@@ -3,15 +3,12 @@
     .pf-c-description-list {
       margin-top: var(--pf-global--spacer--md);
       --pf-c-description-list__group--RowGap: var(--pf-global--gutter--sm);
-      dl.pf-l-stack {
-        margin: var(--pf-global--spacer--0) 0 var(--pf-global--spacer--0) 0;
-        dt {
-          color: var(--pf-global--Color--400);
-          font-size: var(--pf-global--FontSize--sm);
-          font-weight: var(--pf-global--FontWeight--bold);
-          margin-right: var(--pf-global--spacer--sm);
-          text-transform: none;
-        }
+      dl.pf-l-stack dt {
+        color: var(--pf-global--Color--400);
+        font-size: var(--pf-global--FontSize--sm);
+        font-weight: var(--pf-global--FontWeight--bold);
+        margin-right: var(--pf-global--spacer--sm);
+        text-transform: none;
       }
     }
   }

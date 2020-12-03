@@ -36,6 +36,26 @@ exports[`<UpgradeStatus /> when a manual update is scheduled should render 1`] =
 </Fragment>
 `;
 
+exports[`<UpgradeStatus /> when an automatic update is scheduled should not show upgrade time when the schedule is "pending" 1`] = `
+<Fragment>
+  <div>
+    <OutlinedArrowAltCircleUpIcon
+      className="ocm-upgrade-available-icon"
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+     
+    Update available
+    <UpdateGraph
+      currentVersion="1.2.3"
+      hasMore={false}
+      updateVersion="1.2.4"
+    />
+  </div>
+</Fragment>
+`;
+
 exports[`<UpgradeStatus /> when an automatic update is scheduled should render 1`] = `
 <Fragment>
   <div>
