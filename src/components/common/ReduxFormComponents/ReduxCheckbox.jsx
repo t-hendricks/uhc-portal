@@ -28,6 +28,7 @@ function ReduxCheckbox(props) {
     meta: { error, touched },
     input,
     isSwitch = false,
+    extendedHelpText,
     ...extraProps // any extra props not specified above
   } = props;
 
@@ -44,15 +45,16 @@ function ReduxCheckbox(props) {
             label={label}
           />
         </SplitItem>
-        {extraProps.extendedHelpText && (
+        {extendedHelpText && (
           <SplitItem>
-            <PopoverHint hint={extraProps.extendedHelpText} />
+            <PopoverHint hint={extendedHelpText} />
           </SplitItem>
         )}
       </Split>
     </FormGroup>
   );
 }
+
 ReduxCheckbox.propTypes = {
   label: PropTypes.string.isRequired,
   // props passed by redux-form
@@ -60,6 +62,7 @@ ReduxCheckbox.propTypes = {
   meta: PropTypes.object.isRequired,
   isSwitch: PropTypes.bool,
   // plus other props to be passed to the field...
+  extendedHelpText: PropTypes.oneOfType(PropTypes.string, PropTypes.node),
 };
 
 export default ReduxCheckbox;
