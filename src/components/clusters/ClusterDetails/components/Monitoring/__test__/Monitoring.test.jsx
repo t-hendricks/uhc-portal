@@ -14,12 +14,16 @@ describe('<Monitoring />', () => {
       nodes={{}}
       operators={{}}
       lastCheckIn={new Date('2020-02-02')}
-      healthStatus={monitoringStatuses.HEALTHY}
       discoveredIssues={0}
     />);
   });
 
-  it('should render', () => {
-    expect(wrapper).toMatchSnapshot();
+  it('should render correctly with every health status', () => {
+    Object.keys(monitoringStatuses).forEach((status) => {
+      wrapper.setProps({
+        healthStatus: monitoringStatuses[status],
+      });
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 });

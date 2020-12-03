@@ -45,6 +45,10 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
     return monitoringStatuses.INSTALLING;
   }
 
+  if (cluster.state === clusterStates.UNINSTALLING) {
+    return monitoringStatuses.UNINSTALLING;
+  }
+
   if (discoveredIssues > 0) {
     return monitoringStatuses.HAS_ISSUES;
   }
