@@ -12,7 +12,6 @@ import {
   minValueSelector,
   shouldShowStorageQuotaAlert,
   shouldShowLoadBalancerAlert,
-  masterResizeAlertThreshold,
 } from './ScaleClusterSelectors';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 
@@ -32,7 +31,6 @@ const mapStateToProps = (state) => {
     consoleURL: get(modalData, 'console.url', null),
     showLoadBalancerAlert: shouldShowLoadBalancerAlert(state),
     showPersistentStorageAlert: shouldShowStorageQuotaAlert(state),
-    masterResizeAlertThreshold: masterResizeAlertThreshold(state),
     persistentStorageValues: state.persistentStorageValues,
     loadBalancerValues: state.loadBalancerValues,
     organization: state.userProfile.organization,

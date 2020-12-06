@@ -5,7 +5,7 @@ import get from 'lodash/get';
 import EditNodeCountModal from './EditNodeCountModal';
 import { closeModal } from '../../../common/Modal/ModalActions';
 
-import { masterResizeAlertThreshold } from '../ScaleClusterDialog/ScaleClusterSelectors';
+import masterResizeAlertThresholdSelector from './EditNodeCountModalSelectors';
 
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
@@ -54,7 +54,7 @@ const mapStateToProps = (state) => {
       ],
     },
     isMultiAz: get(cluster, 'multi_az', false),
-    masterResizeAlertThreshold: masterResizeAlertThreshold(state),
+    masterResizeAlertThreshold: masterResizeAlertThresholdSelector(state),
     organization: state.userProfile.organization,
     machineTypes: state.machineTypes,
     cloudProviderID: get(cluster, 'cloud_provider.id', ''),
