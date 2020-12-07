@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Alert } from '@patternfly/react-core';
 
-import EditNodeCountModal from './EditNodeCountModal';
+import EditNodeCountModal from '../EditNodeCountModal';
 
 const baseProps = {
   openModal: jest.fn(),
@@ -28,10 +29,16 @@ const baseProps = {
 };
 
 describe('<EditNodeCountModal />', () => {
+  const wrapper = shallow(<EditNodeCountModal
+    {...baseProps}
+  />);
+
   it('renders correctly', () => {
-    const wrapper = shallow(<EditNodeCountModal
-      {...baseProps}
-    />);
     expect(wrapper).toMatchSnapshot();
+  });
+
+  it('renders with master resize warning', () => {
+    wrapper.setProps({ masterResizeAlertThreshold: 26 });
+    expect(wrapper.find(Alert).length).toEqual(1);
   });
 });
