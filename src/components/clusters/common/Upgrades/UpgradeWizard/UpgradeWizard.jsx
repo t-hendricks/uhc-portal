@@ -76,7 +76,7 @@ class UpgradeWizard extends React.Component {
       },
       {
         id: 'schedule-upgrade',
-        name: 'Schedule upgrade',
+        name: 'Schedule update',
         component: (
           <UpgradeTimeSelection
             onSet={this.setSchedule}
@@ -91,7 +91,7 @@ class UpgradeWizard extends React.Component {
         name: 'Confirmation',
         component: (
           <>
-            <Title className="wizard-step-title" size="lg" headingLevel="h3">Confirmation of your upgrade</Title>
+            <Title className="wizard-step-title" size="lg" headingLevel="h3">Confirmation of your update</Title>
             <dl className="wizard-step-body cluster-upgrade-dl">
               <div>
                 <dt>Version</dt>
@@ -121,7 +121,7 @@ class UpgradeWizard extends React.Component {
             </dl>
           </>
         ),
-        nextButtonText: 'Confirm upgrade',
+        nextButtonText: 'Confirm update',
         canJumpTo: gotAllDetails,
       },
       {
@@ -140,7 +140,7 @@ class UpgradeWizard extends React.Component {
     ];
     return isOpen && (
       <Wizard
-        title="Upgrade cluster"
+        title="Update cluster"
         className="ocm-upgrade-wizard"
         description={clusterName}
         isOpen={isOpen}

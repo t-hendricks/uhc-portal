@@ -107,7 +107,7 @@ class UpgradeTimeSelection extends React.Component {
               name="upgrade-schedule-type"
               id="upgrade-schedule-now"
               value="now"
-              label="Upgrade now (upgrade will begin within the next hour)"
+              label="Update now (update will begin within the next hour)"
               onChange={this.modeChange}
             />
           </FormGroup>

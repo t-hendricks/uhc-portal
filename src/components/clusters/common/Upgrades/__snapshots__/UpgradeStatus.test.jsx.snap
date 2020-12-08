@@ -31,7 +31,7 @@ exports[`<UpgradeStatus /> when a manual update is scheduled should render 1`] =
     onClick={[Function]}
     variant="link"
   >
-    Cancel this upgrade
+    Cancel this update
   </Button>
 </Fragment>
 `;
