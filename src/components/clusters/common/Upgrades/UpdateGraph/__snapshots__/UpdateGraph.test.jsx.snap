@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Update graph /> should render 1`] = `
+exports[`<UpdateGraph /> should render 1`] = `
 <div
   className="ocm-upgrade-graph"
 >
@@ -22,6 +22,65 @@ exports[`<Update graph /> should render 1`] = `
           next version
         </VersionLabel>
         <VersionDot />
+      </GraphLine>
+    </GraphPath>
+  </GraphContainer>
+</div>
+`;
+
+exports[`<UpdateGraph /> should render when additional versions are available 1`] = `
+<div
+  className="ocm-upgrade-graph"
+>
+  <GraphContainer>
+    <GraphPath
+      current={true}
+    >
+      <GraphLine>
+        <VersionLabel>
+          1.2.3
+        </VersionLabel>
+        <VersionDot
+          current={true}
+        />
+      </GraphLine>
+      <GraphLine />
+      <GraphLine>
+        <VersionLabel>
+          1.2.4
+        </VersionLabel>
+        <VersionDot />
+      </GraphLine>
+    </GraphPath>
+  </GraphContainer>
+  <div
+    className="ocm-upgrade-additional-versions-available"
+  >
+    <InfoCircleIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+    Additional versions available between 1.2.3 and 1.2.4
+  </div>
+</div>
+`;
+
+exports[`<UpdateGraph /> should render with no updates available 1`] = `
+<div
+  className="ocm-upgrade-graph"
+>
+  <GraphContainer>
+    <GraphPath
+      current={true}
+    >
+      <GraphLine>
+        <VersionLabel>
+          1.2.3
+        </VersionLabel>
+        <VersionDot
+          current={true}
+        />
       </GraphLine>
     </GraphPath>
   </GraphContainer>
