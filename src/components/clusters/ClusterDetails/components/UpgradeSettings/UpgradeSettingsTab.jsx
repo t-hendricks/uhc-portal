@@ -51,6 +51,8 @@ class UpgradeSettingsTab extends React.Component {
       cluster,
       openModal,
       versionInfo,
+      change,
+      initialValues,
     } = this.props;
     const { confirmationModalOpen } = this.state;
 
@@ -108,6 +110,8 @@ class UpgradeSettingsTab extends React.Component {
                   <UpgradeSettingsFields
                     isAutomatic={isAutomatic}
                     isDisabled={isDisabled}
+                    change={change}
+                    initialSceduleValue={initialValues.automatic_upgrade_schedule}
                     showDivider
                   />
                 </Grid>
@@ -208,6 +212,10 @@ UpgradeSettingsTab.propTypes = {
   }),
   reset: PropTypes.func,
   openModal: PropTypes.func,
+  change: PropTypes.func,
+  initialValues: PropTypes.shape({
+    automatic_upgrade_schedule: PropTypes.string,
+  }),
 };
 
 export default UpgradeSettingsTab;
