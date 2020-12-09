@@ -7,7 +7,7 @@ import { getMachineTypes } from '../../../../../../../redux/actions/machineTypes
 import { getOrganizationAndQuota } from '../../../../../../../redux/actions/userActions';
 import { addMachinePool, clearAddMachinePoolResponse } from '../../MachinePoolsActions';
 
-import { hasLabelsInput, parseReduxFormKeyValueList } from '../../../../../../../common/helpers';
+import { strToCleanObject } from '../../../../../../../common/helpers';
 
 const reduxFormConfig = {
   form: 'AddMachinePool',
@@ -21,7 +21,6 @@ const mapStateToProps = state => ({
   initialValues: {
     name: '',
     nodes_compute: '0',
-    node_labels: [{}],
   },
 });
 
@@ -31,10 +30,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       id: formData.name,
       replicas: parseInt(formData.nodes_compute, 10),
       instance_type: formData.machine_type,
+      labels: strToCleanObject(formData.node_labels, '='),
     };
-    if (hasLabelsInput(formData.node_labels)) {
-      machinePoolRequest.labels = parseReduxFormKeyValueList(formData.node_labels);
-    }
     dispatch(addMachinePool(ownProps.cluster.id, machinePoolRequest));
   },
   clearAddMachinePoolResponse: () => dispatch(clearAddMachinePoolResponse()),

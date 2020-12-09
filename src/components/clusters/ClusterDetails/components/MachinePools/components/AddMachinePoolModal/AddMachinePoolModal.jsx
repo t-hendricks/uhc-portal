@@ -94,7 +94,6 @@ class AddMachinePoolModal extends Component {
                 gridSpan={12}
                 minNodes={0}
                 isMachinePool
-                nodeLabelsGridSpan={6}
               />
               <GridItem span={4}>
                 <FormGroup label="Machine pool name" isRequired>
