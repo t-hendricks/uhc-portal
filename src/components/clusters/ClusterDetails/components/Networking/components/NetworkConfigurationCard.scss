@@ -1,0 +1,12 @@
+.ocm-c-networking-network-configuration__card {
+  &--header { 
+    .pf-c-card__title {
+      padding-top: var(--pf-global--spacer--0);
+    }
+  }
+  &--body {
+    .pf-c-description-list {
+      --pf-c-description-list__group--RowGap: var(--pf-global--gutter--sm);
+    }
+  }
+}

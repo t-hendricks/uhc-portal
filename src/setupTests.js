@@ -9,6 +9,8 @@ if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
 // These tests have warnings but don't cause test failure
 const testsExcludedFromWarningFail = [
   'Router.test.jsx',
+  'Insights.test.jsx',
+  'ReduxFormKeyValueList.test',
   // TODO: Fix the warnings in this test
   'UpdateGraph.test.jsx',
 ];

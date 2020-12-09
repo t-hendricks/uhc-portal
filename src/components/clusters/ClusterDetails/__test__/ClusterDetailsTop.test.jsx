@@ -7,7 +7,6 @@ import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
 
-
 describe('<ClusterDetailsTop />', () => {
   let wrapper;
   const functions = funcs();

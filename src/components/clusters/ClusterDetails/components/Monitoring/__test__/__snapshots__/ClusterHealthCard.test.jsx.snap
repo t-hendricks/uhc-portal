@@ -1,6 +1,237 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ClusterHealthCard /> should render 1`] = `
+exports[`<ClusterHealthCard /> should render correctly with every health status 1`] = `
+<Card
+  className="ocm-c-monitoring-health__card"
+>
+  <CardTitle
+    className="ocm-c-monitoring-health__card--header"
+  >
+    <Split>
+      <SplitItem>
+        <ExclamationTriangleIcon
+          className="warning"
+          color="currentColor"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      >
+        <Title
+          headingLevel="h2"
+        >
+          Cluster has no metrics
+        </Title>
+      </SplitItem>
+      <SplitItem
+        className="last-checkin"
+      />
+    </Split>
+  </CardTitle>
+</Card>
+`;
+
+exports[`<ClusterHealthCard /> should render correctly with every health status 2`] = `
+<Card
+  className="ocm-c-monitoring-health__card"
+>
+  <CardTitle
+    className="ocm-c-monitoring-health__card--header"
+  >
+    <Split>
+      <SplitItem>
+        <ExclamationTriangleIcon
+          className="warning"
+          color="currentColor"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      >
+        <Title
+          headingLevel="h2"
+        >
+          Cluster has no metrics
+        </Title>
+      </SplitItem>
+      <SplitItem
+        className="last-checkin"
+      />
+    </Split>
+  </CardTitle>
+</Card>
+`;
+
+exports[`<ClusterHealthCard /> should render correctly with every health status 3`] = `
+<Card
+  className="ocm-c-monitoring-health__card"
+>
+  <CardTitle
+    className="ocm-c-monitoring-health__card--header"
+  >
+    <Split>
+      <SplitItem>
+        <ExclamationTriangleIcon
+          className="warning"
+          color="currentColor"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      >
+        <Title
+          headingLevel="h2"
+        >
+          Cluster has no metrics
+        </Title>
+      </SplitItem>
+      <SplitItem
+        className="last-checkin"
+      />
+    </Split>
+  </CardTitle>
+</Card>
+`;
+
+exports[`<ClusterHealthCard /> should render correctly with every health status 4`] = `
+<Card
+  className="ocm-c-monitoring-health__card"
+>
+  <CardTitle
+    className="ocm-c-monitoring-health__card--header"
+  >
+    <Split>
+      <SplitItem>
+        <ExclamationTriangleIcon
+          className="warning"
+          color="currentColor"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      >
+        <Title
+          headingLevel="h2"
+        >
+          Cluster has no metrics
+        </Title>
+      </SplitItem>
+      <SplitItem
+        className="last-checkin"
+      />
+    </Split>
+  </CardTitle>
+</Card>
+`;
+
+exports[`<ClusterHealthCard /> should render correctly with every health status 5`] = `
+<Card
+  className="ocm-c-monitoring-health__card"
+>
+  <CardTitle
+    className="ocm-c-monitoring-health__card--header"
+  >
+    <Split>
+      <SplitItem>
+        <ExclamationTriangleIcon
+          className="warning"
+          color="currentColor"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      >
+        <Title
+          headingLevel="h2"
+        >
+          Cluster has no metrics
+        </Title>
+      </SplitItem>
+      <SplitItem
+        className="last-checkin"
+      />
+    </Split>
+  </CardTitle>
+</Card>
+`;
+
+exports[`<ClusterHealthCard /> should render correctly with every health status 6`] = `
+<Card
+  className="ocm-c-monitoring-health__card"
+>
+  <CardTitle
+    className="ocm-c-monitoring-health__card--header"
+  >
+    <Split>
+      <SplitItem>
+        <ExclamationTriangleIcon
+          className="warning"
+          color="currentColor"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      >
+        <Title
+          headingLevel="h2"
+        >
+          Cluster has no metrics
+        </Title>
+      </SplitItem>
+      <SplitItem
+        className="last-checkin"
+      />
+    </Split>
+  </CardTitle>
+</Card>
+`;
+
+exports[`<ClusterHealthCard /> should render correctly with every health status 7`] = `
+<Card
+  className="ocm-c-monitoring-health__card"
+>
+  <CardTitle
+    className="ocm-c-monitoring-health__card--header"
+  >
+    <Split>
+      <SplitItem>
+        <ExclamationTriangleIcon
+          className="warning"
+          color="currentColor"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      </SplitItem>
+      <SplitItem
+        isFilled={true}
+      >
+        <Title
+          headingLevel="h2"
+        >
+          Cluster has no metrics
+        </Title>
+      </SplitItem>
+      <SplitItem
+        className="last-checkin"
+      />
+    </Split>
+  </CardTitle>
+</Card>
+`;
+
+exports[`<ClusterHealthCard /> should render correctly with every health status 8`] = `
 <Card
   className="ocm-c-monitoring-health__card"
 >

@@ -5,10 +5,11 @@ import {
   GridItem, FormGroup, Title, Alert,
 } from '@patternfly/react-core';
 
-import { constants } from '../CreateOSDFormConstants';
-import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
-import validators from '../../../../../common/validators';
-import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { constants } from '../../CreateOSDFormConstants';
+import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
+import validators from '../../../../../../common/validators';
+import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import InstallToVPC from './InstallToVPC';
 import './NetworkingSection.scss';
 
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
@@ -26,6 +27,9 @@ function NetworkingSection({
   privateClusterSelected,
   cloudProviderID,
   isMultiAz,
+  isAWSCCS,
+  selectedRegion,
+  installToVPCSelected,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -117,6 +121,15 @@ function NetworkingSection({
           defaultValue="basic"
         />
       </FormGroup>
+      {
+        mode === 'advanced' && isAWSCCS && (
+          <InstallToVPC
+            selectedRegion={selectedRegion}
+            isMultiAz={isMultiAz}
+            selected={installToVPCSelected}
+          />
+        )
+      }
       { mode === 'advanced'
         && (
           <>
@@ -264,6 +277,10 @@ function NetworkingSection({
   );
 }
 
+NetworkingSection.defaultProps = {
+  isAWSCCS: false,
+};
+
 NetworkingSection.propTypes = {
   pending: PropTypes.bool,
   mode: PropTypes.string,
@@ -272,6 +289,9 @@ NetworkingSection.propTypes = {
   privateClusterSelected: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
+  isAWSCCS: PropTypes.bool,
+  selectedRegion: PropTypes.string,
+  installToVPCSelected: PropTypes.bool,
 };
 
 export default NetworkingSection;

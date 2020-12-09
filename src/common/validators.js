@@ -798,6 +798,14 @@ const validateGCPServiceAccount = (content) => {
   }
 };
 
+const validateAzIndex = (index) => {
+  const legalIndex = /^[a-f]$/;
+  if (!legalIndex.test(index)) {
+    return 'Availability zone indices are a-f.';
+  }
+  return undefined;
+};
+
 const validators = {
   required,
   checkIdentityProviderName,
@@ -863,6 +871,7 @@ export {
   checkMachinePoolName,
   checkMachinePoolLabels,
   checkLabels,
+  validateAzIndex,
 };
 
 export default validators;

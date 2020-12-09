@@ -11,7 +11,7 @@ import getPersistentStorageValues from '../../../redux/actions/persistentStorage
 import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
-import { scrollToFirstError, strToCleanObject } from '../../../common/helpers';
+import { scrollToFirstError, hasLabelsInput, parseReduxFormKeyValueList } from '../../../common/helpers';
 
 import {
   hasOSDQuotaSelector,
@@ -52,6 +52,8 @@ const mapStateToProps = (state, ownProps) => {
     machineTypes: state.machineTypes,
     organization,
 
+    selectedRegion: valueSelector(state, 'region'),
+    installToVPCSelected: valueSelector(state, 'install_to_vpc'),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
     upgradesEnabled: state.features[OSD_UPGRADES_FEATURE],
@@ -90,6 +92,7 @@ const mapStateToProps = (state, ownProps) => {
       node_drain_grace_period: 60,
       upgrade_policy: 'manual',
       automatic_upgrade_schedule: '0 0 * * 0',
+      node_labels: [{}],
     },
   });
 };
@@ -106,7 +109,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         compute_machine_type: {
           id: formData.machine_type,
         },
-        compute_labels: strToCleanObject(formData.node_labels, '='),
       },
       managed: true,
       cloud_provider: {
@@ -119,6 +121,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       },
       etcd_encryption: formData.etcd_encryption,
     };
+    // only parse node labels if the user added some
+    if (hasLabelsInput(formData.node_labels)) {
+      clusterRequest.nodes.compute_labels = parseReduxFormKeyValueList(formData.node_labels);
+    }
     if (ownProps.product) {
       clusterRequest.product = {
         id: ownProps.product,
@@ -146,6 +152,33 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           secret_access_key: formData.secret_access_key,
         };
         clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
+        if (formData.network_configuration_toggle === 'advanced' && formData.install_to_vpc) {
+          let subnetIds = [
+            formData.private_subnet_id_0, formData.public_subnet_id_0,
+          ];
+
+          if (formData.multi_az === 'true') {
+            subnetIds = [
+              ...subnetIds,
+              formData.private_subnet_id_1, formData.public_subnet_id_1,
+              formData.private_subnet_id_2, formData.public_subnet_id_2,
+            ];
+          }
+          clusterRequest.aws.subnet_ids = subnetIds;
+
+          let AZs = [
+            `${formData.region}${formData.az_0}`,
+          ];
+
+          if (formData.multi_az === 'true') {
+            AZs = [
+              ...AZs,
+              `${formData.region}${formData.az_1}`,
+              `${formData.region}${formData.az_2}`,
+            ];
+          }
+          clusterRequest.nodes.availability_zones = AZs;
+        }
       } else if (ownProps.cloudProviderID === 'gcp') {
         const parsed = JSON.parse(formData.gcp_service_account);
         clusterRequest.gcp = pick(parsed, [
