@@ -47,6 +47,7 @@ class AddOnsParametersModal extends Component {
       addOn,
       isUpdateForm,
       submitClusterAddOnResponse,
+      pristine,
     } = this.props;
 
     const isPending = submitClusterAddOnResponse.pending;
@@ -61,7 +62,7 @@ class AddOnsParametersModal extends Component {
       secondaryText="Cancel"
       onPrimaryClick={handleSubmit}
       onSecondaryClick={this.handleClose}
-      isPrimaryDisabled={false}
+      isPrimaryDisabled={isUpdateForm && pristine}
       isPending={isPending}
     >
 
@@ -99,6 +100,7 @@ AddOnsParametersModal.propTypes = {
   isUpdateForm: PropTypes.bool,
   submitClusterAddOnResponse: PropTypes.object,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
 };
 
 export default AddOnsParametersModal;
