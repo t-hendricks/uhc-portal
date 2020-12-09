@@ -1,0 +1,15 @@
+.ocm-c-overview-details__card {
+  &--body {
+    .pf-c-description-list {
+      margin-top: var(--pf-global--spacer--md);
+      --pf-c-description-list__group--RowGap: var(--pf-global--gutter--sm);
+      dl.pf-l-stack dt {
+        color: var(--pf-global--Color--400);
+        font-size: var(--pf-global--FontSize--sm);
+        font-weight: var(--pf-global--FontWeight--bold);
+        margin-right: var(--pf-global--spacer--sm);
+        text-transform: none;
+      }
+    }
+  }
+}

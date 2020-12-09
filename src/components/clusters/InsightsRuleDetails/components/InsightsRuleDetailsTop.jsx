@@ -13,6 +13,7 @@ import getClusterName from '../../../../common/getClusterName';
 import ReportActionsDropdown from './ReportActionsDropdown';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import DisabledTooltip from '../../ClusterDetails/components/Insights/DisabledTooltip';
+import { appendCrParamToDocLinks } from '../../ClusterDetails/components/Insights/helpers';
 
 function InsightsRuleDetailsTop(props) {
   const {
@@ -38,12 +39,12 @@ function InsightsRuleDetailsTop(props) {
 
   const breadcrumbs = (
     <Breadcrumbs path={
-        [
-          { label: 'Clusters' },
-          { label: clusterName, path: `/details/${cluster.id}#insights` },
-          { label: rule.description },
-        ]
-      }
+      [
+        { label: 'Clusters' },
+        { label: clusterName, path: `/details/${cluster.id}#insights` },
+        { label: rule.description },
+      ]
+    }
     />
   );
 
@@ -59,9 +60,9 @@ function InsightsRuleDetailsTop(props) {
           <ReportDetails
             title={(
               <Title size="lg" headingLevel="h1" className="cl-details-page-title">
-                { rule.disabled && <DisabledTooltip /> }
-                { rule.description }
-                { pending && <Spinner className="cluster-details-spinner" /> }
+                {rule.disabled && <DisabledTooltip />}
+                {rule.description}
+                {pending && <Spinner className="cluster-details-spinner" />}
               </Title>
             )}
             actions={(
@@ -71,7 +72,7 @@ function InsightsRuleDetailsTop(props) {
               </span>
             )}
             createdAt={<DateFormat date={rule.created_at} />}
-            details={rule.details}
+            details={appendCrParamToDocLinks(rule.details)}
             ruleId={rule.rule_id}
             totalRisk={rule.total_risk}
             riskOfChange={rule.risk_of_change}

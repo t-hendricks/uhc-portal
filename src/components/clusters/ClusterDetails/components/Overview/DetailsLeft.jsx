@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import {
+  DescriptionList,
+  DescriptionListTerm,
+  DescriptionListGroup,
+  DescriptionListDescription,
+} from '@patternfly/react-core';
 
 import Timestamp from '../../../../common/Timestamp';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
@@ -34,57 +40,75 @@ function DetailsLeft({ cluster, cloudProviders }) {
 
   return (
     <>
-      <dl className="cluster-details-item">
-        <dt>Cluster ID</dt>
-        <dd>
-          {get(cluster, 'external_id', 'N/A')}
-        </dd>
-        <dt>
-          Type
-        </dt>
-        <dd>
-          <ClusterTypeLabel cluster={cluster} />
-        </dd>
-        <dt>Location</dt>
-        <dd>
-          {region}
-        </dd>
-        <dt>Provider</dt>
-        <dd>
-          {cloudProvider}
-        </dd>
+      <DescriptionList>
+        <DescriptionListGroup>
+          <DescriptionListTerm>Cluster ID</DescriptionListTerm>
+          <DescriptionListDescription>
+            {get(cluster, 'external_id', 'N/A')}
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+        <DescriptionListGroup>
+          <DescriptionListTerm>
+            Type
+          </DescriptionListTerm>
+          <DescriptionListDescription>
+            <ClusterTypeLabel cluster={cluster} />
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+        <DescriptionListGroup>
+          <DescriptionListTerm>Location</DescriptionListTerm>
+          <DescriptionListDescription>
+            {region}
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+        <DescriptionListGroup>
+          <DescriptionListTerm>Provider</DescriptionListTerm>
+          <DescriptionListDescription>
+            {cloudProvider}
+          </DescriptionListDescription>
+        </DescriptionListGroup>
         { cluster.managed
           && (
             <>
-              <dt>Availability</dt>
-              <dd>
-                {cluster.multi_az ? 'Multizone' : 'Single zone'}
-              </dd>
+              <DescriptionListGroup>
+                <DescriptionListTerm>Availability</DescriptionListTerm>
+                <DescriptionListDescription>
+                  {cluster.multi_az ? 'Multizone' : 'Single zone'}
+                </DescriptionListDescription>
+              </DescriptionListGroup>
             </>
           )}
-        <dt>Version</dt>
-        <dd>
-          <ClusterVersionInfo cluster={cluster} />
-        </dd>
-        <dt>Created at</dt>
-        <dd>
-          <Timestamp value={get(cluster, 'creation_timestamp', 'N/A')} />
-        </dd>
-        <dt>Owner</dt>
-        <dd>
-          {get(cluster, 'subscription.creator.name') || get(cluster, 'subscription.creator.username', 'N/A')}
-        </dd>
+        <DescriptionListGroup>
+          <DescriptionListTerm>Version</DescriptionListTerm>
+          <DescriptionListDescription>
+            <ClusterVersionInfo cluster={cluster} />
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+        <DescriptionListGroup>
+          <DescriptionListTerm>Created at</DescriptionListTerm>
+          <DescriptionListDescription>
+            <Timestamp value={get(cluster, 'creation_timestamp', 'N/A')} />
+          </DescriptionListDescription>
+        </DescriptionListGroup>
+        <DescriptionListGroup>
+          <DescriptionListTerm>Owner</DescriptionListTerm>
+          <DescriptionListDescription>
+            {get(cluster, 'subscription.creator.name') || get(cluster, 'subscription.creator.username', 'N/A')}
+          </DescriptionListDescription>
+        </DescriptionListGroup>
         {cluster.managed && (
           <>
-            <dt>
-              Billing model
-            </dt>
-            <dd>
-              { billingModel }
-            </dd>
+            <DescriptionListGroup>
+              <DescriptionListTerm>
+                Billing model
+              </DescriptionListTerm>
+              <DescriptionListDescription>
+                { billingModel }
+              </DescriptionListDescription>
+            </DescriptionListGroup>
           </>
         )}
-      </dl>
+      </DescriptionList>
     </>
   );
 }

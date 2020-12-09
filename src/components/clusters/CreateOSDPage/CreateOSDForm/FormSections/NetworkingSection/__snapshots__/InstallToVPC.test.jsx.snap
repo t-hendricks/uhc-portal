@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InstallToVPC> renders correctly when checkbox is not selected 1`] = `
+<Fragment>
+  <GridItem
+    span={4}
+  >
+    <Field
+      component={[Function]}
+      label="Install into an existing VPC"
+      name="install_to_vpc"
+    />
+  </GridItem>
+  <GridItem
+    span={8}
+  />
+</Fragment>
+`;
+
+exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
+<Fragment>
+  <GridItem
+    span={4}
+  >
+    <Field
+      component={[Function]}
+      label="Install into an existing VPC"
+      name="install_to_vpc"
+    />
+  </GridItem>
+  <GridItem
+    span={8}
+  />
+  <GridItem
+    span={12}
+  >
+    <Title
+      headingLevel="h4"
+      size="md"
+    >
+      Existing VPC
+    </Title>
+    To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availablility zone that you want the cluster installed into.
+  </GridItem>
+  <SubnetFieldsRow
+    index={0}
+    selectedRegion="us-east-1"
+    showLabels={true}
+  />
+  <SubnetFieldsRow
+    index={1}
+    selectedRegion="us-east-1"
+  />
+  <SubnetFieldsRow
+    index={2}
+    selectedRegion="us-east-1"
+  />
+</Fragment>
+`;
+
+exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
+<Fragment>
+  <GridItem
+    span={4}
+  >
+    <Field
+      component={[Function]}
+      label="Install into an existing VPC"
+      name="install_to_vpc"
+    />
+  </GridItem>
+  <GridItem
+    span={8}
+  />
+  <GridItem
+    span={12}
+  >
+    <Title
+      headingLevel="h4"
+      size="md"
+    >
+      Existing VPC
+    </Title>
+    To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availablility zone that you want the cluster installed into.
+  </GridItem>
+  <SubnetFieldsRow
+    index={0}
+    selectedRegion="us-east-1"
+    showLabels={true}
+  />
+</Fragment>
+`;

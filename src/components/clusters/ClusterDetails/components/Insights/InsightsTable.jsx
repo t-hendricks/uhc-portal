@@ -17,7 +17,7 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/component
 import { InsightsLabel } from '@redhat-cloud-services/frontend-components/components/InsightsLabel';
 import { CheckCircleIcon } from '@patternfly/react-icons';
 import AnalysisSummary from './AnalysisSummary';
-import { severityMapping } from './helpers';
+import { severityMapping, appendCrParamToDocLinks } from './helpers';
 import DisabledTooltip from './DisabledTooltip';
 import { setReportDetails } from './InsightsActions';
 import OnRuleDisableFeedbackModal from './OnRuleDisableFeedbackModal';
@@ -245,7 +245,6 @@ class InsightsTable extends React.Component {
       sortBy,
     } = this.state;
 
-
     function getShownDataForRow(rowIndex) {
       if (rowIndex % 2 !== 0) {
         return null;
@@ -296,12 +295,12 @@ class InsightsTable extends React.Component {
                   title: 'Description',
                   selector: report => (
                     <>
-                      { report.disabled ? <DisabledTooltip /> : null }
+                      {report.disabled ? <DisabledTooltip /> : null}
                       <Link
                         to={`/details/${cluster.id}/insights/${report.rule_id.replace(/\./g, '|')}/${report.extra_data.error_key}`}
                         onClick={() => setReportDetails(report)}
                       >
-                        { report.description }
+                        {report.description}
                       </Link>
                     </>
                   ),
@@ -325,7 +324,7 @@ class InsightsTable extends React.Component {
               ]}
               detail={details => (
                 <ReportDetails
-                  details={details.details}
+                  details={appendCrParamToDocLinks(details.details)}
                   ruleId={details.rule_id}
                   totalRisk={details.total_risk}
                   riskOfChange={details.risk_of_change}

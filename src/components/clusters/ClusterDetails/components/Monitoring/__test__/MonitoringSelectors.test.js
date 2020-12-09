@@ -80,6 +80,11 @@ describe('clusterHealthSelector', () => {
           },
         },
       },
+      clusterUpgrades: {
+        schedules: {
+          items: [],
+        },
+      },
     };
 
     it('should not return status DISCONNECTED for OSD cluster', () => {
@@ -99,6 +104,15 @@ describe('clusterHealthSelector', () => {
             },
           },
         },
+        clusterUpgrades: {
+          schedules: {
+            items: [
+              {
+                state: { value: 'running' },
+              },
+            ],
+          },
+        },
       };
       expect(clusterHealthSelector(state, makeFreshCheckIn(), 1))
         .toBe(monitoringStatuses.UPGRADING);
@@ -113,6 +127,11 @@ describe('clusterHealthSelector', () => {
               ...mockOSDCluserDetails,
               state: clusterStates.INSTALLING,
             },
+          },
+        },
+        clusterUpgrades: {
+          schedules: {
+            items: [],
           },
         },
       };
@@ -133,6 +152,13 @@ describe('clusterHealthSelector', () => {
     it('return status HEALTHY', () => {
       expect(clusterHealthSelector(stateWithOsdCluster, makeFreshCheckIn(), 0))
         .toBe(monitoringStatuses.HEALTHY);
+    });
+
+    it('return status UNINSTALLING', () => {
+      const stateWithUninstallingCluster = { ...stateWithOsdCluster };
+      stateWithUninstallingCluster.clusters.details.cluster.state = clusterStates.UNINSTALLING;
+      expect(clusterHealthSelector(stateWithUninstallingCluster, makeFreshCheckIn(), 0))
+        .toBe(monitoringStatuses.UNINSTALLING);
     });
   });
 

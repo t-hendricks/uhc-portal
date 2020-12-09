@@ -10,7 +10,7 @@ import CustomerCloudSubscriptionModal from './FormSections/BillingModelSection/C
 import BillingModelSection from './FormSections/BillingModelSection/BillingModelSection';
 import BasicFieldsSection from './FormSections/BasicFieldsSection';
 import AWSAccountDetailsSection from './FormSections/AWSAccountDetailsSection';
-import NetworkingSection from './FormSections/NetworkingSection';
+import NetworkingSection from './FormSections/NetworkingSection/NetworkingSection';
 import ScaleSection from './FormSections/ScaleSection/ScaleSection';
 import { constants } from './CreateOSDFormConstants';
 
@@ -110,6 +110,8 @@ class CreateOSDForm extends React.Component {
       upgradesEnabled,
       isAutomaticUpgrade,
       canEnableEtcdEncryption,
+      selectedRegion,
+      installToVPCSelected,
     } = this.props;
 
     const {
@@ -240,6 +242,9 @@ class CreateOSDForm extends React.Component {
           privateClusterSelected={privateClusterSelected}
           cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}
+          selectedRegion={selectedRegion}
+          isAWSCCS={isAws && isBYOCForm}
+          installToVPCSelected={installToVPCSelected}
         />
         {/* Encryption */}
         {canEnableEtcdEncryption && (
@@ -326,6 +331,8 @@ CreateOSDForm.propTypes = {
   upgradesEnabled: PropTypes.bool,
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
+  selectedRegion: PropTypes.string,
+  installToVPCSelected: PropTypes.bool,
 };
 
 export default CreateOSDForm;
