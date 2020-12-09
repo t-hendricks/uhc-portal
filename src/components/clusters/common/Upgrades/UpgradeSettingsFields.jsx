@@ -24,7 +24,7 @@ function UpgradeSettingsFields({ isDisabled, isAutomatic, showDivider }) {
             {
               value: 'automatic',
               label: 'Automatic',
-              description: 'Clusters will be automatically upgraded based on your defined day and start time when new versions are available',
+              description: 'Clusters will be automatically updated based on your defined day and start time when new versions are available',
               extraField: isAutomatic && (
               <Field
                 component={UpgradeScheduleSelection}
@@ -49,7 +49,7 @@ function UpgradeSettingsFields({ isDisabled, isAutomatic, showDivider }) {
                   <p>
         Note: High and Critical security concerns (CVEs) will be patched automatically
                     {' '}
-          within 48 hours, regardless of your chosen upgrade strategy.
+          within 48 hours, regardless of your chosen update strategy.
                   </p>
                 </>
               ),
@@ -63,7 +63,7 @@ function UpgradeSettingsFields({ isDisabled, isAutomatic, showDivider }) {
         <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">Node draining</Title>
       You may set a grace period for how long Pod Disruption Budget-protected workloads will
         {' '}
-      be respected during upgrades. After this grace period, any workloads protected by
+      be respected during updates. After this grace period, any workloads protected by
         {' '}
       Pod Disruption Budgets that have not been successfully drained from a node will be
         {' '}
