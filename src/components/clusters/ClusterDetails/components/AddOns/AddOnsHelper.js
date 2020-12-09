@@ -64,6 +64,13 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
 
 const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;
 
+const getParameter = (addOn, paramID) => {
+  if (hasParameters(addOn)) {
+    return addOn.parameters.items.find(item => item.id === paramID);
+  }
+  return undefined;
+};
+
 export {
   isAvailable,
   isInstalled,
@@ -72,4 +79,5 @@ export {
   availableAddOns,
   supportsFreeAddOns,
   hasParameters,
+  getParameter,
 };
