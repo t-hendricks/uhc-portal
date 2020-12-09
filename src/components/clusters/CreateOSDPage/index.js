@@ -11,7 +11,7 @@ import getPersistentStorageValues from '../../../redux/actions/persistentStorage
 import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
-import { scrollToFirstError, hasLabelsInput, parseReduxFormKeyValueList } from '../../../common/helpers';
+import { scrollToFirstError, strToCleanObject } from '../../../common/helpers';
 
 import {
   hasOSDQuotaSelector,
@@ -92,7 +92,6 @@ const mapStateToProps = (state, ownProps) => {
       node_drain_grace_period: 60,
       upgrade_policy: 'manual',
       automatic_upgrade_schedule: '0 0 * * 0',
-      node_labels: [{}],
     },
   });
 };
@@ -109,6 +108,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         compute_machine_type: {
           id: formData.machine_type,
         },
+        compute_labels: strToCleanObject(formData.node_labels, '='),
       },
       managed: true,
       cloud_provider: {
@@ -121,10 +121,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       },
       etcd_encryption: formData.etcd_encryption,
     };
-    // only parse node labels if the user added some
-    if (hasLabelsInput(formData.node_labels)) {
-      clusterRequest.nodes.compute_labels = parseReduxFormKeyValueList(formData.node_labels);
-    }
     if (ownProps.product) {
       clusterRequest.product = {
         id: ownProps.product,
