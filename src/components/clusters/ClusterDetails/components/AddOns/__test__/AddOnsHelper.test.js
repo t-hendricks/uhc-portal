@@ -1,4 +1,4 @@
-import { mockAddOns, mockClusterAddOns } from './AddOns.fixtures';
+import { mockAddOns, mockClusterAddOns, mockClusterAddOnsParams } from './AddOns.fixtures';
 import { quotaSummary } from '../../../../../subscriptions/__test__/Subscriptions.fixtures';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
@@ -8,6 +8,8 @@ import {
   hasQuota,
   availableAddOns,
   hasParameters,
+  getParameter,
+  parameterValuesForEditing,
 } from '../AddOnsHelper';
 
 const { cluster } = fixtures.clusterDetails;
@@ -118,5 +120,41 @@ describe('hasParameters', () => {
   it('should determine that the add-on has no parameters', () => {
     const hasParams = hasParameters(mockAddOns.items[0]);
     expect(hasParams).toBe(false);
+  });
+});
+
+describe('getParameter', () => {
+  it('should return the existing parameter', () => {
+    const param = getParameter(mockAddOns.items[1], 'cidr-range');
+    expect(param).toEqual(mockAddOns.items[1].parameters.items[0]);
+  });
+
+  it('should return undefined for non existing parameter', () => {
+    const param = getParameter(mockAddOns.items[1], 'foo');
+    expect(param).toEqual(undefined);
+  });
+
+  it('should return undefined for addOn with no parameters', () => {
+    const param = getParameter(mockAddOns.items[0], 'cidr-range');
+    expect(param).toEqual(undefined);
+  });
+});
+
+describe('parameterValuesForEditing', () => {
+  it('should return an empty object for addOn with no parameters', () => {
+    const param = parameterValuesForEditing(mockClusterAddOnsParams.items[0], mockAddOns.items[0]);
+    expect(param).toEqual({ parameters: {} });
+  });
+  it('should return an empty object for addOn with parameters but no current values', () => {
+    const param = parameterValuesForEditing(undefined, mockAddOns.items[1]);
+    expect(param).toEqual({ parameters: {} });
+  });
+  it('should return existing values', () => {
+    const param = parameterValuesForEditing(mockClusterAddOnsParams.items[1], mockAddOns.items[1]);
+    expect(param).toEqual({ parameters: { 'cidr-range': '10.1.0.0/16' } });
+  });
+  it('should return only existing values for current addon parameters', () => {
+    const param = parameterValuesForEditing(mockClusterAddOnsParams.items[2], mockAddOns.items[1]);
+    expect(param).toEqual({ parameters: { 'cidr-range': '10.1.0.0/16' } });
   });
 });
