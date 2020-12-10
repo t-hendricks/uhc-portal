@@ -71,6 +71,20 @@ const getParameter = (addOn, paramID) => {
   return undefined;
 };
 
+const parameterValuesForEditing = (addOnInstallation, addOn) => {
+  const vals = { parameters: {} };
+  if (hasParameters(addOnInstallation) && hasParameters(addOn)) {
+    vals.parameters = Object.entries(addOnInstallation.parameters.items).reduce((acc, curr) => {
+      if (getParameter(addOn, curr[1].id)) {
+        // eslint-disable-next-line no-param-reassign
+        acc[curr[1].id] = curr[1].value;
+      }
+      return acc;
+    }, {});
+  }
+  return vals;
+};
+
 export {
   isAvailable,
   isInstalled,
@@ -80,4 +94,5 @@ export {
   supportsFreeAddOns,
   hasParameters,
   getParameter,
+  parameterValuesForEditing,
 };
