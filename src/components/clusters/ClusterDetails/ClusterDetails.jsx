@@ -21,7 +21,7 @@ import intersection from 'lodash/intersection';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-import { BareMetalHostsClusterDetailTab, canAddBareMetalHost } from 'facet-lib';
+import { BareMetalHostsClusterDetailTab, canAddBareMetalHost } from 'openshift-assisted-ui-lib';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
