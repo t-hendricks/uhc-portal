@@ -20,7 +20,7 @@ import { withRouter } from 'react-router';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { FacetRouter } from 'facet-lib';
+import { AssistedUiRouter } from 'openshift-assisted-ui-lib';
 
 import TermsGuardedRoute from './TermsGuardedRoute';
 import apiRequest from '../../services/apiRequest';
@@ -68,7 +68,7 @@ import { ASSISTED_INSTALLER_FEATURE } from '../../redux/constants/featureConstan
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 
-const GatedFacetRouter = withFeatureGate(FacetRouter, ASSISTED_INSTALLER_FEATURE);
+const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
   InstallBareMetal, ASSISTED_INSTALLER_FEATURE, InstallBMUPI, InstallBMIPI,
 );
@@ -125,7 +125,7 @@ function Router({ history }) {
             <Route path="/subscriptions" component={Subscriptions} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/overview" exact component={Overview} />
-            <Route path="/assisted-installer" component={GatedFacetRouter} />
+            <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
             <Route path="/" exact component={ClustersList} />
             <Route component={NotFoundError} />
           </Switch>
