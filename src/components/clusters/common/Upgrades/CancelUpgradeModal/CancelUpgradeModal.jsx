@@ -40,9 +40,9 @@ class CancelUpgradeModal extends React.Component {
 
     return isOpen && (
       <Modal
-        title="Cancel upgrade"
+        title="Cancel update"
         onClose={this.close}
-        primaryText="Cancel this upgrade"
+        primaryText="Cancel this update"
         secondaryText="Close"
         onPrimaryClick={this.deleteSchedule}
         isPending={deleteScheduleRequest.pending}
