@@ -28,7 +28,7 @@ class InstallToVPC extends React.Component {
               <GridItem span={12}>
                 <Title headingLevel="h4" size="md">Existing VPC</Title>
                 To install into an existing VPC you need to ensure that your VPC is configured
-                with a public and a private subnet for each availablility zone that you want
+                with a public and a private subnet for each availability zone that you want
                 the cluster installed into.
               </GridItem>
               <SubnetFieldsRow
