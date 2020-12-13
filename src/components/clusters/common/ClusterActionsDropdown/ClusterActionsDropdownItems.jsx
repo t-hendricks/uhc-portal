@@ -5,6 +5,7 @@ import clusterStates, { isHibernating } from '../clusterStates';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
 import modals from '../../../common/Modal/modals';
+import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
 
 /**
  * This function is used by PF tables to determine which dropdown items are displayed
@@ -322,7 +323,8 @@ function actionResolver(
     && !isArchived;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && isArchived;
-  const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
+  const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL)
+    && !isAssistedInstallCluster(cluster);
   const showEditSubscriptionSettings = get(cluster, 'subscription.plan.id', '') === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
   const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(get(cluster, 'subscription.plan.id', ''));
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership

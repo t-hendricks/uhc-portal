@@ -69,7 +69,7 @@ function ClusterDetailsTop(props) {
       {' '}
       <Button variant="link" isInline onClick={openIDPModal}>Add OAuth configuration</Button>
       {' '}
-      to allow  others to log in.
+      to allow others to log in.
     </Alert>
   );
 

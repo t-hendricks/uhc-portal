@@ -9,9 +9,10 @@ import {
   Flex,
 } from '@patternfly/react-core';
 
+import { ClusterStatus as AIClusterStatus } from 'openshift-assisted-ui-lib';
+import isAssistedInstallSubscription from '../../../../../../common/isAssistedInstallerCluster';
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
-
 import ClusterStateIcon from '../../../../common/ClusterStateIcon/ClusterStateIcon';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
@@ -52,10 +53,16 @@ function DetailsRight({
           <DescriptionListTerm>
             Status
           </DescriptionListTerm>
-          <DescriptionListDescription>
-            <ClusterStateIcon clusterState={cluster.state.state} animated />
-            {' '}
-            {cluster.state.description}
+          <DescriptionListDescription style={cluster.state.style}>
+            { isAssistedInstallSubscription(cluster.subscription)
+              ? <AIClusterStatus status={cluster.metrics.state} />
+              : (
+                <>
+                  <ClusterStateIcon clusterState={cluster.state.state} animated />
+                  {' '}
+                  {cluster.state.description}
+                </>
+              )}
           </DescriptionListDescription>
         </DescriptionListGroup>
         {showVCPU && (

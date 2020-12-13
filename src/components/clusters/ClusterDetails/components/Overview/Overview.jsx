@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import get from 'lodash/get';
 
 import {
   Grid, GridItem, Card, CardBody, Title, Alert, CardTitle,
 } from '@patternfly/react-core';
 
-import get from 'lodash/get';
-
+import { ClusterInstallationProgressCard } from 'openshift-assisted-ui-lib';
 import clusterStates, { getClusterStateAndDescription, isHibernating } from '../../../common/clusterStates';
+
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
@@ -22,6 +23,7 @@ import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import InstallProgress from '../../../common/InstallProgress/InstallProgress';
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
 import CostBreakdownCard from './CostBreakdownCard';
+import isAssistedInstallSubscription from '../../../../../common/isAssistedInstallerCluster';
 
 import './Overview.scss';
 
@@ -57,6 +59,7 @@ class Overview extends React.Component {
       userAccess,
     } = this.props;
     let topCard;
+
     const { showInstallSuccessAlert } = this.state;
     const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
@@ -75,6 +78,7 @@ class Overview extends React.Component {
     const showInsightsAdvisor = insightsData?.status === 200
                               && insightsData?.data && !cluster.managed;
     const showResourceUsage = !isHibernating(cluster.state)
+      && !isAssistedInstallSubscription(cluster.subscription)
       && !shouldShowLogs(cluster) && !isDeprovisioned;
     const showCostBreakdown = !cluster.managed && userAccess.fulfilled
       && userAccess.data !== undefined && userAccess.data === true;
@@ -85,7 +89,7 @@ class Overview extends React.Component {
         <HibernatingClusterCard cluster={cluster} openModal={openModal} />
       );
     } else {
-      topCard = shouldShowLogs(cluster) && (
+      topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
         <>
           <InstallProgress cluster={cluster}>
             <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
@@ -130,6 +134,9 @@ class Overview extends React.Component {
         <GridItem sm={12} xl2={showSidePanel ? 9 : 12}>
           <Grid hasGutter>
             { topCard }
+            {cluster.aiCluster && isAssistedInstallSubscription(cluster.subscription) && (
+            <ClusterInstallationProgressCard clusterStringObj={JSON.stringify(cluster.aiCluster)} />
+            )}
             { (showResourceUsage && !showSidePanel) && resourceUsage}
             <Card className="ocm-c-overview-details__card">
               <CardTitle className="ocm-c-overview-details__card--header">

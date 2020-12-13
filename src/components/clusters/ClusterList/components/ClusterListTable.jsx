@@ -18,6 +18,7 @@ import {
 } from '@patternfly/react-table';
 
 import { Link } from 'react-router-dom';
+import { ClusterStatus as AIClusterStatus } from 'openshift-assisted-ui-lib';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import clusterStates, { getClusterStateAndDescription } from '../../common/clusterStates';
@@ -28,6 +29,13 @@ import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActio
 import skeletonRows from '../../../common/SkeletonRows';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
+import isAssistedInstallSubscription from '../../../../common/isAssistedInstallerCluster';
+
+const aiStatuses = {
+  PENDING: 'pending-for-input',
+  INSUFFICIENT: 'insufficient',
+  READY: 'ready',
+};
 
 function ClusterListTable(props) {
   const {
@@ -54,8 +62,23 @@ function ClusterListTable(props) {
   const clusterRow = (cluster) => {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
 
+    const clusterDetailsPath = isAssistedInstallSubscription(cluster.subscription) && [
+      aiStatuses.PENDING,
+      aiStatuses.INSUFFICIENT,
+      aiStatuses.READY,
+    ].includes(cluster.state)
+      ? `/assisted-installer/clusters/${cluster.id}`
+      : `/details/s/${cluster.subscription.id}`;
+
     const clusterName = (
-      <Link to={`/details/s/${cluster.subscription.id}`} onClick={() => { if (!cluster.partialCS) { setClusterDetails(cluster); } }}>
+      <Link
+        to={clusterDetailsPath}
+        onClick={() => {
+          if (!cluster.partialCS) {
+            setClusterDetails(cluster);
+          }
+        }}
+      >
         {getClusterName(cluster)}
       </Link>
     );
@@ -64,6 +87,9 @@ function ClusterListTable(props) {
     const icon = <ClusterStateIcon clusterState={clusterState.state || ''} animated={false} />;
     const clusterStatus = (clusterStateAndDescription) => {
       const { state, description } = clusterStateAndDescription;
+      if (isAssistedInstallSubscription(cluster.subscription)) {
+        return <AIClusterStatus status={cluster.state} />;
+      }
       if (state === clusterStates.ERROR) {
         return (
           <span>
