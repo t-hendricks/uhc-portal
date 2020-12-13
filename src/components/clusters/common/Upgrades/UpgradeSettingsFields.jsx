@@ -12,7 +12,9 @@ import UpgradeScheduleSelection from './UpgradeScheduleSelection';
 import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
 import './UpgradeSettingsFields.scss';
 
-function UpgradeSettingsFields({ isDisabled, isAutomatic, showDivider }) {
+function UpgradeSettingsFields({
+  isDisabled, isAutomatic, showDivider, change, initialSceduleValue,
+}) {
   return (
     <>
       <GridItem span={12} className="ocm-c-upgrade-policy-radios">
@@ -20,6 +22,11 @@ function UpgradeSettingsFields({ isDisabled, isAutomatic, showDivider }) {
           component={RadioButtons}
           name="upgrade_policy"
           isDisabled={isDisabled}
+          onChange={(_, value) => {
+            if (change && value === 'manual') {
+              change('automatic_upgrade_schedule', initialSceduleValue);
+            }
+          }}
           options={[
             {
               value: 'automatic',
@@ -82,6 +89,8 @@ UpgradeSettingsFields.propTypes = {
   isAutomatic: PropTypes.bool,
   isDisabled: PropTypes.bool,
   showDivider: PropTypes.bool,
+  change: PropTypes.func,
+  initialSceduleValue: PropTypes.string,
 };
 
 export default UpgradeSettingsFields;
