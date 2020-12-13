@@ -39,6 +39,20 @@ exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
       size="md"
     >
       Existing VPC
+      <PopoverHint
+        hint={
+          <React.Fragment>
+            Your VPC must have public and private subnets. Public subnets are associated with appropriate Ingress rules. Private subnets need appropriate routes and tables.
+             
+            <ExternalLink
+              href="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-vpc.html"
+            >
+              Learn more about installing into an existing VPC
+            </ExternalLink>
+          </React.Fragment>
+        }
+        iconClassName="pf-u-ml-sm"
+      />
     </Title>
     To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availability zone that you want the cluster installed into.
   </GridItem>
@@ -80,6 +94,20 @@ exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
       size="md"
     >
       Existing VPC
+      <PopoverHint
+        hint={
+          <React.Fragment>
+            Your VPC must have public and private subnets. Public subnets are associated with appropriate Ingress rules. Private subnets need appropriate routes and tables.
+             
+            <ExternalLink
+              href="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-vpc.html"
+            >
+              Learn more about installing into an existing VPC
+            </ExternalLink>
+          </React.Fragment>
+        }
+        iconClassName="pf-u-ml-sm"
+      />
     </Title>
     To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availability zone that you want the cluster installed into.
   </GridItem>

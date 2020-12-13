@@ -167,14 +167,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           clusterRequest.aws.subnet_ids = subnetIds;
 
           let AZs = [
-            `${formData.region}${formData.az_0}`,
+            formData.az_0,
           ];
 
           if (formData.multi_az === 'true') {
             AZs = [
               ...AZs,
-              `${formData.region}${formData.az_1}`,
-              `${formData.region}${formData.az_2}`,
+              formData.az_1,
+              formData.az_2,
             ];
           }
           clusterRequest.nodes.availability_zones = AZs;

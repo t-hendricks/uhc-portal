@@ -5,7 +5,8 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { required, validateAzIndex } from '../../../../../../common/validators';
+import AvailabilityZoneSelection from './AvailabilityZoneSelection';
+import { required } from '../../../../../../common/validators';
 
 const SubnetFieldsRow = ({
   showLabels = false,
@@ -15,14 +16,11 @@ const SubnetFieldsRow = ({
   <>
     <GridItem className="vpc-input-field" span={3}>
       <Field
-        component={ReduxVerticalFormGroup}
+        component={AvailabilityZoneSelection}
         name={`az_${index}`}
         label={showLabels ? 'Availability zone' : null}
-        type="text"
-        validate={[required, validateAzIndex]}
-        inputPrefix={selectedRegion}
-        helpText={index === 0 && 'Complete the field with an a-f availability zone index'}
-        showHelpTextOnError={false}
+        validate={required}
+        region={selectedRegion}
       />
     </GridItem>
     <GridItem span={3}>
