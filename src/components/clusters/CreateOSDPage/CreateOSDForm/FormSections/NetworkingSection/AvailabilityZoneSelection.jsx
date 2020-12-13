@@ -35,7 +35,7 @@ class AvailabilityZoneSelection extends React.Component {
         label={label}
         className="ocm-c-create-osd-az-select"
         validated={meta.error ? 'error' : undefined}
-        helperTextInvalid={meta.touched && meta.error}
+        helperTextInvalid={meta.dirty && meta.error}
       >
         <Select
           isOpen={isOpen}
@@ -62,7 +62,7 @@ AvailabilityZoneSelection.propTypes = {
     onChange: PropTypes.func,
   }),
   meta: PropTypes.shape({
-    touched: PropTypes.bool,
+    dirty: PropTypes.bool,
     error: PropTypes.string,
   }),
 };

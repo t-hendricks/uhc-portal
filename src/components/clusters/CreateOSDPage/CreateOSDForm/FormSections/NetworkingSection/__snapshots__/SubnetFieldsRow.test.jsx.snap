@@ -1,85 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SubnetFieldsRow /> should render 1`] = `
+exports[`<SubnetFields /> should render 1`] = `
 <Fragment>
-  <GridItem
-    className="vpc-input-field"
-    span={3}
-  >
-    <Field
-      component={[Function]}
-      label={null}
-      name="az_0"
-      region="fake-region"
-      validate={[Function]}
-    />
-  </GridItem>
-  <GridItem
-    span={3}
-  >
-    <Field
-      component={[Function]}
-      label={null}
-      name="private_subnet_id_0"
-      type="text"
-      validate={[Function]}
-    />
-  </GridItem>
-  <GridItem
-    span={3}
-  >
-    <Field
-      component={[Function]}
-      label={null}
-      name="public_subnet_id_0"
-      type="text"
-      validate={[Function]}
-    />
-  </GridItem>
-  <GridItem
-    span={3}
-  />
-</Fragment>
-`;
-
-exports[`<SubnetFieldsRow /> should render with labels 1`] = `
-<Fragment>
-  <GridItem
-    className="vpc-input-field"
-    span={3}
-  >
-    <Field
-      component={[Function]}
-      label="Availability zone"
-      name="az_0"
-      region="fake-region"
-      validate={[Function]}
-    />
-  </GridItem>
-  <GridItem
-    span={3}
-  >
-    <Field
-      component={[Function]}
-      label="Private subnet ID"
-      name="private_subnet_id_0"
-      type="text"
-      validate={[Function]}
-    />
-  </GridItem>
-  <GridItem
-    span={3}
-  >
-    <Field
-      component={[Function]}
-      label="Public subnet ID"
-      name="public_subnet_id_0"
-      type="text"
-      validate={[Function]}
-    />
-  </GridItem>
-  <GridItem
-    span={3}
+  <SingleSubnetFieldsRow
+    index={0}
+    selectedRegion="fake-region"
+    showLabels={true}
   />
 </Fragment>
 `;

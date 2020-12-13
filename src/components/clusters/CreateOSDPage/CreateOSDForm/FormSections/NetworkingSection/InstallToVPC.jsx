@@ -6,7 +6,7 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckbox';
-import SubnetFieldsRow from './SubnetFieldsRow';
+import SubnetFields from './SubnetFields';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 
@@ -42,25 +42,10 @@ function InstallToVPC({ selectedRegion, isMultiAz, selected }) {
                 with a public and a private subnet for each availability zone that you want
                 the cluster installed into.
               </GridItem>
-              <SubnetFieldsRow
-                showLabels
-                index={0}
+              <SubnetFields
+                isMultiAz={isMultiAz}
                 selectedRegion={selectedRegion}
               />
-              {
-                isMultiAz && (
-                  <>
-                    <SubnetFieldsRow
-                      index={1}
-                      selectedRegion={selectedRegion}
-                    />
-                    <SubnetFieldsRow
-                      index={2}
-                      selectedRegion={selectedRegion}
-                    />
-                  </>
-                )
-              }
             </>
           )
         }
