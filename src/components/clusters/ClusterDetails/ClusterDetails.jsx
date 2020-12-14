@@ -417,6 +417,7 @@ class ClusterDetails extends Component {
     );
 
     const consoleURL = get(cluster, 'console.url');
+    const displayMonitoringTab = !isArchived && !cluster.managed;
     const displayAccessControlTab = cluster.managed && !!consoleURL && cluster.state === 'ready';
     const displayNetworkingTab = (cluster.state === clusterStates.READY
       || cluster.state === clusterStates.UPDATING)
@@ -447,7 +448,7 @@ class ClusterDetails extends Component {
           toggleSubscriptionReleased={toggleSubscriptionReleased}
         >
           <TabsRow
-            displayMonitoringTab={!isArchived}
+            displayMonitoringTab={displayMonitoringTab}
             displayAccessControlTab={displayAccessControlTab}
             displayAddOnsTab={displayAddOnsTab}
             displayNetworkingTab={displayNetworkingTab}
@@ -489,7 +490,7 @@ class ClusterDetails extends Component {
             openModal={openModal}
           />
         </TabContent>
-        {!isArchived && (
+        { displayMonitoringTab && (
           <TabContent
             eventKey={1}
             id="monitoringTabContent"
