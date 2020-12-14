@@ -74,7 +74,7 @@ class UpgradeSettingsTab extends React.Component {
       <Grid hasGutter>
         <GridItem lg={9} md={12}>
           <Card>
-            <CardTitle>Upgrade Strategy</CardTitle>
+            <CardTitle>Update Strategy</CardTitle>
             <CardBody>
               {scheduledManualUpgrade && confirmationModalOpen && (
               <Modal
@@ -141,7 +141,7 @@ class UpgradeSettingsTab extends React.Component {
         <GridItem lg={3} md={12}>
           <Card>
             <CardTitle>
-              Upgrade Status
+              Update Status
             </CardTitle>
             <CardBody>
               <UpgradeStatus
