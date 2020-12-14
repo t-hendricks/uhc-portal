@@ -8,7 +8,7 @@ import {
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import NetworkConfigurationCard from './components/NetworkConfigurationCard';
-import EditCluserRoutersCard from './components/EditClusterRoutersCard';
+import EditClusterRoutersCard from './components/EditClusterRoutersCard';
 
 class Networking extends React.Component {
   componentWillUnmount() {
@@ -37,7 +37,7 @@ class Networking extends React.Component {
     return (
       <Grid>
         <GridItem lg={9} md={12}>
-          <EditCluserRoutersCard refreshCluster={refreshCluster} provider={provider} />
+          <EditClusterRoutersCard refreshCluster={refreshCluster} provider={provider} />
         </GridItem>
         <GridItem lg={3} md={12}>
           <NetworkConfigurationCard
