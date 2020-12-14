@@ -418,10 +418,12 @@ class ClusterDetails extends Component {
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && !!consoleURL && cluster.state === 'ready';
+    const cloudProvider = get(cluster, 'cloud_provider.id');
     const displayNetworkingTab = (cluster.state === clusterStates.READY
       || cluster.state === clusterStates.UPDATING)
       && cluster.managed && !!get(cluster, 'api.url')
-      && get(cluster, 'cloud_provider.id') === 'aws';
+      && (cloudProvider === 'aws'
+         || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')));
     const displayMachinePoolsTab = cluster.managed && cluster.state === clusterStates.READY;
     const clusterName = getClusterName(cluster);
     const displaySupportTab = supportTabFeature
