@@ -2,6 +2,7 @@
 
 exports[`<AddOnsDeleteModal /> renders correctly 1`] = `
 <Modal
+  isPending={false}
   isPrimaryDisabled={true}
   onClose={[Function]}
   onPrimaryClick={[Function]}
