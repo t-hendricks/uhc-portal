@@ -5,11 +5,11 @@ exports[`CreateOSDForm; should render 1`] = `
   <GridItem
     span={12}
   >
-    <h3
-      className="osd-page-header"
+    <Title
+      headingLevel="h3"
     >
       Billing model
-    </h3>
+    </Title>
   </GridItem>
   <BillingModelSection
     byocSelected={false}
@@ -21,11 +21,11 @@ exports[`CreateOSDForm; should render 1`] = `
   <GridItem
     span={12}
   >
-    <h3
-      className="osd-page-header"
+    <Title
+      headingLevel="h3"
     >
       Cluster details
-    </h3>
+    </Title>
   </GridItem>
   <BasicFieldsSection
     change={[MockFunction]}
@@ -52,9 +52,11 @@ exports[`CreateOSDForm; should render 1`] = `
   <GridItem
     span={12}
   >
-    <h3>
+    <Title
+      headingLevel="h3"
+    >
       Scale
-    </h3>
+    </Title>
     <p>
       The number and instance type of compute nodes in your cluster. After cluster creation you will be able to change the number of compute nodes in your cluster, but you will not be able to change the worker node instance type.
     </p>
