@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import {
+  DescriptionList,
+  DescriptionListTerm,
+  DescriptionListGroup,
+  DescriptionListDescription,
+  Flex,
+} from '@patternfly/react-core';
 
 import ClusterStateIcon from '../../../../common/ClusterStateIcon/ClusterStateIcon';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
@@ -33,151 +40,174 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
 
   return (
     <>
-      <dl className="cluster-details-item">
-        <dt>
-          Status
-        </dt>
-        { isArchived ? (
-          <dd>
-            Archived
-          </dd>
-        ) : (
-          <dd style={cluster.state.style}>
-            <ClusterStateIcon clusterState={cluster.state.state} animated />
-            {' '}
-            {cluster.state.description}
-          </dd>
-        )}
+      <DescriptionList>
+        <DescriptionListGroup>
+          <DescriptionListTerm>
+            Status
+          </DescriptionListTerm>
+          { isArchived ? (
+            <DescriptionListDescription>
+              Archived
+            </DescriptionListDescription>
+          ) : (
+            <DescriptionListDescription style={cluster.state.style}>
+              <ClusterStateIcon clusterState={cluster.state.state} animated />
+              {' '}
+              {cluster.state.description}
+            </DescriptionListDescription>
+          )}
+        </DescriptionListGroup>
+
         {showVCPU && (
           <>
-            <dt>
-              Total vCPU
-            </dt>
-            <dd>
-              {cluster.metrics.cpu.total.value}
-              {' '}
-              vCPU
-            </dd>
+            <DescriptionListGroup>
+              <DescriptionListTerm>
+                Total vCPU
+              </DescriptionListTerm>
+              <DescriptionListDescription>
+                {cluster.metrics.cpu.total.value}
+                {' '}
+                vCPU
+              </DescriptionListDescription>
+            </DescriptionListGroup>
           </>
         )}
-        <dt>
-          Total memory
-        </dt>
-        <dd>
-          {get(cluster, 'subscription.status') === subscriptionStatuses.DISCONNECTED ? (
-            'N/A'
-          )
-            : (
-              <>
-                {memoryTotalWithUnit.value}
-                {' '}
-                {memoryTotalWithUnit.unit}
-              </>
-            )}
-        </dd>
+        <DescriptionListGroup>
+          <DescriptionListTerm>
+            Total memory
+          </DescriptionListTerm>
+          <DescriptionListDescription>
+            {get(cluster, 'subscription.status') === subscriptionStatuses.DISCONNECTED ? (
+              'N/A'
+            )
+              : (
+                <>
+                  {memoryTotalWithUnit.value}
+                  {' '}
+                  {memoryTotalWithUnit.unit}
+                </>
+              )}
+          </DescriptionListDescription>
+        </DescriptionListGroup>
         { cluster.managed && !cluster.byoc && (
           <>
-            <dt>
-            Load balancers
-            </dt>
-            <dd>
-              {cluster.load_balancer_quota}
-            </dd>
-            <dt>
-            Persistent storage
-            </dt>
-            <dd>
-              {humanizedPersistentStorage.value}
-              {' '}
-              {humanizedPersistentStorage.unit}
-            </dd>
+            <DescriptionListGroup>
+              <DescriptionListTerm>
+                Load balancers
+              </DescriptionListTerm>
+              <DescriptionListDescription>
+                {cluster.load_balancer_quota}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+            <DescriptionListGroup>
+              <DescriptionListTerm>
+                Persistent storage
+              </DescriptionListTerm>
+              <DescriptionListDescription>
+                {humanizedPersistentStorage.value}
+                {' '}
+                {humanizedPersistentStorage.unit}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
           </>
         )}
         {showDesiredNodes ? (
           <>
-            <dt>
-              Nodes
-              <span className="font-weight-normal"> (actual/desired)</span>
-            </dt>
-            <dd>
-              <dl className="cluster-details-item-list">
-                <dt>
-                  Master:
-                  {' '}
-                </dt>
-                <dd>
-                  { masterActualNodes !== '-' || masterDesiredNodes !== '-'
-                    ? `${masterActualNodes}/${masterDesiredNodes}`
-                    : 'N/A'}
-                </dd>
-              </dl>
-              {showInfraNodes && (
-                <dl className="cluster-details-item-list">
-                  <dt>
-                    Infra:
-                    {' '}
-                  </dt>
-                  <dd>
-                    { infraActualNodes !== '-' || infraDesiredNodes !== '-'
-                      ? `${infraActualNodes}/${infraDesiredNodes}`
-                      : 'N/A'}
-                  </dd>
+            <DescriptionListGroup>
+              <DescriptionListTerm>
+                Nodes
+                <span className="font-weight-normal"> (actual/desired)</span>
+              </DescriptionListTerm>
+              <DescriptionListDescription>
+                <dl className="pf-l-stack">
+                  <Flex>
+                    <dt>
+                      Master:
+                      {' '}
+                    </dt>
+                    <dd>
+                      { masterActualNodes !== '-' || masterDesiredNodes !== '-'
+                        ? `${masterActualNodes}/${masterDesiredNodes}`
+                        : 'N/A'}
+                    </dd>
+                  </Flex>
+                  {showInfraNodes && (
+                    <>
+                      <Flex>
+                        <dt>
+                          Infra:
+                          {' '}
+                        </dt>
+                        <dd>
+                          { infraActualNodes !== '-' || infraDesiredNodes !== '-'
+                            ? `${infraActualNodes}/${infraDesiredNodes}`
+                            : 'N/A'}
+                        </dd>
+                      </Flex>
+                    </>
+                  )}
+                  <Flex>
+                    <dt>
+                      Compute:
+                      {' '}
+                    </dt>
+                    <dd>
+                      { computeActualNodes !== '-' || computeDesiredNodes !== '-'
+                        ? `${computeActualNodes}/${computeDesiredNodes}`
+                        : 'N/A'}
+                    </dd>
+                  </Flex>
                 </dl>
-              )}
-              <dl className="cluster-details-item-list">
-                <dt>
-                  Compute:
-                  {' '}
-                </dt>
-                <dd>
-                  { computeActualNodes !== '-' || computeDesiredNodes !== '-'
-                    ? `${computeActualNodes}/${computeDesiredNodes}`
-                    : 'N/A'}
-                </dd>
-              </dl>
-            </dd>
+              </DescriptionListDescription>
+            </DescriptionListGroup>
           </>
         )
           : (
             <>
-              <dt>
-             Nodes
-              </dt>
-              <dd>
-                <dl className="cluster-details-item-list">
-                  <dt>
-               Master:
-                    {' '}
-                  </dt>
-                  <dd>
-                    {get(cluster, 'metrics.nodes.master', 'N/A')}
-                  </dd>
-                </dl>
-                {showInfraNodes && (
-                <dl className="cluster-details-item-list">
-                  <dt>
-                 Infra:
-                    {' '}
-                  </dt>
-                  <dd>
-                    {get(cluster, 'metrics.nodes.infra', 'N/A')}
-                  </dd>
-                </dl>
-                )}
-                <dl className="cluster-details-item-list">
-                  <dt>
-               Compute:
-                    {' '}
-                  </dt>
-                  <dd>
-                    {get(cluster, 'metrics.nodes.compute', 'N/A')}
-                  </dd>
-                </dl>
-              </dd>
+              <DescriptionListGroup>
+                <DescriptionListTerm>
+                  Nodes
+                </DescriptionListTerm>
+                <DescriptionListDescription>
+                  <dl className="pf-l-stack">
+                    <Flex>
+                      <dt>
+                        Master:
+                        {' '}
+                      </dt>
+                      <dd>
+                        {get(cluster, 'metrics.nodes.master', 'N/A')}
+                      </dd>
+                    </Flex>
+                    {showInfraNodes && (
+                      <>
+                        <Flex>
+                          <dt>
+                            Infra:
+                            {' '}
+                          </dt>
+                          <dd>
+                            {get(cluster, 'metrics.nodes.infra', 'N/A')}
+                          </dd>
+                        </Flex>
+                      </>
+                    )}
+                    <Flex>
+                      <dt>
+                        Compute:
+                        {' '}
+                      </dt>
+                      <dd>
+                        {get(cluster, 'metrics.nodes.compute', 'N/A')}
+                      </dd>
+                    </Flex>
+                  </dl>
+                </DescriptionListDescription>
+              </DescriptionListGroup>
             </>
           )}
         <ClusterNetwork cluster={cluster} />
-      </dl>
+      </DescriptionList>
     </>
   );
 }

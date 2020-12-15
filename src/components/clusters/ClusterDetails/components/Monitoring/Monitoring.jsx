@@ -24,6 +24,7 @@ class Monitoring extends React.Component {
     } = this.props;
 
     const isInstalling = healthStatus === monitoringStatuses.INSTALLING;
+    const isUninstalling = healthStatus === monitoringStatuses.UNINSTALLING;
 
     if (healthStatus === monitoringStatuses.DISCONNECTED) {
       return (
@@ -44,6 +45,17 @@ class Monitoring extends React.Component {
           <ClusterHealthCard status={healthStatus} />
           <MonitoringEmptyState hideLastCheckIn>
             <p>Monitoring data is not available at this time. Try again later.</p>
+          </MonitoringEmptyState>
+        </>
+      );
+    }
+
+    if (isUninstalling) {
+      return (
+        <>
+          <ClusterHealthCard status={healthStatus} />
+          <MonitoringEmptyState hideLastCheckIn title="Monitoring data is no longer available">
+            <p>The cluster is currently uninstalling. This will take a few minutes to complete.</p>
           </MonitoringEmptyState>
         </>
       );

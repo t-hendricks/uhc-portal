@@ -51,6 +51,8 @@ class UpgradeSettingsTab extends React.Component {
       cluster,
       openModal,
       versionInfo,
+      change,
+      initialValues,
     } = this.props;
     const { confirmationModalOpen } = this.state;
 
@@ -72,7 +74,7 @@ class UpgradeSettingsTab extends React.Component {
       <Grid hasGutter>
         <GridItem lg={9} md={12}>
           <Card>
-            <CardTitle>Upgrade Strategy</CardTitle>
+            <CardTitle>Update Strategy</CardTitle>
             <CardBody>
               {scheduledManualUpgrade && confirmationModalOpen && (
               <Modal
@@ -108,6 +110,8 @@ class UpgradeSettingsTab extends React.Component {
                   <UpgradeSettingsFields
                     isAutomatic={isAutomatic}
                     isDisabled={isDisabled}
+                    change={change}
+                    initialSceduleValue={initialValues.automatic_upgrade_schedule}
                     showDivider
                   />
                 </Grid>
@@ -137,7 +141,7 @@ class UpgradeSettingsTab extends React.Component {
         <GridItem lg={3} md={12}>
           <Card>
             <CardTitle>
-              Upgrade Status
+              Update Status
             </CardTitle>
             <CardBody>
               <UpgradeStatus
@@ -208,6 +212,10 @@ UpgradeSettingsTab.propTypes = {
   }),
   reset: PropTypes.func,
   openModal: PropTypes.func,
+  change: PropTypes.func,
+  initialValues: PropTypes.shape({
+    automatic_upgrade_schedule: PropTypes.string,
+  }),
 };
 
 export default UpgradeSettingsTab;

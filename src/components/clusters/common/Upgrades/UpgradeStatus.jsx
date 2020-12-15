@@ -76,7 +76,7 @@ function UpgradeStatus({
           hasMore={!isManualUpgradeScheduled && availableUpgrades.length > 1}
         />
 
-        {scheduledUpgrade && upgradeState !== 'started' && (
+        {scheduledUpgrade && upgradeState !== 'started' && upgradeState !== 'pending' && (
           <>
             <div className="ocm-upgrade-status-scheduled-title">Upgrade scheduled</div>
             <DateFormat type="exact" date={Date.parse(scheduledUpgrade.next_run)} />
@@ -95,7 +95,7 @@ function UpgradeStatus({
           openModal('cancel-upgrade', { clusterID, schedule: scheduledUpgrade });
         }}
       >
-         Cancel this upgrade
+         Cancel this update
       </Button>
     )
   }

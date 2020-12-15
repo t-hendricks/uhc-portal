@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field, FieldArray } from 'redux-form';
 import {
   FormGroup,
   GridItem,
@@ -8,14 +8,14 @@ import {
 } from '@patternfly/react-core';
 
 import MachineTypeSelection from './MachineTypeSelection';
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { ReduxFormKeyValueList } from '../../../../../common/ReduxFormComponents';
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
 import NodeCountInput from '../../../../common/NodeCountInput';
 import { constants } from '../../CreateOSDFormConstants';
 
 import PopoverHint from '../../../../../common/PopoverHint';
-import { required, checkMachinePoolLabels } from '../../../../../../common/validators';
+import { required } from '../../../../../../common/validators';
 
 function ScaleSection({
   pending,
@@ -29,6 +29,7 @@ function ScaleSection({
   gridSpan = 9,
   minNodes,
   isMachinePool = false,
+  nodeLabelsGridSpan = 4,
 }) {
   return (
     <>
@@ -75,27 +76,15 @@ function ScaleSection({
         />
       </GridItem>
       <GridItem span={8} />
-      <GridItem span={4}>
+      <GridItem span={nodeLabelsGridSpan}>
         <ExpandableSection
           toggleTextCollapsed="Edit node labels"
           toggleTextExpanded="Edit node labels"
         >
-          <FormGroup label="Node labels">
-            <Field
-              component={ReduxVerticalFormGroup}
-              arid-label="Node labels"
-              name="node_labels"
-              type="text"
-              helpText="Comma separated pairs in key=value format."
-              key="node_label"
-              disabled={pending}
-              showHelpTextOnError={false}
-              validate={checkMachinePoolLabels}
-            />
-          </FormGroup>
+          <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
         </ExpandableSection>
       </GridItem>
-      <GridItem span={8} />
+      <GridItem span={12 - nodeLabelsGridSpan} />
       {/* Persistent Storage & Load Balancers */}
       { showStorageAndLoadBalancers && !isBYOC && (
         <>
@@ -149,6 +138,7 @@ ScaleSection.propTypes = {
   product: PropTypes.string.isRequired,
   handleMachineTypesChange: PropTypes.func.isRequired,
   gridSpan: PropTypes.number,
+  nodeLabelsGridSpan: PropTypes.number,
   minNodes: PropTypes.number,
   isMachinePool: PropTypes.bool,
 };

@@ -99,7 +99,7 @@ class UpgradeTimeSelection extends React.Component {
 
     return (
       <>
-        <Title className="wizard-step-title" size="lg" headingLevel="h3">Schedule upgrade</Title>
+        <Title className="wizard-step-title" size="lg" headingLevel="h3">Schedule update</Title>
         <Form className="wizard-step-body">
           <FormGroup fieldId="upgrade-schedule-now">
             <Radio
@@ -107,7 +107,7 @@ class UpgradeTimeSelection extends React.Component {
               name="upgrade-schedule-type"
               id="upgrade-schedule-now"
               value="now"
-              label="Upgrade now (upgrade will begin within the next hour)"
+              label="Update now (update will begin within the next hour)"
               onChange={this.modeChange}
             />
           </FormGroup>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { InfoCircleIcon } from '@patternfly/react-icons';
 import './UpdateGraph.scss';
 
 const GraphContainer = ({ children }) => (
@@ -38,12 +39,6 @@ const VersionDot = ({ current }) => (
   />
 );
 
-const MoreLabel = () => (
-  <div className="ocm-upgrade-graph-more-versions">
-    + more
-  </div>
-);
-
 const UpdateGraph = ({ currentVersion, updateVersion, hasMore }) => (
   <div className="ocm-upgrade-graph">
     <GraphContainer>
@@ -52,14 +47,6 @@ const UpdateGraph = ({ currentVersion, updateVersion, hasMore }) => (
           <VersionLabel>{currentVersion}</VersionLabel>
           <VersionDot current />
         </GraphLine>
-        { hasMore && (
-          <>
-            <GraphLine />
-            <GraphLine>
-              <MoreLabel />
-            </GraphLine>
-          </>
-        )}
         { updateVersion && (
           <>
             <GraphLine />
@@ -71,6 +58,12 @@ const UpdateGraph = ({ currentVersion, updateVersion, hasMore }) => (
         )}
       </GraphPath>
     </GraphContainer>
+    { hasMore && (
+      <div className="ocm-upgrade-additional-versions-available">
+        <InfoCircleIcon />
+        {`Additional versions available between ${currentVersion} and ${updateVersion}`}
+      </div>
+    )}
   </div>
 );
 

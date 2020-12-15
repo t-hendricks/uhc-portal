@@ -29,20 +29,21 @@ const Insights = ({
     );
   }
 
+  const status = get(insightsData, 'status');
   // No enabled rules for cluster
-  if (insightsData.status === 404) {
+  if (status === 404) {
     return <NoRulesMessage />;
   }
   // insights-operator was just installed on cluster, no information yet
-  if (insightsData.status === 204) {
+  if (status === 204) {
     return <AnalysisInProgressMessage />;
   }
-  // Error on aggregator side
-  if (insightsData.status === 500) {
+  // Another error
+  if (status !== 200 && status !== 304) {
     return <ErrorMessage />;
   }
   // No issues was found
-  if (!insightsData || get(insightsData, 'meta.count', 0) === 0) {
+  if (get(insightsData, 'meta.count', 0) === 0) {
     return <NoIssuesMessage lastChecked={get(insightsData, 'meta.last_checked_at')} />;
   }
 

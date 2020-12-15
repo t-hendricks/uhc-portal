@@ -139,9 +139,9 @@ class TabsRow extends React.Component {
       },
       {
         key: 8,
-        title: 'Upgrade settings',
+        title: 'Update settings',
         contentId: 'upgradeSettingsTabContent',
-        id: 'upgradeSettings',
+        id: 'updateSettings',
         show: displayUpgradeSettingsTab,
         ref: upgradeSettingsTabRef,
       },

@@ -17,7 +17,7 @@ import validators, {
   checkMachinePoolLabels,
   awsNumericAccountID,
   validateServiceAccountObject,
-  validateAzIndex,
+  validateUniqueAZ,
 } from '../validators';
 import fixtures from './validators.fixtures';
 
@@ -509,10 +509,18 @@ test('GCP service account JSON', () => {
   });
 });
 
-test('Validate AZ index', () => {
-  expect(validateAzIndex('a')).toBe(undefined);
-  expect(validateAzIndex('e')).toBe(undefined);
-  expect(validateAzIndex('g')).toBe('Availability zone indices are a-f.');
-  expect(validateAzIndex('bb')).toBe('Availability zone indices are a-f.');
-  expect(validateAzIndex('asdf')).toBe('Availability zone indices are a-f.');
+test('Unique AZs', () => {
+  const name = 'az_0';
+  let value = 'a';
+  const AllValues = {
+    az_1: 'b',
+    az_2: 'c',
+  };
+  expect(validateUniqueAZ(value, AllValues, null, name)).toBe(undefined);
+  value = 'b';
+  expect(validateUniqueAZ(value, AllValues, null, name)).toBe('Each subnet should be in a different AZ.');
+  AllValues.az_1 = 'd';
+  expect(validateUniqueAZ(value, AllValues, null, name)).toBe(undefined);
+  value = 'd';
+  expect(validateUniqueAZ(value, AllValues, null, name)).toBe('Each subnet should be in a different AZ.');
 });
