@@ -42,10 +42,7 @@ const mapStateToProps = (state, ownProps) => {
 
   let privateClusterSelected = false;
   const valueSelector = formValueSelector('CreateCluster');
-
-  if (isAwsForm) {
-    privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
-  }
+  privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
 
   return ({
     createClusterResponse: state.clusters.createdCluster,
