@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import {
   Button,
   Card,
-  CardBody, 
+  CardBody,
   CardTitle,
   DescriptionList,
   DescriptionListTerm,
