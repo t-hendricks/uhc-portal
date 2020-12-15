@@ -56,17 +56,8 @@ exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
     </Title>
     To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availability zone that you want the cluster installed into.
   </GridItem>
-  <SubnetFieldsRow
-    index={0}
-    selectedRegion="us-east-1"
-    showLabels={true}
-  />
-  <SubnetFieldsRow
-    index={1}
-    selectedRegion="us-east-1"
-  />
-  <SubnetFieldsRow
-    index={2}
+  <SubnetFields
+    isMultiAz={true}
     selectedRegion="us-east-1"
   />
 </Fragment>
@@ -111,10 +102,9 @@ exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
     </Title>
     To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availability zone that you want the cluster installed into.
   </GridItem>
-  <SubnetFieldsRow
-    index={0}
+  <SubnetFields
+    isMultiAz={false}
     selectedRegion="us-east-1"
-    showLabels={true}
   />
 </Fragment>
 `;
