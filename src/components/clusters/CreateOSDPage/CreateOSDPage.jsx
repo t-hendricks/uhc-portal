@@ -130,7 +130,6 @@ class CreateOSDPage extends React.Component {
       clustersQuota,
       cloudProviderID,
       privateClusterSelected,
-      upgradesEnabled,
       isAutomaticUpgrade,
       canEnableEtcdEncryption,
       selectedRegion,
@@ -267,7 +266,6 @@ class CreateOSDPage extends React.Component {
                     cloudProviderID={cloudProviderID}
                     privateClusterSelected={privateClusterSelected}
                     product={product}
-                    upgradesEnabled={upgradesEnabled}
                     isAutomaticUpgrade={isAutomaticUpgrade}
                     canEnableEtcdEncryption={canEnableEtcdEncryption}
                     selectedRegion={selectedRegion}
@@ -354,7 +352,6 @@ CreateOSDPage.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.string,
   privateClusterSelected: PropTypes.bool.isRequired,
-  upgradesEnabled: PropTypes.bool,
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
   selectedRegion: PropTypes.string,

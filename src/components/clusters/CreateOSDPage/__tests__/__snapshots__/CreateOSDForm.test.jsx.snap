@@ -79,5 +79,18 @@ exports[`CreateOSDForm; should render 1`] = `
     showClusterPrivacy={true}
     toggleNetwork={[Function]}
   />
+  <GridItem
+    span={12}
+  >
+    <Divider />
+  </GridItem>
+  <Title
+    headingLevel="h3"
+  >
+    Cluster updates
+  </Title>
+  <UpgradeSettingsFields
+    isDisabled={false}
+  />
 </Fragment>
 `;

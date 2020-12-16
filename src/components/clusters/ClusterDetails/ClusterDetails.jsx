@@ -342,7 +342,6 @@ class ClusterDetails extends Component {
       setOpenedTab,
       initTabOpen,
       supportTabFeature,
-      upgradesEnabled,
       assistedInstallerEnabled,
     } = this.props;
     const { selectedTab } = this.state;
@@ -423,7 +422,7 @@ class ClusterDetails extends Component {
     const clusterName = getClusterName(cluster);
     const displaySupportTab = supportTabFeature
       && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING);
-    const displayUpgradeSettingsTab = upgradesEnabled && cluster.managed && cluster.canEdit;
+    const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit;
     const displayAddBareMetalHosts = assistedInstallerEnabled && canAddBareMetalHost({ cluster });
 
     return (
@@ -709,7 +708,6 @@ ClusterDetails.propTypes = {
   getNotificationContacts: PropTypes.func.isRequired,
   getSupportCases: PropTypes.func.isRequired,
   supportCases: PropTypes.object.isRequired,
-  upgradesEnabled: PropTypes.bool,
   assistedInstallerEnabled: PropTypes.bool,
   getSchedules: PropTypes.func,
 };
