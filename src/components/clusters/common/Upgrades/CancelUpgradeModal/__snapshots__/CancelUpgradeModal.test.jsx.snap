@@ -20,9 +20,9 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
     onClose={[Function]}
     onPrimaryClick={[Function]}
     onSecondaryClick={[Function]}
-    primaryText="Cancel this upgrade"
+    primaryText="Cancel this update"
     secondaryText="Close"
-    title="Cancel upgrade"
+    title="Cancel update"
   >
     <Modal
       actions={
@@ -33,7 +33,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
             type="submit"
             variant="primary"
           >
-            Cancel this upgrade
+            Cancel this update
           </Button>,
           <Button
             onClick={[Function]}
@@ -53,7 +53,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
       onClose={[Function]}
       ouiaSafe={true}
       showClose={true}
-      title="Cancel upgrade"
+      title="Cancel update"
       variant="small"
     >
       <Portal
@@ -106,7 +106,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                       class="pf-c-modal-box__title pf-c-modal-box__title"
                       id="pf-modal-part-1"
                     >
-                      Cancel upgrade
+                      Cancel update
                     </h1>
                   </header>
                   <div
@@ -141,7 +141,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                       data-ouia-safe="true"
                       type="submit"
                     >
-                      Cancel this upgrade
+                      Cancel this update
                     </button>
                     <button
                       aria-disabled="false"
@@ -169,7 +169,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                 type="submit"
                 variant="primary"
               >
-                Cancel this upgrade
+                Cancel this update
               </Button>,
               <Button
                 onClick={[Function]}
@@ -192,7 +192,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
           ouiaId="OUIA-Generated-Modal-small-1"
           ouiaSafe={true}
           showClose={true}
-          title="Cancel upgrade"
+          title="Cancel update"
           variant="small"
         >
           <Backdrop>
@@ -292,13 +292,13 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                           <ModalBoxTitle
                             className="pf-c-modal-box__title"
                             id="pf-modal-part-1"
-                            title="Cancel upgrade"
+                            title="Cancel update"
                           >
                             <h1
                               className="pf-c-modal-box__title pf-c-modal-box__title"
                               id="pf-modal-part-1"
                             >
-                              Cancel upgrade
+                              Cancel update
                             </h1>
                           </ModalBoxTitle>
                         </header>
@@ -361,7 +361,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                               role={null}
                               type="submit"
                             >
-                              Cancel this upgrade
+                              Cancel this update
                             </button>
                           </Button>
                           <Button

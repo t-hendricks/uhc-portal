@@ -24,7 +24,7 @@ import { NotificationPortal } from '@redhat-cloud-services/frontend-components-n
 import * as Sentry from '@sentry/browser';
 import { SessionTiming } from '@sentry/integrations';
 
-import { Api, Config } from 'facet-lib';
+import { Api, Config } from 'openshift-assisted-ui-lib';
 
 import { userInfoResponse } from './redux/actions/userActions';
 import config from './config';

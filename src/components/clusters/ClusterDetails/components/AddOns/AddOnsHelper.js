@@ -64,6 +64,27 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
 
 const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;
 
+const getParameter = (addOn, paramID) => {
+  if (hasParameters(addOn)) {
+    return addOn.parameters.items.find(item => item.id === paramID);
+  }
+  return undefined;
+};
+
+const parameterValuesForEditing = (addOnInstallation, addOn) => {
+  const vals = { parameters: {} };
+  if (hasParameters(addOnInstallation) && hasParameters(addOn)) {
+    vals.parameters = Object.entries(addOnInstallation.parameters.items).reduce((acc, curr) => {
+      if (getParameter(addOn, curr[1].id)) {
+        // eslint-disable-next-line no-param-reassign
+        acc[curr[1].id] = curr[1].value;
+      }
+      return acc;
+    }, {});
+  }
+  return vals;
+};
+
 export {
   isAvailable,
   isInstalled,
@@ -72,4 +93,6 @@ export {
   availableAddOns,
   supportsFreeAddOns,
   hasParameters,
+  getParameter,
+  parameterValuesForEditing,
 };

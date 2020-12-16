@@ -21,7 +21,7 @@ import intersection from 'lodash/intersection';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-import { BareMetalHostsClusterDetailTab, canAddBareMetalHost } from 'facet-lib';
+import { BareMetalHostsClusterDetailTab, canAddBareMetalHost } from 'openshift-assisted-ui-lib';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
@@ -409,19 +409,16 @@ class ClusterDetails extends Component {
 
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
-    const displayInsightsTab = !cluster.managed && !isArchived && (
-      !insightsData[cluster.external_id] || 'meta' in insightsData[cluster.external_id]
-      || insightsData[cluster.external_id].status === 404
-      || insightsData[cluster.external_id].status === 500
-      || insightsData[cluster.external_id].status === 204
-    );
+    const displayInsightsTab = !cluster.managed && !isArchived;
 
     const consoleURL = get(cluster, 'console.url');
     const displayAccessControlTab = cluster.managed && !!consoleURL && cluster.state === 'ready';
+    const cloudProvider = get(cluster, 'cloud_provider.id');
     const displayNetworkingTab = (cluster.state === clusterStates.READY
       || cluster.state === clusterStates.UPDATING)
       && cluster.managed && !!get(cluster, 'api.url')
-      && get(cluster, 'cloud_provider.id') === 'aws';
+      && (cloudProvider === 'aws'
+         || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')));
     const displayMachinePoolsTab = cluster.managed && cluster.state === clusterStates.READY;
     const clusterName = getClusterName(cluster);
     const displaySupportTab = supportTabFeature

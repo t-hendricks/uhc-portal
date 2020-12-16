@@ -31,10 +31,10 @@ function FinishedStep({
     <EmptyState variant="large" className="wizard-step-body">
       <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
       <Title headingLevel="h4" size="lg">
-        Scheduled cluster upgrade
+        Scheduled cluster update
       </Title>
       <EmptyStateBody>
-        Your upgrade was successfully scheduled to start within
+        Your update was successfully scheduled to start within
         {' '}
         { scheduleType === 'now' ? 'the next hour' : (
           <>

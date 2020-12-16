@@ -238,7 +238,7 @@ class CreateOSDForm extends React.Component {
         <NetworkingSection
           mode={mode}
           toggleNetwork={this.toggleNetwork}
-          showClusterPrivacy={isAws}
+          showClusterPrivacy={isAws || (isGCP && isBYOCForm)}
           privateClusterSelected={privateClusterSelected}
           cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}

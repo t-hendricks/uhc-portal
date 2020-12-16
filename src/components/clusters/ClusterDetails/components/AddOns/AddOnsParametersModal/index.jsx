@@ -4,6 +4,7 @@ import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 import { closeModal } from '../../../../../common/Modal/ModalActions';
 import AddOnsParametersModal from './AddOnsParametersModal';
 import { addClusterAddOn, updateClusterAddOn, clearClusterAddOnsResponses } from '../AddOnsActions';
+import { parameterValuesForEditing } from '../AddOnsHelper';
 
 const reduxFormConfig = {
   form: 'AddOnsParameters',
@@ -11,18 +12,6 @@ const reduxFormConfig = {
 };
 
 const reduxFormAddOnParameters = reduxForm(reduxFormConfig)(AddOnsParametersModal);
-
-const initialValuesForEditing = (addOnInstallation) => {
-  const vals = { parameters: {} };
-  if (addOnInstallation !== undefined && addOnInstallation.parameters !== undefined) {
-    vals.parameters = Object.entries(addOnInstallation.parameters.items).reduce((acc, curr) => {
-      // eslint-disable-next-line no-param-reassign
-      acc[curr[1].id] = curr[1].value;
-      return acc;
-    }, {});
-  }
-  return vals;
-};
 
 const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'add-ons-parameters-modal'),
@@ -32,7 +21,9 @@ const mapStateToProps = state => ({
   submitClusterAddOnResponse: state.modal.data.isUpdateForm
     ? state.addOns.updateClusterAddOnResponse
     : state.addOns.addClusterAddOnResponse,
-  initialValues: initialValuesForEditing(state.modal.data.addOnInstallation),
+  initialValues: parameterValuesForEditing(
+    state.modal.data.addOnInstallation, state.modal.data.addOn,
+  ),
 });
 
 const mapDispatchToProps = dispatch => ({
