@@ -204,7 +204,7 @@ class AddOnsCard extends Component {
       <DropdownItem
         key="action"
         component="button"
-        isDisabled={!hasParameters(addOn)}
+        isDisabled={!hasParameters(addOn) || !cluster.canEdit}
         onClick={() => configureAddOn(installedAddOn)}
       >
         Configure
@@ -212,6 +212,7 @@ class AddOnsCard extends Component {
       <DropdownItem
         key="action"
         component="button"
+        isDisabled={!cluster.canEdit}
         onClick={() => openModal('add-ons-delete-modal', {
           addOnName: addOn.name,
           addOnID: addOn.id,

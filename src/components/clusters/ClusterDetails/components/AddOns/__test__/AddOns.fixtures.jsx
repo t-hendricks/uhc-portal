@@ -132,6 +132,53 @@ export const mockClusterAddOns = {
   ],
 };
 
+export const mockClusterAddOnsParams = {
+  items: [
+    {
+      kind: 'AddOnLink',
+      href: '/api/clusters_mgmt/v1/addons/crc-workspaces',
+      addon: {
+        id: 'crc-workspaces',
+      },
+      state: 'ready',
+    },
+    {
+      kind: 'AddOnLink',
+      href: '/api/clusters_mgmt/v1/addons/managed-integration',
+      addon: {
+        id: 'managed-integration',
+      },
+      state: 'ready',
+      parameters: {
+        items: [{
+          id: 'cidr-range',
+          value: '10.1.0.0/16',
+        }],
+      },
+    },
+    {
+      kind: 'AddOnLink',
+      href: '/api/clusters_mgmt/v1/addons/managed-integration',
+      addon: {
+        id: 'managed-integration',
+      },
+      state: 'ready',
+      parameters: {
+        items: [
+          {
+            id: 'cidr-range',
+            value: '10.1.0.0/16',
+          },
+          {
+            id: 'foo',
+            value: 'bar',
+          },
+        ],
+      },
+    },
+  ],
+};
+
 export const mockQuota = {
   addOnsQuota: {
     'managed-integration': 1,

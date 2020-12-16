@@ -1,0 +1,28 @@
+.reduxFormKeyValueList {
+  .reduxFormKeyValueList-key,
+  .reduxFormKeyValueList-value,
+  .reduxFormKeyValueList-title {
+    width: 33%;
+  }
+
+  .reduxFormKeyValueList-title {
+    float: left;
+  }
+
+  .reduxFormKeyValueList-value,
+  .reduxFormKeyValueList-title-value {
+    margin-left: 3%;
+  }
+
+  .reduxFormKeyValueList-addBtn {
+    padding-left: 0;
+  }
+
+  .reduxFormKeyValueList-colTitles {
+    padding-bottom: var(--pf-global--spacer--lg);
+  }
+
+  button.reduxFormKeyValueList-removeBtn-disabled{
+    color: #d2d2d2;
+  }
+}

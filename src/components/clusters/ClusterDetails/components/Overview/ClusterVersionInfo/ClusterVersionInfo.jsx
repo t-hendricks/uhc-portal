@@ -83,7 +83,7 @@ class ClusterVersionInfo extends React.Component {
           { scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (
             <div>
               <Flex>
-                <dt>Upgrade scheduled: </dt>
+                <dt>Update scheduled: </dt>
                 <dd>
                   <Popover
                     headerContent="Update status"
@@ -125,7 +125,7 @@ class ClusterVersionInfo extends React.Component {
           { channel && (
           <div>
             <Flex>
-              <dt>Upgrade channel: </dt>
+              <dt>Update channel: </dt>
               <dd>{channel}</dd>
             </Flex>
           </div>

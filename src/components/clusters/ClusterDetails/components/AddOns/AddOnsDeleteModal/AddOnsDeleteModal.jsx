@@ -69,39 +69,41 @@ class AddOnsDeleteModal extends Component {
       <ErroBox message="Error uninstalling add-on" response={deleteClusterAddOnResponse} />
     );
 
-    return isOpen && (
-      <Modal
-        title={`Uninstall ${addOnName}`}
-        onClose={this.handleClose}
-        primaryText="Uninstall"
-        primaryVariant="danger"
-        isPrimaryDisabled={!isValid}
-        onPrimaryClick={handleSubmit}
-        onSecondaryClick={this.handleClose}
-      >
+    const isPending = deleteClusterAddOnResponse.pending;
 
+    return isOpen && (
+    <Modal
+      title={`Uninstall ${addOnName}`}
+      onClose={this.handleClose}
+      primaryText="Uninstall"
+      primaryVariant="danger"
+      isPrimaryDisabled={!isValid}
+      onPrimaryClick={handleSubmit}
+      onSecondaryClick={this.handleClose}
+      isPending={isPending}
+    >
+      <p>
+        {errorContainer}
+            This action will uninstall the add-on,
+            removing add-on data from cluster can not be undone.
+      </p>
+      <Form onSubmit={submitForm}>
         <p>
-          {errorContainer}
-          This action will uninstall the add-on,
-           removing add-on data from cluster can not be undone.
+              Confirm deletion by typing
+          {' '}
+          <span className="addon-delete-modal-textinput">{addOnName}</span>
+          {' '}
+              below:
         </p>
-        <Form onSubmit={submitForm}>
-          <p>
-            Confirm deletion by typing
-            {' '}
-            <span className="addon-delete-modal-textinput">{addOnName}</span>
-            {' '}
-            below:
-          </p>
-          <TextInput
-            type="text"
-            value={addOnNameInput}
-            placeholder="Enter name"
-            onChange={this.setValue}
-            aria-label="addon name"
-          />
-        </Form>
-      </Modal>
+        <TextInput
+          type="text"
+          value={addOnNameInput}
+          placeholder="Enter name"
+          onChange={this.setValue}
+          aria-label="addon name"
+        />
+      </Form>
+    </Modal>
     );
   }
 }

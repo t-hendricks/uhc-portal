@@ -11,7 +11,7 @@ import getPersistentStorageValues from '../../../redux/actions/persistentStorage
 import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
-import { scrollToFirstError, strToCleanObject } from '../../../common/helpers';
+import { scrollToFirstError, hasLabelsInput, parseReduxFormKeyValueList } from '../../../common/helpers';
 
 import {
   hasOSDQuotaSelector,
@@ -42,10 +42,7 @@ const mapStateToProps = (state, ownProps) => {
 
   let privateClusterSelected = false;
   const valueSelector = formValueSelector('CreateCluster');
-
-  if (isAwsForm) {
-    privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
-  }
+  privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
 
   return ({
     createClusterResponse: state.clusters.createdCluster,
@@ -92,6 +89,7 @@ const mapStateToProps = (state, ownProps) => {
       node_drain_grace_period: 60,
       upgrade_policy: 'manual',
       automatic_upgrade_schedule: '0 0 * * 0',
+      node_labels: [{}],
     },
   });
 };
@@ -108,7 +106,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         compute_machine_type: {
           id: formData.machine_type,
         },
-        compute_labels: strToCleanObject(formData.node_labels, '='),
       },
       managed: true,
       cloud_provider: {
@@ -121,6 +118,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       },
       etcd_encryption: formData.etcd_encryption,
     };
+    // only parse node labels if the user added some
+    if (hasLabelsInput(formData.node_labels)) {
+      clusterRequest.nodes.compute_labels = parseReduxFormKeyValueList(formData.node_labels);
+    }
     if (ownProps.product) {
       clusterRequest.product = {
         id: ownProps.product,
@@ -163,14 +164,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           clusterRequest.aws.subnet_ids = subnetIds;
 
           let AZs = [
-            `${formData.region}${formData.az_0}`,
+            formData.az_0,
           ];
 
           if (formData.multi_az === 'true') {
             AZs = [
               ...AZs,
-              `${formData.region}${formData.az_1}`,
-              `${formData.region}${formData.az_2}`,
+              formData.az_1,
+              formData.az_2,
             ];
           }
           clusterRequest.nodes.availability_zones = AZs;
