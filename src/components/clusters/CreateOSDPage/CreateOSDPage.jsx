@@ -252,7 +252,7 @@ class CreateOSDPage extends React.Component {
         {title}
         <PageSection>
           <Card>
-            <div className="pf-c-content ocm-page">
+            <div className="ocm-page">
               {creationErrorModal}
               {/* Form */}
               <Form onSubmit={handleSubmit}>

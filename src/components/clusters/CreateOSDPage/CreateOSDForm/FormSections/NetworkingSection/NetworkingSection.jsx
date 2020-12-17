@@ -83,7 +83,7 @@ function NetworkingSection({
   return (
     <>
       <GridItem span={4}>
-        <Title headingLevel="h4" size="xl">Networking</Title>
+        <Title headingLevel="h3">Networking</Title>
       </GridItem>
       <FormGroup
         label="Network configuration"
