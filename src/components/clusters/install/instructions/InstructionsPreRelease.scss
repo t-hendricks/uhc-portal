@@ -8,6 +8,7 @@
     padding-top: var(--pf-global--spacer--sm);
   }
   &--body {
+    max-width: 700px;
     margin-top: var(--pf-global--spacer--md);
     small {
       margin-top: var(--pf-global--spacer--md);
