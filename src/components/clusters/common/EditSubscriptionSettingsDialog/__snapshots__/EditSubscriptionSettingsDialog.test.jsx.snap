@@ -224,7 +224,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               class="pf-c-radio__label"
                               for="support_level:Self-Support"
                             >
-                              Self-support
+                              Self-Support
                             </label>
                           </div>
                           
@@ -291,7 +291,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               class="pf-c-radio__label"
                               for="usage:Development/Test"
                             >
-                              Dev/test
+                              Dev/Test
                             </label>
                           </div>
                           <div
@@ -312,7 +312,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               class="pf-c-radio__label"
                               for="usage:Disaster Recovery"
                             >
-                              Disaster recovery
+                              Disaster Recovery
                             </label>
                           </div>
                           
@@ -738,7 +738,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                       "value": "Standard",
                                     },
                                     Object {
-                                      "label": "Self-support",
+                                      "label": "Self-Support",
                                       "value": "Self-Support",
                                     },
                                   ]
@@ -854,7 +854,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                         isDisabled={false}
                                         isValid={true}
                                         key="support_level:Self-Support"
-                                        label="Self-support"
+                                        label="Self-Support"
                                         name="support_level:Self-Support"
                                         onChange={[Function]}
                                         value="Self-Support"
@@ -880,7 +880,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                             className="pf-c-radio__label"
                                             htmlFor="support_level:Self-Support"
                                           >
-                                            Self-support
+                                            Self-Support
                                           </label>
                                         </div>
                                       </Radio>
@@ -901,11 +901,11 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                       "value": "Production",
                                     },
                                     Object {
-                                      "label": "Dev/test",
+                                      "label": "Dev/Test",
                                       "value": "Development/Test",
                                     },
                                     Object {
-                                      "label": "Disaster recovery",
+                                      "label": "Disaster Recovery",
                                       "value": "Disaster Recovery",
                                     },
                                   ]
@@ -984,7 +984,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                         isDisabled={false}
                                         isValid={true}
                                         key="usage:Development/Test"
-                                        label="Dev/test"
+                                        label="Dev/Test"
                                         name="usage:Development/Test"
                                         onChange={[Function]}
                                         value="Development/Test"
@@ -1010,7 +1010,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                             className="pf-c-radio__label"
                                             htmlFor="usage:Development/Test"
                                           >
-                                            Dev/test
+                                            Dev/Test
                                           </label>
                                         </div>
                                       </Radio>
@@ -1021,7 +1021,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                         isDisabled={false}
                                         isValid={true}
                                         key="usage:Disaster Recovery"
-                                        label="Disaster recovery"
+                                        label="Disaster Recovery"
                                         name="usage:Disaster Recovery"
                                         onChange={[Function]}
                                         value="Disaster Recovery"
@@ -1047,7 +1047,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                             className="pf-c-radio__label"
                                             htmlFor="usage:Disaster Recovery"
                                           >
-                                            Disaster recovery
+                                            Disaster Recovery
                                           </label>
                                         </div>
                                       </Radio>
@@ -1779,7 +1779,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               class="pf-c-radio__label"
                               for="support_level:Self-Support"
                             >
-                              Self-support
+                              Self-Support
                             </label>
                           </div>
                           
@@ -1846,7 +1846,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               class="pf-c-radio__label"
                               for="usage:Development/Test"
                             >
-                              Dev/test
+                              Dev/Test
                             </label>
                           </div>
                           <div
@@ -1867,7 +1867,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               class="pf-c-radio__label"
                               for="usage:Disaster Recovery"
                             >
-                              Disaster recovery
+                              Disaster Recovery
                             </label>
                           </div>
                           
@@ -2371,7 +2371,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                       "value": "Standard",
                                     },
                                     Object {
-                                      "label": "Self-support",
+                                      "label": "Self-Support",
                                       "value": "Self-Support",
                                     },
                                   ]
@@ -2487,7 +2487,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                         isDisabled={false}
                                         isValid={true}
                                         key="support_level:Self-Support"
-                                        label="Self-support"
+                                        label="Self-Support"
                                         name="support_level:Self-Support"
                                         onChange={[Function]}
                                         value="Self-Support"
@@ -2513,7 +2513,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                             className="pf-c-radio__label"
                                             htmlFor="support_level:Self-Support"
                                           >
-                                            Self-support
+                                            Self-Support
                                           </label>
                                         </div>
                                       </Radio>
@@ -2534,11 +2534,11 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                       "value": "Production",
                                     },
                                     Object {
-                                      "label": "Dev/test",
+                                      "label": "Dev/Test",
                                       "value": "Development/Test",
                                     },
                                     Object {
-                                      "label": "Disaster recovery",
+                                      "label": "Disaster Recovery",
                                       "value": "Disaster Recovery",
                                     },
                                   ]
@@ -2617,7 +2617,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                         isDisabled={false}
                                         isValid={true}
                                         key="usage:Development/Test"
-                                        label="Dev/test"
+                                        label="Dev/Test"
                                         name="usage:Development/Test"
                                         onChange={[Function]}
                                         value="Development/Test"
@@ -2643,7 +2643,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                             className="pf-c-radio__label"
                                             htmlFor="usage:Development/Test"
                                           >
-                                            Dev/test
+                                            Dev/Test
                                           </label>
                                         </div>
                                       </Radio>
@@ -2654,7 +2654,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                         isDisabled={false}
                                         isValid={true}
                                         key="usage:Disaster Recovery"
-                                        label="Disaster recovery"
+                                        label="Disaster Recovery"
                                         name="usage:Disaster Recovery"
                                         onChange={[Function]}
                                         value="Disaster Recovery"
@@ -2680,7 +2680,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                             className="pf-c-radio__label"
                                             htmlFor="usage:Disaster Recovery"
                                           >
-                                            Disaster recovery
+                                            Disaster Recovery
                                           </label>
                                         </div>
                                       </Radio>

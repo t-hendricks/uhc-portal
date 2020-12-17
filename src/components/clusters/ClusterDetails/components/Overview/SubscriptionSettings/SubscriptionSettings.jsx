@@ -50,7 +50,7 @@ function SubscriptionSettings({
   let supportLevelStr = supportLevel;
   let titleIcon = null;
   if (supportLevel === subscriptionSupportLevels.EVAL) {
-    supportLevelStr = 'Self-support 60-day evaluation';
+    supportLevelStr = 'Self-Support 60-day evaluation';
     if (isEditViewable) {
       titleIcon = <ExclamationTriangleIcon className="subscription-settings warning-title-icon" />;
     }

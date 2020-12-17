@@ -106,11 +106,11 @@ class EditSubscriptionSettingsDialog extends Component {
         options = [
           { label: 'Premium', value: PREMIUM },
           { label: 'Standard', value: STANDARD },
-          { label: 'Self-support', value: SELF_SUPPORT },
+          { label: 'Self-Support', value: SELF_SUPPORT },
         ];
         if (value === EVAL || !subscription.id) {
           options.push({
-            label: 'Self-support 60-day evaluation',
+            label: 'Self-Support 60-day evaluation',
             value: EVAL,
           });
         } else if (value === NONE) {
@@ -123,8 +123,8 @@ class EditSubscriptionSettingsDialog extends Component {
       case USAGE:
         options = [
           { label: 'Production', value: PRODUCTION, isDefault: true },
-          { label: 'Dev/test', value: DEV_TEST },
-          { label: 'Disaster recovery', value: DISASTER_RECOVERY },
+          { label: 'Dev/Test', value: DEV_TEST },
+          { label: 'Disaster Recovery', value: DISASTER_RECOVERY },
         ];
         break;
       case SERVICE_LEVEL:
