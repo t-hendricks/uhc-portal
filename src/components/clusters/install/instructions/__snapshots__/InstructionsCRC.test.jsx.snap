@@ -3,14 +3,15 @@
 exports[`CRC instructions renders correctly 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-instructions-crc__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -20,67 +21,54 @@ exports[`CRC instructions renders correctly 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="ocp-downloads"
-            >
-              <div
-                className="instructions-section"
+            <TextContent>
+              <Text
+                component="h2"
               >
-                <Title
-                  headingLevel="h2"
-                >
-                  What you need to get started
-                </Title>
-                <Title
-                  headingLevel="h3"
-                >
-                  CodeReady Containers archive
-                </Title>
-                <p>
-                  Download and extract the CodeReady Containers archive for your operating system and place the executable in your
-                   
-                  <code>
-                    $PATH
-                  </code>
-                   
-                  .
-                </p>
-              </div>
-              <div
-                className="instructions-section"
+                What you need to get started
+              </Text>
+              <Text
+                component="h3"
               >
-                <DownloadAndOSSelection
-                  channel="CRC"
-                  cloudProviderID="/"
-                  mode="CRC"
-                  token={Object {}}
-                />
-              </div>
-              <div
-                className="instructions-section"
+                CodeReady Containers archive
+              </Text>
+              <Text
+                component="p"
               >
-                <Title
-                  headingLevel="h3"
-                >
-                  Pull secret
-                </Title>
-                <PullSecretSection
-                  cloudProviderID="/"
-                  token={Object {}}
-                />
-              </div>
-            </div>
+                Download and extract the CodeReady Containers archive for your operating system and place the executable in your
+                 
+                <code>
+                  $PATH
+                </code>
+                 
+                .
+              </Text>
+              <DownloadAndOSSelection
+                channel="CRC"
+                cloudProviderID="/"
+                mode="CRC"
+                token={Object {}}
+              />
+              <Text
+                component="h3"
+              >
+                Pull secret
+              </Text>
+              <PullSecretSection
+                cloudProviderID="/"
+                token={Object {}}
+              />
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -90,15 +78,15 @@ exports[`CRC instructions renders correctly 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the documentation to install CodeReady containers
-              </Title>
-              <p>
+              </Text>
+              <Text
+                component="p"
+              >
                 Run the
                  
                 <code>
@@ -106,8 +94,10 @@ exports[`CRC instructions renders correctly 1`] = `
                 </code>
                  
                 command to set up your host operating system for the CodeReady Containers virtual machine.
-              </p>
-              <p>
+              </Text>
+              <Text
+                component="p"
+              >
                 Then, the
                  
                 <code>
@@ -115,8 +105,9 @@ exports[`CRC instructions renders correctly 1`] = `
                 </code>
                  
                 will create a minimal OpenShift 4 cluster on your laptop or desktop computer.
-              </p>
+              </Text>
               <Button
+                className="pf-u-mb-md"
                 component="a"
                 href="https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/"
                 onClick={[Function]}
@@ -126,12 +117,12 @@ exports[`CRC instructions renders correctly 1`] = `
               >
                 Get started
               </Button>
-              <p
-                className="small-text"
+              <Text
+                component="small"
               >
                 Note: Your CodeReady Container cluster will not show in your list of clusters in OpenShift Cluster Manager since it is short-lived and occasionally running. OpenShift Cluster Manager currently shows only production-level clusters.
-              </p>
-            </div>
+              </Text>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>

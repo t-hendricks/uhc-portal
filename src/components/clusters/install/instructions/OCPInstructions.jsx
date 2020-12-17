@@ -8,12 +8,15 @@ import {
   Divider,
   Stack,
   StackItem,
+  Text,
+  TextContent,
 } from '@patternfly/react-core';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import SubscriptionAndSupport from './components/SubscriptionAndSupport';
 import GetStarted from './components/GetStarted';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import instructionsMapping from './instructionsMapping';
+import './Instructions.scss';
 
 const OCPInstructions = (props) => {
   const {
@@ -37,14 +40,14 @@ const OCPInstructions = (props) => {
     : `Follow the documentation to configure your ${instructionsMapping[cloudProviderID].cloudProvider} account and run the installer`;
   return (
     <>
-      <Card className="ocp-downloads">
+      <Card className="ocm-ocp-instructions__card">
         <Stack>
           {token.error
             && (
             <StackItem>
               <Split>
-                <SplitItem>
-                  <Title headingLevel="h1" className="step-number alert" />
+                <SplitItem className="step-number alert">
+                  <Title headingLevel="h1" />
                 </SplitItem>
                 <SplitItem className="download-instructions alert" isFilled>
                   <TokenErrorAlert token={token} />
@@ -54,8 +57,8 @@ const OCPInstructions = (props) => {
             )}
           <StackItem>
             <Split>
-              <SplitItem>
-                <Title headingLevel="h1" className="step-number">1</Title>
+              <SplitItem className="step-number">
+                <Title headingLevel="h1">1</Title>
               </SplitItem>
               <SplitItem className="download-instructions" isFilled>
                 <DownloadsAndPullSecretSection
@@ -70,15 +73,15 @@ const OCPInstructions = (props) => {
               </SplitItem>
             </Split>
           </StackItem>
-          <Divider className="steps-divider" />
+          <Divider />
           <StackItem>
             <Split>
-              <SplitItem>
-                <Title headingLevel="h1" className="step-number">2</Title>
+              <SplitItem className="step-number">
+                <Title headingLevel="h1">2</Title>
               </SplitItem>
               <SplitItem className="download-instructions" isFilled>
-                <div className="instructions-section">
-                  <Title headingLevel="h2">{getStartedTitleText}</Title>
+                <TextContent>
+                  <Text component="h2">{getStartedTitleText}</Text>
                   <GetStarted
                     docURL={docURL}
                     pendoID={pendoID}
@@ -86,15 +89,15 @@ const OCPInstructions = (props) => {
                     customizations={customizations}
                     isBMIPI={isBMIPI}
                   />
-                </div>
+                </TextContent>
               </SplitItem>
             </Split>
           </StackItem>
-          <Divider className="steps-divider" />
+          <Divider />
           <StackItem>
             <Split>
-              <SplitItem>
-                <Title headingLevel="h1" className="step-number">3</Title>
+              <SplitItem className="step-number">
+                <Title headingLevel="h1">3</Title>
               </SplitItem>
               <SplitItem className="download-instructions" isFilled>
                 <SubscriptionAndSupport />

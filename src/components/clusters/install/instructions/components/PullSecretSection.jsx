@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Tooltip } from '@patternfly/react-core';
+import {
+  Button,
+  Text,
+  Tooltip,
+} from '@patternfly/react-core';
 import { PasteIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Download from '@axetroy/react-download';
 import isEmpty from 'lodash/isEmpty';
 
 import { trackPendo } from '../../../../../common/helpers';
-import './PullSecretSection.scss';
 
 class PullSecretSection extends React.Component {
   constructor(props) {
@@ -36,15 +39,15 @@ class PullSecretSection extends React.Component {
     const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
     const downloadButton = (
       <Button variant="secondary" isDisabled={isDisabled} onClick={() => trackPendo('OCP-Download-PullSecret', pendoID)}>
-      Download pull secret
+        Download pull secret
       </Button>
     );
 
     return (
       <>
-        <p>
+        <Text component="p">
           { text || 'Download or copy your pull secret. The install program will prompt you for your pull secret during installation.'}
-        </p>
+        </Text>
         <div>
           {isDisabled ? downloadButton : (
             <Download file="pull-secret" content={tokenView} style={{ display: 'inline' }}>
@@ -61,18 +64,14 @@ class PullSecretSection extends React.Component {
               text={isDisabled ? '' : tokenView}
               onCopy={this.onCopy}
             >
-
               <Button
                 variant="link"
-                id="copyPullSecret"
-                className="install--copy-pull-secret"
                 type="button"
                 tabIndex={0}
                 isDisabled={isDisabled}
+                icon={<PasteIcon />}
               >
-                <PasteIcon color="#0066cc" size="sm" />
-              &nbsp;
-              Copy pull secret
+                Copy pull secret
               </Button>
             </CopyToClipboard>
           </Tooltip>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import {
-  Stack, Split, SplitItem, StackItem,
+  Grid, GridItem, StackItem, Text,
 } from '@patternfly/react-core';
 import instructionsMapping from '../../instructionsMapping';
 import RHCOSDownloadAndSelect from './RHCOSDownloadAndSelect';
@@ -66,7 +66,7 @@ const RHCOSSection = (props) => {
         const { url, name, buttonText } = alt;
         return (
           <>
-            <SplitItem key={name}>
+            <GridItem key={name} className="pf-m-12-col-on-sm">
               <DownloadButton
                 token={token}
                 url={url}
@@ -76,34 +76,34 @@ const RHCOSSection = (props) => {
                 disabled={!token}
                 pendoID={pendoID}
               />
-            </SplitItem>
+            </GridItem>
             {
                 index !== item.alternatives.length - 1 && (
-                  <SplitItem key={`alt-${name}`}>
+                  <GridItem key={`alt-${name}`}>
                     or
-                  </SplitItem>
+                  </GridItem>
                 )
               }
           </>
         );
       });
       return (
-        <Split hasGutter>
+        <Grid className="pf-m-12-col-on-sm" hasGutter>
           {altsSplitItems}
-        </Split>
+        </Grid>
       );
     });
     return (
-      <Stack hasGutter>
+      <Grid hasGutter>
         {buttons}
-      </Stack>
+      </Grid>
     );
   };
 
   return (
     <>
       {learnMoreURL && (
-      <p>
+      <Text component="p">
         Download RHCOS to create machines for your cluster to use during installation.
         { instructionsObj.rhcosAdditionalInstructions && (
           <>
@@ -112,13 +112,13 @@ const RHCOSSection = (props) => {
           </>
         )}
         {' '}
-        <a href={learnMoreURL} rel="noreferrer noopener" target="_blank">
+        <Text component="a" href={learnMoreURL} rel="noreferrer noopener" target="_blank">
       Learn more
           {' '}
-          <ExternalLinkAltIcon color="#0066cc" size="sm" />
-      .
-        </a>
-      </p>
+          <ExternalLinkAltIcon size="sm" />
+          .
+        </Text>
+      </Text>
       )}
       {
         downloadButtons(instructionsObj.rhcosDownloads)
