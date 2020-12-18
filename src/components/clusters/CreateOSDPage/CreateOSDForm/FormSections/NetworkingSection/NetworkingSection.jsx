@@ -262,11 +262,16 @@ function NetworkingSection({
                 />
                 {privateClusterSelected && (
                 <Alert className="bottom-alert" variant="warning" isInline title="You will not be able to access your cluster until you edit network settings in your cloud provider.">
-                  Follow the
-                  {' '}
-                  <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-understanding-aws.html">documentation</a>
-                  {' '}
-                  for how to do that.
+                  {cloudProviderID === 'aws'
+                    && (
+                    <span>
+                    Follow the
+                      {' '}
+                      <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-understanding-aws.html">documentation</a>
+                      {' '}
+                    for how to do that.
+                    </span>
+                    )}
                 </Alert>
                 )}
               </>
