@@ -217,7 +217,7 @@ class NetworkSelfServiceSection extends React.Component {
     const rows = hasGrants && grants.data.map(grantRow);
 
     const addGrantBtn = (
-      <Button onClick={() => openAddGrantModal()} variant="secondary" className="access-control-add" isDisabled={!canEdit}>
+      <Button onClick={() => { setTimeout(() => openAddGrantModal(), 0); }} variant="secondary" className="access-control-add" isDisabled={!canEdit}>
         Grant role
       </Button>
     );
