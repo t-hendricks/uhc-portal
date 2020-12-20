@@ -150,11 +150,16 @@ const parseReduxFormKeyValueList = labelsFormData => Object.assign(
 );
 
 /**
- * check if there is any user input in the key-value list
- * @param {Array} labelsFormData Array of key value parirs
+ * only return non-empty taints (temporary untill proper fields validation will be implemented)
+ * and remove the 'id' property
+ * @param {Array} labelsFormData Array of taints. Example:
+ * [{ key: 'foo', value: 'bar', effect: 'NoSchedule'},
+ * { id: '1a2b3c', key: 'foo1', value: 'bar1', effect: 'NoExecute'},]
  */
-const hasLabelsInput = labelsFormData => !(labelsFormData.length === 1
-  && isEmpty(labelsFormData[0]));
+const parseReduxFormTaints = taintsFormData => taintsFormData.map(
+  taint => ((taint.key && taint.value && taint.effect)
+   && { key: taint.key, value: taint.value, effect: taint.effect }),
+).filter(Boolean);
 
 export {
   noop,
@@ -170,7 +175,7 @@ export {
   shouldRefetchQuota,
   scrollToFirstError,
   parseReduxFormKeyValueList,
-  hasLabelsInput,
+  parseReduxFormTaints,
 };
 
 export default helpers;
