@@ -107,7 +107,6 @@ class CreateOSDForm extends React.Component {
       cloudProviderID,
       privateClusterSelected,
       product,
-      upgradesEnabled,
       isAutomaticUpgrade,
       canEnableEtcdEncryption,
       selectedRegion,
@@ -272,21 +271,14 @@ class CreateOSDForm extends React.Component {
             </FormGroup>
           </>
         )}
-        { upgradesEnabled
-        && (
-          <>
-            <GridItem span={12}>
-              <Divider />
-            </GridItem>
-            <GridItem span={12}>
-              <Title headingLevel="h3">Cluster update settings</Title>
-            </GridItem>
-            <UpgradeSettingsFields
-              isAutomatic={isAutomaticUpgrade}
-              isDisabled={pending}
-            />
-          </>
-        )}
+        <GridItem span={12}>
+          <Divider />
+        </GridItem>
+        <Title headingLevel="h3">Cluster updates</Title>
+        <UpgradeSettingsFields
+          isAutomatic={isAutomaticUpgrade}
+          isDisabled={pending}
+        />
       </>
     );
   }
@@ -328,7 +320,6 @@ CreateOSDForm.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   product: PropTypes.string.isRequired,
-  upgradesEnabled: PropTypes.bool,
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
   selectedRegion: PropTypes.string,
