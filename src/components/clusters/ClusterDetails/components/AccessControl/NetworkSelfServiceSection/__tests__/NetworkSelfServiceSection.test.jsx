@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 
 import NetworkSelfServiceSection from '../NetworkSelfServiceSection';
 
+jest.useFakeTimers();
+
 const baseResponse = {
   fulfilled: false,
   pending: false,
@@ -72,9 +74,9 @@ describe('<NetworkSelfServiceSection />', () => {
 
   it('should open modal when needed', () => {
     wrapper.find('.access-control-add').simulate('click');
-    setTimeout(() => {
-      expect(openAddGrantModal).toBeCalled();
-    }, 0);
+    expect(setTimeout).toBeCalledTimes(1);
+    jest.runAllTimers();
+    expect(openAddGrantModal).toBeCalled();
   });
 
   it('should call getGrants() when a grant is added', () => {
