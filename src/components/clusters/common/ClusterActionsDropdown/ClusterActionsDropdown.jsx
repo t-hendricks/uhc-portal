@@ -60,6 +60,7 @@ class ClusterActionsDropdown extends React.Component {
         toggle={toggleComponent}
         isPlain={isKebab}
         isOpen={isOpen}
+        data-test-id="cluster-actions-dropdown"
       />
     );
 

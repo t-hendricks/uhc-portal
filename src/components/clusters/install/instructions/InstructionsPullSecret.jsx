@@ -11,7 +11,7 @@ function InstructionsPullSecret({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-          Pull secret
+        Pull secret
       </Title>
       <Card>
         <div className="pf-l-grid pf-m-gutter ocm-page">

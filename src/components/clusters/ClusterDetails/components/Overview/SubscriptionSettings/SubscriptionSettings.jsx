@@ -2,8 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import {
-  Grid, GridItem, Button, Card, CardBody, Title, CardTitle,
+  Button,
+  Card,
+  CardBody,
+  CardTitle,
+  DescriptionList,
+  DescriptionListTerm,
+  DescriptionListGroup,
+  DescriptionListDescription,
+  Grid,
+  GridItem,
+  Title,
 } from '@patternfly/react-core';
+
+
 import {
   ExclamationCircleIcon, ExclamationTriangleIcon,
 } from '@patternfly/react-icons';
@@ -38,7 +50,7 @@ function SubscriptionSettings({
   let supportLevelStr = supportLevel;
   let titleIcon = null;
   if (supportLevel === subscriptionSupportLevels.EVAL) {
-    supportLevelStr = 'Self-support 60-day evaluation';
+    supportLevelStr = 'Self-Support 60-day evaluation';
     if (isEditViewable) {
       titleIcon = <ExclamationTriangleIcon className="subscription-settings warning-title-icon" />;
     }
@@ -74,41 +86,53 @@ function SubscriptionSettings({
       </CardTitle>
       <CardBody className="ocm-c-overview-subscription-settings__card--body">
         <Grid>
-          <GridItem sm={6}>
-            <dl className="cluster-details-item left">
-              <dt>SLA</dt>
-              <dd>{supportLevelStr}</dd>
-              <dt>Production status</dt>
-              <dd>{usageStr}</dd>
-              <dt>Service level</dt>
-              <dd>{serviceLevelStr}</dd>
-              {isEditViewable && (
-              <dd>
-                {canSubscribeOCP ? (
-                  <Button variant="link" isInline onClick={handleEditSettings}>Edit subscription settings</Button>
-                ) : (
-                  <>
-                    <a href={salesURL} target="_blank" rel="noreferrer noopener">Contact sales</a>
-                    {' to purchase an OpenShift subscription.'}
-                  </>
+          <GridItem md={6}>
+            <DescriptionList>
+              <DescriptionListGroup>
+                <DescriptionListTerm>SLA</DescriptionListTerm>
+                <DescriptionListDescription>{supportLevelStr}</DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
+                <DescriptionListTerm>Production status</DescriptionListTerm>
+                <DescriptionListDescription>{usageStr}</DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
+                <DescriptionListTerm>Service level</DescriptionListTerm>
+                <DescriptionListDescription>{serviceLevelStr}</DescriptionListDescription>
+                {isEditViewable && (
+                  <DescriptionListDescription>
+                    {canSubscribeOCP ? (
+                      <Button variant="link" isInline onClick={handleEditSettings}>Edit subscription settings</Button>
+                    ) : (
+                      <>
+                        <a href={salesURL} target="_blank" rel="noreferrer noopener">Contact sales</a>
+                        {' to purchase an OpenShift subscription.'}
+                      </>
+                    )}
+                  </DescriptionListDescription>
                 )}
-              </dd>
-              )}
-            </dl>
+              </DescriptionListGroup>
+            </DescriptionList>
           </GridItem>
-          <GridItem sm={6}>
-            <dl className="cluster-details-item right">
-              <dt>Subscription units</dt>
-              <dd>{systemUnitsStr}</dd>
+          <GridItem md={6}>
+            <DescriptionList>
+              <DescriptionListGroup>
+                <DescriptionListTerm>Subscription units</DescriptionListTerm>
+                <DescriptionListDescription>{systemUnitsStr}</DescriptionListDescription>
+              </DescriptionListGroup>
               {false && ( // TODO: either add back or remove PRODUCT_BUNDLE
                 <>
-                  <dt>Subscription product</dt>
-                  <dd>{productBundleStr}</dd>
+                  <DescriptionListGroup>
+                    <DescriptionListTerm>Subscription product</DescriptionListTerm>
+                    <DescriptionListDescription>{productBundleStr}</DescriptionListDescription>
+                  </DescriptionListGroup>
                 </>
               )}
-              <dt>Subscription obligation</dt>
-              <dd>{obligationStr}</dd>
-            </dl>
+              <DescriptionListGroup>
+                <DescriptionListTerm>Subscription obligation</DescriptionListTerm>
+                <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
+              </DescriptionListGroup>
+            </DescriptionList>
           </GridItem>
         </Grid>
       </CardBody>

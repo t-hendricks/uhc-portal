@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  Text,
+} from '@patternfly/react-core';
+
 import PropTypes from 'prop-types';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
 import { downloadButtonModes } from './DownloadButton';
@@ -7,12 +11,12 @@ const CLISection = ({
   token, pendoID, channel, isBMIPI,
 }) => (
   <>
-    <p>
+    <Text component="p">
       Download the OpenShift command-line tools and add them to your
       {' '}
       <code>PATH</code>
       .
-    </p>
+    </Text>
     <div>
       <DownloadAndOSSelection
         token={token}
@@ -21,9 +25,9 @@ const CLISection = ({
         mode={downloadButtonModes.CLI_TOOLS}
       />
     </div>
-    <p />
+    <Text component="p" />
     {!isBMIPI && (
-    <p>
+    <Text component="p">
       When the installer is complete you will see the console URL and credentials for
       accessing your new cluster. A
       {' '}
@@ -34,7 +38,7 @@ const CLISection = ({
       <code>oc</code>
       {' '}
       CLI tools you downloaded.
-    </p>
+    </Text>
     )}
   </>
 );

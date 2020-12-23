@@ -1,6 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Button, ClipboardCopy } from '@patternfly/react-core';
+import {
+  Button,
+  ClipboardCopy,
+} from '@patternfly/react-core';
 
 import GetStarted from '../GetStarted';
 
@@ -21,7 +24,7 @@ describe('<GetStarted />', () => {
       expect(copybox.props().isReadOnly).toEqual(true);
     });
     it('should have a customizations link', () => {
-      const link = wrapper.find('a');
+      const link = wrapper.find('.customizations');
       expect(link.length).toEqual(1);
     });
   });

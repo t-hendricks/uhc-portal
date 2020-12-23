@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  Stack,
+  StackItem,
+  Text,
+  TextContent,
+  Button, ClipboardCopy,
+} from '@patternfly/react-core';
 import { get } from 'lodash';
-import { Button, ClipboardCopy } from '@patternfly/react-core';
+
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
 import { trackPendo } from '../../../../../common/helpers';
@@ -10,72 +17,85 @@ const GetStarted = ({
   docURL, pendoID, cloudProviderID, customizations, isBMIPI,
 }) => (
   <>
-    <p>
-      {!isBMIPI && (
-        <>
-          The installer will take about 45 minutes to run.
-          {' '}
-        </>
-      )}
-      {
-        get(instructionsMapping, `${cloudProviderID}.getStartedAdditional`, null) || ''
-      }
-      {
-        isBMIPI && (
-          <p>
-      When the installer is complete you will see the console URL and credentials for
-      accessing your new cluster. A
-            {' '}
-            <code>kubeconfig</code>
-            {' '}
-      file will also be generated for you to use with the
-            {' '}
-            <code>oc</code>
-            {' '}
-      CLI tools you downloaded.
-          </p>
-        )
-      }
-    </p>
-    <Button
-      component="a"
-      href={docURL}
-      rel="noreferrer noopener"
-      target="_blank"
-      variant="secondary"
-      onClick={() => trackPendo('OCP-Download-OfficialDocumentation', pendoID)}
-    >
-      Get started
-    </Button>
-    <div>
+    <Stack hasGutter>
+      <StackItem>
+        <TextContent>
+          <Text component="p">
+            {!isBMIPI && (
+              <>
+                The installer will take about 45 minutes to run.
+                {' '}
+              </>
+            )}
+            {
+              get(instructionsMapping, `${cloudProviderID}.getStartedAdditional`, null) || ''
+            }
+            {
+              isBMIPI && (
+                <Text component="p">
+                  When the installer is complete you will see the console URL and credentials for
+                  accessing your new cluster. A
+                    {' '}
+                  <code>kubeconfig</code>
+                    {' '}
+                  file will also be generated for you to use with the
+                    {' '}
+                  <code>oc</code>
+                    {' '}
+                  CLI tools you downloaded.
+                </Text>
+              )
+            }
+          </Text>
+        </TextContent>
+      </StackItem>
+      <StackItem>
+        <Button
+          component="a"
+          href={docURL}
+          rel="noreferrer noopener"
+          target="_blank"
+          variant="secondary"
+          onClick={() => trackPendo('OCP-Download-OfficialDocumentation', pendoID)}
+        >
+          Get started
+        </Button>
+      </StackItem>
       { !isBMIPI && (
         <>
-      To quickly create a cluster with the default options, run the following command:
-          <ClipboardCopy
-            id="copy-command"
-            isReadOnly
-            isCode
-          >
-        ./openshift-install create cluster
-          </ClipboardCopy>
+          <StackItem>
+            <Text component="p">
+              To quickly create a cluster with the default options, run the following command:
+            </Text>
+            <ClipboardCopy
+              id="copy-command"
+              isReadOnly
+              isCode
+            >
+              ./openshift-install create cluster
+            </ClipboardCopy>
+          </StackItem>
         </>
       )}
       {customizations
         && (
-          <p>
-            Refer to the documentation to
-            {' '}
-            <a
-              href={customizations}
-            >
-        install with customizations
-            </a>
-      .
-          </p>
+          <StackItem>
+            <TextContent>
+              <Text component="p">
+                Refer to the documentation to
+                {' '}
+                <Text component="a" className="customizations" href={customizations}>
+                  install with customizations
+                </Text>
+                .
+              </Text>
+            </TextContent>
+          </StackItem>
         )}
-    </div>
-
-    <TelemetryDisclaimer />
+      <StackItem>
+        <TelemetryDisclaimer />
+      </StackItem>
+    </Stack>
   </>
 );
 

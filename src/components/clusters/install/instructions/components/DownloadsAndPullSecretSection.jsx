@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Title } from '@patternfly/react-core';
+import {
+  Stack,
+  StackItem,
+  Text,
+  TextContent,
+} from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 
 import PullSecretSection from './PullSecretSection';
@@ -22,67 +27,74 @@ function DownloadsAndPullSecretSection({
   isBMIPI,
 }) {
   return (
-    <div className="ocp-downloads">
+    <div>
       {children}
-      <div key="install" className="instructions-section">
-        <Title headingLevel="h2">What you need to get started</Title>
-        {!isBMIPI && (
-          <>
-            <Title headingLevel="h3">OpenShift installer</Title>
-            <p>
-          Download and extract the install program for your operating system and place the file
-          in the directory where you will store the installation configuration files.
-          Note: The OpenShift install program is only available for Linux and macOS at this
-          time.
-            </p>
-
-            {showPreReleaseDocs && (
-            <p>
-              For pre-release documentation, refer to the
-              {' '}
-              <a href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} rel="noreferrer noopener" target="_blank">
-                latest installer documentation
-                {' '}
-                <ExternalLinkAltIcon color="#0066cc" size="sm" />
-              </a>
-              .
-            </p>
+      <Stack hasGutter>
+        <StackItem key="install">
+          <TextContent>
+            <Text component="h2">What you need to get started</Text>
+            {!isBMIPI && (
+              <>
+                <Text component="h3">OpenShift installer</Text>
+                <Text component="p">
+                  Download and extract the install program for your operating system and place the
+                  file in the directory where you will store the installation configuration files.
+                  Note: The OpenShift install program is only available for Linux and macOS at this
+                  time.
+                </Text>
+                {showPreReleaseDocs && (
+                  <Text component="p">
+                    For pre-release documentation, refer to the
+                    {' '}
+                    <Text component="a" href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} rel="noreferrer noopener" target="_blank">
+                      latest installer documentation
+                      {' '}
+                      <ExternalLinkAltIcon size="sm" />
+                    </Text>
+                    .
+                  </Text>
+                )}
+                <DownloadAndOSSelection
+                  token={token}
+                  channel={channel}
+                  pendoID={pendoID}
+                />
+                {showPreReleasePageLink && <div><DeveloperPreviewSection /></div>}
+              </>
             )}
-            <div>
-              <DownloadAndOSSelection
+          </TextContent>
+        </StackItem>
+        <StackItem key="pull-secret">
+          <TextContent>
+            <Text component="h3">Pull secret</Text>
+            <PullSecretSection token={token} pendoID={pendoID} />
+          </TextContent>
+        </StackItem>
+        <StackItem key="cli">
+          <TextContent>
+            <Text component="h3">Command line interface</Text>
+            <CLISection
+              token={token}
+              pendoID={pendoID}
+              channel={channel}
+              isBMIPI={isBMIPI}
+            />
+          </TextContent>
+        </StackItem>
+        {rhcosLearnMoreURL && (
+          <StackItem key="rhcos">
+            <TextContent>
+              <Text component="h3">Red Hat Enterprise Linux CoreOS (RHCOS)</Text>
+              <RHCOSSection
+                learnMoreURL={rhcosLearnMoreURL}
                 token={token}
-                channel={channel}
                 pendoID={pendoID}
+                cloudProviderID={cloudProviderID}
               />
-            </div>
-            {showPreReleasePageLink && <div><DeveloperPreviewSection /></div>}
-          </>
+            </TextContent>
+          </StackItem>
         )}
-      </div>
-      <div key="pull-secret" className="instructions-section">
-        <Title headingLevel="h3">Pull secret</Title>
-        <PullSecretSection token={token} pendoID={pendoID} />
-      </div>
-      <div key="cli" className="instructions-section">
-        <Title headingLevel="h3">Command line interface</Title>
-        <CLISection
-          token={token}
-          pendoID={pendoID}
-          channel={channel}
-          isBMIPI={isBMIPI}
-        />
-      </div>
-      {rhcosLearnMoreURL && (
-        <div key="rhcos" className="instructions-section">
-          <Title headingLevel="h3">Red Hat Enterprise Linux CoreOS (RHCOS)</Title>
-          <RHCOSSection
-            learnMoreURL={rhcosLearnMoreURL}
-            token={token}
-            pendoID={pendoID}
-            cloudProviderID={cloudProviderID}
-          />
-        </div>
-      )}
+      </Stack>
     </div>
   );
 }

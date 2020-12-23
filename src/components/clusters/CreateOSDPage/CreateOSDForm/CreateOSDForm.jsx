@@ -107,7 +107,6 @@ class CreateOSDForm extends React.Component {
       cloudProviderID,
       privateClusterSelected,
       product,
-      upgradesEnabled,
       isAutomaticUpgrade,
       canEnableEtcdEncryption,
       selectedRegion,
@@ -133,7 +132,7 @@ class CreateOSDForm extends React.Component {
       <>
         {/* Billing Model */}
         <GridItem span={12}>
-          <h3 className="osd-page-header">Billing model</h3>
+          <Title headingLevel="h3">Billing model</Title>
         </GridItem>
         <BillingModelSection
           openModal={openModal}
@@ -155,7 +154,7 @@ class CreateOSDForm extends React.Component {
         { isAws && isBYOCForm && (
           <>
             <GridItem span={12}>
-              <h3 className="osd-page-header">AWS account details</h3>
+              <Title headingLevel="h3">AWS account details</Title>
             </GridItem>
             <AWSAccountDetailsSection pending={pending} />
           </>
@@ -165,7 +164,7 @@ class CreateOSDForm extends React.Component {
           isGCP && isBYOCForm && (
             <>
               <GridItem span={12}>
-                <h3 className="osd-page-header">GCP service account</h3>
+                <Title headingLevel="h3">GCP service account</Title>
               </GridItem>
               <GridItem span={12}>
                 <p>
@@ -202,7 +201,7 @@ class CreateOSDForm extends React.Component {
 
         {/* Basic fields - Cluster Details section */}
         <GridItem span={12}>
-          <h3 className="osd-page-header">Cluster details</h3>
+          <Title headingLevel="h3">Cluster details</Title>
         </GridItem>
         <BasicFieldsSection
           pending={pending}
@@ -218,7 +217,7 @@ class CreateOSDForm extends React.Component {
 
         {/* Scale section */}
         <GridItem span={12}>
-          <h3>Scale</h3>
+          <Title headingLevel="h3">Scale</Title>
           <p>
             The number and instance type of compute nodes in your cluster. After cluster creation
             you will be able to change the number of compute nodes in your cluster, but you will
@@ -250,7 +249,7 @@ class CreateOSDForm extends React.Component {
         {canEnableEtcdEncryption && (
           <>
             <GridItem span={4}>
-              <Title headingLevel="h4" size="xl">Encryption</Title>
+              <Title headingLevel="h3">Encryption</Title>
             </GridItem>
             <FormGroup
               fieldId="etcd_encryption"
@@ -272,21 +271,14 @@ class CreateOSDForm extends React.Component {
             </FormGroup>
           </>
         )}
-        { upgradesEnabled
-        && (
-          <>
-            <GridItem span={12}>
-              <Divider />
-            </GridItem>
-            <GridItem span={12}>
-              <Title headingLevel="h3">Cluster updates</Title>
-              <UpgradeSettingsFields
-                isAutomatic={isAutomaticUpgrade}
-                isDisabled={pending}
-              />
-            </GridItem>
-          </>
-        )}
+        <GridItem span={12}>
+          <Divider />
+        </GridItem>
+        <Title headingLevel="h3">Cluster updates</Title>
+        <UpgradeSettingsFields
+          isAutomatic={isAutomaticUpgrade}
+          isDisabled={pending}
+        />
       </>
     );
   }
@@ -328,7 +320,6 @@ CreateOSDForm.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   product: PropTypes.string.isRequired,
-  upgradesEnabled: PropTypes.bool,
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
   selectedRegion: PropTypes.string,
