@@ -65,7 +65,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
   <PageSection>
     <Card>
       <div
-        className="pf-c-content ocm-page"
+        className="ocm-page"
       >
         <Form
           onSubmit={[MockFunction]}

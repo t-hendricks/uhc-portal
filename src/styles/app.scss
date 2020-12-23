@@ -603,10 +603,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: 15px;
 }
 
-ul.dev-preview-warnings li {
-  font-weight: var(--pf-global--FontWeight--bold);
-}
-
 .cluster-list .pf-c-chip-group .pf-c-chip-group__label {
   margin-right: 10px;
   overflow: visible;
@@ -698,17 +694,6 @@ ul.dev-preview-warnings li {
   }
 }
 
-button:focus {
-  &.install--copy-pull-secret::after {
-    --pf-c-button--BorderColor: var(--pf-c-button--m-secondary--focus--BorderColor);
-    --pf-c-button--BorderWidth: var(--pf-c-button--focus--BorderWidth);
-  }
-  &.popover-hover {
-    --pf-c-content--a--Color: var(--pf-c-content--a--hover--Color);
-    --pf-c-content--a--TextDecoration: var(--pf-c-content--a--hover--TextDecoration);
-  }
-}
-
 .hand-pointer {
   cursor: pointer;
 }
@@ -745,92 +730,6 @@ button:focus {
 
 .idp-helptext-heading {
   margin-top: var(--pf-global--spacer--lg);
-}
-
-.ocp-downloads {
-   .pf-c-alert{
-    max-width: 700px;
-    margin-bottom: 0;
-  }
-  .pf-c-alert + .pf-c-alert {
-    margin-top: 24px;
-  }
-
-  .pf-c-card {
-    margin: 24px 0;
-  }
-  .pf-c-title.pf-m-2xl.step-number {
-    font-weight: 400;
-    font-size: 36px;
-    border-radius: 50%;
-    width: 64px;
-    height: 64px;
-    margin: 24px;
-    border: 2px solid #d2d2d2;
-    &.alert {
-      border: transparent;
-    }
-    text-align: center;
-    padding: 4px 2px 0 0;
-  }
-
-  .steps-divider {
-    margin: 0 24px;
-    max-width: 800px;
-  }
-
-  .pre-release-card {
-    margin-top: 24px;
-  }
-
-  .download-instructions {
-    &.pre-release {
-      margin-left: 24px;
-    }
-    padding: 24px;
-    &.alert {
-      padding-bottom: 0;
-    }
-    .instructions-section {
-      max-width: 700px;
-      &:not(:last-child) {
-        margin-bottom: 24px;
-      }
-      > h2 {
-        font-weight: 400;
-        font-size: var(--pf-global--FontSize--xl);
-        margin-bottom: 16px;
-      }
-      > h3 {
-        font-weight: 400;
-        font-size: var(--pf-global--FontSize--lg);
-        margin-bottom: 16px;
-      }
-      > p.small-text {
-          font-size: 14px;
-          margin-top: 24px;
-      }
-      > p:not(:last-child) {
-        margin-bottom: 16px;
-      }
-      p + p, div + p, a + div{
-        margin-top: 16px;
-      }
-      #copy-command {
-        margin: 8px 0;
-        font-family: monospace;
-      }
-      li {
-        list-style-type: disc;
-        position: relative;
-        left: 24px;
-        > span {
-          position: relative;
-          left: 12px;
-        }
-      }
-    }
-  }
 }
 
 .space-top-lg {

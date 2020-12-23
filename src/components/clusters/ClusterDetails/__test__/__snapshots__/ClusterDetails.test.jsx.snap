@@ -206,6 +206,7 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       displayMonitoringTab={true}
       displayNetworkingTab={true}
       displaySupportTab={false}
+      displayUpgradeSettingsTab={true}
       hasIssues={true}
       hasIssuesInsights={false}
       initTabOpen=""
@@ -1071,6 +1072,13 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
         }
       }
     />
+  </ForwardRef>
+  <ForwardRef
+    aria-label="Upgrade settings"
+    eventKey={8}
+    id="upgradeSettingsContent"
+  >
+    <Connect(ReduxForm) />
   </ForwardRef>
   <Connect(ReduxForm)
     onClose={[Function]}

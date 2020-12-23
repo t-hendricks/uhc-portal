@@ -3,14 +3,15 @@
 exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -30,14 +31,13 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -47,14 +47,12 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="AWS"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
@@ -62,18 +60,17 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -95,14 +92,15 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
 exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -122,14 +120,13 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -139,14 +136,12 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="AWS"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
@@ -154,18 +149,17 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -187,14 +181,15 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
 exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -214,14 +209,13 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -231,14 +225,12 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="Azure"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
@@ -246,18 +238,17 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -279,14 +270,15 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
 exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -306,14 +298,13 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -323,14 +314,12 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="Azure"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
@@ -338,18 +327,17 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -371,14 +359,15 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
 exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -398,14 +387,13 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -415,14 +403,12 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="Bare Metal"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
@@ -430,18 +416,17 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -463,14 +448,15 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
 exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -491,14 +477,13 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -508,14 +493,12 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="Bare Metal"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
@@ -523,18 +506,17 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -556,14 +538,15 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
 exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -583,14 +566,13 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -600,14 +582,12 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="GCP"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
@@ -615,18 +595,17 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -648,14 +627,15 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
 exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -676,14 +656,13 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -693,14 +672,12 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="GCP"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
@@ -708,18 +685,17 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -741,14 +717,15 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
 exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -769,14 +746,13 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -786,14 +762,12 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="IBM-Z"
                 customizations=""
@@ -801,18 +775,17 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -834,14 +807,15 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
 exports[`Every OCP instruction page should render:  Power 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -862,14 +836,13 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -879,14 +852,12 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="Power"
                 customizations=""
@@ -894,18 +865,17 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -927,14 +897,15 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
 exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-ipi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -954,14 +925,13 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -971,14 +941,12 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="Red Hat OpenStack Platform"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
@@ -986,18 +954,17 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -1019,14 +986,15 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
 exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-upi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -1047,14 +1015,13 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -1064,14 +1031,12 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="Red Hat OpenStack Platform"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
@@ -1079,18 +1044,17 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -1112,14 +1076,15 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
 exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -1139,14 +1104,13 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -1156,14 +1120,12 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="Red Hat Virutalization"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
@@ -1171,18 +1133,17 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -1204,14 +1165,15 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
 exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -1231,14 +1193,13 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -1248,14 +1209,12 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="Red Hat Virutalization"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
@@ -1263,18 +1222,17 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3
@@ -1296,14 +1254,15 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
 exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
 <Fragment>
   <Card
-    className="ocp-downloads"
+    className="ocm-ocp-instructions__card"
   >
     <Stack>
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               1
@@ -1324,14 +1283,13 @@ exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               2
@@ -1341,14 +1299,12 @@ exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
             className="download-instructions"
             isFilled={true}
           >
-            <div
-              className="instructions-section"
-            >
-              <Title
-                headingLevel="h2"
+            <TextContent>
+              <Text
+                component="h2"
               >
                 Follow the instructions to configure your environment and install your cluster
-              </Title>
+              </Text>
               <GetStarted
                 cloudProviderID="VMWare vSphere"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
@@ -1356,18 +1312,17 @@ exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
                 isBMIPI={false}
                 pendoID="/"
               />
-            </div>
+            </TextContent>
           </SplitItem>
         </Split>
       </StackItem>
-      <Divider
-        className="steps-divider"
-      />
+      <Divider />
       <StackItem>
         <Split>
-          <SplitItem>
+          <SplitItem
+            className="step-number"
+          >
             <Title
-              className="step-number"
               headingLevel="h1"
             >
               3

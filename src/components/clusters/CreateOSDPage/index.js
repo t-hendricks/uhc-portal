@@ -22,8 +22,6 @@ import {
 } from '../common/quotaSelectors';
 import canEnableEtcdSelector from './CreateOsdPageSelectors';
 
-import { OSD_UPGRADES_FEATURE } from '../../../redux/constants/featureConstants';
-
 const AWS_DEFAULT_REGION = 'us-east-1';
 const GCP_DEFAULT_REGION = 'us-east1';
 
@@ -53,7 +51,6 @@ const mapStateToProps = (state, ownProps) => {
     installToVPCSelected: valueSelector(state, 'install_to_vpc'),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
-    upgradesEnabled: state.features[OSD_UPGRADES_FEATURE],
     isAutomaticUpgrade: valueSelector(state, 'upgrade_policy') === 'automatic',
 
     cloudProviders: state.cloudProviders,

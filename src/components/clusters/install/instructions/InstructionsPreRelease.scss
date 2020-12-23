@@ -1,9 +1,30 @@
-.developer-preview {
-  background-color: var(--pf-global--warning-color--100);
-  padding-top: 10px;
-  padding-bottom: 8px;
-  margin-left: -24px;
-  margin-top: -24px;
-  margin-right: -24px;
-  padding-left: 22px;
+.ocm-c-pre-release__card {
+  margin-top: var(--pf-global--spacer--md);
+  &--header:first-child {
+    background-color: var(--pf-global--warning-color--100);
+    font-weight: normal;
+    padding-bottom: var(--pf-global--spacer--sm);
+    padding-left: var (--pf-global--spacer--lg);
+    padding-top: var(--pf-global--spacer--sm);
+  }
+  &--body {
+    max-width: 700px;
+    margin-top: var(--pf-global--spacer--md);
+    small {
+      margin-top: var(--pf-global--spacer--md);
+    }
+    ul li {
+      font-weight: var(--pf-global--FontWeight--bold);
+    }
+  }
+}
+
+.ocm-c-pre-release-instructions__card {
+  &--body {
+    max-width: 700px;
+  }
+
+  &--footer {
+    max-width: 700px;
+  }
 }

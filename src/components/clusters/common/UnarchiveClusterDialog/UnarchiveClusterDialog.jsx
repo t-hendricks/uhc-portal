@@ -34,6 +34,7 @@ class UnarchiveClusterDialog extends Component {
     return isOpen && (
       <Modal
         title="Unarchive cluster"
+        data-test-id="unarchive-cluster-dialog"
         onClose={cancelEdit}
         primaryText="Unarchive cluster"
         onPrimaryClick={() => submit(subscriptionID, name)}

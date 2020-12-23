@@ -1,7 +1,8 @@
+import { v4 } from 'uuid';
 import LoginPage from '../pageobjects/login.page';
 import ClusterListPage from '../pageobjects/ClusterList.page';
+import ClusterDetailsPage from '../pageobjects/ClusterDetails.page';
 import RegisterClusterPage from '../pageobjects/RegisterCluster.page';
-
 
 describe('Register cluster flow', async () => {
   it('should login successfully', async () => {
@@ -28,5 +29,64 @@ describe('Register cluster flow', async () => {
     expect(RegisterClusterPage.clusterIDError).toHaveText('Cluster ID is required.');
   });
 
-  // TODO finish register cluster tests
+  it('shows error when URL is not valid', async () => {
+    await (await RegisterClusterPage.clusterURLInput).setValue('asdf');
+    expect(RegisterClusterPage.clusterURLError).toExist();
+    expect(RegisterClusterPage.clusterIDError).toHaveText('The URL should include the scheme prefix (http://, https://).');
+
+    await (await RegisterClusterPage.clusterURLInput).setValue('https://uwu');
+    expect(RegisterClusterPage.clusterURLError).toExist();
+    expect(RegisterClusterPage.clusterIDError).toHaveText('Invalid URL');
+  });
+
+  it('shows error when display name is not valid', async () => {
+    await (await RegisterClusterPage.clusterURLInput).setValue('a'.repeat(70));
+    expect(RegisterClusterPage.displayNameError).toExist();
+    expect(RegisterClusterPage.displayNameError).toHaveText('Cluster display name may not exceed 63 characters.');
+  });
+
+  it('redirects to cluster list when clicking cancel', async () => {
+    await (await RegisterClusterPage.cancelButton).click();
+    expect(await ClusterListPage.isClusterListPage()).toBeTruthy();
+  });
+
+  it('creates a new cluster and redirects to its details page', async () => {
+    await ClusterListPage.navigateToRegisterCluster();
+    expect(await RegisterClusterPage.isRegisterClusterPage()).toBeTruthy();
+
+    const clusterID = v4();
+    const clusterName = `selenium-${clusterID}`;
+    await (await RegisterClusterPage.clusterIDInput).setValue(clusterID);
+    expect(RegisterClusterPage.clusterIDError).not.toExist();
+    await (await RegisterClusterPage.displayNameInput).setValue(clusterName);
+    expect(RegisterClusterPage.displayNameError).not.toExist();
+    await (await RegisterClusterPage.submitButton).click();
+    expect(ClusterDetailsPage.isClusterDetailsPage(clusterID)).toBeTruthy();
+  });
+
+  it('successfully archives the newly created cluster', async () => {
+    await (await ClusterDetailsPage.actionsDropdownToggle).click();
+    await (await ClusterDetailsPage.archiveClusterDropdownItem).click();
+    await (await ClusterDetailsPage.archiveClusterDialogConfirm).click();
+    expect(ClusterDetailsPage.archiveClusterDialogConfirm).not.toExist();
+    expect(ClusterDetailsPage.successNotification).toExist();
+    expect(ClusterDetailsPage.unarchiveClusterButton).toExist();
+  });
+
+  it('successfully unarchives the archived cluster', async () => {
+    await (await ClusterDetailsPage.unarchiveClusterButton).click();
+    await (await ClusterDetailsPage.unarchiveClusterDialogConfirm).click();
+    expect(ClusterDetailsPage.unarchiveClusterDialogConfirm).not.toExist();
+    expect(ClusterDetailsPage.successNotification).toExist();
+    expect(ClusterDetailsPage.actionsDropdownToggle).toExist();
+  });
+
+  after('Finally, archive the cluster created', async () => {
+    await browser.waitUntil(
+      async () => ((await ClusterDetailsPage.actionsDropdownToggle).isClickable()),
+    );
+    await (await ClusterDetailsPage.actionsDropdownToggle).click();
+    await (await ClusterDetailsPage.archiveClusterDropdownItem).click();
+    await (await ClusterDetailsPage.archiveClusterDialogConfirm).click();
+  }).timeout(8000);
 });

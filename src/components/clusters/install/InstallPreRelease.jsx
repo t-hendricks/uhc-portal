@@ -10,7 +10,6 @@ import { tollboothActions } from '../../../redux/actions';
 import InstructionsPreRelease from './instructions/InstructionsPreRelease';
 import { scrollToTop } from '../../../common/helpers';
 
-
 class InstallPreRelease extends Component {
   componentDidMount() {
     scrollToTop();
@@ -35,7 +34,7 @@ class InstallPreRelease extends Component {
     return (
       <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
-        <PageSection className="ocp-downloads">
+        <PageSection>
           <InstructionsPreRelease token={token} />
         </PageSection>
       </>

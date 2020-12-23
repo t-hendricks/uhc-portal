@@ -3,6 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Card,
+  CardBody,
+  CardFooter,
+  CardTitle,
+  Text,
+  TextContent,
   Title,
   Stack,
   StackItem,
@@ -20,57 +25,52 @@ function InstructionsPreRelease({ token }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
-          Experimental Developer Preview Builds
+        Experimental Developer Preview Builds
       </Title>
       <Stack hasGutter>
         <StackItem>
-          <Card className="pre-release-card">
-            <div className="pf-l-grid pf-m-gutter ocm-page instructions-section">
-              <div className="developer-preview">
-                <CodeIcon />
-                {' '}
-            Developer Preview
-              </div>
+          <Card className="ocm-c-pre-release__card">
+            <CardTitle className="ocm-c-pre-release__card--header">
+              <CodeIcon />
+              {' '}
+              <span>
+                Developer Preview
+              </span>
+            </CardTitle>
+            <CardBody className="ocm-c-pre-release__card--body">
               {token.error && <TokenErrorAlert token={token} />}
-              <TelemetryDisclaimer />
-              <div className="pf-c-content">
-
-                <p>
-            As Red Hat OpenShift Container Platform (OCP) has moved to become a more
-            agile and rapidly deployable Kubernetes offering, we want to allow
-            existing and evaluation customers and partners access to the latest
-            pre-release nightly builds to see a real-time view into the next version
-            of OpenShift.
-                </p>
-
-                <p />
-
+              <TextContent>
+                <TelemetryDisclaimer />
+                <Text component="p">
+                  As Red Hat OpenShift Container Platform (OCP) has moved to become a more
+                  agile and rapidly deployable Kubernetes offering, we want to allow
+                  existing and evaluation customers and partners access to the latest
+                  pre-release nightly builds to see a real-time view into the next version
+                  of OpenShift.
+                </Text>
                 <DeveloperPreviewStatements />
-
-                <p>
-            These nightly builds are useful for those who would like to stay up
-            to date on features being developed in the next release of OpenShift.
-            Such builds are advantageous for planning future deployments,
-            ISV integrations, or other educational purposes.
-                </p>
-
-                <h3>
-            Feature Completion in Nightly Builds
-                </h3>
-
-                <p>
-            Each OpenShift minor release will target initiatives or focus areas.
-            These features will not be the same in every nightly build.
-            Because these are experimental nightly builds, some features
-            may be incomplete or have bugs. This is the beauty of the development process.
-                </p>
-              </div>
-            </div>
+                <Text component="p">
+                  These nightly builds are useful for those who would like to stay up
+                  to date on features being developed in the next release of OpenShift.
+                  Such builds are advantageous for planning future deployments,
+                  ISV integrations, or other educational purposes.
+                </Text>
+                <Text component="h3">
+                  Feature Completion in Nightly Builds
+                </Text>
+                <Text component="p">
+                  Each OpenShift minor release will target initiatives or focus areas.
+                  These features will not be the same in every nightly build.
+                  Because these are experimental nightly builds, some features
+                  may be incomplete or have bugs. This is the beauty of the development process.
+                </Text>
+              </TextContent>
+            </CardBody>
           </Card>
         </StackItem>
         <StackItem>
-          <Card className="download-instructions">
-            <div className="instructions-section pf-c-content">
+          <Card className="ocm-c-pre-release-instructions__card">
+            <CardBody className="ocm-c-pre-release-instructions__card--body">
               <DownloadsAndPullSecretSection
                 rhcosDownloadURL={links.INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_LATEST}
                 token={token}
@@ -78,30 +78,32 @@ function InstructionsPreRelease({ token }) {
                 showPreReleasePageLink={false}
                 channel={channels.PRE_RELEASE}
               />
-              <h3 className="pf-c-title pf-m-md downloads-subtitle">Feedback and Support</h3>
-              <p>
-            If you are a Red Hat customer or partner and have feedback about these nightly builds,
-            email
-                {' '}
-                <a href={links.INSTALL_PRE_RELEASE_FEEDBACK_MAILTO}>
-              ***REMOVED***
-                </a>
-            . Do not use the formal Red Hat support service ticket process.
-            You can read more about support handling in the following
-                {' '}
-                <a href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS} rel="noreferrer noopener" target="_blank">
-              knowledge article
-                </a>
-            .
-              </p>
-            </div>
+            </CardBody>
+            <CardFooter className="ocm-c-pre-release-instructions__card--footer">
+              <TextContent>
+                <Text component="h3">Feedback and Support</Text>
+                <Text component="p">
+                  If you are a Red Hat customer or partner and have feedback about these nightly builds, email
+                  {' '}
+                  <Text component="a" href={links.INSTALL_PRE_RELEASE_FEEDBACK_MAILTO}>
+                    ***REMOVED***
+                  </Text>
+                  . Do not use the formal Red Hat support service ticket process.
+                  You can read more about support handling in the following
+                  {' '}
+                  <Text component="a" href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS} rel="noreferrer noopener" target="_blank">
+                    knowledge article
+                  </Text>
+                  .
+                </Text>
+              </TextContent>
+            </CardFooter>
           </Card>
         </StackItem>
       </Stack>
     </>
   );
 }
-
 
 InstructionsPreRelease.propTypes = {
   token: PropTypes.object.isRequired,

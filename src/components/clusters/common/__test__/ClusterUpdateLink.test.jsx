@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ClusterUpdateLink from './ClusterUpdateLink';
+import ClusterUpdateLink from '../ClusterUpdateLink';
 
 describe('<ClusterUpdateLink />', () => {
   it('renders null for OCP when no upgrades are available', () => {

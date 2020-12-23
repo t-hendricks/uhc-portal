@@ -2,96 +2,140 @@
 
 exports[`<GetStarted /> GetStarted w/ customizations should render 1`] = `
 <Fragment>
-  <p>
-    The installer will take about 45 minutes to run.
-     
-  </p>
-  <Button
-    component="a"
-    href=""
-    onClick={[Function]}
-    rel="noreferrer noopener"
-    target="_blank"
-    variant="secondary"
+  <Stack
+    hasGutter={true}
   >
-    Get started
-  </Button>
-  <div>
-    To quickly create a cluster with the default options, run the following command:
-    <ClipboardCopy
-      clickTip="Successfully copied to clipboard!"
-      entryDelay={100}
-      exitDelay={1600}
-      hoverTip="Copy to clipboard"
-      id="copy-command"
-      isCode={true}
-      isExpanded={false}
-      isReadOnly={true}
-      maxWidth="150px"
-      onChange={[Function]}
-      onCopy={[Function]}
-      position="top"
-      switchDelay={2000}
-      textAriaLabel="Copyable input"
-      toggleAriaLabel="Show content"
-      variant="inline"
-    >
-      ./openshift-install create cluster
-    </ClipboardCopy>
-    <p>
-      Refer to the documentation to
-       
-      <a
-        href="example.doc.link"
+    <StackItem>
+      <TextContent>
+        <Text
+          component="p"
+        >
+          The installer will take about 45 minutes to run.
+           
+        </Text>
+      </TextContent>
+    </StackItem>
+    <StackItem>
+      <Button
+        component="a"
+        href=""
+        onClick={[Function]}
+        rel="noreferrer noopener"
+        target="_blank"
+        variant="secondary"
       >
-        install with customizations
-      </a>
-      .
-    </p>
-  </div>
-  <TelemetryDisclaimer />
+        Get started
+      </Button>
+    </StackItem>
+    <StackItem>
+      <Text
+        component="p"
+      >
+        To quickly create a cluster with the default options, run the following command:
+      </Text>
+      <ClipboardCopy
+        clickTip="Successfully copied to clipboard!"
+        entryDelay={100}
+        exitDelay={1600}
+        hoverTip="Copy to clipboard"
+        id="copy-command"
+        isCode={true}
+        isExpanded={false}
+        isReadOnly={true}
+        maxWidth="150px"
+        onChange={[Function]}
+        onCopy={[Function]}
+        position="top"
+        switchDelay={2000}
+        textAriaLabel="Copyable input"
+        toggleAriaLabel="Show content"
+        variant="inline"
+      >
+        ./openshift-install create cluster
+      </ClipboardCopy>
+    </StackItem>
+    <StackItem>
+      <TextContent>
+        <Text
+          component="p"
+        >
+          Refer to the documentation to
+           
+          <Text
+            className="customizations"
+            component="a"
+            href="example.doc.link"
+          >
+            install with customizations
+          </Text>
+          .
+        </Text>
+      </TextContent>
+    </StackItem>
+    <StackItem>
+      <TelemetryDisclaimer />
+    </StackItem>
+  </Stack>
 </Fragment>
 `;
 
 exports[`<GetStarted /> GetStarted w/o customizations should render 1`] = `
 <Fragment>
-  <p>
-    The installer will take about 45 minutes to run.
-     
-  </p>
-  <Button
-    component="a"
-    href=""
-    onClick={[Function]}
-    rel="noreferrer noopener"
-    target="_blank"
-    variant="secondary"
+  <Stack
+    hasGutter={true}
   >
-    Get started
-  </Button>
-  <div>
-    To quickly create a cluster with the default options, run the following command:
-    <ClipboardCopy
-      clickTip="Successfully copied to clipboard!"
-      entryDelay={100}
-      exitDelay={1600}
-      hoverTip="Copy to clipboard"
-      id="copy-command"
-      isCode={true}
-      isExpanded={false}
-      isReadOnly={true}
-      maxWidth="150px"
-      onChange={[Function]}
-      onCopy={[Function]}
-      position="top"
-      switchDelay={2000}
-      textAriaLabel="Copyable input"
-      toggleAriaLabel="Show content"
-      variant="inline"
-    >
-      ./openshift-install create cluster
-    </ClipboardCopy>
-  </div>
-  <TelemetryDisclaimer />
+    <StackItem>
+      <TextContent>
+        <Text
+          component="p"
+        >
+          The installer will take about 45 minutes to run.
+           
+        </Text>
+      </TextContent>
+    </StackItem>
+    <StackItem>
+      <Button
+        component="a"
+        href=""
+        onClick={[Function]}
+        rel="noreferrer noopener"
+        target="_blank"
+        variant="secondary"
+      >
+        Get started
+      </Button>
+    </StackItem>
+    <StackItem>
+      <Text
+        component="p"
+      >
+        To quickly create a cluster with the default options, run the following command:
+      </Text>
+      <ClipboardCopy
+        clickTip="Successfully copied to clipboard!"
+        entryDelay={100}
+        exitDelay={1600}
+        hoverTip="Copy to clipboard"
+        id="copy-command"
+        isCode={true}
+        isExpanded={false}
+        isReadOnly={true}
+        maxWidth="150px"
+        onChange={[Function]}
+        onCopy={[Function]}
+        position="top"
+        switchDelay={2000}
+        textAriaLabel="Copyable input"
+        toggleAriaLabel="Show content"
+        variant="inline"
+      >
+        ./openshift-install create cluster
+      </ClipboardCopy>
+    </StackItem>
+    <StackItem>
+      <TelemetryDisclaimer />
+    </StackItem>
+  </Stack>
 </Fragment>
 `;
