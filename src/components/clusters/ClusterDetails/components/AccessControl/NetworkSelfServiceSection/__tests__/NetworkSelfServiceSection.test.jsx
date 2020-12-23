@@ -72,7 +72,9 @@ describe('<NetworkSelfServiceSection />', () => {
 
   it('should open modal when needed', () => {
     wrapper.find('.access-control-add').simulate('click');
-    expect(openAddGrantModal).toBeCalled();
+    setTimeout(() => {
+      expect(openAddGrantModal).toBeCalled();
+    }, 0);
   });
 
   it('should call getGrants() when a grant is added', () => {
