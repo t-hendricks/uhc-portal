@@ -248,7 +248,7 @@ class CreateOSDForm extends React.Component {
         {/* Encryption */}
         {canEnableEtcdEncryption && (
           <>
-            <GridItem span={4}>
+            <GridItem span={12}>
               <Title headingLevel="h3">Encryption</Title>
             </GridItem>
             <FormGroup
