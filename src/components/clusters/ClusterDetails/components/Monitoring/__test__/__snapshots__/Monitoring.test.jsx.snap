@@ -98,37 +98,6 @@ exports[`<Monitoring /> should render correctly with every health status 4`] = `
 exports[`<Monitoring /> should render correctly with every health status 5`] = `
 <Fragment>
   <ClusterHealthCard
-    status="INSTALLING"
-  />
-  <MonitoringEmptyState
-    hideLastCheckIn={true}
-  >
-    <p>
-      Monitoring data is not available at this time. Try again later.
-    </p>
-  </MonitoringEmptyState>
-</Fragment>
-`;
-
-exports[`<Monitoring /> should render correctly with every health status 6`] = `
-<Fragment>
-  <ClusterHealthCard
-    status="UNINSTALLING"
-  />
-  <MonitoringEmptyState
-    hideLastCheckIn={true}
-    title="Monitoring data is no longer available"
-  >
-    <p>
-      The cluster is currently uninstalling. This will take a few minutes to complete.
-    </p>
-  </MonitoringEmptyState>
-</Fragment>
-`;
-
-exports[`<Monitoring /> should render correctly with every health status 7`] = `
-<Fragment>
-  <ClusterHealthCard
     discoveredIssues={0}
     lastCheckIn={2020-02-02T00:00:00.000Z}
     status="UPGRADING"
@@ -161,7 +130,7 @@ exports[`<Monitoring /> should render correctly with every health status 7`] = `
 </Fragment>
 `;
 
-exports[`<Monitoring /> should render correctly with every health status 8`] = `
+exports[`<Monitoring /> should render correctly with every health status 6`] = `
 <Fragment>
   <ClusterHealthCard
     discoveredIssues={0}

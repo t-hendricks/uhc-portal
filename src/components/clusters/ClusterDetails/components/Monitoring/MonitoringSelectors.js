@@ -9,7 +9,6 @@ import {
   resourceUsageIssuesHelper,
   maxMetricsTimeDelta,
 } from './monitoringHelper';
-import clusterStates from '../../../common/clusterStates';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
 
@@ -28,9 +27,8 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
   const diff = new Date().getTime() - lastCheckIn.getTime();
   const hours = diff / 1000 / 60 / 60;
   const freshActivity = OCM_SHOW_OLD_METRICS || hours < maxMetricsTimeDelta;
-  const isOSDUpgrading = cluster.managed && state.clusterUpgrades.schedules.items.some(schedule => schedule.state?.value === 'started');
 
-  if (!cluster.managed && (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED)) {
+  if (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED) {
     return monitoringStatuses.DISCONNECTED;
   }
 
@@ -38,16 +36,8 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
     return monitoringStatuses.NO_METRICS;
   }
 
-  if (cluster.metrics.upgrade.state === 'running' || isOSDUpgrading) {
+  if (cluster.metrics.upgrade.state === 'running') {
     return monitoringStatuses.UPGRADING;
-  }
-
-  if (cluster.state === clusterStates.INSTALLING || cluster.state === clusterStates.PENDING) {
-    return monitoringStatuses.INSTALLING;
-  }
-
-  if (cluster.state === clusterStates.UNINSTALLING) {
-    return monitoringStatuses.UNINSTALLING;
   }
 
   if (discoveredIssues > 0) {
