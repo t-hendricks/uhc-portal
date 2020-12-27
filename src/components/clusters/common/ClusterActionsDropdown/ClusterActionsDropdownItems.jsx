@@ -15,7 +15,7 @@ import modals from '../../../common/Modal/modals';
  * @param {*} openModal           Action to open modal
  */
 function actionResolver(
-  cluster, showConsoleButton, openModal, canAllowClusterAdmin, canSubscribeOCP,
+  cluster, showConsoleButton, openModal, canSubscribeOCP,
   canTransferClusterOwnership, toggleSubscriptionReleased,
 ) {
   const baseProps = {
@@ -222,16 +222,6 @@ function actionResolver(
     return transferClusterOwnershipProps;
   };
 
-  const getToggleClusterAdminAccessDialogProps = () => (
-    {
-      ...baseProps,
-      title: !cluster.cluster_admin_enabled ? 'Allow cluster-admin access' : 'Remove cluster-admin access',
-      key: getKey('allowclusteradmin'),
-      onClick: () => openModal('allow-cluster-admin', cluster),
-      ...isUninstallingProps,
-    }
-  );
-
   const adminConsoleItemProps = getAdminConosleProps();
   const scaleClusterItemProps = getScaleClusterProps();
   const editNodeCountItemProps = getEditNodeCountProps();
@@ -242,7 +232,6 @@ function actionResolver(
   const unarchiveClusterItemProps = getUnarchiveClusterProps();
   const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
   const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
-  const ToggleClusterAdminAccessDialogProps = getToggleClusterAdminAccessDialogProps();
   const editccscredentialsProps = getEditCCSCredentialsProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
@@ -258,7 +247,6 @@ function actionResolver(
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership
     && get(cluster, 'subscription.plan.id', '') === normalizedProducts.OCP
     && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
-  const showToggleClusterAdmin = cluster.managed && canAllowClusterAdmin;
   // eslint-disable-next-line max-len
   // const showccscredentials = cluster.ccs?.enabled && cluster.cloud_provider && cluster.cloud_provider.id !== 'gcp';
   const showccscredentials = false; // Temporary until backend is fixed
@@ -274,17 +262,16 @@ function actionResolver(
     showUnarchive && unarchiveClusterItemProps,
     showEditSubscriptionSettings && editSubscriptionSettingsProps,
     showTransferClusterOwnership && transferClusterOwnershipProps,
-    showToggleClusterAdmin && ToggleClusterAdminAccessDialogProps,
     showccscredentials && editccscredentialsProps,
   ].filter(Boolean);
 }
 
 function dropDownItems({
-  cluster, showConsoleButton, openModal, canAllowClusterAdmin, canSubscribeOCP,
+  cluster, showConsoleButton, openModal, canSubscribeOCP,
   canTransferClusterOwnership, toggleSubscriptionReleased,
 }) {
   const actions = actionResolver(
-    cluster, showConsoleButton, openModal, canAllowClusterAdmin, canSubscribeOCP,
+    cluster, showConsoleButton, openModal, canSubscribeOCP,
     canTransferClusterOwnership, toggleSubscriptionReleased,
   );
   const menuItems = actions.map(

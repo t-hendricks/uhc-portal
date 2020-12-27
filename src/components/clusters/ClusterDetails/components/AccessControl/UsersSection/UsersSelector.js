@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 
-import clusterStates from '../clusterStates';
+import clusterStates from '../../../../common/clusterStates';
 
 const canAllowAdminSelector = (state) => {
   const product = get(state, 'clusters.details.cluster.product.id', 'osd');

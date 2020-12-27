@@ -39,7 +39,6 @@ import DeleteIDPDialog from './components/DeleteIDPDialog';
 import ErrorBoundary from '../../App/ErrorBoundary';
 
 import CommonClusterModals from '../common/CommonClusterModals';
-import ToggleClusterAdminAccessDialog from '../common/ToggleClusterAdminAccessDialog';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
@@ -325,7 +324,6 @@ class ClusterDetails extends Component {
       voteOnRule,
       disableRule,
       enableRule,
-      canAllowClusterAdmin,
       canSubscribeOCP,
       canTransferClusterOwnership,
       anyModalOpen,
@@ -430,7 +428,6 @@ class ClusterDetails extends Component {
           organization={organization}
           error={clusterDetails.error}
           errorMessage={clusterDetails.errorMessage}
-          canAllowClusterAdmin={canAllowClusterAdmin}
           canSubscribeOCP={canSubscribeOCP}
           canTransferClusterOwnership={canTransferClusterOwnership}
           autoRefreshEnabled={!anyModalOpen}
@@ -625,7 +622,6 @@ class ClusterDetails extends Component {
             history.push('/');
           }}
         />
-        <ToggleClusterAdminAccessDialog onClose={onDialogClose} />
         <IdentityProvidersModal
           clusterID={cluster.id}
           clusterName={clusterName}
@@ -698,7 +694,6 @@ ClusterDetails.propTypes = {
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   setOpenedTab: PropTypes.func.isRequired,
-  canAllowClusterAdmin: PropTypes.bool.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
   getClusterRouters: PropTypes.func.isRequired,
