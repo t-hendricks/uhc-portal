@@ -74,11 +74,9 @@ const editCluster = (id, cluster) => dispatch => dispatch({
   payload: clusterService.editCluster(id, cluster),
 });
 
-const editClusterDisplayName = (id, subscriptionID, displayName) => dispatch => dispatch({
+const editClusterDisplayName = (subscriptionID, displayName) => dispatch => dispatch({
   type: clustersConstants.EDIT_CLUSTER,
-  payload: clusterService.editCluster(id, { display_name: displayName }).then(
-    () => accountsService.editSubscription(subscriptionID, { display_name: displayName }),
-  ),
+  payload: accountsService.editSubscription(subscriptionID, { display_name: displayName }),
 });
 
 /** Build a notification
