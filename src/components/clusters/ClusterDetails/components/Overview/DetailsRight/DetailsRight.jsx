@@ -19,6 +19,8 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
     cluster.metrics.memory.total.value, cluster.metrics.memory.total.unit,
   );
 
+  const isDisconnected = get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;
+
   const showDesiredNodes = cluster.managed;
   const showInfraNodes = (!cluster.managed && get(cluster, 'metrics.nodes.infra', null))
                          || get(cluster, 'nodes.infra', 0) > 0;
@@ -26,7 +28,7 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
 
   const humanizedPersistentStorage = cluster.managed
              && humanizeValueWithUnitGiB(cluster.storage_quota.value);
-  const showVCPU = !hasSockets;
+  const showVCPU = !isDisconnected && !hasSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
   const masterActualNodes = get(cluster, 'metrics.nodes.master', '-');
@@ -57,7 +59,6 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
             </DescriptionListDescription>
           )}
         </DescriptionListGroup>
-
         {showVCPU && (
           <>
             <DescriptionListGroup>
@@ -72,23 +73,20 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
             </DescriptionListGroup>
           </>
         )}
-        <DescriptionListGroup>
-          <DescriptionListTerm>
+        {!isDisconnected && (
+          <>
+            <DescriptionListGroup>
+              <DescriptionListTerm>
             Total memory
-          </DescriptionListTerm>
-          <DescriptionListDescription>
-            {get(cluster, 'subscription.status') === subscriptionStatuses.DISCONNECTED ? (
-              'N/A'
-            )
-              : (
-                <>
-                  {memoryTotalWithUnit.value}
-                  {' '}
-                  {memoryTotalWithUnit.unit}
-                </>
-              )}
-          </DescriptionListDescription>
-        </DescriptionListGroup>
+              </DescriptionListTerm>
+              <DescriptionListDescription>
+                {memoryTotalWithUnit.value}
+                {' '}
+                {memoryTotalWithUnit.unit}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
         { cluster.managed && !cluster.byoc && (
           <>
             <DescriptionListGroup>
