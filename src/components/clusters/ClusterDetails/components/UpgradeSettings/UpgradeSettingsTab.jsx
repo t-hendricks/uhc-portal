@@ -28,6 +28,11 @@ class UpgradeSettingsTab extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { clearResponses } = this.props;
+    clearResponses();
+  }
+
   closeConfirmationModal = () => {
     this.setState({ confirmationModalOpen: false });
   }
@@ -212,6 +217,7 @@ UpgradeSettingsTab.propTypes = {
   }),
   reset: PropTypes.func,
   openModal: PropTypes.func,
+  clearResponses: PropTypes.func,
   change: PropTypes.func,
   initialValues: PropTypes.shape({
     automatic_upgrade_schedule: PropTypes.string,
