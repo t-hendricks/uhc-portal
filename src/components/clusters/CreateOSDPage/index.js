@@ -14,8 +14,9 @@ import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/helpers';
 
+import { normalizedProducts } from '../../../common/subscriptionTypes';
 import {
-  hasOSDQuotaSelector,
+  hasManagedQuotaSelector,
   hasAwsQuotaSelector,
   hasGcpQuotaSelector,
   awsQuotaSelector,
@@ -59,9 +60,9 @@ const mapStateToProps = (state, ownProps) => {
     loadBalancerValues: state.loadBalancerValues,
 
     clustersQuota: {
-      hasOsdQuota: hasOSDQuotaSelector(state),
-      hasAwsQuota: hasAwsQuotaSelector(state),
-      hasGcpQuota: hasGcpQuotaSelector(state),
+      hasOsdQuota: hasManagedQuotaSelector(state, normalizedProducts.OSD),
+      hasAwsQuota: hasAwsQuotaSelector(state, normalizedProducts.OSD),
+      hasGcpQuota: hasGcpQuotaSelector(state, normalizedProducts.OSD),
       aws: awsQuotaSelector(state),
       gcp: gcpQuotaSelector(state),
     },

@@ -1,3 +1,5 @@
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
+
 const stateWithQuota = {
   clusters: {
     details: {
@@ -456,399 +458,403 @@ const stateWithQuota = {
       },
       quotaList: {
         clustersQuota: {
-          aws: {
-            byoc: {
-              singleAz: {
-                available: 88,
-                'cpu.large': 7,
-                'cpu.medium': 7,
-                'gp.large': 7,
-                'gp.medium': 7,
-                'gp.small': 7,
-                'mem.large': 7,
-                'mem.medium': 7,
-                'mem.small': 7,
-                'cpu.xlarge': 2,
-                'cpu.xxlarge': 2,
-                'cpu.xxxlarge': 2,
-                'cpu.xxxxlarge': 2,
-                'gp.xlarge': 2,
-                'gp.xxlarge': 2,
-                'gp.xxxlarge': 2,
-                'gp.xxxxlarge': 2,
-                'mem.xlarge': 2,
-                'mem.xxlarge': 2,
-                'mem.xxxlarge': 2,
-                'mem.xxxxlarge': 2,
+          [normalizedProducts.OSD]: {
+            aws: {
+              byoc: {
+                singleAz: {
+                  available: 88,
+                  'cpu.large': 7,
+                  'cpu.medium': 7,
+                  'gp.large': 7,
+                  'gp.medium': 7,
+                  'gp.small': 7,
+                  'mem.large': 7,
+                  'mem.medium': 7,
+                  'mem.small': 7,
+                  'cpu.xlarge': 2,
+                  'cpu.xxlarge': 2,
+                  'cpu.xxxlarge': 2,
+                  'cpu.xxxxlarge': 2,
+                  'gp.xlarge': 2,
+                  'gp.xxlarge': 2,
+                  'gp.xxxlarge': 2,
+                  'gp.xxxxlarge': 2,
+                  'mem.xlarge': 2,
+                  'mem.xxlarge': 2,
+                  'mem.xxxlarge': 2,
+                  'mem.xxxxlarge': 2,
+                },
+                multiAz: {
+                  available: 88,
+                  'cpu.large': 7,
+                  'cpu.medium': 7,
+                  'gp.large': 7,
+                  'gp.medium': 7,
+                  'gp.small': 7,
+                  'mem.large': 7,
+                  'mem.medium': 7,
+                  'mem.small': 7,
+                  'cpu.xlarge': 2,
+                  'cpu.xxlarge': 2,
+                  'cpu.xxxlarge': 2,
+                  'cpu.xxxxlarge': 2,
+                  'gp.xlarge': 2,
+                  'gp.xxlarge': 2,
+                  'gp.xxxlarge': 2,
+                  'gp.xxxxlarge': 2,
+                  'mem.xlarge': 2,
+                  'mem.xxlarge': 2,
+                  'mem.xxxlarge': 2,
+                  'mem.xxxxlarge': 2,
+                },
+                totalAvailable: 144,
               },
-              multiAz: {
-                available: 88,
-                'cpu.large': 7,
-                'cpu.medium': 7,
-                'gp.large': 7,
-                'gp.medium': 7,
-                'gp.small': 7,
-                'mem.large': 7,
-                'mem.medium': 7,
-                'mem.small': 7,
-                'cpu.xlarge': 2,
-                'cpu.xxlarge': 2,
-                'cpu.xxxlarge': 2,
-                'cpu.xxxxlarge': 2,
-                'gp.xlarge': 2,
-                'gp.xxlarge': 2,
-                'gp.xxxlarge': 2,
-                'gp.xxxxlarge': 2,
-                'mem.xlarge': 2,
-                'mem.xxlarge': 2,
-                'mem.xxxlarge': 2,
-                'mem.xxxxlarge': 2,
+              rhInfra: {
+                singleAz: {
+                  available: 164,
+                  'cpu.medium': 7,
+                  'gp.small': 1,
+                  'cpu.large': 7,
+                  'gp.large': 7,
+                  'mem.small': 7,
+                  'mem.medium': 7,
+                  'mem.large': 7,
+                  'gp.medium': 7,
+                },
+                multiAz: {
+                  available: 65,
+                  'cpu.medium': 7,
+                  'mem.medium': 7,
+                  'mem.small': 7,
+                  'cpu.large': 7,
+                  'gp.large': 7,
+                  'gp.medium': 7,
+                  'gp.small': 16,
+                  'mem.large': 7,
+                },
+                totalAvailable: 229,
               },
-              totalAvailable: 144,
+              isAvailable: true,
             },
-            rhInfra: {
-              singleAz: {
-                available: 164,
-                'cpu.medium': 7,
-                'gp.small': 1,
-                'cpu.large': 7,
-                'gp.large': 7,
-                'mem.small': 7,
-                'mem.medium': 7,
-                'mem.large': 7,
-                'gp.medium': 7,
+            gcp: {
+              byoc: {
+                singleAz: {
+                  available: 88,
+                  'cpu.large': 7,
+                  'cpu.medium': 7,
+                  'gp.large': 7,
+                  'gp.medium': 7,
+                  'gp.small': 7,
+                  'mem.large': 7,
+                  'mem.medium': 7,
+                  'mem.small': 7,
+                  'cpu.xlarge': 2,
+                  'cpu.xxlarge': 2,
+                  'cpu.xxxlarge': 2,
+                  'cpu.xxxxlarge': 2,
+                  'gp.xlarge': 2,
+                  'gp.xxlarge': 2,
+                  'gp.xxxlarge': 2,
+                  'gp.xxxxlarge': 2,
+                  'mem.xlarge': 2,
+                  'mem.xxlarge': 2,
+                  'mem.xxxlarge': 2,
+                  'mem.xxxxlarge': 2,
+                },
+                multiAz: {
+                  available: 88,
+                  'cpu.large': 7,
+                  'cpu.medium': 7,
+                  'gp.large': 7,
+                  'gp.medium': 7,
+                  'gp.small': 7,
+                  'mem.large': 7,
+                  'mem.medium': 7,
+                  'mem.small': 7,
+                  'cpu.xlarge': 2,
+                  'cpu.xxlarge': 2,
+                  'cpu.xxxlarge': 2,
+                  'cpu.xxxxlarge': 2,
+                  'gp.xlarge': 2,
+                  'gp.xxlarge': 2,
+                  'gp.xxxlarge': 2,
+                  'gp.xxxxlarge': 2,
+                  'mem.xlarge': 2,
+                  'mem.xxlarge': 2,
+                  'mem.xxxlarge': 2,
+                  'mem.xxxxlarge': 2,
+                },
+                totalAvailable: 144,
               },
-              multiAz: {
-                available: 65,
-                'cpu.medium': 7,
-                'mem.medium': 7,
-                'mem.small': 7,
-                'cpu.large': 7,
-                'gp.large': 7,
-                'gp.medium': 7,
-                'gp.small': 16,
-                'mem.large': 7,
+              rhInfra: {
+                singleAz: {
+                  available: 163,
+                  'cpu.medium': 7,
+                  'gp.small': 114,
+                  'cpu.large': 7,
+                  'gp.large': 7,
+                  'mem.small': 7,
+                  'mem.medium': 7,
+                  'mem.large': 7,
+                  'gp.medium': 7,
+                },
+                multiAz: {
+                  available: 65,
+                  'cpu.medium': 7,
+                  'mem.medium': 7,
+                  'mem.small': 7,
+                  'cpu.large': 7,
+                  'gp.large': 7,
+                  'gp.medium': 7,
+                  'gp.small': 16,
+                  'mem.large': 7,
+                },
+                totalAvailable: 228,
               },
-              totalAvailable: 229,
+              isAvailable: true,
             },
-            isAvailable: true,
-          },
-          gcp: {
-            byoc: {
-              singleAz: {
-                available: 88,
-                'cpu.large': 7,
-                'cpu.medium': 7,
-                'gp.large': 7,
-                'gp.medium': 7,
-                'gp.small': 7,
-                'mem.large': 7,
-                'mem.medium': 7,
-                'mem.small': 7,
-                'cpu.xlarge': 2,
-                'cpu.xxlarge': 2,
-                'cpu.xxxlarge': 2,
-                'cpu.xxxxlarge': 2,
-                'gp.xlarge': 2,
-                'gp.xxlarge': 2,
-                'gp.xxxlarge': 2,
-                'gp.xxxxlarge': 2,
-                'mem.xlarge': 2,
-                'mem.xxlarge': 2,
-                'mem.xxxlarge': 2,
-                'mem.xxxxlarge': 2,
-              },
-              multiAz: {
-                available: 88,
-                'cpu.large': 7,
-                'cpu.medium': 7,
-                'gp.large': 7,
-                'gp.medium': 7,
-                'gp.small': 7,
-                'mem.large': 7,
-                'mem.medium': 7,
-                'mem.small': 7,
-                'cpu.xlarge': 2,
-                'cpu.xxlarge': 2,
-                'cpu.xxxlarge': 2,
-                'cpu.xxxxlarge': 2,
-                'gp.xlarge': 2,
-                'gp.xxlarge': 2,
-                'gp.xxxlarge': 2,
-                'gp.xxxxlarge': 2,
-                'mem.xlarge': 2,
-                'mem.xxlarge': 2,
-                'mem.xxxlarge': 2,
-                'mem.xxxxlarge': 2,
-              },
-              totalAvailable: 144,
-            },
-            rhInfra: {
-              singleAz: {
-                available: 163,
-                'cpu.medium': 7,
-                'gp.small': 114,
-                'cpu.large': 7,
-                'gp.large': 7,
-                'mem.small': 7,
-                'mem.medium': 7,
-                'mem.large': 7,
-                'gp.medium': 7,
-              },
-              multiAz: {
-                available: 65,
-                'cpu.medium': 7,
-                'mem.medium': 7,
-                'mem.small': 7,
-                'cpu.large': 7,
-                'gp.large': 7,
-                'gp.medium': 7,
-                'gp.small': 16,
-                'mem.large': 7,
-              },
-              totalAvailable: 228,
-            },
-            isAvailable: true,
           },
         },
         nodesQuota: {
-          aws: {
-            byoc: {
-              available: 0,
-              'cpu.xlarge': {
-                available: 128,
-                cost: 36,
+          [normalizedProducts.OSD]: {
+            aws: {
+              byoc: {
+                available: 0,
+                'cpu.xlarge': {
+                  available: 128,
+                  cost: 36,
+                },
+                'cpu.xxlarge': {
+                  available: 128,
+                  cost: 48,
+                },
+                'cpu.xxxlarge': {
+                  available: 128,
+                  cost: 72,
+                },
+                'cpu.xxxxlarge': {
+                  available: 128,
+                  cost: 96,
+                },
+                'gp.xlarge': {
+                  available: 128,
+                  cost: 32,
+                },
+                'gp.xxlarge': {
+                  available: 128,
+                  cost: 48,
+                },
+                'gp.xxxlarge': {
+                  available: 128,
+                  cost: 64,
+                },
+                'gp.xxxxlarge': {
+                  available: 128,
+                  cost: 96,
+                },
+                'mem.xlarge': {
+                  available: 128,
+                  cost: 32,
+                },
+                'mem.xxlarge': {
+                  available: 128,
+                  cost: 48,
+                },
+                'mem.xxxlarge': {
+                  available: 128,
+                  cost: 64,
+                },
+                'mem.xxxxlarge': {
+                  available: 128,
+                  cost: 96,
+                },
+                'cpu.large': {
+                  available: 8,
+                  cost: 16,
+                },
+                'cpu.medium': {
+                  available: 8,
+                  cost: 8,
+                },
+                'gp.large': {
+                  available: 8,
+                  cost: 16,
+                },
+                'gp.medium': {
+                  available: 8,
+                  cost: 8,
+                },
+                'gp.small': {
+                  available: 8,
+                  cost: 4,
+                },
+                'mem.large': {
+                  available: 8,
+                  cost: 16,
+                },
+                'mem.medium': {
+                  available: 8,
+                  cost: 8,
+                },
+                'mem.small': {
+                  available: 8,
+                  cost: 4,
+                },
               },
-              'cpu.xxlarge': {
-                available: 128,
-                cost: 48,
-              },
-              'cpu.xxxlarge': {
-                available: 128,
-                cost: 72,
-              },
-              'cpu.xxxxlarge': {
-                available: 128,
-                cost: 96,
-              },
-              'gp.xlarge': {
-                available: 128,
-                cost: 32,
-              },
-              'gp.xxlarge': {
-                available: 128,
-                cost: 48,
-              },
-              'gp.xxxlarge': {
-                available: 128,
-                cost: 64,
-              },
-              'gp.xxxxlarge': {
-                available: 128,
-                cost: 96,
-              },
-              'mem.xlarge': {
-                available: 128,
-                cost: 32,
-              },
-              'mem.xxlarge': {
-                available: 128,
-                cost: 48,
-              },
-              'mem.xxxlarge': {
-                available: 128,
-                cost: 64,
-              },
-              'mem.xxxxlarge': {
-                available: 128,
-                cost: 96,
-              },
-              'cpu.large': {
-                available: 8,
-                cost: 16,
-              },
-              'cpu.medium': {
-                available: 8,
-                cost: 8,
-              },
-              'gp.large': {
-                available: 8,
-                cost: 16,
-              },
-              'gp.medium': {
-                available: 8,
-                cost: 8,
-              },
-              'gp.small': {
-                available: 8,
-                cost: 4,
-              },
-              'mem.large': {
-                available: 8,
-                cost: 16,
-              },
-              'mem.medium': {
-                available: 8,
-                cost: 8,
-              },
-              'mem.small': {
-                available: 8,
-                cost: 4,
-              },
-            },
-            rhInfra: {
-              available: 0,
-              'mem.small': {
-                available: 2,
-                cost: 1,
-              },
-              'cpu.large': {
-                available: 2,
-                cost: 1,
-              },
-              'mem.medium': {
-                available: 7,
-                cost: 1,
-              },
-              'cpu.medium': {
-                available: 2,
-                cost: 1,
-              },
-              'gp.large': {
-                available: 2,
-                cost: 1,
-              },
-              'gp.medium': {
-                available: 2,
-                cost: 1,
-              },
-              'gp.small': {
-                available: 27,
-                cost: 1,
-              },
-              'mem.large': {
-                available: 2,
-                cost: 1,
-              },
-            },
-          },
-          gcp: {
-            byoc: {
-              available: 0,
-              'cpu.xlarge': {
-                available: 128,
-                cost: 36,
-              },
-              'cpu.xxlarge': {
-                available: 128,
-                cost: 48,
-              },
-              'cpu.xxxlarge': {
-                available: 128,
-                cost: 72,
-              },
-              'cpu.xxxxlarge': {
-                available: 128,
-                cost: 96,
-              },
-              'gp.xlarge': {
-                available: 128,
-                cost: 32,
-              },
-              'gp.xxlarge': {
-                available: 128,
-                cost: 48,
-              },
-              'gp.xxxlarge': {
-                available: 128,
-                cost: 64,
-              },
-              'gp.xxxxlarge': {
-                available: 128,
-                cost: 96,
-              },
-              'mem.xlarge': {
-                available: 128,
-                cost: 32,
-              },
-              'mem.xxlarge': {
-                available: 128,
-                cost: 48,
-              },
-              'mem.xxxlarge': {
-                available: 128,
-                cost: 64,
-              },
-              'mem.xxxxlarge': {
-                available: 128,
-                cost: 96,
-              },
-              'cpu.large': {
-                available: 8,
-                cost: 16,
-              },
-              'cpu.medium': {
-                available: 8,
-                cost: 8,
-              },
-              'gp.large': {
-                available: 8,
-                cost: 16,
-              },
-              'gp.medium': {
-                available: 8,
-                cost: 8,
-              },
-              'gp.small': {
-                available: 8,
-                cost: 4,
-              },
-              'mem.large': {
-                available: 8,
-                cost: 16,
-              },
-              'mem.medium': {
-                available: 8,
-                cost: 8,
-              },
-              'mem.small': {
-                available: 8,
-                cost: 4,
+              rhInfra: {
+                available: 0,
+                'mem.small': {
+                  available: 2,
+                  cost: 1,
+                },
+                'cpu.large': {
+                  available: 2,
+                  cost: 1,
+                },
+                'mem.medium': {
+                  available: 7,
+                  cost: 1,
+                },
+                'cpu.medium': {
+                  available: 2,
+                  cost: 1,
+                },
+                'gp.large': {
+                  available: 2,
+                  cost: 1,
+                },
+                'gp.medium': {
+                  available: 2,
+                  cost: 1,
+                },
+                'gp.small': {
+                  available: 27,
+                  cost: 1,
+                },
+                'mem.large': {
+                  available: 2,
+                  cost: 1,
+                },
               },
             },
-            rhInfra: {
-              available: 0,
-              'mem.small': {
-                available: 2,
-                cost: 1,
+            gcp: {
+              byoc: {
+                available: 0,
+                'cpu.xlarge': {
+                  available: 128,
+                  cost: 36,
+                },
+                'cpu.xxlarge': {
+                  available: 128,
+                  cost: 48,
+                },
+                'cpu.xxxlarge': {
+                  available: 128,
+                  cost: 72,
+                },
+                'cpu.xxxxlarge': {
+                  available: 128,
+                  cost: 96,
+                },
+                'gp.xlarge': {
+                  available: 128,
+                  cost: 32,
+                },
+                'gp.xxlarge': {
+                  available: 128,
+                  cost: 48,
+                },
+                'gp.xxxlarge': {
+                  available: 128,
+                  cost: 64,
+                },
+                'gp.xxxxlarge': {
+                  available: 128,
+                  cost: 96,
+                },
+                'mem.xlarge': {
+                  available: 128,
+                  cost: 32,
+                },
+                'mem.xxlarge': {
+                  available: 128,
+                  cost: 48,
+                },
+                'mem.xxxlarge': {
+                  available: 128,
+                  cost: 64,
+                },
+                'mem.xxxxlarge': {
+                  available: 128,
+                  cost: 96,
+                },
+                'cpu.large': {
+                  available: 8,
+                  cost: 16,
+                },
+                'cpu.medium': {
+                  available: 8,
+                  cost: 8,
+                },
+                'gp.large': {
+                  available: 8,
+                  cost: 16,
+                },
+                'gp.medium': {
+                  available: 8,
+                  cost: 8,
+                },
+                'gp.small': {
+                  available: 8,
+                  cost: 4,
+                },
+                'mem.large': {
+                  available: 8,
+                  cost: 16,
+                },
+                'mem.medium': {
+                  available: 8,
+                  cost: 8,
+                },
+                'mem.small': {
+                  available: 8,
+                  cost: 4,
+                },
               },
-              'cpu.large': {
-                available: 2,
-                cost: 1,
-              },
-              'mem.medium': {
-                available: 7,
-                cost: 1,
-              },
-              'cpu.medium': {
-                available: 2,
-                cost: 1,
-              },
-              'gp.large': {
-                available: 2,
-                cost: 1,
-              },
-              'gp.medium': {
-                available: 2,
-                cost: 1,
-              },
-              'gp.small': {
-                available: 27,
-                cost: 1,
-              },
-              'mem.large': {
-                available: 2,
-                cost: 1,
+              rhInfra: {
+                available: 0,
+                'mem.small': {
+                  available: 2,
+                  cost: 1,
+                },
+                'cpu.large': {
+                  available: 2,
+                  cost: 1,
+                },
+                'mem.medium': {
+                  available: 7,
+                  cost: 1,
+                },
+                'cpu.medium': {
+                  available: 2,
+                  cost: 1,
+                },
+                'gp.large': {
+                  available: 2,
+                  cost: 1,
+                },
+                'gp.medium': {
+                  available: 2,
+                  cost: 1,
+                },
+                'gp.small': {
+                  available: 27,
+                  cost: 1,
+                },
+                'mem.large': {
+                  available: 2,
+                  cost: 1,
+                },
               },
             },
           },
