@@ -12,17 +12,18 @@ const mapStateToProps = (state) => {
     isOpen: shouldShowModal(state, 'edit-console-url'),
     editClusterResponse: state.clusters.editedCluster,
     clusterID: cluster.id,
+    subscriptionID: get(cluster, 'subscription.id'),
     consoleURL: cluster.console_url || get(cluster, 'console.url', ''),
   });
 };
 
 const mapDispatchToProps = dispatch => ({
-  submit: (clusterID, consoleURL) => {
+  submit: (clusterID, subscriptionID, consoleURL) => {
     let sanitizedURL = consoleURL;
     if (consoleURL.endsWith('/')) {
       sanitizedURL = consoleURL.substring(0, consoleURL.length - 1);
     }
-    dispatch(editClusterConsoleURL(clusterID, sanitizedURL));
+    dispatch(editClusterConsoleURL(clusterID, subscriptionID, sanitizedURL));
   },
   resetResponse: () => dispatch(clearClusterResponse()),
   closeModal: () => dispatch(closeModal()),
