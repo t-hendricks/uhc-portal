@@ -15,6 +15,7 @@ import {
 import { Link } from 'react-router-dom';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel/ClusterLocationLabel';
 import getClusterName from '../../../../../common/getClusterName';
+import modals from '../../../../common/Modal/modals';
 
 
 function ArchivedClusterListTable(props) {
@@ -46,7 +47,7 @@ function ArchivedClusterListTable(props) {
       </Tooltip>
     );
 
-    const openUnarchiveModal = () => openModal('unarchive-cluster',
+    const openUnarchiveModal = () => openModal(modals.UNARCHIVE_CLUSTER,
       {
         subscriptionID: cluster.subscription ? cluster.subscription.id : '',
         name,

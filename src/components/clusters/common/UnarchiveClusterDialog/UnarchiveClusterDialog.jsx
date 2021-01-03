@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Form } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
+import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
 
 class UnarchiveClusterDialog extends Component {
@@ -19,7 +20,7 @@ class UnarchiveClusterDialog extends Component {
 
   render() {
     const {
-      isOpen, closeModal, submit, unarchiveClusterResponse, resetResponse, subscriptionID, name,
+      closeModal, submit, unarchiveClusterResponse, resetResponse, subscriptionID, name,
     } = this.props;
 
     const cancelEdit = () => {
@@ -31,7 +32,7 @@ class UnarchiveClusterDialog extends Component {
       <ErrorBox message="Error un-archiving cluster" response={unarchiveClusterResponse} />
     ) : null;
 
-    return isOpen && (
+    return (
       <Modal
         title="Unarchive cluster"
         data-test-id="unarchive-cluster-dialog"
@@ -56,7 +57,6 @@ class UnarchiveClusterDialog extends Component {
 }
 
 UnarchiveClusterDialog.propTypes = {
-  isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
@@ -67,8 +67,9 @@ UnarchiveClusterDialog.propTypes = {
 };
 
 UnarchiveClusterDialog.defaultProps = {
-  isOpen: false,
   unarchiveClusterResponse: {},
 };
+
+UnarchiveClusterDialog.modalName = modals.UNARCHIVE_CLUSTER;
 
 export default UnarchiveClusterDialog;

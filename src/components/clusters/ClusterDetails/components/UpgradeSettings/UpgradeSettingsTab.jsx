@@ -8,6 +8,7 @@ import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
 import getClusterName from '../../../../../common/getClusterName';
 import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
 import ErrorBox from '../../../../common/ErrorBox';
+import modals from '../../../../common/Modal/modals';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false }
@@ -160,7 +161,7 @@ class UpgradeSettingsTab extends React.Component {
               {availableUpgrades.length > 0 && !scheduledUpgrade && (
                 <Button
                   variant="secondary"
-                  onClick={() => openModal('upgrade-wizard',
+                  onClick={() => openModal(modals.UPGRADE_WIZARD,
                     {
                       clusterName: getClusterName(cluster),
                       clusterVersion: cluster.openshift_version,

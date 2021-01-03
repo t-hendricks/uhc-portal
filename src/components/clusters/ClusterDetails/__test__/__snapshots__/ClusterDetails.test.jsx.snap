@@ -939,38 +939,11 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
       <Connect(ReduxForm) />
     </ErrorBoundary>
   </ForwardRef>
-  <Connect(ReduxForm)
+  <CommonClusterModals
     onClose={[Function]}
-  />
-  <Connect(ReduxForm)
-    onClose={[Function]}
-  />
-  <Connect(EditDisplayNameDialog)
-    onClose={[Function]}
-  />
-  <Connect(EditCCSCredentialsDialog)
-    onClose={[Function]}
-  />
-  <Connect(UnarchiveClusterDialog)
-    onClose={[Function]}
-  />
-  <Connect(EditConsoleURLDialog)
-    onClose={[Function]}
-  />
-  <Connect(TransferClusterOwnershipDialog)
-    onClose={[Function]}
-  />
-  <Connect(EditSubscriptionSettingsDialog)
-    isDialog={true}
-    onClose={[Function]}
-  />
-  <Connect(ArchiveClusterDialog)
-    onClose={[Function]}
+    onClusterDeleted={[Function]}
   />
   <Connect(ToggleClusterAdminAccessDialog)
-    onClose={[Function]}
-  />
-  <Connect(DeleteClusterDialog)
     onClose={[Function]}
   />
   <Connect(ReduxForm)
@@ -986,7 +959,6 @@ exports[`<ClusterDetails /> Cluster Details should render 1`] = `
   <Connect(AddGrantModal)
     clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
   />
-  <Connect(UpgradeWizard) />
   <Connect(CancelUpgradeModal) />
 </PageSection>
 `;

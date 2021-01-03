@@ -37,6 +37,7 @@ import GlobalErrorBox from '../common/GlobalErrorBox';
 import Breadcrumbs from '../common/Breadcrumbs';
 
 import Unavailable from '../../common/Unavailable';
+import ConnectedModal from '../../common/Modal/ConnectedModal';
 import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
@@ -201,7 +202,10 @@ class ArchivedClusterList extends Component {
                 totalPages={viewOptions.totalPages}
                 variant="bottom"
               />
-              <UnarchiveClusterDialog onClose={invalidateClusters} />
+              <ConnectedModal
+                ModalComponent={UnarchiveClusterDialog}
+                onClose={invalidateClusters}
+              />
             </div>
           </Card>
         </PageSection>
