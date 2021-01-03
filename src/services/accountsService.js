@@ -22,6 +22,7 @@ const getSubscriptions = params => apiRequest({
     search: params.filter,
     fetchAccounts: true,
     fetchCapabilities: true,
+    fetchMetrics: true,
   },
   url: '/api/accounts_mgmt/v1/subscriptions',
 });

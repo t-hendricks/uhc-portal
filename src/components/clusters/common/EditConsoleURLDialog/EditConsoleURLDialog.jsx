@@ -50,7 +50,8 @@ class EditConsoleURLDialog extends Component {
 
   render() {
     const {
-      isOpen, closeModal, submit, editClusterResponse, resetResponse, clusterID, consoleURL,
+      isOpen, closeModal, submit, editClusterResponse, resetResponse, clusterID, subscriptionID,
+      consoleURL,
     } = this.props;
     const { currentValue, beenSet } = this.state;
 
@@ -67,7 +68,7 @@ class EditConsoleURLDialog extends Component {
     const validationMessage = checkClusterConsoleURL(currentValue, true);
     const handleSubmit = () => {
       if (!validationMessage) {
-        submit(clusterID, currentValue);
+        submit(clusterID, subscriptionID, currentValue);
       }
     };
 
@@ -123,6 +124,7 @@ EditConsoleURLDialog.propTypes = {
   editClusterResponse: PropTypes.object,
   consoleURL: PropTypes.string,
   clusterID: PropTypes.string,
+  subscriptionID: PropTypes.string,
 };
 
 EditConsoleURLDialog.defaultProps = {
