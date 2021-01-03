@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import isEmpty from 'lodash/isEmpty';
 
 import AddMachinePoolModal from './AddMachinePoolModal';
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
@@ -7,7 +8,7 @@ import { getMachineTypes } from '../../../../../../../redux/actions/machineTypes
 import { getOrganizationAndQuota } from '../../../../../../../redux/actions/userActions';
 import { addMachinePool, clearAddMachinePoolResponse } from '../../MachinePoolsActions';
 
-import { hasLabelsInput, parseReduxFormKeyValueList } from '../../../../../../../common/helpers';
+import { parseReduxFormKeyValueList, parseReduxFormTaints } from '../../../../../../../common/helpers';
 
 const reduxFormConfig = {
   form: 'AddMachinePool',
@@ -22,6 +23,7 @@ const mapStateToProps = state => ({
     name: '',
     nodes_compute: '0',
     node_labels: [{}],
+    taints: [{ effect: 'NoSchedule' }],
   },
 });
 
@@ -32,9 +34,18 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       replicas: parseInt(formData.nodes_compute, 10),
       instance_type: formData.machine_type,
     };
-    if (hasLabelsInput(formData.node_labels)) {
+
+    const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
+    const parsedTaints = parseReduxFormTaints(formData.taints);
+
+    if (!isEmpty(parsedLabels)) {
       machinePoolRequest.labels = parseReduxFormKeyValueList(formData.node_labels);
     }
+
+    if (parsedTaints.length > 0) {
+      machinePoolRequest.taints = parsedTaints;
+    }
+
     dispatch(addMachinePool(ownProps.cluster.id, machinePoolRequest));
   },
   clearAddMachinePoolResponse: () => dispatch(clearAddMachinePoolResponse()),
