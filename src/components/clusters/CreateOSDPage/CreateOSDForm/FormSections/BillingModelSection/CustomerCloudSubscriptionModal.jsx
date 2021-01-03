@@ -68,7 +68,7 @@ const contentByCloudProvider = (cloudProviderID) => {
             the desired cluster size. See resource requirements.
           </li>
           <li>
-            An IAM user called “osd-ccs-admin” exists with the following roles attached:
+            A service account called “osd-ccs-admin” exists with the following roles attached:
             <ul className="unpadded-ul">
               <li>DNS Administrator</li>
               <li>Organization Policy Viewer</li>
