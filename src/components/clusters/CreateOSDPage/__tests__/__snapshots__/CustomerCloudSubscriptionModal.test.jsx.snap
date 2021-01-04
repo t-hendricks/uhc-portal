@@ -95,7 +95,7 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
         Your Google Cloud account has the necessary resource quotas and limits to support the desired cluster size. See resource requirements.
       </li>
       <li>
-        A service account called “osd-ccs-admin” exists with the following roles attached:
+        An IAM service account called “osd-ccs-admin” exists with the following roles attached:
         <ul
           className="unpadded-ul"
         >
