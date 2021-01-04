@@ -25,6 +25,8 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
+  Text,
+  TextContent,
 } from '@patternfly/react-core';
 import Tokens, { splitToken, snippetBox, tokenBox } from './Tokens';
 
@@ -86,28 +88,31 @@ class TokensROSA extends Tokens {
       <>
         {title}
         <PageSection>
-          <Card>
+          <Card className="ocm-c-api-token__card">
             <CardTitle>
               <h2>Fully managed OpenShift clusters</h2>
             </CardTitle>
-            <CardBody>
-              <p>
-                Red Hat OpenShift Service on AWS is a managed service that makes it easy for you
-                to use OpenShift on AWS without needing to install, operate or upgrade your own
-                OpenShift (Kubernetes) cluster.
-              </p>
-              <p>
-                Download and install the {rosaLink} command-line utility and use the Offline
-                Access Token to authenticate against your Red Hat OpenShift Cluster Manager account.
-              </p>
-              {tokenBox(offlineAccessToken)}
-              <p>
-                Copy it, and then use it to authenticate with the {rosaLink} command-line utility:
-              </p>
-              {snippetBox(offlineAccessTokenSnippet)}
-              <p>
-                Run <code>rosa login --help</code> to get more information.
-              </p>
+            <CardBody className="ocm-c-api-token__card--body">
+              <TextContent>
+                <Text component="p">
+                  Red Hat OpenShift Service on AWS is a managed service that makes it easy for you
+                  to use OpenShift on AWS without needing to install, operate or upgrade your own
+                  OpenShift (Kubernetes) cluster.
+                </Text>
+                <Text component="p">
+                  Download and install the {rosaLink} command-line utility and use the Offline
+                  Access Token to authenticate against your Red Hat OpenShift Cluster Manager
+                  account.
+                </Text>
+                {tokenBox(offlineAccessToken)}
+                <Text component="p">
+                  Copy it, and then use it to authenticate with the {rosaLink} command-line utility:
+                </Text>
+                {snippetBox(offlineAccessTokenSnippet)}
+                <Text component="p">
+                  Run <code>rosa login --help</code> to get more information.
+                </Text>
+              </TextContent>
             </CardBody>
           </Card>
         </PageSection>
