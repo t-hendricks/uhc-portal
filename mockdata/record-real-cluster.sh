@@ -58,7 +58,7 @@ else
   request "" "$cluster_href/metric_queries/cluster_operators"
 
   subscription_href="$(jq .subscription.href "mockdata/$cluster_href".json --raw-output)"
-  request "" "$subscription_href" --parameter=fetchAccounts=true --parameter=fetchCpuAndSocket=true --parameter=fetchCapabilities=true
+  request "" "$subscription_href" --parameter=fetchAccounts=true --parameter=fetchCpuAndSocket=true --parameter=fetchCapabilities=true --parameter=fetchMetrics=true
   request "" "$subscription_href/notification_contacts"
   request "" "$subscription_href/support_cases"
 fi
