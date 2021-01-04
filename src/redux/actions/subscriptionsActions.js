@@ -16,6 +16,7 @@ limitations under the License.
 import { subscriptionsConstants } from '../constants';
 import { accountsService, authorizationsService } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
+import { mapListResponse, normalizeQuotaCost } from '../../common/normalize';
 
 function fetchAccount() {
   return dispatch => dispatch({
@@ -52,7 +53,9 @@ const invalidateSubscriptions = () => dispatch => dispatch({
 function fetchQuotaCost(organizationID) {
   return dispatch => dispatch({
     type: subscriptionsConstants.GET_QUOTA_COST,
-    payload: accountsService.getOrganizationQuota(organizationID),
+    payload: accountsService.getOrganizationQuota(organizationID).then(response => (
+      mapListResponse(response, normalizeQuotaCost)
+    )),
   });
 }
 

@@ -15,7 +15,7 @@ import ScaleSection from './FormSections/ScaleSection/ScaleSection';
 import { constants } from './CreateOSDFormConstants';
 
 import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
-import { subscriptionPlans } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import { required, validateGCPServiceAccount } from '../../../../common/validators';
 
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
@@ -231,7 +231,7 @@ class CreateOSDForm extends React.Component {
           machineType={machineType}
           handleMachineTypesChange={this.handleMachineTypesChange}
           cloudProviderID={cloudProviderID}
-          product={subscriptionPlans.OSD}
+          product={normalizedProducts.OSD}
         />
         {/* Networking section */}
         <NetworkingSection

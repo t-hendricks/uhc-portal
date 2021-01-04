@@ -2,7 +2,8 @@ import get from 'lodash/get';
 
 import { userConstants } from '../constants';
 import { accountsService, authorizationsService } from '../../services';
-import { isROSA } from '../../components/clusters/common/quotaSelectors';
+import { normalizeQuotaCost } from '../../common/normalize';
+import { normalizedProducts } from '../../common/subscriptionTypes';
 
 const userInfoResponse = payload => ({
   payload,
@@ -25,7 +26,7 @@ const processClusterQuota = (clustersQuota, item, resources) => {
     // TODO: Honor cost field, specifically cost=0.
     // TODO: Split data structure by product (https://issues.redhat.com/browse/SDA-3231).
     //       Until then, ignore ROSA to avoid collision with OSD CCS.
-    if (isROSA(product)) {
+    if (product === normalizedProducts.ROSA) {
       return;
     }
 
@@ -73,7 +74,7 @@ const processNodeQuota = (nodesQuota, item, resources) => {
 
     // TODO: split data structure by product (https://issues.redhat.com/browse/SDA-3231).
     //       Until then, ignore ROSA to avoid collision with OSD CCS.
-    if (isROSA(product)) {
+    if (product === normalizedProducts.ROSA) {
       return;
     }
 
@@ -136,13 +137,14 @@ const processAddOnQuota = (addOnsQuota, item, resources) => {
   });
 };
 
+/**
+ * Normalize incoming quota and construct an easy to query structure to figure
+ * out how many of each resource types we have available.
+ * This is done here to ensure the calculation is done every time we get the quota,
+ * and that we won't have to replicate it across different components
+ * which might need to query this data.
+ */
 const processQuota = (response) => {
-  /* construct an easy to query structure to figure out how many of each resource types
-     we have available.
-     This is done here to ensure the calculation is done every time we get the quota,
-     and that we won't have to replicate it across different components
-     which might need to query this data. */
-
   const clustersQuotaByAz = () => ({
     singleAz: { available: 0 },
     multiAz: { available: 0 },
@@ -186,8 +188,9 @@ const processQuota = (response) => {
   };
 
   const items = get(response.data, 'items', []);
+  items.forEach((rawItem) => {
+    const item = normalizeQuotaCost(rawItem);
 
-  items.forEach((item) => {
     const resources = get(item, 'related_resources', []);
     if (resources.length < 1) {
       return;

@@ -2,7 +2,7 @@ import get from 'lodash/get';
 import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
-import { subscriptionStatuses, subscriptionPlans } from '../../../../common/subscriptionTypes';
+import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
 import modals from '../../../common/Modal/modals';
 
@@ -255,7 +255,8 @@ function actionResolver(
     && isArchived;
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
   const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && canSubscribeOCP;
-  const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership && get(cluster, 'subscription.plan.id', false) === subscriptionPlans.OCP
+  const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership
+    && get(cluster, 'subscription.plan.id', '') === normalizedProducts.OCP
     && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   const showToggleClusterAdmin = cluster.managed && canAllowClusterAdmin;
   // eslint-disable-next-line max-len
