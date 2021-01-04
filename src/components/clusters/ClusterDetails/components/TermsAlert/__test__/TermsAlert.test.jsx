@@ -4,10 +4,11 @@ import { shallow } from 'enzyme';
 import TermsAlert from '../TermsAlert';
 import * as Fixtures from './TermsAlert.fixtures';
 import { buildUrlParams } from '../../../../../../common/queryHelpers';
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 describe('<TermsAlert />', () => {
   describe('TermsAlert OCP', () => {
-    const props = { ...Fixtures, subscription: { plan: { id: 'OCP' } } };
+    const props = { ...Fixtures, subscription: { plan: { id: normalizedProducts.OCP } } };
     const wrapper = shallow(<TermsAlert {...props} />);
 
     it('should not render', () => {

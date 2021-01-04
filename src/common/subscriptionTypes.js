@@ -1,5 +1,6 @@
 /**
  * names of all subscriptioin settings
+ * @enum string
  */
 const subscriptionSettings = {
   SUPPORT_LEVEL: 'support_level',
@@ -13,6 +14,7 @@ const subscriptionSettings = {
 
 /**
  * support_levels
+ * @enum string
  */
 const subscriptionSupportLevels = {
   EVAL: 'Eval',
@@ -24,6 +26,7 @@ const subscriptionSupportLevels = {
 
 /**
  * service_levels
+ * @enum string
  */
 const subscriptionServiceLevels = {
   L1_L3: 'L1-L3',
@@ -32,6 +35,7 @@ const subscriptionServiceLevels = {
 
 /**
  * usage
+ * @enum string
  */
 const subscriptionUsages = {
   PRODUCTION: 'Production',
@@ -41,6 +45,7 @@ const subscriptionUsages = {
 
 /**
  * product_bundle
+ * @enum string
  */
 const subscriptionProductBundles = {
   OPENSHIFT: 'Openshift',
@@ -50,6 +55,7 @@ const subscriptionProductBundles = {
 
 /**
  * system_units
+ * @enum string
  */
 const subscriptionSystemUnits = {
   CORES_VCPU: 'Cores/vCPU',
@@ -58,6 +64,7 @@ const subscriptionSystemUnits = {
 
 /**
  * status
+ * @enum string
  */
 const subscriptionStatuses = {
   ACTIVE: 'Active',
@@ -69,15 +76,18 @@ const subscriptionStatuses = {
 };
 
 /**
- * plan
+ * cluster.product.id, subscription.plan.id, quota_cost.related_resources[].product
+ * use related but different values (see https://issues.redhat.com/browse/SDB-1625).
+ * They should all be passed through normalizeProductID(), should result in one of the values here.
+ * @enum string
  */
-const subscriptionPlans = {
+const normalizedProducts = {
   OSD: 'OSD',
   OCP: 'OCP',
-  MOA: 'MOA',
   RHMI: 'RHMI',
   ROSA: 'ROSA',
-  ANY: 'ANY',
+  ANY: 'ANY', // used in quota_cost
+  UNKNOWN: 'UNKNOWN', // normally should not happen except during loading
 };
 
 export {
@@ -88,5 +98,5 @@ export {
   subscriptionUsages,
   subscriptionProductBundles,
   subscriptionSystemUnits,
-  subscriptionPlans,
+  normalizedProducts,
 };

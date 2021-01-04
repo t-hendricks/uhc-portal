@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Alert, Button } from '@patternfly/react-core';
-import { subscriptionSupportLevels, subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import { normalizedProducts, subscriptionSupportLevels, subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
 import getClusterEvaluationExpiresInDays from '../../../../common/getClusterEvaluationExpiresInDays';
 import {
@@ -14,7 +14,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
   const subscription = get(cluster, 'subscription');
 
   const planID = get(subscription, 'plan.id');
-  if (planID !== 'OCP') {
+  if (planID !== normalizedProducts.OCP) {
     return null;
   }
 

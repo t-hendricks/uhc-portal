@@ -19,7 +19,12 @@ import isUuid from 'uuid-validate';
 import { clustersConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
-import { normalizeCluster, fakeClusterFromSubscription } from '../../common/normalize';
+import {
+  normalizeCluster,
+  fakeClusterFromSubscription,
+  normalizeSubscription,
+  mapListResponse,
+} from '../../common/normalize';
 import {
   postSchedule,
 } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
@@ -180,7 +185,7 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
 
   const promises = [
     accountsService.getSubscriptions(clusterRequestParams).then((response) => {
-      subscriptions = response;
+      subscriptions = mapListResponse(response, normalizeSubscription);
     }),
     authorizationsService.selfResourceReview(
       { action: 'delete', resource_type: 'Cluster' },

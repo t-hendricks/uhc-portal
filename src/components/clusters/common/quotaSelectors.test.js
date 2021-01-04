@@ -1,6 +1,7 @@
 import * as quotaSelectors from './quotaSelectors';
 import { dedicatedRhInfra, dedicatedCCS, unlimitedROSA } from './__test__/quota_cost.fixtures';
 import { userActions } from '../../../redux/actions/userActions';
+import { normalizedProducts } from '../../../common/subscriptionTypes';
 // This is the quota we use in mockdata mode, pretty much everything is allowed.
 import * as mockQuotaCost from '../../../../mockdata/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost.json';
 
@@ -66,14 +67,14 @@ describe('quotaSelectors', () => {
   });
 
   const paramsRhInfra = {
-    product: 'OSD',
+    product: normalizedProducts.OSD,
     cloudProviderID: 'aws',
     resourceName: 'gp.small',
     isMultiAz: true,
     isBYOC: false,
   };
   const paramsCCS = {
-    product: 'OSD',
+    product: normalizedProducts.OSD,
     cloudProviderID: 'aws',
     resourceName: 'gp.small',
     isMultiAz: true,
@@ -81,7 +82,7 @@ describe('quotaSelectors', () => {
   };
   const paramsROSA = {
     ...paramsCCS,
-    product: 'MOA',
+    product: normalizedProducts.ROSA,
   };
 
   describe('availableClustersFromQuota', () => {
