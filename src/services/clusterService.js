@@ -45,7 +45,7 @@ const getUnhealthyClusters = params => apiRequest({
   params: {
     page: params.page,
     size: params.page_size,
-    orderBy: params.order,
+    order: params.order,
     search: params.filter,
   },
 });
