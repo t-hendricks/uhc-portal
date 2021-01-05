@@ -136,7 +136,7 @@ const editClusterConsoleURL = (id, subscriptionID, consoleURL) => dispatch => di
 });
 
 /**
- * Collect a list of OSD object IDs and build a SQL-like query searching for these IDs.
+ * Collect a list of object IDs and build a SQL-like query searching for these IDs.
  * For example, to collect subscription IDs from clusters, so we can query
  * for the subscription info.
  * @param {*} items A collection of items
@@ -145,26 +145,19 @@ const editClusterConsoleURL = (id, subscriptionID, consoleURL) => dispatch => di
 const buildSearchQuery = (items, field) => {
   const IDs = new Set();
   items.forEach((item) => {
-    if (item?.plan?.id !== 'OSD') {
-      return;
-    }
     const objectID = item[field];
     if (objectID) {
       IDs.add(`'${objectID}'`);
     }
   });
-  if (IDs.size === 0) {
-    return false;
-  }
   return `id in (${Array.from(IDs).join(',')})`;
 };
 
 const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => {
   const result = [];
   subscriptionMap.forEach((value) => {
-    const isOSD = value.subscription.plan.id === 'OSD';
-    if (isOSD && value?.cluster === null) {
-      // skip OSD cluster without data
+    if (value.subscription.managed && value?.cluster === null) {
+      // skip managed cluster without data
       return;
     }
     const cluster = value?.cluster
@@ -208,9 +201,9 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
         subscription: item,
       }));
 
-      const clustersQuery = buildSearchQuery(items, 'cluster_id');
-      if (!clustersQuery) {
-        // There are no OSD clusters
+      // clusters-service only needed for managed clusters.
+      const managedSubsriptions = items.filter(s => s.managed);
+      if (managedSubsriptions.length === 0) {
         return {
           data: {
             items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
@@ -221,7 +214,8 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
         };
       }
 
-      // fetch OSD clusters by subscription
+      // fetch managed clusters by subscription
+      const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
       return clusterService.getClusters(clustersQuery)
         .then((response) => {
           const clusters = response?.data?.items;
