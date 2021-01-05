@@ -1,38 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from '@patternfly/react-core';
+
 import get from 'lodash/get';
+
+import { normalizedProducts } from '../../../common/subscriptionTypes';
 
 function ClusterTypeLabel({ cluster }) {
   const clusterTypes = {
-    ocp: {
+    [normalizedProducts.OCP]: {
       name: 'OCP',
       tooltip: 'Self-managed OpenShift Container Platform (OCP) cluster',
     },
-    osd: {
+    [normalizedProducts.OSD]: {
       name: 'OSD',
       tooltip: 'OpenShift Dedicated (OSD) cluster managed by Red Hat',
     },
-    rhmi: {
+    [normalizedProducts.RHMI]: {
       name: 'RHMI',
       tooltip: 'Red Hat Managed Integration',
     },
-    moa: {
+    [normalizedProducts.ROSA]: {
       name: 'ROSA',
       tooltip: 'Red Hat OpenShift Service on AWS',
     },
-    rosa: {
-      name: 'ROSA',
-      tooltip: 'Red Hat OpenShift Service on AWS',
-    },
-    UnknownClusterType: {
+    [normalizedProducts.UNKNOWN]: {
       name: 'N/A',
       tooltip: 'Not Available',
     },
   };
 
-  const typeId = get(cluster, 'product.id', 'UnknownClusterType');
-  const type = clusterTypes[typeId] || clusterTypes.UnknownClusterType;
+  const typeId = get(cluster, 'product.id', normalizedProducts.UNKNOWN);
+  const type = clusterTypes[typeId] || clusterTypes[normalizedProducts.UNKNOWN];
   return (
     <Tooltip
       content={type.tooltip}
