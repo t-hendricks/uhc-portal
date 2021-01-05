@@ -27,8 +27,7 @@ class InstallAWSIPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'OpenShift Container Platform', path: '/install' },
-        { label: 'Amazon Web Services', path: '/install/aws' },
+        { label: 'Amazon Web Services', path: '/create/aws' },
         { label: 'Installer-provisioned infrastructure' },
       ]}
       />

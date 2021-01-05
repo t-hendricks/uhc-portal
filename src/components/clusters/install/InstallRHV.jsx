@@ -18,7 +18,6 @@ class InstallRHV extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Red Hat Virtualization' },
       ]}
       />

@@ -1,0 +1,42 @@
+.cluster-create-page {
+  h2.light {
+    font-weight: var(--pf-global--FontWeight--light);
+  }
+
+  table.install-options-table {
+    margin-top: 20px;
+  }
+
+  table.managed-subscriptions {
+    &.pf-c-table tbody > tr > * {
+      vertical-align: middle;
+    }
+  }
+
+  table {
+    .partner-logo {
+      display: block;
+      height: 24px;
+      max-width: 30px;
+    }
+
+    #toggle-all-button {
+      padding: 0px;
+    }
+  }
+
+  .ocm-instructions-crc__card {
+    padding: 0;
+    .download-instructions.header {
+      max-width: 800px;
+      small {
+        color: var(--pf-global--Color--400);
+      }
+    }
+  }
+
+  #subscriptions {
+    float: right;
+    display: block;
+  }
+}

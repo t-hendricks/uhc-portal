@@ -11,7 +11,7 @@ const InstructionsOSP = () => (
         OpenStack: Select an installation type
       </Title>
       <div className="flex-container">
-        <Link to="/install/openstack/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/create/openstack/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isRecommened />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <SyncAltIcon
@@ -23,7 +23,7 @@ const InstructionsOSP = () => (
             provisions and the cluster maintains.
           </CardBody>
         </Link>
-        <Link to="/install/openstack/user-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/create/openstack/user-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isHidden />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <UserIcon

@@ -5,6 +5,7 @@ import CreateClusterPage from '../CreateClusterPage';
 
 describe('<CreateClusterPage />', () => {
   const getOrganizationAndQuota = jest.fn();
+  const getAuthToken = jest.fn();
   const organization = {
     details: null,
     error: false,
@@ -18,6 +19,8 @@ describe('<CreateClusterPage />', () => {
       hasOSDQuota
       getOrganizationAndQuota={getOrganizationAndQuota}
       organization={{ ...organization, fulfilled: true }}
+      token={{}}
+      getAuthToken={getAuthToken}
     />);
     expect(wrapper).toMatchSnapshot();
   });
@@ -29,6 +32,8 @@ describe('<CreateClusterPage />', () => {
           hasOSDQuota={false}
           getOrganizationAndQuota={getOrganizationAndQuota}
           organization={{ ...organization, fulfilled: true }}
+          token={{}}
+          getAuthToken={getAuthToken}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -42,6 +47,8 @@ describe('<CreateClusterPage />', () => {
         hasOSDQuota={false}
         getOrganizationAndQuota={getOrganizationAndQuota}
         organization={organization}
+        token={{}}
+        getAuthToken={getAuthToken}
       />);
     });
 
