@@ -1,0 +1,12 @@
+{
+  "alerts": [
+    {
+      "severity": "info",
+      "name": "UpdateAvailable"
+    },
+    {
+      "severity": "none",
+      "name": "Watchdog"
+    }
+  ]
+}
