@@ -19,13 +19,12 @@ function getClusterStateAndDescription(cluster) {
     state = clusterStates.INSTALLING;
   } else if (get(cluster, 'metrics.upgrade.state') === 'running' && !cluster.managed) {
     state = clusterStates.UPDATING;
+  }
+  if (!cluster.managed
+    && cluster.subscription.status === subscriptionStatuses.DISCONNECTED) {
+    state = clusterStates.DISCONNECTED;
   } else if (cluster.state === clusterStates.READY) {
-    if (!cluster.managed
-      && cluster.subscription.status === subscriptionStatuses.DISCONNECTED) {
-      state = clusterStates.DISCONNECTED;
-    } else {
-      state = clusterStates.READY;
-    }
+    state = clusterStates.READY;
   } else if (cluster.state === clusterStates.UNINSTALLING) {
     state = clusterStates.UNINSTALLING;
   } else if (cluster.state === clusterStates.ERROR) {
