@@ -1,0 +1,19 @@
+{
+  "kind": "GroupList",
+  "href": "/api/clusters_mgmt/v1/clusters/1i0drqlqbj9ht00ugr61mcfs1s05a2fl/groups",
+  "page": 1,
+  "size": 2,
+  "total": 2,
+  "items": [
+    {
+      "kind": "Group",
+      "href": "/api/clusters_mgmt/v1/clusters/1i0drqlqbj9ht00ugr61mcfs1s05a2fl/groups/dedicated-admins",
+      "id": "dedicated-admins"
+    },
+    {
+      "kind": "Group",
+      "href": "/api/clusters_mgmt/v1/clusters/1i0drqlqbj9ht00ugr61mcfs1s05a2fl/groups/cluster-admins",
+      "id": "cluster-admins"
+    }
+  ]
+}
