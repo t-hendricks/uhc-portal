@@ -224,17 +224,6 @@ class AddOnsCard extends Component {
       </DropdownItem>,
     ];
 
-    const dropdown = (
-      <Dropdown
-        onSelect={this.onSelect}
-        toggle={<KebabToggle onToggle={this.onToggle} />}
-        isOpen={isActionsOpen}
-        isPlain
-        dropdownItems={dropdownItems}
-        position="right"
-      />
-    );
-
     if (!cluster.canEdit) {
       return (
         <Tooltip
@@ -249,7 +238,16 @@ class AddOnsCard extends Component {
         </Tooltip>
       );
     }
-    return dropdown;
+    return (
+      <Dropdown
+        onSelect={this.onSelect}
+        toggle={<KebabToggle onToggle={this.onToggle} />}
+        isOpen={isActionsOpen}
+        isPlain
+        dropdownItems={dropdownItems}
+        position="right"
+      />
+    );
   }
 
   render() {
