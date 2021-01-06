@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddOnsCard /> renders correctly 1`] = `
+<Card
+  className="ocm-c-addons__card"
+  key="Dummy ID"
+>
+  <CardHeader
+    className="ocm-c-addons__card--header"
+  >
+    <CardActions>
+      <Dropdown
+        dropdownItems={
+          Array [
+            <DropdownItem
+              component="button"
+              isDisabled={false}
+              onClick={[Function]}
+            >
+              Configure
+            </DropdownItem>,
+            <DropdownItem
+              component="button"
+              isDisabled={false}
+              onClick={[Function]}
+            >
+              Uninstall add-on
+            </DropdownItem>,
+          ]
+        }
+        isOpen={false}
+        isPlain={true}
+        onSelect={[Function]}
+        position="right"
+        toggle={
+          <KebabToggle
+            onToggle={[Function]}
+          />
+        }
+      />
+    </CardActions>
+  </CardHeader>
+  <CardTitle>
+    Dummy Name
+  </CardTitle>
+  <CardBody
+    className="ocm-c-addons__card--body"
+    isFilled={false}
+  >
+    <Label
+      color="green"
+      icon={
+        <CheckCircleIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      }
+      variant="outline"
+    >
+      Installed
+    </Label>
+  </CardBody>
+  <CardBody
+    className="ocm-c-addons__card--body"
+  >
+    Dummy Desc
+     
+  </CardBody>
+  <CardFooter
+    className="ocm-c-addons__card--footer"
+  >
+    <Button
+      component="a"
+      href="https://dummy.devshift.org/k8s/ns/undefined/operators.coreos.com~v1alpha1~ClusterServiceVersion/dummy-operator.vundefined"
+      rel="noopener noreferrer"
+      target="_blank"
+      variant="secondary"
+    >
+      View in Console
+    </Button>
+  </CardFooter>
+</Card>
+`;
