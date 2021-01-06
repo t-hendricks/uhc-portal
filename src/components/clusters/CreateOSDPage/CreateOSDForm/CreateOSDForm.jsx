@@ -156,6 +156,13 @@ class CreateOSDForm extends React.Component {
             <GridItem span={12}>
               <Title headingLevel="h3">AWS account details</Title>
             </GridItem>
+            <GridItem span={4}>
+              Before creating the cluster, review all the prerequisites in
+              {' '}
+              <ExternalLink href="https://www.openshift.com/dedicated/ccs">the documentation.</ExternalLink>
+              {' '}
+            </GridItem>
+            <GridItem span={8} />
             <AWSAccountDetailsSection pending={pending} />
           </>
         )}
@@ -173,10 +180,10 @@ class CreateOSDForm extends React.Component {
                   {' '}
                   <code>osd-ccs-admin</code>
                   {' '}
-                that meets the requirements.
+                that meets
                   {' '}
-                  {/* <ExternalLink href="tbd">these requirements.</ExternalLink>
-                  {' '} */}
+                  <ExternalLink href="https://www.openshift.com/dedicated/ccs">these requirements.</ExternalLink>
+                  {' '}
                 Create a key for that service account, export to a file named
                   {' '}
                   <code>osServiceAccount.json</code>
