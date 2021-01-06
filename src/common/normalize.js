@@ -45,7 +45,7 @@ const normalizeCluster = (cluster) => {
   return result;
 };
 
-// Normalize data from AMS
+// Normalize data from AMS for an unmanaged cluster.
 const fakeClusterFromSubscription = (subscription) => {
   const emptyMetrics = {
     memory: {
@@ -90,10 +90,10 @@ const fakeClusterFromSubscription = (subscription) => {
   };
   const metrics = subscription.metrics?.[0] || emptyMetrics;
 
+  // Omitting some fields that real data from clusters-service does have, but we won't use.
   return {
     subscription_id: subscription.id,
     id: subscription.cluster_id,
-    name: subscription.external_cluster_id,
     external_id: subscription.external_cluster_id,
     console: {
       url: subscription.console_url,
