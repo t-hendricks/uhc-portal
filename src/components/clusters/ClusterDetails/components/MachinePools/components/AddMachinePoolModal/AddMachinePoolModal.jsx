@@ -82,6 +82,17 @@ class AddMachinePoolModal extends Component {
           {hasError}
           <Form className="control-form-cursor" onSubmit={(e) => { submit(); e.preventDefault(); }}>
             <Grid>
+              <GridItem span={4}>
+                <FormGroup label="Machine pool name" className="space-bottom-md" isRequired>
+                  <Field
+                    component={ReduxVerticalFormGroup}
+                    name="name"
+                    type="text"
+                    validate={checkMachinePoolName}
+                    disabled={isPending}
+                  />
+                </FormGroup>
+              </GridItem>
               <ScaleSection
                 pending={isPending}
                 isBYOC={!!cluster?.ccs?.enabled}
@@ -96,17 +107,6 @@ class AddMachinePoolModal extends Component {
                 isMachinePool
                 nodeLabelsGridSpan={6}
               />
-              <GridItem span={4}>
-                <FormGroup label="Machine pool name" isRequired>
-                  <Field
-                    component={ReduxVerticalFormGroup}
-                    name="name"
-                    type="text"
-                    validate={checkMachinePoolName}
-                    disabled={isPending}
-                  />
-                </FormGroup>
-              </GridItem>
             </Grid>
           </Form>
         </>
