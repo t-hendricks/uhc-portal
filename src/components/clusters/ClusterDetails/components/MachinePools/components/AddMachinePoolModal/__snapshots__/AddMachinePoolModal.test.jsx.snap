@@ -16,6 +16,22 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
     onSubmit={[Function]}
   >
     <Grid>
+      <GridItem
+        span={4}
+      >
+        <FormGroup
+          className="space-bottom-md"
+          isRequired={true}
+          label="Machine pool name"
+        >
+          <Field
+            component={[Function]}
+            name="name"
+            type="text"
+            validate={[Function]}
+          />
+        </FormGroup>
+      </GridItem>
       <ScaleSection
         cloudProviderID="aws"
         gridSpan={12}
@@ -29,21 +45,6 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         product="OSD"
         showStorageAndLoadBalancers={false}
       />
-      <GridItem
-        span={4}
-      >
-        <FormGroup
-          isRequired={true}
-          label="Machine pool name"
-        >
-          <Field
-            component={[Function]}
-            name="name"
-            type="text"
-            validate={[Function]}
-          />
-        </FormGroup>
-      </GridItem>
     </Grid>
   </Form>
 </Modal>
