@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import NodeCountInput from './NodeCountInput';
+import * as quotaSelectors from '../quotaSelectors';
 
 const baseProps = {
   isDisabled: false,
@@ -19,34 +20,15 @@ const baseProps = {
   product: 'OSD',
 };
 
-const fakeRhInfraQuota = (nodes, cost = 1) => ({
-  nodesQuota: {
-    aws: {
-      rhInfra: {
-        fake: {
-          available: nodes,
-          cost,
-        },
-      },
-    },
-  },
-});
-
-const fakeByocQuota = (nodes, cost = 1) => ({
-  nodesQuota: {
-    aws: {
-      rhInfra: {
-        fake: {
-          available: nodes,
-          cost,
-        },
-      },
-    },
-  },
-});
-
-
 describe('<NodeCountInput>', () => {
+  let mockAvailableNodes;
+  beforeEach(() => {
+    mockAvailableNodes = jest.spyOn(quotaSelectors, 'availableNodesFromQuota');
+  });
+  afterEach(() => {
+    mockAvailableNodes.mockRestore();
+  });
+
   describe('Single AZ', () => {
     it('renders with no quota', () => {
       const wrapper = shallow(<NodeCountInput {...baseProps} />);
@@ -56,33 +38,33 @@ describe('<NodeCountInput>', () => {
     });
 
     it('renders with some quota', () => {
+      mockAvailableNodes.mockReturnValue(10);
       const wrapper = shallow(<NodeCountInput
         {...baseProps}
         machineType="fake"
-        quota={fakeRhInfraQuota(10)}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
     });
 
     it('renders with extremely high quota (should only allow up to MAX_NODES)', () => {
+      mockAvailableNodes.mockReturnValue(10000);
       const wrapper = shallow(<NodeCountInput
         {...baseProps}
         machineType="fake"
-        quota={fakeRhInfraQuota(10000)}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
     });
 
     it('correctly handle machineType switching & default value', () => {
+      mockAvailableNodes.mockReturnValue(10);
       const onChange = jest.fn();
       const inputProps = { ...baseProps.input, onChange };
       const wrapper = shallow(<NodeCountInput
         {...baseProps}
         input={inputProps}
         machineType="fake"
-        quota={fakeRhInfraQuota(10)}
       />);
       // now let's set a higher value and make sure it works...
       wrapper.setProps({ input: { ...inputProps, value: 10 } }, () => {
@@ -98,11 +80,11 @@ describe('<NodeCountInput>', () => {
 
     describe('BYOC', () => {
       it('renders with quota granted but insufficient amount', () => {
+        mockAvailableNodes.mockReturnValue(0);
         const wrapper = shallow(<NodeCountInput
           {...baseProps}
           isByoc
           machineType=""
-          quota={fakeRhInfraQuota(1, 4)}
         />);
         expect(wrapper).toMatchSnapshot();
         expect(wrapper.find('FormSelect').props().isDisabled).toBeTruthy();
@@ -110,12 +92,12 @@ describe('<NodeCountInput>', () => {
 
       describe('and is editing cluster', () => {
         it('renders enabled', () => {
+          mockAvailableNodes.mockReturnValue(0);
           const wrapper = shallow(<NodeCountInput
             {...baseProps}
             isByoc
             machineType="fake"
             isEditingCluster
-            quota={fakeByocQuota(2, 4)}
           />);
           expect(wrapper).toMatchSnapshot();
           expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
@@ -124,12 +106,12 @@ describe('<NodeCountInput>', () => {
 
       describe('and is editing a machine pool', () => {
         it('renders enabled', () => {
+          mockAvailableNodes.mockReturnValue(0);
           const wrapper = shallow(<NodeCountInput
             {...baseProps}
             isByoc
             machineType="fake"
             isMachinePool
-            quota={fakeByocQuota(2, 4)}
           />);
           expect(wrapper).toMatchSnapshot();
           expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
@@ -139,6 +121,7 @@ describe('<NodeCountInput>', () => {
   });
   describe('Multi AZ', () => {
     it('renders with no quota', () => {
+      mockAvailableNodes.mockReturnValue(0);
       const wrapper = shallow(<NodeCountInput {...baseProps} isMultiAz />);
       expect(wrapper).toMatchSnapshot();
       const formSelectProps = wrapper.find('FormSelect').props();
@@ -146,11 +129,11 @@ describe('<NodeCountInput>', () => {
     });
 
     it('renders with some quota', () => {
+      mockAvailableNodes.mockReturnValue(3);
       const wrapper = shallow(<NodeCountInput
         {...baseProps}
         machineType="fake"
         isMultiAz
-        quota={fakeRhInfraQuota(3)}
       />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
@@ -158,6 +141,7 @@ describe('<NodeCountInput>', () => {
   });
 
   it('correctly handle machineType switching & default value', () => {
+    mockAvailableNodes.mockReturnValue(3);
     const onChange = jest.fn();
     const inputProps = { ...baseProps.input, onChange };
     const wrapper = shallow(<NodeCountInput
@@ -165,7 +149,6 @@ describe('<NodeCountInput>', () => {
       input={{ ...baseProps.input, onChange }}
       machineType="fake"
       isMultiAz
-      quota={fakeRhInfraQuota(3)}
     />);
     // now let's set a higher value and make sure it works...
     wrapper.setProps({ input: { ...inputProps, value: 15 } }, () => {
@@ -182,6 +165,7 @@ describe('<NodeCountInput>', () => {
   describe('scaling dialog behavior', () => {
     describe('singleAZ', () => {
       it('renders with no quota above current value', () => {
+        mockAvailableNodes.mockReturnValue(0);
         const wrapper = shallow(
           <NodeCountInput {...baseProps} isEditingCluster currentNodeCount={6} />,
         );
@@ -192,6 +176,7 @@ describe('<NodeCountInput>', () => {
     });
     describe('multiAz', () => {
       it('renders with no quota above current value', () => {
+        mockAvailableNodes.mockReturnValue(0);
         const wrapper = shallow(
           <NodeCountInput {...baseProps} isMultiAz isEditingCluster currentNodeCount={12} />,
         );
