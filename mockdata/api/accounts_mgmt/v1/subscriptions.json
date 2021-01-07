@@ -1,8 +1,8 @@
 {
   "kind": "SubscriptionList",
   "page": 1,
-  "size": 7,
-  "total": 7,
+  "size": 8,
+  "total": 8,
   "items": [
     {
       "id": "1KgB0WcVBZBdRGAreuve29yoxUB",
@@ -182,6 +182,156 @@
       "cloud_account_id": "765374464689",
       "cloud_provider_id": "AWS",
       "region_id": "us-west-2"
+    },
+    {
+      "id": "1mb8AErRROMMc8dWjfnKTnvmIIM",
+      "kind": "Subscription",
+      "href": "/api/accounts_mgmt/v1/subscriptions/1mb8AErRROMMc8dWjfnKTnvmIIM",
+      "plan": {
+        "id": "MOA",
+        "kind": "Plan",
+        "href": "/api/accounts_mgmt/v1/plans/MOA"
+      },
+      "cluster_id": "1i08lvpg5jd0v2ve3vh5s55nibooopqn",
+      "external_cluster_id": "49293b5e-a026-4e9d-85e6-ad85f63b50e9",
+      "organization_id": "1H1PQMDtwzAUsjPxgoWRjhSpNGD",
+      "last_telemetry_date": "2021-01-05T09:58:15.554351Z",
+      "created_at": "2021-01-04T08:59:44.853304Z",
+      "updated_at": "2021-01-05T09:58:15.55438Z",
+      "support_level": "Premium",
+      "cpu_total": 4,
+      "socket_total": 2,
+      "display_name": "ROSA-cluster-uninstalling",
+      "creator": {
+        "id": "1Du28axTYfDk2r9fHOUGSoo5GZa",
+        "kind": "Account",
+        "href": "/api/accounts_mgmt/v1/accounts/1Du28axTYfDk2r9fHOUGSoo5GZa",
+        "name": "Beni Paskin-Cherniavsky",
+        "username": "***REMOVED***",
+        "email": "***REMOVED***"
+      },
+      "managed": true,
+      "status": "Active",
+      "provenance": "Provisioning",
+      "last_reconcile_date": "0001-01-01T00:00:00Z",
+      "capabilities": [
+        {
+          "name": "capability.cluster.subscribed_ocp",
+          "value": "true",
+          "inherited": true
+        },
+        {
+          "name": "capability.cluster.manage_cluster_admin",
+          "value": "true",
+          "inherited": false
+        }
+      ],
+      "last_released_at": "0001-01-01T00:00:00Z",
+      "metrics": [
+        {
+          "HealthState": "healthy",
+          "memory": {
+            "updated_timestamp": "2021-01-05T10:30:11.962Z",
+            "used": {
+              "value": 26245849088,
+              "unit": "B"
+            },
+            "total": {
+              "value": 148110278656,
+              "unit": "B"
+            }
+          },
+          "cpu": {
+            "updated_timestamp": "2021-01-05T10:30:13.033Z",
+            "used": {
+              "value": 3.7982857142857127,
+              "unit": ""
+            },
+            "total": {
+              "value": 28,
+              "unit": ""
+            }
+          },
+          "sockets": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 0,
+              "unit": ""
+            }
+          },
+          "compute_nodes_memory": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": "B"
+            },
+            "total": {
+              "value": 99129942016,
+              "unit": "B"
+            }
+          },
+          "compute_nodes_cpu": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 16,
+              "unit": ""
+            }
+          },
+          "compute_nodes_sockets": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 0,
+              "unit": ""
+            }
+          },
+          "storage": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": "B"
+            },
+            "total": {
+              "value": 0,
+              "unit": "B"
+            }
+          },
+          "nodes": {
+            "total": 7,
+            "master": 3,
+            "infra": 2,
+            "compute": 2
+          },
+          "operating_system": "",
+          "upgrade": {
+            "updated_timestamp": "2021-01-05T10:30:12.84Z",
+            "available": true
+          },
+          "state": "ready",
+          "state_description": "",
+          "open_shift_version": "4.6.8",
+          "cloud_provider": "AWS",
+          "region": "us-west-2",
+          "console_url": "https://console-openshift-console.apps.cben-rosa1.vgyx.p1.openshiftapps.com",
+          "critical_alerts_firing": 0,
+          "operators_condition_failing": 0,
+          "subscription_cpu_total": 4,
+          "subscription_socket_total": 2
+        }
+      ],
+      "cloud_account_id": "765374464689",
+      "cloud_provider_id": "aws"
     },
     {
       "id": "1KJHPPHFDSHxcvwB4rsfDmgHG6c",

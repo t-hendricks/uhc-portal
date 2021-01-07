@@ -156,13 +156,16 @@ const buildSearchQuery = (items, field) => {
 const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => {
   const result = [];
   subscriptionMap.forEach((value) => {
-    if (value.subscription.managed && value?.cluster === null) {
-      // skip managed cluster without data
-      return;
+    let cluster;
+    if (value.subscription.managed) {
+      if (value?.cluster === null) {
+        // skip OSD cluster without data
+        return;
+      }
+      cluster = normalizeCluster(value.cluster);
+    } else {
+      cluster = fakeClusterFromSubscription(value.subscription);
     }
-    const cluster = value?.cluster
-      ? normalizeCluster(value.cluster)
-      : fakeClusterFromSubscription(value.subscription);
     cluster.canEdit = canEdit['*'] || !!canEdit[cluster.id];
     cluster.canDelete = canDelete['*'] || !!canDelete[cluster.id];
     cluster.subscription = value.subscription;
