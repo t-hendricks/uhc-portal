@@ -283,9 +283,13 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
           if (subscription.data.metrics !== undefined && subscription.data.metrics.length > 0) {
             [cluster.data.metrics] = subscription.data.metrics;
           }
+          if (!cluster.managed && !cluster?.console?.url) {
+            cluster.console = { url: cluster.data.subscription.console_url };
+          }
           return cluster;
         }).catch(() => cluster);
       }
+
       return cluster;
     }).catch(() => cluster);
   });
