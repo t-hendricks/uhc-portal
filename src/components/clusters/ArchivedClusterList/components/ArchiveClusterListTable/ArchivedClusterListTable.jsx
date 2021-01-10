@@ -16,7 +16,8 @@ import { Link } from 'react-router-dom';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel/ClusterLocationLabel';
 import getClusterName from '../../../../../common/getClusterName';
 import modals from '../../../../common/Modal/modals';
-
+import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
+import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
 function ArchivedClusterListTable(props) {
   const { viewOptions, setSorting } = props;
@@ -25,21 +26,46 @@ function ArchivedClusterListTable(props) {
     return <p className="notfound">No results match the filter criteria.</p>;
   }
 
+  const hiddenOnMdOrSmaller = classNames(Visibility.visibleOnLg, Visibility.hiddenOnMd,
+    Visibility.hiddenOnSm);
+
+  const columns = [
+    { title: 'Name', transforms: [sortable, cellWidth(30)] },
+    { title: 'Type', transforms: [sortable] },
+    { title: 'Status', transforms: [sortable] },
+    { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
+    '',
+  ];
+
+
+  const sortColumns = {
+    Name: 'display_name',
+    Type: 'plan.id',
+    Status: 'status',
+  };
+
+
   const sortBy = {
-    index: 0, // TODO support more fields
+    index: viewOptions.sorting.sortIndex,
     direction: viewOptions.sorting.isAscending ? SortByDirection.asc : SortByDirection.desc,
   };
 
-  const onSortToggle = (_event, _index, direction) => {
+  const onSortToggle = (_event, index, direction) => {
     const sorting = { ...viewOptions.sorting };
     sorting.isAscending = direction === SortByDirection.asc;
-    sorting.sortField = 'name'; // TODO support more fields
+    sorting.sortField = sortColumns[columns[index].title];
+    sorting.sortIndex = index;
     setSorting(sorting);
   };
 
   const clusterRow = (cluster) => {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
     const name = getClusterName(cluster);
+
+    const statusMap = {
+      Archived: 'Archived',
+      Deprovisioned: 'Deleted',
+    };
 
     const clusterName = (
       <Link to={`/details/s/${cluster.subscription.id}`}>{name}</Link>
@@ -51,7 +77,7 @@ function ArchivedClusterListTable(props) {
         name,
       });
 
-    const unarchiveButton = (
+    const unarchiveButton = cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED && (
       <Button variant="secondary" onClick={openUnarchiveModal} isDisabled={!cluster.canEdit}>
         Unarchive
       </Button>
@@ -59,6 +85,10 @@ function ArchivedClusterListTable(props) {
 
     return [
       { title: clusterName },
+      { title: <ClusterTypeLabel cluster={cluster} /> },
+      {
+        title: <span className="cluster-status-string">{statusMap[cluster.subscription.status]}</span>,
+      },
       {
         title: <ClusterLocationLabel
           regionID={get(cluster, 'region.id', 'N/A')}
@@ -70,15 +100,6 @@ function ArchivedClusterListTable(props) {
       },
     ];
   };
-
-  const hiddenOnMdOrSmaller = classNames(Visibility.visibleOnLg, Visibility.hiddenOnMd,
-    Visibility.hiddenOnSm);
-
-  const columns = [
-    { title: 'Name', transforms: [sortable, cellWidth(70)] },
-    { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
-    '',
-  ];
 
 
   return (

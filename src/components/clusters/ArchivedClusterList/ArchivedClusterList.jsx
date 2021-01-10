@@ -30,6 +30,7 @@ import {
 } from '@patternfly/react-core';
 
 import ClusterListFilter from '../common/ClusterListFilter';
+import ClusterListFilterDropDown from '../ClusterList/components/ClusterListFilterDropdown';
 import ArchivedClusterListTable from './components/ArchiveClusterListTable/ArchivedClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
@@ -54,7 +55,7 @@ class ArchivedClusterList extends Component {
   }
 
   componentDidMount() {
-    document.title = 'Archived Clusters | Red Hat OpenShift Cluster Manager';
+    document.title = 'Cluster Archives | Red Hat OpenShift Cluster Manager';
     const {
       getCloudProviders, cloudProviders, setListFlag, invalidateClusters,
     } = this.props;
@@ -107,7 +108,7 @@ class ArchivedClusterList extends Component {
     const breadCrumbs = (
       <Breadcrumbs path={[
         { label: 'Clusters' },
-        { label: 'Archived clusters' },
+        { label: 'Cluster Archives' },
       ]}
       />
     );
@@ -115,7 +116,7 @@ class ArchivedClusterList extends Component {
     const pageHeader = (
       <PageHeader>
         {breadCrumbs}
-        <PageHeaderTitle title="Archived clusters" />
+        <PageHeaderTitle title="Cluster Archives" />
       </PageHeader>
     );
 
@@ -123,7 +124,7 @@ class ArchivedClusterList extends Component {
       return (
         <PageSection>
           <Unavailable
-            message="Error retrieving archived clusters"
+            message="Error retrieving cluster archives"
             response={{
               errorMessage,
               operationID,
@@ -161,6 +162,12 @@ class ArchivedClusterList extends Component {
               <Split id="cluster-list-top">
                 <SplitItem>
                   <ClusterListFilter view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
+                </SplitItem>
+                <SplitItem>
+                  <ClusterListFilterDropDown
+                    view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
+                    isDisabled={pending}
+                  />
                 </SplitItem>
                 <SplitItem className="pf-l-split__item split-margin-left">
                   <div className="show-active-clusters-link">

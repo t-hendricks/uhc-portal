@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ArchivedClusterListTable /> ArchivedClusterListTable should render 1`] = `
+<Table
+  borders={true}
+  canSelectAll={true}
+  cells={
+    Array [
+      Object {
+        "title": "Name",
+        "transforms": Array [
+          [Function],
+          [Function],
+        ],
+      },
+      Object {
+        "title": "Type",
+        "transforms": Array [
+          [Function],
+        ],
+      },
+      Object {
+        "title": "Status",
+        "transforms": Array [
+          [Function],
+        ],
+      },
+      Object {
+        "columnTransforms": Array [
+          [Function],
+        ],
+        "title": "Provider (Location)",
+      },
+      "",
+    ]
+  }
+  className=""
+  contentId="expanded-content"
+  dropdownDirection="down"
+  dropdownPosition="right"
+  expandId="expandable-toggle"
+  gridBreakPoint="grid-md"
+  isStickyHeader={false}
+  onSort={[Function]}
+  ouiaSafe={true}
+  role="grid"
+  rowLabeledBy="simple-node"
+  rows={
+    Array [
+      Array [
+        Object {
+          "title": <Link
+            to="/details/s/1HAtdkNPWql68fuOI7Kvuyk4OTp"
+          >
+            1HAtdkNPWql68fuOI7Kvuyk4OTp
+          </Link>,
+        },
+        Object {
+          "title": <ClusterTypeLabel
+            cluster={
+              Object {
+                "cluster_id": "1HAtdkNPWql68fuOI7KvuyM4OTp",
+                "created_at": "2019-02-14T15:07:24.640289Z",
+                "creator": Object {
+                  "email": "***REMOVED***",
+                  "href": "/api/accounts_mgmt/v1/accounts/1G1ikKt3haukUjrUDvRVLZyfEnY",
+                  "id": "1G1ikKt3haukUjrUDvRVLZyfEnY",
+                  "kind": "Account",
+                  "name": "Elad Tabak",
+                  "username": "etabak_privileged_uhc_20012019",
+                },
+                "href": "/api/accounts_mgmt/v1/subscriptions/1HAtguRKqqlQYCSFk14uwMl6g6p",
+                "id": "1HAtguRKqqlQYCSFk14uwMl6g6p",
+                "kind": "Subscription",
+                "last_telemetry_date": "0001-01-01T00:00:00Z",
+                "organization_id": "1HAIjRf0KAoWykFD2gexUhfngd0",
+                "plan": Object {
+                  "href": "/api/accounts_mgmt/v1/plans/OCP",
+                  "id": "OCP",
+                  "kind": "Plan",
+                },
+                "subscription": Object {
+                  "id": "1HAtdkNPWql68fuOI7Kvuyk4OTp",
+                  "last_reconcile_date": "0001-01-01T00:00:00Z",
+                  "last_released_at": "0001-01-01T00:00:00Z",
+                  "managed": false,
+                  "provenance": "Provisioning",
+                  "status": "Deprovisioned",
+                },
+                "support_level": "Eval",
+                "updated_at": "2019-09-24T01:37:42.930173Z",
+              }
+            }
+          />,
+        },
+        Object {
+          "title": <span
+            className="cluster-status-string"
+          >
+            Deleted
+          </span>,
+        },
+        Object {
+          "title": <Memo(Connect(ClusterLocationLabel))
+            cloudProviderID="N/A"
+            regionID="N/A"
+          />,
+        },
+        Object {
+          "title": false,
+        },
+      ],
+    ]
+  }
+  selectVariant="checkbox"
+  sortBy={
+    Object {
+      "direction": "asc",
+      "index": 0,
+    }
+  }
+  variant={null}
+>
+  <TableHeader />
+  <Component />
+</Table>
+`;

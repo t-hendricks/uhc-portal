@@ -106,7 +106,7 @@ describe('createViewQueryObject()', () => {
         showArchived: true,
       },
     };
-    expect(createViewQueryObject(viewOptions)).toEqual({ ...baseResult, filter: "(cluster_id!='') AND (status='Archived')" });
+    expect(createViewQueryObject(viewOptions)).toEqual({ ...baseResult, filter: "(cluster_id!='') AND (status IN ('Deprovisioned', 'Archived'))" });
   });
 
   it('correctly formats filter when a filter is set', () => {

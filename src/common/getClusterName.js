@@ -5,6 +5,18 @@ import get from 'lodash/get';
  * or the string "Unnamed Cluster".
  * @param {*} cluster a cluster object.
  */
-const getClusterName = cluster => get(cluster, 'subscription.display_name', false) || cluster.display_name || cluster.name || cluster.external_id || 'Unnamed Cluster';
+const getClusterName = (cluster) => {
+  const clusterName = get(cluster, 'subscription.display_name', false) || cluster.display_name || cluster.name || cluster.external_id;
+  if (clusterName === undefined) {
+    if (get(cluster, 'subscription.status', false) === 'Deprovisioned') {
+      const subscriptionId = get(cluster, 'subscription.id', false);
+      if (subscriptionId) {
+        return subscriptionId;
+      }
+    }
+    return 'Unnamed Cluster';
+  }
+  return clusterName;
+};
 
 export default getClusterName;

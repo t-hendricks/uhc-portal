@@ -9,6 +9,8 @@ const clusterStates = {
   UNINSTALLING: 'uninstalling',
   DISCONNECTED: 'disconnected',
   ERROR: 'error',
+  DEPROVISIONED: 'deprovisioned',
+  ARCHIVED: 'archived',
 };
 
 function getClusterStateAndDescription(cluster) {
@@ -23,6 +25,10 @@ function getClusterStateAndDescription(cluster) {
   if (!cluster.managed
     && cluster.subscription.status === subscriptionStatuses.DISCONNECTED) {
     state = clusterStates.DISCONNECTED;
+  } else if (cluster.subscription.status === subscriptionStatuses.DEPROVISIONED) {
+    state = clusterStates.DEPROVISIONED;
+  } else if (cluster.subscription.status === subscriptionStatuses.ARCHIVED) {
+    state = clusterStates.ARCHIVED;
   } else if (cluster.state === clusterStates.READY) {
     state = clusterStates.READY;
   } else if (cluster.state === clusterStates.UNINSTALLING) {
@@ -30,6 +36,7 @@ function getClusterStateAndDescription(cluster) {
   } else if (cluster.state === clusterStates.ERROR) {
     state = clusterStates.ERROR;
   }
+
 
   return {
     state,

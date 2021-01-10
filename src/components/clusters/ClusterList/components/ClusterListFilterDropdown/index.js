@@ -1,15 +1,14 @@
 
 import { connect } from 'react-redux';
 import { onListFlagsSet } from '../../../../../redux/actions/viewOptionsActions';
-import { viewConstants } from '../../../../../redux/constants';
 import ClusterListFilterDropdown from './ClusterListFilterDropdown';
 
-const mapStateToProps = state => ({
-  currentFilters: state.viewOptions[viewConstants.CLUSTERS_VIEW].flags.subscriptionFilter || {},
+const mapStateToProps = (state, ownProps) => ({
+  currentFilters: state.viewOptions[ownProps.view].flags.subscriptionFilter || {},
 });
 
-const mapDispatchToProps = {
-  setFilter: filter => onListFlagsSet('subscriptionFilter', filter, viewConstants.CLUSTERS_VIEW),
-};
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  setFilter: filter => dispatch(onListFlagsSet('subscriptionFilter', filter, ownProps.view)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterListFilterDropdown);

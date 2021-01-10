@@ -29,7 +29,6 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
   const humanizedPersistentStorage = cluster.managed && cluster.storage_quota
              && humanizeValueWithUnitGiB(cluster.storage_quota.value);
   const showVCPU = !isDisconnected && !hasSockets;
-  const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
   const masterActualNodes = get(cluster, 'metrics.nodes.master', '-');
   const masterDesiredNodes = get(cluster, 'nodes.master', '-');
@@ -47,17 +46,11 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
           <DescriptionListTerm>
             Status
           </DescriptionListTerm>
-          { isArchived ? (
-            <DescriptionListDescription>
-              Archived
-            </DescriptionListDescription>
-          ) : (
-            <DescriptionListDescription style={cluster.state.style}>
-              <ClusterStateIcon clusterState={cluster.state.state} animated />
-              {' '}
-              {cluster.state.description}
-            </DescriptionListDescription>
-          )}
+          <DescriptionListDescription style={cluster.state.style}>
+            <ClusterStateIcon clusterState={cluster.state.state} animated />
+            {' '}
+            {cluster.state.description}
+          </DescriptionListDescription>
         </DescriptionListGroup>
         {showVCPU && (
           <>

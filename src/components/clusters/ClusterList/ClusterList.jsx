@@ -209,7 +209,11 @@ class ClusterList extends Component {
                     />
                   </ToolbarItem>
                   <ToolbarItem>
-                    <ClusterListFilterDropdown isDisabled={pending} history={history} />
+                    <ClusterListFilterDropdown
+                      view={viewConstants.CLUSTERS_VIEW}
+                      isDisabled={pending}
+                      history={history}
+                    />
                   </ToolbarItem>
                   <ToolbarItem>
                     <Link to="/create">
