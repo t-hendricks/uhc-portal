@@ -74,7 +74,7 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
       keyHandler={[Function]}
       onClick={[Function]}
       sendRef={[Function]}
-      value="a"
+      value="fake-regiona"
     >
       fake-regiona
     </SelectOption>
@@ -93,7 +93,7 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
       keyHandler={[Function]}
       onClick={[Function]}
       sendRef={[Function]}
-      value="b"
+      value="fake-regionb"
     >
       fake-regionb
     </SelectOption>
@@ -112,7 +112,7 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
       keyHandler={[Function]}
       onClick={[Function]}
       sendRef={[Function]}
-      value="c"
+      value="fake-regionc"
     >
       fake-regionc
     </SelectOption>
@@ -131,7 +131,7 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
       keyHandler={[Function]}
       onClick={[Function]}
       sendRef={[Function]}
-      value="d"
+      value="fake-regiond"
     >
       fake-regiond
     </SelectOption>
@@ -150,7 +150,7 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
       keyHandler={[Function]}
       onClick={[Function]}
       sendRef={[Function]}
-      value="e"
+      value="fake-regione"
     >
       fake-regione
     </SelectOption>
@@ -169,7 +169,7 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
       keyHandler={[Function]}
       onClick={[Function]}
       sendRef={[Function]}
-      value="f"
+      value="fake-regionf"
     >
       fake-regionf
     </SelectOption>
