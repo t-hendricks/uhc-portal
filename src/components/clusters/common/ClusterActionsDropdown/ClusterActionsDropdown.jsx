@@ -34,6 +34,7 @@ class ClusterActionsDropdown extends React.Component {
       canSubscribeOCP,
       canTransferClusterOwnership,
       toggleSubscriptionReleased,
+      canHibernateCluster,
     } = this.props;
     const { isOpen } = this.state;
 
@@ -47,6 +48,7 @@ class ClusterActionsDropdown extends React.Component {
       openModal,
       canSubscribeOCP,
       canTransferClusterOwnership,
+      canHibernateCluster,
       toggleSubscriptionReleased,
     });
 
@@ -84,6 +86,7 @@ ClusterActionsDropdown.propTypes = {
   disabled: PropTypes.bool,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
+  canHibernateCluster: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
 };
 

@@ -15,5 +15,7 @@ const modals = {
   UPGRADE_WIZARD: 'upgrade-wizard',
   TRANSFER_CLUSTER_OWNERSHIP: 'transfer-cluster-ownership',
   EDIT_SUBSCRIPTION_SETTINGS: 'edit-subscription-settings',
+  HIBERNATE_CLUSTER: 'hibernate-cluster',
+  RESUME_CLUSTER: 'resume-cluster',
 };
 export default modals;

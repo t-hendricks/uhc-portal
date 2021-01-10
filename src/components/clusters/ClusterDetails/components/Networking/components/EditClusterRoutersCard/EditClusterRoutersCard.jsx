@@ -41,17 +41,33 @@ class EditClusterRoutersCard extends React.Component {
       defaultRouterAddress,
       additionalRouterAddress,
       canEdit,
+      clusterHibernating,
       provider,
     } = this.props;
+
+    const disabled = !canEdit || clusterHibernating;
+    const tooltipContent = clusterHibernating ? 'This operation is not available while cluster is hibernating'
+      : 'You do not have permission to edit routers. Only cluster owners and organization administrators can edit routers.';
 
     const changeSettingsBtn = (
       <Button
         variant="primary"
         onClick={this.handleSaveChanges}
-        isDisabled={!canEdit || pristine || !valid}
+        isDisabled={disabled || pristine || !valid}
       >
       Change settings
       </Button>
+    );
+
+    const additionalRouterRadio = (
+      <Field
+        component={ReduxCheckbox}
+        isSwitch
+        name="enable_additional_router"
+        labelOff="Not enabled"
+        label="Enabled"
+        isDisabled={disabled}
+      />
     );
 
     return (
@@ -75,7 +91,7 @@ class EditClusterRoutersCard extends React.Component {
                         component={ReduxCheckbox}
                         name="private_api"
                         label="Make API private"
-                        isDisabled={!canEdit}
+                        isDisabled={disabled}
                       />
                     </StackItem>
                     <StackItem>
@@ -91,7 +107,7 @@ class EditClusterRoutersCard extends React.Component {
                         component={ReduxCheckbox}
                         name="private_default_router"
                         label="Make router private"
-                        isDisabled={!canEdit}
+                        isDisabled={disabled}
                       />
                     </StackItem>
                     <StackItem>
@@ -100,14 +116,14 @@ class EditClusterRoutersCard extends React.Component {
                           <Title headingLevel="h2" size="md" className="card-title">Additional application router</Title>
                         </SplitItem>
                         <SplitItem>
-                          <Field
-                            component={ReduxCheckbox}
-                            isSwitch
-                            name="enable_additional_router"
-                            labelOff="Not enabled"
-                            label="Enabled"
-                            isDisabled={!canEdit}
-                          />
+                          {
+                          disabled ? (
+                            <Tooltip content={tooltipContent}>
+                              {additionalRouterRadio}
+                            </Tooltip>
+                          )
+                            : additionalRouterRadio
+                          }
                         </SplitItem>
                       </Split>
                     </StackItem>
@@ -124,7 +140,7 @@ class EditClusterRoutersCard extends React.Component {
                               component={ReduxCheckbox}
                               name="private_additional_router"
                               label="Make router private"
-                              disabled={!canEdit}
+                              disabled={disabled}
                             />
                           </StackItem>
                         </>
@@ -143,15 +159,15 @@ class EditClusterRoutersCard extends React.Component {
                             validate={checkRouteSelectors}
                             key="route_selectors"
                             onChange={this.handleChangeRouteSelectors}
-                            isReadOnly={!canEdit}
+                            isReadOnly={disabled}
                           />
                         </StackItem>
                       )
                     }
                     <StackItem>
                       <ActionGroup>
-                        { !canEdit ? (
-                          <Tooltip content="You do not have permission to edit routers. Only cluster owners and organization administrators can edit routers.">
+                        { disabled ? (
+                          <Tooltip content={tooltipContent}>
                             <span>
                               {changeSettingsBtn}
                             </span>
@@ -202,6 +218,7 @@ EditClusterRoutersCard.propTypes = {
   defaultRouterAddress: PropTypes.string.isRequired,
   additionalRouterAddress: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  clusterHibernating: PropTypes.bool.isRequired,
   provider: PropTypes.string,
 };
 

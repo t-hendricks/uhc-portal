@@ -26,6 +26,7 @@ describe('<Users />', () => {
       hasUsers={false}
       isAddUserModalOpen={false}
       canAddClusterAdmin={false}
+      clusterHibernating={false}
     />);
 
     expect(wrapper).toMatchSnapshot();
@@ -49,6 +50,7 @@ describe('<Users />', () => {
       hasUsers
       isAddUserModalOpen={false}
       canAddClusterAdmin={false}
+      clusterHibernating={false}
     />);
 
     it('should render', () => {

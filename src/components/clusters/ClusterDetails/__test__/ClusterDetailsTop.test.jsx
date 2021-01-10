@@ -21,6 +21,7 @@ describe('<ClusterDetailsTop />', () => {
       organization: fixtures.organization,
       canSubscribeOCP: fixtures.canSubscribeOCP,
       canTransferClusterOwnership: fixtures.canTransferClusterOwnership,
+      canHibernateCluster: fixtures.canHibernateCluster,
       toggleSubscriptionReleased: functions.toggleSubscriptionReleased,
     };
     wrapper = shallow(

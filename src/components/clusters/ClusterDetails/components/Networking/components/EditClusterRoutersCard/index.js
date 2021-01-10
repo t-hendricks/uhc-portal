@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import { openModal } from '../../../../../../common/Modal/ModalActions';
 import NetworkingSelector from '../../NetworkingSelector';
 import EditClusterRoutersCard from './EditClusterRoutersCard';
+import { isHibernating } from '../../../../../common/clusterStates';
 import { saveNetworkingConfiguration } from '../../NetworkingActions';
 
 const reduxFormConfig = {
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => {
   return {
     clusterID: cluster.id,
     canEdit: cluster.canEdit,
+    clusterHibernating: isHibernating(cluster.state),
     initialValues: {
       private_api: APIPrivate,
       private_default_router: clusterRouters.default.isPrivate,

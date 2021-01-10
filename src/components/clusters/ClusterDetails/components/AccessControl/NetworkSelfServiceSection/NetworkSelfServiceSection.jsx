@@ -84,6 +84,7 @@ class NetworkSelfServiceSection extends React.Component {
       deleteGrantResponse,
       openAddGrantModal,
       canEdit,
+      clusterHibernating,
     } = this.props;
 
     const grantStatus = (status, description) => {
@@ -216,8 +217,13 @@ class NetworkSelfServiceSection extends React.Component {
 
     const rows = hasGrants && grants.data.map(grantRow);
 
+    const disabled = !canEdit || clusterHibernating;
+
+    const tooltipContent = clusterHibernating ? 'This operation is not available while cluster is hibernating'
+      : 'You do not have permission to grant a role. Only cluster owners and organization administrators can grant roles.';
+
     const addGrantBtn = (
-      <Button onClick={() => { setTimeout(() => openAddGrantModal(), 0); }} variant="secondary" className="access-control-add" isDisabled={!canEdit}>
+      <Button onClick={() => { setTimeout(() => openAddGrantModal(), 0); }} variant="secondary" className="access-control-add" isDisabled={disabled}>
         Grant role
       </Button>
     );
@@ -255,8 +261,8 @@ class NetworkSelfServiceSection extends React.Component {
               <TableBody />
             </Table>
             )}
-            {!canEdit ? (
-              <Tooltip content="You do not have permission to grant a role. Only cluster owners and organization administrators can grant roles.">
+            {disabled ? (
+              <Tooltip content={tooltipContent}>
                 <span>
                   {addGrantBtn}
                 </span>
@@ -279,6 +285,7 @@ NetworkSelfServiceSection.propTypes = {
   openAddGrantModal: PropTypes.func.isRequired,
   addNotification: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  clusterHibernating: PropTypes.bool.isRequired,
 };
 
 export default NetworkSelfServiceSection;

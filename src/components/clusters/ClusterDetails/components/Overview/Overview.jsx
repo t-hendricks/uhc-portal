@@ -6,13 +6,14 @@ import {
 } from '@patternfly/react-core';
 
 import get from 'lodash/get';
-import clusterStates, { getClusterStateAndDescription } from '../../../common/clusterStates';
+import clusterStates, { getClusterStateAndDescription, isHibernating } from '../../../common/clusterStates';
 
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
 import SubscriptionSettings from './SubscriptionSettings';
 import ClusterLogs from '../ClusterLogs';
+import HibernatingClusterCard from '../../../common/HibernatingClusterCard/HibernatingClusterCard';
 import InstallationLogView, { shouldShowLogs } from './InstallationLogView';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
@@ -43,8 +44,9 @@ class Overview extends React.Component {
 
   render() {
     const {
-      cluster, cloudProviders, history, displayClusterLogs, refresh,
+      cluster, cloudProviders, history, displayClusterLogs, refresh, openModal,
     } = this.props;
+    let topCard;
     const { showInstallSuccessAlert } = this.state;
     const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
@@ -60,43 +62,55 @@ class Overview extends React.Component {
                              || cluster.state === clusterStates.INSTALLING
                              || cluster.state === clusterStates.UNINSTALLING;
 
+    if (isHibernating(cluster.state)) {
+      topCard = (
+        <HibernatingClusterCard cluster={cluster} openModal={openModal} />
+      );
+    } else if (shouldShowLogs(cluster)) {
+      topCard = (
+        <>
+          <InstallProgress cluster={cluster}>
+            <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
+            <InstallationLogView
+              cluster={cluster}
+              isExpandable={cluster.state !== clusterStates.UNINSTALLING}
+            />
+          </InstallProgress>
+        </>
+      );
+    } else {
+      topCard = !isDeprovisioned && (
+        <>
+          <Card className="ocm-c-overview-resource-usage__card">
+            <CardTitle className="ocm-c-overview-resource-usage__card--header">
+              <Title headingLevel="h2" className="card-title">Resource usage</Title>
+              { showInstallSuccessAlert && <Alert variant="success" isInline title="Cluster installed successfully" />}
+              { shouldMonitorStatus && (
+              <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
+              )}
+            </CardTitle>
+            <CardBody className="ocm-c-overview-resource-usage__card--body">
+              <ResourceUsage
+                metricsAvailable={metricsAvailable}
+                metricsStatusMessage={metricsStatusMessage}
+                cpu={{
+                  used: cluster.metrics.cpu.used,
+                  total: cluster.metrics.cpu.total,
+                }}
+                memory={{
+                  used: cluster.metrics.memory.used,
+                  total: cluster.metrics.memory.total,
+                }}
+                type="threshold"
+              />
+            </CardBody>
+          </Card>
+        </>
+      );
+    }
     return (
       <>
-        { shouldShowLogs(cluster)
-          ? (
-            <InstallProgress cluster={cluster}>
-              <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
-              <InstallationLogView
-                cluster={cluster}
-                isExpandable={cluster.state !== clusterStates.UNINSTALLING}
-              />
-            </InstallProgress>
-          ) : !isDeprovisioned && (
-            <Card className="ocm-c-overview-resource-usage__card">
-              <CardTitle className="ocm-c-overview-resource-usage__card--header">
-                <Title headingLevel="h2" className="card-title">Resource usage</Title>
-                { showInstallSuccessAlert && <Alert variant="success" isInline title="Cluster installed successfully" />}
-                { shouldMonitorStatus && (
-                  <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
-                )}
-              </CardTitle>
-              <CardBody className="ocm-c-overview-resource-usage__card--body">
-                <ResourceUsage
-                  metricsAvailable={metricsAvailable}
-                  metricsStatusMessage={metricsStatusMessage}
-                  cpu={{
-                    used: cluster.metrics.cpu.used,
-                    total: cluster.metrics.cpu.total,
-                  }}
-                  memory={{
-                    used: cluster.metrics.memory.used,
-                    total: cluster.metrics.memory.total,
-                  }}
-                  type="threshold"
-                />
-              </CardBody>
-            </Card>
-          )}
+        { topCard }
         <Card className="ocm-c-overview-details__card">
           <CardTitle className="ocm-c-overview-details__card--header">
             <Title headingLevel="h2" className="card-title">Details</Title>
@@ -132,6 +146,7 @@ Overview.propTypes = {
   history: PropTypes.object.isRequired,
   displayClusterLogs: PropTypes.bool.isRequired,
   refresh: PropTypes.func,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default Overview;

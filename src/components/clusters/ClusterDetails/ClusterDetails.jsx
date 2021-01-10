@@ -43,7 +43,7 @@ import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
-import clusterStates from '../common/clusterStates';
+import clusterStates, { isHibernating } from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
 import Support from './components/Support';
@@ -324,6 +324,7 @@ class ClusterDetails extends Component {
       enableRule,
       canSubscribeOCP,
       canTransferClusterOwnership,
+      canHibernateCluster,
       anyModalOpen,
       hasIssues,
       hasIssuesInsights,
@@ -384,6 +385,7 @@ class ClusterDetails extends Component {
       this.setState({ selectedTab: tabId });
     };
 
+    const clusterHibernating = isHibernating(cluster.state);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
     || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
@@ -391,17 +393,21 @@ class ClusterDetails extends Component {
 
     const consoleURL = get(cluster, 'console.url');
     const displayMonitoringTab = !isArchived && !cluster.managed;
-    const displayAccessControlTab = cluster.managed && !!consoleURL && cluster.state === 'ready';
+    const displayAccessControlTab = cluster.managed && !!consoleURL
+      && (cluster.state === 'ready' || clusterHibernating);
     const cloudProvider = get(cluster, 'cloud_provider.id');
     const displayNetworkingTab = (cluster.state === clusterStates.READY
-          || cluster.state === clusterStates.UPDATING)
+          || cluster.state === clusterStates.UPDATING || clusterHibernating)
           && cluster.managed && !!get(cluster, 'api.url')
       && (cloudProvider === 'aws'
          || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')));
-    const displayMachinePoolsTab = cluster.managed && cluster.state === clusterStates.READY;
+    const displayMachinePoolsTab = cluster.managed
+      && (cluster.state === clusterStates.READY || clusterHibernating);
     const clusterName = getClusterName(cluster);
     const displaySupportTab = supportTabFeature
-      && (cluster.state === clusterStates.READY || cluster.state === clusterStates.UPDATING);
+      && (cluster.state === clusterStates.READY
+        || cluster.state === clusterStates.UPDATING
+        || clusterHibernating);
     const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit;
     const displayAddBareMetalHosts = assistedInstallerEnabled && canAddBareMetalHost({ cluster });
 
@@ -419,6 +425,7 @@ class ClusterDetails extends Component {
           errorMessage={clusterDetails.errorMessage}
           canSubscribeOCP={canSubscribeOCP}
           canTransferClusterOwnership={canTransferClusterOwnership}
+          canHibernateCluster={canHibernateCluster}
           autoRefreshEnabled={!anyModalOpen}
           toggleSubscriptionReleased={toggleSubscriptionReleased}
         >
@@ -685,6 +692,7 @@ ClusterDetails.propTypes = {
   setOpenedTab: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
+  canHibernateCluster: PropTypes.bool.isRequired,
   getClusterRouters: PropTypes.func.isRequired,
   anyModalOpen: PropTypes.bool,
   hasIssues: PropTypes.bool.isRequired,
