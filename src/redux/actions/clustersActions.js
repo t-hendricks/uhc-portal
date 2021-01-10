@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 import isUuid from 'uuid-validate';
 
 import { clustersConstants } from '../constants';
@@ -158,8 +159,12 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
   subscriptionMap.forEach((value) => {
     let cluster;
     if (value.subscription.managed) {
-      if (value?.cluster === null) {
+      if (!value?.cluster || isEmpty(value?.cluster)) {
         // skip OSD cluster without data
+        /* TODO - reconsider this approach:
+          when we start showing deprovisioned OSD clusters in the archived cluster list
+          skipping a cluster like this will stop making sense. */
+        console.warn(`Skipped OSD cluster with no data in CS - subscription ID ${value.subscription.id}`);
         return;
       }
       cluster = normalizeCluster(value.cluster);
