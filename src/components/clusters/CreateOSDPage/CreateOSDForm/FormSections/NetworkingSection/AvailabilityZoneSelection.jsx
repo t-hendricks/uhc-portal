@@ -45,9 +45,13 @@ class AvailabilityZoneSelection extends React.Component {
           isDisabled={isDisabled}
         >
           <SelectOption key={0} value={PLACEHOLDER_VALUE} isPlaceholder />
-          {['a', 'b', 'c', 'd', 'e', 'f'].map(letter => (
-            <SelectOption key={letter} value={letter}>{`${region}${letter}`}</SelectOption>
-          ))}
+          {['a', 'b', 'c', 'd', 'e', 'f'].map((letter) => {
+            // AWS availability zones are comprised from the region name
+            // followed by a single letter. For more information please see:
+            // https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones
+            const avalabilityZone = region + letter;
+            return <SelectOption key={letter} value={avalabilityZone}>{`${avalabilityZone}`}</SelectOption>;
+          })}
         </Select>
       </FormGroup>
     );
