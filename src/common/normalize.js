@@ -91,7 +91,7 @@ const fakeClusterFromSubscription = (subscription) => {
   const metrics = subscription.metrics?.[0] || emptyMetrics;
 
   // Omitting some fields that real data from clusters-service does have, but we won't use.
-  return {
+  const cluster = {
     subscription_id: subscription.id,
     id: subscription.cluster_id,
     external_id: subscription.external_cluster_id,
@@ -109,6 +109,20 @@ const fakeClusterFromSubscription = (subscription) => {
     managed: false,
     metrics,
   };
+  const cloudProvider = subscription.cloud_provider_id;
+  if (cloudProvider) {
+    cluster.cloud_provider = {
+      id: cloudProvider.toLowerCase(),
+    };
+  }
+  const regionId = subscription.region_id;
+  if (regionId) {
+    cluster.region = {
+      id: regionId.toLowerCase(),
+    };
+  }
+
+  return cluster;
 };
 
 const normalizeSubscription = subscription => (
