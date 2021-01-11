@@ -35,6 +35,27 @@ getClusterStatus.mockResolvedValue({});
 const getMachineTypes = jest.fn();
 getMachineTypes.mockResolvedValue({});
 
+const getMachinePools = jest.fn();
+getMachinePools.mockResolvedValue({});
+
+const addMachinePool = jest.fn();
+addMachinePool.mockResolvedValue({});
+
+const scaleMachinePool = jest.fn();
+scaleMachinePool.mockResolvedValue({});
+
+const clearAddMachinePoolResponse = jest.fn();
+clearAddMachinePoolResponse.mockResolvedValue({});
+
+const deleteMachinePool = jest.fn();
+deleteMachinePool.mockResolvedValue({});
+
+const clearGetMachinePoolsResponse = jest.fn();
+clearGetMachinePoolsResponse.mockResolvedValue({});
+
+const clearScaleMachinePoolResponse = jest.fn();
+clearScaleMachinePoolResponse.mockResolvedValue({});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -48,6 +69,13 @@ const clusterService = {
   deleteClusterGroupUser,
   getClusterStatus,
   getMachineTypes,
+  getMachinePools,
+  addMachinePool,
+  scaleMachinePool,
+  deleteMachinePool,
+  clearAddMachinePoolResponse,
+  clearGetMachinePoolsResponse,
+  clearScaleMachinePoolResponse,
 };
 
 export default clusterService;
