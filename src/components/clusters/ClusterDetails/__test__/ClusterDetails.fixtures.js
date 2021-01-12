@@ -1,4 +1,4 @@
-const match = { params: { id: '1IztzhAGrbjtKkMbiPewJanhTXk' } };
+const match = { params: { id: '1i4counta3holamvo1g5tp6n8p3a03bq' } };
 const funcs = () => ({
   history: {
     push: jest.fn(),
@@ -44,27 +44,6 @@ const funcs = () => ({
   getSchedules: jest.fn(),
 });
 
-const subscriptionInfo = {
-  id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
-  kind: 'Subscription',
-  href: '/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8',
-  plan: {
-    id: 'OCP',
-    kind: 'Plan',
-    href: '/api/accounts_mgmt/v1/plans/OCP',
-  },
-  registry_credential: {
-    id: '1EaZd2cDHH6ibIb1FFqav2Mles6',
-    kind: 'RegistryCredential',
-    href: '/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6',
-  },
-  cluster_id: '1IztzhAGrbjtKkMbiPewJanhTXk',
-  external_cluster_id: 'test-liza',
-  last_telemetry_date: '0001-01-01T00:00:00Z',
-  created_at: '2019-01-02T18:28:14.851121Z',
-  updated_at: '2019-01-02T18:28:14.851121Z',
-};
-
 const clusterDetails = {
   error: false,
   errorMessage: '',
@@ -72,75 +51,161 @@ const clusterDetails = {
   fulfilled: true,
   cluster: {
     kind: 'Cluster',
-    id: '1IztzhAGrbjtKkMbiPewJanhTXk',
-    href: '/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk',
+    id: '1i4counta3holamvo1g5tp6n8p3a03bq',
+    href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq',
     name: 'test-liza',
-    external_id: '9f50940b-fba8-4c59-9c6c-d64284b2026d',
+    external_id: 'bae5b227-2472-4e71-be4d-a18fc60bb48a',
+    infra_id: 'test-liza-d7vkd',
     display_name: 'test-liza',
-    cluster_admin_enabled: false,
-    creation_timestamp: '2019-03-26T15:18:39.06783Z',
+    creation_timestamp: '2021-01-10T15:17:16.278663Z',
+    activity_timestamp: '2021-01-11T11:55:29Z',
+    expiration_timestamp: '2021-01-12T03:17:14.999204Z',
     cloud_provider: {
       kind: 'CloudProviderLink',
       id: 'aws',
       href: '/api/clusters_mgmt/v1/cloud_providers/aws',
     },
+    openshift_version: '4.6.8',
     region: {
       kind: 'CloudRegionLink',
       id: 'us-east-1',
       href: '/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1',
     },
     console: {
-      url: 'https://console-openshift-console.apps.test-liza.sdev.devshift.net',
+      url: 'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
     },
     api: {
-      url: 'https://api.test-liza.sdev.devshift.net:6443',
+      url: 'https://api.test-liza.wiex.s1.devshift.org:6443',
+      listening: 'external',
     },
     nodes: {
-      total: 5,
       master: 3,
-      compute: 2,
+      infra: 2,
+      compute: 4,
+      availability_zones: [
+        'us-east-1a',
+      ],
+      master_machine_type: {
+        kind: 'MachineTypeLink',
+        id: 'm5.xlarge',
+        href: '/api/clusters_mgmt/v1/machine_types/m5.xlarge',
+      },
+      compute_machine_type: {
+        kind: 'MachineTypeLink',
+        id: 'm5.xlarge',
+        href: '/api/clusters_mgmt/v1/machine_types/m5.xlarge',
+      },
+    },
+    state: 'ready',
+    flavour: {
+      kind: 'FlavourLink',
+      id: 'osd-4',
+      href: '/api/clusters_mgmt/v1/flavours/osd-4',
+    },
+    groups: {
+      kind: 'GroupListLink',
+      href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/groups',
+    },
+    dns: {
+      base_domain: 'wiex.s1.devshift.org',
+    },
+    network: {
+      machine_cidr: '10.0.0.0/16',
+      service_cidr: '172.30.0.0/16',
+      pod_cidr: '10.128.0.0/14',
+      host_prefix: 23,
+    },
+    external_configuration: {
+      kind: 'ExternalConfiguration',
+      href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration',
+      syncsets: {
+        kind: 'SyncsetListLink',
+        href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/syncsets',
+      },
+      labels: {
+        kind: 'LabelListLink',
+        href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/external_configuration/labels',
+      },
+    },
+    multi_az: false,
+    managed: true,
+    byoc: false,
+    ccs: {
+      enabled: false,
+      disable_scp_checks: false,
+    },
+    version: {
+      kind: 'Version',
+      id: 'openshift-v4.6.8',
+      href: '/api/clusters_mgmt/v1/versions/openshift-v4.6.8',
+      channel_group: 'stable',
     },
     storage_quota: {
       value: 107374182400,
       unit: 'B',
     },
     load_balancer_quota: 0,
+    identity_providers: {
+      kind: 'IdentityProviderListLink',
+      href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/identity_providers',
+    },
+    aws_infrastructure_access_role_grants: {
+      kind: 'AWSInfrastructureAccessRoleGrantLink',
+      href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/aws_infrastructure_access_role_grants',
+      items: null,
+    },
     metrics: {
       memory: {
-        updated_timestamp: '2019-04-28T14:23:19Z',
+        updated_timestamp: '2021-01-11T11:55:29Z',
         used: {
-          value: 16546058240,
+          value: 28802600960,
           unit: 'B',
         },
         total: {
-          value: 82293346304,
+          value: 147469647872,
           unit: 'B',
         },
       },
       cpu: {
-        updated_timestamp: '2019-04-28T14:23:18Z',
+        updated_timestamp: '2021-01-11T11:55:29Z',
         used: {
-          value: 3.995410922987096,
+          value: 3.8904761904758463,
           unit: '',
         },
+        total: {
+          value: 36,
+          unit: '',
+        },
+      },
+      sockets: {
+        used: {
+          value: 0,
+          unit: '',
+        },
+        total: {
+          value: 0,
+          unit: '',
+        },
+      },
+      compute_nodes_memory: {
+        total: {
+          value: 65835802624,
+          unit: 'B',
+        },
+      },
+      compute_nodes_cpu: {
         total: {
           value: 16,
           unit: '',
         },
       },
-      sockets: {
-        updated_timestamp: '0001-01-01T00:00:00Z',
-        used: {
-          value: 0,
-          unit: '',
-        },
+      compute_nodes_sockets: {
         total: {
           value: 0,
           unit: '',
         },
       },
       storage: {
-        updated_timestamp: '0001-01-01T00:00:00Z',
         used: {
           value: 0,
           unit: 'B',
@@ -151,48 +216,200 @@ const clusterDetails = {
         },
       },
       nodes: {
-        total: 7,
+        total: 9,
         master: 3,
+        infra: 2,
         compute: 4,
       },
-    },
-    state: 'ready',
-    flavour: {
-      kind: 'FlavourLink',
-      id: 'osd-4',
-      href: '/api/clusters_mgmt/v1/flavours/osd-4',
-    },
-    dns: {
-      base_domain: 'sdev.devshift.net',
-    },
-    network: {
-      machine_cidr: '10.0.0.0/16',
-      service_cidr: '172.30.0.0/16',
-      pod_cidr: '10.128.0.0/14',
-      router_shards: {
-        kind: 'RouterShardListLink',
-        href: '/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewJanhTXk/router_shards',
-        id: '1IztzhAGrbjtKkMbiPewJanhTXk',
+      version_update_available: false,
+      upgrade: {
+        updated_timestamp: '2021-01-11T11:55:29Z',
+        available: false,
       },
     },
-    multi_az: false,
-    managed: true,
-    version: {
-      kind: 'VersionLink',
-      id: 'openshift-v4.0-latest',
-      href: '/api/clusters_mgmt/v1/versions/openshift-v4.0-latest',
+    addons: {
+      kind: 'AddOnInstallationListLink',
+      href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons',
     },
-    canEdit: true,
-    canDelete: true,
-    subscription: subscriptionInfo,
+    ingresses: {
+      kind: 'IngressListLink',
+      href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/ingresses',
+      id: '1i4counta3holamvo1g5tp6n8p3a03bq',
+    },
+    machine_pools: {
+      kind: 'MachinePoolListLink',
+      href: '/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/machine_pools',
+    },
+    health_state: 'healthy',
     product: {
+      kind: 'ProductLink',
       id: 'osd',
+      href: '/api/clusters_mgmt/v1/products/osd',
     },
     status: {
       state: 'ready',
       dns_ready: true,
+      provision_error_message: '',
+      provision_error_code: '',
+    },
+    node_drain_grace_period: {
+      value: 60,
+      unit: 'minutes',
+    },
+    etcd_encryption: false,
+    upgrade_channel_group: 'stable',
+    subscription: {
+      id: '1msoogsgTLQ4PePjrTOt3UqvMzX',
+      kind: 'Subscription',
+      href: '/api/accounts_mgmt/v1/subscriptions/1msoogsgTLQ4PePjrTOt3UqvMzX',
+      plan: {
+        id: 'OSD',
+        kind: 'Plan',
+        href: '/api/accounts_mgmt/v1/plans/OSD',
+      },
+      cluster_id: '1i4counta3holamvo1g5tp6n8p3a03bq',
+      external_cluster_id: 'bae5b227-2472-4e71-be4d-a18fc60bb48a',
+      organization_id: '1MKVU4otCIuogoLtgtyU6wajxjW',
+      last_telemetry_date: '2021-01-11T03:59:48.224585Z',
+      created_at: '2021-01-10T15:17:15.19112Z',
+      updated_at: '2021-01-11T03:59:48.224622Z',
+      support_level: 'Premium',
+      cpu_total: 8,
+      socket_total: 4,
+      display_name: 'test-liza',
+      creator: {
+        id: '1MRilA9vHlOUX9ui3lx6IohSsaS',
+        kind: 'Account',
+        href: '/api/accounts_mgmt/v1/accounts/1MRilA9vHlOUX9ui3lx6IohSsaS',
+        name: 'Liza Gilman',
+        username: 'egilman.openshift',
+        email: '***REMOVED***',
+      },
+      managed: true,
+      status: 'Active',
+      provenance: 'Provisioning',
+      last_reconcile_date: '0001-01-01T00:00:00Z',
+      console_url: 'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
+      capabilities: [
+        {
+          name: 'capability.cluster.subscribed_ocp',
+          value: 'true',
+          inherited: true,
+        },
+        {
+          name: 'capability.cluster.manage_cluster_admin',
+          value: 'true',
+          inherited: true,
+        },
+      ],
+      last_released_at: '0001-01-01T00:00:00Z',
+      metrics: [
+        {
+          HealthState: 'healthy',
+          memory: {
+            updated_timestamp: '2021-01-11T11:55:10.448Z',
+            used: {
+              value: 28802600960,
+              unit: 'B',
+            },
+            total: {
+              value: 147469647872,
+              unit: 'B',
+            },
+          },
+          cpu: {
+            updated_timestamp: '2021-01-11T11:55:10.517Z',
+            used: {
+              value: 3.8904761904758463,
+              unit: '',
+            },
+            total: {
+              value: 36,
+              unit: '',
+            },
+          },
+          sockets: {
+            updated_timestamp: '1970-01-01T00:00:00Z',
+            used: {
+              value: 0,
+              unit: '',
+            },
+            total: {
+              value: 0,
+              unit: '',
+            },
+          },
+          compute_nodes_memory: {
+            updated_timestamp: '1970-01-01T00:00:00Z',
+            used: {
+              value: 0,
+              unit: 'B',
+            },
+            total: {
+              value: 98489344000,
+              unit: 'B',
+            },
+          },
+          compute_nodes_cpu: {
+            updated_timestamp: '1970-01-01T00:00:00Z',
+            used: {
+              value: 0,
+              unit: '',
+            },
+            total: {
+              value: 24,
+              unit: '',
+            },
+          },
+          compute_nodes_sockets: {
+            updated_timestamp: '1970-01-01T00:00:00Z',
+            used: {
+              value: 0,
+              unit: '',
+            },
+            total: {
+              value: 0,
+              unit: '',
+            },
+          },
+          storage: {
+            updated_timestamp: '1970-01-01T00:00:00Z',
+            used: {
+              value: 0,
+              unit: 'B',
+            },
+            total: {
+              value: 0,
+              unit: 'B',
+            },
+          },
+          nodes: {
+            total: 9,
+            master: 3,
+            infra: 2,
+            compute: 4,
+          },
+          operating_system: '',
+          upgrade: {
+            updated_timestamp: '2021-01-11T11:55:10.206Z',
+          },
+          state: 'ready',
+          state_description: '',
+          open_shift_version: '4.6.8',
+          cloud_provider: 'aws',
+          region: 'us-east-1',
+          console_url: 'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
+          critical_alerts_firing: 0,
+          operators_condition_failing: 0,
+          subscription_cpu_total: 8,
+          subscription_socket_total: 4,
+        },
+      ],
+      cloud_provider_id: 'aws',
+      region_id: 'us-east-1',
     },
   },
+
 };
 
 const insightsData = {
@@ -235,7 +452,7 @@ const insightsData = {
   ],
 };
 
-const clusterDetailsNotManaged = {
+const OCPClusterDetails = {
   error: false,
   errorMessage: '',
   pending: false,
@@ -354,7 +571,26 @@ const clusterDetailsNotManaged = {
     },
     canEdit: true,
     canDelete: true,
-    subscription: subscriptionInfo,
+    subscription: {
+      id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
+      kind: 'Subscription',
+      href: '/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8',
+      plan: {
+        id: 'OCP',
+        kind: 'Plan',
+        href: '/api/accounts_mgmt/v1/plans/OCP',
+      },
+      registry_credential: {
+        id: '1EaZd2cDHH6ibIb1FFqav2Mles6',
+        kind: 'RegistryCredential',
+        href: '/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6',
+      },
+      cluster_id: '1IztzhAGrbjtKkMbiPewJanhTXk',
+      external_cluster_id: 'test-liza',
+      last_telemetry_date: '0001-01-01T00:00:00Z',
+      created_at: '2019-01-02T18:28:14.851121Z',
+      updated_at: '2019-01-02T18:28:14.851121Z',
+    },
     product: {
       id: 'ocp',
     },
@@ -578,7 +814,7 @@ const fixtures = {
   match,
   clusterDetails,
   insightsData,
-  clusterDetailsNotManaged,
+  OCPClusterDetails,
   cloudProviders,
   clusterIdentityProviders,
   organization,

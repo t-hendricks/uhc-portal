@@ -3,7 +3,7 @@
 exports[`<ClusterLogs /> should render 1`] = `
 <Fragment>
   <Connect(ClusterLogsToolbar)
-    externalClusterID="9f50940b-fba8-4c59-9c6c-d64284b2026d"
+    externalClusterID="bae5b227-2472-4e71-be4d-a18fc60bb48a"
     history={
       Object {
         "push": [MockFunction],

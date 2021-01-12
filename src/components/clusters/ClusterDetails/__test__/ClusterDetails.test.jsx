@@ -6,7 +6,7 @@ import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
 
 describe('<ClusterDetails />', () => {
-  describe('Cluster Details', () => {
+  describe('Cluster Details - OSD', () => {
     const functions = funcs();
     const wrapper = shallow(<ClusterDetails {...fixtures} {...functions} hasIssues />);
 
@@ -18,8 +18,55 @@ describe('<ClusterDetails />', () => {
       expect(functions.clearGlobalError).toBeCalledWith('clusterDetails');
     });
 
-    it('should call get grants for aws cluster', () => {
-      expect(functions.getGrants).toBeCalledWith(fixtures.clusterDetails.cluster.id);
+    describe('fetches all relevant resources', () => {
+      it('should call get grants for aws cluster', () => {
+        expect(functions.getGrants).toBeCalledWith(fixtures.clusterDetails.cluster.id);
+      });
+
+      it('should get IDPs', () => {
+        expect(functions.getClusterIdentityProviders)
+          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+      });
+
+      it('should get users', () => {
+        expect(functions.getUsers)
+          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+      });
+
+      it('should get alerts', () => {
+        expect(functions.getAlerts)
+          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+      });
+
+      it('should get nodes', () => {
+        expect(functions.getNodes)
+          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+      });
+
+      it('should get cluster operators', () => {
+        expect(functions.getClusterOperators)
+          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+      });
+
+      it('should get cluster routers', () => {
+        expect(functions.getClusterRouters)
+          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+      });
+
+      it('should get cluster addons', () => {
+        expect(functions.getClusterAddOns)
+          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+      });
+
+      it('should get machine pools', () => {
+        expect(functions.getMachinePools)
+          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+      });
+
+      it('should get schedules', () => {
+        expect(functions.getSchedules)
+          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+      });
     });
 
     it('should not consider issues when cluster is installing', () => {
