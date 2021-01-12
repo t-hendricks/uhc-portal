@@ -15,6 +15,7 @@ import CardBadge from '../../common/CardBadge';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import PageTitle from '../../../common/PageTitle';
 import { noQuotaTooltip, shouldRefetchQuota } from '../../../../common/helpers';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import AWSLogo from '../../../../styles/images/AWS.png';
 import GCPLogo from '../../../../styles/images/google-cloud-logo.svg';
 import './CloudProviderSelection.scss';
@@ -30,11 +31,15 @@ class CloudProviderSelection extends Component {
 
   render() {
     const {
-      hasOSDQuota, hasGcpQuota, hasAwsQuota, organization,
+      hasOSDQuota, hasGcpQuota, hasAwsQuota, organization, osdTrialFeature, product,
     } = this.props;
 
+    const selectedOSDTrial = product === normalizedProducts.OSDTrial;
+    const productSlug = product.toLowerCase();
+
     if (!organization.pending && (organization.fulfilled || organization.error)) {
-      if (!hasOSDQuota) {
+      const noTrialQuota = (selectedOSDTrial && (!hasOSDQuota || !osdTrialFeature));
+      if (noTrialQuota) {
         return (
           <Redirect to="/create" />
         );
@@ -58,7 +63,7 @@ class CloudProviderSelection extends Component {
     );
 
     const gcpCard = hasGcpQuota ? (
-      <Link to="/create/osd/gcp" className="infra-card create-cluster-card pf-c-card">
+      <Link to={`/create/${productSlug}/gcp`} className="infra-card create-cluster-card pf-c-card">
         {gcpCardBody}
       </Link>
     ) : (
@@ -77,7 +82,7 @@ class CloudProviderSelection extends Component {
     );
 
     const awsCard = hasAwsQuota ? (
-      <Link to="/create/osd/aws" className="infra-card create-cluster-card pf-c-card">
+      <Link to={`/create/${productSlug}/aws`} className="infra-card create-cluster-card pf-c-card">
         <CardBadge isHidden />
         {awsCardBody}
       </Link>
@@ -143,6 +148,12 @@ CloudProviderSelection.propTypes = {
   hasGcpQuota: PropTypes.bool.isRequired,
   hasAwsQuota: PropTypes.bool.isRequired,
   hasOSDQuota: PropTypes.bool.isRequired,
+  osdTrialFeature: PropTypes.bool,
+  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+};
+
+CloudProviderSelection.defaultProps = {
+  osdTrialFeature: false,
 };
 
 export default CloudProviderSelection;

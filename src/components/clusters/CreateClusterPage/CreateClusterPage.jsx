@@ -53,7 +53,13 @@ class CreateCluster extends React.Component {
 
     render() {
       const {
-        hasOSDQuota, organization, token, assistedInstallerFeature, activeTab,
+        hasOSDQuota,
+        hasOSDTrialQuota,
+        organization,
+        token,
+        assistedInstallerFeature,
+        osdTrialFeature,
+        activeTab,
       } = this.props;
 
       const activeTabIndex = hashToTabIndex[activeTab] || 0;
@@ -119,7 +125,11 @@ class CreateCluster extends React.Component {
           <PageSection variant="light" className="cluster-create-page">
             <Tabs isFilled activeKey={activeTabIndex} onSelect={this.handleTabClick}>
               <Tab eventKey={0} title={tabTitle(0)}>
-                <CloudTab hasOSDQuota={hasOSDQuota} />
+                <CloudTab
+                  hasOSDQuota={hasOSDQuota}
+                  hasOSDTrialQuota={hasOSDTrialQuota}
+                  osdTrialFeature={osdTrialFeature}
+                />
               </Tab>
               <Tab eventKey={1} title={tabTitle(1)}>
                 <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
@@ -143,6 +153,8 @@ class CreateCluster extends React.Component {
 
 CreateCluster.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
+  hasOSDTrialQuota: PropTypes.bool.isRequired,
+  osdTrialFeature: PropTypes.bool.isRequired,
   organization: PropTypes.shape({
     fulfilled: PropTypes.bool,
     error: PropTypes.bool,

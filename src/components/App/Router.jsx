@@ -127,7 +127,10 @@ function Router({ history }) {
               history={history}
               render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSD} />}
             />
-            <Route path="/create/osd" component={CloudProviderSelection} />
+            <TermsGuardedRoute path="/create/osdtrial/aws" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="aws" product={normalizedProducts.OSDTrial} />} history={history} />
+            <TermsGuardedRoute path="/create/osdtrial/gcp" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSDTrial} />} history={history} />
+            <Route path="/create/osdtrial" render={() => <CloudProviderSelection product={normalizedProducts.OSDTrial} />} />
+            <Route path="/create/osd" render={() => <CloudProviderSelection product={normalizedProducts.OSD} />} />
             <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />

@@ -43,7 +43,30 @@ const getColumns = () => ([
   },
 ]);
 
-const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true) => {
+const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, trialEnabled = false) => {
+  let contents = (
+    <Button component="a" href={links.OSD_LEARN_MORE} variant="secondary" rel="noopener noreferrer" target="_blank">
+      Learn more
+    </Button>
+  );
+  if (!hasQuota && trialEnabled) {
+    contents = (
+      <Link id="create-cluster" to="/create/osdtrial">
+        <Button>
+          Create cluster
+        </Button>
+      </Link>
+    );
+  } else if (hasQuota) {
+    contents = (
+      <Link id="create-cluster" to="/create/osd">
+        <Button>
+          Create cluster
+        </Button>
+      </Link>
+    );
+  }
+
   const offeringRow = {
     cells: [
       {
@@ -64,17 +87,7 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true) => {
       'Available on AWS and GCP',
       (
         <>
-          {hasQuota ? (
-            <Link id="create-cluster" to="/create/osd">
-              <Button>
-              Create cluster
-              </Button>
-            </Link>
-          ) : (
-            <Button component="a" href={links.OSD_LEARN_MORE} variant="secondary" rel="noopener noreferrer" target="_blank">
-              Learn more
-            </Button>
-          )}
+          {contents}
         </>
       ),
     ],
@@ -129,7 +142,7 @@ const activeSubscriptionsTable = () => {
   );
 };
 
-const managedServices = (hasQuota) => {
+const managedServices = (hasQuota, hasTrialQuota, osdTrialFeature) => {
   const [openRows, setOpenRows] = useState([]);
   const onCollapse = (e, rowKey, open) => {
     if (open) {
@@ -307,9 +320,10 @@ const managedServices = (hasQuota) => {
   },
   ];
 
+  const enableTrial = osdTrialFeature && hasTrialQuota;
   const rows = hasQuota
     ? defaultRows
-    : osdRow(true, openRows.includes(rowKeys.osd), hasQuota).concat(defaultRows);
+    : osdRow(true, openRows.includes(rowKeys.osd), hasQuota, enableTrial).concat(defaultRows);
 
   return (
     <Table
@@ -357,7 +371,7 @@ const runItYourself = () => {
   );
 };
 
-const CloudTab = ({ hasOSDQuota }) => (
+const CloudTab = ({ hasOSDQuota, hasOSDTrialQuota, osdTrialFeature }) => (
   <>
     {
     hasOSDQuota && (
@@ -391,7 +405,7 @@ const CloudTab = ({ hasOSDQuota }) => (
         </StackItem>
         <StackItem>
           Create clusters in the cloud using a managed service.
-          {managedServices(hasOSDQuota)}
+          {managedServices(hasOSDQuota, hasOSDTrialQuota, osdTrialFeature)}
         </StackItem>
       </Stack>
     </PageSection>
@@ -415,4 +429,6 @@ export default CloudTab;
 
 CloudTab.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
+  hasOSDTrialQuota: PropTypes.bool.isRequired,
+  osdTrialFeature: PropTypes.bool.isRequired,
 };

@@ -1,5 +1,436 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
+<Fragment>
+  <PageSection>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Title
+          headingLevel="h2"
+        >
+          Managed services
+        </Title>
+      </StackItem>
+      <StackItem>
+        Create clusters in the cloud using a managed service.
+        <Table
+          aria-label="Managed services table"
+          borders={true}
+          canSelectAll={true}
+          cells={
+            Array [
+              Object {
+                "cellFormatters": Array [
+                  [Function],
+                ],
+                "title": null,
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "title": "Offerings",
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "title": "Purchased through",
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "title": "",
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "title": "Get started",
+              },
+            ]
+          }
+          className=""
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isStickyHeader={false}
+          onCollapse={[Function]}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          rows={
+            Array [
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <React.Fragment>
+                      <img
+                        alt="OSD"
+                        className="partner-logo"
+                        src="test-file-stub"
+                      />
+                    </React.Fragment>,
+                  },
+                  <React.Fragment>
+                    <a
+                      href="https://www.openshift.com/products/dedicated/"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Red Hat OpenShift Dedicated
+                    </a>
+                  </React.Fragment>,
+                  "Red Hat",
+                  "Available on AWS and GCP",
+                  <React.Fragment>
+                    <Link
+                      id="create-cluster"
+                      to="/create/osdtrial"
+                    >
+                      <Button>
+                        Create cluster
+                      </Button>
+                    </Link>
+                  </React.Fragment>,
+                ],
+                "isOpen": false,
+              },
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <Stack
+                      hasGutter={true}
+                    >
+                      <StackItem>
+                        A complete OpenShift cluster provided as a fully-managed cloud service dedicated to a single customer. Reduce operational complexity and focus on building and scaling applications that add more value to your business.
+                        <br />
+                        Hosted on Amazon Web Services (AWS) and Google Cloud.
+                      </StackItem>
+                      <StackItem>
+                        <a
+                          href="https://www.openshift.com/products/dedicated/"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Learn more about Red Hat OpenShift Dedicated
+                           
+                          <ArrowRightIcon
+                            color="currentColor"
+                            noVerticalAlign={false}
+                            size="sm"
+                          />
+                        </a>
+                      </StackItem>
+                    </Stack>,
+                  },
+                ],
+                "fullWidth": true,
+                "parent": 0,
+              },
+              Object {
+                "cells": Array [
+                  <React.Fragment>
+                    <img
+                      alt="Microsoft"
+                      className="partner-logo"
+                      src="test-file-stub"
+                    />
+                  </React.Fragment>,
+                  <React.Fragment>
+                    <a
+                      href="https://azure.microsoft.com/en-us/services/openshift"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Azure Red Hat Openshift
+                    </a>
+                  </React.Fragment>,
+                  "Microsoft Azure",
+                  "Flexible hourly billing",
+                  <React.Fragment>
+                    <Button
+                      component="a"
+                      href="https://azure.microsoft.com/en-us/services/openshift"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      variant="secondary"
+                    >
+                      Try it on Azure
+                    </Button>
+                  </React.Fragment>,
+                ],
+                "isOpen": false,
+              },
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <Stack
+                      hasGutter={true}
+                    >
+                      <StackItem>
+                        A flexible, self-service deployment of OpenShift clusters provided as a fully-managed cloud service by Microsoft and Red Hat.
+                        <br />
+                        Hosted on Microsoft Azure.
+                      </StackItem>
+                      <StackItem>
+                        <a
+                          href="https://azure.microsoft.com/en-us/services/openshift"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Learn more about Azure Red Hat OpenShift
+                           
+                          <ArrowRightIcon
+                            color="currentColor"
+                            noVerticalAlign={false}
+                            size="sm"
+                          />
+                        </a>
+                      </StackItem>
+                    </Stack>,
+                  },
+                ],
+                "fullWidth": true,
+                "parent": 2,
+              },
+              Object {
+                "cells": Array [
+                  <React.Fragment>
+                    <img
+                      alt="IBM Cloud"
+                      className="partner-logo"
+                      src="test-file-stub"
+                    />
+                  </React.Fragment>,
+                  <React.Fragment>
+                    <a
+                      href="https://www.ibm.com/cloud/openshift"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Red Hat OpenShift on IBM Cloud
+                    </a>
+                  </React.Fragment>,
+                  "IBM",
+                  "Flexible hourly billing",
+                  <React.Fragment>
+                    <Button
+                      component="a"
+                      href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      variant="secondary"
+                    >
+                      Try it on IBM
+                    </Button>
+                  </React.Fragment>,
+                ],
+                "isOpen": false,
+              },
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <Stack
+                      hasGutter={true}
+                    >
+                      <StackItem>
+                        A preconfigured OpenShift environment provided as a fully-managed cloud service at enterprise scale.
+                        <br />
+                        Hosted on IBM Cloud.
+                      </StackItem>
+                      <StackItem>
+                        <a
+                          href="https://www.ibm.com/cloud/openshift"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Learn more about Red Hat OpenShift on IBM Cloud
+                           
+                          <ArrowRightIcon
+                            color="currentColor"
+                            noVerticalAlign={false}
+                            size="sm"
+                          />
+                        </a>
+                      </StackItem>
+                    </Stack>,
+                  },
+                ],
+                "fullWidth": true,
+                "parent": 4,
+              },
+              Object {
+                "cells": Array [
+                  <React.Fragment>
+                    <img
+                      alt="AWS"
+                      className="partner-logo"
+                      src="test-file-stub"
+                    />
+                  </React.Fragment>,
+                  <React.Fragment>
+                    <a
+                      href="https://www.openshift.com/products/amazon-openshift"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Red Hat OpenShift Service on AWS
+                    </a>
+                  </React.Fragment>,
+                  "Amazon Web Services",
+                  "Flexible hourly billing",
+                  <React.Fragment>
+                    <Button
+                      component="a"
+                      href="https://www.openshift.com/products/amazon-openshift"
+                      rel="noopener noreferrer"
+                      variant="secondary"
+                    >
+                      Learn more
+                    </Button>
+                  </React.Fragment>,
+                ],
+                "isOpen": false,
+              },
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <Stack
+                      hasGutter={true}
+                    >
+                      <StackItem>
+                        Build, deploy, and manage Kubernetes applications with Red Hat OpenShift running natively on AWS.
+                        <br />
+                        Hosted on AWS.
+                      </StackItem>
+                      <StackItem>
+                        <a
+                          href="https://www.openshift.com/products/amazon-openshift"
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Learn more about Red Hat OpenShift Service on AWS
+                           
+                          <ArrowRightIcon
+                            color="currentColor"
+                            noVerticalAlign={false}
+                            size="sm"
+                          />
+                        </a>
+                      </StackItem>
+                    </Stack>,
+                  },
+                ],
+                "fullWidth": true,
+                "parent": 6,
+              },
+            ]
+          }
+          selectVariant="checkbox"
+          variant={null}
+        >
+          <TableHeader />
+          <Component />
+        </Table>
+      </StackItem>
+    </Stack>
+  </PageSection>
+  <PageSection>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Title
+          className="font-weight-light"
+          headingLevel="h2"
+        >
+          Run it yourself
+        </Title>
+      </StackItem>
+      <StackItem>
+        Run OpenShift clusters on your own by installing from another cloud provider.
+        <Table
+          aria-label="Run it yourself"
+          borders={true}
+          canSelectAll={true}
+          cells={
+            Array [
+              "Cloud provider",
+              "Installation options",
+            ]
+          }
+          className="run-it-yourself"
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isStickyHeader={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          rows={
+            Array [
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/aws"
+                  >
+                    AWS
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/azure"
+                  >
+                    Azure
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/gcp"
+                  >
+                    Google Cloud
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/metal"
+                  >
+                    Platform agnostic
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+            ]
+          }
+          selectVariant="checkbox"
+          variant={null}
+        >
+          <TableHeader />
+          <Component />
+        </Table>
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;
+
 exports[`<CloudTab /> should render correctly with quota 1`] = `
 <Fragment>
   <PageSection
