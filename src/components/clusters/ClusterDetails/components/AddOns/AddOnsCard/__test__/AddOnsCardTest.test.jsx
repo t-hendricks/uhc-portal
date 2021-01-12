@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import { Dropdown } from '@patternfly/react-core';
 
 import AddOnsCard from '../AddOnsCard';
+import AddOnsConstants from '../../AddOnsConstants';
 
 describe('<AddOnsCard />', () => {
   let wrapper;
@@ -35,7 +36,7 @@ describe('<AddOnsCard />', () => {
           console: { url: 'https://dummy.devshift.org' },
         }}
         installedAddOn={{
-          state: 'ready',
+          state: AddOnsConstants.INSTALLATION_STATE.READY,
         }}
         hasQuota
         openModal={openModal}
@@ -54,8 +55,38 @@ describe('<AddOnsCard />', () => {
   });
 
   it('addon drop down menus items should be enabled if canEdit is true', () => {
-    const { dropdownItems } = wrapper.find(Dropdown).props();
-    dropdownItems.forEach(item => expect(item.props.isDisabled).toBeFalsy());
+    const dropdown = wrapper.find(Dropdown).props();
+    dropdown.dropdownItems.forEach(item => expect(item.props.isDisabled).toBeFalsy());
+  });
+
+  it('addon dropdown when cluster addon is installing', () => {
+    const installedAddOn = {
+      state: AddOnsConstants.INSTALLATION_STATE.INSTALLING,
+    };
+    wrapper.setProps({ installedAddOn }, () => {
+      expect(wrapper.find(Dropdown).props().toggle.props.isDisabled).toBeFalsy();
+
+      const dropdown = wrapper.find(Dropdown).props();
+      // configure dropdown item should be disabled
+      expect(dropdown.dropdownItems[0].props.isDisabled).toBeTruthy();
+      // delete dropdown item should be enabled
+      expect(dropdown.dropdownItems[1].props.isDisabled).toBeFalsy();
+    });
+  });
+
+  it('addon dropdown when cluster addon is installing', () => {
+    const installedAddOn = {
+      state: AddOnsConstants.INSTALLATION_STATE.FAILED,
+    };
+    wrapper.setProps({ installedAddOn }, () => {
+      expect(wrapper.find(Dropdown).props().toggle.props.isDisabled).toBeFalsy();
+
+      const dropdown = wrapper.find(Dropdown).props();
+      // configure dropdown item should be disabled
+      expect(dropdown.dropdownItems[0].props.isDisabled).toBeTruthy();
+      // delete dropdown item should be enabled
+      expect(dropdown.dropdownItems[1].props.isDisabled).toBeFalsy();
+    });
   });
 
   it('addon drop down should be disabled if canEdit is false', () => {
@@ -65,6 +96,20 @@ describe('<AddOnsCard />', () => {
     };
     wrapper.setProps({ cluster }, () => {
       expect(wrapper.find(Dropdown).props().toggle.props.isDisabled).toBeTruthy();
+    });
+  });
+
+  it('addon drop down menu items should be disabled if addon is deleting', () => {
+    const cluster = {
+      canEdit: true,
+      console: { url: 'https://dummy.devshift.org' },
+    };
+    const installedAddOn = {
+      state: AddOnsConstants.INSTALLATION_STATE.DELETING,
+    };
+    wrapper.setProps({ installedAddOn, cluster }, () => {
+      const dropdown = wrapper.find(Dropdown).props();
+      dropdown.dropdownItems.forEach(item => expect(item.props.isDisabled).toBeTruthy());
     });
   });
 });
