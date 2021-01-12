@@ -116,10 +116,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       },
       etcd_encryption: formData.etcd_encryption,
     };
+
     const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
 
-    // only parse node labels if the user added some
-    if (isEmpty(parsedLabels)) {
+    if (!isEmpty(parsedLabels)) {
       clusterRequest.nodes.compute_labels = parseReduxFormKeyValueList(formData.node_labels);
     }
     if (ownProps.product) {
