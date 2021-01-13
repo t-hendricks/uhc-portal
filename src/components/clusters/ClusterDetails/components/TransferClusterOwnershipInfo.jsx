@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Alert } from '@patternfly/react-core';
 
-import { subscriptionPlans, subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import { normalizedProducts, subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import ExternalLink from '../../../common/ExternalLink';
 
 
 function TransferClusterOwnershipInfo({ subscription = {} }) {
-  if (get(subscription, 'plan.id', false) !== subscriptionPlans.OCP || !subscription.released) {
+  if (get(subscription, 'plan.id', false) !== normalizedProducts.OCP || !subscription.released) {
     return null;
   }
 

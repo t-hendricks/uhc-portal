@@ -1,3 +1,5 @@
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
+
 const tncUrl = 'https://www.redhat.com/wapps/tnc/ackrequired?site=ocm&event=register';
 
 const selfTermsReview = jest.fn();
@@ -13,7 +15,7 @@ const selfTermsReviewResult = {
 
 const subscription = {
   id: '1234567890',
-  plan: { id: 'MOA' },
+  plan: { id: normalizedProducts.ROSA },
   status: 'Active',
 };
 

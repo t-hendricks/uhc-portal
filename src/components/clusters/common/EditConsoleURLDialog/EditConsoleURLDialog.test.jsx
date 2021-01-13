@@ -23,6 +23,7 @@ describe('<EditConsoleURLDialog />', () => {
       submit={submit}
       resetResponse={resetResponse}
       clusterID="some-id"
+      subscriptionID="some-sub-id"
       consoleURL="http://www.example.com"
       editClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
     />);
@@ -42,7 +43,7 @@ describe('<EditConsoleURLDialog />', () => {
     const input = wrapper.find('ForwardRef[type="text"]');
     input.prop('onChange')('http://www.example.com');
     wrapper.find('Modal').at(0).prop('onPrimaryClick')();
-    expect(submit).toBeCalledWith('some-id', 'http://www.example.com');
+    expect(submit).toBeCalledWith('some-id', 'some-sub-id', 'http://www.example.com');
   });
 
   it('renders correctly when an erorr occurs', () => {

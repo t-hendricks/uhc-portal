@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import ReduxFormKeyValueList from './ReduxFormKeyValueList';
 
-class MockFields extends Array {
+export default class MockFields extends Array {
   constructor(...args) {
     super(...args);
     this.push = jest.fn();

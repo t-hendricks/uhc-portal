@@ -1,5 +1,6 @@
 import { userActions } from './userActions';
 import { accountsService } from '../../services';
+import { normalizedProducts } from '../../common/subscriptionTypes';
 
 jest.mock('../../services/accountsService.js');
 
@@ -58,6 +59,8 @@ describe('clustersActions', () => {
         byoc: 'rhinfra',
         availability_zone_type: 'single',
         resource_name: 'gp.small',
+        product: normalizedProducts.OSD,
+        cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
       expect(clusterQuota.aws.rhInfra.singleAz['gp.small']).toEqual(1);
@@ -72,6 +75,8 @@ describe('clustersActions', () => {
           byoc: 'rhinfra',
           availability_zone_type: 'single',
           resource_name: 'gp.small',
+          product: normalizedProducts.OSD,
+          cost: 1,
         },
         {
           cloud_provider: 'any',
@@ -79,7 +84,8 @@ describe('clustersActions', () => {
           resource_type: 'cluster',
           byoc: 'byoc',
           availability_zone_type: 'single',
-          product: 'OSD',
+          product: normalizedProducts.OSD,
+          cost: 1,
         },
       ];
       userActions.processClusterQuota(clusterQuota, item, resources);
@@ -96,6 +102,7 @@ describe('clustersActions', () => {
         byoc: 'rhinfra',
         availability_zone_type: 'single',
         resource_name: 'gp.small',
+        product: normalizedProducts.OSD,
         cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
@@ -113,6 +120,7 @@ describe('clustersActions', () => {
         byoc: 'any',
         availability_zone_type: 'single',
         resource_name: 'gp.small',
+        product: normalizedProducts.OSD,
         cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
@@ -130,6 +138,8 @@ describe('clustersActions', () => {
         byoc: 'rhinfra',
         availability_zone_type: 'any',
         resource_name: 'gp.small',
+        product: normalizedProducts.OSD,
+        cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
       expect(clusterQuota.aws.rhInfra.singleAz['gp.small']).toEqual(1);
@@ -154,6 +164,7 @@ describe('clustersActions', () => {
         cloud_provider: 'aws',
         byoc: 'rhinfra',
         resource_name: 'gp.small',
+        product: normalizedProducts.OSD,
         cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
@@ -166,6 +177,7 @@ describe('clustersActions', () => {
           cloud_provider: 'aws',
           byoc: 'rhinfra',
           resource_name: 'gp.small',
+          product: normalizedProducts.OSD,
           cost: 1,
         },
         {
@@ -174,7 +186,7 @@ describe('clustersActions', () => {
           resource_type: 'compute.node',
           byoc: 'byoc',
           availability_zone_type: 'any',
-          product: 'OSD',
+          product: normalizedProducts.OSD,
           cost: 1,
         },
       ];
@@ -188,6 +200,8 @@ describe('clustersActions', () => {
         cloud_provider: 'any',
         byoc: 'rhinfra',
         resource_name: 'gp.small',
+        product: normalizedProducts.OSD,
+        cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
       expect(nodesQuota.aws.rhInfra['gp.small'].available).toEqual(1);
@@ -199,6 +213,8 @@ describe('clustersActions', () => {
         cloud_provider: 'aws',
         byoc: 'any',
         resource_name: 'gp.small',
+        product: normalizedProducts.OSD,
+        cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
       expect(nodesQuota.aws.byoc['gp.small'].available).toEqual(1);

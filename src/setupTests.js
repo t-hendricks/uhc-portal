@@ -11,6 +11,7 @@ const testsExcludedFromWarningFail = [
   'Router.test.jsx',
   'Insights.test.jsx',
   'ReduxFormKeyValueList.test',
+  'ReduxFormTaints.test',
   // TODO: Fix the warnings in this test
   'UpdateGraph.test.jsx',
 ];

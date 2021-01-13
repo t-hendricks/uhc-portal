@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Form } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
+import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
 
 class ArchiveClusterDialog extends Component {
@@ -19,7 +20,7 @@ class ArchiveClusterDialog extends Component {
 
   render() {
     const {
-      isOpen, closeModal, submit, archiveClusterResponse, resetResponse, subscriptionID, name,
+      closeModal, submit, archiveClusterResponse, resetResponse, subscriptionID, name,
     } = this.props;
 
     const cancelEdit = () => {
@@ -31,7 +32,7 @@ class ArchiveClusterDialog extends Component {
       <ErrorBox message="Error archiving cluster" response={archiveClusterResponse} />
     ) : null;
 
-    return isOpen && (
+    return (
       <Modal
         title="Archive cluster"
         data-test-id="archive-cluster-dialog"
@@ -64,7 +65,6 @@ class ArchiveClusterDialog extends Component {
 }
 
 ArchiveClusterDialog.propTypes = {
-  isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
@@ -75,8 +75,9 @@ ArchiveClusterDialog.propTypes = {
 };
 
 ArchiveClusterDialog.defaultProps = {
-  isOpen: false,
   archiveClusterResponse: {},
 };
+
+ArchiveClusterDialog.modalName = modals.ARCHIVE_CLUSTER;
 
 export default ArchiveClusterDialog;

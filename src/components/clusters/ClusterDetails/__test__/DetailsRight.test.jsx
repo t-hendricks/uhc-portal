@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import DetailsRight from '../components/Overview/DetailsRight/DetailsRight';
 import fixtures from './ClusterDetails.fixtures';
 import { getClusterStateAndDescription } from '../../common/clusterStates';
+import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 
 describe('<DetailsRight />', () => {
   let { clusterDetails } = fixtures;
@@ -43,6 +44,20 @@ describe('<DetailsRight />', () => {
       );
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('ClusterStateIcon').length).toEqual(0);
+    });
+
+    it('should not render vcpu and memory for disconnected clusters', () => {
+      const wrapper = shallow(
+        <DetailsRight
+          cluster={{
+            ...clusterDetails.cluster,
+            subscription: { status: subscriptionStatuses.DISCONNECTED },
+            managed: false,
+            nodes: null,
+          }}
+        />,
+      );
+      expect(wrapper).toMatchSnapshot();
     });
   });
 });

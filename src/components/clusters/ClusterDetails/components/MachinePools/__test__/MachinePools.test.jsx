@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import MachinePools from './MachinePools';
+import MachinePools from '../MachinePools';
 
 const baseProps = {
   cluster: {

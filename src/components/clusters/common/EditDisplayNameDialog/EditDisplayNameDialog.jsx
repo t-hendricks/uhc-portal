@@ -5,26 +5,19 @@ import { Form, TextInput, FormGroup } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
+import modals from '../../../common/Modal/modals';
 import { checkClusterDisplayName } from '../../../../common/validators';
 
 
 class EditDisplayNameDialog extends Component {
   state = {
-    validFor: null,
     currentValue: '',
   }
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { validFor } = this.state;
-    if (nextProps.clusterID !== validFor) {
-      this.setState((state, props) => ({
-        validFor: nextProps.clusterID,
-        currentValue: props.displayName,
-      }));
-    }
+  componentDidMount() {
+    const { displayName } = this.props;
+    this.setState({ currentValue: displayName });
   }
-
 
   componentDidUpdate() {
     const {
@@ -45,7 +38,7 @@ class EditDisplayNameDialog extends Component {
 
   render() {
     const {
-      isOpen, closeModal, submit, editClusterResponse, resetResponse, clusterID, subscriptionID,
+      closeModal, submit, editClusterResponse, resetResponse, subscriptionID,
     } = this.props;
     const { currentValue } = this.state;
 
@@ -63,11 +56,11 @@ class EditDisplayNameDialog extends Component {
     const validationMessage = checkClusterDisplayName(currentValue);
     const handleSubmit = () => {
       if (!validationMessage) {
-        submit(clusterID, subscriptionID, currentValue);
+        submit(subscriptionID, currentValue);
       }
     };
 
-    return isOpen && (
+    return (
 
       <Modal
         title="Edit display name"
@@ -105,20 +98,19 @@ class EditDisplayNameDialog extends Component {
 }
 
 EditDisplayNameDialog.propTypes = {
-  isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
   resetResponse: PropTypes.func.isRequired,
   editClusterResponse: PropTypes.object,
   displayName: PropTypes.string,
-  clusterID: PropTypes.string,
   subscriptionID: PropTypes.string,
 };
 
 EditDisplayNameDialog.defaultProps = {
-  isOpen: false,
   editClusterResponse: {},
 };
+
+EditDisplayNameDialog.modalName = modals.EDIT_DISPLAY_NAME;
 
 export default EditDisplayNameDialog;

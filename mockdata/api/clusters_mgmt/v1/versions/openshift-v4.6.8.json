@@ -1,0 +1,14 @@
+{
+  "kind": "Version",
+  "id": "openshift-v4.6.8",
+  "href": "/api/clusters_mgmt/v1/versions/openshift-v4.6.8",
+  "raw_id": "4.6.8",
+  "enabled": true,
+  "default": true,
+  "channel_group": "stable",
+  "available_upgrades": [
+    "4.6.9"
+  ],
+  "rosa_enabled": true,
+  "moa_enabled": true
+}

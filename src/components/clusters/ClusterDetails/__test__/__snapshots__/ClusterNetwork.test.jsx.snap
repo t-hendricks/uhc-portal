@@ -34,6 +34,14 @@ exports[`<ClusterNetwork /> should render 1`] = `
             10.128.0.0/14
           </dd>
         </Flex>
+        <Flex>
+          <dt>
+            Host prefix: 
+          </dt>
+          <dd>
+            23
+          </dd>
+        </Flex>
       </dl>
     </DescriptionListDescription>
   </DescriptionListGroup>

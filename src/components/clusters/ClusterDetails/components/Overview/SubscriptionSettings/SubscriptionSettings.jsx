@@ -25,6 +25,7 @@ import {
   subscriptionSystemUnits,
   subscriptionStatuses,
   subscriptionSettings,
+  normalizedProducts,
 } from '../../../../../../common/subscriptionTypes';
 
 function SubscriptionSettings({
@@ -32,7 +33,7 @@ function SubscriptionSettings({
   canEdit = false, canSubscribeOCP = false,
 }) {
   const planID = get(subscription, 'plan.id');
-  if (planID !== 'OCP') {
+  if (planID !== normalizedProducts.OCP) {
     return null;
   }
 

@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import get from 'lodash/get';
 import EditCCSCredentialsDialog from './EditCCSCredentialsDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
-import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import { clearClusterResponse, editCluster } from '../../../../redux/actions/clustersActions';
 
 
 const mapStateToProps = (state) => {
   const cluster = state.modal.data;
   return ({
-    isOpen: shouldShowModal(state, 'edit-ccs-credentials'),
     editClusterResponse: state.clusters.editedCluster,
     clusterID: cluster.id,
     awsAccountID: get(cluster, 'aws.account_id', ''),

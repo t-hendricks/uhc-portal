@@ -5,10 +5,11 @@ import {
   FormGroup,
   GridItem,
   ExpandableSection,
+  Title,
 } from '@patternfly/react-core';
 
 import MachineTypeSelection from './MachineTypeSelection';
-import { ReduxFormKeyValueList } from '../../../../../common/ReduxFormComponents';
+import { ReduxFormKeyValueList, ReudxFormTaints } from '../../../../../common/ReduxFormComponents';
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
 import NodeCountInput from '../../../../common/NodeCountInput';
@@ -31,6 +32,8 @@ function ScaleSection({
   isMachinePool = false,
   nodeLabelsGridSpan = 4,
 }) {
+  const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
+
   return (
     <>
       {/* Instance type */}
@@ -78,10 +81,22 @@ function ScaleSection({
       <GridItem span={8} />
       <GridItem span={nodeLabelsGridSpan}>
         <ExpandableSection
-          toggleTextCollapsed="Edit node labels"
-          toggleTextExpanded="Edit node labels"
+          toggleTextCollapsed={expandableSectionTitle}
+          toggleTextExpanded={expandableSectionTitle}
         >
+          <GridItem span={4} className="space-bottom-md">
+            <Title headingLevel="h3">Node labels</Title>
+          </GridItem>
           <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
+          {isMachinePool
+          && (
+            <>
+              <GridItem span={4} className="space-bottom-md space-top-lg">
+                <Title headingLevel="h3">Taints</Title>
+              </GridItem>
+              <FieldArray name="taints" component={ReudxFormTaints} />
+            </>
+          )}
         </ExpandableSection>
       </GridItem>
       <GridItem span={12 - nodeLabelsGridSpan} />

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Alert, AlertActionLink } from '@patternfly/react-core';
 
-import { subscriptionPlans, subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import { normalizedProducts, subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import getTermsAppLink from '../../../../../common/getTermsAppLink';
 
 class TermsAlert extends Component {
@@ -35,10 +35,9 @@ class TermsAlert extends Component {
     const status = get(subscription, 'status');
 
     return status !== subscriptionStatuses.DEPROVISIONED && (
-      planID === subscriptionPlans.OSD
-      || planID === subscriptionPlans.MOA
-      || planID === subscriptionPlans.RHMI
-      || planID === subscriptionPlans.ROSA
+      planID === normalizedProducts.OSD
+      || planID === normalizedProducts.RHMI
+      || planID === normalizedProducts.ROSA
     );
   }
 

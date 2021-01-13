@@ -280,36 +280,10 @@ class InsightsRuleDetails extends Component {
               <div>
                 <TabContent
                   eventKey={0}
-                  id="reasonTabContent"
-                  ref={this.reasonTabRef}
-                  aria-label="Reason"
-                  ouiaId="reasonTabContent"
-                >
-                  <Card>
-                    <CardBody>
-                      {
-                        reasonInfoExist && (
-                          <Markdown
-                            template={reportDetails.report.reason}
-                            definitions={reportDetails.report.extra_data}
-                          />
-                        )
-                      }
-                      {
-                        !reasonInfoExist && (
-                          <EmptyRemediationInfo title="reason" />
-                        )
-                      }
-                    </CardBody>
-                  </Card>
-                </TabContent>
-                <TabContent
-                  eventKey={1}
                   id="resolutionTabContent"
                   ref={this.resolutionTabRef}
                   aria-label="How to remediate"
                   ouiaId="resolutionTabContent"
-                  hidden
                 >
                   <Card>
                     <CardBody>
@@ -324,6 +298,32 @@ class InsightsRuleDetails extends Component {
                       {
                         !resolutionInfoExist && (
                           <EmptyRemediationInfo title="resolution" />
+                        )
+                      }
+                    </CardBody>
+                  </Card>
+                </TabContent>
+                <TabContent
+                  eventKey={1}
+                  id="reasonTabContent"
+                  ref={this.reasonTabRef}
+                  aria-label="Reason"
+                  ouiaId="reasonTabContent"
+                  hidden
+                >
+                  <Card>
+                    <CardBody>
+                      {
+                        reasonInfoExist && (
+                          <Markdown
+                            template={reportDetails.report.reason}
+                            definitions={reportDetails.report.extra_data}
+                          />
+                        )
+                      }
+                      {
+                        !reasonInfoExist && (
+                          <EmptyRemediationInfo title="reason" />
                         )
                       }
                     </CardBody>

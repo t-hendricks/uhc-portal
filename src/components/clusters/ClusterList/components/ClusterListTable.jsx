@@ -2,8 +2,6 @@ import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  Tooltip,
-  TooltipPosition,
   Popover,
   PopoverPosition,
   Button,
@@ -55,12 +53,11 @@ function ClusterListTable(props) {
 
   const clusterRow = (cluster) => {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
-    const name = getClusterName(cluster);
 
     const clusterName = (
-      <Tooltip content={`cluster name: ${cluster.name}`} position={TooltipPosition.right}>
-        <Link to={`/details/${cluster.id}`} onClick={() => setClusterDetails(cluster)}>{name.trim() !== '' ? name : cluster.name}</Link>
-      </Tooltip>
+      <Link to={`/details/${cluster.id}`} onClick={() => setClusterDetails(cluster)}>
+        {getClusterName(cluster)}
+      </Link>
     );
 
     const clusterState = getClusterStateAndDescription(cluster);
@@ -85,7 +82,7 @@ function ClusterListTable(props) {
                   {' '}
                   for further assistance.
                 </>
-                )}
+              )}
               aria-label="Status: Error"
             >
               <Button

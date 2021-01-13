@@ -45,13 +45,13 @@ class ClustersWithIssuesTableCard extends React.Component {
       return (
         <Card className="clusters-overview-card">
           <CardTitle>
-              Clusters with issues
+            Clusters with issues
           </CardTitle>
           <CardBody>
             <EmptyState>
               <EmptyStateIcon icon={CheckCircleIcon} color={global_success_color_100.value} />
               <EmptyStateBody>
-                  No issues detected
+                No issues detected
               </EmptyStateBody>
             </EmptyState>
           </CardBody>
@@ -60,7 +60,6 @@ class ClustersWithIssuesTableCard extends React.Component {
     }
 
     const clusterWithIssuesRow = (cluster) => {
-      const name = getClusterName(cluster);
       const issuesCount = (
         <span>
           {getIssuesCount(cluster)}
@@ -68,7 +67,9 @@ class ClustersWithIssuesTableCard extends React.Component {
       );
 
       const clusterName = (
-        <Link to={`/details/${cluster.id}`} onClick={() => setClusterDetails(cluster)}>{name.trim() !== '' ? name : cluster.name}</Link>
+        <Link to={`/details/${cluster.id}`} onClick={() => setClusterDetails(cluster)}>
+          {getClusterName(cluster)}
+        </Link>
       );
 
       return {

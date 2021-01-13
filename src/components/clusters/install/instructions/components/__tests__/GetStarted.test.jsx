@@ -6,6 +6,7 @@ import {
 } from '@patternfly/react-core';
 
 import GetStarted from '../GetStarted';
+import ExternalLink from '../../../../../common/ExternalLink';
 
 describe('<GetStarted />', () => {
   describe('GetStarted w/ customizations', () => {
@@ -24,7 +25,7 @@ describe('<GetStarted />', () => {
       expect(copybox.props().isReadOnly).toEqual(true);
     });
     it('should have a customizations link', () => {
-      const link = wrapper.find('.customizations');
+      const link = wrapper.find(ExternalLink);
       expect(link.length).toEqual(1);
     });
   });

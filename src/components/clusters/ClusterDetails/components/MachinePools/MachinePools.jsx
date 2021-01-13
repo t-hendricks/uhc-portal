@@ -14,6 +14,7 @@ import {
   Skeleton,
 } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../../common/ErrorBox';
+import modals from '../../../../common/Modal/modals';
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import './MachinePools.scss';
 
@@ -107,7 +108,7 @@ class MachinePools extends React.Component {
       deleteMachinePool(rowData.machinePool.id);
     };
 
-    const onClickScaleActions = (_, __, rowData) => openModal('edit-node-count', {
+    const onClickScaleActions = (_, __, rowData) => openModal(modals.EDIT_NODE_COUNT, {
       machinePool: rowData.machinePool,
       isDefaultMachinePool: rowData.machinePool.id === 'Default',
       cluster,

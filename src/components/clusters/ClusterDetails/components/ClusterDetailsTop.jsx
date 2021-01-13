@@ -8,6 +8,7 @@ import {
 } from '@patternfly/react-core';
 
 import clusterStates from '../../common/clusterStates';
+import modals from '../../../common/Modal/modals';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../../common/ErrorTriangle';
@@ -83,7 +84,7 @@ function ClusterDetailsTop(props) {
       </Button>
     );
   } else if (cluster.canEdit) {
-    launchConsole = (<Button variant="primary" onClick={() => openModal('edit-console-url', cluster)}>Add console URL</Button>);
+    launchConsole = (<Button variant="primary" onClick={() => openModal(modals.EDIT_CONSOLE_URL, cluster)}>Add console URL</Button>);
   }
 
   const actions = (
@@ -141,7 +142,7 @@ function ClusterDetailsTop(props) {
             ) : (
               <Button
                 variant="secondary"
-                onClick={() => openModal('unarchive-cluster', {
+                onClick={() => openModal(modals.UNARCHIVE_CLUSTER, {
                   subscriptionID: cluster.subscription ? cluster.subscription.id : '',
                   name: clusterName,
                 })}

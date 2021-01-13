@@ -2,7 +2,7 @@
 
 exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
 <Modal
-  isPrimaryDisabled={true}
+  isPrimaryDisabled={false}
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}
@@ -15,7 +15,6 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
   >
     <FormGroup
       fieldId="edit-console-url-input"
-      helperTextInvalid="Cluster console URL should not be empty"
       label="Web console URL"
       validated="default"
     >
@@ -26,7 +25,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
         placeholder="https://console-openshift-console.apps.mycluster.example.com/"
         type="text"
         validated="default"
-        value=""
+        value="http://www.example.com"
       />
     </FormGroup>
   </Form>

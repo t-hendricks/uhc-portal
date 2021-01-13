@@ -80,7 +80,7 @@ function UpgradesRecuder(state = initialState, action) {
       }
       case REJECTED_ACTION(GET_VERSION_INFO):
         draft.versionInfo = {
-          ...initialState,
+          ...initialState.versionInfo,
           ...getErrorState(action),
         };
         break;

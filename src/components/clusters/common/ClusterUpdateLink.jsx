@@ -4,6 +4,7 @@ import { Button, Popover } from '@patternfly/react-core';
 import { InfoCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
 import links from '../../../common/installLinks';
 import getClusterName from '../../../common/getClusterName';
+import modals from '../../common/Modal/modals';
 
 
 const ClusterUpdateLink = ({
@@ -36,7 +37,7 @@ const ClusterUpdateLink = ({
       <Button
         className="cluster-update-link"
         variant="link"
-        onClick={() => openModal('upgrade-wizard',
+        onClick={() => openModal(modals.UPGRADE_WIZARD,
           {
             clusterName: getClusterName(cluster),
             clusterVersion: cluster.openshift_version,

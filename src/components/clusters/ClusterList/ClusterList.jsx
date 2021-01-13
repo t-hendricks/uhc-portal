@@ -43,18 +43,7 @@ import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
 import Unavailable from '../../common/Unavailable';
-
-import ScaleClusterDialog from '../common/ScaleClusterDialog';
-import EditNodeCountModal from '../common/EditNodeCountModal';
-import ArchiveClusterDialog from '../common/ArchiveClusterDialog';
-import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
-import EditDisplayNameDialog from '../common/EditDisplayNameDialog';
-import EditConsoleURLDialog from '../common/EditConsoleURLDialog';
-import EditSubscriptionSettingsDialog from '../common/EditSubscriptionSettingsDialog';
-import TransferClusterOwnershipDialog from '../common/TransferClusterOwnershipDialog';
-import DeleteClusterDialog from '../common/DeleteClusterDialog';
-import UpgradeWizard from '../common/Upgrades/UpgradeWizard';
-import EditCCSCredentialsDialog from '../common/EditCCSCredentialsDialog';
+import CommonClusterModals from '../common/CommonClusterModals';
 
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
@@ -275,22 +264,7 @@ class ClusterList extends Component {
                 variant="bottom"
                 isDisabled={isPendingNoData}
               />
-              <EditDisplayNameDialog onClose={invalidateClusters} />
-              <EditConsoleURLDialog onClose={invalidateClusters} />
-              <TransferClusterOwnershipDialog onClose={invalidateClusters} />
-              <EditSubscriptionSettingsDialog onClose={invalidateClusters} isDialog />
-              <ScaleClusterDialog onClose={invalidateClusters} />
-              <EditNodeCountModal onClose={invalidateClusters} />
-              <ArchiveClusterDialog onClose={invalidateClusters} />
-              <UnarchiveClusterDialog onClose={invalidateClusters} />
-              <EditCCSCredentialsDialog onClose={invalidateClusters} />
-              <UpgradeWizard />
-              <DeleteClusterDialog onClose={(shouldRefresh) => {
-                if (shouldRefresh) {
-                  invalidateClusters();
-                }
-              }}
-              />
+              <CommonClusterModals onClose={invalidateClusters} />
             </div>
           </Card>
         </PageSection>

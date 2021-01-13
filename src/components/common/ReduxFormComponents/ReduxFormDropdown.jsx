@@ -22,10 +22,33 @@ class DropDownSelect extends React.Component {
       meta: { error, touched },
       input,
       disabled,
+      isFormGroup,
       ...extraProps
     } = this.props;
     const { value } = this.state;
-    return (
+
+    const formSelect = (
+      <FormSelect
+        id={input.name}
+        name={input.name}
+        value={value}
+        {...input}
+        onChange={this.onChange}
+        isDisabled={disabled}
+        {...extraProps}
+      >
+        {options.map(option => (
+          <FormSelectOption
+            key={option.value}
+            value={option.value}
+            label={option.name}
+          />
+        ))}
+      </FormSelect>
+    );
+
+
+    return isFormGroup ? (
       <FormGroup
         fieldId={input.name}
         label={label}
@@ -33,25 +56,10 @@ class DropDownSelect extends React.Component {
         helperText={helpText}
         helperTextInvalid={touched && error ? `${helpText} ${error}` : ''}
       >
-        <FormSelect
-          id={input.name}
-          name={input.name}
-          value={value}
-          {...input}
-          onChange={this.onChange}
-          isDisabled={disabled}
-          {...extraProps}
-        >
-          {options.map(option => (
-            <FormSelectOption
-              key={option.value}
-              value={option.value}
-              label={option.name}
-            />
-          ))}
-        </FormSelect>
+        {formSelect}
       </FormGroup>
-    );
+    )
+      : formSelect;
   }
 }
 
@@ -64,13 +72,18 @@ DropDownSelect.propTypes = {
     onChange: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   helpText: PropTypes.string,
   meta: PropTypes.shape({
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     touched: PropTypes.bool,
   }).isRequired,
   disabled: PropTypes.bool,
+  isFormGroup: PropTypes.bool,
+};
+
+DropDownSelect.defaultProps = {
+  isFormGroup: true,
 };
 
 export default DropDownSelect;

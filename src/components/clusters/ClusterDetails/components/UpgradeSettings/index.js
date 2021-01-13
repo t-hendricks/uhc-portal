@@ -4,6 +4,7 @@ import { reduxForm, formValueSelector } from 'redux-form';
 import UpgradeSettingsTab from './UpgradeSettingsTab';
 import {
   getSchedules, postSchedule, editSchedule, deleteSchedule, replaceSchedule,
+  clearPostedUpgradeScheduleResponse, clearDeleteScheduleResponse,
 } from '../../../common/Upgrades/clusterUpgradeActions';
 import { editCluster } from '../../../../../redux/actions/clustersActions';
 import { openModal } from '../../../../common/Modal/ModalActions';
@@ -37,6 +38,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  clearResponses: () => {
+    dispatch(clearPostedUpgradeScheduleResponse());
+    dispatch(clearDeleteScheduleResponse());
+  },
   openModal: (modal, data) => dispatch(openModal(modal, data)),
   getSchedules: clusterID => dispatch(getSchedules(clusterID)),
   onSubmit: (formData, clusterID, existingSchedules, existingGracePeriod) => {

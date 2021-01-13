@@ -11,7 +11,7 @@ import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
 
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
-import { shouldRefetchQuota } from '../../../../common/helpers';
+import modals from '../../../common/Modal/modals';
 
 class EditNodeCountModal extends Component {
   componentDidMount() {
@@ -20,35 +20,29 @@ class EditNodeCountModal extends Component {
       getOrganizationAndQuota,
       machineTypes,
       getMachineTypes,
+      machinePoolsList,
+      getMachinePools,
+      clusterID,
     } = this.props;
 
     if (!machineTypes.fulfilled && !machineTypes.pending) {
       getMachineTypes();
     }
-    if (shouldRefetchQuota(organization)) {
+    if (!organization.pending) {
       getOrganizationAndQuota();
+    }
+    if (!machinePoolsList.pending) {
+      getMachinePools(clusterID);
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const {
       getOrganizationAndQuota,
       onClose,
-      machinePoolsList,
-      getMachinePools,
-      clusterID,
-      organization,
       editNodeCountResponse,
-      isOpen,
     } = this.props;
 
-    if (!prevProps.isOpen && isOpen && clusterID && !machinePoolsList.pending) {
-      getMachinePools(clusterID);
-    }
-
-    if (!prevProps.isOpen && isOpen && clusterID && !organization.pending) {
-      getOrganizationAndQuota();
-    }
 
     if (editNodeCountResponse.fulfilled
         && !editNodeCountResponse.pending
@@ -98,7 +92,6 @@ class EditNodeCountModal extends Component {
 
   render() {
     const {
-      isOpen,
       machinePoolsList,
       handleSubmit,
       isMultiAz,
@@ -142,7 +135,7 @@ class EditNodeCountModal extends Component {
      || organization.pending
      || machinePoolsList.pending;
 
-    return isOpen && (
+    return (
       <Modal
         className="edit-cluster-modal edit-cluster-modal-rhinfra"
         title="Edit node count"
@@ -196,7 +189,6 @@ class EditNodeCountModal extends Component {
 }
 
 EditNodeCountModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   resetScaleDefaultMachinePoolResponse: PropTypes.func.isRequired,
@@ -230,5 +222,7 @@ EditNodeCountModal.propTypes = {
 EditNodeCountModal.defaultProps = {
   editNodeCountResponse: {},
 };
+
+EditNodeCountModal.modalName = modals.EDIT_NODE_COUNT;
 
 export default EditNodeCountModal;

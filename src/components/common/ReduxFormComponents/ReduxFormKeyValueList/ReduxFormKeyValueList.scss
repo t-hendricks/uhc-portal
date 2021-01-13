@@ -1,16 +1,19 @@
 .reduxFormKeyValueList {
+  .reduxFormKeyValueList-title,
   .reduxFormKeyValueList-key,
   .reduxFormKeyValueList-value,
-  .reduxFormKeyValueList-title {
-    width: 33%;
+  .reduxFormKeyValueList-extraField  {
+    width: 28%;
+    float: left;
   }
 
   .reduxFormKeyValueList-title {
     float: left;
   }
 
+  .reduxFormKeyValueList-title-value,
   .reduxFormKeyValueList-value,
-  .reduxFormKeyValueList-title-value {
+  .reduxFormKeyValueList-extraField {
     margin-left: 3%;
   }
 

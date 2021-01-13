@@ -2,8 +2,9 @@ import get from 'lodash/get';
 import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
-import { subscriptionStatuses, subscriptionPlans } from '../../../../common/subscriptionTypes';
+import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
+import modals from '../../../common/Modal/modals';
 
 /**
  * This function is used by PF tables to determine which dropdown items are displayed
@@ -61,7 +62,7 @@ function actionResolver(
     };
     const managedEditProps = {
       ...scaleClusterBaseProps,
-      onClick: () => openModal('edit-cluster', cluster),
+      onClick: () => openModal(modals.SCALE_CLUSTER, cluster),
     };
     const disabledManagedEditProps = {
       ...scaleClusterBaseProps,
@@ -79,7 +80,7 @@ function actionResolver(
     };
     const managedEditNodeCountProps = {
       ...editNodeCountBaseProps,
-      onClick: () => openModal('edit-node-count', { cluster, isDefaultMachinePool: true }),
+      onClick: () => openModal(modals.EDIT_NODE_COUNT, { cluster, isDefaultMachinePool: true }),
     };
     const disabledManagedEditProps = {
       ...editNodeCountBaseProps,
@@ -97,7 +98,7 @@ function actionResolver(
     };
     const managedEditProps = {
       ...editCCSCredentialsBaseProps,
-      onClick: () => openModal('edit-ccs-credentials', cluster),
+      onClick: () => openModal(modals.EDIT_CCS_CREDENTIALS, cluster),
     };
     const disabledManagedEditProps = {
       ...editCCSCredentialsBaseProps,
@@ -117,7 +118,7 @@ function actionResolver(
     const editDisplayNameProps = {
       ...editDisplayNameBaseProps,
       title: 'Edit display name',
-      onClick: () => openModal('edit-display-name', cluster),
+      onClick: () => openModal(modals.EDIT_DISPLAY_NAME, cluster),
     };
     const editDisplayNamePropsUninstalling = {
       ...editDisplayNameBaseProps,
@@ -135,7 +136,10 @@ function actionResolver(
       subscriptionID: cluster.subscription ? cluster.subscription.id : '',
       name: clusterName,
     };
-    return { ...baseArchiveProps, onClick: () => openModal('archive-cluster', archiveModalData) };
+    return {
+      ...baseArchiveProps,
+      onClick: () => openModal(modals.ARCHIVE_CLUSTER, archiveModalData),
+    };
   };
 
   const getUnarchiveClusterProps = () => {
@@ -148,7 +152,10 @@ function actionResolver(
       subscriptionID: cluster.subscription ? cluster.subscription.id : '',
       name: clusterName,
     };
-    return { ...baseArchiveProps, onClick: () => openModal('unarchive-cluster', unarchiveModalData) };
+    return {
+      ...baseArchiveProps,
+      onClick: () => openModal(modals.UNARCHIVE_CLUSTER, unarchiveModalData),
+    };
   };
 
   const hasConsoleURL = get(cluster, 'console.url', false);
@@ -161,7 +168,7 @@ function actionResolver(
     const editConsoleURLProps = {
       title: hasConsoleURL ? 'Edit console URL' : 'Add console URL',
       ...editConsoleURLBaseProps,
-      onClick: () => openModal('edit-console-url', cluster),
+      onClick: () => openModal(modals.EDIT_CONSOLE_URL, cluster),
     };
     const editConsoleURLPropsUninstalling = {
       ...editConsoleURLBaseProps,
@@ -182,7 +189,7 @@ function actionResolver(
     };
     return isClusterUninstalling
       ? { ...baseDeleteProps, ...isUninstallingProps }
-      : { ...baseDeleteProps, onClick: () => openModal('delete-cluster', deleteModalData) };
+      : { ...baseDeleteProps, onClick: () => openModal(modals.DELETE_CLUSTER, deleteModalData) };
   };
 
   const getEditSubscriptionSettingsProps = () => {
@@ -190,7 +197,7 @@ function actionResolver(
       ...baseProps,
       title: 'Edit subscription settings',
       key: getKey('editsubscriptionsettings'),
-      onClick: () => openModal('edit-subscription-settings', cluster.subscription),
+      onClick: () => openModal(modals.EDIT_SUBSCRIPTION_SETTINGS, cluster.subscription),
     };
     return editSubscriptionSettingsProps;
   };
@@ -208,7 +215,7 @@ function actionResolver(
         if (isReleased) {
           toggleSubscriptionReleased(get(cluster, 'subscription.id'), false);
         } else {
-          openModal('transfer-cluster-ownership', cluster.subscription);
+          openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, cluster.subscription);
         }
       },
     };
@@ -248,7 +255,8 @@ function actionResolver(
     && isArchived;
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
   const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && canSubscribeOCP;
-  const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership && get(cluster, 'subscription.plan.id', false) === subscriptionPlans.OCP
+  const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership
+    && get(cluster, 'subscription.plan.id', '') === normalizedProducts.OCP
     && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   const showToggleClusterAdmin = cluster.managed && canAllowClusterAdmin;
   // eslint-disable-next-line max-len

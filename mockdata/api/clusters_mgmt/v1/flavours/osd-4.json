@@ -1,0 +1,40 @@
+{
+  "kind": "Flavour",
+  "name": "OpenShift Dedicated 4.X",
+  "id": "osd-4",
+  "href": "/api/clusters_mgmt/v1/flavours/osd-4",
+  "nodes": {
+    "master": 3
+  },
+  "network": {
+    "machine_cidr": "10.0.0.0/16",
+    "service_cidr": "172.30.0.0/16",
+    "pod_cidr": "10.128.0.0/14",
+    "host_prefix": 23
+  },
+  "aws": {
+    "master_instance_type": "m5.xlarge",
+    "compute_instance_type": "m5.xlarge",
+    "infra_instance_type": "m5.xlarge",
+    "master_volume": {
+      "iops": 1000,
+      "size": 350,
+      "type": "io1"
+    },
+    "infra_volume": {
+      "iops": 100,
+      "size": 300,
+      "type": "gp2"
+    },
+    "worker_volume": {
+      "iops": 100,
+      "size": 300,
+      "type": "gp2"
+    }
+  },
+  "gcp": {
+    "master_instance_type": "custom-4-16384",
+    "compute_instance_type": "custom-4-16384",
+    "infra_instance_type": "custom-4-16384"
+  }
+}

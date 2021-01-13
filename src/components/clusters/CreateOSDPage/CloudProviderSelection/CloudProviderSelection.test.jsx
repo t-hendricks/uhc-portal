@@ -53,4 +53,21 @@ describe('<CloudProviderSelection />', () => {
       expect(wrapper).toMatchSnapshot();
     });
   });
+
+  describe('when quota request pending', () => {
+    it('renders a spinnter', () => {
+      const props = {
+        ...baseProps,
+        organization: {
+          pending: true,
+          error: false,
+          fulfilled: false,
+        },
+      };
+      const wrapper = shallow(<CloudProviderSelection
+        {...props}
+      />);
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 });

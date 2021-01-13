@@ -16,6 +16,7 @@ import {
   PageHeader, PageHeaderTitle, Spinner,
 } from '@redhat-cloud-services/frontend-components';
 
+import ConnectedModal from '../common/Modal/ConnectedModal';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';
 import OverviewEmptyState from './OverviewEmptyState';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
@@ -195,8 +196,11 @@ class Overview extends Component {
               <ExpiredTrialsCard />
             </GridItem>
           </Grid>
-          <EditSubscriptionSettingsDialog onClose={invalidateSubscriptions} />
-          <ArchiveClusterDialog onClose={invalidateSubscriptions} />
+          <ConnectedModal
+            ModalComponent={EditSubscriptionSettingsDialog}
+            onClose={invalidateSubscriptions}
+          />
+          <ConnectedModal ModalComponent={ArchiveClusterDialog} onClose={invalidateSubscriptions} />
         </PageSection>
       </>
     );
