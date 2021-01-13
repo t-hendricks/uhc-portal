@@ -8,7 +8,7 @@ import DownloadAndOSSelection from './DownloadAndOSSelection';
 import { downloadButtonModes } from './DownloadButton';
 
 const CLISection = ({
-  token, pendoID, channel, isBMIPI,
+  token, pendoID, channel, isBMIPI = false,
 }) => (
   <>
     <Text component="p">
@@ -47,10 +47,6 @@ CLISection.propTypes = {
   token: PropTypes.object.isRequired,
   channel: PropTypes.string.isRequired,
   isBMIPI: PropTypes.bool,
-};
-
-CLISection.propTypes = {
-  isBMIPI: false,
 };
 
 export default CLISection;

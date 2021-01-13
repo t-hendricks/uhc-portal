@@ -7,6 +7,7 @@ import {
 } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
+import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
 import getBaseName from '../../../../common/getBaseName';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
@@ -35,7 +36,6 @@ class TransferClusterOwnershipDialog extends Component {
 
   render() {
     const {
-      isOpen,
       requestState,
       subscription,
     } = this.props;
@@ -73,7 +73,7 @@ class TransferClusterOwnershipDialog extends Component {
       </>
     );
 
-    return isOpen && (
+    return (
       <Modal
         title="Transfer cluster ownership"
         width={600}
@@ -106,14 +106,11 @@ class TransferClusterOwnershipDialog extends Component {
 TransferClusterOwnershipDialog.propTypes = {
   subscription: PropTypes.object,
   requestState: PropTypes.object,
-  isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-TransferClusterOwnershipDialog.defaultProps = {
-  isOpen: false,
-};
+TransferClusterOwnershipDialog.modalName = modals.TRANSFER_CLUSTER_OWNERSHIP;
 
 export default TransferClusterOwnershipDialog;

@@ -61,13 +61,11 @@ exports[`<GetStarted /> GetStarted w/ customizations should render 1`] = `
         >
           Refer to the documentation to
            
-          <Text
-            className="customizations"
-            component="a"
+          <ExternalLink
             href="example.doc.link"
           >
             install with customizations
-          </Text>
+          </ExternalLink>
           .
         </Text>
       </TextContent>

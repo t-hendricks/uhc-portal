@@ -65,10 +65,13 @@ const contentByCloudProvider = (cloudProviderID) => {
         <ul>
           <li>
             Your Google Cloud account has the necessary resource quotas and limits to support
-            the desired cluster size. See resource requirements.
+            the desired cluster size.
+            {' '}
+            <a href="https://www.openshift.com/dedicated/ccs" rel="noreferrer noopener" target="_blank">See resource requirements.</a>
+            {' '}
           </li>
           <li>
-            An IAM user called “osd-ccs-admin” exists with the following roles attached:
+            An IAM service account called “osd-ccs-admin” exists with the following roles attached:
             <ul className="unpadded-ul">
               <li>DNS Administrator</li>
               <li>Organization Policy Viewer</li>
@@ -85,7 +88,11 @@ const contentByCloudProvider = (cloudProviderID) => {
       It is also recommended that you have at least Production support from GCP.
       To prevent potential conflicts, we also recommend that you have no other resources
       provisioned in the project prior to provisioning OpenShift Dedicated.
-      Refer to the documentation for more detail around the requirements for
+      Refer to
+        {' '}
+        <a href="https://www.openshift.com/dedicated/ccs" rel="noreferrer noopener" target="_blank">the documentation</a>
+        {' '}
+       for more detail around the requirements for
       customer cloud subscription.
       </TextContent>
     </>

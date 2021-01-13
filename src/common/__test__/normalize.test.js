@@ -1,6 +1,71 @@
 import get from 'lodash/get';
 
-import { normalizeCluster } from '../normalize';
+import { normalizeCluster, normalizeProductID, normalizeQuotaCost } from '../normalize';
+import { normalizedProducts } from '../subscriptionTypes';
+import { dedicatedRhInfra, unlimitedROSA, rhmiAddon } from '../../components/clusters/common/__test__/quota_cost.fixtures';
+
+const productOCP = {
+  kind: 'ProductLink',
+  id: 'ocp',
+  href: '/api/clusters_mgmt/v1/products/ocp',
+};
+const productROSA = {
+  kind: 'ProductLink',
+  id: 'rosa',
+  href: '/api/clusters_mgmt/v1/products/rosa',
+};
+
+const planOCP = {
+  id: 'OCP',
+  kind: 'Plan',
+  href: '/api/accounts_mgmt/v1/plans/OCP',
+};
+
+// As of this writing account-manager returns "MOA", in future probably "ROSA".
+const planMOA = {
+  id: 'MOA',
+  kind: 'Plan',
+  href: '/api/accounts_mgmt/v1/plans/MOA',
+};
+const planROSA = {
+  id: 'ROSA',
+  kind: 'Plan',
+  href: '/api/accounts_mgmt/v1/plans/ROSA',
+};
+
+describe('normalizeProductID', () => {
+  test('Normalizes clusters-service products', () => {
+    expect(normalizeProductID(productOCP.id)).toEqual(normalizedProducts.OCP);
+    expect(normalizeProductID(productROSA.id)).toEqual(normalizedProducts.ROSA);
+  });
+
+  test('Normalizes account-manager plans', () => {
+    expect(normalizeProductID(planOCP.id)).toEqual(normalizedProducts.OCP);
+    expect(normalizeProductID(planMOA.id)).toEqual(normalizedProducts.ROSA);
+    expect(normalizeProductID(planROSA.id)).toEqual(normalizedProducts.ROSA);
+    // quota_cost may contain "product": "any".
+    expect(normalizeProductID('any')).toEqual(normalizedProducts.ANY);
+  });
+
+  // It's convenient to call normalization in many places, a value may be normalized multiple times.
+  test('Is idempotent', () => {
+    Object.values(normalizedProducts).forEach((v) => {
+      expect(normalizeProductID(v)).toEqual(v);
+    });
+  });
+});
+
+describe('normalizeQuotaCost', () => {
+  test('Normalizes product ids', () => {
+    const products = quotaCost => quotaCost.related_resources.map(r => r.product);
+
+    expect(products(normalizeQuotaCost(dedicatedRhInfra[0]))).toEqual([normalizedProducts.OSD]);
+    expect(products(normalizeQuotaCost(unlimitedROSA[0]))).toEqual([normalizedProducts.ROSA]);
+    expect(products(normalizeQuotaCost(rhmiAddon[0]))).toEqual(
+      [normalizedProducts.OSD, normalizedProducts.RHMI],
+    );
+  });
+});
 
 // Some data is fake.
 const clusterWithMetrics = {
@@ -112,6 +177,11 @@ const clusterWithMetrics = {
       compute: 4,
     },
   },
+  product: {
+    kind: 'ProductLink',
+    id: 'osd',
+    href: '/api/clusters_mgmt/v1/products/osd',
+  },
 };
 
 // TODO: finalize when https://jira.coreos.com/browse/SDA-821 is completed.
@@ -210,6 +280,11 @@ const clusterWithMissingMetrics = {
       },
     },
     nodes: {},
+  },
+  product: {
+    kind: 'ProductLink',
+    id: 'osd',
+    href: '/api/clusters_mgmt/v1/products/osd',
   },
 };
 

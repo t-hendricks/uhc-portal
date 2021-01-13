@@ -21,14 +21,20 @@ exports[`<Users /> should render without users 1`] = `
         Learn more.
       </a>
     </p>
-    <Button
-      className="access-control-add"
-      isDisabled={false}
-      onClick={[Function]}
-      variant="secondary"
+    <Tooltip
+      content="You do not have permission to add a user. Only cluster owners and organization administrators can add users."
     >
-      Add user
-    </Button>
+      <span>
+        <Button
+          className="access-control-add"
+          isDisabled={true}
+          onClick={[Function]}
+          variant="secondary"
+        >
+          Add user
+        </Button>
+      </span>
+    </Tooltip>
     <AddUserDialog
       addUserResponse={
         Object {
@@ -42,7 +48,7 @@ exports[`<Users /> should render without users 1`] = `
       canAddClusterAdmin={false}
       clearAddUserResponses={[MockFunction]}
       closeModal={[MockFunction]}
-      clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
+      clusterID="1i4counta3holamvo1g5tp6n8p3a03bq"
       isOpen={false}
       submit={[MockFunction]}
     />
@@ -196,14 +202,20 @@ exports[`<Users /> with users should render 1`] = `
       <TableHeader />
       <Component />
     </Table>
-    <Button
-      className="access-control-add"
-      isDisabled={false}
-      onClick={[Function]}
-      variant="secondary"
+    <Tooltip
+      content="You do not have permission to add a user. Only cluster owners and organization administrators can add users."
     >
-      Add user
-    </Button>
+      <span>
+        <Button
+          className="access-control-add"
+          isDisabled={true}
+          onClick={[Function]}
+          variant="secondary"
+        >
+          Add user
+        </Button>
+      </span>
+    </Tooltip>
     <AddUserDialog
       addUserResponse={
         Object {
@@ -217,7 +229,7 @@ exports[`<Users /> with users should render 1`] = `
       canAddClusterAdmin={false}
       clearAddUserResponses={[MockFunction]}
       closeModal={[MockFunction]}
-      clusterID="1IztzhAGrbjtKkMbiPewJanhTXk"
+      clusterID="1i4counta3holamvo1g5tp6n8p3a03bq"
       isOpen={false}
       submit={[MockFunction]}
     />

@@ -7,6 +7,7 @@ import {
 } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
+import modals from '../../../common/Modal/modals';
 import { ReduxFormRadioGroup } from '../../../common/ReduxFormComponents';
 import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
 import {
@@ -67,6 +68,11 @@ class EditSubscriptionSettingsDialog extends Component {
     [SERVICE_LEVEL]: [],
     [USAGE]: [],
     [SYSTEM_UNITS]: [],
+  }
+
+  componentDidMount() {
+    const { subscription } = this.props;
+    this.setState(this.resetOptions(subscription));
   }
 
   // eslint-disable-next-line camelcase
@@ -184,7 +190,6 @@ class EditSubscriptionSettingsDialog extends Component {
 
   render() {
     const {
-      isOpen,
       requestState,
       onClose,
       isDialog,
@@ -301,7 +306,7 @@ class EditSubscriptionSettingsDialog extends Component {
         : subscriptionFieldsRegisterNewCluster;
     }
 
-    return isOpen && isDialog && (
+    return isDialog && (
     <Modal
       title="Subscription settings"
       width={810}
@@ -335,7 +340,6 @@ class EditSubscriptionSettingsDialog extends Component {
 EditSubscriptionSettingsDialog.propTypes = {
   subscription: PropTypes.object,
   requestState: PropTypes.object,
-  isOpen: PropTypes.bool,
   hideSubscriptionSettings: PropTypes.bool,
   isDialog: PropTypes.bool,
   closeModal: PropTypes.func,
@@ -346,10 +350,10 @@ EditSubscriptionSettingsDialog.propTypes = {
 };
 
 EditSubscriptionSettingsDialog.defaultProps = {
-  isOpen: false,
   isDialog: true, // TODO FIXME this prop needs to be removed.
   hideSubscriptionSettings: true,
   subscription: {},
 };
+EditSubscriptionSettingsDialog.modalName = modals.EDIT_SUBSCRIPTION_SETTINGS;
 
 export default EditSubscriptionSettingsDialog;

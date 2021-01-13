@@ -14,12 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import get from 'lodash/get';
+import isEmpty from 'lodash/isEmpty';
 import isUuid from 'uuid-validate';
 
 import { clustersConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
-import { normalizeCluster } from '../../common/normalize';
+import {
+  normalizeCluster,
+  fakeClusterFromSubscription,
+  normalizeSubscription,
+  mapListResponse,
+} from '../../common/normalize';
 import {
   postSchedule,
 } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
@@ -74,11 +80,9 @@ const editCluster = (id, cluster) => dispatch => dispatch({
   payload: clusterService.editCluster(id, cluster),
 });
 
-const editClusterDisplayName = (id, subscriptionID, displayName) => dispatch => dispatch({
+const editClusterDisplayName = (subscriptionID, displayName) => dispatch => dispatch({
   type: clustersConstants.EDIT_CLUSTER,
-  payload: clusterService.editCluster(id, { display_name: displayName }).then(
-    () => accountsService.editSubscription(subscriptionID, { display_name: displayName }),
-  ),
+  payload: accountsService.editSubscription(subscriptionID, { display_name: displayName }),
 });
 
 /** Build a notification
@@ -124,31 +128,55 @@ const clearClusterUnarchiveResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE,
 });
 
-const editClusterConsoleURL = (id, consoleURL) => dispatch => dispatch({
+
+const editClusterConsoleURL = (id, subscriptionID, consoleURL) => dispatch => dispatch({
   type: clustersConstants.EDIT_CLUSTER,
-  payload: clusterService.editCluster(id, { console: { url: consoleURL } }),
+  payload: clusterService.editCluster(id, { console: { url: consoleURL } }).then(
+    () => accountsService.editSubscription(subscriptionID, { console_url: consoleURL }),
+  ),
 });
 
 /**
  * Collect a list of object IDs and build a SQL-like query searching for these IDs.
  * For example, to collect subscription IDs from clusters, so we can query
  * for the subscription info.
- * @param {*} response A response containing a collection of items
+ * @param {*} items A collection of items
  * @param {string} field The field containing the ID to collect for the search
  */
-const buildSearchQuery = (response, field) => {
+const buildSearchQuery = (items, field) => {
   const IDs = new Set();
-  const items = get(response, 'data.items', []);
   items.forEach((item) => {
-    const objectID = get(item, field);
+    const objectID = item[field];
     if (objectID) {
       IDs.add(`'${objectID}'`);
     }
   });
-  if (IDs.length === 0) {
-    return false;
-  }
   return `id in (${Array.from(IDs).join(',')})`;
+};
+
+const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => {
+  const result = [];
+  subscriptionMap.forEach((value) => {
+    let cluster;
+    if (value.subscription.managed) {
+      if (!value?.cluster || isEmpty(value?.cluster)) {
+        // skip OSD cluster without data
+        /* TODO - reconsider this approach:
+          when we start showing deprovisioned OSD clusters in the archived cluster list
+          skipping a cluster like this will stop making sense. */
+        console.warn(`Skipped OSD cluster with no data in CS - subscription ID ${value.subscription.id}`);
+        return;
+      }
+      cluster = normalizeCluster(value.cluster);
+    } else {
+      cluster = fakeClusterFromSubscription(value.subscription);
+    }
+    cluster.canEdit = canEdit['*'] || !!canEdit[cluster.id];
+    cluster.canDelete = canDelete['*'] || !!canDelete[cluster.id];
+    cluster.subscription = value.subscription;
+    result.push(cluster);
+  });
+  return result;
 };
 
 const fetchClustersAndPermissions = (clusterRequestParams) => {
@@ -158,7 +186,7 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
 
   const promises = [
     accountsService.getSubscriptions(clusterRequestParams).then((response) => {
-      subscriptions = response;
+      subscriptions = mapListResponse(response, normalizeSubscription);
     }),
     authorizationsService.selfResourceReview(
       { action: 'delete', resource_type: 'Cluster' },
@@ -167,44 +195,56 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
       { action: 'update', resource_type: 'Cluster' },
     ).then((response) => { canEdit = buildPermissionDict(response); }),
   ];
-  return Promise.all(promises).then(() => {
-    const clustersQuery = buildSearchQuery(subscriptions, 'cluster_id');
-    if (!clustersQuery) {
-      return subscriptions;
-    }
-    const subscriptionMap = {}; // map subscription ID to subscription info
-    const subscriptionItems = get(subscriptions, 'data.items', []);
-    for (let i = 0; i < subscriptionItems.length; i += 1) {
-      // regular for loop, because we need the index
-      subscriptionMap[subscriptionItems[i].cluster_id] = { data: subscriptionItems[i], order: i };
-    }
+  return Promise.all(promises)
+    .then(() => {
+      const items = subscriptions?.data?.items;
+      if (!items) {
+        return subscriptions;
+      }
 
-    // fetch clusters by subscription
-    return clusterService.getClusters(clustersQuery).then((response) => {
-      const clusters = response;
-      const sorted = [];
+      // map subscription ID to subscription info
+      // Note: Map keeps order of insertions
+      const subscriptionMap = new Map();
+      items.forEach(item => subscriptionMap.set(item.cluster_id, {
+        subscription: item,
+      }));
 
-      clusters.data.items.forEach((rawCluster) => {
-        const normalizedCluster = normalizeCluster(rawCluster);
+      // clusters-service only needed for managed clusters.
+      const managedSubsriptions = items.filter(s => s.managed);
+      if (managedSubsriptions.length === 0) {
+        return {
+          data: {
+            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+            page: subscriptions.data.page,
+            total: subscriptions.data.total || 0,
+            queryParams: { ...clusterRequestParams },
+          },
+        };
+      }
 
-        normalizedCluster.canEdit = canEdit['*'] || !!canEdit[normalizedCluster.id];
-        normalizedCluster.canDelete = canDelete['*'] || !!canDelete[normalizedCluster.id];
-
-        if (normalizedCluster.id && subscriptionMap[normalizedCluster.id]) {
-          const subscriptionInfo = subscriptionMap[normalizedCluster.id];
-
-          normalizedCluster.subscription = subscriptionInfo.data;
-          sorted[subscriptionInfo.order] = normalizedCluster;
-        }
-      });
-      clusters.data.items = sorted;
-      clusters.data.page = subscriptions.data.page;
-      clusters.data.total = subscriptions.data.total || 0;
-      clusters.data.queryParams = { ...clusterRequestParams };
-
-      return clusters;
+      // fetch managed clusters by subscription
+      const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
+      return clusterService.getClusters(clustersQuery)
+        .then((response) => {
+          const clusters = response?.data?.items;
+          clusters.forEach((cluster) => {
+            const entry = subscriptionMap.get(cluster.id);
+            if (entry !== undefined) {
+              // store cluster into subscription map
+              entry.cluster = cluster;
+              subscriptionMap.set(cluster.id, entry);
+            }
+          });
+          return {
+            data: {
+              items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+              page: subscriptions.data.page,
+              total: subscriptions.data.total || 0,
+              queryParams: { ...clusterRequestParams },
+            },
+          };
+        });
     });
-  });
 };
 
 const fetchClusters = params => dispatch => dispatch({
@@ -248,9 +288,18 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
           if (subscription.data.metrics !== undefined && subscription.data.metrics.length > 0) {
             [cluster.data.metrics] = subscription.data.metrics;
           }
+          if (!cluster.data.managed && !cluster.data?.console?.url) {
+            cluster.data.console = { url: cluster.data.subscription.console_url };
+          }
+          // eslint-disable-next-line camelcase
+          if (!cluster.data.openshift_version && cluster.data?.metrics.openshift_version) {
+            // eslint-disable-next-line camelcase
+            cluster.data.openshift_version = cluster.data?.metrics.openshift_version;
+          }
           return cluster;
         }).catch(() => cluster);
       }
+
       return cluster;
     }).catch(() => cluster);
   });

@@ -1737,12 +1737,12 @@
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@popperjs/core/-/core-2.4.2.tgz#7c6dc4ecef16149fd7a736710baa1b811017fdca"
   integrity sha512-JlGTGRYHC2QK+DDbePyXdBdooxFq2+noLfWpRqJtkxcb/oYWzOF0kcbfvvbWrwevCC1l6hLUg1wHYT+ona5BWQ==
 
-"@redhat-cloud-services/frontend-components-notifications@^2.1.1":
-  version "2.1.1"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components-notifications/-/frontend-components-notifications-2.1.1.tgz#24aa6bf64fae7546becc1eefb640cfd5cdf4391a"
-  integrity sha512-iufWE31xDdt3MpSQDSqdhVyTtZm7vxjwm9wJL7mWNf86anzGmt7qvGy7Gi7n3YHQZKhSlYqNaE7mReG7qps/cQ==
+"@redhat-cloud-services/frontend-components-notifications@^2.2.4":
+  version "2.2.4"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components-notifications/-/frontend-components-notifications-2.2.4.tgz#0ac2e0afd1ff192478cf0e8496efb4609f1a6eb0"
+  integrity sha512-FmUf77Z0XP7UaOfiE+a2nn1DjWxnOlo1B6HIOjnRoToHAKSuMEtuxHxMGIv02ru2NL0Pc1GhFLr+IJ+L2BeTaQ==
   dependencies:
-    "@redhat-cloud-services/frontend-components-utilities" "2.1.0-beta"
+    "@redhat-cloud-services/frontend-components-utilities" "*"
 
 "@redhat-cloud-services/frontend-components-utilities@*":
   version "1.0.0"
@@ -1755,10 +1755,10 @@
     commander "^2.20.0"
     react-content-loader "^3.4.1"
 
-"@redhat-cloud-services/frontend-components-utilities@2.1.0-beta":
-  version "2.1.0-beta"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-2.1.0-beta.tgz#ab8c7b0f34dfd24668c36acb2f3196676595d2f7"
-  integrity sha512-4qF+ElZaBRXnWtdpIY/VF2TA4sGTkHbHUQVy3gV6Uu1h2YHpuxhKuiJhB/Gq/BgPmkU7yVV2Dpm//iCe6ObOUg==
+"@redhat-cloud-services/frontend-components-utilities@^2.2.8":
+  version "2.2.8"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-2.2.8.tgz#24b19f45968a5c503b154f79a14f2f255e81694a"
+  integrity sha512-SjGOfGbLA9V75EI+0H18u06uKi5WhkceFoUvtHvg9T9Zbbxem6zIIfIw+8iT1VBr1VfyNRzUh5Q06xIe7ZBjvg==
   dependencies:
     "@sentry/browser" "^5.4.0"
     awesome-debounce-promise "^2.1.0"
@@ -1766,26 +1766,7 @@
     commander ">=2.20.0"
     react-content-loader ">=3.4.1"
 
-"@redhat-cloud-services/frontend-components-utilities@^2.1.0":
-  version "2.1.0"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-2.1.0.tgz#578f2732b124a45fca6cfd0156e96b71ff8353b8"
-  integrity sha512-CeEaT/LA9icJDEZZBfodTOwg7jsLpzivL0htCUJBw5YCsCMLQ141FDOQaSgFAv7R5ZTo+bqlo0RpvkC9G2Bl0w==
-  dependencies:
-    "@sentry/browser" "^5.4.0"
-    awesome-debounce-promise "^2.1.0"
-    axios "^0.19.0"
-    commander ">=2.20.0"
-    react-content-loader ">=3.4.1"
-
-"@redhat-cloud-services/frontend-components@*":
-  version "2.2.2"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components/-/frontend-components-2.2.2.tgz#2edcf74f6e7fe918ee745fe2af47e3067c51dc8c"
-  integrity sha512-X5eg7WrPnFgtdw/hp/2SBeXb0Lia54UALYrs8ORRUV0bkTFjNXbT43go0IIzJEewCaBBphxxDt5EkkTTS7tCeQ==
-  dependencies:
-    "@redhat-cloud-services/frontend-components-utilities" "*"
-    sanitize-html "^1.25.0"
-
-"@redhat-cloud-services/frontend-components@2.3.11":
+"@redhat-cloud-services/frontend-components@*", "@redhat-cloud-services/frontend-components@2.3.11":
   version "2.3.11"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/frontend-components/-/frontend-components-2.3.11.tgz#1761687b4a46b894a47493b848abb3064ca4cb83"
   integrity sha512-EHw+u7/1MZkfpvyqaiyIblxI4Rsh1osGfZUwPm7hiJAOMOUCnpk1jrrzSiC6QORuiAUJ0aSnCRgVAnb3RduPxw==
@@ -1793,10 +1774,10 @@
     "@redhat-cloud-services/frontend-components-utilities" "*"
     sanitize-html "^1.25.0"
 
-"@redhat-cloud-services/rule-components@2.1.4":
-  version "2.1.4"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/rule-components/-/rule-components-2.1.4.tgz#854ee664fef76043cbf709d7aa6b3e4ea3de2650"
-  integrity sha512-SFuZnZRQsuRyTKA4uwPbYmUmATwsqEgNW0hwxCpHxWD8cd9dnyxG9p8J7Ca+HDUiLjt/ANqMmhFqxRAxjsu7BA==
+"@redhat-cloud-services/rule-components@2.2.1":
+  version "2.2.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@redhat-cloud-services/rule-components/-/rule-components-2.2.1.tgz#0efacec52f1e247131ac6d056db67af708b6d7e7"
+  integrity sha512-mwpNYC4uQcGxq5rV0LCfhXHUm/SgFjapIcg9SJge9iIcwHklxRIW3dhI1qanyFntTC/E5pjiJ4h5ThNVjDP+iA==
   dependencies:
     "@patternfly/react-core" "^4.23.1"
     "@patternfly/react-icons" "^4.4.2"
@@ -9479,10 +9460,10 @@ opener@^1.5.1:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
 
-openshift-assisted-ui-lib@^1.5.2-1:
-  version "1.5.2-1"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-1.5.2-1.tgz#3a7770bb6ec19b4661596fb72ffbd636d786fafd"
-  integrity sha512-6oZPU6U1A6lkeOrqc8XBSnsRQutWRa097bz+0F/WgMF2rHxAZYfRdEgu7NWxc6K/fn9RUXpifyW2gTPpv3zf7w==
+openshift-assisted-ui-lib@^1.5.3-1:
+  version "1.5.3-1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-1.5.3-1.tgz#51cfab23139cc031be838ce27c247716a910512a"
+  integrity sha512-UdWyYZkoeXTD9lHtSGgTE2caoA+chYNk49LmZ5sSfFwkIeZ2pi/eZDBV8e5PkQvn7ilIWzlwkmIjA4iQFuH+Tg==
   dependencies:
     axios-case-converter "^0.6.0"
     ip-address "^7.1.0"
@@ -10441,7 +10422,17 @@ react-datepicker@^3.3.0:
     react-onclickoutside "^6.9.0"
     react-popper "^1.3.4"
 
-react-dom@^16.12.0, react-dom@^16.13.1:
+react-dom@^16.12.0:
+  version "16.14.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-dom/-/react-dom-16.14.0.tgz#7ad838ec29a777fb3c75c3a190f661cf92ab8b89"
+  integrity sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.19.1"
+
+react-dom@^16.13.1:
   version "16.13.1"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
   integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
@@ -10590,10 +10581,10 @@ react-test-renderer@^16.0.0-0:
     react-is "^16.8.6"
     scheduler "^0.19.1"
 
-react@^16.12.0, react@^16.13.1:
-  version "16.13.1"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
-  integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
+react@^16.12.0, react@^16.14.0:
+  version "16.14.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
+  integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

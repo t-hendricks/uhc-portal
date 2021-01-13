@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { reduxForm, reset, formValueSelector } from 'redux-form';
 import pick from 'lodash/pick';
+import isEmpty from 'lodash/isEmpty';
 
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../redux/actions/machineTypesActions';
@@ -11,7 +12,7 @@ import getPersistentStorageValues from '../../../redux/actions/persistentStorage
 import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
-import { scrollToFirstError, hasLabelsInput, parseReduxFormKeyValueList } from '../../../common/helpers';
+import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/helpers';
 
 import {
   hasOSDQuotaSelector,
@@ -115,8 +116,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       },
       etcd_encryption: formData.etcd_encryption,
     };
-    // only parse node labels if the user added some
-    if (hasLabelsInput(formData.node_labels)) {
+
+    const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
+
+    if (!isEmpty(parsedLabels)) {
       clusterRequest.nodes.compute_labels = parseReduxFormKeyValueList(formData.node_labels);
     }
     if (ownProps.product) {

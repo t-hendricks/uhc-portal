@@ -1,0 +1,21 @@
+{
+  "kind": "MachineType",
+  "name": "r5.xlarge - Memory Optimized",
+  "category": "memory_optimized",
+  "size": "small",
+  "id": "r5.xlarge",
+  "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+  "memory": {
+    "value": 34359738368,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 4,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  }
+}

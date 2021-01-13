@@ -93,30 +93,36 @@ class CloudProviderSelection extends Component {
 
     if (organization.fulfilled) {
       return (
-        <PageSection>
-          <Card>
-            <div className="pf-c-content ocm-page">
-              <Title headingLevel="h3" size="2xl">
+        <>
+          {title}
+          <PageSection>
+            <Card>
+              <div className="pf-c-content ocm-page">
+                <Title headingLevel="h3" size="2xl">
                 Select an infrastructure provider
-              </Title>
-              <div className="flex-container">
-                {awsCard}
-                {gcpCard}
+                </Title>
+                <div className="flex-container">
+                  {awsCard}
+                  {gcpCard}
+                </div>
               </div>
-            </div>
-          </Card>
-        </PageSection>
+            </Card>
+          </PageSection>
+        </>
       );
     }
 
     if (organization.error) {
       return (
-        <PageSection>
-          <Unavailable
-            message="Error retrieving quota"
-            response={organization}
-          />
-        </PageSection>
+        <>
+          {title}
+          <PageSection>
+            <Unavailable
+              message="Error retrieving quota"
+              response={organization}
+            />
+          </PageSection>
+        </>
       );
     }
 

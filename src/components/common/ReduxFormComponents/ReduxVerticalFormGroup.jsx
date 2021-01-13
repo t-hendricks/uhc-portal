@@ -23,6 +23,7 @@ function ReduxVerticalFormGroup(props) {
     isTextArea,
     showHelpTextOnError,
     inputPrefix,
+    formGroupClass,
     ...extraProps // any extra props not specified above
   } = props;
 
@@ -55,6 +56,7 @@ function ReduxVerticalFormGroup(props) {
       helperTextInvalid={helperTextInvalid()}
       isRequired={isRequired}
       labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
+      className={formGroupClass}
     >
       <InputGroup className={isValid && 'valid-field'}>
         {
@@ -103,6 +105,7 @@ ReduxVerticalFormGroup.propTypes = {
   // incl. children)...
   showHelpTextOnError: PropTypes.bool,
   inputPrefix: PropTypes.string,
+  formGroupClass: PropTypes.string,
 };
 
 export default ReduxVerticalFormGroup;

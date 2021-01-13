@@ -24,7 +24,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
         placeholder="Enter display name"
         type="text"
         validated="default"
-        value=""
+        value="some-name"
       />
     </FormGroup>
   </Form>

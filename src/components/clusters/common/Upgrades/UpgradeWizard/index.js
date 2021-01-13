@@ -2,12 +2,10 @@ import { connect } from 'react-redux';
 
 import { closeModal } from '../../../../common/Modal/ModalActions';
 import { postSchedule, clearPostedUpgradeScheduleResponse } from '../clusterUpgradeActions';
-import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 import UpgradeWizard from './UpgradeWizard';
 
 
 const mapStateToProps = state => ({
-  isOpen: shouldShowModal(state, 'upgrade-wizard'),
   clusterID: state.modal.data.clusterID,
   clusterChannel: state.modal.data.clusterChannel,
   clusterName: state.modal.data.clusterName,

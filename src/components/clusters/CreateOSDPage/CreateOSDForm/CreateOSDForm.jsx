@@ -15,7 +15,7 @@ import ScaleSection from './FormSections/ScaleSection/ScaleSection';
 import { constants } from './CreateOSDFormConstants';
 
 import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
-import { subscriptionPlans } from '../../../../common/subscriptionTypes';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import { required, validateGCPServiceAccount } from '../../../../common/validators';
 
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
@@ -156,6 +156,13 @@ class CreateOSDForm extends React.Component {
             <GridItem span={12}>
               <Title headingLevel="h3">AWS account details</Title>
             </GridItem>
+            <GridItem span={4}>
+              Before creating the cluster, review all the prerequisites in
+              {' '}
+              <ExternalLink href="https://www.openshift.com/dedicated/ccs">the documentation.</ExternalLink>
+              {' '}
+            </GridItem>
+            <GridItem span={8} />
             <AWSAccountDetailsSection pending={pending} />
           </>
         )}
@@ -173,10 +180,10 @@ class CreateOSDForm extends React.Component {
                   {' '}
                   <code>osd-ccs-admin</code>
                   {' '}
-                that meets the requirements.
+                that meets
                   {' '}
-                  {/* <ExternalLink href="tbd">these requirements.</ExternalLink>
-                  {' '} */}
+                  <ExternalLink href="https://www.openshift.com/dedicated/ccs">these requirements.</ExternalLink>
+                  {' '}
                 Create a key for that service account, export to a file named
                   {' '}
                   <code>osServiceAccount.json</code>
@@ -231,7 +238,7 @@ class CreateOSDForm extends React.Component {
           machineType={machineType}
           handleMachineTypesChange={this.handleMachineTypesChange}
           cloudProviderID={cloudProviderID}
-          product={subscriptionPlans.OSD}
+          product={normalizedProducts.OSD}
         />
         {/* Networking section */}
         <NetworkingSection
@@ -248,7 +255,7 @@ class CreateOSDForm extends React.Component {
         {/* Encryption */}
         {canEnableEtcdEncryption && (
           <>
-            <GridItem span={4}>
+            <GridItem span={12}>
               <Title headingLevel="h3">Encryption</Title>
             </GridItem>
             <FormGroup

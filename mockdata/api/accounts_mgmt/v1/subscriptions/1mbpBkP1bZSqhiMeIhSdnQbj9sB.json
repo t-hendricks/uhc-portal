@@ -1,0 +1,151 @@
+{
+  "id": "1mbpBkP1bZSqhiMeIhSdnQbj9sB",
+  "kind": "Subscription",
+  "href": "/api/accounts_mgmt/v1/subscriptions/1mbpBkP1bZSqhiMeIhSdnQbj9sB",
+  "plan": {
+    "id": "MOA",
+    "kind": "Plan",
+    "href": "/api/accounts_mgmt/v1/plans/MOA"
+  },
+  "cluster_id": "1i0drqlqbj9ht00ugr61mcfs1s05a2fl",
+  "external_cluster_id": "f2fbb88b-bd56-4715-aca6-e1297c69f86b",
+  "organization_id": "1HAXGgCYqHpednsRDiwWsZBmDlA",
+  "last_telemetry_date": "2021-01-05T03:40:37.197095Z",
+  "created_at": "2021-01-04T14:53:31.782466Z",
+  "updated_at": "2021-01-05T03:40:37.197128Z",
+  "support_level": "Premium",
+  "cpu_total": 4,
+  "socket_total": 2,
+  "display_name": "ROSA-cluster-ready",
+  "creator": {
+    "id": "1Du1exk9XTTOqQys7p2Bv3Dsfhi",
+    "kind": "Account",
+    "href": "/api/accounts_mgmt/v1/accounts/1Du1exk9XTTOqQys7p2Bv3Dsfhi",
+    "name": "Beni Paskin-Cherniavsky",
+    "username": "bpaskinc.openshift",
+    "email": "***REMOVED***"
+  },
+  "managed": true,
+  "status": "Active",
+  "provenance": "Provisioning",
+  "last_reconcile_date": "0001-01-01T00:00:00Z",
+  "console_url": "https://console-openshift-console.apps.cben-rosa2.uhqs.s1.devshift.org",
+  "capabilities": [
+    {
+      "name": "capability.cluster.manage_cluster_admin",
+      "value": "true",
+      "inherited": false
+    },
+    {
+      "name": "capability.cluster.subscribed_ocp",
+      "value": "true",
+      "inherited": true
+    }
+  ],
+  "last_released_at": "0001-01-01T00:00:00Z",
+  "metrics": [
+    {
+      "HealthState": "healthy",
+      "memory": {
+        "updated_timestamp": "2021-01-05T10:00:13.514Z",
+        "used": {
+          "value": 26454585344,
+          "unit": "B"
+        },
+        "total": {
+          "value": 148286832640,
+          "unit": "B"
+        }
+      },
+      "cpu": {
+        "updated_timestamp": "2021-01-05T10:00:13.108Z",
+        "used": {
+          "value": 3.7876190476188825,
+          "unit": ""
+        },
+        "total": {
+          "value": 28,
+          "unit": ""
+        }
+      },
+      "sockets": {
+        "updated_timestamp": "1970-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": ""
+        },
+        "total": {
+          "value": 0,
+          "unit": ""
+        }
+      },
+      "compute_nodes_memory": {
+        "updated_timestamp": "1970-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": "B"
+        },
+        "total": {
+          "value": 99306307584,
+          "unit": "B"
+        }
+      },
+      "compute_nodes_cpu": {
+        "updated_timestamp": "1970-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": ""
+        },
+        "total": {
+          "value": 16,
+          "unit": ""
+        }
+      },
+      "compute_nodes_sockets": {
+        "updated_timestamp": "1970-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": ""
+        },
+        "total": {
+          "value": 0,
+          "unit": ""
+        }
+      },
+      "storage": {
+        "updated_timestamp": "1970-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": "B"
+        },
+        "total": {
+          "value": 0,
+          "unit": "B"
+        }
+      },
+      "nodes": {
+        "total": 7,
+        "master": 3,
+        "infra": 2,
+        "compute": 2
+      },
+      "operating_system": "",
+      "upgrade": {
+        "updated_timestamp": "2021-01-05T10:00:13.41Z"
+      },
+      "state": "ready",
+      "state_description": "",
+      "open_shift_version": "4.6.9",
+      "cloud_provider": "AWS",
+      "region": "us-west-2",
+      "console_url": "https://console-openshift-console.apps.cben-rosa2.uhqs.s1.devshift.org",
+      "critical_alerts_firing": 0,
+      "operators_condition_failing": 0,
+      "subscription_cpu_total": 4,
+      "subscription_socket_total": 2
+    }
+  ],
+  "cloud_account_id": "765374464689",
+  "cloud_provider_id": "AWS",
+  "region_id": "us-west-2"
+}

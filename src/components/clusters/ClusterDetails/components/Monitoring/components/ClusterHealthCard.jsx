@@ -37,14 +37,6 @@ function ClusterHealthCard({
       icon = <InProgressIcon />;
       title = <Title headingLevel="h2">Cluster is updating</Title>;
       break;
-    case monitoringStatuses.INSTALLING:
-      icon = <InProgressIcon />;
-      title = <Title headingLevel="h2">Installation in progress</Title>;
-      break;
-    case monitoringStatuses.UNINSTALLING:
-      icon = <InProgressIcon />;
-      title = <Title headingLevel="h2">Uninstalling cluster</Title>;
-      break;
     case monitoringStatuses.NO_METRICS:
       icon = <ExclamationTriangleIcon className="warning" />;
       title = <Title headingLevel="h2">Cluster has no metrics</Title>;

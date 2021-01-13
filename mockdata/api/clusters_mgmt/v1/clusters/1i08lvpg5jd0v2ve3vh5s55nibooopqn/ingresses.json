@@ -1,0 +1,18 @@
+{
+  "kind": "IngressList",
+  "href": "/api/clusters_mgmt/v1/clusters/1i08lvpg5jd0v2ve3vh5s55nibooopqn/ingresses",
+  "id": "1i08lvpg5jd0v2ve3vh5s55nibooopqn",
+  "page": 1,
+  "size": 1,
+  "total": 1,
+  "items": [
+    {
+      "kind": "Ingress",
+      "href": "/api/clusters_mgmt/v1/clusters/1i08lvpg5jd0v2ve3vh5s55nibooopqn/ingresses/u3r5",
+      "id": "u3r5",
+      "listening": "external",
+      "default": true,
+      "dns_name": "apps.cben-rosa1.vgyx.p1.openshiftapps.com"
+    }
+  ]
+}

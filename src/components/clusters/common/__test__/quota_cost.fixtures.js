@@ -123,8 +123,40 @@ const unlimitedROSA = [
   },
 ];
 
+const rhmiAddon = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'add-on|addon-rhmi-operator',
+    allowed: 15,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-rhmi-operator',
+        resource_type: 'add-on',
+        byoc: 'any',
+        availability_zone_type: 'any',
+        product: 'OSD',
+        cost: 1,
+      },
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-rhmi-operator',
+        resource_type: 'add-on',
+        byoc: 'any',
+        availability_zone_type: 'any',
+        product: 'RHMI',
+        cost: 0,
+      },
+    ],
+  },
+];
+
 export {
   dedicatedRhInfra,
   dedicatedCCS,
   unlimitedROSA,
+  rhmiAddon,
 };

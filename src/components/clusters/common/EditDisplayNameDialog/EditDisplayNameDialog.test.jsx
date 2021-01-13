@@ -70,7 +70,7 @@ describe('<EditDisplayNameDialog />', () => {
       input.instance().value = 'hello';
       input.at(0).simulate('change');
       wrapper.find('.pf-m-primary').simulate('click');
-      expect(submit).toBeCalledWith('some-id', 'some-other-id', 'hello');
+      expect(submit).toBeCalledWith('some-other-id', 'hello');
     });
 
     it('when fulfilled, closes dialog', () => {

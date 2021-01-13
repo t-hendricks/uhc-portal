@@ -231,10 +231,30 @@ exports[`<Overview /> renders correctly 1`] = `
         <Connect(ExpiredTrialsCard) />
       </GridItem>
     </Grid>
-    <Connect(EditSubscriptionSettingsDialog)
+    <Connect(ConnectedModal)
+      ModalComponent={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(EditSubscriptionSettingsDialog)",
+          "modalName": "edit-subscription-settings",
+          "type": [Function],
+        }
+      }
       onClose={[MockFunction]}
     />
-    <Connect(ArchiveClusterDialog)
+    <Connect(ConnectedModal)
+      ModalComponent={
+        Object {
+          "$$typeof": Symbol(react.memo),
+          "WrappedComponent": [Function],
+          "compare": null,
+          "displayName": "Connect(ArchiveClusterDialog)",
+          "modalName": "archive-cluster",
+          "type": [Function],
+        }
+      }
       onClose={[MockFunction]}
     />
   </PageSection>

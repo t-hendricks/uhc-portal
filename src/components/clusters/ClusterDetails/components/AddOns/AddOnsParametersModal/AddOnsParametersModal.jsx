@@ -40,6 +40,29 @@ class AddOnsParametersModal extends Component {
       && addOnInstallation.parameters.items.find(x => x.id === param.id) !== undefined;
   };
 
+  // only return param on create form.
+  getParamDefault = (param) => {
+    const { isUpdateForm } = this.props;
+    if (!isUpdateForm && param.default_value !== undefined) {
+      return param.default_value;
+    }
+    return '';
+  }
+
+  getHelpText = (param) => {
+    const { isUpdateForm } = this.props;
+    // on create just show param description
+    if (!isUpdateForm) {
+      return param.description;
+    }
+    // on update with a default value set, show description and example
+    if (param.default_value !== undefined && param.default_value !== '') {
+      return `${param.description}. For example "${param.default_value}"`;
+    }
+    // on update with no default value set, show description and example
+    return param.description;
+  }
+
   render() {
     const {
       isOpen,
@@ -78,10 +101,11 @@ class AddOnsParametersModal extends Component {
             name={`parameters.${param.id}`}
             label={param.name}
             type="text"
+            placeholder={this.getParamDefault(param)}
             validate={this.validationsForParameterField(param)}
             isRequired={param.required}
             disabled={this.isFieldDisabled(param)}
-            helpText={param.description}
+            helpText={this.getHelpText(param)}
           />
         ))}
       </Form>

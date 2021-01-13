@@ -1,0 +1,6 @@
+{
+  "kind": "Product",
+  "id": "rosa",
+  "href": "/api/clusters_mgmt/v1/products/rosa",
+  "name": "Red Hat OpenShift Service on AWS"
+}

@@ -200,6 +200,7 @@ class AddOnsCard extends Component {
     };
 
     const { isActionsOpen } = this.state;
+
     const dropdownItems = [
       <DropdownItem
         key="action"
@@ -223,6 +224,20 @@ class AddOnsCard extends Component {
       </DropdownItem>,
     ];
 
+    if (!cluster.canEdit) {
+      return (
+        <Tooltip
+          content="You do not have permission to make changes to this add-on. Only cluster owners and organization administrators can make these changes."
+          position="bottom"
+        >
+          <Dropdown
+            toggle={<KebabToggle isDisabled />}
+            isPlain
+            position="right"
+          />
+        </Tooltip>
+      );
+    }
     return (
       <Dropdown
         onSelect={this.onSelect}

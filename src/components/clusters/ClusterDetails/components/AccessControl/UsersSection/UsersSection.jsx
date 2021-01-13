@@ -180,7 +180,7 @@ class UsersSection extends React.Component {
     }
 
     const addUserBtn = (
-      <Button onClick={() => openModal('add-user')} variant="secondary" className="access-control-add" isDisabled={!cluster.canEdit}>
+      <Button onClick={() => { setTimeout(() => openModal('add-user'), 0); }} variant="secondary" className="access-control-add" isDisabled={!cluster.canEdit}>
         Add user
       </Button>
     );

@@ -5,6 +5,7 @@ import {
   Form, TextInput, FormGroup,
 } from '@patternfly/react-core';
 import Modal from '../../../common/Modal/Modal';
+import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
 
 class EditCCSCredentialsDialog extends Component {
@@ -41,7 +42,7 @@ class EditCCSCredentialsDialog extends Component {
 
     render() {
       const {
-        isOpen, submit, editClusterResponse, clusterID, awsAccountID,
+        submit, editClusterResponse, clusterID, awsAccountID,
       } = this.props;
       const { isUpdated } = this.state;
       const errorContainer = editClusterResponse.error && (
@@ -65,77 +66,76 @@ class EditCCSCredentialsDialog extends Component {
           submit(clusterID, this.state);
         }
       };
-      return isOpen && (
-      <Modal
-        title="Edit AWS account credentials"
-        onClose={() => this.onClose()}
-        secondaryText="Cancel"
-        onPrimaryClick={handleSubmit}
-        onSecondaryClick={() => this.onClose()}
-        isPrimaryDisabled={!!validationMessage || editClusterResponse.pending}
-      >
+      return (
+        <Modal
+          title="Edit AWS account credentials"
+          onClose={() => this.onClose()}
+          secondaryText="Cancel"
+          onPrimaryClick={handleSubmit}
+          onSecondaryClick={() => this.onClose()}
+          isPrimaryDisabled={!!validationMessage || editClusterResponse.pending}
+        >
           {errorContainer}
-        <>
-          <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
-            <p>
+          <>
+            <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
+              <p>
 
             You can update your AWS credentials used for this cluster.
             The updated credentials must be associated with the same AWS account ID.
-            </p>
+              </p>
 
-            <FormGroup
-              label="AWS Account ID"
-              fieldId="awsAccountID"
-            >
-              <TextInput
-                name="awsAccountID"
-                id="awsAccountID"
-                aria-label="AWS Account ID"
-                type="text"
-                value={awsAccountID}
-                isDisabled={false}
-              />
-            </FormGroup>
-            <FormGroup
-              label="AWS access key ID"
-              fieldId="awsaccesskeyid"
-              helperTextInvalid={validationMessage}
-              validated={(isUpdated ? !validationMessage : true) ? 'default' : 'error'}
-            >
-              <TextInput
-                name="awsaccesskeyid"
-                aria-label="AWS access key ID"
-                id="awsaccesskeyid"
-                type="text"
+              <FormGroup
+                label="AWS Account ID"
+                fieldId="awsAccountID"
+              >
+                <TextInput
+                  name="awsAccountID"
+                  id="awsAccountID"
+                  aria-label="AWS Account ID"
+                  type="text"
+                  value={awsAccountID}
+                  isDisabled={false}
+                />
+              </FormGroup>
+              <FormGroup
+                label="AWS access key ID"
+                fieldId="awsaccesskeyid"
+                helperTextInvalid={validationMessage}
                 validated={(isUpdated ? !validationMessage : true) ? 'default' : 'error'}
-                onChange={value => this.setState({ awsaccesskeyid: value, isUpdated: true })}
-              />
-            </FormGroup>
-            <FormGroup
-              label="AWS secret access key"
-              fieldId="awssecretaccesskey"
-              helperTextInvalid={validationMessage}
-              validated={(isUpdated ? !validationMessage : true) ? 'default' : 'error'}
-            >
-              <TextInput
-                name="awssecretaccesskey"
-                id="awssecretaccesskey"
-                aria-label="AWS secret access key"
-                type="password"
-                onChange={value => this.setState({ awssecretaccesskey: value, isUpdated: true })}
+              >
+                <TextInput
+                  name="awsaccesskeyid"
+                  aria-label="AWS access key ID"
+                  id="awsaccesskeyid"
+                  type="text"
+                  validated={(isUpdated ? !validationMessage : true) ? 'default' : 'error'}
+                  onChange={value => this.setState({ awsaccesskeyid: value, isUpdated: true })}
+                />
+              </FormGroup>
+              <FormGroup
+                label="AWS secret access key"
+                fieldId="awssecretaccesskey"
+                helperTextInvalid={validationMessage}
                 validated={(isUpdated ? !validationMessage : true) ? 'default' : 'error'}
-              />
-            </FormGroup>
+              >
+                <TextInput
+                  name="awssecretaccesskey"
+                  id="awssecretaccesskey"
+                  aria-label="AWS secret access key"
+                  type="password"
+                  onChange={value => this.setState({ awssecretaccesskey: value, isUpdated: true })}
+                  validated={(isUpdated ? !validationMessage : true) ? 'default' : 'error'}
+                />
+              </FormGroup>
 
-          </Form>
-        </>
-      </Modal>
+            </Form>
+          </>
+        </Modal>
       );
     }
 }
 
 EditCCSCredentialsDialog.propTypes = {
-  isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
@@ -146,8 +146,6 @@ EditCCSCredentialsDialog.propTypes = {
 
 };
 
-EditCCSCredentialsDialog.defaultProps = {
-  isOpen: false,
-};
+EditCCSCredentialsDialog.modalName = modals.EDIT_CCS_CREDENTIALS;
 
 export default EditCCSCredentialsDialog;

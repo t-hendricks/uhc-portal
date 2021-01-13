@@ -1,4 +1,4 @@
-import helpers, { parseReduxFormKeyValueList, hasLabelsInput } from '../helpers';
+import helpers, { parseReduxFormKeyValueList, parseReduxFormTaints } from '../helpers';
 
 describe('nestedIsEmpty()', () => {
   it('returns true for an empty object', () => {
@@ -36,18 +36,27 @@ describe('parseReduxFormKeyValueList', () => {
   });
 });
 
-describe('hasLabelsInput', () => {
-  it('returns true if there is some input', () => {
-    const reduxFormInput = [{ key: 'foo', value: 'bar' }, { key: 'hello', value: 'world' }];
-    expect(hasLabelsInput(reduxFormInput)).toBe(true);
+describe('parseReduxFormTaints', () => {
+  it('returns the valid input', () => {
+    const reduxFormInput = [{ key: 'foo', value: 'bar', effect: 'NoExecute' }, { key: 'hello', value: 'world', effect: 'NoSchedule' }];
+    const expected = reduxFormInput;
+    expect(parseReduxFormTaints(reduxFormInput)).toEqual(expected);
   });
 
-  it('returns false if there is no input', () => {
-    const reduxFormInput = [{}];
-    expect(hasLabelsInput(reduxFormInput)).toBe(false);
+  it('returns only non empty items', () => {
+    const reduxFormInput = [
+      { key: undefined, value: 'world', effect: 'NoExecute' },
+      { key: 'hello', value: 'world', effect: undefined },
+      { key: 'foo', value: 'bar', effect: 'NoExecute' },
+      { key: 'hello', value: undefined, effect: undefined },
+    ];
+    const expected = [{ key: 'foo', value: 'bar', effect: 'NoExecute' }];
+    expect(parseReduxFormTaints(reduxFormInput)).toEqual(expected);
   });
-  it('returns true if there is some input in the middle of the list', () => {
-    const reduxFormInput = [{}, { key: 'foo', value: 'bar' }, {}];
-    expect(hasLabelsInput(reduxFormInput)).toBe(true);
+
+  it('returns an empty array', () => {
+    const reduxFormInput = [{}, {}, {}];
+    const expected = [];
+    expect(parseReduxFormTaints(reduxFormInput)).toEqual(expected);
   });
 });

@@ -18,16 +18,16 @@ class TabsRow extends React.Component {
     return [
       {
         key: 0,
-        title: 'Reason',
-        contentId: 'reasonTabContent',
-        ref: reasonTabRef,
+        title: 'How to remediate',
+        contentId: 'resolutionTabContent',
+        ref: resolutionTabRef,
         show: true,
       },
       {
         key: 1,
-        title: 'How to remediate',
-        contentId: 'resolutionTabContent',
-        ref: resolutionTabRef,
+        title: 'Reason',
+        contentId: 'reasonTabContent',
+        ref: reasonTabRef,
         show: true,
       },
     ];

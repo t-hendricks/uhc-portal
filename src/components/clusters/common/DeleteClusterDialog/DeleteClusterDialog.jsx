@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Form, TextInput } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
+import modals from '../../../common/Modal/modals';
 
 import ErroBox from '../../../common/ErrorBox';
 import { noop } from '../../../../common/helpers';
@@ -40,7 +41,6 @@ class DeleteClusterDialog extends React.Component {
 
   render() {
     const {
-      isOpen,
       modalData,
       deleteCluster,
       deleteClusterResponse,
@@ -73,7 +73,7 @@ class DeleteClusterDialog extends React.Component {
       }
     };
 
-    return isOpen && (
+    return (
       <Modal
         title="Delete cluster"
         onClose={() => this.closeDialog(false)}
@@ -112,7 +112,6 @@ class DeleteClusterDialog extends React.Component {
 }
 
 DeleteClusterDialog.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   modalData: PropTypes.shape({
     clusterName: PropTypes.string,
     clusterID: PropTypes.string,
@@ -127,5 +126,7 @@ DeleteClusterDialog.propTypes = {
 DeleteClusterDialog.defaultProps = {
   onClose: noop,
 };
+
+DeleteClusterDialog.modalName = modals.DELETE_CLUSTER;
 
 export default DeleteClusterDialog;

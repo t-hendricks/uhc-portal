@@ -10,7 +10,7 @@ import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
 import PersistentStorageDropdown from '../PersistentStorageDropdown';
 import LoadBalancersDropdown from '../LoadBalancersDropdown';
-import { shouldRefetchQuota } from '../../../../common/helpers';
+import modals from '../../../common/Modal/modals';
 
 
 class ScaleClusterDialog extends Component {
@@ -29,26 +29,19 @@ class ScaleClusterDialog extends Component {
     if (!loadBalancerValues.fulfilled && !loadBalancerValues.pending) {
       getLoadBalancers();
     }
-    if (shouldRefetchQuota(organization)) {
+    if (!organization.pending) {
       getOrganizationAndQuota();
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const {
       editClusterResponse,
       resetResponse,
       closeModal,
       onClose,
-      organization,
       getOrganizationAndQuota,
-      isOpen,
     } = this.props;
-
-    // Fetch quota on opening the scale modal.
-    if (!prevProps.isOpen && isOpen && shouldRefetchQuota(organization)) {
-      getOrganizationAndQuota();
-    }
 
     // Only finalize when all responses are out of their pending state
     if (editClusterResponse.fulfilled
@@ -63,7 +56,6 @@ class ScaleClusterDialog extends Component {
 
   render() {
     const {
-      isOpen,
       closeModal,
       handleSubmit,
       editClusterResponse,
@@ -114,7 +106,7 @@ class ScaleClusterDialog extends Component {
 
     const className = isByoc ? 'edit-cluster-modal' : 'edit-cluster-modal edit-cluster-modal-rhinfra';
 
-    return isOpen && (
+    return (
       <Modal
         className={className}
         title="Edit load balancers and persistent storage"
@@ -177,7 +169,6 @@ class ScaleClusterDialog extends Component {
 }
 
 ScaleClusterDialog.propTypes = {
-  isOpen: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
@@ -208,8 +199,9 @@ ScaleClusterDialog.propTypes = {
 };
 
 ScaleClusterDialog.defaultProps = {
-  isOpen: false,
   editClusterResponse: {},
 };
+
+ScaleClusterDialog.modalName = modals.SCALE_CLUSTER;
 
 export default ScaleClusterDialog;

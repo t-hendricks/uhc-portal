@@ -8,7 +8,6 @@ import {
   mockNodes,
   mockOperators,
   resourceUsageWithIssues,
-  mockOSDCluserDetails,
   mockOCPActiveClusterDetails,
   mockOCPDisconnectedClusterDetails,
   makeFutureDate,
@@ -16,7 +15,6 @@ import {
   makeStaleCheckIn,
 } from './Monitoring.fixtures';
 import { monitoringStatuses } from '../monitoringHelper';
-import clusterStates from '../../../../common/clusterStates';
 
 describe('lastCheckInSelector', () => {
   it('returns something valid if activity_timestamp is missing (unrealistic)', () => {
@@ -71,101 +69,9 @@ describe('clusterHealthSelector', () => {
     });
   });
 
-  describe('OSD', () => {
-    const stateWithOsdCluster = {
-      clusters: {
-        details: {
-          cluster: {
-            ...mockOSDCluserDetails,
-          },
-        },
-      },
-      clusterUpgrades: {
-        schedules: {
-          items: [],
-        },
-      },
-    };
-
-    it('should not return status DISCONNECTED for OSD cluster', () => {
-      expect(clusterHealthSelector(stateWithOsdCluster, makeStaleCheckIn(), null))
-        .not.toBe(monitoringStatuses.DISCONNECTED);
-    });
-
-    it('should return status UPGRADING', () => {
-      const { metrics } = mockOSDCluserDetails;
-      // upgrading cluster state
-      const state = {
-        clusters: {
-          details: {
-            cluster: {
-              ...mockOSDCluserDetails,
-              metrics: { ...metrics, upgrade: { ...metrics.upgrade, state: 'running' } },
-            },
-          },
-        },
-        clusterUpgrades: {
-          schedules: {
-            items: [
-              {
-                state: { value: 'running' },
-              },
-            ],
-          },
-        },
-      };
-      expect(clusterHealthSelector(state, makeFreshCheckIn(), 1))
-        .toBe(monitoringStatuses.UPGRADING);
-    });
-
-    it('should return status INSTALLING', () => {
-      // installing cluster state
-      const state = {
-        clusters: {
-          details: {
-            cluster: {
-              ...mockOSDCluserDetails,
-              state: clusterStates.INSTALLING,
-            },
-          },
-        },
-        clusterUpgrades: {
-          schedules: {
-            items: [],
-          },
-        },
-      };
-      expect(clusterHealthSelector(state, makeFreshCheckIn(), null))
-        .toBe(monitoringStatuses.INSTALLING);
-    });
-
-    it('should return status HAS_ISSUES', () => {
-      expect(clusterHealthSelector(stateWithOsdCluster, makeFreshCheckIn(), 2))
-        .toBe(monitoringStatuses.HAS_ISSUES);
-    });
-
-    it('return status NO_METRICS', () => {
-      expect(clusterHealthSelector(stateWithOsdCluster, makeStaleCheckIn(), 3))
-        .toBe(monitoringStatuses.NO_METRICS);
-    });
-
-    it('return status HEALTHY', () => {
-      expect(clusterHealthSelector(stateWithOsdCluster, makeFreshCheckIn(), 0))
-        .toBe(monitoringStatuses.HEALTHY);
-    });
-
-    it('return status UNINSTALLING', () => {
-      const stateWithUninstallingCluster = { ...stateWithOsdCluster };
-      stateWithUninstallingCluster.clusters.details.cluster.state = clusterStates.UNINSTALLING;
-      expect(clusterHealthSelector(stateWithUninstallingCluster, makeFreshCheckIn(), 0))
-        .toBe(monitoringStatuses.UNINSTALLING);
-    });
-  });
-
-
   describe('issuesAndWarningsSelector', () => {
     const cluster = {
-      ...mockOSDCluserDetails,
+      ...mockOCPActiveClusterDetails,
       metrics: {
         ...resourceUsageWithIssues,
         memory: {

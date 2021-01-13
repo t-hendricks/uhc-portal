@@ -9,6 +9,7 @@ import {
 } from '@patternfly/react-core';
 import { get } from 'lodash';
 
+import ExternalLink from '../../../../common/ExternalLink';
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
 import { trackPendo } from '../../../../../common/helpers';
@@ -84,9 +85,9 @@ const GetStarted = ({
               <Text component="p">
                 Refer to the documentation to
                 {' '}
-                <Text component="a" className="customizations" href={customizations}>
+                <ExternalLink href={customizations}>
                   install with customizations
-                </Text>
+                </ExternalLink>
                 .
               </Text>
             </TextContent>

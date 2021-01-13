@@ -9,6 +9,9 @@ const sentryMiddleware = () => next => (action) => {
     case '@@router/LOCATION_CHANGE':
       data.location = action.payload.location;
       break;
+    case '@@redux-form/DESTROY':
+      data.form = action.meta.form;
+      break;
     case 'OPEN_MODAL':
       data.modalName = action.payload.name;
       break;

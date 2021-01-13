@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Tooltip, TooltipPosition } from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
 import {
   cellWidth,
   classNames,
@@ -15,6 +15,7 @@ import {
 import { Link } from 'react-router-dom';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel/ClusterLocationLabel';
 import getClusterName from '../../../../../common/getClusterName';
+import modals from '../../../../common/Modal/modals';
 
 
 function ArchivedClusterListTable(props) {
@@ -41,12 +42,10 @@ function ArchivedClusterListTable(props) {
     const name = getClusterName(cluster);
 
     const clusterName = (
-      <Tooltip content={`cluster name: ${cluster.name}`} position={TooltipPosition.right}>
-        <Link to={`/details/${cluster.id}`}>{name.trim() !== '' ? name : cluster.name}</Link>
-      </Tooltip>
+      <Link to={`/details/${cluster.id}`}>{name}</Link>
     );
 
-    const openUnarchiveModal = () => openModal('unarchive-cluster',
+    const openUnarchiveModal = () => openModal(modals.UNARCHIVE_CLUSTER,
       {
         subscriptionID: cluster.subscription ? cluster.subscription.id : '',
         name,
