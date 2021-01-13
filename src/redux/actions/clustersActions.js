@@ -288,8 +288,13 @@ const fetchSingleClusterAndPermissions = (clusterID) => {
           if (subscription.data.metrics !== undefined && subscription.data.metrics.length > 0) {
             [cluster.data.metrics] = subscription.data.metrics;
           }
-          if (!cluster.managed && !cluster?.console?.url) {
-            cluster.console = { url: cluster.data.subscription.console_url };
+          if (!cluster.data.managed && !cluster.data?.console?.url) {
+            cluster.data.console = { url: cluster.data.subscription.console_url };
+          }
+          // eslint-disable-next-line camelcase
+          if (!cluster.data.openshift_version && cluster.data?.metrics.openshift_version) {
+            // eslint-disable-next-line camelcase
+            cluster.data.openshift_version = cluster.data?.metrics.openshift_version;
           }
           return cluster;
         }).catch(() => cluster);
