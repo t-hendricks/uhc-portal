@@ -1,6 +1,7 @@
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 
+import { productFilterOptions } from './subscriptionTypes';
 
 const viewPropsChanged = (nextViewOptions, currentViewOptions) => (
   nextViewOptions.currentPage !== currentViewOptions.currentPage
@@ -60,15 +61,19 @@ const createViewQueryObject = (viewOptions, queryObj) => {
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
       // We got flags for filtering according to specific subscription properties
-      // subscriptionFilter is an object in the form of { key: ["possible", "values"] }
-      Object.keys(viewOptions.flags.subscriptionFilter).forEach((field) => {
-        const items = viewOptions.flags.subscriptionFilter[field];
-        if (!isEmpty(items)) {
-          // convert each list of selected filter values to a SQL-like clause
-          const quotedItems = viewOptions.flags.subscriptionFilter[field].map(sqlString);
-          clauses.push(`${field} IN (${quotedItems.join(',')})`);
-        }
-      });
+      // subscriptionFilter is an object in the form of { key: ["possible", "values"] }.
+      // Currently the only supported key is `plan_id`.
+      const items = viewOptions.flags.subscriptionFilter.plan_id;
+      if (!isEmpty(items)) {
+        // The values we got are internal normalizedProducts values,
+        // but we have to query backend with pre-normalization values.
+        const backendValues = items.flatMap(v => (
+          productFilterOptions.find(opt => opt.key === v).plansToQuery
+        ));
+
+        const quotedItems = backendValues.map(sqlString);
+        clauses.push(`plan_id IN (${quotedItems.join(',')})`);
+      }
     }
     queryObject.filter = clauses.map(c => `(${c})`).join(' AND ').trim();
   }

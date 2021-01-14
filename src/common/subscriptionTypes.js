@@ -90,6 +90,18 @@ const normalizedProducts = {
   UNKNOWN: 'UNKNOWN', // normally should not happen except during loading
 };
 
+/**
+ * Products by which UI allows to filter.
+ * key is used internally and for URL ?plan_id=.
+ * label is how it's shown in the UI.
+ * plansToQuery are pre-normalization value to send to account-manager in ?search= query.
+ */
+const productFilterOptions = [
+  { key: normalizedProducts.OCP, label: 'OCP', plansToQuery: ['OCP'] },
+  { key: normalizedProducts.OSD, label: 'OSD', plansToQuery: ['OSD'] },
+  { key: normalizedProducts.ROSA, label: 'ROSA', plansToQuery: ['MOA', 'ROSA'] },
+];
+
 export {
   subscriptionStatuses,
   subscriptionSettings,
@@ -99,4 +111,5 @@ export {
   subscriptionProductBundles,
   subscriptionSystemUnits,
   normalizedProducts,
+  productFilterOptions,
 };

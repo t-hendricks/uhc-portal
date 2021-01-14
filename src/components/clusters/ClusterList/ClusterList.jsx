@@ -48,6 +48,8 @@ import CommonClusterModals from '../common/CommonClusterModals';
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 
 import helpers, { scrollToTop } from '../../../common/helpers';
+import { productFilterOptions } from '../../../common/subscriptionTypes';
+
 import { viewPropsChanged, createViewQueryObject, getQueryParam } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
 
@@ -67,8 +69,11 @@ class ClusterList extends Component {
     const planIDFilter = getQueryParam('plan_id') || '';
 
     if (!isEmpty(planIDFilter)) {
+      const allowedProducts = {};
+      productFilterOptions.forEach((option) => { allowedProducts[option.key] = true; });
+      const sanitizedFilter = planIDFilter.split(',').filter(value => allowedProducts[value]);
       setListFlag('subscriptionFilter', {
-        plan_id: planIDFilter.split(',').filter(value => (value === 'OCP' || value === 'OSD')),
+        plan_id: sanitizedFilter,
       });
     } else {
       // only call refresh if we're not setting the filter flag. When the flag is set, refresh
