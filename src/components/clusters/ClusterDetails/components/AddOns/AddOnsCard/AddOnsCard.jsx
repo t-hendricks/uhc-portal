@@ -186,10 +186,6 @@ class AddOnsCard extends Component {
       return '';
     }
 
-    if (AddOnsConstants.INSTALLATION_STATE.READY !== installedAddOn.state) {
-      return '';
-    }
-
     const configureAddOn = (addOnInstallation) => {
       openModal('add-ons-parameters-modal', {
         clusterID: cluster.id,
@@ -205,7 +201,11 @@ class AddOnsCard extends Component {
       <DropdownItem
         key="action"
         component="button"
-        isDisabled={!hasParameters(addOn) || !cluster.canEdit}
+        isDisabled={
+          !hasParameters(addOn)
+          || !cluster.canEdit
+          || installedAddOn.state !== AddOnsConstants.INSTALLATION_STATE.READY
+        }
         onClick={() => configureAddOn(installedAddOn)}
       >
         Configure
@@ -213,7 +213,10 @@ class AddOnsCard extends Component {
       <DropdownItem
         key="action"
         component="button"
-        isDisabled={!cluster.canEdit}
+        isDisabled={
+          !cluster.canEdit
+          || installedAddOn.state === AddOnsConstants.INSTALLATION_STATE.DELETING
+        }
         onClick={() => openModal('add-ons-delete-modal', {
           addOnName: addOn.name,
           addOnID: addOn.id,
