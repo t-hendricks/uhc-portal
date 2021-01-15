@@ -6,7 +6,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
 >
   <ClusterDetailsTop
     autoRefreshEnabled={true}
-    canAllowClusterAdmin={false}
     canSubscribeOCP={false}
     canTransferClusterOwnership={false}
     cluster={
@@ -1804,9 +1803,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
   <CommonClusterModals
     onClose={[Function]}
     onClusterDeleted={[Function]}
-  />
-  <Connect(ToggleClusterAdminAccessDialog)
-    onClose={[Function]}
   />
   <Connect(ReduxForm)
     clusterConsoleURL="https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org"

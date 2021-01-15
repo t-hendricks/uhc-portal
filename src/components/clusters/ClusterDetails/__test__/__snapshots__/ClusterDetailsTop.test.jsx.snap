@@ -54,7 +54,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           </Button>
         </a>
         <Connect(ClusterActionsDropdown)
-          canAllowClusterAdmin={false}
           canSubscribeOCP={false}
           canTransferClusterOwnership={false}
           cluster={
