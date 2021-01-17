@@ -70,9 +70,9 @@ exports[`BareMetal UPI install renders correctly 1`] = `
           Array [
             Object {
               "archURL": Object {
-                "ppc": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/rhcos-installer.ppc64le.iso",
-                "s390x": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/rhcos-installer.s390x.iso",
-                "x86": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-installer.x86_64.iso",
+                "ppc": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/rhcos-live.ppc64le.iso",
+                "s390x": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/rhcos-live.s390x.iso",
+                "x86": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-live.x86_64.iso",
               },
               "buttonText": "Download RHCOS ISO",
               "name": "OCP-Download-RHCOS-ISO",
