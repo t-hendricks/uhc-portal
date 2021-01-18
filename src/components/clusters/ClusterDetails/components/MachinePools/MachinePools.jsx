@@ -17,10 +17,13 @@ import {
 import {
   Skeleton,
 } from '@redhat-cloud-services/frontend-components';
+
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
+
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import './MachinePools.scss';
+import actionResolver from './machinePoolsHelper';
 
 const initialState = {
   deletedRowIndex: null,
@@ -206,7 +209,7 @@ class MachinePools extends React.Component {
       }
     });
 
-    const onClickDeleteActions = (_, rowID, rowData) => {
+    const onClickDeleteAction = (_, rowID, rowData) => {
       this.setState(produce((draft) => {
         draft.deletedRowIndex = rowID;
         draft.openedRows = draft.openedRows.filter(
@@ -216,33 +219,11 @@ class MachinePools extends React.Component {
       deleteMachinePool(rowData.machinePool.id);
     };
 
-    const onClickScaleActions = (_, __, rowData) => openModal(modals.EDIT_NODE_COUNT, {
+    const onClickScaleAction = (_, __, rowData) => openModal(modals.EDIT_NODE_COUNT, {
       machinePool: rowData.machinePool,
       isDefaultMachinePool: rowData.machinePool.id === 'Default',
       cluster,
     });
-
-    const actionResolver = (rowData) => {
-      // hide delete action for the default machine pool and for expandable rows
-      if (rowData.machinePool?.id === 'Default' || !rowData.machinePool) {
-        return [];
-      }
-
-      const deleteAction = [{
-        title: 'Delete',
-        onClick: onClickDeleteActions,
-        className: 'hand-pointer',
-      }];
-
-      return [
-        {
-          title: 'Scale',
-          onClick: onClickScaleActions,
-          className: 'hand-pointer',
-        },
-        ...deleteAction,
-      ];
-    };
 
     const showSkeleton = !hasMachinePools && machinePoolsList.pending;
     const skeletonRow = {
@@ -312,7 +293,9 @@ class MachinePools extends React.Component {
                 cells={columns}
                 rows={rows}
                 onCollapse={this.onCollapse}
-                actionResolver={actionResolver}
+                actionResolver={
+                  rowData => actionResolver(rowData, onClickDeleteAction, onClickScaleAction)
+                }
                 areActionsDisabled={() => !cluster.canEdit}
               >
                 <TableHeader />
