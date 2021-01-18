@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { reduxForm, formValueSelector } from 'redux-form';
 import isEmpty from 'lodash/isEmpty';
 
 import AddMachinePoolModal from './AddMachinePoolModal';
+import { canAutoScaleSelector } from '../../MachinePoolsSelectors';
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
 import { getMachineTypes } from '../../../../../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../../../../../redux/actions/userActions';
@@ -15,25 +16,45 @@ const reduxFormConfig = {
 };
 const reduxFormAddMachinePool = reduxForm(reduxFormConfig)(AddMachinePoolModal);
 
-const mapStateToProps = state => ({
-  addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
-  machineTypes: state.machineTypes,
-  organization: state.userProfile.organization,
-  initialValues: {
-    name: '',
-    nodes_compute: '0',
-    node_labels: [{}],
-    taints: [{ effect: 'NoSchedule' }],
-  },
-});
+const mapStateToProps = (state, ownProps) => {
+  const valueSelector = formValueSelector('AddMachinePool');
+
+  return ({
+    addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
+    machineTypes: state.machineTypes,
+    organization: state.userProfile.organization,
+    autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
+    autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
+    autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
+    canAutoScale: canAutoScaleSelector(state, ownProps.cluster.product.id),
+    initialValues: {
+      name: '',
+      nodes_compute: '0',
+      node_labels: [{}],
+      taints: [{ effect: 'NoSchedule' }],
+    },
+  });
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (formData) => {
     const machinePoolRequest = {
       id: formData.name,
-      replicas: parseInt(formData.nodes_compute, 10),
       instance_type: formData.machine_type,
     };
+
+    if (formData.autoscalingEnabled) {
+      const minNodes = parseInt(formData.min_replicas, 10);
+      const maxNodes = parseInt(formData.max_replicas, 10);
+      const isMultiAz = ownProps.cluster.multi_az;
+
+      machinePoolRequest.autoscaling = {
+        min_replicas: isMultiAz ? minNodes * 3 : minNodes,
+        max_replicas: isMultiAz ? maxNodes * 3 : minNodes,
+      };
+    } else {
+      machinePoolRequest.replicas = parseInt(formData.nodes_compute, 10);
+    }
 
     const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
     const parsedTaints = parseReduxFormTaints(formData.taints);
@@ -45,7 +66,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     if (parsedTaints.length > 0) {
       machinePoolRequest.taints = parsedTaints;
     }
-
     dispatch(addMachinePool(ownProps.cluster.id, machinePoolRequest));
   },
   clearAddMachinePoolResponse: () => dispatch(clearAddMachinePoolResponse()),

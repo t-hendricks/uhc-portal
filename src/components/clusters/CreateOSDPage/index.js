@@ -14,6 +14,8 @@ import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/helpers';
 
+import { canAutoScaleSelector } from '../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+
 import {
   hasManagedQuotaSelector,
   hasAwsQuotaSelector,
@@ -71,6 +73,11 @@ const mapStateToProps = (state, ownProps) => {
     privateClusterSelected,
     product,
 
+    canAutoScale: canAutoScaleSelector(state, product),
+    autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
+    autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
+    autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
+
     initialValues: {
       byoc: 'false',
       name: '',
@@ -94,13 +101,13 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: async (formData) => {
+    const isMultiAz = formData.multi_az === 'true';
     const clusterRequest = {
       name: formData.name,
       region: {
         id: formData.region,
       },
       nodes: {
-        compute: parseInt(formData.nodes_compute, 10),
         compute_machine_type: {
           id: formData.machine_type,
         },
@@ -109,13 +116,25 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       cloud_provider: {
         id: ownProps.cloudProviderID,
       },
-      multi_az: formData.multi_az === 'true',
+      multi_az: isMultiAz,
       node_drain_grace_period: {
         value: formData.node_drain_grace_period,
         unit: 'minutes',
       },
       etcd_encryption: formData.etcd_encryption,
     };
+
+    if (formData.autoscalingEnabled) {
+      const minNodes = parseInt(formData.min_replicas, 10);
+      const maxNodes = parseInt(formData.max_replicas, 10);
+
+      clusterRequest.nodes.autoscale_compute = {
+        min_replicas: isMultiAz ? minNodes * 3 : minNodes,
+        max_replicas: isMultiAz ? maxNodes * 3 : minNodes,
+      };
+    } else {
+      clusterRequest.nodes.compute = parseInt(formData.nodes_compute, 10);
+    }
 
     const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
 
@@ -154,7 +173,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             formData.private_subnet_id_0, formData.public_subnet_id_0,
           ];
 
-          if (formData.multi_az === 'true') {
+          if (isMultiAz) {
             subnetIds = [
               ...subnetIds,
               formData.private_subnet_id_1, formData.public_subnet_id_1,
@@ -167,7 +186,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             formData.az_0,
           ];
 
-          if (formData.multi_az === 'true') {
+          if (isMultiAz) {
             AZs = [
               ...AZs,
               formData.az_1,

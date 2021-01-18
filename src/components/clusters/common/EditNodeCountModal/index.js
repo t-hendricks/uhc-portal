@@ -17,6 +17,8 @@ import {
   clearGetMachinePoolsResponse,
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
 
+import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+
 const reduxFormConfig = {
   form: 'EditNodeCount',
   enableReinitialize: true,
@@ -58,10 +60,18 @@ const mapStateToProps = (state) => {
     cloudProviderID: get(cluster, 'cloud_provider.id', ''),
     isByoc: cluster?.ccs?.enabled,
     product: cluster?.subscription?.plan?.id,
+    autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
+    canAutoScale: canAutoScaleSelector(state, get(cluster, 'product.id', '')),
+    autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
+    autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
   };
+
+  let machinePoolWithAutoscale = false;
 
   // Cluster's default machine pool case
   if (selectedMachinePool === 'Default') {
+    machinePoolWithAutoscale = 'autoscale_compute' in get(cluster, 'nodes', {});
+
     return ({
       ...commonProps,
       editNodeCountResponse: state.clusters.editedCluster,
@@ -70,12 +80,16 @@ const mapStateToProps = (state) => {
       initialValues: {
         nodes_compute: get(cluster, 'nodes.compute', null),
         machine_pool: 'Default',
+        autoscalingEnabled: machinePoolWithAutoscale,
+        ...(machinePoolWithAutoscale && get(cluster, 'nodes.autoscale_compute')),
       },
     });
   }
   // Any other machine pool
-  const selectedMachinePoolData = state.machinePools.getMachinePools.data
-    .find(machinePool => machinePool.id === selectedMachinePool);
+  const selectedMachinePoolData = get(state, 'machinePools.getMachinePools.data', [])
+    .find(machinePool => machinePool.id === selectedMachinePool) || {};
+
+  machinePoolWithAutoscale = 'autoscaling' in selectedMachinePoolData;
 
   return ({
     ...commonProps,
@@ -85,23 +99,33 @@ const mapStateToProps = (state) => {
     initialValues: {
       nodes_compute: get(selectedMachinePoolData, 'replicas', null),
       machine_pool: selectedMachinePool,
+      autoscalingEnabled: machinePoolWithAutoscale,
+      ...(machinePoolWithAutoscale && selectedMachinePoolData.autoscaling),
     },
   });
 };
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: (formData, clusterID) => {
+    const machinePoolRequest = {};
+    const nodesCount = parseInt(formData.nodes_compute, 10);
+    const autoScaleLimits = {
+      min_replicas: parseInt(formData.min_replicas, 10),
+      max_replicas: parseInt(formData.max_replicas, 10),
+    };
+
     if (formData.machine_pool === 'Default') {
-      dispatch(editCluster(
-        clusterID,
-        { nodes: { compute: parseInt(formData.nodes_compute, 10) } },
-      ));
+      machinePoolRequest.nodes = formData.autoscalingEnabled
+        ? { autoscale_compute: autoScaleLimits } : { compute: nodesCount };
+
+      dispatch(editCluster(clusterID, machinePoolRequest));
     } else {
-      dispatch(scaleMachinePool(
-        clusterID,
-        formData.machine_pool,
-        { replicas: parseInt(formData.nodes_compute, 10) },
-      ));
+      if (formData.autoscalingEnabled) {
+        machinePoolRequest.autoscaling = autoScaleLimits;
+      } else {
+        machinePoolRequest.replicas = nodesCount;
+      }
+      dispatch(scaleMachinePool(clusterID, formData.machine_pool, machinePoolRequest));
     }
   },
   getMachinePools: clusterID => dispatch(getMachinePools(clusterID)),

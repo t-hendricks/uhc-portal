@@ -33,6 +33,11 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         </FormGroup>
       </GridItem>
       <ScaleSection
+        autoScaleMaxNodesValue="0"
+        autoScaleMinNodesValue="0"
+        autoscalingEnabled={true}
+        canAutoScale={false}
+        change={[MockFunction]}
         cloudProviderID="aws"
         gridSpan={12}
         handleMachineTypesChange={[Function]}
@@ -41,7 +46,6 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         isMultiAz={false}
         machineType=""
         minNodes={0}
-        nodeLabelsGridSpan={6}
         product="OSD"
         showStorageAndLoadBalancers={false}
       />

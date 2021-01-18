@@ -124,6 +124,10 @@ class CreateOSDForm extends React.Component {
       canEnableEtcdEncryption,
       selectedRegion,
       installToVPCSelected,
+      canAutoScale,
+      autoscalingEnabled,
+      autoScaleMinNodesValue,
+      autoScaleMaxNodesValue,
     } = this.props;
 
     const {
@@ -253,6 +257,11 @@ class CreateOSDForm extends React.Component {
           handleMachineTypesChange={this.handleMachineTypesChange}
           cloudProviderID={cloudProviderID}
           product={product}
+          canAutoScale={canAutoScale}
+          autoscalingEnabled={autoscalingEnabled}
+          change={change}
+          autoScaleMinNodesValue={autoScaleMinNodesValue}
+          autoScaleMaxNodesValue={autoScaleMaxNodesValue}
         />
         {/* Networking section */}
         <NetworkingSection
@@ -308,6 +317,8 @@ class CreateOSDForm extends React.Component {
 CreateOSDForm.defaultProps = {
   pending: false,
   isBYOCModalOpen: false,
+  autoScaleMinNodesValue: '0',
+  autoScaleMaxNodesValue: '0',
 };
 
 CreateOSDForm.propTypes = {
@@ -345,6 +356,10 @@ CreateOSDForm.propTypes = {
   canEnableEtcdEncryption: PropTypes.bool,
   selectedRegion: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
+  canAutoScale: PropTypes.bool.isRequired,
+  autoscalingEnabled: PropTypes.bool.isRequired,
+  autoScaleMinNodesValue: PropTypes.string,
+  autoScaleMaxNodesValue: PropTypes.string,
 };
 
 export default CreateOSDForm;

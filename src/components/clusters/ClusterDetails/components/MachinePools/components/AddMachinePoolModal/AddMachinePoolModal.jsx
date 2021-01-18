@@ -56,6 +56,11 @@ class AddMachinePoolModal extends Component {
       cluster,
       pristine,
       organization,
+      canAutoScale,
+      autoscalingEnabled,
+      change,
+      autoScaleMinNodesValue,
+      autoScaleMaxNodesValue,
     } = this.props;
 
     const { machineType } = this.state;
@@ -105,7 +110,11 @@ class AddMachinePoolModal extends Component {
                 gridSpan={12}
                 minNodes={0}
                 isMachinePool
-                nodeLabelsGridSpan={6}
+                canAutoScale={canAutoScale}
+                autoscalingEnabled={autoscalingEnabled}
+                change={change}
+                autoScaleMinNodesValue={autoScaleMinNodesValue}
+                autoScaleMaxNodesValue={autoScaleMaxNodesValue}
               />
             </Grid>
           </Form>
@@ -126,10 +135,17 @@ AddMachinePoolModal.propTypes = {
   machineTypes: PropTypes.object.isRequired,
   pristine: PropTypes.bool.isRequired,
   organization: PropTypes.object,
+  canAutoScale: PropTypes.bool.isRequired,
+  autoscalingEnabled: PropTypes.bool.isRequired,
+  change: PropTypes.func.isRequired,
+  autoScaleMinNodesValue: PropTypes.string,
+  autoScaleMaxNodesValue: PropTypes.string,
 };
 
 AddMachinePoolModal.defaultProps = {
   addMachinePoolResponse: {},
+  autoScaleMinNodesValue: '0',
+  autoScaleMaxNodesValue: '0',
 };
 
 export default AddMachinePoolModal;

@@ -15,6 +15,8 @@ describe('CreateOSDForm;', () => {
       cloudProviderID="aws"
       privateClusterSelected={false}
       product={normalizedProducts.OSD}
+      canAutoScale={false}
+      autoscalingEnabled={false}
     />);
 
     expect(wrapper).toMatchSnapshot();
@@ -30,6 +32,8 @@ describe('CreateOSDForm;', () => {
       privateClusterSelected={false}
       product={normalizedProducts.OSD}
       canEnableEtcdEncryption
+      canAutoScale={false}
+      autoscalingEnabled={false}
     />);
 
     expect(wrapper.find('Field[name="etcd_encryption"]').length).toEqual(1);

@@ -1,4 +1,4 @@
-import hasMachinePoolsQuotaSelector from '../MachinePoolsSelectors';
+import { hasMachinePoolsQuotaSelector } from '../MachinePoolsSelectors';
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
 import { stateWithQuota, stateWithNoQuota } from './MachinePools.fixtures';
 

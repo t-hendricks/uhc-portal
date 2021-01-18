@@ -27,6 +27,8 @@ const baseProps = {
     id: '',
     nodes_compute: 0,
   },
+  isMultiAz: true,
+  isBYOC: false,
 };
 
 describe('<EditNodeCountModal />', () => {
