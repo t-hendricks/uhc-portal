@@ -11,7 +11,7 @@ const InstructionsAWS = () => (
         AWS: Select an installation type
       </Title>
       <div className="flex-container">
-        <Link to="/create/aws/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/aws/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isRecommened />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <SyncAltIcon
@@ -23,7 +23,7 @@ const InstructionsAWS = () => (
             provisions and the cluster maintains.
           </CardBody>
         </Link>
-        <Link to="/create/aws/user-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/aws/user-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isHidden />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <UserIcon

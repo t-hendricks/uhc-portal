@@ -1,5 +1,16 @@
 .cluster-create-page {
-  h2.light {
+  .ocm-sandbox-graytext {
+    color: var(--pf-global--Color--200);
+  }
+  h2.ocm-ocp-sandbox-title {
+    display: inline-block;
+    margin-right: var(--pf-global--spacer--md);
+  }
+
+  table a.pf-c-button.pf-m-secondary {
+    width: 150px;
+  }
+  h2.font-weight-light {
     font-weight: var(--pf-global--FontWeight--light);
   }
 
@@ -27,12 +38,6 @@
 
   .ocm-instructions-crc__card {
     padding: 0;
-    .download-instructions.header {
-      max-width: 800px;
-      small {
-        color: var(--pf-global--Color--400);
-      }
-    }
   }
 
   #subscriptions {

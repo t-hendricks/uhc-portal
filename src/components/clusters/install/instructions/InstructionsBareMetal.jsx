@@ -23,7 +23,7 @@ export const InstructionsBareMetal = () => (
             that makes it easy to connect discovered hardware.
           </CardBody>
         </Link>
-        <Link to="/create/metal/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/metal/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isRecommened />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <SyncAltIcon
@@ -35,7 +35,7 @@ export const InstructionsBareMetal = () => (
             provisions and the cluster maintains.
           </CardBody>
         </Link>
-        <Link to="/create/metal/user-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/metal/user-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isHidden />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <UserIcon

@@ -16,7 +16,7 @@ exports[`BareMetal UPI install renders correctly 1`] = `
             },
             Object {
               "label": "Bare Metal",
-              "path": "/create/metal",
+              "path": "/install/metal",
             },
             Object {
               "label": "User-provisioned infrastructure",
@@ -42,7 +42,7 @@ exports[`BareMetal UPI install renders correctly 1`] = `
               },
               Object {
                 "label": "Bare Metal",
-                "path": "/create/metal",
+                "path": "/install/metal",
               },
               Object {
                 "label": "User-provisioned infrastructure",

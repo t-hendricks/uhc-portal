@@ -11,6 +11,7 @@ import {
   TextContent,
   Divider,
   Button,
+  Label,
 } from '@patternfly/react-core';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
@@ -23,24 +24,27 @@ import '../install/instructions/Instructions.scss';
 const cloudProviderID = window.location.pathname;
 const docURL = 'https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/';
 
-const LaptopTab = ({ token }) => (
+const SandboxTab = ({ token }) => (
   <>
     <PageSection className="ocm-instructions-crc__card">
       <Stack hasGutter className="download-instructions header">
         <StackItem>
-          <Title headingLevel="h2">
+          <Title headingLevel="h2" className="ocm-ocp-sandbox-title">
           Red Hat CodeReady Containers
           </Title>
+          <Label>
+            local sandbox
+          </Label>
         </StackItem>
         <StackItem>
         Create, set up, and manage a minimal OpenShift 4 cluster through a pre-configured
         installation for local development with access to developer-focused resources.
         </StackItem>
         <StackItem>
-          <Text component="small">
-            Note: Your CodeReady Container cluster will not show in your list of clusters in
-            OpenShift Cluster Manager since it is short-lived and occasionally running.
-            OpenShift Cluster Manager currently shows only production-level clusters.
+          <Text component="p" className="ocm-sandbox-graytext">
+            <b>Note: </b>
+            Your CodeReady installation won&apos;t appear in the OpenShift Cluster Manager
+            because it is not a production-level cluster.
           </Text>
         </StackItem>
       </Stack>
@@ -134,8 +138,8 @@ const LaptopTab = ({ token }) => (
   </>
 );
 
-LaptopTab.propTypes = {
+SandboxTab.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default LaptopTab;
+export default SandboxTab;

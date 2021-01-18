@@ -15,7 +15,7 @@ import Breadcrumbs from '../common/Breadcrumbs';
 import { shouldRefetchQuota } from '../../../common/helpers';
 import DatacenterTab from './DatacenterTab';
 import CloudTab from './CloudTab';
-import LaptopTab from './LaptopTab';
+import SandboxTab from './SandboxTab';
 
 
 class CreateCluster extends React.Component {
@@ -39,7 +39,9 @@ class CreateCluster extends React.Component {
     };
 
     render() {
-      const { hasOSDQuota, organization, token } = this.props;
+      const {
+        hasOSDQuota, organization, token, assistedInstallerFeature,
+      } = this.props;
       const { activeTabKey } = this.state;
 
       const title = (
@@ -86,7 +88,7 @@ class CreateCluster extends React.Component {
                   <LaptopIcon />
                 </TabTitleIcon>
                 <TabTitleText>
-                  Laptop
+                  Sandbox
                 </TabTitleText>
               </>
             );
@@ -103,13 +105,13 @@ class CreateCluster extends React.Component {
           <PageSection variant="light" className="cluster-create-page">
             <Tabs isFilled activeKey={activeTabKey} onSelect={this.handleTabClick}>
               <Tab eventKey={0} title={tabTitle(0)}>
-                <DatacenterTab />
+                <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
               </Tab>
               <Tab eventKey={1} title={tabTitle(1)}>
                 <CloudTab hasOSDQuota={hasOSDQuota} />
               </Tab>
               <Tab eventKey={2} title={tabTitle(2)}>
-                <LaptopTab token={token} />
+                <SandboxTab token={token} />
               </Tab>
             </Tabs>
           </PageSection>
@@ -127,10 +129,14 @@ class CreateCluster extends React.Component {
 
 CreateCluster.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
-  organization: PropTypes.object.isRequired,
+  organization: PropTypes.shape({
+    fulfilled: PropTypes.bool,
+    error: PropTypes.bool,
+  }).isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   token: PropTypes.object.isRequired,
   getAuthToken: PropTypes.func.isRequired,
+  assistedInstallerFeature: PropTypes.bool,
 };
 
 export default CreateCluster;

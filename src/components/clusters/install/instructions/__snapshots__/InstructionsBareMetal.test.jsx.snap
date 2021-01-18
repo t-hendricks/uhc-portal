@@ -42,7 +42,7 @@ exports[`BareMetal instructions renders correctly 1`] = `
       </Link>
       <Link
         className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-        to="/create/metal/installer-provisioned"
+        to="/install/metal/installer-provisioned"
       >
         <CardBadge
           isRecommened={true}
@@ -68,7 +68,7 @@ exports[`BareMetal instructions renders correctly 1`] = `
       </Link>
       <Link
         className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-        to="/create/metal/user-provisioned"
+        to="/install/metal/user-provisioned"
       >
         <CardBadge
           isHidden={true}

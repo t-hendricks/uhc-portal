@@ -119,12 +119,12 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
               />
             </TabTitleIcon>
             <TabTitleText>
-              Laptop
+              Sandbox
             </TabTitleText>
           </React.Fragment>
         }
       >
-        <LaptopTab
+        <SandboxTab
           token={Object {}}
         />
       </Tab>
@@ -223,12 +223,12 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
               />
             </TabTitleIcon>
             <TabTitleText>
-              Laptop
+              Sandbox
             </TabTitleText>
           </React.Fragment>
         }
       >
-        <LaptopTab
+        <SandboxTab
           token={Object {}}
         />
       </Tab>

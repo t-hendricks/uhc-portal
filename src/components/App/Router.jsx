@@ -85,34 +85,34 @@ function Router({ history }) {
               to ensure the route is tested.
             */}
             <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
-            <Redirect from="/install" to="create" />
             <Redirect from="/token/moa" to="/token/rosa" />
             <TermsGuardedRoute path="/token/rosa" component={TokensROSA} history={history} />
             <Route path="/token" component={Tokens} />
-            <Route path="/create/aws/installer-provisioned" component={InstallAWSIPI} />
-            <Route path="/create/aws/user-provisioned" component={InstallAWSUPI} />
-            <Route path="/create/aws" component={InstallAWS} />
-            <Route path="/create/gcp/installer-provisioned" component={InstallGCPIPI} />
-            <Route path="/create/gcp/user-provisioned" component={InstallGCPUPI} />
-            <Route path="/create/gcp" component={InstallGCP} />
-            <Route path="/create/openstack/installer-provisioned" component={InstallOSPIPI} />
-            <Route path="/create/openstack/user-provisioned" component={InstallOSPUPI} />
-            <Route path="/create/openstack" component={InstallOSP} />
-            <Route path="/create/rhv/installer-provisioned" component={InstallRHVIPI} />
-            <Route path="/create/rhv/user-provisioned" component={InstallRHVUPI} />
-            <Route path="/create/rhv" component={InstallRHV} />
-            <Route path="/create/azure/installer-provisioned" component={InstallAzureIPI} />
-            <Route path="/create/azure/user-provisioned" component={InstallAzureUPI} />
-            <Route path="/create/azure" exact component={InstallAzure} />
-            <Route path="/create/metal/user-provisioned" component={InstallBMUPI} />
-            <Route path="/create/metal/installer-provisioned" component={InstallBMIPI} />
-            <Route path="/create/metal" component={GatedMetalInstall} />
-            <Route path="/create/vsphere/user-provisioned" component={InstallVSphere} />
-            <Route path="/create/ibmz/user-provisioned" component={InstallIBM} />
-            <Route path="/create/power/user-provisioned" component={InstallPower} />
-            <Route path="/create/pre-release" component={InstallPreRelease} />
-            <Route path="/create/pull-secret" component={InstallPullSecret} />
-            <Route path="/create/azure/aro-provisioned" component={InstallPullSecretAzure} />
+            <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
+            <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
+            <Route path="/install/aws" component={InstallAWS} />
+            <Route path="/install/gcp/installer-provisioned" component={InstallGCPIPI} />
+            <Route path="/install/gcp/user-provisioned" component={InstallGCPUPI} />
+            <Route path="/install/gcp" component={InstallGCP} />
+            <Route path="/install/openstack/installer-provisioned" component={InstallOSPIPI} />
+            <Route path="/install/openstack/user-provisioned" component={InstallOSPUPI} />
+            <Route path="/install/openstack" component={InstallOSP} />
+            <Route path="/install/rhv/installer-provisioned" component={InstallRHVIPI} />
+            <Route path="/install/rhv/user-provisioned" component={InstallRHVUPI} />
+            <Route path="/install/rhv" component={InstallRHV} />
+            <Route path="/install/azure/installer-provisioned" component={InstallAzureIPI} />
+            <Route path="/install/azure/user-provisioned" component={InstallAzureUPI} />
+            <Route path="/install/azure" exact component={InstallAzure} />
+            <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
+            <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
+            <Route path="/install/metal" component={GatedMetalInstall} />
+            <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
+            <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
+            <Route path="/install/power/user-provisioned" component={InstallPower} />
+            <Route path="/install/pre-release" component={InstallPreRelease} />
+            <Route path="/install/pull-secret" component={InstallPullSecret} />
+            <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
+            <Redirect from="/install" to="/create" />
             <TermsGuardedRoute path="/create/osd/aws" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="aws" />} history={history} />
             <TermsGuardedRoute path="/create/osd/gcp" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="gcp" />} history={history} />
             <Route path="/create/osd" component={CloudProviderSelection} />

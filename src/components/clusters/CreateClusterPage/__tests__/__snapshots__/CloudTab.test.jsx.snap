@@ -12,11 +12,10 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
         <Title
           headingLevel="h2"
         >
-          Current managed subscriptions
+          Active subscriptions
         </Title>
       </StackItem>
       <StackItem>
-        This is a list of your active OpenShift subscriptions.
         <Table
           aria-label="Managed subscriptions"
           borders={true}
@@ -213,15 +212,15 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   "Microsoft Azure",
                   "Flexible hourly billing",
                   <React.Fragment>
-                    <a
+                    <Button
+                      component="a"
                       href="https://azure.microsoft.com/en-us/services/openshift"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      variant="secondary"
                     >
-                      <Button
-                        variant="secondary"
-                      >
-                        Try it on Azure
-                      </Button>
-                    </a>
+                      Try it on Azure
+                    </Button>
                   </React.Fragment>,
                 ],
                 "isOpen": false,
@@ -239,7 +238,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.ibm.com/cloud/openshift"
+                          href="https://azure.microsoft.com/en-us/services/openshift"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -279,15 +278,15 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   "IBM",
                   "Flexible hourly billing",
                   <React.Fragment>
-                    <a
+                    <Button
+                      component="a"
                       href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      variant="secondary"
                     >
-                      <Button
-                        variant="secondary"
-                      >
-                        Try it on IBM
-                      </Button>
-                    </a>
+                      Try it on IBM
+                    </Button>
                   </React.Fragment>,
                 ],
                 "isOpen": false,
@@ -309,7 +308,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                           rel="noopener noreferrer"
                           target="_blank"
                         >
-                          Learn more about IBM OpenShift
+                          Learn more about Red Hat OpenShift on IBM Cloud
                            
                           <ArrowRightIcon
                             color="currentColor"
@@ -345,15 +344,14 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   "Amazon Web Services",
                   "Flexible hourly billing",
                   <React.Fragment>
-                    <a
+                    <Button
+                      component="a"
                       href="https://www.openshift.com/products/amazon-openshift"
+                      rel="noopener noreferrer"
+                      variant="secondary"
                     >
-                      <Button
-                        variant="secondary"
-                      >
-                        Learn more
-                      </Button>
-                    </a>
+                      Learn more
+                    </Button>
                   </React.Fragment>,
                 ],
                 "isOpen": false,
@@ -371,11 +369,11 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.ibm.com/cloud/openshift"
+                          href="https://www.openshift.com/products/amazon-openshift"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
-                          Learn more about Amazon Red Hat OpenShift
+                          Learn more about Red Hat OpenShift Service on AWS
                            
                           <ArrowRightIcon
                             color="currentColor"
@@ -407,14 +405,14 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
     >
       <StackItem>
         <Title
-          className="light"
+          className="font-weight-light"
           headingLevel="h2"
         >
           Run it yourself
         </Title>
       </StackItem>
       <StackItem>
-        If you cannot have someone run it for you because of reasons, you can run it yourself.
+        Run OpenShift clusters on your own by installing from another cloud provider.
         <Table
           aria-label="Run it yourself"
           borders={true}
@@ -440,7 +438,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/create/aws"
+                    to="/install/aws"
                   >
                     AWS
                   </Link>
@@ -450,7 +448,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/create/azure"
+                    to="/install/azure"
                   >
                     Azure
                   </Link>
@@ -460,7 +458,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/create/gcp"
+                    to="/install/gcp"
                   >
                     Google Cloud
                   </Link>
@@ -470,7 +468,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/create/metal"
+                    to="/install/metal"
                   >
                     Platform agnostic
                   </Link>
@@ -580,15 +578,15 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   "Red Hat",
                   "Available on AWS and GCP",
                   <React.Fragment>
-                    <a
-                      href="https://www.openshift.com/products/amazon-openshift"
+                    <Button
+                      component="a"
+                      href="https://www.openshift.com/products/dedicated/"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      variant="secondary"
                     >
-                      <Button
-                        variant="secondary"
-                      >
-                        Learn more
-                      </Button>
-                    </a>
+                      Learn more
+                    </Button>
                   </React.Fragment>,
                 ],
                 "isOpen": false,
@@ -610,7 +608,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                           rel="noopener noreferrer"
                           target="_blank"
                         >
-                          Learn more about Red Hat OpenShift
+                          Learn more about Red Hat OpenShift Dedicated
                            
                           <ArrowRightIcon
                             color="currentColor"
@@ -646,15 +644,15 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   "Microsoft Azure",
                   "Flexible hourly billing",
                   <React.Fragment>
-                    <a
+                    <Button
+                      component="a"
                       href="https://azure.microsoft.com/en-us/services/openshift"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      variant="secondary"
                     >
-                      <Button
-                        variant="secondary"
-                      >
-                        Try it on Azure
-                      </Button>
-                    </a>
+                      Try it on Azure
+                    </Button>
                   </React.Fragment>,
                 ],
                 "isOpen": false,
@@ -672,7 +670,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.ibm.com/cloud/openshift"
+                          href="https://azure.microsoft.com/en-us/services/openshift"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -712,15 +710,15 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   "IBM",
                   "Flexible hourly billing",
                   <React.Fragment>
-                    <a
+                    <Button
+                      component="a"
                       href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      variant="secondary"
                     >
-                      <Button
-                        variant="secondary"
-                      >
-                        Try it on IBM
-                      </Button>
-                    </a>
+                      Try it on IBM
+                    </Button>
                   </React.Fragment>,
                 ],
                 "isOpen": false,
@@ -742,7 +740,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                           rel="noopener noreferrer"
                           target="_blank"
                         >
-                          Learn more about IBM OpenShift
+                          Learn more about Red Hat OpenShift on IBM Cloud
                            
                           <ArrowRightIcon
                             color="currentColor"
@@ -778,15 +776,14 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   "Amazon Web Services",
                   "Flexible hourly billing",
                   <React.Fragment>
-                    <a
+                    <Button
+                      component="a"
                       href="https://www.openshift.com/products/amazon-openshift"
+                      rel="noopener noreferrer"
+                      variant="secondary"
                     >
-                      <Button
-                        variant="secondary"
-                      >
-                        Learn more
-                      </Button>
-                    </a>
+                      Learn more
+                    </Button>
                   </React.Fragment>,
                 ],
                 "isOpen": false,
@@ -804,11 +801,11 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.ibm.com/cloud/openshift"
+                          href="https://www.openshift.com/products/amazon-openshift"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
-                          Learn more about Amazon Red Hat OpenShift
+                          Learn more about Red Hat OpenShift Service on AWS
                            
                           <ArrowRightIcon
                             color="currentColor"
@@ -840,14 +837,14 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
     >
       <StackItem>
         <Title
-          className="light"
+          className="font-weight-light"
           headingLevel="h2"
         >
           Run it yourself
         </Title>
       </StackItem>
       <StackItem>
-        If you cannot have someone run it for you because of reasons, you can run it yourself.
+        Run OpenShift clusters on your own by installing from another cloud provider.
         <Table
           aria-label="Run it yourself"
           borders={true}
@@ -873,7 +870,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/create/aws"
+                    to="/install/aws"
                   >
                     AWS
                   </Link>
@@ -883,7 +880,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/create/azure"
+                    to="/install/azure"
                   >
                     Azure
                   </Link>
@@ -893,7 +890,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/create/gcp"
+                    to="/install/gcp"
                   >
                     Google Cloud
                   </Link>
@@ -903,7 +900,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/create/metal"
+                    to="/install/metal"
                   >
                     Platform agnostic
                   </Link>

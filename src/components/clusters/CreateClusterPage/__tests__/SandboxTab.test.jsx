@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import LaptopTab from '../DatacenterTab';
+import SandboxTab from '../SandboxTab';
 
-describe('<DatacenterTab />', () => {
+describe('<SandboxTab />', () => {
   it('renders correctly', () => {
     const wrapper = shallow(
-      <LaptopTab
+      <SandboxTab
         token={{}}
       />,
     );

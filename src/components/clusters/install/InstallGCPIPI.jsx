@@ -27,7 +27,7 @@ class InstallGCPIPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'Google Cloud Platform', path: '/create/gcp' },
+        { label: 'Google Cloud Platform', path: '/install/gcp' },
         { label: 'Installer-provisioned infrastructure' },
       ]}
       />

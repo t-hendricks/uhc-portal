@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SandboxTab /> renders correctly 1`] = `
+<Fragment>
+  <PageSection
+    className="ocm-instructions-crc__card"
+  >
+    <Stack
+      className="download-instructions header"
+      hasGutter={true}
+    >
+      <StackItem>
+        <Title
+          className="ocm-ocp-sandbox-title"
+          headingLevel="h2"
+        >
+          Red Hat CodeReady Containers
+        </Title>
+        <Label>
+          local sandbox
+        </Label>
+      </StackItem>
+      <StackItem>
+        Create, set up, and manage a minimal OpenShift 4 cluster through a pre-configured installation for local development with access to developer-focused resources.
+      </StackItem>
+      <StackItem>
+        <Text
+          className="ocm-sandbox-graytext"
+          component="p"
+        >
+          <b>
+            Note: 
+          </b>
+          Your CodeReady installation won't appear in the OpenShift Cluster Manager because it is not a production-level cluster.
+        </Text>
+      </StackItem>
+    </Stack>
+    <Divider />
+    <Stack>
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              1
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <TextContent>
+              <Text
+                component="h2"
+              >
+                What you need to get started
+              </Text>
+              <Text
+                component="h3"
+              >
+                CodeReady Containers archive
+              </Text>
+              <Text
+                component="p"
+              >
+                Download and extract the CodeReady Containers archive for your operating system and place the executable in your
+                 
+                <code>
+                  $PATH
+                </code>
+                 
+                .
+              </Text>
+              <DownloadAndOSSelection
+                channel="CRC"
+                cloudProviderID="/"
+                mode="CRC"
+                token={Object {}}
+              />
+              <Text
+                component="h3"
+              >
+                Pull secret
+              </Text>
+              <PullSecretSection
+                cloudProviderID="/"
+                token={Object {}}
+              />
+            </TextContent>
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider />
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              2
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <TextContent>
+              <Text
+                component="h2"
+              >
+                Follow the documentation to install CodeReady containers
+              </Text>
+              <Text
+                component="p"
+              >
+                Run the
+                 
+                <code>
+                  crc setup
+                </code>
+                 
+                command to set up your host operating system for the CodeReady Containers virtual machine.
+              </Text>
+              <Text
+                component="p"
+              >
+                Then, the
+                 
+                <code>
+                  crc start
+                </code>
+                 
+                will create a minimal OpenShift 4 cluster on your laptop or desktop computer.
+              </Text>
+              <Button
+                className="pf-u-mb-md"
+                component="a"
+                href="https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/"
+                onClick={[Function]}
+                rel="noreferrer noopener"
+                target="_blank"
+                variant="secondary"
+              >
+                Get started
+              </Button>
+            </TextContent>
+          </SplitItem>
+        </Split>
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;

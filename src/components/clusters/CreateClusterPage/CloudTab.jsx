@@ -17,7 +17,7 @@ import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import AWSLogo from '../../../styles/images/AWS.png';
-import { links } from './CreateClusterConsts';
+import links from './CreateClusterConsts';
 
 
 const getColumns = () => ([
@@ -55,12 +55,8 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true) => {
       },
       (
         <>
-          <a
-            href={links.OSD_LEARN_MORE}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-              Red Hat OpenShift Dedicated
+          <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
+            Red Hat OpenShift Dedicated
           </a>
         </>
       ),
@@ -75,13 +71,9 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true) => {
               </Button>
             </Link>
           ) : (
-            <a
-              href={links.AWS}
-            >
-              <Button variant="secondary">
-                Learn more
-              </Button>
-            </a>
+            <Button component="a" href={links.OSD_LEARN_MORE} variant="secondary" rel="noopener noreferrer" target="_blank">
+              Learn more
+            </Button>
           )}
         </>
       ),
@@ -102,12 +94,8 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true) => {
               Hosted on Amazon Web Services (AWS) and Google Cloud.
             </StackItem>
             <StackItem>
-              <a
-                href={links.OSD_LEARN_MORE}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Learn more about Red Hat OpenShift
+              <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
+                Learn more about Red Hat OpenShift Dedicated
                 {' '}
                 <ArrowRightIcon />
               </a>
@@ -174,11 +162,7 @@ const managedServices = (hasQuota) => {
       ,
       (
         <>
-          <a
-            href={links.AZURE}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={links.AZURE} target="_blank" rel="noopener noreferrer">
             Azure Red Hat Openshift
           </a>
         </>
@@ -187,13 +171,9 @@ const managedServices = (hasQuota) => {
       'Flexible hourly billing',
       (
         <>
-          <a
-            href={links.AZURE}
-          >
-            <Button variant="secondary">
+          <Button component="a" href={links.AZURE} variant="secondary" target="_blank" rel="noopener noreferrer">
           Try it on Azure
-            </Button>
-          </a>
+          </Button>
         </>
       ),
     ],
@@ -212,11 +192,7 @@ const managedServices = (hasQuota) => {
               Hosted on Microsoft Azure.
             </StackItem>
             <StackItem>
-              <a
-                href={links.IBM_CLOUD_LEARN_MORE}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={links.AZURE} target="_blank" rel="noopener noreferrer">
                 Learn more about Azure Red Hat OpenShift
                 {' '}
                 <ArrowRightIcon />
@@ -237,12 +213,8 @@ const managedServices = (hasQuota) => {
       ),
       (
         <>
-          <a
-            href={links.IBM_CLOUD_LEARN_MORE}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-              OpenShift on IBM Cloud
+          <a href={links.IBM_CLOUD_LEARN_MORE} target="_blank" rel="noopener noreferrer">
+            OpenShift on IBM Cloud
           </a>
         </>
       ),
@@ -250,13 +222,9 @@ const managedServices = (hasQuota) => {
       'Flexible hourly billing',
       (
         <>
-          <a
-            href={links.IBM_CLOUD}
-          >
-            <Button variant="secondary">
-            Try it on IBM
-            </Button>
-          </a>
+          <Button component="a" href={links.IBM_CLOUD} variant="secondary" target="_blank" rel="noopener noreferrer">
+          Try it on IBM
+          </Button>
         </>
       ),
     ],
@@ -275,12 +243,8 @@ const managedServices = (hasQuota) => {
               Hosted on IBM Cloud.
             </StackItem>
             <StackItem>
-              <a
-                href={links.IBM_CLOUD_LEARN_MORE}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Learn more about IBM OpenShift
+              <a href={links.IBM_CLOUD_LEARN_MORE} target="_blank" rel="noopener noreferrer">
+                Learn more about Red Hat OpenShift on IBM Cloud
                 {' '}
                 <ArrowRightIcon />
               </a>
@@ -300,12 +264,8 @@ const managedServices = (hasQuota) => {
       ),
       (
         <>
-          <a
-            href={links.AWS}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-              Red Hat OpenShift Service on AWS
+          <a href={links.AWS} target="_blank" rel="noopener noreferrer">
+            Red Hat OpenShift Service on AWS
           </a>
         </>
       ),
@@ -313,13 +273,9 @@ const managedServices = (hasQuota) => {
       'Flexible hourly billing',
       (
         <>
-          <a
-            href={links.AWS}
-          >
-            <Button variant="secondary">
+          <Button component="a" href={links.AWS} rel="noopener noreferrer" variant="secondary">
             Learn more
-            </Button>
-          </a>
+          </Button>
         </>
       ),
     ],
@@ -338,12 +294,8 @@ const managedServices = (hasQuota) => {
               Hosted on AWS.
             </StackItem>
             <StackItem>
-              <a
-                href={links.IBM_CLOUD_LEARN_MORE}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Learn more about Amazon Red Hat OpenShift
+              <a href={links.AWS} target="_blank" rel="noopener noreferrer">
+                Learn more about Red Hat OpenShift Service on AWS
                 {' '}
                 <ArrowRightIcon />
               </a>
@@ -376,49 +328,21 @@ const runItYourself = () => {
   const columns = ['Cloud provider', 'Installation options'];
   const rows = [
     [
-      (
-        <>
-          <Link
-            to="/create/aws"
-          >
-                AWS
-          </Link>
-        </>
-      ),
-      'Full stack automation and pre-existing infrastructure'],
+      <><Link to="/install/aws">AWS</Link></>,
+      'Full stack automation and pre-existing infrastructure',
+    ],
     [
-      (
-        <>
-          <Link
-            to="/create/azure"
-          >
-              Azure
-          </Link>
-        </>
-      ),
-      'Full stack automation and pre-existing infrastructure'],
+      <><Link to="/install/azure">Azure</Link></>,
+      'Full stack automation and pre-existing infrastructure',
+    ],
     [
-      (
-        <>
-          <Link
-            to="/create/gcp"
-          >
-                Google Cloud
-          </Link>
-        </>
-      ),
-      'Full stack automation and pre-existing infrastructure'],
+      <><Link to="/install/gcp">Google Cloud</Link></>,
+      'Full stack automation and pre-existing infrastructure',
+    ],
     [
-      (
-        <>
-          <Link
-            to="/create/metal"
-          >
-            Platform agnostic
-          </Link>
-        </>
-      ),
-      'Full stack automation and pre-existing infrastructure'],
+      <><Link to="/install/metal">Platform agnostic</Link></>,
+      'Full stack automation and pre-existing infrastructure',
+    ],
   ];
   return (
     <Table
@@ -441,11 +365,10 @@ const CloudTab = ({ hasOSDQuota }) => (
         <Stack hasGutter>
           <StackItem>
             <Title headingLevel="h2">
-        Current managed subscriptions
+        Active subscriptions
             </Title>
           </StackItem>
           <StackItem>
-          This is a list of your active OpenShift subscriptions.
             {activeSubscriptionsTable()}
             <Link to="/subscriptions">
               <Button id="subscriptions" variant="link">
@@ -476,12 +399,12 @@ const CloudTab = ({ hasOSDQuota }) => (
     <PageSection>
       <Stack hasGutter>
         <StackItem>
-          <Title headingLevel="h2" className="light">
+          <Title headingLevel="h2" className="font-weight-light">
           Run it yourself
           </Title>
         </StackItem>
         <StackItem>
-          If you cannot have someone run it for you because of reasons, you can run it yourself.
+          Run OpenShift clusters on your own by installing from another cloud provider.
           {runItYourself()}
         </StackItem>
       </Stack>

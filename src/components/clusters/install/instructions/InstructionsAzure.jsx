@@ -11,7 +11,7 @@ const InstructionsAzure = () => (
         Azure: Select an installation type
       </Title>
       <div className="flex-container">
-        <Link to="/create/azure/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/azure/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isRecommened />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <SyncAltIcon
@@ -23,7 +23,7 @@ const InstructionsAzure = () => (
             provisions and the cluster maintains.
           </CardBody>
         </Link>
-        <Link to="/create/azure/user-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+        <Link to="/install/azure/user-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isHidden />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <UserIcon

@@ -27,7 +27,7 @@ export class InstallBareMetalIPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'Bare Metal', path: '/create/metal' },
+        { label: 'Bare Metal', path: '/install/metal' },
         { label: 'Installer-provisioned infrastructure' },
       ]}
       />
