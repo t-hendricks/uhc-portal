@@ -1,8 +1,8 @@
 {
   "kind": "SubscriptionList",
   "page": 1,
-  "size": 10,
-  "total": 10,
+  "size": 12,
+  "total": 12,
   "items": [
     {
       "id": "1KgB0WcVBZBdRGAreuve29yoxUB",
@@ -516,6 +516,152 @@
       "cloud_provider_id": "aws"
     },
     {
+      "id": "aws-ready-1nEonST7DqSwt",
+      "kind": "Subscription",
+      "href": "/api/accounts_mgmt/v1/subscriptions/aws-ready-1nEonST7DqSwt",
+      "plan": {
+        "id": "OSD",
+        "kind": "Plan",
+        "href": "/api/accounts_mgmt/v1/plans/OSD"
+      },
+      "cluster_id": "aws-ready-1i9h2a904lpvh",
+      "external_cluster_id": "aws-ready-68339ba4-b45a-4a13-ad2d-c3dc6c5d0456",
+      "organization_id": "1HAXGgCYqHpednsRDiwWsZBmDlA",
+      "last_telemetry_date": "2021-01-18T13:07:52.134086Z",
+      "created_at": "2021-01-18T10:12:57.511098Z",
+      "updated_at": "2021-01-18T13:07:52.134123Z",
+      "support_level": "Premium",
+      "cpu_total": 8,
+      "socket_total": 4,
+      "display_name": "osd-aws ready",
+      "creator": {
+        "id": "1MRtmsFtVUgyKlYg125H98kmeLd",
+        "kind": "Account",
+        "href": "/api/accounts_mgmt/v1/accounts/1MRtmsFtVUgyKlYg125H98kmeLd",
+        "name": "Beni Paskin-Cherniavsky",
+        "username": "bpaskinc.openshift",
+        "email": "***REMOVED***"
+      },
+      "managed": true,
+      "status": "Active",
+      "provenance": "Provisioning",
+      "last_reconcile_date": "0001-01-01T00:00:00Z",
+      "console_url": "https://console-openshift-console.apps.cben-osd-aws.cakn.p2.openshiftapps.com",
+      "capabilities": [
+        {
+          "name": "capability.cluster.subscribed_ocp",
+          "value": "true",
+          "inherited": true
+        }
+      ],
+      "last_released_at": "0001-01-01T00:00:00Z",
+      "metrics": [
+        {
+          "HealthState": "healthy",
+          "memory": {
+            "updated_timestamp": "2021-01-18T13:10:19.377Z",
+            "used": {
+              "value": 31872716800,
+              "unit": "B"
+            },
+            "total": {
+              "value": 147997958144,
+              "unit": "B"
+            }
+          },
+          "cpu": {
+            "updated_timestamp": "2021-01-18T13:10:13.825Z",
+            "used": {
+              "value": 4.047904761904727,
+              "unit": ""
+            },
+            "total": {
+              "value": 36,
+              "unit": ""
+            }
+          },
+          "sockets": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 0,
+              "unit": ""
+            }
+          },
+          "compute_nodes_memory": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": "B"
+            },
+            "total": {
+              "value": 98841460736,
+              "unit": "B"
+            }
+          },
+          "compute_nodes_cpu": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 24,
+              "unit": ""
+            }
+          },
+          "compute_nodes_sockets": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 0,
+              "unit": ""
+            }
+          },
+          "storage": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": "B"
+            },
+            "total": {
+              "value": 0,
+              "unit": "B"
+            }
+          },
+          "nodes": {
+            "total": 9,
+            "master": 3,
+            "infra": 2,
+            "compute": 4
+          },
+          "operating_system": "",
+          "upgrade": {
+            "updated_timestamp": "2021-01-18T13:10:18.768Z"
+          },
+          "state": "ready",
+          "state_description": "",
+          "openshift_version": "4.6.8",
+          "cloud_provider": "aws",
+          "region": "us-east-1",
+          "console_url": "https://console-openshift-console.apps.cben-osd-aws.cakn.p2.openshiftapps.com",
+          "critical_alerts_firing": 0,
+          "operators_condition_failing": 0,
+          "subscription_cpu_total": 8,
+          "subscription_socket_total": 4,
+          "subscription_obligation_exists": 3
+        }
+      ],
+      "cloud_provider_id": "aws",
+      "region_id": "us-east-1"
+    },
+    {
       "id": "gcp-early-install-1nEp0repdarm8",
       "kind": "Subscription",
       "href": "/api/accounts_mgmt/v1/subscriptions/gcp-early-install-1nEp0repdarm8",
@@ -552,6 +698,152 @@
       ],
       "last_released_at": "0001-01-01T00:00:00Z",
       "cloud_provider_id": "gcp"
+    },
+    {
+      "id": "gcp-ready-1nEp0repdarm8",
+      "kind": "Subscription",
+      "href": "/api/accounts_mgmt/v1/subscriptions/gcp-ready-1nEp0repdarm8",
+      "plan": {
+        "id": "OSD",
+        "kind": "Plan",
+        "href": "/api/accounts_mgmt/v1/plans/OSD"
+      },
+      "cluster_id": "gcp-ready-1i9h34q00bcf5",
+      "external_cluster_id": "gcp-ready-ff373269-39ec-4b39-a999-5fe2ff56a706",
+      "organization_id": "1HAXGgCYqHpednsRDiwWsZBmDlA",
+      "last_telemetry_date": "2021-01-18T13:06:03.653047Z",
+      "created_at": "2021-01-18T10:14:43.209794Z",
+      "updated_at": "2021-01-18T13:06:03.653078Z",
+      "support_level": "Premium",
+      "cpu_total": 8,
+      "socket_total": 4,
+      "display_name": "osd-gcp ready",
+      "creator": {
+        "id": "1MRtmsFtVUgyKlYg125H98kmeLd",
+        "kind": "Account",
+        "href": "/api/accounts_mgmt/v1/accounts/1MRtmsFtVUgyKlYg125H98kmeLd",
+        "name": "Beni Paskin-Cherniavsky",
+        "username": "bpaskinc.openshift",
+        "email": "***REMOVED***"
+      },
+      "managed": true,
+      "status": "Active",
+      "provenance": "Provisioning",
+      "last_reconcile_date": "0001-01-01T00:00:00Z",
+      "console_url": "https://console-openshift-console.apps.cben-osd-gcp.uaxk.p2.openshiftapps.com",
+      "capabilities": [
+        {
+          "name": "capability.cluster.subscribed_ocp",
+          "value": "true",
+          "inherited": true
+        }
+      ],
+      "last_released_at": "0001-01-01T00:00:00Z",
+      "metrics": [
+        {
+          "HealthState": "healthy",
+          "memory": {
+            "updated_timestamp": "2021-01-18T13:10:14.144Z",
+            "used": {
+              "value": 30422872064,
+              "unit": "B"
+            },
+            "total": {
+              "value": 151312048128,
+              "unit": "B"
+            }
+          },
+          "cpu": {
+            "updated_timestamp": "2021-01-18T13:10:17.429Z",
+            "used": {
+              "value": 5.652204618126877,
+              "unit": ""
+            },
+            "total": {
+              "value": 36,
+              "unit": ""
+            }
+          },
+          "sockets": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 0,
+              "unit": ""
+            }
+          },
+          "compute_nodes_memory": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": "B"
+            },
+            "total": {
+              "value": 100874559488,
+              "unit": "B"
+            }
+          },
+          "compute_nodes_cpu": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 24,
+              "unit": ""
+            }
+          },
+          "compute_nodes_sockets": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 0,
+              "unit": ""
+            }
+          },
+          "storage": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": "B"
+            },
+            "total": {
+              "value": 0,
+              "unit": "B"
+            }
+          },
+          "nodes": {
+            "total": 9,
+            "master": 3,
+            "infra": 2,
+            "compute": 4
+          },
+          "operating_system": "",
+          "upgrade": {
+            "updated_timestamp": "2021-01-18T13:10:19.035Z"
+          },
+          "state": "ready",
+          "state_description": "",
+          "openshift_version": "4.6.8",
+          "cloud_provider": "gcp",
+          "region": "us-east1",
+          "console_url": "https://console-openshift-console.apps.cben-osd-gcp.uaxk.p2.openshiftapps.com",
+          "critical_alerts_firing": 0,
+          "operators_condition_failing": 0,
+          "subscription_cpu_total": 8,
+          "subscription_socket_total": 4,
+          "subscription_obligation_exists": 3
+        }
+      ],
+      "cloud_provider_id": "gcp",
+      "region_id": "us-east1"
     }
   ]
 }

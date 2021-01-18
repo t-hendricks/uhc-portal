@@ -1,0 +1,8 @@
+{
+  "kind": "IngressList",
+  "href": "/api/clusters_mgmt/v1/clusters/gcp-ready-1i9h34q00bcf5/ingresses",
+  "id": "gcp-ready-1i9h34q00bcf5",
+  "page": 1,
+  "size": 0,
+  "total": 0
+}
