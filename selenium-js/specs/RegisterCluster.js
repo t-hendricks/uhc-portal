@@ -71,6 +71,7 @@ describe('Register cluster flow', async () => {
     await (await ClusterDetailsPage.editConsoleURLDialogConfirm).click();
     expect(ClusterDetailsPage.editConsoleURLDialogConfirm).not.toExist();
     expect(ClusterDetailsPage.openConsoleButton).toHaveAttribute('href', 'http://example.com');
+  });
 
   it('successfully changes display name', async () => {
     await (await ClusterDetailsPage.actionsDropdownToggle).click();
