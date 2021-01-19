@@ -29,6 +29,14 @@ class ClusterDetails extends Page {
   get editConsoleURLDialogConfirm() { return $('div[data-test-id="edit-console-url-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
 
   get openConsoleButton() { return $('//button[contains(text(),\'Open console\')]'); }
+
+  get editDisplayNameDropdownItem() { return $("//button[contains(text(),'Edit display name')]"); }
+
+  get editDisplayNameInput() { return $('input#edit-display-name-input'); }
+
+  get editDisplaynameConfirm() { return $('div[data-test-id="edit-displayname-modal"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
+
+  get clusterNameTitle() { return $('h1.cl-details-page-title'); }
 }
 
 export default new ClusterDetails();

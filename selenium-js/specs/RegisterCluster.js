@@ -5,6 +5,7 @@ import ClusterDetailsPage from '../pageobjects/ClusterDetails.page';
 import RegisterClusterPage from '../pageobjects/RegisterCluster.page';
 
 describe('Register cluster flow', async () => {
+  let clusterName;
   it('should login successfully', async () => {
     await LoginPage.open();
     await LoginPage.login();
@@ -55,7 +56,7 @@ describe('Register cluster flow', async () => {
     expect(await RegisterClusterPage.isRegisterClusterPage()).toBeTruthy();
 
     const clusterID = v4();
-    const clusterName = `selenium-${clusterID}`;
+    clusterName = `selenium-${clusterID}`;
     await (await RegisterClusterPage.clusterIDInput).setValue(clusterID);
     expect(RegisterClusterPage.clusterIDError).not.toExist();
     await (await RegisterClusterPage.displayNameInput).setValue(clusterName);
@@ -70,6 +71,14 @@ describe('Register cluster flow', async () => {
     await (await ClusterDetailsPage.editConsoleURLDialogConfirm).click();
     expect(ClusterDetailsPage.editConsoleURLDialogConfirm).not.toExist();
     expect(ClusterDetailsPage.openConsoleButton).toHaveAttribute('href', 'http://example.com');
+
+  it('successfully changes display name', async () => {
+    await (await ClusterDetailsPage.actionsDropdownToggle).click();
+    await (await ClusterDetailsPage.editDisplayNameDropdownItem).click();
+    await (await ClusterDetailsPage.editDisplayNameInput).setValue(`${clusterName}-test`);
+    await (await ClusterDetailsPage.editDisplaynameConfirm).click();
+    expect(ClusterDetailsPage.editDisplaynameConfirm).not.toExist();
+    expect(ClusterDetailsPage.clusterNameTitle).toHaveText(`${clusterName}-test`);
   });
 
   it('successfully archives the newly created cluster', async () => {
