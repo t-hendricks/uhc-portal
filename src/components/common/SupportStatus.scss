@@ -1,0 +1,24 @@
+.pf-c-card__title .support-status-label {
+  font-size: var(--pf-global--FontSize--xs);
+  font-weight: var(--pf-global--FontWeight--normal);
+}
+
+.support-status-label--clickable {
+  cursor: pointer;
+}
+
+// mock the a:hover styles from PatternFly since we're not using an a element
+.support-status-label--clickable .pf-c-label__content:hover {
+  --pf-c-label__content--before--BorderWidth: var(--pf-c-label__content--link--hover--before--BorderWidth);
+}
+
+// mock the a:hover styles from PatternFly since we're not using an a element
+.support-status-label--clickable.pf-m-outline .pf-c-label__content:hover {
+  --pf-c-label__content--before--BorderWidth: var(--pf-c-label--m-outline__content--link--hover--before--BorderWidth);
+}
+
+// override Insights link styling for <a> in <footer>
+.support-status-popover footer a {
+  color: var(--pf-global--link--Color) !important;
+  margin: 0 !important;
+}

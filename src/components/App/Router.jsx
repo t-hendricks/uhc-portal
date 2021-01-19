@@ -67,6 +67,7 @@ import { ASSISTED_INSTALLER_FEATURE } from '../../redux/constants/featureConstan
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
+import Releases from '../releases/index';
 
 const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
@@ -145,6 +146,7 @@ function Router({ history }) {
             <Route path="/quota" component={Quota} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/overview" exact component={Overview} />
+            <Route path="/releases" exact component={Releases} />
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
             <Route path="/" exact component={ClustersList} />
             <Route component={NotFoundError} />

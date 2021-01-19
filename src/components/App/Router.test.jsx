@@ -55,6 +55,7 @@ const routes = [
   '/register',
   '/quota',
   '/archived',
+  '/releases',
 ];
 
 describe('Every route should render: ', () => test.each(routes)('%s', (route) => {
