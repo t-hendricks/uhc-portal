@@ -75,7 +75,7 @@ class ExpiredTrialsCard extends React.Component {
       const name = subscription.display_name || subscription.external_cluster_id;
 
       const clusterName = (
-        <Link to={`/details/${subscription.cluster_id}`}>{name}</Link>
+        <Link to={`/details/s/${subscription.id}`}>{name}</Link>
       );
 
       return {

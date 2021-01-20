@@ -34,11 +34,6 @@ const getClusterStatus = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/status`,
 });
 
-const fetchClusterByExternalId = clusterExternalID => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters?&search=external_id='${clusterExternalID}'`,
-});
-
 const getUnhealthyClusters = params => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/dashboards/summary/unhealthy_clusters',
@@ -311,7 +306,6 @@ const clusterService = {
   postNewCluster,
   postDisconnectedCluster,
   getClusterDetails,
-  fetchClusterByExternalId,
   editCluster,
   getCloudProviders,
   deleteCluster,

@@ -13,9 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
-import isUuid from 'uuid-validate';
 
 import { clustersConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
@@ -252,62 +250,43 @@ const fetchClusters = params => dispatch => dispatch({
   payload: fetchClustersAndPermissions(params),
 });
 
-const fetchSingleClusterAndPermissions = (clusterID) => {
-  let cluster;
+const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   let canEdit;
-  let canDelete;
-  const clusterIdIsUUID = isUuid(clusterID);
-  const clusterPromise = clusterIdIsUUID ? clusterService.fetchClusterByExternalId(clusterID)
-    : clusterService.getClusterDetails(clusterID);
-  // fetchClusterByExternalId returns an array. getClusterDetails returns a single cluster
-  return clusterPromise.then((clusterResponse) => {
-    cluster = clusterIdIsUUID ? { data: get(clusterResponse, 'data.items[0]') } : clusterResponse;
-    if (clusterIdIsUUID && !cluster.data) {
-      // create a fake 404 error so 404 handling in components will work as if it was a regular 404.
-      const error = Error('Cluster not found');
-      error.response = { status: 404 };
-      return Promise.reject(error);
-    }
-    cluster.data = normalizeCluster(cluster.data);
-    const promises = [
-      authorizationsService.selfAccessReview(
-        { action: 'delete', resource_type: 'Cluster', cluster_id: clusterID },
-      ).then((response) => { canDelete = response.data.allowed; }),
-      authorizationsService.selfAccessReview(
-        { action: 'update', resource_type: 'Cluster', cluster_id: clusterID },
-      ).then((response) => { canEdit = response.data.allowed; }),
-    ];
-    return Promise.all(promises).then(() => {
-      cluster.data.shouldRedirect = clusterIdIsUUID;
-      cluster.data.canEdit = canEdit;
-      cluster.data.canDelete = canDelete;
-      const subscriptionID = get(cluster.data, 'subscription.id');
-      if (subscriptionID) {
-        return accountsService.getSubscription(subscriptionID).then((subscription) => {
-          cluster.data.subscription = subscription.data;
-          if (subscription.data.metrics !== undefined && subscription.data.metrics.length > 0) {
-            [cluster.data.metrics] = subscription.data.metrics;
-          }
-          if (!cluster.data.managed && !cluster.data?.console?.url) {
-            cluster.data.console = { url: cluster.data.subscription.console_url };
-          }
-          // eslint-disable-next-line camelcase
-          if (!cluster.data.openshift_version && cluster.data?.metrics.openshift_version) {
-            // eslint-disable-next-line camelcase
-            cluster.data.openshift_version = cluster.data?.metrics.openshift_version;
-          }
-          return cluster;
-        }).catch(() => cluster);
-      }
+  const subscription = await accountsService.getSubscription(subscriptionID);
+  await authorizationsService.selfAccessReview(
+    { action: 'update', resource_type: 'Subscription', subscription_id: subscriptionID },
+  ).then((response) => { canEdit = response.data.allowed; });
 
-      return cluster;
-    }).catch(() => cluster);
-  });
+  if (subscription.data.managed) {
+    const cluster = await clusterService.getClusterDetails(subscription.data.cluster_id);
+    cluster.data = normalizeCluster(cluster.data);
+
+    const canDeleteAccessReviewResponse = await authorizationsService.selfAccessReview(
+      { action: 'delete', resource_type: 'Cluster', cluster_id: subscription.data.cluster_id },
+    );
+
+    cluster.data.canEdit = canEdit;
+    cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
+    if (subscription.data.metrics !== undefined) {
+      [cluster.data.metrics] = subscription.data.metrics; // take metrics from AMS (even for OSD)
+    }
+
+    // TODO later, refactor, this should return subscription as the base resource
+    cluster.data.subscription = subscription.data;
+    return cluster;
+  }
+
+  const cluster = {};
+  cluster.data = fakeClusterFromSubscription(subscription.data); // TODO remove fake cluster
+  cluster.data.canEdit = canEdit;
+  cluster.data.canDelete = false; // OCP clusters can't be deleted
+  cluster.data.subscription = subscription.data;
+  return cluster;
 };
 
-const fetchClusterDetails = clusterID => dispatch => dispatch({
+const fetchClusterDetails = subscriptionID => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTER_DETAILS,
-  payload: fetchSingleClusterAndPermissions(clusterID),
+  payload: fetchSingleClusterAndPermissions(subscriptionID),
 });
 
 const setClusterDetails = (cluster, mergeDetails = false) => dispatch => dispatch({

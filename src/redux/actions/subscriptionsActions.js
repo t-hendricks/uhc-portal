@@ -13,8 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import isUuid from 'uuid-validate';
+
 import { subscriptionsConstants } from '../constants';
-import { accountsService, authorizationsService } from '../../services';
+import { accountsService, authorizationsService, clusterService } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
 import { mapListResponse, normalizeQuotaCost } from '../../common/normalize';
 
@@ -60,11 +62,39 @@ function fetchQuotaCost(organizationID) {
 }
 
 
+const getSubscriptionIDForCluster = (clusterID) => {
+  if (isUuid(clusterID)) {
+    return accountsService
+      .fetchSubscriptionByExternalId(clusterID)
+      .then(result => result.data?.items[0]?.id);
+  }
+  return clusterService
+    .getClusterDetails(clusterID)
+    .then(result => result.data.subscription.id);
+};
+
+/**
+ * Redux action creator, get a subscription ID using a cluster's id / uuid,
+ * for redirecting requests from `/details/<id>` to `/details/s/<subscription_id>`
+ *
+ * @param {String} clusterID Either a Clusters Service cluster ID or a cluster's external_id (uuid)
+ */
+const fetchSubscriptionIDForCluster = clusterID => dispatch => dispatch({
+  type: subscriptionsConstants.GET_SUBSCRIPTION_ID,
+  payload: getSubscriptionIDForCluster(clusterID),
+});
+
+const clearSubscriptionIDForCluster = () => dispatch => dispatch({
+  type: subscriptionsConstants.CLEAR_SUBSCRIPTION_ID,
+});
+
 const subscriptionsActions = {
   fetchAccount,
   fetchQuotaCost,
   getSubscriptions,
   invalidateSubscriptions,
+  fetchSubscriptionIDForCluster,
+  clearSubscriptionIDForCluster,
 };
 
 export {
@@ -73,4 +103,6 @@ export {
   fetchQuotaCost,
   getSubscriptions,
   invalidateSubscriptions,
+  fetchSubscriptionIDForCluster,
+  clearSubscriptionIDForCluster,
 };

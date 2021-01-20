@@ -49,6 +49,7 @@ const routes = [
   '/install/azure/aro-provisioned',
   '/install',
   '/details/:id',
+  '/details/s/:id',
   '/create/osd/aws',
   '/create/osd/gcp',
   '/create/osd',

@@ -50,7 +50,7 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
               Object {
                 "title": <Link
                   onClick={[Function]}
-                  to="/details/1IztzhAGrbjtKkMbiPewJanhTXk"
+                  to="/details/s/foo"
                 >
                   test-liza
                 </Link>,
@@ -171,6 +171,9 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
               "storage_quota": Object {
                 "unit": "B",
                 "value": 107374182400,
+              },
+              "subscription": Object {
+                "id": "foo",
               },
               "version": Object {
                 "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
