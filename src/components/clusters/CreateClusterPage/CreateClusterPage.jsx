@@ -1,117 +1,142 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import {
-  Card,
-  CardTitle,
-  CardBody,
+  Tabs,
+  Tab,
+  TabTitleText,
+  TabTitleIcon,
   PageSection,
-  Tooltip,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-import openShiftDedicatedLogo from '../../../styles/images/Logo-Red_Hat-OpenShift_Dedicated-A-Standard-RGB.svg';
-import openShiftContainerPlatformLogo from '../../../styles/images/Logo-Red_Hat-OpenShift-Container_Platform-A-Standard-RGB.svg';
+import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
+import './CreateClusterPage.scss';
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../common/Breadcrumbs';
-import { noQuotaTooltip, shouldRefetchQuota } from '../../../common/helpers';
+import { shouldRefetchQuota } from '../../../common/helpers';
+import DatacenterTab from './DatacenterTab';
+import CloudTab from './CloudTab';
+import SandboxTab from './SandboxTab';
+
 
 class CreateCluster extends React.Component {
+  state = { activeTabKey: 0 };
+
   componentDidMount() {
     // Try to get quota or organization when the component is first mounted.
-    const { getOrganizationAndQuota, organization } = this.props;
+    const { getOrganizationAndQuota, organization, getAuthToken } = this.props;
 
     document.title = 'Create an OpenShift cluster | Red Hat OpenShift Cluster Manager';
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
+    getAuthToken();
   }
 
-  render() {
-    const { hasOSDQuota, organization } = this.props;
+    handleTabClick = (event, tabIndex) => {
+      this.setState({
+        activeTabKey: tabIndex,
+      });
+    };
 
-    const title = (
-      <PageTitle
-        title="Create a cluster to get started"
-        breadcrumbs={(
-          <Breadcrumbs path={[
-            { label: 'Clusters' },
-            { label: 'Create' },
-          ]}
-          />
+    render() {
+      const {
+        hasOSDQuota, organization, token, assistedInstallerFeature,
+      } = this.props;
+      const { activeTabKey } = this.state;
+
+      const title = (
+        <PageTitle
+          title="Create an OpenShift cluster"
+          breadcrumbs={(
+            <Breadcrumbs path={[
+              { label: 'Clusters' },
+              { label: 'Create' },
+            ]}
+            />
         )}
-      />
-    );
+        />
+      );
 
-    const osdCardBody = (
-      <>
-        <CardTitle className="create-cluster-header">
-          <img src={openShiftDedicatedLogo} alt="OpenShift Dedicated" className="create-cluster-logo" />
-        </CardTitle>
-        <CardBody>
-          Create a Red Hat-managed cluster (OSD),
-          provisioned on Amazon Web Services or Google Cloud Platform.
-        </CardBody>
-      </>
-    );
+      const tabTitle = (tabKey) => {
+        switch (tabKey) {
+          case 0:
+            return (
+              <>
+                <TabTitleIcon>
+                  <ServerIcon />
+                </TabTitleIcon>
+                <TabTitleText>
+                  Datacenter
+                </TabTitleText>
+              </>
+            );
+          case 1:
+            return (
+              <>
+                <TabTitleIcon>
+                  <CloudIcon />
+                </TabTitleIcon>
+                <TabTitleText>
+                  Cloud
+                </TabTitleText>
+              </>
+            );
+          case 2:
+            return (
+              <>
+                <TabTitleIcon>
+                  <LaptopIcon />
+                </TabTitleIcon>
+                <TabTitleText>
+                  Sandbox
+                </TabTitleText>
+              </>
+            );
+          default:
+            return null;
+        }
+      };
 
-    const osdCard = hasOSDQuota ? (
-      <Link to="/create/osd" className="infra-card pf-c-card create-cluster-card">
-        {osdCardBody}
-      </Link>
-    ) : (
-      <Tooltip
-        content={noQuotaTooltip}
-      >
-        <Card className="infra-card create-cluster-card card-disabled">
-          {osdCardBody}
-        </Card>
-      </Tooltip>
-    );
+      const quotaRequestComplete = organization.fulfilled || organization.error;
 
-    const ocpCard = (
-      <Link to="/install" className="infra-card pf-c-card create-cluster-card">
-        <CardTitle className="create-cluster-header">
-          <img src={openShiftContainerPlatformLogo} alt="OpenShift Container Platform" className="create-cluster-logo" />
-        </CardTitle>
-        <CardBody>
-          Create an OCP cluster using the command-line installer.
-          Your cluster will automatically register to
-          the Cluster Manager after installation completes.
-        </CardBody>
-      </Link>
-    );
-
-    const quotaRequestComplete = organization.fulfilled || organization.error;
-
-    return quotaRequestComplete ? (
-      <>
-        {title}
-        <PageSection>
-          <Card>
-            <div className="pf-c-content ocm-page ocp-osd-selection">
-              <div className="flex-container">
-                {ocpCard}
-                {osdCard}
-              </div>
-            </div>
-          </Card>
-        </PageSection>
-      </>
-    ) : (
-      <>
-        {title}
-        <PageSection>
-          <Spinner centered />
-        </PageSection>
-      </>
-    );
-  }
+      return quotaRequestComplete ? (
+        <>
+          {title}
+          <PageSection variant="light" className="cluster-create-page">
+            <Tabs isFilled activeKey={activeTabKey} onSelect={this.handleTabClick}>
+              <Tab eventKey={0} title={tabTitle(0)}>
+                <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
+              </Tab>
+              <Tab eventKey={1} title={tabTitle(1)}>
+                <CloudTab hasOSDQuota={hasOSDQuota} />
+              </Tab>
+              <Tab eventKey={2} title={tabTitle(2)}>
+                <SandboxTab token={token} />
+              </Tab>
+            </Tabs>
+          </PageSection>
+        </>
+      ) : (
+        <>
+          {title}
+          <PageSection variant="light">
+            <Spinner centered />
+          </PageSection>
+        </>
+      );
+    }
 }
 
 CreateCluster.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
-  organization: PropTypes.object.isRequired,
+  organization: PropTypes.shape({
+    fulfilled: PropTypes.bool,
+    error: PropTypes.bool,
+  }).isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
+  token: PropTypes.object.isRequired,
+  getAuthToken: PropTypes.func.isRequired,
+  assistedInstallerFeature: PropTypes.bool,
 };
 
 export default CreateCluster;

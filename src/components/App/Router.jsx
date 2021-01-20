@@ -34,7 +34,6 @@ import InsightsRuleDetails from '../clusters/InsightsRuleDetails';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
 import CreateOSDPage from '../clusters/CreateOSDPage';
-import InstallInfrastructure from '../clusters/install/InstallInfrastructure';
 import InstallAWS from '../clusters/install/InstallAWS';
 import InstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import InstallAWSIPI from '../clusters/install/InstallAWSIPI';
@@ -55,7 +54,6 @@ import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallPullSecret from '../clusters/install/InstallPullSecret';
 import InstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
-import InstallCRC from '../clusters/install/InstallCRC';
 import InstallIBM from '../clusters/install/InstallIBM';
 import InstallPower from '../clusters/install/InstallPower';
 import Tokens from '../tokens/Tokens';
@@ -109,20 +107,19 @@ function Router({ history }) {
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
             <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
-            <Route path="/install/crc/installer-provisioned" component={InstallCRC} />
             <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
             <Route path="/install/power/user-provisioned" component={InstallPower} />
             <Route path="/install/pre-release" component={InstallPreRelease} />
             <Route path="/install/pull-secret" component={InstallPullSecret} />
             <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
-            <Route path="/install" component={InstallInfrastructure} />
-            <Route path="/details/:clusterId/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
-            <Route path="/details/s/:id" component={ClusterDetails} />
-            <Route path="/details/:id" component={ClusterDetailsRedirector} />
+            <Redirect from="/install" to="/create" />
             <TermsGuardedRoute path="/create/osd/aws" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="aws" />} history={history} />
             <TermsGuardedRoute path="/create/osd/gcp" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="gcp" />} history={history} />
             <Route path="/create/osd" component={CloudProviderSelection} />
             <Route path="/create" component={CreateClusterPage} />
+            <Route path="/details/:clusterId/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
+            <Route path="/details/s/:id" component={ClusterDetails} />
+            <Route path="/details/:id" component={ClusterDetailsRedirector} />
             <Route path="/register" component={RegisterCluster} />
             <Route path="/subscriptions" component={Subscriptions} />
             <Route path="/archived" component={ArchivedClusterList} />

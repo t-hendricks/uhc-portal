@@ -1,0 +1,288 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
+<Fragment>
+  <PageSection
+    variant="light"
+  >
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Title
+          headingLevel="h2"
+        >
+          Assisted Installer
+        </Title>
+      </StackItem>
+      <StackItem>
+        Create a bare metal cluster with ease. From connecting your hardware to running pre-flight checks, the Assisted Installer guides you through the creation process.
+      </StackItem>
+      <StackItem>
+        <Button
+          component={
+            Object {
+              "$$typeof": Symbol(react.forward_ref),
+              "displayName": "Link",
+              "propTypes": Object {
+                "innerRef": [Function],
+                "onClick": [Function],
+                "replace": [Function],
+                "target": [Function],
+                "to": [Function],
+              },
+              "render": [Function],
+            }
+          }
+          to="/assisted-installer/clusters/~new"
+        >
+          Create cluster
+        </Button>
+      </StackItem>
+    </Stack>
+  </PageSection>
+  <PageSection>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Title
+          className="font-weight-light"
+          headingLevel="h2"
+        >
+          Other datacenter options
+        </Title>
+      </StackItem>
+      <StackItem>
+        Create clusters in other environments using a downloadable installer program.
+      </StackItem>
+      <StackItem>
+        <Table
+          aria-label="Installation options table"
+          borders={true}
+          canSelectAll={true}
+          cells={
+            Array [
+              "Infrastructure provider",
+              "Installation options",
+            ]
+          }
+          className="install-options-table"
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isStickyHeader={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          rows={
+            Array [
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/metal"
+                  >
+                    Bare Metal
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/ibmz/user-provisioned"
+                  >
+                    IBM Z
+                  </Link>
+                </React.Fragment>,
+                "Pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/power/user-provisioned"
+                  >
+                    Power
+                  </Link>
+                </React.Fragment>,
+                "Pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/openstack"
+                  >
+                    Red Hat OpenStack
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/rhv"
+                  >
+                    Red Hat Virtualization
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/vsphere/user-provisioned"
+                  >
+                    vSphere
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/metal"
+                  >
+                    Platform agnostic
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+            ]
+          }
+          selectVariant="checkbox"
+          variant={null}
+        >
+          <TableHeader />
+          <Component />
+        </Table>
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
+<Fragment>
+  <PageSection>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Title
+          className="font-weight-light"
+          headingLevel="h2"
+        >
+          datacenter options
+        </Title>
+      </StackItem>
+      <StackItem>
+        Create clusters in other environments using a downloadable installer program.
+      </StackItem>
+      <StackItem>
+        <Table
+          aria-label="Installation options table"
+          borders={true}
+          canSelectAll={true}
+          cells={
+            Array [
+              "Infrastructure provider",
+              "Installation options",
+            ]
+          }
+          className="install-options-table"
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isStickyHeader={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          rows={
+            Array [
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/metal"
+                  >
+                    Bare Metal
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/ibmz/user-provisioned"
+                  >
+                    IBM Z
+                  </Link>
+                </React.Fragment>,
+                "Pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/power/user-provisioned"
+                  >
+                    Power
+                  </Link>
+                </React.Fragment>,
+                "Pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/openstack"
+                  >
+                    Red Hat OpenStack
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/rhv"
+                  >
+                    Red Hat Virtualization
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/vsphere/user-provisioned"
+                  >
+                    vSphere
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/metal"
+                  >
+                    Platform agnostic
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+            ]
+          }
+          selectVariant="checkbox"
+          variant={null}
+        >
+          <TableHeader />
+          <Component />
+        </Table>
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;

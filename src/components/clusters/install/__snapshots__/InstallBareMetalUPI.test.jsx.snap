@@ -15,10 +15,6 @@ exports[`BareMetal UPI install renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "OpenShift Container Platform",
-              "path": "/install",
-            },
-            Object {
               "label": "Bare Metal",
               "path": "/install/metal",
             },
@@ -43,10 +39,6 @@ exports[`BareMetal UPI install renders correctly 1`] = `
               Object {
                 "label": "Create",
                 "path": "/create",
-              },
-              Object {
-                "label": "OpenShift Container Platform",
-                "path": "/install",
               },
               Object {
                 "label": "Bare Metal",

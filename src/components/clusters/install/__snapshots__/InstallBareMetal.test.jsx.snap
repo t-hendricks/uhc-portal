@@ -15,10 +15,6 @@ exports[`BareMetal install renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "OpenShift Container Platform",
-              "path": "/install",
-            },
-            Object {
               "label": "Bare Metal",
             },
           ]
