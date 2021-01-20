@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
-import get from 'lodash/get';
+
 import usersActions from './UsersActions';
 import UsersSection from './UsersSection';
-
+import canAllowAdminSelector from './UsersSelector';
 import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../../../../common/Modal/ModalActions';
 
 
 const mapStateToProps = (state) => {
   const { groupUsers, addUserResponse, deleteUserResponse } = state.clusterUsers;
-  const canAddClusterAdmin = get(state, 'clusters.details.cluster.cluster_admin_enabled', false);
+  const canAddClusterAdmin = canAllowAdminSelector(state);
 
   return ({
     clusterGroupUsers: groupUsers,
@@ -18,7 +18,6 @@ const mapStateToProps = (state) => {
     deleteUserResponse,
     isAddUserModalOpen: shouldShowModal(state, 'add-user'),
     canAddClusterAdmin,
-    toggleClusterAdminResponse: state.clusters.editedCluster,
   });
 };
 

@@ -17,7 +17,6 @@ const cluster = {
 
 const props = {
   showConsoleButton: true,
-  canAllowClusterAdmin: false,
   canSubscribeOCP: false,
   canTransferClusterOwnership: false,
   openModal: jest.fn(),

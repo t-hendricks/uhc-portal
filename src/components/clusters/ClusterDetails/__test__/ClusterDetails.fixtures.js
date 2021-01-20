@@ -830,7 +830,6 @@ const fixtures = {
   canSubscribeOCP: false,
   hasIssues: false,
   hasIssuesInsights: false,
-  canAllowClusterAdmin: false,
 };
 
 export { funcs };

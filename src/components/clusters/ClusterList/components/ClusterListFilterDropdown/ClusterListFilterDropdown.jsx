@@ -7,6 +7,7 @@ import {
 import { FilterIcon } from '@patternfly/react-icons';
 import get from 'lodash/get';
 
+import { productFilterOptions } from '../../../../../common/subscriptionTypes';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 
 
@@ -33,10 +34,7 @@ class ClusterListFilterDropdown extends React.Component {
       {
         key: 'plan_id',
         label: 'Cluster type',
-        options: [
-          ['OSD', 'OSD'],
-          ['OCP', 'OCP'],
-        ],
+        options: productFilterOptions,
         selected: {},
       },
     ];
@@ -55,27 +53,25 @@ class ClusterListFilterDropdown extends React.Component {
       return (
         <DropdownGroup key={`filtergroup-${group.key}`} label={group.label}>
           {group.options.map((option) => {
-            const key = option[0];
-            const label = option[1];
             const onChange = (checked) => {
               if (checked) {
                 setFilterAndQueryParams({
-                  ...currentFilters, [group.key]: [...currentFilter, key],
+                  ...currentFilters, [group.key]: [...currentFilter, option.key],
                 });
               } else {
                 setFilterAndQueryParams({
                   ...currentFilters,
-                  [group.key]: currentFilter.filter(item => item !== key),
+                  [group.key]: currentFilter.filter(item => item !== option.key),
                 });
               }
             };
             return (
-              <DropdownItem key={key}>
+              <DropdownItem key={option.key}>
                 <Checkbox
                   className="pf-c-dropdown__menu-item"
-                  isChecked={selected[key]}
-                  id={key}
-                  label={label}
+                  isChecked={selected[option.key]}
+                  id={option.key}
+                  label={option.label}
                   onChange={onChange}
                 />
               </DropdownItem>

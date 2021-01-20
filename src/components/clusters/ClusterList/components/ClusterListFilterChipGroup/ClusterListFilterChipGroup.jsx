@@ -7,6 +7,7 @@ import {
 } from '@patternfly/react-core';
 
 import helpers from '../../../../../common/helpers';
+import { productFilterOptions } from '../../../../../common/subscriptionTypes';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 
 function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
@@ -14,6 +15,7 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
     return null;
   }
 
+  // TODO extract this to an action.
   const setFilterAndQueryParams = (filter) => {
     history.push({
       search: buildFilterURLParams(filter),
@@ -25,10 +27,7 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
     {
       key: 'plan_id',
       label: 'Cluster type',
-      optionLabels: {
-        OSD: 'OSD',
-        OCP: 'OCP',
-      },
+      options: productFilterOptions,
     },
   ];
 
@@ -44,7 +43,7 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
             return (
               <ChipGroup key={`chipgroup-${group.key}`} categoryName={group.label}>
                 {currentFilter.map((key) => {
-                  const label = group.optionLabels[key];
+                  const { label } = group.options.find(opt => opt.key === key);
                   const deleteItem = () => {
                     setFilterAndQueryParams({
                       ...currentFilters,

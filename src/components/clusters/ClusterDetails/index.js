@@ -35,9 +35,7 @@ import {
   voteOnRuleInsights,
 } from './components/Insights/InsightsActions';
 import { getMachinePools, clearGetMachinePoolsResponse } from './components/MachinePools/MachinePoolsActions';
-import canAllowAdminSelector from '../common/ToggleClusterAdminAccessDialog/ClusterAdminSelectors';
-import canSubscribeOCPSelector
-  from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
+import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
 import issuesCountSelector from './components/Insights/InsightsSelectors';
@@ -80,7 +78,6 @@ const mapStateToProps = (state, { location }) => {
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
     groups,
-    canAllowClusterAdmin: canAllowAdminSelector(state),
     canSubscribeOCP: canSubscribeOCPSelector(state),
     canTransferClusterOwnership: canTransferClusterOwnershipSelector(state),
     anyModalOpen: !!state.modal.modalName,

@@ -740,16 +740,20 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
  margin-right: var(--pf-global--spacer--lg);
 }
 
-.space-bottom-lg {
-  margin-bottom: var(--pf-global--spacer--lg);
- }
-
  .space-left-lg {
   margin-left: var(--pf-global--spacer--lg);
  }
 
+ .space-bottom-lg {
+  margin-bottom: var(--pf-global--spacer--lg);
+ }
+
  .space-bottom-md {
   margin-bottom: var(--pf-global--spacer--md);
+ }
+
+ .space-bottom-sm {
+  margin-bottom: var(--pf-global--spacer--sm);
  }
 
 a.overview-clusters-link:hover {

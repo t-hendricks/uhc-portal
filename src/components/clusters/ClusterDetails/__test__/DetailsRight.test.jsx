@@ -60,4 +60,17 @@ describe('<DetailsRight />', () => {
       expect(wrapper).toMatchSnapshot();
     });
   });
+
+  describe('CCS clusters', () => {
+    it('should not render storage quota', () => {
+      const wrapper = shallow(
+        <DetailsRight
+          cluster={{
+            ...clusterDetails.cluster, managed: true, byoc: true, storage_quota: null,
+          }}
+        />,
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 });

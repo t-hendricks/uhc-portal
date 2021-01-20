@@ -31,7 +31,6 @@ function ClusterDetailsTop(props) {
     error,
     errorMessage,
     children,
-    canAllowClusterAdmin,
     canSubscribeOCP,
     canTransferClusterOwnership,
     autoRefreshEnabled,
@@ -93,7 +92,6 @@ function ClusterDetailsTop(props) {
       cluster={cluster}
       organization={organization.details}
       showConsoleButton={false}
-      canAllowClusterAdmin={canAllowClusterAdmin}
       canSubscribeOCP={canSubscribeOCP}
       canTransferClusterOwnership={canTransferClusterOwnership}
       toggleSubscriptionReleased={toggleSubscriptionReleased}
@@ -194,7 +192,6 @@ ClusterDetailsTop.propTypes = {
     PropTypes.element,
   ]),
   children: PropTypes.any,
-  canAllowClusterAdmin: PropTypes.bool.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
   autoRefreshEnabled: PropTypes.bool,

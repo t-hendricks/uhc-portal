@@ -74,7 +74,7 @@ class ChangePrivacySettingsDialog extends React.Component {
             <StackItem>
               {text}
               {' '}
-              {learnMore}
+              {provider === 'aws' && learnMore}
             </StackItem>
             {
               shouldShowAlert && (
