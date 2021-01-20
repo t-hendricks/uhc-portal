@@ -67,7 +67,7 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true) => {
           {hasQuota ? (
             <Link id="create-cluster" to="/create/osd">
               <Button>
-              Create cluser
+              Create cluster
               </Button>
             </Link>
           ) : (

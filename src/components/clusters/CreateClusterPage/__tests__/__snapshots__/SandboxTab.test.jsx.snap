@@ -31,7 +31,7 @@ exports[`<SandboxTab /> renders correctly 1`] = `
           <b>
             Note: 
           </b>
-          Your CodeReady installation won't appear in the OpenShift Cluster Manager because it is not a production-level cluster.
+          Your CodeReady installation won't appear in the OpenShift Cluster Manager unless you enable cluster monitoring and telemetry.
         </Text>
       </StackItem>
     </Stack>
