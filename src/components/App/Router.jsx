@@ -29,6 +29,7 @@ import Overview from '../overview';
 import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetails from '../clusters/ClusterDetails';
+import ClusterDetailsRedirector from '../clusters/ClusterDetailsRedirector';
 import InsightsRuleDetails from '../clusters/InsightsRuleDetails';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
@@ -116,7 +117,8 @@ function Router({ history }) {
             <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
             <Route path="/install" component={InstallInfrastructure} />
             <Route path="/details/:clusterId/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
-            <Route path="/details/:id" component={ClusterDetails} />
+            <Route path="/details/s/:id" component={ClusterDetails} />
+            <Route path="/details/:id" component={ClusterDetailsRedirector} />
             <TermsGuardedRoute path="/create/osd/aws" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="aws" />} history={history} />
             <TermsGuardedRoute path="/create/osd/gcp" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="gcp" />} history={history} />
             <Route path="/create/osd" component={CloudProviderSelection} />

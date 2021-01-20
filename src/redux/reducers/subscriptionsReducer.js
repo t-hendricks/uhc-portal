@@ -42,6 +42,10 @@ const initialState = {
     valid: false,
     items: [],
   },
+  subscriptionID: {
+    ...baseRequestState,
+    id: undefined,
+  },
 };
 
 function subscriptionsReducer(state = initialState, action) {
@@ -98,6 +102,31 @@ function subscriptionsReducer(state = initialState, action) {
           fulfilled: true,
           valid: true,
           items: action.payload.data.items,
+        };
+        break;
+      // GET_SUBSCRIPTION_ID
+      case REJECTED_ACTION(subscriptionsConstants.GET_SUBSCRIPTION_ID):
+        draft.subscriptionID = {
+          ...initialState.subscriptionID,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(subscriptionsConstants.GET_SUBSCRIPTION_ID):
+        draft.subscriptionID = {
+          ...initialState.subscriptionID,
+          pending: true,
+        };
+        break;
+      case FULFILLED_ACTION(subscriptionsConstants.GET_SUBSCRIPTION_ID):
+        draft.subscriptionID = {
+          ...initialState.subscriptionID,
+          fulfilled: true,
+          id: action.payload,
+        };
+        break;
+      case subscriptionsConstants.CLEAR_SUBSCRIPTION_ID:
+        draft.subscriptionID = {
+          ...initialState.subscriptionID,
         };
         break;
       // GET_QUOTA_COST

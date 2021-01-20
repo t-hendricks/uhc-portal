@@ -114,17 +114,20 @@ const clustersWithIssues = [{
   },
   canEdit: true,
   canDelete: true,
+  subscription: {
+    id: 'foo',
+  },
 }];
 
 const expiredTrials = [{
   display_name: 'my cluster',
   canEdit: true,
-  cluster_id: 'foo',
+  id: 'foo',
 },
 {
   display_name: 'other cluster',
   canEdit: false,
-  cluster_id: 'foo',
+  id: 'foo',
 },
 ];
 

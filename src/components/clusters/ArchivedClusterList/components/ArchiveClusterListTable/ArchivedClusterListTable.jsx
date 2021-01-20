@@ -42,7 +42,7 @@ function ArchivedClusterListTable(props) {
     const name = getClusterName(cluster);
 
     const clusterName = (
-      <Link to={`/details/${cluster.id}`}>{name}</Link>
+      <Link to={`/details/s/${cluster.subscription.id}`}>{name}</Link>
     );
 
     const openUnarchiveModal = () => openModal(modals.UNARCHIVE_CLUSTER,

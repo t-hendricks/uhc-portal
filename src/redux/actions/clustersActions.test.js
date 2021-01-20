@@ -1,5 +1,5 @@
 import { clustersActions } from './clustersActions';
-import { clusterService } from '../../services';
+import { clusterService, accountsService } from '../../services';
 import { clustersConstants } from '../constants';
 import { INVALIDATE_ACTION } from '../reduxHelpers';
 
@@ -86,7 +86,7 @@ describe('clustersActions', () => {
     it('calls clusterService.getClusterDetails', () => {
       const fakeParams = { fake: 'params' };
       clustersActions.fetchClusterDetails(fakeParams)(mockDispatch);
-      expect(clusterService.getClusterDetails).toBeCalledWith(fakeParams);
+      expect(accountsService.getSubscription).toBeCalledWith(fakeParams);
     });
   });
 

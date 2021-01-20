@@ -36,6 +36,19 @@ const getSubscription = subscriptionID => apiRequest({
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}`,
 });
 
+const fetchSubscriptionByExternalId = clusterExternalID => apiRequest({
+  method: 'get',
+  url: '/api/accounts_mgmt/v1/subscriptions',
+  params: {
+    search: `external_cluster_id='${clusterExternalID}'`,
+    fetchAccounts: true,
+    fetchCpuAndSocket: true,
+    fetchCapabilities: true,
+    fetchMetrics: true,
+  },
+});
+
+
 const editSubscription = (subscriptionID, data) => apiRequest({
   method: 'patch',
   data,
@@ -103,6 +116,7 @@ const accountsService = {
   getRequest,
   getFeature,
   getSupportCases,
+  fetchSubscriptionByExternalId,
 };
 
 export default accountsService;

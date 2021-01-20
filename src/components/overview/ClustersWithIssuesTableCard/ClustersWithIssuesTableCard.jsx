@@ -67,7 +67,7 @@ class ClustersWithIssuesTableCard extends React.Component {
       );
 
       const clusterName = (
-        <Link to={`/details/${cluster.id}`} onClick={() => setClusterDetails(cluster)}>
+        <Link to={`/details/s/${cluster.subscription.id}`} onClick={() => setClusterDetails(cluster)}>
           {getClusterName(cluster)}
         </Link>
       );

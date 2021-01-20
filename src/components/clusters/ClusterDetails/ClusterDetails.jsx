@@ -13,7 +13,6 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import isUuid from 'uuid-validate';
 import { Redirect } from 'react-router';
 import get from 'lodash/get';
 import has from 'lodash/has';
@@ -62,8 +61,6 @@ class ClusterDetails extends Component {
     super(props);
     this.refresh = this.refresh.bind(this);
     this.refreshIDP = this.refreshIDP.bind(this);
-    this.fetchDetailsAndInsightsData = this.fetchDetailsAndInsightsData.bind(this);
-    this.fetchSupportData = this.fetchSupportData.bind(this);
 
     this.overviewTabRef = React.createRef();
     this.insightsTabRef = React.createRef();
@@ -85,11 +82,6 @@ class ClusterDetails extends Component {
     const {
       cloudProviders,
       getCloudProviders,
-      clusterIdentityProviders,
-      getClusterIdentityProviders,
-      getClusterAddOns,
-      clusterAddOns,
-      match,
       addOns,
       getAddOns,
       clearGlobalError,
@@ -97,23 +89,10 @@ class ClusterDetails extends Component {
 
     clearGlobalError('clusterDetails');
 
-    const clusterID = match.params.id;
-
-    this.refresh(false);
+    this.refresh();
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
-    }
-    if (isValid(clusterID) && !isUuid(clusterID)) {
-      // TODO: get IDP and Add-On Installations only for managed clusters
-      if (!clusterIdentityProviders.pending
-          && !clusterIdentityProviders.error
-          && !clusterIdentityProviders.fulfilled) {
-        getClusterIdentityProviders(clusterID);
-      }
-      if (!clusterAddOns.pending && !clusterAddOns.error && !clusterAddOns.fulfilled) {
-        getClusterAddOns(clusterID);
-      }
     }
     if (!addOns.pending && !addOns.error && !addOns.fulfilled) {
       getAddOns();
@@ -126,14 +105,12 @@ class ClusterDetails extends Component {
       groups,
       clusterDetails,
       insightsData,
-      fetchInsightsData,
       fetchGroups,
     } = this.props;
-    const clusterID = match.params.id;
-    const oldClusterID = prevProps.match.params.id;
+    const subscriptionID = match.params.id;
     const externalId = get(clusterDetails, 'cluster.external_id');
 
-    if (get(clusterDetails, 'cluster.id') === clusterID) {
+    if (get(clusterDetails, 'cluster.subscription.id') === subscriptionID) {
       const clusterName = getClusterName(clusterDetails.cluster);
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
     }
@@ -147,15 +124,12 @@ class ClusterDetails extends Component {
       fetchGroups();
     }
 
-    if (clusterID !== oldClusterID && isValid(clusterID)) {
-      this.refresh(false);
-    }
-
-    if (
-      get(clusterDetails, 'cluster.external_id')
-      && get(prevProps.clusterDetails, 'cluster.external_id') !== get(clusterDetails, 'cluster.external_id')
-    ) {
-      fetchInsightsData(get(clusterDetails, 'cluster.external_id'));
+    if (!prevProps.clusterDetails?.cluster?.id
+      && clusterDetails.fulfilled
+      && clusterDetails?.cluster?.id) {
+      /* we only know the Cluster Service `cluster_id` after the subscription request has returned.
+      only then we can fetch Cluster Service specific data */
+      this.refreshRelatedResources();
     }
   }
 
@@ -165,17 +139,63 @@ class ClusterDetails extends Component {
       closeModal,
       resetClusterHistory,
       clearGetMachinePoolsResponse,
-      match,
     } = this.props;
     resetIdentityProvidersState();
     closeModal();
     resetClusterHistory();
-    clearGetMachinePoolsResponse(match.params.id);
+    clearGetMachinePoolsResponse();
   }
 
-  refresh(automatic = true) {
+  onDialogClose = () => {
+    const { match, invalidateClusters, fetchDetails } = this.props;
+    const subscriptionID = match.params.id;
+
+    invalidateClusters();
+    if (isValid(subscriptionID)) {
+      fetchDetails(subscriptionID);
+    }
+  };
+
+  refresh() {
     const {
       match,
+      clusterDetails,
+      fetchDetails,
+    } = this.props;
+    const subscriptionID = match.params.id;
+
+    if (isValid(subscriptionID)) {
+      fetchDetails(subscriptionID);
+    }
+
+    const clusterID = get(clusterDetails, 'cluster.id');
+    if (isValid(clusterID)) {
+      this.refreshRelatedResources();
+    }
+  }
+
+  refreshIDP() {
+    const { clusterDetails, clusterIdentityProviders, getClusterIdentityProviders } = this.props;
+    const clusterID = clusterDetails?.cluster?.id;
+
+    if (isValid(clusterID)
+      && !clusterIdentityProviders.pending
+      && !clusterIdentityProviders.error) {
+      getClusterIdentityProviders(clusterID);
+    }
+  }
+
+  /**
+   * Refresh the cluster's related resources.
+   */
+  refreshRelatedResources() {
+    /* TODO everything here has to be moved to the individual tabs that require this info
+     ideally cluster details should dispatch an event on refresh,
+    and leave sub-resource handling for sub-components.
+
+    https://issues.redhat.com/browse/SDA-2249
+    */
+    const {
       clusterDetails,
       getUsers,
       getAlerts,
@@ -190,65 +210,37 @@ class ClusterDetails extends Component {
       organization,
       getMachinePools,
       getSchedules,
-    } = this.props;
-    const clusterID = match.params.id;
-    if (isValid(clusterID)) {
-      this.fetchDetailsAndInsightsData(
-        clusterID,
-        get(clusterDetails, 'cluster.external_id'),
-        get(clusterDetails, 'cluster.managed', false),
-      );
-      if (shouldRefetchQuota(organization)) {
-        getOrganizationAndQuota();
-      }
-      if (automatic) {
-        const externalClusterID = get(clusterDetails, 'cluster.external_id');
-        if (externalClusterID) {
-          getClusterHistory(externalClusterID, clusterLogsViewOptions);
-        }
-        this.fetchSupportData();
-      }
-
-      if (!isUuid(clusterID)) {
-        getUsers(clusterID);
-        getAlerts(clusterID);
-        getNodes(clusterID);
-        getClusterOperators(clusterID);
-        getClusterRouters(clusterID);
-        if (get(clusterDetails, 'cluster.managed')) {
-          getClusterAddOns(clusterID);
-          this.refreshIDP();
-          getMachinePools(clusterID);
-          getSchedules(clusterID);
-        }
-        // don't fetch grants if cloud provider is known to be gcp
-        if (get(clusterDetails, 'cluster.cloud_provider.id') !== 'gcp') {
-          getGrants(clusterID);
-        }
-      }
-    }
-  }
-
-  refreshIDP() {
-    const { match, clusterIdentityProviders, getClusterIdentityProviders } = this.props;
-    const clusterID = match.params.id;
-
-    if (isValid(clusterID)
-      && !isUuid(clusterID)
-      && !clusterIdentityProviders.pending
-      && !clusterIdentityProviders.error) {
-      getClusterIdentityProviders(clusterID);
-    }
-  }
-
-  fetchDetailsAndInsightsData(id, externalId, isOSD) {
-    const {
-      fetchDetails,
       fetchInsightsData,
     } = this.props;
-    fetchDetails(id);
-    if (externalId) {
-      fetchInsightsData(externalId, isOSD);
+    const clusterID = get(clusterDetails, 'cluster.id');
+    const isManaged = get(clusterDetails, 'cluster.managed', false);
+
+    if (shouldRefetchQuota(organization)) {
+      getOrganizationAndQuota();
+    }
+    const externalClusterID = get(clusterDetails, 'cluster.external_id');
+    if (externalClusterID) {
+      getClusterHistory(externalClusterID, clusterLogsViewOptions);
+      fetchInsightsData(externalClusterID, isManaged);
+      this.fetchSupportData();
+    }
+
+    if (isManaged) {
+      // All managed-cluster-specific requests
+      getUsers(clusterID);
+      getAlerts(clusterID);
+      getNodes(clusterID);
+      getClusterOperators(clusterID);
+      getClusterRouters(clusterID);
+      getClusterAddOns(clusterID);
+      this.refreshIDP();
+      getMachinePools(clusterID);
+      getSchedules(clusterID);
+
+      if (get(clusterDetails, 'cluster.cloud_provider.id') !== 'gcp') {
+        // don't fetch grants if cloud provider is known to be gcp
+        getGrants(clusterID);
+      }
     }
   }
 
@@ -339,20 +331,13 @@ class ClusterDetails extends Component {
 
     const { cluster } = clusterDetails;
 
-    // ClusterDetails can be entered via normal id from OCM, or via external_id (a uuid)
-    // from openshift console. if we enter via the uuid, switch to the normal id.
-    const requestedClusterID = match.params.id;
-    if (cluster && cluster.shouldRedirect && isUuid(requestedClusterID)) {
-      return (
-        <Redirect to={`/details/${cluster.id}`} />
-      );
-    }
+    const requestedSubscriptionID = match.params.id;
 
     // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
     // the redux state will have the data for the previous cluster. We want to ensure we only
     // show data for the requested cluster, so different data should be marked as pending.
 
-    const isPending = ((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error);
+    const isPending = (get(cluster, 'subscription.id') !== requestedSubscriptionID && !clusterDetails.error);
 
     const errorState = () => (
       <>
@@ -373,13 +358,13 @@ class ClusterDetails extends Component {
 
     // show a full error state only if we don't have data at all,
     // or when we only have data for a different cluster
-    if (clusterDetails.error && (!cluster || get(cluster, 'id') !== requestedClusterID)) {
-      if (clusterDetails.errorCode === 404) {
+    if (clusterDetails.error && (!cluster || get(cluster, 'subscription.id') !== requestedSubscriptionID)) {
+      if (clusterDetails.errorCode === 404 || clusterDetails.errorCode === 403) {
         setGlobalError((
           <>
-            Cluster
+            Cluster with subscription ID
             {' '}
-            <b>{requestedClusterID}</b>
+            <b>{requestedSubscriptionID}</b>
             {' '}
             was not found, it might have been deleted or you don&apos;t have permission to see it.
           </>
@@ -389,10 +374,6 @@ class ClusterDetails extends Component {
       return errorState();
     }
 
-    const onDialogClose = () => {
-      invalidateClusters();
-      this.fetchDetailsAndInsightsData(cluster.id);
-    };
     const onTabSelected = (tabId) => {
       this.setState({ selectedTab: tabId });
     };
@@ -616,7 +597,7 @@ class ClusterDetails extends Component {
           </TabContent>
         )}
         <CommonClusterModals
-          onClose={onDialogClose}
+          onClose={this.onDialogClose}
           onClusterDeleted={() => {
             invalidateClusters();
             history.push('/');
