@@ -64,6 +64,14 @@ describe('Register cluster flow', async () => {
     expect(ClusterDetailsPage.isClusterDetailsPage(clusterID)).toBeTruthy();
   });
 
+  it('sucessfully changes the console URL for the cluster', async () => {
+    await (await ClusterDetailsPage.addConsoleURLButton).click();
+    await (await ClusterDetailsPage.editConsoleURLDialogInput).setValue('http://example.com');
+    await (await ClusterDetailsPage.editConsoleURLDialogConfirm).click();
+    expect(ClusterDetailsPage.editConsoleURLDialogConfirm).not.toExist();
+    expect(ClusterDetailsPage.openConsoleButton).toHaveAttribute('href', 'http://example.com');
+  });
+
   it('successfully archives the newly created cluster', async () => {
     await (await ClusterDetailsPage.actionsDropdownToggle).click();
     await (await ClusterDetailsPage.archiveClusterDropdownItem).click();
