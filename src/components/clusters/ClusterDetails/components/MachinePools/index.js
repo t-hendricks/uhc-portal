@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
       instance_type: nodes.compute_machine_type?.id,
       availability_zones: nodes.availability_zones,
       desired: nodes.compute,
+      labels: nodes.compute_labels,
     },
     machinePoolsList: state.machinePools.getMachinePools,
     addMachinePoolResponse: state.machinePools.addMachinePoolResponse,

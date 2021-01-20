@@ -59,7 +59,6 @@ describe('Cluster Actions Dropdown Items', () => {
   describe('cluster with state uninstalling', () => {
     const wrapper = shallow(<DropDownItemsRenderHelper
       {...Fixtures.clusterUninstallingProps}
-      canAllowClusterAdmin
     />);
 
     it('should render (uninstalling)', () => {

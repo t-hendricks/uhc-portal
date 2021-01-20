@@ -35,3 +35,10 @@ You can replace the backend while the app is running.
 With any of the above options, UI will be served at https://qa.foo.redhat.com:1337/openshift/
 
 Authentication is QA SSO which accepts various user names (e.g. `foo`, `user`, `redhat`), and the password is always `redhat`.
+
+## Merge Request Review
+
+* Code that changes behavior requires a test
+* When you touch a component without tests add one
+* Large merge requests should be resubmitted in smaller chunks
+* Test broad changes locally

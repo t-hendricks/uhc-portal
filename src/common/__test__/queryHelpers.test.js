@@ -124,20 +124,19 @@ describe('createViewQueryObject()', () => {
     expect(createViewQueryObject(viewOptions)).toEqual(expected);
   });
 
-  it('correctly formats filter when entitlement_status filter flags are set', () => {
+  it('correctly formats filter when plan_id filter flags are set', () => {
     const viewOptions = {
       ...baseViewOptions,
       flags: {
         subscriptionFilter: {
-          entitlement_status: ['a', 'b', 'c'],
-          type: ['osd'],
+          plan_id: ['OCP', 'ROSA'],
         },
       },
     };
     const expected = {
       ...baseResult,
       has_filters: false,
-      filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (entitlement_status IN ('a','b','c')) AND (type IN ('osd'))",
+      filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (plan_id IN ('OCP','MOA','ROSA'))",
     };
 
     expect(createViewQueryObject(viewOptions)).toEqual(expected);

@@ -27,12 +27,9 @@ class UsersSection extends React.Component {
 
   componentDidMount() {
     const {
-      clusterGroupUsers, cluster, getUsers, toggleClusterAdminResponse,
+      clusterGroupUsers, cluster, getUsers,
     } = this.props;
-    if (clusterGroupUsers.clusterID !== cluster.id
-      || (!clusterGroupUsers.pending)
-      // don't fetch users if we just allowed/ removed cluster admin access
-      || !toggleClusterAdminResponse.pending) {
+    if (clusterGroupUsers.clusterID !== cluster.id || !clusterGroupUsers.pending) {
       getUsers();
     }
   }
@@ -42,7 +39,6 @@ class UsersSection extends React.Component {
       deleteUserResponse,
       addUserResponse,
       getUsers,
-      toggleClusterAdminResponse,
       clusterGroupUsers,
     } = this.props;
     const { deletedRowIndex } = this.state;
@@ -50,9 +46,7 @@ class UsersSection extends React.Component {
     // fetch users again if we just added/deleted a user.
     if (((deleteUserResponse.fulfilled && prevProps.deleteUserResponse.pending)
       || (addUserResponse.fulfilled && prevProps.addUserResponse.pending))
-      && ((!clusterGroupUsers.pending)
-      // don't fetch users if we just allowed/ removed cluster admin access
-      || !toggleClusterAdminResponse.pending)) {
+      && !clusterGroupUsers.pending) {
       getUsers();
     }
     if (prevProps.clusterGroupUsers.pending
@@ -258,7 +252,6 @@ UsersSection.propTypes = {
   closeModal: PropTypes.func.isRequired,
   clearUsersResponses: PropTypes.func.isRequired,
   clearAddUserResponses: PropTypes.func.isRequired,
-  toggleClusterAdminResponse: PropTypes.object.isRequired,
   hasUsers: PropTypes.bool.isRequired,
 };
 

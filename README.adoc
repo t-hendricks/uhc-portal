@@ -225,3 +225,10 @@ the script for more details.
 
 Use `./deploy_info.js` script to check which versions are now deployed.
 If you want to monitor/debug the deploy jobs, `./deploy_info.js --json` output has all the info you'll need.
+
+== Merge Request review
+
+* Code that changes behavior requires a test
+* When you touch a component without tests add one
+* Large merge requests should be resubmitted in smaller chunks
+* Test broad changes locally

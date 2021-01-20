@@ -26,7 +26,7 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
                          || get(cluster, 'nodes.infra', 0) > 0;
   const hasSockets = get(cluster, 'metrics.sockets.total.value', 0) > 0;
 
-  const humanizedPersistentStorage = cluster.managed
+  const humanizedPersistentStorage = cluster.managed && cluster.storage_quota
              && humanizeValueWithUnitGiB(cluster.storage_quota.value);
   const showVCPU = !isDisconnected && !hasSockets;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
