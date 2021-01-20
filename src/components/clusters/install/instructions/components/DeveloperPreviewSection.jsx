@@ -12,9 +12,9 @@ const DeveloperPreviewSection = ({ isDevPreview = false }) => (
       Developer Preview
     </span>
     {' '}
-    <Link to="/create/pre-release">
-      { isDevPreview ? 'About' : 'Download'}
-      { ' ' }
+    <Link to="/install/pre-release">
+      {isDevPreview ? 'About' : 'Download'}
+      {' '}
       pre-release builds
     </Link>
   </>
