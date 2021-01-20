@@ -25,6 +25,8 @@ import AddMachinePoolModal from './components/AddMachinePoolModal';
 import './MachinePools.scss';
 import actionResolver from './machinePoolsHelper';
 
+import { noQuotaTooltip } from '../../../../../common/helpers';
+
 const initialState = {
   deletedRowIndex: null,
   openedRows: [],
@@ -34,10 +36,20 @@ class MachinePools extends React.Component {
   state = initialState;
 
   componentDidMount() {
-    const { machinePoolsList, getMachinePools } = this.props;
+    const {
+      machinePoolsList,
+      getMachinePools,
+      getOrganizationAndQuota,
+      machineTypes,
+      getMachineTypes,
+    } = this.props;
     if (!machinePoolsList.pending) {
       getMachinePools();
     }
+    if (!machineTypes.fulfilled && !machineTypes.pending) {
+      getMachineTypes();
+    }
+    getOrganizationAndQuota();
   }
 
   componentDidUpdate(prevProps) {
@@ -94,6 +106,7 @@ class MachinePools extends React.Component {
       defaultMachinePool,
       deleteMachinePoolResponse,
       addMachinePoolResponse,
+      hasMachinePoolsQuota,
     } = this.props;
 
     const { deletedRowIndex, openedRows } = this.state;
@@ -250,8 +263,10 @@ class MachinePools extends React.Component {
       rows[deletedRowIndex] = skeletonRow;
     }
 
+    const addMachinePoolDisabled = !cluster.canEdit || !hasMachinePoolsQuota;
+
     const addMachinePoolBtn = (
-      <Button id="add-machine-pool" onClick={() => openModal('add-machine-pool')} variant="secondary" className="space-bottom-lg" isDisabled={!cluster.canEdit}>
+      <Button id="add-machine-pool" onClick={() => openModal('add-machine-pool')} variant="secondary" className="space-bottom-lg" isDisabled={addMachinePoolDisabled}>
         Add machine pool
       </Button>
     );
@@ -276,8 +291,13 @@ class MachinePools extends React.Component {
               { machinePoolsList.error && (
               <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
               )}
-              {!cluster.canEdit ? (
-                <Tooltip content="You do not have permission to add a machine pool. Only cluster owners and organization administrators can add machine pools.">
+              {addMachinePoolDisabled ? (
+                <Tooltip content={
+                  !cluster.canEdit
+                    ? 'You do not have permission to add a machine pool. Only cluster owners and organization administrators can add machine pools.'
+                    : noQuotaTooltip
+                }
+                >
                   <span>
                     {addMachinePoolBtn}
                   </span>
@@ -313,6 +333,7 @@ class MachinePools extends React.Component {
 MachinePools.propTypes = {
   cluster: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
+  hasMachinePoolsQuota: PropTypes.bool.isRequired,
   isAddMachinePoolModalOpen: PropTypes.bool.isRequired,
   deleteMachinePoolResponse: PropTypes.object.isRequired,
   addMachinePoolResponse: PropTypes.object.isRequired,
@@ -328,6 +349,9 @@ MachinePools.propTypes = {
   getMachinePools: PropTypes.func.isRequired,
   deleteMachinePool: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
+  getMachineTypes: PropTypes.func.isRequired,
+  machineTypes: PropTypes.object.isRequired,
 };
 
 export default MachinePools;

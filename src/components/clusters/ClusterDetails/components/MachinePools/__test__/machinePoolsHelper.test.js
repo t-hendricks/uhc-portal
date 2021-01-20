@@ -1,4 +1,4 @@
-import actionResolver from './machinePoolsHelper';
+import actionResolver from '../machinePoolsHelper';
 
 describe('machine pools action resolver', () => {
   const onClickDelete = jest.fn();

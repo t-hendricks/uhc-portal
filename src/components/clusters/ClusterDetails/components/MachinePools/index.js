@@ -8,10 +8,12 @@ import {
   deleteMachinePool,
   clearGetMachinePoolsResponse,
 } from './MachinePoolsActions';
-
+import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
+import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
 import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
-import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
+import shouldShowModal from '../../../../common/Modal/ModalSelectors';
+import hasMachinePoolsQuotaSelector from './MachinePoolsSelectors';
 
 const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});
@@ -30,6 +32,9 @@ const mapStateToProps = (state) => {
     addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
     deleteMachinePoolResponse: state.machinePools.deleteMachinePoolResponse,
     scaleMachinePoolResponse: state.machinePools.scaleMachinePoolResponse,
+    hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
+    machineTypes: state.machineTypes,
+    organization: state.userProfile.organization,
   });
 };
 
@@ -46,6 +51,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   deleteMachinePool: machinePoolID => dispatch(
     deleteMachinePool(ownProps.cluster.id, machinePoolID),
   ),
+  getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
+  getMachineTypes: () => dispatch(getMachineTypes()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MachinePools);
