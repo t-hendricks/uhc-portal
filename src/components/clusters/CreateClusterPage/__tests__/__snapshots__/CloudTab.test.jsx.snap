@@ -94,7 +94,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                       to="/create/osd"
                     >
                       <Button>
-                        Create cluser
+                        Create cluster
                       </Button>
                     </Link>
                   </React.Fragment>,

@@ -44,7 +44,7 @@ const SandboxTab = ({ token }) => (
           <Text component="p" className="ocm-sandbox-graytext">
             <b>Note: </b>
             Your CodeReady installation won&apos;t appear in the OpenShift Cluster Manager
-            because it is not a production-level cluster.
+            unless you enable cluster monitoring and telemetry.
           </Text>
         </StackItem>
       </Stack>
