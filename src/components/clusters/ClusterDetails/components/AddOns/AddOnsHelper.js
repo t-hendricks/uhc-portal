@@ -61,6 +61,8 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
 
 const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;
 
+const hasRequirements = addOn => get(addOn, 'requirements.length', 0) > 0;
+
 const getParameter = (addOn, paramID) => {
   if (hasParameters(addOn)) {
     return addOn.parameters.items.find(item => item.id === paramID);
@@ -95,6 +97,92 @@ const parameterValuesForEditing = (addOnInstallation, addOn) => {
   return vals;
 };
 
+const formatRequirementData = (data) => {
+  const attrs = [];
+  Object.entries(data)
+    .forEach(([field, requiredValue]) => {
+      if (Array.isArray(requiredValue)) {
+        attrs.push(`${field} is ${requiredValue.join(' or ')}`);
+      } else if (typeof requiredValue === 'number') {
+        attrs.push(`${field} >= ${requiredValue}`);
+      } else {
+        attrs.push(`${field} is ${requiredValue}`);
+      }
+    });
+  return attrs.join(' and ');
+};
+
+const requirementFulfilledByResource = (myResource, requirement) => {
+  let constraintsMet = true;
+  Object.entries(requirement.data)
+    .every(([field, requiredValue]) => {
+      const clusterValue = get(myResource, field);
+      if (Array.isArray(requiredValue)) {
+        constraintsMet = requiredValue.includes(clusterValue);
+      } else if (typeof requiredValue === 'number') {
+        constraintsMet = clusterValue >= requiredValue;
+      } else {
+        constraintsMet = clusterValue === requiredValue;
+      }
+      return constraintsMet;
+    });
+  return constraintsMet;
+};
+
+const validateAddOnRequirements = (
+  addOn, cluster, clusterAddOns, clusterMachinePools, breakOnFirstError = true,
+) => {
+  const requirementStatus = {
+    fulfilled: true,
+    errorMsgs: [],
+  };
+  if (hasRequirements(addOn)) {
+    addOn.requirements.every((requirement) => {
+      let requirementMet = false;
+      let requirementError;
+      switch (requirement.resource) {
+        case 'cluster': {
+          requirementMet = requirementFulfilledByResource(cluster, requirement);
+          break;
+        }
+        case 'addon': {
+          if (get(clusterAddOns, 'items.length', false)) {
+            requirementMet = clusterAddOns.items
+              .some(addon => requirementFulfilledByResource(addon, requirement));
+          }
+          if (!requirementMet) {
+            requirementError = 'This addon requires an addon to be installed where '
+              + `${formatRequirementData(requirement.data)}`;
+          }
+          break;
+        }
+        case 'machine_pool': {
+          if (get(clusterMachinePools, 'data.length', false)) {
+            requirementMet = clusterMachinePools.data
+              .some(machinePool => requirementFulfilledByResource(machinePool, requirement));
+          }
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+      if (!requirementMet) {
+        if (!requirementError) {
+          requirementError = `This addon requires a ${requirement.resource} where `
+            + `${formatRequirementData(requirement.data)}`;
+        }
+        requirementStatus.errorMsgs.push(requirementError);
+      }
+      if (requirementStatus.fulfilled) {
+        requirementStatus.fulfilled = requirementMet;
+      }
+      return !(!requirementStatus.fulfilled && breakOnFirstError);
+    });
+  }
+  return requirementStatus;
+};
+
 export {
   isAvailable,
   isInstalled,
@@ -102,6 +190,8 @@ export {
   hasQuota,
   availableAddOns,
   hasParameters,
+  hasRequirements,
   getParameter,
   parameterValuesForEditing,
+  validateAddOnRequirements,
 };

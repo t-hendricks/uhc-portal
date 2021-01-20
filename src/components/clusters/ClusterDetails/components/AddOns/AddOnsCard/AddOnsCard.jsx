@@ -12,6 +12,8 @@ import {
   DropdownItem,
   KebabToggle,
   Label,
+  Text,
+  TextVariants,
   Tooltip,
 } from '@patternfly/react-core';
 import {
@@ -20,11 +22,18 @@ import {
   InProgressIcon,
   UnknownIcon,
 } from '@patternfly/react-icons';
+import {
+  // eslint-disable-next-line camelcase
+  global_danger_color_100,
+  // eslint-disable-next-line camelcase
+  global_icon_FontSize_sm,
+} from '@patternfly/react-tokens';
 import AddOnsConstants from '../AddOnsConstants';
-import { hasParameters } from '../AddOnsHelper';
+import { hasParameters, hasRequirements } from '../AddOnsHelper';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
 import clusterStates, { isHibernating } from '../../../../common/clusterStates';
 import './AddOnsCard.scss';
+import PopoverHint from '../../../../../common/PopoverHint';
 
 class AddOnsCard extends Component {
   state = {
@@ -88,6 +97,7 @@ class AddOnsCard extends Component {
       addClusterAddOn,
       addClusterAddOnResponse,
       hasQuota,
+      requirements,
       openModal,
     } = this.props;
 
@@ -134,6 +144,16 @@ class AddOnsCard extends Component {
         );
       }
 
+      if (!requirements.fulfilled) {
+        return (
+          <div className="pf-u-display-inline-block">
+            <Button isDisabled>
+              Install
+            </Button>
+          </div>
+        );
+      }
+
       return (
         <Button
           variant="secondary"
@@ -142,6 +162,7 @@ class AddOnsCard extends Component {
             addClusterAddOnResponse.pending
             || cluster.state !== clusterStates.READY
             || !cluster.canEdit
+            || !requirements.fulfilled
           }
           onClick={installAddOn}
         >
@@ -262,6 +283,33 @@ class AddOnsCard extends Component {
     );
   }
 
+  getRequirementsState(addOn) {
+    const { requirements } = this.props;
+    if (!hasRequirements(addOn)) {
+      return '';
+    }
+
+    if (requirements.fulfilled) {
+      return '';
+    }
+
+    return (
+      <span className="req-status">
+        <ExclamationCircleIcon
+          color={global_danger_color_100.value}
+          size={global_icon_FontSize_sm.value}
+        />
+        <Text component={TextVariants.p}>
+          Prerequisites not met
+        </Text>
+        <PopoverHint
+          hint={requirements.errorMsgs.join(',')}
+          iconClassName="hand-pointer"
+        />
+      </span>
+    );
+  }
+
   render() {
     const { addOn } = this.props;
     return (
@@ -287,6 +335,9 @@ class AddOnsCard extends Component {
             <a href={addOn.docs_link} rel="noreferrer noopener" target="_blank">View documentation</a>
           )}
         </CardBody>
+        <CardBody isFilled={false} className="ocm-c-addons__card--body">
+          { this.getRequirementsState(addOn) }
+        </CardBody>
         <CardFooter className="ocm-c-addons__card--footer">
           { this.getPrimaryAction(addOn) }
         </CardFooter>
@@ -300,6 +351,7 @@ AddOnsCard.propTypes = {
   cluster: PropTypes.object.isRequired,
   installedAddOn: PropTypes.object,
   hasQuota: PropTypes.bool.isRequired,
+  requirements: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   addClusterAddOn: PropTypes.func.isRequired,
   addClusterAddOnResponse: PropTypes.object.isRequired,

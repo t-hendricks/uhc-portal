@@ -53,6 +53,16 @@ export const managedIntegration = {
       },
     ],
   },
+  requirements: [
+    {
+      id: 'cluster',
+      resource: 'cluster',
+      data: {
+        'cloud_provider.id': 'aws',
+      },
+      enabled: true,
+    },
+  ],
 };
 export const serviceMesh = {
   kind: 'AddOn',
@@ -68,6 +78,16 @@ export const serviceMesh = {
   target_namespace: 'redhat-service-mesh-operator',
   install_mode: 'single_namespace',
   operator_name: 'service-mesh-operator',
+  requirements: [
+    {
+      id: 'cluster',
+      resource: 'cluster',
+      data: {
+        'cloud_provider.id': 'gcp',
+      },
+      enabled: true,
+    },
+  ],
 };
 export const dbaOperator = {
   kind: 'AddOn',
