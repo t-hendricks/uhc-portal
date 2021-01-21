@@ -138,13 +138,9 @@ const processAddOnQuota = (addOnsQuota, item, resources) => {
 };
 
 /**
- * Normalize incoming quota and construct an easy to query structure to figure
- * out how many of each resource types we have available.
- * This is done here to ensure the calculation is done every time we get the quota,
- * and that we won't have to replicate it across different components
- * which might need to query this data.
+ * Constructs a blank quota data structure (extracted for tests).
  */
-const processQuota = (response) => {
+const emptyQuota = () => {
   const clustersQuotaByAz = () => ({
     singleAz: { available: 0 },
     multiAz: { available: 0 },
@@ -179,14 +175,24 @@ const processQuota = (response) => {
     gcp: { available: 0 },
   });
 
-  const allQuotas = {
+  return {
     clustersQuota: clustersQuotaByProviderInfraAz(),
     nodesQuota: nodesQuotaByProviderInfra(),
     storageQuota: storageQuotaByProvider(),
     loadBalancerQuota: loadBalancerQuotaByProvider(),
     addOnsQuota: {},
   };
+}
 
+/**
+ * Normalize incoming quota and construct an easy to query structure to figure
+ * out how many of each resource types we have available.
+ * This is done here to ensure the calculation is done every time we get the quota,
+ * and that we won't have to replicate it across different components
+ * which might need to query this data.
+ */
+const processQuota = (response) => {
+  const allQuotas = emptyQuota();
   const items = get(response.data, 'items', []);
   items.forEach((rawItem) => {
     const item = normalizeQuotaCost(rawItem);
@@ -278,6 +284,7 @@ const userActions = {
   processStorageQuota,
   processLoadBalancerQuota,
   processAddOnQuota,
+  emptyQuota,
   processQuota,
   selfTermsReview,
 };

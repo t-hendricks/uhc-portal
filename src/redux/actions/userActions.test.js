@@ -30,27 +30,15 @@ describe('clustersActions', () => {
   describe('processClusterQuota', () => {
     let clusterQuota;
     beforeEach(() => {
-      clusterQuota = {
-        aws: {
-          byoc: {
-            singleAz: { available: 0 },
-            multiAz: { available: 0 },
-            totalAvailable: 0,
-          },
-          rhInfra: {
-            singleAz: { available: 0 },
-            multiAz: { available: 0 },
-            totalAvailable: 0,
-          },
-        },
-        gcp: {
-          rhInfra: {
-            singleAz: { available: 0 },
-            multiAz: { available: 0 },
-            totalAvailable: 0,
-          },
-        },
-      };
+      clusterQuota = userActions.emptyQuota().clustersQuota;
+    });
+
+    it('should process empty quota', () => {
+      const resources = [];
+      userActions.processClusterQuota(clusterQuota, item, resources);
+      expect(clusterQuota.aws.rhInfra.singleAz).not.toContain('gp.small');
+      expect(clusterQuota.aws.rhInfra.singleAz.available).toEqual(0);
+      expect(clusterQuota.aws.rhInfra.totalAvailable).toEqual(0);
     });
 
     it('should process quota for basic OSD on AWS', () => {
