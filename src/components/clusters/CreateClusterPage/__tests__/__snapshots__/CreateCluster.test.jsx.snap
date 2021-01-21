@@ -72,25 +72,6 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
         title={
           <React.Fragment>
             <TabTitleIcon>
-              <ServerIcon
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />
-            </TabTitleIcon>
-            <TabTitleText>
-              Datacenter
-            </TabTitleText>
-          </React.Fragment>
-        }
-      >
-        <DatacenterTab />
-      </Tab>
-      <Tab
-        eventKey={1}
-        title={
-          <React.Fragment>
-            <TabTitleIcon>
               <CloudIcon
                 color="currentColor"
                 noVerticalAlign={false}
@@ -106,6 +87,25 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
         <CloudTab
           hasOSDQuota={false}
         />
+      </Tab>
+      <Tab
+        eventKey={1}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <ServerIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Datacenter
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <DatacenterTab />
       </Tab>
       <Tab
         eventKey={2}
@@ -176,25 +176,6 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
         title={
           <React.Fragment>
             <TabTitleIcon>
-              <ServerIcon
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />
-            </TabTitleIcon>
-            <TabTitleText>
-              Datacenter
-            </TabTitleText>
-          </React.Fragment>
-        }
-      >
-        <DatacenterTab />
-      </Tab>
-      <Tab
-        eventKey={1}
-        title={
-          <React.Fragment>
-            <TabTitleIcon>
               <CloudIcon
                 color="currentColor"
                 noVerticalAlign={false}
@@ -210,6 +191,25 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
         <CloudTab
           hasOSDQuota={true}
         />
+      </Tab>
+      <Tab
+        eventKey={1}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <ServerIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Datacenter
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <DatacenterTab />
       </Tab>
       <Tab
         eventKey={2}

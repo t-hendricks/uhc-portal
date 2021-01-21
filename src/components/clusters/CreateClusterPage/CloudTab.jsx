@@ -390,8 +390,7 @@ const CloudTab = ({ hasOSDQuota }) => (
           </Title>
         </StackItem>
         <StackItem>
-          Managed as a service. Simplify your IT by running your OpenShift
-          cluster with one of our partners below.
+          Create clusters in the cloud using a managed service.
           {managedServices(hasOSDQuota)}
         </StackItem>
       </Stack>

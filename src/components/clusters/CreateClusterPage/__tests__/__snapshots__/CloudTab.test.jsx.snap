@@ -139,7 +139,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
         </Title>
       </StackItem>
       <StackItem>
-        Managed as a service. Simplify your IT by running your OpenShift cluster with one of our partners below.
+        Create clusters in the cloud using a managed service.
         <Table
           aria-label="Managed services table"
           borders={true}
@@ -503,7 +503,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
         </Title>
       </StackItem>
       <StackItem>
-        Managed as a service. Simplify your IT by running your OpenShift cluster with one of our partners below.
+        Create clusters in the cloud using a managed service.
         <Table
           aria-label="Managed services table"
           borders={true}
