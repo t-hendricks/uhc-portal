@@ -39,8 +39,8 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
             </Title>
           </StackItem>
           <StackItem>
-          Create a bare metal cluster with ease. From connecting your hardware to running
-          pre-flight checks, the Assisted Installer guides you through the creation process.
+          Create a cluster on bare metal following a guided installation
+           process to connect your hardware.
           </StackItem>
           <StackItem>
             <Button component={Link} to="/assisted-installer/clusters/~new">
@@ -58,7 +58,8 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
           </Title>
         </StackItem>
         <StackItem>
-        Create clusters in other environments using a downloadable installer program.
+        Create clusters on supported infrastructure using our extensive documentation
+         and installer program.
         </StackItem>
         <StackItem>
           <Table

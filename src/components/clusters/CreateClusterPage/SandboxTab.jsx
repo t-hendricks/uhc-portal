@@ -37,8 +37,7 @@ const SandboxTab = ({ token }) => (
           </Label>
         </StackItem>
         <StackItem>
-        Create, set up, and manage a minimal OpenShift 4 cluster through a pre-configured
-        installation for local development with access to developer-focused resources.
+        Create a minimal cluster on your desktop/laptop for local development and testing.
         </StackItem>
         <StackItem>
           <Text component="p" className="ocm-sandbox-graytext">

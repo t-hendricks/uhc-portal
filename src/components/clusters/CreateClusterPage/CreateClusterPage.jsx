@@ -63,10 +63,10 @@ class CreateCluster extends React.Component {
             return (
               <>
                 <TabTitleIcon>
-                  <ServerIcon />
+                  <CloudIcon />
                 </TabTitleIcon>
                 <TabTitleText>
-                  Datacenter
+                  Cloud
                 </TabTitleText>
               </>
             );
@@ -74,10 +74,10 @@ class CreateCluster extends React.Component {
             return (
               <>
                 <TabTitleIcon>
-                  <CloudIcon />
+                  <ServerIcon />
                 </TabTitleIcon>
                 <TabTitleText>
-                  Cloud
+                  Datacenter
                 </TabTitleText>
               </>
             );
@@ -105,10 +105,10 @@ class CreateCluster extends React.Component {
           <PageSection variant="light" className="cluster-create-page">
             <Tabs isFilled activeKey={activeTabKey} onSelect={this.handleTabClick}>
               <Tab eventKey={0} title={tabTitle(0)}>
-                <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
+                <CloudTab hasOSDQuota={hasOSDQuota} />
               </Tab>
               <Tab eventKey={1} title={tabTitle(1)}>
-                <CloudTab hasOSDQuota={hasOSDQuota} />
+                <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
               </Tab>
               <Tab eventKey={2} title={tabTitle(2)}>
                 <SandboxTab token={token} />
