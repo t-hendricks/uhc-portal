@@ -39,10 +39,12 @@ describe('clustersActions', () => {
       expect(clusterQuota.aws.rhInfra.singleAz).not.toContain('gp.small');
       expect(clusterQuota.aws.rhInfra.singleAz.available).toEqual(0);
       expect(clusterQuota.aws.rhInfra.totalAvailable).toEqual(0);
+      expect(clusterQuota.aws.isAvailable).toEqual(false);
     });
 
     it('should process quota for basic OSD on AWS', () => {
       const resources = [{
+        resource_type: 'cluster',
         cloud_provider: 'aws',
         byoc: 'rhinfra',
         availability_zone_type: 'single',
@@ -54,11 +56,14 @@ describe('clustersActions', () => {
       expect(clusterQuota.aws.rhInfra.singleAz['gp.small']).toEqual(1);
       expect(clusterQuota.aws.rhInfra.singleAz.available).toEqual(1);
       expect(clusterQuota.aws.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota.aws.isAvailable).toEqual(true);
+      expect(clusterQuota.gcp.isAvailable).toEqual(false);
     });
 
     it('should process quota for basic OSD on AWS and byoc', () => {
       const resources = [
         {
+          resource_type: 'cluster',
           cloud_provider: 'aws',
           byoc: 'rhinfra',
           availability_zone_type: 'single',
@@ -67,9 +72,9 @@ describe('clustersActions', () => {
           cost: 1,
         },
         {
-          cloud_provider: 'any',
-          resource_name: 'mem.small',
           resource_type: 'cluster',
+          cloud_provider: 'aws',
+          resource_name: 'mem.small',
           byoc: 'byoc',
           availability_zone_type: 'single',
           product: normalizedProducts.OSD,
@@ -82,10 +87,13 @@ describe('clustersActions', () => {
       expect(clusterQuota.aws.rhInfra.totalAvailable).toEqual(1);
       expect(clusterQuota.aws.byoc.singleAz.available).toEqual(1);
       expect(clusterQuota.aws.byoc.totalAvailable).toEqual(1);
+      expect(clusterQuota.aws.isAvailable).toEqual(true);
+      expect(clusterQuota.gcp.isAvailable).toEqual(false);
     });
 
     it('should process quota for any cloud provider', () => {
       const resources = [{
+        resource_type: 'cluster',
         cloud_provider: 'any',
         byoc: 'rhinfra',
         availability_zone_type: 'single',
@@ -97,13 +105,16 @@ describe('clustersActions', () => {
       expect(clusterQuota.aws.rhInfra.singleAz['gp.small']).toEqual(1);
       expect(clusterQuota.aws.rhInfra.singleAz.available).toEqual(1);
       expect(clusterQuota.aws.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota.aws.isAvailable).toEqual(true);
       expect(clusterQuota.gcp.rhInfra.singleAz['gp.small']).toEqual(1);
       expect(clusterQuota.gcp.rhInfra.singleAz.available).toEqual(1);
       expect(clusterQuota.gcp.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota.gcp.isAvailable).toEqual(true);
     });
 
     it('should process quota for any infrastructure', () => {
       const resources = [{
+        resource_type: 'cluster',
         cloud_provider: 'aws',
         byoc: 'any',
         availability_zone_type: 'single',
@@ -118,10 +129,13 @@ describe('clustersActions', () => {
       expect(clusterQuota.aws.rhInfra.singleAz['gp.small']).toEqual(1);
       expect(clusterQuota.aws.rhInfra.singleAz.available).toEqual(1);
       expect(clusterQuota.aws.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota.aws.isAvailable).toEqual(true);
+      expect(clusterQuota.gcp.isAvailable).toEqual(false);
     });
 
     it('should process quota for any availability zone', () => {
       const resources = [{
+        resource_type: 'cluster',
         cloud_provider: 'aws',
         byoc: 'rhinfra',
         availability_zone_type: 'any',
@@ -135,6 +149,8 @@ describe('clustersActions', () => {
       expect(clusterQuota.aws.rhInfra.multiAz['gp.small']).toEqual(1);
       expect(clusterQuota.aws.rhInfra.multiAz.available).toEqual(1);
       expect(clusterQuota.aws.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota.aws.isAvailable).toEqual(true);
+      expect(clusterQuota.gcp.isAvailable).toEqual(false);
     });
   });
 
@@ -149,6 +165,7 @@ describe('clustersActions', () => {
 
     it('should process quota for OSD compute nodes on AWS', () => {
       const resources = [{
+        resource_type: 'compute.node',
         cloud_provider: 'aws',
         byoc: 'rhinfra',
         resource_name: 'gp.small',
@@ -162,6 +179,7 @@ describe('clustersActions', () => {
     it('should process quota for OSD compute nodes on AWS and byoc', () => {
       const resources = [
         {
+          resource_type: 'compute.node',
           cloud_provider: 'aws',
           byoc: 'rhinfra',
           resource_name: 'gp.small',
@@ -169,9 +187,9 @@ describe('clustersActions', () => {
           cost: 1,
         },
         {
+          resource_type: 'compute.node',
           cloud_provider: 'any',
           resource_name: 'cpu.large',
-          resource_type: 'compute.node',
           byoc: 'byoc',
           availability_zone_type: 'any',
           product: normalizedProducts.OSD,
@@ -185,6 +203,7 @@ describe('clustersActions', () => {
 
     it('should process quota for any cloud provider', () => {
       const resources = [{
+        resource_type: 'compute.node',
         cloud_provider: 'any',
         byoc: 'rhinfra',
         resource_name: 'gp.small',
@@ -198,6 +217,7 @@ describe('clustersActions', () => {
 
     it('should process quota for any infrastructure', () => {
       const resources = [{
+        resource_type: 'compute.node',
         cloud_provider: 'aws',
         byoc: 'any',
         resource_name: 'gp.small',

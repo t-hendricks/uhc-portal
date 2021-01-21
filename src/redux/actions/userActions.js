@@ -52,6 +52,10 @@ const processClusterQuota = (clustersQuota, item, resources) => {
                 // To avoid double-counting, we calculate only half for each of the two AZ's
                 categoryQuota.totalAvailable += available / 2;
               }
+
+              if (categoryQuota.totalAvailable > 0) {
+                quota[provider].isAvailable = true;
+              }
             });
           }
         });
@@ -182,7 +186,7 @@ const emptyQuota = () => {
     loadBalancerQuota: loadBalancerQuotaByProvider(),
     addOnsQuota: {},
   };
-}
+};
 
 /**
  * Normalize incoming quota and construct an easy to query structure to figure
@@ -232,14 +236,6 @@ const processQuota = (response) => {
         break;
     }
   });
-
-  // check if any quota available for aws clusters
-  allQuotas.clustersQuota.aws.isAvailable = allQuotas.clustersQuota.aws.byoc.totalAvailable > 0
-    || allQuotas.clustersQuota.aws.rhInfra.totalAvailable > 0;
-
-  // check if any quota available for gcp clusters
-  allQuotas.clustersQuota.gcp.isAvailable = allQuotas.clustersQuota.gcp.byoc.totalAvailable > 0
-    || allQuotas.clustersQuota.gcp.rhInfra.totalAvailable > 0;
 
   return allQuotas;
 };
