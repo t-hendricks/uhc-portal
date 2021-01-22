@@ -106,6 +106,7 @@ class AddOns extends React.Component {
         <Gallery hasGutter>
           { addOnsList.map(addOn => (
             <AddOnsCard
+              key={addOn.id}
               addOn={addOn}
               installedAddOn={getInstalled(addOn, clusterAddOns)}
               hasQuota={hasQuota(addOn, cluster, organization, quota)}

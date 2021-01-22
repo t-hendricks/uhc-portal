@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form } from '@patternfly/react-core';
+import { Form, FormGroup, Button } from '@patternfly/react-core';
 
 import { Field } from 'redux-form';
+import { LevelUpAltIcon } from '@patternfly/react-icons';
 import Modal from '../../../../../common/Modal/Modal';
 import { hasParameters } from '../AddOnsHelper';
 import { ReduxVerticalFormGroup } from '../../../../../common/ReduxFormComponents';
 import { required } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
+
+import '../AddOns.scss';
 
 class AddOnsParametersModal extends Component {
   componentDidUpdate() {
@@ -56,11 +59,16 @@ class AddOnsParametersModal extends Component {
       return param.description;
     }
     // on update with a default value set, show description and example
-    if (param.default_value !== undefined && param.default_value !== '') {
+    if (isUpdateForm && param.default_value && param.editable) {
       return `${param.description}. For example "${param.default_value}"`;
     }
     // on update with no default value set, show description and example
     return param.description;
+  }
+
+  setParamValue = (param) => {
+    const { change } = this.props;
+    change(`parameters.${param.id}`, `${param.default_value}`);
   }
 
   render() {
@@ -95,20 +103,44 @@ class AddOnsParametersModal extends Component {
 
       <Form>
         {hasParameters(addOn) && addOn.parameters.items.map(param => (
-          <Field
+          <FormGroup
             key={param.id}
-            component={ReduxVerticalFormGroup}
-            name={`parameters.${param.id}`}
-            label={param.name}
-            type="text"
-            placeholder={this.getParamDefault(param)}
-            validate={this.validationsForParameterField(param)}
-            isRequired={param.required}
-            disabled={this.isFieldDisabled(param)}
-            helpText={this.getHelpText(param)}
-          />
+          >
+            <Field
+              key={param.id}
+              component={ReduxVerticalFormGroup}
+              name={`parameters.${param.id}`}
+              label={param.name}
+              type="text"
+              placeholder={this.getParamDefault(param)}
+              validate={this.validationsForParameterField(param)}
+              isRequired={param.required}
+              disabled={this.isFieldDisabled(param)}
+              helpText={this.getHelpText(param)}
+            />
+
+            {
+          ((isUpdateForm && param.editable && param.default_value)
+           || (!isUpdateForm && param.default_value))
+          && (
+          <Button
+            onClick={() => this.setParamValue(param)}
+            variant="link"
+            icon={<LevelUpAltIcon />}
+            iconPosition="right"
+            className="addon-parameter-default-button"
+          >
+                  Use default
+            {' '}
+            {param.default_value}
+          </Button>
+          )
+}
+
+          </FormGroup>
         ))}
       </Form>
+
     </Modal>
     );
   }
@@ -125,6 +157,7 @@ AddOnsParametersModal.propTypes = {
   submitClusterAddOnResponse: PropTypes.object,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
+  change: PropTypes.func,
 };
 
 export default AddOnsParametersModal;
