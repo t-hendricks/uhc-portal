@@ -83,6 +83,7 @@ const subscriptionStatuses = {
  */
 const normalizedProducts = {
   OSD: 'OSD',
+  OSDTrial: 'OSDTrial',
   OCP: 'OCP',
   RHMI: 'RHMI',
   ROSA: 'ROSA',
