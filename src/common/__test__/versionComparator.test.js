@@ -1,4 +1,4 @@
-import { versionComparator } from './clusterUpgardeHelpers';
+import { versionComparator } from '../versionComparator';
 
 test('Version comparator', () => {
   expect(versionComparator('4.5.15', '4.5.15')).toBe(0);

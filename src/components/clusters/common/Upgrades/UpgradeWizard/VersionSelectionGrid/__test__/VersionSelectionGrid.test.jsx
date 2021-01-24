@@ -3,15 +3,9 @@ import { shallow } from 'enzyme';
 import {
   Divider,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
 import VersionSelectionGrid from '../VersionSelectionGrid';
 import VersionCard from '../VersionCard';
 
-const baseResponse = {
-  fulfilled: false,
-  pending: false,
-  error: false,
-};
 
 describe('<VersionSelectionGrid />', () => {
   let wrapper;
@@ -67,33 +61,22 @@ describe('<VersionSelectionGrid />', () => {
     onSelect = jest.fn();
     wrapper = shallow(
       <VersionSelectionGrid
-        clusterVersion=""
-        clusterChannel=""
+        clusterVersion="4.5.20"
+        clusterChannel="stable"
         getVersion={getVersion}
-        versionInfo={
-          {
-            ...baseResponse,
-          }
-        }
+        availableUpgrades={['4.5.21']}
         onSelect={onSelect}
         selected={undefined}
       />,
     );
   });
 
-  it('should display a spinner while version info not fulfilled', () => {
-    expect(wrapper.find(Spinner).length).toEqual(1);
-  });
 
   it('should have recommended card for the latest version only and nothing more', () => {
     wrapper.setProps({
       clusterVersion: cases[0].version,
       clusterChannel: cases[0].channelGroup,
-      versionInfo: {
-        ...baseResponse,
-        fulfilled: true,
-        ...cases[0],
-      },
+      availableUpgrades: cases[0].availableUpgrades,
     });
     const versionCards = wrapper.find(VersionCard);
     expect(versionCards.length).toEqual(1);
@@ -106,11 +89,7 @@ describe('<VersionSelectionGrid />', () => {
     wrapper.setProps({
       clusterVersion: cases[1].version,
       clusterChannel: cases[1].channelGroup,
-      versionInfo: {
-        ...baseResponse,
-        fulfilled: true,
-        ...cases[1],
-      },
+      availableUpgrades: cases[1].availableUpgrades,
     });
     const versionCards = wrapper.find(VersionCard);
     expect(versionCards.length).toEqual(4);
@@ -123,11 +102,7 @@ describe('<VersionSelectionGrid />', () => {
     wrapper.setProps({
       clusterVersion: cases[2].version,
       clusterChannel: cases[2].channelGroup,
-      versionInfo: {
-        ...baseResponse,
-        fulfilled: true,
-        ...cases[2],
-      },
+      availableUpgrades: cases[2].availableUpgrades,
     });
     const versionCards = wrapper.find(VersionCard);
     expect(versionCards.length).toEqual(9);
@@ -139,11 +114,7 @@ describe('<VersionSelectionGrid />', () => {
     wrapper.setProps({
       clusterVersion: cases[3].version,
       clusterChannel: cases[3].channelGroup,
-      versionInfo: {
-        ...baseResponse,
-        fulfilled: true,
-        ...cases[3],
-      },
+      availableUpgrades: cases[3].availableUpgrades,
     });
     const versionCards = wrapper.find(VersionCard);
     expect(versionCards.length).toEqual(2);
