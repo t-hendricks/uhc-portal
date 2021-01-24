@@ -5,8 +5,13 @@ import clusterStates from '../../../../common/clusterStates';
 const canAllowAdminSelector = (state) => {
   const product = get(state, 'clusters.details.cluster.product.id', 'osd');
   const clusterState = get(state, 'clusters.details.cluster.state');
+
   if (product === 'rhmi' || clusterState !== clusterStates.READY) {
     return false;
+  }
+
+  if (get(state, 'clusters.details.cluster.ccs.enabled', false)) {
+    return true;
   }
 
   const capabilites = get(state, 'clusters.details.cluster.subscription.capabilities', []);
