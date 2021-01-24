@@ -43,7 +43,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
       <Button
         variant="link"
       >
-        View archived clusters
+        View cluster archives
       </Button>
     </Link>
     <Connect(Component) />

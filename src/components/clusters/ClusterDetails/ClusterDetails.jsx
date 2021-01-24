@@ -162,14 +162,16 @@ class ClusterDetails extends Component {
       clusterDetails,
       fetchDetails,
     } = this.props;
+    const { cluster } = clusterDetails;
     const subscriptionID = match.params.id;
 
     if (isValid(subscriptionID)) {
       fetchDetails(subscriptionID);
     }
 
-    const clusterID = get(clusterDetails, 'cluster.id');
-    if (isValid(clusterID)) {
+    const clusterID = get(cluster, 'id');
+    const subscriptionStatus = get(cluster, 'subscription.status');
+    if (isValid(clusterID) && subscriptionStatus !== subscriptionStatuses.DEPROVISIONED) {
       this.refreshRelatedResources();
     }
   }
@@ -378,7 +380,8 @@ class ClusterDetails extends Component {
       this.setState({ selectedTab: tabId });
     };
 
-    const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+    const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
+    || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
     const displayInsightsTab = !cluster.managed && !isArchived;
 

@@ -18,6 +18,7 @@ import isEmpty from 'lodash/isEmpty';
 import { clustersConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
+import { subscriptionStatuses } from '../../common/subscriptionTypes';
 import {
   normalizeCluster,
   fakeClusterFromSubscription,
@@ -156,12 +157,10 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
   const result = [];
   subscriptionMap.forEach((value) => {
     let cluster;
-    if (value.subscription.managed) {
+    if (value.subscription.managed
+      && value.subscription.status !== subscriptionStatuses.DEPROVISIONED) {
       if (!value?.cluster || isEmpty(value?.cluster)) {
         // skip OSD cluster without data
-        /* TODO - reconsider this approach:
-          when we start showing deprovisioned OSD clusters in the archived cluster list
-          skipping a cluster like this will stop making sense. */
         console.warn(`Skipped OSD cluster with no data in CS - subscription ID ${value.subscription.id}`);
         return;
       }
@@ -169,7 +168,7 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
     } else {
       cluster = fakeClusterFromSubscription(value.subscription);
     }
-    cluster.canEdit = canEdit['*'] || !!canEdit[cluster.id];
+    cluster.canEdit = (canEdit['*'] || !!canEdit[cluster.id]) && value.subscription.status !== subscriptionStatuses.DEPROVISIONED;
     cluster.canDelete = canDelete['*'] || !!canDelete[cluster.id];
     cluster.subscription = value.subscription;
     result.push(cluster);
@@ -208,7 +207,8 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
       }));
 
       // clusters-service only needed for managed clusters.
-      const managedSubsriptions = items.filter(s => s.managed);
+      const managedSubsriptions = items.filter(s => s.managed
+        && s.status !== subscriptionStatuses.DEPROVISIONED);
       if (managedSubsriptions.length === 0) {
         return {
           data: {
@@ -253,11 +253,15 @@ const fetchClusters = params => dispatch => dispatch({
 const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   let canEdit;
   const subscription = await accountsService.getSubscription(subscriptionID);
-  await authorizationsService.selfAccessReview(
-    { action: 'update', resource_type: 'Subscription', subscription_id: subscriptionID },
-  ).then((response) => { canEdit = response.data.allowed; });
 
-  if (subscription.data.managed) {
+  if (subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
+    await authorizationsService.selfAccessReview(
+      { action: 'update', resource_type: 'Subscription', subscription_id: subscriptionID },
+    ).then((response) => { canEdit = response.data.allowed; });
+  }
+
+  if (subscription.data.managed
+    && subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
     const cluster = await clusterService.getClusterDetails(subscription.data.cluster_id);
     cluster.data = normalizeCluster(cluster.data);
 
