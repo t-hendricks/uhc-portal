@@ -8,6 +8,8 @@ import { baseRequestState } from '../../../../../../redux/reduxHelpers';
 const getMachinePools = jest.fn();
 const deleteMachinePool = jest.fn();
 const openModal = jest.fn();
+const getOrganizationAndQuota = jest.fn();
+const getMachineTypes = jest.fn();
 
 const baseProps = {
   cluster: {
@@ -28,6 +30,10 @@ const baseProps = {
   getMachinePools,
   deleteMachinePool,
   clearGetMachinePoolsResponse: jest.fn(),
+  getOrganizationAndQuota,
+  getMachineTypes,
+  machineTypes: {},
+  hasMachinePoolsQuota: true,
 };
 
 describe('<MachinePools />', () => {
@@ -124,6 +130,13 @@ describe('<MachinePools />', () => {
 
   it('should not allow adding machine pools to users without permissions', () => {
     const props = { ...baseProps, cluster: { canEdit: false } };
+    const wrapper = shallow(<MachinePools {...props} />);
+
+    expect(wrapper.find('#add-machine-pool').props().isDisabled).toBeTruthy();
+  });
+
+  it('should not allow adding machine pools to users without enough quota', () => {
+    const props = { ...baseProps, hasMachinePoolsQuota: false };
     const wrapper = shallow(<MachinePools {...props} />);
 
     expect(wrapper.find('#add-machine-pool').props().isDisabled).toBeTruthy();
