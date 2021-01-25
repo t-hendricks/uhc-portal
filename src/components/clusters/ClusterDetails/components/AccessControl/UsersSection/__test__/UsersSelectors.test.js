@@ -9,7 +9,7 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.READY,
-            product: 'OSD',
+            product: { id: 'osd' },
             subscription: {
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
@@ -51,7 +51,7 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.READY,
-            product: 'rhmi',
+            product: { id: 'rhmi' },
             subscription: {
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
@@ -74,7 +74,31 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.READY,
-            product: 'OSD',
+            product: { id: 'osd' },
+            subscription: {
+              capabilities: [
+                { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
+                { name: 'capability.cluster.manage_cluster_admin', value: 'true', inherited: false },
+              ],
+            },
+          },
+        },
+      },
+    };
+
+    const result = canAllowAdminSelector(stateWithCapability);
+
+    expect(result).toBe(true);
+  });
+
+  it('should allow adding cluster admins for ccs clusters', () => {
+    const stateWithCapability = {
+      clusters: {
+        details: {
+          cluster: {
+            state: clusterStates.READY,
+            ccs: { enabled: true },
+            product: { id: 'osd' },
             subscription: {
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
