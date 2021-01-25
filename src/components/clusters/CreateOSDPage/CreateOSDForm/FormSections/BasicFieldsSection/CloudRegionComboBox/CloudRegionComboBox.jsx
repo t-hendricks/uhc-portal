@@ -27,6 +27,12 @@ class CloudRegionComboBox extends React.Component {
     }
   }
 
+  onChange = (value, event) => {
+    const { input: { onChange }, handleCloudRegionChange } = this.props;
+    handleCloudRegionChange();
+    onChange(event, value); // redux form has the parameters the other way around from PF
+  };
+
   render() {
     const {
       input, enabledRegions, cloudProviders, disabled, isMultiAz,
@@ -48,6 +54,7 @@ class CloudRegionComboBox extends React.Component {
           aria-label="Region"
           isDisabled={disabled}
           {...input}
+          onChange={this.onChange}
         >
           {enabledRegions.map(region => regionOption(region))}
         </FormSelect>
@@ -72,6 +79,7 @@ CloudRegionComboBox.propTypes = {
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool,
+  handleCloudRegionChange: PropTypes.func.isRequired,
   // Plus extraprops passed by react-bootstrap / patternfly-react FormControl
 };
 

@@ -20,6 +20,7 @@ function BasicFieldsSection({
   quota,
   cloudProviderID,
   handleMultiAZChange,
+  handleCloudRegionChange,
   isMultiAz,
   isBYOC,
 }) {
@@ -79,6 +80,7 @@ function BasicFieldsSection({
             isRequired
             isMultiAz={isMultiAz}
             isBYOC={isBYOC}
+            handleCloudRegionChange={handleCloudRegionChange}
           />
         </FormGroup>
       </GridItem>
@@ -131,6 +133,7 @@ BasicFieldsSection.propTypes = {
   showDNSBaseDomain: PropTypes.bool,
   showAvailability: PropTypes.bool,
   handleMultiAZChange: PropTypes.func.isRequired,
+  handleCloudRegionChange: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   isBYOC: PropTypes.bool.isRequired,
   quota: PropTypes.shape({

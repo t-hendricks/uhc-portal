@@ -71,4 +71,8 @@ AvailabilityZoneSelection.propTypes = {
   }),
 };
 
+export {
+  PLACEHOLDER_VALUE,
+};
+
 export default AvailabilityZoneSelection;
