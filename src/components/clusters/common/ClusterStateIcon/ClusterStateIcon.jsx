@@ -8,7 +8,7 @@ import {
   UnknownIcon,
   ExclamationCircleIcon,
   InProgressIcon,
-  OffIcon,
+  BanIcon,
   FolderOpenIcon,
 } from '@patternfly/react-icons';
 // need to disable eslint for the react tokens because it's silly - it warns about these names
@@ -46,7 +46,7 @@ function ClusterStateIcon(props) {
     case clusterStates.ERROR:
       return <ExclamationCircleIcon color={global_danger_color_100.value} {...iconProps} />;
     case clusterStates.DEPROVISIONED:
-      return <OffIcon {...iconProps} />;
+      return <BanIcon {...iconProps} />;
     case clusterStates.ARCHIVED:
       return <FolderOpenIcon {...iconProps} />;
     default:
