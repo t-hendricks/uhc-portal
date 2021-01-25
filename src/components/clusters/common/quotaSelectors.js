@@ -5,8 +5,8 @@ import { normalizedProducts } from '../../../common/subscriptionTypes';
 const hasAwsQuotaSelector = (state, product) => (
   // ROSA has zero cost (as far as Red Hat is concerned, billed by Amazon).
   // TODO don't hardcode, look up by product (https://issues.redhat.com/browse/SDA-3231).
-  product === normalizedProducts.ROSA ? true :
-    get(
+  product === normalizedProducts.ROSA ? true
+    : get(
       state.userProfile.organization.quotaList,
       ['clustersQuota', product, 'aws', 'isAvailable'],
       false,

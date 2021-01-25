@@ -180,34 +180,38 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
   quota={
     Object {
       "clustersQuota": Object {
-        "aws": Object {
-          "byoc": Object {
-            "multiAz": Object {
-              "available": 5,
-              "mem.small": 5,
+        "OSD": Object {
+          "aws": Object {
+            "byoc": Object {
+              "multiAz": Object {
+                "available": 5,
+                "mem.small": 5,
+              },
+              "singleAz": Object {
+                "available": 0,
+              },
+              "totalAvailable": 5,
             },
-            "singleAz": Object {
-              "available": 0,
+            "rhInfra": Object {
+              "multiAz": Object {
+                "available": 0,
+              },
+              "singleAz": Object {
+                "available": 0,
+              },
+              "totalAvailable": 0,
             },
-            "totalAvailable": 5,
-          },
-          "rhInfra": Object {
-            "multiAz": Object {
-              "available": 0,
-            },
-            "singleAz": Object {
-              "available": 0,
-            },
-            "totalAvailable": 0,
           },
         },
       },
       "nodesQuota": Object {
-        "aws": Object {
-          "byoc": Object {
-            "mem.small": Object {
-              "available": 4,
-              "cost": 4,
+        "OSD": Object {
+          "aws": Object {
+            "byoc": Object {
+              "mem.small": Object {
+                "available": 4,
+                "cost": 4,
+              },
             },
           },
         },
@@ -594,34 +598,38 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
   quota={
     Object {
       "clustersQuota": Object {
-        "aws": Object {
-          "byoc": Object {
-            "multiAz": Object {
-              "available": 5,
-              "mem.small": 5,
+        "OSD": Object {
+          "aws": Object {
+            "byoc": Object {
+              "multiAz": Object {
+                "available": 5,
+                "mem.small": 5,
+              },
+              "singleAz": Object {
+                "available": 0,
+              },
+              "totalAvailable": 5,
             },
-            "singleAz": Object {
-              "available": 0,
+            "rhInfra": Object {
+              "multiAz": Object {
+                "available": 0,
+              },
+              "singleAz": Object {
+                "available": 0,
+              },
+              "totalAvailable": 0,
             },
-            "totalAvailable": 5,
-          },
-          "rhInfra": Object {
-            "multiAz": Object {
-              "available": 0,
-            },
-            "singleAz": Object {
-              "available": 0,
-            },
-            "totalAvailable": 0,
           },
         },
       },
       "nodesQuota": Object {
-        "aws": Object {
-          "byoc": Object {
-            "mem.small": Object {
-              "available": 12,
-              "cost": 4,
+        "OSD": Object {
+          "aws": Object {
+            "byoc": Object {
+              "mem.small": Object {
+                "available": 12,
+                "cost": 4,
+              },
             },
           },
         },
@@ -1007,13 +1015,15 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
   quota={
     Object {
       "clustersQuota": Object {
-        "aws": Object {
-          "rhInfra": Object {
-            "multiAz": Object {
-              "mem.small": 5,
-            },
-            "singleAz": Object {
-              "mem.small": 0,
+        "OSD": Object {
+          "aws": Object {
+            "rhInfra": Object {
+              "multiAz": Object {
+                "mem.small": 5,
+              },
+              "singleAz": Object {
+                "mem.small": 0,
+              },
             },
           },
         },

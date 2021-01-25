@@ -6,9 +6,9 @@ jest.mock('../../services/accountsService.js');
 
 // See also quotaSelectors.test.js checking processQuota -> selectors together.
 
-const OCP = normalizedProducts.OCP;
-const OSD = normalizedProducts.OSD;
-const OSDTrial = normalizedProducts.OSDTrial;
+const { OCP } = normalizedProducts;
+const { OSD } = normalizedProducts;
+const { OSDTrial } = normalizedProducts;
 
 describe('clustersActions', () => {
   let item;
@@ -98,13 +98,13 @@ describe('clustersActions', () => {
     it('should process quota for OSDTrial', () => {
       const resources = [
         {
-          "resource_type": "cluster",
-          "cloud_provider": "any",
-          "resource_name": "cpu.large",
-          "byoc": "byoc",
-          "availability_zone_type": "any",
-          "product": "OSDTrial",
-          "cost": 1
+          resource_type: 'cluster',
+          cloud_provider: 'any',
+          resource_name: 'cpu.large',
+          byoc: 'byoc',
+          availability_zone_type: 'any',
+          product: 'OSDTrial',
+          cost: 1,
         },
       ];
       userActions.processClusterQuota(clusterQuota, item, resources);
@@ -123,18 +123,17 @@ describe('clustersActions', () => {
     it('should process quota for any product', () => {
       const resources = [
         {
-          "resource_type": "cluster",
-          "cloud_provider": "aws",
-          "resource_name": "cpu.large",
-          "byoc": "byoc",
-          "availability_zone_type": "single",
-          "product": normalizedProducts.ANY,
-          "cost": 1
+          resource_type: 'cluster',
+          cloud_provider: 'aws',
+          resource_name: 'cpu.large',
+          byoc: 'byoc',
+          availability_zone_type: 'single',
+          product: normalizedProducts.ANY,
+          cost: 1,
         },
       ];
       userActions.processClusterQuota(clusterQuota, item, resources);
       [OCP, OSD, OSDTrial].forEach((product) => {
-        console.log(clusterQuota[product].aws)
         expect(clusterQuota[product].aws.byoc.singleAz['cpu.large']).toEqual(1);
         expect(clusterQuota[product].aws.byoc.singleAz.available).toEqual(1);
         expect(clusterQuota[product].aws.byoc.multiAz.available).toEqual(0);
