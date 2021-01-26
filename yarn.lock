@@ -9460,7 +9460,7 @@ opener@^1.5.1:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
 
-openshift-assisted-ui-lib@^1.5.5-1:
+openshift-assisted-ui-lib@1.5.5-1:
   version "1.5.5-1"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-1.5.5-1.tgz#7c0bb4093e4f2b2d32dd98d4c62a07f3974e93ec"
   integrity sha512-qWNf1PdGquaUxvgjrckuwh7pS+vA+hvMsQ//w7PupsK40kouBXoVIRgBYOSAXHFArPD2MtDkPO/KVioPlm3cmw==
