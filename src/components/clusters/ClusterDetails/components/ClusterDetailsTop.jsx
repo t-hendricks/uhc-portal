@@ -26,6 +26,7 @@ function ClusterDetailsTop(props) {
     openModal,
     pending,
     refreshFunc,
+    clickRefreshFunc,
     clusterIdentityProviders,
     organization,
     error,
@@ -152,7 +153,7 @@ function ClusterDetailsTop(props) {
                 Unarchive
               </Button>
             )}
-            <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} />
+            <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />
           </span>
         </SplitItem>
       </Split>
@@ -185,6 +186,7 @@ ClusterDetailsTop.propTypes = {
   cluster: PropTypes.object,
   openModal: PropTypes.func.isRequired,
   refreshFunc: PropTypes.func.isRequired,
+  clickRefreshFunc: PropTypes.func,
   pending: PropTypes.bool.isRequired,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,

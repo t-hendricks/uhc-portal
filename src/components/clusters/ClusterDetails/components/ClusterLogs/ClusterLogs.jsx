@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { EmptyState, PageSection } from '@patternfly/react-core';
+import {
+  EmptyState,
+  PageSection,
+  Card,
+  CardBody,
+  Title,
+  CardTitle,
+  CardActions,
+  CardHeader,
+} from '@patternfly/react-core';
 import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
 
@@ -12,6 +21,7 @@ import ErrorBox from '../../../../common/ErrorBox';
 import ViewPaginationRow from '../../../common/ViewPaginationRow/viewPaginationRow';
 import helpers from '../../../../../common/helpers';
 import { SEVERITY_TYPES } from './clusterLogConstants';
+import LiveDateFormat from '../../../../common/LiveDateFormat/LiveDateFormat';
 
 class ClusterLogs extends React.Component {
   componentDidMount() {
@@ -54,6 +64,7 @@ class ClusterLogs extends React.Component {
           operationID,
         },
         logs,
+        fetchedClusterLogsAt,
       },
       viewOptions,
       history,
@@ -81,29 +92,42 @@ class ClusterLogs extends React.Component {
     const hasNoFilters = isEmpty(viewOptions.filter)
       && helpers.nestedIsEmpty(viewOptions.flags.severityTypes);
     const isPendingNoData = (!size(logs) && pending && hasNoFilters);
-
     return (
       <>
-        <ClusterLogsToolbar
-          view={viewConstants.CLUSTER_LOGS_VIEW}
-          history={history}
-          externalClusterID={externalClusterID}
-          isPendingNoData={isPendingNoData}
-        />
-        <LogTable
-          logs={logs}
-          setSorting={setSorting}
-        />
+        <Card className="ocm-c-overview-cluster-history__card">
+          <CardHeader className="ocm-c-overview-cluster-history__card--header">
+            <CardTitle className="ocm-c-overview-cluster-history__card--header">
+              <Title headingLevel="h2" className="card-title">Cluster history</Title>
+            </CardTitle>
+            <CardActions>
+              Updated &nbsp;
+              {fetchedClusterLogsAt
+              && <LiveDateFormat timestamp={fetchedClusterLogsAt.getTime()} />}
+            </CardActions>
+          </CardHeader>
+          <CardBody className="ocm-c-overview-cluster-history__card--body">
+            <ClusterLogsToolbar
+              view={viewConstants.CLUSTER_LOGS_VIEW}
+              history={history}
+              externalClusterID={externalClusterID}
+              isPendingNoData={isPendingNoData}
+            />
+            <LogTable
+              logs={logs}
+              setSorting={setSorting}
+            />
 
-        <ViewPaginationRow
-          viewType={viewConstants.CLUSTER_LOGS_VIEW}
-          currentPage={viewOptions.currentPage}
-          pageSize={viewOptions.pageSize}
-          totalCount={viewOptions.totalCount}
-          totalPages={viewOptions.totalPages}
-          variant="bottom"
-          isDisabled={isPendingNoData}
-        />
+            <ViewPaginationRow
+              viewType={viewConstants.CLUSTER_LOGS_VIEW}
+              currentPage={viewOptions.currentPage}
+              pageSize={viewOptions.pageSize}
+              totalCount={viewOptions.totalCount}
+              totalPages={viewOptions.totalPages}
+              variant="bottom"
+              isDisabled={isPendingNoData}
+            />
+          </CardBody>
+        </Card>
       </>
     );
   }

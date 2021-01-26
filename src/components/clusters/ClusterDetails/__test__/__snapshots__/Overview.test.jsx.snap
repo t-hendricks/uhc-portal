@@ -560,28 +560,10 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
     </CardBody>
   </Card>
   <Connect(SubscriptionSettings) />
-  <Card
-    className="ocm-c-overview-cluster-history__card"
-  >
-    <CardTitle
-      className="ocm-c-overview-cluster-history__card--header"
-    >
-      <Title
-        className="card-title"
-        headingLevel="h2"
-      >
-        Cluster history
-      </Title>
-    </CardTitle>
-    <CardBody
-      className="ocm-c-overview-cluster-history__card--body"
-    >
-      <Connect(ClusterLogs)
-        externalClusterID="9f50940b-fba8-4c59-9c6c-d64284b2026d"
-        history={Object {}}
-      />
-    </CardBody>
-  </Card>
+  <Connect(ClusterLogs)
+    externalClusterID="9f50940b-fba8-4c59-9c6c-d64284b2026d"
+    history={Object {}}
+  />
 </Fragment>
 `;
 
