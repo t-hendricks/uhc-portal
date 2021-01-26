@@ -6,6 +6,7 @@ import {
   Button,
   Stack,
   StackItem,
+  Label,
 } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
@@ -34,9 +35,12 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
       <PageSection variant="light">
         <Stack hasGutter>
           <StackItem>
-            <Title headingLevel="h2">
+            <Title headingLevel="h2" className="ocm-ocp-datacenter-title">
             Assisted Installer
             </Title>
+            <Label color="orange">
+            Developer preview
+            </Label>
           </StackItem>
           <StackItem>
           Create a cluster on bare metal following a guided installation

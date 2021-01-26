@@ -10,10 +10,16 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
     >
       <StackItem>
         <Title
+          className="ocm-ocp-datacenter-title"
           headingLevel="h2"
         >
           Assisted Installer
         </Title>
+        <Label
+          color="orange"
+        >
+          Developer preview
+        </Label>
       </StackItem>
       <StackItem>
         Create a cluster on bare metal following a guided installation process to connect your hardware.
