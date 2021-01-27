@@ -118,14 +118,7 @@ class Overview extends React.Component {
         </Card>
         <SubscriptionSettings />
         {displayClusterLogs && (
-        <Card className="ocm-c-overview-cluster-history__card">
-          <CardTitle className="ocm-c-overview-cluster-history__card--header">
-            <Title headingLevel="h2" className="card-title">Cluster history</Title>
-          </CardTitle>
-          <CardBody className="ocm-c-overview-cluster-history__card--body">
-            <ClusterLogs externalClusterID={cluster.external_id} history={history} />
-          </CardBody>
-        </Card>
+          <ClusterLogs externalClusterID={cluster.external_id} history={history} />
         )}
       </>
     );

@@ -156,7 +156,7 @@ class ClusterDetails extends Component {
     }
   };
 
-  refresh() {
+  refresh(clicked) {
     const {
       match,
       clusterDetails,
@@ -172,7 +172,7 @@ class ClusterDetails extends Component {
     const clusterID = get(cluster, 'id');
     const subscriptionStatus = get(cluster, 'subscription.status');
     if (isValid(clusterID) && subscriptionStatus !== subscriptionStatuses.DEPROVISIONED) {
-      this.refreshRelatedResources();
+      this.refreshRelatedResources(clicked);
     }
   }
 
@@ -190,7 +190,7 @@ class ClusterDetails extends Component {
   /**
    * Refresh the cluster's related resources.
    */
-  refreshRelatedResources() {
+  refreshRelatedResources(clicked) {
     /* TODO everything here has to be moved to the individual tabs that require this info
      ideally cluster details should dispatch an event on refresh,
     and leave sub-resource handling for sub-components.
@@ -222,9 +222,12 @@ class ClusterDetails extends Component {
     }
     const externalClusterID = get(clusterDetails, 'cluster.external_id');
     if (externalClusterID) {
-      getClusterHistory(externalClusterID, clusterLogsViewOptions);
       fetchInsightsData(externalClusterID, isManaged);
       this.fetchSupportData();
+    }
+
+    if (externalClusterID && clicked === 'clicked') {
+      getClusterHistory(externalClusterID, clusterLogsViewOptions);
     }
 
     if (isManaged) {
@@ -408,6 +411,7 @@ class ClusterDetails extends Component {
           openModal={openModal}
           pending={clusterDetails.pending}
           refreshFunc={this.refresh}
+          clickRefreshFunc={() => this.refresh('clicked')}
           clusterIdentityProviders={clusterIdentityProviders}
           organization={organization}
           error={clusterDetails.error}
