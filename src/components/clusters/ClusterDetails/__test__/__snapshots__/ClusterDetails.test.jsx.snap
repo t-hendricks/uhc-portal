@@ -8,6 +8,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
     autoRefreshEnabled={true}
     canSubscribeOCP={false}
     canTransferClusterOwnership={false}
+    clickRefreshFunc={[Function]}
     cluster={
       Object {
         "activity_timestamp": "2021-01-11T11:55:29Z",
