@@ -27,7 +27,6 @@ export class InstallBareMetalUPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Bare Metal', path: '/install/metal' },
         { label: 'User-provisioned infrastructure' },
       ]}

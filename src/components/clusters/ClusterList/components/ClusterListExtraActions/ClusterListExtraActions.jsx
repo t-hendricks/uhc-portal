@@ -36,7 +36,7 @@ class ClusterListExtraActions extends React.Component {
       <DropdownItem component="button" key="archived">
         <div>
           <Link to="archived" className="pf-c-dropdown__menu-item">
-            Show archived clusters
+            View cluster archives
           </Link>
         </div>
       </DropdownItem>,

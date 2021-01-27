@@ -48,7 +48,7 @@ const createViewQueryObject = (viewOptions, queryObj) => {
 
     // handle archived flag
     if (viewOptions.flags.showArchived) {
-      clauses.push("status='Archived'");
+      clauses.push("status IN ('Deprovisioned', 'Archived')");
     } else {
       clauses.push("status NOT IN ('Deprovisioned', 'Archived')");
     }

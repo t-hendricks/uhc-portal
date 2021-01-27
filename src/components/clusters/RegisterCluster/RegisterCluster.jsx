@@ -82,7 +82,8 @@ class RegisterCluster extends React.Component {
 
     if (registerClusterResponse.fulfilled) {
       return (
-        <Redirect to={`/details/${registerClusterResponse.cluster.cluster_id}`} />
+        // TODO 'cluster' here is actually subscription, should be renamed
+        <Redirect to={`/details/s/${registerClusterResponse.cluster.id}`} />
       );
     }
 

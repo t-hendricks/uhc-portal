@@ -27,7 +27,6 @@ class InstallAzureUPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Microsoft Azure', path: '/install/azure' },
         { label: 'User-provisioned infrastructure' },
       ]}

@@ -26,6 +26,16 @@ describe('getClusterName', () => {
     expect(getClusterName(cluster)).toEqual('yes');
   });
 
+  it('uses subscription_id from cluster when the subscription status is deprovisioned', () => {
+    const cluster = {
+      subscription: {
+        id: 'yes',
+        status: 'Deprovisioned',
+      },
+    };
+    expect(getClusterName(cluster)).toEqual('yes');
+  });
+
   it('returns "Unnamed Cluster" when no other info is present', () => {
     expect(getClusterName({})).toEqual('Unnamed Cluster');
   });

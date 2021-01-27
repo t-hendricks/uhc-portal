@@ -138,7 +138,7 @@ class CreateOSDPage extends React.Component {
 
     if (createClusterResponse.fulfilled) {
       return (
-        <Redirect to={`/details/${createClusterResponse.cluster.id}`} />
+        <Redirect to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />
       );
     }
 

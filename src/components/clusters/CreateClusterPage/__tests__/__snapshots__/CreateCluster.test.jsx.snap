@@ -17,9 +17,11 @@ exports[`<CreateClusterPage /> Quota not fetched yet should render 1`] = `
         }
       />
     }
-    title="Create a cluster to get started"
+    title="Create an OpenShift cluster"
   />
-  <PageSection>
+  <PageSection
+    variant="light"
+  >
     <Spinner
       centered={true}
     />
@@ -44,56 +46,89 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
         }
       />
     }
-    title="Create a cluster to get started"
+    title="Create an OpenShift cluster"
   />
-  <PageSection>
-    <Card>
-      <div
-        className="pf-c-content ocm-page ocp-osd-selection"
-      >
-        <div
-          className="flex-container"
-        >
-          <Link
-            className="infra-card pf-c-card create-cluster-card"
-            to="/install"
-          >
-            <CardTitle
-              className="create-cluster-header"
-            >
-              <img
-                alt="OpenShift Container Platform"
-                className="create-cluster-logo"
-                src="test-file-stub"
+  <PageSection
+    className="cluster-create-page"
+    variant="light"
+  >
+    <Tabs
+      activeKey={0}
+      component="div"
+      isBox={false}
+      isFilled={true}
+      isSecondary={false}
+      isVertical={false}
+      leftScrollAriaLabel="Scroll left"
+      mountOnEnter={false}
+      onSelect={[Function]}
+      ouiaSafe={true}
+      rightScrollAriaLabel="Scroll right"
+      unmountOnExit={false}
+      variant="default"
+    >
+      <Tab
+        eventKey={0}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <CloudIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
               />
-            </CardTitle>
-            <CardBody>
-              Create an OCP cluster using the command-line installer. Your cluster will automatically register to the Cluster Manager after installation completes.
-            </CardBody>
-          </Link>
-          <Tooltip
-            content="You do not have enough quota for this option. Contact sales to purchase additional quota."
-          >
-            <Card
-              className="infra-card create-cluster-card card-disabled"
-            >
-              <CardTitle
-                className="create-cluster-header"
-              >
-                <img
-                  alt="OpenShift Dedicated"
-                  className="create-cluster-logo"
-                  src="test-file-stub"
-                />
-              </CardTitle>
-              <CardBody>
-                Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services or Google Cloud Platform.
-              </CardBody>
-            </Card>
-          </Tooltip>
-        </div>
-      </div>
-    </Card>
+            </TabTitleIcon>
+            <TabTitleText>
+              Cloud
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <CloudTab
+          hasOSDQuota={false}
+        />
+      </Tab>
+      <Tab
+        eventKey={1}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <ServerIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Datacenter
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <DatacenterTab />
+      </Tab>
+      <Tab
+        eventKey={2}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <LaptopIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Sandbox
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <SandboxTab
+          token={Object {}}
+        />
+      </Tab>
+    </Tabs>
   </PageSection>
 </Fragment>
 `;
@@ -115,53 +150,89 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
         }
       />
     }
-    title="Create a cluster to get started"
+    title="Create an OpenShift cluster"
   />
-  <PageSection>
-    <Card>
-      <div
-        className="pf-c-content ocm-page ocp-osd-selection"
+  <PageSection
+    className="cluster-create-page"
+    variant="light"
+  >
+    <Tabs
+      activeKey={0}
+      component="div"
+      isBox={false}
+      isFilled={true}
+      isSecondary={false}
+      isVertical={false}
+      leftScrollAriaLabel="Scroll left"
+      mountOnEnter={false}
+      onSelect={[Function]}
+      ouiaSafe={true}
+      rightScrollAriaLabel="Scroll right"
+      unmountOnExit={false}
+      variant="default"
+    >
+      <Tab
+        eventKey={0}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <CloudIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Cloud
+            </TabTitleText>
+          </React.Fragment>
+        }
       >
-        <div
-          className="flex-container"
-        >
-          <Link
-            className="infra-card pf-c-card create-cluster-card"
-            to="/install"
-          >
-            <CardTitle
-              className="create-cluster-header"
-            >
-              <img
-                alt="OpenShift Container Platform"
-                className="create-cluster-logo"
-                src="test-file-stub"
+        <CloudTab
+          hasOSDQuota={true}
+        />
+      </Tab>
+      <Tab
+        eventKey={1}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <ServerIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
               />
-            </CardTitle>
-            <CardBody>
-              Create an OCP cluster using the command-line installer. Your cluster will automatically register to the Cluster Manager after installation completes.
-            </CardBody>
-          </Link>
-          <Link
-            className="infra-card pf-c-card create-cluster-card"
-            to="/create/osd"
-          >
-            <CardTitle
-              className="create-cluster-header"
-            >
-              <img
-                alt="OpenShift Dedicated"
-                className="create-cluster-logo"
-                src="test-file-stub"
+            </TabTitleIcon>
+            <TabTitleText>
+              Datacenter
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <DatacenterTab />
+      </Tab>
+      <Tab
+        eventKey={2}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <LaptopIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
               />
-            </CardTitle>
-            <CardBody>
-              Create a Red Hat-managed cluster (OSD), provisioned on Amazon Web Services or Google Cloud Platform.
-            </CardBody>
-          </Link>
-        </div>
-      </div>
-    </Card>
+            </TabTitleIcon>
+            <TabTitleText>
+              Sandbox
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <SandboxTab
+          token={Object {}}
+        />
+      </Tab>
+    </Tabs>
   </PageSection>
 </Fragment>
 `;

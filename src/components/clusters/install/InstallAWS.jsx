@@ -19,7 +19,6 @@ class InstallAWS extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Amazon Web Services' },
       ]}
       />

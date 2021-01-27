@@ -27,7 +27,6 @@ class InstallRHVIPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Red Hat Virtualization', path: '/install/rhv' },
         { label: 'User-provisioned infrastructure' },
       ]}

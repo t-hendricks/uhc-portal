@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ArchivedClusterList /> ArchivedClusterList should render 1`] = `
+<Fragment>
+  <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Clusters",
+          },
+          Object {
+            "label": "Cluster Archives",
+          },
+        ]
+      }
+    />
+    <PageHeaderTitle
+      title="Cluster Archives"
+    />
+  </PageHeader>
+  <PageSection>
+    <Card>
+      <div
+        className="cluster-list"
+      >
+        <Connect(GlobalErrorBox) />
+        <Split
+          id="cluster-list-top"
+        >
+          <SplitItem>
+            <Connect(ClusterListFilter)
+              view="ARCHIVED_CLUSTERS_VIEW"
+            />
+          </SplitItem>
+          <SplitItem>
+            <Connect(ClusterListFilterDropdown)
+              isDisabled={false}
+              view="ARCHIVED_CLUSTERS_VIEW"
+            />
+          </SplitItem>
+          <SplitItem
+            className="pf-l-split__item split-margin-left"
+          >
+            <div
+              className="show-active-clusters-link"
+            >
+              <Link
+                to="/"
+              >
+                Show active clusters
+              </Link>
+            </div>
+          </SplitItem>
+          <SplitItem
+            className="spinner-fit-container"
+          />
+          <SplitItem
+            isFilled={true}
+          />
+          <SplitItem>
+            <Connect(ViewPaginationRow)
+              variant="top"
+              viewType="ARCHIVED_CLUSTERS_VIEW"
+            />
+          </SplitItem>
+          <SplitItem>
+            <RefreshBtn
+              autoRefresh={true}
+              classOptions="cluster-list-top"
+              refreshFunc={[Function]}
+            />
+          </SplitItem>
+        </Split>
+        <ArchivedClusterListTable
+          clusters={
+            Array [
+              Object {
+                "cluster_id": "1HAtdkNPWql68fuOI7KvuyM4OTp",
+                "created_at": "2019-02-14T15:07:24.640289Z",
+                "creator": Object {
+                  "email": "***REMOVED***",
+                  "href": "/api/accounts_mgmt/v1/accounts/1G1ikKt3haukUjrUDvRVLZyfEnY",
+                  "id": "1G1ikKt3haukUjrUDvRVLZyfEnY",
+                  "kind": "Account",
+                  "name": "Elad Tabak",
+                  "username": "etabak_privileged_uhc_20012019",
+                },
+                "href": "/api/accounts_mgmt/v1/subscriptions/1HAtguRKqqlQYCSFk14uwMl6g6p",
+                "id": "1HAtguRKqqlQYCSFk14uwMl6g6p",
+                "kind": "Subscription",
+                "last_telemetry_date": "0001-01-01T00:00:00Z",
+                "organization_id": "1HAIjRf0KAoWykFD2gexUhfngd0",
+                "plan": Object {
+                  "href": "/api/accounts_mgmt/v1/plans/OCP",
+                  "id": "OCP",
+                  "kind": "Plan",
+                },
+                "subscription": Object {
+                  "id": "1HAtdkNPWql68fuOI7Kvuyk4OTp",
+                  "last_reconcile_date": "0001-01-01T00:00:00Z",
+                  "last_released_at": "0001-01-01T00:00:00Z",
+                  "managed": false,
+                  "provenance": "Provisioning",
+                  "status": "Deprovisioned",
+                },
+                "support_level": "Eval",
+                "updated_at": "2019-09-24T01:37:42.930173Z",
+              },
+            ]
+          }
+          openModal={[MockFunction]}
+          setSorting={[MockFunction]}
+          viewOptions={
+            Object {
+              "fields": Object {},
+              "flags": Object {},
+            }
+          }
+        />
+        <Connect(ViewPaginationRow)
+          variant="bottom"
+          viewType="ARCHIVED_CLUSTERS_VIEW"
+        />
+        <Connect(ConnectedModal)
+          ModalComponent={
+            Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(UnarchiveClusterDialog)",
+              "modalName": "unarchive-cluster",
+              "type": [Function],
+            }
+          }
+          onClose={
+            [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            }
+          }
+        />
+      </div>
+    </Card>
+  </PageSection>
+</Fragment>
+`;

@@ -49,6 +49,9 @@ function ClusterDetailsTop(props) {
 
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
+  const isDeprovisioned = get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+
+
   const openIDPModal = () => {
     openModal('create-identity-provider');
   };
@@ -102,7 +105,7 @@ function ClusterDetailsTop(props) {
     <Breadcrumbs path={
         [
           { label: 'Clusters' },
-          isArchived && { label: 'Archived clusters', path: '/archived' },
+          (isArchived || isDeprovisioned) && { label: 'Cluster Archives', path: '/archived' },
           { label: clusterName },
         ].filter(Boolean)
       }
@@ -132,12 +135,12 @@ function ClusterDetailsTop(props) {
         <SplitItem isFilled />
         <SplitItem>
           <span id="cl-details-btns">
-            { !isArchived ? (
+            { !isArchived && !isDeprovisioned ? (
               <>
                 {launchConsole}
                 {actions}
               </>
-            ) : (
+            ) : !isDeprovisioned && (
               <Button
                 variant="secondary"
                 onClick={() => openModal(modals.UNARCHIVE_CLUSTER, {
