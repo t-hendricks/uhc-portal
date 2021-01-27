@@ -1,6 +1,6 @@
 import apiRequest from './apiRequest';
 
-const getClusterHistory = params => apiRequest({
+const getClusterHistory = (clusterUUID, params) => apiRequest({
   method: 'get',
   params: {
     size: params.page_size,
@@ -10,7 +10,7 @@ const getClusterHistory = params => apiRequest({
     query: params.query,
     format: params.format,
   },
-  url: '/api/service_logs/v1/cluster_logs/',
+  url: `/api/service_logs/v1/clusters/${clusterUUID}/cluster_logs`,
 });
 
 const serviceLogService = {

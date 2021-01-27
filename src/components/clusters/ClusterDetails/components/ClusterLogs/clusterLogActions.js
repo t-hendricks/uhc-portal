@@ -5,7 +5,8 @@ import { createServiceLogQueryObject } from '../../../../../common/queryHelpers'
 const getClusterHistory = (externalClusterID, params) => dispatch => dispatch({
   type: clusterLogConstants.GET_CLUSTER_LOGS,
   payload: serviceLogService.getClusterHistory(
-    createServiceLogQueryObject(params, externalClusterID),
+    externalClusterID,
+    createServiceLogQueryObject(params),
   )
     .then(
       response => ({
@@ -17,10 +18,13 @@ const getClusterHistory = (externalClusterID, params) => dispatch => dispatch({
 
 const downloadClusterLogs = (externalClusterID, params, format = 'csv') => dispatch => dispatch({
   type: clusterLogConstants.DOWNLOAD_CLUSTER_LOGS,
-  payload: serviceLogService.getClusterHistory({
-    ...createServiceLogQueryObject(params, externalClusterID),
-    format,
-  })
+  payload: serviceLogService.getClusterHistory(
+    externalClusterID,
+    {
+      ...createServiceLogQueryObject(params),
+      format,
+    },
+  )
     .then(
       response => ({
         format,
