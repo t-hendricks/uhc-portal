@@ -20,6 +20,7 @@ const initialState = {
   logs: [],
   data: undefined,
   format: '',
+  fetchedClusterLogsAt: undefined,
 };
 
 function clusterLogReducer(state = initialState, action) {
@@ -42,6 +43,7 @@ function clusterLogReducer(state = initialState, action) {
           fulfilled: true,
         };
         draft.logs = action.payload.logs.data.items;
+        draft.fetchedClusterLogsAt = new Date();
         break;
 
       case REJECTED_ACTION(GET_CLUSTER_LOGS):
