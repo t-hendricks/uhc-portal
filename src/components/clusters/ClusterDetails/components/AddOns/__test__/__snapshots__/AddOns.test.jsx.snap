@@ -25,6 +25,7 @@ exports[`<AddOns /> should render 1`] = `
         }
       }
       hasQuota={true}
+      key="crc-workspaces"
     />
     <Connect(AddOnsCard)
       addOn={
@@ -68,6 +69,7 @@ exports[`<AddOns /> should render 1`] = `
         }
       }
       hasQuota={true}
+      key="managed-integration"
     />
     <Connect(AddOnsCard)
       addOn={
@@ -98,6 +100,7 @@ exports[`<AddOns /> should render 1`] = `
           "state": "ready",
         }
       }
+      key="service-mesh"
     />
     <Connect(AddOnsCard)
       addOn={
@@ -118,6 +121,7 @@ exports[`<AddOns /> should render 1`] = `
         }
       }
       hasQuota={true}
+      key="dba-operator"
     />
     <Connect(AddOnsCard)
       addOn={
@@ -139,6 +143,7 @@ exports[`<AddOns /> should render 1`] = `
         }
       }
       hasQuota={false}
+      key="integreatly"
     />
     <Connect(AddOnsCard)
       addOn={
@@ -160,6 +165,7 @@ exports[`<AddOns /> should render 1`] = `
         }
       }
       hasQuota={true}
+      key="prow-operator"
     />
   </Gallery>
   <Connect(ReduxForm)
