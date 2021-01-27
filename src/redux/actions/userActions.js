@@ -30,33 +30,33 @@ const processClusterQuota = (clustersQuota, item, resources) => {
       return;
     }
 
+    /* eslint-disable no-param-reassign */
     // Since quota can apply to either AWS or GCP, or "any", we compare an exact match or an
     // "any" match. If the quota applies to a specific cloud provider, we add it there. If it
     // applies to "any" cloud provider, we add it to both providers in the quota object.
     // This also applies to BYOC and AZ.
-    Object.keys(quota).forEach((product) => {
+    Object.entries(quota).forEach(([product, productQuota]) => {
       if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
-        Object.keys(quota[product]).forEach((provider) => {
+        Object.entries(productQuota).forEach(([provider, providerQuota]) => {
           if (cloudProvider === provider || cloudProvider === 'any') {
-            Object.keys(quota[product][provider]).forEach((category) => {
+            Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
               if (infraCategory === category || infraCategory === 'any') {
-                Object.keys(quota[product][provider][category]).forEach((zoneType) => {
-                  const categoryQuota = quota[product][provider][category];
+                Object.entries(categoryQuota).forEach(([zoneType, zoneQuota]) => {
                   if (`${availabilityZoneType}Az` === zoneType) {
-                    categoryQuota[zoneType][machineType] = available;
-                    categoryQuota[zoneType].available += available;
+                    zoneQuota[machineType] = available;
+                    zoneQuota.available += available;
                     categoryQuota.totalAvailable += available;
                   }
                   // When calculating for any AZ, skip the totalAvailable property
                   if (availabilityZoneType === 'any' && zoneType !== 'totalAvailable') {
-                    categoryQuota[zoneType][machineType] = available;
-                    categoryQuota[zoneType].available += available;
+                    zoneQuota[machineType] = available;
+                    zoneQuota.available += available;
                     // To avoid double-counting, we calculate only half for each of the two AZ's
                     categoryQuota.totalAvailable += available / 2;
                   }
 
                   if (categoryQuota.totalAvailable > 0) {
-                    quota[product][provider].isAvailable = true;
+                    providerQuota.isAvailable = true;
                   }
                 });
               }
@@ -65,6 +65,7 @@ const processClusterQuota = (clustersQuota, item, resources) => {
         });
       }
     });
+    /* eslint-enable no-param-reassign */
   });
 };
 
@@ -86,13 +87,14 @@ const processNodeQuota = (nodesQuota, item, resources) => {
       return;
     }
 
-    Object.keys(quota).forEach((product) => {
+    /* eslint-disable no-param-reassign */
+    Object.entries(quota).forEach(([product, productQuota]) => {
       if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
-        Object.keys(quota[product]).forEach((provider) => {
+        Object.entries(productQuota).forEach(([provider, providerQuota]) => {
           if (cloudProvider === provider || cloudProvider === 'any') {
-            Object.keys(quota[product][provider]).forEach((category) => {
+            Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
               if (infraCategory === category || infraCategory === 'any') {
-                quota[product][provider][category][machineType] = {
+                categoryQuota[machineType] = {
                   available,
                   cost: resource.cost,
                 };
@@ -102,6 +104,7 @@ const processNodeQuota = (nodesQuota, item, resources) => {
         });
       }
     });
+    /* eslint-enable no-param-reassign */
   });
 };
 
@@ -115,11 +118,13 @@ const processStorageQuota = (storageQuota, item, resources) => {
   resources.forEach((resource) => {
     const cloudProvider = resource.cloud_provider;
 
-    Object.keys(quota).forEach((provider) => {
+    /* eslint-disable no-param-reassign */
+    Object.entries(quota).forEach(([provider, providerQuota]) => {
       if (cloudProvider === provider || cloudProvider === 'any') {
-        quota[provider].available += available;
+        providerQuota.available += available;
       }
     });
+    /* eslint-enable no-param-reassign */
   });
 };
 
@@ -130,11 +135,13 @@ const processLoadBalancerQuota = (loadBalancerQuota, item, resources) => {
   resources.forEach((resource) => {
     const cloudProvider = resource.cloud_provider;
 
-    Object.keys(quota).forEach((provider) => {
+    /* eslint-disable no-param-reassign */
+    Object.entries(quota).forEach(([provider, providerQuota]) => {
       if (cloudProvider === provider || cloudProvider === 'any') {
-        quota[provider].available += available;
+        providerQuota.available += available;
       }
     });
+    /* eslint-enable no-param-reassign */
   });
 };
 
