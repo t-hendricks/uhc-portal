@@ -17,6 +17,7 @@ const INITIAL_VIEW_STATE = {
   sorting: {
     sortField: 'name',
     isAscending: true,
+    sortIndex: 0,
   },
   flags: {
     showArchived: false,

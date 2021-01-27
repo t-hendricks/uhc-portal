@@ -157,6 +157,9 @@ exports[`<Overview /> renders correctly 1`] = `
                     "unit": "B",
                     "value": 107374182400,
                   },
+                  "subscription": Object {
+                    "id": "foo",
+                  },
                   "version": Object {
                     "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
                     "id": "openshift-v4.0-latest",

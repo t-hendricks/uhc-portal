@@ -66,6 +66,7 @@ class EditConsoleURLDialog extends Component {
     return (
 
       <Modal
+        data-test-id="edit-console-url-dialog"
         title={consoleURL ? 'Edit console URL' : 'Add console URL'}
         onClose={cancelEdit}
         primaryText={consoleURL ? 'Save' : 'Add URL'}

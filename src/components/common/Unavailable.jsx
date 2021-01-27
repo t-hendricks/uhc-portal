@@ -48,7 +48,7 @@ Unavailable.propTypes = {
       PropTypes.node,
       PropTypes.element,
     ]).isRequired,
-    internalErrorCode: PropTypes.number,
+    internalErrorCode: PropTypes.string,
     errorDetails: PropTypes.array,
     operationID: PropTypes.string,
     errorCode: PropTypes.number,

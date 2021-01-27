@@ -1,0 +1,51 @@
+.cluster-create-page {
+  .ocm-sandbox-graytext {
+    color: var(--pf-global--Color--200);
+  }
+  h2.ocm-ocp-sandbox-title {
+    display: inline-block;
+    margin-right: var(--pf-global--spacer--md);
+  }
+  h2.ocm-ocp-datacenter-title {
+    display: inline-block;
+    margin-right: var(--pf-global--spacer--md);
+  }
+
+  table a.pf-c-button.pf-m-secondary {
+    width: 150px;
+  }
+  h2.font-weight-light {
+    font-weight: var(--pf-global--FontWeight--light);
+  }
+
+  table.install-options-table {
+    margin-top: 20px;
+  }
+
+  table.managed-subscriptions {
+    &.pf-c-table tbody > tr > * {
+      vertical-align: middle;
+    }
+  }
+
+  table {
+    .partner-logo {
+      display: block;
+      height: 24px;
+      max-width: 30px;
+    }
+
+    #toggle-all-button {
+      padding: 0px;
+    }
+  }
+
+  .ocm-instructions-crc__card {
+    padding: 0;
+  }
+
+  #subscriptions {
+    float: right;
+    display: block;
+  }
+}

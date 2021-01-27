@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterDetailsRedirector /> on error 404 error should render a redirect to / 1`] = `
+<Redirect
+  to="/"
+/>
+`;
+
+exports[`<ClusterDetailsRedirector /> on error 500 error should render an Unavailable message 1`] = `
+<Unavailable
+  message="Error retrieving cluster details"
+  response={
+    Object {
+      "error": true,
+      "errorCode": 500,
+      "errorMessage": "some message",
+      "pending": false,
+    }
+  }
+/>
+`;
+
+exports[`<ClusterDetailsRedirector /> on fulfilled should render a redirect 1`] = `
+<Redirect
+  to="/details/s/foobar"
+/>
+`;
+
+exports[`<ClusterDetailsRedirector /> when pending or not yet fulfilled should render a spinner 1`] = `
+<Spinner
+  centered={true}
+/>
+`;

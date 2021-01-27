@@ -43,7 +43,15 @@ describe('<DetailsRight />', () => {
         />,
       );
       expect(wrapper).toMatchSnapshot();
-      expect(wrapper.find('ClusterStateIcon').length).toEqual(0);
+    });
+
+    it('should render status correctly for deprovisioned cluster', () => {
+      const wrapper = shallow(
+        <DetailsRight
+          cluster={{ ...clusterDetails.cluster, managed: true, subscription: { status: 'Deprovisioned' } }}
+        />,
+      );
+      expect(wrapper).toMatchSnapshot();
     });
 
     it('should not render vcpu and memory for disconnected clusters', () => {

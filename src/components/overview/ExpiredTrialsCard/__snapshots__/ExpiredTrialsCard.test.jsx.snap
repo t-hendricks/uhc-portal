@@ -37,7 +37,7 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
             "cells": Array [
               Object {
                 "title": <Link
-                  to="/details/foo"
+                  to="/details/s/foo"
                 >
                   my cluster
                 </Link>,
@@ -45,15 +45,15 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
             ],
             "subscription": Object {
               "canEdit": true,
-              "cluster_id": "foo",
               "display_name": "my cluster",
+              "id": "foo",
             },
           },
           Object {
             "cells": Array [
               Object {
                 "title": <Link
-                  to="/details/foo"
+                  to="/details/s/foo"
                 >
                   other cluster
                 </Link>,
@@ -61,8 +61,8 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
             ],
             "subscription": Object {
               "canEdit": false,
-              "cluster_id": "foo",
               "display_name": "other cluster",
+              "id": "foo",
             },
           },
         ]

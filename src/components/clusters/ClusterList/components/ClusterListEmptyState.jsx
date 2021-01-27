@@ -47,7 +47,7 @@ function ClusterListEmptyState() {
           <Button variant="link">Register cluster</Button>
         </Link>
         <Link to="/archived">
-          <Button variant="link">View archived clusters</Button>
+          <Button variant="link">View cluster archives</Button>
         </Link>
         <AssistedInstallerLink />
       </EmptyStateSecondaryActions>

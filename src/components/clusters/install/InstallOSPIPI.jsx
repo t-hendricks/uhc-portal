@@ -27,7 +27,6 @@ class InstallOSPIPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'OpenShift Container Platform', path: '/install' },
         { label: 'Red Hat OpenStack Platform', path: '/install/openstack' },
         { label: 'Installer-provisioned infrastructure' },
       ]}
