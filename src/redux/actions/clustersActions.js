@@ -253,6 +253,7 @@ const fetchClusters = params => dispatch => dispatch({
 const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   let canEdit;
   const subscription = await accountsService.getSubscription(subscriptionID);
+  subscription.data = normalizeSubscription(subscription.data);
 
   if (subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
     await authorizationsService.selfAccessReview(
