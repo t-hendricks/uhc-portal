@@ -33,21 +33,6 @@ describe('<ClusterDetails />', () => {
           .toBeCalledWith(fixtures.clusterDetails.cluster.id);
       });
 
-      it('should get alerts', () => {
-        expect(functions.getAlerts)
-          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
-      });
-
-      it('should get nodes', () => {
-        expect(functions.getNodes)
-          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
-      });
-
-      it('should get cluster operators', () => {
-        expect(functions.getClusterOperators)
-          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
-      });
-
       it('should get cluster routers', () => {
         expect(functions.getClusterRouters)
           .toBeCalledWith(fixtures.clusterDetails.cluster.id);
@@ -67,6 +52,18 @@ describe('<ClusterDetails />', () => {
         expect(functions.getSchedules)
           .toBeCalledWith(fixtures.clusterDetails.cluster.id);
       });
+
+      it('should not get alerts', () => {
+        expect(functions.getAlerts).toHaveBeenCalledTimes(0);
+      });
+
+      it('should not get nodes', () => {
+        expect(functions.getNodes).toHaveBeenCalledTimes(0);
+      });
+
+      it('should not get cluster operators', () => {
+        expect(functions.getClusterOperators).toHaveBeenCalledTimes(0);
+      });
     });
 
     it('should not consider issues when cluster is installing', () => {
@@ -84,6 +81,29 @@ describe('<ClusterDetails />', () => {
       expect(wrapper.find('TabsRow').props().hasIssues).toBe(false);
     });
   });
+
+
+  describe('OCP cluster', () => {
+    const functions = funcs();
+    const props = { ...fixtures, ...functions, clusterDetails: { ...fixtures.OCPClusterDetails } };
+    shallow(<ClusterDetails {...props} />);
+
+    it('should get alerts', () => {
+      expect(functions.getAlerts)
+        .toBeCalledWith(fixtures.OCPClusterDetails.cluster.id);
+    });
+
+    it('should get nodes', () => {
+      expect(functions.getNodes)
+        .toBeCalledWith(fixtures.OCPClusterDetails.cluster.id);
+    });
+
+    it('should get cluster operators', () => {
+      expect(functions.getClusterOperators)
+        .toBeCalledWith(fixtures.OCPClusterDetails.cluster.id);
+    });
+  });
+
 
   describe('Loading', () => {
     const functions = funcs();
