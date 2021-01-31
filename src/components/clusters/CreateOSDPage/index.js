@@ -63,8 +63,8 @@ const mapStateToProps = (state, ownProps) => {
       hasOsdQuota: hasManagedQuotaSelector(state, normalizedProducts.OSD),
       hasAwsQuota: hasAwsQuotaSelector(state, normalizedProducts.OSD),
       hasGcpQuota: hasGcpQuotaSelector(state, normalizedProducts.OSD),
-      aws: awsQuotaSelector(state),
-      gcp: gcpQuotaSelector(state),
+      aws: awsQuotaSelector(state, normalizedProducts.OSD),
+      gcp: gcpQuotaSelector(state, normalizedProducts.OSD),
     },
 
     canEnableEtcdEncryption: canEnableEtcdSelector(state),

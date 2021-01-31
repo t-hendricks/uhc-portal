@@ -23,9 +23,14 @@ const hasManagedQuotaSelector = (state, product) => (
   hasAwsQuotaSelector(state, product) || hasGcpQuotaSelector(state, product)
 );
 
-const awsQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.aws');
+// TODO: special-case ROSA?
+const awsQuotaSelector = (state, product) => (
+  get(state.userProfile.organization.quotaList, ['clustersQuota', product, 'aws'])
+);
 
-const gcpQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.gcp');
+const gcpQuotaSelector = (state, product) => (
+  get(state.userProfile.organization.quotaList, ['clustersQuota', product, 'gcp'])
+);
 
 /**
  * Returns number of clusters of specific type that can be created/added, from 0 to `Infinity`.
