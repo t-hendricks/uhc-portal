@@ -23,31 +23,9 @@ const hasManagedQuotaSelector = (state, product) => (
   hasAwsQuotaSelector(state, product) || hasGcpQuotaSelector(state, product)
 );
 
-const awsQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.aws', {
-  byoc: {
-    singleAz: {},
-    multiAz: {},
-    totalAvailable: 0,
-  },
-  rhInfra: {
-    singleAz: {},
-    multiAz: {},
-    totalAvailable: 0,
-  },
-});
+const awsQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.aws');
 
-const gcpQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.gcp', {
-  byoc: {
-    singleAz: {},
-    multiAz: {},
-    totalAvailable: 0,
-  },
-  rhInfra: {
-    singleAz: {},
-    multiAz: {},
-    totalAvailable: 0,
-  },
-});
+const gcpQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.gcp');
 
 /**
  * Returns number of clusters of specific type that can be created/added, from 0 to `Infinity`.
