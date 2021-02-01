@@ -196,9 +196,7 @@ exports[`<InstallProgress /> should render correclty installing cluster 1`] = `
           },
           "openshift_version": "4.6.8",
           "product": Object {
-            "href": "/api/clusters_mgmt/v1/products/osd",
-            "id": "osd",
-            "kind": "ProductLink",
+            "id": "OSD",
           },
           "region": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",

@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import NodeCountInput from './NodeCountInput';
 import * as quotaSelectors from '../quotaSelectors';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 const baseProps = {
   isDisabled: false,
@@ -17,7 +18,7 @@ const baseProps = {
     onChange: jest.fn(),
   },
   cloudProviderID: 'aws',
-  product: 'OSD',
+  product: normalizedProducts.OSD,
 };
 
 describe('<NodeCountInput>', () => {

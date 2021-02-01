@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CreateOSDForm from '../CreateOSDForm';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 import { awsRhInfraGcpRhInfraClustersQuota } from '../../common/__test__/quota.fixtures';
 
@@ -13,7 +14,7 @@ describe('CreateOSDForm;', () => {
       clustersQuota={awsRhInfraGcpRhInfraClustersQuota}
       cloudProviderID="aws"
       privateClusterSelected={false}
-      product="OSD"
+      product={normalizedProducts.OSD}
     />);
 
     expect(wrapper).toMatchSnapshot();
@@ -27,7 +28,7 @@ describe('CreateOSDForm;', () => {
       clustersQuota={awsRhInfraGcpRhInfraClustersQuota}
       cloudProviderID="aws"
       privateClusterSelected={false}
-      product="OSD"
+      product={normalizedProducts.OSD}
       canEnableEtcdEncryption
     />);
 

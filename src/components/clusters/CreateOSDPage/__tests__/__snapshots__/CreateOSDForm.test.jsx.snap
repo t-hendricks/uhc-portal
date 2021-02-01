@@ -46,7 +46,7 @@ exports[`CreateOSDForm; should render 1`] = `
         "totalAvailable": 1,
       }
     }
-    showAvailability={false}
+    showAvailability={true}
     showDNSBaseDomain={false}
   />
   <GridItem

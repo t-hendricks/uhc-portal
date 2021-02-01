@@ -66,6 +66,7 @@ import withFeatureGate from '../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
+import { normalizedProducts } from '../../common/subscriptionTypes';
 
 const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
@@ -113,8 +114,18 @@ function Router({ history }) {
             <Route path="/install/pull-secret" component={InstallPullSecret} />
             <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
             <Redirect from="/install" to="/create" />
-            <TermsGuardedRoute path="/create/osd/aws" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="aws" />} history={history} />
-            <TermsGuardedRoute path="/create/osd/gcp" gobackPath="/create/osd" render={() => <CreateOSDPage cloudProviderID="gcp" />} history={history} />
+            <TermsGuardedRoute
+              path="/create/osd/aws"
+              gobackPath="/create/osd"
+              history={history}
+              render={() => <CreateOSDPage cloudProviderID="aws" product={normalizedProducts.OSD} />}
+            />
+            <TermsGuardedRoute
+              path="/create/osd/gcp"
+              gobackPath="/create/osd"
+              history={history}
+              render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSD} />}
+            />
             <Route path="/create/osd" component={CloudProviderSelection} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/:clusterId/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
