@@ -11,6 +11,7 @@ import {
 import Timestamp from '../../../../common/Timestamp';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import ClusterVersionInfo from './ClusterVersionInfo';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 
 function DetailsLeft({ cluster, cloudProviders }) {
@@ -30,7 +31,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
   }
 
   let billingModel;
-  if (['moa', 'rosa'].includes(get(cluster, 'product.id'))) {
+  if (get(cluster, 'product.id') == normalizedProducts.ROSA) {
     billingModel = 'Through AWS';
   } else if (get(cluster, 'ccs.enabled')) {
     billingModel = 'Customer cloud subscription';
