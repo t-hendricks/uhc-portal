@@ -88,7 +88,7 @@ class ClusterListFilterDropdown extends React.Component {
           <DropdownToggle onToggle={this.onToggle} isDisabled={isDisabled}>
             <FilterIcon />
             {' '}
-            Filter
+            Cluster type
           </DropdownToggle>
         )}
         isOpen={isOpen}
