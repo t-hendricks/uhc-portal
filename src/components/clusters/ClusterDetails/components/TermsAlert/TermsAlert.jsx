@@ -31,13 +31,11 @@ class TermsAlert extends Component {
 
   isTermsReviewRquired() {
     const { subscription } = this.props;
-    const planID = get(subscription, 'plan.id');
+    const product = get(subscription, 'plan.id');
     const status = get(subscription, 'status');
 
     return status !== subscriptionStatuses.DEPROVISIONED && (
-      planID === normalizedProducts.OSD
-      || planID === normalizedProducts.RHMI
-      || planID === normalizedProducts.ROSA
+      [normalizedProducts.OSD, normalizedProducts.RHMI, normalizedProducts.ROSA].includes(product)
     );
   }
 
