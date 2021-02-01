@@ -1,5 +1,6 @@
 import canAllowAdminSelector from '../UsersSelector';
 import clusterStates from '../../../../../common/clusterStates';
+import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 
 
 describe('canAllowAdminSelector', () => {
@@ -9,7 +10,7 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.READY,
-            product: { id: 'osd' },
+            product: { id: normalizedProducts.OSD },
             subscription: {
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
@@ -51,7 +52,7 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.READY,
-            product: { id: 'rhmi' },
+            product: { id: normalizedProducts.RHMI },
             subscription: {
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
@@ -74,7 +75,7 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.READY,
-            product: { id: 'osd' },
+            product: { id: normalizedProducts.OSD },
             subscription: {
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
@@ -98,7 +99,7 @@ describe('canAllowAdminSelector', () => {
           cluster: {
             state: clusterStates.READY,
             ccs: { enabled: true },
-            product: { id: 'osd' },
+            product: { id: normalizedProducts.OSD },
             subscription: {
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },

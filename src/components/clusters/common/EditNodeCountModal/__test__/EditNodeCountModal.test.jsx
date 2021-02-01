@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import { Alert } from '@patternfly/react-core';
 
 import EditNodeCountModal from '../EditNodeCountModal';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 const baseProps = {
   openModal: jest.fn(),
@@ -18,7 +19,7 @@ const baseProps = {
   getMachinePools: jest.fn(),
   isOpen: true,
   cloudProviderID: 'gcp',
-  product: 'OSD',
+  product: normalizedProducts.OSD,
   machineTypes: {},
   machinePoolsList: { data: [] },
   organization: {},

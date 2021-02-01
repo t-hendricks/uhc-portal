@@ -1,3 +1,4 @@
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import { mockAddOns, mockClusterAddOns, mockClusterAddOnsParams } from './AddOns.fixtures';
 import { quotaSummary } from '../../../../../subscriptions/__test__/Subscriptions.fixtures';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
@@ -32,21 +33,21 @@ describe('isAvailable', () => {
 
   it('should determine that add-on is not available for non-OSD cluster', () => {
     const available = isAvailable(mockAddOns.items[0], {
-      product: { id: 'rhmi' },
+      product: { id: normalizedProducts.RHMI },
     }, { fulfilled: true }, quotaSummary);
     expect(available).toBe(false);
   });
 
   it('should determine that add-on is available for OSD cluster', () => {
     const available = isAvailable(mockAddOns.items[0], {
-      product: { id: 'osd' },
+      product: { id: normalizedProducts.OSD },
     }, { fulfilled: true }, quotaSummary);
     expect(available).toBe(true);
   });
 
   it('should determine that add-on is available for ROSA cluster', () => {
     const available = isAvailable(mockAddOns.items[0], {
-      product: { id: 'rosa' },
+      product: { id: normalizedProducts.ROSA },
     }, { fulfilled: true }, quotaSummary);
     expect(available).toBe(true);
   });
@@ -82,14 +83,14 @@ describe('hasQuota', () => {
 
   it('should determine that the org does not need quota for the add-on on an OSD cluster', () => {
     const quota = hasQuota(mockAddOns.items[0], {
-      product: { id: 'osd' },
+      product: { id: normalizedProducts.OSD },
     }, { fulfilled: true }, quotaSummary);
     expect(quota).toBe(true);
   });
 
   it('should determine that the org does not need quota for the add-on on a ROSA cluster', () => {
     const quota = hasQuota(mockAddOns.items[0], {
-      product: { id: 'rosa' },
+      product: { id: normalizedProducts.ROSA },
     }, { fulfilled: true }, quotaSummary);
     expect(quota).toBe(true);
   });

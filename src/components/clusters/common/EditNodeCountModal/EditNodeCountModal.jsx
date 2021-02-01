@@ -7,6 +7,7 @@ import {
 
 import NodeCountInput from '../NodeCountInput';
 import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 
 import Modal from '../../../common/Modal/Modal';
@@ -132,8 +133,8 @@ class EditNodeCountModal extends Component {
     );
 
     const pending = editNodeCountResponse.pending
-     || organization.pending
-     || machinePoolsList.pending;
+      || organization.pending
+      || machinePoolsList.pending;
 
     return (
       <Modal
@@ -214,8 +215,7 @@ EditNodeCountModal.propTypes = {
   machineType: PropTypes.string,
   clusterID: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
-  // For quota purposes, product is subscription.plan.id, not cluster.product.id.
-  product: PropTypes.string,
+  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   pristine: PropTypes.bool,
 };
 
