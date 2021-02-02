@@ -124,7 +124,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
     if (ownProps.product) {
       clusterRequest.product = {
-        id: ownProps.product,
+        id: ownProps.product.toLowerCase(),
       };
     }
     if (formData.network_configuration_toggle === 'advanced') {
