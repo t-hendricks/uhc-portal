@@ -14,7 +14,6 @@ import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/helpers';
 
-import { normalizedProducts } from '../../../common/subscriptionTypes';
 import {
   hasManagedQuotaSelector,
   hasAwsQuotaSelector,
@@ -60,11 +59,11 @@ const mapStateToProps = (state, ownProps) => {
     loadBalancerValues: state.loadBalancerValues,
 
     clustersQuota: {
-      hasOsdQuota: hasManagedQuotaSelector(state, normalizedProducts.OSD),
-      hasAwsQuota: hasAwsQuotaSelector(state, normalizedProducts.OSD),
-      hasGcpQuota: hasGcpQuotaSelector(state, normalizedProducts.OSD),
-      aws: awsQuotaSelector(state, normalizedProducts.OSD),
-      gcp: gcpQuotaSelector(state, normalizedProducts.OSD),
+      hasOsdQuota: hasManagedQuotaSelector(state, ownProps.product),
+      hasAwsQuota: hasAwsQuotaSelector(state, ownProps.product),
+      hasGcpQuota: hasGcpQuotaSelector(state, ownProps.product),
+      aws: awsQuotaSelector(state, ownProps.product),
+      gcp: gcpQuotaSelector(state, ownProps.product),
     },
 
     canEnableEtcdEncryption: canEnableEtcdSelector(state),
