@@ -10,9 +10,8 @@ import {
 
 import Timestamp from '../../../../common/Timestamp';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
+import BillingModelLabel from '../../../common/BillingModelLabel';
 import ClusterVersionInfo from './ClusterVersionInfo';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-
 
 function DetailsLeft({ cluster, cloudProviders }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
@@ -28,15 +27,6 @@ function DetailsLeft({ cluster, cloudProviders }) {
     }
   } else {
     cloudProvider = cloudProviderId ? cloudProviderId.toUpperCase() : 'N/A';
-  }
-
-  let billingModel;
-  if (get(cluster, 'product.id') == normalizedProducts.ROSA) {
-    billingModel = 'Through AWS';
-  } else if (get(cluster, 'ccs.enabled')) {
-    billingModel = 'Customer cloud subscription';
-  } else {
-    billingModel = 'Standard';
   }
 
   return (
@@ -68,7 +58,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
             {cloudProvider}
           </DescriptionListDescription>
         </DescriptionListGroup>
-        { cluster.managed
+        {cluster.managed
           && (
             <>
               <DescriptionListGroup>
@@ -104,7 +94,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
                 Billing model
               </DescriptionListTerm>
               <DescriptionListDescription>
-                { billingModel }
+                <BillingModelLabel cluster={cluster} />
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>

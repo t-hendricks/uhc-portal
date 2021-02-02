@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BillingModelLabel for OSD CCS cluster 1`] = `"Customer cloud subscription"`;
+
+exports[`BillingModelLabel for OSD rhInfra cluster 1`] = `"Standard"`;
+
+exports[`BillingModelLabel for OSDTrial CCS cluster 1`] = `"Customer cloud subscription"`;
+
+exports[`BillingModelLabel for ROSA cluster 1`] = `"Through AWS"`;
