@@ -1,7 +1,11 @@
 import get from 'lodash/get';
 import has from 'lodash/has';
 
-const supportsFreeAddOns = cluster => ['osd', 'moa', 'rosa'].includes((cluster.product.id).toLowerCase());
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+
+const supportsFreeAddOns = cluster => (
+  [normalizedProducts.OSD, normalizedProducts.ROSA].includes(cluster.product.id)
+);
 
 // Add-ons with 0 resource cost are free for OSD/ROSA clusters
 const isFreeAddOn = (addOn, cluster) => {
@@ -59,7 +63,7 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
   }
 
   return addOns.items.filter(addOn => isAvailable(addOn, cluster, organization, quota)
-                             || isInstalled(addOn, clusterAddOns));
+    || isInstalled(addOn, clusterAddOns));
 };
 
 const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;

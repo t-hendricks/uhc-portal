@@ -1,3 +1,5 @@
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
+
 const stateWithQuota = {
   clusters: {
     details: {
@@ -29,9 +31,7 @@ const stateWithQuota = {
           kind: 'Subscription',
           href: '/api/accounts_mgmt/v1/subscriptions/1nN0ylc0CaJdNshnrFbh614ajCQ',
           plan: {
-            id: 'OSD',
-            kind: 'Plan',
-            href: '/api/accounts_mgmt/v1/plans/OSD',
+            id: normalizedProducts.OSD,
           },
           cluster_id: '1ibe928bp9ojdqkqobpp3ig1a1r5i0rb',
           external_cluster_id: '702ba579-ae0e-41f3-aa8c-4e4fcf497318',
@@ -380,7 +380,7 @@ const stateWithQuota = {
         },
         health_state: 'healthy',
         product: {
-          id: 'OSD',
+          id: normalizedProducts.OSD,
         },
         status: {
           state: 'ready',

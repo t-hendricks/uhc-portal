@@ -32,8 +32,8 @@ function SubscriptionSettings({
   subscription, openModal,
   canEdit = false, canSubscribeOCP = false,
 }) {
-  const planID = get(subscription, 'plan.id');
-  if (planID !== normalizedProducts.OCP) {
+  const product = get(subscription, 'plan.id');
+  if (product !== normalizedProducts.OCP) {
     return null;
   }
 
