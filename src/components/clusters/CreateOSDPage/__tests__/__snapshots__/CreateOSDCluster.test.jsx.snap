@@ -119,7 +119,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
               openModal={[MockFunction]}
               pending={false}
               privateClusterSelected={false}
-              product="osd"
+              product="OSD"
             />
             <GridItem>
               <Split

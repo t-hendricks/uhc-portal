@@ -6,6 +6,8 @@ import {
   awsRhInfraGcpRhInfraClustersQuota,
 } from '../../common/__test__/quota.fixtures';
 
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
+
 import CreateOSDCluster from '../CreateOSDPage';
 import CreateOSDForm from '../CreateOSDForm/CreateOSDForm';
 
@@ -65,6 +67,7 @@ describe('CreateOSDCluster', () => {
       machineTypes={fulfilledRequest}
       loadBalancerValues={fulfilledRequest}
       persistentStorageValues={fulfilledRequest}
+      product={normalizedProducts.OSD}
       cloudProviderID="aws"
       clustersQuota={awsByocRhInfraGcpRhInfraClustersQuota}
     />);
@@ -118,6 +121,7 @@ describe('CreateOSDCluster', () => {
         machineTypes={initialRequestStatus}
         persistentStorageValues={initialRequestStatus}
         loadBalancerValues={initialRequestStatus}
+        product={normalizedProducts.OSD}
         cloudProviderID="aws"
         clustersQuota={awsRhInfraGcpRhInfraClustersQuota}
       />);

@@ -10,6 +10,7 @@ import range from 'lodash/range';
 
 import PopoverHint from '../../../common/PopoverHint';
 import { noQuotaTooltip } from '../../../../common/helpers';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import { availableNodesFromQuota } from '../quotaSelectors';
 
 const MAX_NODES = 180;
@@ -174,8 +175,7 @@ NodeCountInput.propTypes = {
     onChange: PropTypes.func.isRequired,
   }),
   cloudProviderID: PropTypes.string.isRequired,
-  // For quota purposes, product is subscription.plan.id, not cluster.product.id.
-  product: PropTypes.string.isRequired,
+  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
 };
 
 export default NodeCountInput;

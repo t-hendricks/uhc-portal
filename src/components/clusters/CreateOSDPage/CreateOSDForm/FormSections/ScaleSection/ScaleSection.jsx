@@ -13,6 +13,7 @@ import { ReduxFormKeyValueList, ReudxFormTaints } from '../../../../../common/Re
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
 import NodeCountInput from '../../../../common/NodeCountInput';
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import { constants } from '../../CreateOSDFormConstants';
 
 import PopoverHint from '../../../../../common/PopoverHint';
@@ -149,8 +150,7 @@ ScaleSection.propTypes = {
   showStorageAndLoadBalancers: PropTypes.bool,
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
-  // For quota purposes, product is subscription.plan.id, not cluster.product.id.
-  product: PropTypes.string.isRequired,
+  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   handleMachineTypesChange: PropTypes.func.isRequired,
   gridSpan: PropTypes.number,
   nodeLabelsGridSpan: PropTypes.number,

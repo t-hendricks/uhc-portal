@@ -18,6 +18,7 @@ import {
   StackItem,
 } from '@patternfly/react-core';
 
+import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { shouldRefetchQuota } from '../../../common/helpers';
 
 import PageTitle from '../../common/PageTitle';
@@ -232,7 +233,7 @@ class CreateOSDPage extends React.Component {
     const loadingSpinner = createClusterResponse.pending ? (
       <div className="form-loading-spinner">
         <span>
-         Do not refresh this page. This request may take a moment...
+          Do not refresh this page. This request may take a moment...
         </span>
         <Spinner />
       </div>
@@ -276,13 +277,13 @@ class CreateOSDPage extends React.Component {
                     <Split hasGutter className="create-osd-form-button-split">
                       <SplitItem>
                         <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={createClusterResponse.pending}>
-                        Create cluster
+                          Create cluster
                         </Button>
                       </SplitItem>
                       <SplitItem>
                         <Link to="/">
                           <Button variant="secondary" isDisabled={createClusterResponse.pending}>
-                          Cancel
+                            Cancel
                           </Button>
                         </Link>
                       </SplitItem>
@@ -300,10 +301,6 @@ class CreateOSDPage extends React.Component {
     );
   }
 }
-
-CreateOSDPage.defaultProps = {
-  product: 'osd',
-};
 
 CreateOSDPage.propTypes = {
   isErrorModalOpen: PropTypes.bool,
@@ -350,7 +347,7 @@ CreateOSDPage.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
-  product: PropTypes.string,
+  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
