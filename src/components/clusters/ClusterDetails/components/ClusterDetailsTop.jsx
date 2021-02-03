@@ -153,7 +153,7 @@ function ClusterDetailsTop(props) {
                 Unarchive
               </Button>
             )}
-            <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />
+            { !isDeprovisioned && (<RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />)}
           </span>
         </SplitItem>
       </Split>

@@ -31,6 +31,7 @@ import {
 
 import ClusterListFilter from '../common/ClusterListFilter';
 import ClusterListFilterDropDown from '../ClusterList/components/ClusterListFilterDropdown';
+import ClusterListFilterChipGroup from '../ClusterList/components/ClusterListFilterChipGroup';
 import ArchivedClusterListTable from './components/ArchiveClusterListTable/ArchivedClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
@@ -163,7 +164,7 @@ class ArchivedClusterList extends Component {
                 <SplitItem>
                   <ClusterListFilter view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
                 </SplitItem>
-                <SplitItem>
+                <SplitItem className="pf-l-split__item split-margin-left">
                   <ClusterListFilterDropDown
                     view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
                     isDisabled={pending}
@@ -195,6 +196,7 @@ class ArchivedClusterList extends Component {
                   <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
                 </SplitItem>
               </Split>
+              <ClusterListFilterChipGroup view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
               <ArchivedClusterListTable
                 clusters={clusters || []}
                 viewOptions={viewOptions}

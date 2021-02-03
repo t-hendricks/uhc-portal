@@ -48,6 +48,7 @@ class Overview extends React.Component {
     const { showInstallSuccessAlert } = this.state;
     const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
+    const isDeprovisioned = get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const metricsAvailable = hasResourceUsageMetrics(cluster)
       && (cluster.canEdit
           || (cluster.state !== clusterStates.PENDING
@@ -70,7 +71,7 @@ class Overview extends React.Component {
                 isExpandable={cluster.state !== clusterStates.UNINSTALLING}
               />
             </InstallProgress>
-          ) : (
+          ) : !isDeprovisioned && (
             <Card className="ocm-c-overview-resource-usage__card">
               <CardTitle className="ocm-c-overview-resource-usage__card--header">
                 <Title headingLevel="h2" className="card-title">Resource usage</Title>
