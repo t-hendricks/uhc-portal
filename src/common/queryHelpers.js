@@ -81,7 +81,7 @@ const createViewQueryObject = (viewOptions, queryObj) => {
   return queryObject;
 };
 
-const createServiceLogQueryObject = (viewOptions, externalClusterID, queryObj) => {
+const createServiceLogQueryObject = (viewOptions, queryObj) => {
   const queryObject = {
     ...queryObj,
   };
@@ -96,9 +96,6 @@ const createServiceLogQueryObject = (viewOptions, externalClusterID, queryObj) =
     }
 
     const clauses = []; // will be joined with AND
-
-    // base filter: search by cluster_uuid
-    clauses.push(`cluster_uuid = '${externalClusterID}'`);
 
     // If we got a search string from the user, format it as an ILIKE query.
     if (viewOptions.filter) {
@@ -117,9 +114,11 @@ const createServiceLogQueryObject = (viewOptions, externalClusterID, queryObj) =
       }
     }
 
-    queryObject.filter = clauses.map(c => `(${c})`)
-      .join(' AND ')
-      .trim();
+    if (clauses.length > 0) {
+      queryObject.filter = clauses.map(c => `(${c})`)
+        .join(' AND ')
+        .trim();
+    }
   }
 
   return queryObject;
