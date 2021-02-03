@@ -7,7 +7,7 @@
     {
       "id": "1YNnwKxJNB3LmYy8R4F2u7xVAex",
       "kind": "ClusterLog",
-      "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+      "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
       "timestamp": "2020-02-27T10:29:43Z",
       "severity": "Debug",
       "service_name": "liran_service",
@@ -19,7 +19,7 @@
     {
       "id": "1YNnj7e8YgsXIvAOdqffX3GlXoJ",
       "kind": "ClusterLog",
-      "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+      "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
       "timestamp": "2020-02-27T10:27:43Z",
       "severity": "Info",
       "service_name": "liran_service",
@@ -31,7 +31,7 @@
     {
       "id": "1YNnUiSejeDrgwnGMrNBeoCGABk",
       "kind": "ClusterLog",
-      "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+      "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
       "timestamp": "2020-02-27T10:25:43Z",
       "severity": "Error",
       "service_name": "liran_service",
@@ -43,7 +43,7 @@
     {
       "id": "1YNnMfHmjZbnQM5YrGQDMYkQe93",
       "kind": "ClusterLog",
-      "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+      "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
       "timestamp": "2020-02-27T10:24:43Z",
       "severity": "Error",
       "service_name": "liran_service",
@@ -55,7 +55,7 @@
     {
       "id": "1YNmyTANNOk0qGbHEPcHegZ0X1C",
       "kind": "ClusterLog",
-      "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+      "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
       "timestamp": "2020-02-27T10:21:43Z",
       "severity": "Fatal",
       "service_name": "liran_service",
@@ -67,7 +67,7 @@
     {
       "id": "1YNmRkLaiZIV004D69vjxMkja2w",
       "kind": "ClusterLog",
-      "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+      "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
       "timestamp": "2020-02-27T10:16:32Z",
       "severity": "Warning",
       "service_name": "liran_service",
@@ -79,7 +79,7 @@
     {
       "id": "1Z243BZ6iQFR9FxXsI1MxLU33bb",
       "kind": "ClusterLog",
-      "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+      "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
       "timestamp": "2020-01-28T10:19:32Z",
       "severity": "Fatal",
       "service_name": "Gregory",
@@ -94,7 +94,7 @@
       {
         "id": "1YNnwKxJNB3LmYy8R4F2u7xVAex",
         "kind": "ClusterLog",
-        "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+        "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
         "timestamp": "2020-02-27T10:29:43Z",
         "severity": "Debug",
         "service_name": "liran_service",
@@ -106,7 +106,7 @@
       {
         "id": "1YNnj7e8YgsXIvAOdqffX3GlXoJ",
         "kind": "ClusterLog",
-        "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+        "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
         "timestamp": "2020-02-27T10:27:43Z",
         "severity": "Info",
         "service_name": "liran_service",
@@ -118,7 +118,7 @@
       {
         "id": "1YNnUiSejeDrgwnGMrNBeoCGABk",
         "kind": "ClusterLog",
-        "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+        "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
         "timestamp": "2020-02-27T10:25:43Z",
         "severity": "Error",
         "service_name": "liran_service",
@@ -130,7 +130,7 @@
       {
         "id": "1YNnMfHmjZbnQM5YrGQDMYkQe93",
         "kind": "ClusterLog",
-        "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+        "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
         "timestamp": "2020-02-27T10:24:43Z",
         "severity": "Error",
         "service_name": "liran_service",
@@ -142,7 +142,7 @@
       {
         "id": "1YNmyTANNOk0qGbHEPcHegZ0X1C",
         "kind": "ClusterLog",
-        "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+        "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
         "timestamp": "2020-02-27T10:21:43Z",
         "severity": "Fatal",
         "service_name": "liran_service",
@@ -154,7 +154,7 @@
       {
         "id": "1YNmRkLaiZIV004D69vjxMkja2w",
         "kind": "ClusterLog",
-        "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+        "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
         "timestamp": "2020-02-27T10:16:32Z",
         "severity": "Warning",
         "service_name": "liran_service",
@@ -166,7 +166,7 @@
       {
         "id": "1Z243BZ6iQFR9FxXsI1MxLU33bb",
         "kind": "ClusterLog",
-        "href": "/api/service_logs/v1/cluster_logs/6544b1fe-8d30-47d4-90c0-1038de0fe0c7",
+        "href": "/api/service_logs/v1/clusters/6544b1fe-8d30-47d4-90c0-1038de0fe0c7/cluster_logs",
         "timestamp": "2020-01-28T10:19:32Z",
         "severity": "Fatal",
         "service_name": "Gregory",

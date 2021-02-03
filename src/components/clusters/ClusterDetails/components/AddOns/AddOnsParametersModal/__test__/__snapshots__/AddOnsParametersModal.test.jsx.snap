@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddOnsParametersModal /> renders correctly 1`] = `
+<Modal
+  isPending={false}
+  isPrimaryDisabled={false}
+  onClose={[Function]}
+  onPrimaryClick={[MockFunction]}
+  onSecondaryClick={[Function]}
+  primaryText="Install"
+  secondaryText="Cancel"
+  title="Configure Dummy Name"
+  variant="large"
+  width={810}
+>
+  <Form>
+    <FormGroup
+      key="dummy item"
+    >
+      <Field
+        component={[Function]}
+        disabled={false}
+        key="dummy item"
+        name="parameters.dummy item"
+        placeholder="dummy value"
+        type="text"
+        validate={Array []}
+      />
+      <Button
+        className="addon-parameter-default-button"
+        icon={
+          <LevelUpAltIcon
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+        }
+        iconPosition="right"
+        onClick={[Function]}
+        variant="link"
+      >
+        Use default
+         
+        dummy value
+      </Button>
+    </FormGroup>
+  </Form>
+</Modal>
+`;

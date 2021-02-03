@@ -252,7 +252,7 @@ class ClusterList extends Component {
                   </ToolbarItem>
                 </ToolbarContent>
               </Toolbar>
-              <ClusterListFilterChipGroup history={history} />
+              <ClusterListFilterChipGroup view={viewConstants.CLUSTERS_VIEW} history={history} />
               <ClusterListTable
                 openModal={openModal}
                 clusters={clusters || []}
