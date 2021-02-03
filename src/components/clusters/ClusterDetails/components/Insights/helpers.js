@@ -7,7 +7,7 @@ export const appendQueryParameter = (url, parameter, value) => {
   const u = new URL(url);
   const params = new URLSearchParams(u.search);
   params.set(parameter, value);
-  u.search = params.toString();
+  u.search = params;
 
   return u.href;
 };
@@ -15,5 +15,5 @@ export const appendQueryParameter = (url, parameter, value) => {
 // for statistics purposes (CCXDEV-3552)
 export const appendCrParamToDocLinks = (details) => {
   const re = /https:\/\/(docs.openshift.com|access.redhat.com)\/[^ )([\]"]+/g;
-  return details.replaceAll(re, match => (appendQueryParameter(match, 'cr', 'OCM')));
+  return details.replace(re, match => (appendQueryParameter(match, 'cr', 'OCM')));
 };

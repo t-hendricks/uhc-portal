@@ -33,7 +33,9 @@ exports[`<ArchivedClusterList /> ArchivedClusterList should render 1`] = `
               view="ARCHIVED_CLUSTERS_VIEW"
             />
           </SplitItem>
-          <SplitItem>
+          <SplitItem
+            className="pf-l-split__item split-margin-left"
+          >
             <Connect(ClusterListFilterDropdown)
               isDisabled={false}
               view="ARCHIVED_CLUSTERS_VIEW"
@@ -72,6 +74,9 @@ exports[`<ArchivedClusterList /> ArchivedClusterList should render 1`] = `
             />
           </SplitItem>
         </Split>
+        <Connect(ClusterListFilterChipGroup)
+          view="ARCHIVED_CLUSTERS_VIEW"
+        />
         <ArchivedClusterListTable
           clusters={
             Array [
