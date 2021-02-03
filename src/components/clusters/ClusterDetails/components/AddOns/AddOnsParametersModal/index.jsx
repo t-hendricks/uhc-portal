@@ -43,7 +43,8 @@ const mapDispatchToProps = dispatch => ({
       addOnRequest.parameters = {
         items: Object.entries(formData.parameters).map(([key, value]) => ({
           id: key,
-          value,
+          // Ensure all values are strings
+          value: value.toString(),
         })),
       };
     }
