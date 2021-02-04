@@ -43,7 +43,8 @@ const mapDispatchToProps = dispatch => ({
   closeModal: (name) => { dispatch(closeModal(name)); },
   openModal: (name) => { dispatch(openModal(name)); },
   onSubmit: (formData) => {
-    const clusterRequest = {
+    // This request goes to account-manager,
+    const registrationRequest = {
       cluster_uuid: formData.cluster_id,
       plan_id: 'OCP',
       status: 'Disconnected',
@@ -72,7 +73,7 @@ const mapDispatchToProps = dispatch => ({
       }
     }
 
-    dispatch(registerDisconnectedCluster(clusterRequest, subscriptionRequest));
+    dispatch(registerDisconnectedCluster(registrationRequest, subscriptionRequest));
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('RegisterCluster')),

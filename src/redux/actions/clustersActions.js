@@ -54,8 +54,8 @@ const createCluster = (params, upgradeSettings) => dispatch => dispatch({
 });
 
 const registerClusterAndUpdateSubscription = async (
-  clusterRequest, subscriptionRequest, dispatch) => {
-  const registerClusterResponse = await clusterService.postDisconnectedCluster(clusterRequest);
+  registrationRequest, subscriptionRequest, dispatch) => {
+  const registerClusterResponse = await accountsService.registerDisconnected(registrationRequest);
 
   if (subscriptionRequest && registerClusterResponse.status === 201) {
     dispatch(editSubscriptionSettings(registerClusterResponse.data.id, subscriptionRequest));
@@ -64,10 +64,14 @@ const registerClusterAndUpdateSubscription = async (
   return registerClusterResponse;
 };
 
-const registerDisconnectedCluster = (clusterRequest, subscriptionRequest) => dispatch => dispatch({
-  type: clustersConstants.CREATE_CLUSTER,
-  payload: registerClusterAndUpdateSubscription(clusterRequest, subscriptionRequest, dispatch),
-});
+const registerDisconnectedCluster = (registrationRequest, subscriptionRequest) => dispatch => (
+  dispatch({
+    type: clustersConstants.CREATE_CLUSTER,
+    payload: registerClusterAndUpdateSubscription(
+      registrationRequest, subscriptionRequest, dispatch,
+    ),
+  })
+);
 
 
 const clearClusterResponse = () => dispatch => dispatch({
