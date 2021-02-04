@@ -9460,10 +9460,10 @@ opener@^1.5.1:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
 
-openshift-assisted-ui-lib@^1.5.7:
-  version "1.5.7"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-1.5.7.tgz#7dc8a6372b0d25ad761b28f26160182918e08aab"
-  integrity sha512-dLhMqbKBBf+WiTwJgReWD95XxWAEROWVYNxkA9Ri8fZxQNc8L0PccP1y6ZsePObBkN7VHGAka5PJl6wKpqK/ng==
+openshift-assisted-ui-lib@^1.5.7-1:
+  version "1.5.7-1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-1.5.7-1.tgz#4a42c36bbbc6958550814a0c3dfa1c04d6c0b355"
+  integrity sha512-bTbvMtaOVTbdnu53El5NpGkxrJB86gmff9vZvr4UW92aOuPwDXcW7XNXbzxKOEN8emKhZr6ObhICsNp7D3A2BA==
   dependencies:
     axios-case-converter "^0.6.0"
     ip-address "^7.1.0"
