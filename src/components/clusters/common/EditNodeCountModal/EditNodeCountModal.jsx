@@ -9,11 +9,11 @@ import NodeCountInput from '../NodeCountInput';
 import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
-import AutoScaleSection from '../../ClusterDetails/components/MachinePools/components/AddMachinePoolModal/AutoScaleSection';
-
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
 import modals from '../../../common/Modal/modals';
+
+import AutoScaleSection from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleSection';
 
 class EditNodeCountModal extends Component {
   componentDidMount() {
@@ -242,7 +242,7 @@ EditNodeCountModal.propTypes = {
   machineType: PropTypes.string,
   clusterID: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
-  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+  product: PropTypes.oneOf(Object.keys(normalizedProducts), '').isRequired,
   pristine: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
   canAutoScale: PropTypes.bool,

@@ -1,0 +1,832 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 1`] = `
+<Fragment>
+  <Card
+    className="ocm-c-machine-pools__card"
+  >
+    <CardBody
+      className="ocm-c-machine-pools__card--body"
+    >
+      <Button
+        className="space-bottom-lg"
+        id="add-machine-pool"
+        isDisabled={false}
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Add machine pool
+      </Button>
+      <Divider />
+      <Table
+        actionResolver={[Function]}
+        areActionsDisabled={[Function]}
+        aria-label="Machine pools"
+        borders={true}
+        canSelectAll={true}
+        cells={
+          Array [
+            Object {
+              "cellFormatters": Array [
+                [Function],
+              ],
+              "title": "Machine pool",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Instance type",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Availability zones",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Node count",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Autoscaling",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+          ]
+        }
+        className=""
+        contentId="expanded-content"
+        dropdownDirection="down"
+        dropdownPosition="right"
+        expandId="expandable-toggle"
+        gridBreakPoint="grid-md"
+        isStickyHeader={false}
+        onCollapse={[Function]}
+        ouiaSafe={true}
+        role="grid"
+        rowLabeledBy="simple-node"
+        rows={
+          Array [
+            Object {
+              "cells": Array [
+                "some-id",
+                "m5.xlarge",
+                "us-east-1",
+                "1",
+                "Disabled",
+              ],
+              "key": "some-id",
+              "machinePool": Object {
+                "availability_zones": Array [
+                  "us-east-1",
+                ],
+                "desired": 1,
+                "id": "some-id",
+                "instance_type": "m5.xlarge",
+              },
+            },
+            Object {
+              "cells": Array [
+                "mp-autoscaling",
+                "m5.xlarge",
+                "us-east-1a",
+                "Min: 1, Max: 2",
+                "Enabled",
+              ],
+              "isOpen": false,
+              "key": "mp-autoscaling",
+              "machinePool": Object {
+                "autoscaling": Object {
+                  "max_replicas": 2,
+                  "min_replicas": 1,
+                },
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-autoscaling",
+                "id": "mp-autoscaling",
+                "instance_type": "m5.xlarge",
+                "kind": "MachinePool",
+                "labels": Object {
+                  "foo": "bar",
+                },
+                "taints": Array [
+                  Object {
+                    "effect": "NoSchedule",
+                    "key": "foo1",
+                    "value": "bazz1",
+                  },
+                  Object {
+                    "effect": "NoSchedule",
+                    "key": "foo2",
+                    "value": "bazz2",
+                  },
+                ],
+              },
+            },
+            Object {
+              "cells": Array [
+                Object {
+                  "title": <React.Fragment>
+                    <React.Fragment>
+                      <Title
+                        className="space-bottom-sm"
+                        headingLevel="h4"
+                      >
+                        Labels
+                      </Title>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          foo = bar
+                        </Label>
+                         
+                      </React.Fragment>
+                    </React.Fragment>
+                    <React.Fragment>
+                      <Title
+                        className="space-bottom-sm space-top-lg"
+                        headingLevel="h4"
+                      >
+                        Taints
+                      </Title>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          foo1 = bazz1:NoSchedule
+                        </Label>
+                         
+                      </React.Fragment>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          foo2 = bazz2:NoSchedule
+                        </Label>
+                         
+                      </React.Fragment>
+                    </React.Fragment>
+                    <React.Fragment>
+                      <Title
+                        className="space-bottom-sm"
+                        headingLevel="h4"
+                      >
+                        Autoscaling
+                      </Title>
+                      <Split
+                        hasGutter={true}
+                      >
+                        <SplitItem>
+                          <Title
+                            className="autoscale__lim"
+                            headingLevel="h4"
+                          >
+                            Min nodes
+                          </Title>
+                          1
+                        </SplitItem>
+                        <SplitItem>
+                          <Title
+                            className="autoscale__lim"
+                            headingLevel="h4"
+                          >
+                            Max nodes
+                          </Title>
+                          2
+                        </SplitItem>
+                      </Split>
+                    </React.Fragment>
+                  </React.Fragment>,
+                },
+              ],
+              "fullWidth": true,
+              "key": "mp-autoscaling-child",
+              "parent": 1,
+            },
+          ]
+        }
+        selectVariant="checkbox"
+        variant={null}
+      >
+        <TableHeader />
+        <Component />
+      </Table>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`<MachinePools /> renders with additional machine pools, some with labels and/or taints 1`] = `
+<Fragment>
+  <Card
+    className="ocm-c-machine-pools__card"
+  >
+    <CardBody
+      className="ocm-c-machine-pools__card--body"
+    >
+      <Button
+        className="space-bottom-lg"
+        id="add-machine-pool"
+        isDisabled={false}
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Add machine pool
+      </Button>
+      <Divider />
+      <Table
+        actionResolver={[Function]}
+        areActionsDisabled={[Function]}
+        aria-label="Machine pools"
+        borders={true}
+        canSelectAll={true}
+        cells={
+          Array [
+            Object {
+              "cellFormatters": Array [
+                [Function],
+              ],
+              "title": "Machine pool",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Instance type",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Availability zones",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Node count",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Autoscaling",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+          ]
+        }
+        className=""
+        contentId="expanded-content"
+        dropdownDirection="down"
+        dropdownPosition="right"
+        expandId="expandable-toggle"
+        gridBreakPoint="grid-md"
+        isStickyHeader={false}
+        onCollapse={[Function]}
+        ouiaSafe={true}
+        role="grid"
+        rowLabeledBy="simple-node"
+        rows={
+          Array [
+            Object {
+              "cells": Array [
+                "some-id",
+                "m5.xlarge",
+                "us-east-1",
+                "1",
+                "Disabled",
+              ],
+              "key": "some-id",
+              "machinePool": Object {
+                "availability_zones": Array [
+                  "us-east-1",
+                ],
+                "desired": 1,
+                "id": "some-id",
+                "instance_type": "m5.xlarge",
+              },
+            },
+            Object {
+              "cells": Array [
+                "mp-with-labels-and-taints",
+                "m5.xlarge",
+                "us-east-1a",
+                "0",
+                "Disabled",
+              ],
+              "isOpen": false,
+              "key": "mp-with-labels-and-taints",
+              "machinePool": Object {
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-labels-and-taints",
+                "id": "mp-with-labels-and-taints",
+                "instance_type": "m5.xlarge",
+                "kind": "MachinePool",
+                "labels": Object {
+                  "foo": "bar",
+                },
+                "replicas": 0,
+                "taints": Array [
+                  Object {
+                    "effect": "NoSchedule",
+                    "key": "foo1",
+                    "value": "bazz1",
+                  },
+                  Object {
+                    "effect": "NoSchedule",
+                    "key": "foo2",
+                    "value": "bazz2",
+                  },
+                ],
+              },
+            },
+            Object {
+              "cells": Array [
+                Object {
+                  "title": <React.Fragment>
+                    <React.Fragment>
+                      <Title
+                        className="space-bottom-sm"
+                        headingLevel="h4"
+                      >
+                        Labels
+                      </Title>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          foo = bar
+                        </Label>
+                         
+                      </React.Fragment>
+                    </React.Fragment>
+                    <React.Fragment>
+                      <Title
+                        className="space-bottom-sm space-top-lg"
+                        headingLevel="h4"
+                      >
+                        Taints
+                      </Title>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          foo1 = bazz1:NoSchedule
+                        </Label>
+                         
+                      </React.Fragment>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          foo2 = bazz2:NoSchedule
+                        </Label>
+                         
+                      </React.Fragment>
+                    </React.Fragment>
+                  </React.Fragment>,
+                },
+              ],
+              "fullWidth": true,
+              "key": "mp-with-labels-and-taints-child",
+              "parent": 1,
+            },
+            Object {
+              "cells": Array [
+                "mp-with-label",
+                "m5.xlarge",
+                "us-east-1a",
+                "0",
+                "Disabled",
+              ],
+              "isOpen": false,
+              "key": "mp-with-label",
+              "machinePool": Object {
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-labels",
+                "id": "mp-with-label",
+                "instance_type": "m5.xlarge",
+                "kind": "MachinePool",
+                "labels": Object {
+                  "foo": "bar",
+                },
+                "replicas": 0,
+              },
+            },
+            Object {
+              "cells": Array [
+                Object {
+                  "title": <React.Fragment>
+                    <React.Fragment>
+                      <Title
+                        className="space-bottom-sm"
+                        headingLevel="h4"
+                      >
+                        Labels
+                      </Title>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          foo = bar
+                        </Label>
+                         
+                      </React.Fragment>
+                    </React.Fragment>
+                  </React.Fragment>,
+                },
+              ],
+              "fullWidth": true,
+              "key": "mp-with-label-child",
+              "parent": 3,
+            },
+            Object {
+              "cells": Array [
+                "mp-with-taints",
+                "m5.xlarge",
+                "us-east-1a",
+                "0",
+                "Disabled",
+              ],
+              "isOpen": false,
+              "key": "mp-with-taints",
+              "machinePool": Object {
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-taints",
+                "id": "mp-with-taints",
+                "instance_type": "m5.xlarge",
+                "kind": "MachinePool",
+                "replicas": 0,
+                "taints": Array [
+                  Object {
+                    "effect": "NoSchedule",
+                    "key": "foo1",
+                    "value": "bazz1",
+                  },
+                  Object {
+                    "effect": "NoSchedule",
+                    "key": "foo2",
+                    "value": "bazz2",
+                  },
+                ],
+              },
+            },
+            Object {
+              "cells": Array [
+                Object {
+                  "title": <React.Fragment>
+                    <React.Fragment>
+                      <Title
+                        className="space-bottom-sm"
+                        headingLevel="h4"
+                      >
+                        Taints
+                      </Title>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          foo1 = bazz1:NoSchedule
+                        </Label>
+                         
+                      </React.Fragment>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          foo2 = bazz2:NoSchedule
+                        </Label>
+                         
+                      </React.Fragment>
+                    </React.Fragment>
+                  </React.Fragment>,
+                },
+              ],
+              "fullWidth": true,
+              "key": "mp-with-taints-child",
+              "parent": 5,
+            },
+            Object {
+              "cells": Array [
+                "mp-with-no-labels-no-taints",
+                "m5.xlarge",
+                "us-east-1a",
+                "0",
+                "Disabled",
+              ],
+              "key": "mp-with-no-labels-no-taints",
+              "machinePool": Object {
+                "availability_zones": Array [
+                  "us-east-1a",
+                ],
+                "href": "/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-with-no-labels-no-taints",
+                "id": "mp-with-no-labels-no-taints",
+                "instance_type": "m5.xlarge",
+                "kind": "MachinePool",
+                "replicas": 0,
+              },
+            },
+          ]
+        }
+        selectVariant="checkbox"
+        variant={null}
+      >
+        <TableHeader />
+        <Component />
+      </Table>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`<MachinePools /> renders with the default machine pool 1`] = `
+<Fragment>
+  <Card
+    className="ocm-c-machine-pools__card"
+  >
+    <CardBody
+      className="ocm-c-machine-pools__card--body"
+    >
+      <Button
+        className="space-bottom-lg"
+        id="add-machine-pool"
+        isDisabled={false}
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Add machine pool
+      </Button>
+      <Divider />
+      <Table
+        actionResolver={[Function]}
+        areActionsDisabled={[Function]}
+        aria-label="Machine pools"
+        borders={true}
+        canSelectAll={true}
+        cells={
+          Array [
+            Object {
+              "cellFormatters": Array [
+                [Function],
+              ],
+              "title": "Machine pool",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Instance type",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Availability zones",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Node count",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Autoscaling",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+          ]
+        }
+        className=""
+        contentId="expanded-content"
+        dropdownDirection="down"
+        dropdownPosition="right"
+        expandId="expandable-toggle"
+        gridBreakPoint="grid-md"
+        isStickyHeader={false}
+        onCollapse={[Function]}
+        ouiaSafe={true}
+        role="grid"
+        rowLabeledBy="simple-node"
+        rows={
+          Array [
+            Object {
+              "cells": Array [
+                "some-id",
+                "m5.xlarge",
+                "us-east-1",
+                "1",
+                "Disabled",
+              ],
+              "key": "some-id",
+              "machinePool": Object {
+                "availability_zones": Array [
+                  "us-east-1",
+                ],
+                "desired": 1,
+                "id": "some-id",
+                "instance_type": "m5.xlarge",
+              },
+            },
+          ]
+        }
+        selectVariant="checkbox"
+        variant={null}
+      >
+        <TableHeader />
+        <Component />
+      </Table>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`<MachinePools /> renders with the default machine pool when it has labels 1`] = `
+<Fragment>
+  <Card
+    className="ocm-c-machine-pools__card"
+  >
+    <CardBody
+      className="ocm-c-machine-pools__card--body"
+    >
+      <Button
+        className="space-bottom-lg"
+        id="add-machine-pool"
+        isDisabled={false}
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Add machine pool
+      </Button>
+      <Divider />
+      <Table
+        actionResolver={[Function]}
+        areActionsDisabled={[Function]}
+        aria-label="Machine pools"
+        borders={true}
+        canSelectAll={true}
+        cells={
+          Array [
+            Object {
+              "cellFormatters": Array [
+                [Function],
+              ],
+              "title": "Machine pool",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Instance type",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Availability zones",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Node count",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+            Object {
+              "title": "Autoscaling",
+              "transforms": Array [
+                [Function],
+              ],
+            },
+          ]
+        }
+        className=""
+        contentId="expanded-content"
+        dropdownDirection="down"
+        dropdownPosition="right"
+        expandId="expandable-toggle"
+        gridBreakPoint="grid-md"
+        isStickyHeader={false}
+        onCollapse={[Function]}
+        ouiaSafe={true}
+        role="grid"
+        rowLabeledBy="simple-node"
+        rows={
+          Array [
+            Object {
+              "cells": Array [
+                "some-id",
+                "m5.xlarge",
+                "us-east-1",
+                "1",
+                "Disabled",
+              ],
+              "isOpen": false,
+              "key": "some-id",
+              "machinePool": Object {
+                "availability_zones": Array [
+                  "us-east-1",
+                ],
+                "desired": 1,
+                "id": "some-id",
+                "instance_type": "m5.xlarge",
+                "labels": Object {
+                  "foo": "bar",
+                  "hello": "world",
+                },
+              },
+            },
+            Object {
+              "cells": Array [
+                Object {
+                  "title": <React.Fragment>
+                    <React.Fragment>
+                      <Title
+                        className="space-bottom-sm"
+                        headingLevel="h4"
+                      >
+                        Labels
+                      </Title>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          foo = bar
+                        </Label>
+                         
+                      </React.Fragment>
+                      <React.Fragment>
+                        <Label
+                          color="blue"
+                        >
+                          hello = world
+                        </Label>
+                         
+                      </React.Fragment>
+                    </React.Fragment>
+                  </React.Fragment>,
+                },
+              ],
+              "fullWidth": true,
+              "key": "some-id-child",
+              "parent": 0,
+            },
+          ]
+        }
+        selectVariant="checkbox"
+        variant={null}
+      >
+        <TableHeader />
+        <Component />
+      </Table>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`<MachinePools /> should render skeleton while fetching machine pools 1`] = `
+<Fragment>
+  <Card>
+    <CardTitle>
+      <Skeleton
+        isDark={false}
+        size="lg"
+      />
+    </CardTitle>
+    <CardBody>
+      <Skeleton
+        isDark={false}
+        size="lg"
+      />
+    </CardBody>
+    <CardFooter>
+      <Skeleton
+        isDark={false}
+        size="lg"
+      />
+    </CardFooter>
+  </Card>
+</Fragment>
+`;

@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
       machinePoolRequest.autoscaling = {
         min_replicas: isMultiAz ? minNodes * 3 : minNodes,
-        max_replicas: isMultiAz ? maxNodes * 3 : minNodes,
+        max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
       };
     } else {
       machinePoolRequest.replicas = parseInt(formData.nodes_compute, 10);

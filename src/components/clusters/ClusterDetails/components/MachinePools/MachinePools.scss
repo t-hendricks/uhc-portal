@@ -10,21 +10,8 @@
   .pf-c-table__expandable-row-content .autoscale__lim {
     color: var(--pf-global--secondary-color--100);
   }
-}
-
-#autoscaling {
-  margin-top: var(--pf-global--spacer--md);
-
-  .autoscaling__nodes-formGroup, .autoscaling__nodes-formGroup > .pf-c-form__group-control{
-    >input {
-     width: 60px;
-     margin-right: var(--pf-global--spacer--sm);
-    }
-    >span {
-     margin-right: var(--pf-global--spacer--sm);
-    }
-  }
-  .autoscaling__container {
-    margin-top: var(--pf-global--spacer--md);
+  .nodes-count {
+    margin: 0;
+    padding: 0;
   }
 }

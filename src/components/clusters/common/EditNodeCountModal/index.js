@@ -59,7 +59,7 @@ const mapStateToProps = (state) => {
     machineTypes: state.machineTypes,
     cloudProviderID: get(cluster, 'cloud_provider.id', ''),
     isByoc: cluster?.ccs?.enabled,
-    product: cluster?.subscription?.plan?.id,
+    product: get(cluster, 'subscription.plan.id', ''),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     canAutoScale: canAutoScaleSelector(state, get(cluster, 'product.id', '')),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
@@ -68,9 +68,15 @@ const mapStateToProps = (state) => {
 
   let machinePoolWithAutoscale = false;
 
+  const getMinAndMaxNodesValues = autoscaleObj => ({
+    min_replicas: autoscaleObj.min_replicas?.toString(),
+    max_replicas: autoscaleObj.max_replicas?.toString(),
+  });
+
   // Cluster's default machine pool case
   if (selectedMachinePool === 'Default') {
-    machinePoolWithAutoscale = 'autoscale_compute' in get(cluster, 'nodes', {});
+    // eslint-disable-next-line camelcase
+    machinePoolWithAutoscale = cluster.nodes?.autoscale_compute;
 
     return ({
       ...commonProps,
@@ -78,10 +84,10 @@ const mapStateToProps = (state) => {
       machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
       machinePoolId: 'Default',
       initialValues: {
-        nodes_compute: get(cluster, 'nodes.compute', null),
+        nodes_compute: get(cluster, 'nodes.compute', null) || 4,
         machine_pool: 'Default',
         autoscalingEnabled: machinePoolWithAutoscale,
-        ...(machinePoolWithAutoscale && get(cluster, 'nodes.autoscale_compute')),
+        ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(cluster.nodes.autoscale_compute)),
       },
     });
   }
@@ -89,7 +95,7 @@ const mapStateToProps = (state) => {
   const selectedMachinePoolData = get(state, 'machinePools.getMachinePools.data', [])
     .find(machinePool => machinePool.id === selectedMachinePool) || {};
 
-  machinePoolWithAutoscale = 'autoscaling' in selectedMachinePoolData;
+  machinePoolWithAutoscale = selectedMachinePoolData.autoscaling;
 
   return ({
     ...commonProps,
@@ -100,7 +106,7 @@ const mapStateToProps = (state) => {
       nodes_compute: get(selectedMachinePoolData, 'replicas', null),
       machine_pool: selectedMachinePool,
       autoscalingEnabled: machinePoolWithAutoscale,
-      ...(machinePoolWithAutoscale && selectedMachinePoolData.autoscaling),
+      ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(selectedMachinePoolData.autoscaling)),
     },
   });
 };
@@ -117,7 +123,6 @@ const mapDispatchToProps = dispatch => ({
     if (formData.machine_pool === 'Default') {
       machinePoolRequest.nodes = formData.autoscalingEnabled
         ? { autoscale_compute: autoScaleLimits } : { compute: nodesCount };
-
       dispatch(editCluster(clusterID, machinePoolRequest));
     } else {
       if (formData.autoscalingEnabled) {

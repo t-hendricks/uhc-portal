@@ -130,7 +130,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
       clusterRequest.nodes.autoscale_compute = {
         min_replicas: isMultiAz ? minNodes * 3 : minNodes,
-        max_replicas: isMultiAz ? maxNodes * 3 : minNodes,
+        max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
       };
     } else {
       clusterRequest.nodes.compute = parseInt(formData.nodes_compute, 10);

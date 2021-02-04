@@ -20,7 +20,7 @@ import { constants } from '../../CreateOSDFormConstants';
 import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
 
-import AutoScaleSection from '../../../../ClusterDetails/components/MachinePools/components/AddMachinePoolModal/AutoScaleSection';
+import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 
 
 function ScaleSection({

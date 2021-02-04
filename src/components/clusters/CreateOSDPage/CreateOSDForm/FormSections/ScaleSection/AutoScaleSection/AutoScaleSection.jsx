@@ -6,13 +6,13 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import '../../MachinePools.scss';
+import './AutoScale.scss';
+import getMinNodesAllowed from './AutoScaleHelper';
 import ReduxCheckbox from '../../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../../common/PopoverHint';
-import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 import { validateNumericInput, required } from '../../../../../../../common/validators';
-import { constants } from '../../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+import { constants } from '../../../CreateOSDFormConstants';
 
 class NodesInput extends React.Component {
   componentDidUpdate() {
@@ -56,6 +56,17 @@ class AutoScaleSection extends React.Component {
     maxErrorMessage: undefined,
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      autoscalingEnabled, change, isDefaultMachinePool, product, isBYOC, isMultiAz,
+    } = this.props;
+    if (!prevProps.autoscalingEnabled && autoscalingEnabled) {
+      change('min_replicas', getMinNodesAllowed({
+        isDefaultMachinePool, product, isBYOC, isMultiAz,
+      }).toString());
+    }
+  }
+
   displayError = (lim, vaildationMessage) => this.setState({ [`${lim}ErrorMessage`]: vaildationMessage });
 
   hideError = lim => this.setState({ [`${lim}ErrorMessage`]: undefined });
@@ -64,19 +75,10 @@ class AutoScaleSection extends React.Component {
     const {
       isDefaultMachinePool, product, isBYOC, isMultiAz,
     } = this.props;
-    let minUserInput = 0;
-    if (isDefaultMachinePool) {
-      if (isBYOC || product === normalizedProducts.ROSA) {
-        // for mutliAz, the value will be multiplied by 3 on form submit.
-        minUserInput = isMultiAz ? 1 : 2;
-      } else {
-        minUserInput = isMultiAz ? 3 : 4;
-      }
-    } else {
-      // both for multiAz and singleAz, as multiAz is multiplied by 3
-      minUserInput = 1;
-    }
-    return validateNumericInput(val, { min: minUserInput });
+    const minNodesAllowed = getMinNodesAllowed({
+      val, isDefaultMachinePool, product, isBYOC, isMultiAz,
+    });
+    return validateNumericInput(val, { min: isMultiAz ? minNodesAllowed / 3 : minNodesAllowed });
   }
 
   validateMaxNodes = (val, allValues) => {
@@ -218,6 +220,7 @@ AutoScaleSection.propTypes = {
   product: PropTypes.string.isRequired,
   isBYOC: PropTypes.bool.isRequired,
   isDefaultMachinePool: PropTypes.bool.isRequired,
+  change: PropTypes.func.isRequired,
 };
 
 AutoScaleSection.defaultProps = {

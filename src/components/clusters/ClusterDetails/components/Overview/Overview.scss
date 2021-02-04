@@ -8,12 +8,15 @@
       dd button {
         margin-top: var(--pf-global--spacer--lg);
       }
-      dl.pf-l-stack dt {
+      dl.pf-l-stack dt, .autoscale-data-t {
         color: var(--pf-global--Color--400);
         font-size: var(--pf-global--FontSize--sm);
         font-weight: var(--pf-global--FontWeight--bold);
         margin-right: var(--pf-global--spacer--sm);
         text-transform: none;
+      }
+      .nodes-hint {
+        margin-left: var(--pf-global--spacer--sm);
       }
     }
   }
