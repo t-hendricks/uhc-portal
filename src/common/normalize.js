@@ -14,6 +14,7 @@ const normalizeProductID = (id) => {
   const map = {
     OCP: normalizedProducts.OCP,
     OSD: normalizedProducts.OSD,
+    OSDTRIAL: normalizedProducts.OSDTrial,
     RHMI: normalizedProducts.RHMI,
     MOA: normalizedProducts.ROSA,
     ROSA: normalizedProducts.ROSA,
