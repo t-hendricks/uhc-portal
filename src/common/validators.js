@@ -807,6 +807,20 @@ const validateUniqueAZ = (value, allValues, _, name) => {
   return undefined;
 };
 
+// Function to validate that the identity provider name field doesn't include whitespaces:
+const validateGCPSubnet = (value) => {
+  if (!value) {
+    return 'Field is required.';
+  }
+  if (/\s/.test(value)) {
+    return 'Name must not contain whitespaces.';
+  }
+  if (/[^a-z0-9-]/.test(value)) {
+    return 'Name should contain only lowercase alphabets, numbers and hyphens.';
+  }
+  return undefined;
+};
+
 const validators = {
   required,
   checkIdentityProviderName,
@@ -873,6 +887,7 @@ export {
   checkMachinePoolLabels,
   checkLabels,
   validateUniqueAZ,
+  validateGCPSubnet,
 };
 
 export default validators;

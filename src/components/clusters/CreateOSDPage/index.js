@@ -195,6 +195,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         clusterRequest.flavour = {
           id: 'osd-4',
         };
+        if (formData.network_configuration_toggle === 'advanced' && formData.install_to_vpc) {
+          clusterRequest.gcp_network = {
+            vpc_name: formData.vpc_name,
+            control_plane_subnet: formData.control_plane_subnet,
+            compute_subnet: formData.compute_subnet,
+          };
+        }
       }
     } else {
       // Don't pass LB and storage to byoc cluster.

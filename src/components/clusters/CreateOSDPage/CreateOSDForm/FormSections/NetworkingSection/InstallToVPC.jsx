@@ -9,8 +9,11 @@ import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckb
 import SubnetFields from './SubnetFields';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
+import GCPNetworkConfigSection from './GCPNetworkConfigSection';
 
-function InstallToVPC({ selectedRegion, isMultiAz, selected }) {
+function InstallToVPC({
+  selectedRegion, isMultiAz, selected, cloudProviderID,
+}) {
   return (
     <>
       <GridItem span={4}>
@@ -20,9 +23,10 @@ function InstallToVPC({ selectedRegion, isMultiAz, selected }) {
           label="Install into an existing VPC"
         />
       </GridItem>
+
       <GridItem span={8} />
       {
-          selected && (
+          selected && cloudProviderID === 'aws' && (
             <>
               <GridItem span={12}>
                 <Title headingLevel="h4" size="md">
@@ -49,6 +53,32 @@ function InstallToVPC({ selectedRegion, isMultiAz, selected }) {
             </>
           )
         }
+      {
+          selected && cloudProviderID === 'gcp' && (
+            <>
+              <GridItem span={12}>
+                <Title headingLevel="h4" size="md">
+                  Existing VPC
+                  <PopoverHint
+                    iconClassName="pf-u-ml-sm"
+                    hint={(
+                      <>
+                        {'Your VPC must have control plane and compute subnets. The control plane subnet is where you deploy your control plane machines to. The Compute subnet is where you deploy your commute machines to. '}
+                        {' '}
+                        <ExternalLink href="https://docs.openshift.com/container-platform/4.6/installing/installing_gcp/installing-gcp-vpc.html">Learn more about installing into an existing VPC</ExternalLink>
+                      </>
+                  )}
+                  />
+                </Title>
+                To install into an existing VPC you need to ensure that your VPC is configured
+                with a control plane subnet and compute subnet.
+              </GridItem>
+
+              <GCPNetworkConfigSection />
+
+            </>
+          )
+      }
     </>
   );
 }
@@ -57,6 +87,7 @@ InstallToVPC.propTypes = {
   selectedRegion: PropTypes.string,
   isMultiAz: PropTypes.bool,
   selected: PropTypes.bool,
+  cloudProviderID: PropTypes.string,
 };
 
 export default InstallToVPC;

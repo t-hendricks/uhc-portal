@@ -249,7 +249,7 @@ class CreateOSDForm extends React.Component {
           cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}
           selectedRegion={selectedRegion}
-          isAWSCCS={isAws && isBYOCForm}
+          isCCS={isBYOCForm}
           installToVPCSelected={installToVPCSelected}
         />
         {/* Encryption */}
