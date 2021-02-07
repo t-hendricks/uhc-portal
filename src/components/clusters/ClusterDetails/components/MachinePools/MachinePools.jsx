@@ -150,7 +150,7 @@ class MachinePools extends React.Component {
               bodyContent="Minimum and maximum node totals are calculated based on the number of zones."
               aria-label="help"
             >
-              <Button className="nodes-count" variant="link">{`Min: ${cluster.multi_az ? machinePool.autoscaling.min_replicas * 3 : machinePool.autoscaling.min_replicas}, Max: ${cluster.multi_az ? machinePool.autoscaling.max_replicas * 3 : machinePool.autoscaling.max_replicas}`}</Button>
+              <Button className="nodes-count" variant="link">{`Min: ${machinePool.autoscaling.min_replicas}, Max: ${machinePool.autoscaling.max_replicas}`}</Button>
             </Popover>
           </>
         )
@@ -197,12 +197,14 @@ class MachinePools extends React.Component {
           <Title headingLevel="h4" className="space-bottom-sm space-top-lg">Autoscaling</Title>
           <Split hasGutter>
             <SplitItem>
-              <Title headingLevel="h4" className="autoscale__lim">Min nodes</Title>
-              {machinePool.autoscaling.min_replicas}
+              <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${cluster.multi_az ? 'per zone' : ''}`}</Title>
+              {cluster.multi_az
+                ? machinePool.autoscaling.min_replicas / 3 : machinePool.autoscaling.min_replicas}
             </SplitItem>
             <SplitItem>
               <Title headingLevel="h4" className="autoscale__lim">Max nodes</Title>
-              {machinePool.autoscaling.max_replicas}
+              {cluster.multi_az
+                ? machinePool.autoscaling.max_replicas / 3 : machinePool.autoscaling.max_replicas}
             </SplitItem>
           </Split>
         </>

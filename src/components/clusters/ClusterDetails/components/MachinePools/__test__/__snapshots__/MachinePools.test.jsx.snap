@@ -79,7 +79,9 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
                 "some-id",
                 "m5.xlarge",
                 "us-east-1",
-                "1",
+                Object {
+                  "title": "1",
+                },
                 "Disabled",
               ],
               "key": "some-id",
@@ -97,7 +99,21 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
                 "mp-autoscaling",
                 "m5.xlarge",
                 "us-east-1a",
-                "Min: 1, Max: 2",
+                Object {
+                  "title": <React.Fragment>
+                    <Popover
+                      aria-label="help"
+                      bodyContent="Minimum and maximum node totals are calculated based on the number of zones."
+                    >
+                      <Button
+                        className="nodes-count"
+                        variant="link"
+                      >
+                        Min: 1, Max: 2
+                      </Button>
+                    </Popover>
+                  </React.Fragment>,
+                },
                 "Enabled",
               ],
               "isOpen": false,
@@ -177,7 +193,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
                     </React.Fragment>
                     <React.Fragment>
                       <Title
-                        className="space-bottom-sm"
+                        className="space-bottom-sm space-top-lg"
                         headingLevel="h4"
                       >
                         Autoscaling
@@ -190,7 +206,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
                             className="autoscale__lim"
                             headingLevel="h4"
                           >
-                            Min nodes
+                            Min nodes 
                           </Title>
                           1
                         </SplitItem>
@@ -304,7 +320,9 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "some-id",
                 "m5.xlarge",
                 "us-east-1",
-                "1",
+                Object {
+                  "title": "1",
+                },
                 "Disabled",
               ],
               "key": "some-id",
@@ -322,7 +340,9 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "mp-with-labels-and-taints",
                 "m5.xlarge",
                 "us-east-1a",
-                "0",
+                Object {
+                  "title": "1",
+                },
                 "Disabled",
               ],
               "isOpen": false,
@@ -338,7 +358,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "labels": Object {
                   "foo": "bar",
                 },
-                "replicas": 0,
+                "replicas": 1,
                 "taints": Array [
                   Object {
                     "effect": "NoSchedule",
@@ -409,7 +429,9 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "mp-with-label",
                 "m5.xlarge",
                 "us-east-1a",
-                "0",
+                Object {
+                  "title": "1",
+                },
                 "Disabled",
               ],
               "isOpen": false,
@@ -425,7 +447,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "labels": Object {
                   "foo": "bar",
                 },
-                "replicas": 0,
+                "replicas": 1,
               },
             },
             Object {
@@ -460,7 +482,9 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "mp-with-taints",
                 "m5.xlarge",
                 "us-east-1a",
-                "0",
+                Object {
+                  "title": "1",
+                },
                 "Disabled",
               ],
               "isOpen": false,
@@ -473,7 +497,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "id": "mp-with-taints",
                 "instance_type": "m5.xlarge",
                 "kind": "MachinePool",
-                "replicas": 0,
+                "replicas": 1,
                 "taints": Array [
                   Object {
                     "effect": "NoSchedule",
@@ -528,7 +552,9 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "mp-with-no-labels-no-taints",
                 "m5.xlarge",
                 "us-east-1a",
-                "0",
+                Object {
+                  "title": "1",
+                },
                 "Disabled",
               ],
               "key": "mp-with-no-labels-no-taints",
@@ -540,7 +566,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "id": "mp-with-no-labels-no-taints",
                 "instance_type": "m5.xlarge",
                 "kind": "MachinePool",
-                "replicas": 0,
+                "replicas": 1,
               },
             },
           ]
@@ -635,7 +661,9 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
                 "some-id",
                 "m5.xlarge",
                 "us-east-1",
-                "1",
+                Object {
+                  "title": "1",
+                },
                 "Disabled",
               ],
               "key": "some-id",
@@ -740,7 +768,9 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
                 "some-id",
                 "m5.xlarge",
                 "us-east-1",
-                "1",
+                Object {
+                  "title": "1",
+                },
                 "Disabled",
               ],
               "isOpen": false,
