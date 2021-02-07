@@ -184,10 +184,10 @@ UpgradeWizard.propTypes = {
         id: PropTypes.string,
       }),
       openshift_version: PropTypes.string,
-      version: {
+      version: PropTypes.shape({
         channel_group: PropTypes.string,
         available_upgrades: PropTypes.arrayOf(PropTypes.string),
-      },
+      }),
     }),
   }),
 };
