@@ -23,7 +23,6 @@ const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
   return {
     cluster,
-    versionInfo: state.clusterUpgrades.versionInfo,
     isAutomatic: valueSelector(state, 'upgrade_policy') === 'automatic',
     schedules: state.clusterUpgrades.schedules,
     upgradeScheduleRequest: state.clusterUpgrades.postedUpgradeSchedule,

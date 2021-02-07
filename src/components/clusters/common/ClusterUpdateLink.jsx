@@ -10,9 +10,12 @@ import modals from '../../common/Modal/modals';
 const ClusterUpdateLink = ({
   cluster,
   openModal,
-  osdUpgradeAvailable,
+  hideOSDUpdates,
 }) => {
   const { upgrade } = cluster.metrics;
+  // eslint-disable-next-line camelcase
+  const osdUpgradeAvailable = cluster.managed && cluster.version?.available_upgrades?.length > 0
+                              && cluster.openshift_version && !hideOSDUpdates;
 
   // Show which version the cluster is currently updating to
   if (upgrade.state === 'running' && upgrade.version && (cluster.openshift_version !== upgrade.version)) {
@@ -40,9 +43,7 @@ const ClusterUpdateLink = ({
         onClick={() => openModal(modals.UPGRADE_WIZARD,
           {
             clusterName: getClusterName(cluster),
-            clusterVersion: cluster.openshift_version,
-            clusterChannel: cluster.version.channel_group,
-            clusterID: cluster.id,
+            subscriptionID: cluster.subscription.id,
           })}
         icon={<OutlinedArrowAltCircleUpIcon />}
       >
@@ -88,7 +89,7 @@ const ClusterUpdateLink = ({
 ClusterUpdateLink.propTypes = {
   cluster: PropTypes.object.isRequired,
   openModal: PropTypes.func,
-  osdUpgradeAvailable: PropTypes.bool,
+  hideOSDUpdates: PropTypes.bool,
 };
 
 export default ClusterUpdateLink;

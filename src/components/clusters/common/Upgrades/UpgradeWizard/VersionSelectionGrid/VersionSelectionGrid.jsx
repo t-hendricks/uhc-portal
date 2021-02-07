@@ -6,26 +6,14 @@ import {
   Title,
   Divider,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
 import last from 'lodash/last';
-import ErrorBox from '../../../../../common/ErrorBox';
-import { versionRegEx } from '../../clusterUpgardeHelpers';
+import { versionRegEx } from '../../../../../../common/versionComparator';
 import VersionCard from './VersionCard';
 
 class VersionSelectionGrid extends React.Component {
   componentDidMount() {
-    this.fetchVersionInfoIfNeeded();
     this.selectDefault();
   }
-
-  componentDidUpdate(prevProps) {
-    const { clusterVersion } = this.props;
-    if (prevProps.clusterVersion !== clusterVersion) {
-      this.fetchVersionInfoIfNeeded();
-    }
-    this.selectDefault();
-  }
-
 
   onKeyDown = (event) => {
     if (event.target !== event.currentTarget) {
@@ -43,21 +31,10 @@ class VersionSelectionGrid extends React.Component {
   };
 
   selectDefault() {
-    const { versionInfo, selected, onSelect } = this.props;
-    if (versionInfo.fulfilled && versionInfo.availableUpgrades.length === 1 && !selected) {
+    const { availableUpgrades, selected, onSelect } = this.props;
+    if (availableUpgrades.length === 1 && !selected) {
       // select the version if there's only one available
-      onSelect(versionInfo.availableUpgrades[0]);
-    }
-  }
-
-  fetchVersionInfoIfNeeded() {
-    const {
-      clusterVersion, clusterChannel, getVersion, versionInfo,
-    } = this.props;
-    if ((!versionInfo.fulfilled || versionInfo.version !== clusterVersion
-         || versionInfo.channelGroup !== clusterChannel)
-        && !versionInfo.pending) {
-      getVersion(clusterVersion, clusterChannel);
+      onSelect(availableUpgrades[0]);
     }
   }
 
@@ -105,15 +82,8 @@ class VersionSelectionGrid extends React.Component {
   }
 
   render() {
-    const { versionInfo, clusterVersion, selected } = this.props;
-    if (versionInfo.error && !versionInfo.pending) {
-      return <ErrorBox message="Error loading version info" response={versionInfo} />;
-    }
-    if (!versionInfo.fulfilled || versionInfo.pending || clusterVersion !== versionInfo.version) {
-      return <Spinner centered />;
-    }
+    const { availableUpgrades, clusterVersion, selected } = this.props;
 
-    const { availableUpgrades } = versionInfo;
     const latestVersion = last(availableUpgrades);
     const clusterVersionParts = versionRegEx.exec(clusterVersion).groups;
     const versionsInCurrMinor = availableUpgrades.filter((v) => {
@@ -162,16 +132,7 @@ class VersionSelectionGrid extends React.Component {
 
 VersionSelectionGrid.propTypes = {
   clusterVersion: PropTypes.string.isRequired,
-  clusterChannel: PropTypes.string.isRequired,
-  getVersion: PropTypes.func.isRequired,
-  versionInfo: PropTypes.shape({
-    fulfilled: PropTypes.bool,
-    pending: PropTypes.bool,
-    error: PropTypes.bool,
-    version: PropTypes.string,
-    channelGroup: PropTypes.string,
-    availableUpgrades: PropTypes.arrayOf(PropTypes.string),
-  }).isRequired,
+  availableUpgrades: PropTypes.arrayOf(PropTypes.string),
   onSelect: PropTypes.func.isRequired,
   selected: PropTypes.string,
 };

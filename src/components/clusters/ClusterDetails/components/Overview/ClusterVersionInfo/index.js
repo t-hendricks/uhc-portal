@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getVersion, getSchedules } from '../../../../common/Upgrades/clusterUpgradeActions';
+import { getSchedules } from '../../../../common/Upgrades/clusterUpgradeActions';
 import { openModal } from '../../../../../common/Modal/ModalActions';
 
 import ClusterVersionInfo from './ClusterVersionInfo';
@@ -11,7 +11,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getVersion: (version, channel) => dispatch(getVersion(version, channel)),
   getSchedules: clusterID => dispatch(getSchedules(clusterID)),
   // explicit dispatching is annoying, but is a must when using openModal
   // TODO fix openModal so explicit dispatching won't be necessary, like all other actions
