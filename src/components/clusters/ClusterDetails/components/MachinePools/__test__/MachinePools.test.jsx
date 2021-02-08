@@ -71,7 +71,7 @@ describe('<MachinePools />', () => {
             instance_type: 'm5.xlarge',
             kind: 'MachinePool',
             labels: { foo: 'bar' },
-            replicas: 0,
+            replicas: 1,
             taints: [
               { key: 'foo1', value: 'bazz1', effect: 'NoSchedule' },
               { key: 'foo2', value: 'bazz2', effect: 'NoSchedule' },
@@ -84,7 +84,7 @@ describe('<MachinePools />', () => {
             instance_type: 'm5.xlarge',
             kind: 'MachinePool',
             labels: { foo: 'bar' },
-            replicas: 0,
+            replicas: 1,
           },
           {
             availability_zones: ['us-east-1a'],
@@ -92,7 +92,7 @@ describe('<MachinePools />', () => {
             id: 'mp-with-taints',
             instance_type: 'm5.xlarge',
             kind: 'MachinePool',
-            replicas: 0,
+            replicas: 1,
             taints: [
               { key: 'foo1', value: 'bazz1', effect: 'NoSchedule' },
               { key: 'foo2', value: 'bazz2', effect: 'NoSchedule' },
@@ -104,7 +104,7 @@ describe('<MachinePools />', () => {
             id: 'mp-with-no-labels-no-taints',
             instance_type: 'm5.xlarge',
             kind: 'MachinePool',
-            replicas: 0,
+            replicas: 1,
           },
         ],
       },

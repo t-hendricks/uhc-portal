@@ -73,7 +73,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "some-id",
                 "m5.xlarge",
                 "us-east-1",
-                "1",
+                1,
               ],
               "key": "some-id",
               "machinePool": Object {
@@ -90,7 +90,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "mp-with-labels-and-taints",
                 "m5.xlarge",
                 "us-east-1a",
-                "0",
+                1,
               ],
               "isOpen": false,
               "key": "mp-with-labels-and-taints",
@@ -105,7 +105,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "labels": Object {
                   "foo": "bar",
                 },
-                "replicas": 0,
+                "replicas": 1,
                 "taints": Array [
                   Object {
                     "effect": "NoSchedule",
@@ -176,7 +176,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "mp-with-label",
                 "m5.xlarge",
                 "us-east-1a",
-                "0",
+                1,
               ],
               "isOpen": false,
               "key": "mp-with-label",
@@ -191,7 +191,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "labels": Object {
                   "foo": "bar",
                 },
-                "replicas": 0,
+                "replicas": 1,
               },
             },
             Object {
@@ -226,7 +226,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "mp-with-taints",
                 "m5.xlarge",
                 "us-east-1a",
-                "0",
+                1,
               ],
               "isOpen": false,
               "key": "mp-with-taints",
@@ -238,7 +238,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "id": "mp-with-taints",
                 "instance_type": "m5.xlarge",
                 "kind": "MachinePool",
-                "replicas": 0,
+                "replicas": 1,
                 "taints": Array [
                   Object {
                     "effect": "NoSchedule",
@@ -293,7 +293,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "mp-with-no-labels-no-taints",
                 "m5.xlarge",
                 "us-east-1a",
-                "0",
+                1,
               ],
               "key": "mp-with-no-labels-no-taints",
               "machinePool": Object {
@@ -304,7 +304,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                 "id": "mp-with-no-labels-no-taints",
                 "instance_type": "m5.xlarge",
                 "kind": "MachinePool",
-                "replicas": 0,
+                "replicas": 1,
               },
             },
           ]
@@ -393,7 +393,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
                 "some-id",
                 "m5.xlarge",
                 "us-east-1",
-                "1",
+                1,
               ],
               "key": "some-id",
               "machinePool": Object {
@@ -491,7 +491,7 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
                 "some-id",
                 "m5.xlarge",
                 "us-east-1",
-                "1",
+                1,
               ],
               "isOpen": false,
               "key": "some-id",
