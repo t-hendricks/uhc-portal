@@ -29,7 +29,7 @@ class AddOnsParametersModal extends Component {
 
   validationsForParameterField = (param) => {
     const validations = [];
-    if (param.required) {
+    if (param.required && param.value_type !== 'boolean') {
       validations.push(required);
     }
     if (param.value_type === 'number') {

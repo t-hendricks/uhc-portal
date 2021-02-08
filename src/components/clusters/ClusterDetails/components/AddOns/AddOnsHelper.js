@@ -86,15 +86,15 @@ const getParameterValue = (addOnInstallation, paramID) => {
 const parameterValuesForEditing = (addOnInstallation, addOn) => {
   const vals = { parameters: {} };
   if (hasParameters(addOn)) {
-    vals.parameters = Object.entries(addOn.parameters.items).reduce((acc, curr) => {
-      let paramValue = getParameterValue(addOnInstallation, curr[1].id);
-      if (curr[1].value_type === 'boolean') {
+    vals.parameters = Object.values(addOn.parameters.items).reduce((acc, curr) => {
+      let paramValue = getParameterValue(addOnInstallation, curr.id);
+      if (curr.value_type === 'boolean') {
         // Ensure existing boolean value is returned as a boolean, and always return false otherwise
         paramValue = paramValue === 'true';
       }
       if (paramValue !== undefined) {
         // eslint-disable-next-line no-param-reassign
-        acc[curr[1].id] = paramValue;
+        acc[curr.id] = paramValue;
       }
       return acc;
     }, {});
