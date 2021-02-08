@@ -8,6 +8,7 @@ const enabledRegions = [{ id: 'us-east-1', display_name: 'N. Virginia', enabled:
 describe('<CloudRegionComboBox />', () => {
   describe('when region list needs to be fetched', () => {
     let onChange;
+    let handleCloudRegionChange;
     let wrapper;
     beforeAll(() => {
       const state = {
@@ -19,12 +20,14 @@ describe('<CloudRegionComboBox />', () => {
       };
 
       onChange = jest.fn();
+      handleCloudRegionChange = jest.fn();
       wrapper = mount(
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
           enabledRegions={enabledRegions}
+          handleCloudRegionChange={handleCloudRegionChange}
           disabled={false}
         />,
       );
@@ -37,6 +40,7 @@ describe('<CloudRegionComboBox />', () => {
 
   describe('when there was an error', () => {
     let onChange;
+    let handleCloudRegionChange;
     let wrapper;
     beforeAll(() => {
       const state = {
@@ -48,12 +52,14 @@ describe('<CloudRegionComboBox />', () => {
       };
 
       onChange = jest.fn();
+      handleCloudRegionChange = jest.fn();
       wrapper = mount(
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
           enabledRegions={enabledRegions}
+          handleCloudRegionChange={handleCloudRegionChange}
           disabled={false}
         />,
       );
@@ -66,6 +72,7 @@ describe('<CloudRegionComboBox />', () => {
 
   describe('when the request is pending', () => {
     let onChange;
+    let handleCloudRegionChange;
     let wrapper;
     const state = {
       error: false,
@@ -76,12 +83,14 @@ describe('<CloudRegionComboBox />', () => {
     };
     beforeAll(() => {
       onChange = jest.fn();
+      handleCloudRegionChange = jest.fn();
       wrapper = mount(
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
           enabledRegions={enabledRegions}
+          handleCloudRegionChange={handleCloudRegionChange}
           disabled={false}
         />,
       );
@@ -94,6 +103,7 @@ describe('<CloudRegionComboBox />', () => {
 
   describe('when the region list is available', () => {
     let onChange;
+    let handleCloudRegionChange;
     let wrapper;
     beforeAll(() => {
       const state = {
@@ -112,12 +122,14 @@ describe('<CloudRegionComboBox />', () => {
       };
 
       onChange = jest.fn();
+      handleCloudRegionChange = jest.fn();
       wrapper = mount(
         <DisconnectedCloudRegionComboBox
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
           enabledRegions={enabledRegions}
+          handleCloudRegionChange={handleCloudRegionChange}
           disabled={false}
         />,
       );
@@ -129,6 +141,14 @@ describe('<CloudRegionComboBox />', () => {
 
     it('renders only enabled regions', () => {
       expect(wrapper.find('FormSelectOption').children()).toHaveLength(1);
+    });
+
+
+    it('should call handleCloudRegionChange on selection', () => {
+      wrapper.find('.cloud-region-combo-box').at(0).simulate('change', {
+        target: { value: enabledRegions[0].id, selectedIndex: 0 },
+      });
+      expect(handleCloudRegionChange).toBeCalled();
     });
   });
 });

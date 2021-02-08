@@ -21,6 +21,7 @@ import { required, validateGCPServiceAccount } from '../../../../common/validato
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
 import ReduxCheckbox from '../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../common/ExternalLink';
+import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from './FormSections/NetworkingSection/AvailabilityZoneSelection';
 
 import './CreateOSDForm.scss';
 
@@ -65,6 +66,18 @@ class CreateOSDForm extends React.Component {
     this.setState({ isMultiAz });
     change('nodes_compute', computeNodes);
   };
+
+  handleCloudRegionChange = () => {
+    // Move the az selection form
+    // to its default value once the cloudRegion selection
+    // changes to avoid incorrect zone.
+    const { change } = this.props;
+    const { isMultiAz } = this.state;
+    const azCount = isMultiAz ? 3 : 1;
+    for (let i = 0; i < azCount; i += 1) {
+      change(`az_${i}`, AVAILABILITY_ZONE_PLACEHOLDER);
+    }
+  }
 
 
   handleMachineTypesChange = (_, value) => {
@@ -219,6 +232,7 @@ class CreateOSDForm extends React.Component {
           cloudProviderID={cloudProviderID}
           quota={clustersQuota[cloudProviderID][infraType]}
           handleMultiAZChange={this.handleMultiAZChange}
+          handleCloudRegionChange={this.handleCloudRegionChange}
           isMultiAz={isMultiAz}
         />
 

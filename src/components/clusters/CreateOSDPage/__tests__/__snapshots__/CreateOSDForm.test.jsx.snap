@@ -30,6 +30,7 @@ exports[`CreateOSDForm; should render 1`] = `
   <BasicFieldsSection
     change={[MockFunction]}
     cloudProviderID="aws"
+    handleCloudRegionChange={[Function]}
     handleMultiAZChange={[Function]}
     isBYOC={false}
     isMultiAz={false}
