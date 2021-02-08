@@ -7,20 +7,32 @@ import {
   TabTitleIcon,
   PageSection,
 } from '@patternfly/react-core';
+
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
+
 import './CreateClusterPage.scss';
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../common/Breadcrumbs';
 import { shouldRefetchQuota } from '../../../common/helpers';
 import DatacenterTab from './DatacenterTab';
 import CloudTab from './CloudTab';
-import SandboxTab from './SandboxTab';
+import LocalTab from './LocalTab';
 
+const hashToTabIndex = {
+  cloud: 0,
+  datacenter: 1,
+  local: 2,
+};
+
+const tabIndexToHash = Object.entries(hashToTabIndex).reduce((acc, tabIndex) => {
+  const [key, value] = tabIndex;
+  // eslint-disable-next-line no-param-reassign
+  acc[value] = key;
+  return acc;
+}, {});
 
 class CreateCluster extends React.Component {
-  state = { activeTabKey: 0 };
-
   componentDidMount() {
     // Try to get quota or organization when the component is first mounted.
     const { getOrganizationAndQuota, organization, getAuthToken } = this.props;
@@ -33,16 +45,18 @@ class CreateCluster extends React.Component {
   }
 
     handleTabClick = (event, tabIndex) => {
-      this.setState({
-        activeTabKey: tabIndex,
-      });
+      const { history } = this.props;
+      const tabHash = tabIndexToHash[tabIndex];
+      history.push(`/create/${tabHash}`);
     };
+
 
     render() {
       const {
-        hasOSDQuota, organization, token, assistedInstallerFeature,
+        hasOSDQuota, organization, token, assistedInstallerFeature, activeTab,
       } = this.props;
-      const { activeTabKey } = this.state;
+
+      const activeTabIndex = hashToTabIndex[activeTab] || 0;
 
       const title = (
         <PageTitle
@@ -88,7 +102,7 @@ class CreateCluster extends React.Component {
                   <LaptopIcon />
                 </TabTitleIcon>
                 <TabTitleText>
-                  Sandbox
+                  Local
                 </TabTitleText>
               </>
             );
@@ -103,7 +117,7 @@ class CreateCluster extends React.Component {
         <>
           {title}
           <PageSection variant="light" className="cluster-create-page">
-            <Tabs isFilled activeKey={activeTabKey} onSelect={this.handleTabClick}>
+            <Tabs isFilled activeKey={activeTabIndex} onSelect={this.handleTabClick}>
               <Tab eventKey={0} title={tabTitle(0)}>
                 <CloudTab hasOSDQuota={hasOSDQuota} />
               </Tab>
@@ -111,7 +125,7 @@ class CreateCluster extends React.Component {
                 <DatacenterTab assistedInstallerFeature={assistedInstallerFeature} />
               </Tab>
               <Tab eventKey={2} title={tabTitle(2)}>
-                <SandboxTab token={token} />
+                <LocalTab token={token} />
               </Tab>
             </Tabs>
           </PageSection>
@@ -137,6 +151,10 @@ CreateCluster.propTypes = {
   token: PropTypes.object.isRequired,
   getAuthToken: PropTypes.func.isRequired,
   assistedInstallerFeature: PropTypes.bool,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  activeTab: PropTypes.string,
 };
 
 export default CreateCluster;
