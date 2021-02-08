@@ -150,10 +150,12 @@ export const mockClusterAddOnsParams = {
       },
       state: 'ready',
       parameters: {
-        items: [{
-          id: 'cidr-range',
-          value: '10.1.0.0/16',
-        }],
+        items: [
+          {
+            id: 'cidr-range',
+            value: '10.1.0.0/16',
+          },
+        ],
       },
     },
     {

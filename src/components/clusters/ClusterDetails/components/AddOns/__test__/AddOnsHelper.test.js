@@ -158,4 +158,22 @@ describe('parameterValuesForEditing', () => {
     const param = parameterValuesForEditing(mockClusterAddOnsParams.items[2], mockAddOns.items[1]);
     expect(param).toEqual({ parameters: { 'cidr-range': '10.1.0.0/16' } });
   });
+  it('should return false for boolean addon param with no installation param value', () => {
+    const mockAddOnsParams = { parameters: { items: [{ id: 'my-bool', value_type: 'boolean' }] } };
+    const mockAddOnsInstallParams = {};
+    const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
+    expect(param).toEqual({ parameters: { 'my-bool': false } });
+  });
+  it('should return true for boolean addon param with installation param value of "true"', () => {
+    const mockAddOnsParams = { parameters: { items: [{ id: 'my-bool', value_type: 'boolean' }] } };
+    const mockAddOnsInstallParams = { parameters: { items: [{ id: 'my-bool', value: 'true' }] } };
+    const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
+    expect(param).toEqual({ parameters: { 'my-bool': true } });
+  });
+  it('should return false for boolean addon param with installation param value of "false"', () => {
+    const mockAddOnsParams = { parameters: { items: [{ id: 'my-bool', value_type: 'boolean' }] } };
+    const mockAddOnsInstallParams = { parameters: { items: [{ id: 'my-bool', value: 'false' }] } };
+    const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
+    expect(param).toEqual({ parameters: { 'my-bool': false } });
+  });
 });

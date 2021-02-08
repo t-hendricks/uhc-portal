@@ -75,13 +75,26 @@ const getParameter = (addOn, paramID) => {
   return undefined;
 };
 
+const getParameterValue = (addOnInstallation, paramID) => {
+  const param = getParameter(addOnInstallation, paramID);
+  if (param) {
+    return param.value;
+  }
+  return undefined;
+};
+
 const parameterValuesForEditing = (addOnInstallation, addOn) => {
   const vals = { parameters: {} };
-  if (hasParameters(addOnInstallation) && hasParameters(addOn)) {
-    vals.parameters = Object.entries(addOnInstallation.parameters.items).reduce((acc, curr) => {
-      if (getParameter(addOn, curr[1].id)) {
+  if (hasParameters(addOn)) {
+    vals.parameters = Object.entries(addOn.parameters.items).reduce((acc, curr) => {
+      let paramValue = getParameterValue(addOnInstallation, curr[1].id);
+      if (curr[1].value_type === 'boolean') {
+        // Ensure existing boolean value is returned as a boolean, and always return false otherwise
+        paramValue = paramValue === 'true';
+      }
+      if (paramValue !== undefined) {
         // eslint-disable-next-line no-param-reassign
-        acc[curr[1].id] = curr[1].value;
+        acc[curr[1].id] = paramValue;
       }
       return acc;
     }, {});
