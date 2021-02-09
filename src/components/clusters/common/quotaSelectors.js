@@ -2,35 +2,35 @@ import get from 'lodash/get';
 
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
-const hasAwsQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.aws.isAvailable', false);
-const hasGcpQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.gcp.isAvailable', false);
-const hasOSDQuotaSelector = state => hasAwsQuotaSelector(state) || hasGcpQuotaSelector(state);
+const hasAwsQuotaSelector = (state, product) => (
+  // ROSA has zero cost (as far as Red Hat is concerned, billed by Amazon).
+  // TODO don't hardcode, look up by product (https://issues.redhat.com/browse/SDA-3231).
+  product === normalizedProducts.ROSA ? true
+    : get(
+      state.userProfile.organization.quotaList,
+      ['clustersQuota', product, 'aws', 'isAvailable'],
+      false,
+    )
+);
+const hasGcpQuotaSelector = (state, product) => (
+  get(
+    state.userProfile.organization.quotaList,
+    ['clustersQuota', product, 'gcp', 'isAvailable'],
+    false,
+  )
+);
+const hasManagedQuotaSelector = (state, product) => (
+  hasAwsQuotaSelector(state, product) || hasGcpQuotaSelector(state, product)
+);
 
-const awsQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.aws', {
-  byoc: {
-    singleAz: {},
-    multiAz: {},
-    totalAvailable: 0,
-  },
-  rhInfra: {
-    singleAz: {},
-    multiAz: {},
-    totalAvailable: 0,
-  },
-});
+// TODO: special-case ROSA?
+const awsQuotaSelector = (state, product) => (
+  get(state.userProfile.organization.quotaList, ['clustersQuota', product, 'aws'])
+);
 
-const gcpQuotaSelector = state => get(state, 'userProfile.organization.quotaList.clustersQuota.gcp', {
-  byoc: {
-    singleAz: {},
-    multiAz: {},
-    totalAvailable: 0,
-  },
-  rhInfra: {
-    singleAz: {},
-    multiAz: {},
-    totalAvailable: 0,
-  },
-});
+const gcpQuotaSelector = (state, product) => (
+  get(state.userProfile.organization.quotaList, ['clustersQuota', product, 'gcp'])
+);
 
 /**
  * Returns number of clusters of specific type that can be created/added, from 0 to `Infinity`.
@@ -56,7 +56,7 @@ const availableClustersFromQuota = (
   const infra = isBYOC ? 'byoc' : 'rhInfra';
   const zoneType = isMultiAz ? 'multiAz' : 'singleAz';
 
-  return get(quotaList.clustersQuota, [cloudProviderID, infra, zoneType, resourceName], 0);
+  return get(quotaList.clustersQuota, [product, cloudProviderID, infra, zoneType, resourceName], 0);
 };
 
 /**
@@ -75,12 +75,12 @@ const availableNodesFromQuota = (
   },
 ) => {
   const infra = isBYOC ? 'byoc' : 'rhInfra';
-  const available = get(quotaList.nodesQuota, [cloudProviderID, infra, resourceName, 'available'], 0);
-
+  const data = get(quotaList.nodesQuota, [product, cloudProviderID, infra, resourceName], {});
+  const available = get(data, 'available', 0);
   // ROSA has zero cost (as far as Red Hat is concerned, billed by Amazon).
   // TODO don't hardcode, look up by product (https://issues.redhat.com/browse/SDA-3231).
   const cost = (product === normalizedProducts.ROSA) ? 0
-    : get(quotaList.nodesQuota, [cloudProviderID, infra, resourceName, 'cost'], Infinity);
+    : get(data, 'cost', Infinity);
 
   if (cost === 0) {
     return Infinity;
@@ -90,7 +90,7 @@ const availableNodesFromQuota = (
 };
 
 export {
-  hasOSDQuotaSelector,
+  hasManagedQuotaSelector,
   hasAwsQuotaSelector,
   hasGcpQuotaSelector,
   awsQuotaSelector,

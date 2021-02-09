@@ -858,6 +858,7 @@ export {
   validateRHITUsername,
   checkClusterConsoleURL,
   checkOpenIDIssuer,
+  validateNumericInput,
   checkGithubTeams,
   checkRouteSelectors,
   checkDisconnectedConsoleURL,

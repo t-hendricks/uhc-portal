@@ -97,9 +97,7 @@ exports[`<ArchivedClusterList /> ArchivedClusterList should render 1`] = `
                 "last_telemetry_date": "0001-01-01T00:00:00Z",
                 "organization_id": "1HAIjRf0KAoWykFD2gexUhfngd0",
                 "plan": Object {
-                  "href": "/api/accounts_mgmt/v1/plans/OCP",
                   "id": "OCP",
-                  "kind": "Plan",
                 },
                 "subscription": Object {
                   "id": "1HAtdkNPWql68fuOI7Kvuyk4OTp",

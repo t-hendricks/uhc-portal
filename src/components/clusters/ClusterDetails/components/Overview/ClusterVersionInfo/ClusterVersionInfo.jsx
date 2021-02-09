@@ -20,44 +20,25 @@ class ClusterVersionInfo extends React.Component {
   componentDidMount() {
     const { cluster, getSchedules } = this.props;
     if (cluster && cluster.id && cluster.managed) {
-      if (cluster.openshift_version) {
-        this.fetchVersionInfoIfNeeded();
-      }
       getSchedules(cluster.id);
     }
   }
 
   componentDidUpdate(prevProps) {
     const { cluster, getSchedules } = this.props;
-    if (prevProps.cluster.openshift_version !== cluster.openshift_version) {
-      this.fetchVersionInfoIfNeeded();
-    }
     if (prevProps.cluster.id !== cluster.id && cluster.managed) {
       getSchedules(cluster.id);
     }
   }
 
-  fetchVersionInfoIfNeeded() {
-    const { cluster, getVersion, versionInfo } = this.props;
-    if ((!versionInfo.fulfilled
-          || versionInfo.version !== cluster.openshift_version
-          || versionInfo.channelGroup !== cluster.version.channel_group)
-        && !versionInfo.pending && cluster.openshift_version && cluster.managed) {
-      getVersion(cluster.openshift_version, cluster.version.channel_group);
-    }
-  }
-
   render() {
     const {
-      cluster, versionInfo, openModal, schedules,
+      cluster, openModal, schedules,
     } = this.props;
     const { popoverOpen } = this.state;
     const clusterVersion = cluster.openshift_version || 'N/A';
     const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
     const channel = get(cluster, 'metrics.channel');
-    const hasUpgrades = versionInfo.version === cluster.openshift_version
-                        && versionInfo.availableUpgrades.length > 0
-                        && cluster.managed;
 
     const scheduledUpdate = schedules.items.find(
       schedule => schedule.version !== cluster.openshift_version,
@@ -76,7 +57,7 @@ class ClusterVersionInfo extends React.Component {
               <ClusterUpdateLink
                 cluster={cluster}
                 openModal={openModal}
-                osdUpgradeAvailable={hasUpgrades && !scheduledUpdate && schedules.fulfilled}
+                hideOSDUpdates={!!scheduledUpdate}
               />
             </dd>
           </Flex>
@@ -97,7 +78,8 @@ class ClusterVersionInfo extends React.Component {
                         clusterVersion={cluster.openshift_version}
                         scheduledUpgrade={scheduledUpdate}
                         openModal={openModal}
-                        availableUpgrades={versionInfo.availableUpgrades}
+                        // eslint-disable-next-line camelcase
+                        availableUpgrades={cluster.version?.available_upgrades}
                         onCancelClick={() => this.setState({ popoverOpen: false })}
                       />
                     )}
@@ -160,8 +142,6 @@ ClusterVersionInfo.propTypes = {
     error: PropTypes.bool,
     items: PropTypes.array,
   }).isRequired,
-
-  getVersion: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
   getSchedules: PropTypes.func.isRequired,
 };

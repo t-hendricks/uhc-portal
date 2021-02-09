@@ -76,17 +76,26 @@ const subscriptionStatuses = {
 };
 
 /**
+ * Possible results of normalizeProductID() that are actual products.
+ * See `normalizedProducts` for the other possible results.
+ * @enum string
+ */
+const knownProducts = {
+  OSD: 'OSD',
+  OSDTrial: 'OSDTrial',
+  OCP: 'OCP',
+  RHMI: 'RHMI',
+  ROSA: 'ROSA',
+};
+
+/**
  * cluster.product.id, subscription.plan.id, quota_cost.related_resources[].product
  * use related but different values (see https://issues.redhat.com/browse/SDB-1625).
  * They should all be passed through normalizeProductID(), should result in one of the values here.
  * @enum string
  */
 const normalizedProducts = {
-  OSD: 'OSD',
-  OSDTrial: 'OSDTrial',
-  OCP: 'OCP',
-  RHMI: 'RHMI',
-  ROSA: 'ROSA',
+  ...knownProducts,
   ANY: 'ANY', // used in quota_cost
   UNKNOWN: 'UNKNOWN', // normally should not happen except during loading
 };
@@ -111,6 +120,7 @@ export {
   subscriptionUsages,
   subscriptionProductBundles,
   subscriptionSystemUnits,
+  knownProducts,
   normalizedProducts,
   productFilterOptions,
 };

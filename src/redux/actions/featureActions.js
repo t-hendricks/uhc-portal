@@ -2,6 +2,7 @@ import {
   SET_FEATURE,
   ASSISTED_INSTALLER_FEATURE,
   SUPPORT_TAB_FEATURE,
+  ASSISTED_INSTALLER_SNO_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -19,6 +20,13 @@ export const features = [
       authorizationsService.selfAccessReview({ action: 'create', resource_type: 'BareMetalCluster' }),
       accountsService.getFeature('assisted-installer', organizationID),
     ]).then(([resource, unleash]) => resource.data.allowed && unleash.data.enabled)
+      : Promise.reject(Error('No organization'))),
+  },
+  {
+    name: ASSISTED_INSTALLER_SNO_FEATURE,
+    action: organizationID => (organizationID
+      ? accountsService.getFeature('assisted-installer-sno', organizationID)
+        .then(unleash => unleash.data.enabled)
       : Promise.reject(Error('No organization'))),
   },
   {

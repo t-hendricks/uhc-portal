@@ -56,21 +56,20 @@ class UpgradeSettingsTab extends React.Component {
       reset,
       cluster,
       openModal,
-      versionInfo,
       change,
       initialValues,
     } = this.props;
     const { confirmationModalOpen } = this.state;
 
     const isDisabled = !schedules.fulfilled
-                      || upgradeScheduleRequest.pending || versionInfo.pending;
+                      || upgradeScheduleRequest.pending;
 
     const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual');
     const actionsDisabled = isDisabled || pristine;
 
     const scheduledUpgrade = schedules.items.find(schedule => ['manual', 'automatic'].includes(schedule.schedule_type));
-    const availableUpgrades = versionInfo.version === cluster.openshift_version
-      ? versionInfo.availableUpgrades : [];
+    // eslint-disable-next-line camelcase
+    const availableUpgrades = cluster?.version?.available_upgrades;
 
     const isPending = upgradeScheduleRequest.pending
                    || deleteScheduleRequest.pending
@@ -158,15 +157,13 @@ class UpgradeSettingsTab extends React.Component {
                 availableUpgrades={availableUpgrades}
                 openModal={openModal}
               />
-              {availableUpgrades.length > 0 && !scheduledUpgrade && (
+              {availableUpgrades?.length > 0 && !scheduledUpgrade && (
                 <Button
                   variant="secondary"
                   onClick={() => openModal(modals.UPGRADE_WIZARD,
                     {
                       clusterName: getClusterName(cluster),
-                      clusterVersion: cluster.openshift_version,
-                      clusterChannel: cluster.version.channel_group,
-                      clusterID: cluster.id,
+                      subscriptionID: cluster.subscription.id,
                     })}
                 >
                   Update
@@ -187,8 +184,12 @@ UpgradeSettingsTab.propTypes = {
     canEdit: PropTypes.bool,
     openshift_version: PropTypes.string,
     id: PropTypes.string,
+    subscription: PropTypes.shape({
+      id: PropTypes.string,
+    }),
     version: PropTypes.shape({
       channel_group: PropTypes.string,
+      available_upgrades: PropTypes.arrayOf(PropTypes.string),
     }),
   }),
   getSchedules: PropTypes.func.isRequired,
@@ -202,11 +203,6 @@ UpgradeSettingsTab.propTypes = {
     fulfilled: PropTypes.bool,
     pending: PropTypes.bool,
     error: PropTypes.bool,
-  }),
-  versionInfo: PropTypes.shape({
-    version: PropTypes.string,
-    availableUpgrades: PropTypes.arrayOf(PropTypes.string),
-    pending: PropTypes.bool,
   }),
   deleteScheduleRequest: PropTypes.shape({
     pending: PropTypes.bool,

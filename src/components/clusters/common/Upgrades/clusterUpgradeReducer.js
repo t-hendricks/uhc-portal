@@ -21,14 +21,12 @@ import {
 } from '../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../common/errors';
 import {
-  GET_VERSION_INFO,
   POST_UPGRADE_SCHEDULE,
   GET_UPGRADE_SCHEDULES,
   DELETE_UPGRADE_SCHEDULE,
   CLEAR_DELETE_UPGRADE_SCHEDULE,
   CLEAR_POST_UPGRADE_SCHEDULE,
 } from './clusterUpgradeActions';
-import { versionComparator } from './clusterUpgardeHelpers';
 
 const initialState = {
   versionInfo: {
@@ -53,38 +51,6 @@ function UpgradesRecuder(state = initialState, action) {
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
-      case PENDING_ACTION(GET_VERSION_INFO):
-        draft.versionInfo.pending = true;
-        break;
-      case FULFILLED_ACTION(GET_VERSION_INFO): {
-        // eslint-disable-next-line camelcase
-        const channelGroup = action.payload.data?.channel_group;
-        let version = action.payload.data?.id?.replace('openshift-v', '');
-        if (channelGroup && version) {
-          // remove channel group from version, to match the version number format in Telemetry
-          version = version.replace(`-${channelGroup}`, '');
-        }
-        // eslint-disable-next-line camelcase
-        let availableUpgrades = action.payload.data?.available_upgrades;
-        if (availableUpgrades) {
-          availableUpgrades = availableUpgrades.sort(versionComparator);
-        }
-        draft.versionInfo = {
-          ...initialState.versionInfo,
-          fulfilled: true,
-          version,
-          channelGroup,
-          availableUpgrades: availableUpgrades || [],
-        };
-        break;
-      }
-      case REJECTED_ACTION(GET_VERSION_INFO):
-        draft.versionInfo = {
-          ...initialState.versionInfo,
-          ...getErrorState(action),
-        };
-        break;
-
       case PENDING_ACTION(POST_UPGRADE_SCHEDULE):
         draft.postedUpgradeSchedule.pending = true;
         break;

@@ -9,7 +9,7 @@ import getTermsAppLink from '../../../../../common/getTermsAppLink';
 class TermsAlert extends Component {
   componentDidMount() {
     const { selfTermsReview } = this.props;
-    if (this.isTermsReviewRquired()) {
+    if (this.isTermsReviewRequired()) {
       selfTermsReview();
     }
   }
@@ -17,7 +17,7 @@ class TermsAlert extends Component {
   componentDidUpdate(prevProps) {
     const { subscription: prevSubscription } = prevProps;
     const { subscription, selfTermsReview } = this.props;
-    if (get(prevSubscription, 'id') !== get(subscription, 'id') && this.isTermsReviewRquired()) {
+    if (get(prevSubscription, 'id') !== get(subscription, 'id') && this.isTermsReviewRequired()) {
       selfTermsReview();
     }
   }
@@ -29,22 +29,20 @@ class TermsAlert extends Component {
     return getTermsAppLink(baseURL, currentHref, currentHref);
   };
 
-  isTermsReviewRquired() {
+  isTermsReviewRequired() {
     const { subscription } = this.props;
-    const planID = get(subscription, 'plan.id');
+    const product = get(subscription, 'plan.id');
     const status = get(subscription, 'status');
 
     return status !== subscriptionStatuses.DEPROVISIONED && (
-      planID === normalizedProducts.OSD
-      || planID === normalizedProducts.RHMI
-      || planID === normalizedProducts.ROSA
+      [normalizedProducts.OSD, normalizedProducts.RHMI, normalizedProducts.ROSA].includes(product)
     );
   }
 
   render() {
     const { selfTermsReviewResult } = this.props;
 
-    if (this.isTermsReviewRquired()
+    if (this.isTermsReviewRequired()
       && selfTermsReviewResult.fulfilled
       && selfTermsReviewResult.terms_required) {
       const tncAppURL = this.getTncAppURL(selfTermsReviewResult.redirect_url);

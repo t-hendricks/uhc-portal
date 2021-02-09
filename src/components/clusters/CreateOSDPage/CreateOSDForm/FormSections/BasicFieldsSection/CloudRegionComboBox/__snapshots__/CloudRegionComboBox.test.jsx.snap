@@ -22,6 +22,7 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
       },
     ]
   }
+  handleCloudRegionChange={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction],
@@ -89,6 +90,7 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
       },
     ]
   }
+  handleCloudRegionChange={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction],
@@ -101,7 +103,7 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
     isDisabled={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[MockFunction]}
+    onChange={[Function]}
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
@@ -161,6 +163,7 @@ exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1
       },
     ]
   }
+  handleCloudRegionChange={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction],
@@ -213,6 +216,7 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
       },
     ]
   }
+  handleCloudRegionChange={[MockFunction]}
   input={
     Object {
       "onChange": [MockFunction],

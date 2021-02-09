@@ -11,6 +11,7 @@ import FlatRadioButton from '../../../../../../common/FlatRadioButton';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
+import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 
 const machineTypeIcon = (machineTypeCategory) => {
   switch (machineTypeCategory) {
@@ -208,8 +209,7 @@ MachineTypeSelection.propTypes = {
   isBYOC: PropTypes.bool.isRequired,
   isMachinePool: PropTypes.bool.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
-  // For quota purposes, product is subscription.plan.id, not cluster.product.id.
-  product: PropTypes.string.isRequired,
+  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   meta: PropTypes.shape({

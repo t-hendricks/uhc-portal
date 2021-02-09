@@ -1,16 +1,16 @@
 import produce from 'immer';
-import get from 'lodash/get';
 import { userConstants } from '../constants';
 import {
   REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
+import { userActions } from '../actions/userActions';
 
 const initialState = {
   keycloakProfile: {},
   organization: {
     details: null,
-    quotaList: {},
+    quotaList: userActions.emptyQuota(),
     ...baseRequestState,
   },
   selfTermsReviewResult: {
@@ -29,7 +29,7 @@ function userProfile(state = initialState, action) {
         draft.keycloakProfile = action.payload;
         break;
 
-        // GET_ORGANIZATION
+      // GET_ORGANIZATION
       case REJECTED_ACTION(userConstants.GET_ORGANIZATION):
         draft.organization = {
           ...initialState.organization,
@@ -44,7 +44,7 @@ function userProfile(state = initialState, action) {
           ...initialState.organization,
           fulfilled: true,
           details: action.payload.organization.data,
-          quotaList: get(action.payload, 'quota', {}),
+          quotaList: action.payload.quota,
           timestamp: new Date(),
         };
         break;

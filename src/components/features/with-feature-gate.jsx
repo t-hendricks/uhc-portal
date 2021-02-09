@@ -7,6 +7,7 @@ import { store } from '../../redux/store';
 
 const mapStateToProps = feature => state => ({
   enabled: state.features[feature],
+  allEnabledFeatures: { ...state.features },
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

@@ -124,10 +124,11 @@ function ClusterListTable(props) {
       );
     };
 
+    // Note: hideOSDUpdates is set because we can't know if an update was already scheduled
     const clusterVersion = (
       <span>
         {cluster.openshift_version || 'N/A'}
-        <ClusterUpdateLink cluster={cluster} openModal={openModal} />
+        <ClusterUpdateLink cluster={cluster} openModal={openModal} hideOSDUpdates />
       </span>
     );
 

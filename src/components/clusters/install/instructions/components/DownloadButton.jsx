@@ -26,7 +26,7 @@ const DownloadButton = ({
   // eslint-disable-next-line default-case
   switch (mode) {
     case (downloadButtonModes.CRC):
-      buttonText = 'Download Code-Ready Containers';
+      buttonText = 'Download CodeReady Containers';
       break;
     case (downloadButtonModes.CLI_TOOLS):
       buttonText = 'Download command-line tools';

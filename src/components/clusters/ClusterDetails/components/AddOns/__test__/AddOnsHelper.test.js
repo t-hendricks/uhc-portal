@@ -1,3 +1,4 @@
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import { mockAddOns, mockClusterAddOns, mockClusterAddOnsParams } from './AddOns.fixtures';
 import { quotaSummary } from '../../../../../subscriptions/__test__/Subscriptions.fixtures';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
@@ -32,21 +33,21 @@ describe('isAvailable', () => {
 
   it('should determine that add-on is not available for non-OSD cluster', () => {
     const available = isAvailable(mockAddOns.items[0], {
-      product: { id: 'rhmi' },
+      product: { id: normalizedProducts.RHMI },
     }, { fulfilled: true }, quotaSummary);
     expect(available).toBe(false);
   });
 
   it('should determine that add-on is available for OSD cluster', () => {
     const available = isAvailable(mockAddOns.items[0], {
-      product: { id: 'osd' },
+      product: { id: normalizedProducts.OSD },
     }, { fulfilled: true }, quotaSummary);
     expect(available).toBe(true);
   });
 
   it('should determine that add-on is available for ROSA cluster', () => {
     const available = isAvailable(mockAddOns.items[0], {
-      product: { id: 'rosa' },
+      product: { id: normalizedProducts.ROSA },
     }, { fulfilled: true }, quotaSummary);
     expect(available).toBe(true);
   });
@@ -82,14 +83,14 @@ describe('hasQuota', () => {
 
   it('should determine that the org does not need quota for the add-on on an OSD cluster', () => {
     const quota = hasQuota(mockAddOns.items[0], {
-      product: { id: 'osd' },
+      product: { id: normalizedProducts.OSD },
     }, { fulfilled: true }, quotaSummary);
     expect(quota).toBe(true);
   });
 
   it('should determine that the org does not need quota for the add-on on a ROSA cluster', () => {
     const quota = hasQuota(mockAddOns.items[0], {
-      product: { id: 'rosa' },
+      product: { id: normalizedProducts.ROSA },
     }, { fulfilled: true }, quotaSummary);
     expect(quota).toBe(true);
   });
@@ -156,5 +157,23 @@ describe('parameterValuesForEditing', () => {
   it('should return only existing values for current addon parameters', () => {
     const param = parameterValuesForEditing(mockClusterAddOnsParams.items[2], mockAddOns.items[1]);
     expect(param).toEqual({ parameters: { 'cidr-range': '10.1.0.0/16' } });
+  });
+  it('should return false for boolean addon param with no installation param value', () => {
+    const mockAddOnsParams = { parameters: { items: [{ id: 'my-bool', value_type: 'boolean' }] } };
+    const mockAddOnsInstallParams = {};
+    const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
+    expect(param).toEqual({ parameters: { 'my-bool': false } });
+  });
+  it('should return true for boolean addon param with installation param value of "true"', () => {
+    const mockAddOnsParams = { parameters: { items: [{ id: 'my-bool', value_type: 'boolean' }] } };
+    const mockAddOnsInstallParams = { parameters: { items: [{ id: 'my-bool', value: 'true' }] } };
+    const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
+    expect(param).toEqual({ parameters: { 'my-bool': true } });
+  });
+  it('should return false for boolean addon param with installation param value of "false"', () => {
+    const mockAddOnsParams = { parameters: { items: [{ id: 'my-bool', value_type: 'boolean' }] } };
+    const mockAddOnsInstallParams = { parameters: { items: [{ id: 'my-bool', value: 'false' }] } };
+    const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
+    expect(param).toEqual({ parameters: { 'my-bool': false } });
   });
 });

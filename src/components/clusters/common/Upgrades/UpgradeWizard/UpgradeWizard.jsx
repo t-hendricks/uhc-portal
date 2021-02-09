@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Wizard, Title } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 
 import modals from '../../../../common/Modal/modals';
@@ -14,6 +15,12 @@ class UpgradeWizard extends React.Component {
     selectedVersion: undefined,
     upgradeTimestamp: undefined,
     scheduleType: 'now',
+  }
+
+  componentDidMount() {
+    const { fetchClusterDetails, subscriptionID } = this.props;
+    // make sure cluster data is fresh
+    fetchClusterDetails(subscriptionID);
   }
 
   close = () => {
@@ -30,14 +37,14 @@ class UpgradeWizard extends React.Component {
   });
 
   onNext = (newStep) => {
-    const { clusterID, postSchedule } = this.props;
+    const { clusterDetails, postSchedule } = this.props;
     const { selectedVersion, scheduleType, upgradeTimestamp } = this.state;
     const MINUTES_IN_MS = 1000 * 60;
     if (newStep.id === 'finish') {
       const nextRun = scheduleType === 'now'
         ? new Date(new Date().getTime() + 6 * MINUTES_IN_MS).toISOString()
         : upgradeTimestamp;
-      postSchedule(clusterID, {
+      postSchedule(clusterDetails.cluster.id, {
         schedule_type: 'manual',
         upgrade_type: 'OSD',
         next_run: nextRun,
@@ -49,29 +56,37 @@ class UpgradeWizard extends React.Component {
   render() {
     const {
       clusterName,
-      clusterVersion,
       upgradeScheduleRequest,
-      clusterChannel,
+      clusterDetails,
+      subscriptionID,
     } = this.props;
     const {
       selectedVersion,
       upgradeTimestamp,
       scheduleType,
     } = this.state;
+    const { cluster } = clusterDetails;
+    const isPending = (clusterDetails.pending && !clusterDetails.fulfilled)
+                      || cluster?.subscription.id !== subscriptionID;
+
     const gotAllDetails = selectedVersion && (upgradeTimestamp || scheduleType === 'now');
 
     const steps = [
       {
         id: 'select-version',
         name: 'Select version',
-        component: (
-          <VersionSelectionGrid
-            clusterVersion={clusterVersion}
-            clusterChannel={clusterChannel}
-            selected={selectedVersion}
-            onSelect={this.selectVersion}
-          />
-        ),
+        component: isPending ? (
+          <Spinner centered />
+        )
+          : (
+            <VersionSelectionGrid
+              availableUpgrades={cluster.version.available_upgrades}
+              clusterVersion={cluster.openshift_version}
+              clusterChannel={cluster.version.channel_group}
+              selected={selectedVersion}
+              onSelect={this.selectVersion}
+            />
+          ),
         enableNext: !!selectedVersion,
       },
       {
@@ -96,7 +111,7 @@ class UpgradeWizard extends React.Component {
               <div>
                 <dt>Version</dt>
                 <dd>
-                  {clusterVersion}
+                  {cluster.openshift_version}
                   {' '}
                   &rarr;
                   {' '}
@@ -155,12 +170,26 @@ class UpgradeWizard extends React.Component {
 UpgradeWizard.propTypes = {
   closeModal: PropTypes.func.isRequired,
   clusterName: PropTypes.string,
-  clusterID: PropTypes.string,
-  clusterVersion: PropTypes.string,
-  clusterChannel: PropTypes.string,
+  subscriptionID: PropTypes.string,
   upgradeScheduleRequest: PropTypes.object.isRequired,
   postSchedule: PropTypes.func.isRequired,
   clearPostedUpgradeScheduleResponse: PropTypes.func.isRequired,
+  fetchClusterDetails: PropTypes.func.isRequired,
+  clusterDetails: PropTypes.shape({
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+    cluster: PropTypes.shape({
+      id: PropTypes.string,
+      subscription: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+      openshift_version: PropTypes.string,
+      version: PropTypes.shape({
+        channel_group: PropTypes.string,
+        available_upgrades: PropTypes.arrayOf(PropTypes.string),
+      }),
+    }),
+  }),
 };
 
 UpgradeWizard.modalName = modals.UPGRADE_WIZARD;

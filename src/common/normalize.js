@@ -1,6 +1,7 @@
 import produce from 'immer';
 import get from 'lodash/get';
 
+import { versionComparator } from './versionComparator';
 import { normalizedProducts } from './subscriptionTypes';
 
 /**
@@ -42,6 +43,11 @@ const normalizeCluster = (cluster) => {
     // Omit other properties like "href", we only use the id anyway.
     id: normalizeProductID(cluster.product.id),
   };
+
+  // make sure available_upgrades are sorted
+  if (cluster.version && cluster.version.available_upgrades) {
+    result.version.available_upgrades.sort(versionComparator);
+  }
 
   return result;
 };

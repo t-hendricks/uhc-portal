@@ -988,6 +988,170 @@
           "cost": 1
         }
       ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost",
+      "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+      "quota_id": "compute.node|cpu|byoc|osdtrial",
+      "allowed": 8,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.large",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.medium",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.large",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.medium",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.small",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 4
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.large",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.medium",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.small",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 4
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost",
+      "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+      "quota_id": "cluster|byoc|osdtrial",
+      "allowed": 1,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.large",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.medium",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.large",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.medium",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.small",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.large",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.medium",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.small",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "cost": 1
+        }
+      ]
     }
   ]
 }
