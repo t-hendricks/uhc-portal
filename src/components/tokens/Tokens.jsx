@@ -20,9 +20,9 @@ limitations under the License.
 import React from 'react';
 import { Skeleton, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 import {
-  PageSection, Card, CardBody, CardFooter, ClipboardCopy, CardTitle,
+  PageSection, Card, CardBody, CardFooter, ClipboardCopy, CardTitle, Text, TextContent,
 } from '@patternfly/react-core';
-
+import './Tokens.scss';
 
 /**
  * Splits the given text into lines of 80 characters each, so that they look
@@ -42,9 +42,9 @@ const splitToken = (text) => {
  * Generates a box for containing the value of a token.
  */
 const tokenBox = token => (
-  <div className="token-value">
+  <Text component="pre">
     <ClipboardCopy isReadOnly>{token}</ClipboardCopy>
-  </div>
+  </Text>
 );
 
 /**
@@ -53,9 +53,9 @@ const tokenBox = token => (
  * number of blanks that appear in the first line.
  */
 const snippetBox = lines => (
-  <div className="token-snippet">
-    <pre>{lines.join('\n')}</pre>
-  </div>
+  <Text component="pre">
+    {lines.join('\n')}
+  </Text>
 );
 
 class Tokens extends React.Component {
@@ -121,28 +121,30 @@ class Tokens extends React.Component {
       <>
         {title}
         <PageSection>
-          <Card>
+          <Card className="ocm-c-api-token__card">
             <CardTitle>
               <h2>OpenShift Cluster Manager API Token</h2>
             </CardTitle>
-            <CardBody>
-              <p>
-                Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you
-                to use OpenShift without needing to install, operate or upgrade your own OpenShift
-                (Kubernetes) cluster.
-              </p>
-              <p>
-                Download and install the {ocmLink} command-line utility and use the API token to
-                authenticate against your Red Hat OpenShift Cluster Manager account.
-              </p>
-              {tokenBox(offlineAccessToken)}
-              <p>
-                Copy it, and then use it to authenticate with the {ocmLink} command-line utility:
-              </p>
-              {snippetBox(offlineAccessTokenSnippet)}
-              <p>
-                Run <code>ocm login --help</code> to get more information.
-              </p>
+            <CardBody className="ocm-c-api-token__card--body">
+              <TextContent>
+                <Text component="p">
+                  Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you
+                  to use OpenShift without needing to install, operate or upgrade your own OpenShift
+                  (Kubernetes) cluster.
+                </Text>
+                <Text component="p">
+                  Download and install the {ocmLink} command-line utility and use the API token to
+                  authenticate against your Red Hat OpenShift Cluster Manager account.
+                </Text>
+                {tokenBox(offlineAccessToken)}
+                <Text component="p">
+                  Copy it, and then use it to authenticate with the {ocmLink} command-line utility:
+                </Text>
+                {snippetBox(offlineAccessTokenSnippet)}
+                <Text component="p">
+                  Run <code>ocm login --help</code> to get more information.
+                </Text>
+              </TextContent>
             </CardBody>
           </Card>
         </PageSection>
