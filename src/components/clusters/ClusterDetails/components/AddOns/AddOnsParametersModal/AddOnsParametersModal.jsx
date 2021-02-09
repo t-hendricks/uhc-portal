@@ -69,9 +69,13 @@ class AddOnsParametersModal extends Component {
     return param.description;
   };
 
-  setParamValue = (param) => {
+  setDefaultParamValue = (param) => {
     const { change } = this.props;
-    change(`parameters.${param.id}`, `${param.default_value}`);
+    let paramValue = param.default_value;
+    if (param.value_type === 'boolean') {
+      paramValue = paramValue === 'true';
+    }
+    change(`parameters.${param.id}`, paramValue);
   };
 
   getFieldProps = (param) => {
@@ -148,7 +152,7 @@ class AddOnsParametersModal extends Component {
                   || (!isUpdateForm && param.default_value))
                 && (
                   <Button
-                    onClick={() => this.setParamValue(param)}
+                    onClick={() => this.setDefaultParamValue(param)}
                     variant="link"
                     icon={<LevelUpAltIcon />}
                     iconPosition="right"
