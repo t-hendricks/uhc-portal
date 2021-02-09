@@ -6,12 +6,12 @@ const nodesSectionDataSelector = (state) => {
   let totalMinNodesCount = 0;
   let totalMaxNodesCount = 0;
 
-  const defaultMachineAutoscal = get(state, 'clusters.details.cluster.nodes.autoscale_compute');
+  const defaultMachineAutoscale = get(state, 'clusters.details.cluster.nodes.autoscale_compute');
 
-  if (defaultMachineAutoscal) {
+  if (defaultMachineAutoscale) {
     hasMachinePoolWithAutoscaling = true;
-    totalMinNodesCount = defaultMachineAutoscal.min_replicas;
-    totalMaxNodesCount = defaultMachineAutoscal.max_replicas;
+    totalMinNodesCount = defaultMachineAutoscale.min_replicas;
+    totalMaxNodesCount = defaultMachineAutoscale.max_replicas;
   } else {
     totalMinNodesCount += totalDesiredComputeNodes;
     totalMaxNodesCount += totalDesiredComputeNodes;

@@ -36,6 +36,8 @@ const mapStateToProps = (state) => {
 
   const cloudProviderID = get(cluster, 'cloud_provider.id', '');
 
+  const isMultiAz = get(cluster, 'multi_az', false);
+
   const commonProps = {
     clusterID: get(cluster, 'id', ''),
     machinePoolsList: {
@@ -55,7 +57,7 @@ const mapStateToProps = (state) => {
         })),
       ],
     },
-    isMultiAz: get(cluster, 'multi_az', false),
+    isMultiAz,
     masterResizeAlertThreshold: masterResizeAlertThresholdSelector(state),
     organization: state.userProfile.organization,
     machineTypes: state.machineTypes,
@@ -70,10 +72,15 @@ const mapStateToProps = (state) => {
 
   let machinePoolWithAutoscale = false;
 
-  const getMinAndMaxNodesValues = autoscaleObj => ({
-    min_replicas: autoscaleObj.min_replicas?.toString(),
-    max_replicas: autoscaleObj.max_replicas?.toString(),
-  });
+  const getMinAndMaxNodesValues = (autoscaleObj) => {
+    const min = autoscaleObj.min_replicas;
+    const max = autoscaleObj.max_replicas;
+
+    return ({
+      min_replicas: isMultiAz ? (min / 3).toString() : min.toString(),
+      max_replicas: isMultiAz ? (max / 3).toString() : max.toString(),
+    });
+  };
 
   // Cluster's default machine pool case
   if (selectedMachinePool === 'Default') {
@@ -114,12 +121,16 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (formData, clusterID) => {
+  onSubmit: (formData, clusterID, isMultiAz) => {
     const machinePoolRequest = {};
     const nodesCount = parseInt(formData.nodes_compute, 10);
+
+    const minNodes = parseInt(formData.min_replicas, 10);
+    const maxNodes = parseInt(formData.max_replicas, 10);
+
     const autoScaleLimits = {
-      min_replicas: parseInt(formData.min_replicas, 10),
-      max_replicas: parseInt(formData.max_replicas, 10),
+      min_replicas: isMultiAz ? minNodes * 3 : minNodes,
+      max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
     };
 
     if (formData.machine_pool === 'Default') {
@@ -146,7 +157,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const onSubmit = (formData) => {
-    dispatchProps.onSubmit(formData, stateProps.clusterID);
+    dispatchProps.onSubmit(formData, stateProps.clusterID, stateProps.isMultiAz);
   };
   return ({
     ...ownProps,

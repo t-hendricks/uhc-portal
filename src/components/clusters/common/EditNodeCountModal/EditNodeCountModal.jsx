@@ -242,7 +242,7 @@ EditNodeCountModal.propTypes = {
   machineType: PropTypes.string,
   clusterID: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
-  product: PropTypes.oneOf(Object.keys(normalizedProducts), '').isRequired,
+  product: PropTypes.oneOf([...Object.keys(normalizedProducts), '']).isRequired,
   pristine: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
   canAutoScale: PropTypes.bool,

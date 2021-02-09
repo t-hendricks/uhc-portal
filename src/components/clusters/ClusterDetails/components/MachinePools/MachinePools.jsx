@@ -202,7 +202,7 @@ class MachinePools extends React.Component {
                 ? machinePool.autoscaling.min_replicas / 3 : machinePool.autoscaling.min_replicas}
             </SplitItem>
             <SplitItem>
-              <Title headingLevel="h4" className="autoscale__lim">Max nodes</Title>
+              <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${cluster.multi_az ? 'per zone' : ''}`}</Title>
               {cluster.multi_az
                 ? machinePool.autoscaling.max_replicas / 3 : machinePool.autoscaling.max_replicas}
             </SplitItem>

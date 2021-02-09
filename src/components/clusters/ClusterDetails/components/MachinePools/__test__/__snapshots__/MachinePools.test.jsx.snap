@@ -215,7 +215,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
                             className="autoscale__lim"
                             headingLevel="h4"
                           >
-                            Max nodes
+                            Max nodes 
                           </Title>
                           2
                         </SplitItem>
