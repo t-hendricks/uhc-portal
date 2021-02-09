@@ -24,7 +24,7 @@ import '../install/instructions/Instructions.scss';
 const cloudProviderID = window.location.pathname;
 const docURL = 'https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/';
 
-const SandboxTab = ({ token }) => (
+const LocalTab = ({ token }) => (
   <>
     <PageSection className="ocm-instructions-crc__card">
       <Stack hasGutter className="download-instructions header">
@@ -137,8 +137,8 @@ const SandboxTab = ({ token }) => (
   </>
 );
 
-SandboxTab.propTypes = {
+LocalTab.propTypes = {
   token: PropTypes.object.isRequired,
 };
 
-export default SandboxTab;
+export default LocalTab;

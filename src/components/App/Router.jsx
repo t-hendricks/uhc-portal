@@ -86,6 +86,7 @@ function Router({ history }) {
               to ensure the route is tested.
             */}
             <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
+            <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
             <Redirect from="/token/moa" to="/token/rosa" />
             <TermsGuardedRoute path="/token/rosa" component={TokensROSA} history={history} />
             <Route path="/token" component={Tokens} />
@@ -127,6 +128,9 @@ function Router({ history }) {
               render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSD} />}
             />
             <Route path="/create/osd" component={CloudProviderSelection} />
+            <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
+            <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
+            <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/:clusterId/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
             <Route path="/details/s/:id" component={ClusterDetails} />

@@ -119,12 +119,12 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
               />
             </TabTitleIcon>
             <TabTitleText>
-              Sandbox
+              Local
             </TabTitleText>
           </React.Fragment>
         }
       >
-        <SandboxTab
+        <LocalTab
           token={Object {}}
         />
       </Tab>
@@ -223,12 +223,324 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
               />
             </TabTitleIcon>
             <TabTitleText>
-              Sandbox
+              Local
             </TabTitleText>
           </React.Fragment>
         }
       >
-        <SandboxTab
+        <LocalTab
+          token={Object {}}
+        />
+      </Tab>
+    </Tabs>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<CreateClusterPage /> renders correctly for specific tabs cloud tab 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+            },
+          ]
+        }
+      />
+    }
+    title="Create an OpenShift cluster"
+  />
+  <PageSection
+    className="cluster-create-page"
+    variant="light"
+  >
+    <Tabs
+      activeKey={0}
+      component="div"
+      isBox={false}
+      isFilled={true}
+      isSecondary={false}
+      isVertical={false}
+      leftScrollAriaLabel="Scroll left"
+      mountOnEnter={false}
+      onSelect={[Function]}
+      ouiaSafe={true}
+      rightScrollAriaLabel="Scroll right"
+      unmountOnExit={false}
+      variant="default"
+    >
+      <Tab
+        eventKey={0}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <CloudIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Cloud
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <CloudTab
+          hasOSDQuota={true}
+        />
+      </Tab>
+      <Tab
+        eventKey={1}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <ServerIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Datacenter
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <DatacenterTab />
+      </Tab>
+      <Tab
+        eventKey={2}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <LaptopIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Local
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <LocalTab
+          token={Object {}}
+        />
+      </Tab>
+    </Tabs>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<CreateClusterPage /> renders correctly for specific tabs datacenter tab 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+            },
+          ]
+        }
+      />
+    }
+    title="Create an OpenShift cluster"
+  />
+  <PageSection
+    className="cluster-create-page"
+    variant="light"
+  >
+    <Tabs
+      activeKey={1}
+      component="div"
+      isBox={false}
+      isFilled={true}
+      isSecondary={false}
+      isVertical={false}
+      leftScrollAriaLabel="Scroll left"
+      mountOnEnter={false}
+      onSelect={[Function]}
+      ouiaSafe={true}
+      rightScrollAriaLabel="Scroll right"
+      unmountOnExit={false}
+      variant="default"
+    >
+      <Tab
+        eventKey={0}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <CloudIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Cloud
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <CloudTab
+          hasOSDQuota={true}
+        />
+      </Tab>
+      <Tab
+        eventKey={1}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <ServerIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Datacenter
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <DatacenterTab />
+      </Tab>
+      <Tab
+        eventKey={2}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <LaptopIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Local
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <LocalTab
+          token={Object {}}
+        />
+      </Tab>
+    </Tabs>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<CreateClusterPage /> renders correctly for specific tabs local tab 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+            },
+          ]
+        }
+      />
+    }
+    title="Create an OpenShift cluster"
+  />
+  <PageSection
+    className="cluster-create-page"
+    variant="light"
+  >
+    <Tabs
+      activeKey={2}
+      component="div"
+      isBox={false}
+      isFilled={true}
+      isSecondary={false}
+      isVertical={false}
+      leftScrollAriaLabel="Scroll left"
+      mountOnEnter={false}
+      onSelect={[Function]}
+      ouiaSafe={true}
+      rightScrollAriaLabel="Scroll right"
+      unmountOnExit={false}
+      variant="default"
+    >
+      <Tab
+        eventKey={0}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <CloudIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Cloud
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <CloudTab
+          hasOSDQuota={true}
+        />
+      </Tab>
+      <Tab
+        eventKey={1}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <ServerIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Datacenter
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <DatacenterTab />
+      </Tab>
+      <Tab
+        eventKey={2}
+        title={
+          <React.Fragment>
+            <TabTitleIcon>
+              <LaptopIcon
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </TabTitleIcon>
+            <TabTitleText>
+              Local
+            </TabTitleText>
+          </React.Fragment>
+        }
+      >
+        <LocalTab
           token={Object {}}
         />
       </Tab>
