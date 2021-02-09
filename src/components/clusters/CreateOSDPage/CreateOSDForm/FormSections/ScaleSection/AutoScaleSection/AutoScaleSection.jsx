@@ -61,9 +61,10 @@ class AutoScaleSection extends React.Component {
       autoscalingEnabled, change, isDefaultMachinePool, product, isBYOC, isMultiAz,
     } = this.props;
     if (!prevProps.autoscalingEnabled && autoscalingEnabled) {
-      change('min_replicas', getMinNodesAllowed({
+      const minAllowed = getMinNodesAllowed({
         isDefaultMachinePool, product, isBYOC, isMultiAz,
-      }).toString());
+      });
+      change('min_replicas', isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString());
     }
   }
 
@@ -82,7 +83,7 @@ class AutoScaleSection extends React.Component {
   }
 
   validateMaxNodes = (val, allValues) => {
-    if (val < allValues.min_replicas) {
+    if (parseInt(val, 10) < parseInt(allValues.min_replicas, 10)) {
       return 'Max nodes cannot be less than min nodes.';
     }
     return validateNumericInput(val);
