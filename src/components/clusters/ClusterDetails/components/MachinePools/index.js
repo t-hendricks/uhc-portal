@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
       id: 'Default',
       instance_type: nodes.compute_machine_type?.id,
       availability_zones: nodes.availability_zones,
-      desired: nodes.compute,
+      desired: nodes.autoscale_compute ? `Min: ${nodes.autoscale_compute.min_replicas}, Max: ${nodes.autoscale_compute.min_replicas}` : nodes.compute,
       labels: nodes.compute_labels,
     },
     machinePoolsList: state.machinePools.getMachinePools,
