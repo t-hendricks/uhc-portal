@@ -74,6 +74,10 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
             hasGutter={true}
           >
             <CreateOSDForm
+              autoScaleMaxNodesValue="0"
+              autoScaleMinNodesValue="0"
+              autoscalingEnabled={false}
+              canAutoScale={true}
               change={[MockFunction]}
               closeModal={[MockFunction]}
               cloudProviderID="aws"

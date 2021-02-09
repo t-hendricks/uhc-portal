@@ -135,6 +135,10 @@ class CreateOSDPage extends React.Component {
       canEnableEtcdEncryption,
       selectedRegion,
       installToVPCSelected,
+      canAutoScale,
+      autoscalingEnabled,
+      autoScaleMinNodesValue,
+      autoScaleMaxNodesValue,
     } = this.props;
 
     if (createClusterResponse.fulfilled) {
@@ -271,6 +275,10 @@ class CreateOSDPage extends React.Component {
                     canEnableEtcdEncryption={canEnableEtcdEncryption}
                     selectedRegion={selectedRegion}
                     installToVPCSelected={installToVPCSelected}
+                    canAutoScale={canAutoScale}
+                    autoscalingEnabled={autoscalingEnabled}
+                    autoScaleMinNodesValue={autoScaleMinNodesValue}
+                    autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                   />
                   {/* Form footer */}
                   <GridItem>
@@ -353,6 +361,15 @@ CreateOSDPage.propTypes = {
   canEnableEtcdEncryption: PropTypes.bool,
   selectedRegion: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
+  canAutoScale: PropTypes.bool.isRequired,
+  autoscalingEnabled: PropTypes.bool.isRequired,
+  autoScaleMinNodesValue: PropTypes.string,
+  autoScaleMaxNodesValue: PropTypes.string,
+};
+
+CreateOSDPage.defaultProps = {
+  autoScaleMinNodesValue: '0',
+  autoScaleMaxNodesValue: '0',
 };
 
 export default CreateOSDPage;

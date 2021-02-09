@@ -63,6 +63,11 @@ exports[`CreateOSDForm; should render 1`] = `
     </p>
   </GridItem>
   <ScaleSection
+    autoScaleMaxNodesValue="0"
+    autoScaleMinNodesValue="0"
+    autoscalingEnabled={false}
+    canAutoScale={false}
+    change={[MockFunction]}
     cloudProviderID="aws"
     handleMachineTypesChange={[Function]}
     isBYOC={false}

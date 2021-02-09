@@ -17,6 +17,8 @@ import {
   clearGetMachinePoolsResponse,
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
 
+import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+
 const reduxFormConfig = {
   form: 'EditNodeCount',
   enableReinitialize: true,
@@ -31,6 +33,10 @@ const mapStateToProps = (state) => {
   const selectedMachinePool = valueSelector(state, 'machine_pool')
   || modalData.machinePool?.id
   || (modalData.isDefaultMachinePool && 'Default');
+
+  const cloudProviderID = get(cluster, 'cloud_provider.id', '');
+
+  const isMultiAz = get(cluster, 'multi_az', false);
 
   const commonProps = {
     clusterID: get(cluster, 'id', ''),
@@ -51,31 +57,54 @@ const mapStateToProps = (state) => {
         })),
       ],
     },
-    isMultiAz: get(cluster, 'multi_az', false),
+    isMultiAz,
     masterResizeAlertThreshold: masterResizeAlertThresholdSelector(state),
     organization: state.userProfile.organization,
     machineTypes: state.machineTypes,
-    cloudProviderID: get(cluster, 'cloud_provider.id', ''),
+    cloudProviderID,
     isByoc: cluster?.ccs?.enabled,
-    product: cluster?.subscription?.plan?.id,
+    product: get(cluster, 'subscription.plan.id', ''),
+    autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
+    canAutoScale: canAutoScaleSelector(state, get(cluster, 'product.id', ''), cloudProviderID),
+    autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
+    autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
+  };
+
+  let machinePoolWithAutoscale = false;
+
+  const getMinAndMaxNodesValues = (autoscaleObj) => {
+    const min = autoscaleObj.min_replicas;
+    const max = autoscaleObj.max_replicas;
+
+    return ({
+      min_replicas: isMultiAz ? (min / 3).toString() : min.toString(),
+      max_replicas: isMultiAz ? (max / 3).toString() : max.toString(),
+    });
   };
 
   // Cluster's default machine pool case
   if (selectedMachinePool === 'Default') {
+    // eslint-disable-next-line camelcase
+    machinePoolWithAutoscale = cluster.nodes?.autoscale_compute;
+
     return ({
       ...commonProps,
       editNodeCountResponse: state.clusters.editedCluster,
       machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
       machinePoolId: 'Default',
       initialValues: {
-        nodes_compute: get(cluster, 'nodes.compute', null),
+        nodes_compute: get(cluster, 'nodes.compute', null) || 4,
         machine_pool: 'Default',
+        autoscalingEnabled: machinePoolWithAutoscale,
+        ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(cluster.nodes.autoscale_compute)),
       },
     });
   }
   // Any other machine pool
-  const selectedMachinePoolData = state.machinePools.getMachinePools.data
-    .find(machinePool => machinePool.id === selectedMachinePool);
+  const selectedMachinePoolData = get(state, 'machinePools.getMachinePools.data', [])
+    .find(machinePool => machinePool.id === selectedMachinePool) || {};
+
+  machinePoolWithAutoscale = selectedMachinePoolData.autoscaling;
 
   return ({
     ...commonProps,
@@ -85,23 +114,36 @@ const mapStateToProps = (state) => {
     initialValues: {
       nodes_compute: get(selectedMachinePoolData, 'replicas', null),
       machine_pool: selectedMachinePool,
+      autoscalingEnabled: machinePoolWithAutoscale,
+      ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(selectedMachinePoolData.autoscaling)),
     },
   });
 };
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (formData, clusterID) => {
+  onSubmit: (formData, clusterID, isMultiAz) => {
+    const machinePoolRequest = {};
+    const nodesCount = parseInt(formData.nodes_compute, 10);
+
+    const minNodes = parseInt(formData.min_replicas, 10);
+    const maxNodes = parseInt(formData.max_replicas, 10);
+
+    const autoScaleLimits = {
+      min_replicas: isMultiAz ? minNodes * 3 : minNodes,
+      max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
+    };
+
     if (formData.machine_pool === 'Default') {
-      dispatch(editCluster(
-        clusterID,
-        { nodes: { compute: parseInt(formData.nodes_compute, 10) } },
-      ));
+      machinePoolRequest.nodes = formData.autoscalingEnabled
+        ? { autoscale_compute: autoScaleLimits } : { compute: nodesCount };
+      dispatch(editCluster(clusterID, machinePoolRequest));
     } else {
-      dispatch(scaleMachinePool(
-        clusterID,
-        formData.machine_pool,
-        { replicas: parseInt(formData.nodes_compute, 10) },
-      ));
+      if (formData.autoscalingEnabled) {
+        machinePoolRequest.autoscaling = autoScaleLimits;
+      } else {
+        machinePoolRequest.replicas = nodesCount;
+      }
+      dispatch(scaleMachinePool(clusterID, formData.machine_pool, machinePoolRequest));
     }
   },
   getMachinePools: clusterID => dispatch(getMachinePools(clusterID)),
@@ -115,7 +157,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const onSubmit = (formData) => {
-    dispatchProps.onSubmit(formData, stateProps.clusterID);
+    dispatchProps.onSubmit(formData, stateProps.clusterID, stateProps.isMultiAz);
   };
   return ({
     ...ownProps,

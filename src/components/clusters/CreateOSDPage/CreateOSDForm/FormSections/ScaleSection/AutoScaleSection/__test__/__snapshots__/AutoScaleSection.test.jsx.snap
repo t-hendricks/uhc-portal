@@ -1,0 +1,215 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
+<Fragment>
+  <GridItem
+    id="autoscaling"
+    span={12}
+  >
+    <FormGroup
+      fieldId="autoscaling"
+      label="Autoscaling"
+      labelIcon={
+        <PopoverHint
+          hint={
+            <React.Fragment>
+              Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.
+               
+              <ExternalLink
+                href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
+              >
+                Learn more about autoscaling
+              </ExternalLink>
+            </React.Fragment>
+          }
+        />
+      }
+    />
+    <Field
+      component={[Function]}
+      label="Enable autoscaling"
+      name="autoscalingEnabled"
+    />
+    <Split
+      className="autoscaling__container"
+      hasGutter={true}
+    >
+      <SplitItem>
+        <FormGroup
+          className="autoscaling__nodes-formGroup"
+          fieldId="nodes_min_multiAZ"
+          isRequired={true}
+          label="Minimum nodes per zone"
+        >
+          <Field
+            ariaLabel="Minimum nodes"
+            component={[Function]}
+            displayError={[Function]}
+            hideError={[Function]}
+            limit="min"
+            name="min_replicas"
+            type="text"
+            validate={
+              Array [
+                [Function],
+                [Function],
+              ]
+            }
+          />
+          <span>
+            X 3 zones = 0
+          </span>
+        </FormGroup>
+      </SplitItem>
+      <SplitItem>
+        <FormGroup
+          className="autoscaling__nodes-formGroup"
+          fieldId="nodes_max_multiAZ"
+          isRequired={true}
+          label="Maximum nodes per zone"
+        >
+          <Field
+            ariaLabel="Maximum nodes"
+            component={[Function]}
+            displayError={[Function]}
+            hideError={[Function]}
+            limit="max"
+            name="max_replicas"
+            type="text"
+            validate={
+              Array [
+                [Function],
+                [Function],
+              ]
+            }
+          />
+          <span>
+            X 3 zones = 0
+          </span>
+        </FormGroup>
+      </SplitItem>
+    </Split>
+  </GridItem>
+</Fragment>
+`;
+
+exports[`<AutoScaleSection /> renders correctly when autoscale disabled 1`] = `
+<Fragment>
+  <GridItem
+    id="autoscaling"
+    span={12}
+  >
+    <FormGroup
+      fieldId="autoscaling"
+      label="Autoscaling"
+      labelIcon={
+        <PopoverHint
+          hint={
+            <React.Fragment>
+              Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.
+               
+              <ExternalLink
+                href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
+              >
+                Learn more about autoscaling
+              </ExternalLink>
+            </React.Fragment>
+          }
+        />
+      }
+    />
+    <Field
+      component={[Function]}
+      label="Enable autoscaling"
+      name="autoscalingEnabled"
+    />
+  </GridItem>
+</Fragment>
+`;
+
+exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
+<Fragment>
+  <GridItem
+    id="autoscaling"
+    span={12}
+  >
+    <FormGroup
+      fieldId="autoscaling"
+      label="Autoscaling"
+      labelIcon={
+        <PopoverHint
+          hint={
+            <React.Fragment>
+              Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.
+               
+              <ExternalLink
+                href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
+              >
+                Learn more about autoscaling
+              </ExternalLink>
+            </React.Fragment>
+          }
+        />
+      }
+    />
+    <Field
+      component={[Function]}
+      label="Enable autoscaling"
+      name="autoscalingEnabled"
+    />
+    <FormGroup
+      className="autoscaling__container"
+      fieldId="nodes_limit"
+      isRequired={true}
+      label="Minimum and maximum node count"
+    >
+      <Split
+        hasGutter={true}
+      >
+        <SplitItem
+          className="autoscaling__nodes-formGroup"
+        >
+          <Field
+            ariaLabel="Minimum nodes"
+            component={[Function]}
+            displayError={[Function]}
+            hideError={[Function]}
+            limit="min"
+            name="min_replicas"
+            type="text"
+            validate={
+              Array [
+                [Function],
+                [Function],
+              ]
+            }
+          />
+          <span>
+            minimum
+          </span>
+        </SplitItem>
+        <SplitItem
+          className="autoscaling__nodes-formGroup"
+        >
+          <Field
+            ariaLabel="Maximum nodes"
+            component={[Function]}
+            displayError={[Function]}
+            hideError={[Function]}
+            limit="max"
+            name="max_replicas"
+            type="text"
+            validate={
+              Array [
+                [Function],
+                [Function],
+              ]
+            }
+          />
+          maximum
+        </SplitItem>
+      </Split>
+    </FormGroup>
+  </GridItem>
+</Fragment>
+`;

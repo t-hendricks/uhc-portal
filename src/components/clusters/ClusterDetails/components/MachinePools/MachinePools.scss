@@ -7,4 +7,11 @@
   .pf-c-table__toggle {
     padding-top: 0;
   }
+  .pf-c-table__expandable-row-content .autoscale__lim {
+    color: var(--pf-global--secondary-color--100);
+  }
+  .nodes-count {
+    margin: 0;
+    padding: 0;
+  }
 }

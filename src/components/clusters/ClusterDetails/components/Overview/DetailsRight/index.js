@@ -1,19 +1,22 @@
 import { connect } from 'react-redux';
-import get from 'lodash/get';
-
+import nodesSectionDataSelector from './DetailsRightSelectors';
 import DetailsRight from './DetailsRight';
 
-const mapStateToProps = (state) => {
-  let totalDesiredComputeNodes = get(state, 'clusters.details.cluster.nodes.compute', 0);
+const mapStateToProps = (state, ownProps) => {
+  const nodesSectionData = nodesSectionDataSelector(state, ownProps.cluster);
 
-  state.machinePools.getMachinePools.data.forEach((machinePool) => {
-    totalDesiredComputeNodes += machinePool.replicas;
-  });
+  const {
+    hasMachinePoolWithAutoscaling, totalMinNodesCount, totalMaxNodesCount, totalDesiredComputeNodes,
+  } = nodesSectionData;
 
-  return {
-    totalDesiredComputeNodes,
-  };
+  if (hasMachinePoolWithAutoscaling) {
+    return {
+      autoscaleEnabled: hasMachinePoolWithAutoscaling,
+      totalMinNodesCount,
+      totalMaxNodesCount,
+    };
+  }
+  return { autoscaleEnabled: hasMachinePoolWithAutoscaling, totalDesiredComputeNodes };
 };
-
 
 export default connect(mapStateToProps, null)(DetailsRight);

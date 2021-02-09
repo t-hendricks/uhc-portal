@@ -28,6 +28,7 @@ const constants = {
     the credentials have the correct permissions. Disabling SCP checks allows installation to proceed.
     The SCP will still be enforced even if the checks are bypassed.`,
   enableEtcdHint: 'When you enable etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.',
+  autoscaleHint: 'Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.',
 };
 
 const billingModelConstants = {
