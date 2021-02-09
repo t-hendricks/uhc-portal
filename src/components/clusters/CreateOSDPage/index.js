@@ -73,7 +73,7 @@ const mapStateToProps = (state, ownProps) => {
     privateClusterSelected,
     product,
 
-    canAutoScale: canAutoScaleSelector(state, product),
+    canAutoScale: canAutoScaleSelector(state, product, cloudProviderID),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),

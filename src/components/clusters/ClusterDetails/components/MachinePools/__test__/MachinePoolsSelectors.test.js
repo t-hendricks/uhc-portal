@@ -52,22 +52,27 @@ describe('machinePoolsSelector', () => {
         },
       },
     };
-    const result = hasOrgLevelAutoscaleCapability(stateWithCapability);
+    const result = hasOrgLevelAutoscaleCapability(stateWithCapability, normalizedProducts.OSD, 'aws');
     expect(result).toBe(true);
   });
 
   it('should return false when org users cannot set autoscaling', () => {
-    const result = hasOrgLevelAutoscaleCapability(stateWithoutAutoscaleCapability);
+    const result = hasOrgLevelAutoscaleCapability(stateWithoutAutoscaleCapability, normalizedProducts.OSD, 'aws');
     expect(result).toBe(false);
   });
 
   it('should allow autoscaling for ROSA clusters', () => {
-    const result = canAutoScaleSelector({}, normalizedProducts.ROSA);
+    const result = canAutoScaleSelector({}, normalizedProducts.ROSA, 'aws');
     expect(result).toBe(true);
   });
 
   it('should not allow autoscaling', () => {
-    const result = canAutoScaleSelector(stateWithoutAutoscaleCapability, normalizedProducts.OCP);
+    const result = canAutoScaleSelector(stateWithoutAutoscaleCapability, normalizedProducts.OCP, 'aws');
+    expect(result).toBe(false);
+  });
+
+  it('should not allow autoscaling for gcp clusters', () => {
+    const result = hasOrgLevelAutoscaleCapability(stateWithoutAutoscaleCapability, normalizedProducts.OSD, 'gcp');
     expect(result).toBe(false);
   });
 });

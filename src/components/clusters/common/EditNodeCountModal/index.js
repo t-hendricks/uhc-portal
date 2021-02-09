@@ -34,6 +34,8 @@ const mapStateToProps = (state) => {
   || modalData.machinePool?.id
   || (modalData.isDefaultMachinePool && 'Default');
 
+  const cloudProviderID = get(cluster, 'cloud_provider.id', '');
+
   const commonProps = {
     clusterID: get(cluster, 'id', ''),
     machinePoolsList: {
@@ -57,11 +59,11 @@ const mapStateToProps = (state) => {
     masterResizeAlertThreshold: masterResizeAlertThresholdSelector(state),
     organization: state.userProfile.organization,
     machineTypes: state.machineTypes,
-    cloudProviderID: get(cluster, 'cloud_provider.id', ''),
+    cloudProviderID,
     isByoc: cluster?.ccs?.enabled,
     product: get(cluster, 'subscription.plan.id', ''),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
-    canAutoScale: canAutoScaleSelector(state, get(cluster, 'product.id', '')),
+    canAutoScale: canAutoScaleSelector(state, get(cluster, 'product.id', ''), cloudProviderID),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
   };
