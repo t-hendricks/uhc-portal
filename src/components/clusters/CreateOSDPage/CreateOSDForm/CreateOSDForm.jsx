@@ -21,6 +21,7 @@ import { required, validateGCPServiceAccount } from '../../../../common/validato
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
 import ReduxCheckbox from '../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../common/ExternalLink';
+import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from './FormSections/NetworkingSection/AvailabilityZoneSelection';
 
 import './CreateOSDForm.scss';
 
@@ -65,6 +66,18 @@ class CreateOSDForm extends React.Component {
     this.setState({ isMultiAz });
     change('nodes_compute', computeNodes);
   };
+
+  handleCloudRegionChange = () => {
+    // Move the az selection form
+    // to its default value once the cloudRegion selection
+    // changes to avoid incorrect zone.
+    const { change } = this.props;
+    const { isMultiAz } = this.state;
+    const azCount = isMultiAz ? 3 : 1;
+    for (let i = 0; i < azCount; i += 1) {
+      change(`az_${i}`, AVAILABILITY_ZONE_PLACEHOLDER);
+    }
+  }
 
 
   handleMachineTypesChange = (_, value) => {
@@ -175,8 +188,8 @@ class CreateOSDForm extends React.Component {
               </GridItem>
               <GridItem span={12}>
                 <p>
-               In order to create a Customer Cloud Subscription cluster, you must have a Service
-                Account in GCP named
+                  In order to create a Customer Cloud Subscription cluster, you must have a Service
+                  Account in GCP named
                   {' '}
                   <code>osd-ccs-admin</code>
                   {' '}
@@ -213,12 +226,13 @@ class CreateOSDForm extends React.Component {
         <BasicFieldsSection
           pending={pending}
           showDNSBaseDomain={false}
-          showAvailability={product === 'osd'}
+          showAvailability={product === normalizedProducts.OSD}
           change={change}
           isBYOC={isBYOCForm}
           cloudProviderID={cloudProviderID}
           quota={clustersQuota[cloudProviderID][infraType]}
           handleMultiAZChange={this.handleMultiAZChange}
+          handleCloudRegionChange={this.handleCloudRegionChange}
           isMultiAz={isMultiAz}
         />
 
@@ -238,7 +252,7 @@ class CreateOSDForm extends React.Component {
           machineType={machineType}
           handleMachineTypesChange={this.handleMachineTypesChange}
           cloudProviderID={cloudProviderID}
-          product={normalizedProducts.OSD}
+          product={product}
         />
         {/* Networking section */}
         <NetworkingSection
@@ -272,7 +286,7 @@ class CreateOSDForm extends React.Component {
                     {' '}
                     <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
                   </>
-              )}
+                )}
               />
               <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
             </FormGroup>
@@ -326,7 +340,7 @@ CreateOSDForm.propTypes = {
   }),
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
-  product: PropTypes.string.isRequired,
+  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
   selectedRegion: PropTypes.string,

@@ -13,8 +13,8 @@ import modals from '../../../common/Modal/modals';
 function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false }) {
   const subscription = get(cluster, 'subscription');
 
-  const planID = get(subscription, 'plan.id');
-  if (planID !== normalizedProducts.OCP) {
+  const product = get(subscription, 'plan.id');
+  if (product !== normalizedProducts.OCP) {
     return null;
   }
 

@@ -244,11 +244,6 @@ const deleteAdditionalIngress = (clusterID, routerID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/ingresses/${routerID}`,
 });
 
-const getVersionInfo = version => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/versions/${version}`,
-});
-
 const postUpgradeSchedule = (clusterID, schedule) => apiRequest({
   method: 'post',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies`,
@@ -347,7 +342,6 @@ const clusterService = {
   deleteMachinePool,
 };
 export {
-  getVersionInfo,
   postUpgradeSchedule,
   getUpgradeSchedules,
   getUpgradeScheduleState,

@@ -186,8 +186,8 @@ const managedServices = (hasQuota) => {
         title: (
           <Stack hasGutter>
             <StackItem>
-              A flexible, self-service deployment of OpenShift clusters provided as a
-              fully-managed cloud service patched, updated, and monitored by Microsoft and Red Hat.
+            A flexible, self-service deployment of OpenShift clusters provided as a fully-managed
+             cloud service by Microsoft and Red Hat.
               <br />
               Hosted on Microsoft Azure.
             </StackItem>
@@ -214,7 +214,7 @@ const managedServices = (hasQuota) => {
       (
         <>
           <a href={links.IBM_CLOUD_LEARN_MORE} target="_blank" rel="noopener noreferrer">
-            OpenShift on IBM Cloud
+          Red Hat OpenShift on IBM Cloud
           </a>
         </>
       ),
@@ -288,8 +288,8 @@ const managedServices = (hasQuota) => {
         title: (
           <Stack hasGutter>
             <StackItem>
-              A Quick Start architecture that sets up a cloud architecture, builds infrastructure
-              from templates, and deploys Red Hat OpenShift Container Platform.
+            Build, deploy, and manage Kubernetes applications with Red Hat OpenShift
+             running natively on AWS.
               <br />
               Hosted on AWS.
             </StackItem>

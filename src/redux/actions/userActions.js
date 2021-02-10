@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import { userConstants } from '../constants';
 import { accountsService, authorizationsService } from '../../services';
 import { normalizeQuotaCost } from '../../common/normalize';
-import { normalizedProducts } from '../../common/subscriptionTypes';
+import { knownProducts, normalizedProducts } from '../../common/subscriptionTypes';
 
 const userInfoResponse = payload => ({
   payload,
@@ -19,48 +19,53 @@ const processClusterQuota = (clustersQuota, item, resources) => {
       availability_zone_type: availabilityZoneType,
       cloud_provider: cloudProvider,
       resource_name: machineType,
-      product,
+      product: quotaProduct,
     } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
 
     // TODO: Honor cost field, specifically cost=0.
     // TODO: Split data structure by product (https://issues.redhat.com/browse/SDA-3231).
     //       Until then, ignore ROSA to avoid collision with OSD CCS.
-    if (product === normalizedProducts.ROSA) {
+    if (quotaProduct === normalizedProducts.ROSA) {
       return;
     }
 
+    /* eslint-disable no-param-reassign */
     // Since quota can apply to either AWS or GCP, or "any", we compare an exact match or an
     // "any" match. If the quota applies to a specific cloud provider, we add it there. If it
     // applies to "any" cloud provider, we add it to both providers in the quota object.
     // This also applies to BYOC and AZ.
-    Object.keys(quota).forEach((provider) => {
-      if (cloudProvider === provider || cloudProvider === 'any') {
-        Object.keys(quota[provider]).forEach((category) => {
-          if (infraCategory === category || infraCategory === 'any') {
-            Object.keys(quota[provider][category]).forEach((zoneType) => {
-              const categoryQuota = quota[provider][category];
-              if (`${availabilityZoneType}Az` === zoneType) {
-                categoryQuota[zoneType][machineType] = available;
-                categoryQuota[zoneType].available += available;
-                categoryQuota.totalAvailable += available;
-              }
-              // When calculating for any AZ, skip the totalAvailable property
-              if (availabilityZoneType === 'any' && zoneType !== 'totalAvailable') {
-                categoryQuota[zoneType][machineType] = available;
-                categoryQuota[zoneType].available += available;
-                // To avoid double-counting, we calculate only half for each of the two AZ's
-                categoryQuota.totalAvailable += available / 2;
-              }
+    Object.entries(quota).forEach(([product, productQuota]) => {
+      if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
+        Object.entries(productQuota).forEach(([provider, providerQuota]) => {
+          if (cloudProvider === provider || cloudProvider === 'any') {
+            Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
+              if (infraCategory === category || infraCategory === 'any') {
+                Object.entries(categoryQuota).forEach(([zoneType, zoneQuota]) => {
+                  if (`${availabilityZoneType}Az` === zoneType) {
+                    zoneQuota[machineType] = available;
+                    zoneQuota.available += available;
+                    categoryQuota.totalAvailable += available;
+                  }
+                  // When calculating for any AZ, skip the totalAvailable property
+                  if (availabilityZoneType === 'any' && zoneType !== 'totalAvailable') {
+                    zoneQuota[machineType] = available;
+                    zoneQuota.available += available;
+                    // To avoid double-counting, we calculate only half for each of the two AZ's
+                    categoryQuota.totalAvailable += available / 2;
+                  }
 
-              if (categoryQuota.totalAvailable > 0) {
-                quota[provider].isAvailable = true;
+                  if (categoryQuota.totalAvailable > 0) {
+                    providerQuota.isAvailable = true;
+                  }
+                });
               }
             });
           }
         });
       }
     });
+    /* eslint-enable no-param-reassign */
   });
 };
 
@@ -72,30 +77,39 @@ const processNodeQuota = (nodesQuota, item, resources) => {
     const {
       cloud_provider: cloudProvider,
       resource_name: machineType,
-      product,
+      product: quotaProduct,
     } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
 
     // TODO: split data structure by product (https://issues.redhat.com/browse/SDA-3231).
     //       Until then, ignore ROSA to avoid collision with OSD CCS.
-    if (product === normalizedProducts.ROSA) {
+    if (quotaProduct === normalizedProducts.ROSA) {
       return;
     }
 
-    Object.keys(quota).forEach((provider) => {
-      if (cloudProvider === provider || cloudProvider === 'any') {
-        Object.keys(quota[provider]).forEach((category) => {
-          if (infraCategory === category || infraCategory === 'any') {
-            quota[provider][category][machineType] = {
-              available,
-              cost: resource.cost,
-            };
+    /* eslint-disable no-param-reassign */
+    Object.entries(quota).forEach(([product, productQuota]) => {
+      if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
+        Object.entries(productQuota).forEach(([provider, providerQuota]) => {
+          if (cloudProvider === provider || cloudProvider === 'any') {
+            Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
+              if (infraCategory === category || infraCategory === 'any') {
+                categoryQuota[machineType] = {
+                  available,
+                  cost: resource.cost,
+                };
+              }
+            });
           }
         });
       }
     });
+    /* eslint-enable no-param-reassign */
   });
 };
+
+// TODO: Split the other data structures by product (https://issues.redhat.com/browse/SDA-3231).
+//    Or replace the whole thing with generic query mechanism treating all types symmetrically.
 
 const processStorageQuota = (storageQuota, item, resources) => {
   const quota = storageQuota;
@@ -104,11 +118,13 @@ const processStorageQuota = (storageQuota, item, resources) => {
   resources.forEach((resource) => {
     const cloudProvider = resource.cloud_provider;
 
-    Object.keys(quota).forEach((provider) => {
+    /* eslint-disable no-param-reassign */
+    Object.entries(quota).forEach(([provider, providerQuota]) => {
       if (cloudProvider === provider || cloudProvider === 'any') {
-        quota[provider].available += available;
+        providerQuota.available += available;
       }
     });
+    /* eslint-enable no-param-reassign */
   });
 };
 
@@ -119,11 +135,13 @@ const processLoadBalancerQuota = (loadBalancerQuota, item, resources) => {
   resources.forEach((resource) => {
     const cloudProvider = resource.cloud_provider;
 
-    Object.keys(quota).forEach((provider) => {
+    /* eslint-disable no-param-reassign */
+    Object.entries(quota).forEach(([provider, providerQuota]) => {
       if (cloudProvider === provider || cloudProvider === 'any') {
-        quota[provider].available += available;
+        providerQuota.available += available;
       }
     });
+    /* eslint-enable no-param-reassign */
   });
 };
 
@@ -159,6 +177,13 @@ const emptyQuota = () => {
     aws: clustersQuotaByInfraAz(),
     gcp: clustersQuotaByInfraAz(),
   });
+  const clustersQuotaByProductProviderInfraAz = () => {
+    const result = {};
+    Object.keys(knownProducts).forEach((p) => {
+      result[p] = clustersQuotaByProviderInfraAz();
+    });
+    return result;
+  };
 
   const nodesQuotaByInfra = () => ({
     byoc: { available: 0 },
@@ -168,7 +193,13 @@ const emptyQuota = () => {
     aws: nodesQuotaByInfra(),
     gcp: nodesQuotaByInfra(),
   });
-
+  const nodesQuotaByProductProviderInfra = () => {
+    const result = {};
+    Object.keys(knownProducts).forEach((p) => {
+      result[p] = nodesQuotaByProviderInfra();
+    });
+    return result;
+  };
   const storageQuotaByProvider = () => ({
     aws: { available: 0 },
     gcp: { available: 0 },
@@ -180,8 +211,8 @@ const emptyQuota = () => {
   });
 
   return {
-    clustersQuota: clustersQuotaByProviderInfraAz(),
-    nodesQuota: nodesQuotaByProviderInfra(),
+    clustersQuota: clustersQuotaByProductProviderInfraAz(),
+    nodesQuota: nodesQuotaByProductProviderInfra(),
     storageQuota: storageQuotaByProvider(),
     loadBalancerQuota: loadBalancerQuotaByProvider(),
     addOnsQuota: {},

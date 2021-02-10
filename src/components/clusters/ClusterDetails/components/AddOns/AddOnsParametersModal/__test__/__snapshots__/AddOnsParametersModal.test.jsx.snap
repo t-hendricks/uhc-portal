@@ -19,7 +19,7 @@ exports[`<AddOnsParametersModal /> renders correctly 1`] = `
     >
       <Field
         component={[Function]}
-        disabled={false}
+        isDisabled={false}
         key="dummy item"
         name="parameters.dummy item"
         placeholder="dummy value"

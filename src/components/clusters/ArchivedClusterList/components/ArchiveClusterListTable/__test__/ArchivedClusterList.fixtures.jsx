@@ -1,3 +1,5 @@
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
+
 const invalidateClusters = jest.fn();
 const fetchClusters = jest.fn();
 const setSorting = jest.fn();
@@ -17,9 +19,7 @@ const clusters = [
     kind: 'Subscription',
     href: '/api/accounts_mgmt/v1/subscriptions/1HAtguRKqqlQYCSFk14uwMl6g6p',
     plan: {
-      id: 'OCP',
-      kind: 'Plan',
-      href: '/api/accounts_mgmt/v1/plans/OCP',
+      id: normalizedProducts.OCP,
     },
     cluster_id: '1HAtdkNPWql68fuOI7KvuyM4OTp',
     organization_id: '1HAIjRf0KAoWykFD2gexUhfngd0',

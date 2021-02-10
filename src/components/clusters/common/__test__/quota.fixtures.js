@@ -1,14 +1,16 @@
-// Fragments of processed quota objects
+// Fragments of processed quotaList state
 
 const rhInfraClusterQuota = {
   clustersQuota: {
-    aws: {
-      rhInfra: {
-        multiAz: {
-          'mem.small': 5,
-        },
-        singleAz: {
-          'mem.small': 0,
+    OSD: {
+      aws: {
+        rhInfra: {
+          multiAz: {
+            'mem.small': 5,
+          },
+          singleAz: {
+            'mem.small': 0,
+          },
         },
       },
     },
@@ -17,28 +19,32 @@ const rhInfraClusterQuota = {
 
 const awsCCSClustersWithNodesQuota = {
   clustersQuota: {
-    aws: {
-      rhInfra: {
-        singleAz: { available: 0 },
-        multiAz: { available: 0 },
-        totalAvailable: 0,
-      },
-      byoc: {
-        singleAz: { available: 0 },
-        multiAz: {
-          'mem.small': 5,
-          available: 5,
+    OSD: {
+      aws: {
+        rhInfra: {
+          singleAz: { available: 0 },
+          multiAz: { available: 0 },
+          totalAvailable: 0,
         },
-        totalAvailable: 5,
+        byoc: {
+          singleAz: { available: 0 },
+          multiAz: {
+            'mem.small': 5,
+            available: 5,
+          },
+          totalAvailable: 5,
+        },
       },
     },
   },
   nodesQuota: {
-    aws: {
-      byoc: {
-        'mem.small': {
-          available: 12,
-          cost: 4,
+    OSD: {
+      aws: {
+        byoc: {
+          'mem.small': {
+            available: 12,
+            cost: 4,
+          },
         },
       },
     },
@@ -47,33 +53,39 @@ const awsCCSClustersWithNodesQuota = {
 
 const awsCCSClustersWithSingleNodeQuota = {
   clustersQuota: {
-    aws: {
-      rhInfra: {
-        singleAz: { available: 0 },
-        multiAz: { available: 0 },
-        totalAvailable: 0,
-      },
-      byoc: {
-        singleAz: { available: 0 },
-        multiAz: {
-          'mem.small': 5,
-          available: 5,
+    OSD: {
+      aws: {
+        rhInfra: {
+          singleAz: { available: 0 },
+          multiAz: { available: 0 },
+          totalAvailable: 0,
         },
-        totalAvailable: 5,
+        byoc: {
+          singleAz: { available: 0 },
+          multiAz: {
+            'mem.small': 5,
+            available: 5,
+          },
+          totalAvailable: 5,
+        },
       },
     },
   },
   nodesQuota: {
-    aws: {
-      byoc: {
-        'mem.small': {
-          available: 4,
-          cost: 4,
+    OSD: {
+      aws: {
+        byoc: {
+          'mem.small': {
+            available: 4,
+            cost: 4,
+          },
         },
       },
     },
   },
 };
+
+// Values for `clustersQuota` prop passed down by CreateOSDPage.
 
 const awsByocRhInfraGcpRhInfraClustersQuota = {
   hasOsdQuota: true,

@@ -129,13 +129,14 @@ class MachinePools extends React.Component {
     ];
 
     const getMachinePoolRow = (machinePool, isExpandableRow) => {
+      const nodesCount = machinePool.desired || machinePool.replicas || (machinePool.autoscaling && `Min: ${machinePool.autoscaling.min_replicas}, Max: ${machinePool.autoscaling.max_replicas}`);
       const row = (
         {
           cells: [
             machinePool.id,
             machinePool.instance_type,
             machinePool.availability_zones?.join(', '),
-            `${machinePool.desired || machinePool.replicas}`,
+            nodesCount,
           ],
           key: machinePool.id,
           machinePool,

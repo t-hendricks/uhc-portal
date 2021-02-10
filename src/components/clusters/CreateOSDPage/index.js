@@ -15,7 +15,7 @@ import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/helpers';
 
 import {
-  hasOSDQuotaSelector,
+  hasManagedQuotaSelector,
   hasAwsQuotaSelector,
   hasGcpQuotaSelector,
   awsQuotaSelector,
@@ -59,11 +59,11 @@ const mapStateToProps = (state, ownProps) => {
     loadBalancerValues: state.loadBalancerValues,
 
     clustersQuota: {
-      hasOsdQuota: hasOSDQuotaSelector(state),
-      hasAwsQuota: hasAwsQuotaSelector(state),
-      hasGcpQuota: hasGcpQuotaSelector(state),
-      aws: awsQuotaSelector(state),
-      gcp: gcpQuotaSelector(state),
+      hasOsdQuota: hasManagedQuotaSelector(state, ownProps.product),
+      hasAwsQuota: hasAwsQuotaSelector(state, ownProps.product),
+      hasGcpQuota: hasGcpQuotaSelector(state, ownProps.product),
+      aws: awsQuotaSelector(state, ownProps.product),
+      gcp: gcpQuotaSelector(state, ownProps.product),
     },
 
     canEnableEtcdEncryption: canEnableEtcdSelector(state),
@@ -124,7 +124,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
     if (ownProps.product) {
       clusterRequest.product = {
-        id: ownProps.product,
+        id: ownProps.product.toLowerCase(),
       };
     }
     if (formData.network_configuration_toggle === 'advanced') {

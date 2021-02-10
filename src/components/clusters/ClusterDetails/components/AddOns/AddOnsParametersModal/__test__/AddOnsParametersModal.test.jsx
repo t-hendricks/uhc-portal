@@ -66,7 +66,7 @@ describe('<AddOnsParametersModal />', () => {
   });
 
   it('expect addon field to be enabled on create form', () => {
-    expect(wrapper.find(Field).props().disabled).toBeFalsy();
+    expect(wrapper.find(Field).props().isDisabled).toBeFalsy();
   });
 
   it('expect addon field placeholder to equal default value', () => {
@@ -110,7 +110,7 @@ describe('<AddOnsParametersModal />', () => {
     };
     const isUpdateForm = true;
     wrapper.setProps({ addOn, isUpdateForm }, () => {
-      expect(wrapper.find(Field).props().disabled).toBeTruthy();
+      expect(wrapper.find(Field).props().isDisabled).toBeTruthy();
     });
   });
 });

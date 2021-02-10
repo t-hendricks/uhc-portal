@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, FormGroup, Button } from '@patternfly/react-core';
+import { Button, Form, FormGroup } from '@patternfly/react-core';
 
 import { Field } from 'redux-form';
 import { LevelUpAltIcon } from '@patternfly/react-icons';
 import Modal from '../../../../../common/Modal/Modal';
 import { hasParameters } from '../AddOnsHelper';
-import { ReduxVerticalFormGroup } from '../../../../../common/ReduxFormComponents';
-import { required } from '../../../../../../common/validators';
+import { ReduxCheckbox, ReduxVerticalFormGroup } from '../../../../../common/ReduxFormComponents';
+import { required, validateNumericInput } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
 
 import '../AddOns.scss';
@@ -29,8 +29,11 @@ class AddOnsParametersModal extends Component {
 
   validationsForParameterField = (param) => {
     const validations = [];
-    if (param.required) {
+    if (param.required && param.value_type !== 'boolean') {
       validations.push(required);
+    }
+    if (param.value_type === 'number') {
+      validations.push(validateNumericInput);
     }
     return validations;
   };
@@ -50,7 +53,7 @@ class AddOnsParametersModal extends Component {
       return param.default_value;
     }
     return '';
-  }
+  };
 
   getHelpText = (param) => {
     const { isUpdateForm } = this.props;
@@ -64,12 +67,49 @@ class AddOnsParametersModal extends Component {
     }
     // on update with no default value set, show description and example
     return param.description;
-  }
+  };
 
-  setParamValue = (param) => {
+  setDefaultParamValue = (param) => {
     const { change } = this.props;
-    change(`parameters.${param.id}`, `${param.default_value}`);
-  }
+    let paramValue = param.default_value;
+    if (param.value_type === 'boolean') {
+      paramValue = paramValue === 'true';
+    }
+    change(`parameters.${param.id}`, paramValue);
+  };
+
+  getFieldProps = (param) => {
+    switch (param.value_type) {
+      case 'number':
+        return ({
+          component: ReduxVerticalFormGroup,
+          type: 'text',
+        });
+      case 'boolean':
+        return ({
+          component: ReduxCheckbox,
+        });
+      default:
+        return ({
+          component: ReduxVerticalFormGroup,
+          type: 'text',
+        });
+    }
+  };
+
+  fieldForParam = param => (
+    <Field
+      {...this.getFieldProps(param)}
+      key={param.id}
+      name={`parameters.${param.id}`}
+      label={param.name}
+      placeholder={this.getParamDefault(param)}
+      isRequired={param.required}
+      isDisabled={this.isFieldDisabled(param)}
+      helpText={this.getHelpText(param)}
+      validate={this.validationsForParameterField(param)}
+    />
+  );
 
   render() {
     const {
@@ -84,64 +124,52 @@ class AddOnsParametersModal extends Component {
     const isPending = submitClusterAddOnResponse.pending;
 
     return isOpen && (
-    <Modal
-      title={`Configure ${addOn.name}`}
-      width={810}
-      variant="large"
-      onClose={this.handleClose}
-      primaryText={isUpdateForm ? 'Update' : 'Install'}
-      secondaryText="Cancel"
-      onPrimaryClick={handleSubmit}
-      onSecondaryClick={this.handleClose}
-      isPrimaryDisabled={isUpdateForm && pristine}
-      isPending={isPending}
-    >
+      <Modal
+        title={`Configure ${addOn.name}`}
+        width={810}
+        variant="large"
+        onClose={this.handleClose}
+        primaryText={isUpdateForm ? 'Update' : 'Install'}
+        secondaryText="Cancel"
+        onPrimaryClick={handleSubmit}
+        onSecondaryClick={this.handleClose}
+        isPrimaryDisabled={isUpdateForm && pristine}
+        isPending={isPending}
+      >
 
-      { submitClusterAddOnResponse.error && (
-        <ErrorBox message="Error adding add-ons" response={submitClusterAddOnResponse} />
-      )}
+        {submitClusterAddOnResponse.error && (
+          <ErrorBox message="Error adding add-ons" response={submitClusterAddOnResponse} />
+        )}
 
-      <Form>
-        {hasParameters(addOn) && addOn.parameters.items.map(param => (
-          <FormGroup
-            key={param.id}
-          >
-            <Field
+        <Form>
+          {hasParameters(addOn) && addOn.parameters.items.map(param => (
+            <FormGroup
               key={param.id}
-              component={ReduxVerticalFormGroup}
-              name={`parameters.${param.id}`}
-              label={param.name}
-              type="text"
-              placeholder={this.getParamDefault(param)}
-              validate={this.validationsForParameterField(param)}
-              isRequired={param.required}
-              disabled={this.isFieldDisabled(param)}
-              helpText={this.getHelpText(param)}
-            />
+            >
+              {this.fieldForParam(param)}
+              {
+                ((isUpdateForm && param.editable && param.default_value)
+                  || (!isUpdateForm && param.default_value))
+                && (
+                  <Button
+                    onClick={() => this.setDefaultParamValue(param)}
+                    variant="link"
+                    icon={<LevelUpAltIcon />}
+                    iconPosition="right"
+                    className="addon-parameter-default-button"
+                  >
+                    Use default
+                    {' '}
+                    {param.default_value}
+                  </Button>
+                )
+              }
 
-            {
-          ((isUpdateForm && param.editable && param.default_value)
-           || (!isUpdateForm && param.default_value))
-          && (
-          <Button
-            onClick={() => this.setParamValue(param)}
-            variant="link"
-            icon={<LevelUpAltIcon />}
-            iconPosition="right"
-            className="addon-parameter-default-button"
-          >
-                  Use default
-            {' '}
-            {param.default_value}
-          </Button>
-          )
-}
+            </FormGroup>
+          ))}
+        </Form>
 
-          </FormGroup>
-        ))}
-      </Form>
-
-    </Modal>
+      </Modal>
     );
   }
 }

@@ -11,7 +11,7 @@ import {
   Button,
 } from '@patternfly/react-core';
 import { StarIcon } from '@patternfly/react-icons';
-import { versionRegEx } from '../../clusterUpgardeHelpers';
+import { versionRegEx } from '../../../../../../common/versionComparator';
 import ExternalLink from '../../../../../common/ExternalLink';
 
 const getReleaseNotesLink = (version) => {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SandboxTab /> renders correctly 1`] = `
+exports[`<LocalTab /> renders correctly 1`] = `
 <Fragment>
   <PageSection
     className="ocm-instructions-crc__card"

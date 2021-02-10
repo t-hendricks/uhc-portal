@@ -76,7 +76,7 @@ class UpgradeScheduleSelection extends React.Component {
           {' '}
           Use the API to set the schedule, or
           {' '}
-          <Button variant="link" isInline onClick={() => input.onChange('0 0 * * 0')}>reset the schedule</Button>
+          <Button variant="link" isInline onClick={() => input.onChange('')}>reset the schedule</Button>
           .
         </FormGroup>
       );
@@ -112,6 +112,7 @@ class UpgradeScheduleSelection extends React.Component {
               onSelect={this.onDaySelect}
               isDisabled={isDisabled}
             >
+              <SelectOption isPlaceholder value="Select day" />
               {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, idx) => (
                 <SelectOption key={day} value={idx}>
                   {day}
@@ -127,6 +128,7 @@ class UpgradeScheduleSelection extends React.Component {
               onSelect={this.onHourSelect}
               isDisabled={isDisabled}
             >
+              <SelectOption isPlaceholder value="Select hour" />
               {makeHourList()}
             </Select>
           </GridItem>

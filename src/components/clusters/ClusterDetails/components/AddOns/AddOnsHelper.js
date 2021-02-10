@@ -1,7 +1,11 @@
 import get from 'lodash/get';
 import has from 'lodash/has';
 
-const supportsFreeAddOns = cluster => ['osd', 'moa', 'rosa'].includes((cluster.product.id).toLowerCase());
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+
+const supportsFreeAddOns = cluster => (
+  [normalizedProducts.OSD, normalizedProducts.ROSA].includes(cluster.product.id)
+);
 
 // Add-ons with 0 resource cost are free for OSD/ROSA clusters
 const isFreeAddOn = (addOn, cluster) => {
@@ -59,7 +63,7 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
   }
 
   return addOns.items.filter(addOn => isAvailable(addOn, cluster, organization, quota)
-                             || isInstalled(addOn, clusterAddOns));
+    || isInstalled(addOn, clusterAddOns));
 };
 
 const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;
@@ -71,13 +75,26 @@ const getParameter = (addOn, paramID) => {
   return undefined;
 };
 
+const getParameterValue = (addOnInstallation, paramID) => {
+  const param = getParameter(addOnInstallation, paramID);
+  if (param) {
+    return param.value;
+  }
+  return undefined;
+};
+
 const parameterValuesForEditing = (addOnInstallation, addOn) => {
   const vals = { parameters: {} };
-  if (hasParameters(addOnInstallation) && hasParameters(addOn)) {
-    vals.parameters = Object.entries(addOnInstallation.parameters.items).reduce((acc, curr) => {
-      if (getParameter(addOn, curr[1].id)) {
+  if (hasParameters(addOn)) {
+    vals.parameters = Object.values(addOn.parameters.items).reduce((acc, curr) => {
+      let paramValue = getParameterValue(addOnInstallation, curr.id);
+      if (curr.value_type === 'boolean') {
+        // Ensure existing boolean value is returned as a boolean, and always return false otherwise
+        paramValue = paramValue === 'true';
+      }
+      if (paramValue !== undefined) {
         // eslint-disable-next-line no-param-reassign
-        acc[curr[1].id] = curr[1].value;
+        acc[curr.id] = paramValue;
       }
       return acc;
     }, {});

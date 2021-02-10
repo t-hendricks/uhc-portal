@@ -1,3 +1,5 @@
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
+
 const match = { params: { id: '1msoogsgTLQ4PePjrTOt3UqvMzX' } };
 const funcs = () => ({
   history: {
@@ -242,9 +244,7 @@ const clusterDetails = {
     },
     health_state: 'healthy',
     product: {
-      kind: 'ProductLink',
-      id: 'osd',
-      href: '/api/clusters_mgmt/v1/products/osd',
+      id: normalizedProducts.OSD,
     },
     status: {
       state: 'ready',
@@ -592,7 +592,7 @@ const OCPClusterDetails = {
       updated_at: '2019-01-02T18:28:14.851121Z',
     },
     product: {
-      id: 'ocp',
+      id: normalizedProducts.OCP,
     },
     status: {
       state: 'ready',

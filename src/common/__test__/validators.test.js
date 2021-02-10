@@ -18,6 +18,7 @@ import validators, {
   awsNumericAccountID,
   validateServiceAccountObject,
   validateUniqueAZ,
+  validateNumericInput,
 } from '../validators';
 import fixtures from './validators.fixtures';
 
@@ -334,16 +335,16 @@ test('Field is a valid issuer', () => {
 });
 
 test('Field contains a numeric string', () => {
-  expect(validators.validateNumericInput()).toBe(undefined);
-  expect(validators.validateNumericInput('8.8', { allowDecimal: true })).toBe(undefined);
-  expect(validators.validateNumericInput('8.8')).toBe('Input must be an integer.');
-  expect(validators.validateNumericInput('-10')).toBe('Input must be a positive number.');
-  expect(validators.validateNumericInput('-10', { allowNeg: true })).toBe(undefined);
-  expect(validators.validateNumericInput('asdf')).toBe('Input must be a number.');
-  expect(validators.validateNumericInput('0', { allowZero: true })).toBe(undefined);
-  expect(validators.validateNumericInput('1000', { max: 999 })).toBe('Input cannot be more than 999.');
-  expect(validators.validateNumericInput('999', { max: 999 })).toBe(undefined);
-  expect(validators.validateNumericInput(Number.MAX_SAFE_INTEGER)).toBe(undefined);
+  expect(validateNumericInput()).toBe(undefined);
+  expect(validateNumericInput('8.8', { allowDecimal: true })).toBe(undefined);
+  expect(validateNumericInput('8.8')).toBe('Input must be an integer.');
+  expect(validateNumericInput('-10')).toBe('Input must be a positive number.');
+  expect(validateNumericInput('-10', { allowNeg: true })).toBe(undefined);
+  expect(validateNumericInput('asdf')).toBe('Input must be a number.');
+  expect(validateNumericInput('0', { allowZero: true })).toBe(undefined);
+  expect(validateNumericInput('1000', { max: 999 })).toBe('Input cannot be more than 999.');
+  expect(validateNumericInput('999', { max: 999 })).toBe(undefined);
+  expect(validateNumericInput(Number.MAX_SAFE_INTEGER)).toBe(undefined);
 });
 
 test('Field is a valid list of github teams', () => {
