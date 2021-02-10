@@ -55,6 +55,13 @@ const editSubscription = (subscriptionID, data) => apiRequest({
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}`,
 });
 
+const registerDisconnected = data => apiRequest({
+  method: 'post',
+  url: '/api/accounts_mgmt/v1/subscriptions',
+  data,
+});
+
+
 const getNotificationContacts = subscriptionID => apiRequest({
   method: 'get',
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/notification_contacts`,
@@ -113,6 +120,7 @@ const accountsService = {
   deleteNotificationContact,
   getOrganizationQuota,
   editSubscription,
+  registerDisconnected,
   getRequest,
   getFeature,
   getSupportCases,
