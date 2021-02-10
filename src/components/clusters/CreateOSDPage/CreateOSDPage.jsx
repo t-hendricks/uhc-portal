@@ -121,6 +121,7 @@ class CreateOSDPage extends React.Component {
       organization,
       cloudProviders,
       product,
+      osdTrialFeature,
       loadBalancerValues,
       persistentStorageValues,
       isErrorModalOpen,
@@ -141,21 +142,30 @@ class CreateOSDPage extends React.Component {
       autoScaleMaxNodesValue,
     } = this.props;
 
+    const selectedOSDTrial = product === normalizedProducts.OSDTrial;
+    const orgWasFetched = !organization.pending && organization.fulfilled;
+
     if (createClusterResponse.fulfilled) {
       return (
         <Redirect to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />
       );
     }
 
-    if (!organization.pending && organization.fulfilled && !clustersQuota.hasOsdQuota) {
+    if (orgWasFetched && !clustersQuota.hasOsdQuota) {
       return (
         <Redirect to="/create" />
       );
     }
 
-    if (!organization.pending && organization.fulfilled) {
+    if (orgWasFetched) {
       if ((cloudProviderID === 'gcp' && !clustersQuota.hasGcpQuota) || (cloudProviderID === 'aws' && !clustersQuota.hasAwsQuota)) {
         return (<Redirect to="/create/osd" />);
+      }
+      const noTrialQuota = (selectedOSDTrial && (!clustersQuota.hasOsdQuota || !osdTrialFeature));
+      if (noTrialQuota) {
+        return (
+          <Redirect to="/create" />
+        );
       }
     }
 
@@ -365,6 +375,7 @@ CreateOSDPage.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  osdTrialFeature: PropTypes.bool,
 };
 
 CreateOSDPage.defaultProps = {
