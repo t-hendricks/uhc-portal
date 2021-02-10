@@ -86,6 +86,8 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
       >
         <CloudTab
           hasOSDQuota={false}
+          hasOSDTrialQuota={false}
+          osdTrialFeature={false}
         />
       </Tab>
       <Tab
@@ -190,6 +192,8 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
       >
         <CloudTab
           hasOSDQuota={true}
+          hasOSDTrialQuota={false}
+          osdTrialFeature={false}
         />
       </Tab>
       <Tab
@@ -294,6 +298,8 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs cloud tab 1`]
       >
         <CloudTab
           hasOSDQuota={true}
+          hasOSDTrialQuota={false}
+          osdTrialFeature={false}
         />
       </Tab>
       <Tab
@@ -398,6 +404,8 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs datacenter ta
       >
         <CloudTab
           hasOSDQuota={true}
+          hasOSDTrialQuota={false}
+          osdTrialFeature={false}
         />
       </Tab>
       <Tab
@@ -502,6 +510,8 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs local tab 1`]
       >
         <CloudTab
           hasOSDQuota={true}
+          hasOSDTrialQuota={false}
+          osdTrialFeature={false}
         />
       </Tab>
       <Tab

@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 import CloudProviderSelection from './CloudProviderSelection';
 
@@ -14,6 +15,8 @@ const baseProps = {
   hasAwsQuota: false,
   // OSD quota is required for selection to render
   hasOSDQuota: false,
+  osdTrialFeature: false,
+  product: normalizedProducts.OSD,
 };
 
 describe('<CloudProviderSelection />', () => {
@@ -23,6 +26,22 @@ describe('<CloudProviderSelection />', () => {
         {...baseProps}
       />);
       expect(wrapper).toMatchSnapshot();
+    });
+
+    describe('and osd trial feature', () => {
+      it('renders a redirect', () => {
+        const props = {
+          ...baseProps,
+          osdTrialFeature: true,
+          product: normalizedProducts.OSDTrial,
+        };
+        const wrapper = shallow(<CloudProviderSelection
+          {...props}
+        />);
+        const redirect = wrapper.find('Redirect');
+        expect(redirect.length).toBe(1);
+        expect(redirect.props().to).toEqual('/create');
+      });
     });
   });
 
@@ -37,6 +56,21 @@ describe('<CloudProviderSelection />', () => {
         {...props}
       />);
       expect(wrapper).toMatchSnapshot();
+    });
+
+    describe('and osd trial feature', () => {
+      it('renders correctly', () => {
+        const props = {
+          ...baseProps,
+          hasAwsQuota: true,
+          hasOSDQuota: true,
+          osdTrialFeature: true,
+        };
+        const wrapper = shallow(<CloudProviderSelection
+          {...props}
+        />);
+        expect(wrapper).toMatchSnapshot();
+      });
     });
   });
 
