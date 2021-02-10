@@ -100,19 +100,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
                 "m5.xlarge",
                 "us-east-1a",
                 Object {
-                  "title": <React.Fragment>
-                    <Popover
-                      aria-label="help"
-                      bodyContent="Minimum and maximum node totals are calculated based on the number of zones."
-                    >
-                      <Button
-                        className="nodes-count"
-                        variant="link"
-                      >
-                        Min: 1, Max: 2
-                      </Button>
-                    </Popover>
-                  </React.Fragment>,
+                  "title": "Min: 1, Max: 2",
                 },
                 "Enabled",
               ],

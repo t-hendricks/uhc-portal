@@ -143,18 +143,24 @@ class MachinePools extends React.Component {
 
     const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
       const autoscalingEnabled = machinePool.autoscaling;
-      const nodes = autoscalingEnabled
-        ? (
+      let nodes;
+
+      if (autoscalingEnabled) {
+        const autoScaleNodesText = `Min: ${machinePool.autoscaling.min_replicas}, Max: ${machinePool.autoscaling.max_replicas}`;
+        nodes = cluster.multi_az ? (
           <>
             <Popover
               bodyContent="Minimum and maximum node totals are calculated based on the number of zones."
               aria-label="help"
             >
-              <Button className="nodes-count" variant="link">{`Min: ${machinePool.autoscaling.min_replicas}, Max: ${machinePool.autoscaling.max_replicas}`}</Button>
+              <Button className="nodes-count" variant="link">{autoScaleNodesText}</Button>
             </Popover>
           </>
-        )
-        : `${machinePool.desired || machinePool.replicas}`;
+        ) : autoScaleNodesText;
+      } else {
+        nodes = `${machinePool.desired || machinePool.replicas}`;
+      }
+
       const row = (
         {
           cells: [
