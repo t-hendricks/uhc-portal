@@ -19,6 +19,21 @@ describe('machinePoolsSelector', () => {
     },
   };
 
+  const stateWithAutoscaleCapability = {
+    userProfile: {
+      organization: {
+        details: {
+          capabilities: [
+            { name: 'capability.account.create_moa_clusters', value: 'true', inherited: false },
+            { name: 'capability.account.allow_etcd_encryption', value: 'false', inherited: false },
+            { name: 'capability.organization.autoscale_clusters', value: 'true', inherited: false },
+            { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: false },
+          ],
+        },
+      },
+    },
+  };
+
   it('should return false when quota is not fetched yet', () => {
     const organiztionNotFulfilledState = {
       userProfile: { organization: { ...baseRequestState } },
@@ -38,41 +53,28 @@ describe('machinePoolsSelector', () => {
   });
 
   it('should return true when org users can set autoscaling', () => {
-    const stateWithCapability = {
-      userProfile: {
-        organization: {
-          details: {
-            capabilities: [
-              { name: 'capability.account.create_moa_clusters', value: 'true', inherited: false },
-              { name: 'capability.account.allow_etcd_encryption', value: 'false', inherited: false },
-              { name: 'capability.organization.autoscale_clusters', value: 'true', inherited: false },
-              { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: false },
-            ],
-          },
-        },
-      },
-    };
-    const result = hasOrgLevelAutoscaleCapability(stateWithCapability, normalizedProducts.OSD, 'aws');
+    const result = hasOrgLevelAutoscaleCapability(
+      stateWithAutoscaleCapability,
+      normalizedProducts.OSD,
+    );
     expect(result).toBe(true);
   });
 
   it('should return false when org users cannot set autoscaling', () => {
-    const result = hasOrgLevelAutoscaleCapability(stateWithoutAutoscaleCapability, normalizedProducts.OSD, 'aws');
+    const result = hasOrgLevelAutoscaleCapability(
+      stateWithoutAutoscaleCapability,
+      normalizedProducts.OSD,
+    );
     expect(result).toBe(false);
   });
 
   it('should allow autoscaling for ROSA clusters', () => {
-    const result = canAutoScaleSelector({}, normalizedProducts.ROSA, 'aws');
+    const result = canAutoScaleSelector({}, normalizedProducts.ROSA);
     expect(result).toBe(true);
   });
 
   it('should not allow autoscaling', () => {
-    const result = canAutoScaleSelector(stateWithoutAutoscaleCapability, normalizedProducts.OCP, 'aws');
-    expect(result).toBe(false);
-  });
-
-  it('should not allow autoscaling for gcp clusters', () => {
-    const result = hasOrgLevelAutoscaleCapability(stateWithoutAutoscaleCapability, normalizedProducts.OSD, 'gcp');
+    const result = canAutoScaleSelector(stateWithoutAutoscaleCapability, normalizedProducts.OCP);
     expect(result).toBe(false);
   });
 });

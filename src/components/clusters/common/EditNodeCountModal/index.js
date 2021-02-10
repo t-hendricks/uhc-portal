@@ -65,7 +65,7 @@ const mapStateToProps = (state) => {
     isByoc: cluster?.ccs?.enabled,
     product: get(cluster, 'subscription.plan.id', ''),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
-    canAutoScale: canAutoScaleSelector(state, get(cluster, 'product.id', ''), cloudProviderID),
+    canAutoScale: canAutoScaleSelector(state, get(cluster, 'product.id', '')),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
   };
