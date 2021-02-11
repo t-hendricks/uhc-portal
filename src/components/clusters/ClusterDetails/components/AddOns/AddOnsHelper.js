@@ -90,7 +90,7 @@ const parameterValuesForEditing = (addOnInstallation, addOn) => {
       let paramValue = getParameterValue(addOnInstallation, curr.id);
       if (curr.value_type === 'boolean') {
         // Ensure existing boolean value is returned as a boolean, and always return false otherwise
-        paramValue = paramValue === 'true';
+        paramValue = (paramValue || '').toLowerCase() === 'true';
       }
       if (paramValue !== undefined) {
         // eslint-disable-next-line no-param-reassign
