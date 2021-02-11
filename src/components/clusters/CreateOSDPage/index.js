@@ -3,6 +3,7 @@ import { reduxForm, reset, formValueSelector } from 'redux-form';
 import pick from 'lodash/pick';
 import isEmpty from 'lodash/isEmpty';
 
+import config from '../../../config';
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
@@ -146,6 +147,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         id: ownProps.product.toLowerCase(),
       };
     }
+    if (config.fakeOSD) {
+      clusterRequest.properties = { fake_cluster: 'true' };
+    }
+
+
     if (formData.network_configuration_toggle === 'advanced') {
       clusterRequest.network = {
         machine_cidr: formData.network_machine_cidr,

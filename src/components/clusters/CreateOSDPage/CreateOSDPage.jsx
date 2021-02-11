@@ -16,8 +16,9 @@ import {
   EmptyState,
   Stack,
   StackItem,
+  Banner,
 } from '@patternfly/react-core';
-
+import config from '../../../config';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import { shouldRefetchQuota } from '../../../common/helpers';
 
@@ -261,6 +262,16 @@ class CreateOSDPage extends React.Component {
               {/* Form */}
               <Form onSubmit={handleSubmit}>
                 <Grid hasGutter>
+                  {config.fakeOSD && (
+                    <>
+                      <GridItem span={8}>
+                        <Banner variant="warning">
+                          On submit, a fake OSD cluster will be created.
+                        </Banner>
+                      </GridItem>
+                      <GridItem span={4} />
+                    </>
+                  )}
                   <CreateOSDForm
                     pending={createClusterResponse.pending}
                     change={change}

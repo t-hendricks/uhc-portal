@@ -7,7 +7,9 @@ const configs = {};
 configs.production = import(/* webpackMode: "eager" */ './config/production.json');
 configs.stageSSO = import(/* webpackMode: "eager" */ './config/ci.json');
 
-if (APP_BETA || APP_DEVMODE || APP_API_ENV !== 'production') {
+const isDevOrStaging = APP_BETA || APP_DEVMODE || APP_API_ENV !== 'production';
+
+if (isDevOrStaging) {
   configs.staging = import(/* webpackMode: "eager" */ './config/staging.json');
   configs.integration = import(/* webpackMode: "eager" */ './config/integration.json');
   configs.integrationV3 = import(/* webpackMode: "eager" */ './config/integrationV3.json');
@@ -33,6 +35,17 @@ const parseEnvQueryParam = () => {
   return ret;
 };
 
+const parseFakeQueryParam = () => {
+  let ret = false;
+  window.location.search.substring(1).split('&').forEach((queryString) => {
+    const [key, val] = queryString.split('=');
+    if (key === 'fake' && val === 'true') {
+      ret = true;
+    }
+  });
+  return ret;
+};
+
 
 const config = {
   configData: {},
@@ -40,6 +53,9 @@ const config = {
   fetchConfig() {
     const that = this;
     return new Promise((resolve) => {
+      if (parseFakeQueryParam() && isDevOrStaging) {
+        that.fakeOSD = true;
+      }
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
         configs[queryEnv].then((data) => {

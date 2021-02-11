@@ -36,7 +36,7 @@ class LoginPage extends Page {
   }
 
   async open() {
-    return super.open('/openshift');
+    return super.open('/openshift?fake=true');
   }
 }
 export default new LoginPage();
