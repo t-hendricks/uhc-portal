@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterLocationLabel /> renders correctly when providers have been fetched 1`] = `
+<Fragment>
+  Bare Metal
+   (some-region)
+</Fragment>
+`;
+
+exports[`<ClusterLocationLabel /> renders correctly when region is not known 1`] = `
+<Fragment>
+  GCP
+</Fragment>
+`;
+
+exports[`<ClusterLocationLabel /> renders correctly when there's no provider data available 1`] = `
+<Fragment>
+  AWS
+   (us-east-1)
+</Fragment>
+`;
