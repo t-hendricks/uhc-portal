@@ -130,7 +130,7 @@ class EditNodeCountModal extends Component {
             {' '}
             {nodes}
             {' '}
-            nodes, the cluster&apos;s master nodes have
+            nodes, the cluster&apos;s control plane nodes have
             to be manually resized by a Red Hat SRE.
             This process will take about 24 hours.
           </p>

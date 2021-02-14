@@ -31,7 +31,7 @@ class EditClusterRoutersCard extends React.Component {
 
   render() {
     const {
-      masterAPIEndpoint,
+      controlPlaneAPIEndpoint,
       handleSubmit,
       pristine,
       valid,
@@ -63,11 +63,11 @@ class EditClusterRoutersCard extends React.Component {
                 <GridItem md={9}>
                   <Stack hasGutter>
                     <StackItem>
-                      <Title headingLevel="h1" size="md" className="card-title">Master API endpoint</Title>
+                      <Title headingLevel="h1" size="md" className="card-title">Control Plane API endpoint</Title>
                     </StackItem>
                     <StackItem>
                       <ClipboardCopy isReadOnly>
-                        {masterAPIEndpoint}
+                        {controlPlaneAPIEndpoint}
                       </ClipboardCopy>
                     </StackItem>
                     <StackItem>
@@ -185,7 +185,7 @@ class EditClusterRoutersCard extends React.Component {
 EditClusterRoutersCard.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
-  masterAPIEndpoint: PropTypes.string.isRequired,
+  controlPlaneAPIEndpoint: PropTypes.string.isRequired,
   valid: PropTypes.bool.isRequired,
   pristine: PropTypes.bool.isRequired,
   reset: PropTypes.func.isRequired,

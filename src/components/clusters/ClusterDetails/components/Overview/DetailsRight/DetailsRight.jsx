@@ -36,14 +36,14 @@ function DetailsRight({
              && humanizeValueWithUnitGiB(cluster.storage_quota.value);
   const showVCPU = !isDisconnected && !hasSockets;
 
-  const masterActualNodes = get(cluster, 'metrics.nodes.master', '-');
-  const masterDesiredNodes = get(cluster, 'nodes.master', '-');
+  const controlPlaneActualNodes = get(cluster, 'metrics.nodes.master', '-');
+  const controlPlaneDesiredNodes = get(cluster, 'nodes.master', '-');
 
   const infraActualNodes = get(cluster, 'metrics.nodes.infra', '-');
   const infraDesiredNodes = get(cluster, 'nodes.infra', '-');
 
-  const computeActualNodes = get(cluster, 'metrics.nodes.compute', '-');
-  const computeDesiredNodes = totalDesiredComputeNodes || '-';
+  const workerActualNodes = get(cluster, 'metrics.nodes.compute', '-');
+  const workerDesiredNodes = totalDesiredComputeNodes || '-';
 
   return (
     <>
@@ -124,12 +124,12 @@ function DetailsRight({
                 <dl className="pf-l-stack">
                   <Flex>
                     <dt>
-                      Master:
+                      Control plane:
                       {' '}
                     </dt>
                     <dd>
-                      { masterActualNodes !== '-' || masterDesiredNodes !== '-'
-                        ? `${masterActualNodes}/${masterDesiredNodes}`
+                      { controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
+                        ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
                         : 'N/A'}
                     </dd>
                   </Flex>
@@ -150,12 +150,12 @@ function DetailsRight({
                   )}
                   <Flex>
                     <dt>
-                      Compute:
+                      Worker:
                       {' '}
                     </dt>
                     <dd>
-                      { computeActualNodes !== '-' || computeDesiredNodes !== '-'
-                        ? `${computeActualNodes}/${computeDesiredNodes}`
+                      { workerActualNodes !== '-' || workerDesiredNodes !== '-'
+                        ? `${workerActualNodes}/${workerDesiredNodes}`
                         : 'N/A'}
                     </dd>
                   </Flex>
@@ -174,7 +174,7 @@ function DetailsRight({
                   <dl className="pf-l-stack">
                     <Flex>
                       <dt>
-                        Master:
+                        Control Plane:
                         {' '}
                       </dt>
                       <dd>
@@ -196,7 +196,7 @@ function DetailsRight({
                     )}
                     <Flex>
                       <dt>
-                        Compute:
+                        Worker:
                         {' '}
                       </dt>
                       <dd>
