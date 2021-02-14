@@ -19,7 +19,7 @@ import {
 
 import { Link } from 'react-router-dom';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
-import ClusterLocationLabel from '../../common/ClusterLocationLabel/ClusterLocationLabel';
+import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import clusterStates, { getClusterStateAndDescription } from '../../common/clusterStates';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
