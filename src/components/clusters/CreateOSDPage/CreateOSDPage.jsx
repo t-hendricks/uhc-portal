@@ -234,15 +234,6 @@ class CreateOSDPage extends React.Component {
       );
     }
 
-    const loadingSpinner = createClusterResponse.pending ? (
-      <div className="form-loading-spinner">
-        <span>
-          Do not refresh this page. This request may take a moment...
-        </span>
-        <Spinner />
-      </div>
-    ) : null;
-
     const creationErrorModal = isErrorModalOpen && (
       <ErrorModal
         title="Error creating cluster"
@@ -284,7 +275,13 @@ class CreateOSDPage extends React.Component {
                   <GridItem>
                     <Split hasGutter className="create-osd-form-button-split">
                       <SplitItem>
-                        <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={createClusterResponse.pending}>
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          onClick={handleSubmit}
+                          isDisabled={createClusterResponse.pending}
+                          isLoading={createClusterResponse.peneding}
+                        >
                           Create cluster
                         </Button>
                       </SplitItem>
@@ -296,7 +293,7 @@ class CreateOSDPage extends React.Component {
                         </Link>
                       </SplitItem>
                       <SplitItem>
-                        {loadingSpinner}
+                        {createClusterResponse.pending && (<div className="form-loading-text">Do not refresh this page. This request may take a moment...</div>)}
                       </SplitItem>
                     </Split>
                   </GridItem>
