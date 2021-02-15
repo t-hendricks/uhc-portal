@@ -328,7 +328,7 @@ CreateOSDForm.propTypes = {
   closeModal: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   clustersQuota: PropTypes.shape({
-    hasOsdQuota: PropTypes.bool.isRequired,
+    hasProductQuota: PropTypes.bool.isRequired,
     aws: PropTypes.shape({
       byoc: PropTypes.shape({
         singleAz: PropTypes.object.isRequired,

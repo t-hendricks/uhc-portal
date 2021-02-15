@@ -14,7 +14,7 @@ const baseProps = {
   hasGcpQuota: false,
   hasAwsQuota: false,
   // OSD quota is required for selection to render
-  hasOSDQuota: false,
+  hasProductQuota: false,
   osdTrialFeature: false,
   product: normalizedProducts.OSD,
 };
@@ -50,7 +50,7 @@ describe('<CloudProviderSelection />', () => {
       const props = {
         ...baseProps,
         hasAwsQuota: true,
-        hasOSDQuota: true,
+        hasProductQuota: true,
       };
       const wrapper = shallow(<CloudProviderSelection
         {...props}
@@ -63,7 +63,7 @@ describe('<CloudProviderSelection />', () => {
         const props = {
           ...baseProps,
           hasAwsQuota: true,
-          hasOSDQuota: true,
+          hasProductQuota: true,
           osdTrialFeature: true,
         };
         const wrapper = shallow(<CloudProviderSelection
@@ -79,7 +79,7 @@ describe('<CloudProviderSelection />', () => {
       const props = {
         ...baseProps,
         hasGcpQuota: true,
-        hasOSDQuota: true,
+        hasProductQuota: true,
       };
       const wrapper = shallow(<CloudProviderSelection
         {...props}

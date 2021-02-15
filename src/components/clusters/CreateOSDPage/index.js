@@ -62,7 +62,7 @@ const mapStateToProps = (state, ownProps) => {
     loadBalancerValues: state.loadBalancerValues,
 
     clustersQuota: {
-      hasOsdQuota: hasManagedQuotaSelector(state, ownProps.product),
+      hasProductQuota: hasManagedQuotaSelector(state, ownProps.product),
       hasAwsQuota: hasAwsQuotaSelector(state, ownProps.product),
       hasGcpQuota: hasGcpQuotaSelector(state, ownProps.product),
       aws: awsQuotaSelector(state, ownProps.product),

@@ -151,7 +151,7 @@ class CreateOSDPage extends React.Component {
       );
     }
 
-    if (orgWasFetched && !clustersQuota.hasOsdQuota) {
+    if (orgWasFetched && !clustersQuota.hasProductQuota) {
       return (
         <Redirect to="/create" />
       );
@@ -161,7 +161,7 @@ class CreateOSDPage extends React.Component {
       if ((cloudProviderID === 'gcp' && !clustersQuota.hasGcpQuota) || (cloudProviderID === 'aws' && !clustersQuota.hasAwsQuota)) {
         return (<Redirect to="/create/osd" />);
       }
-      const noTrialQuota = (selectedOSDTrial && (!clustersQuota.hasOsdQuota || !osdTrialFeature));
+      const noTrialQuota = selectedOSDTrial && (!clustersQuota.hasProductQuota || !osdTrialFeature);
       if (noTrialQuota) {
         return (
           <Redirect to="/create" />
@@ -325,7 +325,7 @@ CreateOSDPage.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   clustersQuota: PropTypes.shape({
-    hasOsdQuota: PropTypes.bool.isRequired,
+    hasProductQuota: PropTypes.bool.isRequired,
     hasAwsQuota: PropTypes.bool.isRequired,
     hasGcpQuota: PropTypes.bool.isRequired,
     aws: PropTypes.shape({
