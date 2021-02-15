@@ -116,7 +116,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
                   },
                   "hasAwsQuota": true,
                   "hasGcpQuota": true,
-                  "hasOsdQuota": true,
+                  "hasProductQuota": true,
                 }
               }
               isBYOCModalOpen={false}

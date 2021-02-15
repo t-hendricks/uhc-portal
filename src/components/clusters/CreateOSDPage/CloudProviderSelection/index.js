@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => {
   const { product } = ownProps;
 
   return {
-    hasOSDQuota: hasManagedQuotaSelector(state, product),
+    hasProductQuota: hasManagedQuotaSelector(state, product),
     hasAwsQuota: hasAwsQuotaSelector(state, product),
     hasGcpQuota: hasGcpQuotaSelector(state, product),
     osdTrialFeature: state.features[OSD_TRIAL_FEATURE],

@@ -31,14 +31,14 @@ class CloudProviderSelection extends Component {
 
   render() {
     const {
-      hasOSDQuota, hasGcpQuota, hasAwsQuota, organization, osdTrialFeature, product,
+      hasProductQuota, hasGcpQuota, hasAwsQuota, organization, osdTrialFeature, product,
     } = this.props;
 
     const selectedOSDTrial = product === normalizedProducts.OSDTrial;
     const productSlug = product.toLowerCase();
 
     if (!organization.pending && (organization.fulfilled || organization.error)) {
-      const noTrialQuota = (selectedOSDTrial && (!hasOSDQuota || !osdTrialFeature));
+      const noTrialQuota = (selectedOSDTrial && (!hasProductQuota || !osdTrialFeature));
       if (noTrialQuota) {
         return (
           <Redirect to="/create" />
@@ -147,7 +147,7 @@ CloudProviderSelection.propTypes = {
   organization: PropTypes.object.isRequired,
   hasGcpQuota: PropTypes.bool.isRequired,
   hasAwsQuota: PropTypes.bool.isRequired,
-  hasOSDQuota: PropTypes.bool.isRequired,
+  hasProductQuota: PropTypes.bool.isRequired,
   osdTrialFeature: PropTypes.bool,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
 };
