@@ -57,7 +57,7 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
     <PageSection>
       <Stack hasGutter>
         <StackItem>
-          <Title headingLevel="h2" className="font-weight-light">
+          <Title headingLevel="h2">
             {assistedInstallerFeature ? 'Other datacenter options' : 'datacenter options'}
           </Title>
         </StackItem>
