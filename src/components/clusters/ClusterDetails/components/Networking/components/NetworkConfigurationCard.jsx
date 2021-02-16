@@ -7,9 +7,7 @@ import {
   DescriptionListTerm,
   DescriptionListGroup,
   DescriptionListDescription,
-  Title,
   CardBody,
-  CardHeader,
   CardTitle,
 } from '@patternfly/react-core';
 
@@ -18,11 +16,9 @@ import './NetworkConfigurationCard.scss';
 function NetworkConfigurationCard({ network }) {
   return (
     <Card className="ocm-c-networking-network-configuration__card">
-      <CardHeader className="ocm-c-networking-network-configuration__card--header">
-        <CardTitle>
-          <Title headingLevel="h2" size="md" className="card-title">Network configuration</Title>
-        </CardTitle>
-      </CardHeader>
+      <CardTitle>
+          Network configuration
+      </CardTitle>
       <CardBody className="ocm-c-networking-network-configuration__card--body">
         <>
           <DescriptionList>
