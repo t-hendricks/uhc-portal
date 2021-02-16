@@ -28,14 +28,15 @@ class AvailabilityZoneSelection extends React.Component {
   render() {
     const { isOpen } = this.state;
     const {
-      input, isDisabled, region, label, meta,
+      input, isDisabled, region, label, meta: { error, touched },
     } = this.props;
     return (
       <FormGroup
+        {...input}
         label={label}
         className="ocm-c-create-osd-az-select"
-        validated={meta.error ? 'error' : undefined}
-        helperTextInvalid={meta.dirty && meta.error}
+        validated={error ? 'error' : undefined}
+        helperTextInvalid={touched && error}
       >
         <Select
           isOpen={isOpen}
@@ -66,7 +67,7 @@ AvailabilityZoneSelection.propTypes = {
     onChange: PropTypes.func,
   }),
   meta: PropTypes.shape({
-    dirty: PropTypes.bool,
+    touched: PropTypes.bool,
     error: PropTypes.string,
   }),
 };
