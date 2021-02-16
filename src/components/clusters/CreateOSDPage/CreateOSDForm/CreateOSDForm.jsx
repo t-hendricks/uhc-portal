@@ -244,8 +244,8 @@ class CreateOSDForm extends React.Component {
         <GridItem span={12}>
           <Title headingLevel="h3">Scale</Title>
           <p>
-            The number and instance type of compute nodes in your cluster. After cluster creation
-            you will be able to change the number of compute nodes in your cluster, but you will
+            The number and instance type of worker nodes in your cluster. After cluster creation
+            you will be able to change the number of worker nodes in your cluster, but you will
             not be able to change the worker node instance type.
           </p>
         </GridItem>

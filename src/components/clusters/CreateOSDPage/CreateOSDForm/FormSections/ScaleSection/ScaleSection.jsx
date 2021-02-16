@@ -70,7 +70,7 @@ function ScaleSection({
       {/* Instance type */}
       <GridItem span={gridSpan}>
         <FormGroup
-          label="Compute node instance type"
+          label="Worker node instance type"
           isRequired
           fieldId="node_type"
           labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
@@ -110,14 +110,14 @@ function ScaleSection({
           {gridSpan === 9 && <GridItem span={3} />}
         </>
       )}
-      {/* Compute nodes */}
+      {/* Worker nodes */}
       { !autoscalingEnabled && (
         <>
           <GridItem span={4}>
             <Field
               component={NodeCountInput}
               name="nodes_compute"
-              label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
+              label={isMultiAz ? 'Worker node count (per zone)' : 'Worker node count'}
               isMultiAz={isMultiAz}
               isByoc={isBYOC}
               machineType={machineType}

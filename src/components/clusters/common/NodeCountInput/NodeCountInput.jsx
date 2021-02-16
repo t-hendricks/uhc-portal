@@ -113,7 +113,7 @@ class NodeCountInput extends React.Component {
 
     const formSelect = (
       <FormSelect
-        aria-label="Compute nodes"
+        aria-label="Worker nodes"
         isDisabled={disabled}
         className="quota-dropdown"
         {...input}
@@ -145,7 +145,7 @@ class NodeCountInput extends React.Component {
           {' '}
           {input.value}
           {' '}
-        compute nodes
+        worker nodes
         </span>
         )}
       </FormGroup>

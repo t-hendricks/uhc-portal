@@ -61,7 +61,7 @@ exports[`<DetailsRight /> CCS clusters should not render storage quota 1`] = `
         >
           <Flex>
             <dt>
-              Master:
+              Control plane:
                
             </dt>
             <dd>
@@ -79,7 +79,7 @@ exports[`<DetailsRight /> CCS clusters should not render storage quota 1`] = `
           </Flex>
           <Flex>
             <dt>
-              Compute:
+              Worker:
                
             </dt>
             <dd>
@@ -510,7 +510,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
         >
           <Flex>
             <dt>
-              Master:
+              Control Plane:
                
             </dt>
             <dd>
@@ -528,7 +528,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
           </Flex>
           <Flex>
             <dt>
-              Compute:
+              Worker:
                
             </dt>
             <dd>
@@ -925,7 +925,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render vcpu and memory
         >
           <Flex>
             <dt>
-              Master:
+              Control Plane:
                
             </dt>
             <dd>
@@ -943,7 +943,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render vcpu and memory
           </Flex>
           <Flex>
             <dt>
-              Compute:
+              Worker:
                
             </dt>
             <dd>
@@ -1213,7 +1213,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         >
           <Flex>
             <dt>
-              Master:
+              Control Plane:
                
             </dt>
             <dd>
@@ -1231,7 +1231,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
           </Flex>
           <Flex>
             <dt>
-              Compute:
+              Worker:
                
             </dt>
             <dd>
@@ -1545,7 +1545,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         >
           <Flex>
             <dt>
-              Master:
+              Control plane:
                
             </dt>
             <dd>
@@ -1563,7 +1563,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
           </Flex>
           <Flex>
             <dt>
-              Compute:
+              Worker:
                
             </dt>
             <dd>
@@ -1877,7 +1877,7 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
         >
           <Flex>
             <dt>
-              Master:
+              Control plane:
                
             </dt>
             <dd>
@@ -1895,7 +1895,7 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
           </Flex>
           <Flex>
             <dt>
-              Compute:
+              Worker:
                
             </dt>
             <dd>
@@ -2347,7 +2347,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
         >
           <Flex>
             <dt>
-              Master:
+              Control Plane:
                
             </dt>
             <dd>
@@ -2365,7 +2365,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
           </Flex>
           <Flex>
             <dt>
-              Compute:
+              Worker:
                
             </dt>
             <dd>

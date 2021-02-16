@@ -226,7 +226,7 @@ function NetworkingSection({
                 <Title headingLevel="h4" size="xl" className="privacy-heading">Cluster privacy</Title>
                 <GridItem span={8}>
                   <p>
-                  Clusters may be created initially with master API endpoint
+                  Clusters may be created initially with control plane API endpoint
                   and application routes being all public or all private.
                   More options are available after the initial installation.
                   </p>
@@ -242,7 +242,7 @@ function NetworkingSection({
                     label: (
                       <>
                   Public (recommended)
-                        <div className="radio-helptext">Master API endpoint and application routes are accessible from the internet.</div>
+                        <div className="radio-helptext">Control plane API endpoint and application routes are accessible from the internet.</div>
                       </>),
                   },
                   {
@@ -252,7 +252,7 @@ function NetworkingSection({
                       <>
                       Private
                         <div className="radio-helptext">
-                        Master API endpoint and application routes are restricted to direct,
+                        Control plane API endpoint and application routes are restricted to direct,
                         private connectivity.
                         </div>
                       </>
