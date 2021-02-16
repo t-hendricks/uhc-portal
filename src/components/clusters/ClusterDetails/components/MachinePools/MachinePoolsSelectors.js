@@ -50,9 +50,7 @@ const hasOrgLevelAutoscaleCapability = (state) => {
   return !!(autoScaleClusters && autoScaleClusters.value === 'true');
 };
 
-const canAutoScaleSelector = (
-  state, product, cloudProviderID,
-) => product === normalizedProducts.ROSA
-  || (product === normalizedProducts.OSD && cloudProviderID === 'aws' && hasOrgLevelAutoscaleCapability(state));
+const canAutoScaleSelector = (state, product) => product === normalizedProducts.ROSA
+  || (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
 
 export { hasMachinePoolsQuotaSelector, canAutoScaleSelector, hasOrgLevelAutoscaleCapability };
