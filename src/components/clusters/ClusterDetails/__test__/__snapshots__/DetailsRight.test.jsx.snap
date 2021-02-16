@@ -510,7 +510,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
         >
           <Flex>
             <dt>
-              Control Plane:
+              Control plane:
                
             </dt>
             <dd>
@@ -925,7 +925,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render vcpu and memory
         >
           <Flex>
             <dt>
-              Control Plane:
+              Control plane:
                
             </dt>
             <dd>
@@ -1213,7 +1213,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         >
           <Flex>
             <dt>
-              Control Plane:
+              Control plane:
                
             </dt>
             <dd>
@@ -2347,7 +2347,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
         >
           <Flex>
             <dt>
-              Control Plane:
+              Control plane:
                
             </dt>
             <dd>
