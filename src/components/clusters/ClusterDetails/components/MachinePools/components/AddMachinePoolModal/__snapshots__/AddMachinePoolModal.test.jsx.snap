@@ -37,6 +37,7 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         autoScaleMinNodesValue="0"
         autoscaleAndNodeCountGridSpan={6}
         autoscalingEnabled={true}
+        billingModel="standard"
         canAutoScale={true}
         change={[MockFunction]}
         cloudProviderID="aws"

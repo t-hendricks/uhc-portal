@@ -5,6 +5,7 @@ import {
   ASSISTED_INSTALLER_OCS_FEATURE,
   OSD_TRIAL_FEATURE,
   GCP_EXISTING_VPC_FEATURE,
+  MARKETPLACE_QUOTA_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -16,6 +17,13 @@ const setFeature = (feature, enabled) => ({
 
 // list of features to detect upon app startup
 export const features = [
+  {
+    name: MARKETPLACE_QUOTA_FEATURE,
+    action: organizationID => (organizationID
+      ? accountsService.getFeature('marketplace-quota', organizationID)
+        .then(unleash => unleash.data.enabled)
+      : Promise.reject(Error('No organization'))),
+  },
   {
     name: OSD_TRIAL_FEATURE,
     action: organizationID => (organizationID

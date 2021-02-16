@@ -14,7 +14,7 @@ import { ReduxFormKeyValueList, ReudxFormTaints } from '../../../../../common/Re
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
 import NodeCountInput from '../../../../common/NodeCountInput';
-import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../../../common/subscriptionTypes';
 import { constants } from '../../CreateOSDFormConstants';
 
 import PopoverHint from '../../../../../common/PopoverHint';
@@ -41,6 +41,7 @@ function ScaleSection({
   autoScaleMinNodesValue = '0',
   autoScaleMaxNodesValue = '0',
   change,
+  billingModel,
 }) {
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
 
@@ -89,6 +90,7 @@ function ScaleSection({
             cloudProviderID={cloudProviderID}
             product={product}
             isMachinePool={isMachinePool}
+            billingModel={billingModel}
           />
         </FormGroup>
       </GridItem>
@@ -129,6 +131,7 @@ function ScaleSection({
               product={product}
               minNodes={minNodes}
               isMachinePool={isMachinePool}
+              billingModel={billingModel}
             />
             {labelsAndTaintsSection}
 
@@ -179,6 +182,10 @@ function ScaleSection({
   );
 }
 
+ScaleSection.defaultProps = {
+  billingModel: billingModels.STANDARD,
+};
+
 ScaleSection.propTypes = {
   pending: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
@@ -187,6 +194,7 @@ ScaleSection.propTypes = {
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+  billingModel: PropTypes.oneOf(Object.values(billingModels)),
   handleMachineTypesChange: PropTypes.func.isRequired,
   instanceTypeGridSpan: PropTypes.number,
   autoscaleAndNodeCountGridSpan: PropTypes.number,

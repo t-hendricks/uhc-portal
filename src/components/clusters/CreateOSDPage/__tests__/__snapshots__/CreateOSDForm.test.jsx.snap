@@ -12,11 +12,16 @@ exports[`CreateOSDForm; should render 1`] = `
     </Title>
   </GridItem>
   <BillingModelSection
+    billingModel="standard"
     byocSelected={false}
     hasBYOCquota={false}
+    hasMarketplaceQuota={false}
     hasStandardQuota={true}
     openModal={[MockFunction]}
+    pending={false}
+    product="OSD"
     toggleBYOCFields={[Function]}
+    toggleSubscriptionBilling={[Function]}
   />
   <GridItem
     span={12}
@@ -66,6 +71,7 @@ exports[`CreateOSDForm; should render 1`] = `
     autoScaleMaxNodesValue="0"
     autoScaleMinNodesValue="0"
     autoscalingEnabled={false}
+    billingModel="standard"
     canAutoScale={false}
     change={[MockFunction]}
     cloudProviderID="aws"

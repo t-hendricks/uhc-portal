@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import NodeCountInput from './NodeCountInput';
 import * as quotaSelectors from '../quotaSelectors';
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 
 const baseProps = {
   isDisabled: false,
@@ -19,6 +19,7 @@ const baseProps = {
   },
   cloudProviderID: 'aws',
   product: normalizedProducts.OSD,
+  billingModel: billingModels.STANDARD,
 };
 
 describe('<NodeCountInput>', () => {
