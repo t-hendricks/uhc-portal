@@ -174,7 +174,7 @@ function DetailsRight({
                   <dl className="pf-l-stack">
                     <Flex>
                       <dt>
-                        Control Plane:
+                        Control plane:
                         {' '}
                       </dt>
                       <dd>
