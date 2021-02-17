@@ -59,6 +59,12 @@ const initialState = {
     ...baseState,
     cluster: null,
   },
+  hibernatingCluster: {
+    ...baseState,
+  },
+  resumeHibernatingCluster: {
+    ...baseState,
+  },
 };
 
 function clustersReducer(state = initialState, action) {
@@ -204,6 +210,55 @@ function clustersReducer(state = initialState, action) {
       case clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE:
         draft.archivedCluster = {
           ...initialState.archivedCluster,
+        };
+        break;
+
+      // Hibernate cluster
+      case FULFILLED_ACTION(clustersConstants.HIBERNATE_CLUSTER):
+        draft.hibernatingCluster = {
+          ...initialState.hibernatingCluster,
+          cluster: action.payload.data,
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(clustersConstants.HIBERNATE_CLUSTER):
+        draft.hibernatingCluster = {
+          ...initialState.hibernatingCluster,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.HIBERNATE_CLUSTER):
+        draft.hibernatingCluster = {
+          pending: true,
+        };
+        break;
+      case clustersConstants.CLEAR_CLUSTER_HIBERNATE_RESPONSE:
+        draft.hibernatingCluster = {
+          ...initialState.hibernatingCluster,
+        };
+        break;
+
+      // Resume cluster
+      case FULFILLED_ACTION(clustersConstants.RESUME_CLUSTER):
+        draft.resumeHibernatingCluster = {
+          ...initialState.resumeHibernatingCluster,
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(clustersConstants.RESUME_CLUSTER):
+        draft.resumeHibernatingCluster = {
+          ...initialState.resumeHibernatingCluster,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.RESUME_CLUSTER):
+        draft.resumeHibernatingCluster = {
+          pending: true,
+        };
+        break;
+      case clustersConstants.CLEAR_RESUME_CLUSTER_RESPONSE:
+        draft.resumeHibernatingCluster = {
+          ...initialState.resumeHibernatingCluster,
         };
         break;
 

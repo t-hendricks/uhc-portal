@@ -38,6 +38,7 @@ import './MachinePools.scss';
 import actionResolver from './machinePoolsHelper';
 
 import { noQuotaTooltip } from '../../../../../common/helpers';
+import { isHibernating } from '../../../common/clusterStates';
 
 const initialState = {
   deletedRowIndex: null,
@@ -315,7 +316,17 @@ class MachinePools extends React.Component {
       rows[deletedRowIndex] = skeletonRow;
     }
 
-    const addMachinePoolDisabled = !cluster.canEdit || !hasMachinePoolsQuota;
+    const clusterHibernating = isHibernating(cluster.state);
+    const addMachinePoolDisabled = !cluster.canEdit || !hasMachinePoolsQuota || clusterHibernating;
+    let tooltipContent;
+    if (clusterHibernating) {
+      tooltipContent = 'This operation is not available while cluster is hibernating';
+    } else if (!cluster.canEdit) {
+      tooltipContent = 'You do not have permission to add a machine pool. Only cluster owners and organization administrators can add machine pools.';
+    } else {
+      tooltipContent = noQuotaTooltip;
+    }
+
 
     const addMachinePoolBtn = (
       <Button id="add-machine-pool" onClick={() => openModal('add-machine-pool')} variant="secondary" className="space-bottom-lg" isDisabled={addMachinePoolDisabled}>
@@ -344,12 +355,7 @@ class MachinePools extends React.Component {
               <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
               )}
               {addMachinePoolDisabled ? (
-                <Tooltip content={
-                  !cluster.canEdit
-                    ? 'You do not have permission to add a machine pool. Only cluster owners and organization administrators can add machine pools.'
-                    : noQuotaTooltip
-                }
-                >
+                <Tooltip content={tooltipContent}>
                   <span>
                     {addMachinePoolBtn}
                   </span>
@@ -368,7 +374,7 @@ class MachinePools extends React.Component {
                 actionResolver={
                   rowData => actionResolver(rowData, onClickDeleteAction, onClickScaleAction)
                 }
-                areActionsDisabled={() => !cluster.canEdit}
+                areActionsDisabled={() => !cluster.canEdit || clusterHibernating}
               >
                 <TableHeader />
                 <TableBody />

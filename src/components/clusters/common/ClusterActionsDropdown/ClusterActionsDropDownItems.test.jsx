@@ -39,8 +39,13 @@ describe('Cluster Actions Dropdown Items', () => {
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-node-count', { cluster: Fixtures.cluster, isDefaultMachinePool: true });
     });
 
-    it('should open delete modal', () => {
+    it('should open hibernate cluster modal', () => {
       wrapper.find(DropdownItem).at(4).simulate('click');
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('hibernate-cluster', Fixtures.hibernateClusterModalData);
+    });
+
+    it('should open delete modal', () => {
+      wrapper.find(DropdownItem).at(5).simulate('click');
       expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('delete-cluster', Fixtures.deleteModalData);
     });
 
@@ -90,9 +95,11 @@ describe('Cluster Actions Dropdown Items', () => {
       const launchConsoleDisabled = wrapper.find(DropdownItem).at(0).props().isDisabled;
       const editDisplayNameDisabled = wrapper.find(DropdownItem).at(1).props().isDisabled;
       const editDisabled = wrapper.find(DropdownItem).at(2).props().isDisabled;
-      const deleteDisabled = wrapper.find(DropdownItem).at(4).props().isDisabled;
+      const hibernateDisabled = wrapper.find(DropdownItem).at(4).props().isDisabled;
+      const deleteDisabled = wrapper.find(DropdownItem).at(5).props().isDisabled;
       expect(launchConsoleDisabled).toEqual(true);
       expect(editDisplayNameDisabled).toBeFalsy();
+      expect(hibernateDisabled).toEqual(true);
       expect(editDisabled).toEqual(true);
       expect(deleteDisabled).toBeFalsy();
     });

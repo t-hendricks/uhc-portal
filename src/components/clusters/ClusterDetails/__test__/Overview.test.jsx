@@ -11,6 +11,7 @@ describe('<Overview />', () => {
       cloudProviders: fixtures.cloudProviders,
       history: {},
       displayClusterLogs: false,
+      openModal: jest.fn(),
     };
     const wrapper = shallow(
       <Overview {...props} />,
@@ -27,6 +28,7 @@ describe('<Overview />', () => {
       cloudProviders: fixtures.cloudProviders,
       history: {},
       displayClusterLogs: true,
+      openModal: jest.fn(),
     };
     const wrapper = shallow(
       <Overview {...props} />,

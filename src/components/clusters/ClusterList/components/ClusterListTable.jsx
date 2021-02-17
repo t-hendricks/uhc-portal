@@ -34,6 +34,7 @@ function ClusterListTable(props) {
   const {
     viewOptions, setSorting, clusters, openModal, isPending, setClusterDetails,
     canSubscribeOCPList = {}, canTransferClusterOwnershipList = {}, toggleSubscriptionReleased,
+    canHibernateClusterList = {},
   } = props;
   if (!isPending && (!clusters || clusters.length === 0)) {
     return <p className="notfound">No results match the filter criteria.</p>;
@@ -169,6 +170,7 @@ function ClusterListTable(props) {
       false,
       canSubscribeOCPList[get(rowData, 'cluster.id')] || false,
       canTransferClusterOwnershipList[get(rowData, 'cluster.id')] || false,
+      canHibernateClusterList[get(rowData, 'cluster.id')] || false,
       toggleSubscriptionReleased);
 
 
@@ -196,6 +198,7 @@ ClusterListTable.propTypes = {
   setClusterDetails: PropTypes.func.isRequired,
   canSubscribeOCPList: PropTypes.objectOf(PropTypes.bool),
   canTransferClusterOwnershipList: PropTypes.objectOf(PropTypes.bool),
+  canHibernateClusterList: PropTypes.objectOf(PropTypes.bool),
   toggleSubscriptionReleased: PropTypes.func.isRequired,
 };
 

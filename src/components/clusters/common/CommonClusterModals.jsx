@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import ScaleClusterDialog from './ScaleClusterDialog';
 import EditNodeCountModal from './EditNodeCountModal';
 import ArchiveClusterDialog from './ArchiveClusterDialog';
+import HibernateClusterModal from './HibernateClusterModal';
+import ResumeClusterModal from './ResumeClusterModal';
 import UnarchiveClusterDialog from './UnarchiveClusterDialog';
 import EditDisplayNameDialog from './EditDisplayNameDialog';
 import EditConsoleURLDialog from './EditConsoleURLDialog';
@@ -29,6 +31,8 @@ function CommonClusterModals({ onClose, onClusterDeleted }) {
       <ConnectedModal ModalComponent={ScaleClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={EditNodeCountModal} onClose={onClose} />
       <ConnectedModal ModalComponent={ArchiveClusterDialog} onClose={onClose} />
+      <ConnectedModal ModalComponent={HibernateClusterModal} onClose={onClose} />
+      <ConnectedModal ModalComponent={ResumeClusterModal} onClose={onClose} />
       <ConnectedModal
         ModalComponent={UnarchiveClusterDialog}
         onClose={onClose}

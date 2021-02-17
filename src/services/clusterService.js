@@ -152,6 +152,16 @@ const unarchiveCluster = id => apiRequest({
   data: '{"status":"Disconnected"}',
 });
 
+const hibernateCluster = id => apiRequest({
+  method: 'post',
+  url: `/api/clusters_mgmt/v1/clusters/${id}/hibernate`,
+});
+
+const resumeCluster = id => apiRequest({
+  method: 'post',
+  url: `/api/clusters_mgmt/v1/clusters/${id}/resume`,
+});
+
 const getDashboard = id => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/dashboards/${id}`,
@@ -309,6 +319,8 @@ const clusterService = {
   getAlerts,
   getClusterOperators,
   archiveCluster,
+  hibernateCluster,
+  resumeCluster,
   unarchiveCluster,
   getAddOns,
   getDashboard,
