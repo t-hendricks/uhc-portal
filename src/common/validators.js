@@ -623,6 +623,7 @@ const validateNumericInput = (
     allowNeg = false,
     allowZero = false,
     max = NaN,
+    min = NaN,
   } = {},
 ) => {
   if (!input) {
@@ -632,6 +633,9 @@ const validateNumericInput = (
   const value = Number(input);
   if (Number.isNaN(value)) {
     return 'Input must be a number.';
+  }
+  if (!Number.isNaN(min) && value < min) {
+    return `Input cannot be less than ${min}.`;
   }
   if (!allowNeg && !allowZero && value <= 0) {
     return 'Input must be a positive number.';

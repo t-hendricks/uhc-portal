@@ -19,11 +19,13 @@ describe('<CreateClusterPage />', () => {
   it('renders correctly', () => {
     wrapper = shallow(<CreateClusterPage
       hasOSDQuota
+      hasOSDTrialQuota={false}
       getOrganizationAndQuota={getOrganizationAndQuota}
       organization={{ ...organization, fulfilled: true }}
       token={{}}
       getAuthToken={getAuthToken}
       history={{ push }}
+      osdTrialFeature={false}
     />);
     expect(wrapper).toMatchSnapshot();
   });
@@ -51,11 +53,13 @@ describe('<CreateClusterPage />', () => {
       wrapper = shallow(
         <CreateClusterPage
           hasOSDQuota={false}
+          hasOSDTrialQuota={false}
           getOrganizationAndQuota={getOrganizationAndQuota}
           organization={{ ...organization, fulfilled: true }}
           token={{}}
           getAuthToken={getAuthToken}
           history={{ push }}
+          osdTrialFeature={false}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -66,11 +70,13 @@ describe('<CreateClusterPage />', () => {
     beforeAll(() => {
       wrapper = shallow(<CreateClusterPage
         hasOSDQuota={false}
+        hasOSDTrialQuota={false}
         getOrganizationAndQuota={getOrganizationAndQuota}
         organization={organization}
         token={{}}
         getAuthToken={getAuthToken}
         history={{ push }}
+        osdTrialFeature={false}
       />);
     });
 

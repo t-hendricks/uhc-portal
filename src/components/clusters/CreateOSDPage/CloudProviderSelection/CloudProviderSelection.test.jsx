@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 import CloudProviderSelection from './CloudProviderSelection';
 
@@ -13,7 +14,9 @@ const baseProps = {
   hasGcpQuota: false,
   hasAwsQuota: false,
   // OSD quota is required for selection to render
-  hasOSDQuota: false,
+  hasProductQuota: false,
+  osdTrialFeature: false,
+  product: normalizedProducts.OSD,
 };
 
 describe('<CloudProviderSelection />', () => {
@@ -24,6 +27,22 @@ describe('<CloudProviderSelection />', () => {
       />);
       expect(wrapper).toMatchSnapshot();
     });
+
+    describe('and osd trial feature', () => {
+      it('renders a redirect', () => {
+        const props = {
+          ...baseProps,
+          osdTrialFeature: true,
+          product: normalizedProducts.OSDTrial,
+        };
+        const wrapper = shallow(<CloudProviderSelection
+          {...props}
+        />);
+        const redirect = wrapper.find('Redirect');
+        expect(redirect.length).toBe(1);
+        expect(redirect.props().to).toEqual('/create');
+      });
+    });
   });
 
   describe('with aws quota', () => {
@@ -31,12 +50,27 @@ describe('<CloudProviderSelection />', () => {
       const props = {
         ...baseProps,
         hasAwsQuota: true,
-        hasOSDQuota: true,
+        hasProductQuota: true,
       };
       const wrapper = shallow(<CloudProviderSelection
         {...props}
       />);
       expect(wrapper).toMatchSnapshot();
+    });
+
+    describe('and osd trial feature', () => {
+      it('renders correctly', () => {
+        const props = {
+          ...baseProps,
+          hasAwsQuota: true,
+          hasProductQuota: true,
+          osdTrialFeature: true,
+        };
+        const wrapper = shallow(<CloudProviderSelection
+          {...props}
+        />);
+        expect(wrapper).toMatchSnapshot();
+      });
     });
   });
 
@@ -45,7 +79,7 @@ describe('<CloudProviderSelection />', () => {
       const props = {
         ...baseProps,
         hasGcpQuota: true,
-        hasOSDQuota: true,
+        hasProductQuota: true,
       };
       const wrapper = shallow(<CloudProviderSelection
         {...props}

@@ -9,12 +9,18 @@ import {
   Flex,
 } from '@patternfly/react-core';
 
+import ClusterNetwork from '../ClusterNetwork';
+import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
+
 import ClusterStateIcon from '../../../../common/ClusterStateIcon/ClusterStateIcon';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
-import ClusterNetwork from '../ClusterNetwork';
+import PopoverHint from '../../../../../common/PopoverHint';
+import ExternalLink from '../../../../../common/ExternalLink';
 
-function DetailsRight({ cluster, totalDesiredComputeNodes }) {
+function DetailsRight({
+  cluster, totalDesiredComputeNodes, autoscaleEnabled, totalMinNodesCount, totalMaxNodesCount,
+}) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
     cluster.metrics.memory.total.value, cluster.metrics.memory.total.unit,
   );
@@ -30,14 +36,14 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
              && humanizeValueWithUnitGiB(cluster.storage_quota.value);
   const showVCPU = !isDisconnected && !hasSockets;
 
-  const masterActualNodes = get(cluster, 'metrics.nodes.master', '-');
-  const masterDesiredNodes = get(cluster, 'nodes.master', '-');
+  const controlPlaneActualNodes = get(cluster, 'metrics.nodes.master', '-');
+  const controlPlaneDesiredNodes = get(cluster, 'nodes.master', '-');
 
   const infraActualNodes = get(cluster, 'metrics.nodes.infra', '-');
   const infraDesiredNodes = get(cluster, 'nodes.infra', '-');
 
-  const computeActualNodes = get(cluster, 'metrics.nodes.compute', '-');
-  const computeDesiredNodes = totalDesiredComputeNodes || '-';
+  const workerActualNodes = get(cluster, 'metrics.nodes.compute', '-');
+  const workerDesiredNodes = totalDesiredComputeNodes || '-';
 
   return (
     <>
@@ -70,7 +76,7 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>
-            Total memory
+                Total memory
               </DescriptionListTerm>
               <DescriptionListDescription>
                 {memoryTotalWithUnit.value}
@@ -102,23 +108,28 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
             </DescriptionListGroup>
           </>
         )}
-        {showDesiredNodes ? (
+        {/* Nodes */}
+        {showDesiredNodes && !autoscaleEnabled ? (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>
                 Nodes
                 <span className="font-weight-normal"> (actual/desired)</span>
+                <PopoverHint
+                  iconClassName="nodes-hint"
+                  hint="The actual number of worker (compute) nodes may not always match with the number of desired when the cluster is scaling."
+                />
               </DescriptionListTerm>
               <DescriptionListDescription>
                 <dl className="pf-l-stack">
                   <Flex>
                     <dt>
-                      Master:
+                      Control plane:
                       {' '}
                     </dt>
                     <dd>
-                      { masterActualNodes !== '-' || masterDesiredNodes !== '-'
-                        ? `${masterActualNodes}/${masterDesiredNodes}`
+                      { controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
+                        ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
                         : 'N/A'}
                     </dd>
                   </Flex>
@@ -139,12 +150,12 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
                   )}
                   <Flex>
                     <dt>
-                      Compute:
+                      Worker:
                       {' '}
                     </dt>
                     <dd>
-                      { computeActualNodes !== '-' || computeDesiredNodes !== '-'
-                        ? `${computeActualNodes}/${computeDesiredNodes}`
+                      { workerActualNodes !== '-' || workerDesiredNodes !== '-'
+                        ? `${workerActualNodes}/${workerDesiredNodes}`
                         : 'N/A'}
                     </dd>
                   </Flex>
@@ -163,7 +174,7 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
                   <dl className="pf-l-stack">
                     <Flex>
                       <dt>
-                        Master:
+                        Control plane:
                         {' '}
                       </dt>
                       <dd>
@@ -185,7 +196,7 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
                     )}
                     <Flex>
                       <dt>
-                        Compute:
+                        Worker:
                         {' '}
                       </dt>
                       <dd>
@@ -197,6 +208,43 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
               </DescriptionListGroup>
             </>
           )}
+        {/* Autoscaling */}
+        {
+          autoscaleEnabled
+          && (
+            <>
+              <DescriptionListGroup>
+                <DescriptionListTerm>
+                  Autoscale
+                  <PopoverHint
+                    iconClassName="nodes-hint"
+                    hint={(
+                      <>
+                        {constants.autoscaleHint}
+                        {' '}
+                        <ExternalLink href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html">Learn more about autoscaling</ExternalLink>
+                      </>
+                    )}
+                  />
+                </DescriptionListTerm>
+                <DescriptionListDescription>
+                  Enabled
+                </DescriptionListDescription>
+                <DescriptionListDescription>
+                  <span className="autoscale-data-t">Min:</span>
+                  {' '}
+                  {totalMinNodesCount}
+                  <span className="space-left-lg autoscale-data-t">
+                  Max:
+                    {' '}
+                  </span>
+                  {totalMaxNodesCount}
+                </DescriptionListDescription>
+              </DescriptionListGroup>
+            </>
+          )
+        }
+        {/* Network */}
         <ClusterNetwork cluster={cluster} />
       </DescriptionList>
     </>
@@ -206,6 +254,9 @@ function DetailsRight({ cluster, totalDesiredComputeNodes }) {
 DetailsRight.propTypes = {
   cluster: PropTypes.any,
   totalDesiredComputeNodes: PropTypes.number,
+  totalMinNodesCount: PropTypes.number,
+  totalMaxNodesCount: PropTypes.number,
+  autoscaleEnabled: PropTypes.bool.isRequired,
 };
 
 export default DetailsRight;

@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
       labels_additional_router: get(clusterRouters, 'additional.routeSelectors', null),
     },
     clusterRouters,
-    masterAPIEndpoint: cluster.api.url,
+    controlPlaneAPIEndpoint: cluster.api.url,
     additionalRouterEnabled,
     defaultRouterAddress: clusterRouters.default.address,
     additionalRouterAddress: existsAdditionalRouter

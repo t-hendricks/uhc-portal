@@ -13,7 +13,7 @@ import {
   Visibility,
 } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
-import ClusterLocationLabel from '../../../common/ClusterLocationLabel/ClusterLocationLabel';
+import ClusterLocationLabel from '../../../common/ClusterLocationLabel';
 import getClusterName from '../../../../../common/getClusterName';
 import modals from '../../../../common/Modal/modals';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';

@@ -13,21 +13,29 @@ import { getMachineTypes } from '../../../../../redux/actions/machineTypesAction
 import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
 
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
-import hasMachinePoolsQuotaSelector from './MachinePoolsSelectors';
+import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
 
 const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});
   const nodes = get(cluster, 'nodes', {});
 
+  // align the default machine pool structure to additional machine pools structure
+  const defaultMachinePool = {
+    id: 'Default',
+    instance_type: nodes.compute_machine_type?.id,
+    availability_zones: nodes.availability_zones,
+    labels: nodes.compute_labels,
+  };
+
+  if (nodes.autoscale_compute) {
+    defaultMachinePool.autoscaling = { ...nodes.autoscale_compute };
+  } else {
+    defaultMachinePool.desired = nodes.compute;
+  }
+
   return ({
     isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
-    defaultMachinePool: {
-      id: 'Default',
-      instance_type: nodes.compute_machine_type?.id,
-      availability_zones: nodes.availability_zones,
-      desired: nodes.autoscale_compute ? `Min: ${nodes.autoscale_compute.min_replicas}, Max: ${nodes.autoscale_compute.min_replicas}` : nodes.compute,
-      labels: nodes.compute_labels,
-    },
+    defaultMachinePool,
     machinePoolsList: state.machinePools.getMachinePools,
     addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
     deleteMachinePoolResponse: state.machinePools.deleteMachinePoolResponse,

@@ -470,7 +470,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                 class="pf-c-form__helper-text"
                                 id="undefined-helper"
                               >
-                                This number should not include master nodes
+                                This number should not include control plane nodes
                               </div>
                             </div>
                           </div>
@@ -1270,7 +1270,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                       </Radio>
                                       <FormGroup
                                         className="units-numeric-input"
-                                        helperText="This number should not include master nodes"
+                                        helperText="This number should not include control plane nodes"
                                         helperTextInvalid="Cores/vCPU value can only be a positive integer."
                                         id="compute-cores-input"
                                         isRequired={true}
@@ -1349,7 +1349,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                               className="pf-c-form__helper-text"
                                               id="undefined-helper"
                                             >
-                                              This number should not include master nodes
+                                              This number should not include control plane nodes
                                             </div>
                                           </div>
                                         </div>
@@ -2026,7 +2026,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                 class="pf-c-form__helper-text"
                                 id="undefined-helper"
                               >
-                                This number should not include master nodes
+                                This number should not include control plane nodes
                               </div>
                             </div>
                           </div>
@@ -2904,7 +2904,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                       </Radio>
                                       <FormGroup
                                         className="units-numeric-input"
-                                        helperText="This number should not include master nodes"
+                                        helperText="This number should not include control plane nodes"
                                         helperTextInvalid="Cores/vCPU value can only be a positive integer."
                                         id="compute-cores-input"
                                         isRequired={true}
@@ -2983,7 +2983,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                               className="pf-c-form__helper-text"
                                               id="undefined-helper"
                                             >
-                                              This number should not include master nodes
+                                              This number should not include control plane nodes
                                             </div>
                                           </div>
                                         </div>

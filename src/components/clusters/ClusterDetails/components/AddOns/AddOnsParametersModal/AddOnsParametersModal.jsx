@@ -73,7 +73,7 @@ class AddOnsParametersModal extends Component {
     const { change } = this.props;
     let paramValue = param.default_value;
     if (param.value_type === 'boolean') {
-      paramValue = paramValue === 'true';
+      paramValue = (paramValue || '').toLowerCase() === 'true';
     }
     change(`parameters.${param.id}`, paramValue);
   };

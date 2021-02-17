@@ -124,6 +124,10 @@ class CreateOSDForm extends React.Component {
       canEnableEtcdEncryption,
       selectedRegion,
       installToVPCSelected,
+      canAutoScale,
+      autoscalingEnabled,
+      autoScaleMinNodesValue,
+      autoScaleMaxNodesValue,
     } = this.props;
 
     const {
@@ -240,8 +244,8 @@ class CreateOSDForm extends React.Component {
         <GridItem span={12}>
           <Title headingLevel="h3">Scale</Title>
           <p>
-            The number and instance type of compute nodes in your cluster. After cluster creation
-            you will be able to change the number of compute nodes in your cluster, but you will
+            The number and instance type of worker nodes in your cluster. After cluster creation
+            you will be able to change the number of worker nodes in your cluster, but you will
             not be able to change the worker node instance type.
           </p>
         </GridItem>
@@ -253,6 +257,11 @@ class CreateOSDForm extends React.Component {
           handleMachineTypesChange={this.handleMachineTypesChange}
           cloudProviderID={cloudProviderID}
           product={product}
+          canAutoScale={canAutoScale}
+          autoscalingEnabled={autoscalingEnabled}
+          change={change}
+          autoScaleMinNodesValue={autoScaleMinNodesValue}
+          autoScaleMaxNodesValue={autoScaleMaxNodesValue}
         />
         {/* Networking section */}
         <NetworkingSection
@@ -308,6 +317,8 @@ class CreateOSDForm extends React.Component {
 CreateOSDForm.defaultProps = {
   pending: false,
   isBYOCModalOpen: false,
+  autoScaleMinNodesValue: '0',
+  autoScaleMaxNodesValue: '0',
 };
 
 CreateOSDForm.propTypes = {
@@ -317,7 +328,7 @@ CreateOSDForm.propTypes = {
   closeModal: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   clustersQuota: PropTypes.shape({
-    hasOsdQuota: PropTypes.bool.isRequired,
+    hasProductQuota: PropTypes.bool.isRequired,
     aws: PropTypes.shape({
       byoc: PropTypes.shape({
         singleAz: PropTypes.object.isRequired,
@@ -345,6 +356,10 @@ CreateOSDForm.propTypes = {
   canEnableEtcdEncryption: PropTypes.bool,
   selectedRegion: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
+  canAutoScale: PropTypes.bool.isRequired,
+  autoscalingEnabled: PropTypes.bool.isRequired,
+  autoScaleMinNodesValue: PropTypes.string,
+  autoScaleMaxNodesValue: PropTypes.string,
 };
 
 export default CreateOSDForm;

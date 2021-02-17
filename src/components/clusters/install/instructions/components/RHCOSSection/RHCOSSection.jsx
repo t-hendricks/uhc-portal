@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import {
-  Grid, GridItem, StackItem, Text,
+  Split, SplitItem, Stack, StackItem, Text,
 } from '@patternfly/react-core';
 import instructionsMapping from '../../instructionsMapping';
 import RHCOSDownloadAndSelect from './RHCOSDownloadAndSelect';
@@ -66,7 +66,7 @@ const RHCOSSection = (props) => {
         const { url, name, buttonText } = alt;
         return (
           <>
-            <GridItem key={name} className="pf-m-12-col-on-sm">
+            <SplitItem key={name}>
               <DownloadButton
                 token={token}
                 url={url}
@@ -76,27 +76,27 @@ const RHCOSSection = (props) => {
                 disabled={!token}
                 pendoID={pendoID}
               />
-            </GridItem>
+            </SplitItem>
             {
                 index !== item.alternatives.length - 1 && (
-                  <GridItem key={`alt-${name}`}>
+                  <SplitItem key={`alt-${name}`}>
                     or
-                  </GridItem>
+                  </SplitItem>
                 )
               }
           </>
         );
       });
       return (
-        <Grid className="pf-m-12-col-on-sm" hasGutter>
+        <Split hasGutter>
           {altsSplitItems}
-        </Grid>
+        </Split>
       );
     });
     return (
-      <Grid hasGutter>
+      <Stack hasGutter>
         {buttons}
-      </Grid>
+      </Stack>
     );
   };
 

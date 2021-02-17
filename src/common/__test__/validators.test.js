@@ -345,6 +345,7 @@ test('Field contains a numeric string', () => {
   expect(validateNumericInput('1000', { max: 999 })).toBe('Input cannot be more than 999.');
   expect(validateNumericInput('999', { max: 999 })).toBe(undefined);
   expect(validateNumericInput(Number.MAX_SAFE_INTEGER)).toBe(undefined);
+  expect(validateNumericInput('2', { min: 3 })).toBe('Input cannot be less than 3.');
 });
 
 test('Field is a valid list of github teams', () => {
