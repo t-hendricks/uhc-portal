@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, CardBody, EmptyStateIcon,
+  Button, Card, CardBody, EmptyStateIcon, Stack, StackItem,
 } from '@patternfly/react-core';
 import { cellWidth, RowWrapper } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
@@ -323,23 +323,35 @@ class InsightsTable extends React.Component {
                 },
               ]}
               detail={details => (
-                <ReportDetails
-                  details={appendCrParamToDocLinks(details.details)}
-                  ruleId={details.rule_id}
-                  totalRisk={details.total_risk}
-                  riskOfChange={details.risk_of_change}
-                  showRiskDescription={false}
-                  definitions={details.extra_data}
-                  userVote={details.user_vote}
-                  remediating={
+                <Stack>
+                  <StackItem className="report-details-link">
+                    <Link
+                      to={`/details/${cluster.id}/insights/${details.rule_id.replace(/\./g, '|')}/${details.extra_data.error_key}`}
+                      onClick={() => setReportDetails(details)}
+                    >
+                    View details and remediation steps
+                    </Link>
+                  </StackItem>
+                  <StackItem>
+                    <ReportDetails
+                      details={appendCrParamToDocLinks(details.details)}
+                      ruleId={details.rule_id}
+                      totalRisk={details.total_risk}
+                      riskOfChange={details.risk_of_change}
+                      showRiskDescription={false}
+                      definitions={details.extra_data}
+                      userVote={details.user_vote}
+                      remediating={
                     (details.reason || details.resolution)
                     && {
                       reason: details.reason,
                       resolution: details.resolution,
                     }
                   }
-                  onFeedbackChanged={voteOnRule}
-                />
+                      onFeedbackChanged={voteOnRule}
+                    />
+                  </StackItem>
+                </Stack>
               )}
               actionResolver={(rowData, { rowIndex }) => {
                 const shownDataForRow = getShownDataForRow(rowIndex);
