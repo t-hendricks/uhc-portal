@@ -3756,6 +3756,13 @@ cidr-regex@^2.0.10:
   dependencies:
     ip-regex "^2.1.0"
 
+cidr-regex@^3.1.1:
+  version "3.1.1"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/cidr-regex/-/cidr-regex-3.1.1.tgz#ba1972c57c66f61875f18fd7dd487469770b571d"
+  integrity sha512-RBqYd32aDwbCMFJRL6wHOlDNYJsPNTt8vC82ErHF5vKt8QQzxm1FrkW8s/R5pVrXMf17sba09Uoy91PKiddAsw==
+  dependencies:
+    ip-regex "^4.1.0"
+
 cidr-tools@^3.0.0:
   version "3.0.0"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/cidr-tools/-/cidr-tools-3.0.0.tgz#eba712e4d394b784f8ff0f7454ab9e68c70030da"
@@ -5875,6 +5882,11 @@ filelist@^1.0.1:
   dependencies:
     minimatch "^3.0.4"
 
+filesize.js@^2.0.0:
+  version "2.0.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/filesize.js/-/filesize.js-2.0.0.tgz#b212f8dfe35de64bca9b7141ca3ddb2e7413f139"
+  integrity sha512-dOngzfsRfjwTQkG3UPY3GI+OqbBj4mO1UW1FoDYN2SF/p7hACKXHKGjgA62ug4KtORXcXdlEKOXrgfzt+qB2Nw==
+
 filesize@^3.6.1:
   version "3.6.1"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/filesize/-/filesize-3.6.1.tgz#090bb3ee01b6f801a8a8be99d31710b3422bb317"
@@ -7087,6 +7099,11 @@ ip-regex@^2.1.0:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/ip-regex/-/ip-regex-2.1.0.tgz#fa78bf5d2e6913c911ce9f819ee5146bb6d844e9"
   integrity sha1-+ni/XS5pE8kRzp+BnuUUa7bYROk=
 
+ip-regex@^4.1.0:
+  version "4.3.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/ip-regex/-/ip-regex-4.3.0.tgz#687275ab0f57fa76978ff8f4dddc8a23d5990db5"
+  integrity sha512-B9ZWJxHHOHUhUjCPrMpLD4xEq35bUTClHM1S6CBU5ixQnkZmwipwgc96vAd7AAGM9TGHvJR+Uss+/Ak6UphK+Q==
+
 ip@^1.1.0, ip@^1.1.5:
   version "1.1.5"
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -7223,6 +7240,13 @@ is-cidr@^3.1.0:
   integrity sha512-3kxTForpuj8O4iHn0ocsn1jxRm5VYm60GDghK6HXmpn4IyZOoRy9/GmdjFA2yEMqw91TB1/K3bFTuI7FlFNR1g==
   dependencies:
     cidr-regex "^2.0.10"
+
+is-cidr@^4.0.2:
+  version "4.0.2"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/is-cidr/-/is-cidr-4.0.2.tgz#94c7585e4c6c77ceabf920f8cde51b8c0fda8814"
+  integrity sha512-z4a1ENUajDbEl/Q6/pVBpTR1nBjjEE1X7qb7bmWYanNnPoKAvUCPFKeXV6Fe4mgTkWKBqiHIcwsI3SndiO5FeA==
+  dependencies:
+    cidr-regex "^3.1.1"
 
 is-data-descriptor@^0.1.4:
   version "0.1.4"
@@ -9460,13 +9484,15 @@ opener@^1.5.1:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
 
-openshift-assisted-ui-lib@^1.5.8-1:
-  version "1.5.8-1"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-1.5.8-1.tgz#f8ba0c3db03597f06363fb1743ecc1864feb8e5e"
-  integrity sha512-Kn2kDqUPjeLV2HtWFrilYyK+NhhIHtmSn/dDaOFJOqAJ0zYbWf4rWnIZarggWBm29jfSiweZ1TBYDdYCF52AjQ==
+openshift-assisted-ui-lib@^1.5.9:
+  version "1.5.9"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-1.5.9.tgz#f22e5e46cc87ed8f84792e5386cdb801f6f1c7bc"
+  integrity sha512-l/8wkNt8o5iNlHOmXIc1glrEkWX3DKsfKOFwqmao4heLh5x++nwuRr+QPWc40BM6qMASLwoHaWZ1wxs7VhWAhA==
   dependencies:
     axios-case-converter "^0.6.0"
+    filesize.js "^2.0.0"
     ip-address "^7.1.0"
+    is-cidr "^4.0.2"
     is-in-subnet "^3.1.0"
     unique-names-generator "^4.2.0"
 
