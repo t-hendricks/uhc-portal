@@ -208,7 +208,7 @@ class AddOnsCard extends Component {
 
     const dropdownItems = [
       <DropdownItem
-        key="action"
+        key="parameters"
         component="button"
         isDisabled={
           !hasParameters(addOn)
@@ -220,7 +220,7 @@ class AddOnsCard extends Component {
         Configure
       </DropdownItem>,
       <DropdownItem
-        key="action"
+        key="delete"
         component="button"
         isDisabled={
           !cluster.canEdit
