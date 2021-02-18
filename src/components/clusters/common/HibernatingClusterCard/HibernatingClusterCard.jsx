@@ -34,7 +34,7 @@ function HibernatingClusterCard({ cluster, openModal }) {
   };
 
   switch (cluster.state) {
-    case clusterStates.POWERING_UP:
+    case clusterStates.RESUMING:
       title = 'Cluster is resuming from hibernation';
       body = 'This might take a few minutes!';
       icon = InProgressIcon;
