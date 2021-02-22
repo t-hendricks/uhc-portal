@@ -816,7 +816,7 @@ const validateGCPSubnet = (value) => {
     return 'Name must not contain whitespaces.';
   }
   if (/[^a-z0-9-]/.test(value)) {
-    return 'Name should contain only lowercase alphabets, numbers and hyphens.';
+    return 'Name should contain only lowercase letters, numbers and hyphens.';
   }
   return undefined;
 };

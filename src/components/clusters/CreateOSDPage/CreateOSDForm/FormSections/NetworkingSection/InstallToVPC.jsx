@@ -63,7 +63,7 @@ function InstallToVPC({
                     iconClassName="pf-u-ml-sm"
                     hint={(
                       <>
-                        {'Your VPC must have control plane and compute subnets. The control plane subnet is where you deploy your control plane machines to. The Compute subnet is where you deploy your commute machines to. '}
+                        {'Your VPC must have control plane and compute subnets. The control plane subnet is where you deploy your control plane machines to. The compute subnet is where you deploy your compute machines to. '}
                         {' '}
                         <ExternalLink href="https://docs.openshift.com/container-platform/4.6/installing/installing_gcp/installing-gcp-vpc.html">Learn more about installing into an existing VPC</ExternalLink>
                       </>
