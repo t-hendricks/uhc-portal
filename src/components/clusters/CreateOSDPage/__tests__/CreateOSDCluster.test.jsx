@@ -70,6 +70,8 @@ describe('CreateOSDCluster', () => {
       product={normalizedProducts.OSD}
       cloudProviderID="aws"
       clustersQuota={awsByocRhInfraGcpRhInfraClustersQuota}
+      canAutoScale
+      autoscalingEnabled={false}
     />);
   });
 
@@ -124,6 +126,8 @@ describe('CreateOSDCluster', () => {
         product={normalizedProducts.OSD}
         cloudProviderID="aws"
         clustersQuota={awsRhInfraGcpRhInfraClustersQuota}
+        canAutoScale={false}
+        autoscalingEnabled={false}
       />);
       expect(getOrganizationAndQuota).toBeCalled();
       expect(getMachineTypes).toBeCalled();

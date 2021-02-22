@@ -5,7 +5,19 @@ import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
 
 import {
-  Card, Button, CardBody, CardFooter, Tooltip, CardTitle, Divider, EmptyState, Label, Title,
+  Card,
+  Button,
+  CardBody,
+  CardFooter,
+  Tooltip,
+  CardTitle,
+  Divider,
+  EmptyState,
+  Label,
+  Title,
+  Split,
+  SplitItem,
+  Popover,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -122,21 +134,41 @@ class MachinePools extends React.Component {
     }
 
     const columns = [
-      { title: 'Machine pool', transforms: [cellWidth(25)], cellFormatters: [expandable] },
-      { title: 'Instance type', transforms: [cellWidth(25)] },
+      { title: 'Machine pool', transforms: [cellWidth(19)], cellFormatters: [expandable] },
+      { title: 'Instance type', transforms: [cellWidth(19)] },
       { title: 'Availability zones', transforms: [cellWidth(25)] },
-      { title: 'Node count', transforms: [cellWidth(25)] },
+      { title: 'Node count', transforms: [cellWidth(19)] },
+      { title: 'Autoscaling', transforms: [cellWidth(19)] },
     ];
 
-    const getMachinePoolRow = (machinePool, isExpandableRow) => {
-      const nodesCount = machinePool.desired || machinePool.replicas || (machinePool.autoscaling && `Min: ${machinePool.autoscaling.min_replicas}, Max: ${machinePool.autoscaling.max_replicas}`);
+    const getMachinePoolRow = (machinePool = {}, isExpandableRow) => {
+      const autoscalingEnabled = machinePool.autoscaling;
+      let nodes;
+
+      if (autoscalingEnabled) {
+        const autoScaleNodesText = `Min: ${machinePool.autoscaling.min_replicas}, Max: ${machinePool.autoscaling.max_replicas}`;
+        nodes = cluster.multi_az ? (
+          <>
+            <Popover
+              bodyContent="Minimum and maximum node totals are calculated based on the number of zones."
+              aria-label="help"
+            >
+              <Button className="nodes-count" variant="link">{autoScaleNodesText}</Button>
+            </Popover>
+          </>
+        ) : autoScaleNodesText;
+      } else {
+        nodes = `${machinePool.desired || machinePool.replicas}`;
+      }
+
       const row = (
         {
           cells: [
             machinePool.id,
             machinePool.instance_type,
             machinePool.availability_zones?.join(', '),
-            nodesCount,
+            { title: nodes },
+            autoscalingEnabled ? 'Enabled' : 'Disabled',
           ],
           key: machinePool.id,
           machinePool,
@@ -148,7 +180,7 @@ class MachinePools extends React.Component {
       return row;
     };
 
-    const getExpandableRow = (machinePool, parentIndex) => {
+    const getExpandableRow = (machinePool = {}, parentIndex) => {
       const { labels, taints } = machinePool;
       const labelsKeys = !isEmpty(labels) ? Object.keys(labels) : [];
 
@@ -166,6 +198,24 @@ class MachinePools extends React.Component {
         </React.Fragment>
       ));
 
+      const autoScaling = machinePool.autoscaling && (
+        <>
+          <Title headingLevel="h4" className="space-bottom-sm space-top-lg">Autoscaling</Title>
+          <Split hasGutter>
+            <SplitItem>
+              <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${cluster.multi_az ? 'per zone' : ''}`}</Title>
+              {cluster.multi_az
+                ? machinePool.autoscaling.min_replicas / 3 : machinePool.autoscaling.min_replicas}
+            </SplitItem>
+            <SplitItem>
+              <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${cluster.multi_az ? 'per zone' : ''}`}</Title>
+              {cluster.multi_az
+                ? machinePool.autoscaling.max_replicas / 3 : machinePool.autoscaling.max_replicas}
+            </SplitItem>
+          </Split>
+        </>
+      );
+
       const expandableRowContent = (
         <>
           {labelsList && (
@@ -180,7 +230,7 @@ class MachinePools extends React.Component {
               {taintsList}
             </>
           )}
-
+          {autoScaling}
         </>
       );
 
@@ -196,10 +246,11 @@ class MachinePools extends React.Component {
       );
     };
 
-    // row is expandable if it has either labels or taints
-    const isExpandable = (labels, taints) => !isEmpty(labels) || taints?.length > 0;
+    // row is expandable if autoscaling enabled, or it has lables, or taints
+    const isExpandable = (machinePool = {}) => !isEmpty(machinePool.labels)
+    || machinePool.taints?.length > 0 || machinePool.autoscaling;
 
-    const isDefaultExpandable = isExpandable(defaultMachinePool.labels, null);
+    const isDefaultExpandable = isExpandable(defaultMachinePool);
 
     // initialize rows array with default machine pool row
     const rows = [getMachinePoolRow(defaultMachinePool, isDefaultExpandable)];
@@ -211,7 +262,7 @@ class MachinePools extends React.Component {
 
     // set all other machine pools rows
     machinePoolsList.data.forEach((machinePool) => {
-      const isExpandableRow = isExpandable(machinePool.labels, machinePool.taints);
+      const isExpandableRow = isExpandable(machinePool);
       const machinePoolRow = getMachinePoolRow(machinePool, isExpandableRow);
 
       rows.push(machinePoolRow);
@@ -331,6 +382,14 @@ class MachinePools extends React.Component {
   }
 }
 
+const checkNodesAtLeastOne = (props) => {
+  // eslint-disable-next-line react/destructuring-assignment
+  if (!props.desired && !props.autoscaling) {
+    return new Error('One of props "desired" or "autoscaling" was not specified in MachinePools.');
+  }
+  return null;
+};
+
 MachinePools.propTypes = {
   cluster: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
@@ -344,7 +403,8 @@ MachinePools.propTypes = {
     id: PropTypes.string.isRequired,
     instance_type: PropTypes.string.isRequired,
     availability_zones: PropTypes.array.isRequired,
-    desired: PropTypes.number.isRequired,
+    desired: checkNodesAtLeastOne,
+    autoscaling: checkNodesAtLeastOne,
     labels: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
   getMachinePools: PropTypes.func.isRequired,

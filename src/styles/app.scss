@@ -55,23 +55,6 @@ limitations under the License.
   margin: 0 auto;
 }
 
-// Styles for the page where the user can download the access tokens, for use
-// with API clients:
-.token-details {
-  margin: 0px 30px 0 30px;
-}
-
-.token-value {
-  margin-bottom: 10px;
-}
-
-.token-value, .token-snippet {
-  pre {
-    overflow: auto;
-  }
-  overflow: auto;
-}
-
 #not-found > div.pf-c-alert__description {
   overflow: hidden;
   text-overflow: ellipsis;

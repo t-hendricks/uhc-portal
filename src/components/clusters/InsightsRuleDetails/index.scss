@@ -9,7 +9,7 @@
 		margin-top: var(--pf-global--gutter--md);
 	}
 
-	#cl-details-top-row, #ruledetails-content #cl-details-top-row > .pf-l-split__item {
+	#cl-details-top-row, #cl-details-top-row > .pf-l-split__item {
 		width: 100%;
 	}
 
@@ -26,15 +26,13 @@
 		margin: 5px 0;
 	}
 
-	.cl-details-page-title {
-		transform: inherit;
-	}
 	.ins-c-critical-icon {
 		width: 1em;
 		height: 1em;
 		vertical-align: -0.3em;
 		fill: var(--pf-global--danger-color--200);
 	}
+	
 	.disabled-tooltip {
 		margin-right: var(--pf-global--spacer--sm);
 		font-weight: lighter;

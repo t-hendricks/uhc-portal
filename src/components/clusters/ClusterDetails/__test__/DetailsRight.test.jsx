@@ -16,11 +16,25 @@ describe('<DetailsRight />', () => {
     },
   };
 
-  it('should render', () => {
+  it('should render when autoscale disabled', () => {
     const wrapper = shallow(
       <DetailsRight
         cluster={clusterDetails.cluster}
         totalDesiredComputeNodes={clusterDetails.cluster.nodes.compute}
+        autoscaleEnabled={false}
+      />,
+    );
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should render when autoscale enabled', () => {
+    const wrapper = shallow(
+      <DetailsRight
+        cluster={clusterDetails.cluster}
+        totalDesiredComputeNodes={clusterDetails.cluster.nodes.compute}
+        autoscaleEnabled
+        totalMinNodesCount={2}
+        totalMaxNodesCount={4}
       />,
     );
     expect(wrapper).toMatchSnapshot();
@@ -31,6 +45,7 @@ describe('<DetailsRight />', () => {
       const wrapper = shallow(
         <DetailsRight
           cluster={{ ...clusterDetails.cluster, managed: false, nodes: null }}
+          autoscaleEnabled={false}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -40,6 +55,7 @@ describe('<DetailsRight />', () => {
       const wrapper = shallow(
         <DetailsRight
           cluster={{ ...clusterDetails.cluster, managed: false, subscription: { status: 'Archived' } }}
+          autoscaleEnabled={false}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -49,6 +65,7 @@ describe('<DetailsRight />', () => {
       const wrapper = shallow(
         <DetailsRight
           cluster={{ ...clusterDetails.cluster, managed: true, subscription: { status: 'Deprovisioned' } }}
+          autoscaleEnabled={false}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -63,6 +80,7 @@ describe('<DetailsRight />', () => {
             managed: false,
             nodes: null,
           }}
+          autoscaleEnabled={false}
         />,
       );
       expect(wrapper).toMatchSnapshot();
@@ -76,6 +94,7 @@ describe('<DetailsRight />', () => {
           cluster={{
             ...clusterDetails.cluster, managed: true, byoc: true, storage_quota: null,
           }}
+          autoscaleEnabled={false}
         />,
       );
       expect(wrapper).toMatchSnapshot();

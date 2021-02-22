@@ -113,6 +113,27 @@ describe('<MachinePools />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('renders with a machine pool with autosacaling enabled', () => {
+    const data = [
+      {
+        autoscaling: { max_replicas: 2, min_replicas: 1 },
+        availability_zones: ['us-east-1a'],
+        href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/mp-autoscaling',
+        id: 'mp-autoscaling',
+        instance_type: 'm5.xlarge',
+        kind: 'MachinePool',
+        labels: { foo: 'bar' },
+        taints: [
+          { key: 'foo1', value: 'bazz1', effect: 'NoSchedule' },
+          { key: 'foo2', value: 'bazz2', effect: 'NoSchedule' },
+        ],
+      },
+    ];
+
+    const wrapper = shallow(<MachinePools {...baseProps} machinePoolsList={{ data }} />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('should open modal', () => {
     const wrapper = shallow(<MachinePools {...baseProps} />);
 

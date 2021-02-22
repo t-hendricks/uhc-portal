@@ -20,7 +20,7 @@ describe('<AvailabilityZoneSelection />', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('should show error on error', () => {
-    wrapper.setProps({ meta: { dirty: true, error: 'some error message' } });
+    wrapper.setProps({ meta: { touched: true, error: 'some error message' } });
     const formGroupProps = wrapper.find('FormGroup').props();
     expect(formGroupProps.helperTextInvalid).toEqual('some error message');
     expect(formGroupProps.validated).toEqual('error');

@@ -3,6 +3,7 @@ import { reduxForm, reset, formValueSelector } from 'redux-form';
 import pick from 'lodash/pick';
 import isEmpty from 'lodash/isEmpty';
 
+import config from '../../../config';
 import { createCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
@@ -13,6 +14,9 @@ import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/helpers';
+
+import { canAutoScaleSelector } from '../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+import { OSD_TRIAL_FEATURE } from '../../../redux/constants/featureConstants';
 
 import {
   hasManagedQuotaSelector,
@@ -59,7 +63,7 @@ const mapStateToProps = (state, ownProps) => {
     loadBalancerValues: state.loadBalancerValues,
 
     clustersQuota: {
-      hasOsdQuota: hasManagedQuotaSelector(state, ownProps.product),
+      hasProductQuota: hasManagedQuotaSelector(state, ownProps.product),
       hasAwsQuota: hasAwsQuotaSelector(state, ownProps.product),
       hasGcpQuota: hasGcpQuotaSelector(state, ownProps.product),
       aws: awsQuotaSelector(state, ownProps.product),
@@ -70,6 +74,12 @@ const mapStateToProps = (state, ownProps) => {
 
     privateClusterSelected,
     product,
+
+    canAutoScale: canAutoScaleSelector(state, product),
+    autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
+    autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
+    autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
+    osdTrialFeature: state.features[OSD_TRIAL_FEATURE],
 
     initialValues: {
       byoc: 'false',
@@ -94,13 +104,13 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: async (formData) => {
+    const isMultiAz = formData.multi_az === 'true';
     const clusterRequest = {
       name: formData.name,
       region: {
         id: formData.region,
       },
       nodes: {
-        compute: parseInt(formData.nodes_compute, 10),
         compute_machine_type: {
           id: formData.machine_type,
         },
@@ -109,13 +119,25 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       cloud_provider: {
         id: ownProps.cloudProviderID,
       },
-      multi_az: formData.multi_az === 'true',
+      multi_az: isMultiAz,
       node_drain_grace_period: {
         value: formData.node_drain_grace_period,
         unit: 'minutes',
       },
       etcd_encryption: formData.etcd_encryption,
     };
+
+    if (formData.autoscalingEnabled) {
+      const minNodes = parseInt(formData.min_replicas, 10);
+      const maxNodes = parseInt(formData.max_replicas, 10);
+
+      clusterRequest.nodes.autoscale_compute = {
+        min_replicas: isMultiAz ? minNodes * 3 : minNodes,
+        max_replicas: isMultiAz ? maxNodes * 3 : maxNodes,
+      };
+    } else {
+      clusterRequest.nodes.compute = parseInt(formData.nodes_compute, 10);
+    }
 
     const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
 
@@ -127,6 +149,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         id: ownProps.product.toLowerCase(),
       };
     }
+    if (config.fakeOSD) {
+      clusterRequest.properties = { fake_cluster: 'true' };
+    }
+
+
     if (formData.network_configuration_toggle === 'advanced') {
       clusterRequest.network = {
         machine_cidr: formData.network_machine_cidr,
@@ -154,7 +181,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             formData.private_subnet_id_0, formData.public_subnet_id_0,
           ];
 
-          if (formData.multi_az === 'true') {
+          if (isMultiAz) {
             subnetIds = [
               ...subnetIds,
               formData.private_subnet_id_1, formData.public_subnet_id_1,
@@ -167,7 +194,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             formData.az_0,
           ];
 
-          if (formData.multi_az === 'true') {
+          if (isMultiAz) {
             AZs = [
               ...AZs,
               formData.az_1,

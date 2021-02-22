@@ -3,6 +3,7 @@ import {
   ASSISTED_INSTALLER_FEATURE,
   SUPPORT_TAB_FEATURE,
   ASSISTED_INSTALLER_SNO_FEATURE,
+  OSD_TRIAL_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -14,6 +15,13 @@ const setFeature = (feature, enabled) => ({
 
 // list of features to detect upon app startup
 export const features = [
+  {
+    name: OSD_TRIAL_FEATURE,
+    action: organizationID => (organizationID
+      ? accountsService.getFeature('osd-trial', organizationID)
+        .then(unleash => unleash.data.enabled)
+      : Promise.reject(Error('No organization'))),
+  },
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: organizationID => (organizationID ? Promise.all([

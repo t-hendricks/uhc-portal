@@ -112,7 +112,7 @@ class UnitFields extends React.Component {
             className="units-numeric-input"
             label="Number of compute cores"
             isRequired={input.value === CORES_VCPU}
-            helperText="This number should not include master nodes"
+            helperText="This number should not include control plane nodes"
             helperTextInvalid={this.validationMessege(CORES_VCPU, computeCoresValue)}
             validated={(computeCoresTouched ? !this.validationMessege(CORES_VCPU, computeCoresValue) : true) ? 'default' : 'error'}
           >

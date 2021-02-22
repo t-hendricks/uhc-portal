@@ -18,12 +18,6 @@ const postNewCluster = params => apiRequest({
   data: params,
 });
 
-const postDisconnectedCluster = params => apiRequest({
-  method: 'post',
-  url: '/api/accounts_mgmt/v1/subscriptions',
-  data: params,
-});
-
 const getClusterDetails = clusterID => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}`,
@@ -299,7 +293,6 @@ const clusterService = {
   getClusters,
   getUnhealthyClusters,
   postNewCluster,
-  postDisconnectedCluster,
   getClusterDetails,
   editCluster,
   getCloudProviders,

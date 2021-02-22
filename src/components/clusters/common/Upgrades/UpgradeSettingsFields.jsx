@@ -51,7 +51,7 @@ function UpgradeSettingsFields({
                   {' '}
         it will be automatically updated. See the
                   {' '}
-                  <ExternalLink href="https://access.redhat.com/support/policy/updates/openshift">version support information</ExternalLink>
+                  <ExternalLink href="https://access.redhat.com/support/policy/updates/openshift/dedicated">version support information</ExternalLink>
         .
                   <p>
         Note: High and Critical security concerns (CVEs) will be patched automatically

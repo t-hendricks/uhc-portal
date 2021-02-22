@@ -2,15 +2,20 @@ import { connect } from 'react-redux';
 
 import CloudProviderSelection from './CloudProviderSelection';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { OSD_TRIAL_FEATURE } from '../../../../redux/constants/featureConstants';
 import { hasManagedQuotaSelector, hasAwsQuotaSelector, hasGcpQuotaSelector } from '../../common/quotaSelectors';
 
-const mapStateToProps = state => ({
-  hasOSDQuota: hasManagedQuotaSelector(state, normalizedProducts.OSD),
-  hasAwsQuota: hasAwsQuotaSelector(state, normalizedProducts.OSD),
-  hasGcpQuota: hasGcpQuotaSelector(state, normalizedProducts.OSD),
-  organization: state.userProfile.organization,
-});
+const mapStateToProps = (state, ownProps) => {
+  const { product } = ownProps;
+
+  return {
+    hasProductQuota: hasManagedQuotaSelector(state, product),
+    hasAwsQuota: hasAwsQuotaSelector(state, product),
+    hasGcpQuota: hasGcpQuotaSelector(state, product),
+    osdTrialFeature: state.features[OSD_TRIAL_FEATURE],
+    organization: state.userProfile.organization,
+  };
+};
 
 const mapDispatchToProps = {
   getOrganizationAndQuota,

@@ -9,10 +9,11 @@ import NodeCountInput from '../NodeCountInput';
 import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
-
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
 import modals from '../../../common/Modal/modals';
+
+import AutoScaleSection from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleSection';
 
 class EditNodeCountModal extends Component {
   componentDidMount() {
@@ -106,6 +107,11 @@ class EditNodeCountModal extends Component {
       machineType,
       machinePoolId,
       pristine,
+      change,
+      canAutoScale,
+      autoscalingEnabled,
+      autoScaleMinNodesValue,
+      autoScaleMaxNodesValue,
     } = this.props;
 
     const error = editNodeCountResponse.error ? (
@@ -124,7 +130,7 @@ class EditNodeCountModal extends Component {
             {' '}
             {nodes}
             {' '}
-            nodes, the cluster&apos;s master nodes have
+            nodes, the cluster&apos;s control plane nodes have
             to be manually resized by a Red Hat SRE.
             This process will take about 24 hours.
           </p>
@@ -162,24 +168,45 @@ class EditNodeCountModal extends Component {
                 />
               </GridItem>
               <GridItem span={4} />
-              <GridItem span={8}>
-                <Field
-                  component={NodeCountInput}
-                  name="nodes_compute"
-                  label={isMultiAz ? 'Node count per zone' : 'Node count'}
-                  isMultiAz={isMultiAz}
-                  isByoc={isByoc}
-                  machineType={machineType}
-                  isDisabled={pending}
-                  isEditingCluster
-                  currentNodeCount={initialValues.nodes_compute || 0}
-                  cloudProviderID={cloudProviderID}
-                  product={product}
-                  minNodes={machinePoolId !== 'Default' ? 0 : undefined}
-                  isMachinePool
-                />
-              </GridItem>
-              <GridItem span={4} />
+              {canAutoScale
+                && (
+                  <>
+                    <GridItem span={12}>
+                      <AutoScaleSection
+                        autoscalingEnabled={autoscalingEnabled}
+                        isMultiAz={isMultiAz}
+                        change={change}
+                        autoScaleMinNodesValue={autoScaleMinNodesValue}
+                        autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+                        product={product}
+                        isBYOC={isByoc}
+                        isDefaultMachinePool={machinePoolId === 'Default'}
+                      />
+                    </GridItem>
+                  </>
+                )}
+              { !autoscalingEnabled && (
+                <>
+                  <GridItem span={8}>
+                    <Field
+                      component={NodeCountInput}
+                      name="nodes_compute"
+                      label={isMultiAz ? 'Node count per zone' : 'Node count'}
+                      isMultiAz={isMultiAz}
+                      isByoc={isByoc}
+                      machineType={machineType}
+                      isDisabled={pending}
+                      isEditingCluster
+                      currentNodeCount={initialValues.nodes_compute || 0}
+                      cloudProviderID={cloudProviderID}
+                      product={product}
+                      minNodes={machinePoolId !== 'Default' ? 0 : undefined}
+                      isMachinePool
+                    />
+                  </GridItem>
+                  <GridItem span={4} />
+                </>
+              )}
               {!!masterResizeAlertThreshold && resizingAlert(masterResizeAlertThreshold)}
             </Grid>
           </Form>
@@ -215,12 +242,17 @@ EditNodeCountModal.propTypes = {
   machineType: PropTypes.string,
   clusterID: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
-  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+  product: PropTypes.oneOf([...Object.keys(normalizedProducts), '']).isRequired,
   pristine: PropTypes.bool,
+  autoscalingEnabled: PropTypes.bool,
+  canAutoScale: PropTypes.bool,
+  autoScaleMinNodesValue: PropTypes.string,
+  autoScaleMaxNodesValue: PropTypes.string,
 };
 
 EditNodeCountModal.defaultProps = {
   editNodeCountResponse: {},
+  autoscalingEnabled: false,
 };
 
 EditNodeCountModal.modalName = modals.EDIT_NODE_COUNT;

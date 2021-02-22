@@ -42,73 +42,85 @@ exports[`<TokensROSA /> Renders token 1`] = `
     />
   </PageHeader>
   <PageSection>
-    <Card>
+    <Card
+      className="ocm-c-api-token__card"
+    >
       <CardTitle>
         <h2>
           Fully managed OpenShift clusters
         </h2>
       </CardTitle>
-      <CardBody>
-        <p>
-          Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
-        </p>
-        <p>
-          Download and install the 
-          <a
-            href="https://github.com/openshift/moactl/releases/latest"
+      <CardBody
+        className="ocm-c-api-token__card--body"
+      >
+        <TextContent>
+          <Text
+            component="p"
           >
-            rosa
-          </a>
-           command-line utility and use the Offline Access Token to authenticate against your Red Hat OpenShift Cluster Manager account.
-        </p>
-        <div
-          className="token-value"
-        >
-          <ClipboardCopy
-            clickTip="Successfully copied to clipboard!"
-            entryDelay={100}
-            exitDelay={1600}
-            hoverTip="Copy to clipboard"
-            isCode={false}
-            isExpanded={false}
-            isReadOnly={true}
-            maxWidth="150px"
-            onChange={[Function]}
-            onCopy={[Function]}
-            position="top"
-            switchDelay={2000}
-            textAriaLabel="Copyable input"
-            toggleAriaLabel="Show content"
-            variant="inline"
+            Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
+          </Text>
+          <Text
+            component="p"
           >
-            hello offline access token!
-          </ClipboardCopy>
-        </div>
-        <p>
-          Copy it, and then use it to authenticate with the 
-          <a
-            href="https://github.com/openshift/moactl/releases/latest"
+            Download and install the 
+            <a
+              href="https://github.com/openshift/moactl/releases/latest"
+            >
+              rosa
+            </a>
+             command-line utility and use the Offline Access Token to authenticate against your Red Hat OpenShift Cluster Manager account.
+          </Text>
+          <Text
+            component="pre"
           >
-            rosa
-          </a>
-           command-line utility:
-        </p>
-        <div
-          className="token-snippet"
-        >
-          <pre>
+            <ClipboardCopy
+              clickTip="Successfully copied to clipboard!"
+              entryDelay={100}
+              exitDelay={1600}
+              hoverTip="Copy to clipboard"
+              isCode={false}
+              isExpanded={false}
+              isReadOnly={true}
+              maxWidth="150px"
+              onChange={[Function]}
+              onCopy={[Function]}
+              position="top"
+              switchDelay={2000}
+              textAriaLabel="Copyable input"
+              toggleAriaLabel="Show content"
+              variant="inline"
+            >
+              hello offline access token!
+            </ClipboardCopy>
+          </Text>
+          <Text
+            component="p"
+          >
+            Copy it, and then use it to authenticate with the 
+            <a
+              href="https://github.com/openshift/moactl/releases/latest"
+            >
+              rosa
+            </a>
+             command-line utility:
+          </Text>
+          <Text
+            component="pre"
+          >
             rosa login --token="\\
 hello offline access token!\\
 "
-          </pre>
-        </div>
-        <p>
-          Run 
-          <code>
-            rosa login --help
-          </code>
-           to get more information.
-        </p>
+          </Text>
+          <Text
+            component="p"
+          >
+            Run 
+            <code>
+              rosa login --help
+            </code>
+             to get more information.
+          </Text>
+        </TextContent>
       </CardBody>
     </Card>
   </PageSection>

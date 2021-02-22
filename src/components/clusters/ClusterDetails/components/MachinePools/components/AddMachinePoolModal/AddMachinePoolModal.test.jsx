@@ -21,6 +21,7 @@ describe('<AddMachinePoolModal />', () => {
   };
   const getOrganizationAndQuota = jest.fn();
   const getMachineTypes = jest.fn();
+  const change = jest.fn();
   const pendingRequest = {
     pending: true,
     fulfilled: false,
@@ -37,6 +38,9 @@ describe('<AddMachinePoolModal />', () => {
       getMachineTypes={getMachineTypes}
       machineTypes={pendingRequest}
       pristine={false}
+      canAutoScale
+      autoscalingEnabled
+      change={change}
     />,
   );
   it('renders correctly', () => {
