@@ -167,7 +167,6 @@ function ClusterListTable(props) {
   const rows = isPending ? skeletonRows() : clusters.map(cluster => clusterRow(cluster));
   const resolver = isPending ? undefined
     : rowData => actionResolver(rowData.cluster, true, openModal,
-      false,
       canSubscribeOCPList[get(rowData, 'cluster.id')] || false,
       canTransferClusterOwnershipList[get(rowData, 'cluster.id')] || false,
       canHibernateClusterList[get(rowData, 'cluster.id')] || false,
