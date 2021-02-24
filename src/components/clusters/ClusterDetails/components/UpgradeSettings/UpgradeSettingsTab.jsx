@@ -73,6 +73,10 @@ class UpgradeSettingsTab extends React.Component {
     // eslint-disable-next-line camelcase
     const availableUpgrades = cluster?.version?.available_upgrades;
 
+    const showUpdateButton = !!cluster.openshift_version
+                            && availableUpgrades?.length > 0
+                            && !scheduledUpgrade && !clusterHibernating;
+
     const isPending = upgradeScheduleRequest.pending
                    || deleteScheduleRequest.pending
                    || editClusterRequest.pending;
@@ -102,7 +106,7 @@ class UpgradeSettingsTab extends React.Component {
       <Grid hasGutter>
         <GridItem lg={9} md={12}>
           <Card>
-            <CardTitle>Update Strategy</CardTitle>
+            <CardTitle>Update strategy</CardTitle>
             <CardBody>
               {scheduledManualUpgrade && confirmationModalOpen && (
               <Modal
@@ -182,7 +186,7 @@ class UpgradeSettingsTab extends React.Component {
                 availableUpgrades={availableUpgrades}
                 openModal={openModal}
               />
-              {availableUpgrades?.length > 0 && !scheduledUpgrade && !clusterHibernating && (
+              {showUpdateButton && (
                 <Button
                   variant="secondary"
                   onClick={() => openModal(modals.UPGRADE_WIZARD,
