@@ -78,7 +78,7 @@ exports[`CreateOSDForm; should render 1`] = `
   />
   <NetworkingSection
     cloudProviderID="aws"
-    isAWSCCS={false}
+    isCCS={false}
     isMultiAz={false}
     mode="basic"
     privateClusterSelected={false}

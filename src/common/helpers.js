@@ -161,6 +161,7 @@ const parseReduxFormTaints = taintsFormData => taintsFormData.map(
    && { key: taint.key, value: taint.value, effect: taint.effect }),
 ).filter(Boolean);
 
+
 export {
   noop,
   isValid,
