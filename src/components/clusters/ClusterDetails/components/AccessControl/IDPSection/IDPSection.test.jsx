@@ -18,6 +18,7 @@ describe('<IDPSection />', () => {
       canEdit={false}
       clusterID="fake id"
       identityProviders={baseIDPs}
+      clusterHibernating={false}
       openModal={openModal}
       clusterConsoleURL="http://example.com/"
     />);
@@ -35,6 +36,7 @@ describe('<IDPSection />', () => {
 
     const wrapper = shallow(<IDPSection
       canEdit={false}
+      clusterHibernating={false}
       clusterID="fake id"
       identityProviders={IDPs}
       openModal={jest.fn()}
@@ -66,6 +68,7 @@ describe('<IDPSection />', () => {
       canEdit={false}
       clusterID="fake id"
       identityProviders={IDPs}
+      clusterHibernating={false}
       openModal={openModal}
       clusterConsoleURL="http://example.com/"
     />);

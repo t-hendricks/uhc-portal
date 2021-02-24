@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Card, CardBody, CardFooter, CardTitle,
   Form, Flex, FlexItem, Grid, GridItem, Modal,
+  Tooltip, Alert,
 } from '@patternfly/react-core';
 import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
 import getClusterName from '../../../../../common/getClusterName';
@@ -58,6 +59,7 @@ class UpgradeSettingsTab extends React.Component {
       openModal,
       change,
       initialValues,
+      clusterHibernating,
     } = this.props;
     const { confirmationModalOpen } = this.state;
 
@@ -65,21 +67,46 @@ class UpgradeSettingsTab extends React.Component {
                       || upgradeScheduleRequest.pending;
 
     const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual');
-    const actionsDisabled = isDisabled || pristine;
+    const actionsDisabled = isDisabled || pristine || clusterHibernating;
 
     const scheduledUpgrade = schedules.items.find(schedule => ['manual', 'automatic'].includes(schedule.schedule_type));
     // eslint-disable-next-line camelcase
     const availableUpgrades = cluster?.version?.available_upgrades;
 
+    const showUpdateButton = !!cluster.openshift_version
+                            && availableUpgrades?.length > 0
+                            && !scheduledUpgrade && !clusterHibernating;
+
     const isPending = upgradeScheduleRequest.pending
                    || deleteScheduleRequest.pending
                    || editClusterRequest.pending;
+
+    const saveButton = (
+      <Button
+        variant="primary"
+        onClick={handleSubmit}
+        isDisabled={actionsDisabled}
+        isLoading={isPending}
+      >
+        Save
+      </Button>
+    );
+
+    const hibernatingClusterInfo = (
+      <Alert
+        variant="info"
+        className="space-bottom-md"
+        isInline
+        title="Version updates will not occur while this cluster is Hibernating.
+            Once resumed, updates will start according to the selected updates strategy."
+      />
+    );
 
     return (
       <Grid hasGutter>
         <GridItem lg={9} md={12}>
           <Card>
-            <CardTitle>Update Strategy</CardTitle>
+            <CardTitle>Update strategy</CardTitle>
             <CardBody>
               {scheduledManualUpgrade && confirmationModalOpen && (
               <Modal
@@ -101,6 +128,7 @@ class UpgradeSettingsTab extends React.Component {
                 Are you sure you want to continue?
               </Modal>
               )}
+              {clusterHibernating && hibernatingClusterInfo}
               {upgradeScheduleRequest.error && (
                 <ErrorBox response={upgradeScheduleRequest} message="Can't schedule upgrade" />
               )}
@@ -125,14 +153,15 @@ class UpgradeSettingsTab extends React.Component {
             <CardFooter>
               <Flex>
                 <FlexItem>
-                  <Button
-                    variant="primary"
-                    onClick={handleSubmit}
-                    isDisabled={actionsDisabled}
-                    isLoading={isPending}
-                  >
-                  Save
-                  </Button>
+                  {
+                    clusterHibernating ? (
+                      <Tooltip content="This operation is not available while cluster is hibernating">
+                        <span>
+                          {saveButton}
+                        </span>
+                      </Tooltip>
+                    ) : saveButton
+                  }
                 </FlexItem>
                 <FlexItem>
                   <Button onClick={reset} variant="link" isDisabled={actionsDisabled}>
@@ -157,7 +186,7 @@ class UpgradeSettingsTab extends React.Component {
                 availableUpgrades={availableUpgrades}
                 openModal={openModal}
               />
-              {availableUpgrades?.length > 0 && !scheduledUpgrade && (
+              {showUpdateButton && (
                 <Button
                   variant="secondary"
                   onClick={() => openModal(modals.UPGRADE_WIZARD,
@@ -180,6 +209,7 @@ class UpgradeSettingsTab extends React.Component {
 UpgradeSettingsTab.propTypes = {
   pristine: PropTypes.bool,
   isAutomatic: PropTypes.bool,
+  clusterHibernating: PropTypes.bool,
   cluster: PropTypes.shape({
     canEdit: PropTypes.bool,
     openshift_version: PropTypes.string,

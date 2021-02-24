@@ -59,6 +59,7 @@ describe('<NetworkSelfServiceSection />', () => {
         grants={{ ...baseResponse, data: [] }}
         deleteGrantResponse={baseResponse}
         addGrantResponse={baseResponse}
+        clusterHibernating={false}
       />,
     );
   });
@@ -169,6 +170,7 @@ describe('<NetworkSelfServiceSection />', () => {
         grants={{ ...baseResponse, fulfilled: true, data: fakeGrants }}
         deleteGrantResponse={baseResponse}
         addGrantResponse={baseResponse}
+        clusterHibernating={false}
       />,
     );
     expect(wrapper.find('.access-control-add').props().isDisabled).toBeTruthy();

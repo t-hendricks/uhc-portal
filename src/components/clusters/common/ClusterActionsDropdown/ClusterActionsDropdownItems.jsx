@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 import React from 'react';
 import { DropdownItem } from '@patternfly/react-core';
-import clusterStates from '../clusterStates';
+import clusterStates, { isHibernating } from '../clusterStates';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
 import modals from '../../../common/Modal/modals';
@@ -16,7 +16,7 @@ import modals from '../../../common/Modal/modals';
  */
 function actionResolver(
   cluster, showConsoleButton, openModal, canSubscribeOCP,
-  canTransferClusterOwnership, toggleSubscriptionReleased,
+  canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased,
 ) {
   const baseProps = {
     component: 'button',
@@ -24,7 +24,19 @@ function actionResolver(
   const uninstallingMessage = <span>The cluster is being uninstalled</span>;
   const consoleDisabledMessage = <span>Admin console is not yet available for this cluster</span>;
   const notReadyMessage = <span>This cluster is not ready</span>;
+  const hibernatingMessage = (
+    <span>
+This cluster is hibernating;
+     awaken cluster in order to perform actions
+    </span>
+  );
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
+  const isClusterInHibernatingProcess = isHibernating(cluster.state);
+  const isClusterInHibernatingProcessProps = isClusterInHibernatingProcess
+    ? { isDisabled: true, tooltip: hibernatingMessage } : {};
+  const isClusterHibernatingOrPoweringDown = cluster.state === clusterStates.HIBERNATING
+  || cluster.state === clusterStates.POWERING_DOWN;
+  const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
   const isClusterReady = cluster.state === clusterStates.READY;
   const isClusterErrorInAccountClaimPhase = cluster.state === clusterStates.ERROR
   && !cluster.status.dns_ready;
@@ -51,7 +63,38 @@ function actionResolver(
       tooltip: isClusterUninstalling ? uninstallingMessage : consoleDisabledMessage,
       key: getKey('adminconsole'),
     };
-    return consoleURL && !isClusterUninstalling ? adminConsoleEnabled : adminConsoleDisabled;
+    return consoleURL && !isClusterUninstalling
+       && !isClusterInHibernatingProcess ? adminConsoleEnabled : adminConsoleDisabled;
+  };
+
+  const getHibernateClusterProps = () => {
+    const hibernateClusterBaseProps = {
+      ...baseProps,
+      key: getKey('hibernatecluster'),
+    };
+    const clusterData = {
+      clusterID: cluster.id,
+      clusterName,
+      subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+    };
+    const hibernateClusterProps = {
+      ...hibernateClusterBaseProps,
+      title: 'Hibernate cluster',
+      isDisabled: !isClusterReady,
+      onClick: () => openModal(modals.HIBERNATE_CLUSTER, clusterData),
+    };
+    const resumeHibernatingClusterProps = {
+      ...hibernateClusterBaseProps,
+      isDisabled: isClusterPoweringDown,
+      title: 'Resume from Hibernation',
+      onClick: () => openModal(modals.RESUME_CLUSTER, clusterData),
+    };
+
+
+    if (isClusterHibernatingOrPoweringDown) {
+      return resumeHibernatingClusterProps;
+    }
+    return hibernateClusterProps;
   };
 
   const getScaleClusterProps = () => {
@@ -124,7 +167,17 @@ function actionResolver(
       ...editDisplayNameBaseProps,
       ...isUninstallingProps,
     };
-    return isClusterUninstalling ? editDisplayNamePropsUninstalling : editDisplayNameProps;
+    const editDisplayNamePropsHibernating = {
+      ...editDisplayNameBaseProps,
+      ...isClusterInHibernatingProcessProps,
+    };
+
+    if (isClusterUninstalling) {
+      return editDisplayNamePropsUninstalling;
+    } if (isClusterInHibernatingProcess) {
+      return editDisplayNamePropsHibernating;
+    }
+    return editDisplayNameProps;
   };
   const getArchiveClusterProps = () => {
     const baseArchiveProps = {
@@ -187,9 +240,13 @@ function actionResolver(
       clusterID: cluster.id,
       clusterName,
     };
-    return isClusterUninstalling
-      ? { ...baseDeleteProps, ...isUninstallingProps }
-      : { ...baseDeleteProps, onClick: () => openModal(modals.DELETE_CLUSTER, deleteModalData) };
+
+    if (isClusterUninstalling) {
+      return { ...baseDeleteProps, ...isUninstallingProps };
+    } if (isClusterInHibernatingProcess) {
+      return { ...baseDeleteProps, ...isClusterInHibernatingProcessProps };
+    }
+    return { ...baseDeleteProps, onClick: () => openModal(modals.DELETE_CLUSTER, deleteModalData) };
   };
 
   const getEditSubscriptionSettingsProps = () => {
@@ -233,9 +290,11 @@ function actionResolver(
   const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
   const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
   const editccscredentialsProps = getEditCCSCredentialsProps();
+  const hibernateClusterProps = getHibernateClusterProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
+  const showHibernateCluster = cluster.canEdit && cluster.managed && canHibernateCluster;
   const showEditNodeCount = cluster.canEdit && cluster.managed;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription
@@ -257,6 +316,7 @@ function actionResolver(
     showEditURL && editConsoleURLItemProps,
     showScale && scaleClusterItemProps,
     showEditNodeCount && editNodeCountItemProps,
+    showHibernateCluster && hibernateClusterProps,
     showDelete && deleteClusterItemProps,
     showArchive && archiveClusterItemProps,
     showUnarchive && unarchiveClusterItemProps,
@@ -268,11 +328,11 @@ function actionResolver(
 
 function dropDownItems({
   cluster, showConsoleButton, openModal, canSubscribeOCP,
-  canTransferClusterOwnership, toggleSubscriptionReleased,
+  canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased,
 }) {
   const actions = actionResolver(
     cluster, showConsoleButton, openModal, canSubscribeOCP,
-    canTransferClusterOwnership, toggleSubscriptionReleased,
+    canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased,
   );
   const menuItems = actions.map(
     action => (<DropdownItem {...action}>{action.title}</DropdownItem>),

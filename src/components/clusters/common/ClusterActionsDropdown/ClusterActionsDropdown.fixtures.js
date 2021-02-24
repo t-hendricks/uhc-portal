@@ -13,11 +13,15 @@ const cluster = {
     state: clusterStates.READY,
     dns_ready: true,
   },
+  subscription: {
+    id: 'subscription-id',
+  },
 };
 
 const props = {
   showConsoleButton: true,
   canSubscribeOCP: false,
+  canHibernateCluster: true,
   canTransferClusterOwnership: false,
   openModal: jest.fn(),
   toggleSubscriptionReleased: jest.fn(),
@@ -26,6 +30,12 @@ const props = {
 const managedReadyProps = {
   cluster: { ...cluster },
   ...props,
+};
+
+const hibernateClusterModalData = {
+  clusterID: cluster.id,
+  clusterName: cluster.name,
+  subscriptionID: cluster.subscription.id,
 };
 
 const deleteModalData = {
@@ -98,4 +108,5 @@ export {
   selfManagedProps,
   cluster,
   organizationClusterProps,
+  hibernateClusterModalData,
 };

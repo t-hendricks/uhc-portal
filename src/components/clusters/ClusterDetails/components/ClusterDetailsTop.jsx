@@ -34,6 +34,7 @@ function ClusterDetailsTop(props) {
     children,
     canSubscribeOCP,
     canTransferClusterOwnership,
+    canHibernateCluster,
     autoRefreshEnabled,
     toggleSubscriptionReleased,
   } = props;
@@ -74,7 +75,13 @@ function ClusterDetailsTop(props) {
 
 
   let launchConsole;
-  if (consoleURL && (cluster.state !== clusterStates.UNINSTALLING)) {
+  const disableConsoleOnStates = [
+    clusterStates.UNINSTALLING,
+    clusterStates.POWERING_DOWN,
+    clusterStates.POWERING_UP,
+    clusterStates.HIBERNATING,
+  ];
+  if (consoleURL && !disableConsoleOnStates.includes(cluster.state)) {
     launchConsole = (
       <a href={consoleURL} target="_blank" rel="noopener noreferrer" className="pull-left">
         <Button variant="primary">Open console</Button>
@@ -99,6 +106,7 @@ function ClusterDetailsTop(props) {
       canSubscribeOCP={canSubscribeOCP}
       canTransferClusterOwnership={canTransferClusterOwnership}
       toggleSubscriptionReleased={toggleSubscriptionReleased}
+      canHibernateCluster={canHibernateCluster}
     />
   );
 
@@ -198,6 +206,7 @@ ClusterDetailsTop.propTypes = {
   ]),
   children: PropTypes.any,
   canSubscribeOCP: PropTypes.bool.isRequired,
+  canHibernateCluster: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
   autoRefreshEnabled: PropTypes.bool,
   toggleSubscriptionReleased: PropTypes.func.isRequired,

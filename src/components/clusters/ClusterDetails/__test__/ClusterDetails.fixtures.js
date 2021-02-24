@@ -827,6 +827,7 @@ const fixtures = {
   supportTabFeature: false,
   displayClusterLogs: false,
   canTransferClusterOwnership: false,
+  canHibernateCluster: true,
   canSubscribeOCP: false,
   hasIssues: false,
   hasIssuesInsights: false,

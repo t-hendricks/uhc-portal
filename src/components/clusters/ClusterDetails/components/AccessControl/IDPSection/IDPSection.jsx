@@ -21,7 +21,7 @@ import links from '../../../../../../common/installLinks';
 import { IDPTypeNames, getOauthCallbackURL, IDPNeedsOAuthURL } from '../../IdentityProvidersModal/IdentityProvidersHelper';
 
 function IDPSection({
-  clusterID, clusterConsoleURL, identityProviders, openModal, canEdit,
+  clusterID, clusterConsoleURL, identityProviders, openModal, canEdit, clusterHibernating,
 }) {
   const columns = [
     { title: 'Name', transforms: [cellWidth(30)] },
@@ -75,8 +75,13 @@ function IDPSection({
 
   const hasIDPs = !!identityProviders.clusterIDPList.length;
 
+  const disabled = !canEdit || clusterHibernating;
+
+  const tooltipContent = clusterHibernating ? 'This operation is not available while cluster is hibernating'
+    : 'You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers.';
+
   const addIdpBtn = (
-    <Button onClick={() => openModal('create-identity-provider')} variant="secondary" className="access-control-add" isDisabled={!canEdit}>
+    <Button onClick={() => openModal('create-identity-provider')} variant="secondary" className="access-control-add" isDisabled={disabled}>
       Add identity provider
     </Button>
   );
@@ -112,14 +117,14 @@ function IDPSection({
               variant={TableVariant.compact}
               cells={columns}
               rows={identityProviders.clusterIDPList.map(idpRow)}
-              areActionsDisabled={() => !canEdit}
+              areActionsDisabled={() => disabled}
             >
               <TableHeader />
               <TableBody />
             </Table>
           )}
-          {!canEdit ? (
-            <Tooltip content="You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers.">
+          {disabled ? (
+            <Tooltip content={tooltipContent}>
               <span>
                 {addIdpBtn}
               </span>
@@ -138,6 +143,7 @@ IDPSection.propTypes = {
   identityProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  clusterHibernating: PropTypes.bool.isRequired,
 };
 
 export default IDPSection;

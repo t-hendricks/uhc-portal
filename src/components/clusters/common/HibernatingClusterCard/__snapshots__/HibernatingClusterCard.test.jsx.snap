@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HibernateClusterModal /> renders correctly 1`] = `
+<Card
+  id="hibernatingClusterCard"
+>
+  <CardBody>
+    <EmptyState
+      variant="large"
+    >
+      <EmptyStateIcon
+        className="status-icon"
+        icon={[Function]}
+      />
+      <Title
+        headingLevel="h4"
+        size="lg"
+      >
+        Cluster is currently hibernating
+      </Title>
+      <EmptyStateBody>
+        The cluster is not utilizing any infrastructure and all operations will not be available
+      </EmptyStateBody>
+      <EmptyStateSecondaryActions>
+        <Button
+          disabled={true}
+          onClick={[Function]}
+          variant="link"
+        >
+          Resume from Hibernation
+        </Button>
+      </EmptyStateSecondaryActions>
+    </EmptyState>
+  </CardBody>
+</Card>
+`;

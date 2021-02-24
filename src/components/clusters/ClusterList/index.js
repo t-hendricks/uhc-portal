@@ -8,6 +8,7 @@ import { viewActions } from '../../../redux/actions/viewOptionsActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 import canSubscribeOCPListSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPListSelector';
 import { canTransferClusterOwnershipListSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
+import canHibernateClusterListSelector from '../common/HibernateClusterModal/CanHibernateClusterListSelector';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 
 const mapDispatchToProps = {
@@ -29,6 +30,7 @@ const mapStateToProps = state => ({
   cloudProviders: state.cloudProviders,
   anyModalOpen: !!state.modal.modalName,
   canSubscribeOCPList: canSubscribeOCPListSelector(state),
+  canHibernateClusterList: canHibernateClusterListSelector(state),
   canTransferClusterOwnershipList: canTransferClusterOwnershipListSelector(state),
 });
 

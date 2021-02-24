@@ -8,9 +8,11 @@ describe('<AddOnsDeleteModal />', () => {
   let wrapper;
   let closeModal;
   let deleteClusterAddOn;
+  let clearClusterAddOnsResponses;
   beforeAll(() => {
     closeModal = jest.fn();
     deleteClusterAddOn = jest.fn();
+    clearClusterAddOnsResponses = jest.fn();
     wrapper = shallow(
       <AddOnsDeleteModal
         isOpen
@@ -21,6 +23,7 @@ describe('<AddOnsDeleteModal />', () => {
         }}
         closeModal={closeModal}
         deleteClusterAddOn={deleteClusterAddOn}
+        clearClusterAddOnsResponses={clearClusterAddOnsResponses}
         deleteClusterAddOnResponse={{ fulfilled: false, pending: false, error: false }}
       />,
     );
@@ -56,5 +59,11 @@ describe('<AddOnsDeleteModal />', () => {
       deleteClusterAddOnResponse: { fulfilled: true, pending: false, error: false },
     });
     expect(closeModal).toBeCalled();
+  });
+
+  it('should clear response when modal is closed', () => {
+    const modal = wrapper.find('Modal');
+    modal.props().onSecondaryClick();
+    expect(clearClusterAddOnsResponses).toBeCalled();
   });
 });
