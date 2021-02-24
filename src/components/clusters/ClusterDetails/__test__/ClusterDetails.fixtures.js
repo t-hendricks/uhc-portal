@@ -824,7 +824,6 @@ const fixtures = {
   supportCases: {},
   notificationContacts: {},
   initTabOpen: '',
-  supportTabFeature: false,
   displayClusterLogs: false,
   canTransferClusterOwnership: false,
   canHibernateCluster: true,
