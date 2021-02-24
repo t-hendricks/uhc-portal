@@ -231,7 +231,6 @@ class InsightsTable extends React.Component {
   render() {
     const {
       insightsData,
-      voteOnRule,
       disableRule,
       enableRule,
       groups,
@@ -323,15 +322,7 @@ class InsightsTable extends React.Component {
                 },
               ]}
               detail={details => (
-                <Stack>
-                  <StackItem className="report-details-link">
-                    <Link
-                      to={`/details/${cluster.id}/insights/${details.rule_id.replace(/\./g, '|')}/${details.extra_data.error_key}`}
-                      onClick={() => setReportDetails(details)}
-                    >
-                    View details and remediation steps
-                    </Link>
-                  </StackItem>
+                <Stack className="report-details-unfolded">
                   <StackItem>
                     <ReportDetails
                       details={appendCrParamToDocLinks(details.details)}
@@ -340,7 +331,6 @@ class InsightsTable extends React.Component {
                       riskOfChange={details.risk_of_change}
                       showRiskDescription={false}
                       definitions={details.extra_data}
-                      userVote={details.user_vote}
                       remediating={
                     (details.reason || details.resolution)
                     && {
@@ -348,8 +338,15 @@ class InsightsTable extends React.Component {
                       resolution: details.resolution,
                     }
                   }
-                      onFeedbackChanged={voteOnRule}
                     />
+                  </StackItem>
+                  <StackItem className="report-details-unfolded__link">
+                    <Link
+                      to={`/details/${cluster.id}/insights/${details.rule_id.replace(/\./g, '|')}/${details.extra_data.error_key}`}
+                      onClick={() => setReportDetails(details)}
+                    >
+                    View details and remediation steps
+                    </Link>
                   </StackItem>
                 </Stack>
               )}
@@ -401,7 +398,6 @@ InsightsTable.propTypes = {
   cluster: PropTypes.object.isRequired,
   insightsData: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
-  voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
