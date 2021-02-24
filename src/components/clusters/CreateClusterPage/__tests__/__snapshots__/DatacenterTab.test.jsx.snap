@@ -67,6 +67,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
           aria-label="Installation options table"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               "Infrastructure provider",
@@ -191,6 +192,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
           aria-label="Installation options table"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               "Infrastructure provider",

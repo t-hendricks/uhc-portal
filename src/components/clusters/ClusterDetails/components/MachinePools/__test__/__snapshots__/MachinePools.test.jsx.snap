@@ -24,6 +24,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
         aria-label="Machine pools"
         borders={true}
         canSelectAll={true}
+        canSortFavorites={true}
         cells={
           Array [
             Object {
@@ -253,6 +254,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
         aria-label="Machine pools"
         borders={true}
         canSelectAll={true}
+        canSortFavorites={true}
         cells={
           Array [
             Object {
@@ -594,6 +596,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
         aria-label="Machine pools"
         borders={true}
         canSelectAll={true}
+        canSortFavorites={true}
         cells={
           Array [
             Object {
@@ -701,6 +704,7 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
         aria-label="Machine pools"
         borders={true}
         canSelectAll={true}
+        canSortFavorites={true}
         cells={
           Array [
             Object {

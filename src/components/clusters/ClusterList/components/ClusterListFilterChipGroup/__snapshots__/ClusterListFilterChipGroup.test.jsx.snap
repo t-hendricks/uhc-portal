@@ -13,6 +13,7 @@ exports[`<ClusterListFilterChipGroup /> should render 1`] = `
       isClosable={false}
       numChips={3}
       onClick={[Function]}
+      onOverflowChipClick={[Function]}
       tooltipPosition="top"
     >
       <ChipGroup
@@ -26,6 +27,7 @@ exports[`<ClusterListFilterChipGroup /> should render 1`] = `
         key="chipgroup-plan_id"
         numChips={3}
         onClick={[Function]}
+        onOverflowChipClick={[Function]}
         tooltipPosition="top"
       >
         <Chip

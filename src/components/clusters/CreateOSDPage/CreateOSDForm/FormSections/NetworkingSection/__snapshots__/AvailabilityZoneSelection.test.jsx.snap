@@ -10,6 +10,7 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
   <Select
     aria-label=""
     aria-labelledby=""
+    chipGroupComponent={null}
     className=""
     clearSelectionsAriaLabel="Clear all"
     createText="Create"
@@ -33,6 +34,7 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
     onFilter={null}
     onSelect={[Function]}
     onToggle={[Function]}
+    onTypeaheadInputChanged={null}
     ouiaSafe={true}
     placeholderText=""
     removeSelectionAriaLabel="Remove"

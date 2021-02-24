@@ -19,6 +19,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           aria-label="Managed services table"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               Object {
@@ -359,6 +360,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           aria-label="Run it yourself"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               "Cloud provider",
@@ -451,6 +453,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           aria-label="Managed subscriptions"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               Object {
@@ -575,6 +578,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           aria-label="Managed services table"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               Object {
@@ -848,6 +852,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           aria-label="Run it yourself"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               "Cloud provider",
@@ -939,6 +944,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           aria-label="Managed services table"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               Object {
@@ -1280,6 +1286,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           aria-label="Run it yourself"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               "Cloud provider",

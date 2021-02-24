@@ -218,6 +218,7 @@ exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
     aria-label="Quota Table"
     borders={true}
     canSelectAll={true}
+    canSortFavorites={true}
     cells={
       Array [
         "Resource type",

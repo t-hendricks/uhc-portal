@@ -18,7 +18,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
       fieldId="edit-display-name-input"
       validated="default"
     >
-      <ForwardRef
+      <TextInput
         aria-label="Edit display name"
         id="edit-display-name-input"
         onChange={[Function]}
@@ -59,7 +59,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = 
       fieldId="edit-display-name-input"
       validated="default"
     >
-      <ForwardRef
+      <TextInput
         aria-label="Edit display name"
         id="edit-display-name-input"
         onChange={[Function]}
@@ -92,7 +92,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when pending 1`] = `
       fieldId="edit-display-name-input"
       validated="default"
     >
-      <ForwardRef
+      <TextInput
         aria-label="Edit display name"
         id="edit-display-name-input"
         onChange={[Function]}
