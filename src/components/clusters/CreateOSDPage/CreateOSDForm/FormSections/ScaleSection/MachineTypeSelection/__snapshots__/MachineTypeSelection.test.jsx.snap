@@ -1284,7 +1284,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           }
           trigger={
             <div
-              aria-describedby="pf-tooltip-1"
               className="ocm-flat-radio-button-disabled"
             >
               <Button
@@ -1335,7 +1334,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
             onFoundRef={[Function]}
           >
             <div
-              aria-describedby="pf-tooltip-1"
               className="ocm-flat-radio-button-disabled"
             >
               <Button

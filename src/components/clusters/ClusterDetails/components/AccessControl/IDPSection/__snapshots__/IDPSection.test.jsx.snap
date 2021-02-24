@@ -102,6 +102,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
       aria-label="Identity Providers"
       borders={true}
       canSelectAll={true}
+      canSortFavorites={true}
       cells={
         Array [
           Object {

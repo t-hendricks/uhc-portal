@@ -4,6 +4,7 @@ exports[`<MonitoringList /> should render 1`] = `
 <DataList
   aria-label="monitoring-table"
   className=""
+  gridBreakpoint="md"
   isCompact={false}
   selectedDataListItemId=""
   wrapModifier={null}
