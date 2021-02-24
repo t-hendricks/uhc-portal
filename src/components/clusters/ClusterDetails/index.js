@@ -39,6 +39,7 @@ import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/Ca
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
 import issuesCountSelector from './components/Insights/InsightsSelectors';
+import canHibernateClusterSelector from '../common/HibernateClusterModal/HibernateClusterModalSelector';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import getBaseName from '../../../common/getBaseName';
 import { SUPPORT_TAB_FEATURE, ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
@@ -80,6 +81,7 @@ const mapStateToProps = (state, { location }) => {
     groups,
     canSubscribeOCP: canSubscribeOCPSelector(state),
     canTransferClusterOwnership: canTransferClusterOwnershipSelector(state),
+    canHibernateCluster: canHibernateClusterSelector(state),
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
     // check whether there are Critical (4) or Important (3) issues

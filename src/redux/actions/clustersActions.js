@@ -121,6 +121,26 @@ const clearClusterArchiveResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE,
 });
 
+
+const hibernateCluster = id => dispatch => dispatch({
+  type: clustersConstants.HIBERNATE_CLUSTER,
+  payload: clusterService.hibernateCluster(id),
+});
+
+const clearHibernateClusterResponse = () => dispatch => dispatch({
+  type: clustersConstants.CLEAR_CLUSTER_HIBERNATE_RESPONSE,
+});
+
+const resumeCluster = id => dispatch => dispatch({
+  type: clustersConstants.RESUME_CLUSTER,
+  payload: clusterService.resumeCluster(id),
+});
+
+const clearResumeClusterResponse = () => dispatch => dispatch({
+  type: clustersConstants.CLEAR_RESUME_CLUSTER_RESPONSE,
+});
+
+
 const unarchiveCluster = (id, name) => dispatch => dispatch({
   type: clustersConstants.UNARCHIVE_CLUSTER,
   payload: clusterService.unarchiveCluster(id),
@@ -340,6 +360,10 @@ export {
   invalidateClusters,
   resetCreatedClusterResponse,
   editClusterDisplayName,
+  hibernateCluster,
+  clearHibernateClusterResponse,
+  resumeCluster,
+  clearResumeClusterResponse,
   archiveCluster,
   clearClusterArchiveResponse,
   unarchiveCluster,

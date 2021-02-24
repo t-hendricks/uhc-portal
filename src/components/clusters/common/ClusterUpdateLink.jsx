@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Popover } from '@patternfly/react-core';
 import { InfoCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
+import { isHibernating } from './clusterStates';
 import links from '../../../common/installLinks';
 import getClusterName from '../../../common/getClusterName';
 import modals from '../../common/Modal/modals';
@@ -30,7 +31,8 @@ const ClusterUpdateLink = ({
 
   // Only show Update tooltip/link for OCP clusters that have available updates
   // or OSD clusters when the feature toggle is enabled
-  if ((cluster.managed && (!cluster.canEdit || !osdUpgradeAvailable))
+  if ((cluster.managed
+        && (!cluster.canEdit || !osdUpgradeAvailable || isHibernating(cluster.state)))
       || (!cluster.managed && !upgrade.available)) {
     return null;
   }

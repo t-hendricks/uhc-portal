@@ -23,7 +23,7 @@ import {
 import AddOnsConstants from '../AddOnsConstants';
 import { hasParameters } from '../AddOnsHelper';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
-import clusterStates from '../../../../common/clusterStates';
+import clusterStates, { isHibernating } from '../../../../common/clusterStates';
 import './AddOnsCard.scss';
 
 class AddOnsCard extends Component {
@@ -109,12 +109,21 @@ class AddOnsCard extends Component {
 
     // Show install button if not installed
     if (!installedAddOn) {
-      if (!hasQuota || !cluster.canEdit) {
+      const clusterHibernating = isHibernating(cluster.state);
+      if (!hasQuota || !cluster.canEdit || clusterHibernating) {
+        let tooltipContent;
+        if (clusterHibernating) {
+          tooltipContent = 'This operation is not available while cluster is hibernating';
+        } else if (!cluster.canEdit) {
+          tooltipContent = 'You do not have permission to install add ons. Only cluster owners and organization administrators can install add ons.';
+        } else {
+          tooltipContent = noQuotaTooltip;
+        }
+
+
         return (
           <Tooltip
-            content={!cluster.canEdit
-              ? 'You do not have permission to install add ons. Only cluster owners and organization administrators can install add ons.'
-              : noQuotaTooltip}
+            content={tooltipContent}
           >
             <div className="pf-u-display-inline-block">
               <Button isDisabled>
@@ -199,7 +208,7 @@ class AddOnsCard extends Component {
 
     const dropdownItems = [
       <DropdownItem
-        key="action"
+        key="parameters"
         component="button"
         isDisabled={
           !hasParameters(addOn)
@@ -211,7 +220,7 @@ class AddOnsCard extends Component {
         Configure
       </DropdownItem>,
       <DropdownItem
-        key="action"
+        key="delete"
         component="button"
         isDisabled={
           !cluster.canEdit

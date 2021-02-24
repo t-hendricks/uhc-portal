@@ -3,6 +3,7 @@ import {
   ASSISTED_INSTALLER_FEATURE,
   SUPPORT_TAB_FEATURE,
   ASSISTED_INSTALLER_SNO_FEATURE,
+  ASSISTED_INSTALLER_OCS_FEATURE,
   OSD_TRIAL_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
@@ -34,6 +35,13 @@ export const features = [
     name: ASSISTED_INSTALLER_SNO_FEATURE,
     action: organizationID => (organizationID
       ? accountsService.getFeature('assisted-installer-sno', organizationID)
+        .then(unleash => unleash.data.enabled)
+      : Promise.reject(Error('No organization'))),
+  },
+  {
+    name: ASSISTED_INSTALLER_OCS_FEATURE,
+    action: organizationID => (organizationID
+      ? accountsService.getFeature('assisted-installer-ocs', organizationID)
         .then(unleash => unleash.data.enabled)
       : Promise.reject(Error('No organization'))),
   },

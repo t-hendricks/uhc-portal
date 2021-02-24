@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 import { closeModal } from '../../../../../common/Modal/ModalActions';
 import AddOnsDeleteModal from './AddOnsDeleteModal';
-import { addOnsActions } from '../AddOnsActions';
+import { addOnsActions, clearClusterAddOnsResponses } from '../AddOnsActions';
 
 
 const mapStateToProps = state => ({
@@ -11,10 +11,12 @@ const mapStateToProps = state => ({
   deleteClusterAddOnResponse: state.addOns.deleteClusterAddOnResponse,
 });
 
-const mapDispatchToProps = {
-  deleteClusterAddOn: (clusterID, addOnID) => addOnsActions.deleteClusterAddOn(clusterID, addOnID),
-  closeModal: () => closeModal(),
-  clearDeleteAddOnResponse: () => addOnsActions.clearClusterAddOnsResponses(),
-};
+const mapDispatchToProps = dispatch => ({
+  deleteClusterAddOn: (clusterID, addOnID) => dispatch(
+    addOnsActions.deleteClusterAddOn(clusterID, addOnID),
+  ),
+  closeModal: () => dispatch(closeModal()),
+  clearClusterAddOnsResponses: () => dispatch(clearClusterAddOnsResponses()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddOnsDeleteModal);

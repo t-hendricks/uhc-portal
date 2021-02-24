@@ -85,6 +85,15 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
   </DropdownItem>
   <DropdownItem
     component="button"
+    isDisabled={true}
+    key="undefined.menu.hibernatecluster"
+    onClick={[Function]}
+    title="Hibernate cluster"
+  >
+    Hibernate cluster
+  </DropdownItem>
+  <DropdownItem
+    component="button"
     key="undefined.menu.deletecluster"
     onClick={[Function]}
     title="Delete cluster"
@@ -129,6 +138,15 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
     title="Edit node count"
   >
     Edit node count
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    isDisabled={false}
+    key="1.menu.hibernatecluster"
+    onClick={[Function]}
+    title="Hibernate cluster"
+  >
+    Hibernate cluster
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -194,6 +212,15 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
     }
   >
     Edit node count
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    isDisabled={true}
+    key="undefined.menu.hibernatecluster"
+    onClick={[Function]}
+    title="Hibernate cluster"
+  >
+    Hibernate cluster
   </DropdownItem>
   <DropdownItem
     component="button"

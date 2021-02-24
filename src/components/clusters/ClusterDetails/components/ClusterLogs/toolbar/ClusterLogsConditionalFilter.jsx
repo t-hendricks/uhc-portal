@@ -88,6 +88,7 @@ class ClusterLogsConditionalFilter extends Component {
       value: 'Description',
       label: 'Description',
       filterValues: {
+        'aria-label': 'Description Filter Input',
         onChange: (event, value) => this.updateCurrentValue(value, 'description'),
         value: description,
       },

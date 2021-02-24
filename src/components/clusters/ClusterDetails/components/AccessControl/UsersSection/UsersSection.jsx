@@ -67,6 +67,7 @@ class UsersSection extends React.Component {
       addUserResponse,
       deleteUserResponse,
       cluster,
+      clusterHibernating,
       deleteUser,
       addUser,
       isAddUserModalOpen,
@@ -173,8 +174,13 @@ class UsersSection extends React.Component {
       rows[deletedRowIndex] = skeletonRow;
     }
 
+    const disabled = !cluster.canEdit || clusterHibernating;
+
+    const tooltipContent = clusterHibernating ? 'This operation is not available while cluster is hibernating'
+      : 'You do not have permission to add a user. Only cluster owners and organization administrators can add users.';
+
     const addUserBtn = (
-      <Button onClick={() => { setTimeout(() => openModal('add-user'), 0); }} variant="secondary" className="access-control-add" isDisabled={!cluster.canEdit}>
+      <Button onClick={() => { setTimeout(() => openModal('add-user'), 0); }} variant="secondary" className="access-control-add" isDisabled={disabled}>
         Add user
       </Button>
     );
@@ -215,8 +221,8 @@ class UsersSection extends React.Component {
               <TableBody />
             </Table>
           )}
-          {!cluster.canEdit ? (
-            <Tooltip content="You do not have permission to add a user. Only cluster owners and organization administrators can add users.">
+          {disabled ? (
+            <Tooltip content={tooltipContent}>
               <span>
                 {addUserBtn}
               </span>
@@ -253,6 +259,7 @@ UsersSection.propTypes = {
   clearUsersResponses: PropTypes.func.isRequired,
   clearAddUserResponses: PropTypes.func.isRequired,
   hasUsers: PropTypes.bool.isRequired,
+  clusterHibernating: PropTypes.bool.isRequired,
 };
 
 export default UsersSection;

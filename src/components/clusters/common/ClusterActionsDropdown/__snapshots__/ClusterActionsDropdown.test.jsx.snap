@@ -96,6 +96,14 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
       </DropdownItem>,
       <DropdownItem
         component="button"
+        isDisabled={true}
+        onClick={[Function]}
+        title="Hibernate cluster"
+      >
+        Hibernate cluster
+      </DropdownItem>,
+      <DropdownItem
+        component="button"
         onClick={[Function]}
         title="Delete cluster"
       >
@@ -150,6 +158,14 @@ exports[`<ClusterActionsDropdown /> cluster with state ready and console url sho
         title="Edit node count"
       >
         Edit node count
+      </DropdownItem>,
+      <DropdownItem
+        component="button"
+        isDisabled={false}
+        onClick={[Function]}
+        title="Hibernate cluster"
+      >
+        Hibernate cluster
       </DropdownItem>,
       <DropdownItem
         component="button"
@@ -225,6 +241,14 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
         }
       >
         Edit node count
+      </DropdownItem>,
+      <DropdownItem
+        component="button"
+        isDisabled={true}
+        onClick={[Function]}
+        title="Hibernate cluster"
+      >
+        Hibernate cluster
       </DropdownItem>,
       <DropdownItem
         component="button"

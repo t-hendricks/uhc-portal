@@ -27,7 +27,8 @@ class AddOnsDeleteModal extends Component {
   }
 
   handleClose = () => {
-    const { closeModal } = this.props;
+    const { closeModal, clearClusterAddOnsResponses } = this.props;
+    clearClusterAddOnsResponses();
     this.setState({
       addOnNameInput: '',
     });
@@ -118,6 +119,7 @@ AddOnsDeleteModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   deleteClusterAddOn: PropTypes.func.isRequired,
   deleteClusterAddOnResponse: PropTypes.object.isRequired,
+  clearClusterAddOnsResponses: PropTypes.func.isRequired,
 };
 
 export default AddOnsDeleteModal;

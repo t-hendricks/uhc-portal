@@ -114,3 +114,15 @@
 .insights-on-rule-disabled-feedback-modal .error-message {
 	color: var(--pf-global--danger-color--100);
 }
+
+.report-details-unfolded {
+	padding-bottom: var(--pf-global--gutter--md);
+
+	.ins-c-rule__report-detail {
+		padding-bottom: 0;
+	}
+
+	&__link {
+		padding: 0 40px;
+	}
+}

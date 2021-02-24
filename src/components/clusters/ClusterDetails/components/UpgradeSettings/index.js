@@ -7,6 +7,7 @@ import {
   clearPostedUpgradeScheduleResponse, clearDeleteScheduleResponse,
 } from '../../../common/Upgrades/clusterUpgradeActions';
 import { editCluster } from '../../../../../redux/actions/clustersActions';
+import { isHibernating } from '../../../common/clusterStates';
 import { openModal } from '../../../../common/Modal/ModalActions';
 
 const reduxFormConfig = {
@@ -23,6 +24,7 @@ const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
   return {
     cluster,
+    clusterHibernating: isHibernating(cluster.state),
     isAutomatic: valueSelector(state, 'upgrade_policy') === 'automatic',
     schedules: state.clusterUpgrades.schedules,
     upgradeScheduleRequest: state.clusterUpgrades.postedUpgradeSchedule,
