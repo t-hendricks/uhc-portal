@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StarIcon, CodeIcon } from '@patternfly/react-icons';
+import { StarIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
-import { global_warning_color_100, global_active_color_100 } from '@patternfly/react-tokens';
+import { global_active_color_100 } from '@patternfly/react-tokens';
+import { Label } from '@patternfly/react-core';
 
 function CardBadge({
   isRecommened, isDevPreview, isHidden, devPreviewText = 'Developer Preview',
@@ -12,9 +13,8 @@ function CardBadge({
     <div className="card-badge-container">
       <span className={className}>
         {isRecommened && <StarIcon color={global_active_color_100.value} />}
-        {isDevPreview && <CodeIcon color={global_warning_color_100.value} /> }
         {isRecommened && 'Recommended'}
-        {isDevPreview && devPreviewText}
+        {isDevPreview && <Label variant="outline" color="orange">{devPreviewText}</Label>}
       </span>
     </div>
   );
