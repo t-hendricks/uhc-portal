@@ -3,10 +3,17 @@ import actionResolver from '../machinePoolsHelper';
 describe('machine pools action resolver', () => {
   const onClickDelete = jest.fn();
   const onClickScale = jest.fn();
+  const onClickTaints = jest.fn();
 
   const scaleAction = {
     title: 'Scale',
     onClick: onClickScale,
+    className: 'hand-pointer',
+  };
+
+  const editTaintsAction = {
+    title: 'Edit taints',
+    onClick: onClickTaints,
     className: 'hand-pointer',
   };
 
@@ -22,28 +29,33 @@ describe('machine pools action resolver', () => {
       cells: [{ title: 'test' }],
       key: 'Default-child',
     };
-    expect(actionResolver(expandableRowData, onClickDelete, onClickScale)).toEqual([]);
+    expect(actionResolver(
+      expandableRowData,
+      onClickDelete,
+      onClickScale,
+      onClickTaints,
+    )).toEqual([]);
   });
 
-  it('should not have delete action for the default machine pool', () => {
+  it('should only have scale section for the default machine pool', () => {
     const defaultMachinePoolRowData = {
       cells: ['Default', 'm5.xlarge', 'us-east-1a', '4'],
       machinePool: { id: 'Default' },
       key: 'Default',
     };
     const expected = [scaleAction];
-    expect(actionResolver(defaultMachinePoolRowData, onClickDelete, onClickScale))
+    expect(actionResolver(defaultMachinePoolRowData, onClickDelete, onClickScale, onClickTaints))
       .toEqual(expected);
   });
 
-  it('should have scale and delete actions', () => {
+  it('should have scale, edit taints and delete actions', () => {
     const machinePoolRowData = {
       cells: ['test-mp', 'm5.xlarge', 'us-east-1a', '4'],
       machinePool: { id: 'test-mp' },
       key: 'test-mp',
     };
-    const expected = [scaleAction, deleteAction];
-    expect(actionResolver(machinePoolRowData, onClickDelete, onClickScale))
+    const expected = [scaleAction, editTaintsAction, deleteAction];
+    expect(actionResolver(machinePoolRowData, onClickDelete, onClickScale, onClickTaints))
       .toEqual(expected);
   });
 });

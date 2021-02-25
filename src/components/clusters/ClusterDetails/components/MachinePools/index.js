@@ -35,6 +35,7 @@ const mapStateToProps = (state) => {
 
   return ({
     isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
+    isEditLabelsAndTaintsModalOpen: shouldShowModal(state, 'edit-labels-taints'),
     defaultMachinePool,
     machinePoolsList: state.machinePools.getMachinePools,
     addMachinePoolResponse: state.machinePools.addMachinePoolResponse,

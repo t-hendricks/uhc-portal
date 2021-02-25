@@ -16,6 +16,7 @@ function Modal({
   onPrimaryClick = noop,
   onSecondaryClick = noop,
   isSmall = true,
+  modalSize,
   isPrimaryDisabled = false,
   isPending = false,
   children = null,
@@ -27,7 +28,7 @@ function Modal({
       // For a medium size modal use variant="large".
       // For a full screen modal use isSmall=false.
       className={isPending ? 'pending-modal' : null}
-      variant={isSmall ? 'small' : undefined}
+      variant={modalSize || (isSmall ? 'small' : undefined)}
       title={title}
       isOpen
       onClose={onClose}
@@ -58,6 +59,7 @@ function Modal({
 
 Modal.propTypes = {
   isSmall: PropTypes.bool,
+  modalSize: PropTypes.string,
   title: PropTypes.string,
   onClose: PropTypes.func,
   primaryText: PropTypes.string,
