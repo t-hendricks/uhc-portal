@@ -55,44 +55,126 @@ describe('OSD cluster tests', async () => {
       await (await CreateOSDFormPage.submitButton).click();
       await browser.waitUntil(
         async () => ClusterDetailsPage.isClusterDetailsPage(),
-        { timeout: 60000 }, // 1 minute
+        { timeout: 1 * 60 * 1000 },
       );
       expect(ClusterDetailsPage.clusterNameTitle).toHaveText(clusterName);
     });
   });
 
-  describe.skip('Access control tab', async () => {
+  describe('Access control tab', async () => {
     it('waits until cluster installs and goes to the access control tab', async () => {
-      await browser.waitUntil(
-        async () => ((await ClusterDetailsPage.installationSuccessAlert).isDisplayed()),
-        { timeout: 300000 },
-      );
+      await ClusterDetailsPage.waitForInstallCompletion();
       await (await ClusterDetailsPage.accessControlTabBtn).click();
+      expect(await ClusterDetailsPage.addIDPButton).toBeDisplayed();
+    });
+
+    it('adds a new IDP to the cluster', async () => {
       await (await ClusterDetailsPage.addIDPButton).click();
       expect(ClusterDetailsPage.IDPModalBody).toBeDisplayed();
       await (await ClusterDetailsPage.IDPSelection).click();
-      await (await (await ClusterDetailsPage.IDPSelection).selectByVisibleText('Google'));
+      await (await ClusterDetailsPage.IDPSelection).selectByVisibleText('Google');
       expect(ClusterDetailsPage.IDPNameInput).toHaveValue('Google');
-      const requiredFields = await (ClusterDetailsPage.IDPModalRequiredFields());
-      requiredFields.foreach((input) => {
-        if (!input.getValue()) {
-          input.setValue('asdf');
+      const requiredFields = await (await ClusterDetailsPage.IDPModalRequiredFields);
+      await Promise.all(requiredFields.map(async (input) => {
+        const v = await input.getValue();
+        if (!v) {
+          await input.setValue('asdf');
         }
-      });
+      }));
       await (await ClusterDetailsPage.addIDPModalConfirm).click();
+      expect(await ClusterDetailsPage.IDPTable).toBeDisplayed();
+    });
+
+    it.skip('copies IDP URL from the table', async () => {
+      await (await ClusterDetailsPage.firstRowURLCopy).click();
+      expect(await navigator.clipboard.readText()).toBe('https://oauth-openshift.com/veryfakewebconsole/oauth2callback/Google');
+    });
+
+    it('deletes the newly created IDP', async () => {
+      await (await ClusterDetailsPage.firstRowActions).click();
+      await (await ClusterDetailsPage.firstRowDeleteIDP).click();
+      expect(await ClusterDetailsPage.deleteIDPModal).toBeDisplayed();
+      await (await ClusterDetailsPage.deleteIDPModalRemoveBtn).click();
+      expect(await ClusterDetailsPage.deleteIDPModal).not.toBeDisplayed();
+      expect(await ClusterDetailsPage.IDPTable).not.toBeDisplayed();
+    });
+  });
+
+  describe('Networking tab', async () => {
+    it('navigates to the networking tab', async () => {
+      await ClusterDetailsPage.navigateToNetworkingTab();
+      expect(await ClusterDetailsPage.routersCard).toBeDisplayed();
+      expect(await ClusterDetailsPage.saveNetworkingChangesBtn).toBeDisabled();
+    });
+
+    it.skip('copies the control plane API endpoint url', async () => {
+      await (await ClusterDetailsPage.copyControlPlaneAPIURLBtn).click();
+      expect(await navigator.clipboard.readText()).toBe('https://example.com/veryfakeapi');
+    });
+
+    it('sets public API to be private', async () => {
+      expect(await ClusterDetailsPage.makeAPIPrivateCheckbox).not.toBeChecked();
+      await (await ClusterDetailsPage.makeAPIPrivateCheckbox).click();
+      expect(await ClusterDetailsPage.makeAPIPrivateCheckbox).toBeChecked();
+      expect(await ClusterDetailsPage.saveNetworkingChangesBtn).toBeEnabled();
+    });
+
+    it('reverts the change, causing the form to be reset', async () => {
+      await (await ClusterDetailsPage.makeAPIPrivateCheckbox).click();
+      expect(await ClusterDetailsPage.makeAPIPrivateCheckbox).not.toBeChecked();
+      expect(await ClusterDetailsPage.saveNetworkingChangesBtn).toBeDisabled();
+    });
+
+    it('sets public default router private', async () => {
+      expect(await ClusterDetailsPage.additionalRouterURLCopybox).toHaveValueContaining(`https://apps.${clusterName}`);
+      expect(await ClusterDetailsPage.makeDefaultRouterPrivateCheckbox).not.toBeChecked();
+      await (await ClusterDetailsPage.makeDefaultRouterPrivateCheckbox).click();
+      expect(await ClusterDetailsPage.makeDefaultRouterPrivateCheckbox).toBeChecked();
+      expect(await ClusterDetailsPage.saveNetworkingChangesBtn).toBeEnabled();
+    });
+
+    it('Enables additional router', async () => {
+      expect(await ClusterDetailsPage.enableAdditionalRouterSwitch).not.toBeChecked();
+      expect(await ClusterDetailsPage.additionalRouterURLCopybox).not.toBeDisabled();
+      await (await ClusterDetailsPage.enableAdditionalRouterSwitch).click();
+      expect(await ClusterDetailsPage.enableAdditionalRouterSwitch).toBeChecked();
+      expect(await ClusterDetailsPage.additionalRouterURLCopybox).toBeDisabled();
+      expect(await ClusterDetailsPage.additionalRouterURLCopybox).toHaveValueContaining(`https://apps2.${clusterName}`);
+    });
+
+    it('disallows adding a label match that is not well formatted', async () => {
+      await (await ClusterDetailsPage.labelMatchForAdditionalRouterField).setValue('label!');
+      expect(await ClusterDetailsPage.labelMatchFieldError).toBeDisplayed();
+      await (await ClusterDetailsPage.labelMatchForAdditionalRouterField).setValue('label=name!');
+      expect(await ClusterDetailsPage.labelMatchFieldError).toBeDisplayed();
+      await (await ClusterDetailsPage.labelMatchForAdditionalRouterField).setValue('label=name');
+      expect(await ClusterDetailsPage.labelMatchFieldError).not.toBeDisplayed();
+      await (await ClusterDetailsPage.labelMatchForAdditionalRouterField).setValue('label=name,');
+      expect(await ClusterDetailsPage.labelMatchFieldError).toBeDisplayed();
+      await (await ClusterDetailsPage.labelMatchForAdditionalRouterField).setValue('label=name,label2=name2');
+      expect(await ClusterDetailsPage.labelMatchFieldError).not.toBeDisplayed();
+    });
+
+    it('saves new networking configuration', async () => {
+      expect(await ClusterDetailsPage.saveNetworkingChangesBtn).toBeEnabled();
+      await (await ClusterDetailsPage.saveNetworkingChangesBtn).click();
+      expect(await ClusterDetailsPage.saveNetworkingChangesModal).toBeDisplayed();
+      await (await ClusterDetailsPage.saveNetworkingChangesModalConfirmBtn).click();
+      expect(await ClusterDetailsPage.saveNetworkingChangesModal).not.toBeDisabled();
+      expect(await ClusterDetailsPage.saveNetworkingChangesBtn).toBeDisabled();
     });
   });
 
   after('Finally, delete the cluster created', async () => {
     await browser.waitUntil(
       async () => ((await ClusterDetailsPage.actionsDropdownToggle).isClickable()),
-      { timeout: 120000 }
+      { timeout: 1 * 60 * 1000 },
     );
     await (await ClusterDetailsPage.actionsDropdownToggle).click();
     await (await ClusterDetailsPage.deleteClusterDropdownItem).click();
     await (await ClusterDetailsPage.deleteClusterDialogInput).setValue(clusterName);
     await (await ClusterDetailsPage.deleteClusterDialogConfirm).click();
-  });
+  }).timeout(8 * 60 * 1000);
 });
 
 describe('OSD Trial cluster tests', async () => {
