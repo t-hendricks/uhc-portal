@@ -32,7 +32,8 @@ function ScaleSection({
   cloudProviderID,
   product,
   showStorageAndLoadBalancers = true,
-  gridSpan = 9,
+  instanceTypeGridSpan = 9,
+  autoscaleAndNodeCountGridSpan = 4,
   minNodes,
   isMachinePool = false,
   canAutoScale = false,
@@ -52,7 +53,9 @@ function ScaleSection({
       <GridItem span={4} className="space-bottom-md">
         <Title headingLevel="h3">Node labels</Title>
       </GridItem>
-      <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
+      <GridItem span={4}>
+        <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
+      </GridItem>
       {isMachinePool
   && (
     <>
@@ -68,7 +71,7 @@ function ScaleSection({
   return (
     <>
       {/* Instance type */}
-      <GridItem span={gridSpan}>
+      <GridItem span={instanceTypeGridSpan}>
         <FormGroup
           label="Worker node instance type"
           isRequired
@@ -89,31 +92,28 @@ function ScaleSection({
           />
         </FormGroup>
       </GridItem>
-      {gridSpan === 9 && <GridItem span={3} />}
+      {instanceTypeGridSpan !== 12 && <GridItem span={12 - instanceTypeGridSpan} />}
       {/* autoscale */}
-      {canAutoScale
+      <GridItem span={autoscaleAndNodeCountGridSpan}>
+        {canAutoScale
       && (
         <>
-          <GridItem span={gridSpan}>
-            <AutoScaleSection
-              autoscalingEnabled={autoscalingEnabled}
-              isMultiAz={isMultiAz}
-              change={change}
-              autoScaleMinNodesValue={autoScaleMinNodesValue}
-              autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-              product={product}
-              isBYOC={isBYOC}
-              isDefaultMachinePool={!isMachinePool}
-            />
+          <AutoScaleSection
+            autoscalingEnabled={autoscalingEnabled}
+            isMultiAz={isMultiAz}
+            change={change}
+            autoScaleMinNodesValue={autoScaleMinNodesValue}
+            autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+            product={product}
+            isBYOC={isBYOC}
+            isDefaultMachinePool={!isMachinePool}
+          />
             {autoscalingEnabled && labelsAndTaintsSection}
-          </GridItem>
-          {gridSpan === 9 && <GridItem span={3} />}
         </>
       )}
-      {/* Worker nodes */}
-      { !autoscalingEnabled && (
-        <>
-          <GridItem span={4}>
+        {/* Worker nodes */}
+        { !autoscalingEnabled && (
+          <>
             <Field
               component={NodeCountInput}
               name="nodes_compute"
@@ -131,10 +131,12 @@ function ScaleSection({
               isMachinePool={isMachinePool}
             />
             {labelsAndTaintsSection}
-          </GridItem>
-          <GridItem span={8} />
-        </>
-      )}
+
+          </>
+        )}
+      </GridItem>
+      {autoscaleAndNodeCountGridSpan !== 12
+        && <GridItem span={12 - autoscaleAndNodeCountGridSpan} />}
       {/* Persistent Storage & Load Balancers */}
       { showStorageAndLoadBalancers && !isBYOC && (
         <>
@@ -186,7 +188,8 @@ ScaleSection.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   handleMachineTypesChange: PropTypes.func.isRequired,
-  gridSpan: PropTypes.number,
+  instanceTypeGridSpan: PropTypes.number,
+  autoscaleAndNodeCountGridSpan: PropTypes.number,
   minNodes: PropTypes.number,
   isMachinePool: PropTypes.bool,
   canAutoScale: PropTypes.bool,
