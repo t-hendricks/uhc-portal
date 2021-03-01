@@ -16,13 +16,12 @@ if (isDevOrStaging) {
 }
 
 if (APP_DEV_SERVER) {
-  // running in webpack dev server, default to development config
+  // running in webpack dev server, add development config
   configs.development = import(/* webpackMode: "eager" */ './config/development.json');
-  configs.default = configs.development;
-} else {
-  // running in a real build, select config according to the APP_API_ENV flag
-  configs.default = configs[APP_API_ENV];
 }
+
+// select config according to the APP_API_ENV flag (see webpack.config.js)
+configs.default = configs[APP_API_ENV];
 
 const parseEnvQueryParam = () => {
   let ret;
