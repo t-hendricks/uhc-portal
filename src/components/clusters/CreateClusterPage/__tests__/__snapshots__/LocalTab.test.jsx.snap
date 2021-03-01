@@ -16,7 +16,9 @@ exports[`<LocalTab /> renders correctly 1`] = `
         >
           Red Hat CodeReady Containers
         </Title>
-        <Label>
+        <Label
+          variant="outline"
+        >
           local sandbox
         </Label>
       </StackItem>

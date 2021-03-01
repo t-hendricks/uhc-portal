@@ -32,7 +32,7 @@ const LocalTab = ({ token }) => (
           <Title headingLevel="h2" className="ocm-ocp-sandbox-title">
           Red Hat CodeReady Containers
           </Title>
-          <Label>
+          <Label variant="outline">
             local sandbox
           </Label>
         </StackItem>

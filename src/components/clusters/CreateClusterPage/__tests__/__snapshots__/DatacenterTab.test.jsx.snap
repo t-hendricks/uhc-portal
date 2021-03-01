@@ -17,8 +17,9 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
         </Title>
         <Label
           color="orange"
+          variant="outline"
         >
-          Developer preview
+          Technology preview
         </Label>
       </StackItem>
       <StackItem>
