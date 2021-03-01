@@ -147,7 +147,7 @@ class TabsRow extends React.Component {
       },
       {
         key: 9,
-        title: 'Bare Metal',
+        title: 'Add Hosts',
         contentId: 'addBareMetalHostsContent',
         id: 'addBareMetalHosts',
         show: displayAddBareMetalHosts,
