@@ -263,6 +263,7 @@ class ClusterList extends Component {
                 canSubscribeOCPList={canSubscribeOCPList}
                 canTransferClusterOwnershipList={canTransferClusterOwnershipList}
                 toggleSubscriptionReleased={toggleSubscriptionReleased}
+                refreshFunc={this.refresh}
               />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}

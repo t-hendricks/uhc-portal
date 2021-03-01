@@ -35,6 +35,7 @@ class ClusterActionsDropdown extends React.Component {
       canTransferClusterOwnership,
       toggleSubscriptionReleased,
       canHibernateCluster,
+      refreshFunc,
     } = this.props;
     const { isOpen } = this.state;
 
@@ -50,6 +51,7 @@ class ClusterActionsDropdown extends React.Component {
       canTransferClusterOwnership,
       canHibernateCluster,
       toggleSubscriptionReleased,
+      refreshFunc,
     });
 
     const dropdown = (
@@ -88,6 +90,7 @@ ClusterActionsDropdown.propTypes = {
   canTransferClusterOwnership: PropTypes.bool.isRequired,
   canHibernateCluster: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
+  refreshFunc: PropTypes.func.isRequired,
 };
 
 export default ClusterActionsDropdown;

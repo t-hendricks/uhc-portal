@@ -16,7 +16,7 @@ import modals from '../../../common/Modal/modals';
  */
 function actionResolver(
   cluster, showConsoleButton, openModal, canSubscribeOCP,
-  canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased,
+  canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased, refreshFunc,
 ) {
   const baseProps = {
     component: 'button',
@@ -271,6 +271,7 @@ This cluster is hibernating;
       onClick: () => {
         if (isReleased) {
           toggleSubscriptionReleased(get(cluster, 'subscription.id'), false);
+          refreshFunc();
         } else {
           openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, cluster.subscription);
         }
@@ -328,11 +329,11 @@ This cluster is hibernating;
 
 function dropDownItems({
   cluster, showConsoleButton, openModal, canSubscribeOCP,
-  canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased,
+  canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased, refreshFunc,
 }) {
   const actions = actionResolver(
     cluster, showConsoleButton, openModal, canSubscribeOCP,
-    canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased,
+    canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased, refreshFunc,
   );
   const menuItems = actions.map(
     action => (<DropdownItem {...action}>{action.title}</DropdownItem>),

@@ -107,6 +107,7 @@ function ClusterDetailsTop(props) {
       canTransferClusterOwnership={canTransferClusterOwnership}
       toggleSubscriptionReleased={toggleSubscriptionReleased}
       canHibernateCluster={canHibernateCluster}
+      refreshFunc={refreshFunc}
     />
   );
 
