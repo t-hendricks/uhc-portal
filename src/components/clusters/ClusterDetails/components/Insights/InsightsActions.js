@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import get from 'lodash/get';
 import {
   GET_CLUSTER_INSIGHTS,
@@ -31,25 +32,16 @@ export const setReportDetails = report => ({
   payload: report,
 });
 
-const fetchSingleClusterInsights = async (clusterId, isOSD) => {
-  try {
-    const insightsResponse = await insightsService.getClusterInsights(clusterId, isOSD);
-    return {
-      insightsData: get(insightsResponse, 'data.report', {}),
-      clusterId,
-      status: insightsResponse.status,
-    };
-  } catch (e) {
-    const error = Error('Insights for cluster not found');
-    error.status = e.response.status;
-    error.clusterId = clusterId;
-    throw error;
-  }
-};
-
-export const fetchClusterInsights = (clusterID, isOSD) => dispatch => dispatch({
+export const fetchClusterInsights = (clusterId, isOSD) => dispatch => dispatch({
   type: GET_CLUSTER_INSIGHTS,
-  payload: fetchSingleClusterInsights(clusterID, isOSD),
+  payload: insightsService.getClusterInsights(clusterId, isOSD)
+    .then(response => ({
+      insightsData: get(response, 'data.report', {}),
+      status: response.status,
+    })),
+  meta: {
+    clusterId,
+  },
 });
 
 // clusterId is id of the cluster
