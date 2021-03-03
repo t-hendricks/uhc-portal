@@ -141,6 +141,7 @@ class CreateOSDPage extends React.Component {
       autoscalingEnabled,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
+      gcpExistingVPCFeature,
     } = this.props;
 
     const selectedOSDTrial = product === normalizedProducts.OSDTrial;
@@ -291,6 +292,7 @@ class CreateOSDPage extends React.Component {
                     autoscalingEnabled={autoscalingEnabled}
                     autoScaleMinNodesValue={autoScaleMinNodesValue}
                     autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+                    gcpExistingVPCFeature={gcpExistingVPCFeature}
                   />
                   {/* Form footer */}
                   <GridItem>
@@ -384,6 +386,7 @@ CreateOSDPage.propTypes = {
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
   osdTrialFeature: PropTypes.bool,
+  gcpExistingVPCFeature: PropTypes.bool,
 };
 
 CreateOSDPage.defaultProps = {

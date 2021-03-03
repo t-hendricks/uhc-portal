@@ -16,7 +16,7 @@ import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/helpers';
 
 import { canAutoScaleSelector } from '../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
-import { OSD_TRIAL_FEATURE } from '../../../redux/constants/featureConstants';
+import { OSD_TRIAL_FEATURE, GCP_EXISTING_VPC_FEATURE } from '../../../redux/constants/featureConstants';
 
 import {
   hasManagedQuotaSelector,
@@ -80,6 +80,7 @@ const mapStateToProps = (state, ownProps) => {
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     osdTrialFeature: state.features[OSD_TRIAL_FEATURE],
+    gcpExistingVPCFeature: state.features[GCP_EXISTING_VPC_FEATURE],
 
     initialValues: {
       byoc: 'false',
