@@ -9,7 +9,7 @@ const clusterStates = {
   UNINSTALLING: 'uninstalling',
   HIBERNATING: 'hibernating',
   POWERING_DOWN: 'powering_down',
-  POWERING_UP: 'powering_up',
+  RESUMING: 'resuming',
   DISCONNECTED: 'disconnected',
   ERROR: 'error',
   DEPROVISIONED: 'deprovisioned',
@@ -41,9 +41,9 @@ function getClusterStateAndDescription(cluster) {
   } else if (cluster.state === clusterStates.HIBERNATING) {
     state = clusterStates.HIBERNATING;
   } else if (cluster.state === clusterStates.POWERING_DOWN) {
-    state = clusterStates.POWERING_DOWN;
-  } else if (cluster.state === clusterStates.POWERING_UP) {
-    state = clusterStates.POWERING_UP;
+    state = clusterStates.POWERING_DOWN.replace(/_/g, '-');
+  } else if (cluster.state === clusterStates.RESUMING) {
+    state = clusterStates.RESUMING;
   }
 
 
@@ -56,7 +56,7 @@ function getClusterStateAndDescription(cluster) {
 
 const isHibernating = state => state === clusterStates.HIBERNATING
   || state === clusterStates.POWERING_DOWN
-  || state === clusterStates.POWERING_UP;
+  || state === clusterStates.RESUMING;
 
 export { getClusterStateAndDescription, isHibernating };
 export default clusterStates;

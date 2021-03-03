@@ -32,7 +32,7 @@ function ClusterStateIcon(props) {
     case clusterStates.INSTALLING:
     case clusterStates.UPDATING:
     case clusterStates.POWERING_DOWN:
-    case clusterStates.POWERING_UP:
+    case clusterStates.RESUMING:
       if (animated) {
         return <Spinner {...iconProps} />;
       }
