@@ -128,6 +128,7 @@ class CreateOSDForm extends React.Component {
       autoscalingEnabled,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
+      gcpExistingVPCFeature,
     } = this.props;
 
     const {
@@ -274,6 +275,7 @@ class CreateOSDForm extends React.Component {
           selectedRegion={selectedRegion}
           isCCS={isBYOCForm}
           installToVPCSelected={installToVPCSelected}
+          gcpExistingVPCFeature={gcpExistingVPCFeature}
         />
         {/* Encryption */}
         {canEnableEtcdEncryption && (
@@ -360,6 +362,7 @@ CreateOSDForm.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  gcpExistingVPCFeature: PropTypes.bool,
 };
 
 export default CreateOSDForm;
