@@ -257,12 +257,8 @@ class ClusterDetails extends Component {
       getSupportCases,
       supportCases,
       notificationContacts,
-      supportTabFeature,
     } = this.props;
 
-    if (!supportTabFeature) {
-      return;
-    }
     const subscriptionID = clusterDetails.cluster?.subscription?.id;
 
     if (isValid(subscriptionID)) {
@@ -331,7 +327,6 @@ class ClusterDetails extends Component {
       toggleSubscriptionReleased,
       setOpenedTab,
       initTabOpen,
-      supportTabFeature,
       assistedInstallerEnabled,
     } = this.props;
     const { selectedTab } = this.state;
@@ -404,10 +399,9 @@ class ClusterDetails extends Component {
     const displayMachinePoolsTab = cluster.managed
       && (cluster.state === clusterStates.READY || clusterHibernating);
     const clusterName = getClusterName(cluster);
-    const displaySupportTab = supportTabFeature
-      && (cluster.state === clusterStates.READY
+    const displaySupportTab = cluster.state === clusterStates.READY
         || cluster.state === clusterStates.UPDATING
-        || clusterHibernating);
+        || clusterHibernating;
     const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit;
     const displayAddBareMetalHosts = assistedInstallerEnabled && canAddBareMetalHost({ cluster });
 
@@ -699,7 +693,6 @@ ClusterDetails.propTypes = {
   hasIssuesInsights: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   initTabOpen: PropTypes.string.isRequired,
-  supportTabFeature: PropTypes.bool.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
   getSupportCases: PropTypes.func.isRequired,

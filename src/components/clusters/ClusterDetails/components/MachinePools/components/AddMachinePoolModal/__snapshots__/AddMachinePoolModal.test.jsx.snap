@@ -35,12 +35,13 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
       <ScaleSection
         autoScaleMaxNodesValue="0"
         autoScaleMinNodesValue="0"
+        autoscaleAndNodeCountGridSpan={6}
         autoscalingEnabled={true}
         canAutoScale={true}
         change={[MockFunction]}
         cloudProviderID="aws"
-        gridSpan={12}
         handleMachineTypesChange={[Function]}
+        instanceTypeGridSpan={12}
         isBYOC={false}
         isMachinePool={true}
         isMultiAz={false}

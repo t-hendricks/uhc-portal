@@ -42,7 +42,7 @@ import issuesCountSelector from './components/Insights/InsightsSelectors';
 import canHibernateClusterSelector from '../common/HibernateClusterModal/HibernateClusterModalSelector';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import getBaseName from '../../../common/getBaseName';
-import { SUPPORT_TAB_FEATURE, ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
+import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 import supportActions from './components/Support/SupportActions';
 
 const mapStateToProps = (state, { location }) => {
@@ -56,7 +56,6 @@ const mapStateToProps = (state, { location }) => {
   const logsPresent = state.clusterLogs.clusterLogInitialized
     === state.clusterLogs.externalClusterID;
   const hideClusterLogs = !logsPresent || errorCode === 403 || errorCode === 404;
-  const supportTabFeature = state.features[SUPPORT_TAB_FEATURE];
   const {
     notificationContacts = {
       pending: false,
@@ -87,7 +86,6 @@ const mapStateToProps = (state, { location }) => {
     // check whether there are Critical (4) or Important (3) issues
     hasIssuesInsights: insightsIssuesCount[4] || insightsIssuesCount[3],
     initTabOpen: location.hash.replace('#', ''),
-    supportTabFeature,
     notificationContacts,
     supportCases,
     assistedInstallerEnabled: state.features[ASSISTED_INSTALLER_FEATURE],

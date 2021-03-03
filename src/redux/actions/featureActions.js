@@ -1,10 +1,10 @@
 import {
   SET_FEATURE,
   ASSISTED_INSTALLER_FEATURE,
-  SUPPORT_TAB_FEATURE,
   ASSISTED_INSTALLER_SNO_FEATURE,
   ASSISTED_INSTALLER_OCS_FEATURE,
   OSD_TRIAL_FEATURE,
+  GCP_EXISTING_VPC_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -46,9 +46,9 @@ export const features = [
       : Promise.reject(Error('No organization'))),
   },
   {
-    name: SUPPORT_TAB_FEATURE,
+    name: GCP_EXISTING_VPC_FEATURE,
     action: organizationID => (organizationID
-      ? accountsService.getFeature('support-tab', organizationID)
+      ? accountsService.getFeature('gcp-existing-vpc', organizationID)
         .then(unleash => unleash.data.enabled)
       : Promise.reject(Error('No organization'))),
   },

@@ -17,5 +17,6 @@ const modals = {
   EDIT_SUBSCRIPTION_SETTINGS: 'edit-subscription-settings',
   HIBERNATE_CLUSTER: 'hibernate-cluster',
   RESUME_CLUSTER: 'resume-cluster',
+  EDIT_TAINTS: 'edit-labels-taints',
 };
 export default modals;

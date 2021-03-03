@@ -13,6 +13,7 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
       aria-label="Clusters with issues"
       borders={true}
       canSelectAll={true}
+      canSortFavorites={true}
       cells={
         Array [
           Object {

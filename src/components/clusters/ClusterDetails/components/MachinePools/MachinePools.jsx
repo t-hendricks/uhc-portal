@@ -34,6 +34,7 @@ import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
 
 import AddMachinePoolModal from './components/AddMachinePoolModal';
+import EditLabelsAndTaintsModal from './components/EditTaintsModal';
 import './MachinePools.scss';
 import actionResolver from './machinePoolsHelper';
 
@@ -115,6 +116,7 @@ class MachinePools extends React.Component {
       machinePoolsList,
       openModal,
       isAddMachinePoolModalOpen,
+      isEditLabelsAndTaintsModalOpen,
       deleteMachinePool,
       defaultMachinePool,
       deleteMachinePoolResponse,
@@ -291,6 +293,10 @@ class MachinePools extends React.Component {
       cluster,
     });
 
+    const onClickEditTaintsAction = (_, __, rowData) => openModal(modals.EDIT_TAINTS, {
+      machinePool: rowData.machinePool,
+    });
+
     const showSkeleton = !hasMachinePools && machinePoolsList.pending;
     const skeletonRow = {
       cells: [
@@ -372,7 +378,10 @@ class MachinePools extends React.Component {
                 rows={rows}
                 onCollapse={this.onCollapse}
                 actionResolver={
-                  rowData => actionResolver(rowData, onClickDeleteAction, onClickScaleAction)
+                  rowData => actionResolver(rowData,
+                    onClickDeleteAction,
+                    onClickScaleAction,
+                    onClickEditTaintsAction)
                 }
                 areActionsDisabled={() => !cluster.canEdit || clusterHibernating}
               >
@@ -383,6 +392,7 @@ class MachinePools extends React.Component {
           </Card>
         )}
         {isAddMachinePoolModalOpen && <AddMachinePoolModal cluster={cluster} />}
+        {isEditLabelsAndTaintsModalOpen && <EditLabelsAndTaintsModal clusterId={cluster.id} />}
       </>
     );
   }
@@ -401,6 +411,7 @@ MachinePools.propTypes = {
   openModal: PropTypes.func.isRequired,
   hasMachinePoolsQuota: PropTypes.bool.isRequired,
   isAddMachinePoolModalOpen: PropTypes.bool.isRequired,
+  isEditLabelsAndTaintsModalOpen: PropTypes.bool.isRequired,
   deleteMachinePoolResponse: PropTypes.object.isRequired,
   addMachinePoolResponse: PropTypes.object.isRequired,
   scaleMachinePoolResponse: PropTypes.object.isRequired,

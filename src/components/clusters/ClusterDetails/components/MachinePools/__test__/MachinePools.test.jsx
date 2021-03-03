@@ -17,6 +17,7 @@ const baseProps = {
   },
   openModal,
   isAddMachinePoolModalOpen: false,
+  isEditLabelsAndTaintsModalOpen: false,
   deleteMachinePoolResponse: { ...baseRequestState },
   addMachinePoolResponse: { ...baseRequestState },
   scaleMachinePoolResponse: { ...baseRequestState },

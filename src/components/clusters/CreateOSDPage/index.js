@@ -16,7 +16,7 @@ import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/helpers';
 
 import { canAutoScaleSelector } from '../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
-import { OSD_TRIAL_FEATURE } from '../../../redux/constants/featureConstants';
+import { OSD_TRIAL_FEATURE, GCP_EXISTING_VPC_FEATURE } from '../../../redux/constants/featureConstants';
 
 import {
   hasManagedQuotaSelector,
@@ -80,6 +80,7 @@ const mapStateToProps = (state, ownProps) => {
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     osdTrialFeature: state.features[OSD_TRIAL_FEATURE],
+    gcpExistingVPCFeature: state.features[GCP_EXISTING_VPC_FEATURE],
 
     initialValues: {
       byoc: 'false',
@@ -165,6 +166,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         listening: formData.cluster_privacy,
       };
     }
+    const isInstallExistingVPC = formData.network_configuration_toggle === 'advanced' && formData.install_to_vpc;
     if (formData.byoc === 'true') {
       clusterRequest.ccs = {
         enabled: true,
@@ -176,7 +178,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
           secret_access_key: formData.secret_access_key,
         };
         clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
-        if (formData.network_configuration_toggle === 'advanced' && formData.install_to_vpc) {
+        if (isInstallExistingVPC) {
           let subnetIds = [
             formData.private_subnet_id_0, formData.public_subnet_id_0,
           ];
@@ -222,6 +224,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         clusterRequest.flavour = {
           id: 'osd-4',
         };
+        if (isInstallExistingVPC) {
+          clusterRequest.gcp_network = {
+            vpc_name: formData.vpc_name,
+            control_plane_subnet: formData.control_plane_subnet,
+            compute_subnet: formData.compute_subnet,
+          };
+        }
       }
     } else {
       // Don't pass LB and storage to byoc cluster.
