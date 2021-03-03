@@ -131,6 +131,7 @@ class UpgradeTimeSelection extends React.Component {
                   dateFormat="yyyy-MM-dd"
                   customInput={<TextInput iconVariant="calendar" />}
                   minDate={new Date()}
+                  maxDate={maxDate}
                 />
                 <Select
                   selections={getSelectedTime()}

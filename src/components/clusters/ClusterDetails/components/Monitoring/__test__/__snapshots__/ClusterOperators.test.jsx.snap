@@ -5,6 +5,7 @@ exports[`<ClusterOperators /> should render 1`] = `
   aria-label="operators"
   borders={false}
   canSelectAll={true}
+  canSortFavorites={true}
   cells={
     Array [
       Object {

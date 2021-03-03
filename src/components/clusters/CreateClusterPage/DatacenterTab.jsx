@@ -38,8 +38,8 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
             <Title headingLevel="h2" className="ocm-ocp-datacenter-title">
             Assisted Installer
             </Title>
-            <Label color="orange">
-            Developer preview
+            <Label color="orange" variant="outline">
+            Technology preview
             </Label>
           </StackItem>
           <StackItem>

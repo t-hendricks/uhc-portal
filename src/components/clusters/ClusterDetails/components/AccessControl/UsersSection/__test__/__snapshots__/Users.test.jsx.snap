@@ -91,6 +91,7 @@ exports[`<Users /> with users should render 1`] = `
       aria-label="Users"
       borders={true}
       canSelectAll={true}
+      canSortFavorites={true}
       cells={
         Array [
           Object {

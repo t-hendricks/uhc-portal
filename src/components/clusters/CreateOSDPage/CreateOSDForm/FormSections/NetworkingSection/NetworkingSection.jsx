@@ -27,9 +27,10 @@ function NetworkingSection({
   privateClusterSelected,
   cloudProviderID,
   isMultiAz,
-  isAWSCCS,
+  isCCS,
   selectedRegion,
   installToVPCSelected,
+  gcpExistingVPCFeature,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -80,6 +81,8 @@ function NetworkingSection({
     ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
     : validators.AWS_MACHINE_CIDR_MAX_SINGLE_AZ;
 
+  const allowExistingVPC = isCCS && (gcpExistingVPCFeature || cloudProviderID === 'aws');
+
   return (
     <>
       <GridItem span={4}>
@@ -122,11 +125,12 @@ function NetworkingSection({
         />
       </FormGroup>
       {
-        mode === 'advanced' && isAWSCCS && (
+        mode === 'advanced' && allowExistingVPC && (
           <InstallToVPC
             selectedRegion={selectedRegion}
             isMultiAz={isMultiAz}
             selected={installToVPCSelected}
+            cloudProviderID={cloudProviderID}
           />
         )
       }
@@ -283,7 +287,7 @@ function NetworkingSection({
 }
 
 NetworkingSection.defaultProps = {
-  isAWSCCS: false,
+  isCCS: false,
 };
 
 NetworkingSection.propTypes = {
@@ -294,9 +298,10 @@ NetworkingSection.propTypes = {
   privateClusterSelected: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
-  isAWSCCS: PropTypes.bool,
+  isCCS: PropTypes.bool,
   selectedRegion: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
+  gcpExistingVPCFeature: PropTypes.bool,
 };
 
 export default NetworkingSection;

@@ -1,5 +1,5 @@
 
-const actionResolver = (rowData, onClickDelete, onClickScale) => {
+const actionResolver = (rowData, onClickDelete, onClickScale, onClickEditTaints) => {
   // hide actions kebab for expandable rows
   if (!rowData.machinePool) {
     return [];
@@ -12,12 +12,21 @@ const actionResolver = (rowData, onClickDelete, onClickScale) => {
       className: 'hand-pointer',
     }] : [];
 
+
+  const editTaintsAction = rowData.machinePool?.id !== 'Default'
+    ? [{
+      title: 'Edit taints',
+      onClick: onClickEditTaints,
+      className: 'hand-pointer',
+    }] : [];
+
   return [
     {
       title: 'Scale',
       onClick: onClickScale,
       className: 'hand-pointer',
     },
+    ...editTaintsAction,
     ...deleteAction,
   ];
 };

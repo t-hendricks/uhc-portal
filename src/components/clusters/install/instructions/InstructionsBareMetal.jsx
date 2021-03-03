@@ -12,7 +12,7 @@ export const InstructionsBareMetal = () => (
       </Title>
       <div className="flex-container">
         <Link to="/assisted-installer/clusters/~new" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
-          <CardBadge isDevPreview />
+          <CardBadge isDevPreview devPreviewText="Technology Preview" />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <ConnectedIcon
               alt="Installer-Provisioned Infrastructure"

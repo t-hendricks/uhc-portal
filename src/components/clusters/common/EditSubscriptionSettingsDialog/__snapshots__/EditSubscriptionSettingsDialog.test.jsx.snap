@@ -67,6 +67,8 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
       ouiaSafe={true}
       showClose={true}
       title="Subscription settings"
+      titleIconVariant={null}
+      titleLabel=""
       variant="large"
       width={810}
     >
@@ -118,10 +120,15 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                     class="pf-c-modal-box__header"
                   >
                     <h1
-                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      class="pf-c-modal-box__title"
                       id="pf-modal-part-1"
                     >
-                      Subscription settings
+                      
+                      <span
+                        class="pf-c-modal-box__title-text"
+                      >
+                        Subscription settings
+                      </span>
                     </h1>
                   </header>
                   <div
@@ -563,6 +570,8 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
           ouiaSafe={true}
           showClose={true}
           title="Subscription settings"
+          titleIconVariant={null}
+          titleLabel=""
           variant="large"
           width={810}
         >
@@ -579,6 +588,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                   }
                 }
                 paused={false}
+                preventScrollOnDeactivate={false}
               >
                 <div
                   className="pf-l-bullseye"
@@ -587,7 +597,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                     aria-describedby="pf-modal-part-2"
                     aria-label=""
                     aria-labelledby="pf-modal-part-1"
-                    className={null}
+                    className=""
                     data-ouia-component-id="OUIA-Generated-Modal-large-1"
                     data-ouia-component-type="PF4/ModalContent"
                     data-ouia-safe={true}
@@ -664,20 +674,27 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                           </button>
                         </Button>
                       </ModalBoxCloseButton>
-                      <ModalBoxHeader>
+                      <ModalBoxHeader
+                        help={null}
+                      >
                         <header
                           className="pf-c-modal-box__header"
                         >
                           <ModalBoxTitle
-                            className="pf-c-modal-box__title"
                             id="pf-modal-part-1"
                             title="Subscription settings"
+                            titleIconVariant={null}
+                            titleLabel=""
                           >
                             <h1
-                              className="pf-c-modal-box__title pf-c-modal-box__title"
+                              className="pf-c-modal-box__title"
                               id="pf-modal-part-1"
                             >
-                              Subscription settings
+                              <span
+                                className="pf-c-modal-box__title-text"
+                              >
+                                Subscription settings
+                              </span>
                             </h1>
                           </ModalBoxTitle>
                         </header>
@@ -1305,7 +1322,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                           <div
                                             className="pf-c-form__group-control"
                                           >
-                                            <ForwardRef
+                                            <TextInput
                                               aria-label="compute cores"
                                               isDisabled={true}
                                               isRequired={true}
@@ -1343,7 +1360,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                   value="0"
                                                 />
                                               </TextInputBase>
-                                            </ForwardRef>
+                                            </TextInput>
                                             <div
                                               aria-live="polite"
                                               className="pf-c-form__helper-text"
@@ -1577,6 +1594,8 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
       ouiaSafe={true}
       showClose={true}
       title="Subscription settings"
+      titleIconVariant={null}
+      titleLabel=""
       variant="large"
       width={810}
     >
@@ -1628,10 +1647,15 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                     class="pf-c-modal-box__header"
                   >
                     <h1
-                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      class="pf-c-modal-box__title"
                       id="pf-modal-part-1"
                     >
-                      Subscription settings
+                      
+                      <span
+                        class="pf-c-modal-box__title-text"
+                      >
+                        Subscription settings
+                      </span>
                     </h1>
                   </header>
                   <div
@@ -2119,6 +2143,8 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
           ouiaSafe={true}
           showClose={true}
           title="Subscription settings"
+          titleIconVariant={null}
+          titleLabel=""
           variant="large"
           width={810}
         >
@@ -2135,6 +2161,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                   }
                 }
                 paused={false}
+                preventScrollOnDeactivate={false}
               >
                 <div
                   className="pf-l-bullseye"
@@ -2143,7 +2170,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                     aria-describedby="pf-modal-part-2"
                     aria-label=""
                     aria-labelledby="pf-modal-part-1"
-                    className={null}
+                    className=""
                     data-ouia-component-id="OUIA-Generated-Modal-large-1"
                     data-ouia-component-type="PF4/ModalContent"
                     data-ouia-safe={true}
@@ -2220,20 +2247,27 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           </button>
                         </Button>
                       </ModalBoxCloseButton>
-                      <ModalBoxHeader>
+                      <ModalBoxHeader
+                        help={null}
+                      >
                         <header
                           className="pf-c-modal-box__header"
                         >
                           <ModalBoxTitle
-                            className="pf-c-modal-box__title"
                             id="pf-modal-part-1"
                             title="Subscription settings"
+                            titleIconVariant={null}
+                            titleLabel=""
                           >
                             <h1
-                              className="pf-c-modal-box__title pf-c-modal-box__title"
+                              className="pf-c-modal-box__title"
                               id="pf-modal-part-1"
                             >
-                              Subscription settings
+                              <span
+                                className="pf-c-modal-box__title-text"
+                              >
+                                Subscription settings
+                              </span>
                             </h1>
                           </ModalBoxTitle>
                         </header>
@@ -2939,7 +2973,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                           <div
                                             className="pf-c-form__group-control"
                                           >
-                                            <ForwardRef
+                                            <TextInput
                                               aria-label="compute cores"
                                               isDisabled={true}
                                               isRequired={true}
@@ -2977,7 +3011,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                   value="0"
                                                 />
                                               </TextInputBase>
-                                            </ForwardRef>
+                                            </TextInput>
                                             <div
                                               aria-live="polite"
                                               className="pf-c-form__helper-text"

@@ -19,6 +19,7 @@ exports[`BareMetal instructions renders correctly 1`] = `
         to="/assisted-installer/clusters/~new"
       >
         <CardBadge
+          devPreviewText="Technology Preview"
           isDevPreview={true}
         />
         <CardBody
