@@ -811,7 +811,7 @@ const validateUniqueAZ = (value, allValues, _, name) => {
   return undefined;
 };
 
-// Function to validate that the identity provider name field doesn't include whitespaces:
+
 const validateGCPSubnet = (value) => {
   if (!value) {
     return 'Field is required.';
@@ -824,6 +824,20 @@ const validateGCPSubnet = (value) => {
   }
   return undefined;
 };
+
+const validateGCPEncryptionKeys = (value) => {
+  if (!value) {
+    return 'Field is required.';
+  }
+  if (/\s/.test(value)) {
+    return 'Field must not contain whitespaces.';
+  }
+  if (/[^a-zA-Z0-9-_]/.test(value)) {
+    return 'Field should contain only letters, numbers , underscores (_) and hyphens (-).';
+  }
+  return undefined;
+};
+
 
 const validators = {
   required,
@@ -893,6 +907,7 @@ export {
   checkLabels,
   validateUniqueAZ,
   validateGCPSubnet,
+  validateGCPEncryptionKeys,
 };
 
 export default validators;

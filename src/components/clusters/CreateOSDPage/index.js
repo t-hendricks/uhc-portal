@@ -48,6 +48,8 @@ const mapStateToProps = (state, ownProps) => {
   let privateClusterSelected = false;
   const valueSelector = formValueSelector('CreateCluster');
   privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
+  let customerManagedEncryptionSelected = false;
+  customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
 
   const hasAwsQuota = hasAwsQuotaSelector(state, ownProps.product, STANDARD)
                    || hasAwsQuotaSelector(state, ownProps.product, MARKETPLACE);
@@ -58,7 +60,7 @@ const mapStateToProps = (state, ownProps) => {
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
     organization,
-
+    customerManagedEncryptionSelected,
     selectedRegion: valueSelector(state, 'region'),
     installToVPCSelected: valueSelector(state, 'install_to_vpc'),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
@@ -252,6 +254,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             vpc_name: formData.vpc_name,
             control_plane_subnet: formData.control_plane_subnet,
             compute_subnet: formData.compute_subnet,
+          };
+        }
+        if (formData.customer_managed_key) {
+          clusterRequest.gcp_encryption_key = {
+            key_name: formData.key_name,
+            key_ring: formData.key_ring,
+            key_location: formData.key_location,
+            kms_key_service_account: formData.kms_service_account,
           };
         }
       }
