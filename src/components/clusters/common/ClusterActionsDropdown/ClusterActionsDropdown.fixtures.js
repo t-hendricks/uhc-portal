@@ -25,6 +25,7 @@ const props = {
   canTransferClusterOwnership: false,
   openModal: jest.fn(),
   toggleSubscriptionReleased: jest.fn(),
+  refreshFunc: jest.fn(),
 };
 
 const managedReadyProps = {
