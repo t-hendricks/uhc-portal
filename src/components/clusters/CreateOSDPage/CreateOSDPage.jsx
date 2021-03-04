@@ -85,6 +85,7 @@ class CreateOSDPage extends React.Component {
       change,
       getOrganizationAndQuota,
       cloudProviderID,
+      billingModel,
     } = this.props;
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
@@ -95,11 +96,12 @@ class CreateOSDPage extends React.Component {
 
     const hasMarketplaceBYOCQuota = this.getMarketplaceQuota('byoc', cloudProviderID);
     const hasMarketplaceRhInfraQuota = this.getMarketplaceQuota('rhInfra', cloudProviderID);
+    const selectedMarketplaceBilling = billingModel === billingModels.MARKETPLACE;
 
     // if user has only BYOC quota
     if (!prevProps.isBYOCModalOpen
      && ((!hasRhInfraQuota && hasBYOCQuota)
-      || (!hasMarketplaceRhInfraQuota && !hasMarketplaceBYOCQuota))
+      || (selectedMarketplaceBilling && !hasMarketplaceRhInfraQuota && hasMarketplaceBYOCQuota))
      && !hasShownBYOCModal) {
       // open BYOC modal
       openModal('customer-cloud-subscription');
