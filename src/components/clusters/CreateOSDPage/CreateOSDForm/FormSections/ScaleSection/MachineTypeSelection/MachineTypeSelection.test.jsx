@@ -95,6 +95,7 @@ describe('<MachineTypeSelection />', () => {
           cloudProviderID="aws"
           isMachinePool={false}
           product="OSD"
+          billingModel="standard"
         />,
       );
     });
@@ -132,6 +133,7 @@ describe('<MachineTypeSelection />', () => {
           cloudProviderID="aws"
           isMachinePool={false}
           product="OSD"
+          billingModel="standard"
         />,
       );
     });
@@ -170,6 +172,7 @@ describe('<MachineTypeSelection />', () => {
           cloudProviderID="aws"
           isMachinePool={false}
           product="OSD"
+          billingModel="standard"
         />,
       );
     });
@@ -254,6 +257,7 @@ describe('<MachineTypeSelection />', () => {
             isMachinePool={false}
             cloudProviderID="aws"
             product="OSD"
+            billingModel="standard"
           />,
         );
       });
@@ -291,6 +295,7 @@ describe('<MachineTypeSelection />', () => {
             isMachinePool={false}
             cloudProviderID="aws"
             product="OSD"
+            billingModel="standard"
           />,
         );
       });
@@ -328,6 +333,7 @@ describe('<MachineTypeSelection />', () => {
             isBYOC
             cloudProviderID="aws"
             product="OSD"
+            billingModel="standard"
           />,
         );
       });

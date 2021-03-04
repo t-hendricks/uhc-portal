@@ -1,35 +1,44 @@
 import get from 'lodash/get';
 
-import { normalizedProducts } from '../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 
-const hasAwsQuotaSelector = (state, product) => (
+// Used for matching any in various fields of quota cost related resources
+const any = 'any';
+
+const hasAwsQuotaSelector = (state, product, billing = billingModels.STANDARD) => (
   // ROSA has zero cost (as far as Red Hat is concerned, billed by Amazon).
   // TODO don't hardcode, look up by product (https://issues.redhat.com/browse/SDA-3231).
   product === normalizedProducts.ROSA ? true
     : get(
       state.userProfile.organization.quotaList,
-      ['clustersQuota', product, 'aws', 'isAvailable'],
+      ['clustersQuota', billing, product, 'aws', 'isAvailable'],
       false,
     )
 );
-const hasGcpQuotaSelector = (state, product) => (
+const hasGcpQuotaSelector = (state, product, billing = billingModels.STANDARD) => (
   get(
     state.userProfile.organization.quotaList,
-    ['clustersQuota', product, 'gcp', 'isAvailable'],
+    ['clustersQuota', billing, product, 'gcp', 'isAvailable'],
     false,
   )
 );
-const hasManagedQuotaSelector = (state, product) => (
-  hasAwsQuotaSelector(state, product) || hasGcpQuotaSelector(state, product)
-);
+const hasManagedQuotaSelector = (state, product) => {
+  const { STANDARD, MARKETPLACE } = billingModels;
+
+  // has marketplace or standard quota for AWS or GCP
+  return hasAwsQuotaSelector(state, product, STANDARD)
+      || hasGcpQuotaSelector(state, product, STANDARD)
+      || hasAwsQuotaSelector(state, product, MARKETPLACE)
+      || hasGcpQuotaSelector(state, product, MARKETPLACE);
+};
 
 // TODO: special-case ROSA?
-const awsQuotaSelector = (state, product) => (
-  get(state.userProfile.organization.quotaList, ['clustersQuota', product, 'aws'])
+const awsQuotaSelector = (state, product, billing = billingModels.STANDARD) => (
+  get(state.userProfile.organization.quotaList, ['clustersQuota', billing, product, 'aws'])
 );
 
-const gcpQuotaSelector = (state, product) => (
-  get(state.userProfile.organization.quotaList, ['clustersQuota', product, 'gcp'])
+const gcpQuotaSelector = (state, product, billing = billingModels.STANDARD) => (
+  get(state.userProfile.organization.quotaList, ['clustersQuota', billing, product, 'gcp'])
 );
 
 /**
@@ -45,6 +54,7 @@ const availableClustersFromQuota = (
     resourceName,
     isBYOC,
     isMultiAz,
+    billingModel,
   },
 ) => {
   if (product === normalizedProducts.ROSA) {
@@ -56,7 +66,24 @@ const availableClustersFromQuota = (
   const infra = isBYOC ? 'byoc' : 'rhInfra';
   const zoneType = isMultiAz ? 'multiAz' : 'singleAz';
 
-  return get(quotaList.clustersQuota, [product, cloudProviderID, infra, zoneType, resourceName], 0);
+  let available = get(
+    quotaList.clustersQuota,
+    [billingModel, product, cloudProviderID, infra, zoneType, resourceName],
+    0,
+  );
+
+  // support resource_name of 'any'
+  const anyResource = get(
+    quotaList.clustersQuota,
+    [billingModel, product, cloudProviderID, infra, zoneType, any],
+    0,
+  );
+
+  if (anyResource > available) {
+    available = anyResource;
+  }
+
+  return available;
 };
 
 /**
@@ -72,19 +99,34 @@ const availableNodesFromQuota = (
     resourceName,
     isBYOC,
     // isMultiAz - unused here.
+    billingModel,
   },
 ) => {
   const infra = isBYOC ? 'byoc' : 'rhInfra';
-  const data = get(quotaList.nodesQuota, [product, cloudProviderID, infra, resourceName], {});
-  const available = get(data, 'available', 0);
+  const data = get(
+    quotaList.nodesQuota, [billingModel, product, cloudProviderID, infra, resourceName], {},
+  );
+  let available = get(data, 'available', 0);
   // ROSA has zero cost (as far as Red Hat is concerned, billed by Amazon).
   // TODO don't hardcode, look up by product (https://issues.redhat.com/browse/SDA-3231).
-  const cost = (product === normalizedProducts.ROSA) ? 0
+  let cost = (product === normalizedProducts.ROSA) ? 0
     : get(data, 'cost', Infinity);
 
   if (cost === 0) {
     return Infinity;
   }
+
+  // support 'any' resource_name for nodes
+  const resourceAnyQuota = get(
+    quotaList.nodesQuota, [billingModel, product, cloudProviderID, infra, any], {},
+  );
+  const anyAvailable = get(resourceAnyQuota, 'available', 0);
+
+  if (anyAvailable > available) {
+    available = anyAvailable;
+    cost = get(resourceAnyQuota, 'cost', Infinity);
+  }
+
   // If you're able to create half a node, you're still in "not enough quota" situation.
   return Math.floor(available / cost);
 };

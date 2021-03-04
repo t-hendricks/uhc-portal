@@ -19,6 +19,7 @@ import {
 
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 import OSDSubscriptionTable from './OSDSubscriptionTable';
+import { billingModels } from '../../../common/subscriptionTypes';
 
 class OSDSubscriptionCard extends Component {
   componentDidMount() {
@@ -58,7 +59,7 @@ class OSDSubscriptionCard extends Component {
   }
 
   render() {
-    const { quotaCost } = this.props;
+    const { quotaCost, marketplaceQuotaFeature } = this.props;
     let content;
     if (quotaCost.fulfilled) {
       const rows = quotaCost.items.flatMap((quotaItem) => {
@@ -71,6 +72,14 @@ class OSDSubscriptionCard extends Component {
         const relatedResources = get(quotaItem, 'related_resources', []).filter(resource => resource.cost !== 0);
         if (relatedResources.length === 0) {
           return [];
+        }
+
+        // filter out marketplace quota unless feature flagged
+        if (!marketplaceQuotaFeature) {
+          const billingModel = get(relatedResources[0], 'billing_model', billingModels.STANDARD);
+          if (billingModel === billingModels.MARKETPLACE) {
+            return [];
+          }
         }
 
         return [[
@@ -121,10 +130,15 @@ class OSDSubscriptionCard extends Component {
   }
 }
 
+OSDSubscriptionCard.defaultProps = {
+  marketplaceQuotaFeature: false,
+};
+
 OSDSubscriptionCard.propTypes = {
   organizationID: PropTypes.string.isRequired,
   fetchQuotaCost: PropTypes.func.isRequired,
   quotaCost: PropTypes.object.isRequired,
+  marketplaceQuotaFeature: PropTypes.bool,
 };
 
 export default OSDSubscriptionCard;

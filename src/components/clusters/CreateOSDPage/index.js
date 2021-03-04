@@ -14,9 +14,10 @@ import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/helpers';
+import { billingModels } from '../../../common/subscriptionTypes';
 
 import { canAutoScaleSelector } from '../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
-import { OSD_TRIAL_FEATURE, GCP_EXISTING_VPC_FEATURE } from '../../../redux/constants/featureConstants';
+import { OSD_TRIAL_FEATURE, GCP_EXISTING_VPC_FEATURE, MARKETPLACE_QUOTA_FEATURE } from '../../../redux/constants/featureConstants';
 
 import {
   hasManagedQuotaSelector,
@@ -42,10 +43,16 @@ const mapStateToProps = (state, ownProps) => {
   const { product, cloudProviderID } = ownProps;
   const isAwsForm = cloudProviderID === 'aws';
   const defaultRegion = isAwsForm ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
+  const { STANDARD, MARKETPLACE } = billingModels;
 
   let privateClusterSelected = false;
   const valueSelector = formValueSelector('CreateCluster');
   privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
+
+  const hasAwsQuota = hasAwsQuotaSelector(state, ownProps.product, STANDARD)
+                   || hasAwsQuotaSelector(state, ownProps.product, MARKETPLACE);
+  const hasGcpQuota = hasGcpQuotaSelector(state, ownProps.product, STANDARD)
+                   || hasGcpQuotaSelector(state, ownProps.product, MARKETPLACE);
 
   return ({
     createClusterResponse: state.clusters.createdCluster,
@@ -64,10 +71,17 @@ const mapStateToProps = (state, ownProps) => {
 
     clustersQuota: {
       hasProductQuota: hasManagedQuotaSelector(state, ownProps.product),
-      hasAwsQuota: hasAwsQuotaSelector(state, ownProps.product),
-      hasGcpQuota: hasGcpQuotaSelector(state, ownProps.product),
-      aws: awsQuotaSelector(state, ownProps.product),
-      gcp: gcpQuotaSelector(state, ownProps.product),
+      hasMarketplaceProductQuota: hasManagedQuotaSelector(
+        state, ownProps.product, MARKETPLACE,
+      ),
+      hasAwsQuota,
+      hasGcpQuota,
+      aws: awsQuotaSelector(state, ownProps.product, STANDARD),
+      gcp: gcpQuotaSelector(state, ownProps.product, STANDARD),
+      marketplace: {
+        aws: awsQuotaSelector(state, ownProps.product, MARKETPLACE),
+        gcp: gcpQuotaSelector(state, ownProps.product, MARKETPLACE),
+      },
     },
 
     canEnableEtcdEncryption: canEnableEtcdSelector(state),
@@ -81,6 +95,8 @@ const mapStateToProps = (state, ownProps) => {
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     osdTrialFeature: state.features[OSD_TRIAL_FEATURE],
     gcpExistingVPCFeature: state.features[GCP_EXISTING_VPC_FEATURE],
+    marketplaceQuotaFeature: state.features[MARKETPLACE_QUOTA_FEATURE],
+    billingModel: valueSelector(state, 'billing_model'),
 
     initialValues: {
       byoc: 'false',
@@ -99,6 +115,7 @@ const mapStateToProps = (state, ownProps) => {
       upgrade_policy: 'manual',
       automatic_upgrade_schedule: '0 0 * * 0',
       node_labels: [{}],
+      billing_model: 'standard',
     },
   });
 };
@@ -126,7 +143,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         unit: 'minutes',
       },
       etcd_encryption: formData.etcd_encryption,
+      billing_model: 'standard',
     };
+
+    if (formData.billing_model) {
+      clusterRequest.billing_model = formData.billing_model;
+    } else {
+      clusterRequest.billing_model = 'standard';
+    }
 
     if (formData.autoscalingEnabled) {
       const minNodes = parseInt(formData.min_replicas, 10);

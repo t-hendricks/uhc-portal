@@ -7,10 +7,22 @@ import {
   GridItem,
 } from '@patternfly/react-core';
 
+import { normalizedProducts, billingModels } from '../../../../../../common/subscriptionTypes';
 import BillingModelRadioButtons from './BillingModelRadioButtons';
 
 function BillingModelSection({
-  hasBYOCquota, hasStandardQuota, openModal, toggleBYOCFields, byocSelected = false,
+  hasBYOCquota,
+  hasStandardQuota,
+  hasMarketplaceBYOCQuota,
+  hasMarketplaceRhInfraQuota,
+  openModal,
+  toggleBYOCFields,
+  byocSelected = false,
+  pending,
+  toggleSubscriptionBilling,
+  product,
+  hasMarketplaceQuota,
+  billingModel,
 }) {
   return (
     <GridItem span={12}>
@@ -23,9 +35,16 @@ function BillingModelSection({
           name="byoc"
           hasBYOCquota={hasBYOCquota}
           hasStandardQuota={hasStandardQuota}
+          hasMarketplaceBYOCQuota={hasMarketplaceBYOCQuota}
+          hasMarketplaceRhInfraQuota={hasMarketplaceRhInfraQuota}
           byocSelected={byocSelected}
           openModal={openModal}
           onChange={toggleBYOCFields}
+          pending={pending}
+          toggleSubscriptionBilling={toggleSubscriptionBilling}
+          product={product}
+          showMarketplace={hasMarketplaceQuota}
+          billingModel={billingModel}
         />
       </FormGroup>
     </GridItem>
@@ -35,9 +54,16 @@ function BillingModelSection({
 BillingModelSection.propTypes = {
   hasBYOCquota: PropTypes.bool.isRequired,
   hasStandardQuota: PropTypes.bool.isRequired,
+  hasMarketplaceQuota: PropTypes.bool,
+  hasMarketplaceBYOCQuota: PropTypes.bool,
+  hasMarketplaceRhInfraQuota: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
   toggleBYOCFields: PropTypes.func.isRequired,
   byocSelected: PropTypes.bool,
+  pending: PropTypes.bool,
+  toggleSubscriptionBilling: PropTypes.func.isRequired,
+  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+  billingModel: PropTypes.oneOf(Object.values(billingModels)),
 };
 
 

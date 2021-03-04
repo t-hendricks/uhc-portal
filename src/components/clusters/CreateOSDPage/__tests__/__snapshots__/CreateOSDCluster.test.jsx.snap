@@ -77,6 +77,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
               autoScaleMaxNodesValue="0"
               autoScaleMinNodesValue="0"
               autoscalingEnabled={false}
+              billingModel="standard"
               canAutoScale={true}
               change={[MockFunction]}
               closeModal={[MockFunction]}
@@ -116,10 +117,13 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
                   },
                   "hasAwsQuota": true,
                   "hasGcpQuota": true,
+                  "hasMarketplaceProductQuota": false,
                   "hasProductQuota": true,
                 }
               }
+              getMarketplaceQuota={[Function]}
               isBYOCModalOpen={false}
+              marketplaceQuotaFeature={false}
               openModal={[MockFunction]}
               pending={false}
               privateClusterSelected={false}
