@@ -40,6 +40,7 @@ const MAX_MACHINE_POOL_NAME_LENGTH = 15;
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 
+const GCP_VPC_SUBNET_LENGTH = 63;
 // Maximum node count
 const MAX_NODE_COUNT = 180;
 
@@ -821,6 +822,9 @@ const validateGCPSubnet = (value) => {
   }
   if (/[^a-z0-9-]/.test(value)) {
     return 'Name should contain only lowercase letters, numbers and hyphens.';
+  }
+  if (value.length > GCP_VPC_SUBNET_LENGTH) {
+    return `Name may not exceed ${GCP_VPC_SUBNET_LENGTH} characters.`;
   }
   return undefined;
 };
