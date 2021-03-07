@@ -34,6 +34,7 @@ exports[`<EditNodeCountModal /> renders correctly 1`] = `
         span={8}
       >
         <Field
+          billingModel="standard"
           cloudProviderID="gcp"
           component={
             Object {
