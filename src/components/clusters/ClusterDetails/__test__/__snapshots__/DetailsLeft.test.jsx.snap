@@ -382,7 +382,7 @@ exports[`<DetailsLeft /> should render 1`] = `
     </DescriptionListGroup>
     <DescriptionListGroup>
       <DescriptionListTerm>
-        Location
+        Region
       </DescriptionListTerm>
       <DescriptionListDescription>
         us-east-1

@@ -42,7 +42,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
           </DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
-          <DescriptionListTerm>Location</DescriptionListTerm>
+          <DescriptionListTerm>Region</DescriptionListTerm>
           <DescriptionListDescription>
             {region}
           </DescriptionListDescription>
