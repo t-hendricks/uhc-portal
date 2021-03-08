@@ -10,7 +10,7 @@ import {
 
 import MachineTypeSelection from './MachineTypeSelection';
 
-import { ReduxFormKeyValueList, ReudxFormTaints } from '../../../../../common/ReduxFormComponents';
+import { ReduxFormKeyValueList, ReduxFormTaints } from '../../../../../common/ReduxFormComponents';
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
 import NodeCountInput from '../../../../common/NodeCountInput';
@@ -58,14 +58,14 @@ function ScaleSection({
         <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
       </GridItem>
       {isMachinePool
-  && (
-    <>
-      <GridItem span={4} className="space-bottom-md space-top-lg">
-        <Title headingLevel="h3">Taints</Title>
-      </GridItem>
-      <FieldArray name="taints" component={ReudxFormTaints} />
-    </>
-  )}
+        && (
+          <>
+            <GridItem span={4} className="space-bottom-md space-top-lg">
+              <Title headingLevel="h3">Taints</Title>
+            </GridItem>
+            <FieldArray name="taints" component={ReduxFormTaints} />
+          </>
+        )}
     </ExpandableSection>
   );
 
@@ -98,23 +98,23 @@ function ScaleSection({
       {/* autoscale */}
       <GridItem span={autoscaleAndNodeCountGridSpan}>
         {canAutoScale
-      && (
-        <>
-          <AutoScaleSection
-            autoscalingEnabled={autoscalingEnabled}
-            isMultiAz={isMultiAz}
-            change={change}
-            autoScaleMinNodesValue={autoScaleMinNodesValue}
-            autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-            product={product}
-            isBYOC={isBYOC}
-            isDefaultMachinePool={!isMachinePool}
-          />
-            {autoscalingEnabled && labelsAndTaintsSection}
-        </>
-      )}
+          && (
+            <>
+              <AutoScaleSection
+                autoscalingEnabled={autoscalingEnabled}
+                isMultiAz={isMultiAz}
+                change={change}
+                autoScaleMinNodesValue={autoScaleMinNodesValue}
+                autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+                product={product}
+                isBYOC={isBYOC}
+                isDefaultMachinePool={!isMachinePool}
+              />
+              {autoscalingEnabled && labelsAndTaintsSection}
+            </>
+          )}
         {/* Worker nodes */}
-        { !autoscalingEnabled && (
+        {!autoscalingEnabled && (
           <>
             <Field
               component={NodeCountInput}

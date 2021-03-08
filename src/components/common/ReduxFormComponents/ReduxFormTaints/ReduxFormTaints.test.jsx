@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ReduxFormTaints from './ReudxFormTaints';
+import ReduxFormTaints from './ReduxFormTaints';
 import MockFields from '../ReduxFormKeyValueList/ReduxFormKeyValueList.test';
 
 describe('<ReduxFormTaints />', () => {
