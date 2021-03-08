@@ -101,6 +101,7 @@ class AddOnsParametersModal extends Component {
     <Field
       {...this.getFieldProps(param)}
       key={param.id}
+      id={`field-${param.id}`}
       name={`parameters.${param.id}`}
       label={param.name}
       placeholder={this.getParamDefault(param)}
@@ -141,7 +142,7 @@ class AddOnsParametersModal extends Component {
           <ErrorBox message="Error adding add-ons" response={submitClusterAddOnResponse} />
         )}
 
-        <Form>
+        <Form id={`form-${addOn.id}`}>
           {hasParameters(addOn) && addOn.parameters.items.map(param => (
             <FormGroup
               key={param.id}
@@ -153,6 +154,7 @@ class AddOnsParametersModal extends Component {
                 && (
                   <Button
                     onClick={() => this.setDefaultParamValue(param)}
+                    id={`reset-${param.id}`}
                     variant="link"
                     icon={<LevelUpAltIcon />}
                     iconPosition="right"
