@@ -69,7 +69,7 @@ const mapStateToProps = (state) => {
     canAutoScale: canAutoScaleSelector(state, get(cluster, 'product.id', '')),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
-    billingModel: cluster.billing_model,
+    billingModel: get(cluster, 'billing_model', ''),
   };
 
   let machinePoolWithAutoscale = false;
