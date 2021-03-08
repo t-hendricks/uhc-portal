@@ -19,6 +19,7 @@ import validators, {
   validateServiceAccountObject,
   validateUniqueAZ,
   validateNumericInput,
+  validateGCPSubnet,
 } from '../validators';
 import fixtures from './validators.fixtures';
 
@@ -525,4 +526,12 @@ test('Unique AZs', () => {
   expect(validateUniqueAZ(value, AllValues, null, name)).toBe(undefined);
   value = 'd';
   expect(validateUniqueAZ(value, AllValues, null, name)).toBe('Each subnet should be in a different AZ.');
+});
+
+test('GCP Subnet', () => {
+  const value = 'testnameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+  expect(validateGCPSubnet()).toBe('Field is required.');
+  expect(validateGCPSubnet('Subnet Name')).toBe('Name must not contain whitespaces.');
+  expect(validateGCPSubnet('Subet$$')).toBe('Name should contain only lowercase letters, numbers and hyphens.');
+  expect(validateGCPSubnet(value)).toBe('Name may not exceed 63 characters.');
 });
