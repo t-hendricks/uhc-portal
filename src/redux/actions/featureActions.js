@@ -4,7 +4,6 @@ import {
   ASSISTED_INSTALLER_SNO_FEATURE,
   ASSISTED_INSTALLER_OCS_FEATURE,
   OSD_TRIAL_FEATURE,
-  GCP_EXISTING_VPC_FEATURE,
   MARKETPLACE_QUOTA_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
@@ -50,13 +49,6 @@ export const features = [
     name: ASSISTED_INSTALLER_OCS_FEATURE,
     action: organizationID => (organizationID
       ? accountsService.getFeature('assisted-installer-ocs', organizationID)
-        .then(unleash => unleash.data.enabled)
-      : Promise.reject(Error('No organization'))),
-  },
-  {
-    name: GCP_EXISTING_VPC_FEATURE,
-    action: organizationID => (organizationID
-      ? accountsService.getFeature('gcp-existing-vpc', organizationID)
         .then(unleash => unleash.data.enabled)
       : Promise.reject(Error('No organization'))),
   },

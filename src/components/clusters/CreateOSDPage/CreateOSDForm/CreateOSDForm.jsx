@@ -148,7 +148,6 @@ class CreateOSDForm extends React.Component {
       autoscalingEnabled,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
-      gcpExistingVPCFeature,
       billingModel,
       marketplaceQuotaFeature,
       getMarketplaceQuota,
@@ -315,7 +314,6 @@ class CreateOSDForm extends React.Component {
           selectedRegion={selectedRegion}
           isCCS={isBYOCForm}
           installToVPCSelected={installToVPCSelected}
-          gcpExistingVPCFeature={gcpExistingVPCFeature}
         />
         {/* Encryption */}
         {canEnableEtcdEncryption && (
@@ -407,7 +405,6 @@ CreateOSDForm.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
-  gcpExistingVPCFeature: PropTypes.bool,
   marketplaceQuotaFeature: PropTypes.bool,
   getMarketplaceQuota: PropTypes.func.isRequired,
 };
