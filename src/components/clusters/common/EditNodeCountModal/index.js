@@ -93,7 +93,7 @@ const mapStateToProps = (state) => {
       machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
       machinePoolId: 'Default',
       initialValues: {
-        nodes_compute: get(cluster, 'nodes.compute', null) || (isMultiAz ? '9' : '4'),
+        nodes_compute: get(cluster, 'nodes.compute', null) || (isMultiAz ? 9 : 4),
         machine_pool: 'Default',
         autoscalingEnabled: machinePoolWithAutoscale,
         ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(cluster.nodes.autoscale_compute)),
@@ -112,7 +112,7 @@ const mapStateToProps = (state) => {
     machineType: get(selectedMachinePoolData, 'instance_type', ''),
     machinePoolId: selectedMachinePool,
     initialValues: {
-      nodes_compute: get(selectedMachinePoolData, 'replicas', null) || '0',
+      nodes_compute: get(selectedMachinePoolData, 'replicas', null) || 0,
       machine_pool: selectedMachinePool,
       autoscalingEnabled: machinePoolWithAutoscale,
       ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(selectedMachinePoolData.autoscaling)),
