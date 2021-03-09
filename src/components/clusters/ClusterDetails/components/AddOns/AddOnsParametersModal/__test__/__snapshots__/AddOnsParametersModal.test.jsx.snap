@@ -13,12 +13,15 @@ exports[`<AddOnsParametersModal /> renders correctly 1`] = `
   variant="large"
   width={810}
 >
-  <Form>
+  <Form
+    id="form-Dummy ID"
+  >
     <FormGroup
       key="dummy item"
     >
       <Field
         component={[Function]}
+        id="field-dummy item"
         isDisabled={false}
         key="dummy item"
         name="parameters.dummy item"
@@ -36,6 +39,7 @@ exports[`<AddOnsParametersModal /> renders correctly 1`] = `
           />
         }
         iconPosition="right"
+        id="reset-dummy item"
         onClick={[Function]}
         variant="link"
       >

@@ -4,6 +4,7 @@ exports[`<AddOnsCard /> renders correctly 1`] = `
 <Card
   className="ocm-c-addons__card"
   key="Dummy ID"
+  ouiaId="card-Dummy ID"
 >
   <CardHeader
     className="ocm-c-addons__card--header"
