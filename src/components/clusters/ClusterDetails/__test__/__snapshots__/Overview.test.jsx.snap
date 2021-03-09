@@ -513,11 +513,8 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                   "kind": "CloudRegionLink",
                 },
                 "state": Object {
-                  "description": "ready",
+                  "description": "Ready",
                   "state": "ready",
-                  "style": Object {
-                    "textTransform": "capitalize",
-                  },
                 },
                 "status": Object {
                   "dns_ready": true,
@@ -1378,11 +1375,8 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                   "kind": "CloudRegionLink",
                 },
                 "state": Object {
-                  "description": "ready",
+                  "description": "Ready",
                   "state": "ready",
-                  "style": Object {
-                    "textTransform": "capitalize",
-                  },
                 },
                 "status": Object {
                   "dns_ready": true,
