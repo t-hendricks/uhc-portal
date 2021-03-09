@@ -8,7 +8,7 @@ import {
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
-import { ReduxFormDropdown, ReudxFormTaints } from '../../../../../../common/ReduxFormComponents';
+import { ReduxFormDropdown, ReduxFormTaints } from '../../../../../../common/ReduxFormComponents';
 
 class EditTaintsModal extends Component {
   componentDidMount() {
@@ -26,8 +26,8 @@ class EditTaintsModal extends Component {
     const { editTaintsResponse } = this.props;
 
     if (editTaintsResponse.fulfilled
-          && !editTaintsResponse.pending
-          && !editTaintsResponse.error) {
+      && !editTaintsResponse.pending
+      && !editTaintsResponse.error) {
       this.cancelEdit();
     }
   }
@@ -98,7 +98,7 @@ class EditTaintsModal extends Component {
               </GridItem>
               <GridItem span={7} />
               <GridItem span={12}>
-                <FieldArray name="taints" component={ReudxFormTaints} />
+                <FieldArray name="taints" component={ReduxFormTaints} />
               </GridItem>
             </Grid>
           </Form>
