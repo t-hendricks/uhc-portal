@@ -2,14 +2,16 @@
 
 const rhInfraClusterQuota = {
   clustersQuota: {
-    OSD: {
-      aws: {
-        rhInfra: {
-          multiAz: {
-            'mem.small': 5,
-          },
-          singleAz: {
-            'mem.small': 0,
+    standard: {
+      OSD: {
+        aws: {
+          rhInfra: {
+            multiAz: {
+              'mem.small': 5,
+            },
+            singleAz: {
+              'mem.small': 0,
+            },
           },
         },
       },
@@ -19,31 +21,35 @@ const rhInfraClusterQuota = {
 
 const awsCCSClustersWithNodesQuota = {
   clustersQuota: {
-    OSD: {
-      aws: {
-        rhInfra: {
-          singleAz: { available: 0 },
-          multiAz: { available: 0 },
-          totalAvailable: 0,
-        },
-        byoc: {
-          singleAz: { available: 0 },
-          multiAz: {
-            'mem.small': 5,
-            available: 5,
+    standard: {
+      OSD: {
+        aws: {
+          rhInfra: {
+            singleAz: { available: 0 },
+            multiAz: { available: 0 },
+            totalAvailable: 0,
           },
-          totalAvailable: 5,
+          byoc: {
+            singleAz: { available: 0 },
+            multiAz: {
+              'mem.small': 5,
+              available: 5,
+            },
+            totalAvailable: 5,
+          },
         },
       },
     },
   },
   nodesQuota: {
-    OSD: {
-      aws: {
-        byoc: {
-          'mem.small': {
-            available: 12,
-            cost: 4,
+    standard: {
+      OSD: {
+        aws: {
+          byoc: {
+            'mem.small': {
+              available: 12,
+              cost: 4,
+            },
           },
         },
       },
@@ -53,31 +59,35 @@ const awsCCSClustersWithNodesQuota = {
 
 const awsCCSClustersWithSingleNodeQuota = {
   clustersQuota: {
-    OSD: {
-      aws: {
-        rhInfra: {
-          singleAz: { available: 0 },
-          multiAz: { available: 0 },
-          totalAvailable: 0,
-        },
-        byoc: {
-          singleAz: { available: 0 },
-          multiAz: {
-            'mem.small': 5,
-            available: 5,
+    standard: {
+      OSD: {
+        aws: {
+          rhInfra: {
+            singleAz: { available: 0 },
+            multiAz: { available: 0 },
+            totalAvailable: 0,
           },
-          totalAvailable: 5,
+          byoc: {
+            singleAz: { available: 0 },
+            multiAz: {
+              'mem.small': 5,
+              available: 5,
+            },
+            totalAvailable: 5,
+          },
         },
       },
     },
   },
   nodesQuota: {
-    OSD: {
-      aws: {
-        byoc: {
-          'mem.small': {
-            available: 4,
-            cost: 4,
+    standard: {
+      OSD: {
+        aws: {
+          byoc: {
+            'mem.small': {
+              available: 4,
+              cost: 4,
+            },
           },
         },
       },
@@ -110,6 +120,7 @@ const awsByocRhInfraGcpRhInfraClustersQuota = {
       totalAvailable: 10,
     },
   },
+  hasMarketplaceProductQuota: false,
 };
 
 const awsRhInfraGcpRhInfraClustersQuota = {
@@ -138,6 +149,7 @@ const awsRhInfraGcpRhInfraClustersQuota = {
       totalAvailable: 1,
     },
   },
+  hasMarketplaceProductQuota: false,
 };
 
 export {

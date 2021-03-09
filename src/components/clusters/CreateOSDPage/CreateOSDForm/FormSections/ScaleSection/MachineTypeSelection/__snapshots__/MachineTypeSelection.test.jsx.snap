@@ -2,6 +2,7 @@
 
 exports[`<MachineTypeSelection /> when machine type list needs to be fetched renders correctly 1`] = `
 <MachineTypeSelection
+  billingModel="standard"
   cloudProviderID="aws"
   getMachineTypes={[MockFunction]}
   input={
@@ -104,6 +105,7 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
 
 exports[`<MachineTypeSelection /> when the machine types list is available byoc lacking enough byoc node quota renders correctly 1`] = `
 <MachineTypeSelection
+  billingModel="standard"
   cloudProviderID="aws"
   getMachineTypes={[MockFunction]}
   input={
@@ -180,37 +182,41 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
   quota={
     Object {
       "clustersQuota": Object {
-        "OSD": Object {
-          "aws": Object {
-            "byoc": Object {
-              "multiAz": Object {
-                "available": 5,
-                "mem.small": 5,
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 5,
+                  "mem.small": 5,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 5,
               },
-              "singleAz": Object {
-                "available": 0,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
               },
-              "totalAvailable": 5,
-            },
-            "rhInfra": Object {
-              "multiAz": Object {
-                "available": 0,
-              },
-              "singleAz": Object {
-                "available": 0,
-              },
-              "totalAvailable": 0,
             },
           },
         },
       },
       "nodesQuota": Object {
-        "OSD": Object {
-          "aws": Object {
-            "byoc": Object {
-              "mem.small": Object {
-                "available": 4,
-                "cost": 4,
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "byoc": Object {
+                "mem.small": Object {
+                  "available": 4,
+                  "cost": 4,
+                },
               },
             },
           },
@@ -269,6 +275,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     className="flat-radio-buttons-flex-container"
   >
     <FlatRadioButton
+      billingModel="standard"
       icon={
         <MemoryIcon
           color="currentColor"
@@ -297,6 +304,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       value="r5.xlarge"
     >
       <Button
+        billingModel="standard"
         className="ocm-flat-radio-button"
         id="machineTypeRadio.r5.xlarge"
         isDisabled={true}
@@ -307,6 +315,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         <button
           aria-disabled={true}
           aria-label={null}
+          billingModel="standard"
           className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
           data-ouia-component-id="OUIA-Generated-Button-tertiary-5"
           data-ouia-component-type="PF4/Button"
@@ -387,6 +396,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       </Button>
     </FlatRadioButton>
     <FlatRadioButton
+      billingModel="standard"
       icon={
         <MemoryIcon
           color="currentColor"
@@ -415,6 +425,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       value="r5.4xlarge"
     >
       <Button
+        billingModel="standard"
         className="ocm-flat-radio-button"
         id="machineTypeRadio.r5.4xlarge"
         isDisabled={true}
@@ -425,6 +436,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         <button
           aria-disabled={true}
           aria-label={null}
+          billingModel="standard"
           className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
           data-ouia-component-id="OUIA-Generated-Button-tertiary-6"
           data-ouia-component-type="PF4/Button"
@@ -510,6 +522,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
 
 exports[`<MachineTypeSelection /> when the machine types list is available byoc with sufficient byoc quota available renders correctly 1`] = `
 <MachineTypeSelection
+  billingModel="standard"
   cloudProviderID="aws"
   getMachineTypes={[MockFunction]}
   input={
@@ -598,37 +611,41 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
   quota={
     Object {
       "clustersQuota": Object {
-        "OSD": Object {
-          "aws": Object {
-            "byoc": Object {
-              "multiAz": Object {
-                "available": 5,
-                "mem.small": 5,
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 5,
+                  "mem.small": 5,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 5,
               },
-              "singleAz": Object {
-                "available": 0,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
               },
-              "totalAvailable": 5,
-            },
-            "rhInfra": Object {
-              "multiAz": Object {
-                "available": 0,
-              },
-              "singleAz": Object {
-                "available": 0,
-              },
-              "totalAvailable": 0,
             },
           },
         },
       },
       "nodesQuota": Object {
-        "OSD": Object {
-          "aws": Object {
-            "byoc": Object {
-              "mem.small": Object {
-                "available": 12,
-                "cost": 4,
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "byoc": Object {
+                "mem.small": Object {
+                  "available": 12,
+                  "cost": 4,
+                },
               },
             },
           },
@@ -687,6 +704,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     className="flat-radio-buttons-flex-container"
   >
     <FlatRadioButton
+      billingModel="standard"
       icon={
         <MemoryIcon
           color="currentColor"
@@ -715,6 +733,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       value="r5.xlarge"
     >
       <Button
+        billingModel="standard"
         className="ocm-flat-radio-button"
         id="machineTypeRadio.r5.xlarge"
         isDisabled={false}
@@ -725,6 +744,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         <button
           aria-disabled={false}
           aria-label={null}
+          billingModel="standard"
           className="pf-c-button pf-m-tertiary ocm-flat-radio-button"
           data-ouia-component-id="OUIA-Generated-Button-tertiary-3"
           data-ouia-component-type="PF4/Button"
@@ -804,6 +824,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       </Button>
     </FlatRadioButton>
     <FlatRadioButton
+      billingModel="standard"
       icon={
         <MemoryIcon
           color="currentColor"
@@ -832,6 +853,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       value="r5.4xlarge"
     >
       <Button
+        billingModel="standard"
         className="ocm-flat-radio-button"
         id="machineTypeRadio.r5.4xlarge"
         isDisabled={true}
@@ -842,6 +864,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         <button
           aria-disabled={true}
           aria-label={null}
+          billingModel="standard"
           className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
           data-ouia-component-id="OUIA-Generated-Button-tertiary-4"
           data-ouia-component-type="PF4/Button"
@@ -927,6 +950,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
 
 exports[`<MachineTypeSelection /> when the machine types list is available with rhinfra quota available renders correctly 1`] = `
 <MachineTypeSelection
+  billingModel="standard"
   cloudProviderID="aws"
   getMachineTypes={[MockFunction]}
   input={
@@ -1015,14 +1039,16 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
   quota={
     Object {
       "clustersQuota": Object {
-        "OSD": Object {
-          "aws": Object {
-            "rhInfra": Object {
-              "multiAz": Object {
-                "mem.small": 5,
-              },
-              "singleAz": Object {
-                "mem.small": 0,
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "mem.small": 5,
+                },
+                "singleAz": Object {
+                  "mem.small": 0,
+                },
               },
             },
           },
@@ -1081,6 +1107,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     className="flat-radio-buttons-flex-container"
   >
     <FlatRadioButton
+      billingModel="standard"
       icon={
         <MemoryIcon
           color="currentColor"
@@ -1109,6 +1136,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       value="r5.xlarge"
     >
       <Button
+        billingModel="standard"
         className="ocm-flat-radio-button"
         id="machineTypeRadio.r5.xlarge"
         isDisabled={false}
@@ -1119,6 +1147,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
         <button
           aria-disabled={false}
           aria-label={null}
+          billingModel="standard"
           className="pf-c-button pf-m-tertiary ocm-flat-radio-button"
           data-ouia-component-id="OUIA-Generated-Button-tertiary-1"
           data-ouia-component-type="PF4/Button"
@@ -1198,6 +1227,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       </Button>
     </FlatRadioButton>
     <FlatRadioButton
+      billingModel="standard"
       icon={
         <MemoryIcon
           color="currentColor"
@@ -1287,6 +1317,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               className="ocm-flat-radio-button-disabled"
             >
               <Button
+                billingModel="standard"
                 className="ocm-flat-radio-button"
                 id="machineTypeRadio.r5.4xlarge"
                 isDisabled={true}
@@ -1337,6 +1368,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               className="ocm-flat-radio-button-disabled"
             >
               <Button
+                billingModel="standard"
                 className="ocm-flat-radio-button"
                 id="machineTypeRadio.r5.4xlarge"
                 isDisabled={true}
@@ -1347,6 +1379,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                 <button
                   aria-disabled={true}
                   aria-label={null}
+                  billingModel="standard"
                   className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
                   data-ouia-component-id="OUIA-Generated-Button-tertiary-2"
                   data-ouia-component-type="PF4/Button"
@@ -1436,6 +1469,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
 
 exports[`<MachineTypeSelection /> when the request is pending renders correctly 1`] = `
 <MachineTypeSelection
+  billingModel="standard"
   cloudProviderID="aws"
   getMachineTypes={[MockFunction]}
   input={
@@ -1538,6 +1572,7 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
 
 exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] = `
 <MachineTypeSelection
+  billingModel="standard"
   cloudProviderID="aws"
   getMachineTypes={[MockFunction]}
   input={

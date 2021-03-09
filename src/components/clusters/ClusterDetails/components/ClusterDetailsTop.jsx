@@ -78,7 +78,7 @@ function ClusterDetailsTop(props) {
   const disableConsoleOnStates = [
     clusterStates.UNINSTALLING,
     clusterStates.POWERING_DOWN,
-    clusterStates.POWERING_UP,
+    clusterStates.RESUMING,
     clusterStates.HIBERNATING,
   ];
   if (consoleURL && !disableConsoleOnStates.includes(cluster.state)) {
@@ -107,6 +107,7 @@ function ClusterDetailsTop(props) {
       canTransferClusterOwnership={canTransferClusterOwnership}
       toggleSubscriptionReleased={toggleSubscriptionReleased}
       canHibernateCluster={canHibernateCluster}
+      refreshFunc={refreshFunc}
     />
   );
 

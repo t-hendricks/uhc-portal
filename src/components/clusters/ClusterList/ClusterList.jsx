@@ -61,7 +61,7 @@ class ClusterList extends Component {
   componentDidMount() {
     document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
     const {
-      getCloudProviders, cloudProviders, setListFlag,
+      getCloudProviders, cloudProviders, setListFlag, getOrganizationAndQuota, organization,
     } = this.props;
 
     scrollToTop();
@@ -83,6 +83,10 @@ class ClusterList extends Component {
 
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
+    }
+
+    if (!organization.fulfilled && !organization.pending) {
+      getOrganizationAndQuota();
     }
   }
 
@@ -133,6 +137,7 @@ class ClusterList extends Component {
       queryParams,
       canSubscribeOCPList,
       canTransferClusterOwnershipList,
+      canHibernateClusterList,
       toggleSubscriptionReleased,
     } = this.props;
 
@@ -261,8 +266,10 @@ class ClusterList extends Component {
                 isPending={showSkeleton}
                 setClusterDetails={setClusterDetails}
                 canSubscribeOCPList={canSubscribeOCPList}
+                canHibernateClusterList={canHibernateClusterList}
                 canTransferClusterOwnershipList={canTransferClusterOwnershipList}
                 toggleSubscriptionReleased={toggleSubscriptionReleased}
+                refreshFunc={this.refresh}
               />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
@@ -300,6 +307,8 @@ ClusterList.propTypes = {
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
+  organization: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
@@ -312,6 +321,7 @@ ClusterList.propTypes = {
   queryParams: PropTypes.shape({
     has_filters: PropTypes.bool,
   }),
+  canHibernateClusterList: PropTypes.objectOf(PropTypes.bool),
   canSubscribeOCPList: PropTypes.objectOf(PropTypes.bool),
   canTransferClusterOwnershipList: PropTypes.objectOf(PropTypes.bool),
   toggleSubscriptionReleased: PropTypes.func.isRequired,

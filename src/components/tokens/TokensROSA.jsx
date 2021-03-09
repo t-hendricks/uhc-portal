@@ -80,7 +80,7 @@ class TokensROSA extends Tokens {
       '"',
     ];
 
-    const rosaURL = 'https://github.com/openshift/moactl/releases/latest';
+    const rosaURL = 'https://github.com/openshift/rosa/releases';
     const rosaLink = <a href={rosaURL}>rosa</a>;
 
     /* eslint-disable react/jsx-one-expression-per-line */

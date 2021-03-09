@@ -17,6 +17,7 @@ describe('CreateOSDForm;', () => {
       product={normalizedProducts.OSD}
       canAutoScale={false}
       autoscalingEnabled={false}
+      getMarketplaceQuota={jest.fn()}
     />);
 
     expect(wrapper).toMatchSnapshot();
@@ -34,6 +35,7 @@ describe('CreateOSDForm;', () => {
       canEnableEtcdEncryption
       canAutoScale={false}
       autoscalingEnabled={false}
+      getMarketplaceQuota={jest.fn()}
     />);
 
     expect(wrapper.find('Field[name="etcd_encryption"]').length).toEqual(1);

@@ -15,7 +15,7 @@ import ScaleSection from './FormSections/ScaleSection/ScaleSection';
 import { constants } from './CreateOSDFormConstants';
 
 import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { required, validateGCPServiceAccount } from '../../../../common/validators';
 
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
@@ -94,18 +94,38 @@ class CreateOSDForm extends React.Component {
     this.setState({ mode: value });
   };
 
+  toggleSubscriptionBilling = (_, value) => {
+    const { change, openModal } = this.props;
+    const { byocSelected } = this.state;
+
+    // marketplace quota is currently CCS only
+    if (value === billingModels.MARKETPLACE && !byocSelected) {
+      openModal('customer-cloud-subscription');
+    }
+    change('billing_model', value);
+    this.setState({ billingModel: value });
+  };
+
   isByocForm = () => {
     const {
       clustersQuota,
       cloudProviderID,
+      getMarketplaceQuota,
     } = this.props;
 
     const {
       byocSelected,
+      billingModel,
     } = this.state;
 
-    const hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
-    const hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
+    const { MARKETPLACE } = billingModels;
+    let hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
+    let hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
+
+    if (billingModel === MARKETPLACE) {
+      hasBYOCQuota = getMarketplaceQuota('byoc', cloudProviderID);
+      hasRhInfraQuota = getMarketplaceQuota('rhInfra', cloudProviderID);
+    }
 
     return hasBYOCQuota && (!hasRhInfraQuota || byocSelected);
   }
@@ -128,7 +148,9 @@ class CreateOSDForm extends React.Component {
       autoscalingEnabled,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
-      gcpExistingVPCFeature,
+      billingModel,
+      marketplaceQuotaFeature,
+      getMarketplaceQuota,
     } = this.props;
 
     const {
@@ -142,9 +164,18 @@ class CreateOSDForm extends React.Component {
 
     const hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
     const hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
+    const hasMarketplaceProductQuota = marketplaceQuotaFeature && !!get(clustersQuota, 'hasMarketplaceProductQuota');
+    const hasMarketplaceBYOCQuota = getMarketplaceQuota('byoc', cloudProviderID);
+    const hasMarketplaceRhInfraQuota = getMarketplaceQuota('rhInfra', cloudProviderID);
 
     const isBYOCForm = this.isByocForm();
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
+
+
+    let basicFieldsQuota = clustersQuota[cloudProviderID][infraType];
+    if (billingModel === billingModels.MARKETPLACE) {
+      basicFieldsQuota = clustersQuota.marketplace[cloudProviderID][infraType];
+    }
 
     return (
       <>
@@ -155,9 +186,16 @@ class CreateOSDForm extends React.Component {
         <BillingModelSection
           openModal={openModal}
           toggleBYOCFields={this.toggleBYOCFields}
+          toggleSubscriptionBilling={this.toggleSubscriptionBilling}
           hasBYOCquota={hasBYOCQuota}
           hasStandardQuota={hasRhInfraQuota}
+          hasMarketplaceQuota={hasMarketplaceProductQuota}
+          hasMarketplaceRhInfraQuota={hasMarketplaceRhInfraQuota}
+          hasMarketplaceBYOCQuota={hasMarketplaceBYOCQuota}
           byocSelected={isBYOCForm}
+          pending={pending}
+          product={product}
+          billingModel={billingModel}
         />
 
         {/* BYOC modal */}
@@ -235,7 +273,7 @@ class CreateOSDForm extends React.Component {
           change={change}
           isBYOC={isBYOCForm}
           cloudProviderID={cloudProviderID}
-          quota={clustersQuota[cloudProviderID][infraType]}
+          quota={basicFieldsQuota}
           handleMultiAZChange={this.handleMultiAZChange}
           handleCloudRegionChange={this.handleCloudRegionChange}
           isMultiAz={isMultiAz}
@@ -263,6 +301,7 @@ class CreateOSDForm extends React.Component {
           change={change}
           autoScaleMinNodesValue={autoScaleMinNodesValue}
           autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+          billingModel={billingModel}
         />
         {/* Networking section */}
         <NetworkingSection
@@ -275,7 +314,6 @@ class CreateOSDForm extends React.Component {
           selectedRegion={selectedRegion}
           isCCS={isBYOCForm}
           installToVPCSelected={installToVPCSelected}
-          gcpExistingVPCFeature={gcpExistingVPCFeature}
         />
         {/* Encryption */}
         {canEnableEtcdEncryption && (
@@ -321,6 +359,8 @@ CreateOSDForm.defaultProps = {
   isBYOCModalOpen: false,
   autoScaleMinNodesValue: '0',
   autoScaleMaxNodesValue: '0',
+  marketplaceQuotaFeature: false,
+  billingModel: billingModels.STANDARD,
 };
 
 CreateOSDForm.propTypes = {
@@ -331,6 +371,7 @@ CreateOSDForm.propTypes = {
   change: PropTypes.func.isRequired,
   clustersQuota: PropTypes.shape({
     hasProductQuota: PropTypes.bool.isRequired,
+    hasMarketplaceProductQuota: PropTypes.bool,
     aws: PropTypes.shape({
       byoc: PropTypes.shape({
         singleAz: PropTypes.object.isRequired,
@@ -350,10 +391,12 @@ CreateOSDForm.propTypes = {
         totalAvailable: PropTypes.number.isRequired,
       }).isRequired,
     }),
+    marketplace: PropTypes.object,
   }),
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+  billingModel: PropTypes.oneOf(Object.values(billingModels)),
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
   selectedRegion: PropTypes.string,
@@ -362,7 +405,8 @@ CreateOSDForm.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
-  gcpExistingVPCFeature: PropTypes.bool,
+  marketplaceQuotaFeature: PropTypes.bool,
+  getMarketplaceQuota: PropTypes.func.isRequired,
 };
 
 export default CreateOSDForm;

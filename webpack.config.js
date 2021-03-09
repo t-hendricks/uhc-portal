@@ -31,8 +31,12 @@ const outDir = path.resolve(__dirname, 'build', insights.appname);
 module.exports = (env, argv) => {
   const devMode = argv.mode !== 'production';
   const betaMode = argv.beta == 'true';
-  const apiEnv = argv['api-env'] || 'production';
   const isDevServer = !!process.argv.find(v => v.includes('webpack-dev-server'));
+
+  // Select default API env based on argument if specified.
+  // Otherwise, default to 'development' for backend-proxy users when running in dev server,
+  // or 'production' when it's a real build.
+  const apiEnv = argv['api-env'] || (isDevServer ? 'development' : 'production');
 
   let bundleAnalyzer = null;
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
