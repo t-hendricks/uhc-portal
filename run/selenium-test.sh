@@ -13,11 +13,18 @@ yarn wait-on http-get://localhost:4444/wd/hub
 
 # Default must match selenium-browser.sh
 BROWSER="${BROWSER:-firefox}"
+
+# JavaScript tests
+
+yarn run wdio
+
+# Ruby/cucumber/xyaml tests
+
 export BUSHSLICER_CONFIG="{
   \"environments\": {
     \"ocm_local_dev_prod_sso\": {
       \"static_users_map\": {
-        \"regularUser\": \"$TEST_SELENIUM_NOANYQUOTA_USERNAME:$TEST_SELENIUM_NOANYQUOTA_PASSWORD\",
+        \"regularUser\": \"$TEST_SELENIUM_WITHQUOTA_USER:$TEST_SELENIUM_WITHQUOTA_PASSWORD\",
         \"noAnyQuotaUser\": \"$TEST_SELENIUM_NOANYQUOTA_USERNAME:$TEST_SELENIUM_NOANYQUOTA_PASSWORD\"
       }
     }
@@ -61,6 +68,3 @@ CUCUMBER_COMMAND=(
                       --env BUSHSLICER_DEFAULT_ENVIRONMENT \
                       $SELENIUM_TESTS_IMAGE \
                       "${CUCUMBER_COMMAND[@]}"
-
-# now run javascript tests
-yarn run wdio 

@@ -30,7 +30,6 @@ function NetworkingSection({
   isCCS,
   selectedRegion,
   installToVPCSelected,
-  gcpExistingVPCFeature,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -81,8 +80,6 @@ function NetworkingSection({
     ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
     : validators.AWS_MACHINE_CIDR_MAX_SINGLE_AZ;
 
-  const allowExistingVPC = isCCS && (gcpExistingVPCFeature || cloudProviderID === 'aws');
-
   return (
     <>
       <GridItem span={4}>
@@ -125,7 +122,7 @@ function NetworkingSection({
         />
       </FormGroup>
       {
-        mode === 'advanced' && allowExistingVPC && (
+        mode === 'advanced' && isCCS && (
           <InstallToVPC
             selectedRegion={selectedRegion}
             isMultiAz={isMultiAz}
@@ -301,7 +298,6 @@ NetworkingSection.propTypes = {
   isCCS: PropTypes.bool,
   selectedRegion: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
-  gcpExistingVPCFeature: PropTypes.bool,
 };
 
 export default NetworkingSection;

@@ -7,7 +7,7 @@ import {
 
 import NodeCountInput from '../NodeCountInput';
 import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
@@ -112,6 +112,7 @@ class EditNodeCountModal extends Component {
       autoscalingEnabled,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
+      billingModel,
     } = this.props;
 
     const error = editNodeCountResponse.error ? (
@@ -202,6 +203,7 @@ class EditNodeCountModal extends Component {
                       product={product}
                       minNodes={machinePoolId !== 'Default' ? 0 : undefined}
                       isMachinePool
+                      billingModel={billingModel}
                     />
                   </GridItem>
                   <GridItem span={4} />
@@ -248,6 +250,7 @@ EditNodeCountModal.propTypes = {
   canAutoScale: PropTypes.bool,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
 };
 
 EditNodeCountModal.defaultProps = {

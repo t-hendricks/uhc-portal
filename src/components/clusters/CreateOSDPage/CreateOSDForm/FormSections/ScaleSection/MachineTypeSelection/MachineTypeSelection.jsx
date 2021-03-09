@@ -11,7 +11,7 @@ import FlatRadioButton from '../../../../../../common/FlatRadioButton';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
-import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../../../../common/subscriptionTypes';
 
 const machineTypeIcon = (machineTypeCategory) => {
   switch (machineTypeCategory) {
@@ -78,7 +78,7 @@ class MachineTypeSelection extends React.Component {
   hasQuotaForType(machineTypeID) {
     const {
       machineTypesByID, organization, quota,
-      cloudProviderID, isBYOC, isMultiAz, isMachinePool, product,
+      cloudProviderID, isBYOC, isMultiAz, isMachinePool, product, billingModel,
     } = this.props;
 
     // Wait for quota_cost.  Presently, it's fetched together with organization.
@@ -93,8 +93,9 @@ class MachineTypeSelection extends React.Component {
     const resourceName = machineType.resource_name;
 
     const quotaParams = {
-      product, cloudProviderID, isBYOC, isMultiAz, resourceName,
+      product, cloudProviderID, isBYOC, isMultiAz, resourceName, billingModel,
     };
+
     const clustersAvailable = availableClustersFromQuota(quota, quotaParams);
     const nodesAvailable = availableNodesFromQuota(quota, quotaParams);
 
@@ -210,6 +211,7 @@ MachineTypeSelection.propTypes = {
   isMachinePool: PropTypes.bool.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+  billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   meta: PropTypes.shape({

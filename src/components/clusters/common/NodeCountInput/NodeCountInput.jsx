@@ -10,7 +10,7 @@ import range from 'lodash/range';
 
 import PopoverHint from '../../../common/PopoverHint';
 import { noQuotaTooltip } from '../../../../common/helpers';
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { availableNodesFromQuota } from '../quotaSelectors';
 
 const MAX_NODES = 180;
@@ -55,6 +55,7 @@ class NodeCountInput extends React.Component {
       machineTypesByID,
       cloudProviderID,
       product,
+      billingModel,
     } = this.props;
 
     const machineTypeResource = machineTypesByID[machineType];
@@ -68,6 +69,7 @@ class NodeCountInput extends React.Component {
       cloudProviderID,
       isBYOC: isByoc,
       resourceName,
+      billingModel,
     };
     return availableNodesFromQuota(quota, quotaParams);
   }
@@ -176,6 +178,7 @@ NodeCountInput.propTypes = {
   }),
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+  billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
 };
 
 export default NodeCountInput;

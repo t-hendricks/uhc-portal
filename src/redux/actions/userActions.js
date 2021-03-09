@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import { userConstants } from '../constants';
 import { accountsService, authorizationsService } from '../../services';
 import { normalizeQuotaCost } from '../../common/normalize';
-import { knownProducts, normalizedProducts } from '../../common/subscriptionTypes';
+import { knownProducts, normalizedProducts, billingModels } from '../../common/subscriptionTypes';
 
 const userInfoResponse = payload => ({
   payload,
@@ -20,6 +20,7 @@ const processClusterQuota = (clustersQuota, item, resources) => {
       cloud_provider: cloudProvider,
       resource_name: machineType,
       product: quotaProduct,
+      billing_model: quotaBilling = 'standard',
     } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
 
@@ -35,28 +36,32 @@ const processClusterQuota = (clustersQuota, item, resources) => {
     // "any" match. If the quota applies to a specific cloud provider, we add it there. If it
     // applies to "any" cloud provider, we add it to both providers in the quota object.
     // This also applies to BYOC and AZ.
-    Object.entries(quota).forEach(([product, productQuota]) => {
-      if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
-        Object.entries(productQuota).forEach(([provider, providerQuota]) => {
-          if (cloudProvider === provider || cloudProvider === 'any') {
-            Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
-              if (infraCategory === category || infraCategory === 'any') {
-                Object.entries(categoryQuota).forEach(([zoneType, zoneQuota]) => {
-                  if (`${availabilityZoneType}Az` === zoneType) {
-                    zoneQuota[machineType] = available;
-                    zoneQuota.available += available;
-                    categoryQuota.totalAvailable += available;
-                  }
-                  // When calculating for any AZ, skip the totalAvailable property
-                  if (availabilityZoneType === 'any' && zoneType !== 'totalAvailable') {
-                    zoneQuota[machineType] = available;
-                    zoneQuota.available += available;
-                    // To avoid double-counting, we calculate only half for each of the two AZ's
-                    categoryQuota.totalAvailable += available / 2;
-                  }
+    Object.entries(quota).forEach(([billing, billingQuota]) => {
+      if (quotaBilling === billing || quotaBilling === 'any') {
+        Object.entries(billingQuota).forEach(([product, productQuota]) => {
+          if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
+            Object.entries(productQuota).forEach(([provider, providerQuota]) => {
+              if (cloudProvider === provider || cloudProvider === 'any') {
+                Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
+                  if (infraCategory === category || infraCategory === 'any') {
+                    Object.entries(categoryQuota).forEach(([zoneType, zoneQuota]) => {
+                      if (`${availabilityZoneType}Az` === zoneType) {
+                        zoneQuota[machineType] = available;
+                        zoneQuota.available += available;
+                        categoryQuota.totalAvailable += available;
+                      }
+                      // When calculating for any AZ, skip the totalAvailable property
+                      if (availabilityZoneType === 'any' && zoneType !== 'totalAvailable') {
+                        zoneQuota[machineType] = available;
+                        zoneQuota.available += available;
+                        // To avoid double-counting, we calculate only half for each of the two AZ's
+                        categoryQuota.totalAvailable += available / 2;
+                      }
 
-                  if (categoryQuota.totalAvailable > 0) {
-                    providerQuota.isAvailable = true;
+                      if (categoryQuota.totalAvailable > 0) {
+                        providerQuota.isAvailable = true;
+                      }
+                    });
                   }
                 });
               }
@@ -78,6 +83,7 @@ const processNodeQuota = (nodesQuota, item, resources) => {
       cloud_provider: cloudProvider,
       resource_name: machineType,
       product: quotaProduct,
+      billing_model: quotaBilling = 'standard',
     } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
 
@@ -88,16 +94,20 @@ const processNodeQuota = (nodesQuota, item, resources) => {
     }
 
     /* eslint-disable no-param-reassign */
-    Object.entries(quota).forEach(([product, productQuota]) => {
-      if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
-        Object.entries(productQuota).forEach(([provider, providerQuota]) => {
-          if (cloudProvider === provider || cloudProvider === 'any') {
-            Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
-              if (infraCategory === category || infraCategory === 'any') {
-                categoryQuota[machineType] = {
-                  available,
-                  cost: resource.cost,
-                };
+    Object.entries(quota).forEach(([billing, billingQuota]) => {
+      if (quotaBilling === billing || quotaBilling === 'any') {
+        Object.entries(billingQuota).forEach(([product, productQuota]) => {
+          if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
+            Object.entries(productQuota).forEach(([provider, providerQuota]) => {
+              if (cloudProvider === provider || cloudProvider === 'any') {
+                Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
+                  if (infraCategory === category || infraCategory === 'any') {
+                    categoryQuota[machineType] = {
+                      available,
+                      cost: resource.cost,
+                    };
+                  }
+                });
               }
             });
           }
@@ -184,6 +194,13 @@ const emptyQuota = () => {
     });
     return result;
   };
+  const clustersQuotaByBillingProductProviderInfraAz = () => {
+    const result = {};
+    Object.values(billingModels).forEach((model) => {
+      result[model] = clustersQuotaByProductProviderInfraAz();
+    });
+    return result;
+  };
 
   const nodesQuotaByInfra = () => ({
     byoc: { available: 0 },
@@ -200,19 +217,26 @@ const emptyQuota = () => {
     });
     return result;
   };
+  const nodesQuotaByBillingProductProviderInfra = () => {
+    const result = {};
+    Object.values(billingModels).forEach((model) => {
+      result[model] = nodesQuotaByProductProviderInfra();
+    });
+    return result;
+  };
+
   const storageQuotaByProvider = () => ({
     aws: { available: 0 },
     gcp: { available: 0 },
   });
-
   const loadBalancerQuotaByProvider = () => ({
     aws: { available: 0 },
     gcp: { available: 0 },
   });
 
   return {
-    clustersQuota: clustersQuotaByProductProviderInfraAz(),
-    nodesQuota: nodesQuotaByProductProviderInfra(),
+    clustersQuota: clustersQuotaByBillingProductProviderInfraAz(),
+    nodesQuota: nodesQuotaByBillingProductProviderInfra(),
     storageQuota: storageQuotaByProvider(),
     loadBalancerQuota: loadBalancerQuotaByProvider(),
     addOnsQuota: {},

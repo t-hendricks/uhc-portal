@@ -6,7 +6,7 @@ import {
   awsRhInfraGcpRhInfraClustersQuota,
 } from '../../common/__test__/quota.fixtures';
 
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 
 import CreateOSDCluster from '../CreateOSDPage';
 import CreateOSDForm from '../CreateOSDForm/CreateOSDForm';
@@ -23,6 +23,7 @@ describe('CreateOSDCluster', () => {
   let privateClusterSelected;
   let createClusterResponse;
   let managedWrapper;
+  const { STANDARD } = billingModels;
 
   beforeAll(() => {
     resetResponse = jest.fn();
@@ -72,6 +73,7 @@ describe('CreateOSDCluster', () => {
       clustersQuota={awsByocRhInfraGcpRhInfraClustersQuota}
       canAutoScale
       autoscalingEnabled={false}
+      billingModel={STANDARD}
     />);
   });
 
@@ -128,6 +130,7 @@ describe('CreateOSDCluster', () => {
         clustersQuota={awsRhInfraGcpRhInfraClustersQuota}
         canAutoScale={false}
         autoscalingEnabled={false}
+        billingModel={STANDARD}
       />);
       expect(getOrganizationAndQuota).toBeCalled();
       expect(getMachineTypes).toBeCalled();

@@ -19,7 +19,7 @@ import {
   Banner,
 } from '@patternfly/react-core';
 import config from '../../../config';
-import { normalizedProducts } from '../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import { shouldRefetchQuota } from '../../../common/helpers';
 
 import PageTitle from '../../common/PageTitle';
@@ -32,6 +32,11 @@ import './CreateOSDPage.scss';
 class CreateOSDPage extends React.Component {
   state = {
     hasShownBYOCModal: false,
+  }
+
+  constructor(props) {
+    super(props);
+    this.getMarketplaceQuota = this.getMarketplaceQuota.bind(this);
   }
 
   componentDidMount() {
@@ -80,6 +85,7 @@ class CreateOSDPage extends React.Component {
       change,
       getOrganizationAndQuota,
       cloudProviderID,
+      billingModel,
     } = this.props;
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
@@ -88,8 +94,15 @@ class CreateOSDPage extends React.Component {
     const hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
     const hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
 
+    const hasMarketplaceBYOCQuota = this.getMarketplaceQuota('byoc', cloudProviderID);
+    const hasMarketplaceRhInfraQuota = this.getMarketplaceQuota('rhInfra', cloudProviderID);
+    const selectedMarketplaceBilling = billingModel === billingModels.MARKETPLACE;
+
     // if user has only BYOC quota
-    if (!prevProps.isBYOCModalOpen && !hasRhInfraQuota && hasBYOCQuota && !hasShownBYOCModal) {
+    if (!prevProps.isBYOCModalOpen
+     && ((!hasRhInfraQuota && hasBYOCQuota)
+      || (selectedMarketplaceBilling && !hasMarketplaceRhInfraQuota && hasMarketplaceBYOCQuota))
+     && !hasShownBYOCModal) {
       // open BYOC modal
       openModal('customer-cloud-subscription');
       // set byoc field value to true
@@ -105,6 +118,13 @@ class CreateOSDPage extends React.Component {
 
   componentWillUnmount() {
     this.reset();
+  }
+
+  getMarketplaceQuota(infra, cloudProviderID) {
+    const { clustersQuota } = this.props;
+    return !!get(
+      clustersQuota, `marketplace.${cloudProviderID}.${infra}.totalAvailable`,
+    );
   }
 
   reset() {
@@ -141,7 +161,8 @@ class CreateOSDPage extends React.Component {
       autoscalingEnabled,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
-      gcpExistingVPCFeature,
+      billingModel,
+      marketplaceQuotaFeature,
     } = this.props;
 
     const selectedOSDTrial = product === normalizedProducts.OSDTrial;
@@ -153,7 +174,9 @@ class CreateOSDPage extends React.Component {
       );
     }
 
-    if (orgWasFetched && !clustersQuota.hasProductQuota) {
+    if (orgWasFetched
+     && !clustersQuota.hasProductQuota
+     && !clustersQuota.hasMarketplaceProductQuota) {
       return (
         <Redirect to="/create" />
       );
@@ -292,7 +315,9 @@ class CreateOSDPage extends React.Component {
                     autoscalingEnabled={autoscalingEnabled}
                     autoScaleMinNodesValue={autoScaleMinNodesValue}
                     autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-                    gcpExistingVPCFeature={gcpExistingVPCFeature}
+                    billingModel={billingModel}
+                    marketplaceQuotaFeature={marketplaceQuotaFeature}
+                    getMarketplaceQuota={this.getMarketplaceQuota}
                   />
                   {/* Form footer */}
                   <GridItem>
@@ -336,6 +361,7 @@ CreateOSDPage.propTypes = {
   closeModal: PropTypes.func.isRequired,
   clustersQuota: PropTypes.shape({
     hasProductQuota: PropTypes.bool.isRequired,
+    hasProductMarketplaceQuota: PropTypes.bool,
     hasAwsQuota: PropTypes.bool.isRequired,
     hasGcpQuota: PropTypes.bool.isRequired,
     aws: PropTypes.shape({
@@ -357,6 +383,7 @@ CreateOSDPage.propTypes = {
         totalAvailable: PropTypes.number.isRequired,
       }).isRequired,
     }),
+    hasMarketplaceProductQuota: PropTypes.bool.isRequired,
   }),
   isBYOCModalOpen: PropTypes.bool.isRequired,
   resetResponse: PropTypes.func.isRequired,
@@ -376,6 +403,7 @@ CreateOSDPage.propTypes = {
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+  billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
@@ -386,7 +414,7 @@ CreateOSDPage.propTypes = {
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
   osdTrialFeature: PropTypes.bool,
-  gcpExistingVPCFeature: PropTypes.bool,
+  marketplaceQuotaFeature: PropTypes.bool,
 };
 
 CreateOSDPage.defaultProps = {

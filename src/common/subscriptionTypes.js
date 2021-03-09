@@ -112,6 +112,15 @@ const productFilterOptions = [
   { key: normalizedProducts.ROSA, label: 'ROSA', plansToQuery: ['MOA', 'ROSA'] },
 ];
 
+/**
+ * The cluster_billing_model field on subscription indicates what kind
+ * of quota this subscription is using.
+ */
+const billingModels = {
+  STANDARD: 'standard', // quota from Red Hat Subscriptions
+  MARKETPLACE: 'marketplace', // quota from Red Hat Marketplace
+};
+
 export {
   subscriptionStatuses,
   subscriptionSettings,
@@ -123,4 +132,5 @@ export {
   knownProducts,
   normalizedProducts,
   productFilterOptions,
+  billingModels,
 };

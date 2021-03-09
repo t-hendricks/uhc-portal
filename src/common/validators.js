@@ -40,6 +40,7 @@ const MAX_MACHINE_POOL_NAME_LENGTH = 15;
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
 
+const GCP_SUBNET_NAME_MAXLEN = 63;
 // Maximum node count
 const MAX_NODE_COUNT = 180;
 
@@ -811,7 +812,7 @@ const validateUniqueAZ = (value, allValues, _, name) => {
   return undefined;
 };
 
-// Function to validate that the identity provider name field doesn't include whitespaces:
+
 const validateGCPSubnet = (value) => {
   if (!value) {
     return 'Field is required.';
@@ -821,6 +822,9 @@ const validateGCPSubnet = (value) => {
   }
   if (/[^a-z0-9-]/.test(value)) {
     return 'Name should contain only lowercase letters, numbers and hyphens.';
+  }
+  if (value.length > GCP_SUBNET_NAME_MAXLEN) {
+    return `Name may not exceed ${GCP_SUBNET_NAME_MAXLEN} characters.`;
   }
   return undefined;
 };

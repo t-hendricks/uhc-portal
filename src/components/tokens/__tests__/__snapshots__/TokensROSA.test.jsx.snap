@@ -64,7 +64,7 @@ exports[`<TokensROSA /> Renders token 1`] = `
           >
             Download and install the 
             <a
-              href="https://github.com/openshift/moactl/releases/latest"
+              href="https://github.com/openshift/rosa/releases"
             >
               rosa
             </a>
@@ -98,7 +98,7 @@ exports[`<TokensROSA /> Renders token 1`] = `
           >
             Copy it, and then use it to authenticate with the 
             <a
-              href="https://github.com/openshift/moactl/releases/latest"
+              href="https://github.com/openshift/rosa/releases"
             >
               rosa
             </a>

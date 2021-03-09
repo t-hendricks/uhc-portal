@@ -6,9 +6,6 @@ set -e -u -o pipefail
 
 cd "$(dirname "$(dirname "$0")")"
 
-echo Waiting on server and backend...
-yarn wait-on http://localhost:8001/ http://localhost:8010/api
-
 # If insights-proxy is already running, spandx will happily start on
 # next available port, despite us requesting specific SPANDX_PORT.
 yarn stop-insights-proxy

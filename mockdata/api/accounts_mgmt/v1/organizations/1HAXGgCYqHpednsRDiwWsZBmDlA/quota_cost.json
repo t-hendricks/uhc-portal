@@ -1152,6 +1152,46 @@
           "cost": 1
         }
       ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost",
+      "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+      "quota_id": "compute.node|cpu|byoc|osd|marketplace",
+      "allowed": 10000,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "any",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 4
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost",
+      "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+      "quota_id": "cluster|byoc|osd|marketplace",
+      "allowed": 100,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "any",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 1
+        }
+      ]
     }
   ]
 }

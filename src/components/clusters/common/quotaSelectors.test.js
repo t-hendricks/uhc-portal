@@ -8,7 +8,7 @@ import {
   availableNodesFromQuota,
 } from './quotaSelectors';
 import { userActions } from '../../../redux/actions/userActions';
-import { normalizedProducts } from '../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import {
   dedicatedRhInfra, dedicatedCCS, dedicatedTrial, unlimitedROSA,
 } from './__test__/quota_cost.fixtures';
@@ -138,6 +138,7 @@ describe('quotaSelectors', () => {
     resourceName: 'gp.small',
     isMultiAz: true,
     isBYOC: false,
+    billingModel: billingModels.STANDARD,
   };
   const paramsCCS = {
     product: normalizedProducts.OSD,
@@ -145,6 +146,7 @@ describe('quotaSelectors', () => {
     resourceName: 'gp.small',
     isMultiAz: true,
     isBYOC: true,
+    billingModel: billingModels.STANDARD,
   };
   const paramsTrial = {
     product: normalizedProducts.OSDTrial,
@@ -152,6 +154,7 @@ describe('quotaSelectors', () => {
     resourceName: 'gp.small',
     isMultiAz: true,
     isBYOC: true,
+    billingModel: billingModels.STANDARD,
   };
   const paramsROSA = {
     ...paramsCCS,

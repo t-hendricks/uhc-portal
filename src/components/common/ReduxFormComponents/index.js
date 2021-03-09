@@ -3,7 +3,7 @@ import ReduxFormDropdown from './ReduxFormDropdown';
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import ReduxFormRadioGroup from './ReduxFormRadioGroup';
 import ReduxFormKeyValueList from './ReduxFormKeyValueList/ReduxFormKeyValueList';
-import ReudxFormTaints from './ReduxFormTaints/ReudxFormTaints';
+import ReduxFormTaints from './ReduxFormTaints/ReduxFormTaints';
 
 export {
   ReduxCheckbox,
@@ -11,5 +11,5 @@ export {
   ReduxVerticalFormGroup,
   ReduxFormRadioGroup,
   ReduxFormKeyValueList,
-  ReudxFormTaints,
+  ReduxFormTaints,
 };
