@@ -152,7 +152,7 @@ const parseReduxFormKeyValueList = labelsFormData => Object.assign(
 /**
  * only return non-empty taints (temporary untill proper fields validation will be implemented)
  * and remove the 'id' property
- * @param {Array} labelsFormData Array of taints. Example:
+ * @param {Array} taintsFormData Array of taints. Example:
  * [{ key: 'foo', value: 'bar', effect: 'NoSchedule'},
  * { id: '1a2b3c', key: 'foo1', value: 'bar1', effect: 'NoExecute'},]
  */
