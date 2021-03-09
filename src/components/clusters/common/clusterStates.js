@@ -14,6 +14,7 @@ const clusterStates = {
   ERROR: 'error',
   DEPROVISIONED: 'deprovisioned',
   ARCHIVED: 'archived',
+  STALE: 'stale',
 };
 
 function getClusterStateAndDescription(cluster) {
@@ -44,6 +45,12 @@ function getClusterStateAndDescription(cluster) {
     state = clusterStates.POWERING_DOWN.replace(/_/g, '-');
   } else if (cluster.state === clusterStates.RESUMING) {
     state = clusterStates.RESUMING;
+  } else if (!cluster.managed
+    && cluster.subscription.status === subscriptionStatuses.ACTIVE) {
+    state = clusterStates.READY;
+  } else if (!cluster.managed
+    && cluster.subscription.status === subscriptionStatuses.STALE) {
+    state = clusterStates.STALE;
   }
 
 
