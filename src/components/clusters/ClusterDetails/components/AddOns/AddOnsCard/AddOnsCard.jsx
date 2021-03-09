@@ -210,6 +210,7 @@ class AddOnsCard extends Component {
     const dropdownItems = [
       <DropdownItem
         key="parameters"
+        ouiaId={`configure-${addOn.id}`}
         component="button"
         isDisabled={
           !hasParameters(addOn)
@@ -222,6 +223,7 @@ class AddOnsCard extends Component {
       </DropdownItem>,
       <DropdownItem
         key="delete"
+        ouiaId={`uninstall-${addOn.id}`}
         component="button"
         isDisabled={
           !cluster.canEdit
@@ -259,6 +261,7 @@ class AddOnsCard extends Component {
         isPlain
         dropdownItems={dropdownItems}
         position="right"
+        ouiaId={`configure-${addOn.id}`}
       />
     );
   }
