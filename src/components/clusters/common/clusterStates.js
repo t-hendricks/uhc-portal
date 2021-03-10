@@ -42,7 +42,7 @@ function getClusterStateAndDescription(cluster) {
   } else if (cluster.state === clusterStates.HIBERNATING) {
     state = clusterStates.HIBERNATING;
   } else if (cluster.state === clusterStates.POWERING_DOWN) {
-    state = clusterStates.POWERING_DOWN.replace(/_/g, '-');
+    state = clusterStates.POWERING_DOWN;
   } else if (cluster.state === clusterStates.RESUMING) {
     state = clusterStates.RESUMING;
   } else if (!cluster.managed
@@ -56,8 +56,8 @@ function getClusterStateAndDescription(cluster) {
 
   return {
     state,
-    description: state,
-    style: { textTransform: 'capitalize' },
+    // Capitalize the first letter and replace any underscore with space.
+    description: state ? (state.charAt(0).toUpperCase() + state.slice(1)).replace(/_/g, ' ') : '',
   };
 }
 
