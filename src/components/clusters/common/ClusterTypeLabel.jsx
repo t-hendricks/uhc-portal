@@ -34,7 +34,7 @@ function ClusterTypeLabel({ cluster }) {
     },
   };
 
-  const typeId = get(cluster, 'product.id', normalizedProducts.UNKNOWN);
+  const typeId = get(cluster, 'subscription.plan.id', normalizedProducts.UNKNOWN);
   const type = clusterTypes[typeId] || clusterTypes[normalizedProducts.UNKNOWN];
   return (
     <Tooltip
