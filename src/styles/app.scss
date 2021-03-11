@@ -38,6 +38,9 @@ limitations under the License.
 
 .cluster-list {
   margin: 0px 30px 0 30px;
+  > .pf-c-alert {
+    margin-top: var(--pf-global--spacer--xs);
+  }
 }
 
 #cluster-list-top {

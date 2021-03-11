@@ -101,6 +101,17 @@ const normalizedProducts = {
 };
 
 /**
+ * product IDs that are managed by Clusters Service
+ *
+ */
+const clustersServiceProducts = [
+  normalizedProducts.OSD,
+  normalizedProducts.OSDTrial,
+  normalizedProducts.ROSA,
+  normalizedProducts.RHMI,
+];
+
+/**
  * Products by which UI allows to filter.
  * key is used internally and for URL ?plan_id=.
  * label is how it's shown in the UI.
@@ -131,6 +142,7 @@ export {
   subscriptionSystemUnits,
   knownProducts,
   normalizedProducts,
+  clustersServiceProducts,
   productFilterOptions,
   billingModels,
 };

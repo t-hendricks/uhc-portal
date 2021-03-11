@@ -41,6 +41,7 @@ import ClusterListEmptyState from './components/ClusterListEmptyState';
 import ClusterListTable from './components/ClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
+import ErrorBox from '../../common/ErrorBox';
 import GlobalErrorBox from '../common/GlobalErrorBox';
 import Unavailable from '../../common/Unavailable';
 import CommonClusterModals from '../common/CommonClusterModals';
@@ -139,6 +140,7 @@ class ClusterList extends Component {
       canTransferClusterOwnershipList,
       canHibernateClusterList,
       toggleSubscriptionReleased,
+      meta: { clustersServiceError },
     } = this.props;
 
     const { loadingChangedView } = this.state;
@@ -205,6 +207,14 @@ class ClusterList extends Component {
           <Card>
             <div className="cluster-list" data-ready={dataReady}>
               <GlobalErrorBox />
+              { clustersServiceError && (
+                <ErrorBox
+                  variant="warning"
+                  message="Some operations are unavailable, try again later"
+                  response={clustersServiceError}
+                  isExpandable
+                />
+              ) }
               <Toolbar id="cluster-list-toolbar">
                 <ToolbarContent>
                   <ToolbarItem>
@@ -301,6 +311,17 @@ ClusterList.propTypes = {
     PropTypes.node,
     PropTypes.element,
   ]).isRequired,
+  meta: PropTypes.shape({
+    clustersServiceError: PropTypes.shape({
+      errorMessage: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
+        PropTypes.element,
+      ]).isRequired,
+      errorDetails: PropTypes.array,
+      errorCode: PropTypes.number,
+    }),
+  }).isRequired,
   errorDetails: PropTypes.array,
   errorCode: PropTypes.number,
   pending: PropTypes.bool.isRequired,
