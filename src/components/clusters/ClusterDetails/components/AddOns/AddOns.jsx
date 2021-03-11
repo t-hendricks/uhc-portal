@@ -6,6 +6,7 @@ import {
   EmptyStateBody,
   EmptyStateIcon,
   Gallery,
+  GalleryItem,
   Title,
 } from '@patternfly/react-core';
 import { IntegrationIcon } from '@patternfly/react-icons';
@@ -99,25 +100,27 @@ class AddOns extends React.Component {
     }
 
     return (
-      <div>
+      <>
         { addClusterAddOnResponse.error && (
-          <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
+        <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
         )}
-        <Gallery hasGutter>
+        <Gallery hasGutter className="addon-gallery">
           { addOnsList.map(addOn => (
-            <AddOnsCard
-              key={addOn.id}
-              addOn={addOn}
-              installedAddOn={getInstalled(addOn, clusterAddOns)}
-              hasQuota={hasQuota(addOn, cluster, organization, quota)}
-            />
+            <GalleryItem>
+              <AddOnsCard
+                key={addOn.id}
+                addOn={addOn}
+                installedAddOn={getInstalled(addOn, clusterAddOns)}
+                hasQuota={hasQuota(addOn, cluster, organization, quota)}
+              />
+            </GalleryItem>
           ))}
         </Gallery>
         <AddOnsParametersModal
           clusterID={cluster.id}
         />
         <AddOnsDeleteModal />
-      </div>
+      </>
     );
   }
 }

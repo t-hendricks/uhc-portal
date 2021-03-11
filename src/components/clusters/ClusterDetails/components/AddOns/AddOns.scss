@@ -5,3 +5,13 @@
 .addon-parameter-default-button {
   padding-left: 0
 }
+
+.addon-gallery {
+  @media(min-width: 1200px) {
+    padding-top: 1rem !important;
+    padding-right: 1rem !important;
+    padding-bottom: 1rem !important;
+    padding-left: 1rem !important;
+
+  }
+}
