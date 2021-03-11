@@ -33,6 +33,12 @@ const planROSA = {
   href: '/api/accounts_mgmt/v1/plans/ROSA',
 };
 
+const planARO = {
+  id: 'ARO',
+  kind: 'Plan',
+  href: '/api/accounts_mgmt/v1/plans/ARO',
+};
+
 describe('normalizeProductID', () => {
   test('Normalizes clusters-service products', () => {
     expect(normalizeProductID(productOCP.id)).toEqual(normalizedProducts.OCP);
@@ -43,6 +49,7 @@ describe('normalizeProductID', () => {
     expect(normalizeProductID(planOCP.id)).toEqual(normalizedProducts.OCP);
     expect(normalizeProductID(planMOA.id)).toEqual(normalizedProducts.ROSA);
     expect(normalizeProductID(planROSA.id)).toEqual(normalizedProducts.ROSA);
+    expect(normalizeProductID(planARO.id)).toEqual(normalizedProducts.ARO);
     // quota_cost may contain "product": "any".
     expect(normalizeProductID('any')).toEqual(normalizedProducts.ANY);
   });

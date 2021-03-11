@@ -12,9 +12,10 @@ import PullSecretSection from './instructions/components/PullSecretSection';
 
 import { tollboothActions } from '../../../redux/actions';
 import { scrollToTop } from '../../../common/helpers';
+import ExternalLink from '../../common/ExternalLink';
 
 
-class InstallPullSecret extends Component {
+class InstallPullSecretAzure extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | Pull Secret';
@@ -26,6 +27,7 @@ class InstallPullSecret extends Component {
   render() {
     const { token } = this.props;
     const azureText = 'Download or copy your pull secret. Your pull secret provides your Azure Red Hat OpenShift cluster with access to additional content provided by Red Hat.';
+    const msDocLink = 'https://docs.microsoft.com/en-us/azure/openshift/howto-add-update-pull-secret';
     return (
       <>
         <PageTitle title="Azure Red Hat OpenShift" />
@@ -43,9 +45,20 @@ class InstallPullSecret extends Component {
                   <Alert
                     variant="info"
                     isInline
-                    title="Azure Red Hat OpenShift clusters do not connect to OpenShift Cluster Manager at this time. OpenShift Cluster Manager integration may be offered in a future release."
+                    title="Connecting your cluster to OpenShift Cluster Manager"
                     className="bottom-alert"
-                  />
+                  >
+                    <p>
+                      Azure Red Hat OpenShift clusters do not connect to OpenShift Cluster Manager
+                      at creation time. Follow the
+                      {' '}
+                      <ExternalLink href={msDocLink}>
+                        Microsoft documentation
+                      </ExternalLink>
+                      {' '}
+                      if you would like to enable telemetry as a day 2 operation.
+                    </p>
+                  </Alert>
                 </div>
               </div>
             </Card>
@@ -56,11 +69,13 @@ class InstallPullSecret extends Component {
   }
 }
 
-InstallPullSecret.propTypes = {
+InstallPullSecretAzure.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallPullSecret);
+export { InstallPullSecretAzure };
+
+export default connect(mapStateToProps)(InstallPullSecretAzure);

@@ -40,6 +40,17 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
             onChange={[Function]}
           />
         </DropdownItem>
+        <DropdownItem>
+          <Checkbox
+            className="pf-c-dropdown__menu-item"
+            id="ARO"
+            isChecked={false}
+            isDisabled={false}
+            isValid={true}
+            label="ARO"
+            onChange={[Function]}
+          />
+        </DropdownItem>
       </DropdownGroup>,
     ]
   }

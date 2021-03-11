@@ -24,6 +24,10 @@ function ClusterTypeLabel({ cluster }) {
       name: 'ROSA',
       tooltip: 'Red Hat OpenShift Service on AWS',
     },
+    [normalizedProducts.ARO]: {
+      name: 'ARO',
+      tooltip: 'Red Hat OpenShift Service on Azure',
+    },
     [normalizedProducts.UNKNOWN]: {
       name: 'N/A',
       tooltip: 'Not Available',

@@ -19,6 +19,7 @@ const normalizeProductID = (id) => {
     RHMI: normalizedProducts.RHMI,
     MOA: normalizedProducts.ROSA,
     ROSA: normalizedProducts.ROSA,
+    ARO: normalizedProducts.ARO,
     ANY: normalizedProducts.ANY, // used by account-manager in quota_cost
   };
   if (typeof id !== 'string') {

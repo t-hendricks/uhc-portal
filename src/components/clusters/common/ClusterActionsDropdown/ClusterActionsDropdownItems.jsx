@@ -304,8 +304,9 @@ This cluster is hibernating;
     && isArchived;
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
   const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && canSubscribeOCP;
+  const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(get(cluster, 'subscription.plan.id', ''));
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership
-    && get(cluster, 'subscription.plan.id', '') === normalizedProducts.OCP
+    && isAllowedProducts
     && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   // eslint-disable-next-line max-len
   // const showccscredentials = cluster.ccs?.enabled && cluster.cloud_provider && cluster.cloud_provider.id !== 'gcp';
