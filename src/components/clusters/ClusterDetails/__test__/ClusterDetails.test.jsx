@@ -104,6 +104,36 @@ describe('<ClusterDetails />', () => {
     });
   });
 
+  describe('ARO cluster', () => {
+    const functions = funcs();
+    const props = {
+      ...fixtures,
+      ...functions,
+      clusterDetails: { ...fixtures.AROClusterDetails },
+    };
+    const wrapper = shallow(<ClusterDetails {...props} />);
+
+    it('should get alerts', () => {
+      expect(functions.getAlerts)
+        .toBeCalledWith(fixtures.AROClusterDetails.cluster.id);
+    });
+
+    it('should get nodes', () => {
+      expect(functions.getNodes)
+        .toBeCalledWith(fixtures.AROClusterDetails.cluster.id);
+    });
+
+    it('should get cluster operators', () => {
+      expect(functions.getClusterOperators)
+        .toBeCalledWith(fixtures.AROClusterDetails.cluster.id);
+    });
+
+    it('it should hide 2 tabs', () => {
+      expect(wrapper.find('TabsRow').props().displayMonitoringTab).toBe(false);
+      expect(wrapper.find('TabsRow').props().displayInsightsTab).toBe(false);
+    });
+  });
+
 
   describe('Loading', () => {
     const functions = funcs();

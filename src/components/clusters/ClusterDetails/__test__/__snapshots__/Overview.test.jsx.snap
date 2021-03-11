@@ -1,5 +1,567 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<Overview /> for an ARO cluster should render 1`] = `
+<Fragment>
+  <Card
+    className="ocm-c-overview-resource-usage__card"
+  >
+    <CardTitle
+      className="ocm-c-overview-resource-usage__card--header"
+    >
+      <Title
+        className="card-title"
+        headingLevel="h2"
+      >
+        Resource usage
+      </Title>
+    </CardTitle>
+    <CardBody
+      className="ocm-c-overview-resource-usage__card--body"
+    >
+      <ResourceUsage
+        cpu={
+          Object {
+            "total": Object {
+              "unit": "",
+              "value": 16,
+            },
+            "used": Object {
+              "unit": "",
+              "value": 3.995410922987096,
+            },
+          }
+        }
+        memory={
+          Object {
+            "total": Object {
+              "unit": "B",
+              "value": 82293346304,
+            },
+            "used": Object {
+              "unit": "B",
+              "value": 16546058240,
+            },
+          }
+        }
+        metricsAvailable={false}
+        metricsStatusMessage="The cluster currently does not have any metrics data. Try again later."
+        type="threshold"
+      />
+    </CardBody>
+  </Card>
+  <Card
+    className="ocm-c-overview-details__card"
+  >
+    <CardTitle
+      className="ocm-c-overview-details__card--header"
+    >
+      <Title
+        className="card-title"
+        headingLevel="h2"
+      >
+        Details
+      </Title>
+    </CardTitle>
+    <CardBody
+      className="ocm-c-overview-details__card--body"
+    >
+      <Grid>
+        <GridItem
+          sm={6}
+        >
+          <DetailsLeft
+            cloudProviders={
+              Object {
+                "error": false,
+                "errorMessage": "",
+                "fulfilled": true,
+                "pending": false,
+                "providers": Object {
+                  "aws": Object {
+                    "display_name": "Amazon Web Services",
+                    "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                    "id": "aws",
+                    "kind": "CloudProvider",
+                    "name": "aws",
+                    "regions": Object {
+                      "ap-northeast-1": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "Asia Pacific (Tokyo)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-northeast-1",
+                        "id": "ap-northeast-1",
+                        "kind": "CloudRegion",
+                      },
+                      "ap-northeast-2": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "Asia Pacific (Seoul)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-northeast-2",
+                        "id": "ap-northeast-2",
+                        "kind": "CloudRegion",
+                      },
+                      "ap-south-1": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "Asia Pacific (Mumbai)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-south-1",
+                        "id": "ap-south-1",
+                        "kind": "CloudRegion",
+                      },
+                      "ap-southeast-1": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "Asia Pacific (Singapore)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-1",
+                        "id": "ap-southeast-1",
+                        "kind": "CloudRegion",
+                      },
+                      "ap-southeast-2": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "Asia Pacific (Sydney)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-2",
+                        "id": "ap-southeast-2",
+                        "kind": "CloudRegion",
+                      },
+                      "ca-central-1": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "Canada (Central)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ca-central-1",
+                        "id": "ca-central-1",
+                        "kind": "CloudRegion",
+                      },
+                      "eu-central-1": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "EU (Frankfurt)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-central-1",
+                        "id": "eu-central-1",
+                        "kind": "CloudRegion",
+                      },
+                      "eu-west-1": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "EU (Ireland)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-west-1",
+                        "id": "eu-west-1",
+                        "kind": "CloudRegion",
+                      },
+                      "eu-west-2": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "EU (London)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-west-2",
+                        "id": "eu-west-2",
+                        "kind": "CloudRegion",
+                      },
+                      "eu-west-3": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "EU (Paris)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-west-3",
+                        "id": "eu-west-3",
+                        "kind": "CloudRegion",
+                      },
+                      "sa-east-1": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "South America (São Paulo)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/sa-east-1",
+                        "id": "sa-east-1",
+                        "kind": "CloudRegion",
+                      },
+                      "us-east-1": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "US East (N. Virginia)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
+                        "id": "us-east-1",
+                        "kind": "CloudRegion",
+                      },
+                      "us-east-2": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "US East (Ohio)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-2",
+                        "id": "us-east-2",
+                        "kind": "CloudRegion",
+                      },
+                      "us-west-1": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "US West (N. California)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-west-1",
+                        "id": "us-west-1",
+                        "kind": "CloudRegion",
+                      },
+                      "us-west-2": Object {
+                        "cloud_provider": Object {
+                          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+                          "id": "aws",
+                          "kind": "CloudProviderLink",
+                        },
+                        "display_name": "US West (Oregon)",
+                        "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-west-2",
+                        "id": "us-west-2",
+                        "kind": "CloudRegion",
+                      },
+                    },
+                  },
+                },
+              }
+            }
+            cluster={
+              Object {
+                "api": Object {
+                  "url": "https://api.test-aro.sdev.devshift.net:6443",
+                },
+                "canDelete": true,
+                "canEdit": true,
+                "cloud_provider": Object {
+                  "href": "/api/clusters_mgmt/v1/cloud_providers/azure",
+                  "id": "azure",
+                  "kind": "CloudProviderLink",
+                },
+                "cluster_admin_enabled": false,
+                "console": Object {
+                  "url": "https://console-openshift-console.apps.test-aro.sdev.devshift.net",
+                },
+                "creation_timestamp": "2021-03-15T15:20:21.061111Z",
+                "display_name": "test-aro",
+                "dns": Object {
+                  "base_domain": "sdev.devshift.net",
+                },
+                "external_id": "9f50940b-fba8-4c59-9c6c-d64284a2beef",
+                "flavour": Object {
+                  "href": "/api/clusters_mgmt/v1/flavours/ocp-4",
+                  "id": "ocp-4",
+                  "kind": "FlavourLink",
+                },
+                "id": "1IztzhAGrbjtKkMbiPewHjImARo",
+                "kind": "Cluster",
+                "load_balancer_quota": 0,
+                "managed": false,
+                "metrics": Object {
+                  "cpu": Object {
+                    "total": Object {
+                      "unit": "",
+                      "value": 16,
+                    },
+                    "updated_timestamp": "2021-03-15T15:20:20Z",
+                    "used": Object {
+                      "unit": "",
+                      "value": 3.995410922987096,
+                    },
+                  },
+                  "memory": Object {
+                    "total": Object {
+                      "unit": "B",
+                      "value": 82293346304,
+                    },
+                    "updated_timestamp": "2021-03-15T15:20:20Z",
+                    "used": Object {
+                      "unit": "B",
+                      "value": 16546058240,
+                    },
+                  },
+                  "nodes": Object {
+                    "compute": 4,
+                    "master": 3,
+                    "total": 7,
+                  },
+                  "sockets": Object {
+                    "total": Object {
+                      "unit": "",
+                      "value": 0,
+                    },
+                    "updated_timestamp": "2021-03-15T15:20:20Z",
+                    "used": Object {
+                      "unit": "",
+                      "value": 0,
+                    },
+                  },
+                  "storage": Object {
+                    "total": Object {
+                      "unit": "B",
+                      "value": 0,
+                    },
+                    "updated_timestamp": "2021-03-15T15:20:20Z",
+                    "used": Object {
+                      "unit": "B",
+                      "value": 0,
+                    },
+                  },
+                },
+                "multi_az": false,
+                "name": "test-aro",
+                "network": Object {
+                  "machine_cidr": "10.0.0.0/16",
+                  "pod_cidr": "10.128.0.0/14",
+                  "router_shards": Object {
+                    "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewHjImARo/router_shards",
+                    "id": "1IztzhAGrbjtKkMbiPewHjImARo",
+                    "kind": "RouterShardListLink",
+                  },
+                  "service_cidr": "172.30.0.0/16",
+                },
+                "nodes": Object {
+                  "compute": 6,
+                  "master": 3,
+                  "total": 9,
+                },
+                "product": Object {
+                  "id": "ARO",
+                },
+                "region": Object {
+                  "href": "/api/clusters_mgmt/v1/cloud_providers/azure/regions/eastus2",
+                  "id": "eastus2",
+                  "kind": "CloudRegionLink",
+                },
+                "state": "ready",
+                "status": Object {
+                  "dns_ready": true,
+                  "state": "ready",
+                },
+                "storage_quota": Object {
+                  "unit": "B",
+                  "value": 100000000,
+                },
+                "subscription": Object {
+                  "cluster_id": "1IztzhAGrbjtKkMbiPewHjImARo",
+                  "created_at": "2021-03-10T15:20:20Z",
+                  "external_cluster_id": "test-aro",
+                  "href": "/api/accounts_mgmt/v1/subscriptions/1msoogsgTLQ4PePjrTOt3UqvMzX",
+                  "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
+                  "kind": "Subscription",
+                  "last_telemetry_date": "2021-03-15T15:20:20Z",
+                  "plan": Object {
+                    "href": "/api/accounts_mgmt/v1/plans/ARO",
+                    "id": "ARO",
+                    "kind": "Plan",
+                  },
+                  "registry_credential": Object {
+                    "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Maro6",
+                    "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
+                    "kind": "RegistryCredential",
+                  },
+                  "updated_at": "2021-03-15T15:20:20Z",
+                },
+                "version": Object {
+                  "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+                  "id": "openshift-v4.0-latest",
+                  "kind": "VersionLink",
+                },
+              }
+            }
+          />
+        </GridItem>
+        <GridItem
+          sm={6}
+        >
+          <Connect(DetailsRight)
+            cluster={
+              Object {
+                "api": Object {
+                  "url": "https://api.test-aro.sdev.devshift.net:6443",
+                },
+                "canDelete": true,
+                "canEdit": true,
+                "cloud_provider": Object {
+                  "href": "/api/clusters_mgmt/v1/cloud_providers/azure",
+                  "id": "azure",
+                  "kind": "CloudProviderLink",
+                },
+                "cluster_admin_enabled": false,
+                "console": Object {
+                  "url": "https://console-openshift-console.apps.test-aro.sdev.devshift.net",
+                },
+                "creation_timestamp": "2021-03-15T15:20:21.061111Z",
+                "display_name": "test-aro",
+                "dns": Object {
+                  "base_domain": "sdev.devshift.net",
+                },
+                "external_id": "9f50940b-fba8-4c59-9c6c-d64284a2beef",
+                "flavour": Object {
+                  "href": "/api/clusters_mgmt/v1/flavours/ocp-4",
+                  "id": "ocp-4",
+                  "kind": "FlavourLink",
+                },
+                "id": "1IztzhAGrbjtKkMbiPewHjImARo",
+                "kind": "Cluster",
+                "load_balancer_quota": 0,
+                "managed": false,
+                "metrics": Object {
+                  "cpu": Object {
+                    "total": Object {
+                      "unit": "",
+                      "value": 16,
+                    },
+                    "updated_timestamp": "2021-03-15T15:20:20Z",
+                    "used": Object {
+                      "unit": "",
+                      "value": 3.995410922987096,
+                    },
+                  },
+                  "memory": Object {
+                    "total": Object {
+                      "unit": "B",
+                      "value": 82293346304,
+                    },
+                    "updated_timestamp": "2021-03-15T15:20:20Z",
+                    "used": Object {
+                      "unit": "B",
+                      "value": 16546058240,
+                    },
+                  },
+                  "nodes": Object {
+                    "compute": 4,
+                    "master": 3,
+                    "total": 7,
+                  },
+                  "sockets": Object {
+                    "total": Object {
+                      "unit": "",
+                      "value": 0,
+                    },
+                    "updated_timestamp": "2021-03-15T15:20:20Z",
+                    "used": Object {
+                      "unit": "",
+                      "value": 0,
+                    },
+                  },
+                  "storage": Object {
+                    "total": Object {
+                      "unit": "B",
+                      "value": 0,
+                    },
+                    "updated_timestamp": "2021-03-15T15:20:20Z",
+                    "used": Object {
+                      "unit": "B",
+                      "value": 0,
+                    },
+                  },
+                },
+                "multi_az": false,
+                "name": "test-aro",
+                "network": Object {
+                  "machine_cidr": "10.0.0.0/16",
+                  "pod_cidr": "10.128.0.0/14",
+                  "router_shards": Object {
+                    "href": "/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewHjImARo/router_shards",
+                    "id": "1IztzhAGrbjtKkMbiPewHjImARo",
+                    "kind": "RouterShardListLink",
+                  },
+                  "service_cidr": "172.30.0.0/16",
+                },
+                "nodes": Object {
+                  "compute": 6,
+                  "master": 3,
+                  "total": 9,
+                },
+                "product": Object {
+                  "id": "ARO",
+                },
+                "region": Object {
+                  "href": "/api/clusters_mgmt/v1/cloud_providers/azure/regions/eastus2",
+                  "id": "eastus2",
+                  "kind": "CloudRegionLink",
+                },
+                "state": Object {
+                  "description": "Ready",
+                  "state": "ready",
+                },
+                "status": Object {
+                  "dns_ready": true,
+                  "state": "ready",
+                },
+                "storage_quota": Object {
+                  "unit": "B",
+                  "value": 100000000,
+                },
+                "subscription": Object {
+                  "cluster_id": "1IztzhAGrbjtKkMbiPewHjImARo",
+                  "created_at": "2021-03-10T15:20:20Z",
+                  "external_cluster_id": "test-aro",
+                  "href": "/api/accounts_mgmt/v1/subscriptions/1msoogsgTLQ4PePjrTOt3UqvMzX",
+                  "id": "1msoogsgTLQ4PePjrTOt3UqvMzX",
+                  "kind": "Subscription",
+                  "last_telemetry_date": "2021-03-15T15:20:20Z",
+                  "plan": Object {
+                    "href": "/api/accounts_mgmt/v1/plans/ARO",
+                    "id": "ARO",
+                    "kind": "Plan",
+                  },
+                  "registry_credential": Object {
+                    "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Maro6",
+                    "id": "1EaZd2cDHH6ibIb1FFqav2Mles6",
+                    "kind": "RegistryCredential",
+                  },
+                  "updated_at": "2021-03-15T15:20:20Z",
+                },
+                "version": Object {
+                  "href": "/api/clusters_mgmt/v1/versions/openshift-v4.0-latest",
+                  "id": "openshift-v4.0-latest",
+                  "kind": "VersionLink",
+                },
+              }
+            }
+          />
+        </GridItem>
+      </Grid>
+    </CardBody>
+  </Card>
+  <Connect(SubscriptionSettings) />
+  <Connect(ClusterLogs)
+    externalClusterID="9f50940b-fba8-4c59-9c6c-d64284a2beef"
+    history={Object {}}
+  />
+</Fragment>
+`;
+
 exports[`<Overview /> for an OCP cluster should render 1`] = `
 <Fragment>
   <Card
