@@ -74,8 +74,10 @@ describe('Register cluster flow', async () => {
   });
 
   it('successfully changes display name', async () => {
+    await (await ClusterDetailsPage.actionsDropdownToggle).waitForClickable();
     await (await ClusterDetailsPage.actionsDropdownToggle).click();
     await (await ClusterDetailsPage.editDisplayNameDropdownItem).click();
+    expect(ClusterDetailsPage.editDisplayNameInput).toExist();
     await (await ClusterDetailsPage.editDisplayNameInput).setValue(`${clusterName}-test`);
     await (await ClusterDetailsPage.editDisplaynameConfirm).click();
     expect(ClusterDetailsPage.editDisplaynameConfirm).not.toExist();
@@ -106,5 +108,5 @@ describe('Register cluster flow', async () => {
     await (await ClusterDetailsPage.actionsDropdownToggle).click();
     await (await ClusterDetailsPage.archiveClusterDropdownItem).click();
     await (await ClusterDetailsPage.archiveClusterDialogConfirm).click();
-  }).timeout(8000);
+  });
 });
