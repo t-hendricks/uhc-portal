@@ -116,7 +116,20 @@ const requirementFulfilledByResource = (myResource, requirement) => {
   let constraintsMet = true;
   Object.entries(requirement.data)
     .every(([field, requiredValue]) => {
-      const clusterValue = get(myResource, field);
+      let clusterValue = get(myResource, field);
+      if (clusterValue === undefined) {
+        // eslint-disable-next-line default-case
+        switch (field) {
+          case 'replicas': {
+            clusterValue = get(myResource, 'autoscaling.max_replicas');
+            break;
+          }
+          case 'nodes.compute': {
+            clusterValue = get(myResource, 'nodes.autoscale_compute.max_replicas');
+            break;
+          }
+        }
+      }
       if (Array.isArray(requiredValue)) {
         constraintsMet = requiredValue.includes(clusterValue);
       } else if (typeof requiredValue === 'number') {
