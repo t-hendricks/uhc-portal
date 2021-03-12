@@ -41,7 +41,7 @@ function actionResolver(
   const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
   const isClusterReady = cluster.state === clusterStates.READY;
   const isClusterErrorInAccountClaimPhase = cluster.state === clusterStates.ERROR
-  && !cluster.status.dns_ready;
+  && !cluster.status?.dns_ready;
   const hasAccountId = cluster.managed && cluster.aws && cluster.aws.account_id;
   const isUninstallingProps = isClusterUninstalling
     ? { isDisabled: true, tooltip: uninstallingMessage } : {};
