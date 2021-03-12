@@ -10,7 +10,6 @@ const initialState = {
     ...baseRequestState,
     items: [],
     resourceNames: [],
-    freeAddOns: [],
   },
   clusterAddOns: {
     ...baseRequestState,
@@ -57,7 +56,6 @@ function AddOnsReducer(state = initialState, action) {
           fulfilled: true,
           items: action.payload.items,
           resourceNames: action.payload.resourceNames,
-          freeAddOns: action.payload.freeAddOns,
         };
         break;
 

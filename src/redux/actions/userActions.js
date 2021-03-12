@@ -10,6 +10,14 @@ const userInfoResponse = payload => ({
   type: userConstants.USER_INFO_RESPONSE,
 });
 
+const availableByCost = (item, resource) => {
+  if (resource.cost === 0) {
+    return Infinity;
+  }
+  // If you're able to create half a node, you're still in "not enough quota" situation.
+  return Math.floor((item.allowed - item.consumed) / resource.cost);
+};
+
 const processClusterQuota = (clustersQuota, item, resources) => {
   const quota = clustersQuota;
   const available = item.allowed - item.consumed;
@@ -157,15 +165,60 @@ const processLoadBalancerQuota = (loadBalancerQuota, item, resources) => {
 
 const processAddOnQuota = (addOnsQuota, item, resources) => {
   const quota = addOnsQuota;
-  const available = item.allowed - item.consumed;
 
   resources.forEach((resource) => {
-    const name = resource.resource_name;
-
-    if (!quota[name]) {
-      quota[name] = 0;
+    const available = availableByCost(item, resource);
+    // quota_cost data may include addons you never had quota for (which we won't even show),
+    // and addons with allowed > 0 but all already used up (these we'll show disabled).
+    if (item.allowed === 0 && resource.cost > 0) {
+      return;
     }
-    quota[name] += available;
+
+    const {
+      availability_zone_type: availabilityZoneType,
+      cloud_provider: cloudProvider,
+      resource_name: resourceName,
+      product: quotaProduct,
+      billing_model: quotaBilling = 'standard',
+    } = resource;
+    const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
+
+    /* eslint-disable no-param-reassign */
+    Object.entries(quota).forEach(([billing, billingQuota]) => {
+      if (quotaBilling === billing || quotaBilling === 'any') {
+        Object.entries(billingQuota).forEach(([product, productQuota]) => {
+          if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
+            Object.entries(productQuota).forEach(([provider, providerQuota]) => {
+              if (cloudProvider === provider || cloudProvider === 'any') {
+                Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
+                  if (infraCategory === category || infraCategory === 'any') {
+                    Object.entries(categoryQuota).forEach(([zoneType, zoneQuota]) => {
+                      if (`${availabilityZoneType}Az` === zoneType) {
+                        zoneQuota[resourceName] = available;
+                        zoneQuota.available += available;
+                        categoryQuota.totalAvailable += available;
+                      }
+                      // When calculating for any AZ, skip the totalAvailable property
+                      if (availabilityZoneType === 'any' && zoneType !== 'totalAvailable') {
+                        zoneQuota[resourceName] = available;
+                        zoneQuota.available += available;
+                        // To avoid double-counting, we calculate only half for each of the two AZ's
+                        categoryQuota.totalAvailable += available / 2;
+                      }
+
+                      if (categoryQuota.totalAvailable > 0) {
+                        providerQuota.isAvailable = true;
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+    /* eslint-enable no-param-reassign */
   });
 };
 
@@ -234,12 +287,41 @@ const emptyQuota = () => {
     gcp: { available: 0 },
   });
 
+  const addOnsQuotaByAz = () => ({
+    singleAz: { available: 0 },
+    multiAz: { available: 0 },
+    totalAvailable: 0,
+  });
+  const addOnsQuotaByInfraAz = () => ({
+    byoc: addOnsQuotaByAz(),
+    rhInfra: addOnsQuotaByAz(),
+    isAvailable: false,
+  });
+  const addOnsQuotaByProviderInfraAz = () => ({
+    aws: addOnsQuotaByInfraAz(),
+    gcp: addOnsQuotaByInfraAz(),
+  });
+  const addOnsQuotaByProductProviderInfraAz = () => {
+    const result = {};
+    Object.keys(knownProducts).forEach((p) => {
+      result[p] = addOnsQuotaByProviderInfraAz();
+    });
+    return result;
+  };
+  const addOnsQuotaByBillingProductProviderInfraAz = () => {
+    const result = {};
+    Object.values(billingModels).forEach((model) => {
+      result[model] = addOnsQuotaByProductProviderInfraAz();
+    });
+    return result;
+  };
+
   return {
     clustersQuota: clustersQuotaByBillingProductProviderInfraAz(),
     nodesQuota: nodesQuotaByBillingProductProviderInfra(),
     storageQuota: storageQuotaByProvider(),
     loadBalancerQuota: loadBalancerQuotaByProvider(),
-    addOnsQuota: {},
+    addOnsQuota: addOnsQuotaByBillingProductProviderInfraAz(),
   };
 };
 

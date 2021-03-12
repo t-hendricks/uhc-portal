@@ -321,10 +321,116 @@ const rhmiAddon = [
   },
 ];
 
+const crcWorkspacesAddon = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'add-on|addon-crw-operator',
+    allowed: 15,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-crw-operator',
+        resource_type: 'add-on',
+        byoc: 'any',
+        availability_zone_type: 'any',
+        product: 'any',
+        cost: 1,
+      },
+    ],
+  },
+];
+
+// Test an addon that's used up on rhInfra (but unlimited on CCS)
+const loggingAddon = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
+    organization_id: '1MKVU4otCIuogoLtgtyU6wajxjW',
+    quota_id: 'add-on|addon-cluster-logging-operator',
+    allowed: 5,
+    consumed: 5,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-cluster-logging-operator',
+        resource_type: 'add-on',
+        byoc: 'byoc',
+        availability_zone_type: 'any',
+        product: 'ANY',
+        billing_model: 'standard',
+        cost: 0,
+      },
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-cluster-logging-operator',
+        resource_type: 'add-on',
+        byoc: 'rhinfra',
+        availability_zone_type: 'any',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+];
+
+const dbaAddon = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
+    organization_id: '1MKVU4otCIuogoLtgtyU6wajxjW',
+    quota_id: 'add-on|addon-dba-operator',
+    allowed: 15,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-dba-operator',
+        resource_type: 'add-on',
+        byoc: 'any',
+        availability_zone_type: 'any',
+        product: 'ANY',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+];
+
+const serviceMeshAddon = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
+    organization_id: '1MKVU4otCIuogoLtgtyU6wajxjW',
+    quota_id: 'add-on|addon-service-mesh',
+    allowed: 15,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-service-mesh',
+        resource_type: 'add-on',
+        byoc: 'any',
+        availability_zone_type: 'any',
+        product: 'ANY',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+];
+
 export {
   dedicatedRhInfra,
   dedicatedCCS,
   dedicatedTrial,
   unlimitedROSA,
   rhmiAddon,
+  crcWorkspacesAddon,
+  loggingAddon,
+  dbaAddon,
+  serviceMeshAddon,
 };
