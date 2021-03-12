@@ -90,6 +90,7 @@ function CustomerManagedEncryptionKeys({ customerManagedEncryptionSelected }) {
                 placeholder="KMS Service Account"
                 validate={validateGCPKMSServiceAccount}
                 helpText="GCP Service account will be used for compute scaling."
+
                 extendedHelpText={(
                   <>
                     {constants.kmsserviceAccount}
