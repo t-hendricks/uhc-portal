@@ -9,7 +9,6 @@ const getAddOns = () => dispatch => dispatch({
     return ({
       items,
       resourceNames: items.map(addOn => addOn.resource_name),
-      freeAddOns: items.filter(addOn => addOn.resource_cost === 0),
     });
   }),
 });

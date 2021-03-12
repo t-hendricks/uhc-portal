@@ -18,53 +18,7 @@ const account = {
   },
 };
 
-const quotaSummary = {
-  empty: false,
-  error: false,
-  errorDetails: null,
-  errorMessage: '',
-  fulfilled: true,
-  pending: false,
-  valid: true,
-  items: [
-    {
-      resource_name: 'c5.4xlarge',
-      resource_type: 'cluster.aws',
-      availability_zone_type: 'multi',
-      byoc: true,
-      allowed: 15,
-      reserved: 10,
-    },
-    {
-      resource_name: 'm5.xlarge',
-      resource_type: 'cluster.aws',
-      availability_zone_type: 'multi',
-      byoc: true,
-      allowed: 15,
-      reserved: 15,
-    },
-    {
-      resource_name: 'c5.4xlarge',
-      resource_type: 'compute.node.aws',
-      availability_zone_type: 'multi',
-      byoc: true,
-      allowed: 4,
-      reserved: 0,
-    },
-    {
-      resource_name: 'dbaOperatorAddon',
-      resource_type: 'addon',
-      availability_zone_type: '',
-      byoc: false,
-      allowed: 5,
-      reserved: 0,
-    },
-  ],
-  addOnsQuota: {
-    dbaOperatorAddon: 5,
-  },
-};
-
+// TODO: move to / replace by quota_cost.fixtures?
 const quotaCost = {
   empty: false,
   error: false,
@@ -119,6 +73,7 @@ const quotaCost = {
     {
       allowed: 5,
       consumed: 0,
+      quota_id: 'add-on|addon-dba-operator',
       related_resources: [
         {
           cloud_provider: 'any',
@@ -126,7 +81,8 @@ const quotaCost = {
           resource_type: 'add-on',
           byoc: 'any',
           availability_zone_type: 'any',
-          product: 'OSD',
+          product: 'ANY',
+          billing_model: 'standard',
         },
       ],
     },
@@ -143,7 +99,6 @@ export {
   fetchQuotaCost,
   organizationID,
   account,
-  quotaSummary,
   quotaCost,
   rows,
   invalidateClusters,

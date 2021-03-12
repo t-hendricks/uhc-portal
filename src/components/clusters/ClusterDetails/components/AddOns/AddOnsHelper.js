@@ -1,34 +1,32 @@
 import get from 'lodash/get';
 import has from 'lodash/has';
 
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { billingModels } from '../../../../../common/subscriptionTypes';
 
-const supportsFreeAddOns = cluster => (
-  [normalizedProducts.OSD, normalizedProducts.ROSA].includes(cluster.product.id)
-);
+/**
+ * Returns last level indexed by resource_name e.g. {'addon-foo': 2, 'addon-bar': Infinity}.
+ */
+const quotaLookup = (cluster, quota) => {
+  const billingModel = get(cluster, 'billing_model', billingModels.STANDARD);
+  const product = cluster.subscription.plan.id; // TODO plan.type
+  const cloudProviderID = get(cluster, 'cloud_provider.id', 'any');
+  const infra = cluster.ccs.enabled ? 'byoc' : 'rhInfra';
+  const zoneType = cluster.multi_az ? 'multiAz' : 'singleAz';
 
-// Add-ons with 0 resource cost are free for OSD/ROSA clusters
-const isFreeAddOn = (addOn, cluster) => {
-  if (addOn.resource_cost === 0) {
-    return supportsFreeAddOns(cluster);
-  }
-  return false;
+  return get(quota.addOnsQuota, [billingModel, product, cloudProviderID, infra, zoneType], {});
 };
 
 // An add-on is only visible if it has an entry in the quota summary
 // regardless of whether the org has quota or not
 const isAvailable = (addOn, cluster, organization, quota) => {
+  // We get quota together with organization.
+  // TODO: have action/reducer set quota.fullfilled, drop organization arg.
   if (!addOn.enabled || !organization.fulfilled) {
     return false;
   }
 
-  // If the add-on is free, it should be available
-  if (isFreeAddOn(addOn, cluster)) {
-    return true;
-  }
-
-  // If the add-on is not in the quota summary, it should not be available
-  return has(quota.addOnsQuota, addOn.resource_name);
+  // If the add-on is not in the quota cost, it should not be available
+  return has(quotaLookup(cluster, quota), addOn.resource_name);
 };
 
 const isInstalled = (addOn, clusterAddOns) => {
@@ -49,12 +47,7 @@ const hasQuota = (addOn, cluster, organization, quota) => {
     return false;
   }
 
-  // Quota is unnecessary for free add-ons
-  if (isFreeAddOn(addOn, cluster)) {
-    return true;
-  }
-
-  return get(quota.addOnsQuota, addOn.resource_name, 0) >= addOn.resource_cost;
+  return get(quotaLookup(cluster, quota), addOn.resource_name, 0) >= 1;
 };
 
 const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) => {
@@ -108,7 +101,6 @@ export {
   getInstalled,
   hasQuota,
   availableAddOns,
-  supportsFreeAddOns,
   hasParameters,
   getParameter,
   parameterValuesForEditing,
