@@ -162,6 +162,7 @@ class CreateOSDForm extends React.Component {
       getMarketplaceQuota,
       customerManagedEncryptionSelected,
       osdTrialFeature,
+      kmsRegionsArray,
     } = this.props;
 
     const {
@@ -363,6 +364,8 @@ class CreateOSDForm extends React.Component {
 
           <GCPClusterEncryption
             customerManagedEncryptionSelected={customerManagedEncryptionSelected}
+            kmsRegionsArray={kmsRegionsArray}
+            selectedRegion={selectedRegion}
           />
 
         )}
@@ -435,6 +438,7 @@ CreateOSDForm.propTypes = {
   marketplaceQuotaFeature: PropTypes.bool,
   osdTrialFeature: PropTypes.bool,
   getMarketplaceQuota: PropTypes.func.isRequired,
+  kmsRegionsArray: PropTypes.object,
 };
 
 export default CreateOSDForm;
