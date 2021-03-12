@@ -48,8 +48,7 @@ const mapStateToProps = (state, ownProps) => {
   let privateClusterSelected = false;
   const valueSelector = formValueSelector('CreateCluster');
   privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
-  let customerManagedEncryptionSelected = false;
-  customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
+  const customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
 
   const hasAwsQuota = hasAwsQuotaSelector(state, ownProps.product, STANDARD)
                    || hasAwsQuotaSelector(state, ownProps.product, MARKETPLACE);

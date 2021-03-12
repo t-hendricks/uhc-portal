@@ -6,7 +6,7 @@ import {
 import { Field } from 'redux-form';
 import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { validateGCPEncryptionKeys } from '../../../../../../common/validators';
+import { validateGCPEncryptionKeys, validateGCPKMSServiceAccount } from '../../../../../../common/validators';
 import { constants } from '../../CreateOSDFormConstants';
 import './GCPClusterEncryption.scss';
 
@@ -88,7 +88,7 @@ function CustomerManagedEncryptionKeys({ customerManagedEncryptionSelected }) {
                 type="text"
                 label="KMS Service Account"
                 placeholder="KMS Service Account"
-                validate={validateGCPEncryptionKeys}
+                validate={validateGCPKMSServiceAccount}
                 helpText="GCP Service account will be used for compute scaling"
                 extendedHelpText={(
                   <>
