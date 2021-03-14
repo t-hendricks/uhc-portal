@@ -13,7 +13,7 @@ import {
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../common/ErrorBox';
 import { humanizeValueWithUnitGiB } from '../../../../common/units';
-import filterPersistentStorageValuesByQuota from './helpers';
+import { filterPersistentStorageValuesByQuota, quotaLookup } from './PersistentStorageDropDownHelper';
 import { noQuotaTooltip } from '../../../../common/helpers';
 
 class PersistentStorageDropdown extends React.Component {
@@ -31,7 +31,7 @@ class PersistentStorageDropdown extends React.Component {
 
   render() {
     const {
-      input, persistentStorageValues, disabled, currentValue, storageQuota,
+      input, persistentStorageValues, disabled, currentValue, cluster, quotaList,
     } = this.props;
 
     // Set up options for storage values
@@ -52,6 +52,7 @@ class PersistentStorageDropdown extends React.Component {
     };
 
     if (persistentStorageValues.fulfilled) {
+      const storageQuota = quotaLookup(cluster, quotaList);
       const filteredStorageValues = filterPersistentStorageValuesByQuota(currentValue,
         persistentStorageValues, storageQuota);
       const notEnoughQuota = filteredStorageValues.values.length <= 1;
@@ -99,8 +100,9 @@ PersistentStorageDropdown.propTypes = {
   persistentStorageValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
-  storageQuota: PropTypes.number.isRequired,
+  quotaList: PropTypes.object.isRequired,
   currentValue: PropTypes.number,
+  cluster: PropTypes.object.isRequired,
 };
 
 export default PersistentStorageDropdown;
