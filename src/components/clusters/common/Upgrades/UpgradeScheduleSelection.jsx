@@ -52,7 +52,7 @@ class UpgradeScheduleSelection extends React.Component {
   parseCurrentValue() {
     const { input } = this.props;
     if (!input.value) {
-      return ['0', '0'];
+      return ['', ''];
     }
     const splitted = input.value.split(' ');
     const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -88,7 +88,7 @@ class UpgradeScheduleSelection extends React.Component {
       for (let hour = 0; hour < 24; hour += 1) {
         const value = `${hour.toString().padStart(2, 0)}:00`;
         ret.push(
-          <SelectOption key={value} value={hour}>
+          <SelectOption key={value} value={hour.toString()}>
             {value}
             {' '}
             UTC
@@ -112,9 +112,9 @@ class UpgradeScheduleSelection extends React.Component {
               onSelect={this.onDaySelect}
               isDisabled={isDisabled}
             >
-              <SelectOption isPlaceholder value="Select day" />
+              <SelectOption isPlaceholder isDisabled value="">Select day</SelectOption>
               {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, idx) => (
-                <SelectOption key={day} value={idx}>
+                <SelectOption key={day} value={idx.toString()}>
                   {day}
                 </SelectOption>
               ))}
@@ -128,7 +128,7 @@ class UpgradeScheduleSelection extends React.Component {
               onSelect={this.onHourSelect}
               isDisabled={isDisabled}
             >
-              <SelectOption isPlaceholder value="Select hour" />
+              <SelectOption isPlaceholder isDisabled value="">Select hour</SelectOption>
               {makeHourList()}
             </Select>
           </GridItem>
