@@ -22,6 +22,7 @@ import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload
 import ReduxCheckbox from '../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../common/ExternalLink';
 import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from './FormSections/NetworkingSection/AvailabilityZoneSelection';
+import GCPClusterEncryption from './FormSections/EncryptionSection/GCPClusterEncryption';
 
 import './CreateOSDForm.scss';
 
@@ -151,6 +152,7 @@ class CreateOSDForm extends React.Component {
       billingModel,
       marketplaceQuotaFeature,
       getMarketplaceQuota,
+      customerManagedEncryptionSelected,
     } = this.props;
 
     const {
@@ -316,30 +318,39 @@ class CreateOSDForm extends React.Component {
           installToVPCSelected={installToVPCSelected}
         />
         {/* Encryption */}
-        {canEnableEtcdEncryption && (
+        {(canEnableEtcdEncryption || (isGCP && isBYOCForm)) && (
           <>
             <GridItem span={12}>
               <Title headingLevel="h3">Encryption</Title>
             </GridItem>
-            <FormGroup
-              fieldId="etcd_encryption"
-              id="etcdEncryption"
-            >
-              <Field
-                component={ReduxCheckbox}
-                name="etcd_encryption"
-                label="Enable etcd encryption"
-                extendedHelpText={(
-                  <>
-                    {constants.enableEtcdHint}
-                    {' '}
-                    <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
-                  </>
-                )}
-              />
-              <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
-            </FormGroup>
           </>
+        )}
+        {canEnableEtcdEncryption && (
+        <FormGroup
+          fieldId="etcd_encryption"
+          id="etcdEncryption"
+        >
+          <Field
+            component={ReduxCheckbox}
+            name="etcd_encryption"
+            label="Enable etcd encryption"
+            extendedHelpText={(
+              <>
+                {constants.enableEtcdHint}
+                {' '}
+                <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
+              </>
+                )}
+          />
+          <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
+        </FormGroup>
+        )}
+        {(isGCP && isBYOCForm) && (
+
+          <GCPClusterEncryption
+            customerManagedEncryptionSelected={customerManagedEncryptionSelected}
+          />
+
         )}
         <GridItem span={12}>
           <Divider />
@@ -399,6 +410,7 @@ CreateOSDForm.propTypes = {
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
+  customerManagedEncryptionSelected: PropTypes.bool,
   selectedRegion: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
   canAutoScale: PropTypes.bool.isRequired,
