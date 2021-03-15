@@ -19,9 +19,11 @@ const state = quotaList => ({ userProfile: { organization: { quotaList } } });
 
 describe('quotaSelectors', () => {
   describe('processQuota', () => {
-    it('result does not depend on input order', () => {
-      expect(ROSACCSQuotaList).toEqual(CCSROSAQuotaList);
-      expect(TrialCCSQuotaList).toEqual(CCSTrialQuotaList);
+    it('processed result does not depend on input order', () => {
+      // Resulting .items is the input, so obviously depends on input.
+      // But the .clustersQuota, .nodesQuota etc. should match.
+      expect({ ...ROSACCSQuotaList, items: null }).toEqual({ ...CCSROSAQuotaList, items: null });
+      expect({ ...TrialCCSQuotaList, items: null }).toEqual({ ...CCSTrialQuotaList, items: null });
     });
   });
 

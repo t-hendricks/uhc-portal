@@ -422,6 +422,7 @@ const emptyQuota = () => {
   };
 
   return {
+    items: [],
     clustersQuota: clustersQuotaByBillingProductProviderInfraAz(),
     nodesQuota: nodesQuotaByBillingProductProviderInfra(),
     storageQuota: storageQuotaByBillingProductProviderInfraAZ(),
@@ -439,10 +440,9 @@ const emptyQuota = () => {
  */
 const processQuota = (response) => {
   const allQuotas = emptyQuota();
-  const items = get(response.data, 'items', []);
-  items.forEach((rawItem) => {
-    const item = normalizeQuotaCost(rawItem);
-
+  const items = get(response.data, 'items', []).map(normalizeQuotaCost);
+  allQuotas.items = items;
+  items.forEach((item) => {
     const resources = get(item, 'related_resources', []);
     if (resources.length < 1) {
       return;
