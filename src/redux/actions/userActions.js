@@ -28,7 +28,7 @@ const processClusterQuota = (clustersQuota, item, resources) => {
       cloud_provider: cloudProvider,
       resource_name: machineType,
       product: quotaProduct,
-      billing_model: quotaBilling = 'standard',
+      billing_model: quotaBilling,
     } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
 
@@ -91,7 +91,7 @@ const processNodeQuota = (nodesQuota, item, resources) => {
       cloud_provider: cloudProvider,
       resource_name: machineType,
       product: quotaProduct,
-      billing_model: quotaBilling = 'standard',
+      billing_model: quotaBilling,
     } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
 
@@ -221,7 +221,7 @@ const processAddOnQuota = (addOnsQuota, item, resources) => {
       cloud_provider: cloudProvider,
       resource_name: resourceName,
       product: quotaProduct,
-      billing_model: quotaBilling = 'standard',
+      billing_model: quotaBilling,
     } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
 
