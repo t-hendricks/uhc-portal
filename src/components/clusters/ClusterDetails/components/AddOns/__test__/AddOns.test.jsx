@@ -25,6 +25,7 @@ describe('<AddOns />', () => {
       organization={organization}
       addOns={mockAddOns}
       clusterAddOns={mockClusterAddOns}
+      clusterMachinePools={{}}
       quota={mockQuota}
       getAddOns={getAddOns}
       getOrganizationAndQuota={getOrganizationAndQuota}

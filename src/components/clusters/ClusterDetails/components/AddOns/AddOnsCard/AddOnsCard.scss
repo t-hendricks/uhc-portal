@@ -1,7 +1,16 @@
 .ocm-c-addons__card {
-  &--header { 
+  &--header {
     img {
       height: 50px;
+    }
+  }
+  &--body {
+    .req-status > * {
+      display: inline-block;
+    }
+    .req-status > p {
+      padding-right: 10px;
+      padding-left: 5px;
     }
   }
 }

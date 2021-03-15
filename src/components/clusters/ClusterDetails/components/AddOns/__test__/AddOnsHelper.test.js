@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash/cloneDeep';
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import {
   crcWorkspaces,
@@ -26,6 +27,7 @@ import {
   hasParameters,
   getParameter,
   parameterValuesForEditing,
+  validateAddOnRequirements,
 } from '../AddOnsHelper';
 
 const osdCluster = fixtures.clusterDetails.cluster;
@@ -235,5 +237,156 @@ describe('parameterValuesForEditing', () => {
     const mockAddOnsInstallParams = { parameters: { items: [{ id: 'my-bool', value: 'false' }] } };
     const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
     expect(param).toEqual({ parameters: { 'my-bool': false } });
+  });
+});
+
+describe('validateAddOnRequirements', () => {
+  let tstAddOn;
+  let tstCluster;
+
+  beforeAll(() => {
+    tstCluster = cloneDeep(osdCluster);
+  });
+
+  it('should return true for addon with no requirements', () => {
+    const status = validateAddOnRequirements(
+      tstAddOn, tstCluster, {}, {},
+    );
+    expect(status.fulfilled)
+      .toEqual(true);
+    expect(status.errorMsgs)
+      .toEqual([]);
+  });
+
+  describe('cluster', () => {
+    beforeAll(() => {
+      tstAddOn = {
+        requirements: [
+          {
+            id: 'cluster',
+            resource: 'cluster',
+            data: {
+              'cloud_provider.id': 'aws',
+            },
+          },
+        ],
+      };
+    });
+
+    it('should return true for addon with fulfilled cluster requirements', () => {
+      const status = validateAddOnRequirements(
+        tstAddOn, tstCluster, {}, {},
+      );
+      expect(status.fulfilled)
+        .toEqual(true);
+      expect(status.errorMsgs)
+        .toEqual([]);
+    });
+    it('should return false for addon with unfulfilled cluster requirements', () => {
+      tstCluster.cloud_provider.id = 'gcp';
+      const status = validateAddOnRequirements(
+        tstAddOn, tstCluster, {}, {},
+      );
+      expect(status.fulfilled)
+        .toEqual(false);
+      expect(status.errorMsgs)
+        .toEqual(['This addon requires a cluster where cloud_provider.id is aws']);
+    });
+  });
+
+  describe('addon', () => {
+    beforeAll(() => {
+      tstAddOn = {
+        requirements: [
+          {
+            id: 'addon',
+            resource: 'addon',
+            data: {
+              id: 'some-addon',
+              state: 'ready',
+            },
+          },
+        ],
+      };
+    });
+
+    it('should return true for addon with fulfilled addon requirements', () => {
+      const clusterAddOns = {
+        items: [
+          {
+            kind: 'AddOnLink',
+            href: '/api/clusters_mgmt/v1/addons/some-addon',
+            id: 'some-addon',
+            addon: {
+              id: 'some-addon',
+            },
+            state: 'ready',
+          },
+        ],
+      };
+      const status = validateAddOnRequirements(
+        tstAddOn, tstCluster, clusterAddOns, {},
+      );
+      expect(status.fulfilled)
+        .toEqual(true);
+      expect(status.errorMsgs)
+        .toEqual([]);
+    });
+    it('should return false for addon with unfulfilled addon requirements', () => {
+      const status = validateAddOnRequirements(
+        tstAddOn, tstCluster, {}, {},
+      );
+      expect(status.fulfilled)
+        .toEqual(false);
+      expect(status.errorMsgs)
+        .toEqual(['This addon requires an addon to be installed where id is some-addon and state '
+        + 'is ready']);
+    });
+  });
+
+  describe('machine_pool', () => {
+    beforeAll(() => {
+      tstAddOn = {
+        requirements: [
+          {
+            id: 'machine_pool',
+            resource: 'machine_pool',
+            data: {
+              replicas: 2,
+              instance_type: 'm5.xlarge',
+            },
+          },
+        ],
+      };
+    });
+
+    it('should return true for addon with fulfilled machine pool requirements', () => {
+      const clusterMachinePools = {
+        data: [
+          {
+            id: 'some-machine-pool',
+            instance_type: 'm5.xlarge',
+            replicas: 4,
+          },
+        ],
+      };
+      const status = validateAddOnRequirements(
+        tstAddOn, tstCluster, {}, clusterMachinePools,
+      );
+      expect(status.fulfilled)
+        .toEqual(true);
+      expect(status.errorMsgs)
+        .toEqual([]);
+    });
+    it('should return false for addon with unfulfilled machine pool requirements', () => {
+      const status = validateAddOnRequirements(
+        tstAddOn, tstCluster, {}, {},
+      );
+      expect(status.fulfilled)
+        .toEqual(false);
+      expect(status.errorMsgs)
+        .toEqual(['This addon requires a machine_pool where replicas >= 2 and instance_type is '
+        + 'm5.xlarge']);
+    });
   });
 });

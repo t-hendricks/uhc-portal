@@ -37,6 +37,12 @@ exports[`<AddOns /> should render 1`] = `
           }
         }
         key="service-mesh"
+        requirements={
+          Object {
+            "errorMsgs": Array [],
+            "fulfilled": true,
+          }
+        }
       />
     </GalleryItem>
   </Gallery>

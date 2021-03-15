@@ -67,6 +67,10 @@ exports[`<AddOnsCard /> renders correctly 1`] = `
     Dummy Desc
      
   </CardBody>
+  <CardBody
+    className="ocm-c-addons__card--body"
+    isFilled={false}
+  />
   <CardFooter
     className="ocm-c-addons__card--footer"
   >
