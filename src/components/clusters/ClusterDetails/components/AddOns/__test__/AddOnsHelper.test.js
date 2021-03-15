@@ -245,7 +245,7 @@ describe('validateAddOnRequirements', () => {
   let tstCluster;
 
   beforeAll(() => {
-    tstCluster = cloneDeep(cluster);
+    tstCluster = cloneDeep(osdCluster);
   });
 
   it('should return true for addon with no requirements', () => {

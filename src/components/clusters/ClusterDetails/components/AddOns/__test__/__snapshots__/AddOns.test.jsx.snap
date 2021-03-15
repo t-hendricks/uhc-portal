@@ -20,6 +20,16 @@ exports[`<AddOns /> should render 1`] = `
             "label": "api.openshift.com/addon-service-mesh",
             "name": "Red Hat OpenShift Service Mesh",
             "operator_name": "service-mesh-operator",
+            "requirements": Array [
+              Object {
+                "data": Object {
+                  "cloud_provider.id": "gcp",
+                },
+                "enabled": true,
+                "id": "cluster",
+                "resource": "cluster",
+              },
+            ],
             "resource_cost": 1,
             "resource_name": "addon-service-mesh",
             "target_namespace": "redhat-service-mesh-operator",
@@ -37,6 +47,14 @@ exports[`<AddOns /> should render 1`] = `
           }
         }
         key="service-mesh"
+        requirements={
+          Object {
+            "errorMsgs": Array [
+              "This addon requires a cluster where cloud_provider.id is gcp",
+            ],
+            "fulfilled": false,
+          }
+        }
       />
     </GalleryItem>
   </Gallery>
