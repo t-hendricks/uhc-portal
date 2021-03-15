@@ -16,6 +16,7 @@ const dedicatedRhInfra = [
         byoc: 'rhinfra',
         availability_zone_type: 'multi',
         product: 'OSD',
+        billing_model: 'standard',
         cost: 1,
       },
     ],
@@ -35,6 +36,7 @@ const dedicatedRhInfra = [
         byoc: 'rhinfra',
         availability_zone_type: 'any',
         product: 'OSD',
+        billing_model: 'standard',
         cost: 1,
       },
     ],
@@ -57,6 +59,7 @@ const dedicatedCCS = [
         byoc: 'byoc',
         availability_zone_type: 'multi',
         product: 'OSD',
+        billing_model: 'standard',
         cost: 1,
       },
     ],
@@ -76,6 +79,7 @@ const dedicatedCCS = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSD',
+        billing_model: 'standard',
         cost: 4,
       },
     ],
@@ -98,6 +102,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 16,
       },
       {
@@ -107,6 +112,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 8,
       },
       {
@@ -116,6 +122,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 16,
       },
       {
@@ -125,6 +132,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 8,
       },
       {
@@ -134,6 +142,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 4,
       },
       {
@@ -143,6 +152,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 16,
       },
       {
@@ -152,6 +162,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 8,
       },
       {
@@ -161,6 +172,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 4,
       },
     ],
@@ -180,6 +192,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -189,6 +202,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -198,6 +212,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -207,6 +222,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -216,6 +232,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -225,6 +242,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -234,6 +252,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -243,6 +262,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
     ],
@@ -265,6 +285,7 @@ const unlimitedROSA = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'MOA',
+        billing_model: 'standard',
         cost: 0,
       },
     ],
@@ -284,6 +305,7 @@ const unlimitedROSA = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'MOA',
+        billing_model: 'standard',
         cost: 0,
       },
     ],
@@ -306,6 +328,7 @@ const rhmiAddon = [
         byoc: 'any',
         availability_zone_type: 'any',
         product: 'OSD',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -315,6 +338,7 @@ const rhmiAddon = [
         byoc: 'any',
         availability_zone_type: 'any',
         product: 'RHMI',
+        billing_model: 'standard',
         cost: 0,
       },
     ],
@@ -337,6 +361,7 @@ const crcWorkspacesAddon = [
         byoc: 'any',
         availability_zone_type: 'any',
         product: 'any',
+        billing_model: 'standard',
         cost: 1,
       },
     ],
