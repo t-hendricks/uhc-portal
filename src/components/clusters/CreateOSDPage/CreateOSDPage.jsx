@@ -98,6 +98,11 @@ class CreateOSDPage extends React.Component {
     const hasMarketplaceRhInfraQuota = this.getMarketplaceQuota('rhInfra', cloudProviderID);
     const selectedMarketplaceBilling = billingModel === billingModels.MARKETPLACE;
 
+    if (prevProps.isBYOCModalOpen && !hasShownBYOCModal) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ hasShownBYOCModal: true });
+    }
+
     // if user has only BYOC quota
     if (!prevProps.isBYOCModalOpen
      && ((!hasRhInfraQuota && hasBYOCQuota)

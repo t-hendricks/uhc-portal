@@ -63,7 +63,8 @@ function ClusterListTable(props) {
 
     const clusterState = getClusterStateAndDescription(cluster);
     const icon = <ClusterStateIcon clusterState={clusterState.state || ''} animated={false} />;
-    const clusterStatus = (state) => {
+    const clusterStatus = (clusterStateAndDescription) => {
+      const { state, description } = clusterStateAndDescription;
       if (state === clusterStates.ERROR) {
         return (
           <span>
@@ -92,7 +93,7 @@ function ClusterListTable(props) {
                 isInline
                 icon={icon}
               >
-                {state}
+                {description}
               </Button>
             </Popover>
           </span>
@@ -112,7 +113,7 @@ function ClusterListTable(props) {
               isInline
               icon={icon}
             >
-              {state}
+              {description}
             </Button>
           </Popover>
         );
@@ -120,7 +121,7 @@ function ClusterListTable(props) {
       return (
         <span className="cluster-status-string">
           {icon}
-          {state}
+          {description}
         </span>
       );
     };
@@ -136,7 +137,7 @@ function ClusterListTable(props) {
     return {
       cells: [
         { title: clusterName },
-        { title: clusterStatus(clusterState.state) },
+        { title: clusterStatus(clusterState) },
         { title: <ClusterTypeLabel cluster={cluster} /> },
         { title: <ClusterCreatedIndicator cluster={cluster} /> },
         { title: clusterVersion },

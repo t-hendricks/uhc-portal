@@ -193,7 +193,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
                   "title": "N/A",
                 },
                 "Any",
-                "OSD",
+                "ANY",
                 "0 of 5",
                 Object {
                   "title": <OutlinedCircleIcon

@@ -52,7 +52,7 @@ function DetailsRight({
           <DescriptionListTerm>
             Status
           </DescriptionListTerm>
-          <DescriptionListDescription style={cluster.state.style}>
+          <DescriptionListDescription>
             <ClusterStateIcon clusterState={cluster.state.state} animated />
             {' '}
             {cluster.state.description}

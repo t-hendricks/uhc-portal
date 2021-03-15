@@ -16,7 +16,6 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 import get from 'lodash/get';
 import has from 'lodash/has';
-import intersection from 'lodash/intersection';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
@@ -30,7 +29,6 @@ import Monitoring from './components/Monitoring';
 import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
-import { supportsFreeAddOns } from './components/AddOns/AddOnsHelper';
 import MachinePools from './components/MachinePools';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
@@ -41,6 +39,7 @@ import CommonClusterModals from '../common/CommonClusterModals';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
+import { hasQuota } from './components/AddOns/AddOnsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 import clusterStates, { isHibernating } from '../common/clusterStates';
@@ -277,18 +276,11 @@ class ClusterDetails extends Component {
     const {
       addOns,
       clusterAddOns,
-      clusterDetails,
+      clusterDetails: { cluster },
       organization,
     } = this.props;
-    const { cluster } = clusterDetails;
 
-    // If cluster already has add-ons installed we can show the tab regardless of quota
     if (get(clusterAddOns, 'items.length', 0)) {
-      return true;
-    }
-
-    // If there are compatible free add-ons available we can show the tab regardless of quota
-    if (supportsFreeAddOns(cluster) && get(addOns, 'freeAddOns.length', 0)) {
       return true;
     }
 
@@ -297,8 +289,14 @@ class ClusterDetails extends Component {
       return false;
     }
 
-    const addOnsQuota = Object.keys(organization.quotaList.addOnsQuota);
-    return !!intersection(addOns.resourceNames, addOnsQuota).length;
+    // check if organization has quota for any addon matching this cluster
+    let foundQuota = false;
+    addOns.items.forEach((addOn) => {
+      if (hasQuota(addOn, cluster, organization, organization.quotaList)) {
+        foundQuota = true;
+      }
+    });
+    return foundQuota;
   }
 
   render() {
