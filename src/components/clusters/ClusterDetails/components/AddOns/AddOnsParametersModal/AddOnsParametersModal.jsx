@@ -101,7 +101,7 @@ class AddOnsParametersModal extends Component {
     <Field
       {...this.getFieldProps(param)}
       key={param.id}
-      id={`field-${param.id}`}
+      id={`field-addon-${param.id}`}
       name={`parameters.${param.id}`}
       label={param.name}
       placeholder={this.getParamDefault(param)}
@@ -154,7 +154,7 @@ class AddOnsParametersModal extends Component {
                 && (
                   <Button
                     onClick={() => this.setDefaultParamValue(param)}
-                    id={`reset-${param.id}`}
+                    id={`reset-addon-${param.id}`}
                     variant="link"
                     icon={<LevelUpAltIcon />}
                     iconPosition="right"

@@ -4,7 +4,7 @@ exports[`<AddOnsCard /> renders correctly 1`] = `
 <Card
   className="ocm-c-addons__card"
   key="Dummy ID"
-  ouiaId="card-Dummy ID"
+  ouiaId="card-addon-Dummy ID"
 >
   <CardHeader
     className="ocm-c-addons__card--header"
@@ -17,7 +17,7 @@ exports[`<AddOnsCard /> renders correctly 1`] = `
               component="button"
               isDisabled={false}
               onClick={[Function]}
-              ouiaId="configure-Dummy ID"
+              ouiaId="configure-addon-Dummy ID"
             >
               Configure
             </DropdownItem>,
@@ -25,7 +25,7 @@ exports[`<AddOnsCard /> renders correctly 1`] = `
               component="button"
               isDisabled={false}
               onClick={[Function]}
-              ouiaId="uninstall-Dummy ID"
+              ouiaId="uninstall-addon-Dummy ID"
             >
               Uninstall add-on
             </DropdownItem>,

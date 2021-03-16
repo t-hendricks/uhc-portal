@@ -21,7 +21,7 @@ exports[`<AddOnsParametersModal /> renders correctly 1`] = `
     >
       <Field
         component={[Function]}
-        id="field-dummy item"
+        id="field-addon-dummy item"
         isDisabled={false}
         key="dummy item"
         name="parameters.dummy item"
@@ -39,7 +39,7 @@ exports[`<AddOnsParametersModal /> renders correctly 1`] = `
           />
         }
         iconPosition="right"
-        id="reset-dummy item"
+        id="reset-addon-dummy item"
         onClick={[Function]}
         variant="link"
       >
