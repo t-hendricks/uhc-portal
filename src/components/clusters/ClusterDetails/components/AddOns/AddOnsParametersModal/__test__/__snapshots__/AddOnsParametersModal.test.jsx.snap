@@ -14,7 +14,7 @@ exports[`<AddOnsParametersModal /> renders correctly 1`] = `
   width={810}
 >
   <Form
-    id="form-Dummy ID"
+    id="form-addon-Dummy ID"
   >
     <FormGroup
       key="dummy item"

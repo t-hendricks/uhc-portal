@@ -142,7 +142,7 @@ class AddOnsParametersModal extends Component {
           <ErrorBox message="Error adding add-ons" response={submitClusterAddOnResponse} />
         )}
 
-        <Form id={`form-${addOn.id}`}>
+        <Form id={`form-addon-${addOn.id}`}>
           {hasParameters(addOn) && addOn.parameters.items.map(param => (
             <FormGroup
               key={param.id}
