@@ -37,4 +37,20 @@ describe('<Overview />', () => {
       expect(wrapper).toMatchSnapshot();
     });
   });
+
+  describe('for an ARO cluster', () => {
+    const props = {
+      cluster: fixtures.AROClusterDetails.cluster,
+      cloudProviders: fixtures.cloudProviders,
+      history: {},
+      displayClusterLogs: true,
+      openModal: jest.fn(),
+    };
+    const wrapper = shallow(
+      <Overview {...props} />,
+    );
+    it('should render', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 });

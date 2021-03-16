@@ -41,7 +41,7 @@ import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import { hasQuota } from './components/AddOns/AddOnsHelper';
 import getClusterName from '../../../common/getClusterName';
-import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
 import clusterStates, { isHibernating } from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
@@ -381,11 +381,12 @@ class ClusterDetails extends Component {
     const clusterHibernating = isHibernating(cluster.state);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
     || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+    const isAROCluster = get(cluster, 'subscription.plan.id', '') === knownProducts.ARO;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
-    const displayInsightsTab = !cluster.managed && !isArchived;
+    const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster;
 
     const consoleURL = get(cluster, 'console.url');
-    const displayMonitoringTab = !isArchived && !cluster.managed;
+    const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster;
     const displayAccessControlTab = cluster.managed && !!consoleURL
       && (cluster.state === 'ready' || clusterHibernating);
     const cloudProvider = get(cluster, 'cloud_provider.id');

@@ -77,4 +77,9 @@ describe('machinePoolsSelector', () => {
     const result = canAutoScaleSelector(stateWithoutAutoscaleCapability, normalizedProducts.OCP);
     expect(result).toBe(false);
   });
+
+  it('should not allow autoscaling for ARO clusters', () => {
+    const result = canAutoScaleSelector(stateWithoutAutoscaleCapability, normalizedProducts.ARO);
+    expect(result).toBe(false);
+  });
 });

@@ -53,7 +53,7 @@ import InstallRHVUPI from '../clusters/install/InstallRHVUPI';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallPullSecret from '../clusters/install/InstallPullSecret';
-import InstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
+import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
 import InstallIBM from '../clusters/install/InstallIBM';
 import InstallPower from '../clusters/install/InstallPower';
 import Tokens from '../tokens/Tokens';
@@ -113,7 +113,7 @@ function Router({ history }) {
             <Route path="/install/power/user-provisioned" component={InstallPower} />
             <Route path="/install/pre-release" component={InstallPreRelease} />
             <Route path="/install/pull-secret" component={InstallPullSecret} />
-            <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
+            <Route path="/install/azure/aro-provisioned" component={ConnectedInstallPullSecretAzure} />
             <Redirect from="/install" to="/create" />
             <TermsGuardedRoute
               path="/create/osd/aws"
