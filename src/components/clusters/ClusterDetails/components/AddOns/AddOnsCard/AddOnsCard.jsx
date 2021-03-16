@@ -136,7 +136,7 @@ class AddOnsCard extends Component {
             content={tooltipContent}
           >
             <div className="pf-u-display-inline-block">
-              <Button isDisabled>
+              <Button isDisabled ouiaId={`install-addon-${addOn.id}`}>
                 Install
               </Button>
             </div>
@@ -164,6 +164,7 @@ class AddOnsCard extends Component {
             || !cluster.canEdit
             || !requirements.fulfilled
           }
+          ouiaId={`install-addon-${addOn.id}`}
           onClick={installAddOn}
         >
           Install
@@ -230,6 +231,7 @@ class AddOnsCard extends Component {
     const dropdownItems = [
       <DropdownItem
         key="parameters"
+        ouiaId={`configure-addon-${addOn.id}`}
         component="button"
         isDisabled={
           !hasParameters(addOn)
@@ -242,6 +244,7 @@ class AddOnsCard extends Component {
       </DropdownItem>,
       <DropdownItem
         key="delete"
+        ouiaId={`uninstall-addon-${addOn.id}`}
         component="button"
         isDisabled={
           !cluster.canEdit
@@ -279,6 +282,7 @@ class AddOnsCard extends Component {
         isPlain
         dropdownItems={dropdownItems}
         position="right"
+        ouiaId={`configure-${addOn.id}`}
       />
     );
   }
@@ -313,7 +317,7 @@ class AddOnsCard extends Component {
   render() {
     const { addOn } = this.props;
     return (
-      <Card key={addOn.id} className="ocm-c-addons__card">
+      <Card key={addOn.id} ouiaId={`card-addon-${addOn.id}`} className="ocm-c-addons__card">
         <CardHeader className="ocm-c-addons__card--header">
           { addOn.icon && (
             <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />
