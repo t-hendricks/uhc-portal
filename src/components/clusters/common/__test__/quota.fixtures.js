@@ -1,4 +1,35 @@
+import { userActions } from '../../../../redux/actions/userActions';
+
+import * as quotaCostFixtures from './quota_cost.fixtures';
+
 // Fragments of processed quotaList state
+
+const crcWorkspacesAddonQuota = userActions.processQuota({
+  data: { items: quotaCostFixtures.crcWorkspacesAddon },
+});
+
+const loggingAddonQuota = userActions.processQuota({
+  data: { items: quotaCostFixtures.loggingAddon },
+});
+
+const dbaAddonQuota = userActions.processQuota({
+  data: { items: quotaCostFixtures.dbaAddon },
+});
+
+const serviceMeshAddonQuota = userActions.processQuota({
+  data: { items: quotaCostFixtures.serviceMeshAddon },
+});
+
+const addonsQuota = userActions.processQuota({
+  data: {
+    items: [].concat(
+      quotaCostFixtures.crcWorkspacesAddon,
+      quotaCostFixtures.loggingAddon,
+      quotaCostFixtures.dbaAddon,
+      quotaCostFixtures.serviceMeshAddon,
+    ),
+  },
+});
 
 const rhInfraClusterQuota = {
   clustersQuota: {
@@ -158,4 +189,9 @@ export {
   awsCCSClustersWithSingleNodeQuota,
   awsByocRhInfraGcpRhInfraClustersQuota,
   awsRhInfraGcpRhInfraClustersQuota,
+  crcWorkspacesAddonQuota,
+  loggingAddonQuota,
+  dbaAddonQuota,
+  serviceMeshAddonQuota,
+  addonsQuota,
 };

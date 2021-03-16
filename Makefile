@@ -29,8 +29,14 @@ binaries:
 	done
 
 .PHONY: lint
-lint: node_modules
+lint: js-lint go-lint
+
+.PHONY: js-lint
+js-lint: node_modules
 	yarn lint
+
+.PHONY: go-lint
+go-lint:
 	golangci-lint \
 		run \
 		--no-config \

@@ -27,17 +27,17 @@ yarn config list
 
 # Run the checks:
 
-mockdata/regenerate-clusters.json.sh  # first because really fast
+mockdata/regenerate-clusters.json.sh # first because really fast
 
 make \
-  lint \
+  js-lint \
   app \
   test \
   binaries
 
 # Selenium tests
 # --------------
-function finish {
+function finish() {
   # Commands here should always return 0, to retain exit code from the test.
 
   # Don't leave run-away containers.
@@ -62,3 +62,6 @@ export FORCE_COLOR=1
 # Jenkins aborting after 30min is wasteful and doesn't
 # give our `finish` function enough time to clean up.
 timeout --signal=TERM --kill-after=2m 5m yarn e2e-test-run
+
+make \
+  go-lint
