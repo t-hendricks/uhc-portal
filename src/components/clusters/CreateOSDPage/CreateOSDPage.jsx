@@ -168,6 +168,7 @@ class CreateOSDPage extends React.Component {
       autoScaleMaxNodesValue,
       billingModel,
       marketplaceQuotaFeature,
+      customerManagedEncryptionSelected,
     } = this.props;
 
     const selectedOSDTrial = product === normalizedProducts.OSDTrial;
@@ -316,6 +317,7 @@ class CreateOSDPage extends React.Component {
                     canEnableEtcdEncryption={canEnableEtcdEncryption}
                     selectedRegion={selectedRegion}
                     installToVPCSelected={installToVPCSelected}
+                    customerManagedEncryptionSelected={customerManagedEncryptionSelected}
                     canAutoScale={canAutoScale}
                     autoscalingEnabled={autoscalingEnabled}
                     autoScaleMinNodesValue={autoScaleMinNodesValue}
@@ -419,6 +421,7 @@ CreateOSDPage.propTypes = {
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
   osdTrialFeature: PropTypes.bool,
+  customerManagedEncryptionSelected: PropTypes.bool,
   marketplaceQuotaFeature: PropTypes.bool,
 };
 
