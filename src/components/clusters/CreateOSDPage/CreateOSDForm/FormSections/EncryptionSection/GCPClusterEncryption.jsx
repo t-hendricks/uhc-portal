@@ -57,7 +57,7 @@ function CustomerManagedEncryptionKeys({ customerManagedEncryptionSelected }) {
                 label="Key ring location"
                 placeholder="Key ring location"
                 validate={validateGCPEncryptionKeys}
-                helpText="The Regional location the keyring covers"
+                helpText="The Regional location the keyring covers."
                 extendedHelpText={(
                   <>
                     {constants.keylocation}
@@ -73,7 +73,7 @@ function CustomerManagedEncryptionKeys({ customerManagedEncryptionSelected }) {
                 label="Key name"
                 placeholder="Key name"
                 validate={validateGCPEncryptionKeys}
-                helpText="Name of the key in the keyring"
+                helpText="Name of the key in the keyring."
                 extendedHelpText={(
                   <>
                     {constants.keyName}
@@ -89,7 +89,7 @@ function CustomerManagedEncryptionKeys({ customerManagedEncryptionSelected }) {
                 label="KMS Service Account"
                 placeholder="KMS Service Account"
                 validate={validateGCPKMSServiceAccount}
-                helpText="GCP Service account will be used for compute scaling"
+                helpText="GCP Service account will be used for compute scaling."
                 extendedHelpText={(
                   <>
                     {constants.kmsserviceAccount}
