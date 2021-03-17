@@ -52,7 +52,7 @@ const PREFIX_MAX_LEN = 253;
 
 const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}$/;
 
-const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^\d{6,30}-compute@developer.gserviceaccount.com$/;
+const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 
 // Function to validate that a field is mandatory:
 const required = value => (value ? undefined : 'Field is required');
@@ -853,7 +853,8 @@ const validateGCPKMSServiceAccount = (value) => {
     return 'Field must not contain whitespaces.';
   }
   if (!GCP_KMS_SERVICE_ACCOUNT_REGEX.test(value)) {
-    return 'Field should be in the format "<projectnumericid>-compute@developer.gserviceaccount.com.';
+    return 'Field start with lowercase letter and can only contain hyphens (-), at (@) and dot (.).'
+    + 'For e.g. "myserviceaccount@myproj.iam.gserviceaccount.com" or "<projectnumericid>-compute@developer.gserviceaccount.com".';
   }
   return undefined;
 };
