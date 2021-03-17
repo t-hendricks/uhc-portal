@@ -400,6 +400,7 @@ class ClusterDetails extends Component {
     const clusterName = getClusterName(cluster);
     const displaySupportTab = cluster.state === clusterStates.READY
         || cluster.state === clusterStates.UPDATING
+        || cluster.subscription.status === clusterStates.READY
         || clusterHibernating;
     const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit;
     const displayAddBareMetalHosts = assistedInstallerEnabled && canAddBareMetalHost({ cluster });
