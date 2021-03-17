@@ -7,38 +7,17 @@ import {
   availableClustersFromQuota,
   availableNodesFromQuota,
 } from './quotaSelectors';
-import { userActions } from '../../../redux/actions/userActions';
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import {
-  dedicatedRhInfra, dedicatedCCS, dedicatedTrial, unlimitedROSA,
-} from './__test__/quota_cost.fixtures';
-// This is the quota we use in mockdata mode, pretty much everything is allowed.
-import * as mockQuotaCost from '../../../../mockdata/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost.json';
+  mockQuotaList, emptyQuotaList,
+  ROSAQuotaList, CCSQuotaList, TrialQuotaList,
+  ROSACCSQuotaList, CCSROSAQuotaList, TrialCCSQuotaList, CCSTrialQuotaList,
+  rhQuotaList,
+} from './__test__/quota.fixtures';
 
 const state = quotaList => ({ userProfile: { organization: { quotaList } } });
 
 describe('quotaSelectors', () => {
-  const mockQuotaList = userActions.processQuota({ data: mockQuotaCost });
-  const emptyQuotaList = userActions.processQuota({ data: { items: [] } });
-
-  const ROSAQuotaList = userActions.processQuota({ data: { items: unlimitedROSA } });
-  const CCSQuotaList = userActions.processQuota({ data: { items: dedicatedCCS } });
-  const TrialQuotaList = userActions.processQuota({ data: { items: dedicatedTrial } });
-  const ROSACCSQuotaList = userActions.processQuota(
-    { data: { items: [...unlimitedROSA, ...dedicatedCCS] } },
-  );
-  const CCSROSAQuotaList = userActions.processQuota(
-    { data: { items: [...dedicatedCCS, ...unlimitedROSA] } },
-  );
-  const TrialCCSQuotaList = userActions.processQuota(
-    { data: { items: [...dedicatedTrial, ...dedicatedCCS] } },
-  );
-  const CCSTrialQuotaList = userActions.processQuota(
-    { data: { items: [...dedicatedCCS, ...dedicatedTrial] } },
-  );
-
-  const rhQuotaList = userActions.processQuota({ data: { items: dedicatedRhInfra } });
-
   describe('processQuota', () => {
     it('result does not depend on input order', () => {
       expect(ROSACCSQuotaList).toEqual(CCSROSAQuotaList);
