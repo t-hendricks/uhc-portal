@@ -86,6 +86,7 @@ const knownProducts = {
   OCP: 'OCP',
   RHMI: 'RHMI',
   ROSA: 'ROSA',
+  ARO: 'ARO',
 };
 
 /**
@@ -110,6 +111,7 @@ const productFilterOptions = [
   { key: normalizedProducts.OCP, label: 'OCP', plansToQuery: ['OCP'] },
   { key: normalizedProducts.OSD, label: 'OSD', plansToQuery: ['OSD'] },
   { key: normalizedProducts.ROSA, label: 'ROSA', plansToQuery: ['MOA', 'ROSA'] },
+  { key: normalizedProducts.ARO, label: 'ARO', plansToQuery: ['ARO'] },
 ];
 
 /**
