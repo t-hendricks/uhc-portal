@@ -2,28 +2,18 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import PersistentStorageDropdown from './PersistentStorageDropdown';
-import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 const baseState = {
   error: false,
   errorMessage: '',
   pending: false,
   fulfilled: false,
+  values: [],
 };
-const quotaList = {
-  storageQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          rhInfra: {
-            singleAZ: {
-              gp2: 27000,
-            },
-          },
-        },
-      },
-    },
-  },
+
+const organizationState = {
+  fulfilled: true,
+  pending: false,
 };
 
 describe('<PersistentStorageDropdown />', () => {
@@ -39,9 +29,9 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={baseState}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quotaList={quotaList}
-          cluster={fixtures.clusterDetails.cluster}
+          organization={organizationState}
           disabled={false}
+          storageQuota={0}
         />,
       );
     });
@@ -73,8 +63,8 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quotaList={quotaList}
-          cluster={fixtures.clusterDetails.cluster}
+          storageQuota={0}
+          organization={organizationState}
           disabled={false}
         />,
       );
@@ -104,8 +94,8 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quotaList={quotaList}
-          cluster={fixtures.clusterDetails.cluster}
+          storageQuota={0}
+          organization={organizationState}
           disabled={false}
         />,
       );
@@ -135,6 +125,8 @@ describe('<PersistentStorageDropdown />', () => {
         values: [{ unit: 'B', value: 107374182400 }, { unit: 'B', value: 644245094400 }, { unit: 'B', value: 1181116006400 }],
       };
 
+      const quota = 600;
+
       getPersistentStorage = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
@@ -142,8 +134,8 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quotaList={quotaList}
-          cluster={fixtures.clusterDetails.cluster}
+          storageQuota={quota}
+          organization={organizationState}
           disabled={false}
         />,
       );
