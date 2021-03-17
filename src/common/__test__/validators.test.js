@@ -20,6 +20,7 @@ import validators, {
   validateUniqueAZ,
   validateNumericInput,
   validateGCPSubnet,
+  validateGCPKMSServiceAccount,
 } from '../validators';
 import fixtures from './validators.fixtures';
 
@@ -534,4 +535,23 @@ test('GCP Subnet', () => {
   expect(validateGCPSubnet('Subnet Name')).toBe('Name must not contain whitespaces.');
   expect(validateGCPSubnet('Subet$$')).toBe('Name should contain only lowercase letters, numbers and hyphens.');
   expect(validateGCPSubnet(value)).toBe('Name may not exceed 63 characters.');
+});
+
+
+test('GCP KMSService Account', () => {
+  const inValidValueTest1 = '9%%#$#$-compute@developer.gserviceaccount.com';
+  const inValidValueTest2 = '100000000000-compute@developer.gserviceaccount.commmm';
+
+  const validValueTest1 = '100000000000-compute@developer.gserviceaccount.com';
+  const validValueTest2 = 'myserviceaccount@exampleproj-3.iam.gserviceaccount.com';
+
+  const expectedMsg = 'Field start with lowercase letter and can only contain hyphens (-), at (@) and dot (.).'
+  + 'For e.g. "myserviceaccount@myproj.iam.gserviceaccount.com" or "<projectnumericid>-compute@developer.gserviceaccount.com".';
+
+  expect(validateGCPKMSServiceAccount()).toBe('Field is required.');
+  expect(validateGCPKMSServiceAccount('service account')).toBe('Field must not contain whitespaces.');
+  expect(validateGCPKMSServiceAccount(inValidValueTest1)).toBe(expectedMsg);
+  expect(validateGCPKMSServiceAccount(inValidValueTest2)).toBe(expectedMsg);
+  expect(validateGCPKMSServiceAccount(validValueTest1)).toBe(undefined);
+  expect(validateGCPKMSServiceAccount(validValueTest2)).toBe(undefined);
 });
