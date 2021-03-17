@@ -46,9 +46,7 @@ exports[`<TokensROSA /> Renders token 1`] = `
       className="ocm-c-api-token__card"
     >
       <CardTitle>
-        <h2>
-          Fully managed OpenShift clusters
-        </h2>
+        Fully managed OpenShift clusters
       </CardTitle>
       <CardBody
         className="ocm-c-api-token__card--body"
@@ -62,13 +60,31 @@ exports[`<TokensROSA /> Renders token 1`] = `
           <Text
             component="p"
           >
-            Download and install the 
-            <a
-              href="https://github.com/openshift/rosa/releases"
-            >
-              rosa
-            </a>
-             command-line utility and use the Offline Access Token to authenticate against your Red Hat OpenShift Cluster Manager account.
+            To download the client:
+            <ol>
+              <li>
+                Download and install the 
+                <a
+                  href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  rosa
+                </a>
+                 command-line utility (CLI).
+              </li>
+              <li>
+                Copy the following Offline Access Token and use it to authenticate with the 
+                <a
+                  href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  rosa
+                </a>
+                 CLI:
+              </li>
+            </ol>
           </Text>
           <Text
             component="pre"
@@ -94,17 +110,6 @@ exports[`<TokensROSA /> Renders token 1`] = `
             </ClipboardCopy>
           </Text>
           <Text
-            component="p"
-          >
-            Copy it, and then use it to authenticate with the 
-            <a
-              href="https://github.com/openshift/rosa/releases"
-            >
-              rosa
-            </a>
-             command-line utility:
-          </Text>
-          <Text
             component="pre"
           >
             rosa login --token="\\
@@ -114,11 +119,23 @@ hello offline access token!\\
           <Text
             component="p"
           >
-            Run 
+            For help, run 
             <code>
               rosa login --help
             </code>
-             to get more information.
+             or see the 
+            <a
+              href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              documentation
+            </a>
+             for more information about setting up the 
+            <code>
+              rosa
+            </code>
+             (CLI).
           </Text>
         </TextContent>
       </CardBody>
