@@ -29,6 +29,7 @@ import {
   TextContent,
 } from '@patternfly/react-core';
 import Tokens, { splitToken, snippetBox, tokenBox } from './Tokens';
+import links from '../../common/installLinks';
 
 // The <TokensROSA> component inherits from the <Tokens> component. This may
 // cause breakage if ever we change the <Tokens> component heavily, but in the
@@ -80,8 +81,12 @@ class TokensROSA extends Tokens {
       '"',
     ];
 
-    const rosaURL = 'https://github.com/openshift/rosa/releases';
-    const rosaLink = <a href={rosaURL}>rosa</a>;
+    const docsLink = (
+      <a href={links.ROSA_DOCS} target="_blank" rel="noopener noreferrer">documentation</a>
+    );
+    const rosaLink = (
+      <a href={links.ROSA_CLIENT_LATEST} target="_blank" rel="noopener noreferrer">rosa</a>
+    );
 
     /* eslint-disable react/jsx-one-expression-per-line */
     return (
@@ -89,9 +94,7 @@ class TokensROSA extends Tokens {
         {title}
         <PageSection>
           <Card className="ocm-c-api-token__card">
-            <CardTitle>
-              <h2>Fully managed OpenShift clusters</h2>
-            </CardTitle>
+            <CardTitle>Fully managed OpenShift clusters</CardTitle>
             <CardBody className="ocm-c-api-token__card--body">
               <TextContent>
                 <Text component="p">
@@ -100,17 +103,20 @@ class TokensROSA extends Tokens {
                   OpenShift (Kubernetes) cluster.
                 </Text>
                 <Text component="p">
-                  Download and install the {rosaLink} command-line utility and use the Offline
-                  Access Token to authenticate against your Red Hat OpenShift Cluster Manager
-                  account.
+                  To download the client:
+                  <ol>
+                    <li>Download and install the {rosaLink} command-line utility (CLI).</li>
+                    <li>
+                      Copy the following Offline Access Token and use it to authenticate with
+                      the {rosaLink} CLI:
+                    </li>
+                  </ol>
                 </Text>
                 {tokenBox(offlineAccessToken)}
-                <Text component="p">
-                  Copy it, and then use it to authenticate with the {rosaLink} command-line utility:
-                </Text>
                 {snippetBox(offlineAccessTokenSnippet)}
                 <Text component="p">
-                  Run <code>rosa login --help</code> to get more information.
+                  For help, run <code>rosa login --help</code> or see the {docsLink} for more
+                  information about setting up the <code>rosa</code> (CLI).
                 </Text>
               </TextContent>
             </CardBody>
