@@ -323,28 +323,21 @@ describe('clustersActions', () => {
   describe('processStorageQuota', () => {
     let storageQuota;
     beforeEach(() => {
-      storageQuota = {
-        aws: { available: 0 },
-        gcp: { available: 0 },
-      };
+      storageQuota = userActions.emptyQuota().storageQuota;
     });
 
     it('should process quota on AWS', () => {
       const resources = [{
+        resource_type: 'pv.storage',
         cloud_provider: 'aws',
+        byoc: 'rhinfra',
+        resource_name: 'gp2',
+        availability_zone_type: 'any',
+        product: OSD,
+        cost: 1,
       }];
-      userActions.processStorageQuota(storageQuota, item, resources);
-      expect(storageQuota.aws.available).toEqual(1);
-      expect(storageQuota.gcp.available).toEqual(0);
-    });
-
-    it('should process quota for any cloud provider', () => {
-      const resources = [{
-        cloud_provider: 'any',
-      }];
-      userActions.processStorageQuota(storageQuota, item, resources);
-      expect(storageQuota.aws.available).toEqual(1);
-      expect(storageQuota.gcp.available).toEqual(1);
+      userActions.processStorageQuota(storageQuota, { allowed: 2700, consumed: 0 }, resources);
+      expect(storageQuota[STANDARD][OSD].aws.rhInfra.singleAZ.gp2).toEqual(2700);
     });
   });
 

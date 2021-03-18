@@ -54,6 +54,7 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
           label="Persistent storage"
         >
           <Field
+            billingModel="standard"
             cloudProviderID="aws"
             component={
               Object {
@@ -66,8 +67,10 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
             }
             currentValue={107374182400}
             disabled={false}
+            isMultiAZ={true}
             label="Persistent storage"
             name="persistent_storage"
+            product="OSD"
           />
         </FormGroup>
       </GridItem>
@@ -142,6 +145,7 @@ exports[`<ScaleClusterDialog /> renders correctly when an error occurs 1`] = `
           label="Persistent storage"
         >
           <Field
+            billingModel="standard"
             cloudProviderID="aws"
             component={
               Object {
@@ -154,8 +158,10 @@ exports[`<ScaleClusterDialog /> renders correctly when an error occurs 1`] = `
             }
             currentValue={107374182400}
             disabled={false}
+            isMultiAZ={true}
             label="Persistent storage"
             name="persistent_storage"
+            product="OSD"
           />
         </FormGroup>
       </GridItem>
