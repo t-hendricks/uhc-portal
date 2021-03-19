@@ -12,10 +12,10 @@ exports[`CreateOSDForm; should render 1`] = `
     </Title>
   </GridItem>
   <BillingModelSection
-    billingModel="standard"
     byocSelected={false}
     hasBYOCquota={false}
     hasMarketplaceQuota={false}
+    hasStandardOSDQuota={true}
     hasStandardQuota={true}
     openModal={[MockFunction]}
     pending={false}

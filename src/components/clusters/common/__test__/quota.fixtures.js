@@ -162,6 +162,7 @@ export const awsCCSClustersWithSingleNodeQuota = {
 // Values for `clustersQuota` prop passed down by CreateOSDPage.
 
 export const awsByocRhInfraGcpRhInfraClustersQuota = {
+  hasStandardOSDQuota: true,
   hasProductQuota: true,
   hasAwsQuota: true,
   hasGcpQuota: true,
@@ -188,6 +189,7 @@ export const awsByocRhInfraGcpRhInfraClustersQuota = {
 };
 
 export const awsRhInfraGcpRhInfraClustersQuota = {
+  hasStandardOSDQuota: true,
   hasProductQuota: true,
   hasAwsQuota: true,
   hasGcpQuota: true,

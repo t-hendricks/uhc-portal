@@ -127,8 +127,7 @@ class CreateCluster extends React.Component {
               <Tab eventKey={0} title={tabTitle(0)}>
                 <CloudTab
                   hasOSDQuota={hasOSDQuota}
-                  hasOSDTrialQuota={hasOSDTrialQuota}
-                  osdTrialFeature={osdTrialFeature}
+                  trialEnabled={hasOSDTrialQuota && osdTrialFeature}
                 />
               </Tab>
               <Tab eventKey={1} title={tabTitle(1)}>

@@ -14,7 +14,7 @@ import CreateOSDPage from './CreateOSDPage';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/helpers';
-import { billingModels } from '../../../common/subscriptionTypes';
+import { billingModels, normalizedProducts } from '../../../common/subscriptionTypes';
 
 import { canAutoScaleSelector } from '../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import { OSD_TRIAL_FEATURE, MARKETPLACE_QUOTA_FEATURE } from '../../../redux/constants/featureConstants';
@@ -40,20 +40,31 @@ const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
 
 const mapStateToProps = (state, ownProps) => {
   const { organization } = state.userProfile;
-  const { product, cloudProviderID } = ownProps;
+  const { cloudProviderID } = ownProps;
+  let { product } = ownProps;
   const isAwsForm = cloudProviderID === 'aws';
   const defaultRegion = isAwsForm ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
   const { STANDARD, MARKETPLACE } = billingModels;
+  const { OSD, OSDTrial } = normalizedProducts;
 
   let privateClusterSelected = false;
   const valueSelector = formValueSelector('CreateCluster');
   privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
   const customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
 
+  // The user may select a different product after entering the creation page
+  // thus it could differ from the product in the URL
+  const selectedProduct = valueSelector(state, 'product');
+  if (selectedProduct) {
+    product = selectedProduct;
+  }
   const hasAwsQuota = hasAwsQuotaSelector(state, ownProps.product, STANDARD)
                    || hasAwsQuotaSelector(state, ownProps.product, MARKETPLACE);
   const hasGcpQuota = hasGcpQuotaSelector(state, ownProps.product, STANDARD)
                    || hasGcpQuotaSelector(state, ownProps.product, MARKETPLACE);
+
+  const hasStandardOSDQuota = hasAwsQuotaSelector(state, OSD, STANDARD)
+                           || hasGcpQuotaSelector(state, OSD, STANDARD);
 
   return ({
     createClusterResponse: state.clusters.createdCluster,
@@ -71,17 +82,20 @@ const mapStateToProps = (state, ownProps) => {
     loadBalancerValues: state.loadBalancerValues,
 
     clustersQuota: {
+      hasStandardOSDQuota,
       hasProductQuota: hasManagedQuotaSelector(state, ownProps.product),
+      hasOSDTrialQuota: hasManagedQuotaSelector(state, OSDTrial),
       hasMarketplaceProductQuota: hasManagedQuotaSelector(
-        state, ownProps.product, MARKETPLACE,
+        state, product, MARKETPLACE,
       ),
       hasAwsQuota,
       hasGcpQuota,
-      aws: awsQuotaSelector(state, ownProps.product, STANDARD),
-      gcp: gcpQuotaSelector(state, ownProps.product, STANDARD),
+      aws: awsQuotaSelector(state, product, STANDARD),
+      gcp: gcpQuotaSelector(state, product, STANDARD),
       marketplace: {
-        aws: awsQuotaSelector(state, ownProps.product, MARKETPLACE),
-        gcp: gcpQuotaSelector(state, ownProps.product, MARKETPLACE),
+        // RHM does not sell OSD Trial access
+        aws: awsQuotaSelector(state, OSD, MARKETPLACE),
+        gcp: gcpQuotaSelector(state, OSD, MARKETPLACE),
       },
     },
 
@@ -169,7 +183,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     if (!isEmpty(parsedLabels)) {
       clusterRequest.nodes.compute_labels = parseReduxFormKeyValueList(formData.node_labels);
     }
-    if (ownProps.product) {
+    if (formData.product) {
+      clusterRequest.product = {
+        id: formData.product.toLowerCase(),
+      };
+    } else if (ownProps.product) {
       clusterRequest.product = {
         id: ownProps.product.toLowerCase(),
       };
