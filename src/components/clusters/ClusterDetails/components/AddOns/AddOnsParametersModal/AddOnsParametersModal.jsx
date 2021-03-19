@@ -6,7 +6,7 @@ import { Field } from 'redux-form';
 import { LevelUpAltIcon } from '@patternfly/react-icons';
 import Modal from '../../../../../common/Modal/Modal';
 import { hasParameters } from '../AddOnsHelper';
-import { ReduxCheckbox, ReduxVerticalFormGroup } from '../../../../../common/ReduxFormComponents';
+import { ReduxCheckbox, ReduxVerticalFormGroup, ReduxFormDropdown } from '../../../../../common/ReduxFormComponents';
 import { required, validateNumericInput } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
 
@@ -79,6 +79,13 @@ class AddOnsParametersModal extends Component {
   };
 
   getFieldProps = (param) => {
+    if (param.options !== undefined && param.options.length > 0) {
+      return ({
+        component: ReduxFormDropdown,
+        options: param.options,
+        type: 'text',
+      });
+    }
     switch (param.value_type) {
       case 'number':
         return ({
