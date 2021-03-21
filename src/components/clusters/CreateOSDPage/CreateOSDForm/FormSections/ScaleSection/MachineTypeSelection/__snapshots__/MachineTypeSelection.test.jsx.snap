@@ -76,6 +76,29 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
         "name": "Memory optimized - R5.4XLarge",
         "resource_name": "mem.large",
       },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xlarge",
+        "size": "xlarge",
+      },
     ]
   }
 >
@@ -127,6 +150,29 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
   }
   machineTypesByID={
     Object {
+      "m5.12xlarge": Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xlarge",
+        "size": "xlarge",
+      },
       "r5.4xlarge": Object {
         "category": "memory_optimized",
         "cloud_provider": Object {
@@ -268,6 +314,29 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         "name": "Memory optimized - R5.4XLarge",
         "resource_name": "mem.large",
       },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xlarge",
+        "size": "xlarge",
+      },
     ]
   }
 >
@@ -317,7 +386,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           aria-label={null}
           billingModel="standard"
           className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
-          data-ouia-component-id="OUIA-Generated-Button-tertiary-5"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-6"
           data-ouia-component-type="PF4/Button"
           data-ouia-safe={true}
           disabled={true}
@@ -438,7 +507,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           aria-label={null}
           billingModel="standard"
           className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
-          data-ouia-component-id="OUIA-Generated-Button-tertiary-6"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-7"
           data-ouia-component-type="PF4/Button"
           data-ouia-safe={true}
           disabled={true}
@@ -516,6 +585,127 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         </button>
       </Button>
     </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <ContainerNodeIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.m5.12xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="m5.12xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            m5.12xlarge
+          </div>
+          <div>
+            General purpose
+          </div>
+        </React.Fragment>
+      }
+      titleText="48 vCPU 192 GiB RAM"
+      tooltip={false}
+      value="m5.12xlarge"
+    >
+      <Button
+        billingModel="standard"
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.m5.12xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          billingModel="standard"
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-8"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.m5.12xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <ContainerNodeIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 1024 1024"
+                      width="2em"
+                    >
+                      <path
+                        d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
+                      />
+                    </svg>
+                  </ContainerNodeIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      48 vCPU 192 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    m5.12xlarge
+                  </div>
+                  <div>
+                    General purpose
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
   </div>
 </MachineTypeSelection>
 `;
@@ -556,6 +746,29 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
   }
   machineTypesByID={
     Object {
+      "m5.12xlarge": Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xlarge",
+        "size": "xlarge",
+      },
       "r5.4xlarge": Object {
         "category": "memory_optimized",
         "cloud_provider": Object {
@@ -696,6 +909,29 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         },
         "name": "Memory optimized - R5.4XLarge",
         "resource_name": "mem.large",
+      },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xlarge",
+        "size": "xlarge",
       },
     ]
   }
@@ -944,6 +1180,127 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         </button>
       </Button>
     </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <ContainerNodeIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.m5.12xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="m5.12xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            m5.12xlarge
+          </div>
+          <div>
+            General purpose
+          </div>
+        </React.Fragment>
+      }
+      titleText="48 vCPU 192 GiB RAM"
+      tooltip={false}
+      value="m5.12xlarge"
+    >
+      <Button
+        billingModel="standard"
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.m5.12xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          billingModel="standard"
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-5"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.m5.12xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <ContainerNodeIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 1024 1024"
+                      width="2em"
+                    >
+                      <path
+                        d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
+                      />
+                    </svg>
+                  </ContainerNodeIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      48 vCPU 192 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    m5.12xlarge
+                  </div>
+                  <div>
+                    General purpose
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
   </div>
 </MachineTypeSelection>
 `;
@@ -984,6 +1341,29 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
   }
   machineTypesByID={
     Object {
+      "m5.12xlarge": Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xlarge",
+        "size": "xlarge",
+      },
       "r5.4xlarge": Object {
         "category": "memory_optimized",
         "cloud_provider": Object {
@@ -1099,6 +1479,29 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
         },
         "name": "Memory optimized - R5.4XLarge",
         "resource_name": "mem.large",
+      },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xlarge",
+        "size": "xlarge",
       },
     ]
   }
@@ -1543,6 +1946,29 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
         "name": "Memory optimized - R5.4XLarge",
         "resource_name": "mem.large",
       },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xlarge",
+        "size": "xlarge",
+      },
     ]
   }
 >
@@ -1645,6 +2071,29 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
         },
         "name": "Memory optimized - R5.4XLarge",
         "resource_name": "mem.large",
+      },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xlarge",
+        "size": "xlarge",
       },
     ]
   }

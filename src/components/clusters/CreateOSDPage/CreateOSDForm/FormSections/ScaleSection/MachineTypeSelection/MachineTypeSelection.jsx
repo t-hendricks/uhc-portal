@@ -172,15 +172,20 @@ class MachineTypeSelection extends React.Component {
         />
       );
     };
+
+    let displayedMachineTypes = sortedMachineTypes;
     if (machineTypes.fulfilled && organization.fulfilled) {
-      if (sortedMachineTypes.length === 0) {
+      if (!isBYOC) {
+        displayedMachineTypes = sortedMachineTypes.filter(type => !type.ccs_only);
+      }
+      if (displayedMachineTypes.length === 0) {
         return <div>No supported machine types</div>;
       }
       return (
         <>
           {(touched && error) && (<span className="error">{error}</span>)}
           <div className="flat-radio-buttons-flex-container">
-            {sortedMachineTypes.map(type => machineTypeRadio(type))}
+            {displayedMachineTypes.map(type => machineTypeRadio(type))}
           </div>
         </>
       );
