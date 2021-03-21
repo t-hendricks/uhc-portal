@@ -1,3 +1,4 @@
+import produce from 'immer';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 const match = { params: { id: '1msoogsgTLQ4PePjrTOt3UqvMzX' } };
@@ -409,8 +410,27 @@ const clusterDetails = {
       region_id: 'us-east-1',
     },
   },
-
 };
+
+const CCSClusterDetails = produce(clusterDetails, (draft) => {
+  draft.cluster.byoc = true;
+  draft.cluster.ccs.enabled = true;
+});
+
+const OSDTrialClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.OSDTrial };
+  draft.cluster.subscription.plan = { id: normalizedProducts.OSDTrial };
+});
+
+const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.ROSA };
+  draft.cluster.subscription.plan = { id: normalizedProducts.ROSA };
+});
+
+const RHMIClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.RHMI };
+  draft.cluster.subscription.plan = { id: normalizedProducts.RHMI };
+});
 
 const insightsData = {
   meta: {
@@ -961,6 +981,10 @@ const clusterRouters = {
 const fixtures = {
   match,
   clusterDetails,
+  CCSClusterDetails,
+  OSDTrialClusterDetails,
+  ROSAClusterDetails,
+  RHMIClusterDetails,
   insightsData,
   OCPClusterDetails,
   AROClusterDetails,

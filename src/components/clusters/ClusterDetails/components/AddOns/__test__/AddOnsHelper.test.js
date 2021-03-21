@@ -1,5 +1,4 @@
 import cloneDeep from 'lodash/cloneDeep';
-import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import {
   crcWorkspaces,
   managedIntegration,
@@ -30,75 +29,58 @@ import {
   validateAddOnRequirements,
 } from '../AddOnsHelper';
 
-const osdCluster = fixtures.clusterDetails.cluster;
-const osdCCSCluster = {
-  ...osdCluster,
-  ccs: { enabled: true },
-};
-const rosaCluster = {
-  ...osdCCSCluster,
-  product: { id: normalizedProducts.ROSA },
-  subscription: {
-    ...osdCCSCluster.subscription,
-    plan: { id: normalizedProducts.ROSA },
-  },
-};
-const rhmiCluster = {
-  ...osdCCSCluster,
-  product: { id: normalizedProducts.RHMI },
-  subscription: {
-    ...osdCCSCluster.subscription,
-    plan: { id: normalizedProducts.RHMI },
-  },
-};
+const OSDCluster = fixtures.clusterDetails.cluster;
+const OSDCCSCluster = fixtures.CCSClusterDetails.cluster;
+const ROSACluster = fixtures.ROSAClusterDetails.cluster;
+const RHMICluster = fixtures.RHMIClusterDetails.cluster;
 
 const org = { fulfilled: true };
 
 describe('isAvailable', () => {
   it('should determine that logging add-on is available on rhInfra', () => {
-    const available = isAvailable(loggingOperator, osdCluster, org, loggingAddonQuota);
+    const available = isAvailable(loggingOperator, OSDCluster, org, loggingAddonQuota);
     expect(available).toBe(true);
   });
 
   it('should determine that logging add-on is available on CCS', () => {
-    const available = isAvailable(loggingOperator, osdCCSCluster, org, loggingAddonQuota);
+    const available = isAvailable(loggingOperator, OSDCCSCluster, org, loggingAddonQuota);
     expect(available).toBe(true);
   });
 
   it('should determine that free add-on is available', () => {
     const available = isAvailable(
-      crcWorkspaces, osdCluster, org, crcWorkspacesAddonQuota,
+      crcWorkspaces, OSDCluster, org, crcWorkspacesAddonQuota,
     );
     expect(available).toBe(true);
   });
 
   it('should determine that add-on is not available', () => {
-    const available = isAvailable(serviceMesh, osdCluster, org, dbaAddonQuota);
+    const available = isAvailable(serviceMesh, OSDCluster, org, dbaAddonQuota);
     expect(available).toBe(false);
   });
 
   it('should determine that add-on is available', () => {
-    const available = isAvailable(dbaOperator, osdCluster, org, dbaAddonQuota);
+    const available = isAvailable(dbaOperator, OSDCluster, org, dbaAddonQuota);
     expect(available).toBe(true);
   });
 
   it('should determine that add-on is available for non-OSD cluster', () => {
     // addon-crw-operator has product 'any'
     let available = isAvailable(
-      crcWorkspaces, rhmiCluster, org, crcWorkspacesAddonQuota,
+      crcWorkspaces, RHMICluster, org, crcWorkspacesAddonQuota,
     );
     expect(available).toBe(true);
-    available = isAvailable(crcWorkspaces, rosaCluster, org, crcWorkspacesAddonQuota);
+    available = isAvailable(crcWorkspaces, ROSACluster, org, crcWorkspacesAddonQuota);
     expect(available).toBe(true);
-    available = isAvailable(crcWorkspaces, osdCluster, org, crcWorkspacesAddonQuota);
+    available = isAvailable(crcWorkspaces, OSDCluster, org, crcWorkspacesAddonQuota);
     expect(available).toBe(true);
   });
 
   it('should determine that several add-ons are available', () => {
-    expect(isAvailable(serviceMesh, osdCCSCluster, org, addonsQuota)).toBe(true);
-    expect(isAvailable(crcWorkspaces, osdCCSCluster, org, addonsQuota)).toBe(true);
-    expect(isAvailable(dbaOperator, osdCCSCluster, org, addonsQuota)).toBe(true);
-    expect(isAvailable(loggingOperator, osdCCSCluster, org, addonsQuota)).toBe(true);
+    expect(isAvailable(serviceMesh, OSDCCSCluster, org, addonsQuota)).toBe(true);
+    expect(isAvailable(crcWorkspaces, OSDCCSCluster, org, addonsQuota)).toBe(true);
+    expect(isAvailable(dbaOperator, OSDCCSCluster, org, addonsQuota)).toBe(true);
+    expect(isAvailable(loggingOperator, OSDCCSCluster, org, addonsQuota)).toBe(true);
   });
 });
 
@@ -116,58 +98,58 @@ describe('isInstalled', () => {
 
 describe('hasQuota', () => {
   it('should determine that the org does not have quota on rhInfra', () => {
-    const quota = hasQuota(loggingOperator, osdCluster, org, loggingAddonQuota);
+    const quota = hasQuota(loggingOperator, OSDCluster, org, loggingAddonQuota);
     expect(quota).toBe(false);
   });
 
   it('should determine that the org does not need quota on CCS', () => {
-    const quota = hasQuota(loggingOperator, osdCCSCluster, org, loggingAddonQuota);
+    const quota = hasQuota(loggingOperator, OSDCCSCluster, org, loggingAddonQuota);
     expect(quota).toBe(true);
   });
 
   it('should determine that the org does not need quota for the add-on', () => {
-    const quota = hasQuota(crcWorkspaces, osdCluster, org, crcWorkspacesAddonQuota);
+    const quota = hasQuota(crcWorkspaces, OSDCluster, org, crcWorkspacesAddonQuota);
     expect(quota).toBe(true);
   });
 
   it('should determine that the org does not have quota for different add-on', () => {
-    const quota = hasQuota(serviceMesh, osdCluster, org, dbaAddonQuota);
+    const quota = hasQuota(serviceMesh, OSDCluster, org, dbaAddonQuota);
     expect(quota).toBe(false);
   });
 
   it('should determine that the org has quota for the add-on', () => {
-    const quota = hasQuota(dbaOperator, osdCluster, org, dbaAddonQuota);
+    const quota = hasQuota(dbaOperator, OSDCluster, org, dbaAddonQuota);
     expect(quota).toBe(true);
   });
 
   it('should determine that the org does not need quota for the add-on on an OSD cluster', () => {
-    const quota = hasQuota(crcWorkspaces, osdCluster, org, crcWorkspacesAddonQuota);
+    const quota = hasQuota(crcWorkspaces, OSDCluster, org, crcWorkspacesAddonQuota);
     expect(quota).toBe(true);
   });
 
   it('should determine that the org does not need quota for the add-on on a ROSA cluster', () => {
-    const quota = hasQuota(crcWorkspaces, rosaCluster, org, crcWorkspacesAddonQuota);
+    const quota = hasQuota(crcWorkspaces, ROSACluster, org, crcWorkspacesAddonQuota);
     expect(quota).toBe(true);
   });
 
   it('should determine that the org has quota for several add-ons', () => {
-    expect(hasQuota(serviceMesh, osdCCSCluster, org, addonsQuota)).toBe(true);
-    expect(hasQuota(crcWorkspaces, osdCCSCluster, org, addonsQuota)).toBe(true);
-    expect(hasQuota(dbaOperator, osdCCSCluster, org, addonsQuota)).toBe(true);
-    expect(hasQuota(loggingOperator, osdCCSCluster, org, addonsQuota)).toBe(true);
+    expect(hasQuota(serviceMesh, OSDCCSCluster, org, addonsQuota)).toBe(true);
+    expect(hasQuota(crcWorkspaces, OSDCCSCluster, org, addonsQuota)).toBe(true);
+    expect(hasQuota(dbaOperator, OSDCCSCluster, org, addonsQuota)).toBe(true);
+    expect(hasQuota(loggingOperator, OSDCCSCluster, org, addonsQuota)).toBe(true);
   });
 });
 
 describe('availableAddOns', () => {
   it('should return an empty list', () => {
-    const addOns = availableAddOns({ items: [] }, osdCluster, mockClusterAddOns, {
+    const addOns = availableAddOns({ items: [] }, OSDCluster, mockClusterAddOns, {
       fulfilled: true,
     }, addonsQuota);
     expect(addOns).toEqual([]);
   });
 
   it('should return a list of available add-ons', () => {
-    const addOns = availableAddOns(mockAddOns, osdCluster, mockClusterAddOns, {
+    const addOns = availableAddOns(mockAddOns, OSDCluster, mockClusterAddOns, {
       fulfilled: true,
     }, addonsQuota);
     expect(addOns).toEqual([crcWorkspaces, serviceMesh, dbaOperator, loggingOperator]);
@@ -245,7 +227,7 @@ describe('validateAddOnRequirements', () => {
   let tstCluster;
 
   beforeAll(() => {
-    tstCluster = cloneDeep(osdCluster);
+    tstCluster = cloneDeep(OSDCluster);
   });
 
   it('should return true for addon with no requirements', () => {
