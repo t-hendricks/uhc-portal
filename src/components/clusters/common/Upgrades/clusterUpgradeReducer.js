@@ -26,6 +26,7 @@ import {
   DELETE_UPGRADE_SCHEDULE,
   CLEAR_DELETE_UPGRADE_SCHEDULE,
   CLEAR_POST_UPGRADE_SCHEDULE,
+  CLEAR_GET_UPGRADE_SCHEDULE,
 } from './clusterUpgradeActions';
 
 const initialState = {
@@ -88,6 +89,10 @@ function UpgradesRecuder(state = initialState, action) {
           ...initialState.schedules,
           ...getErrorState(action),
         };
+        break;
+
+      case CLEAR_GET_UPGRADE_SCHEDULE:
+        draft.schedules = { ...initialState.schedules };
         break;
 
       case PENDING_ACTION(DELETE_UPGRADE_SCHEDULE):

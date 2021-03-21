@@ -570,6 +570,7 @@ class ClusterDetails extends Component {
             id="machinePoolsContent"
             ref={this.machinePoolsTabRef}
             aria-label="Machine pools"
+            hidden
           >
             <ErrorBoundary>
               <MachinePools cluster={cluster} />
@@ -582,6 +583,7 @@ class ClusterDetails extends Component {
             id="upgradeSettingsContent"
             ref={this.upgradeSettingsTabRef}
             aria-label="Upgrade settings"
+            hidden
           >
             <ErrorBoundary>
               <UpgradeSettingsTab />
