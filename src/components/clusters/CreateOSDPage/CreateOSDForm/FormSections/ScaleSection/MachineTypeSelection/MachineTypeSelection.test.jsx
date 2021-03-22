@@ -70,6 +70,29 @@ describe('<MachineTypeSelection />', () => {
           href: '/api/clusters_mgmt/v1/cloud_providers/aws',
         },
       },
+      {
+        kind: 'MachineType',
+        name: 'm5.12xlarge - General purpose',
+        category: 'general_purpose',
+        size: 'xlarge',
+        id: 'm5.12xlarge',
+        href: '/api/clusters_mgmt/v1/machine_types/m5.12xlarge',
+        memory: {
+          value: 206158430208,
+          unit: 'B',
+        },
+        cpu: {
+          value: 48,
+          unit: 'vCPU',
+        },
+        cloud_provider: {
+          kind: 'CloudProviderLink',
+          id: 'aws',
+          href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+        },
+        ccs_only: true,
+        resource_name: 'gp.xlarge',
+      },
     ];
   });
 
@@ -230,6 +253,29 @@ describe('<MachineTypeSelection />', () => {
             href: '/api/clusters_mgmt/v1/cloud_providers/aws',
           },
         },
+        'm5.12xlarge': {
+          kind: 'MachineType',
+          name: 'm5.12xlarge - General purpose',
+          category: 'general_purpose',
+          size: 'xlarge',
+          id: 'm5.12xlarge',
+          href: '/api/clusters_mgmt/v1/machine_types/m5.12xlarge',
+          memory: {
+            value: 206158430208,
+            unit: 'B',
+          },
+          cpu: {
+            value: 48,
+            unit: 'vCPU',
+          },
+          cloud_provider: {
+            kind: 'CloudProviderLink',
+            id: 'aws',
+            href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+          },
+          ccs_only: true,
+          resource_name: 'gp.xlarge',
+        },
       };
     });
 
@@ -269,6 +315,10 @@ describe('<MachineTypeSelection />', () => {
       it('calls onChange with the first item that has quota', () => {
         expect(onChange).toBeCalledWith('r5.xlarge');
       });
+
+      it('does not display ccs_only machine types', () => {
+        expect(wrapper.find('FlatRadioButton')).toHaveLength(2);
+      });
     });
 
     describe('byoc with sufficient byoc quota available', () => {
@@ -306,6 +356,10 @@ describe('<MachineTypeSelection />', () => {
 
       it('calls onChange with the first item that has quota', () => {
         expect(onChange).toBeCalledWith('r5.xlarge');
+      });
+
+      it('displays ccs_only machine types', () => {
+        expect(wrapper.find('FlatRadioButton')).toHaveLength(3);
       });
     });
 
