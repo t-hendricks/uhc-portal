@@ -344,28 +344,23 @@ describe('clustersActions', () => {
   describe('processLoadBalancerQuota', () => {
     let loadBalancerQuota;
     beforeEach(() => {
-      loadBalancerQuota = {
-        aws: { available: 0 },
-        gcp: { available: 0 },
-      };
+      loadBalancerQuota = userActions.emptyQuota().loadBalancerQuota;
     });
 
     it('should process quota on AWS', () => {
       const resources = [{
+        resource_type: 'network.loadbalancer',
         cloud_provider: 'aws',
+        byoc: 'rhinfra',
+        resource_name: 'network',
+        availability_zone_type: 'any',
+        product: OSD,
+        billing_model: 'standard',
+        cost: 1,
       }];
-      userActions.processLoadBalancerQuota(loadBalancerQuota, item, resources);
-      expect(loadBalancerQuota.aws.available).toEqual(1);
-      expect(loadBalancerQuota.gcp.available).toEqual(0);
-    });
-
-    it('should process quota for any cloud provider', () => {
-      const resources = [{
-        cloud_provider: 'any',
-      }];
-      userActions.processLoadBalancerQuota(loadBalancerQuota, item, resources);
-      expect(loadBalancerQuota.aws.available).toEqual(1);
-      expect(loadBalancerQuota.gcp.available).toEqual(1);
+      userActions.processLoadBalancerQuota(loadBalancerQuota,
+        { allowed: 40, consumed: 0 }, resources);
+      expect(loadBalancerQuota[STANDARD][OSD].aws.rhInfra.singleAZ.network).toEqual(40);
     });
   });
 
