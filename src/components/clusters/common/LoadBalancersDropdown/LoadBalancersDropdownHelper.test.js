@@ -1,4 +1,4 @@
-import filterLoadBalancerValuesByQuota from './helpers';
+import { filterLoadBalancerValuesByQuota } from './LoadBalancersDropdownHelper';
 
 test('filterLoadBalancerValuesByQuota works without currentValue and with positive quota', () => {
   const remainingQuota = 4;

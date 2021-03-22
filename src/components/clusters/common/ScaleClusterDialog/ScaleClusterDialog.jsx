@@ -139,6 +139,10 @@ class ScaleClusterDialog extends Component {
                         disabled={pending}
                         currentValue={initialValues.load_balancers}
                         cloudProviderID={cloudProviderID}
+                        billingModel={billingModel}
+                        product={product}
+                        isBYOC={isByoc}
+                        isMultiAZ={isMultiAZ}
                       />
                     </FormGroup>
                   </GridItem>

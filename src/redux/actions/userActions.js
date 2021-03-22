@@ -169,15 +169,36 @@ const processStorageQuota = (storageQuota, item, resources) => {
 
 const processLoadBalancerQuota = (loadBalancerQuota, item, resources) => {
   const quota = loadBalancerQuota;
-  const available = item.allowed - item.consumed;
-
   resources.forEach((resource) => {
-    const cloudProvider = resource.cloud_provider;
-
+    const available = availableByCost(item, resource);
+    const {
+      availability_zone_type: availabilityZoneType,
+      cloud_provider: cloudProvider,
+      resource_name: resourceName,
+      product: quotaProduct,
+      billing_model: quotaBilling = 'standard',
+    } = resource;
+    const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
     /* eslint-disable no-param-reassign */
-    Object.entries(quota).forEach(([provider, providerQuota]) => {
-      if (cloudProvider === provider || cloudProvider === 'any') {
-        providerQuota.available += available;
+    Object.entries(quota).forEach(([billing, billingQuota]) => {
+      if (quotaBilling === billing || quotaBilling === 'any') {
+        Object.entries(billingQuota).forEach(([product, productQuota]) => {
+          if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
+            Object.entries(productQuota).forEach(([provider, providerQuota]) => {
+              if (cloudProvider === provider || cloudProvider === 'any') {
+                Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
+                  if (infraCategory === category || infraCategory === 'any') {
+                    Object.entries(categoryQuota).forEach(([zoneType, zoneQuota]) => {
+                      if (`${availabilityZoneType}AZ` === zoneType || availabilityZoneType === 'any') {
+                        zoneQuota[resourceName] = available;
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
       }
     });
     /* eslint-enable no-param-reassign */
@@ -335,10 +356,41 @@ const emptyQuota = () => {
     return result;
   };
 
-  const loadBalancerQuotaByProvider = () => ({
-    aws: { available: 0 },
-    gcp: { available: 0 },
+  const loadBalancerQuotaByAZ = () => ({
+    singleAZ: { available: 0 },
+    multiAZ: { available: 0 },
   });
+
+  const loadBalancerQuotaByInfraAZ = () => ({
+    byoc: loadBalancerQuotaByAZ(),
+    rhInfra: loadBalancerQuotaByAZ(),
+    isAvailable: false,
+  });
+
+  const loadBalancerQuotaByProviderInfraAZ = () => ({
+    aws: loadBalancerQuotaByInfraAZ(),
+    gcp: loadBalancerQuotaByInfraAZ(),
+  });
+
+  const loadBalancerQuotaByProductProviderInfraAZ = () => {
+    const result = {};
+    Object.keys(knownProducts).forEach((p) => {
+      result[p] = loadBalancerQuotaByProviderInfraAZ();
+    });
+    return result;
+  };
+
+  // Initialize an empty tree for load balancer quota.
+  // To be populated at processLoadBalancerQuota.
+  // the tree levels are:
+  // billing model -> products -> cloud-provider -> infra (byoc, rhinfra) -> multi / single az.
+  const loadBalancerBillingProductProviderInfraAZ = () => {
+    const result = {};
+    Object.values(billingModels).forEach((model) => {
+      result[model] = loadBalancerQuotaByProductProviderInfraAZ();
+    });
+    return result;
+  };
 
   const addOnsQuotaByAz = () => ({
     singleAz: { available: 0 },
@@ -373,7 +425,7 @@ const emptyQuota = () => {
     clustersQuota: clustersQuotaByBillingProductProviderInfraAz(),
     nodesQuota: nodesQuotaByBillingProductProviderInfra(),
     storageQuota: storageQuotaByBillingProductProviderInfraAZ(),
-    loadBalancerQuota: loadBalancerQuotaByProvider(),
+    loadBalancerQuota: loadBalancerBillingProductProviderInfraAZ(),
     addOnsQuota: addOnsQuotaByBillingProductProviderInfraAz(),
   };
 };
