@@ -155,6 +155,10 @@ function ScaleSection({
                 disabled={pending}
                 currentValue={null}
                 cloudProviderID={cloudProviderID}
+                billingModel={billingModel}
+                product={product}
+                isBYOC={isBYOC}
+                isMultiAZ={isMultiAz}
               />
             </FormGroup>
           </GridItem>

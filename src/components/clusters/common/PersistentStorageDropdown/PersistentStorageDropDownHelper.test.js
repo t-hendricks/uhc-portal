@@ -1,4 +1,4 @@
-import filterPersistentStorageValuesByQuota from './helpers';
+import { filterPersistentStorageValuesByQuota } from './PersistentStorageDropDownHelper';
 
 test('filterPersistentStorageValuesByQuota works without currentValue and with positive quota', () => {
   const remainingQuota = 500;
