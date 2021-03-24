@@ -8,12 +8,14 @@ import {
   deleteMachinePool,
   clearGetMachinePoolsResponse,
 } from './MachinePoolsActions';
+import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
+
 import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
 import { getMachineTypes } from '../../../../../redux/actions/machineTypesActions';
 import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
 
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
-import { hasMachinePoolsQuotaSelector } from './MachinePoolsSelectors';
+import modals from '../../../../common/Modal/modals';
 
 const mapStateToProps = (state) => {
   const cluster = get(state, 'clusters.details.cluster', {});
@@ -35,7 +37,8 @@ const mapStateToProps = (state) => {
 
   return ({
     isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
-    isEditLabelsAndTaintsModalOpen: shouldShowModal(state, 'edit-labels-taints'),
+    isEditTaintsModalOpen: shouldShowModal(state, modals.EDIT_TAINTS),
+    isEditLabelsModalOpen: shouldShowModal(state, modals.EDIT_LABELS),
     defaultMachinePool,
     machinePoolsList: state.machinePools.getMachinePools,
     addMachinePoolResponse: state.machinePools.addMachinePoolResponse,

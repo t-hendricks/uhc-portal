@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EditLabelsModal /> renders correctly 1`] = `
+<Modal
+  isPrimaryDisabled={true}
+  modalSize="medium"
+  onClose={[Function]}
+  onPrimaryClick={[MockFunction]}
+  onSecondaryClick={[Function]}
+  primaryText="Save"
+  title="Edit labels"
+>
+  <Form
+    onSubmit={[MockFunction]}
+  >
+    <Grid
+      hasGutter={true}
+    >
+      <GridItem
+        span={5}
+      >
+        <Field
+          component={[Function]}
+          label="Machine pool"
+          name="machinePoolId"
+          onChange={[Function]}
+          options={
+            Array [
+              Object {
+                "name": "mp-with-labels",
+                "value": "mp-with-labels",
+              },
+            ]
+          }
+        />
+      </GridItem>
+      <GridItem
+        span={7}
+      />
+      <GridItem
+        span={12}
+      >
+        <p
+          className="space-bottom-md"
+        >
+          Labels help you organize and select resources. Adding labels below will let you query for objects that have similar, overlapping or dissimilar labels.
+        </p>
+        <Field
+          component={[Function]}
+          inputPlaceholder="Add a label"
+          label="Labels"
+          name="labels"
+          tags={Array []}
+          validate={[Function]}
+        />
+      </GridItem>
+    </Grid>
+  </Form>
+</Modal>
+`;
