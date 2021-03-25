@@ -61,8 +61,9 @@ class OSDSubscriptionCard extends Component {
   render() {
     const { quotaCost, marketplaceQuotaFeature } = this.props;
     let content;
+    let rows = [];
     if (quotaCost.fulfilled) {
-      const rows = quotaCost.items.flatMap((quotaItem) => {
+      rows = quotaCost.items.flatMap((quotaItem) => {
         // filter out quota you neither have nor consume
         if (quotaItem.consumed === 0 && quotaItem.allowed === 0) {
           return [];
@@ -92,7 +93,10 @@ class OSDSubscriptionCard extends Component {
           { title: this.getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
         ]];
       });
+    }
 
+    // all rows may be filtered out if a user doesn't have any quota
+    if (rows.length > 0) {
       content = (
         <>
           <StackItem className="content-header">
