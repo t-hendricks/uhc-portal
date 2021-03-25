@@ -325,6 +325,7 @@ class CreateOSDPage extends React.Component {
                     billingModel={billingModel}
                     marketplaceQuotaFeature={marketplaceQuotaFeature}
                     getMarketplaceQuota={this.getMarketplaceQuota}
+                    osdTrialFeature={osdTrialFeature}
                   />
                   {/* Form footer */}
                   <GridItem>
@@ -367,6 +368,7 @@ CreateOSDPage.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   clustersQuota: PropTypes.shape({
+    hasStandardOSDQuota: PropTypes.bool.isRequired,
     hasProductQuota: PropTypes.bool.isRequired,
     hasProductMarketplaceQuota: PropTypes.bool,
     hasAwsQuota: PropTypes.bool.isRequired,
@@ -410,7 +412,7 @@ CreateOSDPage.propTypes = {
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
-  billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
+  billingModel: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
