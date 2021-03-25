@@ -1,8 +1,8 @@
 {
   "kind": "SubscriptionList",
   "page": 1,
-  "size": 14,
-  "total": 14,
+  "size": 12,
+  "total": 12,
   "items": [
     {
       "id": "1KgB0WcVBZBdRGAreuve29yoxUB",
@@ -388,62 +388,6 @@
       "status": "Disconnected",
       "last_reconcile_date": "2019-12-22T10:42:33.500505Z",
       "consumer_uuid": "ae614bdc-b273-4fb5-8d65-a6b1eea19c1d"
-    },
-    {
-      "id": "1VAYPPHgFNHENCwB4rsfDmgCS8z",
-      "kind": "Subscription",
-      "href": "/api/accounts_mgmt/v1/subscriptions/1VAYPPHgFNHENCwB4rsfDmgCS8z",
-      "plan": {
-        "id": "OSD",
-        "kind": "Plan",
-        "href": "/api/accounts_mgmt/v1/plans/OSD"
-      },
-      "cluster_id": "1H1l4oRVxoh6qSTf4fSmvtaGaWy",
-      "external_cluster_id": "b0c2d108-0603-41c3-9a8f-0a37eba5df49",
-      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
-      "last_telemetry_date": "2019-12-22T11:13:37.38406Z",
-      "created_at": "2019-12-18T19:29:01.359556Z",
-      "updated_at": "2019-12-22T11:13:37.384246Z",
-      "support_level": "Premium",
-      "display_name": "fake-managed-cluster",
-      "creator": {
-        "id": "1MRtmsFtVUgyKlYg125H98kmeLd",
-        "kind": "Account",
-        "href": "/api/accounts_mgmt/v1/accounts/1MRtmsFtVUgyKlYg125H98kmeLd",
-        "name": "Beni Paskin-Cherniavsky",
-        "username": "bpaskinc.openshift"
-      },
-      "managed": true,
-      "status": "Active",
-      "last_reconcile_date": "0001-01-01T00:00:00Z"
-    },
-    {
-      "id": "1Uk0VXX16bIDuBwpkBBkY9VCb3i",
-      "kind": "Subscription",
-      "href": "/api/accounts_mgmt/v1/subscriptions/1Uk0VXX16bIDuBwpkBBkY9VCb3i",
-      "plan": {
-        "id": "OCP",
-        "kind": "Plan",
-        "href": "/api/accounts_mgmt/v1/plans/OCP"
-      },
-      "cluster_id": "fakeclusterid",
-      "external_cluster_id": "b0c2d108-0603-41c3-9a8f-fake",
-      "organization_id": "1Hjy0dhTVwN0oQ29KY6J47w0K8n",
-      "last_telemetry_date": "2019-12-09T10:03:17.532066Z",
-      "created_at": "2019-12-09T09:55:09.286938Z",
-      "updated_at": "2019-12-22T09:03:17.053216Z",
-      "display_name": "fake-managed-cluster-2",
-      "creator": {
-        "id": "1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1",
-        "kind": "Account",
-        "href": "/api/accounts_mgmt/v1/accounts/1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1",
-        "name": "Clayton Coleman",
-        "username": "openshift-ci-test"
-      },
-      "managed": false,
-      "status": "Active",
-      "last_reconcile_date": "2019-12-22T09:03:17.049388Z",
-      "consumer_uuid": "ffca7424-941a-4780-9ca5-f209b0ac2346"
     },
     {
       "id": "1MmOwBoTq1uDmcpBk0NBqJ3dXej",
