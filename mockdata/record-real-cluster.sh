@@ -53,6 +53,7 @@ else
       request "  " "$href"
     done
 
+  request "" "$cluster_href/status"
   request "" "$cluster_href/metric_queries/alerts"
   request "" "$cluster_href/metric_queries/nodes"
   request "" "$cluster_href/metric_queries/cluster_operators"
