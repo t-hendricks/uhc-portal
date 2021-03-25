@@ -178,6 +178,12 @@ if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     rm -rf build
     yarn build --mode=production --beta="true" --api-env="staging"
     push_build "qa-beta"
+
+    echo "running push to secondary environment - ci-beta (not supported)"
+    rm -rf build
+    yarn build --mode=production --beta="true" --api-env="disabled"
+    push_build "ci-beta"
+
 elif [ "$1" == "candidate" ]; then
     echo "running candidate push"
     echo "Candidate branch is available on https://cloud.redhat.com/beta/openshift"
