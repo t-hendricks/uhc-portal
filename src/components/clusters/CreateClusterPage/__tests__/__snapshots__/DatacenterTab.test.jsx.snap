@@ -140,7 +140,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/vsphere/user-provisioned"
+                    to="/install/vsphere"
                   >
                     vSphere
                   </Link>
@@ -265,7 +265,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/vsphere/user-provisioned"
+                    to="/install/vsphere"
                   >
                     vSphere
                   </Link>

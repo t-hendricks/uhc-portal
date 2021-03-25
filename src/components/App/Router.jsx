@@ -50,6 +50,8 @@ import InstallOSPUPI from '../clusters/install/InstallOSPUPI';
 import InstallRHV from '../clusters/install/InstallRHV';
 import InstallRHVIPI from '../clusters/install/InstallRHVIPI';
 import InstallRHVUPI from '../clusters/install/InstallRHVUPI';
+import InstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
+import InstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallPullSecret from '../clusters/install/InstallPullSecret';
@@ -109,7 +111,9 @@ function Router({ history }) {
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
-            <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
+            <Route path="/install/vsphere" exact component={InstallVSphere} />
+            <Route path="/install/vsphere/user-provisioned" component={InstallVSphereUPI} />
+            <Route path="/install/vsphere/installer-provisioned" component={InstallVSphereIPI} />
             <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
             <Route path="/install/power/user-provisioned" component={InstallPower} />
             <Route path="/install/pre-release" component={InstallPreRelease} />

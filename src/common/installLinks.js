@@ -85,7 +85,8 @@ const links = {
   RHCOS_OSPUPI_QCOW_S390X: `${MIROR_RHCOS_LATEST_S390X}/rhcos-openstack.s390x.qcow2.gz`,
   RHCOS_OSPUPI_QCOW_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-openstack.ppc64le.qcow2.gz`,
 
-  INSTALL_VSPHERE_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
+  INSTALL_VSPHEREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
+  INSTALL_VSPHEREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-installer-provisioned.html`,
   INSTALL_VSPHERE_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere`,
   INSTALL_VSPHERE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html`,
   RHCOS_VSPHERE_OVA_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-vmware.x86_64.ova`,
