@@ -53,13 +53,16 @@ const dashboardState = {
 describe('<Overview />', () => {
   let getSummaryDashboard;
   let getUnhealthyClusters;
+  let getUserAccess;
   let wrapper;
   let viewOptions;
   let fetchInsightsGroups;
   let fetchOrganizationInsights;
+  let userAccess;
   beforeAll(() => {
     getSummaryDashboard = jest.fn();
     getUnhealthyClusters = jest.fn();
+    getUserAccess = jest.fn();
     fetchInsightsGroups = jest.fn();
     fetchOrganizationInsights = jest.fn();
     viewOptions = {
@@ -67,6 +70,9 @@ describe('<Overview />', () => {
       pageSize: 1,
       totalCount: 1,
       totalPages: 1,
+    };
+    userAccess = {
+      data: true,
     };
     wrapper = shallow(
       <Overview
@@ -89,6 +95,8 @@ describe('<Overview />', () => {
         fetchOrganizationInsights={fetchOrganizationInsights}
         insightsOverview={dashboardState.insightsOverview}
         insightsGroups={dashboardState.insightsGroups}
+        getUserAccess={getUserAccess}
+        userAccess={userAccess}
       />,
     );
   });
