@@ -161,7 +161,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     };
 
     if (formData.billing_model) {
-      clusterRequest.billing_model = formData.billing_model;
+      const [billing] = formData.billing_model.split('-');
+      clusterRequest.billing_model = billing;
     } else {
       clusterRequest.billing_model = 'standard';
     }
