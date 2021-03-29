@@ -339,7 +339,9 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('does not display ccs_only machine types', () => {
-        expect(wrapper.find('FlatRadioButton')).toHaveLength(2);
+        const types = wrapper.find('FlatRadioButton').getElements().map(e => e.key);
+        expect(types).not.toContain('m5.12xlarge');
+        expect(types).not.toContain('g4dn.2xlarge');
       });
     });
 
@@ -381,7 +383,9 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('displays ccs_only machine types', () => {
-        expect(wrapper.find('FlatRadioButton')).toHaveLength(4);
+        const types = wrapper.find('FlatRadioButton').getElements().map(e => e.key);
+        expect(types).toContain('m5.12xlarge');
+        expect(types).toContain('g4dn.2xlarge');
       });
     });
 
