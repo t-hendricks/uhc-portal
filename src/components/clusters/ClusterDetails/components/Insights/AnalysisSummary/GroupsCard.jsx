@@ -18,7 +18,8 @@ import { ChartPie, ChartLegend } from '@patternfly/react-charts';
 import { HelpIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
-const groupRulesByGroups = (data, groups) => groups.sort((a, b) => a.title.localeCompare(b.title))
+export const groupRulesByGroups = (data, groups) => groups
+  .sort((a, b) => a.title.localeCompare(b.title))
   .reduce(
     (acc, { tags, title }) => ({
       ...acc,

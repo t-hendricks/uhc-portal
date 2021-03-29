@@ -1,33 +1,24 @@
 {
   "groups": [
     {
-      "title": "Group1",
-      "description": "Groups 1 description",
-      "tags": [
-        "tag1"
-      ]
+      "title": "Fault Tolerance",
+      "description": "Fault Tolerance description",
+      "tags": ["tag1"]
     },
     {
-      "title": "Group2",
-      "description": "Groups 2 description",
-      "tags": [
-        "tag2"
-      ]
+      "title": "Service Availability",
+      "description": "Service Availability description",
+      "tags": ["tag2"]
     },
     {
-      "title": "Group3",
-      "description": "Groups 2 description",
-      "tags": [
-        "tag3"
-      ]
+      "title": "Performance",
+      "description": "Performance description",
+      "tags": ["tag3"]
     },
     {
-      "title": "Group4",
-      "description": "Groups 2 description",
-      "tags": [
-        "tag1",
-        "tag4"
-      ]
+      "title": "Security",
+      "description": "Security description",
+      "tags": ["tag1", "tag4"]
     }
   ],
   "status": "ok"
