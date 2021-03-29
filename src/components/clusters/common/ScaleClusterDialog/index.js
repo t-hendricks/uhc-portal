@@ -32,8 +32,9 @@ const mapStateToProps = (state) => {
     loadBalancerValues: state.loadBalancerValues,
     organization: state.userProfile.organization,
     isByoc: modalData.byoc,
-    billingModel: modalData.subscription.cluster_billing_model,
-    product: modalData.subscription.plan.id,
+    // eslint-disable-next-line camelcase
+    billingModel: modalData.subscription?.cluster_billing_model,
+    product: modalData.subscription?.plan.id,
     isMultiAZ: modalData.multi_az,
     cloudProviderID: get(modalData, 'cloud_provider.id', ''),
     initialValues: {
