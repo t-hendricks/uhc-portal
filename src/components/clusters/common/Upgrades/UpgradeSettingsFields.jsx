@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 // Form fields for upgrade settings, used in Upgrade Settings tab and in cluster creation
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -47,16 +48,17 @@ function UpgradeSettingsFields({
                 <>
         You are responsible for updating your cluster.
                   {' '}
-        Note that if your cluster version falls too far behind,
+        Note that if your cluster version falls more than 1 minor version behind
                   {' '}
-        it will be automatically updated. See the
+        the latest available, it will have SRE alerting disabled and will be unsupported until
+        it's upgraded. See the
                   {' '}
                   <ExternalLink href="https://access.redhat.com/support/policy/updates/openshift/dedicated">version support information</ExternalLink>
         .
                   <p>
-        Note: High and Critical security concerns (CVEs) will be patched automatically
+        Note: High and Critical security concerns (CVEs) will be automatically
                     {' '}
-          within 48 hours, regardless of your chosen update strategy.
+        updated to the latest z-stream version not impacted by the CVE.
                   </p>
                 </>
               ),
