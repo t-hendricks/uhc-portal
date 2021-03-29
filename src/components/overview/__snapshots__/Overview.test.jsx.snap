@@ -40,7 +40,8 @@ exports[`<Overview /> renders correctly 1`] = `
         }
       />
       <GridItem
-        span={12}
+        md={6}
+        sm={12}
       >
         <Connect(ClustersWithIssuesTableCard)
           unhealthyClusters={
@@ -192,16 +193,16 @@ exports[`<Overview /> renders correctly 1`] = `
           className="clusters-overview-card"
         >
           <CardTitle>
-            Update status
+            Telemetry
           </CardTitle>
           <CardBody>
             <SmallClusterChart
-              availableTitle="Update available"
-              donutId="update_available_donut"
-              total={11}
+              availableTitle="Not checking in"
+              donutId="connected_clusters_donut"
+              total={30}
               unit="clusters"
               used={10}
-              usedTitle="Up-to-date"
+              usedTitle="Connected"
             />
           </CardBody>
         </Card>
@@ -214,16 +215,16 @@ exports[`<Overview /> renders correctly 1`] = `
           className="clusters-overview-card"
         >
           <CardTitle>
-            Telemetry
+            Update status
           </CardTitle>
           <CardBody>
             <SmallClusterChart
-              availableTitle="Not checking in"
-              donutId="connected_clusters_donut"
-              total={30}
+              availableTitle="Update available"
+              donutId="update_available_donut"
+              total={11}
               unit="clusters"
               used={10}
-              usedTitle="Connected"
+              usedTitle="Up-to-date"
             />
           </CardBody>
         </Card>

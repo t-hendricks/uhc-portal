@@ -24,6 +24,7 @@ import {
   GET_GROUPS_INSIGHTS,
   GET_REPORT_DETAILS,
   SET_REPORT_DETAILS,
+  GET_ORGANIZATION_INSIGHTS,
 } from './InsightsConstants';
 import { insightsService } from '../../../../../services';
 
@@ -32,13 +33,17 @@ export const setReportDetails = report => ({
   payload: report,
 });
 
+const fetchSingleClusterInsights = (clusterId, isOSD) => insightsService
+  .getClusterInsights(clusterId, isOSD)
+  .then(response => ({
+    insightsData: get(response, 'data.report', {}),
+    clusterId,
+    status: response.status,
+  }));
+
 export const fetchClusterInsights = (clusterId, isOSD) => dispatch => dispatch({
   type: GET_CLUSTER_INSIGHTS,
-  payload: insightsService.getClusterInsights(clusterId, isOSD)
-    .then(response => ({
-      insightsData: get(response, 'data.report', {}),
-      status: response.status,
-    })),
+  payload: fetchSingleClusterInsights(clusterId, isOSD),
   meta: {
     clusterId,
   },
@@ -139,4 +144,9 @@ export const fetchGroups = () => dispatch => dispatch({
 export const fetchReportDetails = (clusterId, ruleId, errorKey, isOSD) => dispatch => dispatch({
   type: GET_REPORT_DETAILS,
   payload: insightsService.getReportDetails(clusterId, ruleId, errorKey, isOSD),
+});
+
+export const fetchOrganizationInsights = () => dispatch => dispatch({
+  type: GET_ORGANIZATION_INSIGHTS,
+  payload: insightsService.getOrganizationInsights(),
 });

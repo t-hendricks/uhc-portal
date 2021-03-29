@@ -46,6 +46,8 @@ const dashboardState = {
     valid: false,
     clusters: clustersWithIssues,
   },
+  insightsOverview: {},
+  insightsGroups: {},
 };
 
 describe('<Overview />', () => {
@@ -53,9 +55,13 @@ describe('<Overview />', () => {
   let getUnhealthyClusters;
   let wrapper;
   let viewOptions;
+  let fetchInsightsGroups;
+  let fetchOrganizationInsights;
   beforeAll(() => {
     getSummaryDashboard = jest.fn();
     getUnhealthyClusters = jest.fn();
+    fetchInsightsGroups = jest.fn();
+    fetchOrganizationInsights = jest.fn();
     viewOptions = {
       currentPage: 1,
       pageSize: 1,
@@ -79,6 +85,10 @@ describe('<Overview />', () => {
         upToDate={dashboardState.summary.metrics.clusters_up_to_date_total[0]}
         upgradeAvailable={dashboardState.summary.metrics.clusters_upgrade_available_total[0]}
         viewOptions={viewOptions}
+        fetchInsightsGroups={fetchInsightsGroups}
+        fetchOrganizationInsights={fetchOrganizationInsights}
+        insightsOverview={dashboardState.insightsOverview}
+        insightsGroups={dashboardState.insightsGroups}
       />,
     );
   });

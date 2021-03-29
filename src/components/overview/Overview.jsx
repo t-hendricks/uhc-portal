@@ -26,6 +26,7 @@ import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
 import TopOverviewSection from './TopOverviewSection/TopOverviewSection';
 import { createOverviewQueryObject } from '../../common/queryHelpers';
 import Unavailable from '../common/Unavailable';
+import InsightsAdvisorCard from './InsightsAdvisorCard/InsightsAdvisorCard';
 
 class Overview extends Component {
   componentDidMount() {
@@ -35,6 +36,10 @@ class Overview extends Component {
       unhealthyClusters,
       getUnhealthyClusters,
       viewOptions,
+      fetchInsightsGroups,
+      insightsGroups,
+      fetchOrganizationInsights,
+      insightsOverview,
     } = this.props;
     document.title = 'Overview | Red Hat OpenShift Cluster Manager';
 
@@ -45,6 +50,14 @@ class Overview extends Component {
     if (!unhealthyClusters.fulfilled && !unhealthyClusters.pending) {
       getUnhealthyClusters(createOverviewQueryObject(viewOptions));
     }
+
+    if (!insightsGroups.pending && !insightsGroups.fulfilled) {
+      fetchInsightsGroups();
+    }
+
+    if (!insightsOverview.pending && !insightsOverview.fulfilled) {
+      fetchOrganizationInsights();
+    }
   }
 
   componentDidUpdate() {
@@ -52,6 +65,7 @@ class Overview extends Component {
       summaryDashboard,
       getSummaryDashboard,
     } = this.props;
+
     if (!summaryDashboard.fulfilled && !summaryDashboard.pending) {
       getSummaryDashboard();
     }
@@ -72,12 +86,15 @@ class Overview extends Component {
       usedMem,
       upToDate,
       upgradeAvailable,
+      insightsGroups,
+      insightsOverview,
     } = this.props;
-
 
     const isError = (summaryDashboard.error || unhealthyClusters.error);
     const isPending = (!summaryDashboard.fulfilled || summaryDashboard.pending
        || !unhealthyClusters.fulfilled || unhealthyClusters.pending);
+    // TODO: should show only when at least one cluster is connected and sends Insights
+    const showInsightsAdvisorWidget = insightsOverview.fulfilled && insightsOverview.overview;
 
     if (isError) {
       let errorSource;
@@ -132,14 +149,47 @@ class Overview extends Component {
               totalMem={totalMem}
               usedMem={usedMem}
             />
-            { totalConnectedClusters > 0 && (
-            <GridItem span={12}>
+            {totalConnectedClusters > 0 && (
+            <GridItem md={6} sm={12}>
               <ClustersWithIssuesTableCard
                 unhealthyClusters={unhealthyClusters}
                 viewOptions={viewOptions}
               />
             </GridItem>
             )}
+            {showInsightsAdvisorWidget && (
+              <GridItem md={6} sm={12}>
+                <InsightsAdvisorCard
+                  overview={insightsOverview.overview}
+                  groups={insightsGroups.groups}
+                />
+              </GridItem>
+            )}
+            <GridItem md={6} sm={12}>
+              <Card className="clusters-overview-card">
+                <CardTitle>
+                    Telemetry
+                </CardTitle>
+                <CardBody>
+                  {!totalConnectedClusters && !totalClusters ? (
+                    <EmptyState>
+                      <EmptyStateBody>
+                          No data available
+                      </EmptyStateBody>
+                    </EmptyState>
+                  ) : (
+                    <SmallClusterChart
+                      donutId="connected_clusters_donut"
+                      used={totalConnectedClusters}
+                      total={totalClusters}
+                      availableTitle="Not checking in"
+                      usedTitle="Connected"
+                      unit="clusters"
+                    />
+                  )}
+                </CardBody>
+              </Card>
+            </GridItem>
             <GridItem md={6} sm={12}>
               <Card className="clusters-overview-card">
                 <CardTitle>
@@ -164,31 +214,6 @@ class Overview extends Component {
                         usedTitle="Up-to-date"
                       />
                     )}
-                </CardBody>
-              </Card>
-            </GridItem>
-            <GridItem md={6} sm={12}>
-              <Card className="clusters-overview-card">
-                <CardTitle>
-                    Telemetry
-                </CardTitle>
-                <CardBody>
-                  {!totalConnectedClusters && !totalClusters ? (
-                    <EmptyState>
-                      <EmptyStateBody>
-                          No data available
-                      </EmptyStateBody>
-                    </EmptyState>
-                  ) : (
-                    <SmallClusterChart
-                      donutId="connected_clusters_donut"
-                      used={totalConnectedClusters}
-                      total={totalClusters}
-                      availableTitle="Not checking in"
-                      usedTitle="Connected"
-                      unit="clusters"
-                    />
-                  )}
                 </CardBody>
               </Card>
             </GridItem>
@@ -233,6 +258,10 @@ Overview.propTypes = {
   usedMem: PropTypes.object.isRequired,
   upToDate: PropTypes.object.isRequired,
   upgradeAvailable: PropTypes.object.isRequired,
+  fetchInsightsGroups: PropTypes.func.isRequired,
+  fetchOrganizationInsights: PropTypes.func.isRequired,
+  insightsGroups: PropTypes.object.isRequired,
+  insightsOverview: PropTypes.object.isRequired,
 };
 
 export default Overview;
