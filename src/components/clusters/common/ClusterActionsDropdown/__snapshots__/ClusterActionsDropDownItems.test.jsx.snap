@@ -103,6 +103,53 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
 </Fragment>
 `;
 
+exports[`Cluster Actions Dropdown Items cluster with state ready and console url and product osdtrial should render 1`] = `
+<Fragment>
+  <DropdownItem
+    component="a"
+    href="www.testuhc.com"
+    key="1.menu.adminconsole"
+    rel="noopener noreferrer"
+    target="_blank"
+    title="Open console"
+  >
+    Open console
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    key="1.menu.editdisplayname"
+    onClick={[Function]}
+    title="Edit display name"
+  >
+    Edit display name
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    key="1.menu.scalecluster"
+    onClick={[Function]}
+    title="Edit load balancers and persistent storage"
+  >
+    Edit load balancers and persistent storage
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    key="1.menu.editnodecount"
+    onClick={[Function]}
+    title="Edit node count"
+  >
+    Edit node count
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    key="1.menu.deletecluster"
+    onClick={[Function]}
+    title="Delete cluster"
+  >
+    Delete cluster
+  </DropdownItem>
+</Fragment>
+`;
+
 exports[`Cluster Actions Dropdown Items cluster with state ready and console url should render 1`] = `
 <Fragment>
   <DropdownItem
