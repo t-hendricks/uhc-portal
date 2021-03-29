@@ -1,0 +1,6 @@
+{
+  "kind": "Product",
+  "id": "osd",
+  "href": "/api/clusters_mgmt/v1/products/osd",
+  "name": "OpenShift Dedicated"
+}

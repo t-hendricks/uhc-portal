@@ -1,0 +1,7 @@
+{
+  "kind": "MachinePoolList",
+  "href": "/api/clusters_mgmt/v1/clusters/aws-installer-1i9h2a904lpvh/machine_pools",
+  "page": 1,
+  "size": 0,
+  "total": 0
+}

@@ -53,9 +53,12 @@ else
       request "  " "$href"
     done
 
+  request "" "$cluster_href/status"
   request "" "$cluster_href/metric_queries/alerts"
   request "" "$cluster_href/metric_queries/nodes"
   request "" "$cluster_href/metric_queries/cluster_operators"
+  request "" "$cluster_href/logs/install"
+  request "" "$cluster_href/logs/uninstall"
 
   subscription_href="$(jq .subscription.href "mockdata/$cluster_href".json --raw-output)"
   request "" "$subscription_href" --parameter=fetchAccounts=true --parameter=fetchCpuAndSocket=true --parameter=fetchCapabilities=true
