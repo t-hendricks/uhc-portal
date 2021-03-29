@@ -60,17 +60,6 @@ class Overview extends Component {
     }
   }
 
-  componentDidUpdate() {
-    const {
-      summaryDashboard,
-      getSummaryDashboard,
-    } = this.props;
-
-    if (!summaryDashboard.fulfilled && !summaryDashboard.pending) {
-      getSummaryDashboard();
-    }
-  }
-
   render() {
     const {
       summaryDashboard,
