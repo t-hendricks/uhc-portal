@@ -151,7 +151,7 @@
     "start": "make setup && concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server' './backend' 'yarn insights-proxy'",
     "startmock": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server --api-env=mockserver' 'mockdata/mockserver.py' 'yarn insights-proxy'",
     "dev-server": "webpack-dev-server $(run/progress-flag-if-tty.sh) --hot",
-    "dev-server-for-mock": "OCM_SHOW_OLD_METRICS=true webpack-dev-server $(run/progress-flag-if-tty.sh) --hot --api-env=mockserver",
+    "dev-server-for-mock": "webpack-dev-server $(run/progress-flag-if-tty.sh) --hot --api-env=mockserver",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
     "lint": "eslint src --ext js,jsx",
