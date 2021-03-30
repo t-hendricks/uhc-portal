@@ -1,5 +1,5 @@
 {
   "apiGateway": "https://api.openshift.com",
-  "insightsGateway": "https://cloud.redhat.com/api/insights-results-aggregator/v1",
+  "insightsGateway": "https://$SELF_PATH$/api",
   "sentryDSN": "https://***REMOVED***/12"
 }

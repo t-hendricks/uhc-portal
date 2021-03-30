@@ -9,6 +9,6 @@ routes[`/${APP_ID}`] = { host: 'http://localhost:8001' };
 routes[`/beta/apps/${APP_ID}`] = { host: 'http://localhost:8001' };
 routes[`/apps/${APP_ID}`] = { host: 'http://localhost:8001' };
 
-routes['/api'] = { host: `http://localhost:${API_PORT}` };
+routes['/openshift_api/api'] = { host: `http://localhost:${API_PORT}` };
 
 module.exports = { routes };
