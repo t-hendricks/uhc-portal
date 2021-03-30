@@ -16,8 +16,9 @@ if (isDevOrStaging) {
 }
 
 if (APP_DEV_SERVER) {
-  // running in webpack dev server, add development config
+  // running in webpack dev server, add development configs
   configs.development = import(/* webpackMode: "eager" */ './config/development.json');
+  configs.mockserver = import(/* webpackMode: "eager" */ './config/mockserver.json');
 }
 
 // select config according to the APP_API_ENV flag (see webpack.config.js)
