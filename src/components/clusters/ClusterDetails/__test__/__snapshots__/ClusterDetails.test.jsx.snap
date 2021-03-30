@@ -1427,6 +1427,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
   <ForwardRef
     aria-label="Machine pools"
     eventKey={6}
+    hidden={true}
     id="machinePoolsContent"
   >
     <ErrorBoundary>
