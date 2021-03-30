@@ -2,7 +2,7 @@ import produce from 'immer';
 import get from 'lodash/get';
 
 import { versionComparator } from './versionComparator';
-import { normalizedProducts } from './subscriptionTypes';
+import { normalizedProducts, clustersServiceProducts } from './subscriptionTypes';
 
 /**
  * Erases the differences between clusters-service products and account-manager plans
@@ -114,7 +114,7 @@ const fakeClusterFromSubscription = (subscription) => {
       // Omit other properties like "href", we only use the id anyway.
       id: normalizeProductID(subscription.plan.id),
     },
-    managed: false,
+    managed: clustersServiceProducts.includes(normalizeProductID(subscription.plan.id)),
     metrics,
   };
   const cloudProvider = subscription.cloud_provider_id;

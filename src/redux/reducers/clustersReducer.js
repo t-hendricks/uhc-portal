@@ -32,6 +32,7 @@ const initialState = {
   clusters: {
     ...baseState,
     valid: false,
+    meta: {},
     clusters: [],
     queryParams: {},
   },
@@ -91,16 +92,23 @@ function clustersReducer(state = initialState, action) {
           clusters: state.clusters.clusters,
         };
         break;
-      case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
+      case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS): {
+        const { data } = action.payload;
+        const clustersServiceError = !!data?.meta?.clustersServiceError
+                                     && getErrorState({ payload: data.meta.clustersServiceError });
         draft.clusters = {
           ...initialState.clusters,
-          clusters: action.payload.data.items,
-          queryParams: action.payload.data.queryParams,
+          clusters: data.items,
+          queryParams: data.queryParams,
+          meta: {
+            clustersServiceError: clustersServiceError || undefined,
+          },
           pending: false,
           fulfilled: true,
           valid: true,
         };
         break;
+      }
       case clustersConstants.SET_CLUSTER_DETAILS: {
         const { cluster, mergeDetails } = action.payload;
         draft.details = {
