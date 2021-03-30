@@ -45,7 +45,6 @@ const parseFakeQueryParam = () => {
   return ret;
 };
 
-
 const config = {
   configData: {},
   override: false,
@@ -58,14 +57,26 @@ const config = {
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
         configs[queryEnv].then((data) => {
-          that.configData = data;
+          that.configData = {
+            ...data,
+            // replace $SELF_PATH$ with the current host
+            // to avoid CORS issues when not using prod.foo
+            apiGateway: data.apiGateway.replace('$SELF_PATH$', window.location.host),
+            insightsGateway: data?.insightsGateway.replace('$SELF_PATH$', window.location.host) || undefined,
+          };
           that.override = queryEnv;
           localStorage.setItem(ENV_OVERRIDE_LOCALSTORAGE_KEY, queryEnv);
           resolve();
         });
       } else {
         configs.default.then((data) => {
-          that.configData = data;
+          that.configData = {
+            ...data,
+            // replace $SELF_PATH$ with the current host
+            // to avoid CORS issues when not using prod.foo
+            apiGateway: data.apiGateway.replace('$SELF_PATH$', window.location.host),
+            insightsGateway: data?.insightsGateway.replace('$SELF_PATH$', window.location.host) || undefined,
+          };
           resolve();
         });
       }

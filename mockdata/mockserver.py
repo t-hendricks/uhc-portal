@@ -19,6 +19,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     # But our APIs generally treat 'foos/?...' same as 'foos?...',
     # and we prefer 'foos.json' files to ugly 'foos/.json', so strip it.
     path = super().translate_path(path).rstrip('/') + '.json'
+    path = path.replace('/openshift_api', '')
     print('Accessing ' + path)
     return path
 

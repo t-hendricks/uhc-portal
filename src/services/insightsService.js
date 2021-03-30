@@ -3,7 +3,7 @@ import config from '../config';
 
 const insightsAPIRequest = params => apiRequest({
   ...params,
-  baseURL: config.configData.insightsGateway,
+  baseURL: `${config.configData.insightsGateway}/insights-results-aggregator/v1`,
 });
 
 const putLikeOnRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
