@@ -56,7 +56,7 @@ const config = {
       // replace $SELF_PATH$ with the current host
       // to avoid CORS issues when not using prod.foo
       apiGateway: data.apiGateway.replace('$SELF_PATH$', window.location.host),
-      insightsGateway: data?.insightsGateway.replace('$SELF_PATH$', window.location.host) || undefined,
+      insightsGateway: data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
     };
 
     if (isDevOrStaging) {
