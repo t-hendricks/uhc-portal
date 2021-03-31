@@ -3,90 +3,61 @@
 exports[`<AddOnsCard /> renders correctly 1`] = `
 <Card
   className="ocm-c-addons__card"
-  key="Dummy ID"
-  ouiaId="card-addon-Dummy ID"
+  isHoverable={true}
+  isSelectable={true}
+  isSelected={true}
+  key="dummy-id"
+  onClick={[MockFunction]}
+  ouiaId="card-addon-dummy-id"
 >
   <CardHeader
     className="ocm-c-addons__card--header"
   >
-    <CardActions>
-      <Dropdown
-        dropdownItems={
-          Array [
-            <DropdownItem
-              component="button"
-              isDisabled={false}
-              onClick={[Function]}
-              ouiaId="configure-addon-Dummy ID"
-            >
-              Configure
-            </DropdownItem>,
-            <DropdownItem
-              component="button"
-              isDisabled={false}
-              onClick={[Function]}
-              ouiaId="uninstall-addon-Dummy ID"
-            >
-              Uninstall add-on
-            </DropdownItem>,
-          ]
-        }
-        isOpen={false}
-        isPlain={true}
-        onSelect={[Function]}
-        ouiaId="configure-Dummy ID"
-        position="right"
-        toggle={
-          <KebabToggle
-            onToggle={[Function]}
-          />
-        }
-      />
-    </CardActions>
+    <CardHeaderMain />
   </CardHeader>
   <CardTitle>
     Dummy Name
   </CardTitle>
   <CardBody
     className="ocm-c-addons__card--body"
-    isFilled={false}
   >
-    <Label
-      color="green"
-      icon={
-        <CheckCircleIcon
-          color="currentColor"
-          noVerticalAlign={false}
-          size="sm"
-        />
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, ...
+  </CardBody>
+  <CardFooter>
+    <AddOnStateLabel
+      addOn={
+        Object {
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+          "enabled": true,
+          "has_external_resources": false,
+          "hidden": false,
+          "id": "dummy-id",
+          "kind": "AddOn",
+          "label": "api.openshift.com/dummy",
+          "name": "Dummy Name",
+          "operator_name": "dummy-operator",
+          "parameters": Object {
+            "items": Array [
+              Object {
+                "enabled": true,
+                "id": "dummy item",
+              },
+            ],
+          },
+        }
       }
-      variant="outline"
-    >
-      Installed
-    </Label>
-  </CardBody>
-  <CardBody
-    className="ocm-c-addons__card--body"
-  >
-    Dummy Desc
-     
-  </CardBody>
-  <CardBody
-    className="ocm-c-addons__card--body"
-    isFilled={false}
-  />
-  <CardFooter
-    className="ocm-c-addons__card--footer"
-  >
-    <Button
-      component="a"
-      href="https://dummy.devshift.org/k8s/ns/undefined/operators.coreos.com~v1alpha1~ClusterServiceVersion/dummy-operator.vundefined"
-      rel="noopener noreferrer"
-      target="_blank"
-      variant="secondary"
-    >
-      View in Console
-    </Button>
+      installedAddOn={
+        Object {
+          "state": "ready",
+        }
+      }
+      requirements={
+        Object {
+          "errorMsgs": Array [],
+          "fulfilled": true,
+        }
+      }
+    />
   </CardFooter>
 </Card>
 `;

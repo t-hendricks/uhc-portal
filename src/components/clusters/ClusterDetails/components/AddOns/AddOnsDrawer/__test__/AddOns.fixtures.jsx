@@ -132,19 +132,6 @@ export const loggingOperator = {
   operator_name: 'cluster-logging',
   hidden: false,
   has_external_resources: true,
-  parameters: {
-    items: [
-      {
-        id: 'use-cloudwatch',
-        name: 'Use AWS CloudWatch',
-        description: 'Select this if you want to use AWS CloudWatch',
-        value_type: 'boolean',
-        required: true,
-        editable: true,
-        enabled: true,
-      },
-    ],
-  },
 };
 
 export const mockAddOns = {
@@ -217,73 +204,6 @@ export const mockClusterAddOnsParams = {
           },
         ],
       },
-    },
-    {
-      kind: 'AddOnLink',
-      href: '/api/clusters_mgmt/v1/addons/cluster-logging-operator',
-      addon: {
-        id: 'cluster-logging-operator',
-      },
-      state: 'ready',
-      parameters: {
-        items: [
-          {
-            id: 'use-cloudwatch',
-            value: false,
-          },
-        ],
-      },
-    },
-    {
-      kind: 'AddOnLink',
-      href: '/api/clusters_mgmt/v1/addons/cluster-logging-operator',
-      addon: {
-        id: 'cluster-logging-operator',
-      },
-      state: 'ready',
-      parameters: {
-        items: [
-          {
-            id: 'use-cloudwatch',
-            value: 'true',
-          },
-        ],
-      },
-    },
-  ],
-};
-
-export const mockAddOnsInstallParamAndValues = {
-  items: [
-    {
-      description: 'A block of IP addresses used by the RHMI installation program while installing the cluster',
-      editable: false,
-      id: 'cidr-range',
-      name: 'CIDR Range',
-      required: true,
-      validation: '/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(/(1[6-9]|2[0-6]))$/',
-      value: '10.1.0.0/16',
-      value_type: 'string',
-    },
-    {
-      description: 'Select this if you want to use AWS CloudWatch',
-      editable: true,
-      enabled: true,
-      id: 'use-cloudwatch',
-      name: 'Use AWS CloudWatch',
-      required: true,
-      value: 'false',
-      value_type: 'boolean',
-    },
-    {
-      description: 'Select this if you want to use AWS CloudWatch',
-      editable: true,
-      enabled: true,
-      id: 'use-cloudwatch',
-      name: 'Use AWS CloudWatch',
-      required: true,
-      value: 'true',
-      value_type: 'boolean',
     },
   ],
 };
