@@ -6,6 +6,96 @@
   "items": [
     {
       "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost",
+      "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+      "quota_id": "compute.node|gpu|byoc|osd",
+      "allowed": 400,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "aws",
+          "resource_name": "t4-gpu-4",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 4
+        },
+        {
+          "cloud_provider": "aws",
+          "resource_name": "t4-gpu-8",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "aws",
+          "resource_name": "t4-gpu-16",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "aws",
+          "resource_name": "t4-gpu-48",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "aws",
+          "resource_name": "v100-gpu-8",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "aws",
+          "resource_name": "v100-gpu-32",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 32
+        },
+        {
+          "cloud_provider": "aws",
+          "resource_name": "v100-gpu-64",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 64
+        },
+        {
+          "cloud_provider": "aws",
+          "resource_name": "v100-gpu-96",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 96
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
       "href": "/api/accounts_mgmt/v1/organizations/1H1PQMDtwzAUsjPxgoWRjhSpNGD/quota_cost",
       "organization_id": "1H1PQMDtwzAUsjPxgoWRjhSpNGD",
       "quota_id": "cluster|gp.small|any|byoc|moa|aws",
