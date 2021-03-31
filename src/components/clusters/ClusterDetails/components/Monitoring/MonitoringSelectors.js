@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 
+import config from '../../../../../config';
 import {
   getIssuesAndWarnings,
   monitoringStatuses,
@@ -26,7 +27,8 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
 
   const diff = new Date().getTime() - lastCheckIn.getTime();
   const hours = diff / 1000 / 60 / 60;
-  const freshActivity = OCM_SHOW_OLD_METRICS || hours < maxMetricsTimeDelta;
+  const showOldMetrics = !!config.configData.showOldMetrics;
+  const freshActivity = showOldMetrics || hours < maxMetricsTimeDelta;
 
   if (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED) {
     return monitoringStatuses.DISCONNECTED;
