@@ -65,7 +65,7 @@ function BillingModelRadioButtons({
   ];
 
   if (showOSDTrial) {
-    subscriptionOptions.push(
+    subscriptionOptions.unshift(
       {
         value: 'standard-trial',
         ariaLabel: 'OSD Trial',

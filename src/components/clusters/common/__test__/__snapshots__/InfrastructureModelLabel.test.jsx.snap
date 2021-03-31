@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfrastructureModelLabel for OSD CCS cluster 1`] = `"Customer cloud subscription"`;
+
+exports[`InfrastructureModelLabel for OSD rhInfra cluster 1`] = `"Red Hat cloud account"`;
+
+exports[`InfrastructureModelLabel for OSDTrial CCS cluster 1`] = `"Customer cloud subscription"`;
+
+exports[`InfrastructureModelLabel for ROSA cluster 1`] = `"Through AWS"`;
