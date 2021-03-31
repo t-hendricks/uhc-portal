@@ -93,6 +93,28 @@ describe('<MachineTypeSelection />', () => {
         ccs_only: true,
         resource_name: 'gp.xlarge',
       },
+      {
+        kind: 'MachineType',
+        name: 'g4dn.2xlarge - Accelerated Computing (1 GPU)',
+        category: 'accelerated_computing',
+        size: 'medium',
+        id: 'g4dn.2xlarge',
+        href: '/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge',
+        memory: {
+          value: 34359738368,
+          unit: 'B',
+        },
+        cpu: {
+          value: 8,
+          unit: 'vCPU',
+        },
+        cloud_provider: {
+          kind: 'CloudProviderLink',
+          id: 'aws',
+          href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+        },
+        ccs_only: true,
+      },
     ];
   });
 
@@ -359,7 +381,7 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('displays ccs_only machine types', () => {
-        expect(wrapper.find('FlatRadioButton')).toHaveLength(3);
+        expect(wrapper.find('FlatRadioButton')).toHaveLength(4);
       });
     });
 
