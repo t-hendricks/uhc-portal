@@ -9349,10 +9349,10 @@ opener@^1.5.1:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
 
-openshift-assisted-ui-lib@0.0.13-wizard:
-  version "0.0.13-wizard"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-0.0.13-wizard.tgz#5aed4e9bbd4a3a9bee64c14001a604722c9bca62"
-  integrity sha512-1uwQTCMoNU0wWRb4OPWLKby79m95ZLABJ/cis2MKI2AKHmbStx9EtU5lGZUfo+3FHvGtS6f2Z2iXD+x5rdTvzw==
+openshift-assisted-ui-lib@^1.5.13:
+  version "1.5.13"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-1.5.13.tgz#52ce63ad70dc60fc41edb0f0d0370ead568c948f"
+  integrity sha512-efBbTkYY0wKGKcN4CD8nfObLtD2yq9j+Eiod7+zo/gkxqvrw3tsbM0x4UtM+G2TcQTUcMk/uRWO6gIwhCABtPw==
   dependencies:
     axios-case-converter "^0.6.0"
     filesize.js "^2.0.0"
