@@ -21,7 +21,8 @@ const cluster = {
 const osdTrialCluster = {
   product: {
     kind: 'ProductLink',
-    id: 'osdtrial',
+    // value after normalization
+    id: 'OSDTrial',
     href: '/api/clusters_mgmt/v1/products/osdtrial',
   },
   ...cluster,

@@ -45,7 +45,8 @@ This cluster is hibernating;
     ? { isDisabled: true, tooltip: uninstallingMessage } : {};
   const getKey = item => `${cluster.id}.menu.${item}`;
   const clusterName = getClusterName(cluster);
-  const isProductOSDTrial = cluster.product && cluster.product.id;
+  const isProductOSDTrial = cluster.product
+                         && cluster.product.id === normalizedProducts.OSDTrial;
 
   const getAdminConsoleProps = () => {
     const consoleURL = cluster.console ? cluster.console.url : false;
