@@ -298,6 +298,12 @@ const deleteMachinePool = (clusterID, machinePoolID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools/${machinePoolID}`,
 });
 
+const upgradeTrialCluster = (clusterID, params) => apiRequest({
+  method: 'patch',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}`,
+  data: params,
+});
+
 
 const clusterService = {
   getClusters,
@@ -345,6 +351,7 @@ const clusterService = {
   addMachinePool,
   scaleMachinePool,
   deleteMachinePool,
+  upgradeTrialCluster,
 };
 export {
   postUpgradeSchedule,

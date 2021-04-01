@@ -35,12 +35,15 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
           >
             Cancel this update
           </Button>,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Close
           </Button>,
+          undefined,
+          false,
         ]
       }
       appendTo={[Function]}
@@ -178,12 +181,15 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
               >
                 Cancel this update
               </Button>,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Close
               </Button>,
+              undefined,
+              false,
             ]
           }
           aria-describedby=""
@@ -382,7 +388,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                             </button>
                           </Button>
                           <Button
-                            key="cancel"
+                            key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >

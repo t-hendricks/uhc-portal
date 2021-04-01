@@ -296,6 +296,33 @@ function clustersReducer(state = initialState, action) {
         };
         break;
 
+      // Upgrade trial cluster
+      case FULFILLED_ACTION(clustersConstants.UPGRADE_TRIAL_CLUSTER):
+        draft.upgradedCluster = {
+          ...initialState.upgradedCluster,
+          cluster: action.payload.data,
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(clustersConstants.UPGRADE_TRIAL_CLUSTER):
+        draft.upgradedCluster = {
+          ...initialState.upgradedCluster,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.UPGRADE_TRIAL_CLUSTER):
+        draft.upgradeCluster = {
+          ...initialState.upgradedCluster,
+          pending: true,
+        };
+        break;
+      case clustersConstants.CLEAR_UPGRADE_TRIAL_CLUSTER_RESPONSE:
+        draft.upgradedCluster = {
+          ...initialState.upgradedCluster,
+        };
+        break;
+
+
       // GET_CLUSTER_STATUS
       case REJECTED_ACTION(clustersConstants.GET_CLUSTER_STATUS):
         draft.clusterStatus = {
