@@ -22,102 +22,158 @@ const organizationState = {
   pending: false,
 };
 
+const machineTypesByID = {
+  'r5.xlarge': {
+    kind: 'MachineType',
+    name: 'r5.xlarge - Memory Optimized',
+    category: 'memory_optimized',
+    size: 'small',
+    id: 'r5.xlarge',
+    href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
+    memory: {
+      value: 34359738368,
+      unit: 'B',
+    },
+    cpu: {
+      value: 4,
+      unit: 'vCPU',
+    },
+    cloud_provider: {
+      kind: 'CloudProviderLink',
+      id: 'aws',
+      href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+    },
+    ccs_only: false,
+    resource_name: 'mem.small',
+  },
+  'r5.4xlarge': {
+    kind: 'MachineType',
+    name: 'r5.4xlarge - Memory Optimized',
+    category: 'memory_optimized',
+    size: 'large',
+    id: 'r5.4xlarge',
+    href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
+    memory: {
+      value: 137438953472,
+      unit: 'B',
+    },
+    cpu: {
+      value: 16,
+      unit: 'vCPU',
+    },
+    cloud_provider: {
+      kind: 'CloudProviderLink',
+      id: 'aws',
+      href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+    },
+    ccs_only: false,
+    resource_name: 'mem.large',
+  },
+  'm5.xlarge': {
+    kind: 'MachineType',
+    name: 'm5.xlarge - General Purpose',
+    category: 'general_purpose',
+    size: 'small',
+    id: 'm5.xlarge',
+    href: '/api/clusters_mgmt/v1/machine_types/m5.xlarge',
+    memory: {
+      value: 17179869184,
+      unit: 'B',
+    },
+    cpu: {
+      value: 4,
+      unit: 'vCPU',
+    },
+    cloud_provider: {
+      kind: 'CloudProviderLink',
+      id: 'aws',
+      href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+    },
+    ccs_only: false,
+    resource_name: 'gp.small',
+  },
+  'm5.4xlarge': {
+    kind: 'MachineType',
+    name: 'm5.4xlarge - General Purpose',
+    category: 'general_purpose',
+    size: 'large',
+    id: 'm5.4xlarge',
+    href: '/api/clusters_mgmt/v1/machine_types/m5.4xlarge',
+    memory: {
+      value: 68719476736,
+      unit: 'B',
+    },
+    cpu: {
+      value: 16,
+      unit: 'vCPU',
+    },
+    cloud_provider: {
+      kind: 'CloudProviderLink',
+      id: 'aws',
+      href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+    },
+    ccs_only: false,
+    resource_name: 'gp.large',
+  },
+  'm5.12xlarge': {
+    kind: 'MachineType',
+    name: 'm5.12xlarge - General purpose',
+    category: 'general_purpose',
+    size: 'xxlarge',
+    id: 'm5.12xlarge',
+    href: '/api/clusters_mgmt/v1/machine_types/m5.12xlarge',
+    memory: {
+      value: 206158430208,
+      unit: 'B',
+    },
+    cpu: {
+      value: 48,
+      unit: 'vCPU',
+    },
+    cloud_provider: {
+      kind: 'CloudProviderLink',
+      id: 'aws',
+      href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+    },
+    ccs_only: true,
+    resource_name: 'gp.xxlarge',
+  },
+  'g4dn.2xlarge': {
+    kind: 'MachineType',
+    name: 'g4dn.2xlarge - Accelerated Computing (1 GPU)',
+    category: 'accelerated_computing',
+    size: 'medium',
+    id: 'g4dn.2xlarge',
+    href: '/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge',
+    memory: {
+      value: 34359738368,
+      unit: 'B',
+    },
+    cpu: {
+      value: 8,
+      unit: 'vCPU',
+    },
+    cloud_provider: {
+      kind: 'CloudProviderLink',
+      id: 'aws',
+      href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+    },
+    ccs_only: true,
+    resource_name: 'gpu.medium',
+  },
+};
+
+const sortedMachineTypes = [
+  machineTypesByID['r5.xlarge'],
+  machineTypesByID['r5.4xlarge'],
+  machineTypesByID['m5.xlarge'],
+  machineTypesByID['m5.4xlarge'],
+  machineTypesByID['m5.12xlarge'],
+  machineTypesByID['g4dn.2xlarge'],
+];
+
+
 describe('<MachineTypeSelection />', () => {
-  let sortedMachineTypes;
-  let machineTypesByID = {};
-
-  beforeAll(() => {
-    sortedMachineTypes = [
-      {
-        kind: 'MachineType',
-        name: 'Memory optimized - R5.XLarge',
-        category: 'memory_optimized',
-        id: 'r5.xlarge',
-        resource_name: 'mem.small',
-        href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
-        memory: {
-          value: 34359738368,
-          unit: 'B',
-        },
-        cpu: {
-          value: 4,
-          unit: 'vCPU',
-        },
-        cloud_provider: {
-          kind: 'CloudProviderLink',
-          id: 'aws',
-          href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-        },
-      },
-      {
-        kind: 'MachineType',
-        name: 'Memory optimized - R5.4XLarge',
-        category: 'memory_optimized',
-        id: 'r5.4xlarge',
-        resource_name: 'mem.large',
-        href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
-        memory: {
-          value: 137438953472,
-          unit: 'B',
-        },
-        cpu: {
-          value: 16,
-          unit: 'vCPU',
-        },
-        cloud_provider: {
-          kind: 'CloudProviderLink',
-          id: 'aws',
-          href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-        },
-      },
-      {
-        kind: 'MachineType',
-        name: 'm5.12xlarge - General purpose',
-        category: 'general_purpose',
-        size: 'xlarge',
-        id: 'm5.12xlarge',
-        href: '/api/clusters_mgmt/v1/machine_types/m5.12xlarge',
-        memory: {
-          value: 206158430208,
-          unit: 'B',
-        },
-        cpu: {
-          value: 48,
-          unit: 'vCPU',
-        },
-        cloud_provider: {
-          kind: 'CloudProviderLink',
-          id: 'aws',
-          href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-        },
-        ccs_only: true,
-        resource_name: 'gp.xlarge',
-      },
-      {
-        kind: 'MachineType',
-        name: 'g4dn.2xlarge - Accelerated Computing (1 GPU)',
-        category: 'accelerated_computing',
-        size: 'medium',
-        id: 'g4dn.2xlarge',
-        href: '/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge',
-        memory: {
-          value: 34359738368,
-          unit: 'B',
-        },
-        cpu: {
-          value: 8,
-          unit: 'vCPU',
-        },
-        cloud_provider: {
-          kind: 'CloudProviderLink',
-          id: 'aws',
-          href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-        },
-        ccs_only: true,
-      },
-    ];
-  });
-
   describe('when machine type list needs to be fetched', () => {
     let onChange;
     let getMachineTypes;
@@ -128,8 +184,8 @@ describe('<MachineTypeSelection />', () => {
       wrapper = mount(
         <MachineTypeSelection
           machineTypes={baseState}
-          sortedMachineTypes={sortedMachineTypes}
-          machineTypesByID={machineTypesByID}
+          sortedMachineTypes={[]}
+          machineTypesByID={{}}
           input={{ onChange }}
           meta={{}}
           isMultiAz={false}
@@ -166,8 +222,8 @@ describe('<MachineTypeSelection />', () => {
       wrapper = mount(
         <MachineTypeSelection
           machineTypes={state}
-          sortedMachineTypes={sortedMachineTypes}
-          machineTypesByID={machineTypesByID}
+          sortedMachineTypes={[]}
+          machineTypesByID={{}}
           input={{ onChange }}
           meta={{}}
           isMultiAz={false}
@@ -205,8 +261,8 @@ describe('<MachineTypeSelection />', () => {
       wrapper = mount(
         <MachineTypeSelection
           machineTypes={state}
-          sortedMachineTypes={sortedMachineTypes}
-          machineTypesByID={machineTypesByID}
+          sortedMachineTypes={[]}
+          machineTypesByID={{}}
           input={{ onChange }}
           meta={{}}
           isMultiAz={false}
@@ -231,75 +287,6 @@ describe('<MachineTypeSelection />', () => {
     let onChange;
     let getMachineTypes;
     let wrapper;
-    beforeAll(() => {
-      machineTypesByID = {
-        'r5.xlarge': {
-          kind: 'MachineType',
-          name: 'Memory optimized - R5.XLarge',
-          category: 'memory_optimized',
-          id: 'r5.xlarge',
-          resource_name: 'mem.small',
-          href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
-          memory: {
-            value: 34359738368,
-            unit: 'B',
-          },
-          cpu: {
-            value: 4,
-            unit: 'vCPU',
-          },
-          cloud_provider: {
-            kind: 'CloudProviderLink',
-            id: 'aws',
-            href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-          },
-        },
-        'r5.4xlarge': {
-          kind: 'MachineType',
-          name: 'Memory optimized - R5.4XLarge',
-          category: 'memory_optimized',
-          id: 'r5.4xlarge',
-          resource_name: 'mem.large',
-          href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
-          memory: {
-            value: 137438953472,
-            unit: 'B',
-          },
-          cpu: {
-            value: 16,
-            unit: 'vCPU',
-          },
-          cloud_provider: {
-            kind: 'CloudProviderLink',
-            id: 'aws',
-            href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-          },
-        },
-        'm5.12xlarge': {
-          kind: 'MachineType',
-          name: 'm5.12xlarge - General purpose',
-          category: 'general_purpose',
-          size: 'xlarge',
-          id: 'm5.12xlarge',
-          href: '/api/clusters_mgmt/v1/machine_types/m5.12xlarge',
-          memory: {
-            value: 206158430208,
-            unit: 'B',
-          },
-          cpu: {
-            value: 48,
-            unit: 'vCPU',
-          },
-          cloud_provider: {
-            kind: 'CloudProviderLink',
-            id: 'aws',
-            href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-          },
-          ccs_only: true,
-          resource_name: 'gp.xlarge',
-        },
-      };
-    });
 
     describe('with rhinfra quota available', () => {
       beforeAll(() => {

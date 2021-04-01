@@ -32,97 +32,7 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
   }
   product="OSD"
   quota={Object {}}
-  sortedMachineTypes={
-    Array [
-      Object {
-        "category": "memory_optimized",
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
-        "id": "r5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "Memory optimized - R5.XLarge",
-        "resource_name": "mem.small",
-      },
-      Object {
-        "category": "memory_optimized",
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
-        "id": "r5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 137438953472,
-        },
-        "name": "Memory optimized - R5.4XLarge",
-        "resource_name": "mem.large",
-      },
-      Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
-        },
-        "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xlarge",
-        "size": "xlarge",
-      },
-      Object {
-        "category": "accelerated_computing",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 8,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
-        "id": "g4dn.2xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "size": "medium",
-      },
-    ]
-  }
+  sortedMachineTypes={Array []}
 >
   <div
     className="spinner-fit-container"
@@ -172,6 +82,29 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
   }
   machineTypesByID={
     Object {
+      "g4dn.2xlarge": Object {
+        "category": "accelerated_computing",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 8,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
+        "id": "g4dn.2xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+        "resource_name": "gpu.medium",
+        "size": "medium",
+      },
       "m5.12xlarge": Object {
         "category": "general_purpose",
         "ccs_only": true,
@@ -192,11 +125,58 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 206158430208,
         },
         "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xlarge",
-        "size": "xlarge",
+        "resource_name": "gp.xxlarge",
+        "size": "xxlarge",
+      },
+      "m5.4xlarge": Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+        "id": "m5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 68719476736,
+        },
+        "name": "m5.4xlarge - General Purpose",
+        "resource_name": "gp.large",
+        "size": "large",
+      },
+      "m5.xlarge": Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+        "id": "m5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 17179869184,
+        },
+        "name": "m5.xlarge - General Purpose",
+        "resource_name": "gp.small",
+        "size": "small",
       },
       "r5.4xlarge": Object {
         "category": "memory_optimized",
+        "ccs_only": false,
         "cloud_provider": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
           "id": "aws",
@@ -213,11 +193,13 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "B",
           "value": 137438953472,
         },
-        "name": "Memory optimized - R5.4XLarge",
+        "name": "r5.4xlarge - Memory Optimized",
         "resource_name": "mem.large",
+        "size": "large",
       },
       "r5.xlarge": Object {
         "category": "memory_optimized",
+        "ccs_only": false,
         "cloud_provider": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
           "id": "aws",
@@ -234,8 +216,9 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "B",
           "value": 34359738368,
         },
-        "name": "Memory optimized - R5.XLarge",
+        "name": "r5.xlarge - Memory Optimized",
         "resource_name": "mem.small",
+        "size": "small",
       },
     }
   }
@@ -296,6 +279,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     Array [
       Object {
         "category": "memory_optimized",
+        "ccs_only": false,
         "cloud_provider": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
           "id": "aws",
@@ -312,11 +296,13 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "B",
           "value": 34359738368,
         },
-        "name": "Memory optimized - R5.XLarge",
+        "name": "r5.xlarge - Memory Optimized",
         "resource_name": "mem.small",
+        "size": "small",
       },
       Object {
         "category": "memory_optimized",
+        "ccs_only": false,
         "cloud_provider": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
           "id": "aws",
@@ -333,8 +319,55 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "B",
           "value": 137438953472,
         },
-        "name": "Memory optimized - R5.4XLarge",
+        "name": "r5.4xlarge - Memory Optimized",
         "resource_name": "mem.large",
+        "size": "large",
+      },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+        "id": "m5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 17179869184,
+        },
+        "name": "m5.xlarge - General Purpose",
+        "resource_name": "gp.small",
+        "size": "small",
+      },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+        "id": "m5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 68719476736,
+        },
+        "name": "m5.4xlarge - General Purpose",
+        "resource_name": "gp.large",
+        "size": "large",
       },
       Object {
         "category": "general_purpose",
@@ -356,8 +389,8 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 206158430208,
         },
         "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xlarge",
-        "size": "xlarge",
+        "resource_name": "gp.xxlarge",
+        "size": "xxlarge",
       },
       Object {
         "category": "accelerated_computing",
@@ -379,6 +412,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 34359738368,
         },
         "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+        "resource_name": "gpu.medium",
         "size": "medium",
       },
     ]
@@ -405,10 +439,10 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       secondaryText={
         <React.Fragment>
           <div>
-            Memory optimized
+            r5.xlarge
           </div>
           <div>
-            R5.xlarge
+            Memory optimized
           </div>
         </React.Fragment>
       }
@@ -430,7 +464,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           aria-label={null}
           billingModel="standard"
           className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
-          data-ouia-component-id="OUIA-Generated-Button-tertiary-7"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-11"
           data-ouia-component-type="PF4/Button"
           data-ouia-safe={true}
           disabled={true}
@@ -496,10 +530,10 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
                     </h4>
                   </Title>
                   <div>
-                    Memory optimized
+                    r5.xlarge
                   </div>
                   <div>
-                    R5.xlarge
+                    Memory optimized
                   </div>
                 </div>
               </SplitItem>
@@ -526,10 +560,10 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       secondaryText={
         <React.Fragment>
           <div>
-            Memory optimized
+            r5.4xlarge
           </div>
           <div>
-            R5.4xlarge
+            Memory optimized
           </div>
         </React.Fragment>
       }
@@ -551,7 +585,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           aria-label={null}
           billingModel="standard"
           className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
-          data-ouia-component-id="OUIA-Generated-Button-tertiary-8"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-12"
           data-ouia-component-type="PF4/Button"
           data-ouia-safe={true}
           disabled={true}
@@ -617,10 +651,1356 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
                     </h4>
                   </Title>
                   <div>
-                    Memory optimized
+                    r5.4xlarge
                   </div>
                   <div>
-                    R5.4xlarge
+                    Memory optimized
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <ContainerNodeIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.m5.xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="m5.xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            m5.xlarge
+          </div>
+          <div>
+            General purpose
+          </div>
+        </React.Fragment>
+      }
+      titleText="4 vCPU 16 GiB RAM"
+      tooltip={false}
+      value="m5.xlarge"
+    >
+      <Button
+        billingModel="standard"
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.m5.xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          billingModel="standard"
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-13"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.m5.xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <ContainerNodeIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 1024 1024"
+                      width="2em"
+                    >
+                      <path
+                        d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
+                      />
+                    </svg>
+                  </ContainerNodeIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      4 vCPU 16 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    m5.xlarge
+                  </div>
+                  <div>
+                    General purpose
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <ContainerNodeIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.m5.4xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="m5.4xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            m5.4xlarge
+          </div>
+          <div>
+            General purpose
+          </div>
+        </React.Fragment>
+      }
+      titleText="16 vCPU 64 GiB RAM"
+      tooltip={false}
+      value="m5.4xlarge"
+    >
+      <Button
+        billingModel="standard"
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.m5.4xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          billingModel="standard"
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-14"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.m5.4xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <ContainerNodeIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 1024 1024"
+                      width="2em"
+                    >
+                      <path
+                        d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
+                      />
+                    </svg>
+                  </ContainerNodeIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      16 vCPU 64 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    m5.4xlarge
+                  </div>
+                  <div>
+                    General purpose
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <ContainerNodeIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.m5.12xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="m5.12xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            m5.12xlarge
+          </div>
+          <div>
+            General purpose
+          </div>
+        </React.Fragment>
+      }
+      titleText="48 vCPU 192 GiB RAM"
+      tooltip={false}
+      value="m5.12xlarge"
+    >
+      <Button
+        billingModel="standard"
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.m5.12xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          billingModel="standard"
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-15"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.m5.12xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <ContainerNodeIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 1024 1024"
+                      width="2em"
+                    >
+                      <path
+                        d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
+                      />
+                    </svg>
+                  </ContainerNodeIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      48 vCPU 192 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    m5.12xlarge
+                  </div>
+                  <div>
+                    General purpose
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <ContainerNodeIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.g4dn.2xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="g4dn.2xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            g4dn.2xlarge
+          </div>
+          <div>
+            Accelerated computing (1 gpu)
+          </div>
+        </React.Fragment>
+      }
+      titleText="8 vCPU 32 GiB RAM"
+      tooltip={false}
+      value="g4dn.2xlarge"
+    >
+      <Button
+        billingModel="standard"
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.g4dn.2xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          billingModel="standard"
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-16"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.g4dn.2xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <ContainerNodeIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 1024 1024"
+                      width="2em"
+                    >
+                      <path
+                        d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
+                      />
+                    </svg>
+                  </ContainerNodeIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      8 vCPU 32 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    g4dn.2xlarge
+                  </div>
+                  <div>
+                    Accelerated computing (1 gpu)
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+  </div>
+</MachineTypeSelection>
+`;
+
+exports[`<MachineTypeSelection /> when the machine types list is available byoc with sufficient byoc quota available renders correctly 1`] = `
+<MachineTypeSelection
+  billingModel="standard"
+  cloudProviderID="aws"
+  getMachineTypes={[MockFunction]}
+  input={
+    Object {
+      "onChange": [MockFunction] {
+        "calls": Array [
+          Array [
+            "r5.xlarge",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      },
+    }
+  }
+  isBYOC={true}
+  isMachinePool={false}
+  isMultiAz={true}
+  machineTypes={
+    Object {
+      "error": false,
+      "errorMessage": "",
+      "fulfilled": true,
+      "machineTypes": Object {},
+      "pending": false,
+    }
+  }
+  machineTypesByID={
+    Object {
+      "g4dn.2xlarge": Object {
+        "category": "accelerated_computing",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 8,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
+        "id": "g4dn.2xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+        "resource_name": "gpu.medium",
+        "size": "medium",
+      },
+      "m5.12xlarge": Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xxlarge",
+        "size": "xxlarge",
+      },
+      "m5.4xlarge": Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+        "id": "m5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 68719476736,
+        },
+        "name": "m5.4xlarge - General Purpose",
+        "resource_name": "gp.large",
+        "size": "large",
+      },
+      "m5.xlarge": Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+        "id": "m5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 17179869184,
+        },
+        "name": "m5.xlarge - General Purpose",
+        "resource_name": "gp.small",
+        "size": "small",
+      },
+      "r5.4xlarge": Object {
+        "category": "memory_optimized",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+        "id": "r5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 137438953472,
+        },
+        "name": "r5.4xlarge - Memory Optimized",
+        "resource_name": "mem.large",
+        "size": "large",
+      },
+      "r5.xlarge": Object {
+        "category": "memory_optimized",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+        "id": "r5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "r5.xlarge - Memory Optimized",
+        "resource_name": "mem.small",
+        "size": "small",
+      },
+    }
+  }
+  meta={Object {}}
+  organization={
+    Object {
+      "fulfilled": true,
+      "pending": false,
+    }
+  }
+  product="OSD"
+  quota={
+    Object {
+      "clustersQuota": Object {
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 5,
+                  "mem.small": 5,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 5,
+              },
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
+        },
+      },
+      "nodesQuota": Object {
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "byoc": Object {
+                "mem.small": Object {
+                  "available": 12,
+                  "cost": 4,
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+  }
+  sortedMachineTypes={
+    Array [
+      Object {
+        "category": "memory_optimized",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+        "id": "r5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "r5.xlarge - Memory Optimized",
+        "resource_name": "mem.small",
+        "size": "small",
+      },
+      Object {
+        "category": "memory_optimized",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
+        "id": "r5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 137438953472,
+        },
+        "name": "r5.4xlarge - Memory Optimized",
+        "resource_name": "mem.large",
+        "size": "large",
+      },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+        "id": "m5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 17179869184,
+        },
+        "name": "m5.xlarge - General Purpose",
+        "resource_name": "gp.small",
+        "size": "small",
+      },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+        "id": "m5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 68719476736,
+        },
+        "name": "m5.4xlarge - General Purpose",
+        "resource_name": "gp.large",
+        "size": "large",
+      },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 48,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+        "id": "m5.12xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 206158430208,
+        },
+        "name": "m5.12xlarge - General purpose",
+        "resource_name": "gp.xxlarge",
+        "size": "xxlarge",
+      },
+      Object {
+        "category": "accelerated_computing",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 8,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
+        "id": "g4dn.2xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+        "resource_name": "gpu.medium",
+        "size": "medium",
+      },
+    ]
+  }
+>
+  <div
+    className="flat-radio-buttons-flex-container"
+  >
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <MemoryIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.r5.xlarge"
+      isDisabled={false}
+      isSelected={false}
+      key="r5.xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            r5.xlarge
+          </div>
+          <div>
+            Memory optimized
+          </div>
+        </React.Fragment>
+      }
+      titleText="4 vCPU 32 GiB RAM"
+      tooltip={false}
+      value="r5.xlarge"
+    >
+      <Button
+        billingModel="standard"
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.r5.xlarge"
+        isDisabled={false}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={false}
+          aria-label={null}
+          billingModel="standard"
+          className="pf-c-button pf-m-tertiary ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-5"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={false}
+          id="machineTypeRadio.r5.xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <MemoryIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 640 512"
+                      width="2em"
+                    >
+                      <path
+                        d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z"
+                      />
+                    </svg>
+                  </MemoryIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      4 vCPU 32 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    r5.xlarge
+                  </div>
+                  <div>
+                    Memory optimized
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <MemoryIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.r5.4xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="r5.4xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            r5.4xlarge
+          </div>
+          <div>
+            Memory optimized
+          </div>
+        </React.Fragment>
+      }
+      titleText="16 vCPU 128 GiB RAM"
+      tooltip={false}
+      value="r5.4xlarge"
+    >
+      <Button
+        billingModel="standard"
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.r5.4xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          billingModel="standard"
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-6"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.r5.4xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <MemoryIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 640 512"
+                      width="2em"
+                    >
+                      <path
+                        d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z"
+                      />
+                    </svg>
+                  </MemoryIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      16 vCPU 128 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    r5.4xlarge
+                  </div>
+                  <div>
+                    Memory optimized
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <ContainerNodeIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.m5.xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="m5.xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            m5.xlarge
+          </div>
+          <div>
+            General purpose
+          </div>
+        </React.Fragment>
+      }
+      titleText="4 vCPU 16 GiB RAM"
+      tooltip={false}
+      value="m5.xlarge"
+    >
+      <Button
+        billingModel="standard"
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.m5.xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          billingModel="standard"
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-7"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.m5.xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <ContainerNodeIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 1024 1024"
+                      width="2em"
+                    >
+                      <path
+                        d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
+                      />
+                    </svg>
+                  </ContainerNodeIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      4 vCPU 16 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    m5.xlarge
+                  </div>
+                  <div>
+                    General purpose
+                  </div>
+                </div>
+              </SplitItem>
+            </div>
+          </Split>
+        </button>
+      </Button>
+    </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <ContainerNodeIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.m5.4xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="m5.4xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            m5.4xlarge
+          </div>
+          <div>
+            General purpose
+          </div>
+        </React.Fragment>
+      }
+      titleText="16 vCPU 64 GiB RAM"
+      tooltip={false}
+      value="m5.4xlarge"
+    >
+      <Button
+        billingModel="standard"
+        className="ocm-flat-radio-button"
+        id="machineTypeRadio.m5.4xlarge"
+        isDisabled={true}
+        onClick={[Function]}
+        product="OSD"
+        variant="tertiary"
+      >
+        <button
+          aria-disabled={true}
+          aria-label={null}
+          billingModel="standard"
+          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+          data-ouia-component-id="OUIA-Generated-Button-tertiary-8"
+          data-ouia-component-type="PF4/Button"
+          data-ouia-safe={true}
+          disabled={true}
+          id="machineTypeRadio.m5.4xlarge"
+          onClick={[Function]}
+          product="OSD"
+          role={null}
+          tabIndex={null}
+          type="button"
+        >
+          <Split
+            hasGutter={true}
+          >
+            <div
+              className="pf-l-split pf-m-gutter"
+            >
+              <SplitItem
+                className="ocm-flat-button-icon"
+              >
+                <div
+                  className="pf-l-split__item ocm-flat-button-icon"
+                >
+                  <ContainerNodeIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="lg"
+                  >
+                    <svg
+                      aria-hidden={true}
+                      aria-labelledby={null}
+                      fill="currentColor"
+                      height="2em"
+                      role="img"
+                      style={
+                        Object {
+                          "verticalAlign": "-0.25em",
+                        }
+                      }
+                      viewBox="0 0 1024 1024"
+                      width="2em"
+                    >
+                      <path
+                        d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
+                      />
+                    </svg>
+                  </ContainerNodeIcon>
+                </div>
+              </SplitItem>
+              <SplitItem
+                isFilled={true}
+              >
+                <div
+                  className="pf-l-split__item pf-m-fill"
+                >
+                  <Title
+                    headingLevel="h4"
+                    size="lg"
+                  >
+                    <h4
+                      className="pf-c-title pf-m-lg"
+                    >
+                      16 vCPU 64 GiB RAM
+                    </h4>
+                  </Title>
+                  <div>
+                    m5.4xlarge
+                  </div>
+                  <div>
+                    General purpose
                   </div>
                 </div>
               </SplitItem>
@@ -875,744 +2255,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
 </MachineTypeSelection>
 `;
 
-exports[`<MachineTypeSelection /> when the machine types list is available byoc with sufficient byoc quota available renders correctly 1`] = `
-<MachineTypeSelection
-  billingModel="standard"
-  cloudProviderID="aws"
-  getMachineTypes={[MockFunction]}
-  input={
-    Object {
-      "onChange": [MockFunction] {
-        "calls": Array [
-          Array [
-            "r5.xlarge",
-          ],
-        ],
-        "results": Array [
-          Object {
-            "type": "return",
-            "value": undefined,
-          },
-        ],
-      },
-    }
-  }
-  isBYOC={true}
-  isMachinePool={false}
-  isMultiAz={true}
-  machineTypes={
-    Object {
-      "error": false,
-      "errorMessage": "",
-      "fulfilled": true,
-      "machineTypes": Object {},
-      "pending": false,
-    }
-  }
-  machineTypesByID={
-    Object {
-      "m5.12xlarge": Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
-        },
-        "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xlarge",
-        "size": "xlarge",
-      },
-      "r5.4xlarge": Object {
-        "category": "memory_optimized",
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
-        "id": "r5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 137438953472,
-        },
-        "name": "Memory optimized - R5.4XLarge",
-        "resource_name": "mem.large",
-      },
-      "r5.xlarge": Object {
-        "category": "memory_optimized",
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
-        "id": "r5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "Memory optimized - R5.XLarge",
-        "resource_name": "mem.small",
-      },
-    }
-  }
-  meta={Object {}}
-  organization={
-    Object {
-      "fulfilled": true,
-      "pending": false,
-    }
-  }
-  product="OSD"
-  quota={
-    Object {
-      "clustersQuota": Object {
-        "standard": Object {
-          "OSD": Object {
-            "aws": Object {
-              "byoc": Object {
-                "multiAz": Object {
-                  "available": 5,
-                  "mem.small": 5,
-                },
-                "singleAz": Object {
-                  "available": 0,
-                },
-                "totalAvailable": 5,
-              },
-              "rhInfra": Object {
-                "multiAz": Object {
-                  "available": 0,
-                },
-                "singleAz": Object {
-                  "available": 0,
-                },
-                "totalAvailable": 0,
-              },
-            },
-          },
-        },
-      },
-      "nodesQuota": Object {
-        "standard": Object {
-          "OSD": Object {
-            "aws": Object {
-              "byoc": Object {
-                "mem.small": Object {
-                  "available": 12,
-                  "cost": 4,
-                },
-              },
-            },
-          },
-        },
-      },
-    }
-  }
-  sortedMachineTypes={
-    Array [
-      Object {
-        "category": "memory_optimized",
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
-        "id": "r5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "Memory optimized - R5.XLarge",
-        "resource_name": "mem.small",
-      },
-      Object {
-        "category": "memory_optimized",
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
-        "id": "r5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 137438953472,
-        },
-        "name": "Memory optimized - R5.4XLarge",
-        "resource_name": "mem.large",
-      },
-      Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
-        },
-        "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xlarge",
-        "size": "xlarge",
-      },
-      Object {
-        "category": "accelerated_computing",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 8,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
-        "id": "g4dn.2xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "size": "medium",
-      },
-    ]
-  }
->
-  <div
-    className="flat-radio-buttons-flex-container"
-  >
-    <FlatRadioButton
-      billingModel="standard"
-      icon={
-        <MemoryIcon
-          color="currentColor"
-          noVerticalAlign={false}
-          size="lg"
-        />
-      }
-      id="machineTypeRadio.r5.xlarge"
-      isDisabled={false}
-      isSelected={false}
-      key="r5.xlarge"
-      onChange={[Function]}
-      product="OSD"
-      secondaryText={
-        <React.Fragment>
-          <div>
-            Memory optimized
-          </div>
-          <div>
-            R5.xlarge
-          </div>
-        </React.Fragment>
-      }
-      titleText="4 vCPU 32 GiB RAM"
-      tooltip={false}
-      value="r5.xlarge"
-    >
-      <Button
-        billingModel="standard"
-        className="ocm-flat-radio-button"
-        id="machineTypeRadio.r5.xlarge"
-        isDisabled={false}
-        onClick={[Function]}
-        product="OSD"
-        variant="tertiary"
-      >
-        <button
-          aria-disabled={false}
-          aria-label={null}
-          billingModel="standard"
-          className="pf-c-button pf-m-tertiary ocm-flat-radio-button"
-          data-ouia-component-id="OUIA-Generated-Button-tertiary-3"
-          data-ouia-component-type="PF4/Button"
-          data-ouia-safe={true}
-          disabled={false}
-          id="machineTypeRadio.r5.xlarge"
-          onClick={[Function]}
-          product="OSD"
-          role={null}
-          type="button"
-        >
-          <Split
-            hasGutter={true}
-          >
-            <div
-              className="pf-l-split pf-m-gutter"
-            >
-              <SplitItem
-                className="ocm-flat-button-icon"
-              >
-                <div
-                  className="pf-l-split__item ocm-flat-button-icon"
-                >
-                  <MemoryIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="lg"
-                  >
-                    <svg
-                      aria-hidden={true}
-                      aria-labelledby={null}
-                      fill="currentColor"
-                      height="2em"
-                      role="img"
-                      style={
-                        Object {
-                          "verticalAlign": "-0.25em",
-                        }
-                      }
-                      viewBox="0 0 640 512"
-                      width="2em"
-                    >
-                      <path
-                        d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z"
-                      />
-                    </svg>
-                  </MemoryIcon>
-                </div>
-              </SplitItem>
-              <SplitItem
-                isFilled={true}
-              >
-                <div
-                  className="pf-l-split__item pf-m-fill"
-                >
-                  <Title
-                    headingLevel="h4"
-                    size="lg"
-                  >
-                    <h4
-                      className="pf-c-title pf-m-lg"
-                    >
-                      4 vCPU 32 GiB RAM
-                    </h4>
-                  </Title>
-                  <div>
-                    Memory optimized
-                  </div>
-                  <div>
-                    R5.xlarge
-                  </div>
-                </div>
-              </SplitItem>
-            </div>
-          </Split>
-        </button>
-      </Button>
-    </FlatRadioButton>
-    <FlatRadioButton
-      billingModel="standard"
-      icon={
-        <MemoryIcon
-          color="currentColor"
-          noVerticalAlign={false}
-          size="lg"
-        />
-      }
-      id="machineTypeRadio.r5.4xlarge"
-      isDisabled={true}
-      isSelected={false}
-      key="r5.4xlarge"
-      onChange={[Function]}
-      product="OSD"
-      secondaryText={
-        <React.Fragment>
-          <div>
-            Memory optimized
-          </div>
-          <div>
-            R5.4xlarge
-          </div>
-        </React.Fragment>
-      }
-      titleText="16 vCPU 128 GiB RAM"
-      tooltip={false}
-      value="r5.4xlarge"
-    >
-      <Button
-        billingModel="standard"
-        className="ocm-flat-radio-button"
-        id="machineTypeRadio.r5.4xlarge"
-        isDisabled={true}
-        onClick={[Function]}
-        product="OSD"
-        variant="tertiary"
-      >
-        <button
-          aria-disabled={true}
-          aria-label={null}
-          billingModel="standard"
-          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
-          data-ouia-component-id="OUIA-Generated-Button-tertiary-4"
-          data-ouia-component-type="PF4/Button"
-          data-ouia-safe={true}
-          disabled={true}
-          id="machineTypeRadio.r5.4xlarge"
-          onClick={[Function]}
-          product="OSD"
-          role={null}
-          tabIndex={null}
-          type="button"
-        >
-          <Split
-            hasGutter={true}
-          >
-            <div
-              className="pf-l-split pf-m-gutter"
-            >
-              <SplitItem
-                className="ocm-flat-button-icon"
-              >
-                <div
-                  className="pf-l-split__item ocm-flat-button-icon"
-                >
-                  <MemoryIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="lg"
-                  >
-                    <svg
-                      aria-hidden={true}
-                      aria-labelledby={null}
-                      fill="currentColor"
-                      height="2em"
-                      role="img"
-                      style={
-                        Object {
-                          "verticalAlign": "-0.25em",
-                        }
-                      }
-                      viewBox="0 0 640 512"
-                      width="2em"
-                    >
-                      <path
-                        d="M640 130.94V96c0-17.67-14.33-32-32-32H32C14.33 64 0 78.33 0 96v34.94c18.6 6.61 32 24.19 32 45.06s-13.4 38.45-32 45.06V320h640v-98.94c-18.6-6.61-32-24.19-32-45.06s13.4-38.45 32-45.06zM224 256h-64V128h64v128zm128 0h-64V128h64v128zm128 0h-64V128h64v128zM0 448h64v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h128v-26.67c0-8.84 7.16-16 16-16s16 7.16 16 16V448h64v-96H0v96z"
-                      />
-                    </svg>
-                  </MemoryIcon>
-                </div>
-              </SplitItem>
-              <SplitItem
-                isFilled={true}
-              >
-                <div
-                  className="pf-l-split__item pf-m-fill"
-                >
-                  <Title
-                    headingLevel="h4"
-                    size="lg"
-                  >
-                    <h4
-                      className="pf-c-title pf-m-lg"
-                    >
-                      16 vCPU 128 GiB RAM
-                    </h4>
-                  </Title>
-                  <div>
-                    Memory optimized
-                  </div>
-                  <div>
-                    R5.4xlarge
-                  </div>
-                </div>
-              </SplitItem>
-            </div>
-          </Split>
-        </button>
-      </Button>
-    </FlatRadioButton>
-    <FlatRadioButton
-      billingModel="standard"
-      icon={
-        <ContainerNodeIcon
-          color="currentColor"
-          noVerticalAlign={false}
-          size="lg"
-        />
-      }
-      id="machineTypeRadio.m5.12xlarge"
-      isDisabled={true}
-      isSelected={false}
-      key="m5.12xlarge"
-      onChange={[Function]}
-      product="OSD"
-      secondaryText={
-        <React.Fragment>
-          <div>
-            m5.12xlarge
-          </div>
-          <div>
-            General purpose
-          </div>
-        </React.Fragment>
-      }
-      titleText="48 vCPU 192 GiB RAM"
-      tooltip={false}
-      value="m5.12xlarge"
-    >
-      <Button
-        billingModel="standard"
-        className="ocm-flat-radio-button"
-        id="machineTypeRadio.m5.12xlarge"
-        isDisabled={true}
-        onClick={[Function]}
-        product="OSD"
-        variant="tertiary"
-      >
-        <button
-          aria-disabled={true}
-          aria-label={null}
-          billingModel="standard"
-          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
-          data-ouia-component-id="OUIA-Generated-Button-tertiary-5"
-          data-ouia-component-type="PF4/Button"
-          data-ouia-safe={true}
-          disabled={true}
-          id="machineTypeRadio.m5.12xlarge"
-          onClick={[Function]}
-          product="OSD"
-          role={null}
-          tabIndex={null}
-          type="button"
-        >
-          <Split
-            hasGutter={true}
-          >
-            <div
-              className="pf-l-split pf-m-gutter"
-            >
-              <SplitItem
-                className="ocm-flat-button-icon"
-              >
-                <div
-                  className="pf-l-split__item ocm-flat-button-icon"
-                >
-                  <ContainerNodeIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="lg"
-                  >
-                    <svg
-                      aria-hidden={true}
-                      aria-labelledby={null}
-                      fill="currentColor"
-                      height="2em"
-                      role="img"
-                      style={
-                        Object {
-                          "verticalAlign": "-0.25em",
-                        }
-                      }
-                      viewBox="0 0 1024 1024"
-                      width="2em"
-                    >
-                      <path
-                        d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
-                      />
-                    </svg>
-                  </ContainerNodeIcon>
-                </div>
-              </SplitItem>
-              <SplitItem
-                isFilled={true}
-              >
-                <div
-                  className="pf-l-split__item pf-m-fill"
-                >
-                  <Title
-                    headingLevel="h4"
-                    size="lg"
-                  >
-                    <h4
-                      className="pf-c-title pf-m-lg"
-                    >
-                      48 vCPU 192 GiB RAM
-                    </h4>
-                  </Title>
-                  <div>
-                    m5.12xlarge
-                  </div>
-                  <div>
-                    General purpose
-                  </div>
-                </div>
-              </SplitItem>
-            </div>
-          </Split>
-        </button>
-      </Button>
-    </FlatRadioButton>
-    <FlatRadioButton
-      billingModel="standard"
-      icon={
-        <ContainerNodeIcon
-          color="currentColor"
-          noVerticalAlign={false}
-          size="lg"
-        />
-      }
-      id="machineTypeRadio.g4dn.2xlarge"
-      isDisabled={true}
-      isSelected={false}
-      key="g4dn.2xlarge"
-      onChange={[Function]}
-      product="OSD"
-      secondaryText={
-        <React.Fragment>
-          <div>
-            g4dn.2xlarge
-          </div>
-          <div>
-            Accelerated computing (1 gpu)
-          </div>
-        </React.Fragment>
-      }
-      titleText="8 vCPU 32 GiB RAM"
-      tooltip={false}
-      value="g4dn.2xlarge"
-    >
-      <Button
-        billingModel="standard"
-        className="ocm-flat-radio-button"
-        id="machineTypeRadio.g4dn.2xlarge"
-        isDisabled={true}
-        onClick={[Function]}
-        product="OSD"
-        variant="tertiary"
-      >
-        <button
-          aria-disabled={true}
-          aria-label={null}
-          billingModel="standard"
-          className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
-          data-ouia-component-id="OUIA-Generated-Button-tertiary-6"
-          data-ouia-component-type="PF4/Button"
-          data-ouia-safe={true}
-          disabled={true}
-          id="machineTypeRadio.g4dn.2xlarge"
-          onClick={[Function]}
-          product="OSD"
-          role={null}
-          tabIndex={null}
-          type="button"
-        >
-          <Split
-            hasGutter={true}
-          >
-            <div
-              className="pf-l-split pf-m-gutter"
-            >
-              <SplitItem
-                className="ocm-flat-button-icon"
-              >
-                <div
-                  className="pf-l-split__item ocm-flat-button-icon"
-                >
-                  <ContainerNodeIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="lg"
-                  >
-                    <svg
-                      aria-hidden={true}
-                      aria-labelledby={null}
-                      fill="currentColor"
-                      height="2em"
-                      role="img"
-                      style={
-                        Object {
-                          "verticalAlign": "-0.25em",
-                        }
-                      }
-                      viewBox="0 0 1024 1024"
-                      width="2em"
-                    >
-                      <path
-                        d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
-                      />
-                    </svg>
-                  </ContainerNodeIcon>
-                </div>
-              </SplitItem>
-              <SplitItem
-                isFilled={true}
-              >
-                <div
-                  className="pf-l-split__item pf-m-fill"
-                >
-                  <Title
-                    headingLevel="h4"
-                    size="lg"
-                  >
-                    <h4
-                      className="pf-c-title pf-m-lg"
-                    >
-                      8 vCPU 32 GiB RAM
-                    </h4>
-                  </Title>
-                  <div>
-                    g4dn.2xlarge
-                  </div>
-                  <div>
-                    Accelerated computing (1 gpu)
-                  </div>
-                </div>
-              </SplitItem>
-            </div>
-          </Split>
-        </button>
-      </Button>
-    </FlatRadioButton>
-  </div>
-</MachineTypeSelection>
-`;
-
 exports[`<MachineTypeSelection /> when the machine types list is available with rhinfra quota available renders correctly 1`] = `
 <MachineTypeSelection
   billingModel="standard"
@@ -1649,6 +2291,29 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
   }
   machineTypesByID={
     Object {
+      "g4dn.2xlarge": Object {
+        "category": "accelerated_computing",
+        "ccs_only": true,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 8,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
+        "id": "g4dn.2xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 34359738368,
+        },
+        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+        "resource_name": "gpu.medium",
+        "size": "medium",
+      },
       "m5.12xlarge": Object {
         "category": "general_purpose",
         "ccs_only": true,
@@ -1669,11 +2334,58 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 206158430208,
         },
         "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xlarge",
-        "size": "xlarge",
+        "resource_name": "gp.xxlarge",
+        "size": "xxlarge",
+      },
+      "m5.4xlarge": Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+        "id": "m5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 68719476736,
+        },
+        "name": "m5.4xlarge - General Purpose",
+        "resource_name": "gp.large",
+        "size": "large",
+      },
+      "m5.xlarge": Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+        "id": "m5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 17179869184,
+        },
+        "name": "m5.xlarge - General Purpose",
+        "resource_name": "gp.small",
+        "size": "small",
       },
       "r5.4xlarge": Object {
         "category": "memory_optimized",
+        "ccs_only": false,
         "cloud_provider": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
           "id": "aws",
@@ -1690,11 +2402,13 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "B",
           "value": 137438953472,
         },
-        "name": "Memory optimized - R5.4XLarge",
+        "name": "r5.4xlarge - Memory Optimized",
         "resource_name": "mem.large",
+        "size": "large",
       },
       "r5.xlarge": Object {
         "category": "memory_optimized",
+        "ccs_only": false,
         "cloud_provider": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
           "id": "aws",
@@ -1711,8 +2425,9 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "B",
           "value": 34359738368,
         },
-        "name": "Memory optimized - R5.XLarge",
+        "name": "r5.xlarge - Memory Optimized",
         "resource_name": "mem.small",
+        "size": "small",
       },
     }
   }
@@ -1748,6 +2463,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     Array [
       Object {
         "category": "memory_optimized",
+        "ccs_only": false,
         "cloud_provider": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
           "id": "aws",
@@ -1764,11 +2480,13 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "B",
           "value": 34359738368,
         },
-        "name": "Memory optimized - R5.XLarge",
+        "name": "r5.xlarge - Memory Optimized",
         "resource_name": "mem.small",
+        "size": "small",
       },
       Object {
         "category": "memory_optimized",
+        "ccs_only": false,
         "cloud_provider": Object {
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
           "id": "aws",
@@ -1785,8 +2503,55 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "B",
           "value": 137438953472,
         },
-        "name": "Memory optimized - R5.4XLarge",
+        "name": "r5.4xlarge - Memory Optimized",
         "resource_name": "mem.large",
+        "size": "large",
+      },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 4,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+        "id": "m5.xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 17179869184,
+        },
+        "name": "m5.xlarge - General Purpose",
+        "resource_name": "gp.small",
+        "size": "small",
+      },
+      Object {
+        "category": "general_purpose",
+        "ccs_only": false,
+        "cloud_provider": Object {
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+          "id": "aws",
+          "kind": "CloudProviderLink",
+        },
+        "cpu": Object {
+          "unit": "vCPU",
+          "value": 16,
+        },
+        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+        "id": "m5.4xlarge",
+        "kind": "MachineType",
+        "memory": Object {
+          "unit": "B",
+          "value": 68719476736,
+        },
+        "name": "m5.4xlarge - General Purpose",
+        "resource_name": "gp.large",
+        "size": "large",
       },
       Object {
         "category": "general_purpose",
@@ -1808,8 +2573,8 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 206158430208,
         },
         "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xlarge",
-        "size": "xlarge",
+        "resource_name": "gp.xxlarge",
+        "size": "xxlarge",
       },
       Object {
         "category": "accelerated_computing",
@@ -1831,6 +2596,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 34359738368,
         },
         "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+        "resource_name": "gpu.medium",
         "size": "medium",
       },
     ]
@@ -1857,10 +2623,10 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       secondaryText={
         <React.Fragment>
           <div>
-            Memory optimized
+            r5.xlarge
           </div>
           <div>
-            R5.xlarge
+            Memory optimized
           </div>
         </React.Fragment>
       }
@@ -1947,10 +2713,10 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                     </h4>
                   </Title>
                   <div>
-                    Memory optimized
+                    r5.xlarge
                   </div>
                   <div>
-                    R5.xlarge
+                    Memory optimized
                   </div>
                 </div>
               </SplitItem>
@@ -1977,10 +2743,10 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       secondaryText={
         <React.Fragment>
           <div>
-            Memory optimized
+            r5.4xlarge
           </div>
           <div>
-            R5.4xlarge
+            Memory optimized
           </div>
         </React.Fragment>
       }
@@ -2081,10 +2847,10 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                     </Title>
                     <React.Fragment>
                       <div>
-                        Memory optimized
+                        r5.4xlarge
                       </div>
                       <div>
-                        R5.4xlarge
+                        Memory optimized
                       </div>
                     </React.Fragment>
                   </SplitItem>
@@ -2180,10 +2946,484 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                             </h4>
                           </Title>
                           <div>
-                            Memory optimized
+                            r5.4xlarge
                           </div>
                           <div>
-                            R5.4xlarge
+                            Memory optimized
+                          </div>
+                        </div>
+                      </SplitItem>
+                    </div>
+                  </Split>
+                </button>
+              </Button>
+            </div>
+          </FindRefWrapper>
+        </Popper>
+      </Tooltip>
+    </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <ContainerNodeIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.m5.xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="m5.xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            m5.xlarge
+          </div>
+          <div>
+            General purpose
+          </div>
+        </React.Fragment>
+      }
+      titleText="4 vCPU 16 GiB RAM"
+      tooltip="You do not have quota for this node type. Contact sales to purchase additional quota."
+      value="m5.xlarge"
+    >
+      <Tooltip
+        content="You do not have quota for this node type. Contact sales to purchase additional quota."
+      >
+        <Popper
+          appendTo={[Function]}
+          distance={15}
+          enableFlip={true}
+          flipBehavior={
+            Array [
+              "top",
+              "right",
+              "bottom",
+              "left",
+              "top",
+              "right",
+              "bottom",
+            ]
+          }
+          isVisible={false}
+          onBlur={[Function]}
+          onDocumentClick={false}
+          onDocumentKeyDown={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTriggerEnter={[Function]}
+          placement="top"
+          popper={
+            <div
+              className="pf-c-tooltip"
+              id="pf-tooltip-2"
+              role="tooltip"
+              style={
+                Object {
+                  "maxWidth": null,
+                  "opacity": 0,
+                  "transition": "opacity 300ms cubic-bezier(.54, 1.5, .38, 1.11)",
+                }
+              }
+            >
+              <TooltipArrow />
+              <TooltipContent
+                isLeftAligned={false}
+              >
+                You do not have quota for this node type. Contact sales to purchase additional quota.
+              </TooltipContent>
+            </div>
+          }
+          popperMatchesTriggerWidth={false}
+          positionModifiers={
+            Object {
+              "bottom": "pf-m-bottom",
+              "left": "pf-m-left",
+              "right": "pf-m-right",
+              "top": "pf-m-top",
+            }
+          }
+          trigger={
+            <div
+              className="ocm-flat-radio-button-disabled"
+            >
+              <Button
+                billingModel="standard"
+                className="ocm-flat-radio-button"
+                id="machineTypeRadio.m5.xlarge"
+                isDisabled={true}
+                onClick={[Function]}
+                product="OSD"
+                variant="tertiary"
+              >
+                <Split
+                  hasGutter={true}
+                >
+                  <SplitItem
+                    className="ocm-flat-button-icon"
+                  >
+                    <ContainerNodeIcon
+                      color="currentColor"
+                      noVerticalAlign={false}
+                      size="lg"
+                    />
+                  </SplitItem>
+                  <SplitItem
+                    isFilled={true}
+                  >
+                    <Title
+                      headingLevel="h4"
+                      size="lg"
+                    >
+                      4 vCPU 16 GiB RAM
+                    </Title>
+                    <React.Fragment>
+                      <div>
+                        m5.xlarge
+                      </div>
+                      <div>
+                        General purpose
+                      </div>
+                    </React.Fragment>
+                  </SplitItem>
+                </Split>
+              </Button>
+            </div>
+          }
+          zIndex={9999}
+        >
+          <FindRefWrapper
+            onFoundRef={[Function]}
+          >
+            <div
+              className="ocm-flat-radio-button-disabled"
+            >
+              <Button
+                billingModel="standard"
+                className="ocm-flat-radio-button"
+                id="machineTypeRadio.m5.xlarge"
+                isDisabled={true}
+                onClick={[Function]}
+                product="OSD"
+                variant="tertiary"
+              >
+                <button
+                  aria-disabled={true}
+                  aria-label={null}
+                  billingModel="standard"
+                  className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+                  data-ouia-component-id="OUIA-Generated-Button-tertiary-3"
+                  data-ouia-component-type="PF4/Button"
+                  data-ouia-safe={true}
+                  disabled={true}
+                  id="machineTypeRadio.m5.xlarge"
+                  onClick={[Function]}
+                  product="OSD"
+                  role={null}
+                  tabIndex={null}
+                  type="button"
+                >
+                  <Split
+                    hasGutter={true}
+                  >
+                    <div
+                      className="pf-l-split pf-m-gutter"
+                    >
+                      <SplitItem
+                        className="ocm-flat-button-icon"
+                      >
+                        <div
+                          className="pf-l-split__item ocm-flat-button-icon"
+                        >
+                          <ContainerNodeIcon
+                            color="currentColor"
+                            noVerticalAlign={false}
+                            size="lg"
+                          >
+                            <svg
+                              aria-hidden={true}
+                              aria-labelledby={null}
+                              fill="currentColor"
+                              height="2em"
+                              role="img"
+                              style={
+                                Object {
+                                  "verticalAlign": "-0.25em",
+                                }
+                              }
+                              viewBox="0 0 1024 1024"
+                              width="2em"
+                            >
+                              <path
+                                d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
+                              />
+                            </svg>
+                          </ContainerNodeIcon>
+                        </div>
+                      </SplitItem>
+                      <SplitItem
+                        isFilled={true}
+                      >
+                        <div
+                          className="pf-l-split__item pf-m-fill"
+                        >
+                          <Title
+                            headingLevel="h4"
+                            size="lg"
+                          >
+                            <h4
+                              className="pf-c-title pf-m-lg"
+                            >
+                              4 vCPU 16 GiB RAM
+                            </h4>
+                          </Title>
+                          <div>
+                            m5.xlarge
+                          </div>
+                          <div>
+                            General purpose
+                          </div>
+                        </div>
+                      </SplitItem>
+                    </div>
+                  </Split>
+                </button>
+              </Button>
+            </div>
+          </FindRefWrapper>
+        </Popper>
+      </Tooltip>
+    </FlatRadioButton>
+    <FlatRadioButton
+      billingModel="standard"
+      icon={
+        <ContainerNodeIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="lg"
+        />
+      }
+      id="machineTypeRadio.m5.4xlarge"
+      isDisabled={true}
+      isSelected={false}
+      key="m5.4xlarge"
+      onChange={[Function]}
+      product="OSD"
+      secondaryText={
+        <React.Fragment>
+          <div>
+            m5.4xlarge
+          </div>
+          <div>
+            General purpose
+          </div>
+        </React.Fragment>
+      }
+      titleText="16 vCPU 64 GiB RAM"
+      tooltip="You do not have quota for this node type. Contact sales to purchase additional quota."
+      value="m5.4xlarge"
+    >
+      <Tooltip
+        content="You do not have quota for this node type. Contact sales to purchase additional quota."
+      >
+        <Popper
+          appendTo={[Function]}
+          distance={15}
+          enableFlip={true}
+          flipBehavior={
+            Array [
+              "top",
+              "right",
+              "bottom",
+              "left",
+              "top",
+              "right",
+              "bottom",
+            ]
+          }
+          isVisible={false}
+          onBlur={[Function]}
+          onDocumentClick={false}
+          onDocumentKeyDown={[Function]}
+          onFocus={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTriggerEnter={[Function]}
+          placement="top"
+          popper={
+            <div
+              className="pf-c-tooltip"
+              id="pf-tooltip-3"
+              role="tooltip"
+              style={
+                Object {
+                  "maxWidth": null,
+                  "opacity": 0,
+                  "transition": "opacity 300ms cubic-bezier(.54, 1.5, .38, 1.11)",
+                }
+              }
+            >
+              <TooltipArrow />
+              <TooltipContent
+                isLeftAligned={false}
+              >
+                You do not have quota for this node type. Contact sales to purchase additional quota.
+              </TooltipContent>
+            </div>
+          }
+          popperMatchesTriggerWidth={false}
+          positionModifiers={
+            Object {
+              "bottom": "pf-m-bottom",
+              "left": "pf-m-left",
+              "right": "pf-m-right",
+              "top": "pf-m-top",
+            }
+          }
+          trigger={
+            <div
+              className="ocm-flat-radio-button-disabled"
+            >
+              <Button
+                billingModel="standard"
+                className="ocm-flat-radio-button"
+                id="machineTypeRadio.m5.4xlarge"
+                isDisabled={true}
+                onClick={[Function]}
+                product="OSD"
+                variant="tertiary"
+              >
+                <Split
+                  hasGutter={true}
+                >
+                  <SplitItem
+                    className="ocm-flat-button-icon"
+                  >
+                    <ContainerNodeIcon
+                      color="currentColor"
+                      noVerticalAlign={false}
+                      size="lg"
+                    />
+                  </SplitItem>
+                  <SplitItem
+                    isFilled={true}
+                  >
+                    <Title
+                      headingLevel="h4"
+                      size="lg"
+                    >
+                      16 vCPU 64 GiB RAM
+                    </Title>
+                    <React.Fragment>
+                      <div>
+                        m5.4xlarge
+                      </div>
+                      <div>
+                        General purpose
+                      </div>
+                    </React.Fragment>
+                  </SplitItem>
+                </Split>
+              </Button>
+            </div>
+          }
+          zIndex={9999}
+        >
+          <FindRefWrapper
+            onFoundRef={[Function]}
+          >
+            <div
+              className="ocm-flat-radio-button-disabled"
+            >
+              <Button
+                billingModel="standard"
+                className="ocm-flat-radio-button"
+                id="machineTypeRadio.m5.4xlarge"
+                isDisabled={true}
+                onClick={[Function]}
+                product="OSD"
+                variant="tertiary"
+              >
+                <button
+                  aria-disabled={true}
+                  aria-label={null}
+                  billingModel="standard"
+                  className="pf-c-button pf-m-tertiary pf-m-disabled ocm-flat-radio-button"
+                  data-ouia-component-id="OUIA-Generated-Button-tertiary-4"
+                  data-ouia-component-type="PF4/Button"
+                  data-ouia-safe={true}
+                  disabled={true}
+                  id="machineTypeRadio.m5.4xlarge"
+                  onClick={[Function]}
+                  product="OSD"
+                  role={null}
+                  tabIndex={null}
+                  type="button"
+                >
+                  <Split
+                    hasGutter={true}
+                  >
+                    <div
+                      className="pf-l-split pf-m-gutter"
+                    >
+                      <SplitItem
+                        className="ocm-flat-button-icon"
+                      >
+                        <div
+                          className="pf-l-split__item ocm-flat-button-icon"
+                        >
+                          <ContainerNodeIcon
+                            color="currentColor"
+                            noVerticalAlign={false}
+                            size="lg"
+                          >
+                            <svg
+                              aria-hidden={true}
+                              aria-labelledby={null}
+                              fill="currentColor"
+                              height="2em"
+                              role="img"
+                              style={
+                                Object {
+                                  "verticalAlign": "-0.25em",
+                                }
+                              }
+                              viewBox="0 0 1024 1024"
+                              width="2em"
+                            >
+                              <path
+                                d="M22.3,576.00143 L1001.8,576.00143 C1013.2,576.00143 1020.3,570.90143 1023.1,560.50143 C1025.6,550.20143 1022.9,537.30143 1014.4,522.10143 C1014.4,522.10143 874.3,232.50143 863.8,211.00143 C856,191.90143 841.4,192.000713 841.4,192.000713 L185.6,192.000713 C185.6,192.000713 169,191.60143 161.8,209.70143 C151.3,232.30143 9.7,522.00143 9.7,522.00143 C1.2,537.10143 -1.7,550.00143 1,560.40143 C3.7,570.80143 10.8,576.00143 22.3,576.00143 Z M1013.1,650.90143 C1005.8,643.60143 997.2,640.00143 987.4,640.00143 L36.6,640.00143 C26.6,640.00143 18.2,643.60143 10.9,650.90143 C3.6,658.20143 0,666.80143 0,676.60143 L0,795.50143 C0,805.50143 3.6,813.90143 10.7,821.20143 C18,828.40143 26.4,832.00143 36.4,832.00143 L987.4,832.00143 C997.4,832.00143 1005.8,828.40143 1013.1,821.10143 C1020.4,813.80143 1024,805.40143 1024,795.40143 L1024,676.60143 C1024,666.60143 1020.4,658.20143 1013.1,650.90143 Z M128,768.00143 L64,768.00143 L64,704.00143 L128,704.00143 L128,768.00143 Z M256,768.00143 L192,768.00143 L192,704.00143 L256,704.00143 L256,768.00143 Z M384,768.00143 L320,768.00143 L320,704.00143 L384,704.00143 L384,768.00143 Z M512,768.00143 L448,768.00143 L448,704.00143 L512,704.00143 L512,768.00143 Z M960,768.00143 L896,768.00143 L896,704.00143 L960,704.00143 L960,768.00143 Z"
+                              />
+                            </svg>
+                          </ContainerNodeIcon>
+                        </div>
+                      </SplitItem>
+                      <SplitItem
+                        isFilled={true}
+                      >
+                        <div
+                          className="pf-l-split__item pf-m-fill"
+                        >
+                          <Title
+                            headingLevel="h4"
+                            size="lg"
+                          >
+                            <h4
+                              className="pf-c-title pf-m-lg"
+                            >
+                              16 vCPU 64 GiB RAM
+                            </h4>
+                          </Title>
+                          <div>
+                            m5.4xlarge
+                          </div>
+                          <div>
+                            General purpose
                           </div>
                         </div>
                       </SplitItem>
@@ -2232,97 +3472,7 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
   }
   product="OSD"
   quota={Object {}}
-  sortedMachineTypes={
-    Array [
-      Object {
-        "category": "memory_optimized",
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
-        "id": "r5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "Memory optimized - R5.XLarge",
-        "resource_name": "mem.small",
-      },
-      Object {
-        "category": "memory_optimized",
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
-        "id": "r5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 137438953472,
-        },
-        "name": "Memory optimized - R5.4XLarge",
-        "resource_name": "mem.large",
-      },
-      Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
-        },
-        "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xlarge",
-        "size": "xlarge",
-      },
-      Object {
-        "category": "accelerated_computing",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 8,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
-        "id": "g4dn.2xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "size": "medium",
-      },
-    ]
-  }
+  sortedMachineTypes={Array []}
 >
   <div
     className="spinner-fit-container"
@@ -2380,97 +3530,7 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
   }
   product="OSD"
   quota={Object {}}
-  sortedMachineTypes={
-    Array [
-      Object {
-        "category": "memory_optimized",
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
-        "id": "r5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "Memory optimized - R5.XLarge",
-        "resource_name": "mem.small",
-      },
-      Object {
-        "category": "memory_optimized",
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/r5.4xlarge",
-        "id": "r5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 137438953472,
-        },
-        "name": "Memory optimized - R5.4XLarge",
-        "resource_name": "mem.large",
-      },
-      Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
-        },
-        "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xlarge",
-        "size": "xlarge",
-      },
-      Object {
-        "category": "accelerated_computing",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 8,
-        },
-        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
-        "id": "g4dn.2xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "size": "medium",
-      },
-    ]
-  }
+  sortedMachineTypes={Array []}
 >
   <ErrorBox
     message="Error loading node types"
