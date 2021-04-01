@@ -814,6 +814,7 @@ const validateUniqueAZ = (value, allValues, _, name) => {
   return undefined;
 };
 
+const validateValueNotPlaceholder = placeholder => value => (value !== placeholder ? undefined : 'Field is required');
 
 const validateGCPSubnet = (value) => {
   if (!value) {
@@ -926,6 +927,7 @@ export {
   checkMachinePoolLabels,
   checkLabels,
   validateUniqueAZ,
+  validateValueNotPlaceholder,
   validateGCPSubnet,
   validateGCPEncryptionKeys,
   validateGCPKMSServiceAccount,
