@@ -23,52 +23,6 @@ const organizationState = {
 };
 
 const machineTypesByID = {
-  'r5.xlarge': {
-    kind: 'MachineType',
-    name: 'r5.xlarge - Memory Optimized',
-    category: 'memory_optimized',
-    size: 'small',
-    id: 'r5.xlarge',
-    href: '/api/clusters_mgmt/v1/machine_types/r5.xlarge',
-    memory: {
-      value: 34359738368,
-      unit: 'B',
-    },
-    cpu: {
-      value: 4,
-      unit: 'vCPU',
-    },
-    cloud_provider: {
-      kind: 'CloudProviderLink',
-      id: 'aws',
-      href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-    },
-    ccs_only: false,
-    resource_name: 'mem.small',
-  },
-  'r5.4xlarge': {
-    kind: 'MachineType',
-    name: 'r5.4xlarge - Memory Optimized',
-    category: 'memory_optimized',
-    size: 'large',
-    id: 'r5.4xlarge',
-    href: '/api/clusters_mgmt/v1/machine_types/r5.4xlarge',
-    memory: {
-      value: 137438953472,
-      unit: 'B',
-    },
-    cpu: {
-      value: 16,
-      unit: 'vCPU',
-    },
-    cloud_provider: {
-      kind: 'CloudProviderLink',
-      id: 'aws',
-      href: '/api/clusters_mgmt/v1/cloud_providers/aws',
-    },
-    ccs_only: false,
-    resource_name: 'mem.large',
-  },
   'm5.xlarge': {
     kind: 'MachineType',
     name: 'm5.xlarge - General Purpose',
@@ -164,8 +118,6 @@ const machineTypesByID = {
 };
 
 const sortedMachineTypes = [
-  machineTypesByID['r5.xlarge'],
-  machineTypesByID['r5.4xlarge'],
   machineTypesByID['m5.xlarge'],
   machineTypesByID['m5.4xlarge'],
   machineTypesByID['m5.12xlarge'],
