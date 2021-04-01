@@ -163,9 +163,7 @@ describe('quotaSelectors', () => {
       expect(availableClustersFromQuota(TrialQuotaList, paramsTrial)).toBe(1);
       expect(availableClustersFromQuota(CCSQuotaList, paramsTrial)).toBe(0);
 
-      // Currently AMS only sends 0-cost for ROSA once it notices that you have a ROSA cluster.
-      // Until it *always* sends 0-cost quotas, returning Infinity even on empty input is a feature.
-      expect(availableClustersFromQuota(emptyQuotaList, paramsROSA)).toBe(Infinity);
+      expect(availableClustersFromQuota(emptyQuotaList, paramsROSA)).toBe(0);
       expect(availableClustersFromQuota(ROSACCSQuotaList, paramsROSA))
         .toBe(Infinity);
       expect(availableClustersFromQuota(CCSROSAQuotaList, paramsROSA))
