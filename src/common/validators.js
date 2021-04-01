@@ -35,7 +35,7 @@ const CONSOLE_URL_REGEXP = /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 15;
 
-const MAX_MACHINE_POOL_NAME_LENGTH = 15;
+const MAX_MACHINE_POOL_NAME_LENGTH = 30;
 
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
