@@ -296,7 +296,7 @@ class InsightsTable extends React.Component {
                     <>
                       {report.disabled ? <DisabledTooltip /> : null}
                       <Link
-                        to={`/details/${cluster.id}/insights/${report.rule_id.replace(/\./g, '|')}/${report.extra_data.error_key}`}
+                        to={`/details/s/${cluster.subscription.id}/insights/${report.rule_id.replace(/\./g, '|')}/${report.extra_data.error_key}`}
                         onClick={() => setReportDetails(report)}
                       >
                         {report.description}
@@ -342,7 +342,7 @@ class InsightsTable extends React.Component {
                   </StackItem>
                   <StackItem className="report-details-unfolded__link">
                     <Link
-                      to={`/details/${cluster.id}/insights/${details.rule_id.replace(/\./g, '|')}/${details.extra_data.error_key}`}
+                      to={`/details/s/${cluster.subscription.id}/insights/${details.rule_id.replace(/\./g, '|')}/${details.extra_data.error_key}`}
                       onClick={() => setReportDetails(details)}
                     >
                     View details and remediation steps

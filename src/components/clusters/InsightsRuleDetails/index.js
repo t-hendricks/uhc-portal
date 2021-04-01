@@ -26,15 +26,15 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchClusterDetails: clusterId => fetchClusterDetails(clusterId),
-  fetchReportData: (clusterId, ruleId, errorKey, isOSD) => (
-    fetchReportDetails(clusterId, ruleId, errorKey, isOSD)
+  fetchClusterDetails: subscriptionID => fetchClusterDetails(subscriptionID),
+  fetchReportData: (clusterUUID, ruleId, errorKey, isOSD) => (
+    fetchReportDetails(clusterUUID, ruleId, errorKey, isOSD)
   ),
-  disableRule: (clusterId, ruleId) => disableRuleInsights(clusterId, ruleId),
-  enableRule: (clusterId, ruleId) => enableRuleInsights(clusterId, ruleId),
+  disableRule: (clusterUUID, ruleId) => disableRuleInsights(clusterUUID, ruleId),
+  enableRule: (clusterUUID, ruleId) => enableRuleInsights(clusterUUID, ruleId),
   clearGlobalError,
   setGlobalError,
-  voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),
+  voteOnRule: (clusterUUID, ruleId, vote) => voteOnRuleInsights(clusterUUID, ruleId, vote),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InsightsRuleDetails);
