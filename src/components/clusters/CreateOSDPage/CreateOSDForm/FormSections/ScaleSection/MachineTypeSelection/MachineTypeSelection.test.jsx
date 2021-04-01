@@ -4,9 +4,9 @@ import { mount } from 'enzyme';
 import MachineTypeSelection from './MachineTypeSelection';
 
 import {
-  rhInfraClusterQuota,
-  awsCCSClustersWithNodesQuota,
-  awsCCSClustersWithSingleNodeQuota,
+  rhQuotaList,
+  CCSQuotaList,
+  CCSOneNodeRemainingQuotaList,
 } from '../../../../../common/__test__/quota.fixtures';
 
 const baseState = {
@@ -294,7 +294,7 @@ describe('<MachineTypeSelection />', () => {
           ...baseState,
           fulfilled: true,
         };
-        const quota = rhInfraClusterQuota;
+        const quota = rhQuotaList;
         onChange = jest.fn();
         getMachineTypes = jest.fn();
         wrapper = mount(
@@ -322,7 +322,7 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('calls onChange with the first item that has quota', () => {
-        expect(onChange).toBeCalledWith('r5.xlarge');
+        expect(onChange).toBeCalledWith('m5.xlarge');
       });
 
       it('does not display ccs_only machine types', () => {
@@ -338,7 +338,7 @@ describe('<MachineTypeSelection />', () => {
           ...baseState,
           fulfilled: true,
         };
-        const quota = awsCCSClustersWithNodesQuota;
+        const quota = CCSQuotaList;
         onChange = jest.fn();
         getMachineTypes = jest.fn();
         wrapper = mount(
@@ -366,7 +366,7 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('calls onChange with the first item that has quota', () => {
-        expect(onChange).toBeCalledWith('r5.xlarge');
+        expect(onChange).toBeCalledWith('m5.xlarge');
       });
 
       it('displays ccs_only machine types', () => {
@@ -382,7 +382,7 @@ describe('<MachineTypeSelection />', () => {
           ...baseState,
           fulfilled: true,
         };
-        const quota = awsCCSClustersWithSingleNodeQuota;
+        const quota = CCSOneNodeRemainingQuotaList;
         onChange = jest.fn();
         getMachineTypes = jest.fn();
         wrapper = mount(
