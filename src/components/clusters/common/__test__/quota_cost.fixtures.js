@@ -1,6 +1,6 @@
 // Fragments of QuotaCostList.items.
 
-const dedicatedRhInfra = [
+export const dedicatedRhInfra = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
@@ -43,7 +43,7 @@ const dedicatedRhInfra = [
   },
 ];
 
-const dedicatedCCS = [
+export const dedicatedCCS = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
@@ -86,7 +86,50 @@ const dedicatedCCS = [
   },
 ];
 
-const dedicatedTrial = [
+export const dedicatedCCSOneNodeRemaining = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'cluster|byoc|osd',
+    allowed: 20,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'gp.small',
+        resource_type: 'cluster',
+        byoc: 'byoc',
+        availability_zone_type: 'multi',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'compute.node|cpu|byoc|osd',
+    allowed: 520,
+    consumed: 516,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'gp.small',
+        resource_type: 'compute.node',
+        byoc: 'byoc',
+        availability_zone_type: 'any',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 4,
+      },
+    ],
+  },
+];
+
+export const dedicatedTrial = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
@@ -269,7 +312,7 @@ const dedicatedTrial = [
   },
 ];
 
-const unlimitedROSA = [
+export const unlimitedROSA = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1H1PQMDtwzAUsjPxgoWRjhSpNGD/quota_cost',
@@ -312,7 +355,7 @@ const unlimitedROSA = [
   },
 ];
 
-const rhmiAddon = [
+export const rhmiAddon = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
@@ -345,7 +388,7 @@ const rhmiAddon = [
   },
 ];
 
-const crcWorkspacesAddon = [
+export const crcWorkspacesAddon = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
@@ -369,7 +412,7 @@ const crcWorkspacesAddon = [
 ];
 
 // Test an addon that's used up on rhInfra (but unlimited on CCS)
-const loggingAddon = [
+export const loggingAddon = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
@@ -402,7 +445,7 @@ const loggingAddon = [
   },
 ];
 
-const dbaAddon = [
+export const dbaAddon = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
@@ -425,7 +468,7 @@ const dbaAddon = [
   },
 ];
 
-const serviceMeshAddon = [
+export const serviceMeshAddon = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
@@ -447,15 +490,3 @@ const serviceMeshAddon = [
     ],
   },
 ];
-
-export {
-  dedicatedRhInfra,
-  dedicatedCCS,
-  dedicatedTrial,
-  unlimitedROSA,
-  rhmiAddon,
-  crcWorkspacesAddon,
-  loggingAddon,
-  dbaAddon,
-  serviceMeshAddon,
-};

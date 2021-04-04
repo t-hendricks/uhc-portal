@@ -17,6 +17,9 @@ export const ROSAQuotaList = userActions.processQuota(
 export const CCSQuotaList = userActions.processQuota({
   data: { items: quotaCostFixtures.dedicatedCCS },
 });
+export const CCSOneNodeRemainingQuotaList = userActions.processQuota({
+  data: { items: quotaCostFixtures.dedicatedCCSOneNodeRemaining },
+});
 export const TrialQuotaList = userActions.processQuota({
   data: { items: quotaCostFixtures.dedicatedTrial },
 });
@@ -63,101 +66,6 @@ export const addonsQuota = userActions.processQuota({
     ),
   },
 });
-
-export const rhInfraClusterQuota = {
-  clustersQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          rhInfra: {
-            multiAz: {
-              'mem.small': 5,
-            },
-            singleAz: {
-              'mem.small': 0,
-            },
-          },
-        },
-      },
-    },
-  },
-};
-
-export const awsCCSClustersWithNodesQuota = {
-  clustersQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          rhInfra: {
-            singleAz: { available: 0 },
-            multiAz: { available: 0 },
-            totalAvailable: 0,
-          },
-          byoc: {
-            singleAz: { available: 0 },
-            multiAz: {
-              'mem.small': 5,
-              available: 5,
-            },
-            totalAvailable: 5,
-          },
-        },
-      },
-    },
-  },
-  nodesQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          byoc: {
-            'mem.small': {
-              available: 12,
-              cost: 4,
-            },
-          },
-        },
-      },
-    },
-  },
-};
-
-export const awsCCSClustersWithSingleNodeQuota = {
-  clustersQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          rhInfra: {
-            singleAz: { available: 0 },
-            multiAz: { available: 0 },
-            totalAvailable: 0,
-          },
-          byoc: {
-            singleAz: { available: 0 },
-            multiAz: {
-              'mem.small': 5,
-              available: 5,
-            },
-            totalAvailable: 5,
-          },
-        },
-      },
-    },
-  },
-  nodesQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          byoc: {
-            'mem.small': {
-              available: 4,
-              cost: 4,
-            },
-          },
-        },
-      },
-    },
-  },
-};
 
 // Values for `clustersQuota` prop passed down by CreateOSDPage.
 
