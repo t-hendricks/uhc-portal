@@ -41,27 +41,24 @@ const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDPage);
 const mapStateToProps = (state, ownProps) => {
   const { organization } = state.userProfile;
   const { cloudProviderID } = ownProps;
-  let { product } = ownProps;
   const isAwsForm = cloudProviderID === 'aws';
   const defaultRegion = isAwsForm ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
   const { STANDARD, MARKETPLACE } = billingModels;
   const { OSD, OSDTrial } = normalizedProducts;
 
-  let privateClusterSelected = false;
   const valueSelector = formValueSelector('CreateCluster');
-  privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
+  const privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
   const customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
 
   // The user may select a different product after entering the creation page
   // thus it could differ from the product in the URL
   const selectedProduct = valueSelector(state, 'product');
-  if (selectedProduct) {
-    product = selectedProduct;
-  }
-  const hasAwsQuota = hasAwsQuotaSelector(state, ownProps.product, STANDARD)
-                   || hasAwsQuotaSelector(state, ownProps.product, MARKETPLACE);
-  const hasGcpQuota = hasGcpQuotaSelector(state, ownProps.product, STANDARD)
-                   || hasGcpQuotaSelector(state, ownProps.product, MARKETPLACE);
+  const product = selectedProduct || ownProps.product;
+
+  const hasAwsQuota = hasAwsQuotaSelector(state, product, STANDARD)
+                   || hasAwsQuotaSelector(state, product, MARKETPLACE);
+  const hasGcpQuota = hasGcpQuotaSelector(state, product, STANDARD)
+                   || hasGcpQuotaSelector(state, product, MARKETPLACE);
 
   const hasStandardOSDQuota = hasAwsQuotaSelector(state, OSD, STANDARD)
                            || hasGcpQuotaSelector(state, OSD, STANDARD);
@@ -83,7 +80,7 @@ const mapStateToProps = (state, ownProps) => {
 
     clustersQuota: {
       hasStandardOSDQuota,
-      hasProductQuota: hasManagedQuotaSelector(state, ownProps.product),
+      hasProductQuota: hasManagedQuotaSelector(state, product),
       hasOSDTrialQuota: hasManagedQuotaSelector(state, OSDTrial),
       hasMarketplaceProductQuota: hasManagedQuotaSelector(
         state, product, MARKETPLACE,
@@ -130,6 +127,7 @@ const mapStateToProps = (state, ownProps) => {
       automatic_upgrade_schedule: '0 0 * * 0',
       node_labels: [{}],
       billing_model: 'standard',
+      product: ownProps.product,
     },
   });
 };
