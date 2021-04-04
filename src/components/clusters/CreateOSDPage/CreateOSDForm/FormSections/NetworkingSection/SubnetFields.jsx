@@ -5,8 +5,8 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import AvailabilityZoneSelection from './AvailabilityZoneSelection';
-import { required, validateUniqueAZ } from '../../../../../../common/validators';
+import AvailabilityZoneSelection, { PLACEHOLDER_VALUE } from './AvailabilityZoneSelection';
+import { required, validateUniqueAZ, validateValueNotPlaceholder } from '../../../../../../common/validators';
 
 const SingleSubnetFieldsRow = ({
   showLabels = false,
@@ -15,8 +15,9 @@ const SingleSubnetFieldsRow = ({
   isMultiAz,
 }) => {
   const azValidations = [
-    required,
     isMultiAz && validateUniqueAZ,
+    validateValueNotPlaceholder(PLACEHOLDER_VALUE),
+    required,
   ].filter(Boolean);
 
   return (
