@@ -1,13 +1,9 @@
-const GET_ALERTS = 'GET_ALERTS';
-const GET_NODES = 'GET_NODES';
-const GET_OPERATORS = 'GET_OPERATORS';
+const GET_ONDEMAND_METRICS = 'GET_ONDEMAND_METRICS';
 const CLEAR_MONITORING_STATE = 'CLEAR_MONITORING_STATE';
 
 const monitoringConstants = {
-  GET_ALERTS,
-  GET_NODES,
-  GET_OPERATORS,
+  GET_ONDEMAND_METRICS,
   CLEAR_MONITORING_STATE,
 };
 
-export { monitoringConstants, GET_ALERTS, GET_NODES };
+export default monitoringConstants;

@@ -16,11 +16,7 @@ import { cloudProviderActions } from '../../../redux/actions/cloudProviderAction
 import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';
 import { userActions } from '../../../redux/actions';
 import { modalActions } from '../../common/Modal/ModalActions';
-import {
-  getAlerts,
-  getClusterOperators,
-  getNodes,
-} from './components/Monitoring/MonitoringActions';
+import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import { clusterLogActions, getClusterHistory } from './components/ClusterLogs/clusterLogActions';
@@ -112,9 +108,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   resetClusterHistory: clusterLogActions.resetClusterHistory,
   clearGlobalError,
   setGlobalError,
-  getAlerts,
-  getNodes,
-  getClusterOperators,
+  getOnDemandMetrics,
   getAddOns,
   getClusterAddOns,
   getGrants,

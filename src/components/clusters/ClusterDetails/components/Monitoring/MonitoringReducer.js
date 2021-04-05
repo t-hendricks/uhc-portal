@@ -18,7 +18,7 @@ import {
   REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../common/errors';
-import { monitoringConstants } from './MonitoringConstants';
+import monitoringConstants from './MonitoringConstants';
 
 const initialState = {
   alerts: {
@@ -40,59 +40,39 @@ function MonitoringReducer(state = initialState, action) {
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
-      // GET_ALERTS
-      case REJECTED_ACTION(monitoringConstants.GET_ALERTS):
+      // GET_ONDEMAND_METRICS
+      case REJECTED_ACTION(monitoringConstants.GET_ONDEMAND_METRICS):
         draft.alerts = {
           ...initialState.alerts,
           ...getErrorState(action),
         };
-        break;
-
-      case PENDING_ACTION(monitoringConstants.GET_ALERTS):
-        draft.alerts.pending = true;
-        break;
-
-      case FULFILLED_ACTION(monitoringConstants.GET_ALERTS):
-        draft.alerts = {
-          ...initialState.alerts,
-          fulfilled: true,
-          data: action.payload.data.alerts,
-        };
-        break;
-
-      // GET_NODES
-      case REJECTED_ACTION(monitoringConstants.GET_NODES):
         draft.nodes = {
           ...initialState.nodes,
           ...getErrorState(action),
         };
-        break;
-
-      case PENDING_ACTION(monitoringConstants.GET_NODES):
-        draft.nodes.pending = true;
-        break;
-
-      case FULFILLED_ACTION(monitoringConstants.GET_NODES):
-        draft.nodes = {
-          ...initialState.nodes,
-          fulfilled: true,
-          data: action.payload.data.nodes,
-        };
-        break;
-
-      // GET_OPERATORS
-      case REJECTED_ACTION(monitoringConstants.GET_OPERATORS):
         draft.operators = {
           ...initialState.operators,
           ...getErrorState(action),
         };
         break;
 
-      case PENDING_ACTION(monitoringConstants.GET_OPERATORS):
+      case PENDING_ACTION(monitoringConstants.GET_ONDEMAND_METRICS):
+        draft.alerts.pending = true;
         draft.operators.pending = true;
+        draft.nodes.pending = true;
         break;
 
-      case FULFILLED_ACTION(monitoringConstants.GET_OPERATORS):
+      case FULFILLED_ACTION(monitoringConstants.GET_ONDEMAND_METRICS):
+        draft.alerts = {
+          ...initialState.alerts,
+          fulfilled: true,
+          data: action.payload.data.alerts,
+        };
+        draft.nodes = {
+          ...initialState.nodes,
+          fulfilled: true,
+          data: action.payload.data.nodes,
+        };
         draft.operators = {
           ...initialState.operators,
           fulfilled: true,

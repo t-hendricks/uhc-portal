@@ -81,6 +81,11 @@ const registerDisconnected = data => apiRequest({
   data,
 });
 
+const getOnDemandMetrics = subscriptionID => apiRequest({
+  method: 'get',
+  url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/ondemand_metrics`,
+});
+
 const getNotificationContacts = subscriptionID => apiRequest({
   method: 'get',
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/notification_contacts`,
@@ -141,6 +146,7 @@ const accountsService = {
   getOrganizationQuota,
   editSubscription,
   registerDisconnected,
+  getOnDemandMetrics,
   getRequest,
   getFeature,
   getSupportCases,
