@@ -84,19 +84,19 @@ exports[`<InsightsTable /> should render 1`] = `
         emptyStateDescription={
           <React.Fragment>
             <p>
-              Your cluster is not affected by enabled health checks.
+              Your cluster is not affected by enabled recommendations.
             </p>
             <Button
               className="include-disabled-rules-link"
               onClick={[Function]}
               variant="link"
             >
-              Include disabled health checks
+              Include disabled recommendations
             </Button>
           </React.Fragment>
         }
         emptyStateIcon={[Function]}
-        emptyStateTitle="No health checks"
+        emptyStateTitle="No recommendations"
         fetchData={[Function]}
         filterValues={
           Object {
