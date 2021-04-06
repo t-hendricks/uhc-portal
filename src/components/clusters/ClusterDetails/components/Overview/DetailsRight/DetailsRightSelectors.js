@@ -5,7 +5,6 @@ const nodesSectionDataSelector = (state) => {
   let hasMachinePoolWithAutoscaling = false;
   let totalMinNodesCount = 0;
   let totalMaxNodesCount = 0;
-
   const defaultMachineAutoscale = get(state, 'clusters.details.cluster.nodes.autoscale_compute');
 
   if (defaultMachineAutoscale) {
