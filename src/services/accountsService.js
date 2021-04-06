@@ -48,6 +48,19 @@ const fetchSubscriptionByExternalId = clusterExternalID => apiRequest({
   },
 });
 
+const getUnhealthyClusters = (params) => {
+  const filter = params.filter && params.filter !== '' ? `metrics.health_state = 'unhealthy' and ${params.filter}` : 'metrics.health_state = \'unhealthy\'';
+  return apiRequest({
+    method: 'get',
+    url: '/api/accounts_mgmt/v1/subscriptions',
+    params: {
+      page: params.page,
+      size: params.page_size,
+      order: params.order,
+      search: filter,
+    },
+  });
+};
 
 const editSubscription = (subscriptionID, data) => apiRequest({
   method: 'patch',
@@ -115,6 +128,7 @@ const accountsService = {
   getOrganization,
   getSubscription,
   getSubscriptions,
+  getUnhealthyClusters,
   getNotificationContacts,
   addNotificationContact,
   deleteNotificationContact,

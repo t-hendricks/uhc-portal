@@ -39,9 +39,9 @@ class ClustersWithIssuesTableCard extends React.Component {
 
   render() {
     const {
-      unhealthyClusters, setClusterDetails, viewOptions,
+      unhealthyClusters, viewOptions,
     } = this.props;
-    if (unhealthyClusters.fulfilled && unhealthyClusters.clusters.length === 0) {
+    if (unhealthyClusters.fulfilled && unhealthyClusters.subscriptions.length === 0) {
       return (
         <Card className="clusters-overview-card">
           <CardTitle>
@@ -59,16 +59,16 @@ class ClustersWithIssuesTableCard extends React.Component {
       );
     }
 
-    const clusterWithIssuesRow = (cluster) => {
+    const clusterWithIssuesRow = (subscription) => {
       const issuesCount = (
         <span>
-          {getIssuesCount(cluster)}
+          {getIssuesCount(subscription)}
         </span>
       );
 
       const clusterName = (
-        <Link to={`/details/s/${cluster.subscription.id}`} onClick={() => setClusterDetails(cluster)}>
-          {getClusterName(cluster)}
+        <Link to={`/details/s/${subscription.id}`}>
+          {getClusterName(subscription)}
         </Link>
       );
 
@@ -77,7 +77,7 @@ class ClustersWithIssuesTableCard extends React.Component {
           { title: clusterName },
           { title: issuesCount },
         ],
-        cluster,
+        subscription,
       };
     };
 
@@ -87,12 +87,12 @@ class ClustersWithIssuesTableCard extends React.Component {
     ];
 
     const showSkeleton = unhealthyClusters.pending
-      && (unhealthyClusters.clusters && unhealthyClusters.clusters.length > 0);
+      && (unhealthyClusters.subscriptions && unhealthyClusters.subscriptions.length > 0);
 
     const rows = showSkeleton ? skeletonRows(viewOptions.pageSize)
-      : unhealthyClusters.clusters.map(cluster => clusterWithIssuesRow(cluster));
+      : unhealthyClusters.subscriptions.map(subscription => clusterWithIssuesRow(subscription));
     const resolver = unhealthyClusters.pending ? undefined
-      : rowData => actionResolver(rowData.cluster);
+      : rowData => actionResolver(rowData.subscription);
 
     return (
       <Card className="clusters-overview-card">
@@ -126,7 +126,7 @@ class ClustersWithIssuesTableCard extends React.Component {
 
 ClustersWithIssuesTableCard.propTypes = {
   unhealthyClusters: PropTypes.shape({
-    clusters: PropTypes.array,
+    subscriptions: PropTypes.array,
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
   }).isRequired,
@@ -136,7 +136,6 @@ ClustersWithIssuesTableCard.propTypes = {
     totalCount: PropTypes.number,
     totalPages: PropTypes.number,
   }).isRequired,
-  setClusterDetails: PropTypes.func.isRequired,
   getUnhealthyClusters: PropTypes.func.isRequired,
 };
 
