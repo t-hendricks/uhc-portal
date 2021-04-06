@@ -10,6 +10,38 @@ exports[`<AddOns /> should render 1`] = `
       <Connect(AddOnsCard)
         addOn={
           Object {
+            "description": "A collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development. This add-on installs PostgreSQL, Red Hat SSO, and the Red Hat CodeReady Workspaces server, as well as configures all three services.",
+            "docs_link": "https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces",
+            "enabled": true,
+            "has_external_resources": false,
+            "hidden": false,
+            "href": "/api/clusters_mgmt/v1/addons/codeready-workspaces",
+            "icon": "SNIPPED",
+            "id": "codeready-workspaces",
+            "install_mode": "single_namespace",
+            "kind": "AddOn",
+            "label": "api.openshift.com/addon-codeready-workspaces-operator",
+            "name": "Red Hat CodeReady Workspaces",
+            "operator_name": "crwoperator",
+            "resource_cost": 0,
+            "resource_name": "addon-crw-operator",
+            "target_namespace": "codeready-workspaces-operator",
+          }
+        }
+        hasQuota={true}
+        key="codeready-workspaces"
+        requirements={
+          Object {
+            "errorMsgs": Array [],
+            "fulfilled": true,
+          }
+        }
+      />
+    </GalleryItem>
+    <GalleryItem>
+      <Connect(AddOnsCard)
+        addOn={
+          Object {
             "description": "Based on the open source Istio project, Red Hat OpenShift Service Mesh provides an easy way to create a network of deployed services that provides discovery, load balancing, service-to-service authentication, failure recovery, metrics, and monitoring.",
             "enabled": true,
             "href": "/api/clusters_mgmt/v1/addons/service-mesh",
@@ -25,7 +57,7 @@ exports[`<AddOns /> should render 1`] = `
             "target_namespace": "redhat-service-mesh-operator",
           }
         }
-        hasQuota={false}
+        hasQuota={true}
         installedAddOn={
           Object {
             "addon": Object {
@@ -37,6 +69,66 @@ exports[`<AddOns /> should render 1`] = `
           }
         }
         key="service-mesh"
+        requirements={
+          Object {
+            "errorMsgs": Array [],
+            "fulfilled": true,
+          }
+        }
+      />
+    </GalleryItem>
+    <GalleryItem>
+      <Connect(AddOnsCard)
+        addOn={
+          Object {
+            "description": "DBA Operator description",
+            "enabled": true,
+            "href": "/api/clusters_mgmt/v1/addons/dba-operator",
+            "icon": null,
+            "id": "dba-operator",
+            "install_mode": "all_namespaces",
+            "kind": "AddOn",
+            "label": "api.openshift.com/addon-dba-operator",
+            "name": "DBA Operator",
+            "operator_name": "dba-operator",
+            "resource_cost": 1,
+            "resource_name": "addon-dba-operator",
+            "target_namespace": "addon-dba-operator",
+          }
+        }
+        hasQuota={true}
+        key="dba-operator"
+        requirements={
+          Object {
+            "errorMsgs": Array [],
+            "fulfilled": true,
+          }
+        }
+      />
+    </GalleryItem>
+    <GalleryItem>
+      <Connect(AddOnsCard)
+        addOn={
+          Object {
+            "description": "The Cluster Logging Operator for OKD provides a means for configuring and managing your aggregated logging stack.",
+            "enabled": true,
+            "has_external_resources": true,
+            "hidden": false,
+            "href": "/api/clusters_mgmt/v1/addons/cluster-logging-operator",
+            "icon": "SNIPPED",
+            "id": "cluster-logging-operator",
+            "install_mode": "single_namespace",
+            "kind": "AddOn",
+            "label": "api.openshift.com/addon-cluster-logging-operator",
+            "name": "Red Hat OpenShift Cluster logging operator",
+            "operator_name": "cluster-logging",
+            "resource_cost": 1,
+            "resource_name": "addon-cluster-logging-operator",
+            "target_namespace": "openshift-logging",
+          }
+        }
+        hasQuota={false}
+        key="cluster-logging-operator"
         requirements={
           Object {
             "errorMsgs": Array [],
